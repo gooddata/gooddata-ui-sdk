@@ -6,7 +6,11 @@ import defaultReduxSaga from "redux-saga";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
-import { chatWindowSliceName, chatWindowSliceReducer } from "./chatWindow/chatWindowSlice.js";
+import {
+    chatWindowSliceName,
+    chatWindowSliceReducer,
+    getInitialChatWindowState,
+} from "./chatWindow/chatWindowSlice.js";
 import { type EventDispatcher } from "./events.js";
 import { messagesSliceName, messagesSliceReducer } from "./messages/messagesSlice.js";
 import { type OptionsDispatcher } from "./options.js";
@@ -38,6 +42,9 @@ export const getStore = (
         reducer: {
             [messagesSliceName]: messagesSliceReducer,
             [chatWindowSliceName]: chatWindowSliceReducer,
+        },
+        preloadedState: {
+            [chatWindowSliceName]: getInitialChatWindowState({ isPreview }),
         },
         middleware: (getDefaultMiddleware) =>
             getDefaultMiddleware({

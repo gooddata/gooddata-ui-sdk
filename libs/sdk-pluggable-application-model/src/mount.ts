@@ -225,6 +225,16 @@ export interface IPluggableApplicationMountOptions {
      * The host falls back to its own defaults for any fields not present.
      */
     onHeaderChange?: (header: IAppHeaderOptions) => void;
+
+    /**
+     * Callback invoked by the pluggable application to set the page-title segment of the browser
+     * tab title. The host owns `document.title` and composes it as `"{pageTitle} - {brand}"`.
+     *
+     * @remarks
+     * Call this at mount time and again whenever the page title changes (e.g. after navigating to
+     * a different dashboard). Pass `undefined` to fall back to the application's manifest title.
+     */
+    onDocumentTitleChange?: (pageTitle: string | undefined) => void;
 }
 
 /**

@@ -48,11 +48,20 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate }: IHostUi
     const latestMountStateRef = useAutoupdateRef({ ctx, apps, pathname });
 
     const [headerOptions, setHeaderOptions] = useState<IAppHeaderOptions | undefined>(undefined);
+    const [pageTitle, setPageTitle] = useState<string | undefined>(undefined);
     const activeAppRef = useAutoupdateRef(activeInternalApplication);
     const onHeaderChange = useCallback(
         (appId: string, header: IAppHeaderOptions) => {
             if (activeAppRef.current?.id === appId) {
                 setHeaderOptions(header);
+            }
+        },
+        [activeAppRef],
+    );
+    const onDocumentTitleChange = useCallback(
+        (appId: string, title: string | undefined) => {
+            if (activeAppRef.current?.id === appId) {
+                setPageTitle(title);
             }
         },
         [activeAppRef],
@@ -158,6 +167,14 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate }: IHostUi
         handleRef.current?.updateHeader?.(headerOptions);
     }, [hostReady, headerOptions]);
 
+    // Push the active application's page title to the host UI whenever it changes
+    useEffect(() => {
+        if (!hostReady) {
+            return;
+        }
+        handleRef.current?.updateDocumentTitle?.(pageTitle);
+    }, [hostReady, pageTitle]);
+
     // Track app navigation and page views when the active application changes.
     // Also clear header options on app switch so stale customizations don't leak.
     const prevAppIdRef = useRef<string | undefined>(undefined);
@@ -171,6 +188,7 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate }: IHostUi
             }
             prevAppIdRef.current = activeId;
             setHeaderOptions(undefined);
+            setPageTitle(undefined);
         }
     }, [activeInternalApplication, pathname]);
 
@@ -189,13 +207,14 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate }: IHostUi
                         ctx={ctx}
                         pathname={pathname}
                         onHeaderChange={onHeaderChange}
+                        onDocumentTitleChange={onDocumentTitleChange}
                     />
                 </HostIntlProvider>,
             );
         } else {
             appRootRef.current.render(null);
         }
-    }, [hostReady, activeInternalApplication, ctx, onHeaderChange, pathname]);
+    }, [hostReady, activeInternalApplication, ctx, onHeaderChange, onDocumentTitleChange, pathname]);
 
     return <div ref={containerRef} className="gd-host-ui-container" />;
 }

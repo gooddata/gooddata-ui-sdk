@@ -33,6 +33,7 @@ import {
 } from "../../model.js";
 import { generateTitleFromQuestion } from "../../utils.js";
 import {
+    agentSwitchingActiveSelector,
     allowedRelationshipTypesSelector,
     objectTypesSelector,
     settingsSelector,
@@ -43,6 +44,7 @@ import {
     conversationMessagesByIdSelector,
     conversationSelector,
     messagesSelector,
+    selectedAgentIdSelector,
 } from "../messages/messagesSelectors.js";
 import {
     evaluateMessageAction,
@@ -315,17 +317,35 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
             conversation = conversationState;
         } else {
             const api = backend.workspace(workspace).genAI().getChatConversations({ isPreview });
-            const created: IChatConversation = yield call(api.create.bind(api));
+            // agentSwitchingActiveSelector is false in preview mode, so preview conversations are
+            // never created with an explicit agent and stay pinned to the preview agent being built.
+            const agentSwitchingActive: boolean = yield select(agentSwitchingActiveSelector);
+            const selectedAgentId: string | undefined = agentSwitchingActive
+                ? yield select(selectedAgentIdSelector)
+                : undefined;
+            const created: IChatConversation = yield call(
+                { context: api, fn: api.create },
+                selectedAgentId
+                    ? {
+                          agentId: selectedAgentId,
+                      }
+                    : undefined,
+            );
             const updated: IChatConversation = yield call(api.update.bind(api), created.id, {
                 title: generateTitleFromQuestion(message.content.text),
             });
             //save
             conversation = {
                 ...updated,
+                agentId: updated.agentId ?? created.agentId ?? selectedAgentId,
                 localId: conversationState.localId,
             };
             // Store it as current conversation and clear the transient flag
             yield put(setCurrentConversationAction({ conversation }));
+        }
+
+        if (!conversation) {
+            throw new Error("Conversation is not available.");
         }
 
         // Set evaluation state in store
@@ -477,8 +497,9 @@ function* evaluateUserConversationMessage(
                         //reset
                         currentUserMessage = undefined;
                     }
-                    // Skip user messages
-                    if (value.role === "user") {
+                    // Skip user and system messages — system items are stored as standalone
+                    // conversation items and must not overwrite the current assistant message.
+                    if (value.role === "user" || value.role === "system") {
                         continue;
                     }
 

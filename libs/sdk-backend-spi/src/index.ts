@@ -158,6 +158,7 @@ export {
     type IChatConversationThread,
     type IChatConversationThreadQuery,
     type IChatConversation,
+    type IChatConversationCreateOptions,
     type IChatConversationItem,
     type IChatConversationItemsQuery,
     type IChatConversationItemsQueryResult,
@@ -259,6 +260,8 @@ export type {
 } from "./workspace/index.js";
 
 export type { IAttributeHierarchiesService } from "./workspace/attributeHierarchies/index.js";
+
+export type { IWorkspaceAgentsService } from "./workspace/agents/index.js";
 
 export type { IWorkspacePermissionsService } from "./workspace/permissions/index.js";
 

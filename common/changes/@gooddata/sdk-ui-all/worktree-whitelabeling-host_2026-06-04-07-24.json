@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "White-label the favicon and browser tab title across the pluggable host and standalone apps. The host (sdk-ui-pluggable-host) now owns document.title, composing it as \"{application title} - {brand}\": the application title comes from the active app's manifest (overridable at runtime via a new onDocumentTitleChange mount callback), and the brand is the organization name when white-labeling is enabled (the GoodData product name otherwise, and omitted when white-labeling is enabled with no organization name set). White-label logo/favicon/apple-touch-icon are applied whenever their URLs are set; the host favicon falls back to the default so a cleared custom favicon resets. Child apps (Analytical Designer, Home) now render their own DocumentHeader/title only in standalone mode so the host owns the title and favicon when they are embedded. Adds onDocumentTitleChange to IPluggableApplicationMountOptions and updateDocumentTitle to IHostUiMountHandle, plus a setDocumentTitle helper on PluggableAppEventsProvider/usePluggableAppEvents so embedded apps can set their per-route page-title segment (used by Home to keep per-sub-route titles such as Workspaces/Settings, and by Analytical Designer to report the open insight title, when embedded).",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "petr.dolejsi@gooddata.com"
+}

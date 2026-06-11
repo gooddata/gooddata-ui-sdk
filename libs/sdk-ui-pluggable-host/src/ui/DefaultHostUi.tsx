@@ -36,6 +36,7 @@ interface IHostUiBridgeProps {
         setPathname: (pathname: string) => void,
         setHeaderOptions: (header: IAppHeaderOptions | undefined) => void,
         setNotification: (notification: IHostUiNotification | null) => void,
+        setPageTitle: (pageTitle: string | undefined) => void,
     ) => void;
 }
 
@@ -53,11 +54,12 @@ function HostUiBridge({
     const [pathname, setPathname] = useState(initialPathname);
     const [headerOptions, setHeaderOptions] = useState<IAppHeaderOptions | undefined>(undefined);
     const [notification, setNotification] = useState<IHostUiNotification | null>(null);
+    const [pageTitle, setPageTitle] = useState<string | undefined>(undefined);
     const appContainerRef = useRef<HTMLDivElement>(null);
 
     // Layout effect runs in the same synchronous commit as flushSync.
     useLayoutEffect(() => {
-        onReady(setCtx, setApps, setPathname, setHeaderOptions, setNotification);
+        onReady(setCtx, setApps, setPathname, setHeaderOptions, setNotification, setPageTitle);
         if (appContainerRef.current) {
             onAppContainerReady(appContainerRef.current);
         }
@@ -74,6 +76,7 @@ function HostUiBridge({
             onReplace={replace}
             headerOptions={headerOptions}
             notification={notification}
+            appPageTitle={pageTitle}
         >
             <div ref={appContainerRef} className={e("app-container")} />
         </HostChrome>
@@ -95,6 +98,7 @@ function mountDefaultHostUi(options: IHostUiMountOptions): IHostUiMountHandle {
     let updatePathnameFn: ((pathname: string) => void) | null = null;
     let updateHeaderFn: ((header: IAppHeaderOptions | undefined) => void) | null = null;
     let updateNotificationFn: ((notification: IHostUiNotification | null) => void) | null = null;
+    let updateDocumentTitleFn: ((pageTitle: string | undefined) => void) | null = null;
 
     // Use flushSync so that the DOM is ready synchronously after mount() returns,
     // making getAppContainer() safe to call immediately.
@@ -109,12 +113,13 @@ function mountDefaultHostUi(options: IHostUiMountOptions): IHostUiMountHandle {
                 onAppContainerReady={(el) => {
                     appContainer = el;
                 }}
-                onReady={(setCtx, setApps, setPathname, setHeaderOptions, setNotification) => {
+                onReady={(setCtx, setApps, setPathname, setHeaderOptions, setNotification, setPageTitle) => {
                     updateCtxFn = setCtx;
                     updateAppsFn = setApps;
                     updatePathnameFn = setPathname;
                     updateHeaderFn = setHeaderOptions;
                     updateNotificationFn = setNotification;
+                    updateDocumentTitleFn = setPageTitle;
                 }}
             />,
         );
@@ -131,6 +136,7 @@ function mountDefaultHostUi(options: IHostUiMountOptions): IHostUiMountHandle {
                 updatePathnameFn = null;
                 updateHeaderFn = null;
                 updateNotificationFn = null;
+                updateDocumentTitleFn = null;
                 root.unmount();
             }
         },
@@ -149,6 +155,10 @@ function mountDefaultHostUi(options: IHostUiMountOptions): IHostUiMountHandle {
 
         updateHeader(header: IAppHeaderOptions | undefined) {
             updateHeaderFn?.(header);
+        },
+
+        updateDocumentTitle(pageTitle: string | undefined) {
+            updateDocumentTitleFn?.(pageTitle);
         },
 
         getAppContainer(): HTMLElement {

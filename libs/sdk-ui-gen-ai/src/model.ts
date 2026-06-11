@@ -22,6 +22,17 @@ import type {
 } from "@gooddata/sdk-model";
 
 /**
+ * @internal
+ */
+export type GenAIAgent = {
+    id: string;
+    title: string;
+    description?: string;
+    modifiedAt?: string;
+    lastUsedAt?: string;
+};
+
+/**
  * @public
  */
 export type TextContentObject = {
@@ -370,7 +381,7 @@ export type IChatConversationLocalItem = Omit<IChatConversationItem, "content"> 
     streaming?: boolean;
     //data
     localId: string;
-    content: IChatConversationLocalContent | IChatConversationErrorContent;
+    content: IChatConversationLocalContent | IChatConversationErrorContent | IChatConversationSystemContent;
 };
 
 /**
@@ -400,6 +411,15 @@ export type IChatConversationErrorContent = {
     code?: number;
     reason?: IChatConversationError["reason"];
     traceId?: string;
+};
+
+/**
+ * Local-only content type for system-role items (e.g. agent-switch events).
+ * Meaningful data lives in top-level item fields; content is structurally required but unused.
+ * @public
+ */
+export type IChatConversationSystemContent = {
+    type: "system";
 };
 
 /**
@@ -471,6 +491,29 @@ export const makeUserItem = (
         type: "text",
         text: "",
     },
+});
+
+/**
+ * Make an optimistic agent change event item for the current session.
+ * @internal
+ */
+export const makeAgentChangeItem = ({
+    agentId,
+    oldAgentId,
+}: {
+    agentId: string;
+    oldAgentId?: string;
+}): IChatConversationLocalItem => ({
+    id: "",
+    type: "item",
+    localId: uuidv4(),
+    responseId: "",
+    complete: true,
+    createdAt: Date.now(),
+    role: "system",
+    agentId,
+    oldAgentId,
+    content: { type: "system" },
 });
 
 /**

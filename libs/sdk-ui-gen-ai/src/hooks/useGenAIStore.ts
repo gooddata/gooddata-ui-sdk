@@ -10,6 +10,7 @@ import { type CatalogItem, type GenAIObjectType, type IColorPalette } from "@goo
 import {
     setCatalogItemsActions,
     setColorPaletteAction,
+    setIsPreviewAction,
     setObjectTypesAction,
     setSettingsAction,
     setTagsAction,
@@ -77,6 +78,10 @@ export const useGenAIStore = (
             );
         }
     }, [settings, optionsDispatcher, store]);
+
+    useEffect(() => {
+        store.dispatch(setIsPreviewAction({ isPreview }));
+    }, [isPreview, store]);
 
     useEffect(() => {
         if (objectTypes) {

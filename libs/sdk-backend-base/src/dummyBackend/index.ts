@@ -107,6 +107,7 @@ import {
     type IWidgetAlertCount,
     type IWidgetReferences,
     type IWorkspaceAccessControlService,
+    type IWorkspaceAgentsService,
     type IWorkspaceAttributesService,
     type IWorkspaceAutomationService,
     type IWorkspaceCatalog,
@@ -517,6 +518,9 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
             throw new NotSupported("not supported");
         },
         attributeHierarchies(): IAttributeHierarchiesService {
+            throw new NotSupported("not supported");
+        },
+        agents(): IWorkspaceAgentsService {
             throw new NotSupported("not supported");
         },
         exportDefinitions(): IWorkspaceExportDefinitionsService {

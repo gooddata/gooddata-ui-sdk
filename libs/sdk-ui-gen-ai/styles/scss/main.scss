@@ -28,9 +28,10 @@
         font-size: 12px;
         color: kit-variables.$gd-color-state-blank;
         text-align: center;
+        line-height: normal;
         // Use custom x margin cause some apps user slightly different
         // font and it may not align properly with larger margin
-        margin: 0 10px variables.$y-spacing;
+        margin: calc(#{variables.$y-spacing} - 1em) 10px variables.$x-spacing;
     }
 
     &__global_error {

@@ -9,7 +9,10 @@ import { connect } from "react-redux";
 import { type CatalogItem } from "@gooddata/sdk-model";
 
 import { isAssistantMessage, isUserMessage } from "../model.js";
-import { catalogItemsSelector } from "../store/chatWindow/chatWindowSelectors.js";
+import {
+    agentSwitchingActiveSelector,
+    catalogItemsSelector,
+} from "../store/chatWindow/chatWindowSelectors.js";
 import {
     asyncProcessSelector,
     conversationMessagesSelector,
@@ -26,6 +29,7 @@ import { AssistantItemComponent } from "./messages/AssistantItem.js";
 import { AssistantMessageComponent } from "./messages/AssistantMessage.js";
 import { ItemsGroup } from "./messages/ItemsGroup.js";
 import { useMessageScroller } from "./messages/MessageScroller.js";
+import { SystemItemComponent } from "./messages/SystemItem.js";
 import { ToolItemComponent } from "./messages/ToolItem.js";
 import { UserItemComponent } from "./messages/UserItem.js";
 import { UserMessageComponent } from "./messages/UserMessage.js";
@@ -37,6 +41,7 @@ type MessagesComponentProps = {
     conversation: ReturnType<typeof conversationSelector>;
     catalogItems: ReturnType<typeof catalogItemsSelector>;
     loading: ReturnType<typeof asyncProcessSelector>;
+    agentSwitchingActive: ReturnType<typeof agentSwitchingActiveSelector>;
     initializing?: boolean;
 };
 
@@ -46,6 +51,7 @@ function MessagesComponent({
     catalogItems,
     messages,
     loading,
+    agentSwitchingActive,
     initializing,
 }: MessagesComponentProps) {
     const { scrollerRef } = useMessageScroller(conversation ? conversationMessages : messages);
@@ -63,6 +69,7 @@ function MessagesComponent({
                 "gd-gen-ai-chat__messages--big-screen": isBigScreen,
                 "gd-gen-ai-chat__messages--small-screen": isSmallScreen,
                 "gd-gen-ai-chat__messages--empty": isEmpty,
+                "gd-gen-ai-chat__messages--agent-switching": agentSwitchingActive,
             })}
             ref={scrollerRef}
         >
@@ -147,19 +154,32 @@ function ConversationMessages({ messages, catalogItems }: IConversationMessagesP
                             const isLast = isLastGroup && mi === group.messages.length - 1;
                             switch (message.role) {
                                 case "user":
-                                    return <UserItemComponent message={message} isLast={isLast} />;
+                                    return (
+                                        <UserItemComponent
+                                            key={message.localId}
+                                            message={message}
+                                            isLast={isLast}
+                                        />
+                                    );
                                 case "assistant":
                                     return (
                                         <AssistantItemComponent
+                                            key={message.localId}
                                             group={group}
                                             message={message}
                                             isLast={isLast}
                                         />
                                     );
                                 case "tool":
-                                    return <ToolItemComponent message={message} isLast={isLast} />;
+                                    return (
+                                        <ToolItemComponent
+                                            key={message.localId}
+                                            message={message}
+                                            isLast={isLast}
+                                        />
+                                    );
                                 case "system":
-                                    return null;
+                                    return <SystemItemComponent key={message.localId} message={message} />;
                                 default:
                                     return assertNever(message.role);
                             }
@@ -181,6 +201,7 @@ const mapStateToProps = (state: RootState): MessagesComponentProps => ({
     conversation: conversationSelector(state),
     conversationMessages: conversationMessagesSelector(state),
     catalogItems: catalogItemsSelector(state),
+    agentSwitchingActive: agentSwitchingActiveSelector(state),
 });
 
 export const Messages: any = connect(mapStateToProps)(MessagesComponent);

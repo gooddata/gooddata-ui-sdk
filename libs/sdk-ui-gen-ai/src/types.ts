@@ -31,6 +31,7 @@ export type StoredConversation = {
      * - restoring: cached messages have been restored while the backend fetch is still in-flight
      * - clearing: the thread is being cleared
      * - evaluating: the new user message is being evaluated by assistant
+     * - switchingAgent: the active agent switch is being persisted
      */
-    asyncProcess?: "loading" | "restoring" | "clearing" | "evaluating";
+    asyncProcess?: "loading" | "restoring" | "clearing" | "evaluating" | "switchingAgent";
 };

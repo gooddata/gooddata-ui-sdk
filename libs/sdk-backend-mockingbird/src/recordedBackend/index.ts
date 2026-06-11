@@ -40,6 +40,7 @@ import {
     type IUserSettingsService,
     type IUserWorkspaceSettings,
     type IWorkspaceAccessControlService,
+    type IWorkspaceAgentsService,
     type IWorkspaceAttributesService,
     type IWorkspaceAutomationService,
     type IWorkspaceCatalogFactory,
@@ -412,6 +413,9 @@ function recordedWorkspace(
         },
         attributeHierarchies(): IAttributeHierarchiesService {
             return new RecordedAttributeHierarchiesService(implConfig);
+        },
+        agents(): IWorkspaceAgentsService {
+            throw new NotSupported("not supported");
         },
         exportDefinitions(): IWorkspaceExportDefinitionsService {
             throw new NotSupported("not supported");

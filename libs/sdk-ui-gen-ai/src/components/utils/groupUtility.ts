@@ -3,7 +3,7 @@
 import { type IChatConversationLocalItem } from "../../model.js";
 
 export interface IChatMessagesGroup {
-    type: "reasoning" | "user" | "assistant" | "error";
+    type: "reasoning" | "user" | "assistant" | "error" | "system";
     messages: IChatConversationLocalItem[];
 }
 
@@ -60,9 +60,14 @@ export function groupMessages(messages: IChatConversationLocalItem[]): IChatMess
     return groups;
 }
 
-function getMessageType(message: IChatConversationLocalItem): "reasoning" | "user" | "assistant" | "error" {
+function getMessageType(
+    message: IChatConversationLocalItem,
+): "reasoning" | "user" | "assistant" | "error" | "system" {
     if (message.content.type === "error") {
         return "error";
+    }
+    if (message.role === "system") {
+        return "system";
     }
     if (
         message.content.type === "reasoning" ||

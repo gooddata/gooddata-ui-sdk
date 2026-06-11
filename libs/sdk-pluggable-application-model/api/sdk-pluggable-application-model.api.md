@@ -85,6 +85,7 @@ export interface IHostUiMountHandle {
     unmount(): void;
     updateApplications?(apps: PluggableApplicationRegistryItem[]): void;
     updateContext?(ctx: IPlatformContext): void;
+    updateDocumentTitle?(pageTitle: string | undefined): void;
     updateHeader?(header: IAppHeaderOptions | undefined): void;
     updatePathname?(pathname: string): void;
 }
@@ -209,6 +210,7 @@ export interface IPluggableApplicationMountOptions {
     container: HTMLElement;
     ctx: IPlatformContext;
     id: string;
+    onDocumentTitleChange?: (pageTitle: string | undefined) => void;
     onEvent?: (e: IPluggableAppEvent) => void;
     onHeaderChange?: (header: IAppHeaderOptions) => void;
     onTelemetryEvent?: IPluggableAppTelemetryCallbacks;

@@ -257,6 +257,10 @@ export {
     type KdInsightSavedData,
     type KdOpenDeleteDashboardDialogCommand,
     type KdOpenDeleteDashboardDialogCommandData,
+    type KdToggleAIAssistantCommand,
+    type KdToggleAIAssistantCommandData,
+    type IKdAIAssistantDialogVisibilityChangedBody,
+    type KdAIAssistantDialogVisibilityChangedData,
     type IKdSetApiTokenBody,
     type KdSetApiTokenCommand,
     type KdSetApiTokenCommandData,
@@ -278,6 +282,7 @@ export {
     isKdExportToPdfCommandData,
     isKdSetFilterParentsCommandData,
     isKdOpenDeleteDashboardDialogCommandData,
+    isKdToggleAIAssistantCommandData,
     isKdSetApiTokenCommandData,
 } from "./iframe/EmbeddedKpiDashboard.js";
 

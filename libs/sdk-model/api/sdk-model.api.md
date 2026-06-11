@@ -895,6 +895,7 @@ export interface IAgent {
     description?: string;
     enabled?: boolean;
     isPreview?: boolean;
+    lastUsedAt?: string;
     modifiedAt?: string;
     modifiedBy?: IUser;
     name?: string;

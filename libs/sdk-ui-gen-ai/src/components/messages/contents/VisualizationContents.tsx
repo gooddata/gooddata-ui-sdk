@@ -79,11 +79,16 @@ import {
     mapVisualizationForecastToChartConfig,
 } from "../../../forecast/forecastMapping.js";
 import { type VisualizationContents, makeTextContents, makeUserMessage } from "../../../model.js";
-import { colorPaletteSelector, settingsSelector } from "../../../store/chatWindow/chatWindowSelectors.js";
+import {
+    agentSwitchingActiveSelector,
+    colorPaletteSelector,
+    settingsSelector,
+} from "../../../store/chatWindow/chatWindowSelectors.js";
 import {
     copyToClipboardAction,
     setKeyDriverAnalysisAction,
 } from "../../../store/chatWindow/chatWindowSlice.js";
+import { agentsAvailableSelector } from "../../../store/messages/messagesSelectors.js";
 import {
     newMessageAction,
     saveVisualisationRenderStatusAction,
@@ -122,7 +127,9 @@ export type VisualizationContentsProps = {
     enableNewPivotTable?: boolean;
     enableChangeAnalysis?: boolean;
     enableAccessibleChartTooltip?: boolean;
+    agentSwitchingActive?: boolean;
     agGridToken?: string;
+    agentsAvailable?: boolean;
     onCopyToClipboard?: (data: { content: string }) => void;
     setKeyDriverAnalysis?: typeof setKeyDriverAnalysisAction;
 };
@@ -135,7 +142,9 @@ function VisualizationContentsComponentCore({
     enableNewPivotTable = true,
     enableAccessibleChartTooltip = false,
     enableChangeAnalysis = false,
+    agentSwitchingActive = false,
     agGridToken,
+    agentsAvailable,
     showSuggestions = false,
     onCopyToClipboard,
     setKeyDriverAnalysis,
@@ -159,6 +168,7 @@ function VisualizationContentsComponentCore({
     const workspaceId = useWorkspaceStrict();
     const [isMenuButtonOpen, setMenuButtonOpen] = useState(false);
     const [isTable, setIsTable] = useState(false);
+    const arePromptActionsDisabled = agentSwitchingActive && agentsAvailable !== true;
 
     const intl = useIntl();
     const theme = useTheme();
@@ -811,6 +821,7 @@ function VisualizationContentsComponentCore({
                             label={suggestion.label}
                             variant="secondary"
                             size="small"
+                            isDisabled={arePromptActionsDisabled}
                             onClick={() => {
                                 dispatch(
                                     newMessageAction(
@@ -1188,7 +1199,9 @@ const mapStateToProps = (
     | "enableNewPivotTable"
     | "enableAccessibleChartTooltip"
     | "enableChangeAnalysis"
+    | "agentSwitchingActive"
     | "agGridToken"
+    | "agentsAvailable"
 > => {
     const settings = settingsSelector(state);
     return {
@@ -1196,7 +1209,9 @@ const mapStateToProps = (
         enableNewPivotTable: settings?.enableNewPivotTable,
         enableAccessibleChartTooltip: settings?.enableAccessibleChartTooltip,
         enableChangeAnalysis: settings?.enableChangeAnalysis,
+        agentSwitchingActive: agentSwitchingActiveSelector(state),
         agGridToken: settings?.agGridToken,
+        agentsAvailable: agentsAvailableSelector(state),
     };
 };
 

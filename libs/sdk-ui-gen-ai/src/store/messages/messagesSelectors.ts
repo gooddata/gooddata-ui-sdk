@@ -42,7 +42,7 @@ export const hasMessagesSelector: (state: RootState) => boolean = createSelector
 
 export const asyncProcessSelector: (
     state: RootState,
-) => "loading" | "restoring" | "clearing" | "evaluating" | undefined = createSelector(
+) => "loading" | "restoring" | "clearing" | "evaluating" | "switchingAgent" | undefined = createSelector(
     messagesSliceSelector,
     (state) => {
         if (state.currentConversation) {
@@ -87,6 +87,18 @@ export const conversationMessagesByIdSelector: (
 export const conversationSelector: (state: RootState) => IChatConversationLocal | undefined = createSelector(
     messagesSliceSelector,
     (state) => state.currentConversation,
+);
+
+export const selectedAgentIdSelector: (state: RootState) => string | undefined = createSelector(
+    messagesSliceSelector,
+    (state) => state.selectedAgentId,
+);
+
+export const agentsSelector = createSelector(messagesSliceSelector, (state) => state.agents);
+
+export const agentsAvailableSelector: (state: RootState) => boolean | undefined = createSelector(
+    agentsSelector,
+    (agents) => (agents ? agents.length > 0 : undefined),
 );
 
 export const conversationByIdSelector: (

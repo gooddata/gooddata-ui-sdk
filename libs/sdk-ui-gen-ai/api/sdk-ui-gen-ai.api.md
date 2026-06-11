@@ -309,7 +309,7 @@ export type IChatConversationLocalItem = Omit<IChatConversationItem, "content"> 
     complete?: boolean;
     streaming?: boolean;
     localId: string;
-    content: IChatConversationLocalContent | IChatConversationErrorContent;
+    content: IChatConversationLocalContent | IChatConversationErrorContent | IChatConversationSystemContent;
 };
 
 // @public
@@ -325,6 +325,11 @@ export type IChatConversationMultipartLocalPart = IChatConversationMultipartPart
     };
     objects?: TextContentObject[];
     suggestions?: IChatSuggestions;
+};
+
+// @public
+export type IChatConversationSystemContent = {
+    type: "system";
 };
 
 // @beta (undocumented)

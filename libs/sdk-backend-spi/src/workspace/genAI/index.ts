@@ -782,7 +782,7 @@ export interface IChatConversations {
     /**
      * Create a new conversation.
      */
-    create(): Promise<IChatConversation>;
+    create(options?: IChatConversationCreateOptions): Promise<IChatConversation>;
 
     /**
      * Updates the specified chat conversation with the provided updates.
@@ -791,6 +791,11 @@ export interface IChatConversations {
         conversationId: string,
         update: Partial<Pick<IChatConversation, "title" | "pinned">>,
     ): Promise<IChatConversation>;
+
+    /**
+     * Switches the agent used by the specified chat conversation.
+     */
+    switchAgent(conversationId: string, agentId: string): Promise<IChatConversation>;
 
     /**
      * Delete a conversation.
@@ -812,6 +817,18 @@ export interface IChatConversations {
      */
     getConversationThread(conversationId: string): IChatConversationThread;
 }
+
+/**
+ * Options for creating a chat conversation.
+ *
+ * @internal
+ */
+export type IChatConversationCreateOptions = {
+    /**
+     * Agent id to use for the conversation.
+     */
+    agentId?: string;
+};
 
 /**
  * Service to query conversations items.
@@ -877,6 +894,10 @@ export type IChatConversation = {
      * Conversation pinned status
      */
     pinned?: boolean;
+    /**
+     * Agent id used by this conversation.
+     */
+    agentId?: string;
 };
 
 /**
@@ -918,6 +939,15 @@ export type IChatConversationItem = {
     role: "user" | "assistant" | "tool" | "system";
     content: IChatConversationContent;
     feedback?: IChatConversationFeedback;
+    /**
+     * Id of the agent the conversation was switched to. Only set on system items
+     * that represent an agent-switch event.
+     */
+    agentId?: string;
+    /**
+     * Id of the agent the conversation was switched from, when known.
+     */
+    oldAgentId?: string;
 };
 
 /**

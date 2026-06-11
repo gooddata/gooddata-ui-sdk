@@ -31,6 +31,7 @@ export interface IPluggableApplicationRendererProps {
     ctx: IPlatformContext;
     pathname: string;
     onHeaderChange?: (appId: string, header: IAppHeaderOptions) => void;
+    onDocumentTitleChange?: (appId: string, pageTitle: string | undefined) => void;
 }
 
 export function PluggableApplicationRenderer({
@@ -38,9 +39,11 @@ export function PluggableApplicationRenderer({
     ctx,
     pathname,
     onHeaderChange,
+    onDocumentTitleChange,
 }: IPluggableApplicationRendererProps) {
     const ctxRef = useAutoupdateRef(ctx);
     const onHeaderChangeRef = useAutoupdateRef(onHeaderChange);
+    const onDocumentTitleChangeRef = useAutoupdateRef(onDocumentTitleChange);
     const containerRef = useRef<HTMLDivElement>(null);
     const mountHandleRef = useRef<IPluggableApplicationMountHandle | undefined>(undefined);
     const [viewState, setViewState] = useState<RendererViewState>({ state: "loading" });
@@ -104,6 +107,8 @@ export function PluggableApplicationRenderer({
                     onTelemetryEvent,
                     onHeaderChange: (header: IAppHeaderOptions) =>
                         onHeaderChangeRef.current?.(app.id, header),
+                    onDocumentTitleChange: (pageTitle: string | undefined) =>
+                        onDocumentTitleChangeRef.current?.(app.id, pageTitle),
                 });
 
                 lifecycle?.onMountCompleted?.(app.id, now() - mountStart);
@@ -135,7 +140,16 @@ export function PluggableApplicationRenderer({
                 });
             }
         };
-    }, [app, appBasePath, ctxRef, onHeaderChangeRef, onTelemetryEvent, lifecycle, onEvent]);
+    }, [
+        app,
+        appBasePath,
+        ctxRef,
+        onHeaderChangeRef,
+        onDocumentTitleChangeRef,
+        onTelemetryEvent,
+        lifecycle,
+        onEvent,
+    ]);
 
     useEffect(() => {
         mountHandleRef.current?.updateContext?.(ctx);

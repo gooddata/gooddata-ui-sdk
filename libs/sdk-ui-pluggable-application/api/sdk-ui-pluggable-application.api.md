@@ -48,10 +48,12 @@ export interface IPlatformContextProviderProps extends PropsWithChildren {
 export interface IPluggableAppEventsContextValue {
     emit: (event: IPluggableAppEvent) => void;
     emitPlatformContextReload: () => void;
+    setDocumentTitle: (pageTitle: string | undefined) => void;
 }
 
 // @alpha
 export interface IPluggableAppEventsProviderProps extends PropsWithChildren {
+    onDocumentTitleChange?: (pageTitle: string | undefined) => void;
     onEvent?: (event: IPluggableAppEvent) => void;
 }
 

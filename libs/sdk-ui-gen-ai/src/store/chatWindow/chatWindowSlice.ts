@@ -62,6 +62,11 @@ type ChatWindowSliceState = {
      * Cleared after being consumed by the saga.
      */
     userContext?: IGenAIUserContext;
+    /**
+     * Whether the chat runs against the caller's preview agent. In preview mode the assistant
+     * is pinned to that single agent, so agent switching is not applicable.
+     */
+    isPreview?: boolean;
 };
 
 export const chatWindowSliceName = "chatWindow";
@@ -77,11 +82,21 @@ const initialState: ChatWindowSliceState = {
     excludeTags: undefined,
     allowedRelationshipTypes: undefined,
     userContext: undefined,
+    isPreview: undefined,
 };
+
+export const getInitialChatWindowState = ({
+    isPreview,
+}: {
+    isPreview?: boolean;
+} = {}): ChatWindowSliceState => ({
+    ...initialState,
+    isPreview,
+});
 
 const chatWindowSlice = createSlice({
     name: chatWindowSliceName,
-    initialState,
+    initialState: getInitialChatWindowState(),
     reducers: {
         setOpenAction: (state, { payload: { isOpen } }: PayloadAction<{ isOpen: boolean }>) => {
             state.isOpen = isOpen;
@@ -148,6 +163,9 @@ const chatWindowSlice = createSlice({
         clearUserContextAction: (state) => {
             state.userContext = undefined;
         },
+        setIsPreviewAction: (state, { payload: { isPreview } }: PayloadAction<{ isPreview?: boolean }>) => {
+            state.isPreview = isPreview;
+        },
         copyToClipboardAction: (state, _action: PayloadAction<{ content: string }>) => state,
     },
 });
@@ -167,4 +185,5 @@ export const {
     setAllowedRelationshipTypesAction,
     setUserContextAction,
     clearUserContextAction,
+    setIsPreviewAction,
 } = chatWindowSlice.actions;

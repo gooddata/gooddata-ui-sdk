@@ -44,6 +44,40 @@
         width: 100%;
     }
 
+    &--agent-switching &__container {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid kit-variables.$gd-input-text-border;
+        border-radius: 3px;
+        background: kit-variables.$gd-color-white;
+        @include kit-mixins.box-shadow(
+            inset 0 1px 1px 0 color.adjust(kit-variables.$gd-input-text-box-shadow-color, $alpha: -0.85)
+        );
+        @include kit-mixins.transition(all, 0.25s, ease-in-out);
+
+        &:hover {
+            border-color: kit-variables.$gd-input-text-hover-border;
+        }
+    }
+
+    &--agent-switching:focus-within &__container {
+        border-color: kit-variables.$gd-palette-primary-base;
+    }
+
+    &--agent-switching#{$root}--no-agents &__container,
+    &--agent-switching#{$root}--no-agents:focus-within &__container {
+        border-color: kit-variables.$gd-input-text-border-error;
+    }
+
+    &--agent-switching &__text {
+        position: relative;
+        z-index: 1;
+    }
+
     &__mc {
         position: relative;
         z-index: 1;
@@ -59,6 +93,42 @@
         }
     }
 
+    &--agent-switching &__mc {
+        .cm-editor {
+            padding: 3px 5px 0;
+            border: 0;
+            border-radius: 0;
+            background: transparent;
+            box-shadow: none;
+
+            &:hover,
+            &.cm-focused {
+                border: 0;
+                box-shadow: none;
+            }
+        }
+    }
+
+    &__actions {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        box-sizing: border-box;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 10px;
+        padding: 5px;
+    }
+
+    &__agent-dropdown {
+        min-width: 0;
+
+        // Reuse the assistant "Thinking..." shimmer on the loading label, keeping the button's own font.
+        &--loading .gd-ui-kit-button__text {
+            @include variables.gd-reasoning();
+        }
+    }
+
     &__send_button {
         @include kit-mixins.transition(all, 0.25s, ease-in-out);
 
@@ -67,6 +137,40 @@
         right: 2px;
         bottom: 2px;
         z-index: 2;
+    }
+
+    &__no-agent {
+        display: inline-flex;
+        align-items: center;
+        max-width: 100%;
+        overflow: hidden;
+        box-sizing: border-box;
+        padding: 4px 10px;
+        border: var(--gd-message-error-borderWidth) solid var(--gd-message-error-borderColor);
+        border-radius: var(--gd-message-error-borderRadius);
+        background: var(--gd-message-error-backgroundColor);
+        color: var(--gd-message-error-textColor);
+        font-size: 12px;
+        line-height: 16px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    &:focus-within &__send_button {
+        path,
+        rect {
+            fill: kit-variables.$gd-palette-primary-base;
+        }
+
+        &--disabled,
+        &--disabled:hover {
+            cursor: default;
+
+            path,
+            rect {
+                fill: kit-variables.$gd-color-disabled;
+            }
+        }
     }
 
     &__info {
@@ -113,10 +217,11 @@
 
         code {
             display: inline-flex;
-            padding: 1px 5px;
             justify-content: center;
             align-items: center;
-            gap: 2px;
+            width: 17px;
+            height: 17px;
+            margin: 0 2px;
             border-radius: 3px;
             background: kit-variables.$is-focused-background;
             color: kit-variables.$gd-color-link;
@@ -127,21 +232,12 @@
         }
     }
 
-    &:focus-within &__send_button {
-        path,
-        rect {
-            fill: kit-variables.$gd-palette-primary-base;
-        }
-
-        &--disabled,
-        &--disabled:hover {
-            cursor: default;
-
-            path,
-            rect {
-                fill: kit-variables.$gd-color-disabled;
-            }
-        }
+    &--agent-switching &__info {
+        box-sizing: border-box;
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        padding: variables.$y-spacing 0;
     }
 
     //CodeMirror autocomplete restyle

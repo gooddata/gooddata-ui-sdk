@@ -115,6 +115,30 @@
         "text": "Ask your question. Use control+space or control+I for suggestions.",
         "crowdinContext": "Label for the input field where Windows users type their questions to the AI chatbot"
     },
+    "gd.gen-ai.agents": {
+        "text": "Agents",
+        "crowdinContext": "Label for the agent selector in the AI chatbot input"
+    },
+    "gd.gen-ai.agents.loading": {
+        "text": "Loading",
+        "crowdinContext": "Label shown on the AI chatbot agent selector while the available agents are loading"
+    },
+    "gd.gen-ai.agent.unavailable": {
+        "text": "No agent available",
+        "crowdinContext": "Message shown in the AI chatbot input when no agent can answer prompts"
+    },
+    "gd.gen-ai.agent.unavailable.disabled-tooltip": {
+        "text": "Disabled — no agents available.",
+        "crowdinContext": "Tooltip explaining why AI chatbot landing question buttons are disabled"
+    },
+    "gd.gen-ai.agent.switched": {
+        "text": "Switched to {title} agent",
+        "crowdinContext": "Divider message shown in an AI chatbot conversation after the user switches to another agent"
+    },
+    "gd.gen-ai.agent.unknown": {
+        "text": "unknown",
+        "crowdinContext": "Placeholder shown in the 'Switched to {title} agent' message when the agent no longer exists"
+    },
     "gd.gen-ai.feedback.like": {
         "text": "Mark this message as helpful",
         "crowdinContext": "Button label to mark a message as helpful in the AI chatbot"
