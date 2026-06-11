@@ -231,15 +231,35 @@ $color-picker-spacing: 5px;
     &__item {
         background-color: kit-variables.$is-focused-background;
         padding: 5px 10px;
+
+        .input-checkbox-label {
+            width: 100%;
+        }
     }
 
     &__item__label {
         display: flex;
         gap: 5px;
+        align-items: center;
+        min-width: 0;
+        width: 100%;
+        overflow: hidden;
 
         svg path {
             fill: kit-variables.$gd-color-object-type-metric;
         }
+    }
+    &__item__label__icon {
+        display: inline-flex;
+    }
+
+    &__item__title {
+        flex: 1;
+        min-width: 0;
+        width: 100%;
+        white-space: nowrap;
+        max-width: 115px;
+        display: inline-block;
     }
 }
 

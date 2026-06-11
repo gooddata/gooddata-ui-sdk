@@ -33,10 +33,12 @@ import {
     isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
     isDashboardTextAttributeFilter,
+    isIdentifierRef,
     isMeasureValueFilter,
     isNegativeAttributeFilter,
     isRangeCondition,
     isTextAttributeFilter,
+    isUriRef,
     measureValueFilterConditions,
     measureValueFilterMeasure,
 } from "@gooddata/sdk-model";
@@ -131,18 +133,94 @@ function isInRefList(list: ObjRef[], ref: ObjRef) {
     return list.some((itemRef) => areObjRefsEqual(itemRef, ref));
 }
 
-function findDrillIntersectionAttributeHeaderItem(
+/**
+ * Tolerant ObjRef match used when resolving drill-to-URL placeholders against a drill intersection.
+ *
+ * The intersection comes from the execution result while the display-form metadata comes from the
+ * metadata API; the two can describe the same object with refs that differ in shape (idRef vs uriRef)
+ * or in `type`. The strict {@link areObjRefsEqual} then returns false and silently breaks
+ * `attribute_title(...)` resolution. This compares by the underlying identifier/uri, ignoring those
+ * representational differences.
+ */
+function refsMatchTolerant(a: ObjRef | undefined, b: ObjRef | undefined): boolean {
+    if (!a || !b) {
+        return false;
+    }
+    if (areObjRefsEqual(a, b)) {
+        return true;
+    }
+    const keyOf = (ref: ObjRef): string | undefined =>
+        isIdentifierRef(ref) ? ref.identifier : isUriRef(ref) ? ref.uri : undefined;
+    const keyA = keyOf(a);
+    return keyA !== undefined && keyA === keyOf(b);
+}
+
+/**
+ * @internal
+ */
+export function findDrillIntersectionAttributeHeaderItem(
     drillIntersectionElements: IDrillEventIntersectionElement[],
-    attributeRef: ObjRef,
+    displayForm: IAttributeDisplayFormMetadataObject,
 ) {
-    const intersectionForAttribute = drillIntersectionElements.find(
-        ({ header }) =>
-            isAttributeDescriptor(header) && areObjRefsEqual(attributeRef, header.attributeHeader.formOf.ref),
-    );
+    const intersectionForAttribute = drillIntersectionElements.find(({ header }) => {
+        if (!isAttributeDescriptor(header)) {
+            return false;
+        }
+        const { identifier, ref: labelRef, formOf } = header.attributeHeader;
+
+        // A placeholder names a display form by identifier. Match that identifier string directly —
+        // it is immune to ObjRef shape/type differences between the execution result and the
+        // metadata API. Fall back to tolerant ref matches on the display form and its parent
+        // attribute so a differently-labelled column on the same attribute still resolves.
+        return (
+            displayForm.id === identifier ||
+            refsMatchTolerant(displayForm.ref, labelRef) ||
+            refsMatchTolerant(displayForm.attribute, formOf.ref)
+        );
+    });
 
     if (intersectionForAttribute && isDrillIntersectionAttributeItem(intersectionForAttribute.header)) {
+        const { attributeHeader } = intersectionForAttribute.header;
+
+        // Tripwire: if the strict comparison the resolver relied on before (attribute ref equality)
+        // would NOT have matched this element, the tolerant fallback / identifier match rescued it.
+        // That means the execution result and the metadata API disagree on the attribute's ObjRef
+        // representation — the drill still works, but the underlying (likely backend) mismatch should
+        // be known and fixed at the source.
+        if (!areObjRefsEqual(displayForm.attribute, attributeHeader.formOf.ref)) {
+            console.warn(
+                `Drill to custom URL: attribute "${displayForm.id}" matched the drill intersection only via a tolerant reference comparison; the execution result and metadata report different references for the same attribute.`,
+                {
+                    displayFormAttributeRef: displayForm.attribute,
+                    intersectionAttributeRef: attributeHeader.formOf.ref,
+                },
+            );
+        }
+
         return intersectionForAttribute.header.attributeHeaderItem;
     }
+
+    // No matching attribute element in the intersection — the {attribute_title(...)} placeholder will
+    // stay unresolved and the drill will fail with "Failed to load URL". Log what we looked for vs. what
+    // the intersection actually carried, so the cause (cross-API ref differences, or a drilled column
+    // that does not carry the referenced attribute) is diagnosable from the console alone.
+    const intersectionAttributes = drillIntersectionElements
+        .map(({ header }) => (isAttributeDescriptor(header) ? header.attributeHeader : undefined))
+        .filter(
+            (attributeHeader): attributeHeader is NonNullable<typeof attributeHeader> => !!attributeHeader,
+        )
+        .map((attributeHeader) => ({
+            identifier: attributeHeader.identifier,
+            ref: attributeHeader.ref,
+            attribute: attributeHeader.formOf.ref,
+        }));
+    console.warn(
+        `Drill to custom URL: attribute "${displayForm.id}" referenced by an attribute_title placeholder was not found in the drill intersection.`,
+        {
+            wanted: { id: displayForm.id, ref: displayForm.ref, attribute: displayForm.attribute },
+            intersectionAttributes,
+        },
+    );
 
     return undefined;
 }
@@ -190,32 +268,29 @@ export function* loadAttributeElementsForDrillIntersection(
     );
     const { displayFormsWithKnownValues, displayFormForValueLoad } = splitDisplayForms;
 
-    const mappedElements = displayFormsWithKnownValues.reduce(
-        (acc: IDrillToUrlElement[], { id: dfIdentifier, attribute }) => {
-            const attributeHeaderItem = findDrillIntersectionAttributeHeaderItem(
-                drillIntersectionElements,
-                attribute,
-            );
-            if (!attributeHeaderItem) {
-                return acc;
-            }
-
-            acc.push({
-                identifier: dfIdentifier,
-                elementTitle: attributeHeaderItem.uri,
-            });
+    const mappedElements = displayFormsWithKnownValues.reduce((acc: IDrillToUrlElement[], displayForm) => {
+        const attributeHeaderItem = findDrillIntersectionAttributeHeaderItem(
+            drillIntersectionElements,
+            displayForm,
+        );
+        if (!attributeHeaderItem) {
             return acc;
-        },
-        [],
-    );
+        }
+
+        acc.push({
+            identifier: displayForm.id,
+            elementTitle: attributeHeaderItem.uri,
+        });
+        return acc;
+    }, []);
 
     const loadedElement: IDrillToUrlElement[] = yield all(
         displayFormForValueLoad.reduce((acc: CallEffect[], displayForm) => {
-            const { id: dfIdentifier, attribute, ref: dfRef } = displayForm;
+            const { id: dfIdentifier, ref: dfRef } = displayForm;
 
             const attributeHeaderItem = findDrillIntersectionAttributeHeaderItem(
                 drillIntersectionElements,
-                attribute,
+                displayForm,
             );
             if (!attributeHeaderItem) {
                 return acc;
@@ -619,19 +694,26 @@ export function* resolveDrillToCustomUrl(
                   replacement: undefined,
               }));
 
-    const missingReplacement = [
+    const missingReplacements = [
         ...attributeIdentifiersReplacements,
         ...dashboardAttributeFilterReplacements,
         ...insightAttributeFilterReplacements,
         ...dashboardMeasureValueFilterReplacements,
         ...insightMeasureValueFilterReplacements,
-    ].find(({ replacement }) => replacement === undefined);
+    ].filter(({ replacement }) => replacement === undefined);
 
-    if (missingReplacement) {
+    if (missingReplacements.length > 0) {
+        // Surface every unresolved placeholder (not just the first) and the URL, so a "Failed to load
+        // URL" is diagnosable from the console without a debugger.
+        console.warn(
+            `Drill to custom URL: could not resolve parameter(s) ${missingReplacements
+                .map(({ toBeReplaced }) => toBeReplaced)
+                .join(", ")} in URL "${customUrl}". The drill cannot open.`,
+        );
         throw invalidArgumentsProvided(
             ctx,
             cmd,
-            `Drill to custom URL unable to resolve missing parameter ${missingReplacement.toBeReplaced}`,
+            `Drill to custom URL unable to resolve missing parameter ${missingReplacements[0].toBeReplaced}`,
         );
     }
 

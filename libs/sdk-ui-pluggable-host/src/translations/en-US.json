@@ -75,6 +75,22 @@
         "text": "Something went wrong",
         "crowdinContext": "Heading displayed when an unexpected error occurs during application redirect resolution."
     },
+    "gs.host.error.appNotAllowedForOrganization": {
+        "text": "This application is not available for your organization.",
+        "crowdinContext": "Error shown when the host refuses to mount a pluggable application because the current organization is not in the application's build-time-baked allowlist of permitted organizations."
+    },
+    "gs.host.error.appBuildExpired": {
+        "text": "This application is out of date and must be rebuilt by its author before it can run again.",
+        "crowdinContext": "Error shown when the host refuses to mount a pluggable application because its build is older than the freshness window (currently 30 days)."
+    },
+    "gs.host.error.appSecurityMetadataMissing": {
+        "text": "This application is missing required security metadata and cannot be loaded.",
+        "crowdinContext": "Error shown when the host refuses to mount a pluggable application loaded from a secured remote origin that does not declare its allowed organizations and build timestamp."
+    },
+    "gs.host.demoApp.validUntil": {
+        "text": "Demo application valid till {date}",
+        "crowdinContext": "Text in a small floating badge shown at the bottom-right of the page for a validated demo application loaded from the demo bucket. {date} is the localized date until which the demo build remains valid."
+    },
     "gs.host.notification.newDeployment.message": {
         "text": "A new version of GoodData is available.",
         "crowdinContext": "Toast message shown when the host detects that a newer build of the application has been deployed while the user's tab was open. Followed by a reload link."
@@ -98,6 +114,42 @@
     "gs.header.helpMenu.manage.user": {
         "text": "Managing users and user groups",
         "crowdinContext": "Link to user management documentation in help menu"
+    },
+    "gs.header.helpMenu.connecting": {
+        "text": "Connecting data",
+        "crowdinContext": "LDM Modeler help menu link to data connection guide"
+    },
+    "gs.header.helpMenu.starting": {
+        "text": "Starting with LDM Modeler",
+        "crowdinContext": "LDM Modeler help menu link to getting started guide"
+    },
+    "gs.header.helpMenu.modeling": {
+        "text": "Modeling data in depth",
+        "crowdinContext": "LDM Modeler help menu link to data modeling guide"
+    },
+    "gs.header.helpMenu.understanding": {
+        "text": "Understanding the Logical Data Model",
+        "crowdinContext": "LDM Modeler help menu link to LDM concept guide"
+    },
+    "gs.header.helpMenu.learning": {
+        "text": "Learning the principles of data modeling",
+        "crowdinContext": "LDM Modeler help menu link to data modeling principles"
+    },
+    "gs.header.helpMenu.firstSteps": {
+        "text": "First steps in Analytical Designer",
+        "crowdinContext": "Analytical Designer help menu link to getting started guide"
+    },
+    "gs.header.helpMenu.visualizing": {
+        "text": "Visualizing your data",
+        "crowdinContext": "Analytical Designer help menu link to data visualization guide"
+    },
+    "gs.header.helpMenu.sorting": {
+        "text": "Sorting and filtering your results",
+        "crowdinContext": "Analytical Designer help menu link to sorting and filtering guide"
+    },
+    "gs.header.helpMenu.embedding": {
+        "text": "Embedding Analytical Designer into your app",
+        "crowdinContext": "Analytical Designer help menu link to embedding integration guide"
     },
     "messages.genAi.visualisation.saved.success": {
         "text": "Great! We saved your visualization.",

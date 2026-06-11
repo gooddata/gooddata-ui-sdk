@@ -9,6 +9,7 @@ import { type IPlatformContext } from "./platformContext.js";
  */
 export const PluggableAppEventType = {
     RELOAD_PLATFORM_CONTEXT_REQUESTED: "GDC.PLUGGABLE_APP/EVT.RELOAD_PLATFORM_CONTEXT.REQUESTED",
+    DOCUMENT_TITLE_CHANGED: "GDC.PLUGGABLE_APP/EVT.DOCUMENT_TITLE.CHANGED",
 } as const;
 
 /**
@@ -78,6 +79,57 @@ export function isReloadPlatformContextRequestedEvent(
         "type" in obj &&
         (obj as { type?: unknown }).type === "GDC.PLUGGABLE_APP/EVT.RELOAD_PLATFORM_CONTEXT.REQUESTED"
     );
+}
+
+/**
+ * Event setting the page-title segment of the browser tab title on the host.
+ *
+ * @remarks
+ * The host owns `document.title` and composes it as `"{pageTitle} - {brand}"`. A `pageTitle` of
+ * `undefined` tells the host to fall back to the application's manifest title.
+ *
+ * @alpha
+ */
+export interface IDocumentTitleChangedEvent extends IPluggableAppEvent {
+    readonly type: "GDC.PLUGGABLE_APP/EVT.DOCUMENT_TITLE.CHANGED";
+    readonly payload: {
+        readonly pageTitle: string | undefined;
+    };
+}
+
+/**
+ * Creates an {@link IDocumentTitleChangedEvent}.
+ *
+ * @alpha
+ */
+export function documentTitleChanged(pageTitle: string | undefined): IDocumentTitleChangedEvent {
+    return { type: "GDC.PLUGGABLE_APP/EVT.DOCUMENT_TITLE.CHANGED", payload: { pageTitle } };
+}
+
+/**
+ * Type guard for {@link IDocumentTitleChangedEvent}.
+ *
+ * @remarks
+ * Validates the payload shape too (not just the type), so a malformed event — e.g. one emitted
+ * from JS or a mismatched remote module without the expected `payload` — is rejected rather than
+ * narrowed to a type whose later `payload.pageTitle` access would throw.
+ *
+ * @alpha
+ */
+export function isDocumentTitleChangedEvent(obj: unknown): obj is IDocumentTitleChangedEvent {
+    if (
+        typeof obj !== "object" ||
+        obj === null ||
+        (obj as { type?: unknown }).type !== "GDC.PLUGGABLE_APP/EVT.DOCUMENT_TITLE.CHANGED"
+    ) {
+        return false;
+    }
+    const payload = (obj as { payload?: unknown }).payload;
+    if (typeof payload !== "object" || payload === null) {
+        return false;
+    }
+    const pageTitle = (payload as { pageTitle?: unknown }).pageTitle;
+    return typeof pageTitle === "string" || pageTitle === undefined;
 }
 
 /**
@@ -225,16 +277,6 @@ export interface IPluggableApplicationMountOptions {
      * The host falls back to its own defaults for any fields not present.
      */
     onHeaderChange?: (header: IAppHeaderOptions) => void;
-
-    /**
-     * Callback invoked by the pluggable application to set the page-title segment of the browser
-     * tab title. The host owns `document.title` and composes it as `"{pageTitle} - {brand}"`.
-     *
-     * @remarks
-     * Call this at mount time and again whenever the page title changes (e.g. after navigating to
-     * a different dashboard). Pass `undefined` to fall back to the application's manifest title.
-     */
-    onDocumentTitleChange?: (pageTitle: string | undefined) => void;
 }
 
 /**
@@ -282,4 +324,31 @@ export interface IAppInstance extends IPluggableApplicationMountHandle {
  */
 export interface IPluggableApp {
     mount: PluggableApplicationMount;
+
+    /**
+     * Organization IDs allowed to load this app.
+     *
+     * @remarks
+     * The host enforces this check only for apps loaded from a secured remote origin
+     * (e.g. the shared demo plugins bucket). When enforced, the current organization's
+     * id must appear in this list or the host refuses to mount the app. Apps loaded
+     * from any other origin (same-hostname remotes, local modules) are not subject
+     * to this check.
+     *
+     * @alpha
+     */
+    allowedOrganizations?: string[];
+
+    /**
+     * Unix milliseconds timestamp captured at build time.
+     *
+     * @remarks
+     * The host enforces this check only for apps loaded from a secured remote origin
+     * (e.g. the shared demo plugins bucket). When enforced, builds older than the host's
+     * freshness window are rejected. Apps loaded from any other origin are not subject
+     * to this check.
+     *
+     * @alpha
+     */
+    buildTimestamp?: number;
 }

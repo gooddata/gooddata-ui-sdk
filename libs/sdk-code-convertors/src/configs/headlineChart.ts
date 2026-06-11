@@ -2,7 +2,7 @@
 
 import type { Visualisation } from "@gooddata/sdk-code-schemas/v1";
 
-import { loadColor, saveColor } from "../utils/configUtils.js";
+import { loadColor, loadDisableKda, saveColor } from "../utils/configUtils.js";
 
 import { type ColorMapping } from "./types.js";
 import {
@@ -37,6 +37,7 @@ export type HeadlineChartConfigProperties = {
     };
     disableAlerts: boolean;
     disableScheduledExports: boolean;
+    disableKeyDriveAnalysisOn: Record<string, boolean>;
 };
 
 /** @internal */
@@ -63,6 +64,7 @@ const DEFAULTS: ConfigDefaults<HeadlineChartConfigProperties> = {
     },
     disableAlerts: false,
     disableScheduledExports: false,
+    disableKeyDriveAnalysisOn: {},
 };
 
 /** @internal */
@@ -142,6 +144,8 @@ export function headlineChartLoad(props: VisualisationConfig<HeadlineChartConfig
                         getValueOrDefault(value as boolean, DEFAULTS.disableScheduledExports, "bool"),
                     ],
                 ];
+            case "disableKeyDriveAnalysisOn":
+                return [["disable_key_drive_analysis", loadDisableKda(value as Record<string, boolean>)]];
             default:
                 return [];
         }
@@ -191,6 +195,7 @@ export function headlineChartSave(
             DEFAULTS.disableScheduledExports,
             "bool",
         ),
+        disableKeyDriveAnalysisOn: saveConfigObject(config.disable_key_drive_analysis),
     });
 }
 

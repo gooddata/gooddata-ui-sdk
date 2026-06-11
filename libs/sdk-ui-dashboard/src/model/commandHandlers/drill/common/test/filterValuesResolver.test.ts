@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -114,5 +115,37 @@ describe("resolveFilterValues", () => {
 
         const result = await resolveFilterValues([dateFilter], backend, workspace);
         expect(result).toMatchSnapshot();
+    });
+
+    it("should skip a relative date filter that resolves to no elements instead of throwing", async () => {
+        // Regression: an empty result previously crashed on `items[0].title`, which failed the whole
+        // drill with a generic "Failed to load URL" error. It must now be skipped gracefully.
+        const workspace = "referenceworkspace";
+        const dummy: IAnalyticalBackend = dummyBackend();
+        const elementsQueryFactory = {
+            forFilter: () => ({
+                query: () => ({ limit: 50, offset: 0, totalCount: 0, items: [] }),
+            }),
+        } as unknown as IElementsQueryFactory;
+
+        const attributesDecorator = {
+            elements: () => elementsQueryFactory,
+        } as IWorkspaceAttributesService;
+
+        const dateFilter: IRelativeDateFilter = {
+            relativeDateFilter: {
+                dataSet: { identifier: "date.created" },
+                granularity: "GDC.time.date",
+                from: -5,
+                to: -1,
+            },
+        };
+
+        const backend = decoratedBackend(dummy, {
+            attributes: () => attributesDecorator,
+        });
+
+        const result = await resolveFilterValues([dateFilter], backend, workspace);
+        expect(result).toEqual({ dateFilters: [], attributeFilters: {} });
     });
 });

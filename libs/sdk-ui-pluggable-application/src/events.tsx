@@ -4,6 +4,7 @@ import { type PropsWithChildren, createContext, useCallback, useContext, useMemo
 
 import {
     type IPluggableAppEvent,
+    documentTitleChanged,
     reloadPlatformContextRequested,
 } from "@gooddata/sdk-pluggable-application-model";
 
@@ -25,9 +26,9 @@ export interface IPluggableAppEventsContextValue {
      * Sets the page-title segment of the browser tab title on the host.
      *
      * @remarks
-     * The host owns `document.title` and composes it as `"{pageTitle} - {brand}"`. Pass
-     * `undefined` to fall back to the application's manifest title. No-ops when the application
-     * runs standalone (outside the host).
+     * Emits a standard document-title-changed event on the host event channel. The host owns
+     * `document.title` and composes it as `"{pageTitle} - {brand}"`. Pass `undefined` to fall back to
+     * the application's manifest title. No-ops when the application runs standalone (outside the host).
      */
     setDocumentTitle: (pageTitle: string | undefined) => void;
 }
@@ -42,10 +43,6 @@ export interface IPluggableAppEventsProviderProps extends PropsWithChildren {
      * Host callback passed through pluggable mount options.
      */
     onEvent?: (event: IPluggableAppEvent) => void;
-    /**
-     * Host callback (from pluggable mount options) to set the page-title segment of the tab title.
-     */
-    onDocumentTitleChange?: (pageTitle: string | undefined) => void;
 }
 
 const noop = () => undefined;
@@ -62,11 +59,7 @@ PluggableAppEventsContext.displayName = "PluggableAppEventsContext";
  *
  * @alpha
  */
-export function PluggableAppEventsProvider({
-    onEvent,
-    onDocumentTitleChange,
-    children,
-}: IPluggableAppEventsProviderProps) {
+export function PluggableAppEventsProvider({ onEvent, children }: IPluggableAppEventsProviderProps) {
     const emit = useCallback(
         (event: IPluggableAppEvent) => {
             onEvent?.(event);
@@ -80,9 +73,9 @@ export function PluggableAppEventsProvider({
 
     const setDocumentTitle = useCallback(
         (pageTitle: string | undefined) => {
-            onDocumentTitleChange?.(pageTitle);
+            emit(documentTitleChanged(pageTitle));
         },
-        [onDocumentTitleChange],
+        [emit],
     );
 
     return (

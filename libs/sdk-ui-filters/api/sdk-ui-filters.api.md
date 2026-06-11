@@ -680,6 +680,7 @@ export interface IAttributeFilterDropdownButtonProps {
     // @alpha
     disabled?: boolean;
     dropdownId?: string;
+    hideChevron?: boolean;
     icon?: ReactNode;
     isDraggable?: boolean;
     // (undocumented)
@@ -688,6 +689,7 @@ export interface IAttributeFilterDropdownButtonProps {
     isLoaded?: boolean;
     isLoading?: boolean;
     isOpen?: boolean;
+    layout?: "stacked" | "row";
     onClick?: () => void;
     selectedItemsCount?: number;
     // (undocumented)

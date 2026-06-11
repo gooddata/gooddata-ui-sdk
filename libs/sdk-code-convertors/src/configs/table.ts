@@ -2,7 +2,7 @@
 
 import type { Visualisation } from "@gooddata/sdk-code-schemas/v1";
 
-import { loadColumnsWidth, saveColumnWidths } from "../utils/configUtils.js";
+import { loadColumnsWidth, loadDisableKda, saveColumnWidths } from "../utils/configUtils.js";
 
 import { type ColumnLocator, type ColumnWidthItem } from "./types.js";
 import {
@@ -22,6 +22,7 @@ export type TableConfigProperties = {
     disableDrillIntoURL: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
+    disableKeyDriveAnalysisOn: Record<string, boolean>;
     textWrapping: {
         wrapText: boolean;
         wrapHeaderText: boolean;
@@ -49,6 +50,7 @@ const DEFAULTS: ConfigDefaults<TableConfigProperties> = {
     disableDrillDown: false,
     disableDrillIntoURL: true,
     disableScheduledExports: false,
+    disableKeyDriveAnalysisOn: {},
     textWrapping: {
         wrapText: false,
         wrapHeaderText: false,
@@ -187,6 +189,8 @@ export function tableLoad(props: VisualisationConfig<TableConfigProperties>) {
                         getValueOrDefault(value as boolean, DEFAULTS.disableScheduledExports, "bool"),
                     ],
                 ];
+            case "disableKeyDriveAnalysisOn":
+                return [["disable_key_drive_analysis", loadDisableKda(value as Record<string, boolean>)]];
             case "textWrapping": {
                 const val = value as (typeof DEFAULTS)["textWrapping"];
                 return [["text_wrapping", loadTextWrapping(val)]];
@@ -239,6 +243,7 @@ export function tableSave(
             DEFAULTS.disableScheduledExports,
             "bool",
         ),
+        disableKeyDriveAnalysisOn: saveConfigObject(config.disable_key_drive_analysis),
         textWrapping: saveTextWrapping(config.text_wrapping as YamlTextWrapping | undefined),
         enableAccessibility: getValueOrDefault(
             config.enable_accessibility,

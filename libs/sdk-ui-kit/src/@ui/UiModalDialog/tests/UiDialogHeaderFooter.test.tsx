@@ -8,7 +8,6 @@ import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
 
 import { UiDialogFooter } from "../UiDialogFooter.js";
 import { UiDialogHeader } from "../UiDialogHeader.js";
-import { UiDialogShell } from "../UiDialogShell.js";
 
 const renderWithIntl = (ui: React.ReactNode) =>
     render(
@@ -16,68 +15,6 @@ const renderWithIntl = (ui: React.ReactNode) =>
             {ui}
         </IntlProvider>,
     );
-
-describe("UiDialogShell", () => {
-    it("renders children inside the shell", () => {
-        renderWithIntl(
-            <UiDialogShell dataTestId="shell">
-                <div>content</div>
-            </UiDialogShell>,
-        );
-        expect(screen.getByTestId("shell")).toBeInTheDocument();
-        expect(screen.getByText("content")).toBeInTheDocument();
-    });
-
-    it("applies the supplied width to the root", () => {
-        renderWithIntl(
-            <UiDialogShell width={420} dataTestId="shell">
-                <span />
-            </UiDialogShell>,
-        );
-        expect(screen.getByTestId("shell").style.width).toBe("420px");
-    });
-
-    it("uses the rendered header as the dialog accessible name", () => {
-        renderWithIntl(
-            <UiDialogShell>
-                <UiDialogHeader title="Hello" />
-            </UiDialogShell>,
-        );
-        expect(screen.getByRole("dialog", { name: "Hello" })).toBeInTheDocument();
-    });
-
-    it("uses ariaLabel without generating aria-labelledby when no header exists", () => {
-        renderWithIntl(
-            <UiDialogShell accessibilityConfig={{ ariaLabel: "Standalone dialog" }}>
-                <div>content</div>
-            </UiDialogShell>,
-        );
-        const dialog = screen.getByRole("dialog", { name: "Standalone dialog" });
-        expect(dialog).not.toHaveAttribute("aria-labelledby");
-    });
-
-    it("emits aria-labelledby by default — UiDialogHeader sets the matching id via context", () => {
-        // The shell always emits aria-labelledby (set to the same id UiDialogHeader's <h2>
-        // will use). Callers who do not render UiDialogHeader must pass accessibilityConfig.ariaLabel
-        // or ariaLabelledBy themselves; otherwise the reference dangles and screen readers fall
-        // back to visible content. This avoids guessing at the children tree at render time.
-        renderWithIntl(
-            <UiDialogShell dataTestId="shell">
-                <div>content</div>
-            </UiDialogShell>,
-        );
-        expect(screen.getByTestId("shell")).toHaveAttribute("aria-labelledby");
-    });
-
-    it("respects an externally supplied ariaLabelledBy", () => {
-        renderWithIntl(
-            <UiDialogShell accessibilityConfig={{ ariaLabelledBy: "external-id" }} dataTestId="shell">
-                <div>content</div>
-            </UiDialogShell>,
-        );
-        expect(screen.getByTestId("shell")).toHaveAttribute("aria-labelledby", "external-id");
-    });
-});
 
 describe("UiDialogHeader", () => {
     it("renders the title", () => {

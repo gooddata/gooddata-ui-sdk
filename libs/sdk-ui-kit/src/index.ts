@@ -1188,21 +1188,19 @@ export {
 } from "./ParameterControl/ParameterControlDropdown.js";
 export { UiSectionHeading, type IUiSectionHeadingProps } from "./@ui/UiSectionHeading/UiSectionHeading.js";
 export {
-    UiDialogShell,
-    type IUiDialogShellProps,
-    type IUiDialogShellAccessibilityConfig,
-} from "./@ui/UiDialogShell/UiDialogShell.js";
-export {
     UiDialogHeader,
     type IUiDialogHeaderProps,
     type DialogHeaderTitleSize,
-} from "./@ui/UiDialogShell/UiDialogHeader.js";
-export { UiDialogFooter, type IUiDialogFooterProps } from "./@ui/UiDialogShell/UiDialogFooter.js";
+} from "./@ui/UiModalDialog/UiDialogHeader.js";
+export { UiDialogFooter, type IUiDialogFooterProps } from "./@ui/UiModalDialog/UiDialogFooter.js";
+export { UiConfirmDialog, type IUiConfirmDialogProps } from "./@ui/UiConfirmDialog/UiConfirmDialog.js";
 export {
-    UiConfirmDialog,
-    type IUiConfirmDialogProps,
+    UiConfirmDialogCard,
+    type IUiConfirmDialogCardProps,
     type ConfirmDialogVariant,
-} from "./@ui/UiConfirmDialog/UiConfirmDialog.js";
+} from "./@ui/UiConfirmDialog/UiConfirmDialogCard.js";
+export { UiModalDialog, type IUiModalDialogProps } from "./@ui/UiModalDialog/UiModalDialog.js";
+export { UiDialogBody, type IUiDialogBodyProps } from "./@ui/UiModalDialog/UiDialogBody.js";
 export {
     UiTextInput,
     type IUiTextInputProps,
@@ -1220,8 +1218,12 @@ export { UiGranteeRow, type IUiGranteeRowProps } from "./@ui/UiGranteeRow/UiGran
 export {
     UiObjectShareDialog,
     type IUiObjectShareDialogProps,
-    type IUiObjectShareDialogGrantee,
 } from "./@ui/UiObjectShareDialog/UiObjectShareDialog.js";
+export {
+    UiObjectShareDialogCard,
+    type IUiObjectShareDialogCardProps,
+    type IUiObjectShareDialogGrantee,
+} from "./@ui/UiObjectShareDialog/UiObjectShareDialogCard.js";
 export {
     UiAddGranteeDialog,
     type IUiAddGranteeDialogProps,

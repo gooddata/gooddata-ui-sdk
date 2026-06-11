@@ -8,7 +8,7 @@ import { commonDialogMessages } from "../../locales.js";
 import { bem } from "../@utils/bem.js";
 import { UiIconButton } from "../UiIconButton/UiIconButton.js";
 
-import { useUiDialogContext } from "./UiDialogShell.js";
+import { useUiDialogContext } from "./UiModalDialog.js";
 
 const { b, e } = bem("gd-ui-kit-dialog-header");
 

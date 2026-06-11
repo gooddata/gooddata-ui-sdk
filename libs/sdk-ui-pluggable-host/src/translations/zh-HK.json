@@ -30,5 +30,8 @@
     "messages.genAi.visualisation.link.copied": "可視化連結已複製到剪貼板。",
     "messages.showMore": "顯示更多",
     "messages.showLess": "顯示簡要信息",
-    "gen-ai.ask-assistant.search": "根據以下條件構建新嘅可視化： {question}"
+    "gen-ai.ask-assistant.search": "根據以下條件構建新嘅可視化： {question}",
+    "gs.host.error.appNotAllowedForOrganization": "This application is not available for your organization.",
+    "gs.host.error.appBuildExpired": "This application is out of date and must be rebuilt by its author before it can run again.",
+    "gs.host.error.appSecurityMetadataMissing": "This application is missing required security metadata and cannot be loaded."
 }

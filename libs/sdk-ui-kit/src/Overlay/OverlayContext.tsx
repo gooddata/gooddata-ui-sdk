@@ -1,6 +1,6 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
-import { type ReactNode, createContext, useContext, useEffect, useState } from "react";
+import { type ReactNode, createContext, useContext, useLayoutEffect, useState } from "react";
 
 import { v4 as uuid } from "uuid";
 
@@ -75,16 +75,21 @@ export const useOverlayZIndex = (uuid: string): number | undefined => {
 export function useOverlayZIndexWithRegister() {
     const [overlayId] = useState(uuid());
     const overlayController = useOverlayController();
-    const zIndex = useOverlayZIndex(overlayId);
-
-    useEffect(() => {
+    // Register on commit (before paint), then update local state so the
+    // overlay re-renders with its registered z-index. Without this second
+    // render, an overlay opened above an already-mounted one would render
+    // with the controller's fallback z-index on first paint and slip below
+    // the lower overlay (the controller does not trigger re-renders by
+    // itself).
+    const [zIndex, setZIndex] = useState<number | undefined>(undefined);
+    useLayoutEffect(() => {
         if (!overlayController) {
+            setZIndex(FALLBACK_OVERLAY_Z_INDEX);
             return undefined;
         }
-
         overlayController.addOverlay(overlayId);
+        setZIndex(overlayController.getZIndex(overlayId));
         return () => overlayController.removeOverlay(overlayId);
     }, [overlayController, overlayId]);
-
-    return zIndex;
+    return zIndex ?? FALLBACK_OVERLAY_Z_INDEX;
 }

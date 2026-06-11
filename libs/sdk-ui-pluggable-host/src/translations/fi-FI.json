@@ -30,5 +30,8 @@
     "messages.genAi.visualisation.link.copied": "Visualisointilinkki on kopioitu leikepöydällesi.",
     "messages.showMore": "Näytä lisää",
     "messages.showLess": "Näytä vähemmän",
-    "gen-ai.ask-assistant.search": "Luo uusi visualisointi, joka perustuu{question}: "
+    "gen-ai.ask-assistant.search": "Luo uusi visualisointi, joka perustuu{question}: ",
+    "gs.host.error.appNotAllowedForOrganization": "This application is not available for your organization.",
+    "gs.host.error.appBuildExpired": "This application is out of date and must be rebuilt by its author before it can run again.",
+    "gs.host.error.appSecurityMetadataMissing": "This application is missing required security metadata and cannot be loaded."
 }

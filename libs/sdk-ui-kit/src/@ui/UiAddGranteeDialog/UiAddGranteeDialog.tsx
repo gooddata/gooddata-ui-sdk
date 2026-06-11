@@ -11,10 +11,10 @@ import {
 } from "../../locales.js";
 import { bem } from "../@utils/bem.js";
 import { UiButton } from "../UiButton/UiButton.js";
-import { UiDialogFooter } from "../UiDialogShell/UiDialogFooter.js";
-import { UiDialogHeader } from "../UiDialogShell/UiDialogHeader.js";
-import { UiDialogShell } from "../UiDialogShell/UiDialogShell.js";
 import { UiIconButton } from "../UiIconButton/UiIconButton.js";
+import { UiDialogFooter } from "../UiModalDialog/UiDialogFooter.js";
+import { UiDialogHeader } from "../UiModalDialog/UiDialogHeader.js";
+import { UiModalDialog } from "../UiModalDialog/UiModalDialog.js";
 import { UiTextInput } from "../UiTextInput/UiTextInput.js";
 
 const { b, e } = bem("gd-ui-kit-add-grantee-dialog");
@@ -23,6 +23,8 @@ const { b, e } = bem("gd-ui-kit-add-grantee-dialog");
  * @internal
  */
 export interface IUiAddGranteeDialogProps {
+    /** Whether the dialog is shown. */
+    isOpen: boolean;
     /** Object title shown in the header — wrapped into `Share "\{title\}"`. */
     objectTitle: string;
     /** Current search query. */
@@ -39,7 +41,7 @@ export interface IUiAddGranteeDialogProps {
 
     /** Fires when the user clicks the header back-arrow button. */
     onBack: () => void;
-    /** Fires when the user clicks the header X close button. */
+    /** Fires when the user clicks the header X close button or dismisses the modal. */
     onClose: () => void;
     /** Fires when the user clicks Cancel in the footer. */
     onCancel: () => void;
@@ -48,18 +50,19 @@ export interface IUiAddGranteeDialogProps {
     /** When true, the primary Add button is disabled. */
     isAddDisabled?: boolean;
 
-    /** Test id forwarded to the root element. */
+    /** Test id forwarded to the modal overlay. */
     dataTestId?: string;
 }
 
 /**
- * Standalone dialog for adding a grantee, opened from the share dialog's
+ * Modal dialog for adding a grantee, opened from the share dialog's
  * "+ Add" action. Lets the author search for a user or group, preview the
  * grantee they picked, and confirm adding them with the footer Add button.
  *
  * @internal
  */
 export function UiAddGranteeDialog({
+    isOpen,
     objectTitle,
     searchQuery,
     onSearchQueryChange,
@@ -83,7 +86,7 @@ export function UiAddGranteeDialog({
         />
     );
     return (
-        <UiDialogShell dataTestId={dataTestId}>
+        <UiModalDialog isOpen={isOpen} onClose={onClose} dataTestId={dataTestId}>
             <UiDialogHeader title={dialogTitle} titleSize="large" onClose={onClose} leading={backButton} />
 
             <div className={b()}>
@@ -119,6 +122,6 @@ export function UiAddGranteeDialog({
                     isDisabled={isAddDisabled}
                 />
             </UiDialogFooter>
-        </UiDialogShell>
+        </UiModalDialog>
     );
 }

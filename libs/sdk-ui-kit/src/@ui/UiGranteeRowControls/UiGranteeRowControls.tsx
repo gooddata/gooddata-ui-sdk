@@ -74,8 +74,8 @@ export function UiGranteeRowControls({
                     <UiButton
                         label={labelsTriggerText}
                         size="small"
-                        variant="tertiary"
-                        iconAfter="chevronDown"
+                        variant="dropdownInline"
+                        iconAfter="navigateDown"
                     />
                 }
                 items={labels}
@@ -87,8 +87,8 @@ export function UiGranteeRowControls({
                     <UiButton
                         label={permissionTriggerText}
                         size="small"
-                        variant="tertiary"
-                        iconAfter="chevronDown"
+                        variant="dropdownInline"
+                        iconAfter="navigateDown"
                     />
                 }
                 selectedLevel={permissionLevel}

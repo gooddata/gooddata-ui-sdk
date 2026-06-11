@@ -30,5 +30,8 @@
     "messages.genAi.visualisation.link.copied": "Tautan visualisasi telah disalin ke clipboard Anda.",
     "messages.showMore": "Tampilkan lebih banyak",
     "messages.showLess": "Tampilkan lebih sedikit",
-    "gen-ai.ask-assistant.search": "Bangun visualisasi baru berdasarkan: {question}"
+    "gen-ai.ask-assistant.search": "Bangun visualisasi baru berdasarkan: {question}",
+    "gs.host.error.appNotAllowedForOrganization": "This application is not available for your organization.",
+    "gs.host.error.appBuildExpired": "This application is out of date and must be rebuilt by its author before it can run again.",
+    "gs.host.error.appSecurityMetadataMissing": "This application is missing required security metadata and cannot be loaded."
 }

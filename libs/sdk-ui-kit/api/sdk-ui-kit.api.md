@@ -72,6 +72,7 @@ import type { MetricType } from '@gooddata/sdk-model';
 import { Middleware } from '@floating-ui/react';
 import { ModifierKey } from 'react';
 import { MouseEvent as MouseEvent_2 } from 'react';
+import { MouseEventHandler } from 'react';
 import { MutableRefObject } from 'react';
 import { NamedExoticComponent } from 'react';
 import { ObjRef } from '@gooddata/sdk-model';
@@ -5781,6 +5782,7 @@ export interface ITypographyProps {
 export interface IUiAddGranteeDialogProps {
     dataTestId?: string;
     isAddDisabled?: boolean;
+    isOpen: boolean;
     objectTitle: string;
     onAdd: () => void;
     onBack: () => void;
@@ -6287,7 +6289,7 @@ export interface IUiComboboxState {
 }
 
 // @internal (undocumented)
-export interface IUiConfirmDialogProps {
+export interface IUiConfirmDialogCardProps {
     confirmLabel: string;
     confirmVariant?: ConfirmDialogVariant;
     dataTestId?: string;
@@ -6296,6 +6298,11 @@ export interface IUiConfirmDialogProps {
     onClose: () => void;
     onConfirm: () => void;
     title: string;
+}
+
+// @internal (undocumented)
+export interface IUiConfirmDialogProps extends IUiConfirmDialogCardProps {
+    isOpen: boolean;
 }
 
 // @internal (undocumented)
@@ -6374,6 +6381,11 @@ export interface IUiDateProps {
 }
 
 // @internal (undocumented)
+export interface IUiDialogBodyProps {
+    children: ReactNode;
+}
+
+// @internal (undocumented)
 export interface IUiDialogFooterProps {
     children: ReactNode;
     divider?: boolean;
@@ -6385,26 +6397,6 @@ export interface IUiDialogHeaderProps {
     onClose?: () => void;
     title: string;
     titleSize?: DialogHeaderTitleSize;
-}
-
-// @internal
-export interface IUiDialogShellAccessibilityConfig {
-    // (undocumented)
-    ariaDescribedBy?: string;
-    // (undocumented)
-    ariaLabel?: string;
-    // (undocumented)
-    ariaLabelledBy?: string;
-}
-
-// @internal (undocumented)
-export interface IUiDialogShellProps {
-    accessibilityConfig?: IUiDialogShellAccessibilityConfig;
-    children: ReactNode;
-    dataTestId?: string;
-    isModal?: boolean;
-    onClose?: () => void;
-    width?: number;
 }
 
 // @internal (undocumented)
@@ -7166,6 +7158,16 @@ export interface IUiMenuSubview {
 }
 
 // @internal (undocumented)
+export interface IUiModalDialogProps {
+    accessibilityConfig?: Pick<IAccessibilityConfigBase, "ariaLabel" | "ariaLabelledBy">;
+    children: ReactNode;
+    dataTestId?: string;
+    isOpen: boolean;
+    onClose: () => void;
+    width?: number;
+}
+
+// @internal (undocumented)
 export interface IUiNavigationBypassProps {
     // (undocumented)
     items: IUiNavigationItem[];
@@ -7189,6 +7191,18 @@ export interface IUiNavigationItem {
     targetId: string;
 }
 
+// @internal (undocumented)
+export interface IUiObjectShareDialogCardProps {
+    dataTestId?: string;
+    generalAccess: GeneralAccessValue;
+    grantees: IUiObjectShareDialogGrantee[];
+    objectTitle: string;
+    onAddClick: () => void;
+    onClose: () => void;
+    onGeneralAccessChange: (value: GeneralAccessValue) => void;
+    workspaceControls?: ReactNode;
+}
+
 // @internal
 export interface IUiObjectShareDialogGrantee {
     controls?: ReactNode;
@@ -7200,15 +7214,8 @@ export interface IUiObjectShareDialogGrantee {
 }
 
 // @internal (undocumented)
-export interface IUiObjectShareDialogProps {
-    dataTestId?: string;
-    generalAccess: GeneralAccessValue;
-    grantees: IUiObjectShareDialogGrantee[];
-    objectTitle: string;
-    onAddClick: () => void;
-    onClose: () => void;
-    onGeneralAccessChange: (value: GeneralAccessValue) => void;
-    workspaceControls?: ReactNode;
+export interface IUiObjectShareDialogProps extends IUiObjectShareDialogCardProps {
+    isOpen: boolean;
 }
 
 // @internal (undocumented)
@@ -7649,8 +7656,12 @@ export interface IUiTextInputProps {
     iconAfter?: IconType;
     iconBefore?: IconType;
     label?: string;
+    onBlur?: FocusEventHandler<HTMLInputElement>;
     onChange: (next: string) => void;
+    onClick?: MouseEventHandler<HTMLInputElement>;
+    onFocus?: FocusEventHandler<HTMLInputElement>;
     onIconAfter?: IUiTextInputIconAfterButton;
+    onKeyDown?: KeyboardEventHandler<HTMLInputElement>;
     placeholder?: string;
     type?: "text" | "search" | "email" | "url";
     value: string;
@@ -8880,6 +8891,9 @@ export type UiComboboxPopupProps = HTMLAttributes<HTMLDivElement>;
 export function UiConfirmDialog(input: IUiConfirmDialogProps): JSX.Element;
 
 // @internal
+export function UiConfirmDialogCard(input: IUiConfirmDialogCardProps): JSX.Element;
+
+// @internal
 export function UiControlButton(input: IUiControlButtonProps): JSX.Element;
 
 // @internal (undocumented)
@@ -8889,13 +8903,13 @@ export function UiCopyButton(input: IUiCopyButtonProps): JSX.Element;
 export function UiDate(input: IUiDateProps): JSX.Element;
 
 // @internal
+export function UiDialogBody(input: IUiDialogBodyProps): JSX.Element;
+
+// @internal
 export function UiDialogFooter(input: IUiDialogFooterProps): JSX.Element;
 
 // @internal
 export function UiDialogHeader(input: IUiDialogHeaderProps): JSX.Element;
-
-// @internal
-export function UiDialogShell(input: IUiDialogShellProps): JSX.Element;
 
 // @internal (undocumented)
 export function UiDrawer(input: IUiDrawerProps): JSX.Element | null;
@@ -8985,11 +8999,17 @@ export type UiListboxAriaAttributes = Omit<IDropdownBodyRenderProps["ariaAttribu
 // @internal
 export function UiMenu<T extends IUiMenuItemData = object, M extends object = object>(props: IUiMenuProps<T, M>): ReactNode;
 
+// @internal
+export function UiModalDialog(input: IUiModalDialogProps): JSX.Element | null;
+
 // @internal (undocumented)
 export function UiNavigationBypass(input: IUiNavigationBypassProps): JSX.Element;
 
 // @internal
 export function UiObjectShareDialog(input: IUiObjectShareDialogProps): JSX.Element;
+
+// @internal
+export function UiObjectShareDialogCard(input: IUiObjectShareDialogCardProps): JSX.Element;
 
 // @internal (undocumented)
 export const UiPagedVirtualList: <T>(props: IUiPagedVirtualListProps<T> & RefAttributes<IUiPagedVirtualListImperativeHandle<T>>) => ReactNode;
@@ -9304,7 +9324,7 @@ export const useOverlayController: () => OverlayController | undefined;
 export const useOverlayZIndex: (uuid: string) => number | undefined;
 
 // @internal
-export function useOverlayZIndexWithRegister(): number | undefined;
+export function useOverlayZIndexWithRegister(): number;
 
 // @internal
 export const useResponsiveContext: () => IResponsiveConfig;

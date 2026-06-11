@@ -71,8 +71,11 @@ function UiObjectShareDialogExample() {
     const [generalAccess, setGeneralAccess] = useState<GeneralAccessValue>("RESTRICTED");
     return (
         <IntlProvider locale={DEFAULT_LANGUAGE} messages={DEFAULT_MESSAGES[DEFAULT_LANGUAGE]}>
-            <div className="screenshot-target" style={{ padding: 24, background: "rgba(20,56,93,0.08)" }}>
+            {/* Visible placeholder so the screenshot capture has a target in
+                the page DOM — the modal itself renders through `FloatingPortal`. */}
+            <div className="screenshot-target" style={{ minHeight: 400 }}>
                 <UiObjectShareDialog
+                    isOpen
                     objectTitle="Customer"
                     onClose={action("close")}
                     grantees={buildGrantees()}

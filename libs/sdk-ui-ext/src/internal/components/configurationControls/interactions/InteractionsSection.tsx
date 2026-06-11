@@ -5,7 +5,7 @@ import { type ReactNode, memo } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { type IMeasure } from "@gooddata/sdk-model";
-import { Bubble, BubbleHoverTrigger, SeparatorLine, UiIcon } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, SeparatorLine, ShortenedText, UiIcon } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../../locales.js";
 import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
@@ -127,8 +127,18 @@ export const InteractionsSection = memo(function InteractionsSection({
                                         valuePath={`disableKeyDriveAnalysisOn.${m.measure.localIdentifier}`}
                                         labelContent={
                                             <div className="gd-interactions-section__kda_metrics_list__item__label">
-                                                <UiIcon type="metric" color="currentColor" />{" "}
-                                                {m.measure.title}
+                                                <span className="gd-interactions-section__kda_metrics_list__item__label__icon">
+                                                    <UiIcon type="metric" color="currentColor" size={20} />
+                                                </span>
+                                                <ShortenedText
+                                                    className="gd-interactions-section__kda_metrics_list__item__title"
+                                                    ellipsisPosition="end"
+                                                    tooltipAlignPoints={[
+                                                        { align: "cr cl", offset: { x: 5, y: 0 } },
+                                                    ]}
+                                                >
+                                                    {m.measure.title ?? ""}
+                                                </ShortenedText>
                                             </div>
                                         }
                                         properties={properties}

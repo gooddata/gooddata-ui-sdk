@@ -28,6 +28,9 @@ export const DefaultApplicationId: {
 };
 
 // @alpha
+export function documentTitleChanged(pageTitle: string | undefined): IDocumentTitleChangedEvent;
+
+// @alpha
 export type EmbeddingMode = "none" | "iframe" | "export";
 
 // @alpha
@@ -67,6 +70,16 @@ export interface IContextDeferredAuthCredentials {
     externalProviderId?: string;
     // (undocumented)
     type: "contextDeferred";
+}
+
+// @alpha
+export interface IDocumentTitleChangedEvent extends IPluggableAppEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly pageTitle: string | undefined;
+    };
+    // (undocumented)
+    readonly type: "GDC.PLUGGABLE_APP/EVT.DOCUMENT_TITLE.CHANGED";
 }
 
 // @alpha
@@ -186,6 +199,8 @@ export interface IPlatformContextV1 {
 
 // @alpha
 export interface IPluggableApp {
+    allowedOrganizations?: string[];
+    buildTimestamp?: number;
     // (undocumented)
     mount: PluggableApplicationMount;
 }
@@ -210,7 +225,6 @@ export interface IPluggableApplicationMountOptions {
     container: HTMLElement;
     ctx: IPlatformContext;
     id: string;
-    onDocumentTitleChange?: (pageTitle: string | undefined) => void;
     onEvent?: (e: IPluggableAppEvent) => void;
     onHeaderChange?: (header: IAppHeaderOptions) => void;
     onTelemetryEvent?: IPluggableAppTelemetryCallbacks;
@@ -236,6 +250,9 @@ export interface IReloadPlatformContextRequestedEvent extends IPluggableAppEvent
     // (undocumented)
     readonly type: "GDC.PLUGGABLE_APP/EVT.RELOAD_PLATFORM_CONTEXT.REQUESTED";
 }
+
+// @alpha
+export function isDocumentTitleChangedEvent(obj: unknown): obj is IDocumentTitleChangedEvent;
 
 // @alpha
 export function isPlatformContextV1(context: unknown): context is IPlatformContextV1;
@@ -280,6 +297,7 @@ export enum PantherTier {
 // @alpha
 export const PluggableAppEventType: {
     readonly RELOAD_PLATFORM_CONTEXT_REQUESTED: "GDC.PLUGGABLE_APP/EVT.RELOAD_PLATFORM_CONTEXT.REQUESTED";
+    readonly DOCUMENT_TITLE_CHANGED: "GDC.PLUGGABLE_APP/EVT.DOCUMENT_TITLE.CHANGED";
 };
 
 // @alpha

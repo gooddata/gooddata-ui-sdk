@@ -45,8 +45,8 @@ export async function resolveFilterValues(
     backend?: IAnalyticalBackend,
     workspace?: string,
 ): Promise<IResolvedFilterValues> {
-    const promises: Promise<IResolvedDateFilterValue | IResolvedAttributeFilterValues>[] = filters.map(
-        (filter) => {
+    const promises: Promise<IResolvedDateFilterValue | IResolvedAttributeFilterValues | undefined>[] =
+        filters.map((filter) => {
             if (isAbsoluteDateFilter(filter)) {
                 const resolved: IResolvedDateFilterValue = {
                     from: filter.absoluteDateFilter.from,
@@ -62,8 +62,7 @@ export async function resolveFilterValues(
             } else {
                 return resolveRelativeDateFilterValues(filter, backend, workspace);
             }
-        },
-    );
+        });
     return Promise.all(promises).then((resolvedValues) => {
         const resolvedValuesMap: IResolvedFilterValues = {
             dateFilters: [],
@@ -117,6 +116,13 @@ async function resolveRelativeDateFilterValues(
     const attributesService = backend.workspace(workspace).attributes();
     const elementsQuery = attributesService.elements().forFilter(filter, foundDayDisplayForm?.ref);
     const elements = await elementsQuery.query();
+
+    // No matching elements (e.g. the filter resolves to an empty range) — skip this filter rather
+    // than crashing on items[0], which would fail the whole drill with a generic "Failed to load URL".
+    if (elements.items.length === 0) {
+        return undefined;
+    }
+
     // check for next page to see if we need to use skipped response
     const hasNextPage = elements.limit + elements.offset < elements.totalCount;
     // last page of the response to get last element
@@ -166,17 +172,17 @@ async function resolveAttributeFilterValues(
 
 // to handle the fact, that array of promises' results is combining two different types
 function getResolvedFilterValues(
-    array: (IResolvedDateFilterValue | IResolvedAttributeFilterValues)[],
+    array: (IResolvedDateFilterValue | IResolvedAttributeFilterValues | undefined)[],
     filter: IAttributeFilter,
     index: number,
 ): IResolvedAttributeFilterValues | undefined;
 function getResolvedFilterValues(
-    array: (IResolvedDateFilterValue | IResolvedAttributeFilterValues)[],
+    array: (IResolvedDateFilterValue | IResolvedAttributeFilterValues | undefined)[],
     filter: IDateFilter,
     index: number,
 ): IResolvedDateFilterValue | undefined;
 function getResolvedFilterValues(
-    array: (IResolvedDateFilterValue | IResolvedAttributeFilterValues)[],
+    array: (IResolvedDateFilterValue | IResolvedAttributeFilterValues | undefined)[],
     filter: IAttributeFilter | IDateFilter,
     index: number,
 ): IResolvedAttributeFilterValues | IResolvedDateFilterValue | undefined {
@@ -187,5 +193,5 @@ function getResolvedFilterValues(
 }
 
 function getLastTitle(items: IAttributeElement[]): string | null {
-    return items[items.length - 1].title;
+    return items.length > 0 ? items[items.length - 1].title : null;
 }

@@ -2,7 +2,7 @@
 
 import type { Visualisation } from "@gooddata/sdk-code-schemas/v1";
 
-import { loadColorMapping, saveColorMapping } from "../utils/configUtils.js";
+import { loadColorMapping, loadDisableKda, saveColorMapping } from "../utils/configUtils.js";
 
 import { type ColorMapping } from "./types.js";
 import {
@@ -54,6 +54,7 @@ export type BubbleChartConfigProperties = {
     disableDrillDown: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
+    disableKeyDriveAnalysisOn: Record<string, boolean>;
 };
 
 /** @internal */
@@ -97,6 +98,7 @@ const DEFAULTS: ConfigDefaults<BubbleChartConfigProperties> = {
     disableDrillDown: false,
     disableAlerts: false,
     disableScheduledExports: false,
+    disableKeyDriveAnalysisOn: {},
 };
 
 /** @internal */
@@ -188,6 +190,8 @@ export function bubbleChartLoad(props: VisualisationConfig<BubbleChartConfigProp
                         getValueOrDefault(value as boolean, DEFAULTS.disableScheduledExports, "bool"),
                     ],
                 ];
+            case "disableKeyDriveAnalysisOn":
+                return [["disable_key_drive_analysis", loadDisableKda(value as Record<string, boolean>)]];
             default:
                 return [];
         }
@@ -247,6 +251,7 @@ export function bubbleChartSave(
             DEFAULTS.disableScheduledExports,
             "bool",
         ),
+        disableKeyDriveAnalysisOn: saveConfigObject(config.disable_key_drive_analysis),
     });
 }
 

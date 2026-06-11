@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type HTMLAttributes } from "react";
 
@@ -32,5 +32,7 @@ export function accessibilityConfigToAttributes(
         "aria-controls": accessibilityConfig.ariaControls,
         "aria-haspopup": accessibilityConfig.ariaHaspopup,
         "aria-pressed": accessibilityConfig.ariaPressed,
+        "aria-autocomplete": accessibilityConfig.ariaAutocomplete,
+        "aria-activedescendant": accessibilityConfig.ariaActiveDescendant,
     };
 }

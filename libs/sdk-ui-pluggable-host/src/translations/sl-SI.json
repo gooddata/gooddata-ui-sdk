@@ -30,5 +30,8 @@
     "messages.genAi.visualisation.link.copied": "Povezava vizualizacije je bila kopirana v vašo odlagališče.",
     "messages.showMore": "Prikaži več",
     "messages.showLess": "Prikaži manj",
-    "gen-ai.ask-assistant.search": "Ustvarite novo vizualizacijo na osnovi: {question}"
+    "gen-ai.ask-assistant.search": "Ustvarite novo vizualizacijo na osnovi: {question}",
+    "gs.host.error.appNotAllowedForOrganization": "This application is not available for your organization.",
+    "gs.host.error.appBuildExpired": "This application is out of date and must be rebuilt by its author before it can run again.",
+    "gs.host.error.appSecurityMetadataMissing": "This application is missing required security metadata and cannot be loaded."
 }

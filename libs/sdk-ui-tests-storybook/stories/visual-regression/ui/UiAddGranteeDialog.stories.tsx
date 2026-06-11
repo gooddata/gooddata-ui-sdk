@@ -29,6 +29,7 @@ function EmptyExample() {
         <IntlProvider locale={DEFAULT_LANGUAGE} messages={DEFAULT_MESSAGES[DEFAULT_LANGUAGE]}>
             <div className="screenshot-target" style={{ padding: 24, background: "rgba(20,56,93,0.08)" }}>
                 <UiAddGranteeDialog
+                    isOpen
                     objectTitle="Customer"
                     searchQuery={searchQuery}
                     onSearchQueryChange={(next) => {
@@ -52,6 +53,7 @@ function WithGranteeExample() {
         <IntlProvider locale={DEFAULT_LANGUAGE} messages={DEFAULT_MESSAGES[DEFAULT_LANGUAGE]}>
             <div className="screenshot-target" style={{ padding: 24, background: "rgba(20,56,93,0.08)" }}>
                 <UiAddGranteeDialog
+                    isOpen
                     objectTitle="Customer"
                     searchQuery={searchQuery}
                     onSearchQueryChange={(next) => {

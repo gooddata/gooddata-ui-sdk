@@ -50,13 +50,9 @@
 .gd-mobile-dropdown-content .gd-infinite-list.gd-filter-group-body {
     & .gd-ui-kit-paged-virtual-list__item {
         & .gd-attribute-filter-dropdown-button__next {
-            &::after {
-                border: none;
-                border-bottom: 1px solid var(--gd-palette-complementary-3);
-                border-radius: 0;
-                box-shadow: none;
-            }
+            border-bottom: 1px solid var(--gd-palette-complementary-3);
         }
+        // Hide open/close chevron while the filter sits in the list;
         & .gd-ui-kit-control-button__subtitle-row {
             &::after {
                 display: none;

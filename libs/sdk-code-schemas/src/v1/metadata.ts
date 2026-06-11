@@ -3138,6 +3138,9 @@ export interface VisualisationConfig {
     disable_drill_into_url?: boolean;
     disable_alerts?: boolean;
     disable_scheduled_exports?: boolean;
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
     /**
      * Text wrapping settings for table cells and headers.
      */
@@ -3456,6 +3459,9 @@ export interface VisualisationConfig1 {
     disable_drill_into_url?: boolean;
     disable_alerts?: boolean;
     disable_scheduled_exports?: boolean;
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
     /**
      * Text wrapping settings for table cells and headers.
      */
@@ -3710,6 +3716,9 @@ export interface VisualisationConfig2 {
     disable_drill_into_url?: boolean;
     disable_alerts?: boolean;
     disable_scheduled_exports?: boolean;
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
     /**
      * Text wrapping settings for table cells and headers.
      */
@@ -3964,6 +3973,9 @@ export interface VisualisationConfig3 {
     disable_drill_into_url?: boolean;
     disable_alerts?: boolean;
     disable_scheduled_exports?: boolean;
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
     /**
      * Text wrapping settings for table cells and headers.
      */
@@ -4218,6 +4230,9 @@ export interface VisualisationConfig4 {
     disable_drill_into_url?: boolean;
     disable_alerts?: boolean;
     disable_scheduled_exports?: boolean;
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
     /**
      * Text wrapping settings for table cells and headers.
      */
@@ -4472,6 +4487,9 @@ export interface VisualisationConfig5 {
     disable_drill_into_url?: boolean;
     disable_alerts?: boolean;
     disable_scheduled_exports?: boolean;
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
     /**
      * Text wrapping settings for table cells and headers.
      */
@@ -4726,6 +4744,9 @@ export interface VisualisationConfig6 {
     disable_drill_into_url?: boolean;
     disable_alerts?: boolean;
     disable_scheduled_exports?: boolean;
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
     /**
      * Text wrapping settings for table cells and headers.
      */
@@ -4976,6 +4997,9 @@ export interface VisualisationConfig7 {
     disable_drill_into_url?: boolean;
     disable_alerts?: boolean;
     disable_scheduled_exports?: boolean;
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
     /**
      * Text wrapping settings for table cells and headers.
      */
@@ -5226,6 +5250,9 @@ export interface VisualisationConfig8 {
     disable_drill_into_url?: boolean;
     disable_alerts?: boolean;
     disable_scheduled_exports?: boolean;
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
     /**
      * Text wrapping settings for table cells and headers.
      */
@@ -5476,6 +5503,9 @@ export interface VisualisationConfig9 {
     disable_drill_into_url?: boolean;
     disable_alerts?: boolean;
     disable_scheduled_exports?: boolean;
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
     /**
      * Text wrapping settings for table cells and headers.
      */
@@ -5726,6 +5756,9 @@ export interface VisualisationConfig10 {
     disable_drill_into_url?: boolean;
     disable_alerts?: boolean;
     disable_scheduled_exports?: boolean;
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
     /**
      * Text wrapping settings for table cells and headers.
      */
@@ -5976,6 +6009,9 @@ export interface VisualisationConfig11 {
     disable_drill_into_url?: boolean;
     disable_alerts?: boolean;
     disable_scheduled_exports?: boolean;
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
     /**
      * Text wrapping settings for table cells and headers.
      */
@@ -6234,6 +6270,9 @@ export interface VisualisationConfig12 {
     disable_drill_into_url?: boolean;
     disable_alerts?: boolean;
     disable_scheduled_exports?: boolean;
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
     /**
      * Text wrapping settings for table cells and headers.
      */
@@ -6484,6 +6523,9 @@ export interface VisualisationConfig13 {
     disable_drill_into_url?: boolean;
     disable_alerts?: boolean;
     disable_scheduled_exports?: boolean;
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
     /**
      * Text wrapping settings for table cells and headers.
      */
@@ -6734,6 +6776,9 @@ export interface VisualisationConfig14 {
     disable_drill_into_url?: boolean;
     disable_alerts?: boolean;
     disable_scheduled_exports?: boolean;
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
     /**
      * Text wrapping settings for table cells and headers.
      */
@@ -6986,6 +7031,9 @@ export interface VisualisationConfig15 {
     disable_drill_into_url?: boolean;
     disable_alerts?: boolean;
     disable_scheduled_exports?: boolean;
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
     /**
      * Text wrapping settings for table cells and headers.
      */
@@ -7238,6 +7286,9 @@ export interface VisualisationConfig16 {
     disable_drill_into_url?: boolean;
     disable_alerts?: boolean;
     disable_scheduled_exports?: boolean;
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
     /**
      * Text wrapping settings for table cells and headers.
      */
@@ -7488,6 +7539,9 @@ export interface VisualisationConfig17 {
     disable_drill_into_url?: boolean;
     disable_alerts?: boolean;
     disable_scheduled_exports?: boolean;
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
     /**
      * Text wrapping settings for table cells and headers.
      */
@@ -7738,6 +7792,9 @@ export interface VisualisationConfig18 {
     disable_drill_into_url?: boolean;
     disable_alerts?: boolean;
     disable_scheduled_exports?: boolean;
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
     /**
      * Text wrapping settings for table cells and headers.
      */
@@ -7992,6 +8049,9 @@ export interface VisualisationConfig19 {
     disable_drill_into_url?: boolean;
     disable_alerts?: boolean;
     disable_scheduled_exports?: boolean;
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
     /**
      * Text wrapping settings for table cells and headers.
      */
@@ -8219,6 +8279,9 @@ export interface VisualisationConfig20 {
     disable_drill_into_url?: boolean;
     disable_alerts?: boolean;
     disable_scheduled_exports?: boolean;
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
     /**
      * Text wrapping settings for table cells and headers.
      */
@@ -8473,6 +8536,9 @@ export interface VisualisationConfig21 {
     disable_drill_into_url?: boolean;
     disable_alerts?: boolean;
     disable_scheduled_exports?: boolean;
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
     /**
      * Text wrapping settings for table cells and headers.
      */
@@ -8731,6 +8797,9 @@ export interface VisualisationConfig22 {
     disable_drill_into_url?: boolean;
     disable_alerts?: boolean;
     disable_scheduled_exports?: boolean;
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
     /**
      * Text wrapping settings for table cells and headers.
      */

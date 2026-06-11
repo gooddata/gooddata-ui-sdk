@@ -48,7 +48,7 @@
         "crowdinContext": "ARIA label for the semantic search history tree view component."
     },
     "semantic-search.edit": {
-        "text": "Edit",
+        "text": "Open",
         "crowdinContext": "Label for the edit action in semantic search results tree view."
     },
     "semantic-search.date.at": {

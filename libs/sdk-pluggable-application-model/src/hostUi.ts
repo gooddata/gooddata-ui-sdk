@@ -144,8 +144,8 @@ export interface IHostUiMountHandle {
      * Pushes the active application's page-title segment into the host UI.
      *
      * @remarks
-     * Called by the host whenever the active pluggable application sets a page title via its
-     * `onDocumentTitleChange` callback. The host UI composes the browser tab title as
+     * Called by the host whenever the active pluggable application sets a page title by emitting a
+     * document-title-changed event. The host UI composes the browser tab title as
      * `"{pageTitle} - {brand}"`. When called with `undefined`, the host UI falls back to the
      * active application's manifest title.
      */
