@@ -2,7 +2,7 @@
 
 import type { Visualisation } from "@gooddata/sdk-code-schemas/v1";
 
-import { loadColorMapping, saveColorMapping } from "../utils/configUtils.js";
+import { loadColorMapping, loadDisableKda, saveColorMapping } from "../utils/configUtils.js";
 
 import { type ColorMapping } from "./types.js";
 import {
@@ -26,6 +26,7 @@ export type DependencyWheelChartConfigProperties = {
     disableDrillDown: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
+    disableKeyDriveAnalysisOn: Record<string, boolean>;
 };
 
 /** @internal */
@@ -41,6 +42,7 @@ const DEFAULTS: ConfigDefaults<DependencyWheelChartConfigProperties> = {
     disableDrillDown: false,
     disableAlerts: false,
     disableScheduledExports: false,
+    disableKeyDriveAnalysisOn: {},
 };
 
 /** @internal */
@@ -83,6 +85,8 @@ export function dependencyWheelChartLoad(props: VisualisationConfig<DependencyWh
                         getValueOrDefault(value as boolean, DEFAULTS.disableScheduledExports, "bool"),
                     ],
                 ];
+            case "disableKeyDriveAnalysisOn":
+                return [["disable_key_drive_analysis", loadDisableKda(value as Record<string, boolean>)]];
             default:
                 return [];
         }
@@ -114,6 +118,7 @@ export function dependencyWheelChartSave(
             DEFAULTS.disableScheduledExports,
             "bool",
         ),
+        disableKeyDriveAnalysisOn: saveConfigObject(config.disable_key_drive_analysis),
     });
 }
 

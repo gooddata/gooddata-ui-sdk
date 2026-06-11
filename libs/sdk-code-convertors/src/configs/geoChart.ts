@@ -2,7 +2,7 @@
 
 import type { Visualisation } from "@gooddata/sdk-code-schemas/v1";
 
-import { loadColorMapping, saveColorMapping } from "../utils/configUtils.js";
+import { loadColorMapping, loadDisableKda, saveColorMapping } from "../utils/configUtils.js";
 
 import { type ColorMapping } from "./types.js";
 import {
@@ -67,6 +67,7 @@ export type GeoChartConfigProperties = {
     };
     disableAlerts: boolean;
     disableScheduledExports: boolean;
+    disableKeyDriveAnalysisOn: Record<string, boolean>;
 };
 
 /** @internal */
@@ -105,6 +106,7 @@ const DEFAULTS: ConfigDefaults<GeoChartConfigProperties> = {
     },
     disableAlerts: false,
     disableScheduledExports: false,
+    disableKeyDriveAnalysisOn: {},
 };
 
 function sanitizeControls(controls: GeoChartConfigProperties): GeoChartConfigProperties {
@@ -232,6 +234,8 @@ export function geoChartLoad(props: VisualisationConfig<GeoChartConfigProperties
                         getValueOrDefault(value as boolean, DEFAULTS.disableScheduledExports, "bool"),
                     ],
                 ];
+            case "disableKeyDriveAnalysisOn":
+                return [["disable_key_drive_analysis", loadDisableKda(value as Record<string, boolean>)]];
             case "latitude":
             case "longitude":
             default:
@@ -351,6 +355,7 @@ export function geoChartSave(
             DEFAULTS.disableScheduledExports,
             "bool",
         ),
+        disableKeyDriveAnalysisOn: saveConfigObject(config.disable_key_drive_analysis),
         longitude: positions[0]?.longitude ?? "",
         latitude: positions[0]?.latitude ?? "",
     });

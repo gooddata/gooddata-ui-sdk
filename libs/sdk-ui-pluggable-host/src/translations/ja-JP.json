@@ -30,5 +30,8 @@
     "messages.genAi.visualisation.link.copied": "視覚化リンクがクリップボードにコピーされました。",
     "messages.showMore": "もっと表示",
     "messages.showLess": "表示を減らす",
-    "gen-ai.ask-assistant.search": "新しいビジュアライゼーションを構築する：{question}"
+    "gen-ai.ask-assistant.search": "新しいビジュアライゼーションを構築する：{question}",
+    "gs.host.error.appNotAllowedForOrganization": "This application is not available for your organization.",
+    "gs.host.error.appBuildExpired": "This application is out of date and must be rebuilt by its author before it can run again.",
+    "gs.host.error.appSecurityMetadataMissing": "This application is missing required security metadata and cannot be loaded."
 }

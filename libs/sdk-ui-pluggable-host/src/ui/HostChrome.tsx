@@ -4,6 +4,7 @@ import { type KeyboardEvent, type MouseEvent, type ReactNode, useCallback, useMe
 
 import {
     isExternalPluggableApplicationRegistryItem,
+    type IWorkspacePermissions,
     type PluggableApplicationRegistryItem,
 } from "@gooddata/sdk-model";
 import {
@@ -19,6 +20,7 @@ import {
     type IHeaderMenuItem,
     type IHeaderWorkspace,
     ToastsCenterContextProvider,
+    generateHeaderAccountMenuItems,
     generateHeaderStaticHelpMenuItems,
 } from "@gooddata/sdk-ui-kit";
 import { defaultHeaderTheme } from "@gooddata/sdk-ui-theme-provider";
@@ -62,8 +64,8 @@ export interface IHostChromeProps {
     headerOptions?: IAppHeaderOptions;
     notification?: IHostUiNotification | null;
     /**
-     * Page-title segment set by the active pluggable application via its `onDocumentTitleChange`
-     * callback. When omitted, the active application's manifest title is used instead.
+     * Page-title segment set by the active pluggable application via a document-title-changed
+     * event. When omitted, the active application's manifest title is used instead.
      */
     appPageTitle?: string;
     children?: ReactNode;
@@ -116,15 +118,13 @@ export function HostChrome({
     );
 
     const accountMenuItems = useMemo<IHeaderMenuItem[]>(
-        () => [
-            {
-                key: LOGOUT_MENU_ITEM_KEY,
-                onClick: () => {
-                    void getBackend().deauthenticate();
-                },
-            },
-        ],
-        [],
+        () =>
+            generateHeaderAccountMenuItems(
+                ctx.workspacePermissions ?? ({} as IWorkspacePermissions),
+                features.workspaceId,
+                ctx.settings,
+            ),
+        [ctx.workspacePermissions, features.workspaceId, ctx.settings],
     );
 
     const handleMenuItemClick = useCallback(
@@ -132,6 +132,10 @@ export function HostChrome({
             e?.preventDefault();
             if (item.onClick) {
                 item.onClick(e ?? null);
+                return;
+            }
+            if (item.key === LOGOUT_MENU_ITEM_KEY) {
+                void getBackend().deauthenticate();
                 return;
             }
             if (item.href) {
@@ -207,8 +211,8 @@ export function HostChrome({
     const faviconUrl = ctx.whiteLabeling?.faviconUrl || "/favicon.ico";
 
     // The host owns the browser tab title as "{page} - {brand}". The page segment defaults to the
-    // active application's manifest title, but an embedded app can override it dynamically via its
-    // mount `onDocumentTitleChange` callback (surfaced here as `appPageTitle`). When white-labeling
+    // active application's manifest title, but an embedded app can override it dynamically by emitting
+    // a document-title-changed event (surfaced here as `appPageTitle`). When white-labeling
     // is enabled the brand is the organization name — preferring the user profile's name, then the
     // resolved organization descriptor title (the profile field is optional) — and is omitted (so
     // DocumentHeader drops the " - " separator) only when neither is set. The GoodData product name

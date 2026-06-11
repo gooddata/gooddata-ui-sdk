@@ -207,6 +207,22 @@
         "disable_drill_into_url": { "type": "boolean" },
         "disable_alerts": { "type": "boolean" },
         "disable_scheduled_exports": { "type": "boolean" },
+        "disable_key_drive_analysis": {
+            "type": "object",
+            "$semantic": {
+                "type": "reference",
+                "source": "current.query.metric.localId",
+                "mode": "property"
+            },
+            "additionalProperties": {
+                "type": "boolean",
+                "$semantic": {
+                    "type": "reference",
+                    "source": "current.query.metric.localId",
+                    "mode": "property"
+                }
+            }
+        },
 
         "text_wrapping": {
             "type": "object",

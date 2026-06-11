@@ -53,7 +53,6 @@ export interface IPluggableAppEventsContextValue {
 
 // @alpha
 export interface IPluggableAppEventsProviderProps extends PropsWithChildren {
-    onDocumentTitleChange?: (pageTitle: string | undefined) => void;
     onEvent?: (event: IPluggableAppEvent) => void;
 }
 

@@ -69,4 +69,14 @@ describe("Test AttributeFilterDropdownButton", () => {
 
         expect(buttonRef).toHaveBeenLastCalledWith(container.querySelector(ATTRIBUTE_FILTER_BUTTON_SELECTOR));
     });
+
+    it("forwards the row layout to the underlying control button", () => {
+        const { container } = renderComponent({ layout: "row" });
+        expect(container.querySelector(".gd-ui-kit-control-button--layout-row")).toBeInTheDocument();
+    });
+
+    it("forwards hideChevron to the underlying control button", () => {
+        const { container } = renderComponent({ hideChevron: true });
+        expect(container.querySelector(".gd-ui-kit-control-button--hideChevron")).toBeInTheDocument();
+    });
 });

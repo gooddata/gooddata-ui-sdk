@@ -2,6 +2,7 @@
 
 import { call, fork, takeEvery, takeLatest } from "redux-saga/effects";
 
+import { setOpenAction } from "../chatWindow/chatWindowSlice.js";
 import {
     clearThreadAction,
     deleteConversationAction,
@@ -23,6 +24,7 @@ import { loadCatalogItems } from "./loadCatalogItems.js";
 import { loadColorPalette } from "./loadColorPalette.js";
 import { loadSettings } from "./loadSettings.js";
 import { onAgentSwitch } from "./onAgentSwitch.js";
+import { onChatOpenSync } from "./onChatOpenSync.js";
 import { onConversationDelete } from "./onConversationDelete.js";
 import { onConversationPin } from "./onConversationPin.js";
 import { onConversationRename } from "./onConversationRename.js";
@@ -44,6 +46,9 @@ import { onVisualizationSuccessSave } from "./onVisualizationSuccessSave.js";
 export function* rootSaga() {
     yield takeLatest(loadThreadAction.type, onThreadLoad);
     yield takeLatest(clearThreadAction.type, onThreadClear);
+    // Re-sync the active conversation with the backend when the chat is (re)opened so that
+    // a conversation started/switched on another host micro-frontend is reflected without reload.
+    yield takeLatest(setOpenAction.type, onChatOpenSync);
     yield takeEvery(newMessageAction.type, onUserMessage);
     //messages API
     yield takeEvery(setUserFeedback.type, onUserFeedback);

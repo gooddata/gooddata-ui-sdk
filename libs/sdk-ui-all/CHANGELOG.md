@@ -1,6 +1,54 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 04 Jun 2026 07:12:00 GMT and should not be manually modified.
+This log was last generated on Thu, 11 Jun 2026 11:20:41 GMT and should not be manually modified.
+
+## 11.41.0
+
+Thu, 11 Jun 2026 11:20:41 GMT
+
+### Updates
+
+- sdk-model: Add `IDashboardExportParameter`, relocated from `@gooddata/sdk-backend-spi` `IDashboardParameterValueOverride`
+- sdk-backend-spi: Add `parametersByTab` override field to the non-tabular dashboard export options
+- sdk-backend-tiger: Send NUMBER parameter runtime-overrides on ad-hoc PDF/PPTX/PNG/slides exports and apply them on `?exportId=…` load
+- sdk-ui-dashboard: Thread effective parameter overrides into the non-tabular export command handlers
+- sdk-model: Add `parametersByTab` to `IExportDefinitionDashboardContent` and `IExportDefinitionVisualizationObjectContent`
+- sdk-backend-tiger: Carry `content.parametersByTab` on scheduled non-tabular exports (visual/slides/image) as `metadata.parametersByTab` and restore it when reopening
+- sdk-backend-tiger: Default `enableExportTemplateSelection` flag to true
+- sdk-ui-gen-ai: Enhanced web components and new ai store to support multiple conversations.
+- sdk-ui-gen-ai: Enhance GenAI error handling and settings navigation.
+- sdk-ui-dashboard: Refine widget filter handling in automation workflows for non widget alerts.
+- sdk-ui-all: Add AI embedding support in dashboards.
+- sdk-ui-filters: Improve accessibility in measure value filter
+- sdk-ui-kit: Improve numeric input
+- sdk-ui-filter: Improve attribute filter type switching.
+- sdk-ui-all: Do not apply stored filters during drilling.
+- sdk-backend-tiger: Properly propagate filter's localIdentifier.
+- sdk-ui-all: Enable measure value filters on dashboard by default.
+- sdk-ui-gen-ai: Support for agent switching functionality in AI assistant.
+- sdk-backend-tiger: Introduce genAI observability service.
+- sdk-ui-dashboard: Add `changeParameterValues` command so drill-to-dashboard inherits the source dashboard active parameter overrides
+- sdk-ui-all: Implement Partial Result Warning on AD for enablePartialDataResults setting.
+- sdk-ui-dashboard: Implement Partial Result warning on Dashboard widget for enablePartialDataResults setting.
+- fix filter group mobile view visual
+- add row layout variant to ui control button component
+- fix filters expanded a11y on mobile, use UiControlButton layout row in filters mobile view
+- sdk-ui-kit: prevent UiTags from intercepting key events from a custom add button
+- sdk-ui-kit: UiTags overflow popover is now scrollable when it has many tags
+- Added organization IP allowlists service (SPI + Tiger implementation), related sdk-model types, and the enableIpAllowlistsUi feature flag.
+- sdk-ui-kit: UiTags supports tag icons, a `size` prop, and a custom add-button slot
+- sdk-ui-gen-ai: Sync current AI Chat conversation across host navigation
+- sdk-ui-pluggable-host: Restore app-specific Help menu links in hosted Modeler/AD header
+- sdk-ui-pluggable-host: Restore Workspace settings item in hosted Modeler/AD user menu
+- Propagate the pluggable application page-title segment via a documentTitleChanged event on the generic onEvent channel instead of a dedicated onDocumentTitleChange mount callback.
+- sdk-backend-tiger: Turn on enableDashboardFilterGroups feature flag by default.
+- sdk-ui-dashboard: Propagate execution result limit breaks (partial data due to reached limits) into each widget's execution result state.
+- sdk-ui-kit: allow badge after in dialog list item
+- sdk-ui-kit: added tooltip when text is too long
+- sdk-backend-tiger: Turn on enableSystemAccountFiltering feature flag by default.
+- sdk-backend-tiger: Default `enableCustomTooltip` flag to true.
+- feat: enable metric editor shell application by default
+- White-label the favicon and browser tab title across the pluggable host and standalone apps. The host (sdk-ui-pluggable-host) now owns document.title, composing it as "{application title} - {brand}": the application title comes from the active app's manifest (overridable at runtime via a new onDocumentTitleChange mount callback), and the brand is the organization name when white-labeling is enabled (the GoodData product name otherwise, and omitted when white-labeling is enabled with no organization name set). White-label logo/favicon/apple-touch-icon are applied whenever their URLs are set; the host favicon falls back to the default so a cleared custom favicon resets. Child apps (Analytical Designer, Home) now render their own DocumentHeader/title only in standalone mode so the host owns the title and favicon when they are embedded. Adds onDocumentTitleChange to IPluggableApplicationMountOptions and updateDocumentTitle to IHostUiMountHandle, plus a setDocumentTitle helper on PluggableAppEventsProvider/usePluggableAppEvents so embedded apps can set their per-route page-title segment (used by Home to keep per-sub-route titles such as Workspaces/Settings, and by Analytical Designer to report the open insight title, when embedded).
 
 ## 11.40.0
 

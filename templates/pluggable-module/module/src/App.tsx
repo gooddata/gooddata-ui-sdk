@@ -19,7 +19,7 @@ export function App({ onEvent: _onEvent, onTelemetryEvent: _onTelemetryEvent }: 
     const workspaceId = useWorkspace();
 
     return (
-        <div>
+        <div style={{ display: "flex", flexDirection: "column", padding: "4rem" }}>
             <h1>
                 <FormattedMessage id="gdc-app-template-name.title" />
             </h1>

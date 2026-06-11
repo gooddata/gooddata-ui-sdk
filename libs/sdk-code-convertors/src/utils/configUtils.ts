@@ -401,3 +401,17 @@ export function saveChartFill(config: Visualisation["config"], defaultsChartFill
             config!.chart_fill?.pattern_name_mapping ?? defaultsChartFill.measureToPatternName,
     };
 }
+
+export function loadDisableKda(value: Record<string, boolean> | undefined | null) {
+    if (!value) {
+        return undefined;
+    }
+    if (Object.keys(value).length === 0) {
+        return undefined;
+    }
+    const map = new YAMLMap<string, boolean>();
+    Object.keys(value).forEach((key) => {
+        map.set(key, value[key]);
+    });
+    return map;
+}

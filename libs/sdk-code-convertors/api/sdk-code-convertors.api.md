@@ -197,6 +197,7 @@ export type AreaChartConfigProperties = {
     disableDrillDown: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
+    disableKeyDriveAnalysisOn: Record<string, boolean>;
 };
 
 // @internal (undocumented)
@@ -253,6 +254,51 @@ export function areaChartSave(_fields: Visualisation["query"]["fields"] | undefi
     disableDrillDown: boolean | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
+    disableKeyDriveAnalysisOn: {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | undefined;
 } | undefined;
 
 // @public (undocumented)
@@ -312,6 +358,7 @@ export type BarChartConfigProperties = {
     disableDrillDown: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
+    disableKeyDriveAnalysisOn: Record<string, boolean>;
 };
 
 // @internal (undocumented)
@@ -362,6 +409,51 @@ export function barChartSave(_fields: Visualisation["query"]["fields"] | undefin
     disableDrillDown: boolean | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
+    disableKeyDriveAnalysisOn: {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | undefined;
 } | undefined;
 
 // @internal (undocumented)
@@ -411,6 +503,7 @@ export type BubbleChartConfigProperties = {
     disableDrillDown: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
+    disableKeyDriveAnalysisOn: Record<string, boolean>;
 };
 
 // @internal (undocumented)
@@ -457,6 +550,51 @@ export function bubbleChartSave(_fields: Visualisation["query"]["fields"] | unde
     disableDrillDown: boolean | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
+    disableKeyDriveAnalysisOn: {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | undefined;
 } | undefined;
 
 // @public (undocumented)
@@ -552,6 +690,7 @@ export type BulletChartConfigProperties = {
     disableDrillDown: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
+    disableKeyDriveAnalysisOn: Record<string, boolean>;
 };
 
 // @internal (undocumented)
@@ -595,6 +734,51 @@ export function bulletChartSave(_fields: Visualisation["query"]["fields"] | unde
     disableDrillDown: boolean | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
+    disableKeyDriveAnalysisOn: {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | undefined;
 } | undefined;
 
 // @internal (undocumented)
@@ -675,6 +859,7 @@ export type ColumnChartConfigProperties = {
     disableDrillDown: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
+    disableKeyDriveAnalysisOn: Record<string, boolean>;
 };
 
 // @internal (undocumented)
@@ -725,6 +910,51 @@ export function columnChartSave(_fields: Visualisation["query"]["fields"] | unde
     disableDrillDown: boolean | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
+    disableKeyDriveAnalysisOn: {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | undefined;
 } | undefined;
 
 // @public (undocumented)
@@ -812,6 +1042,7 @@ export type ComboChartConfigProperties = {
     disableDrillDown: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
+    disableKeyDriveAnalysisOn: Record<string, boolean>;
     thresholdMeasures: string[];
     thresholdExcludedMeasures: string[];
 };
@@ -889,6 +1120,51 @@ export function comboChartSave(_fields: Visualisation["query"]["fields"] | undef
     disableDrillDown: boolean | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
+    disableKeyDriveAnalysisOn: {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | undefined;
     thresholdMeasures: string[] | undefined;
     thresholdExcludedMeasures: string[] | undefined;
 } | undefined;
@@ -1123,6 +1399,7 @@ export type DependencyWheelChartConfigProperties = {
     disableDrillDown: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
+    disableKeyDriveAnalysisOn: Record<string, boolean>;
 };
 
 // @internal (undocumented)
@@ -1141,6 +1418,51 @@ export function dependencyWheelChartSave(_fields: Visualisation["query"]["fields
     disableDrillDown: boolean | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
+    disableKeyDriveAnalysisOn: {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | undefined;
 } | undefined;
 
 // @internal (undocumented)
@@ -1167,6 +1489,7 @@ export type DonutChartConfigProperties = {
     disableDrillDown: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
+    disableKeyDriveAnalysisOn: Record<string, boolean>;
 };
 
 // @internal (undocumented)
@@ -1190,6 +1513,51 @@ export function donutChartSave(_fields: Visualisation["query"]["fields"] | undef
     disableDrillDown: boolean | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
+    disableKeyDriveAnalysisOn: {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | undefined;
 } | undefined;
 
 // @internal (undocumented)
@@ -1265,6 +1633,7 @@ export type FunnelChartConfigProperties = {
     disableDrillDown: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
+    disableKeyDriveAnalysisOn: Record<string, boolean>;
 };
 
 // @internal (undocumented)
@@ -1288,6 +1657,51 @@ export function funnelChartSave(_fields: Visualisation["query"]["fields"] | unde
     disableDrillDown: boolean | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
+    disableKeyDriveAnalysisOn: {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | undefined;
 } | undefined;
 
 // @public (undocumented)
@@ -1355,6 +1769,7 @@ export type GeoAreaChartConfigProperties = {
     };
     disableAlerts: boolean;
     disableScheduledExports: boolean;
+    disableKeyDriveAnalysisOn: Record<string, boolean>;
 };
 
 // @internal (undocumented)
@@ -1396,6 +1811,51 @@ export function geoAreaChartSave(_fields: Visualisation["query"]["fields"] | und
     } | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
+    disableKeyDriveAnalysisOn: {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | undefined;
 } | undefined;
 
 // @internal @deprecated (undocumented)
@@ -1443,6 +1903,7 @@ export type GeoChartConfigProperties = {
     };
     disableAlerts: boolean;
     disableScheduledExports: boolean;
+    disableKeyDriveAnalysisOn: Record<string, boolean>;
 };
 
 // @internal (undocumented)
@@ -1493,6 +1954,7 @@ export type HeadlineChartConfigProperties = {
     };
     disableAlerts: boolean;
     disableScheduledExports: boolean;
+    disableKeyDriveAnalysisOn: Record<string, boolean>;
 };
 
 // @internal (undocumented)
@@ -1552,6 +2014,51 @@ export function headlineChartSave(_fields: Visualisation["query"]["fields"] | un
     } | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
+    disableKeyDriveAnalysisOn: {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | undefined;
 } | undefined;
 
 // @internal (undocumented)
@@ -1592,6 +2099,7 @@ export type HeatmapChartConfigProperties = {
     disableDrillDown: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
+    disableKeyDriveAnalysisOn: Record<string, boolean>;
 };
 
 // @internal (undocumented)
@@ -1629,6 +2137,51 @@ export function heatmapChartSave(_fields: Visualisation["query"]["fields"] | und
     disableDrillDown: boolean | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
+    disableKeyDriveAnalysisOn: {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | undefined;
 } | undefined;
 
 // @public (undocumented)
@@ -2080,6 +2633,7 @@ export type LineChartConfigProperties = {
     disableDrillDown: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
+    disableKeyDriveAnalysisOn: Record<string, boolean>;
     thresholdMeasures: string[];
     thresholdExcludedMeasures: string[];
 };
@@ -2147,6 +2701,51 @@ export function lineChartSave(_fields: Visualisation["query"]["fields"] | undefi
     disableDrillDown: boolean | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
+    disableKeyDriveAnalysisOn: {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | undefined;
     thresholdMeasures: string[] | undefined;
     thresholdExcludedMeasures: string[] | undefined;
 } | undefined;
@@ -2204,6 +2803,7 @@ export type PieChartConfigProperties = {
     disableDrillDown: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
+    disableKeyDriveAnalysisOn: Record<string, boolean>;
 };
 
 // @internal (undocumented)
@@ -2227,6 +2827,51 @@ export function pieChartSave(_fields: Visualisation["query"]["fields"] | undefin
     disableDrillDown: boolean | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
+    disableKeyDriveAnalysisOn: {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | undefined;
 } | undefined;
 
 // @internal (undocumented)
@@ -2267,6 +2912,7 @@ export type PyramidChartConfigProperties = {
     disableDrillDown: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
+    disableKeyDriveAnalysisOn: Record<string, boolean>;
 };
 
 // @internal (undocumented)
@@ -2290,6 +2936,51 @@ export function pyramidChartSave(_fields: Visualisation["query"]["fields"] | und
     disableDrillDown: boolean | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
+    disableKeyDriveAnalysisOn: {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | undefined;
 } | undefined;
 
 // @internal (undocumented)
@@ -2308,6 +2999,7 @@ export type RepeaterChartConfigProperties = {
     rowHeight: "small" | "medium" | "large";
     disableAlerts: boolean;
     disableScheduledExports: boolean;
+    disableKeyDriveAnalysisOn: Record<string, boolean>;
 };
 
 // @internal (undocumented)
@@ -2323,6 +3015,51 @@ export function repeaterChartSave(fields: Visualisation["query"]["fields"] | und
     cellImageSizing: "fill" | "fit" | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
+    disableKeyDriveAnalysisOn: {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | undefined;
 } | undefined;
 
 // @public (undocumented)
@@ -2348,6 +3085,7 @@ export type SankeyChartConfigProperties = {
     disableDrillDown: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
+    disableKeyDriveAnalysisOn: Record<string, boolean>;
 };
 
 // @internal (undocumented)
@@ -2367,6 +3105,51 @@ export function sankeyChartSave(_fields: Visualisation["query"]["fields"] | unde
     disableDrillDown: boolean | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
+    disableKeyDriveAnalysisOn: {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | undefined;
 } | undefined;
 
 // @public (undocumented)
@@ -2426,6 +3209,7 @@ export type ScatterChartConfigProperties = {
     disableDrillDown: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
+    disableKeyDriveAnalysisOn: Record<string, boolean>;
 };
 
 // @internal (undocumented)
@@ -2473,6 +3257,51 @@ export function scatterChartSave(_fields: Visualisation["query"]["fields"] | und
     disableDrillDown: boolean | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
+    disableKeyDriveAnalysisOn: {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | undefined;
 } | undefined;
 
 // @internal @deprecated (undocumented)
@@ -2490,6 +3319,7 @@ export type TableConfigProperties = {
     disableDrillIntoURL: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
+    disableKeyDriveAnalysisOn: Record<string, boolean>;
     textWrapping: {
         wrapText: boolean;
         wrapHeaderText: boolean;
@@ -2520,6 +3350,51 @@ export function tableSave(fields: Visualisation["query"]["fields"] | undefined, 
     disableDrillIntoURL: boolean | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
+    disableKeyDriveAnalysisOn: {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | undefined;
     textWrapping: {
         wrapText: boolean;
         wrapHeaderText: boolean;
@@ -2578,6 +3453,7 @@ export type TreemapChartConfigProperties = {
     disableDrillDown: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
+    disableKeyDriveAnalysisOn: Record<string, boolean>;
 };
 
 // @internal (undocumented)
@@ -2601,6 +3477,51 @@ export function treemapChartSave(_fields: Visualisation["query"]["fields"] | und
     disableDrillDown: boolean | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
+    disableKeyDriveAnalysisOn: {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | undefined;
 } | undefined;
 
 // @public (undocumented)
@@ -2674,6 +3595,7 @@ export type WaterfallChartConfigProperties = {
     disableDrillDown: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
+    disableKeyDriveAnalysisOn: Record<string, boolean>;
 };
 
 // @internal (undocumented)
@@ -2728,6 +3650,51 @@ export function waterfallChartSave(_fields: Visualisation["query"]["fields"] | u
     disableDrillDown: boolean | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
+    disableKeyDriveAnalysisOn: {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | {
+        [k: string]: boolean;
+    } | undefined;
 } | undefined;
 
 // @public (undocumented)

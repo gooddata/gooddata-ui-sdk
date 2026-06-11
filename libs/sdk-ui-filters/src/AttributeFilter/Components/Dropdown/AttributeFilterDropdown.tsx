@@ -192,6 +192,7 @@ export function AttributeFilterDropdown() {
                                     buttonRef={buttonRef}
                                     buttonId={dropdownButtonId}
                                     dropdownId={dropdownId}
+                                    layout={fullscreenOnMobile && isMobile && isOpen ? "row" : undefined}
                                 />
                             </AttributeFilterButtonErrorTooltip>
                         )}

@@ -30,5 +30,8 @@
     "messages.genAi.visualisation.link.copied": "Le lien de la visualisation a été copié dans votre presse-papiers.",
     "messages.showMore": "Montrer plus",
     "messages.showLess": "Montrer moins",
-    "gen-ai.ask-assistant.search": "Construire une nouvelle visualisation bas\u0000e9e sur\u0000a0: {question}"
+    "gen-ai.ask-assistant.search": "Construire une nouvelle visualisation bas\u0000e9e sur\u0000a0: {question}",
+    "gs.host.error.appNotAllowedForOrganization": "This application is not available for your organization.",
+    "gs.host.error.appBuildExpired": "This application is out of date and must be rebuilt by its author before it can run again.",
+    "gs.host.error.appSecurityMetadataMissing": "This application is missing required security metadata and cannot be loaded."
 }

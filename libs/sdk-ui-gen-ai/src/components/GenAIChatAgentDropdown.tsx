@@ -70,7 +70,6 @@ export function GenAIChatAgentDropdown({
             if (agents.length) {
                 onSelectAgent(
                     isSelectedAgentAvailable ? selectedAgentId : selectDefaultAgentId(agents, conversations),
-                    { showChangeEvent: true },
                 );
             }
             return;
@@ -98,6 +97,9 @@ export function GenAIChatAgentDropdown({
                     isDisabled: false,
                     data: agent,
                     tooltip: agent.description || undefined,
+                    ariaAttributes: agent.description
+                        ? { "aria-label": `${agent.title}. ${agent.description}` }
+                        : undefined,
                     iconRight: agent.description ? (
                         <UiIcon
                             type="question"
@@ -112,47 +114,50 @@ export function GenAIChatAgentDropdown({
     );
 
     return (
-        <Dropdown
-            className={cx("gd-gen-ai-chat__input__agent-dropdown", {
-                "gd-gen-ai-chat__input__agent-dropdown--loading": isLoading,
-            })}
-            alignPoints={[{ align: "tr br", offset: { x: 0, y: 0 } }]}
-            closeOnEscape
-            fullscreenOnMobile={false}
-            accessibilityConfig={{ popupRole: "listbox" }}
-            renderButton={({ isOpen, toggleDropdown, accessibilityConfig }) => (
-                <UiButton
-                    label={isLoading ? loadingLabel : (selectedAgent?.title ?? agentLabel)}
-                    variant="dropdownInline"
-                    size="small"
-                    iconAfter={isLoading ? undefined : isOpen ? "navigateUp" : "navigateDown"}
-                    isDisabled={isLoading || isDisabled || !agents.length}
-                    onClick={toggleDropdown}
-                    dataTestId="agent_dropdown_button"
-                    accessibilityConfig={{
-                        ...accessibilityConfig,
-                        ariaLabel: agentLabel,
-                    }}
-                />
-            )}
-            renderBody={({ closeDropdown, ariaAttributes }) => (
-                <UiMenu<AgentMenuItemData>
-                    dataTestId="agent_dropdown_menu"
-                    items={items}
-                    size="small"
-                    minWidth={160}
-                    maxWidth={220}
-                    containerTopPadding="small"
-                    containerBottomPadding="small"
-                    MenuHeader={AgentMenuHeader}
-                    ariaAttributes={ariaAttributes}
-                    onSelect={(item) => {
-                        onSelectAgent(item.data.id, { showChangeEvent: true });
-                        closeDropdown();
-                    }}
-                />
-            )}
-        />
+        <>
+            <span className="sr-only" aria-live="polite" aria-atomic="true">
+                {isLoading ? loadingLabel : ""}
+            </span>
+            <Dropdown
+                className={cx("gd-gen-ai-chat__input__agent-dropdown", {
+                    "gd-gen-ai-chat__input__agent-dropdown--loading": isLoading,
+                })}
+                alignPoints={[{ align: "tr br", offset: { x: 0, y: 0 } }]}
+                closeOnEscape
+                fullscreenOnMobile={false}
+                autofocusOnOpen
+                accessibilityConfig={{}}
+                renderButton={({ isOpen, toggleDropdown, accessibilityConfig }) => (
+                    <UiButton
+                        label={isLoading ? loadingLabel : (selectedAgent?.title ?? agentLabel)}
+                        variant="dropdownInline"
+                        size="small"
+                        iconAfter={isLoading ? undefined : isOpen ? "navigateUp" : "navigateDown"}
+                        isDisabled={isLoading || isDisabled || !agents.length}
+                        onClick={toggleDropdown}
+                        dataTestId="agent_dropdown_button"
+                        accessibilityConfig={accessibilityConfig}
+                    />
+                )}
+                renderBody={({ closeDropdown, ariaAttributes }) => (
+                    <UiMenu<AgentMenuItemData>
+                        dataTestId="agent_dropdown_menu"
+                        items={items}
+                        size="small"
+                        minWidth={160}
+                        maxWidth={220}
+                        containerTopPadding="small"
+                        containerBottomPadding="small"
+                        MenuHeader={AgentMenuHeader}
+                        ariaAttributes={ariaAttributes}
+                        onSelect={(item) => {
+                            onSelectAgent(item.data.id, { showChangeEvent: true });
+                            closeDropdown();
+                        }}
+                    />
+                )}
+            />
+        </>
     );
 }
 

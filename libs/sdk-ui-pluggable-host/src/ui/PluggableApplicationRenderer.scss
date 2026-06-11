@@ -12,10 +12,20 @@
 
     &__error {
         min-height: 240px;
+        height: 100%;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        align-items: center;
+        text-align: center;
         gap: 8px;
+
+        // Push the error block to roughly one third from the top. The spacer's
+        // flex-basis is a percentage of this column's height (resolves against
+        // the 100% height above), so it stays proportional as the area resizes.
+        &::before {
+            content: "";
+            flex: 0 0 33%;
+        }
     }
 
     &__container {
@@ -25,5 +35,25 @@
     &__container--visible {
         display: block;
         height: 100%;
+    }
+
+    // Small semi-transparent floating badge pinned to the bottom-right of the
+    // page, shown only for validated demo-bucket apps. Non-interactive so it
+    // never intercepts clicks meant for the app beneath it.
+    &__demoBadge {
+        position: fixed;
+        right: 16px;
+        bottom: 16px;
+        z-index: 100;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 12px;
+        line-height: 1.4;
+        color: #fff;
+        background: rgba(20, 35, 49, 0.16);
+        backdrop-filter: blur(4px);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+        pointer-events: none;
+        user-select: none;
     }
 }

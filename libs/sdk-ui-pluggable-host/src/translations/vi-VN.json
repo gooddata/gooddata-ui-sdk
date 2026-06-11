@@ -30,5 +30,8 @@
     "messages.genAi.visualisation.link.copied": "Liên kết trực quan hóa đã được sao chép vào bảng nhớ tạm của bạn.",
     "messages.showMore": "Hiện thêm",
     "messages.showLess": "Hiện ít",
-    "gen-ai.ask-assistant.search": "Tạo trực quan hóa mới dựa trên: {question}"
+    "gen-ai.ask-assistant.search": "Tạo trực quan hóa mới dựa trên: {question}",
+    "gs.host.error.appNotAllowedForOrganization": "This application is not available for your organization.",
+    "gs.host.error.appBuildExpired": "This application is out of date and must be rebuilt by its author before it can run again.",
+    "gs.host.error.appSecurityMetadataMissing": "This application is missing required security metadata and cannot be loaded."
 }

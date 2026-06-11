@@ -36,6 +36,7 @@ import {
     asyncProcessSelector,
     conversationMessagesSelector,
     conversationSelector,
+    conversationsLoadedSelector,
     conversationsSelector,
     messagesSelector,
     selectedAgentIdSelector,
@@ -65,6 +66,7 @@ type InputStateProps = {
     loading: ReturnType<typeof asyncProcessSelector>;
     conversation: ReturnType<typeof conversationSelector>;
     conversations: ReturnType<typeof conversationsSelector>;
+    conversationsLoaded: ReturnType<typeof conversationsLoadedSelector>;
     items: ReturnType<typeof conversationMessagesSelector>;
     agents: ReturnType<typeof agentsSelector>;
     agentSwitchingEnabled: ReturnType<typeof agentSwitchingEnabledSelector>;
@@ -110,6 +112,7 @@ function InputComponent({
     messages,
     conversation,
     conversations,
+    conversationsLoaded,
     items,
     agents,
     agentSwitchingEnabled,
@@ -131,6 +134,7 @@ function InputComponent({
     const { availableAgents, hasNoAgents, isSelectionLoading } = getAgentSelectionStatus({
         agentSwitchingActive,
         assistantLoading: isAssistantLoading,
+        conversationsLoaded,
         agents,
         selectedAgentId,
     });
@@ -296,6 +300,9 @@ function InputComponent({
                             <span
                                 className="gd-gen-ai-chat__input__no-agent"
                                 data-testid="no_agent_available"
+                                role="status"
+                                aria-live="polite"
+                                aria-atomic="true"
                             >
                                 {noAgentAvailableLabel}
                             </span>
@@ -370,6 +377,7 @@ interface IHintTextProps {
 function HintText({ where, focused }: IHintTextProps) {
     return (
         <div
+            aria-hidden={!focused}
             className={cx("gd-gen-ai-chat__input__info", {
                 hidden: !focused,
                 top: where === "top",
@@ -403,6 +411,7 @@ const mapStateToProps = (
     items: ReturnType<typeof conversationMessagesSelector>;
     conversation: ReturnType<typeof conversationSelector>;
     conversations: ReturnType<typeof conversationsSelector>;
+    conversationsLoaded: ReturnType<typeof conversationsLoadedSelector>;
     messages: ReturnType<typeof messagesSelector>;
     loading: ReturnType<typeof asyncProcessSelector>;
     agents: ReturnType<typeof agentsSelector>;
@@ -415,6 +424,7 @@ const mapStateToProps = (
     return {
         conversation: conversationSelector(state),
         conversations: conversationsSelector(state),
+        conversationsLoaded: conversationsLoadedSelector(state),
         items: conversationMessagesSelector(state),
         messages: messagesSelector(state),
         loading: asyncState,

@@ -33,11 +33,13 @@ export function getEffectiveSelectedAgentId({
 export function getAgentSelectionStatus({
     agentSwitchingActive,
     assistantLoading = false,
+    conversationsLoaded = true,
     agents,
     selectedAgentId,
 }: {
     agentSwitchingActive: boolean;
     assistantLoading?: boolean;
+    conversationsLoaded?: boolean;
     agents: GenAIAgent[] | undefined;
     selectedAgentId?: string;
 }): AgentSelectionStatus {
@@ -48,10 +50,15 @@ export function getAgentSelectionStatus({
     return {
         availableAgents,
         hasNoAgents: agentSwitchingActive && agents?.length === 0,
+        // The conversations list is part of the loading condition so that the dropdown goes
+        // through a single loading phase on startup. Without it, the dropdown briefly resolves
+        // to a default agent after agents load, then flips back to loading when the current
+        // conversation (with a possibly different agent) starts loading.
         isSelectionLoading:
             agentSwitchingActive &&
             (assistantLoading ||
                 agents === undefined ||
+                !conversationsLoaded ||
                 (availableAgents.length > 0 && !isSelectedAgentAvailable)),
     };
 }

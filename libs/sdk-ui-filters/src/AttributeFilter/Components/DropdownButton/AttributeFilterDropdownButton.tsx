@@ -183,6 +183,20 @@ export interface IAttributeFilterDropdownButtonProps {
      * @beta
      */
     ariaLabel?: string;
+
+    /**
+     * Visual layout of the chip. "row" is the full-width single-line variant used in the mobile view.
+     *
+     * @beta
+     */
+    layout?: "stacked" | "row";
+
+    /**
+     * Hides the open/close chevron.
+     *
+     * @beta
+     */
+    hideChevron?: boolean;
 }
 
 /**
@@ -220,6 +234,8 @@ export function AttributeFilterDropdownButton({
     buttonId,
     dropdownId,
     ariaLabel,
+    layout,
+    hideChevron,
 }: IAttributeFilterDropdownButtonProps) {
     const intl = useIntl();
     const subtitleSelectedItemsRef = useRef<HTMLSpanElement>(null);
@@ -296,6 +312,8 @@ export function AttributeFilterDropdownButton({
             icon={filterIcon}
             titleExtension={titleSlotExtension}
             isOpen={isOpen}
+            layout={layout}
+            hideChevron={hideChevron}
             isDraggable={isDraggable}
             isError={isError}
             disabled={disabled}

@@ -2,7 +2,13 @@
 
 import type { Visualisation } from "@gooddata/sdk-code-schemas/v1";
 
-import { loadChartFill, loadColorMapping, saveChartFill, saveColorMapping } from "../utils/configUtils.js";
+import {
+    loadChartFill,
+    loadColorMapping,
+    loadDisableKda,
+    saveChartFill,
+    saveColorMapping,
+} from "../utils/configUtils.js";
 
 import { type ChartFillType, type ColorMapping, type PatternFillName } from "./types.js";
 import {
@@ -58,6 +64,7 @@ export type BarChartConfigProperties = {
     disableDrillDown: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
+    disableKeyDriveAnalysisOn: Record<string, boolean>;
 };
 
 /** @internal */
@@ -104,6 +111,7 @@ const DEFAULTS: ConfigDefaults<BarChartConfigProperties> = {
     disableDrillDown: false,
     disableAlerts: false,
     disableScheduledExports: false,
+    disableKeyDriveAnalysisOn: {},
 };
 
 /** @internal */
@@ -215,6 +223,8 @@ export function barChartLoad(props: VisualisationConfig<BarChartConfigProperties
                         getValueOrDefault(value as boolean, DEFAULTS.disableScheduledExports, "bool"),
                     ],
                 ];
+            case "disableKeyDriveAnalysisOn":
+                return [["disable_key_drive_analysis", loadDisableKda(value as Record<string, boolean>)]];
             default:
                 return [];
         }
@@ -283,6 +293,7 @@ export function barChartSave(
             DEFAULTS.disableScheduledExports,
             "bool",
         ),
+        disableKeyDriveAnalysisOn: saveConfigObject(config.disable_key_drive_analysis),
     });
 }
 
