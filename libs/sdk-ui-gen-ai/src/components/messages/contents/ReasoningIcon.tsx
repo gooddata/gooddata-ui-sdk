@@ -2,10 +2,14 @@
 
 import { UiIcon } from "@gooddata/sdk-ui-kit";
 
-import { type IChatConversationErrorContent, type IChatConversationLocalContent } from "../../../model.js";
+import {
+    type IChatConversationErrorContent,
+    type IChatConversationLocalContent,
+    type IChatConversationSystemContent,
+} from "../../../model.js";
 
 export interface IReasoningIconProps {
-    content: IChatConversationLocalContent | IChatConversationErrorContent;
+    content: IChatConversationLocalContent | IChatConversationErrorContent | IChatConversationSystemContent;
 }
 
 export function ReasoningIcon({ content }: IReasoningIconProps) {

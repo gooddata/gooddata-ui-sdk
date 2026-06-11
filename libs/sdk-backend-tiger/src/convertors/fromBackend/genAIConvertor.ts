@@ -54,6 +54,7 @@ export function convertChatConversationFromBackend(conversation: AiConversationR
         updatedAt: conversation.lastActivityAt,
         title: conversation.title ?? undefined,
         pinned: conversation.pinned,
+        agentId: conversation.agentId ?? undefined,
     };
 }
 
@@ -75,7 +76,21 @@ export function convertChatConversationItemFromBackend(
         createdAt: new Date(item.createdAt).getTime(),
         feedback: convertChatConversationFeedbackFromBackend(response),
         content: convertChatConversationContentFromBackend(item.content, dateNormalizer, locale, timezone),
+        agentId: item.newAgentId ?? undefined,
+        oldAgentId: item.oldAgentId ?? undefined,
     };
+}
+
+export function convertChatConversationItemsFromBackend(
+    items: AiConversationItemResponse[],
+    responses: AiConversationResponseList["responses"] | undefined,
+    dateNormalizer: DateNormalizer,
+    locale?: FormattingLocale,
+    timezone?: string,
+): IChatConversationItem[] {
+    return items.map((item) =>
+        convertChatConversationItemFromBackend(item, responses, dateNormalizer, locale, timezone),
+    );
 }
 
 function convertChatConversationFeedbackFromBackend(

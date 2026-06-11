@@ -248,6 +248,9 @@ export function UiTags({
                             e.stopPropagation();
                             e.preventDefault();
                         }}
+                        onKeyDown={(e) => {
+                            e.stopPropagation();
+                        }}
                     >
                         {renderAddButton?.()}
                     </div>

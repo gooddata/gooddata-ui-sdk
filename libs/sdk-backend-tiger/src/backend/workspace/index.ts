@@ -14,6 +14,7 @@ import {
     type IGenAIService,
     type IReferencesService,
     type IWorkspaceAccessControlService,
+    type IWorkspaceAgentsService,
     type IWorkspaceAttributesService,
     type IWorkspaceAutomationService,
     type IWorkspaceCatalogFactory,
@@ -47,6 +48,7 @@ import { convertWorkspaceUpdate } from "../../convertors/toBackend/WorkspaceConv
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 
 import { TigerWorkspaceAccessControlService } from "./accessControl/index.js";
+import { TigerWorkspaceAgentsService } from "./agents.js";
 import { TigerAttributeHierarchiesService } from "./attributeHierarchies/index.js";
 import { TigerWorkspaceAttributes } from "./attributes/index.js";
 import { TigerWorkspaceAutomationService } from "./automations/index.js";
@@ -208,6 +210,10 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
 
     public attributeHierarchies(): IAttributeHierarchiesService {
         return new TigerAttributeHierarchiesService(this.authCall, this.workspace);
+    }
+
+    public agents(): IWorkspaceAgentsService {
+        return new TigerWorkspaceAgentsService(this.authCall, this.workspace);
     }
 
     public exportDefinitions(): IWorkspaceExportDefinitionsService {

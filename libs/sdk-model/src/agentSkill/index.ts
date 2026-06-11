@@ -97,6 +97,11 @@ export interface IAgent {
     modifiedAt?: string;
 
     /**
+     * Last time the agent was used by the current user.
+     */
+    lastUsedAt?: string;
+
+    /**
      * User who created the agent.
      */
     createdBy?: IUser;

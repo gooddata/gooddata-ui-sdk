@@ -453,6 +453,7 @@ function* loadMessage(assistantMessageId: string): Generator<unknown, MessageInf
 
 function convertMessageTypeTo(
     content:
+        | IChatConversationLocalItem["content"]
         | IChatConversationLocalContent
         | IChatConversationErrorContent
         | IChatConversationMultipartLocalPart

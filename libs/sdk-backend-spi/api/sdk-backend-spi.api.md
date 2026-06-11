@@ -332,6 +332,8 @@ export interface IAnalyticalBackendConfig {
 export interface IAnalyticalWorkspace {
     accessControl(): IWorkspaceAccessControlService;
     // @alpha
+    agents(): IWorkspaceAgentsService;
+    // @alpha
     attributeHierarchies(): IAttributeHierarchiesService;
     attributes(): IWorkspaceAttributesService;
     // @alpha
@@ -664,10 +666,16 @@ export type IChatConversation = {
     updatedAt: string;
     title?: string;
     pinned?: boolean;
+    agentId?: string;
 };
 
 // @internal
 export type IChatConversationContent = IChatConversationTextContent | IChatConversationReasoningContent | IChatConversationMultipartContent | IChatConversationToolCallContent | IChatConversationToolResultContent;
+
+// @internal
+export type IChatConversationCreateOptions = {
+    agentId?: string;
+};
 
 // @internal
 export type IChatConversationError = {
@@ -698,6 +706,8 @@ export type IChatConversationItem = {
     role: "user" | "assistant" | "tool" | "system";
     content: IChatConversationContent;
     feedback?: IChatConversationFeedback;
+    agentId?: string;
+    oldAgentId?: string;
 };
 
 // @public
@@ -734,12 +744,13 @@ export type IChatConversationReasoningContent = {
 
 // @internal
 export interface IChatConversations {
-    create(): Promise<IChatConversation>;
+    create(options?: IChatConversationCreateOptions): Promise<IChatConversation>;
     delete(conversationId: string): Promise<void>;
     generateTitle(conversationId: string): Promise<IChatConversation>;
     getConversation(conversationId: string): Promise<IChatConversation>;
     getConversationItemsQuery(): IChatConversationItemsQuery;
     getConversationThread(conversationId: string): IChatConversationThread;
+    switchAgent(conversationId: string, agentId: string): Promise<IChatConversation>;
     update(conversationId: string, update: Partial<Pick<IChatConversation, "title" | "pinned">>): Promise<IChatConversation>;
 }
 
@@ -2545,6 +2556,11 @@ export interface IWorkspaceAccessControlService {
     grantAccess(sharedObject: ObjRef, grantees: IAccessGrantee[]): Promise<void>;
     // (undocumented)
     revokeAccess(sharedObject: ObjRef, grantees: IAccessGrantee[]): Promise<void>;
+}
+
+// @alpha
+export interface IWorkspaceAgentsService {
+    getAgentsQuery(): IAgentsQuery;
 }
 
 // @public

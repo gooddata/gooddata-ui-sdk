@@ -114,6 +114,11 @@ export enum GdcKdCommandType {
      * The command to set API token
      */
     SetApiToken = "setApiToken",
+
+    /**
+     * The command to toggle AI assistant dialog visibility
+     */
+    ToggleAIAssistant = "toggleAIAssistant",
 }
 
 /**
@@ -280,6 +285,11 @@ export enum GdcKdEventType {
      * "setApiToken" was called the last time).
      */
     ApiTokenIsAboutToExpire = "apiTokenIsAboutToExpire",
+
+    /**
+     * Type notifies embedding application that AI assistant dialog visibility has changed.
+     */
+    AIAssistantDialogVisibilityChanged = "aiAssistantDialogVisibilityChanged",
 }
 
 /**
@@ -1337,6 +1347,39 @@ export type IKdInsightSavedBody = IVisualization & {
 export type KdInsightSavedData = IGdcKdMessageEnvelope<GdcKdEventType.InsightSaved, IKdInsightSavedBody>;
 
 /**
+ * Toggle AI assistant dialog visibility.
+ *
+ * Contract:
+ *
+ * - if AI assistant is available, this command toggles dialog visibility and
+ *   GenAIAssistantDialogVisibilityChanged event will be posted.
+ * - if AI assistant is not available, commandFailed event will be posted.
+ *
+ * @public
+ */
+export type KdToggleAIAssistantCommand = IGdcKdMessageEvent<GdcKdCommandType.ToggleAIAssistant, null>;
+
+/**
+ * @public
+ */
+export type KdToggleAIAssistantCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.ToggleAIAssistant, null>;
+
+/**
+ * Type-guard checking whether object is an instance of {@link KdToggleAIAssistantCommandData}.
+ *
+ * @param obj - object to test
+ *
+ * @public
+ */
+export function isKdToggleAIAssistantCommandData(obj: unknown): obj is KdToggleAIAssistantCommandData {
+    return (
+        obj !== null &&
+        typeof obj === "object" &&
+        getEventType(obj) === (GdcKdCommandType.ToggleAIAssistant as string)
+    );
+}
+
+/**
  * Open delete dashboard dialog, user will be able to delete currently existing dashboard
  *
  * Contract:
@@ -1380,6 +1423,28 @@ export function isKdOpenDeleteDashboardDialogCommandData(
         getEventType(obj) === (GdcKdCommandType.OpenDeleteDashboardDialog as string)
     );
 }
+
+/**
+ * AI assistant dialog visibility changed event body.
+ *
+ * @public
+ */
+export interface IKdAIAssistantDialogVisibilityChangedBody extends IKdAvailableCommands {
+    /**
+     * True if AI assistant dialog is visible, false otherwise.
+     */
+    isVisible: boolean;
+}
+
+/**
+ * Type that represents AI assistant dialog visibility changed event data.
+ *
+ * @public
+ */
+export type KdAIAssistantDialogVisibilityChangedData = IGdcKdMessageEnvelope<
+    GdcKdEventType.AIAssistantDialogVisibilityChanged,
+    IKdAIAssistantDialogVisibilityChangedBody
+>;
 
 /**
  * Set API token command body sent by outer application

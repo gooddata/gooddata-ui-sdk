@@ -830,6 +830,8 @@ export class DummyChatConversations implements IChatConversations {
     // (undocumented)
     getConversationThread(_conversationId: string): IChatConversationThread;
     // (undocumented)
+    switchAgent(_conversationId: string, _agentId: string): Promise<IChatConversation>;
+    // (undocumented)
     update(_conversationId: string, _conversation: IChatConversation): Promise<IChatConversation>;
 }
 

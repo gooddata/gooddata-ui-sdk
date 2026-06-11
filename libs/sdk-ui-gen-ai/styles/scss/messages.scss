@@ -206,6 +206,27 @@
         flex-grow: 0;
         overflow-y: visible;
     }
+
+    &--agent-switching &__agent-change {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        color: kit-variables.$gd-color-state-blank;
+        font-size: 14px;
+        line-height: 20px;
+
+        &__line {
+            flex: 1 1 0;
+            height: 1px;
+            background: kit-variables.$gd-border-color;
+        }
+
+        &__label {
+            flex: 0 0 auto;
+            text-align: center;
+            white-space: nowrap;
+        }
+    }
 }
 
 .gd-gen-ai-chat__messages__scroll {
@@ -658,6 +679,42 @@
                     flex-shrink: 1;
                 }
             }
+
+            & > .gd-ui-kit-tooltip__anchor {
+                flex: 0 0 auto;
+                min-width: 0;
+                margin-top: 1em;
+
+                & ~ .gd-ui-kit-tooltip__anchor,
+                & ~ .gd-button {
+                    margin-top: 1em;
+                }
+
+                .gd-button {
+                    margin-top: 0;
+                }
+            }
+
+            & > .gd-button ~ .gd-ui-kit-tooltip__anchor {
+                margin-top: 1em;
+            }
+        }
+
+        & > .gd-ui-kit-tooltip__anchor {
+            margin-top: 2em;
+
+            & ~ .gd-ui-kit-tooltip__anchor,
+            & ~ .gd-button {
+                margin-top: 1em;
+            }
+
+            .gd-button {
+                margin-top: 0;
+            }
+        }
+
+        & > .gd-button ~ .gd-ui-kit-tooltip__anchor {
+            margin-top: 1em;
         }
     }
 
@@ -1038,6 +1095,10 @@
         &:last-child {
             margin-bottom: 40px;
         }
+    }
+
+    &--system {
+        margin: 18px 0;
     }
 
     // Reasoning header

@@ -43,6 +43,25 @@ export const settingsSelector: (state: RootState) => IUserWorkspaceSettings | un
     (state) => state.settings,
 );
 
+export const isPreviewSelector: (state: RootState) => boolean = createSelector(
+    chatWindowSliceSelector,
+    (state) => state.isPreview === true,
+);
+
+export const agentSwitchingEnabledSelector: (state: RootState) => boolean = createSelector(
+    settingsSelector,
+    (settings) => settings?.["enableGenAiAgentSwitching"] === true,
+);
+
+// Whether the agent switcher is usable in the current chat context. It is never usable in preview
+// mode: the assistant is pinned to the single preview agent being built, so the switcher stays
+// hidden and the legacy input is used.
+export const agentSwitchingActiveSelector: (state: RootState) => boolean = createSelector(
+    agentSwitchingEnabledSelector,
+    isPreviewSelector,
+    (agentSwitchingEnabled, isPreview) => agentSwitchingEnabled && !isPreview,
+);
+
 export const objectTypesSelector: (state: RootState) => GenAIObjectType[] | undefined = createSelector(
     chatWindowSliceSelector,
     (state) => state.objectTypes,

@@ -7,20 +7,28 @@ import { UiButton } from "@gooddata/sdk-ui-kit";
 import {
     type IChatConversationErrorContent,
     type IChatConversationLocalContent,
+    type IChatConversationSystemContent,
     makeUserItem,
 } from "../../model.js";
-import { settingsSelector } from "../../store/chatWindow/chatWindowSelectors.js";
+import {
+    agentSwitchingActiveSelector,
+    settingsSelector,
+} from "../../store/chatWindow/chatWindowSelectors.js";
+import { agentsAvailableSelector } from "../../store/messages/messagesSelectors.js";
 import { newMessageAction } from "../../store/messages/messagesSlice.js";
 
 export interface IAssistantItemSuggestionsProps {
     showSuggestions?: boolean;
-    content: IChatConversationLocalContent | IChatConversationErrorContent;
+    content: IChatConversationLocalContent | IChatConversationErrorContent | IChatConversationSystemContent;
     type: "followUp" | "actions";
 }
 
 export function AssistantItemSuggestions({ type, content, showSuggestions }: IAssistantItemSuggestionsProps) {
     const dispatch = useDispatch();
     const settings = useSelector(settingsSelector);
+    const agentSwitchingActive = useSelector(agentSwitchingActiveSelector);
+    const agentsAvailable = useSelector(agentsAvailableSelector);
+    const isDisabled = agentSwitchingActive && agentsAvailable !== true;
 
     if (!showSuggestions || !settings?.enableAiAgenticSuggestions) {
         return null;
@@ -45,6 +53,7 @@ export function AssistantItemSuggestions({ type, content, showSuggestions }: IAs
                             label={suggestion.label}
                             variant="secondary"
                             size="small"
+                            isDisabled={isDisabled}
                             onClick={() => {
                                 dispatch(
                                     newMessageAction(makeUserItem({ type: "text", text: suggestion.query })),

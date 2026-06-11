@@ -323,11 +323,13 @@ export enum GdcKdCommandType {
     SetFilterContext = "setFilterContext",
     SetFilterParents = "setFilterParents",
     SetSize = "setSize",
-    SwitchToEdit = "switchToEdit"
+    SwitchToEdit = "switchToEdit",
+    ToggleAIAssistant = "toggleAIAssistant"
 }
 
 // @public
 export enum GdcKdEventType {
+    AIAssistantDialogVisibilityChanged = "aiAssistantDialogVisibilityChanged",
     ApiTokenIsAboutToExpire = "apiTokenIsAboutToExpire",
     DashboardCreated = "dashboardCreated",
     DashboardCreationCanceled = "dashboardCreationCanceled",
@@ -600,6 +602,11 @@ export interface IKdAddedWidgetBody {
 export interface IKdAddWidgetBody {
     // (undocumented)
     widget: IKdKpiWidget | IKdInsightWidget;
+}
+
+// @public
+export interface IKdAIAssistantDialogVisibilityChangedBody extends IKdAvailableCommands {
+    isVisible: boolean;
 }
 
 // @public
@@ -1174,6 +1181,9 @@ export function isKdSetSizeCommandData(obj: unknown): obj is KdSetSizeCommandDat
 export function isKdSwitchToEditCommandData(obj: unknown): obj is KdSwitchToEditCommandData;
 
 // @public
+export function isKdToggleAIAssistantCommandData(obj: unknown): obj is KdToggleAIAssistantCommandData;
+
+// @public
 export function isKdUriInsight(obj: unknown): obj is IKdUriInsightRef;
 
 // @public (undocumented)
@@ -1405,6 +1415,9 @@ export type KdAddWidgetCommand = IGdcKdMessageEvent<GdcKdCommandType.AddWidget, 
 export type KdAddWidgetCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.AddWidget, IKdAddWidgetBody>;
 
 // @public
+export type KdAIAssistantDialogVisibilityChangedData = IGdcKdMessageEnvelope<GdcKdEventType.AIAssistantDialogVisibilityChanged, IKdAIAssistantDialogVisibilityChangedBody>;
+
+// @public
 export type KdCancelEditCommand = IGdcKdMessageEvent<GdcKdCommandType.CancelEdit, null>;
 
 // @public (undocumented)
@@ -1565,6 +1578,12 @@ export type KdSwitchToEditCommand = IGdcKdMessageEvent<GdcKdCommandType.SwitchTo
 
 // @public (undocumented)
 export type KdSwitchToEditCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.SwitchToEdit, null>;
+
+// @public
+export type KdToggleAIAssistantCommand = IGdcKdMessageEvent<GdcKdCommandType.ToggleAIAssistant, null>;
+
+// @public (undocumented)
+export type KdToggleAIAssistantCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.ToggleAIAssistant, null>;
 
 // @public
 export type KdWidgetAddedData = IGdcKdMessageEnvelope<GdcKdEventType.WidgetAdded, IKdAddedWidgetBody>;

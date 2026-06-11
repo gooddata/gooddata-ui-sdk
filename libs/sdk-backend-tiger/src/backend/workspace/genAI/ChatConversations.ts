@@ -15,10 +15,12 @@ import {
     GenAiApi_PostConversations,
     GenAiApi_PostGenerateConversationTitle,
     GenAiApi_PostMessages,
+    GenAiApi_SwitchAgent,
 } from "@gooddata/api-client-tiger/endpoints/genAI";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
     type IChatConversation,
+    type IChatConversationCreateOptions,
     type IChatConversationError,
     type IChatConversationItem,
     type IChatConversationItemsQuery,
@@ -41,6 +43,7 @@ import {
     convertChatConversationErrorFromBackend,
     convertChatConversationFromBackend,
     convertChatConversationItemFromBackend,
+    convertChatConversationItemsFromBackend,
 } from "../../../convertors/fromBackend/genAIConvertor.js";
 import type { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
@@ -60,11 +63,12 @@ export class ChatConversationsService implements IChatConversations {
         return new ConversationItemsQuery(this.authCall, this.workspaceId, this.options.isPreview);
     }
 
-    async create(): Promise<IChatConversation> {
+    async create(options?: IChatConversationCreateOptions): Promise<IChatConversation> {
         return await this.authCall(async (client) => {
             const response = await GenAiApi_PostConversations(client.axios, client.basePath, {
                 workspaceId: this.workspaceId,
                 ...(this.options.isPreview === undefined ? {} : { isPreview: this.options.isPreview }),
+                ...(options?.agentId ? { aiCreateConversationRequest: { agentId: options.agentId } } : {}),
             });
             return convertChatConversationFromBackend(response.data);
         });
@@ -79,6 +83,17 @@ export class ChatConversationsService implements IChatConversations {
                 conversationId,
                 workspaceId: this.workspaceId,
                 aiConversationUpdateRequest: update,
+            });
+            return convertChatConversationFromBackend(response.data);
+        });
+    }
+
+    async switchAgent(conversationId: string, agentId: string): Promise<IChatConversation> {
+        return await this.authCall(async (client) => {
+            const response = await GenAiApi_SwitchAgent(client.axios, client.basePath, {
+                conversationId,
+                workspaceId: this.workspaceId,
+                aiSwitchAgentRequest: { agentId },
             });
             return convertChatConversationFromBackend(response.data);
         });
@@ -216,8 +231,10 @@ export class ConversationThread implements IChatConversationThread {
         });
 
         const data = items.data as { items: AiConversationItemResponse[] };
-        return data.items.map((item) =>
-            convertChatConversationItemFromBackend(item, responses?.data.responses, this.dateNormalizer),
+        return convertChatConversationItemsFromBackend(
+            data.items,
+            responses?.data.responses,
+            this.dateNormalizer,
         );
     }
 
@@ -389,9 +406,7 @@ export class ChatConversationThreadQuery implements IChatConversationThreadQuery
             );
         });
         const data = response.data as { items: AiConversationItemResponse[] };
-        return data.items.map((item) =>
-            convertChatConversationItemFromBackend(item, undefined, this.dateNormalizer),
-        );
+        return convertChatConversationItemsFromBackend(data.items, undefined, this.dateNormalizer);
     }
     stream(): ReadableStream<IChatConversationItem | IChatConversationError> {
         // We are using Axios <1.7, which does not support streaming,

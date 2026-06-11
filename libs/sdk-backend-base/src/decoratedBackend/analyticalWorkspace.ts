@@ -9,6 +9,7 @@ import {
     type IGenAIService,
     type IReferencesService,
     type IWorkspaceAccessControlService,
+    type IWorkspaceAgentsService,
     type IWorkspaceAttributesService,
     type IWorkspaceAutomationService,
     type IWorkspaceCatalogFactory,
@@ -160,6 +161,10 @@ export class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
 
     public attributeHierarchies(): IAttributeHierarchiesService {
         return this.decorated.attributeHierarchies();
+    }
+
+    public agents(): IWorkspaceAgentsService {
+        return this.decorated.agents();
     }
 
     public exportDefinitions(): IWorkspaceExportDefinitionsService {

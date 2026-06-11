@@ -253,7 +253,8 @@ function* fetchCurrentConversation() {
             loadConversationSuccessAction({
                 currentConversation: selectedConversation,
                 conversationItems: [
-                    ...messages,
+                    // Drop unconfirmed optimistic system items: the backend returns the persisted version.
+                    ...messages.filter((msg) => !(msg.role === "system" && msg.id === "")),
                     ...resultsItems.map((item) => {
                         return makeConversationItem({
                             ...item,

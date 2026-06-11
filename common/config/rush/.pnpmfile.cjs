@@ -55,5 +55,16 @@ function readPackage(packageJson, _context) {
         packageJson.devDependencies["browserslist"] = browserslistVersion;
     }
 
+    /*
+        remove it when @openapitools/openapi-generator-cli update its dependency concurrently
+        @openapitools/openapi-generator-cli 2.34.0
+        └─┬ concurrently 9.2.1
+          └── shell-quote 1.8.3
+    */
+    if (packageJson.dependencies && packageJson.dependencies["shell-quote"]) {
+        //context.log("Fixed up dependencies for shell-quote");
+        packageJson.dependencies["shell-quote"] = "1.8.4";
+    }
+
     return packageJson;
 }

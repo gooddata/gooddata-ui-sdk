@@ -3,6 +3,7 @@
 import { type IPagedResource } from "../common/paging.js";
 
 import { type IWorkspaceAccessControlService } from "./accessControl/index.js";
+import { type IWorkspaceAgentsService } from "./agents/index.js";
 import { type IAttributeHierarchiesService } from "./attributeHierarchies/index.js";
 import { type IWorkspaceAttributesService } from "./attributes/index.js";
 import { type IWorkspaceAutomationService } from "./automations/index.js";
@@ -166,6 +167,13 @@ export interface IAnalyticalWorkspace {
      * @alpha
      */
     attributeHierarchies(): IAttributeHierarchiesService;
+
+    /**
+     * Returns service that can be used to query AI agents available in this workspace.
+     *
+     * @alpha
+     */
+    agents(): IWorkspaceAgentsService;
 
     /**
      * Returns service that operates over export definitions

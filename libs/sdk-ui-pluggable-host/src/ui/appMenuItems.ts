@@ -42,7 +42,10 @@ function navMessageKey(appId: string): string {
     return `${NAV_MSG_PREFIX}${appId}`;
 }
 
-function getLocalizedTitle(app: PluggableApplicationRegistryItem, locale: ILocale | undefined): string {
+export function getLocalizedTitle(
+    app: PluggableApplicationRegistryItem,
+    locale: ILocale | undefined,
+): string {
     if (locale && app.localizedTitle) {
         const localizedTitle = app.localizedTitle[locale];
         if (localizedTitle) {

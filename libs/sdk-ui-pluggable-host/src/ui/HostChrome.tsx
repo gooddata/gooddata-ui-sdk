@@ -15,6 +15,7 @@ import { BackendProvider, resolveLocale } from "@gooddata/sdk-ui";
 import { AppHeaderNotifications } from "@gooddata/sdk-ui-application-header";
 import {
     AppHeader,
+    DocumentHeader,
     type IHeaderMenuItem,
     type IHeaderWorkspace,
     ToastsCenterContextProvider,
@@ -27,10 +28,10 @@ import {
     getAppLifecycleCallbacks,
     preloadPluggableApplication,
 } from "../loader/pluggableApplicationsLoader.js";
-import { getApplicationHref } from "../loader/routing.js";
+import { getActiveInternalApplication, getApplicationHref } from "../loader/routing.js";
 import { getBackend } from "../platformContext/backend.js";
 
-import { buildAppMenu } from "./appMenuItems.js";
+import { buildAppMenu, getLocalizedTitle } from "./appMenuItems.js";
 import { getUserDisplayName, swapWorkspaceInPath } from "./chromeHelpers.js";
 import { b, e } from "./hostChromeBem.js";
 import { HostIntlProvider } from "./HostIntlProvider.js";
@@ -60,6 +61,11 @@ export interface IHostChromeProps {
     onReplace: (url: string) => void;
     headerOptions?: IAppHeaderOptions;
     notification?: IHostUiNotification | null;
+    /**
+     * Page-title segment set by the active pluggable application via its `onDocumentTitleChange`
+     * callback. When omitted, the active application's manifest title is used instead.
+     */
+    appPageTitle?: string;
     children?: ReactNode;
 }
 
@@ -71,6 +77,7 @@ export function HostChrome({
     onReplace: _onReplace,
     headerOptions,
     notification = null,
+    appPageTitle,
     children,
 }: IHostChromeProps) {
     const locale = resolveLocale(ctx.preferredLocale);
@@ -97,9 +104,15 @@ export function HostChrome({
         [resolvedApplications, ctx, pathname],
     );
 
+    // The default help menu links exclusively to GoodData resources (documentation, university,
+    // community, Slack). When white-labeling is enabled (the "Hide links to GoodData documentation"
+    // setting) those must not leak into the branded header, so the host renders no default help
+    // menu. Apps may still supply their own help items via headerOptions.
     const helpMenuItems = useMemo(
-        () => headerOptions?.helpMenuItems ?? generateHeaderStaticHelpMenuItems(),
-        [headerOptions],
+        () =>
+            headerOptions?.helpMenuItems ??
+            (ctx.whiteLabeling?.enabled ? [] : generateHeaderStaticHelpMenuItems()),
+        [headerOptions, ctx.whiteLabeling?.enabled],
     );
 
     const accountMenuItems = useMemo<IHeaderMenuItem[]>(
@@ -187,6 +200,29 @@ export function HostChrome({
         ? ctx.user.organizationName || defaultLogoTitle
         : defaultLogoTitle;
 
+    // White-label icons are applied whenever their URLs are set, independent of the `enabled`
+    // flag (matching the standalone apps and the Appearance behavior). The favicon falls back to
+    // the default served at /favicon.ico so a previously applied custom favicon is reset once its
+    // URL is cleared, instead of leaving the stale icon in place.
+    const faviconUrl = ctx.whiteLabeling?.faviconUrl || "/favicon.ico";
+
+    // The host owns the browser tab title as "{page} - {brand}". The page segment defaults to the
+    // active application's manifest title, but an embedded app can override it dynamically via its
+    // mount `onDocumentTitleChange` callback (surfaced here as `appPageTitle`). When white-labeling
+    // is enabled the brand is the organization name — preferring the user profile's name, then the
+    // resolved organization descriptor title (the profile field is optional) — and is omitted (so
+    // DocumentHeader drops the " - " separator) only when neither is set. The GoodData product name
+    // is used solely when white-labeling is disabled, so a branded org never falls back to it.
+    const activeApplication = getActiveInternalApplication(resolvedApplications, ctx, pathname);
+    // An app may report an empty page segment (e.g. no insight open); treat it the same as `undefined`
+    // (omitted) so the tab falls back to the active application's manifest title rather than going blank.
+    const documentPageTitle =
+        appPageTitle ||
+        (activeApplication ? getLocalizedTitle(activeApplication, ctx.preferredLocale) : undefined);
+    const documentBrandTitle = ctx.whiteLabeling?.enabled
+        ? ctx.user.organizationName || ctx.organization?.title || ""
+        : defaultLogoTitle;
+
     const headerColor = ctx.theme?.header?.backgroundColor ?? defaultHeaderTheme.backgroundColor;
     const headerTextColor = ctx.theme?.header?.color ?? defaultHeaderTheme.color;
     const activeColor = ctx.theme?.header?.activeColor ?? defaultHeaderTheme.activeColor;
@@ -198,6 +234,12 @@ export function HostChrome({
             <BackendProvider backend={getBackend()}>
                 <ToastsCenterContextProvider>
                     <div className={b()}>
+                        <DocumentHeader
+                            pageTitle={documentPageTitle}
+                            brandTitle={documentBrandTitle}
+                            faviconUrl={faviconUrl}
+                            appleTouchIconUrl={ctx.whiteLabeling?.appleTouchIconUrl}
+                        />
                         {isEmbedded ? null : (
                             <div className={e("header")} onMouseOver={handleHeaderMouseOver}>
                                 <AppHeader

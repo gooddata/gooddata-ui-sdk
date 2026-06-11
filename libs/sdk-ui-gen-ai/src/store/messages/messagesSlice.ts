@@ -9,6 +9,7 @@ import { type SdkErrorType } from "@gooddata/sdk-ui";
 import {
     type AssistantMessage,
     type Contents,
+    type GenAIAgent,
     type IChatConversationErrorContent,
     type IChatConversationLocal,
     type IChatConversationLocalContent,
@@ -20,6 +21,7 @@ import {
     isChatConversationLocalItem,
     isUserMessage,
     isVisualizationContents,
+    makeAgentChangeItem,
     makeErrorContent,
     makeErrorContents,
 } from "../../model.js";
@@ -56,8 +58,9 @@ type MessagesSliceState = {
      * - restoring: cached messages have been restored while the backend fetch is still in-flight
      * - clearing: the thread is being cleared
      * - evaluating: the new user message is being evaluated by assistant
+     * - switchingAgent: the active agent switch is being persisted
      */
-    messageAsyncProcess?: "loading" | "restoring" | "clearing" | "evaluating";
+    messageAsyncProcess?: "loading" | "restoring" | "clearing" | "evaluating" | "switchingAgent";
 
     /**
      * A list of conversations.
@@ -72,6 +75,15 @@ type MessagesSliceState = {
      *  - undefined: no conversation is selected
      */
     currentConversation: IChatConversationLocal | undefined;
+    /**
+     * The currently selected agent id for newly created conversations.
+     */
+    selectedAgentId: string | undefined;
+    /**
+     * The enabled agents available for new prompts.
+     * Undefined means the agent list has not been evaluated yet.
+     */
+    agents: GenAIAgent[] | undefined;
     /**
      * Conversation data
      */
@@ -117,6 +129,8 @@ const initialState: MessagesSliceState = {
     conversations: undefined,
     currentConversation: undefined,
     conversationsLoaded: false,
+    selectedAgentId: undefined,
+    agents: undefined,
     conversationsData: {},
 };
 
@@ -371,6 +385,7 @@ const messagesSlice = createSlice({
             }>,
         ) => {
             setNormalizedConversation(state, currentConversation, conversationItems);
+            state.selectedAgentId = currentConversation.agentId ?? state.selectedAgentId;
             state.threadId = threadId;
             if (state.currentConversation) {
                 const data = getConversationData(state.conversationsData, state.currentConversation.localId);
@@ -706,12 +721,109 @@ const messagesSlice = createSlice({
                 state.threadId = payload.conversation.id;
                 existing.id = payload.conversation.id;
                 existing.localId = payload.conversation.localId;
+                existing.agentId = payload.conversation.agentId;
             } else {
                 state.conversations = [payload.conversation, ...(state.conversations ?? [])];
                 state.currentConversation = payload.conversation;
                 state.threadId = payload.conversation.id;
                 state.loaded = true;
             }
+            state.selectedAgentId = payload.conversation.agentId ?? state.selectedAgentId;
+        },
+        setSelectedAgentAction: (
+            state,
+            {
+                payload,
+            }: PayloadAction<{
+                agentId: string | undefined;
+                previousAgentId?: string | undefined;
+                showChangeEvent?: boolean;
+            }>,
+        ) => {
+            const previousAgentId = state.currentConversation?.agentId;
+            state.selectedAgentId = payload.agentId;
+
+            // Silent defaults (no showChangeEvent) must not stamp a persisted conversation's agentId.
+            if (state.currentConversation && payload.showChangeEvent) {
+                state.currentConversation.agentId = payload.agentId;
+                state.conversations = state.conversations?.map((conversation) =>
+                    conversation.localId === state.currentConversation?.localId
+                        ? {
+                              ...conversation,
+                              agentId: payload.agentId,
+                          }
+                        : conversation,
+                );
+
+                const data = getConversationData(state.conversationsData, state.currentConversation.localId);
+                // Only persisted conversations (with an id) are switched on the backend by onAgentSwitch.
+                // A draft conversation (empty id) is created with the selected agent on the first message,
+                // so it must not show a "switched agent" divider or enter the switching busy state - that
+                // switch never happened on the server.
+                if (
+                    data &&
+                    state.currentConversation.id &&
+                    payload.agentId &&
+                    previousAgentId !== payload.agentId
+                ) {
+                    // Optimistically append the agentChange event for immediate in-session feedback -
+                    // nothing reloads the conversation history right after a switch. The backend persists
+                    // its own agentChange item, which is reconstructed by the history convertor when the
+                    // conversation is reopened (in-memory items are empty on a fresh load, so this does not
+                    // duplicate).
+                    const item = makeAgentChangeItem({
+                        agentId: payload.agentId,
+                        oldAgentId: previousAgentId,
+                    });
+                    data.items[item.localId] = item;
+                    data.order.push(item.localId);
+
+                    data.asyncProcess = "switchingAgent";
+                }
+            }
+        },
+        finishAgentSwitchAction: (state, { payload }: PayloadAction<{ conversationLocalId: string }>) => {
+            const data = state.conversationsData[payload.conversationLocalId];
+            if (data?.asyncProcess === "switchingAgent") {
+                delete data.asyncProcess;
+            }
+        },
+        revertAgentSwitchAction: (
+            state,
+            {
+                payload,
+            }: PayloadAction<{
+                previousAgentId: string | undefined;
+                failedAgentId: string;
+                conversationLocalId: string;
+            }>,
+        ) => {
+            // Only revert the dropdown when the user is still on the failed conversation.
+            if (state.currentConversation?.localId === payload.conversationLocalId) {
+                state.selectedAgentId = payload.previousAgentId;
+                state.currentConversation.agentId = payload.previousAgentId;
+            }
+
+            state.conversations = state.conversations?.map((conversation) =>
+                conversation.localId === payload.conversationLocalId
+                    ? { ...conversation, agentId: payload.previousAgentId }
+                    : conversation,
+            );
+
+            const data = state.conversationsData[payload.conversationLocalId];
+            if (data) {
+                const optimisticId = [...data.order].reverse().find((id) => {
+                    const item = data.items[id];
+                    return item.role === "system" && item.agentId === payload.failedAgentId && item.id === "";
+                });
+                if (optimisticId) {
+                    data.order.splice(data.order.indexOf(optimisticId), 1);
+                    delete data.items[optimisticId];
+                }
+            }
+        },
+        setAgentsAction: (state, { payload }: PayloadAction<{ agents: GenAIAgent[] | undefined }>) => {
+            state.agents = payload.agents;
         },
         setGlobalErrorAction: (state, { payload: { error } }: PayloadAction<{ error: Error }>) => {
             state.globalError = errorToObject(error);
@@ -1213,6 +1325,10 @@ export const {
     saveVisualisationRenderStatusAction,
     saveVisualisationRenderStatusSuccessAction,
     visualizationErrorAction,
+    setSelectedAgentAction,
+    finishAgentSwitchAction,
+    revertAgentSwitchAction,
+    setAgentsAction,
     pinConversationAction,
     pinConversationSuccessAction,
     pinConversationFailureAction,

@@ -42,6 +42,7 @@ export {
     type IChatConversationErrorContent,
     type IChatConversationMultipartLocalPart,
     type IChatConversationLocal,
+    type IChatConversationSystemContent,
 } from "./model.js";
 export {
     type ChatEventHandler,

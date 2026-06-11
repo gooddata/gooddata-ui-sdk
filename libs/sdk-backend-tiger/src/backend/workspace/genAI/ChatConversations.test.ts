@@ -3,13 +3,17 @@
 import { type AxiosProgressEvent, type AxiosPromise } from "axios";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { GenAiApi_PostMessages } from "@gooddata/api-client-tiger/endpoints/genAI";
+import {
+    GenAiApi_PostConversations,
+    GenAiApi_PostMessages,
+    GenAiApi_SwitchAgent,
+} from "@gooddata/api-client-tiger/endpoints/genAI";
 import { idRef } from "@gooddata/sdk-model";
 
 import type { DateNormalizer } from "../../../convertors/fromBackend/dateFormatting/types.js";
 import type { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
-import { ChatConversationThreadQuery } from "./ChatConversations.js";
+import { ChatConversationThreadQuery, ChatConversationsService } from "./ChatConversations.js";
 
 vi.mock("@gooddata/api-client-tiger/endpoints/genAI", () => ({
     GenAiApi_DeleteConversation: vi.fn(),
@@ -17,11 +21,75 @@ vi.mock("@gooddata/api-client-tiger/endpoints/genAI", () => ({
     GenAiApi_GetConversationItems: vi.fn(),
     GenAiApi_GetConversationResponses: vi.fn(),
     GenAiApi_GetConversations: vi.fn(),
+    GenAiApi_PatchConversation: vi.fn(),
     GenAiApi_PostConversationFeedback: vi.fn(),
     GenAiApi_PatchVisualization: vi.fn(),
     GenAiApi_PostConversations: vi.fn(),
+    GenAiApi_PostGenerateConversationTitle: vi.fn(),
     GenAiApi_PostMessages: vi.fn(),
+    GenAiApi_SwitchAgent: vi.fn(),
 }));
+
+describe("ChatConversationsService.create", () => {
+    const dateNormalizer: DateNormalizer = (value) => value ?? "";
+    const authCall = vi.fn(async (callback) =>
+        callback({
+            axios: {},
+            basePath: "",
+        }),
+    ) as TigerAuthenticatedCallGuard;
+
+    beforeEach(() => {
+        vi.clearAllMocks();
+        vi.mocked(GenAiApi_PostConversations).mockResolvedValue({
+            data: {
+                conversationId: "conversation",
+                createdAt: "2026-01-01T00:00:00Z",
+                lastActivityAt: "2026-01-01T00:00:00Z",
+                pinned: false,
+                agentId: "agent-1",
+            },
+        } as unknown as Awaited<AxiosPromise>);
+    });
+
+    it("should send agent id when creating a conversation for a selected agent", async () => {
+        const service = new ChatConversationsService(authCall, "workspace", dateNormalizer);
+
+        const conversation = await service.create({ agentId: "agent-1" });
+
+        expect(vi.mocked(GenAiApi_PostConversations).mock.calls[0][2]).toEqual({
+            workspaceId: "workspace",
+            aiCreateConversationRequest: {
+                agentId: "agent-1",
+            },
+        });
+        expect(conversation.agentId).toBe("agent-1");
+    });
+
+    it("should switch the agent for an existing conversation", async () => {
+        vi.mocked(GenAiApi_SwitchAgent).mockResolvedValue({
+            data: {
+                conversationId: "conversation",
+                createdAt: "2026-01-01T00:00:00Z",
+                lastActivityAt: "2026-01-01T00:00:00Z",
+                pinned: false,
+                agentId: "agent-2",
+            },
+        } as unknown as Awaited<AxiosPromise>);
+        const service = new ChatConversationsService(authCall, "workspace", dateNormalizer);
+
+        const conversation = await service.switchAgent("conversation", "agent-2");
+
+        expect(vi.mocked(GenAiApi_SwitchAgent).mock.calls[0][2]).toEqual({
+            workspaceId: "workspace",
+            conversationId: "conversation",
+            aiSwitchAgentRequest: {
+                agentId: "agent-2",
+            },
+        });
+        expect(conversation.agentId).toBe("agent-2");
+    });
+});
 
 describe("ChatConversationThreadQuery.stream", () => {
     const dateNormalizer: DateNormalizer = (value) => value ?? "";

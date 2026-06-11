@@ -9,6 +9,7 @@ import {
     type IGenAIService,
     type IReferencesService,
     type IWorkspaceAccessControlService,
+    type IWorkspaceAgentsService,
     type IWorkspaceAttributesService,
     type IWorkspaceAutomationService,
     type IWorkspaceCatalogFactory,
@@ -140,6 +141,10 @@ export class CustomWorkspace implements IAnalyticalWorkspace {
 
     public attributeHierarchies(): IAttributeHierarchiesService {
         throw new NotSupported("attribute hierarchy is not supported");
+    }
+
+    public agents(): IWorkspaceAgentsService {
+        throw new NotSupported("agents are not supported");
     }
 
     public exportDefinitions(): IWorkspaceExportDefinitionsService {
