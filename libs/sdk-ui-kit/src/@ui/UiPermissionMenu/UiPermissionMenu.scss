@@ -24,6 +24,14 @@
     &__item-row {
         display: flex;
         align-items: stretch;
+
+        // Hover/focus highlight covers the full row (label button + adjacent
+        // tooltip-icon button), not just the label button. The two buttons
+        // are siblings — a partial highlight would look broken.
+        &:hover,
+        &:focus-within {
+            background: var(--gd-palette-complementary-2);
+        }
     }
 
     &__item {
@@ -40,10 +48,15 @@
         font: inherit;
         color: var(--gd-palette-complementary-8);
 
-        &:hover,
         &:focus-visible {
-            background: var(--gd-palette-complementary-2);
             outline: none;
+        }
+
+        // Selected radio item — same convention as the legacy share dialog,
+        // which renders the active permission level in primary-base.
+        &[aria-checked="true"] {
+            color: var(--gd-palette-primary-base);
+            font-weight: 700;
         }
     }
 

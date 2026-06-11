@@ -18,3 +18,9 @@
         }
     }
 }
+
+// On mobile the error chip fills the full row width instead of the compact desktop width.
+// Declared last so it wins over both width rules above for the mobile context.
+.gd-is-mobile .gd-attribute-filter-dropdown-button__next.gd-message.error {
+    width: 100%;
+}

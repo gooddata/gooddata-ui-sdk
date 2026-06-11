@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "sdk-ui-dashboard: Refine widget filter handling in automation workflows for non widget alerts.",
+            "comment": "sdk-ui-kit: introduce UiModalDialog primitive; UiConfirmDialog and UiObjectShareDialog become real modals via Card composition.",
             "type": "none"
         }
     ],

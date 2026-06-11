@@ -4373,6 +4373,22 @@ export const metadata_v1: {
                     disable_scheduled_exports: {
                         type: string;
                     };
+                    disable_key_drive_analysis: {
+                        type: string;
+                        $semantic: {
+                            type: string;
+                            source: string;
+                            mode: string;
+                        };
+                        additionalProperties: {
+                            type: string;
+                            $semantic: {
+                                type: string;
+                                source: string;
+                                mode: string;
+                            };
+                        };
+                    };
                     text_wrapping: {
                         type: string;
                         description: string;
@@ -10757,6 +10773,10 @@ interface VisualisationConfig {
     // (undocumented)
     disable_drill_into_url?: boolean;
     // (undocumented)
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
+    // (undocumented)
     disable_scheduled_exports?: boolean;
     // (undocumented)
     distinct_point_shapes?: {
@@ -11007,6 +11027,10 @@ interface VisualisationConfig1 {
     disable_drill_down?: boolean;
     // (undocumented)
     disable_drill_into_url?: boolean;
+    // (undocumented)
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
     // (undocumented)
     disable_scheduled_exports?: boolean;
     // (undocumented)
@@ -11259,6 +11283,10 @@ interface VisualisationConfig10 {
     // (undocumented)
     disable_drill_into_url?: boolean;
     // (undocumented)
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
+    // (undocumented)
     disable_scheduled_exports?: boolean;
     // (undocumented)
     distinct_point_shapes?: {
@@ -11509,6 +11537,10 @@ interface VisualisationConfig11 {
     disable_drill_down?: boolean;
     // (undocumented)
     disable_drill_into_url?: boolean;
+    // (undocumented)
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
     // (undocumented)
     disable_scheduled_exports?: boolean;
     // (undocumented)
@@ -11761,6 +11793,10 @@ interface VisualisationConfig12 {
     // (undocumented)
     disable_drill_into_url?: boolean;
     // (undocumented)
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
+    // (undocumented)
     disable_scheduled_exports?: boolean;
     // (undocumented)
     distinct_point_shapes?: {
@@ -12011,6 +12047,10 @@ interface VisualisationConfig13 {
     disable_drill_down?: boolean;
     // (undocumented)
     disable_drill_into_url?: boolean;
+    // (undocumented)
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
     // (undocumented)
     disable_scheduled_exports?: boolean;
     // (undocumented)
@@ -12263,6 +12303,10 @@ interface VisualisationConfig14 {
     // (undocumented)
     disable_drill_into_url?: boolean;
     // (undocumented)
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
+    // (undocumented)
     disable_scheduled_exports?: boolean;
     // (undocumented)
     distinct_point_shapes?: {
@@ -12513,6 +12557,10 @@ interface VisualisationConfig15 {
     disable_drill_down?: boolean;
     // (undocumented)
     disable_drill_into_url?: boolean;
+    // (undocumented)
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
     // (undocumented)
     disable_scheduled_exports?: boolean;
     // (undocumented)
@@ -12765,6 +12813,10 @@ interface VisualisationConfig16 {
     // (undocumented)
     disable_drill_into_url?: boolean;
     // (undocumented)
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
+    // (undocumented)
     disable_scheduled_exports?: boolean;
     // (undocumented)
     distinct_point_shapes?: {
@@ -13015,6 +13067,10 @@ interface VisualisationConfig17 {
     disable_drill_down?: boolean;
     // (undocumented)
     disable_drill_into_url?: boolean;
+    // (undocumented)
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
     // (undocumented)
     disable_scheduled_exports?: boolean;
     // (undocumented)
@@ -13267,6 +13323,10 @@ interface VisualisationConfig18 {
     // (undocumented)
     disable_drill_into_url?: boolean;
     // (undocumented)
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
+    // (undocumented)
     disable_scheduled_exports?: boolean;
     // (undocumented)
     distinct_point_shapes?: {
@@ -13517,6 +13577,10 @@ interface VisualisationConfig19 {
     disable_drill_down?: boolean;
     // (undocumented)
     disable_drill_into_url?: boolean;
+    // (undocumented)
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
     // (undocumented)
     disable_scheduled_exports?: boolean;
     // (undocumented)
@@ -13769,6 +13833,10 @@ interface VisualisationConfig2 {
     // (undocumented)
     disable_drill_into_url?: boolean;
     // (undocumented)
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
+    // (undocumented)
     disable_scheduled_exports?: boolean;
     // (undocumented)
     distinct_point_shapes?: {
@@ -14019,6 +14087,10 @@ interface VisualisationConfig20 {
     disable_drill_down?: boolean;
     // (undocumented)
     disable_drill_into_url?: boolean;
+    // (undocumented)
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
     // (undocumented)
     disable_scheduled_exports?: boolean;
     // (undocumented)
@@ -14271,6 +14343,10 @@ interface VisualisationConfig21 {
     // (undocumented)
     disable_drill_into_url?: boolean;
     // (undocumented)
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
+    // (undocumented)
     disable_scheduled_exports?: boolean;
     // (undocumented)
     distinct_point_shapes?: {
@@ -14521,6 +14597,10 @@ interface VisualisationConfig22 {
     disable_drill_down?: boolean;
     // (undocumented)
     disable_drill_into_url?: boolean;
+    // (undocumented)
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
     // (undocumented)
     disable_scheduled_exports?: boolean;
     // (undocumented)
@@ -14773,6 +14853,10 @@ interface VisualisationConfig3 {
     // (undocumented)
     disable_drill_into_url?: boolean;
     // (undocumented)
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
+    // (undocumented)
     disable_scheduled_exports?: boolean;
     // (undocumented)
     distinct_point_shapes?: {
@@ -15023,6 +15107,10 @@ interface VisualisationConfig4 {
     disable_drill_down?: boolean;
     // (undocumented)
     disable_drill_into_url?: boolean;
+    // (undocumented)
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
     // (undocumented)
     disable_scheduled_exports?: boolean;
     // (undocumented)
@@ -15275,6 +15363,10 @@ interface VisualisationConfig5 {
     // (undocumented)
     disable_drill_into_url?: boolean;
     // (undocumented)
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
+    // (undocumented)
     disable_scheduled_exports?: boolean;
     // (undocumented)
     distinct_point_shapes?: {
@@ -15525,6 +15617,10 @@ interface VisualisationConfig6 {
     disable_drill_down?: boolean;
     // (undocumented)
     disable_drill_into_url?: boolean;
+    // (undocumented)
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
     // (undocumented)
     disable_scheduled_exports?: boolean;
     // (undocumented)
@@ -15777,6 +15873,10 @@ interface VisualisationConfig7 {
     // (undocumented)
     disable_drill_into_url?: boolean;
     // (undocumented)
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
+    // (undocumented)
     disable_scheduled_exports?: boolean;
     // (undocumented)
     distinct_point_shapes?: {
@@ -16028,6 +16128,10 @@ interface VisualisationConfig8 {
     // (undocumented)
     disable_drill_into_url?: boolean;
     // (undocumented)
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
+    // (undocumented)
     disable_scheduled_exports?: boolean;
     // (undocumented)
     distinct_point_shapes?: {
@@ -16278,6 +16382,10 @@ interface VisualisationConfig9 {
     disable_drill_down?: boolean;
     // (undocumented)
     disable_drill_into_url?: boolean;
+    // (undocumented)
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
     // (undocumented)
     disable_scheduled_exports?: boolean;
     // (undocumented)

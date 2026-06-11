@@ -30,5 +30,8 @@
     "messages.genAi.visualisation.link.copied": "De visualisatielink is gekopieerd naar je klembord.",
     "messages.showMore": "Meer tonen",
     "messages.showLess": "Minder tonen",
-    "gen-ai.ask-assistant.search": "Bouw nieuwe visualisatie gebaseerd op: {question}"
+    "gen-ai.ask-assistant.search": "Bouw nieuwe visualisatie gebaseerd op: {question}",
+    "gs.host.error.appNotAllowedForOrganization": "This application is not available for your organization.",
+    "gs.host.error.appBuildExpired": "This application is out of date and must be rebuilt by its author before it can run again.",
+    "gs.host.error.appSecurityMetadataMissing": "This application is missing required security metadata and cannot be loaded."
 }

@@ -2,7 +2,13 @@
 
 import type { Visualisation } from "@gooddata/sdk-code-schemas/v1";
 
-import { loadChartFill, loadColorMapping, saveChartFill, saveColorMapping } from "../utils/configUtils.js";
+import {
+    loadChartFill,
+    loadColorMapping,
+    loadDisableKda,
+    saveChartFill,
+    saveColorMapping,
+} from "../utils/configUtils.js";
 
 import { type ChartFillType, type ColorMapping, type PatternFillName } from "./types.js";
 import {
@@ -31,6 +37,7 @@ export type FunnelChartConfigProperties = {
     disableDrillDown: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
+    disableKeyDriveAnalysisOn: Record<string, boolean>;
 };
 
 /** @internal */
@@ -50,6 +57,7 @@ const DEFAULTS: ConfigDefaults<FunnelChartConfigProperties> = {
     disableDrillDown: false,
     disableAlerts: false,
     disableScheduledExports: false,
+    disableKeyDriveAnalysisOn: {},
 };
 
 /** @internal */
@@ -101,6 +109,8 @@ export function funnelChartLoad(props: VisualisationConfig<FunnelChartConfigProp
                         getValueOrDefault(value as boolean, DEFAULTS.disableScheduledExports, "bool"),
                     ],
                 ];
+            case "disableKeyDriveAnalysisOn":
+                return [["disable_key_drive_analysis", loadDisableKda(value as Record<string, boolean>)]];
             default:
                 return [];
         }
@@ -134,6 +144,7 @@ export function funnelChartSave(
             DEFAULTS.disableScheduledExports,
             "bool",
         ),
+        disableKeyDriveAnalysisOn: saveConfigObject(config.disable_key_drive_analysis),
     });
 }
 

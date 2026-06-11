@@ -813,7 +813,7 @@ export const selectEnableSlideshowExports: DashboardSelector<boolean> = createSe
 export const selectEnableExportTemplateSelection: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return state.settings?.enableExportTemplateSelection ?? false;
+        return state.settings?.enableExportTemplateSelection ?? true;
     },
 );
 

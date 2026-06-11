@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-pluggable-host",
-    "version": "11.41.0-alpha.5",
+    "version": "11.42.0-alpha.0",
     "description": "GoodData SDK runtime for hosting pluggable applications — registry, loader, routing, platform context, default UI chrome",
     "license": "MIT",
     "author": "GoodData Corporation",

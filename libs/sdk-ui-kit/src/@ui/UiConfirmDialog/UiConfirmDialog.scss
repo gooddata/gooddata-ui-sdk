@@ -3,11 +3,4 @@
 .gd-ui-kit-confirm-dialog {
     display: flex;
     flex-direction: column;
-
-    &__body {
-        font-size: 14px;
-        line-height: 20px;
-        color: var(--gd-palette-complementary-7);
-        margin-bottom: var(--gd-spacing-20px);
-    }
 }

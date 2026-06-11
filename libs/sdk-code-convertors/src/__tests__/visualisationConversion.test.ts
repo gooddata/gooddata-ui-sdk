@@ -15,6 +15,30 @@ import type { ExportEntities, FromEntities } from "../types.js";
 
 const emptyEntities: ExportEntities = [];
 const emptyFromEntities: FromEntities = [];
+const configBackedChartTypes: Array<Visualisation["type"]> = [
+    "table",
+    "bar_chart",
+    "column_chart",
+    "line_chart",
+    "area_chart",
+    "scatter_chart",
+    "bubble_chart",
+    "pie_chart",
+    "donut_chart",
+    "treemap_chart",
+    "pyramid_chart",
+    "funnel_chart",
+    "heatmap_chart",
+    "bullet_chart",
+    "waterfall_chart",
+    "dependency_wheel_chart",
+    "sankey_chart",
+    "headline_chart",
+    "combo_chart",
+    "geo_chart",
+    "geo_area_chart",
+    "repeater_chart",
+];
 
 describe("visualisation conversion", () => {
     describe("yamlFiltersToDeclarative", () => {
@@ -453,6 +477,9 @@ describe("visualisation conversion", () => {
                 ["combo_chart", "local:combo2"],
                 ["sankey_chart", "local:sankey"],
                 ["dependency_wheel_chart", "local:dependencywheel"],
+                ["geo_chart", "local:pushpin"],
+                ["geo_area_chart", "local:choropleth"],
+                ["repeater_chart", "local:repeater"],
             ];
 
             for (const [yamlType, expectedUrl] of chartTypeMap) {
@@ -488,6 +515,29 @@ describe("visualisation conversion", () => {
 
             const result = yamlVisualisationToDeclarative(emptyEntities, input);
             expect(result.isHidden).toBe(true);
+        });
+
+        it("should convert all config-backed chart types without crashing", () => {
+            for (const type of configBackedChartTypes) {
+                const input = {
+                    type,
+                    id: `config_${type}`,
+                    query: { fields: {} },
+                    config: {},
+                } as any;
+
+                const declarative = yamlVisualisationToDeclarative(emptyEntities, input);
+
+                expect(
+                    (declarative.content! as any).properties?.controls?.disable_key_drive_analysis,
+                ).toBeUndefined();
+
+                const { json } = declarativeVisualisationToYaml(emptyFromEntities, declarative);
+
+                expect(json!.type).toBe(type);
+                expect(json!.id).toBe(`config_${type}`);
+                expect(json!.config).toBeUndefined();
+            }
         });
     });
 
@@ -685,6 +735,46 @@ describe("visualisation conversion", () => {
 
             const { json } = declarativeVisualisationToYaml(emptyFromEntities, declarative);
             expect(json!.config).toBeUndefined();
+        });
+    });
+
+    describe("waterfall chart disableKeyDriveAnalysisOn round-trip", () => {
+        it("should map disable_key_drive_analysis from YAML to declarative controls", () => {
+            const input = {
+                type: "waterfall_chart",
+                id: "waterfall_key_driver",
+                query: { fields: { m1: { using: "metric/revenue" } } },
+                metrics: [{ field: "m1" }],
+                config: {
+                    disable_key_drive_analysis: {
+                        m1: true,
+                    },
+                },
+            } as any;
+
+            const declarative = yamlVisualisationToDeclarative(emptyEntities, input);
+            const controls = (declarative.content as any).properties.controls;
+
+            expect(controls.disableKeyDriveAnalysisOn).toEqual({ m1: true });
+        });
+
+        it("should map disableKeyDriveAnalysisOn from declarative controls to YAML", () => {
+            const input = {
+                type: "waterfall_chart",
+                id: "waterfall_key_driver",
+                query: { fields: { m1: { using: "metric/revenue" } } },
+                metrics: [{ field: "m1" }],
+                config: {
+                    disable_key_drive_analysis: {
+                        m1: true,
+                    },
+                },
+            } as any;
+
+            const declarative = yamlVisualisationToDeclarative(emptyEntities, input);
+            const { json } = declarativeVisualisationToYaml(emptyFromEntities, declarative);
+
+            expect(json!.config!["disable_key_drive_analysis"]).toEqual({ m1: true });
         });
     });
 

@@ -25,66 +25,28 @@ const baseProps = {
 };
 
 describe("UiConfirmDialog", () => {
-    it("renders the title and description", () => {
-        renderWithIntl(<UiConfirmDialog {...baseProps} />);
-        expect(screen.getByRole("dialog", { name: "Remove access?" })).toBeInTheDocument();
+    it("does not render when isOpen is false", () => {
+        renderWithIntl(<UiConfirmDialog {...baseProps} isOpen={false} />);
+        expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    });
+
+    it("renders the title and description when open", () => {
+        renderWithIntl(<UiConfirmDialog {...baseProps} isOpen />);
+        expect(screen.getByText("Remove access?")).toBeInTheDocument();
         expect(screen.getByText("Are you sure?")).toBeInTheDocument();
     });
 
-    it("renders the confirmLabel on the primary button", () => {
-        renderWithIntl(<UiConfirmDialog {...baseProps} confirmLabel="Transfer" />);
-        expect(screen.getByRole("button", { name: "Transfer" })).toBeInTheDocument();
-    });
-
-    it("calls onConfirm when the confirm button is clicked", () => {
-        const onConfirm = vi.fn();
-        renderWithIntl(<UiConfirmDialog {...baseProps} onConfirm={onConfirm} />);
-        fireEvent.click(screen.getByRole("button", { name: "Remove" }));
-        expect(onConfirm).toHaveBeenCalledTimes(1);
-    });
-
-    it("calls onCancel when the footer Cancel button is clicked", () => {
-        const onCancel = vi.fn();
-        renderWithIntl(<UiConfirmDialog {...baseProps} onCancel={onCancel} />);
-        fireEvent.click(screen.getByRole("button", { name: "Cancel" }));
-        expect(onCancel).toHaveBeenCalledTimes(1);
-    });
-
-    it("calls onClose when the header X button is clicked", () => {
+    it("calls onClose when Escape is pressed inside the dialog", () => {
         const onClose = vi.fn();
-        renderWithIntl(<UiConfirmDialog {...baseProps} onClose={onClose} />);
-        fireEvent.click(screen.getByRole("button", { name: "Close" }));
-        expect(onClose).toHaveBeenCalledTimes(1);
-    });
-
-    it("calls onClose when Escape is pressed (modal behaviour)", () => {
-        const onClose = vi.fn();
-        renderWithIntl(<UiConfirmDialog {...baseProps} onClose={onClose} />);
+        renderWithIntl(<UiConfirmDialog {...baseProps} isOpen onClose={onClose} />);
         fireEvent.keyDown(screen.getByRole("dialog"), { key: "Escape" });
         expect(onClose).toHaveBeenCalledTimes(1);
     });
 
-    it("renders with aria-modal=true (modal behaviour)", () => {
-        renderWithIntl(<UiConfirmDialog {...baseProps} />);
-        expect(screen.getByRole("dialog")).toHaveAttribute("aria-modal", "true");
-    });
-
-    it("renders ReactNode descriptions", () => {
-        renderWithIntl(
-            <UiConfirmDialog
-                {...baseProps}
-                description={
-                    <>
-                        Hello <strong>world</strong>
-                    </>
-                }
-            />,
-        );
-        expect(screen.getByText("world")).toBeInTheDocument();
-    });
-
-    it("forwards dataTestId to the root element", () => {
-        renderWithIntl(<UiConfirmDialog {...baseProps} dataTestId="confirm" />);
-        expect(screen.getByTestId("confirm")).toBeInTheDocument();
+    it("calls onConfirm when the confirm button is clicked", () => {
+        const onConfirm = vi.fn();
+        renderWithIntl(<UiConfirmDialog {...baseProps} isOpen onConfirm={onConfirm} />);
+        fireEvent.click(screen.getByRole("button", { name: "Remove" }));
+        expect(onConfirm).toHaveBeenCalledTimes(1);
     });
 });

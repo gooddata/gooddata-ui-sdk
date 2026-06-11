@@ -2,7 +2,13 @@
 
 import type { Bucket, Visualisation } from "@gooddata/sdk-code-schemas/v1";
 
-import { loadChartFill, loadColorMapping, saveChartFill, saveColorMapping } from "../utils/configUtils.js";
+import {
+    loadChartFill,
+    loadColorMapping,
+    loadDisableKda,
+    saveChartFill,
+    saveColorMapping,
+} from "../utils/configUtils.js";
 import { getFullBucket } from "../utils/sharedUtils.js";
 
 import {
@@ -89,6 +95,7 @@ export type ComboChartConfigProperties = {
     disableDrillDown: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
+    disableKeyDriveAnalysisOn: Record<string, boolean>;
     thresholdMeasures: string[];
     thresholdExcludedMeasures: string[];
 };
@@ -161,6 +168,7 @@ const DEFAULTS: ConfigDefaults<ComboChartConfigProperties> = {
     disableDrillDown: false,
     disableAlerts: false,
     disableScheduledExports: false,
+    disableKeyDriveAnalysisOn: {},
     thresholdMeasures: [],
     thresholdExcludedMeasures: [],
 };
@@ -343,6 +351,8 @@ export function comboChartLoad(props: VisualisationConfig<ComboChartConfigProper
                         getValueOrDefault(value as boolean, DEFAULTS.disableScheduledExports, "bool"),
                     ],
                 ];
+            case "disableKeyDriveAnalysisOn":
+                return [["disable_key_drive_analysis", loadDisableKda(value as Record<string, boolean>)]];
             case "thresholdMeasures": {
                 return [
                     [
@@ -498,6 +508,7 @@ export function comboChartSave(
             DEFAULTS.disableScheduledExports,
             "bool",
         ),
+        disableKeyDriveAnalysisOn: saveConfigObject(config.disable_key_drive_analysis),
         thresholdMeasures: getValueOrDefault(
             config.line_style_control_metrics,
             DEFAULTS.thresholdMeasures,

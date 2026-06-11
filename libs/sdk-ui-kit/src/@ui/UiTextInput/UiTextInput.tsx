@@ -1,6 +1,12 @@
 // (C) 2026 GoodData Corporation
 
-import { type ChangeEvent, useId } from "react";
+import {
+    type ChangeEvent,
+    type FocusEventHandler,
+    type KeyboardEventHandler,
+    type MouseEventHandler,
+    useId,
+} from "react";
 
 import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { accessibilityConfigToAttributes } from "../../typings/utilities.js";
@@ -54,6 +60,14 @@ export interface IUiTextInputProps {
     accessibilityConfig?: IAccessibilityConfigBase;
     disabled?: boolean;
     autoFocus?: boolean;
+    /** Forwarded to the input element. Use for autocomplete / combobox patterns. */
+    onKeyDown?: KeyboardEventHandler<HTMLInputElement>;
+    /** Forwarded to the input element. */
+    onFocus?: FocusEventHandler<HTMLInputElement>;
+    /** Forwarded to the input element. */
+    onBlur?: FocusEventHandler<HTMLInputElement>;
+    /** Forwarded to the input element. */
+    onClick?: MouseEventHandler<HTMLInputElement>;
     /** Test id forwarded to the input element. */
     dataTestId?: string;
 }
@@ -77,6 +91,10 @@ export function UiTextInput({
     accessibilityConfig,
     disabled = false,
     autoFocus = false,
+    onKeyDown,
+    onFocus,
+    onBlur,
+    onClick,
     dataTestId,
 }: IUiTextInputProps) {
     const id = useId();
@@ -107,6 +125,10 @@ export function UiTextInput({
                     autoFocus={autoFocus}
                     data-testid={dataTestId}
                     onChange={(event: ChangeEvent<HTMLInputElement>) => onChange(event.target.value)}
+                    onKeyDown={onKeyDown}
+                    onFocus={onFocus}
+                    onBlur={onBlur}
+                    onClick={onClick}
                     {...accessibilityConfigToAttributes(inputA11y)}
                 />
                 {onIconAfter ? (

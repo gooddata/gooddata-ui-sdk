@@ -6,6 +6,7 @@ import { type IChatConversationItem } from "@gooddata/sdk-backend-spi";
 import { type GenAIChatInteractionUserFeedback } from "@gooddata/sdk-model";
 import { type SdkErrorType } from "@gooddata/sdk-ui";
 
+import { selectDefaultAgentId } from "../../components/utils/agentSelection.js";
 import {
     type AssistantMessage,
     type Contents,
@@ -800,7 +801,16 @@ const messagesSlice = createSlice({
         ) => {
             // Only revert the dropdown when the user is still on the failed conversation.
             if (state.currentConversation?.localId === payload.conversationLocalId) {
-                state.selectedAgentId = payload.previousAgentId;
+                // The conversation itself goes back to its previous agent (possibly none - the
+                // server never switched), but the dropdown needs a concrete selection that is
+                // actually available, otherwise it would flip into the loading state until a
+                // default is re-resolved.
+                const isPreviousAgentAvailable =
+                    !!payload.previousAgentId &&
+                    (state.agents ?? []).some((agent) => agent.id === payload.previousAgentId);
+                state.selectedAgentId = isPreviousAgentAvailable
+                    ? payload.previousAgentId
+                    : selectDefaultAgentId(state.agents ?? [], state.conversations);
                 state.currentConversation.agentId = payload.previousAgentId;
             }
 

@@ -30,5 +30,8 @@
     "messages.genAi.visualisation.link.copied": "시각화 링크가 클립보드에 복사되었습니다.",
     "messages.showMore": "더 보기",
     "messages.showLess": "간단히 보기",
-    "gen-ai.ask-assistant.search": "새 시각화 생성 기준: {question}"
+    "gen-ai.ask-assistant.search": "새 시각화 생성 기준: {question}",
+    "gs.host.error.appNotAllowedForOrganization": "This application is not available for your organization.",
+    "gs.host.error.appBuildExpired": "This application is out of date and must be rebuilt by its author before it can run again.",
+    "gs.host.error.appSecurityMetadataMissing": "This application is missing required security metadata and cannot be loaded."
 }

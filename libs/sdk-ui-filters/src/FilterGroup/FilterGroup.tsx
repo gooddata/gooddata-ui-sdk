@@ -270,7 +270,7 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
                                         </>
                                     }
                                     buttonRef={handleButtonRef}
-                                    isOpen={isMobile ? true : props.isOpen}
+                                    layout={isMobile ? "row" : undefined}
                                 />
                             );
                         },
@@ -286,7 +286,7 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
                         <InnerDropdownButton
                             isLoading
                             buttonRef={setFilterItemRef}
-                            isOpen={isMobile ? true : undefined}
+                            layout={isMobile ? "row" : undefined}
                         />
                     ),
                     [setFilterItemRef, InnerDropdownButton, isMobile],
@@ -296,7 +296,7 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
                         <InnerDropdownButton
                             isError
                             buttonRef={setFilterItemRef}
-                            isOpen={isMobile ? true : undefined}
+                            layout={isMobile ? "row" : undefined}
                         />
                     ),
                     [setFilterItemRef, InnerDropdownButton, isMobile],
@@ -503,6 +503,7 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
                     onClick={toggleDropdown}
                     isError={isAnyFilterError}
                     ariaLabel={groupAriaLabelWithState}
+                    layout={isMobile && isOpen ? "row" : undefined}
                 />
             </div>
         ),

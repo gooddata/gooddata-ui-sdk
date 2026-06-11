@@ -40,14 +40,26 @@ export function* getDrillToUrlFiltersWithResolvedValues(
         const resolvableFilters: ResolvableFilter[] = filters.filter(
             (f): f is ResolvableFilter => isAttributeFilter(f) || isDateFilter(f),
         );
-        const resolvedFilterValues: SagaReturnType<typeof resolveFilterValues> = yield call(
-            resolveFilterValues,
-            resolvableFilters,
-            ctx.backend,
-            ctx.workspace,
-        );
+        try {
+            const resolvedFilterValues: SagaReturnType<typeof resolveFilterValues> = yield call(
+                resolveFilterValues,
+                resolvableFilters,
+                ctx.backend,
+                ctx.workspace,
+            );
 
-        return { filters, resolvedFilterValues };
+            return { filters, resolvedFilterValues };
+        } catch (error) {
+            // Deliberately fail the drill rather than open it: if the filter values cannot be resolved
+            // (e.g. a bounded "month to date" date filter the backend cannot resolve), the target page
+            // would receive incomplete/incorrect filtering and could send the user somewhere wrong.
+            // Log the cause for diagnosability, then re-throw so the redirect is blocked.
+            console.error(
+                "Drill to URL: failed to resolve filter values; the drill will not open to avoid navigating to an incorrectly filtered page.",
+                error,
+            );
+            throw error;
+        }
     }
 
     return { filters };

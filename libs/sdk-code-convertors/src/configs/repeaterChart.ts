@@ -5,6 +5,7 @@ import type { Bucket, Visualisation } from "@gooddata/sdk-code-schemas/v1";
 import {
     loadColorMapping,
     loadColumnsWidth,
+    loadDisableKda,
     saveColorMapping,
     saveColumnWidths,
 } from "../utils/configUtils.js";
@@ -29,6 +30,7 @@ export type RepeaterChartConfigProperties = {
     rowHeight: "small" | "medium" | "large";
     disableAlerts: boolean;
     disableScheduledExports: boolean;
+    disableKeyDriveAnalysisOn: Record<string, boolean>;
 };
 
 /** @internal */
@@ -49,6 +51,7 @@ const DEFAULTS: ConfigDefaults<RepeaterChartConfigProperties> = {
     cellImageSizing: "fit",
     disableAlerts: false,
     disableScheduledExports: false,
+    disableKeyDriveAnalysisOn: {},
 };
 
 /** @internal */
@@ -116,6 +119,8 @@ export function repeaterChartLoad(props: VisualisationConfig<RepeaterChartConfig
                         getValueOrDefault(value as boolean, DEFAULTS.disableScheduledExports, "bool"),
                     ],
                 ];
+            case "disableKeyDriveAnalysisOn":
+                return [["disable_key_drive_analysis", loadDisableKda(value as Record<string, boolean>)]];
             default:
                 return [];
         }
@@ -144,6 +149,7 @@ export function repeaterChartSave(
             DEFAULTS.disableScheduledExports,
             "bool",
         ),
+        disableKeyDriveAnalysisOn: saveConfigObject(config.disable_key_drive_analysis),
     });
 }
 

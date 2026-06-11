@@ -30,5 +30,8 @@
     "messages.genAi.visualisation.link.copied": "Посилання на візуалізацію скопійовано до буфера обміну.",
     "messages.showMore": "Показати більше",
     "messages.showLess": "Показати менше",
-    "gen-ai.ask-assistant.search": "Створити нову візуалізацію на основі: {question}"
+    "gen-ai.ask-assistant.search": "Створити нову візуалізацію на основі: {question}",
+    "gs.host.error.appNotAllowedForOrganization": "This application is not available for your organization.",
+    "gs.host.error.appBuildExpired": "This application is out of date and must be rebuilt by its author before it can run again.",
+    "gs.host.error.appSecurityMetadataMissing": "This application is missing required security metadata and cannot be loaded."
 }

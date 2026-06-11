@@ -16,9 +16,6 @@
 .gd-attribute-filter-dropdown-button__next,
 .gd-mvf-dashboard-filter-button__next {
     position: relative;
-    max-width: 230px;
-    padding: 5px 10px;
-    font-size: 12px;
     line-height: 16px;
 
     &::after {
@@ -92,6 +89,18 @@
     @include typo-mixins.gd-font-base;
 }
 
+.gd-attribute-filter-dropdown-button__next:not(.gd-ui-kit-control-button),
+.gd-mvf-dashboard-filter-button__next:not(.gd-ui-kit-control-button) {
+    max-width: 230px;
+    padding: 5px 10px;
+    font-size: 12px;
+
+    // Keep room for the drag handle.
+    &.gd-is-draggable {
+        padding-left: 23px;
+    }
+}
+
 .gd-attribute-filter-mobile-button-wrapper {
     display: flex;
     align-items: center;
@@ -106,7 +115,6 @@
         }
 
         .gd-ui-kit-control-button__content {
-            padding-right: 20px;
             flex-direction: row;
             align-items: center;
         }
@@ -123,11 +131,19 @@
                 background-color: #fff;
                 background-image: none;
             }
-
-            .gd-ui-kit-control-button__subtitle-row::after {
-                right: 0;
-            }
         }
+    }
+}
+
+// The error tooltip wraps the chip in a `gd-bubble-trigger` span (inline by default). On mobile the
+// chip stretches to the full row width, so the wrapper and the trigger must not collapse it.
+.gd-is-mobile .gd-attribute-filter-button-wrapper {
+    flex: 1;
+    min-width: 0;
+
+    .gd-bubble-trigger {
+        display: block;
+        width: 100%;
     }
 }
 
@@ -138,8 +154,6 @@
     border-bottom: 1px solid var(--gd-palette-complementary-4, #ccd8e2);
 
     .gd-attribute-filter-dropdown-button__next.gd-is-active {
-        height: 45px;
-        padding: 0 10px;
         border-radius: 0;
         background-color: var(--gd-palette-complementary-0, #fff);
 
@@ -212,34 +226,6 @@
 // Drag preview: hide the open/close chevron on the chip subtitle.
 .drag-preview .gd-attribute-filter-dropdown-button__next .gd-ui-kit-control-button__subtitle-row::after {
     display: none;
-}
-
-// Overlay context (mobile filter overlay): title becomes a label with ":" separator;
-// subtitle expands and its chevron is absolutely positioned at the row's right edge.
-.overlay .gd-attribute-filter-dropdown-button__next {
-    .gd-ui-kit-control-button__title {
-        flex: 0 0 auto;
-        max-width: 100%;
-        margin-right: 5px;
-        color: variables.$gd-color-label;
-
-        &::after {
-            content: ":";
-        }
-    }
-
-    .gd-ui-kit-control-button__subtitle-row {
-        flex: 1 1 auto;
-        max-width: none;
-
-        &::after {
-            position: absolute;
-            top: 50%;
-            right: -20px;
-            font-size: 18px;
-            transform: translateY(-50%);
-        }
-    }
 }
 
 .gd-attribute-filter-dropdown-button-selected-items__next,

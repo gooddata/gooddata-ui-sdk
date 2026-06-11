@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: ed0646266e83cf5cb5977a044b91885c2ec801774ae239b4813e6953f4a993b5
+# schema-hash: d503938a7507687be8b46028ec2dba5880fde55c0bcbcba95c4e15db39c14e8a
 
 from __future__ import annotations
 
@@ -1364,6 +1364,7 @@ class Config(TypedDict):
     disable_drill_into_url: NotRequired[bool]
     disable_alerts: NotRequired[bool]
     disable_scheduled_exports: NotRequired[bool]
+    disable_key_drive_analysis: NotRequired[dict[str, bool]]
     text_wrapping: NotRequired[TextWrapping]
     pagination: NotRequired[bool]
     page_size: NotRequired[float]
@@ -2107,7 +2108,14 @@ Visualisation: TypeAlias = (
 
 
 Metadata: TypeAlias = Union[
-    Metadata1, Metadata2, Metadata3, "Metadata4", Metadata5, Metadata6, Metadata8
+    Metadata1,
+    Metadata2,
+    Metadata3,
+    "Metadata4",
+    Metadata5,
+    Metadata6,
+    Metadata1,
+    Metadata8,
 ]
 
 

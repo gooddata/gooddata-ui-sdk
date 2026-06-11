@@ -30,5 +30,8 @@
     "messages.genAi.visualisation.link.copied": "Görselleştirme bağlantısı panonuza kopyalandı.",
     "messages.showMore": "Daha fazla göster",
     "messages.showLess": "Daha az göster",
-    "gen-ai.ask-assistant.search": "Yeni görselleştirme oluştur: {question}"
+    "gen-ai.ask-assistant.search": "Yeni görselleştirme oluştur: {question}",
+    "gs.host.error.appNotAllowedForOrganization": "This application is not available for your organization.",
+    "gs.host.error.appBuildExpired": "This application is out of date and must be rebuilt by its author before it can run again.",
+    "gs.host.error.appSecurityMetadataMissing": "This application is missing required security metadata and cannot be loaded."
 }

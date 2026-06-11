@@ -16,6 +16,7 @@ const renderWithIntl = (ui: React.ReactNode) =>
     );
 
 const baseProps = {
+    isOpen: true,
     objectTitle: "Customer",
     searchQuery: "",
     onSearchQueryChange: () => {},
