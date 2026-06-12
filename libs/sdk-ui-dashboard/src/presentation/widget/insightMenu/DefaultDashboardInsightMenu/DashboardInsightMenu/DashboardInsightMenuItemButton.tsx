@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type ReactElement, type ReactNode } from "react";
 
@@ -43,7 +43,7 @@ function renderButtonWithTooltip(
             <>
                 <UiTooltip
                     triggerBy={isFocused ? [] : ["hover", "focus"]}
-                    arrowPlacement="right"
+                    arrowPlacement="left"
                     optimalPlacement
                     content={tooltip}
                     anchor={button}

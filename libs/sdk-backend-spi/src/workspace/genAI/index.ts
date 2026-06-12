@@ -1067,7 +1067,7 @@ export function isChatConversationToolCallContent(
 export type IChatConversationToolResultContent = {
     type: "toolResult";
     callId: string;
-    result: string;
+    result: string | object;
 };
 
 /**

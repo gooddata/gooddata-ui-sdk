@@ -1,8 +1,10 @@
 // (C) 2021-2026 GoodData Corporation
 
 import {
+    type FC,
     type KeyboardEvent,
     type ReactElement,
+    type ReactNode,
     useCallback,
     useEffect,
     useMemo,
@@ -20,6 +22,7 @@ import {
     Overlay,
     SingleSelectListItem,
     UiFocusManager,
+    UiIcon,
     UiTooltip,
     getFocusableElements,
     isActionKey,
@@ -301,6 +304,10 @@ function MenuItem({
     setIsOpen,
 }: IMenuItemProps) {
     const tooltipId = useIdPrefixed(`menu-tooltip-${menuItem.itemId}`);
+    const warningTooltipId = useIdPrefixed(`menu-warning-${menuItem.itemId}`);
+    // Tracks whether the item-level (focus-triggered) warning tooltip is open, so the icon's hover tooltip can
+    // be suppressed while the item is focused - avoids both tooltips showing at once.
+    const [isWarningFocusTooltipOpen, setIsWarningFocusTooltipOpen] = useState(false);
 
     const renderWithOptionalTooltip = (
         menuItem: IMenuButtonItemButton | IMenuButtonItemMenu,
@@ -390,32 +397,90 @@ function MenuItem({
         ));
     }
 
-    return renderWithOptionalTooltip(menuItem, ({ selectorClassName, tooltipId }) => (
-        <SingleSelectListItem
-            ref={setMenuItemRef(menuItem.itemId)}
-            className={cx("gd-menu-item", menuItem.className, `s-${menuItem.itemId}`, {
-                [selectorClassName]: menuItem.tooltip,
-                "is-disabled": menuItem.disabled,
-            })}
-            key={menuItem.itemId}
-            title={menuItem.itemName}
-            icon={menuItem.icon}
-            onClick={
-                menuItem.disabled
-                    ? undefined
-                    : () => {
-                          menuItem.onClick?.();
-                          setIsOpen(false);
-                          setSelectedMenuItem(null);
-                      }
-            }
-            elementType="button"
-            accessibilityConfig={{
-                role: "menuitem",
-                ariaDisabled: menuItem.disabled,
-                ariaHasPopup: menuItem.opensDialog ? "dialog" : undefined,
-                ariaDescribedBy: menuItem.disabled ? tooltipId : undefined,
-            }}
-        />
-    ));
+    return renderWithOptionalTooltip(menuItem, ({ selectorClassName, tooltipId }) => {
+        const hasWarning = !!menuItem.warning;
+        const item = (
+            <SingleSelectListItem
+                ref={setMenuItemRef(menuItem.itemId)}
+                className={cx("gd-menu-item", menuItem.className, `s-${menuItem.itemId}`, {
+                    [selectorClassName]: menuItem.tooltip,
+                    "is-disabled": menuItem.disabled,
+                })}
+                key={menuItem.itemId}
+                title={menuItem.itemName}
+                icon={menuItem.icon}
+                info={menuItem.warning ?? undefined}
+                infoRenderer={
+                    hasWarning ? (info) => renderMenuItemWarning(info, isWarningFocusTooltipOpen) : undefined
+                }
+                onClick={
+                    menuItem.disabled
+                        ? undefined
+                        : () => {
+                              menuItem.onClick?.();
+                              setIsOpen(false);
+                              setSelectedMenuItem(null);
+                          }
+                }
+                elementType="button"
+                accessibilityConfig={{
+                    role: "menuitem",
+                    ariaDisabled: menuItem.disabled,
+                    ariaHasPopup: menuItem.opensDialog ? "dialog" : undefined,
+                    // The warning icon is not focusable and is hidden from AT, so describe the whole item by
+                    // the warning text for screen-reader users (disabled tooltip takes precedence when present).
+                    ariaDescribedBy: menuItem.disabled
+                        ? tooltipId
+                        : hasWarning
+                          ? warningTooltipId
+                          : undefined,
+                }}
+            />
+        );
+
+        // Keyboard accessibility: the warning icon has its own hover-only tooltip for mouse users, but it is
+        // not focusable. Add a second, focus-triggered tooltip anchored to the whole (focusable) menu item so
+        // keyboard users see the warning too. Skip it when a disabled tooltip already takes over on focus.
+        if (!hasWarning || menuItem.tooltip) {
+            return item;
+        }
+        return (
+            <UiTooltip
+                id={warningTooltipId}
+                triggerBy={["focus"]}
+                arrowPlacement="left"
+                optimalPlacement
+                content={menuItem.warning}
+                anchor={item}
+                onOpen={() => setIsWarningFocusTooltipOpen(true)}
+                onClose={() => setIsWarningFocusTooltipOpen(false)}
+            />
+        );
+    });
+}
+
+function renderMenuItemWarning(info: ReactNode | FC, suppressHover: boolean) {
+    return (
+        <span className="gd-list-icon gd-list-icon-right">
+            {/* Hover-only tooltip for mouse users, anchored to the icon. Keyboard/screen-reader users get the
+                warning from the focus-triggered tooltip + aria-describedby on the whole menu item. The icon
+                itself is decorative and hidden from assistive tech. While the item is focused (and its
+                focus tooltip is shown), this hover tooltip is disabled so both never show at once. */}
+            <UiTooltip
+                triggerBy={["hover"]}
+                disabled={suppressHover}
+                arrowPlacement="left"
+                optimalPlacement
+                content={info as ReactNode}
+                anchor={
+                    <UiIcon
+                        type="warning"
+                        size={16}
+                        color="warning"
+                        accessibilityConfig={{ ariaHidden: true }}
+                    />
+                }
+            />
+        </span>
+    );
 }

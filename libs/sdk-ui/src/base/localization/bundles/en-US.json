@@ -7,6 +7,50 @@
         "text": "at",
         "crowdinContext": "Preposition used for connecting date and time expressions, e.g., 'January 1, 2023 at 3:00 PM'. Used in various date-time displays throughout the application."
     },
+    "partial_data_warning.description": {
+        "text": "The result exceeds a result size limit.",
+        "crowdinContext": "Generic detail text for partial data warning."
+    },
+    "partial_data_warning.rows.description": {
+        "text": "The result exceeds the {rowLimit} row limit by {rowOverflow} rows.",
+        "crowdinContext": "Partial data warning detail when the row limit is exceeded."
+    },
+    "partial_data_warning.rows.description.unknown_total": {
+        "text": "The result exceeds the {rowLimit} row limit.",
+        "crowdinContext": "Partial data warning detail when the row limit is exceeded and the exact total is unknown."
+    },
+    "partial_data_warning.columns.description": {
+        "text": "The result exceeds the {columnLimit} columns limit by {columnOverflow} columns.",
+        "crowdinContext": "Partial data warning detail when the column limit is exceeded."
+    },
+    "partial_data_warning.columns.description.unknown_total": {
+        "text": "The result exceeds the {columnLimit} columns limit.",
+        "crowdinContext": "Partial data warning detail when the column limit is exceeded and the exact total is unknown."
+    },
+    "partial_data_warning.rows_columns.description": {
+        "text": "The result exceeds both the {columnLimit} columns and the {rowLimit} row limit by {columnOverflow} columns and {rowOverflow} rows.",
+        "crowdinContext": "Partial data warning detail when both row and column limits are exceeded."
+    },
+    "partial_data_warning.rows_columns.description.unknown_column_total": {
+        "text": "The result exceeds both the {columnLimit} columns and the {rowLimit} row limit. It exceeds the row limit by {rowOverflow} rows.",
+        "crowdinContext": "Partial data warning detail when both row and column limits are exceeded, but only the row overflow is known."
+    },
+    "partial_data_warning.rows_columns.description.unknown_row_total": {
+        "text": "The result exceeds both the {columnLimit} columns and the {rowLimit} row limit. It exceeds the columns limit by {columnOverflow} columns.",
+        "crowdinContext": "Partial data warning detail when both row and column limits are exceeded, but only the column overflow is known."
+    },
+    "partial_data_warning.rows_columns.description.unknown_total": {
+        "text": "The result exceeds both the {columnLimit} columns and the {rowLimit} row limit.",
+        "crowdinContext": "Partial data warning detail when both row and column limits are exceeded and exact totals are unknown."
+    },
+    "partial_data_warning.cells.description": {
+        "text": "The result exceeds the {cellLimit} datapoint limit by {cellOverflow} datapoints.",
+        "crowdinContext": "Partial data warning detail when the datapoint limit is exceeded."
+    },
+    "partial_data_warning.cells.description.unknown_total": {
+        "text": "The result exceeds the {cellLimit} datapoint limit.",
+        "crowdinContext": "Partial data warning detail when the datapoint limit is exceeded and the exact total is unknown."
+    },
     "gs.time": {
         "text": "time",
         "crowdinContext": "Global string for displaying time units or labels. Used in various time-related components or expressions, such as 'Meeting time' or timestamp displays."

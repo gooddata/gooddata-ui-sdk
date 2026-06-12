@@ -39,6 +39,7 @@ import { IExecutionContext } from '@gooddata/sdk-backend-spi';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IExecutionResult } from '@gooddata/sdk-backend-spi';
 import { IExecutionResultDataSourceMessage } from '@gooddata/sdk-backend-spi';
+import { IExecutionResultLimitBreak } from '@gooddata/sdk-model';
 import { IExportConfig } from '@gooddata/sdk-backend-spi';
 import { IExportResult } from '@gooddata/sdk-backend-spi';
 import { IFilter } from '@gooddata/sdk-model';
@@ -609,6 +610,9 @@ export function getObjectDiff(prevObj: Record<string, any> | null, currObj: Reco
 };
 
 // @internal (undocumented)
+export function getPartialDataWarningMessage(limitBreaks: IExecutionResultLimitBreak[], intl: IntlShape): IPartialDataWarningMessage;
+
+// @internal (undocumented)
 export function getTotalInfo(attributeHeaders: IResultAttributeHeader[]): {
     isTotal: boolean;
     isSubtotal: boolean;
@@ -676,6 +680,7 @@ export type IAutomationUrlBuilder = (params: {
     dashboardId?: string;
     automationId?: string;
     isEmbedded?: boolean;
+    useHostRoute?: boolean;
     queryParams?: IAutomationUrlQueryParams;
 }) => string | undefined;
 
@@ -839,6 +844,7 @@ export type IDashboardUrlBuilder = (params: {
     dashboardId?: string;
     tabId?: string;
     isEmbedded?: boolean;
+    useHostRoute?: boolean;
     queryParams?: IDashboardUrlQueryParams;
 }) => string | undefined;
 
@@ -1390,6 +1396,14 @@ export interface IOpenAsReportUiConfig {
 export interface IOrganizationProviderProps {
     children?: ReactNode;
     organization?: string;
+}
+
+// @internal (undocumented)
+export interface IPartialDataWarningMessage {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    values?: Record<string, string | undefined>;
 }
 
 // @public
@@ -2142,6 +2156,7 @@ export type IWidgetUrlBuilder = (params: {
     widgetId?: string;
     tabId?: string;
     isEmbedded?: boolean;
+    useHostRoute?: boolean;
     queryParams?: IWidgetUrlQueryParams;
 }) => string | undefined;
 

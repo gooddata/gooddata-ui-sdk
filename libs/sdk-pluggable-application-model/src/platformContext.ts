@@ -231,6 +231,7 @@ export interface IPlatformContextV1 {
     currentApplicationScope?: ApplicationScope;
 
     embeddingMode: EmbeddingMode;
+    isExportMode?: boolean;
 }
 
 /**

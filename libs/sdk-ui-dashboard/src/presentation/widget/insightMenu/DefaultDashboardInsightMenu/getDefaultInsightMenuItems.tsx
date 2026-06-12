@@ -65,10 +65,38 @@ const getPresentationExportItems = (
     return compact([isExportPngImageVisible && pngImageItem, pdfPresentationItem, pptxPresentationItem]);
 };
 
+/**
+ * Computes the disabled state and tooltip for a formatted export entry (XLSX, formatted CSV, formatted PDF).
+ *
+ * @remarks
+ * Shared by both the export submenu items and the XLSX/CSV quick-export bubbles so they behave consistently:
+ * - While an export is in progress, the entry is disabled with the in-progress reason tooltip (this takes
+ *   priority over the limit-break message - the user just needs to wait for the running export to finish).
+ * - When the execution reached a result limit, the entry is disabled with the limit-break tooltip.
+ * - Otherwise it reflects its own disabled flag and, when disabled, the shared disabled-reason tooltip
+ *   (too large / data error / old widget / loading) derived from {@link getExportTooltipId}.
+ */
+function getFormattedExportItemState(
+    isDisabled: boolean,
+    disabledReasonTooltip: string,
+    limitBreakTooltip: string | undefined,
+    isExporting: boolean,
+): { disabled: boolean; tooltip: string | undefined } {
+    // An in-progress export takes priority - disabledReasonTooltip already resolves to the in-progress message.
+    if (isExporting) {
+        return { disabled: true, tooltip: disabledReasonTooltip };
+    }
+    if (limitBreakTooltip !== undefined) {
+        return { disabled: true, tooltip: limitBreakTooltip };
+    }
+    return { disabled: isDisabled, tooltip: isDisabled ? disabledReasonTooltip : undefined };
+}
+
 const getDataExportGroupItems = (
     intl: IntlShape,
     config: IUseInsightMenuConfig,
-    tooltip: string,
+    disabledReasonTooltip: string,
+    limitBreakTooltip: string | undefined,
 ): IInsightMenuItem[] => {
     const {
         isExportPdfTabularVisible,
@@ -76,6 +104,7 @@ const getDataExportGroupItems = (
         exportCSVDisabled,
         exportCSVRawDisabled,
         exportPdfTabularDisabled,
+        isExporting,
         onExportXLSX,
         onExportCSV,
         onExportRawCSV,
@@ -88,8 +117,12 @@ const getDataExportGroupItems = (
         itemName: intl.formatMessage({ id: "widget.options.menu.XLSX" }),
         icon: "gd-icon-type-sheet",
         className: "gd-export-options-xlsx",
-        disabled: exportXLSXDisabled,
-        tooltip: exportXLSXDisabled ? tooltip : undefined,
+        ...getFormattedExportItemState(
+            exportXLSXDisabled,
+            disabledReasonTooltip,
+            limitBreakTooltip,
+            isExporting,
+        ),
         onClick: onExportXLSX,
     };
 
@@ -101,8 +134,12 @@ const getDataExportGroupItems = (
         }),
         icon: "gd-icon-type-pdf",
         className: "gd-export-options-pdf-data",
-        disabled: exportPdfTabularDisabled,
-        tooltip: exportPdfTabularDisabled ? tooltip : undefined,
+        ...getFormattedExportItemState(
+            exportPdfTabularDisabled,
+            disabledReasonTooltip,
+            limitBreakTooltip,
+            isExporting,
+        ),
         onClick: onExportPdfTabular,
     };
 
@@ -114,11 +151,16 @@ const getDataExportGroupItems = (
         }),
         icon: "gd-icon-type-csv-formatted",
         className: "gd-export-options-csv",
-        disabled: exportCSVDisabled,
-        tooltip: exportCSVDisabled ? tooltip : undefined,
+        ...getFormattedExportItemState(
+            exportCSVDisabled,
+            disabledReasonTooltip,
+            limitBreakTooltip,
+            isExporting,
+        ),
         onClick: onExportCSV,
     };
 
+    // Raw CSV runs a separate full execution, so it is not affected by the limit break.
     const csvRawItem: IInsightMenuItem = {
         type: "button" as const,
         itemId: "ExportCSVRaw",
@@ -126,7 +168,7 @@ const getDataExportGroupItems = (
         icon: "gd-icon-type-csv-raw",
         className: "gd-export-options-csv-raw",
         disabled: exportCSVRawDisabled,
-        tooltip: exportCSVRawDisabled ? tooltip : undefined,
+        tooltip: exportCSVRawDisabled ? disabledReasonTooltip : undefined,
         onClick: onExportRawCSV,
     };
 
@@ -136,9 +178,10 @@ const getDataExportGroupItems = (
 const getDataExportGroup = (
     intl: IntlShape,
     config: IUseInsightMenuConfig,
-    tooltip: string,
+    disabledReasonTooltip: string,
+    limitBreakTooltip: string | undefined,
 ): IInsightMenuItem[] => {
-    const items = getDataExportGroupItems(intl, config, tooltip);
+    const items = getDataExportGroupItems(intl, config, disabledReasonTooltip, limitBreakTooltip);
 
     return [
         {
@@ -153,17 +196,11 @@ const getDataExportGroup = (
 const getExportMenuItems = (
     intl: IntlShape,
     config: IUseInsightMenuConfig,
-    execution?: IExecutionResultEnvelope,
+    disabledReasonTooltip: string,
+    limitBreakTooltip: string | undefined,
 ): IInsightMenuItem[] => {
-    const { isExportVisible, isExportRawVisible, isExporting, disabledReason } = config;
+    const { isExportVisible, isExportRawVisible } = config;
 
-    const tooltipId = getExportTooltipId({
-        isRawExportsEnabled: isExportRawVisible,
-        isExporting,
-        execution,
-        disabledReason,
-    });
-    const tooltip = intl.formatMessage({ id: tooltipId });
     const presentationTooltip = intl.formatMessage({
         id: "options.menu.export.presentation.unsupported.oldWidget",
     });
@@ -174,7 +211,9 @@ const getExportMenuItems = (
         : [];
 
     // Data exports section - only shown if isExportRawVisible is true
-    const dataExportItems = isExportRawVisible ? getDataExportGroup(intl, config, tooltip) : [];
+    const dataExportItems = isExportRawVisible
+        ? getDataExportGroup(intl, config, disabledReasonTooltip, limitBreakTooltip)
+        : [];
 
     return [...presentationItems, ...dataExportItems];
 };
@@ -211,6 +250,7 @@ export function getDefaultInsightMenuItems(
         canCreateAutomation,
         isExportRawVisible,
         isExportVisible,
+        disabledReason,
     } = config;
 
     const defaultWidgetTooltip = isDataError
@@ -263,7 +303,26 @@ export function getDefaultInsightMenuItems(
                 ? schedulingForInsightNotEnabledTooltip
                 : undefined;
 
-    const exportMenuItems = getExportMenuItems(intl, config, execution);
+    // Disabled-reason tooltip shared by all formatted export entries (submenu items + quick-export bubbles):
+    // export in progress / too large / data error / old widget / loading.
+    const exportReasonTooltip = intl.formatMessage({
+        id: getExportTooltipId({
+            isRawExportsEnabled: isExportRawVisible,
+            isExporting,
+            execution,
+            disabledReason,
+        }),
+    });
+
+    // When the execution reached a result limit, formatted exports (XLSX, formatted CSV/PDF, and the XLSX/CSV
+    // quick-export bubbles) can only contain partial data, so they are disabled with an explanatory tooltip.
+    // Raw CSV is unaffected (it runs a separate full execution).
+    const hasLimitBreaks = (execution?.limitBreaks?.length ?? 0) > 0;
+    const limitBreakTooltip = hasLimitBreaks
+        ? intl.formatMessage({ id: "options.menu.export.partialResults.exportDisabled" })
+        : undefined;
+
+    const exportMenuItems = getExportMenuItems(intl, config, exportReasonTooltip, limitBreakTooltip);
 
     const isSomeScheduleVisible =
         (isScheduleExportVisible && !scheduleExportDisabled) ||
@@ -285,8 +344,12 @@ export function getDefaultInsightMenuItems(
             itemId: "ExportXLSXBubble",
             itemName: intl.formatMessage({ id: "widget.options.menu.exportToXLSX" }),
             onClick: onExportXLSX,
-            disabled: exportXLSXDisabled,
-            tooltip: defaultWidgetTooltip,
+            ...getFormattedExportItemState(
+                exportXLSXDisabled,
+                exportReasonTooltip,
+                limitBreakTooltip,
+                isExporting,
+            ),
             icon: "gd-icon-download",
             className: "s-options-menu-export-xlsx",
         },
@@ -295,8 +358,12 @@ export function getDefaultInsightMenuItems(
             itemId: "ExportCSVBubble",
             itemName: intl.formatMessage({ id: "widget.options.menu.exportToCSV" }),
             onClick: onExportCSV,
-            disabled: exportCSVDisabled,
-            tooltip: defaultWidgetTooltip,
+            ...getFormattedExportItemState(
+                exportCSVDisabled,
+                exportReasonTooltip,
+                limitBreakTooltip,
+                isExporting,
+            ),
             icon: "gd-icon-download",
             className: "s-options-menu-export-csv",
         },

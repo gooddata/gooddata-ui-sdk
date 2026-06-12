@@ -175,6 +175,8 @@ export interface IPlatformContextV1 {
     // (undocumented)
     entitlements?: IEntitlementDescriptor[];
     // (undocumented)
+    isExportMode?: boolean;
+    // (undocumented)
     organization?: IOrganization;
     // (undocumented)
     organizationPermissions?: IOrganizationPermissions;

@@ -29,6 +29,7 @@ export function ShareGranteeBase({
     currentUserPermissions,
     dashboardFilters,
     dashboardParameters,
+    dashboardLinkBasePath,
     isShareGrantHidden,
     applyShareGrantOnSelect,
     showDashboardShareLink,
@@ -120,6 +121,7 @@ export function ShareGranteeBase({
                 <ShareLink
                     dashboardFilters={dashboardFilters}
                     dashboardParameters={dashboardParameters}
+                    dashboardLinkBasePath={dashboardLinkBasePath}
                     onShareLinkCopy={onShareLinkCopy}
                     headline={dialogLabels.linkHeadline}
                     helperText={dialogLabels.linkHelperText}

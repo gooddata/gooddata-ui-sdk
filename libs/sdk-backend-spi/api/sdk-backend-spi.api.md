@@ -805,7 +805,7 @@ export type IChatConversationToolCallContent = {
 export type IChatConversationToolResultContent = {
     type: "toolResult";
     callId: string;
-    result: string;
+    result: string | object;
 };
 
 // @internal

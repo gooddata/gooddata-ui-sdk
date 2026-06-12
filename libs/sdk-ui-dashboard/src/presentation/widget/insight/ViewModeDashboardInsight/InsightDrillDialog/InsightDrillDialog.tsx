@@ -10,7 +10,6 @@ import {
     type IInsight,
     type IInsightWidget,
     type IInsightWidgetDescriptionConfiguration,
-    idRef,
     insightTitle,
     insightVisualizationType,
     isInsight,
@@ -37,6 +36,7 @@ import {
     selectEnableRichTextDynamicReferences,
     selectSeparators,
 } from "../../../../../model/store/config/configSelectors.js";
+import { DRILL_MODAL_EXECUTION_PSEUDO_REF } from "../../../../../model/store/executionResults/constants.js";
 import { selectExecutionTimestamp } from "../../../../../model/store/ui/uiSelectors.js";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../../constants/zIndex.js";
 import { useDashboardComponentsContext } from "../../../../dashboardContexts/DashboardComponentsContext.js";
@@ -46,6 +46,8 @@ import { IntlWrapper } from "../../../../localization/IntlWrapper.js";
 import { ThemedLoadingEqualizer } from "../../../../presentationComponents/ThemedLoadingEqualizer.js";
 import { useInsightExport } from "../../../common/useInsightExport.js";
 import { useShowAsTable } from "../../../showAsTableButton/useShowAsTable.js";
+import { useInsightWarning } from "../../../widget/InsightWidget/useInsightWarning.js";
+import { InsightWidgetWarningPartialResult } from "../../../widget/warningPartialResult/InsightWidgetWarningPartialResult.js";
 import { supportsShowAsTable } from "../../insightToTable.js";
 
 import { DrillDialog } from "./DrillDialog.js";
@@ -103,8 +105,6 @@ const getInsightWidgetDescription = (
     // If widget is not insight or insight is not same as insight in dialog, we will use insight summary as default
     return insight?.summary;
 };
-
-const DRILL_MODAL_EXECUTION_PSEUDO_REF = idRef("@@GDC_DRILL_MODAL");
 
 export function InsightDrillDialog(props: IInsightDrillDialogProps): ReactElement {
     const {
@@ -192,6 +192,8 @@ export function InsightDrillDialog(props: IInsightDrillDialogProps): ReactElemen
     const onCloseDialog = () => {
         onClose();
     };
+
+    const { limitBreaks, executionResult } = useInsightWarning(DRILL_MODAL_EXECUTION_PSEUDO_REF);
 
     const isShowAsTableVisible = supportsShowAsTable(insightVisualizationType(insight));
 
@@ -291,6 +293,17 @@ export function InsightDrillDialog(props: IInsightDrillDialogProps): ReactElemen
                                 );
                             }}
                         </WithDrillSelect>
+                        {limitBreaks.length > 0 && executionResult ? (
+                            <InsightWidgetWarningPartialResult
+                                className="gd-warning-partial-result"
+                                limitBreaks={limitBreaks}
+                                onExportRawCSV={onExportRawCSV}
+                                isExporting={isExporting}
+                                isExportRawVisible={isExportRawVisible}
+                                isLoading={executionResult?.isLoading}
+                                executionResult={executionResult}
+                            />
+                        ) : null}
                     </DrillDialog>
                 </IntlWrapper>
             </OverlayComponent>

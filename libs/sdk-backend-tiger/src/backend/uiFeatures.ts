@@ -168,6 +168,7 @@ export enum TigerFeaturesNames {
     EnableFilterControlInDrillingConfiguration = "enableFilterControlInDrillingConfiguration",
     EnableShellApplication = "enableShellApplication",
     EnableShellApplicationCatalog = "enableShellApplication_catalog",
+    EnableShellApplicationDashboards = "enableShellApplication_dashboards",
     EnableNullJoins = "enableNullJoins",
     EnableDashboardDensitySetting = "enableDashboardDensitySetting",
     EnableDashboardsSearch = "enableDashboardsSearch",
@@ -342,6 +343,7 @@ export type ITigerFeatureFlags = {
     enableFilterControlInDrillingConfiguration: (typeof FeatureFlagsValues)["enableFilterControlInDrillingConfiguration"][number];
     enableShellApplication: (typeof FeatureFlagsValues)["enableShellApplication"][number];
     enableShellApplication_catalog: (typeof FeatureFlagsValues)["enableShellApplication_catalog"][number];
+    enableShellApplication_dashboards: (typeof FeatureFlagsValues)["enableShellApplication_dashboards"][number];
     enableNullJoins: (typeof FeatureFlagsValues)["enableNullJoins"][number];
     enableDashboardDensitySetting: (typeof FeatureFlagsValues)["enableDashboardDensitySetting"][number];
     enableDashboardsSearch: (typeof FeatureFlagsValues)["enableDashboardsSearch"][number];
@@ -518,6 +520,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableFilterControlInDrillingConfiguration: true,
     enableShellApplication: true,
     enableShellApplication_catalog: false,
+    enableShellApplication_dashboards: false,
     enableNullJoins: false,
     enableDashboardDensitySetting: false,
     enableDashboardsSearch: false,
@@ -695,6 +698,7 @@ export const FeatureFlagsValues = {
     enableFilterControlInDrillingConfiguration: [true, false] as const,
     enableShellApplication: [true, false] as const,
     enableShellApplication_catalog: [false, true] as const,
+    enableShellApplication_dashboards: [false, true] as const,
     enableNullJoins: [true, false] as const,
     enableDashboardDensitySetting: [true, false] as const,
     enableDashboardsSearch: [false, true] as const,

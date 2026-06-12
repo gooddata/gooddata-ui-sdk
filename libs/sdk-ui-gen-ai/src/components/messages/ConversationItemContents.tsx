@@ -5,6 +5,7 @@ import {
     type IChatConversationLocalContent,
     type IChatConversationLocalItem,
     type IChatConversationMultipartLocalPart,
+    type TextContentObject,
 } from "../../model.js";
 import { loadWhatIfScenarios } from "../../whatIf/whatIfMapping.js";
 
@@ -20,12 +21,13 @@ import { ConversationWhatIfContent } from "./conversationContents/ConversationWh
 
 type ConversationItemContentsProps = {
     message: IChatConversationLocalItem;
+    references: TextContentObject[];
     role: "user" | "assistant" | "tool";
     isLoading: boolean;
     isLast?: boolean;
 };
 
-export function ConversationItemContents({ message, isLoading }: ConversationItemContentsProps) {
+export function ConversationItemContents({ message, references, isLoading }: ConversationItemContentsProps) {
     const content = message.content as IChatConversationLocalContent | IChatConversationErrorContent;
 
     if (content.type === "error") {
@@ -46,7 +48,7 @@ export function ConversationItemContents({ message, isLoading }: ConversationIte
             <ConversationTextContent
                 useMarkdown
                 text={content.text}
-                objects={content.objects ?? []}
+                objects={[...(content.objects ?? []), ...references]}
                 isLoading={isLoading}
             />
         );
@@ -57,7 +59,7 @@ export function ConversationItemContents({ message, isLoading }: ConversationIte
             <ConversationReasoningContent
                 useMarkdown
                 summary={content.summary}
-                objects={content.objects ?? []}
+                objects={[...(content.objects ?? []), ...references]}
                 isLoading={isLoading}
             />
         );
@@ -75,7 +77,7 @@ export function ConversationItemContents({ message, isLoading }: ConversationIte
                                 useMarkdown
                                 key={index}
                                 text={part.text}
-                                objects={part.objects}
+                                objects={[...(part.objects ?? []), ...references]}
                             />
                         );
                     }

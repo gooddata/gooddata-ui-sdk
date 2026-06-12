@@ -8,6 +8,7 @@ export type IDashboardUrlBuilder = (params: {
     dashboardId?: string;
     tabId?: string;
     isEmbedded?: boolean;
+    useHostRoute?: boolean;
     queryParams?: IDashboardUrlQueryParams;
 }) => string | undefined;
 
@@ -20,6 +21,7 @@ export type IWidgetUrlBuilder = (params: {
     widgetId?: string;
     tabId?: string;
     isEmbedded?: boolean;
+    useHostRoute?: boolean;
     queryParams?: IWidgetUrlQueryParams;
 }) => string | undefined;
 
@@ -31,6 +33,7 @@ export type IAutomationUrlBuilder = (params: {
     dashboardId?: string;
     automationId?: string;
     isEmbedded?: boolean;
+    useHostRoute?: boolean;
     queryParams?: IAutomationUrlQueryParams;
 }) => string | undefined;
 
@@ -94,22 +97,27 @@ export const buildDashboardUrl: IDashboardUrlBuilder = ({
     dashboardId,
     tabId,
     isEmbedded,
+    useHostRoute,
     queryParams,
 }) => {
     if (!workspaceId || !dashboardId) {
         return undefined;
     }
 
-    const basePath = isEmbedded ? "/dashboards/embedded/#" : "/dashboards/#";
+    const route = tabId ? `/dashboard/${dashboardId}/tab/${tabId}` : `/dashboard/${dashboardId}`;
 
-    if (tabId) {
-        return appendQueryParams(
-            `${basePath}/workspace/${workspaceId}/dashboard/${dashboardId}/tab/${tabId}`,
-            queryParams,
-        );
+    // With the dashboards shell application enabled the host owns the /workspace/{id}/dashboards/
+    // pathname and the dashboard route lives in the hash without the workspace segment. The legacy
+    // standalone app instead carries the workspace inside the hash under /dashboards/#.
+    if (useHostRoute) {
+        const basePath = isEmbedded
+            ? `/workspace/${workspaceId}/dashboards/embedded/#`
+            : `/workspace/${workspaceId}/dashboards/#`;
+        return appendQueryParams(`${basePath}${route}`, queryParams);
     }
 
-    return appendQueryParams(`${basePath}/workspace/${workspaceId}/dashboard/${dashboardId}`, queryParams);
+    const basePath = isEmbedded ? "/dashboards/embedded/#" : "/dashboards/#";
+    return appendQueryParams(`${basePath}/workspace/${workspaceId}${route}`, queryParams);
 };
 
 /**
@@ -121,6 +129,7 @@ export const buildWidgetUrl: IWidgetUrlBuilder = ({
     widgetId,
     tabId,
     isEmbedded,
+    useHostRoute,
     queryParams,
 }) => {
     if (!widgetId) {
@@ -131,6 +140,7 @@ export const buildWidgetUrl: IWidgetUrlBuilder = ({
         workspaceId,
         dashboardId,
         isEmbedded,
+        useHostRoute,
         queryParams: {
             ...(queryParams ?? {}),
             widgetId,
@@ -155,6 +165,7 @@ export const buildAutomationUrl: IAutomationUrlBuilder = ({
     dashboardId,
     automationId,
     isEmbedded,
+    useHostRoute,
     queryParams,
 }) => {
     if (!automationId) {
@@ -169,6 +180,7 @@ export const buildAutomationUrl: IAutomationUrlBuilder = ({
         workspaceId,
         dashboardId,
         isEmbedded,
+        useHostRoute,
         queryParams: {
             automationId,
             openAutomationOnLoad,

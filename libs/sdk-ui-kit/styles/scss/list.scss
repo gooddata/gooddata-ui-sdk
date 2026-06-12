@@ -271,7 +271,8 @@ button.gd-list-item {
         text-overflow: ellipsis;
     }
 
-    .gd-list-icon {
+    .gd-list-icon,
+    .gd-list-icon-right {
         flex: 0 0 auto;
     }
 
@@ -426,6 +427,10 @@ button.gd-list-item {
     &:last-child {
         margin-right: 0;
     }
+}
+
+.gd-list-icon-right {
+    margin-right: 0;
 }
 
 .gd-list-item,

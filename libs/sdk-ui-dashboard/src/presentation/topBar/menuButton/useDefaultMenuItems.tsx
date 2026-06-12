@@ -18,6 +18,7 @@ import {
     selectIsReadOnly,
     selectSettings,
 } from "../../../model/store/config/configSelectors.js";
+import { selectHasAnyExecutionResultLimitBreaks } from "../../../model/store/executionResults/executionResultsSelectors.js";
 import { selectDashboardTitle, selectIsNewDashboard } from "../../../model/store/meta/metaSelectors.js";
 import {
     selectCanCreateAutomation,
@@ -79,6 +80,10 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
     const isEmptyLayout = !useDashboardSelector(selectLayoutHasAnalyticalWidgets); // we need at least one non-custom widget there
     const settings = useDashboardSelector(selectSettings);
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
+    const hasAnyLimitBreaks = useDashboardSelector(selectHasAnyExecutionResultLimitBreaks);
+    const xlsxPartialResultsWarning = hasAnyLimitBreaks
+        ? intl.formatMessage({ id: "options.menu.export.partialResults.warning.dashboard" })
+        : undefined;
 
     const {
         isScheduledEmailingVisible,
@@ -454,6 +459,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                             visible: isXlsxExportVisible,
                             disabled: isInProgress,
                             tooltip: disabledTooltip,
+                            warning: xlsxPartialResultsWarning,
                             icon: "gd-icon-type-sheet",
                         },
                     ],
@@ -513,5 +519,6 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
         isXlsxExportVisible,
         isAutomationManagementEnabled,
         enableSnapshotExport,
+        xlsxPartialResultsWarning,
     ]);
 }

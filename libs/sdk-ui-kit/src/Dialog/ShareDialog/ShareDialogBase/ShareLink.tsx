@@ -17,6 +17,7 @@ import { SHARE_LINK_HEADLINE_ID, SHARE_LINK_HELPER_TEXT_ID } from "./utils.js";
 export function ShareLink({
     dashboardFilters,
     dashboardParameters,
+    dashboardLinkBasePath,
     headline,
     helperText,
     buttonLabel,
@@ -32,10 +33,10 @@ export function ShareLink({
         const url = window.location.origin;
         const hashLocation = window.location.hash.split("?")[0];
         return url
-            .concat("/dashboards/")
+            .concat(dashboardLinkBasePath ?? "/dashboards/")
             .concat(hashLocation)
             .concat(`?${new URLSearchParams(queryParams).toString()}`);
-    }, [dashboardFilters, dashboardParameters]);
+    }, [dashboardFilters, dashboardParameters, dashboardLinkBasePath]);
 
     const onIconButtonClick = useCallback(() => {
         onShareLinkCopy?.(shareLink);

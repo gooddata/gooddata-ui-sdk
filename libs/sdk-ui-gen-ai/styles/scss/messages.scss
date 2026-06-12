@@ -152,6 +152,18 @@
             }
         }
 
+        &.dashboard {
+            font-weight: bold;
+            @if $type == "user" {
+                color: kit-variables.$gd-color-white;
+            } @else {
+                color: kit-variables.$gd-color-text;
+                .gd-gen-ai-chat__message-icon::before {
+                    background-color: kit-variables.$gd-color-text;
+                }
+            }
+        }
+
         .gd-gen-ai-chat__message-icon {
             display: inline-block;
             width: 18px;
@@ -183,6 +195,10 @@
 
         &.date .gd-gen-ai-chat__message-icon {
             @include variables.gd-svg-mask("date");
+        }
+
+        &.dashboard .gd-gen-ai-chat__message-icon {
+            @include variables.gd-svg-mask("dashboard");
         }
     }
 }

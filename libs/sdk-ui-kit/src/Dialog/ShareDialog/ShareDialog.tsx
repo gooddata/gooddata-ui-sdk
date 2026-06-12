@@ -44,6 +44,7 @@ export function ShareDialog({
     currentUserPermissions,
     dashboardFilters,
     dashboardParameters,
+    dashboardLinkBasePath,
     isShareGrantHidden,
     applyShareGrantOnSelect,
     showDashboardShareLink,
@@ -145,6 +146,7 @@ export function ShareDialog({
                                 currentUserPermissions={currentUserPermissions}
                                 dashboardFilters={dashboardFilters}
                                 dashboardParameters={dashboardParameters}
+                                dashboardLinkBasePath={dashboardLinkBasePath}
                                 onCancel={onCancel}
                                 onSubmit={onSubmit}
                                 onError={onShareDialogBaseError}

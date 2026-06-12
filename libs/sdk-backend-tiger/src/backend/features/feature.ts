@@ -1146,6 +1146,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableShellApplicationDashboards,
+            "enableShellApplication_dashboards",
+            "BOOLEAN",
+            FeatureFlagsValues.enableShellApplication_dashboards,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableNullJoins,
             "enableNullJoins",
             "BOOLEAN",

@@ -157,6 +157,7 @@ function ConversationMessages({ messages, catalogItems }: IConversationMessagesP
                                     return (
                                         <UserItemComponent
                                             key={message.localId}
+                                            groups={[previousGroup, group]}
                                             message={message}
                                             isLast={isLast}
                                         />
@@ -165,7 +166,7 @@ function ConversationMessages({ messages, catalogItems }: IConversationMessagesP
                                     return (
                                         <AssistantItemComponent
                                             key={message.localId}
-                                            group={group}
+                                            groups={[previousGroup, group]}
                                             message={message}
                                             isLast={isLast}
                                         />
@@ -174,12 +175,19 @@ function ConversationMessages({ messages, catalogItems }: IConversationMessagesP
                                     return (
                                         <ToolItemComponent
                                             key={message.localId}
+                                            groups={[previousGroup, group]}
                                             message={message}
                                             isLast={isLast}
                                         />
                                     );
                                 case "system":
-                                    return <SystemItemComponent key={message.localId} message={message} />;
+                                    return (
+                                        <SystemItemComponent
+                                            key={message.localId}
+                                            groups={[previousGroup, group]}
+                                            message={message}
+                                        />
+                                    );
                                 default:
                                     return assertNever(message.role);
                             }

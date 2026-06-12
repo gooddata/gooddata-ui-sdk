@@ -2,7 +2,7 @@
 
 /* oxlint-disable no-barrel-files/no-barrel-files */
 
-export { authHeader, injectAuthHeader } from "./auth.js";
+export { authHeader, authedRouteFetch, injectAuthHeader } from "./auth.js";
 export {
     type IWorkspaceIdMapping,
     loadMappings,

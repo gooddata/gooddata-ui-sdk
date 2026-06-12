@@ -56,6 +56,7 @@ export function useHostChromeSearch({
                     features.settings.enableShellApplication_analyticalDesigner,
                 )}
                 useHostedLdmModeler={Boolean(features.settings.enableShellApplication_ldmModeler)}
+                useHostedDashboards={Boolean(features.settings.enableShellApplication_dashboards)}
                 onAskAiAssistant={onAskAiAssistant}
                 onEvent={handleSearchEvent}
             />

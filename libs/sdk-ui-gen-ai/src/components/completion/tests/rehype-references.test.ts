@@ -21,4 +21,23 @@ describe("rehypeReferences", () => {
 
         expect(renderedReference).toContain("label");
     });
+
+    it("should render dashboard references with dashboard css class", () => {
+        const tree = {
+            type: "root",
+            children: [{ type: "text", value: "{dashboard/sales-dashboard}" }],
+        };
+        const plugin = rehypeReferences([
+            { id: "sales-dashboard", type: "dashboard", title: "Sales Dashboard" },
+        ]);
+
+        const transformed = plugin()(tree as unknown as never);
+        const renderedReference = (
+            (transformed as unknown as { children: unknown[] }).children[0] as {
+                properties: { className: string };
+            }
+        ).properties.className;
+
+        expect(renderedReference).toContain("dashboard");
+    });
 });

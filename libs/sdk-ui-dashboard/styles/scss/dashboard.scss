@@ -929,8 +929,12 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
 
         .gd-list-icon {
             color: $dashboard-menu-item-icon-color;
-            margin-right: 10px;
             font-size: 16px;
+        }
+
+        // Left (leading) icon only - exclude trailing icons (e.g. the partial-results warning) which manage own spacing.
+        .gd-list-icon:not(.gd-list-icon-right) {
+            margin-right: 10px;
         }
 
         &.is-submenu {

@@ -15,6 +15,9 @@
         display: flex;
         flex-direction: column;
         min-height: 0;
+        // trap the embedded application's z-indexes in their own stacking
+        // context so they cannot paint over the host header and its dropdowns
+        isolation: isolate;
     }
 
     &__app-container {

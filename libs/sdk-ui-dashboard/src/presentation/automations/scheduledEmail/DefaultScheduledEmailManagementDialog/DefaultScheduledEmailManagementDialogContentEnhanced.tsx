@@ -30,6 +30,7 @@ import {
     selectIsEmbedded,
     selectIsWhiteLabeled,
     selectLocale,
+    selectSettings,
     selectTimezone,
 } from "../../../../model/store/config/configSelectors.js";
 import {
@@ -86,6 +87,9 @@ export function DefaultScheduledEmailManagementDialogContentEnhanced({
 
     const automationsInvalidationId = useDashboardSelector(selectAutomationsInvalidationId);
     const isEmbedded = useDashboardSelector(selectIsEmbedded);
+    const settings = useDashboardSelector(selectSettings);
+    const useHostRoute =
+        Boolean(settings.enableShellApplication) && Boolean(settings.enableShellApplication_dashboards);
     const { returnFocusTo } = useScheduleEmailDialogAccessibility();
 
     const maxAutomations = parseInt(maxAutomationsEntitlement?.value ?? DEFAULT_MAX_AUTOMATIONS, 10);
@@ -111,9 +115,10 @@ export function DefaultScheduledEmailManagementDialogContentEnhanced({
                 dashboardId,
                 tabId,
                 isEmbedded,
+                useHostRoute,
                 queryParams: externalRecipientOverride ? { recipient: externalRecipientOverride } : undefined,
             }),
-        [isEmbedded, externalRecipientOverride],
+        [isEmbedded, useHostRoute, externalRecipientOverride],
     );
 
     const titleElementId = useId();

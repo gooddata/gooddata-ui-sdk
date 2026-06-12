@@ -35,6 +35,14 @@ function throwIfAborted(signal?: AbortSignal) {
     }
 }
 
+function detectExportMode(): boolean {
+    if (typeof window === "undefined") {
+        return false;
+    }
+    const hash = window.location.hash;
+    return /[?&]displaymode=export(&|$)/i.test(hash) || /[?&]mode=export(&|$)/i.test(hash);
+}
+
 export async function loadPlatformContext(
     options: ILoadPlatformContextOptions = {},
 ): Promise<IBackendPlatformContext> {
@@ -79,5 +87,6 @@ export async function loadPlatformContext(
         pantherTier: bootstrap.pantherTier,
         theme: bootstrap.theme,
         embeddingMode: window.location.pathname.startsWith("/embedded/") ? "iframe" : "none",
+        isExportMode: detectExportMode(),
     };
 }
