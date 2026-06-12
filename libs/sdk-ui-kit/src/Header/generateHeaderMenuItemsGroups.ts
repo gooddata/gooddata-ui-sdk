@@ -119,7 +119,11 @@ function createInsightsItemsGroup(
 
     const insightItemsGroup: IHeaderMenuItem[] = [];
 
-    const kpisUrl = kpisItemUrl(baseUrl, workspaceId);
+    const kpisUrl = kpisItemUrl(
+        baseUrl,
+        workspaceId,
+        Boolean(featureFlags.enableShellApplication_dashboards),
+    );
     pushConditionally(
         insightItemsGroup,
         createIHeaderMenuItem(HEADER_ITEM_ID_KPIS_NEW, "s-menu-kpis", kpisUrl),
@@ -229,8 +233,11 @@ function canShowMetricsItem(hasMetrics: boolean, workspacePermissions: IWorkspac
     return Boolean(workspacePermissions.canManageMetric === true && hasMetrics);
 }
 
-function kpisItemUrl(baseUrl: string, workspaceId: string): string {
-    return withBaseUrl(baseUrl, `/dashboards/#/workspace/${workspaceId}`);
+function kpisItemUrl(baseUrl: string, workspaceId: string, useHostRoute: boolean): string {
+    return withBaseUrl(
+        baseUrl,
+        useHostRoute ? `/workspace/${workspaceId}/dashboards` : `/dashboards/#/workspace/${workspaceId}`,
+    );
 }
 function canShowKpisItem(
     workspacePermissions: IWorkspacePermissions,

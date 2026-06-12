@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "When an execution reaches a result limit: disable formatted exports (XLSX, formatted CSV, formatted PDF) with an explanatory tooltip in the widget and drill dialog menus, and show a partial-results warning next to the dashboard XLSX export.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "ivan.nejezchleb@gooddata.com"
+}

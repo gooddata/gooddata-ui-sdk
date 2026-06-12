@@ -186,11 +186,19 @@ function convertChatConversationContentFromBackend(
             return {
                 type: "toolResult",
                 callId: content.callId,
-                result: content.result,
+                result: tryParseJson(content.result),
             };
         default:
             assertNever(content);
             throw new Error(`Unexpected content: ${JSON.stringify(content)}`);
+    }
+}
+
+function tryParseJson(jsonString: string): string | object {
+    try {
+        return JSON.parse(jsonString);
+    } catch {
+        return jsonString;
     }
 }
 

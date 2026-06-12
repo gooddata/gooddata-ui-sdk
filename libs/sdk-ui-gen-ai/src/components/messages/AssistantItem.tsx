@@ -4,6 +4,7 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import { type IChatConversationLocalItem } from "../../model.js";
+import { useToolsReferences } from "../completion/useToolsReferences.js";
 import { type IChatMessagesGroup } from "../utils/groupUtility.js";
 
 import { AssistantItemFeedback } from "./AssistantItemFeedback.js";
@@ -13,15 +14,17 @@ import { ConversationItemContents } from "./ConversationItemContents.js";
 import { getItemState } from "./itemState.js";
 
 type AssistantItemProps = {
-    group: IChatMessagesGroup;
+    groups: [IChatMessagesGroup | undefined, IChatMessagesGroup];
     message: IChatConversationLocalItem;
     isLast?: boolean;
 };
 
-export function AssistantItemComponent({ message, group, isLast }: AssistantItemProps) {
+export function AssistantItemComponent({ message, groups, isLast }: AssistantItemProps) {
     const intl = useIntl();
+    const [, group] = groups;
 
     const messageState = getItemState(message);
+    const references = useToolsReferences(groups);
 
     const classNames = cx(
         "gd-gen-ai-chat__messages__conversation",
@@ -44,6 +47,7 @@ export function AssistantItemComponent({ message, group, isLast }: AssistantItem
             <ConversationItemContents
                 role="assistant"
                 message={message}
+                references={references}
                 isLoading={messageState === "loading"}
                 isLast={isLast}
             />

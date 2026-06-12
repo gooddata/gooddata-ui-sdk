@@ -67,7 +67,7 @@ export function getOptions(
     });
 }
 
-const SupportedReferenceTypes = ["fact", "metric", "date", "attribute", "label"] as const;
+const SupportedReferenceTypes = ["fact", "metric", "date", "attribute", "label", "dashboard"] as const;
 
 // Utility: Get regex for references
 export function getReferenceRegex(split?: boolean) {

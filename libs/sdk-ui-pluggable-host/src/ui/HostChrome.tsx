@@ -231,7 +231,7 @@ export function HostChrome({
     const headerTextColor = ctx.theme?.header?.color ?? defaultHeaderTheme.color;
     const activeColor = ctx.theme?.header?.activeColor ?? defaultHeaderTheme.activeColor;
 
-    const isEmbedded = ctx.embeddingMode === "iframe";
+    const hideChrome = ctx.embeddingMode === "iframe" || ctx.isExportMode === true;
 
     return (
         <HostIntlProvider locale={locale} additionalMessages={appMessages}>
@@ -244,7 +244,7 @@ export function HostChrome({
                             faviconUrl={faviconUrl}
                             appleTouchIconUrl={ctx.whiteLabeling?.appleTouchIconUrl}
                         />
-                        {isEmbedded ? null : (
+                        {hideChrome ? null : (
                             <div className={e("header")} onMouseOver={handleHeaderMouseOver}>
                                 <AppHeader
                                     logoUrl={ctx.whiteLabeling?.logoUrl || defaultLogoUrl}

@@ -2,26 +2,34 @@
 
 import {
     type AdSetApiTokenCommandData,
-    GdcAdCommandType as GdcAdCommandTypeValues,
     GdcAdEventType,
+    GdcKdEventType,
     GdcProductName,
-    type IGdcMessageEvent,
+    type KdSetApiTokenCommandData,
     isAdSetApiTokenCommandData,
+    isKdSetApiTokenCommandData,
 } from "@gooddata/sdk-embedding";
 import { messagingUtils } from "@gooddata/sdk-embedding/internal";
 
 import { setApiToken, setJwt } from "./backend.js";
 
-const API_TOKEN_AUTHENTICATION_PARAM = "apiTokenAuthentication";
+const API_TOKEN_AUTHENTICATION_PARAM = "apitokenauthentication";
 const EMBEDDED_PATH_PREFIX = "/embedded/";
 
+// The flag arrives in customer-authored URLs with inconsistent casing (the embedded apps
+// parse their hash queries case-insensitively), so match the param name lowercased.
 function hasFlagInQuery(query: string): boolean {
-    return new URLSearchParams(query).get(API_TOKEN_AUTHENTICATION_PARAM) === "true";
+    for (const [key, value] of new URLSearchParams(query)) {
+        if (key.toLowerCase() === API_TOKEN_AUTHENTICATION_PARAM && value === "true") {
+            return true;
+        }
+    }
+    return false;
 }
 
-// Extracts the query portion from a hash like "#/<route>?<query>". Standalone AD
-// uses hash-based routing and the legacy iframe URL keeps the flag inside the
-// hash, so the host has to look there as well as in `window.location.search`.
+// Extracts the query portion from a hash like "#/<route>?<query>". The embedded apps use
+// hash-based routing and the legacy iframe URLs keep the flag inside the hash, so the host
+// has to look there as well as in `window.location.search`.
 function getHashQuery(hash: string): string {
     const idx = hash.indexOf("?");
     return idx >= 0 ? hash.slice(idx + 1) : "";
@@ -33,7 +41,7 @@ function getHashQuery(hash: string): string {
  * When this returns true, the host MUST defer `backend.bootstrap()` until a
  * `SetApiToken` postMessage from the parent has been applied via `setApiToken`
  * / `setJwt`. The flag may live in either `window.location.search` (modern
- * pluggable URLs) or in the hash query (legacy AD iframe URLs).
+ * pluggable URLs) or in the hash query (legacy iframe URLs).
  */
 export function shouldWaitForInjectedApiToken(): boolean {
     if (!window.location.pathname.startsWith(EMBEDDED_PATH_PREFIX)) {
@@ -45,29 +53,42 @@ export function shouldWaitForInjectedApiToken(): boolean {
     );
 }
 
+type SetApiTokenPayload = (AdSetApiTokenCommandData | KdSetApiTokenCommandData)["gdc"]["event"]["data"];
+
+// Accepts the SetApiToken command from either embedded product — the parent page speaks
+// the product namespace of the app it embeds ("analyticalDesigner" or "dashboard").
+function getSetApiTokenPayload(data: unknown): SetApiTokenPayload | undefined {
+    if (isAdSetApiTokenCommandData(data)) {
+        return data.gdc.event.data;
+    }
+    if (isKdSetApiTokenCommandData(data)) {
+        return data.gdc.event.data;
+    }
+    return undefined;
+}
+
 /**
- * Performs the pre-bootstrap auth handshake AD has historically owned, but
- * lifted to the host so that pluggable AD can keep the customer-side wire
- * contract unchanged.
+ * Performs the pre-bootstrap auth handshake the embedded apps have historically owned,
+ * lifted to the host so that pluggable apps keep the customer-side wire contract unchanged.
  *
  * Sequence:
- *   1. Configure messagingUtils to accept only `SetApiToken` from the
- *      "analyticalDesigner" product.
- *   2. Register a one-shot listener for that command.
- *   3. Emit `listeningForApiToken` to the parent frame.
- *   4. Await the parent's `SetApiToken`, apply it to the host backend, then
- *      tear the listener down so AD can register its full command set when it
- *      mounts.
+ *   1. Register a one-shot listener for the `SetApiToken` command of either embedded
+ *      product. (A raw window listener rather than `messagingUtils.addListener` — the
+ *      messagingUtils filter reads a single module-wide `{product, allowlist}` config,
+ *      so it cannot accept the command from both products at once.)
+ *   2. Emit `listeningForApiToken` to the parent frame under both product names.
+ *   3. Await the parent's `SetApiToken`, apply it to the host backend, then tear the
+ *      listener down so the mounted app can register its full command set.
  *
  * Resolves once a valid token has been applied. Rejects if `signal` aborts.
  */
 export async function waitForInjectedApiToken(signal?: AbortSignal): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-        let listener: ((cmd: IGdcMessageEvent<string, string, unknown>) => boolean) | undefined;
+        let listener: ((e: MessageEvent) => void) | undefined;
 
         const cleanup = () => {
             if (listener) {
-                messagingUtils.removeListener(listener);
+                window.removeEventListener("message", listener);
                 listener = undefined;
             }
             signal?.removeEventListener("abort", onAbort);
@@ -84,22 +105,19 @@ export async function waitForInjectedApiToken(signal?: AbortSignal): Promise<voi
         }
         signal?.addEventListener("abort", onAbort, { once: true });
 
-        listener = (command) => {
-            if (!isAdSetApiTokenCommandData(command.data)) {
-                return false;
-            }
-            const payload = (command.data as AdSetApiTokenCommandData).gdc.event.data;
+        listener = (e: MessageEvent) => {
+            const payload = getSetApiTokenPayload(e.data);
             if (!payload) {
-                return false;
+                return;
             }
             const token = payload.token;
             const tokenType = payload.type ?? "gooddata";
 
             if (typeof token !== "string" || token.length === 0) {
-                return false;
+                return;
             }
             if (tokenType === "jwt" && !/^[\w-]+\.[\w-]+\.[\w-]+$/.test(token)) {
-                return false;
+                return;
             }
 
             try {
@@ -108,18 +126,17 @@ export async function waitForInjectedApiToken(signal?: AbortSignal): Promise<voi
                 } else {
                     setApiToken(token);
                 }
-            } catch (e) {
+            } catch (err) {
                 cleanup();
-                reject(e);
-                return true;
+                reject(err);
+                return;
             }
             cleanup();
             resolve();
-            return true;
         };
 
-        messagingUtils.setConfig(GdcProductName.ANALYTICAL_DESIGNER, [GdcAdCommandTypeValues.SetApiToken]);
-        messagingUtils.addListener(listener);
+        window.addEventListener("message", listener, false);
         messagingUtils.postEvent(GdcProductName.ANALYTICAL_DESIGNER, GdcAdEventType.ListeningForApiToken, {});
+        messagingUtils.postEvent(GdcProductName.KPI_DASHBOARD, GdcKdEventType.ListeningForApiToken, {});
     });
 }

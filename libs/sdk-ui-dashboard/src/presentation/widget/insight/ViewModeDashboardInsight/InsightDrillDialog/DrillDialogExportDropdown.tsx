@@ -157,7 +157,7 @@ function DrillModalExportMenuItem(props: IUiMenuInteractiveItemProps<IMenuItemDa
         <>
             <UiTooltip
                 triggerBy={isFocused ? [] : ["hover", "focus"]}
-                arrowPlacement="right"
+                arrowPlacement="left"
                 optimalPlacement
                 content={tooltip}
                 anchor={<InteractiveItemWithIcon {...props} />}

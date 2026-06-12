@@ -569,6 +569,12 @@ export { type IKpiProps, Kpi } from "./kpi/Kpi.js";
 // Locales
 export { messages } from "./locales.js";
 
+// Partial data warning
+export {
+    type IPartialDataWarningMessage,
+    getPartialDataWarningMessage,
+} from "./execution/warningPartialResult/partialDataWarning.js";
+
 /**
  * Common interface uses to specify number separators for the different SDK components.
  * @public

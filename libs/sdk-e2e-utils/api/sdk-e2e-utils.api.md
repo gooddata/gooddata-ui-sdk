@@ -4,6 +4,7 @@
 
 ```ts
 
+import { APIResponse } from '@playwright/test';
 import { Fixtures } from '@playwright/test';
 import { Locator } from '@playwright/test';
 import { Page } from '@playwright/test';
@@ -11,11 +12,15 @@ import { PlaywrightTestArgs } from '@playwright/test';
 import { PlaywrightTestOptions } from '@playwright/test';
 import { PlaywrightWorkerArgs } from '@playwright/test';
 import { PlaywrightWorkerOptions } from '@playwright/test';
+import { Route } from '@playwright/test';
 import { test } from '@playwright/test';
 import { TestDetails } from '@playwright/test';
 
 // @internal (undocumented)
 export const API_TOKEN: string;
+
+// @internal
+export function authedRouteFetch(route: Route, token: string): Promise<APIResponse>;
 
 // @internal (undocumented)
 export const authHeader: (token: string) => {

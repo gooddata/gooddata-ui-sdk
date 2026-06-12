@@ -4,19 +4,23 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import { type IChatConversationLocalItem } from "../../model.js";
+import { useToolsReferences } from "../completion/useToolsReferences.js";
+import { type IChatMessagesGroup } from "../utils/groupUtility.js";
 
 import { ConversationItemContents } from "./ConversationItemContents.js";
 import { getItemState } from "./itemState.js";
 
 type ToolItemProps = {
     message: IChatConversationLocalItem;
+    groups: [IChatMessagesGroup | undefined, IChatMessagesGroup];
     isLast?: boolean;
 };
 
-export function ToolItemComponent({ message, isLast }: ToolItemProps) {
+export function ToolItemComponent({ message, groups, isLast }: ToolItemProps) {
     const intl = useIntl();
 
     const messageState = getItemState(message);
+    const references = useToolsReferences(groups);
 
     const classNames = cx(
         "gd-gen-ai-chat__messages__conversation",
@@ -33,6 +37,7 @@ export function ToolItemComponent({ message, isLast }: ToolItemProps) {
                 role="tool"
                 isLast={isLast}
                 message={message}
+                references={references}
                 isLoading={messageState === "loading"}
             />
         </div>

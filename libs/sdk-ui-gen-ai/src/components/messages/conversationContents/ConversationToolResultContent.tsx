@@ -4,7 +4,7 @@ import cx from "classnames";
 import { FormattedMessage, defineMessages } from "react-intl";
 
 export type ConversationToolResultContentProps = {
-    result: string;
+    result: string | object;
     className?: string;
     isLoading?: boolean;
 };

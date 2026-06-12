@@ -28,6 +28,7 @@ import {
     selectExternalRecipient,
     selectIsEmbedded,
     selectIsWhiteLabeled,
+    selectSettings,
     selectTimezone,
 } from "../../../../model/store/config/configSelectors.js";
 import { selectInsightByWidgetRef } from "../../../../model/store/insights/insightsSelectors.js";
@@ -78,6 +79,9 @@ export function DefaultAlertingManagementDialogContentEnhanced({
 
     const automationsInvalidationId = useDashboardSelector(selectAutomationsInvalidationId);
     const isEmbedded = useDashboardSelector(selectIsEmbedded);
+    const settings = useDashboardSelector(selectSettings);
+    const useHostRoute =
+        Boolean(settings.enableShellApplication) && Boolean(settings.enableShellApplication_dashboards);
     const isMobile = isMobileView();
 
     // Check if widget has metrics for alert creation
@@ -103,9 +107,10 @@ export function DefaultAlertingManagementDialogContentEnhanced({
                 dashboardId,
                 tabId,
                 isEmbedded,
+                useHostRoute,
                 queryParams: externalRecipientOverride ? { recipient: externalRecipientOverride } : undefined,
             }),
-        [isEmbedded, externalRecipientOverride],
+        [isEmbedded, useHostRoute, externalRecipientOverride],
     );
 
     const titleElementId = useId();

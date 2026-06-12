@@ -10,6 +10,7 @@ import {
     selectEnableAutomationManagement,
     selectExternalRecipient,
     selectIsEmbedded,
+    selectSettings,
 } from "../../../../model/store/config/configSelectors.js";
 import { selectDashboardId } from "../../../../model/store/meta/metaSelectors.js";
 import { type IScheduledEmailManagementDialogProps } from "../types.js";
@@ -40,6 +41,9 @@ export function ScheduledEmailManagementDialog({
     const dashboardId = useDashboardSelector(selectDashboardId);
     const isEmbedded = useDashboardSelector(selectIsEmbedded);
     const externalRecipientOverride = useDashboardSelector(selectExternalRecipient);
+    const settings = useDashboardSelector(selectSettings);
+    const useHostRoute =
+        Boolean(settings.enableShellApplication) && Boolean(settings.enableShellApplication_dashboards);
 
     const handleScheduleDelete = useCallback((scheduledEmail: IAutomationMetadataObject) => {
         setScheduledEmailToDelete(scheduledEmail);
@@ -54,6 +58,7 @@ export function ScheduledEmailManagementDialog({
                         dashboardId: scheduledEmail.dashboard?.id,
                         automationId: scheduledEmail.id,
                         isEmbedded,
+                        useHostRoute,
                         queryParams: externalRecipientOverride
                             ? { recipient: externalRecipientOverride }
                             : undefined,
@@ -63,7 +68,15 @@ export function ScheduledEmailManagementDialog({
             }
             onEdit?.(scheduledEmail);
         },
-        [onEdit, enableAutomationManagement, dashboardId, workspace, isEmbedded, externalRecipientOverride],
+        [
+            onEdit,
+            enableAutomationManagement,
+            dashboardId,
+            workspace,
+            isEmbedded,
+            useHostRoute,
+            externalRecipientOverride,
+        ],
     );
 
     const handleScheduleDeleteSuccess = useCallback(() => {

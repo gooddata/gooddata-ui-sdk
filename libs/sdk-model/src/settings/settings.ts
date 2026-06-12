@@ -1143,6 +1143,14 @@ export interface IFeatureFlags {
     enableShellApplication_catalog?: boolean;
 
     /**
+     * Per-app sub-flag under enableShellApplication. When true (and
+     * enableShellApplication is also true), KPI Dashboards runs as a pluggable
+     * app inside the host. When false, the legacy standalone app at
+     * `/dashboards/#/workspace/{id}/...` is rendered instead.
+     */
+    enableShellApplication_dashboards?: boolean;
+
+    /**
      * Enable NULL-aware joins used for FULL OUTER JOIN conditions.
      */
     enableNullJoins?: boolean;

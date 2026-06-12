@@ -6488,6 +6488,7 @@ export interface IMenuButtonItemButton extends IMenuItemCommonProps {
     tooltip?: string | ReactNode;
     // (undocumented)
     type: "button";
+    warning?: ReactNode;
 }
 
 // @alpha (undocumented)
@@ -11142,6 +11143,9 @@ export const selectFocusObject: DashboardSelector<IDashboardFocusObject>;
 
 // @internal (undocumented)
 export const selectGlobalDrillsDownAttributeHierarchyByWidgetRef: (ref: ObjRef) => DashboardSelector<IGlobalDrillDownAttributeHierarchyDefinition[]>;
+
+// @alpha
+export const selectHasAnyExecutionResultLimitBreaks: DashboardSelector<boolean>;
 
 // @alpha
 export const selectHasAnyResettableParameterOnActiveTab: DashboardSelector<boolean>;

@@ -5141,6 +5141,8 @@ export interface IShareDialogBaseProps {
     // (undocumented)
     dashboardFilters?: FilterContextItem[];
     // (undocumented)
+    dashboardLinkBasePath?: string;
+    // (undocumented)
     dashboardParameters?: IDashboardParameter[];
     // (undocumented)
     isCurrentUserWorkspaceManager: boolean;
@@ -5202,6 +5204,7 @@ export interface IShareDialogProps {
     currentUserPermissions: CurrentUserPermissions;
     // (undocumented)
     dashboardFilters?: FilterContextItem[];
+    dashboardLinkBasePath?: string;
     // (undocumented)
     dashboardParameters?: IDashboardParameter[];
     // (undocumented)
@@ -5248,6 +5251,8 @@ export interface IShareGranteeBaseProps {
     currentUserPermissions: CurrentUserPermissions;
     // (undocumented)
     dashboardFilters?: FilterContextItem[];
+    // (undocumented)
+    dashboardLinkBasePath?: string;
     // (undocumented)
     dashboardParameters?: IDashboardParameter[];
     // (undocumented)

@@ -15,7 +15,7 @@ import {
 } from "../backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectSettings } from "../config/configSelectors.js";
 import { selectCanExecuteRaw, selectCanExportTabular } from "../permissions/permissionsSelectors.js";
-import { selectAnalyticalWidgetByRef } from "../tabs/layout/layoutSelectors.js";
+import { selectAllAnalyticalWidgets, selectAnalyticalWidgetByRef } from "../tabs/layout/layoutSelectors.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
 
 import { executionResultsAdapter } from "./executionResultsEntityAdapter.js";
@@ -95,6 +95,28 @@ export const selectHasExecutionResultLimitBreaksByRef: (
         selectExecutionResultLimitBreaksByRef(ref),
         (limitBreaks): boolean => limitBreaks.length > 0,
     ),
+);
+
+/**
+ * Selects whether at least one widget currently on the dashboard returned partial data because an
+ * execution limit was reached.
+ *
+ * @remarks
+ * Only execution results of widgets still present on the dashboard layout are considered. Execution results
+ * keyed by anything else - removed widgets that left a stale entry behind, or the drill dialog's pseudo
+ * ref `@@GDC_DRILL_MODAL` - are ignored, so they cannot keep the dashboard partial-results warning visible.
+ *
+ * @alpha
+ */
+export const selectHasAnyExecutionResultLimitBreaks: DashboardSelector<boolean> = createSelector(
+    selectExecutionResultEntities,
+    selectAllAnalyticalWidgets,
+    (executionResults, widgets): boolean => {
+        const liveWidgetIds = new Set(widgets.map((widget) => serializeObjRef(widget.ref)));
+        return Object.entries(executionResults).some(
+            ([id, e]) => liveWidgetIds.has(id) && (e?.limitBreaks?.length ?? 0) > 0,
+        );
+    },
 );
 
 /**

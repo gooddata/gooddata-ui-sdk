@@ -30,7 +30,7 @@ export function ItemsGroup({ group, previousGroup, children }: IItemsGroupProps)
     }
 
     return (
-        <DefaultItemsGroup classNames={classNames} group={group}>
+        <DefaultItemsGroup classNames={classNames} previousGroup={previousGroup} group={group}>
             {children}
         </DefaultItemsGroup>
     );

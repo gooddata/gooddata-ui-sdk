@@ -2727,6 +2727,7 @@ export interface IFeatureFlags {
     enableShellApplication?: boolean;
     enableShellApplication_analyticalDesigner?: boolean;
     enableShellApplication_catalog?: boolean;
+    enableShellApplication_dashboards?: boolean;
     enableShellApplication_ldmModeler?: boolean;
     enableShellApplication_metricEditor?: boolean;
     // (undocumented)

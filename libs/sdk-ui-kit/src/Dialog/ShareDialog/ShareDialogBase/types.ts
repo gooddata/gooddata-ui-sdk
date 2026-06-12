@@ -240,6 +240,7 @@ export interface IShareDialogBaseProps {
     currentUserPermissions: CurrentUserPermissions;
     dashboardFilters?: FilterContextItem[];
     dashboardParameters?: IDashboardParameter[];
+    dashboardLinkBasePath?: string;
     isShareGrantHidden?: boolean;
     applyShareGrantOnSelect?: boolean;
     showDashboardShareLink?: boolean;
@@ -286,6 +287,7 @@ export interface IShareGranteeBaseProps {
     currentUserPermissions: CurrentUserPermissions;
     dashboardFilters?: FilterContextItem[];
     dashboardParameters?: IDashboardParameter[];
+    dashboardLinkBasePath?: string;
     isShareGrantHidden?: boolean;
     applyShareGrantOnSelect?: boolean;
     showDashboardShareLink?: boolean;
@@ -374,6 +376,7 @@ export interface IGranteesListProps {
 export interface IShareLinkProps {
     dashboardFilters?: FilterContextItem[];
     dashboardParameters?: IDashboardParameter[];
+    dashboardLinkBasePath?: string;
     headline: string;
     helperText: string;
     buttonLabel: string;

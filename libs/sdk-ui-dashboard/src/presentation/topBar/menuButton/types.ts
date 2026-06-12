@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { type ComponentType, type ReactNode } from "react";
 
 /**
@@ -21,6 +22,12 @@ export interface IMenuButtonItemButton extends IMenuItemCommonProps {
      * If specified, the value is shown on hover of the item as a tooltip.
      */
     tooltip?: string | ReactNode;
+    /**
+     * If specified, a warning indicator is rendered on the trailing side of the item, shown regardless of
+     * the item's disabled state. The value is the content shown on hover of the warning indicator. Used e.g.
+     * to flag that an export will contain partial results because an execution reached a result limit.
+     */
+    warning?: ReactNode;
     disabled?: boolean;
     icon?: string | ReactNode;
     opensDialog?: boolean;

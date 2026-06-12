@@ -7,7 +7,7 @@ import { useIntl } from "react-intl";
 import { type IShareDialogLabels, ShareDialog } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
-import { selectLocale } from "../../model/store/config/configSelectors.js";
+import { selectLocale, selectSettings } from "../../model/store/config/configSelectors.js";
 
 import { type IShareDialogProps } from "./types.js";
 
@@ -36,6 +36,10 @@ export function DefaultShareDialog({
     onShareLinkCopy,
 }: IShareDialogProps): ReactElement | null {
     const locale = useDashboardSelector(selectLocale);
+    const settings = useDashboardSelector(selectSettings);
+    const dashboardLinkBasePath = settings.enableShellApplication_dashboards
+        ? `/workspace/${workspace}/dashboards/`
+        : undefined;
     const intl = useIntl();
     const labels: IShareDialogLabels = useMemo(
         () => ({
@@ -73,6 +77,7 @@ export function DefaultShareDialog({
             currentUserPermissions={currentUserPermissions}
             dashboardFilters={dashboardFilters}
             dashboardParameters={dashboardParameters}
+            dashboardLinkBasePath={dashboardLinkBasePath}
             isShareGrantHidden={isShareGrantHidden}
             applyShareGrantOnSelect={applyShareGrantOnSelect}
             showDashboardShareLink={showDashboardShareLink}

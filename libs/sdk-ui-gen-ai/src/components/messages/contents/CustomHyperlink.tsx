@@ -29,6 +29,7 @@ export function CustomHyperlinkComponent({ href, text, settings }: CustomHyperli
     const enableShellApplication_analyticalDesigner = Boolean(
         settings?.enableShellApplication_analyticalDesigner,
     );
+    const enableShellApplication_dashboards = Boolean(settings?.enableShellApplication_dashboards);
     const canManageMetrics = canManage || canAnalyze;
     const canManageVisualisations = canManage || canAnalyze;
 
@@ -57,6 +58,7 @@ export function CustomHyperlinkComponent({ href, text, settings }: CustomHyperli
             type,
             enableShellApplication_metricEditor,
             enableShellApplication_analyticalDesigner,
+            enableShellApplication_dashboards,
         );
 
         if (!itemUrl) {
@@ -69,7 +71,12 @@ export function CustomHyperlinkComponent({ href, text, settings }: CustomHyperli
             id,
             itemUrl,
         };
-    }, [href, enableShellApplication_metricEditor, enableShellApplication_analyticalDesigner]);
+    }, [
+        href,
+        enableShellApplication_metricEditor,
+        enableShellApplication_analyticalDesigner,
+        enableShellApplication_dashboards,
+    ]);
 
     if (!parsedRef) {
         return text;
@@ -122,6 +129,7 @@ const getItemUrl = (
     objectType: string,
     enableShellApplication_metricEditor?: boolean,
     enableShellApplication_analyticalDesigner?: boolean,
+    enableShellApplication_dashboards?: boolean,
 ) => {
     switch (objectType) {
         case "visualization":
@@ -129,7 +137,9 @@ const getItemUrl = (
                 ? `/workspace/${workspaceId}/analyze/#/${id}/edit`
                 : `/analyze/#/${workspaceId}/${id}/edit`;
         case "dashboard":
-            return `/dashboards/#/workspace/${workspaceId}/dashboard/${id}`;
+            return enableShellApplication_dashboards
+                ? `/workspace/${workspaceId}/dashboards/#/dashboard/${id}`
+                : `/dashboards/#/workspace/${workspaceId}/dashboard/${id}`;
         case "metric":
             return enableShellApplication_metricEditor
                 ? `/workspace/${workspaceId}/metrics/metric/${id}`
