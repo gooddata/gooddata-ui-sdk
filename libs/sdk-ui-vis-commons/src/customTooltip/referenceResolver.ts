@@ -2,6 +2,7 @@
 
 import { REFERENCE_REGEX_MATCH } from "@gooddata/sdk-ui-kit";
 
+import { URL_PATTERN } from "./markdownToHtml.js";
 import {
     type IResolvedReferenceValues,
     type ITooltipLocalizedStrings,
@@ -40,6 +41,45 @@ function renderReference(ref: ResolvedReference | undefined, strings: ITooltipLo
     }
 }
 
+// Prefix is matched case-insensitively (`metric` | `label`); LDM identifiers are case-sensitive.
+function lookupRef(
+    values: IResolvedReferenceValues,
+    prefix: string,
+    identifier: string,
+): ResolvedReference | undefined {
+    return values[prefix.toLowerCase() === "metric" ? metricKey(identifier) : labelKey(identifier)];
+}
+
+// In image/link URL targets a no-data reference must collapse to empty rather than
+// the "(No data)" placeholder, which would break markdown parsing and leak the raw
+// `![alt](...)` syntax. Blanking yields a broken image / empty-href link, matching
+// RichText. Image alt is blanked too; link text keeps the normal placeholder.
+// Slot grammar mirrors `markdownToHtml` (shared URL_PATTERN, single-line slots),
+// so blanking applies only where the renderer will actually see an image/link.
+const IMAGE_CONSTRUCT_REGEX = new RegExp(`!\\[([^\\]\\n]*)\\]\\((${URL_PATTERN})?\\)`, "g");
+const LINK_CONSTRUCT_REGEX = new RegExp(`(?<!!)\\[([^\\]\\n]+)\\]\\((${URL_PATTERN})?\\)`, "g");
+
+function blankNonValueRefs(slot: string, values: IResolvedReferenceValues): string {
+    return slot.replace(
+        REFERENCE_REGEX_MATCH,
+        (fullMatch: string, _wrapped: string, _key: string, prefix: string, identifier: string) =>
+            lookupRef(values, prefix, identifier)?.kind === "value" ? fullMatch : "",
+    );
+}
+
+function blankNonValueTargets(content: string, values: IResolvedReferenceValues): string {
+    return content
+        .replace(
+            IMAGE_CONSTRUCT_REGEX,
+            (_match: string, alt: string, url = "") =>
+                `![${blankNonValueRefs(alt, values)}](${blankNonValueRefs(url, values)})`,
+        )
+        .replace(
+            LINK_CONSTRUCT_REGEX,
+            (_match: string, text: string, url = "") => `[${text}](${blankNonValueRefs(url, values)})`,
+        );
+}
+
 /**
  * Substitutes `{metric/id}` and `{label/id}` references in markdown content
  * with resolved values from the lookup table.
@@ -66,11 +106,10 @@ export function resolveReferences(
         return "";
     }
 
-    return content.replace(REFERENCE_REGEX_MATCH, (_fullMatch, _wrapped, _key, prefix, identifier) => {
-        // The regex captures the prefix case-insensitively (`metric` | `label`);
-        // route through the key helpers so the lookup format stays single-sourced
-        // with the write sites. LDM identifiers stay as-is — they are case-sensitive.
-        const key = prefix.toLowerCase() === "metric" ? metricKey(identifier) : labelKey(identifier);
-        return escapeMarkdownMetachars(renderReference(values[key], strings));
-    });
+    // Blank no-data image/link targets first, before they reach substitution.
+    return blankNonValueTargets(content, values).replace(
+        REFERENCE_REGEX_MATCH,
+        (_fullMatch: string, _wrapped: string, _key: string, prefix: string, identifier: string) =>
+            escapeMarkdownMetachars(renderReference(lookupRef(values, prefix, identifier), strings)),
+    );
 }

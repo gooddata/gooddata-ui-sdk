@@ -134,6 +134,11 @@ export function AlertingDialogRenderer({
         onRecipientsChange,
         onFiltersChange,
         onApplyCurrentFilters,
+        automationParameters,
+        availableParameters,
+        onParameterChange,
+        onParameterDelete,
+        onParameterAdd,
         onMeasureChange,
         getAttributeValues,
         onAttributeChange,
@@ -380,6 +385,11 @@ export function AlertingDialogRenderer({
                                         isDashboardAutomation={false}
                                         overlayPositionType={OVERLAY_POSITION_TYPE}
                                         disableDateFilters={isAnomalyDetection(editedAutomation?.alert)}
+                                        parameters={automationParameters}
+                                        onParameterChange={onParameterChange}
+                                        onParameterDelete={onParameterDelete}
+                                        availableParameters={availableParameters}
+                                        onParameterAdd={onParameterAdd}
                                     />
                                     <ContentDivider className="gd-divider-with-margin" />
                                 </>

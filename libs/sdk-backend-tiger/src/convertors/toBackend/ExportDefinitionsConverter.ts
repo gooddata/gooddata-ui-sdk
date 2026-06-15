@@ -273,7 +273,7 @@ export const convertToVisualExportRequest = (
 export const convertToDashboardTabularExportRequest = (
     exportRequest: IExportDefinitionDashboardRequestPayload,
 ): DashboardTabularExportRequestV2 => {
-    const { filters, filtersByTab, dashboard } = exportRequest.content;
+    const { filters, filtersByTab, parametersByTab, dashboard } = exportRequest.content;
     if (
         exportRequest.format === "XLSX" &&
         isExportDefinitionDashboardRequestPayload(exportRequest) &&
@@ -309,6 +309,7 @@ export const convertToDashboardTabularExportRequest = (
                 : undefined,
             dashboardTabsFiltersOverrides:
                 dashboardTabsFiltersOverrides as unknown as DashboardTabularExportRequestV2["dashboardTabsFiltersOverrides"],
+            dashboardTabsParametersOverrides: parametersByTab,
         };
     }
     throw new UnexpectedError("Export definition must be dashboard and XLSX");
@@ -354,7 +355,7 @@ export const convertToTabularExportRequest = (
 export const convertVisualizationToDashboardTabularExportRequest = (
     exportRequest: IExportDefinitionVisualizationObjectRequestPayload,
 ): DashboardTabularExportRequestV2 => {
-    const { dashboard, widget, filters } = exportRequest.content;
+    const { dashboard, widget, filters, parametersByTab } = exportRequest.content;
 
     if (!dashboard || !widget) {
         throw new UnexpectedError(
@@ -388,6 +389,7 @@ export const convertVisualizationToDashboardTabularExportRequest = (
         dashboardId: dashboard,
         widgetIds: [widget],
         dashboardFiltersOverride: convertSdkFiltersToTiger(filters)?.filter(isTigerFilterContextItem),
+        dashboardTabsParametersOverrides: parametersByTab,
         settings,
     };
 };

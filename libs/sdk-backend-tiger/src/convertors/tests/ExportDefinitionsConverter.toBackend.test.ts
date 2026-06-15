@@ -332,4 +332,61 @@ describe("ExportDefinitionsConverter toBackend", () => {
         const result: DashboardTabularExportRequestV2 = convertToDashboardTabularExportRequest(request);
         expect(result.dashboardFiltersOverride).toHaveLength(1);
     });
+
+    it("maps content.parametersByTab to dashboardTabsParametersOverrides in dashboard tabular export", () => {
+        const request: IExportDefinitionDashboardRequestPayload = {
+            type: "dashboard",
+            fileName: "dashboard-tabular",
+            format: "XLSX",
+            content: {
+                dashboard: "dashboardId",
+                parametersByTab: {
+                    tab1: [{ id: "topN", value: "5", title: "Top N" }],
+                    tab2: [{ id: "limit", value: "10", title: "Limit" }],
+                },
+            },
+        };
+
+        const result = convertToDashboardTabularExportRequest(request);
+
+        expect(result.dashboardTabsParametersOverrides).toEqual({
+            tab1: [{ id: "topN", value: "5", title: "Top N" }],
+            tab2: [{ id: "limit", value: "10", title: "Limit" }],
+        });
+    });
+
+    it("omits dashboardTabsParametersOverrides when content has no parametersByTab", () => {
+        const request: IExportDefinitionDashboardRequestPayload = {
+            type: "dashboard",
+            fileName: "dashboard-tabular",
+            format: "XLSX",
+            content: { dashboard: "dashboardId" },
+        };
+
+        expect(
+            convertToDashboardTabularExportRequest(request).dashboardTabsParametersOverrides,
+        ).toBeUndefined();
+    });
+
+    it("maps content.parametersByTab to dashboardTabsParametersOverrides in widget tabular export", () => {
+        const request: IExportDefinitionVisualizationObjectRequestPayload = {
+            type: "visualizationObject",
+            fileName: "widget-tabular",
+            format: "XLSX",
+            content: {
+                visualizationObject: "visId",
+                widget: "widgetId",
+                dashboard: "dashboardId",
+                parametersByTab: {
+                    tabOwning: [{ id: "topN", value: "5", title: "Top N" }],
+                },
+            },
+        };
+
+        const result = convertVisualizationToDashboardTabularExportRequest(request);
+
+        expect(result.dashboardTabsParametersOverrides).toEqual({
+            tabOwning: [{ id: "topN", value: "5", title: "Top N" }],
+        });
+    });
 });

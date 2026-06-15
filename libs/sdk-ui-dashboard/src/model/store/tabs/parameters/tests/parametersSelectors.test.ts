@@ -25,6 +25,7 @@ import {
     selectActiveParameterRefKeys,
     selectDashboardParameterEntries,
     selectDashboardParameters,
+    selectEffectiveDashboardParametersForWidget,
     selectEffectiveParameterValuesForWidget,
     selectExportEffectiveParameters,
     selectFilterViewParameters,
@@ -1184,6 +1185,54 @@ describe("parameter selectors (per tab)", () => {
             } as unknown as DashboardState;
             const tabBKeys = selectActiveParameterRefKeys(stateActiveOnB);
             expect(tabBKeys.has(objRefToString(topNRef))).toBe(false);
+        });
+
+        it("selectEffectiveDashboardParametersForWidget resolves the widget's owning tab with runtimeOverride folded in", () => {
+            // Widget B lives on (inactive) tab B; its entry must win over the active tab A's entry.
+            const state = makeTwoTabState({
+                tabAEntries: [{ parameter: topNParameter, runtimeOverride: 25 }],
+                tabBEntries: [
+                    { parameter: { ...topNParameter, mode: "readonly", value: 5 }, runtimeOverride: 99 },
+                ],
+            });
+
+            expect(selectEffectiveDashboardParametersForWidget(widgetB)(state)).toEqual([
+                { ...topNParameter, mode: "readonly", value: 99 },
+            ]);
+        });
+
+        it("selectEffectiveDashboardParametersForWidget keeps the persisted value when the owning tab has no runtimeOverride", () => {
+            const state = makeTwoTabState({
+                tabAEntries: [],
+                tabBEntries: [{ parameter: { ...topNParameter, value: 5 }, runtimeOverride: undefined }],
+            });
+
+            expect(selectEffectiveDashboardParametersForWidget(widgetB)(state)).toEqual([
+                { ...topNParameter, value: 5 },
+            ]);
+        });
+
+        it("selectEffectiveDashboardParametersForWidget falls back to the active tab when no ref is given", () => {
+            const state = makeTwoTabState({
+                tabAEntries: [{ parameter: topNParameter, runtimeOverride: 25 }],
+                tabBEntries: [{ parameter: topNParameter, runtimeOverride: 99 }],
+            });
+
+            expect(selectEffectiveDashboardParametersForWidget(undefined)(state)).toEqual([
+                { ...topNParameter, value: 25 },
+            ]);
+        });
+
+        it("selectEffectiveDashboardParametersForWidget returns no parameters for a widget not on the dashboard", () => {
+            // The active tab is unrelated to the unknown widget — its entries must not leak in.
+            const state = makeTwoTabState({
+                tabAEntries: [{ parameter: topNParameter, runtimeOverride: 25 }],
+                tabBEntries: [{ parameter: topNParameter, runtimeOverride: 99 }],
+            });
+
+            expect(selectEffectiveDashboardParametersForWidget(idRef("w-unknown", "insight"))(state)).toEqual(
+                [],
+            );
         });
     });
 

@@ -1105,6 +1105,12 @@ export {
 } from "./@ui/UiFloatingElement/utils.js";
 
 export {
+    UiFloatingPanel,
+    type IUiFloatingPanelProps,
+    type UiFloatingPanelPadding,
+} from "./@ui/UiFloatingPanel/UiFloatingPanel.js";
+
+export {
     useCloseOnOutsideClick,
     FLOATING_ELEMENT_DATA_ATTR,
     type IUseCloseOnOutsideClickOptions,
@@ -1142,8 +1148,8 @@ export { UiCard, type IUiCardProps } from "./@ui/UiCard/UiCard.js";
 export { UiSubmenuHeader, type IUiSubmenuHeaderProps } from "./@ui/UiSubmenuHeader/UiSubmenuHeader.js";
 
 export { UiCombobox, type IUiComboboxProps } from "./@ui/UiCombobox/UiCombobox.js";
-export { UiComboboxInput, type UiComboboxInputProps } from "./@ui/UiCombobox/UiComboboxInput.js";
-export { UiComboboxPopup, type UiComboboxPopupProps } from "./@ui/UiCombobox/UiComboboxPopup.js";
+export { UiComboboxInput, type IUiComboboxInputProps } from "./@ui/UiCombobox/UiComboboxInput.js";
+export { UiComboboxPopup, type IUiComboboxPopupProps } from "./@ui/UiCombobox/UiComboboxPopup.js";
 export { UiComboboxList, type IUiComboboxListProps } from "./@ui/UiCombobox/UiComboboxList.js";
 export {
     UiComboboxListItem,

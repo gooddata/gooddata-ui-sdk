@@ -79,6 +79,18 @@ describe("buildCustomTooltipPieces", () => {
         expect(result.sectionHtml).toContain("value: 42");
         expect(result.sectionHtml).toContain(`missing: ${FALLBACK}`);
     });
+
+    it("renders a broken image instead of leaking markdown when an image URL reference has no data", () => {
+        const cfg: ICustomTooltipConfig = {
+            enabled: true,
+            content: "![Reykjavik]({label/flag_url})",
+        };
+        // No attribute provides `flag_url`, so the reference is absent → blanked in
+        // the image src, yielding a broken image rather than `![Reykjavik](...)`.
+        const result = buildCustomTooltipPieces({}, cfg, emptyMaps, undefined, STRINGS);
+        expect(result.sectionHtml).toContain('<img src="" alt="Reykjavik"');
+        expect(result.sectionHtml).not.toContain("![Reykjavik]");
+    });
 });
 
 describe("composeTooltipBody", () => {

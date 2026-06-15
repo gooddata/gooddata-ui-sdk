@@ -115,6 +115,7 @@ export const convertDashboardTabularExportRequest = (
             settings,
             dashboardFiltersOverride,
             dashboardTabsFiltersOverrides,
+            dashboardTabsParametersOverrides,
             widgetIds,
         },
     } = exportRequest;
@@ -134,6 +135,7 @@ export const convertDashboardTabularExportRequest = (
                 visualizationObject: widgetId ?? "",
                 widget: widgetId,
                 filters: convertTigerToDashboardFilters(dashboardFiltersOverride),
+                parametersByTab: dashboardTabsParametersOverrides,
             },
         };
     }
@@ -158,6 +160,7 @@ export const convertDashboardTabularExportRequest = (
             dashboard: dashboardId,
             filters: convertTigerToDashboardFilters(dashboardFiltersOverride),
             filtersByTab,
+            parametersByTab: dashboardTabsParametersOverrides,
         },
     };
 };

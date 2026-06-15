@@ -120,6 +120,18 @@ export function workspaceParametersByRef(
 }
 
 /**
+ * Folds an entry's ephemeral `runtimeOverride` into the persisted parameter shape's `value`.
+ *
+ * @internal
+ */
+export function applyRuntimeOverride(entry: IDashboardParameterEntry): IDashboardParameter {
+    if (entry.runtimeOverride === undefined) {
+        return entry.parameter;
+    }
+    return { ...entry.parameter, value: entry.runtimeOverride };
+}
+
+/**
  * Resolves a single parameter entry to the export wire shape. Returns `undefined` for entries with
  * no `runtimeOverride` — the dashboard's persisted parameter state and the workspace default are
  * applied by the backend on its own, and insight-level `insight.parameters` are applied per-insight

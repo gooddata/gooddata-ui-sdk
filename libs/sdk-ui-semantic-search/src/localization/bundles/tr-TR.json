@@ -11,7 +11,7 @@
     "semantic-search.previous-search": "Önceki arama: {query}",
     "semantic-search.tree": "Anlamsal arama ağacı",
     "semantic-search.tree.history": "Anlamsal arama ağacı geçmişi",
-    "semantic-search.edit": "Düzenle",
+    "semantic-search.edit": "Aç",
     "semantic-search.date.at": "saat",
     "semantic-search.ask.ai.assistant": "AI Asistanına Sor",
     "semantic-search.error.sync-in-progress": "Hâlâ ayarlanıyor — kısa süre sonra tekrar deneyin.",

@@ -49,16 +49,20 @@
         flex: 1 1 auto;
         min-width: 0;
         height: 100%;
-        padding: 0;
+        // 2px sits on top of the field's 7px padding so text isn't flush to the border.
+        padding: 0 0 0 2px;
         border: none;
         background: transparent;
         font-family: inherit;
         font-size: 14px;
+        line-height: 22px;
         color: var(--gd-palette-complementary-8);
         outline: none;
 
         &::placeholder {
-            color: var(--gd-palette-complementary-5);
+            // `opacity` not `rgba(var(...))` so theme overrides of complementary-7 still apply.
+            color: var(--gd-palette-complementary-7);
+            opacity: 0.75;
         }
 
         &:disabled {

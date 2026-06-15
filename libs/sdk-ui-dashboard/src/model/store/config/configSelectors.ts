@@ -923,6 +923,18 @@ export const selectEnableSnapshotExportAccessibility: DashboardSelector<boolean>
 );
 
 /**
+ * Returns whether the early loading export status signal in export mode is enabled.
+ *
+ * @internal
+ */
+export const selectEnableExportTimeoutFix: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return Boolean(state.settings?.enableExportTimeoutFix);
+    },
+);
+
+/**
  * Selector for the widget export to PNG image feature flag
  *
  * @internal

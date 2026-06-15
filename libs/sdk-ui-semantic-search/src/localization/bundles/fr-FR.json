@@ -11,7 +11,7 @@
     "semantic-search.previous-search": "Recherche précédente : {query}",
     "semantic-search.tree": "Arbre de recherche sémantique",
     "semantic-search.tree.history": "Historique de l’arbre de recherche sémantique",
-    "semantic-search.edit": "Modifier",
+    "semantic-search.edit": "Ouvrir",
     "semantic-search.date.at": "à",
     "semantic-search.ask.ai.assistant": "Demander à l’assistant IA",
     "semantic-search.error.sync-in-progress": "Configuration en cours — réessayez dans un instant.",

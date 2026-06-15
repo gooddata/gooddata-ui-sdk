@@ -897,6 +897,12 @@ export interface IFeatureFlags {
     enableSnapshotExportAccessibility?: boolean;
 
     /**
+     * Enable emitting of the early loading export status signal in export mode,
+     * before any dashboard data is loaded.
+     */
+    enableExportTimeoutFix?: boolean;
+
+    /**
      * Enable widget export to PDF.
      */
     enableWidgetExportPdf?: boolean;

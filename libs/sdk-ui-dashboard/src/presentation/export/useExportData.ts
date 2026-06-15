@@ -76,7 +76,7 @@ const getVisualizationDimensionsAttributes = (
  */
 export const useDashboardExportData = (
     renderMode: RenderMode | undefined,
-    status: "loaded" | "empty",
+    status: "loading" | "loaded" | "empty",
     type: "nested" | "root",
 ): CommonExportDataAttributes | undefined => {
     if (renderMode !== "export" || type === "nested") {

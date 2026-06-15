@@ -5,6 +5,7 @@ import { isEmpty } from "lodash-es";
 import { type IAuditable } from "../base/metadata.js";
 import { type IExecutionDefinition } from "../execution/executionDefinition/index.js";
 import { type IMeasure } from "../execution/measure/index.js";
+import { type IInsightParameterValue } from "../execution/parameter/index.js";
 import {
     type IExportDefinitionMetadataObject,
     type IExportDefinitionMetadataObjectDefinition,
@@ -395,6 +396,12 @@ export type IAutomationAlertExecutionDefinition = Pick<
      * Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.
      */
     readonly auxMeasures?: IMeasure[];
+
+    /**
+     * Parameter value overrides captured for the headless run. Empty/absent means the backend
+     * resolves parameters from the workspace defaults.
+     */
+    readonly parameters?: IInsightParameterValue[];
 };
 
 /**

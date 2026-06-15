@@ -19,10 +19,10 @@ export interface IUiComboboxListProps extends Omit<HTMLAttributes<HTMLUListEleme
 
 /** @internal */
 export function UiComboboxList({ children, className, ...htmlProps }: IUiComboboxListProps) {
-    const { availableOptions } = useComboboxState();
+    const { availableOptions, listboxId } = useComboboxState();
 
     return (
-        <ul role="listbox" {...htmlProps} className={cx(e("list"), className)} tabIndex={-1}>
+        <ul role="listbox" {...htmlProps} id={listboxId} className={cx(e("list"), className)} tabIndex={-1}>
             {/* TODO: Implement virtual list */}
             {availableOptions.map((option, index) =>
                 children ? (

@@ -950,6 +950,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableAiAssistantEmbedding,
+            "enableAiAssistantEmbedding",
+            "BOOLEAN",
+            FeatureFlagsValues.enableAiAssistantEmbedding,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableGenAIReasoningVisibility,
             "enableGenAIReasoningVisibility",
             "BOOLEAN",
@@ -1234,6 +1241,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableShellApplication_ldmModeler",
             "BOOLEAN",
             FeatureFlagsValues.enableShellApplication_ldmModeler,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableExportTimeoutFix,
+            "enableExportTimeoutFix",
+            "BOOLEAN",
+            FeatureFlagsValues.enableExportTimeoutFix,
         ),
     };
 }

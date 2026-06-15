@@ -9,6 +9,7 @@ import { useIntl } from "react-intl";
 import {
     type ICatalogAttribute,
     type ICatalogDateDataset,
+    type IdentifierRef,
     isCatalogAttribute,
     isCatalogMeasure,
 } from "@gooddata/sdk-model";
@@ -17,6 +18,7 @@ import {
     DropdownList,
     type ITab,
     SingleSelectListItem,
+    UiIcon,
     isEscapeKey,
     useIdPrefixed,
 } from "@gooddata/sdk-ui-kit";
@@ -89,16 +91,42 @@ const dropdownAlignPoints = [
 
 const WIDTH = 253;
 
-type AttributesDropdownTabId = "attributes" | "dateDatasets" | "metrics";
+type AttributesDropdownTabId = "attributes" | "dateDatasets" | "metrics" | "parameters";
+
+/**
+ * Addable workspace parameter offered in the dropdown's "parameters" tab (automation dialogs only).
+ *
+ * @internal
+ */
+export interface IParameterDropdownListItem {
+    type: "parameter";
+    ref: IdentifierRef;
+    title: string;
+}
+
+function isParameterDropdownListItem(item: unknown): item is IParameterDropdownListItem {
+    return typeof item === "object" && item !== null && "type" in item && item.type === "parameter";
+}
+
+/**
+ * @internal
+ */
+export interface IAttributesDropdownProps extends IDashboardAttributeFilterPlaceholderProps {
+    /** Addable workspace parameters (automation dialogs only). Renders a "parameters" tab. */
+    parameters?: IParameterDropdownListItem[];
+    onParameterSelect?: (ref: IdentifierRef) => void;
+}
 
 function createDefaultSelectedTabId({
     hasAttributes,
     hasDateFilters,
     hasMeasures,
+    hasParameters,
 }: {
     hasAttributes: boolean;
     hasDateFilters: boolean;
     hasMeasures: boolean;
+    hasParameters: boolean;
 }): AttributesDropdownTabId {
     if (hasAttributes) {
         return "attributes";
@@ -108,6 +136,9 @@ function createDefaultSelectedTabId({
     }
     if (hasMeasures) {
         return "metrics";
+    }
+    if (hasParameters) {
+        return "parameters";
     }
 
     return "attributes";
@@ -134,7 +165,9 @@ export function AttributesDropdown({
     getCustomItemTitle,
     accessibilityConfig,
     returnFocusTo,
-}: IDashboardAttributeFilterPlaceholderProps) {
+    parameters = [],
+    onParameterSelect,
+}: IAttributesDropdownProps) {
     const buttonId = useIdPrefixed(`add-attribute-filter-button-${id ?? ""}-`);
     const intl = useIntl();
     const [searchQuery, setSearchQuery] = useState("");
@@ -219,17 +252,27 @@ export function AttributesDropdown({
         insightsMap,
     });
 
+    const filteredParameters = useMemo(() => {
+        return searchQuery
+            ? parameters.filter((parameter) =>
+                  parameter.title.toLowerCase().includes(searchQuery.toLowerCase()),
+              )
+            : parameters;
+    }, [parameters, searchQuery]);
+
     const hasAttributes = useMemo(() => attributes.length > 0, [attributes]);
     const hasDateFilters = useMemo(
         () => offerDateFilters && dateDatasets.length > 0,
         [dateDatasets, offerDateFilters],
     );
     const hasMeasures = useMemo(() => metricMeasures.length > 0, [metricMeasures]);
+    const hasParameters = useMemo(() => parameters.length > 0, [parameters]);
 
     const defaultSelectedTabId = createDefaultSelectedTabId({
         hasAttributes,
         hasDateFilters,
         hasMeasures,
+        hasParameters,
     });
 
     const [selectedTabId, setSelectedTabId] = useState<string>(defaultSelectedTabId);
@@ -253,13 +296,25 @@ export function AttributesDropdown({
         if (offerDateFilters && dateDatasets.length) {
             newTabs.push({ id: "dateDatasets", iconOnly: true, icon: "gd-icon-date" });
         }
+        if (parameters.length) {
+            newTabs.push({
+                id: "parameters",
+                iconOnly: true,
+                iconNode: <UiIcon type="parameter" size={16} layout="block" color="currentColor" />,
+            });
+        }
 
         return newTabs;
-    }, [attributes, dateDatasets, enableMeasureValueFilterKD, metricMeasures, offerDateFilters]);
+    }, [attributes, dateDatasets, enableMeasureValueFilterKD, metricMeasures, offerDateFilters, parameters]);
 
     const buttonTitle = intl.formatMessage({ id: "addPanel.filter" });
 
-    const items: (ICatalogAttribute | ICatalogDateDataset | IMetricDropdownListItem)[] = useMemo(() => {
+    const items: (
+        | ICatalogAttribute
+        | ICatalogDateDataset
+        | IMetricDropdownListItem
+        | IParameterDropdownListItem
+    )[] = useMemo(() => {
         if (selectedTabId === "attributes") {
             return filteredAttributes;
         }
@@ -271,8 +326,12 @@ export function AttributesDropdown({
             return metricDropdownItems;
         }
 
+        if (selectedTabId === "parameters") {
+            return filteredParameters;
+        }
+
         return [];
-    }, [selectedTabId, filteredAttributes, filteredDateDatasets, metricDropdownItems]);
+    }, [selectedTabId, filteredAttributes, filteredDateDatasets, metricDropdownItems, filteredParameters]);
 
     const showTabs = useMemo(() => {
         return tabs.length > 1;
@@ -334,7 +393,9 @@ export function AttributesDropdown({
                                 if (isMetricHeaderListItem(item) || isMetricSeparatorListItem(item)) {
                                     return;
                                 }
-                                if (isCatalogAttribute(item)) {
+                                if (isParameterDropdownListItem(item)) {
+                                    onParameterSelect?.(item.ref);
+                                } else if (isCatalogAttribute(item)) {
                                     onSelect(item.defaultDisplayForm.ref);
                                 } else if (isCatalogMeasure(item)) {
                                     onSelect(item.measure.ref, "measure");
@@ -349,6 +410,9 @@ export function AttributesDropdown({
                                 }
                                 if (isMetricSeparatorListItem(item)) {
                                     return "";
+                                }
+                                if (isParameterDropdownListItem(item)) {
+                                    return item.title;
                                 }
                                 if (isCatalogAttribute(item)) {
                                     return getAttributeListItemTitle(item, getCustomItemTitle?.(item));
@@ -365,6 +429,25 @@ export function AttributesDropdown({
                                 }
                                 if (isMetricSeparatorListItem(item)) {
                                     return <SingleSelectListItem type={item.type} />;
+                                }
+                                if (isParameterDropdownListItem(item)) {
+                                    return (
+                                        <SingleSelectListItem
+                                            title={item.title}
+                                            icon={
+                                                <UiIcon
+                                                    type="parameter"
+                                                    size={16}
+                                                    layout="block"
+                                                    color="currentColor"
+                                                />
+                                            }
+                                            onClick={() => {
+                                                onParameterSelect?.(item.ref);
+                                                closeDropdown();
+                                            }}
+                                        />
+                                    );
                                 }
                                 if (isCatalogAttribute(item)) {
                                     const title = getCustomItemTitle?.(item);

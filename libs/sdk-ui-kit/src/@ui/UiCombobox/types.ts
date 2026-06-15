@@ -1,7 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import type { ReferenceType, UseInteractionsReturn } from "@floating-ui/react";
-import type { CSSProperties, KeyboardEvent } from "react";
+import type { KeyboardEvent, RefObject } from "react";
 
 /** @internal */
 export interface IUiComboboxOption {
@@ -26,7 +25,10 @@ export interface IUiComboboxParams {
      */
     defaultValue?: string;
     /**
-     * Event handler called when the selected value of the combobox changes.
+     * Called whenever the input value changes — on typing, on Escape reset,
+     * and when an option is selected. The combobox is fully controlled when
+     * paired with `value`; consumers that need to distinguish selection from
+     * typing should inspect the current `selectedOption` state.
      */
     onValueChange?: (value: string) => void;
     /**
@@ -52,13 +54,19 @@ export interface IUiComboboxState {
 
     isOpen: boolean;
     setIsOpen: (isOpen: boolean) => void;
-    setReferenceRef: (node: ReferenceType | null) => void;
-    setFloatingRef: (node: HTMLDivElement | null) => void;
+    /**
+     * Drives popup visibility. Sync combobox sets it to `availableOptions.length > 0`;
+     * async sources keep it `true` so status rows (loading / error / no-match) can show.
+     */
+    shouldRenderPopup: boolean;
+    /** Anchor for the popup — typically the input's outer wrapper, so the popup matches the visible field width. */
+    anchorRef: RefObject<HTMLElement | null>;
     registerItemRef: (node: HTMLElement | null, index: number) => void;
-    getReferenceProps: UseInteractionsReturn["getReferenceProps"];
-    getFloatingProps: UseInteractionsReturn["getFloatingProps"];
-    getItemProps: UseInteractionsReturn["getItemProps"];
-    floatingStyles: CSSProperties;
 
     creatable: boolean;
+    /**
+     * Stable id of the `<ul role="listbox">`. The input advertises it via
+     * `aria-controls`; the listbox sets it as its `id`.
+     */
+    listboxId: string;
 }

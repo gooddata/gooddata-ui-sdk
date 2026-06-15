@@ -827,6 +827,10 @@
         "text": "This filter is locked and cannot be removed.",
         "crowdinContext": "Tooltip text for locked filter in automation create dialog"
     },
+    "dialogs.automation.parameters.chip": {
+        "text": "{title} is {value}",
+        "crowdinContext": "Automation parameter chip label showing a parameter title and its value, e.g. 'Top N is 5'"
+    },
     "dialogs.automation.filters.useFiltersMessage.tooltip": {
         "text": "Check to keep these filters for every export. If unchecked, the export will use the latest default filters from the dashboard.",
         "crowdinContext": "Tooltip explaining filter persistence options for scheduled exports"

@@ -7,7 +7,7 @@ import { usePropState } from "@gooddata/sdk-ui";
 import { isElementTextInput } from "../../utils/domUtilities.js";
 import { useId } from "../../utils/useId.js";
 import { bem } from "../@utils/bem.js";
-import { UiFloatingElement } from "../UiFloatingElement/UiFloatingElement.js";
+import { UiFloatingPanel } from "../UiFloatingPanel/UiFloatingPanel.js";
 import { UiFocusManager } from "../UiFocusManager/UiFocusManager.js";
 import { resolveRef } from "../UiFocusManager/utils.js";
 
@@ -177,7 +177,7 @@ export function UiDropdown({
                 {renderButton(buttonRenderProps)}
             </div>
 
-            <UiFloatingElement
+            <UiFloatingPanel
                 anchor={buttonWrapperRef}
                 isOpen={isOpen}
                 onClose={closeDropdown}
@@ -202,9 +202,9 @@ export function UiDropdown({
                     enableAutofocus={autofocusOnOpen ? { initialFocus } : false}
                     enableReturnFocusOnUnmount={{ returnFocusTo: returnFocusTo ?? buttonRef }}
                 >
-                    <div className={e("body")}>{renderBody(bodyRenderProps)}</div>
+                    {renderBody(bodyRenderProps)}
                 </UiFocusManager>
-            </UiFloatingElement>
+            </UiFloatingPanel>
         </>
     );
 }

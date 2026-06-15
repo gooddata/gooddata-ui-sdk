@@ -358,7 +358,7 @@ export type AttributeHierarchiesInteractionType = "attributeHierarchyDrillDownSe
 export function attributeHierarchyModified(correlationId?: string): IAttributeHierarchyModified;
 
 // @internal (undocumented)
-export function AttributesDropdown(input: IDashboardAttributeFilterPlaceholderProps): JSX.Element;
+export function AttributesDropdown(input: IAttributesDropdownProps): JSX.Element;
 
 // @alpha (undocumented)
 export type AutomationInteractionData = {
@@ -641,7 +641,7 @@ export function commandStartedEventHandler<TCommand extends IDashboardCommand>(t
 export type CommonExportDataAttributes = {
     "data-export-type": ExportElementType;
     "data-export-depth"?: string;
-    "data-export-status"?: "empty" | "loaded";
+    "data-export-status"?: "loading" | "empty" | "loaded";
 };
 
 // @public (undocumented)
@@ -2383,6 +2383,13 @@ export interface IAttributeFiltersCustomizer {
 export interface IAttributeHierarchyModified extends IDashboardCommand {
     // (undocumented)
     readonly type: "GDC.DASH/CMD.ATTRIBUTE_HIERARCHY_MODIFIED";
+}
+
+// @internal (undocumented)
+export interface IAttributesDropdownProps extends IDashboardAttributeFilterPlaceholderProps {
+    // (undocumented)
+    onParameterSelect?: (ref: IdentifierRef) => void;
+    parameters?: IParameterDropdownListItem[];
 }
 
 // @alpha
@@ -6854,6 +6861,16 @@ export interface IObjRefMapConfig<T> {
     readonly uriExtract: (obj: T) => string;
 }
 
+// @internal
+export interface IParameterDropdownListItem {
+    // (undocumented)
+    ref: IdentifierRef;
+    // (undocumented)
+    title: string;
+    // (undocumented)
+    type: "parameter";
+}
+
 // @alpha (undocumented)
 export interface IParametersState {
     // (undocumented)
@@ -10806,6 +10823,9 @@ export const selectEnableDrilledTooltip: DashboardSelector<boolean>;
 export const selectEnableExecutionCancelling: DashboardSelector<boolean>;
 
 // @internal
+export const selectEnableExportTimeoutFix: DashboardSelector<boolean>;
+
+// @internal
 export const selectEnableExportToDocumentStorage: DashboardSelector<boolean>;
 
 // @internal
@@ -13278,7 +13298,7 @@ export const useDashboardEventDispatch: () => (eventBody: DashboardEventBody<ICu
 export const useDashboardEventsContext: () => IDashboardEventsContext;
 
 // @alpha (undocumented)
-export const useDashboardExportData: (renderMode: RenderMode | undefined, status: "empty" | "loaded", type: "nested" | "root") => CommonExportDataAttributes | undefined;
+export const useDashboardExportData: (renderMode: RenderMode | undefined, status: "empty" | "loaded" | "loading", type: "nested" | "root") => CommonExportDataAttributes | undefined;
 
 // @internal (undocumented)
 export const useDashboardQueryProcessing: <TQuery extends DashboardQueries, TQueryResult, TQueryCreatorArgs extends any[]>(input: {

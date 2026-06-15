@@ -17,7 +17,11 @@ import {
 import { ConditionalScopedThemeProvider, useIsScopeThemed, useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { bem } from "../@utils/bem.js";
-import { FLOATING_ELEMENT_DATA_ATTR } from "../hooks/useCloseOnOutsideClick.js";
+import {
+    FLOATING_ELEMENT_DATA_ATTR,
+    isClickInsideOwnSubtree,
+    useRegisterFloatingAnchor,
+} from "../hooks/useCloseOnOutsideClick.js";
 import { useFloatingPosition } from "../UiFloatingElement/useFloatingPosition.js";
 
 import { ARROW_HEIGHT, ARROW_WIDTH, HIDE_DELAY, SHOW_DELAY } from "./constants.js";
@@ -152,8 +156,18 @@ export function UiTooltip({
         enabled: triggerBy.includes("click"),
     });
 
-    // Close on escape/outside click
-    const dismiss = useDismiss(context, { enabled: isOpenProp === undefined });
+    // Read the anchor lazily — floating-ui's `refs.reference` is a mutable
+    // ref that only has a current value once the reference element mounts,
+    // which is independent of our render cycle.
+    const setFloatingWithAnchorRegistry = useRegisterFloatingAnchor(refs.setFloating, () =>
+        refs.reference.current instanceof Element ? refs.reference.current : null,
+    );
+
+    const dismiss = useDismiss(context, {
+        enabled: isOpenProp === undefined,
+        outsidePress: (event) =>
+            !isClickInsideOwnSubtree(event.target as Element | null, refs.floating.current),
+    });
     const { getReferenceProps, getFloatingProps } = useInteractions([dismiss, hover, focus, click]);
 
     return (
@@ -184,7 +198,7 @@ export function UiTooltip({
                                 width: width === "same-as-anchor" ? "same-as-anchor" : false,
                                 variant,
                             })}
-                            ref={refs.setFloating}
+                            ref={setFloatingWithAnchorRegistry}
                             style={{
                                 zIndex,
                                 ...floatingStyles,

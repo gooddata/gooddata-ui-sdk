@@ -61,10 +61,13 @@ import {
     selectDashboardId,
 } from "../../../../../model/store/meta/metaSelectors.js";
 import { selectWidgetLocalIdToTabIdMap } from "../../../../../model/store/tabs/layout/layoutSelectors.js";
+import { selectEffectiveParameterValuesForWidget } from "../../../../../model/store/tabs/parameters/parametersSelectors.js";
 import { selectCurrentUser } from "../../../../../model/store/user/userSelectors.js";
 import { selectUsers } from "../../../../../model/store/users/usersSelectors.js";
 import type { ExtendedDashboardWidget } from "../../../../../model/types/layoutTypes.js";
 import { isEmail } from "../../../scheduledEmail/utils/validate.js";
+import { setAlertExecutionParameters } from "../../../shared/automationFilters/automationParameters.js";
+import { useAutomationAlertParameters } from "../../../shared/automationFilters/useAutomationAlertParameters.js";
 import {
     getAppliedWidgetFilters,
     getVisibleFiltersByFilters,
@@ -153,6 +156,7 @@ export function useEditAlert({
     const commonDateFilterId = useDashboardSelector(selectAutomationCommonDateFilterId);
     const weekStart = useDashboardSelector(selectWeekStart);
     const timezone = useDashboardSelector(selectTimezone);
+    const parameterValues = useDashboardSelector(selectEffectiveParameterValuesForWidget(widget?.ref));
 
     const isInvalidConnectionToInsight = alertToEdit?.metadata?.widget && !insight;
 
@@ -245,8 +249,11 @@ export function useEditAlert({
     })();
 
     const [editedAutomation, setEditedAutomation] = useState<IAutomationMetadataObjectDefinition | undefined>(
-        resolvedAlertToEdit ??
-            createDefaultAlert(
+        () => {
+            if (resolvedAlertToEdit) {
+                return resolvedAlertToEdit;
+            }
+            const defaultNewAlert = createDefaultAlert(
                 getAppliedWidgetFilters(
                     editedAutomationFilters ?? [],
                     dashboardHiddenFilters,
@@ -273,10 +280,22 @@ export function useEditAlert({
                 dashboardId,
                 (widget as IInsightWidget)?.title,
                 targetTabIdentifier,
-            ),
+            );
+            return defaultNewAlert && parameterValues.length > 0
+                ? setAlertExecutionParameters(defaultNewAlert, parameterValues)
+                : defaultNewAlert;
+        },
     );
 
     const [originalAutomation] = useState(editedAutomation);
+
+    const {
+        automationParameters,
+        availableParameters,
+        onParameterChange,
+        onParameterDelete,
+        onParameterAdd,
+    } = useAutomationAlertParameters({ editedAutomation, setEditedAutomation, widgetRef: widget?.ref });
 
     //
     // Selected values
@@ -699,6 +718,11 @@ export function useEditAlert({
         onRecipientsChange,
         onFiltersChange,
         onApplyCurrentFilters,
+        automationParameters,
+        availableParameters,
+        onParameterChange,
+        onParameterDelete,
+        onParameterAdd,
         onMeasureChange,
         getAttributeValues,
         onAttributeChange,

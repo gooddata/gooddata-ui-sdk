@@ -1,6 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { type KeyboardEvent, type ReactElement, useCallback, useMemo, useState } from "react";
+import { type KeyboardEvent, type ReactElement, type ReactNode, useCallback, useMemo, useState } from "react";
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
@@ -25,6 +25,7 @@ export interface ITab {
     >;
     iconOnly?: boolean;
     icon?: string;
+    iconNode?: ReactNode;
 }
 
 /**
@@ -102,7 +103,7 @@ export function Tabs({
                     data-testid={`s-tab-${simplifyText(tab.id)}`}
                 >
                     <span>
-                        {tab.icon ? <i className={tab.icon} /> : null}
+                        {tab.iconNode ?? (tab.icon ? <i className={tab.icon} /> : null)}
                         {tab.iconOnly ? null : (
                             <FormattedMessage
                                 id={tab.id}

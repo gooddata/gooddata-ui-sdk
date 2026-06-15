@@ -32,6 +32,7 @@ import { DEFAULT_TAB_ID } from "../tabsState.js";
 
 import {
     EMPTY_EXPORT_PARAMETERS,
+    applyRuntimeOverride,
     buildPersistedByTabAndRef,
     buildWidgetScopeTabRefSelections,
     collectExportOverrides,
@@ -105,12 +106,7 @@ export const selectFilterViewParameters: DashboardSelector<IDashboardParameter[]
         if (entries.length === 0) {
             return undefined;
         }
-        return entries.map((entry) => {
-            if (entry.runtimeOverride === undefined) {
-                return entry.parameter;
-            }
-            return { ...entry.parameter, value: entry.runtimeOverride };
-        });
+        return entries.map(applyRuntimeOverride);
     });
 
 /**
@@ -351,6 +347,31 @@ export const selectEffectiveParameterValuesForWidget: (
                 seen.add(refKey);
             }
             return result.length === 0 ? EMPTY_PARAMETER_VALUES : result;
+        },
+    ),
+);
+
+/**
+ * Returns the effective dashboard parameters (persisted shape with any `runtimeOverride` folded
+ * into `value`) held by the widget's owning tab.
+ *
+ * @internal
+ */
+export const selectEffectiveDashboardParametersForWidget: (
+    ref: ObjRef | undefined,
+) => DashboardSelector<IDashboardParameter[]> = createMemoizedSelector((ref: ObjRef | undefined) =>
+    createSelector(
+        selectAllTabsInsightWidgetContexts,
+        selectDashboardParameterEntries,
+        (contexts, activeTabEntries) => {
+            if (ref === undefined) {
+                return activeTabEntries.map(applyRuntimeOverride);
+            }
+            // A concrete ref that resolves to no tab means the widget is not on the dashboard;
+            // falling back to the active tab would apply an unrelated tab's modes/labels/values.
+            const owningTabEntries = contexts.find((context) => areObjRefsEqual(context.widget.ref, ref))?.tab
+                .parameters?.parameters;
+            return (owningTabEntries ?? parametersInitialState.parameters).map(applyRuntimeOverride);
         },
     ),
 );

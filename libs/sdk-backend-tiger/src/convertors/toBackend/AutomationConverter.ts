@@ -28,6 +28,7 @@ import { fixNumber } from "../../utils/fixNumber.js";
 import { convertAfmFilters } from "./afm/AfmFiltersConverter.js";
 import { convertAttribute } from "./afm/AttributeConverter.js";
 import { convertMeasure } from "./afm/MeasureConverter.js";
+import { convertParameterValues } from "./afm/toAfmResultSpec.js";
 import {
     convertExportDefinitionRequestPayload,
     convertToDashboardTabularExportRequest,
@@ -272,7 +273,7 @@ export function convertAutomation(
     };
 }
 
-const convertAlert = (alert: IAutomationAlert): JsonApiWorkspaceAutomationOutAttributesAlert => {
+export const convertAlert = (alert: IAutomationAlert): JsonApiWorkspaceAutomationOutAttributesAlert => {
     const { condition, execution } = alert;
 
     const { filters: convertedFilters } = convertAfmFilters(execution.measures, execution.filters, true);
@@ -288,6 +289,9 @@ const convertAlert = (alert: IAutomationAlert): JsonApiWorkspaceAutomationOutAtt
             attributes: execution.attributes?.map((attribute, i) => {
                 return omit(convertAttribute(attribute, i), "alias");
             }),
+            ...(execution.parameters?.length
+                ? { parameters: convertParameterValues(execution.parameters) }
+                : {}),
         },
         trigger: alert.trigger.mode,
         interval: alert.trigger.interval,

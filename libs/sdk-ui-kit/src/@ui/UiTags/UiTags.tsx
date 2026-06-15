@@ -308,7 +308,6 @@ export function UiTags({
                                             interactionState.current.input = node;
                                         }}
                                         name="add-input"
-                                        className={e("add-input")}
                                         aria-label={nameLabel}
                                         onKeyDown={(event) => {
                                             if (event.isDefaultPrevented()) {
@@ -321,7 +320,7 @@ export function UiTags({
                                         }}
                                     />
                                     <UiComboboxPopup>
-                                        <UiComboboxList role="none">
+                                        <UiComboboxList>
                                             {(option, index) => (
                                                 <UiComboboxListItem
                                                     key={option.id}

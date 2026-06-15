@@ -6,6 +6,7 @@ import {
     type AnomalyDetectionWrapper,
     type AutomationAutomationAlert,
     type AutomationAutomationExternalRecipient,
+    type AutomationParameterItem,
     type ComparisonWrapper,
     type JsonApiAnalyticalDashboardOutWithLinks,
     type JsonApiAutomationOutAttributesStateEnum,
@@ -35,6 +36,7 @@ import {
     type IAutomationState,
     type IExportDefinitionMetadataObject,
     type IFilter,
+    type IInsightParameterValue,
     filterAttributeElements,
     filterLocalIdentifier,
     filterObjRef,
@@ -344,7 +346,23 @@ export const convertAutomationListToAutomations = (
     );
 };
 
-const convertAlert = (
+/**
+ * Rows whose stringified value does not parse to a finite number are dropped — the toBackend
+ * converter invariants on finite values, so passing them through would break the next save.
+ */
+function convertParameterItems(items: AutomationParameterItem[]): IInsightParameterValue[] {
+    const result: IInsightParameterValue[] = [];
+    for (const item of items) {
+        const value = Number(item.value);
+        if (!Number.isFinite(value)) {
+            continue;
+        }
+        result.push({ ref: idRef(item.parameter.identifier.id, "parameter"), value });
+    }
+    return result;
+}
+
+export const convertAlert = (
     alert: AutomationAutomationAlert | undefined,
     state?: JsonApiAutomationOutAttributesStateEnum,
 ): IAutomationAlert | undefined => {
@@ -353,6 +371,7 @@ const convertAlert = (
     }
 
     const { condition, execution } = alert;
+    const parameters = convertParameterItems(execution.parameters ?? []);
     const comparison = (condition as ComparisonWrapper)?.comparison;
     const range = (condition as RangeWrapper)?.range;
     const relative = (condition as RelativeWrapper)?.relative;
@@ -369,6 +388,7 @@ const convertAlert = (
             measures: execution.measures.map(convertMeasure),
             auxMeasures: execution.auxMeasures?.map(convertMeasure) ?? [],
             filters: execution.filters.map(convertFilter),
+            ...(parameters.length ? { parameters } : {}),
         },
         trigger: {
             state: state ?? "ACTIVE",

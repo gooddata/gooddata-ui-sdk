@@ -1321,6 +1321,7 @@ export {
     selectEnableDateFilterIdentifiers,
     selectEnableKDEmptyDateValuesFilter,
     selectEnableSnapshotExportAccessibility,
+    selectEnableExportTimeoutFix,
     selectEnableExportToDocumentStorage,
     selectExternalRecipient,
     selectEnableDashboardShareDialogLink,
@@ -2180,7 +2181,11 @@ export {
     type IAddAttributeFilterPlaceholderProps,
     AddAttributeFilterPlaceholder,
 } from "./presentation/filterBar/attributeFilter/addAttributeFilter/AddAttributeFilterPlaceholder.js";
-export { AttributesDropdown } from "./presentation/filterBar/attributeFilter/addAttributeFilter/AttributesDropdown.js";
+export {
+    AttributesDropdown,
+    type IAttributesDropdownProps,
+    type IParameterDropdownListItem,
+} from "./presentation/filterBar/attributeFilter/addAttributeFilter/AttributesDropdown.js";
 export type {
     IDashboardAttributeFilterProps,
     CustomDashboardAttributeFilterComponent,

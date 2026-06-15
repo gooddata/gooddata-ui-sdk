@@ -11,7 +11,7 @@
     "semantic-search.previous-search": "Prejšnje iskanje: {query}",
     "semantic-search.tree": "Drevo semantičnega iskanja",
     "semantic-search.tree.history": "Zgodovina semantičnega iskalnega drevesa",
-    "semantic-search.edit": "Uredi",
+    "semantic-search.edit": "Odpri",
     "semantic-search.date.at": "ob",
     "semantic-search.ask.ai.assistant": "Vprašaj AI asistenta",
     "semantic-search.error.sync-in-progress": "Nastavitev še poteka — poskusite znova čez trenutek.",

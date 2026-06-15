@@ -1,30 +1,40 @@
 // (C) 2025-2026 GoodData Corporation
 
-import cx from "classnames";
-import type { HTMLAttributes } from "react";
+import { type CSSProperties, type ReactNode } from "react";
 
-import { e } from "./comboboxBem.js";
+import { UiFloatingPanel } from "../UiFloatingPanel/UiFloatingPanel.js";
+
 import { useComboboxState } from "./UiComboboxContext.js";
 
 /** @internal */
-export type UiComboboxPopupProps = HTMLAttributes<HTMLDivElement>;
+export interface IUiComboboxPopupProps {
+    children?: ReactNode;
+    style?: CSSProperties;
+}
 
 /** @internal */
-export function UiComboboxPopup({ style, className, children, ...htmlProps }: UiComboboxPopupProps) {
-    const { isOpen, setFloatingRef, getFloatingProps, floatingStyles, availableOptions } = useComboboxState();
+export function UiComboboxPopup({ children, style }: IUiComboboxPopupProps) {
+    const { isOpen, setIsOpen, anchorRef, shouldRenderPopup } = useComboboxState();
 
-    if (!isOpen || availableOptions.length === 0) {
+    if (!shouldRenderPopup) {
         return null;
     }
+
     return (
-        <div
-            {...getFloatingProps({ ...htmlProps, onMouseDown: (e) => e.preventDefault() })}
-            ref={setFloatingRef}
-            style={{ ...style, ...floatingStyles }}
-            className={cx(e("popup"), className)}
-            data-open={isOpen}
+        <UiFloatingPanel
+            anchor={anchorRef}
+            isOpen={isOpen}
+            onClose={() => setIsOpen(false)}
+            placement="bottom-start"
+            width="same-as-anchor"
+            padding="listbox"
+            closeOnOutsideClick
+            accessibilityConfig={{ role: undefined }}
+            style={style}
         >
-            {children}
-        </div>
+            {/* Prevent input blur on listbox option mousedown so the click
+                lands while the popup is still open. */}
+            <div onMouseDown={(event) => event.preventDefault()}>{children}</div>
+        </UiFloatingPanel>
     );
 }

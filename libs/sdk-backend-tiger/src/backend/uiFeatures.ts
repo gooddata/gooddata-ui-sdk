@@ -184,6 +184,8 @@ export enum TigerFeaturesNames {
     EnableDashboardSidebarResize = "enableDashboardSidebarResize",
     EnableIpAllowlistsUi = "enableIpAllowlistsUi",
     EnableLdmModelerRemoteModule = "enableShellApplication_ldmModeler",
+    EnableExportTimeoutFix = "enableExportTimeoutFix",
+    EnableAiAssistantEmbedding = "enableAiAssistantEmbedding",
 }
 
 export type ITigerFeatureFlags = {
@@ -320,6 +322,7 @@ export type ITigerFeatureFlags = {
     enableGenAIMemory: (typeof FeatureFlagsValues)["enableGenAIMemory"][number];
     enableAIKnowledge: (typeof FeatureFlagsValues)["enableAIKnowledge"][number];
     enableAiAgenticSuggestions: (typeof FeatureFlagsValues)["enableAiAgenticSuggestions"][number];
+    enableAiAssistantEmbedding: (typeof FeatureFlagsValues)["enableAiAssistantEmbedding"][number];
     enableAiAgenticMultiConversations: (typeof FeatureFlagsValues)["enableAiAgenticMultiConversations"][number];
     enableGenAiAgentSwitching: (typeof FeatureFlagsValues)["enableGenAiAgentSwitching"][number];
     enableGenAiObservability: (typeof FeatureFlagsValues)["enableGenAiObservability"][number];
@@ -361,6 +364,7 @@ export type ITigerFeatureFlags = {
     enableDashboardSidebarResize: (typeof FeatureFlagsValues)["enableDashboardSidebarResize"][number];
     enableIpAllowlistsUi: (typeof FeatureFlagsValues)["enableIpAllowlistsUi"][number];
     enableShellApplication_ldmModeler: (typeof FeatureFlagsValues)["enableShellApplication_ldmModeler"][number];
+    enableExportTimeoutFix: (typeof FeatureFlagsValues)["enableExportTimeoutFix"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -497,6 +501,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableGenAIMemory: false,
     enableAIKnowledge: false,
     enableAiAgenticSuggestions: false,
+    enableAiAssistantEmbedding: false,
     enableAiAgenticMultiConversations: false,
     enableGenAiAgentSwitching: false,
     enableGenAiObservability: false,
@@ -538,6 +543,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDashboardSidebarResize: false,
     enableIpAllowlistsUi: false,
     enableShellApplication_ldmModeler: false,
+    enableExportTimeoutFix: false,
 };
 
 export const FeatureFlagsValues = {
@@ -675,6 +681,7 @@ export const FeatureFlagsValues = {
     enableGenAIMemory: [false, true] as const,
     enableAIKnowledge: [false, true] as const,
     enableAiAgenticSuggestions: [true, false] as const,
+    enableAiAssistantEmbedding: [true, false] as const,
     enableAiAgenticMultiConversations: [true, false] as const,
     enableGenAiAgentSwitching: [true, false] as const,
     enableGenAiObservability: [true, false] as const,
@@ -716,4 +723,5 @@ export const FeatureFlagsValues = {
     enableDashboardSidebarResize: [true, false] as const,
     enableIpAllowlistsUi: [false, true] as const,
     enableShellApplication_ldmModeler: [true, false] as const,
+    enableExportTimeoutFix: [true, false] as const,
 };

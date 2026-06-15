@@ -115,6 +115,19 @@ describe("markdownToHtml", () => {
         expect(result).toContain("<img");
     });
 
+    it("renders an image with an empty URL as a broken image keeping the alt", () => {
+        // A data reference that resolved to no data is blanked upstream, leaving
+        // `![alt]()`. Render a broken image (like RichText) rather than leaking it.
+        const result = markdownToHtml("![Reykjavik]()");
+        expect(result).toContain('<img src="" alt="Reykjavik"');
+        expect(result).not.toContain("![Reykjavik]");
+    });
+
+    it("renders a link with an empty URL as a dead link keeping the text", () => {
+        const result = markdownToHtml("[docs]()");
+        expect(result).toContain('<a href="" target="_blank" rel="noopener noreferrer">docs</a>');
+    });
+
     it("should handle multi-line content with mixed elements", () => {
         const input = `# Revenue Summary
 **Profit Margin:** 23.5%
