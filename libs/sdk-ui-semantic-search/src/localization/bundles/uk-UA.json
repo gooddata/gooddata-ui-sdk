@@ -11,7 +11,7 @@
     "semantic-search.previous-search": "Попередній пошук: {query}",
     "semantic-search.tree": "Дерево семантичного пошуку",
     "semantic-search.tree.history": "Історія дерева семантичного пошуку",
-    "semantic-search.edit": "Редагувати",
+    "semantic-search.edit": "Відкрити",
     "semantic-search.date.at": "о",
     "semantic-search.ask.ai.assistant": "Запитати AI Assistant",
     "semantic-search.error.sync-in-progress": "Налаштування ще триває — спробуйте знову трохи пізніше.",

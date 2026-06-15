@@ -11,7 +11,7 @@
     "semantic-search.previous-search": "Vorige zoekopdracht: {query}",
     "semantic-search.tree": "Semantische zoekboom",
     "semantic-search.tree.history": "Geschiedenis van semantische zoekboom",
-    "semantic-search.edit": "Bewerken",
+    "semantic-search.edit": "Openen",
     "semantic-search.date.at": "bij",
     "semantic-search.ask.ai.assistant": "Vraag het aan de AI-assistent",
     "semantic-search.error.sync-in-progress": "Nog bezig met instellen — probeer het zo opnieuw.",

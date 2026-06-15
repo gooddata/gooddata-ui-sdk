@@ -15,6 +15,7 @@ import {
     type IDashboardAttributeFilter,
     type IDashboardExportParameter,
     type IExportDefinitionDashboardRequestPayload,
+    type IExportDefinitionVisualizationObjectRequestPayload,
     type IMeasureValueFilter,
     idRef,
     isDashboardArbitraryAttributeFilter,
@@ -302,5 +303,70 @@ describe("ExportDefinitionsConverter fromBackend", () => {
         expect(converted.attributeFilter.displayForm).toEqual(idRef("attr.df", "displayForm"));
         expect(isDashboardArbitraryAttributeFilter(result.content.filtersByTab?.["tab1"]?.[1])).toBe(true);
         expect(isDashboardMatchAttributeFilter(result.content.filtersByTab?.["tab1"]?.[2])).toBe(true);
+    });
+
+    it("converts dashboardTabsParametersOverrides to content.parametersByTab", () => {
+        const exportRequest = {
+            requestPayload: {
+                fileName: "dashboard-tabular-params",
+                format: "XLSX",
+                dashboardId: "dashboardId",
+                dashboardTabsParametersOverrides: {
+                    tab1: [{ id: "topN", value: "5", title: "Top N" }],
+                    tab2: [{ id: "limit", value: "10", title: "Limit" }],
+                },
+                settings: {},
+            },
+        } as JsonApiWorkspaceAutomationOutAttributesDashboardTabularExportsInner;
+
+        const result = convertDashboardTabularExportRequest(
+            exportRequest,
+        ) as IExportDefinitionDashboardRequestPayload;
+
+        expect(result.content.parametersByTab).toEqual({
+            tab1: [{ id: "topN", value: "5", title: "Top N" }],
+            tab2: [{ id: "limit", value: "10", title: "Limit" }],
+        });
+    });
+
+    it("converts dashboardTabsParametersOverrides to content.parametersByTab in widget tabular export", () => {
+        const exportRequest = {
+            requestPayload: {
+                fileName: "widget-tabular-params",
+                format: "XLSX",
+                dashboardId: "dashboardId",
+                widgetIds: ["widgetId"],
+                dashboardTabsParametersOverrides: {
+                    tabOwning: [{ id: "topN", value: "5", title: "Top N" }],
+                },
+                settings: {},
+            },
+        } as JsonApiWorkspaceAutomationOutAttributesDashboardTabularExportsInner;
+
+        const result = convertDashboardTabularExportRequest(
+            exportRequest,
+        ) as IExportDefinitionVisualizationObjectRequestPayload;
+
+        expect(result.type).toBe("visualizationObject");
+        expect(result.content.parametersByTab).toEqual({
+            tabOwning: [{ id: "topN", value: "5", title: "Top N" }],
+        });
+    });
+
+    it("leaves content.parametersByTab undefined when no overrides present", () => {
+        const exportRequest = {
+            requestPayload: {
+                fileName: "dashboard-tabular-no-params",
+                format: "XLSX",
+                dashboardId: "dashboardId",
+                settings: {},
+            },
+        } as JsonApiWorkspaceAutomationOutAttributesDashboardTabularExportsInner;
+
+        const result = convertDashboardTabularExportRequest(
+            exportRequest,
+        ) as IExportDefinitionDashboardRequestPayload;
+
+        expect(result.content.parametersByTab).toBeUndefined();
     });
 });

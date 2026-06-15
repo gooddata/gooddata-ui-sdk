@@ -13,6 +13,7 @@ import {
     type IDashboardAttributeFilterConfig,
     type IDashboardDateFilterConfigItem,
     type IDashboardMeasureValueFilter,
+    type IdentifierRef,
     type ObjRef,
     areObjRefsEqual,
     dashboardFilterLocalIdentifier,
@@ -44,12 +45,17 @@ import {
     AUTOMATION_FILTERS_DIALOG_TITLE_ID,
     AUTOMATION_FILTERS_GROUP_LABEL_ID,
 } from "../../../../constants/automations.js";
-import { AttributesDropdown } from "../../../../filterBar/attributeFilter/addAttributeFilter/AttributesDropdown.js";
+import {
+    AttributesDropdown,
+    type IParameterDropdownListItem,
+} from "../../../../filterBar/attributeFilter/addAttributeFilter/AttributesDropdown.js";
+import { type IAutomationParameter } from "../automationParameters.js";
 import { useAutomationFilters, useAutomationFiltersByTab } from "../useAutomationFilters.js";
 
 import { AutomationAttributeFilter } from "./AutomationAttributeFilter.js";
 import { AutomationDateFilter } from "./AutomationDateFilter.js";
 import { AutomationMeasureValueFilter } from "./AutomationMeasureValueFilter.js";
+import { AutomationParameter } from "./AutomationParameter.js";
 
 const COLLAPSED_FILTERS_COUNT = 2;
 
@@ -105,6 +111,26 @@ export interface IAutomationFiltersSelectProps {
      * Called when user adds, changes, or removes a filter in a tab section.
      */
     onFiltersByTabChange?: (filtersByTab: Record<string, FilterContextItem[]>) => void;
+    /**
+     * Parameter chips to render. Provided only when the `enableParameters` feature is on.
+     */
+    parameters?: IAutomationParameter[];
+    /**
+     * Workspace parameters addable via the "+" menu (catalog minus the selected set).
+     */
+    availableParameters?: IAutomationParameter[];
+    /**
+     * Called when an `active` parameter chip's value is edited.
+     */
+    onParameterChange?: (ref: IdentifierRef, value: number) => void;
+    /**
+     * Called when an `active` parameter chip is removed.
+     */
+    onParameterDelete?: (ref: IdentifierRef) => void;
+    /**
+     * Called when a parameter is added from the "+" menu.
+     */
+    onParameterAdd?: (ref: IdentifierRef) => void;
 }
 
 interface IAutomationCheckboxOrNoteProps {
@@ -188,6 +214,11 @@ export function AutomationFiltersSelect({
     filtersByTab,
     editedFiltersByTab,
     onFiltersByTabChange,
+    parameters = [],
+    onParameterChange,
+    onParameterDelete,
+    availableParameters = [],
+    onParameterAdd,
 }: IAutomationFiltersSelectProps) {
     // Determine rendering mode first
     const shouldRenderByTab = !!filtersByTab && filtersByTab.length > 1;
@@ -222,6 +253,7 @@ export function AutomationFiltersSelect({
     } = shouldRenderByTab && tabFiltersData.processedFiltersByTab ? tabFiltersData : flatFiltersData;
 
     const filters = shouldRenderByTab ? [] : flatFiltersData.visibleFilters;
+    const visibleParameters = shouldRenderByTab ? [] : parameters;
     const attributes = shouldRenderByTab ? [] : flatFiltersData.attributes;
     const dateDatasets = shouldRenderByTab ? [] : flatFiltersData.dateDatasets;
     const measures = shouldRenderByTab ? [] : flatFiltersData.measures;
@@ -244,7 +276,8 @@ export function AutomationFiltersSelect({
 
     const intl = useIntl();
     const [isExpanded, setIsExpanded] = useState(showAllFilters);
-    const isExpandable = !showAllFilters && filters.length > COLLAPSED_FILTERS_COUNT;
+    const chipCount = filters.length + visibleParameters.length;
+    const isExpandable = !showAllFilters && chipCount > COLLAPSED_FILTERS_COUNT;
 
     const handleKeyDown = (e: KeyboardEvent) => {
         if (isActionKey(e)) {
@@ -254,7 +287,13 @@ export function AutomationFiltersSelect({
     };
 
     const automationFilterSelectTooltipId = useIdPrefixed("automation-filter-select-tooltip");
-    const isAddButtonDisabled = availableFilters?.length === selectedFilters?.length;
+    const parameterDropdownItems: IParameterDropdownListItem[] = availableParameters.map((parameter) => ({
+        type: "parameter",
+        ref: parameter.ref,
+        title: parameter.title,
+    }));
+    const isAddButtonDisabled =
+        availableFilters?.length === selectedFilters?.length && availableParameters.length === 0;
     const tooltipTextValues = {
         add: intl.formatMessage({ id: "dialogs.automation.filters.add" }),
         addDisabled: intl.formatMessage({ id: "dialogs.automation.filters.addDisabled" }),
@@ -268,10 +307,7 @@ export function AutomationFiltersSelect({
         <div className="gd-input-component gd-notification-channels-automation-filters s-gd-notifications-channels-dialog-automation-filters">
             {hideTitle ? (
                 <div className="sr-only" id={AUTOMATION_FILTERS_GROUP_LABEL_ID}>
-                    <FormattedMessage
-                        id="dialogs.schedule.email.filters"
-                        values={{ count: filters.length }}
-                    />
+                    <FormattedMessage id="dialogs.schedule.email.filters" values={{ count: chipCount }} />
                 </div>
             ) : (
                 <div className="gd-label" id={AUTOMATION_FILTERS_GROUP_LABEL_ID}>
@@ -280,7 +316,7 @@ export function AutomationFiltersSelect({
                             <UiButton
                                 label={intl.formatMessage(
                                     { id: "dialogs.schedule.email.filters" },
-                                    { count: filters.length },
+                                    { count: chipCount },
                                 )}
                                 variant="tertiary"
                                 onClick={() => setIsExpanded(!isExpanded)}
@@ -306,10 +342,7 @@ export function AutomationFiltersSelect({
                             </Bubble>
                         </BubbleHoverTrigger>
                     ) : (
-                        <FormattedMessage
-                            id="dialogs.schedule.email.filters"
-                            values={{ count: filters.length }}
-                        />
+                        <FormattedMessage id="dialogs.schedule.email.filters" values={{ count: chipCount }} />
                     )}
                 </div>
             )}
@@ -469,12 +502,10 @@ export function AutomationFiltersSelect({
                             ref={filterGroupRef}
                             onBlur={makeFilterGroupUnfocusable}
                         >
-                            {filters
-                                .slice(
-                                    0,
-                                    showAllFilters || isExpanded ? filters.length : COLLAPSED_FILTERS_COUNT,
-                                )
-                                .map((filter) => {
+                            {/* Filter and parameter chips share one list so the collapsed view
+                                truncates them by a single rule instead of two coupled slices. */}
+                            {[
+                                ...filters.map((filter) => {
                                     const isCommonDateFilter =
                                         isDashboardCommonDateFilter(filter) ||
                                         (isDashboardDateFilter(filter) &&
@@ -493,13 +524,28 @@ export function AutomationFiltersSelect({
                                             isReadOnly={disableFilters}
                                         />
                                     );
-                                })}
+                                }),
+                                ...visibleParameters.map((parameter) => (
+                                    <AutomationParameter
+                                        key={`parameter-${parameter.ref.identifier}`}
+                                        parameter={parameter}
+                                        onChange={onParameterChange}
+                                        onDelete={onParameterDelete}
+                                        overlayPositionType={overlayPositionType}
+                                    />
+                                )),
+                            ].slice(0, showAllFilters || isExpanded ? undefined : COLLAPSED_FILTERS_COUNT)}
                             {isExpanded || !isExpandable ? (
                                 <AttributesDropdown
                                     id={AUTOMATION_FILTERS_DIALOG_ID}
                                     onClose={() => {}}
                                     onSelect={(value) => {
                                         handleAddFilter(value, attributes, dateDatasets);
+                                        setIsExpanded(true);
+                                    }}
+                                    parameters={parameterDropdownItems}
+                                    onParameterSelect={(ref) => {
+                                        onParameterAdd?.(ref);
                                         setIsExpanded(true);
                                     }}
                                     attributes={attributes}

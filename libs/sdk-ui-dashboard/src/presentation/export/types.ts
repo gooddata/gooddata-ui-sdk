@@ -48,7 +48,7 @@ export type ExportMetaType =
 export type CommonExportDataAttributes = {
     "data-export-type": ExportElementType;
     "data-export-depth"?: string;
-    "data-export-status"?: "empty" | "loaded";
+    "data-export-status"?: "loading" | "empty" | "loaded";
 };
 
 /**

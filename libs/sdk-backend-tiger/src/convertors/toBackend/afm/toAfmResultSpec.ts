@@ -93,7 +93,7 @@ function convertMeasureDefinitionOverrides(
     }));
 }
 
-function convertParameterValues(values: IInsightParameterValue[]): ParameterItem[] {
+export function convertParameterValues(values: IInsightParameterValue[]): ParameterItem[] {
     return values.map((value) => {
         invariant(Number.isFinite(value.value), "Parameter value must be a finite number");
 

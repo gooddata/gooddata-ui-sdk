@@ -41,7 +41,7 @@ describe("UiCombobox", () => {
 
         // Open the popup
         fireEvent.focus(input);
-        fireEvent.keyDown(input, { key: "ArrowDown" });
+        fireEvent.keyDown(input, { code: "ArrowDown" });
 
         // All options are visible initially
 
@@ -64,10 +64,10 @@ describe("UiCombobox", () => {
 
         // Open the popup
         fireEvent.focus(input);
-        fireEvent.keyDown(input, { key: "ArrowDown" });
+        fireEvent.keyDown(input, { code: "ArrowDown" });
 
         // Select with Enter
-        fireEvent.keyDown(input, { key: "Enter" });
+        fireEvent.keyDown(input, { code: "Enter" });
 
         expect(input.value).toBe("Apple");
     });
@@ -78,7 +78,7 @@ describe("UiCombobox", () => {
         const input: HTMLInputElement = screen.getByRole("combobox");
 
         fireEvent.focus(input);
-        fireEvent.keyDown(input, { key: "ArrowDown" });
+        fireEvent.keyDown(input, { code: "ArrowDown" });
 
         fireEvent.change(input, { target: { value: "ap" } });
         fireEvent.click(screen.getByText("Apple"));
@@ -86,7 +86,7 @@ describe("UiCombobox", () => {
         expect(input.value).toBe("Apple");
 
         fireEvent.focus(input);
-        fireEvent.keyDown(input, { key: "ArrowDown" });
+        fireEvent.keyDown(input, { code: "ArrowDown" });
 
         expect(screen.getByText("Apple")).toBeInTheDocument();
         expect(screen.getByText("Banana")).toBeInTheDocument();
@@ -99,8 +99,8 @@ describe("UiCombobox", () => {
         const input: HTMLInputElement = screen.getByRole("combobox");
 
         fireEvent.focus(input);
-        fireEvent.keyDown(input, { key: "ArrowDown" });
-        fireEvent.keyDown(input, { key: "Enter" });
+        fireEvent.keyDown(input, { code: "ArrowDown" });
+        fireEvent.keyDown(input, { code: "Enter" });
 
         fireEvent.change(input, { target: { value: "ap" } });
         expect(input.value).toBe("ap");
@@ -243,8 +243,8 @@ describe("UiCombobox", () => {
         const input: HTMLInputElement = screen.getByRole("combobox");
 
         fireEvent.focus(input);
-        fireEvent.keyDown(input, { key: "ArrowDown" });
-        fireEvent.keyDown(input, { key: "Enter" });
+        fireEvent.keyDown(input, { code: "ArrowDown" });
+        fireEvent.keyDown(input, { code: "Enter" });
 
         expect(input.value).toBe("Apple");
 
@@ -262,8 +262,8 @@ describe("UiCombobox", () => {
         const input: HTMLInputElement = screen.getByRole("combobox");
 
         fireEvent.focus(input);
-        fireEvent.keyDown(input, { key: "ArrowDown" });
-        fireEvent.keyDown(input, { key: "Enter" });
+        fireEvent.keyDown(input, { code: "ArrowDown" });
+        fireEvent.keyDown(input, { code: "Enter" });
 
         expect(input.value).toBe("Apple");
 
@@ -285,9 +285,9 @@ describe("UiCombobox", () => {
         expect(input.value).toBe("test");
 
         // Close popup first
-        fireEvent.keyDown(input, { key: "Escape" });
+        fireEvent.keyDown(input, { code: "Escape" });
         // Then Escape again to reset
-        fireEvent.keyDown(input, { key: "Escape" });
+        fireEvent.keyDown(input, { code: "Escape" });
 
         expect(input.value).toBe("");
     });
@@ -322,8 +322,8 @@ describe("UiCombobox", () => {
         const input: HTMLInputElement = screen.getByRole("combobox");
 
         fireEvent.focus(input);
-        fireEvent.keyDown(input, { key: "ArrowDown" });
-        fireEvent.keyDown(input, { key: "Enter" });
+        fireEvent.keyDown(input, { code: "ArrowDown" });
+        fireEvent.keyDown(input, { code: "Enter" });
 
         expect(handleValueChange).toHaveBeenCalledWith("Apple");
         expect(input.value).toBe("Apple");
@@ -335,13 +335,13 @@ describe("UiCombobox", () => {
         const input: HTMLInputElement = screen.getByRole("combobox");
 
         fireEvent.focus(input);
-        fireEvent.keyDown(input, { key: "ArrowDown" });
+        fireEvent.keyDown(input, { code: "ArrowDown" });
 
         // Navigate down to second option
-        fireEvent.keyDown(input, { key: "ArrowDown" });
+        fireEvent.keyDown(input, { code: "ArrowDown" });
         // Navigate back up
-        fireEvent.keyDown(input, { key: "ArrowUp" });
-        fireEvent.keyDown(input, { key: "Enter" });
+        fireEvent.keyDown(input, { code: "ArrowUp" });
+        fireEvent.keyDown(input, { code: "Enter" });
 
         expect(input.value).toBe("Apple");
     });
@@ -352,13 +352,13 @@ describe("UiCombobox", () => {
         const input: HTMLInputElement = screen.getByRole("combobox");
 
         fireEvent.focus(input);
-        fireEvent.keyDown(input, { key: "ArrowDown" });
+        fireEvent.keyDown(input, { code: "ArrowDown" });
 
         // Navigate past the last option (3 options, so 3 more ArrowDowns should loop back)
-        fireEvent.keyDown(input, { key: "ArrowDown" });
-        fireEvent.keyDown(input, { key: "ArrowDown" });
-        fireEvent.keyDown(input, { key: "ArrowDown" });
-        fireEvent.keyDown(input, { key: "Enter" });
+        fireEvent.keyDown(input, { code: "ArrowDown" });
+        fireEvent.keyDown(input, { code: "ArrowDown" });
+        fireEvent.keyDown(input, { code: "ArrowDown" });
+        fireEvent.keyDown(input, { code: "Enter" });
 
         expect(input.value).toBe("Apple");
     });

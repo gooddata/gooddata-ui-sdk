@@ -5,6 +5,7 @@ import {
     type FocusEventHandler,
     type KeyboardEventHandler,
     type MouseEventHandler,
+    type Ref,
     useId,
 } from "react";
 
@@ -70,6 +71,17 @@ export interface IUiTextInputProps {
     onClick?: MouseEventHandler<HTMLInputElement>;
     /** Test id forwarded to the input element. */
     dataTestId?: string;
+    inputRef?: Ref<HTMLInputElement>;
+    /** Use as the floating-popup anchor when the popup should match the full field width. */
+    wrapperRef?: Ref<HTMLDivElement>;
+    name?: string;
+    /**
+     * Browser-autofill control. Combobox/autocomplete patterns should set
+     * `"off"` so the native dropdown doesn't overlap the listbox.
+     */
+    autoComplete?: string;
+    autoCapitalize?: string;
+    autoCorrect?: string;
 }
 
 /**
@@ -96,6 +108,12 @@ export function UiTextInput({
     onBlur,
     onClick,
     dataTestId,
+    inputRef,
+    wrapperRef,
+    name,
+    autoComplete,
+    autoCapitalize,
+    autoCorrect,
 }: IUiTextInputProps) {
     const id = useId();
     const { ariaLabel, ...restA11y } = accessibilityConfig ?? {};
@@ -103,7 +121,7 @@ export function UiTextInput({
     // forwarding aria-label would override it (WCAG name-in-name mismatch).
     const inputA11y = label ? restA11y : { ...restA11y, ariaLabel };
     return (
-        <div className={b()}>
+        <div ref={wrapperRef} className={b()}>
             {label ? (
                 <label className={e("label")} htmlFor={id}>
                     {label}
@@ -116,13 +134,18 @@ export function UiTextInput({
                     </span>
                 ) : null}
                 <input
+                    ref={inputRef}
                     id={id}
+                    name={name}
                     type={type}
                     className={e("input")}
                     value={value}
                     placeholder={placeholder}
                     disabled={disabled}
                     autoFocus={autoFocus}
+                    autoComplete={autoComplete}
+                    autoCapitalize={autoCapitalize}
+                    autoCorrect={autoCorrect}
                     data-testid={dataTestId}
                     onChange={(event: ChangeEvent<HTMLInputElement>) => onChange(event.target.value)}
                     onKeyDown={onKeyDown}

@@ -2,6 +2,7 @@
 
 import { describe, expect, it, vi } from "vitest";
 
+import { type AutomationAutomationAlert } from "@gooddata/api-client-tiger";
 import {
     type IDashboardMeasureValueFilter,
     type IMeasureValueFilter,
@@ -9,7 +10,7 @@ import {
     localIdRef,
 } from "@gooddata/sdk-model";
 
-import { convertExecutionFilterToFilterContextItem } from "../AutomationConverter.js";
+import { convertAlert, convertExecutionFilterToFilterContextItem } from "../AutomationConverter.js";
 
 describe("convertExecutionFilterToFilterContextItem — MVF branch", () => {
     const baseMvf = (overrides: Partial<IMeasureValueFilter["measureValueFilter"]>): IMeasureValueFilter => ({
@@ -98,5 +99,53 @@ describe("convertExecutionFilterToFilterContextItem — MVF branch", () => {
         expect(result).toBeUndefined();
         expect(warn).toHaveBeenCalledWith(expect.stringContaining("LocalIdRef"), filter);
         warn.mockRestore();
+    });
+});
+
+describe("convertAlert (fromBackend) — parameters", () => {
+    const baseAlert = (
+        parameters?: AutomationAutomationAlert["execution"]["parameters"],
+    ): AutomationAutomationAlert => ({
+        execution: {
+            attributes: [],
+            measures: [],
+            filters: [],
+            ...(parameters ? { parameters } : {}),
+        },
+        condition: {
+            comparison: { operator: "GREATER_THAN", left: { localIdentifier: "m1" }, right: { value: 5 } },
+        },
+        trigger: "ALWAYS",
+    });
+
+    it("maps AutomationParameterItem[] back to IInsightParameterValue[]", () => {
+        const result = convertAlert(
+            baseAlert([{ parameter: { identifier: { id: "topN", type: "parameter" } }, value: "5" }]),
+        );
+
+        expect(result?.execution.parameters).toEqual([{ ref: idRef("topN", "parameter"), value: 5 }]);
+    });
+
+    it("leaves parameters undefined when the backend sends none", () => {
+        expect(convertAlert(baseAlert())?.execution.parameters).toBeUndefined();
+    });
+
+    it("drops rows whose value is not a finite number, keeping the rest", () => {
+        const result = convertAlert(
+            baseAlert([
+                { parameter: { identifier: { id: "broken", type: "parameter" } }, value: "not-a-number" },
+                { parameter: { identifier: { id: "topN", type: "parameter" } }, value: "5" },
+            ]),
+        );
+
+        expect(result?.execution.parameters).toEqual([{ ref: idRef("topN", "parameter"), value: 5 }]);
+    });
+
+    it("leaves parameters undefined when every row is non-numeric", () => {
+        const result = convertAlert(
+            baseAlert([{ parameter: { identifier: { id: "broken", type: "parameter" } }, value: "NaN" }]),
+        );
+
+        expect(result?.execution.parameters).toBeUndefined();
     });
 });

@@ -1,0 +1,27 @@
+// (C) 2026 GoodData Corporation
+
+@use "../../../styles/scss/variables";
+
+// Canonical kit floating-panel chrome. Used by dropdowns, comboboxes, and any
+// other primitive that renders a list-shaped popup over the current view.
+.gd-ui-kit-floating-panel {
+    position: relative;
+    background-color: var(--gd-palette-complementary-0, #fff);
+    border-radius: 3px;
+    box-shadow: 0 1px 20px var(--gd-shadow-color, rgba(20, 56, 93, 0.15));
+    font-family: var(--gd-font-family), gdcustomfont, Avenir, "Helvetica Neue", arial, sans-serif;
+
+    @media (forced-colors: active) {
+        // stylelint-disable-next-line declaration-no-important
+        border: 1px solid transparent !important;
+    }
+
+    @media #{variables.$small-only} {
+        border-radius: 0;
+    }
+
+    // Listbox-style padding for popups whose direct children are option rows.
+    &--padding-listbox {
+        padding: 4px 0;
+    }
+}

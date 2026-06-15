@@ -50,7 +50,6 @@ import { IFilter } from '@gooddata/sdk-model';
 import { ILocale } from '@gooddata/sdk-ui';
 import { IMeasureSortTarget } from '@gooddata/sdk-model';
 import { IMetadataObjectBase } from '@gooddata/sdk-model';
-import { InputHTMLAttributes } from 'react';
 import { IntlShape } from 'react-intl';
 import { INumberParameterConstraints } from '@gooddata/sdk-model';
 import { IParameterMetadataObject } from '@gooddata/sdk-model';
@@ -97,7 +96,6 @@ import { ShareStatus } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
 import { Strategy } from '@floating-ui/react';
 import { SyntheticEvent } from 'react';
-import type { UseInteractionsReturn } from '@floating-ui/react';
 import { VirtualElement } from '@floating-ui/react';
 import { WeekStart } from '@gooddata/sdk-model';
 import { WithIntlProps } from 'react-intl';
@@ -5634,6 +5632,8 @@ export interface ITab {
     // (undocumented)
     icon?: string;
     // (undocumented)
+    iconNode?: ReactNode;
+    // (undocumented)
     iconOnly?: boolean;
     // (undocumented)
     id: string;
@@ -6210,6 +6210,25 @@ export interface IUiChipProps {
 }
 
 // @internal (undocumented)
+export interface IUiComboboxInputProps {
+    "aria-label"?: string;
+    // (undocumented)
+    autoFocus?: boolean;
+    // (undocumented)
+    dataTestId?: string;
+    name?: string;
+    // (undocumented)
+    onBlur?: (event: FocusEvent_2<HTMLInputElement>) => void;
+    // (undocumented)
+    onClick?: (event: MouseEvent_2<HTMLInputElement>) => void;
+    // (undocumented)
+    onFocus?: (event: FocusEvent_2<HTMLInputElement>) => void;
+    // (undocumented)
+    onKeyDown?: (event: KeyboardEvent_2<HTMLInputElement>) => void;
+    placeholder?: string;
+}
+
+// @internal (undocumented)
 export interface IUiComboboxListItemProps extends HTMLAttributes<HTMLLIElement> {
     // (undocumented)
     index: number;
@@ -6244,6 +6263,14 @@ export interface IUiComboboxParams {
 }
 
 // @internal (undocumented)
+export interface IUiComboboxPopupProps {
+    // (undocumented)
+    children?: ReactNode;
+    // (undocumented)
+    style?: CSSProperties;
+}
+
+// @internal (undocumented)
 export interface IUiComboboxProps extends IUiComboboxParams {
     // (undocumented)
     children?: ReactNode;
@@ -6255,22 +6282,16 @@ export interface IUiComboboxState {
     activeIndex: number | null;
     // (undocumented)
     activeOption: IUiComboboxOption | undefined;
+    anchorRef: RefObject<HTMLElement | null>;
     // (undocumented)
     availableOptions: IUiComboboxOption[];
     // (undocumented)
     creatable: boolean;
     // (undocumented)
-    floatingStyles: CSSProperties;
-    // (undocumented)
-    getFloatingProps: UseInteractionsReturn["getFloatingProps"];
-    // (undocumented)
-    getItemProps: UseInteractionsReturn["getItemProps"];
-    // (undocumented)
-    getReferenceProps: UseInteractionsReturn["getReferenceProps"];
-    // (undocumented)
     inputValue: string;
     // (undocumented)
     isOpen: boolean;
+    listboxId: string;
     // (undocumented)
     onInputBlur: () => void;
     // (undocumented)
@@ -6286,11 +6307,8 @@ export interface IUiComboboxState {
     // (undocumented)
     setActiveIndex: (index: number | null) => void;
     // (undocumented)
-    setFloatingRef: (node: HTMLDivElement | null) => void;
-    // (undocumented)
     setIsOpen: (isOpen: boolean) => void;
-    // (undocumented)
-    setReferenceRef: (node: ReferenceType | null) => void;
+    shouldRenderPopup: boolean;
 }
 
 // @internal (undocumented)
@@ -6569,6 +6587,11 @@ export interface IUiFloatingElementProps {
     width?: number | "same-as-anchor" | "auto";
     // (undocumented)
     zIndex?: number;
+}
+
+// @internal
+export interface IUiFloatingPanelProps extends Omit<IUiFloatingElementProps, "className" | "contentClassName" | "strategy" | "autoFlip" | "maxWidth" | "maxHeight" | "onPlacementChange"> {
+    padding?: UiFloatingPanelPadding;
 }
 
 // @internal (undocumented)
@@ -7654,13 +7677,22 @@ export interface IUiTextInputIconAfterButton {
 export interface IUiTextInputProps {
     accessibilityConfig?: IAccessibilityConfigBase;
     // (undocumented)
+    autoCapitalize?: string;
+    autoComplete?: string;
+    // (undocumented)
+    autoCorrect?: string;
+    // (undocumented)
     autoFocus?: boolean;
     dataTestId?: string;
     // (undocumented)
     disabled?: boolean;
     iconAfter?: IconType;
     iconBefore?: IconType;
+    // (undocumented)
+    inputRef?: Ref<HTMLInputElement>;
     label?: string;
+    // (undocumented)
+    name?: string;
     onBlur?: FocusEventHandler<HTMLInputElement>;
     onChange: (next: string) => void;
     onClick?: MouseEventHandler<HTMLInputElement>;
@@ -7670,6 +7702,7 @@ export interface IUiTextInputProps {
     placeholder?: string;
     type?: "text" | "search" | "email" | "url";
     value: string;
+    wrapperRef?: Ref<HTMLDivElement>;
 }
 
 // @internal
@@ -8862,11 +8895,8 @@ export function UiChip(input: IUiChipProps): JSX.Element;
 // @internal
 export function UiCombobox(input: IUiComboboxProps): JSX.Element;
 
-// @internal (undocumented)
-export const UiComboboxInput: ForwardRefExoticComponent<UiComboboxInputProps & RefAttributes<HTMLInputElement>>;
-
-// @internal (undocumented)
-export type UiComboboxInputProps = InputHTMLAttributes<HTMLInputElement>;
+// @internal
+export const UiComboboxInput: ForwardRefExoticComponent<IUiComboboxInputProps & RefAttributes<HTMLInputElement>>;
 
 // @internal (undocumented)
 export function UiComboboxList(input: IUiComboboxListProps): JSX.Element;
@@ -8874,23 +8904,20 @@ export function UiComboboxList(input: IUiComboboxListProps): JSX.Element;
 // @internal (undocumented)
 export function UiComboboxListItem(props: IUiComboboxListItemProps): JSX.Element;
 
-// @internal
+// @internal (undocumented)
 export function UiComboboxListItemCreatableLabel(props: UiComboboxListItemCreatableLabelProps): JSX.Element;
 
 // @internal (undocumented)
 export type UiComboboxListItemCreatableLabelProps = HTMLAttributes<HTMLSpanElement>;
 
-// @internal
+// @internal (undocumented)
 export function UiComboboxListItemLabel(props: UiComboboxListItemLabelProps): JSX.Element;
 
 // @internal (undocumented)
 export type UiComboboxListItemLabelProps = HTMLAttributes<HTMLSpanElement>;
 
 // @internal (undocumented)
-export function UiComboboxPopup(input: UiComboboxPopupProps): JSX.Element | null;
-
-// @internal (undocumented)
-export type UiComboboxPopupProps = HTMLAttributes<HTMLDivElement>;
+export function UiComboboxPopup(input: IUiComboboxPopupProps): JSX.Element | null;
 
 // @internal
 export function UiConfirmDialog(input: IUiConfirmDialogProps): JSX.Element;
@@ -8937,6 +8964,12 @@ export function UiErrorPage(input: IUiErrorPageProps): JSX.Element;
 
 // @internal
 export function UiFloatingElement(input: IUiFloatingElementProps): JSX.Element | null;
+
+// @internal
+export function UiFloatingPanel(input: IUiFloatingPanelProps): JSX.Element;
+
+// @internal
+export type UiFloatingPanelPadding = "none" | "listbox";
 
 // @internal (undocumented)
 export function UiFocusManager(input: IUiFocusManagerProps): JSX.Element;

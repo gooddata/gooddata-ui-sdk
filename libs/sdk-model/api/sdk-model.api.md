@@ -1270,6 +1270,7 @@ export type IAutomationAlertCondition = IAutomationAlertComparisonCondition | IA
 // @alpha (undocumented)
 export type IAutomationAlertExecutionDefinition = Pick<IExecutionDefinition, "attributes" | "measures" | "filters"> & {
     readonly auxMeasures?: IMeasure[];
+    readonly parameters?: IInsightParameterValue[];
 };
 
 // @alpha (undocumented)
@@ -2648,6 +2649,7 @@ export interface IFeatureFlags {
     enableExecutionCancelling?: boolean;
     enableExecutionTimestamp?: boolean;
     enableExportTemplateSelection?: boolean;
+    enableExportTimeoutFix?: boolean;
     enableExportToDocumentStorage?: boolean;
     enableExternalRecipients?: boolean;
     enableFilterControlInDrillingConfiguration?: boolean;

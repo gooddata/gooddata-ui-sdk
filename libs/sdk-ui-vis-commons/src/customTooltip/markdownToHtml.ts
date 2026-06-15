@@ -42,10 +42,13 @@ function isSafeLinkUrl(url: string): boolean {
 }
 
 // URL pattern allowing one level of balanced parens, e.g.
-// https://en.wikipedia.org/wiki/Page_(name)
-const URL_PATTERN = "(?:[^()\\s]|\\([^)]*\\))+";
-const IMAGE_REGEX = new RegExp(`!\\[([^\\]]*)\\]\\((${URL_PATTERN})\\)`, "g");
-const LINK_REGEX = new RegExp(`\\[([^\\]]+)\\]\\((${URL_PATTERN})\\)`, "g");
+// https://en.wikipedia.org/wiki/Page_(name). Shared with `referenceResolver`
+// so blanking applies exactly where this renderer sees an image/link.
+export const URL_PATTERN = "(?:[^()\\s]|\\([^)\\n]*\\))+";
+// URL is optional: a data reference that resolved to no data is blanked upstream
+// (see `referenceResolver`), leaving `![alt]()` / `[text]()` to render here.
+const IMAGE_REGEX = new RegExp(`!\\[([^\\]]*)\\]\\((${URL_PATTERN})?\\)`, "g");
+const LINK_REGEX = new RegExp(`\\[([^\\]]+)\\]\\((${URL_PATTERN})?\\)`, "g");
 
 // Italic content must have non-whitespace at both inner boundaries. This keeps
 // arithmetic-style text (e.g. `5 * 3 * 2`) from being misread as italics.
@@ -56,20 +59,22 @@ function processInlineMarkdown(text: string): string {
     let result = escapeHtml(text);
 
     // Inline style as fallback since the tooltip renders outside the normal DOM tree.
-    result = result.replace(IMAGE_REGEX, (_match, alt, url) => {
-        if (!isSafeImageUrl(url)) {
+    result = result.replace(IMAGE_REGEX, (_match, alt, url = "") => {
+        if (url && !isSafeImageUrl(url)) {
             return `${alt}`;
         }
+        // Empty URL → broken image keeping the alt (RichText parity).
         return `<img src="${url}" alt="${alt}" style="max-width: 100%; display: block; margin: 4px 0;" />`;
     });
 
     // Always emit a `target="_blank"` anchor for http(s) URLs; whether the user
     // can practically reach it depends on the tooltip mode's lifecycle (the
     // tooltip needs to stay open long enough to mouse over the link).
-    result = result.replace(LINK_REGEX, (_match, linkText, url) => {
-        if (!isSafeLinkUrl(url)) {
+    result = result.replace(LINK_REGEX, (_match, linkText, url = "") => {
+        if (url && !isSafeLinkUrl(url)) {
             return linkText;
         }
+        // Empty URL → anchor with empty href, like RichText (points at the current page).
         return `<a href="${url}" target="_blank" rel="noopener noreferrer">${linkText}</a>`;
     });
 

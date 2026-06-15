@@ -7,7 +7,7 @@ import { createContext, useContext } from "react";
  * Shape grows incrementally as dep-cruiser migration reveals what
  * data is shared across all automation dialogs.
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+// oxlint-disable-next-line typescript-eslint/no-empty-object-type
 export interface IAutomationsContextValue {}
 
 const AutomationsContext = createContext<IAutomationsContextValue | undefined>(undefined);

@@ -10,7 +10,11 @@ import { ConditionalScopedThemeProvider } from "@gooddata/sdk-ui-theme-provider"
 import { bem } from "../@utils/bem.js";
 import { useCloseOnEscape } from "../hooks/useCloseOnEscape.js";
 import { useCloseOnMouseDrag } from "../hooks/useCloseOnMouseDrag.js";
-import { FLOATING_ELEMENT_DATA_ATTR, useCloseOnOutsideClick } from "../hooks/useCloseOnOutsideClick.js";
+import {
+    FLOATING_ELEMENT_DATA_ATTR,
+    useCloseOnOutsideClick,
+    useRegisterFloatingAnchor,
+} from "../hooks/useCloseOnOutsideClick.js";
 import { useCloseOnParentScroll } from "../hooks/useCloseOnParentScroll.js";
 
 import { type IUiFloatingElementProps } from "./types.js";
@@ -127,6 +131,11 @@ export function UiFloatingElement({
         return {};
     }, [width, resolvedAnchor]);
 
+    const setFloatingWithAnchorRegistry = useRegisterFloatingAnchor(
+        refs.setFloating,
+        resolvedAnchor instanceof Element ? resolvedAnchor : null,
+    );
+
     if (!isOpen) {
         return null;
     }
@@ -135,7 +144,7 @@ export function UiFloatingElement({
         <FloatingPortal>
             <ConditionalScopedThemeProvider>
                 <div
-                    ref={refs.setFloating}
+                    ref={setFloatingWithAnchorRegistry}
                     className={cx(b(), className)}
                     style={{
                         ...floatingStyles,

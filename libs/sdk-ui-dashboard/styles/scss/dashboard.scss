@@ -16,7 +16,6 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
 
 // this must be used on the body element in gdc-dashboards
 .gd-dashboards-root {
-    flex-wrap: nowrap;
     background: variables.$gd-dashboards-content-backgroundColor;
     @include mixins.default-styles();
 
@@ -25,6 +24,15 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
         color: inherit;
         font: inherit;
     }
+}
+
+// Must out-specify the `gd-flex-container` utility's `flex-flow: row wrap`. A single-class
+// `flex-wrap: nowrap` ties its specificity and only wins by source order, which is
+// non-deterministic under module federation (kit CSS is duplicated across chunks) — when a
+// `.gd-flex-container` copy lands last, the root wraps and the canvas overlaps the nav.
+// Keep this compound selector; don't reduce to a single class.
+.gd-dashboards-root.gd-flex-container {
+    flex-flow: row nowrap;
 }
 
 .gd-dash-content {

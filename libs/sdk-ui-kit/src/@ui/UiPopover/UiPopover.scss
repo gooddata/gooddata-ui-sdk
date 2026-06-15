@@ -60,6 +60,14 @@ $popover_footer_gap: 10px;
         &:empty {
             display: none;
         }
+
+        // `align-items: flex-start` shrinks block children to intrinsic width.
+        // Stretch direct UiTextInput descendants — combobox listboxes anchor
+        // to the text-input wrapper and a too-narrow anchor produces a too-
+        // narrow popup.
+        > .gd-ui-kit-text-input {
+            width: 100%;
+        }
     }
 
     &__footer {

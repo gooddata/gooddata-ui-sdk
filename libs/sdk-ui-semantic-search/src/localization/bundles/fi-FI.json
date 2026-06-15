@@ -11,7 +11,7 @@
     "semantic-search.previous-search": "Edellinen haku: {query}",
     "semantic-search.tree": "Semanttinen hakupuu",
     "semantic-search.tree.history": "Semanttisen hakupuun historia",
-    "semantic-search.edit": "Muokkaa",
+    "semantic-search.edit": "Avaa",
     "semantic-search.date.at": "-",
     "semantic-search.ask.ai.assistant": "Kysy tekoälyavustajalta",
     "semantic-search.error.sync-in-progress": "Asetuksia viimeistellään edelleen — yritä pian uudelleen.",

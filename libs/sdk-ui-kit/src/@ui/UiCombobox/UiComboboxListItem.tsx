@@ -17,7 +17,8 @@ export interface IUiComboboxListItemProps extends HTMLAttributes<HTMLLIElement> 
 /** @internal */
 export function UiComboboxListItem(props: IUiComboboxListItemProps) {
     const { option } = props;
-    const { registerItemRef, getItemProps, selectOption, activeOption, selectedOption } = useComboboxState();
+    const { registerItemRef, setActiveIndex, selectOption, activeOption, selectedOption } =
+        useComboboxState();
 
     const isDisabled = Boolean(option.disabled);
     const isActive = activeOption?.id === option.id;
@@ -29,8 +30,8 @@ export function UiComboboxListItem(props: IUiComboboxListItemProps) {
             isActive={isActive}
             isSelected={isSelected}
             isDisabled={isDisabled}
-            getItemProps={getItemProps}
             registerItemRef={registerItemRef}
+            setActiveIndex={setActiveIndex}
             selectOption={selectOption}
         />
     );
@@ -40,8 +41,8 @@ type UiComboboxListItemImplProps = IUiComboboxListItemProps & {
     isActive: boolean;
     isSelected: boolean;
     isDisabled: boolean;
-    getItemProps: IUiComboboxState["getItemProps"];
     registerItemRef: IUiComboboxState["registerItemRef"];
+    setActiveIndex: IUiComboboxState["setActiveIndex"];
     selectOption: IUiComboboxState["selectOption"];
 };
 
@@ -54,21 +55,15 @@ export const UiComboboxListItemImpl = memo(function UiComboboxListItemImpl(
         className,
         children,
         onClick,
+        onMouseMove,
         isActive,
         isSelected,
         isDisabled,
-        getItemProps,
         registerItemRef,
+        setActiveIndex,
         selectOption,
         ...htmlProps
     } = props;
-
-    // https://floating-ui.com/docs/useRole#component-roles
-    const itemProps = getItemProps({
-        ...htmlProps,
-        active: isActive,
-        selected: isSelected,
-    });
 
     function handleClick(event: MouseEvent<HTMLLIElement>) {
         if (isDisabled) {
@@ -79,9 +74,16 @@ export const UiComboboxListItemImpl = memo(function UiComboboxListItemImpl(
         onClick?.(event);
     }
 
+    function handleMouseMove(event: MouseEvent<HTMLLIElement>) {
+        if (!isActive) {
+            setActiveIndex(index);
+        }
+        onMouseMove?.(event);
+    }
+
     return (
         <li
-            {...itemProps}
+            {...htmlProps}
             ref={(node) => {
                 registerItemRef(node, index);
             }}
@@ -91,6 +93,7 @@ export const UiComboboxListItemImpl = memo(function UiComboboxListItemImpl(
             aria-disabled={isDisabled}
             className={cx(e("item", { isActive, isSelected, isDisabled }), className)}
             onClick={handleClick}
+            onMouseMove={handleMouseMove}
         >
             {children ?? (
                 <>
@@ -105,12 +108,7 @@ export const UiComboboxListItemImpl = memo(function UiComboboxListItemImpl(
 /** @internal */
 export type UiComboboxListItemLabelProps = HTMLAttributes<HTMLSpanElement>;
 
-/**
- * Renders the primary label content within a combobox list item.
- * Use this component for composable customization of list item content.
- *
- * @internal
- */
+/** @internal */
 export function UiComboboxListItemLabel(props: UiComboboxListItemLabelProps) {
     const { children, className, ...htmlProps } = props;
     return (
@@ -123,12 +121,7 @@ export function UiComboboxListItemLabel(props: UiComboboxListItemLabelProps) {
 /** @internal */
 export type UiComboboxListItemCreatableLabelProps = HTMLAttributes<HTMLSpanElement>;
 
-/**
- * Renders the "creatable" label suffix within a combobox list item.
- * Use this component for composable customization of list item content.
- *
- * @internal
- */
+/** @internal */
 export function UiComboboxListItemCreatableLabel(props: UiComboboxListItemCreatableLabelProps) {
     const { children = "(create new)", className, ...htmlProps } = props;
     return (

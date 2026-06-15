@@ -102,6 +102,84 @@ describe("resolveReferences", () => {
         });
     });
 
+    describe("image and link targets with non-value references", () => {
+        it("blanks a no-data image URL so it renders a broken image, not leaked syntax", () => {
+            const result = resolveReferences(
+                "![Reykjavik]({label/flag})",
+                { "label/flag": { kind: "empty" } },
+                strings(),
+            );
+            expect(result).toBe("![Reykjavik]()");
+            expect(markdownToHtml(result)).toContain('<img src="" alt="Reykjavik"');
+        });
+
+        it("keeps an image URL reference that resolves to a value", () => {
+            const result = resolveReferences(
+                "![Reykjavik]({label/flag})",
+                { "label/flag": value("https://cdn.example.com/is.png") },
+                strings(),
+            );
+            expect(result).toBe("![Reykjavik](https://cdn.example.com/is.png)");
+        });
+
+        it("blanks a no-data image alt reference too, matching RichText", () => {
+            const result = resolveReferences(
+                "![{label/capital}]({label/flag})",
+                { "label/capital": { kind: "empty" }, "label/flag": { kind: "empty" } },
+                strings(),
+            );
+            expect(result).toBe("![]()");
+        });
+
+        it("blanks a no-data link URL but keeps the link text placeholder", () => {
+            const result = resolveReferences(
+                "[{label/name}]({label/url})",
+                { "label/name": { kind: "empty" }, "label/url": { kind: "empty" } },
+                strings(),
+            );
+            // href blanked → dead link; text stays a text node → no-data placeholder.
+            expect(result).toBe("[\\(No data\\)]()");
+            expect(markdownToHtml(result)).toContain('<a href="" target="_blank" rel="noopener noreferrer">');
+        });
+
+        it("keeps a link URL reference that resolves to a value", () => {
+            const result = resolveReferences(
+                "[docs]({label/url})",
+                { "label/url": value("https://example.com") },
+                strings(),
+            );
+            expect(result).toBe("[docs](https://example.com)");
+        });
+
+        it("blanks a no-data ref in a URL containing balanced parens", () => {
+            const result = resolveReferences(
+                "![a](https://en.wikipedia.org/wiki/Page_(name)/{label/z})",
+                { "label/z": { kind: "empty" } },
+                strings(),
+            );
+            expect(result).toBe("![a](https://en.wikipedia.org/wiki/Page_(name)/)");
+            expect(markdownToHtml(result)).toContain("<img");
+        });
+
+        it("does not blank refs in bracket pairs spanning lines, which never render as links", () => {
+            const result = resolveReferences(
+                "[a\nb]({label/x})",
+                { "label/x": { kind: "empty" } },
+                strings(),
+            );
+            expect(result).toBe("[a\nb](\\(No data\\))");
+        });
+
+        it("keeps the placeholder when the URL slot has whitespace and cannot render as an image", () => {
+            const result = resolveReferences(
+                "![a]({label/x} foo)",
+                { "label/x": { kind: "empty" } },
+                strings(),
+            );
+            expect(result).toBe("![a](\\(No data\\) foo)");
+        });
+    });
+
     describe("markdown-metachar escaping in resolved values", () => {
         // Resolved values come from data and may contain markdown syntax. Without
         // escaping, those characters would be reinterpreted as formatting by

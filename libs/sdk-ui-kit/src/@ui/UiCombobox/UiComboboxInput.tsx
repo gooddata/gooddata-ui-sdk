@@ -1,73 +1,123 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
-    type ChangeEvent,
     type FocusEvent,
-    type InputHTMLAttributes,
     type KeyboardEvent,
+    type MouseEvent,
+    type Ref,
     forwardRef,
+    useCallback,
 } from "react";
 
-import { useMergeRefs } from "@floating-ui/react";
-import cx from "classnames";
+import { UiTextInput } from "../UiTextInput/UiTextInput.js";
 
-import { e } from "./comboboxBem.js";
 import { useComboboxState } from "./UiComboboxContext.js";
 
 /** @internal */
-export type UiComboboxInputProps = InputHTMLAttributes<HTMLInputElement>;
+export interface IUiComboboxInputProps {
+    /** Accessible name for the input. */
+    "aria-label"?: string;
+    /** Visible placeholder. */
+    placeholder?: string;
+    /** Form field name forwarded to the underlying input. */
+    name?: string;
+    autoFocus?: boolean;
+    onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void;
+    onFocus?: (event: FocusEvent<HTMLInputElement>) => void;
+    onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
+    onClick?: (event: MouseEvent<HTMLInputElement>) => void;
+    dataTestId?: string;
+}
 
-/** @internal */
-export const UiComboboxInput = forwardRef<HTMLInputElement, UiComboboxInputProps>(
+/**
+ * Binds `UiTextInput` to the surrounding `UiCombobox` state: value, keyboard
+ * handler, open/close, ARIA combobox+listbox attributes.
+ *
+ * @internal
+ */
+export const UiComboboxInput = forwardRef<HTMLInputElement, IUiComboboxInputProps>(
     function UiComboboxInput(props, forwardedRef) {
-        const { type, className, ...htmlInputProps } = props;
+        const {
+            "aria-label": ariaLabel,
+            placeholder,
+            name,
+            autoFocus,
+            onKeyDown: callerOnKeyDown,
+            onFocus: callerOnFocus,
+            onBlur: callerOnBlur,
+            onClick: callerOnClick,
+            dataTestId,
+        } = props;
+
         const {
             inputValue,
             onInputChange,
             onInputKeyDown,
             onInputBlur,
-            setReferenceRef,
-            getReferenceProps,
+            isOpen,
+            setIsOpen,
+            anchorRef,
             activeOption,
+            listboxId,
         } = useComboboxState();
 
-        const ref = useMergeRefs([forwardedRef, setReferenceRef]);
+        const handleKeyDown = useCallback(
+            (event: KeyboardEvent<HTMLInputElement>) => {
+                onInputKeyDown(event);
+                if (!event.isDefaultPrevented()) {
+                    callerOnKeyDown?.(event);
+                }
+            },
+            [onInputKeyDown, callerOnKeyDown],
+        );
 
-        const referenceProps = getReferenceProps({
-            ...htmlInputProps,
-            autoComplete: "off",
-            autoCapitalize: "none",
-            autoCorrect: "off",
-            // Most of the aria attributes already come from `getReferenceProps`
-            "aria-activedescendant": activeOption?.id,
-            "aria-autocomplete": "list",
-            onKeyDown: handleKeyDown,
-            onBlur: handleBlur,
-        });
+        const handleBlur = useCallback(
+            (event: FocusEvent<HTMLInputElement>) => {
+                onInputBlur();
+                callerOnBlur?.(event);
+            },
+            [onInputBlur, callerOnBlur],
+        );
 
-        function handleChange(event: ChangeEvent<HTMLInputElement>) {
-            onInputChange(event.target.value);
-            htmlInputProps.onChange?.(event);
-        }
-
-        function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
-            onInputKeyDown(event);
-            htmlInputProps.onKeyDown?.(event);
-        }
-
-        function handleBlur(event: FocusEvent<HTMLInputElement>) {
-            onInputBlur();
-            htmlInputProps.onBlur?.(event);
-        }
+        // Click toggles open state (matches floating-ui's default `useClick`),
+        // so the user can also click to close. Focus alone doesn't open —
+        // Tab / programmatic focus shouldn't expand the listbox.
+        const handleClick = useCallback(
+            (event: MouseEvent<HTMLInputElement>) => {
+                setIsOpen(!isOpen);
+                callerOnClick?.(event);
+            },
+            [isOpen, setIsOpen, callerOnClick],
+        );
 
         return (
-            <input
-                {...referenceProps}
-                ref={ref}
-                className={cx(e("input"), className)}
-                type={type ?? "text"}
+            <UiTextInput
+                inputRef={forwardedRef}
+                wrapperRef={anchorRef as Ref<HTMLDivElement>}
                 value={inputValue}
-                onChange={handleChange}
+                onChange={onInputChange}
+                name={name}
+                placeholder={placeholder}
+                autoFocus={autoFocus}
+                // Browser autofill would overlap the listbox; the combobox
+                // owns its own typeahead so we suppress all native suggestions.
+                autoComplete="off"
+                autoCapitalize="none"
+                autoCorrect="off"
+                dataTestId={dataTestId}
+                onKeyDown={handleKeyDown}
+                onFocus={callerOnFocus}
+                onBlur={handleBlur}
+                onClick={handleClick}
+                accessibilityConfig={{
+                    role: "combobox",
+                    ariaAutocomplete: "list",
+                    ariaExpanded: isOpen,
+                    ariaActiveDescendant: activeOption?.id,
+                    ariaHaspopup: "listbox",
+                    ariaControls: listboxId,
+                    ariaLabel,
+                }}
             />
         );
     },

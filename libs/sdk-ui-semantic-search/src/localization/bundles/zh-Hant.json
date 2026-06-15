@@ -11,7 +11,7 @@
     "semantic-search.previous-search": "上一次搜尋： {query}",
     "semantic-search.tree": "語意搜尋樹",
     "semantic-search.tree.history": "語意搜尋樹歷史",
-    "semantic-search.edit": "編輯",
+    "semantic-search.edit": "打開",
     "semantic-search.date.at": "在",
     "semantic-search.ask.ai.assistant": "詢問AI助手",
     "semantic-search.error.sync-in-progress": "仍在設定中 — 請稍後再試。",
