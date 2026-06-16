@@ -1162,6 +1162,15 @@ export {
 export { useComboboxState } from "./@ui/UiCombobox/UiComboboxContext.js";
 export type { IUiComboboxOption, IUiComboboxParams, IUiComboboxState } from "./@ui/UiCombobox/types.js";
 
+export { UiAutocomplete } from "./@ui/UiAutocomplete/UiAutocomplete.js";
+export type {
+    IUiAutocompleteProps,
+    IUiAutocompleteOption,
+    IUiAutocompleteSection,
+    IUiAutocompleteMessages,
+    IUiAutocompleteLoadResult,
+} from "./@ui/UiAutocomplete/types.js";
+
 export { UiCopyButton, type IUiCopyButtonProps } from "./@ui/UiCopyButton/UiCopyButton.js";
 export {
     UiInlineTextGenerator,

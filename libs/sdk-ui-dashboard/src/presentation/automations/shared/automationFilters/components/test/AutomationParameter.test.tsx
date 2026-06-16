@@ -54,4 +54,12 @@ describe("AutomationParameter", () => {
         expect(screen.getByText("Top N is 5")).toBeInTheDocument();
         expect(screen.queryByTestId("automation-parameter-topN-delete-button")).toBeNull();
     });
+
+    it("renders a disabled, non-focusable chip when isReadOnly (store filters off): no delete", () => {
+        renderChip({ isReadOnly: true });
+
+        expect(screen.getByText("Top N is 5")).toBeInTheDocument();
+        expect(screen.queryByTestId("automation-parameter-topN-delete-button")).toBeNull();
+        expect(screen.getByRole("button")).toBeDisabled();
+    });
 });

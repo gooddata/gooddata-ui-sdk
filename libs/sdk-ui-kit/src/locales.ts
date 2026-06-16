@@ -112,3 +112,11 @@ export const olpGranteeControlsMessages = defineMessages({
     allLabels: { id: "shareDialog.olp.granteeControls.allLabels" },
     labelsCount: { id: "shareDialog.olp.granteeControls.labelsCount" },
 });
+
+export const uiAutocompleteMessages = defineMessages({
+    searchPlaceholder: { id: "uiKit.autocomplete.searchPlaceholder" },
+    stateLoading: { id: "uiKit.autocomplete.stateLoading" },
+    stateError: { id: "uiKit.autocomplete.stateError" },
+    stateNoMatch: { id: "uiKit.autocomplete.stateNoMatch" },
+    loadMore: { id: "uiKit.autocomplete.loadMore" },
+});

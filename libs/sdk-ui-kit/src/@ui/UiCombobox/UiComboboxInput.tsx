@@ -9,14 +9,19 @@ import {
     useCallback,
 } from "react";
 
+import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { UiTextInput } from "../UiTextInput/UiTextInput.js";
 
 import { useComboboxState } from "./UiComboboxContext.js";
 
 /** @internal */
 export interface IUiComboboxInputProps {
-    /** Accessible name for the input. */
-    "aria-label"?: string;
+    /**
+     * Accessible name/description for the input (e.g. `ariaLabel`,
+     * `ariaDescribedBy`). The combobox role and listbox-wiring attributes are
+     * owned by the component and override anything passed here.
+     */
+    accessibilityConfig?: IAccessibilityConfigBase;
     /** Visible placeholder. */
     placeholder?: string;
     /** Form field name forwarded to the underlying input. */
@@ -38,7 +43,7 @@ export interface IUiComboboxInputProps {
 export const UiComboboxInput = forwardRef<HTMLInputElement, IUiComboboxInputProps>(
     function UiComboboxInput(props, forwardedRef) {
         const {
-            "aria-label": ariaLabel,
+            accessibilityConfig,
             placeholder,
             name,
             autoFocus,
@@ -110,13 +115,13 @@ export const UiComboboxInput = forwardRef<HTMLInputElement, IUiComboboxInputProp
                 onBlur={handleBlur}
                 onClick={handleClick}
                 accessibilityConfig={{
+                    ...accessibilityConfig,
                     role: "combobox",
                     ariaAutocomplete: "list",
                     ariaExpanded: isOpen,
                     ariaActiveDescendant: activeOption?.id,
                     ariaHaspopup: "listbox",
                     ariaControls: listboxId,
-                    ariaLabel,
                 }}
             />
         );

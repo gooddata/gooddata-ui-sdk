@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "Add UiAutocomplete, an async paged sectioned combobox primitive",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "matyas.kandl@gooddata.com"
+}

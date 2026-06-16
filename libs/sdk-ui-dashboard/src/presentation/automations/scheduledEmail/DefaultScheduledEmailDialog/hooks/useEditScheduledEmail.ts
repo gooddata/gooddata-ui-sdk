@@ -15,6 +15,7 @@ import {
     type IAutomationMetadataObjectDefinition,
     type IAutomationRecipient,
     type IAutomationVisibleFilter,
+    type IDashboardExportParameter,
     type IExportDefinitionMetadataObjectDefinition,
     type IExportDefinitionVisualizationObjectSettings,
     type IFilter,
@@ -30,6 +31,7 @@ import {
     isExportDefinitionVisualizationObjectRequestPayload,
     isInsightWidget,
     isWidget,
+    objRefToString,
 } from "@gooddata/sdk-model";
 
 import {
@@ -37,6 +39,8 @@ import {
     convertCurrentUserToAutomationRecipient,
     convertCurrentUserToWorkspaceUser,
     convertExternalRecipientToAutomationRecipient,
+    getAutomationExportParametersByTab,
+    setExportParametersByTab,
 } from "../../../../../_staging/automation/index.js";
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import {
@@ -52,9 +56,11 @@ import {
 } from "../../../../../model/store/filtering/dashboardFilterSelectors.js";
 import { selectDashboardId, selectDashboardTitle } from "../../../../../model/store/meta/metaSelectors.js";
 import { selectWidgetLocalIdToTabIdMap } from "../../../../../model/store/tabs/layout/layoutSelectors.js";
+import { selectExportEffectiveParameters } from "../../../../../model/store/tabs/parameters/parametersSelectors.js";
 import { selectCurrentUser } from "../../../../../model/store/user/userSelectors.js";
 import { selectUsers } from "../../../../../model/store/users/usersSelectors.js";
 import { type ExtendedDashboardWidget } from "../../../../../model/types/layoutTypes.js";
+import { shouldStoreExportParameters } from "../../../shared/automationFilters/automationParameters.js";
 import { getDefaultSelectedFiltersFromFiltersByTab } from "../../../shared/automationFilters/useAutomationFiltersSelect.js";
 import {
     getAppliedDashboardFilters,
@@ -228,6 +234,16 @@ export function useEditScheduledEmail({
         storeFilters,
     );
 
+    const effectiveExportParametersByTab = useDashboardSelector(
+        selectExportEffectiveParameters(widget ? [objRefToString(widget.ref)] : undefined),
+    );
+    // Mirrors the filters seed above, for parameters.
+    const parametersByTabForNewAutomation =
+        shouldStoreExportParameters(isWidget, storeFilters) &&
+        Object.keys(effectiveExportParametersByTab).length > 0
+            ? effectiveExportParametersByTab
+            : undefined;
+
     const [editedAutomation, setEditedAutomation] = useState<IAutomationMetadataObjectDefinition>(
         scheduledExportToEdit ??
             newAutomationMetadataObjectDefinition(
@@ -247,6 +263,7 @@ export function useEditScheduledEmail({
                           defaultPdfPageSize,
                           evaluationMode: "PER_RECIPIENT",
                           targetTabId,
+                          parametersByTab: parametersByTabForNewAutomation,
                       }
                     : {
                           timezone,
@@ -261,11 +278,21 @@ export function useEditScheduledEmail({
                           enableNewScheduledExport,
                           defaultPdfPageSize,
                           evaluationMode: "PER_RECIPIENT",
+                          parametersByTab: parametersByTabForNewAutomation,
                       },
             ),
     );
 
     const [originalAutomation] = useState(editedAutomation);
+
+    // The user-edit path into `content.parametersByTab`: re-encoded wire in, every export definition
+    // patched. Handed to `useAutomationExportParameters`, which owns when to call it. Definition
+    // rebuilds preserve the wire separately via `withRebuiltExportDefinitions`.
+    const setParametersWire = useCallback(
+        (wire: Record<string, IDashboardExportParameter[]> | undefined) =>
+            setEditedAutomation((automation) => setExportParametersByTab(automation, wire)),
+        [],
+    );
 
     const selectedAttachments = useMemo(() => {
         return (
@@ -367,11 +394,7 @@ export function useEditScheduledEmail({
             );
 
             const updatedExportDefinitions = [...keptExportDefinitions, ...newExportDefinitions];
-
-            return {
-                ...s,
-                exportDefinitions: updatedExportDefinitions,
-            };
+            return withRebuiltExportDefinitions(s, updatedExportDefinitions);
         });
     };
 
@@ -412,11 +435,7 @@ export function useEditScheduledEmail({
             );
 
             const updatedExportDefinitions = [...keptExportDefinitions, ...newExportDefinitions];
-
-            return {
-                ...s,
-                exportDefinitions: updatedExportDefinitions,
-            };
+            return withRebuiltExportDefinitions(s, updatedExportDefinitions);
         });
     };
 
@@ -980,8 +999,24 @@ export function useEditScheduledEmail({
         onApplyCurrentFilters,
         onStoreFiltersChange,
         onFiltersByTabChange,
+        setParametersWire,
         enableAutomationEvaluationMode,
     };
+}
+
+/**
+ * Replaces an automation's export definitions while preserving the current parameter wire. Freshly
+ * built definitions carry no `content.parametersByTab`, so without this the stored parameters would
+ * silently drop on any attachment-format change — the one place "rebuild definitions" stays paired
+ * with "keep parameters".
+ */
+function withRebuiltExportDefinitions(
+    automation: IAutomationMetadataObjectDefinition,
+    exportDefinitions: NonNullable<IAutomationMetadataObjectDefinition["exportDefinitions"]>,
+): IAutomationMetadataObjectDefinition {
+    const next = { ...automation, exportDefinitions };
+    const parametersByTab = getAutomationExportParametersByTab(automation);
+    return parametersByTab ? setExportParametersByTab(next, parametersByTab) : next;
 }
 
 function newDashboardExportDefinitionMetadataObjectDefinition({
@@ -1134,6 +1169,7 @@ function newAutomationMetadataObjectDefinition({
     defaultPdfPageSize,
     evaluationMode,
     targetTabId,
+    parametersByTab,
 }: {
     timezone?: string;
     dashboardId: string;
@@ -1152,6 +1188,7 @@ function newAutomationMetadataObjectDefinition({
     defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
     evaluationMode: AutomationEvaluationMode;
     targetTabId?: string;
+    parametersByTab?: Record<string, IDashboardExportParameter[]>;
 }): IAutomationMetadataObjectDefinition {
     const { firstRun, cron } = toNormalizedFirstRunAndCron(timezone);
     const exportDefinition =
@@ -1217,5 +1254,5 @@ function newAutomationMetadataObjectDefinition({
         ...metadataObj,
     };
 
-    return automation;
+    return parametersByTab ? setExportParametersByTab(automation, parametersByTab) : automation;
 }

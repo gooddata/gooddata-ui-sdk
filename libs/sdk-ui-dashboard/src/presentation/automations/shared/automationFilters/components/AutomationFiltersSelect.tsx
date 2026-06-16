@@ -51,6 +51,7 @@ import {
 } from "../../../../filterBar/attributeFilter/addAttributeFilter/AttributesDropdown.js";
 import { type IAutomationParameter } from "../automationParameters.js";
 import { useAutomationFilters, useAutomationFiltersByTab } from "../useAutomationFilters.js";
+import { useParameterAnnouncements } from "../useParameterAnnouncements.js";
 
 import { AutomationAttributeFilter } from "./AutomationAttributeFilter.js";
 import { AutomationDateFilter } from "./AutomationDateFilter.js";
@@ -120,6 +121,10 @@ export interface IAutomationFiltersSelectProps {
      */
     availableParameters?: IAutomationParameter[];
     /**
+     * Called when a parameter is added from the "+" menu.
+     */
+    onParameterAdd?: (ref: IdentifierRef) => void;
+    /**
      * Called when an `active` parameter chip's value is edited.
      */
     onParameterChange?: (ref: IdentifierRef, value: number) => void;
@@ -128,9 +133,29 @@ export interface IAutomationFiltersSelectProps {
      */
     onParameterDelete?: (ref: IdentifierRef) => void;
     /**
-     * Called when a parameter is added from the "+" menu.
+     * Parameter chips per tab. Used in tab-rendering mode (multi-tab dashboard schedules).
      */
-    onParameterAdd?: (ref: IdentifierRef) => void;
+    parametersByTab?: Record<string, IAutomationParameter[]>;
+    /**
+     * Addable workspace parameters per tab. Used in tab-rendering mode.
+     */
+    availableParametersByTab?: Record<string, IAutomationParameter[]>;
+    /**
+     * Called when a parameter is added from a tab section's "+" menu.
+     */
+    onParameterAddByTab?: (tabId: string, ref: IdentifierRef) => void;
+    /**
+     * Called when an `active` parameter chip's value is edited in a tab section.
+     */
+    onParameterChangeByTab?: (tabId: string, ref: IdentifierRef, value: number) => void;
+    /**
+     * Called when an `active` parameter chip is removed in a tab section.
+     */
+    onParameterDeleteByTab?: (tabId: string, ref: IdentifierRef) => void;
+    /**
+     * When the `enableParameters` feature is on, the store-filters tooltip mentions parameter values too.
+     */
+    parametersEnabled?: boolean;
 }
 
 interface IAutomationCheckboxOrNoteProps {
@@ -139,6 +164,7 @@ interface IAutomationCheckboxOrNoteProps {
     handleStoreFiltersChange: (value: boolean) => void;
     handleKeyDown: (e: KeyboardEvent) => void;
     automationFilterSelectTooltipId: string;
+    parametersEnabled?: boolean;
 }
 
 function AutomationCheckboxOrNote({
@@ -147,8 +173,15 @@ function AutomationCheckboxOrNote({
     handleStoreFiltersChange,
     handleKeyDown,
     automationFilterSelectTooltipId,
+    parametersEnabled,
 }: IAutomationCheckboxOrNoteProps) {
     const intl = useIntl();
+    // Keep both message ids as static literals so the i18n extractor sees them.
+    const useFiltersTooltip = parametersEnabled ? (
+        <FormattedMessage id="dialogs.automation.filters.useFiltersMessage.parameters.tooltip" />
+    ) : (
+        <FormattedMessage id="dialogs.automation.filters.useFiltersMessage.tooltip" />
+    );
     return isDashboardAutomation ? (
         <label className="input-checkbox-label gd-automation-filters__use-filters-checkbox s-automation-filters-use-filters-checkbox">
             <input
@@ -163,7 +196,7 @@ function AutomationCheckboxOrNote({
             />
             <span className="input-label-text gd-automation-filters__use-filters-message">
                 <div id={automationFilterSelectTooltipId} className="sr-only">
-                    <FormattedMessage id="dialogs.automation.filters.useFiltersMessage.tooltip" />
+                    {useFiltersTooltip}
                 </div>
                 <FormattedMessage id="dialogs.automation.filters.useFiltersMessage" />
                 <UiTooltip
@@ -171,7 +204,7 @@ function AutomationCheckboxOrNote({
                     triggerBy={["hover", "focus"]}
                     optimalPlacement
                     width={300}
-                    content={<FormattedMessage id="dialogs.automation.filters.useFiltersMessage.tooltip" />}
+                    content={useFiltersTooltip}
                     anchor={
                         <UiIconButton
                             icon="question"
@@ -215,10 +248,16 @@ export function AutomationFiltersSelect({
     editedFiltersByTab,
     onFiltersByTabChange,
     parameters = [],
-    onParameterChange,
-    onParameterDelete,
     availableParameters = [],
     onParameterAdd,
+    onParameterChange,
+    onParameterDelete,
+    parametersByTab,
+    availableParametersByTab,
+    onParameterAddByTab,
+    onParameterChangeByTab,
+    onParameterDeleteByTab,
+    parametersEnabled,
 }: IAutomationFiltersSelectProps) {
     // Determine rendering mode first
     const shouldRenderByTab = !!filtersByTab && filtersByTab.length > 1;
@@ -251,6 +290,8 @@ export function AutomationFiltersSelect({
         makeFilterGroupUnfocusable,
         setAddFilterButtonRefs,
     } = shouldRenderByTab && tabFiltersData.processedFiltersByTab ? tabFiltersData : flatFiltersData;
+
+    const { focusAddFilterButton } = flatFiltersData;
 
     const filters = shouldRenderByTab ? [] : flatFiltersData.visibleFilters;
     const visibleParameters = shouldRenderByTab ? [] : parameters;
@@ -300,6 +341,14 @@ export function AutomationFiltersSelect({
     };
     const tooltipText = isAddButtonDisabled ? tooltipTextValues.addDisabled : tooltipTextValues.add;
     const searchAriaLabel = intl.formatMessage({ id: "dialogs.automation.filters.searchAriaLabel" });
+
+    // Screen-reader announcements for parameter chip add/remove/change
+    const {
+        parameterAnnouncement,
+        announceParameterAdded,
+        announceParameterChanged,
+        announceParameterRemoved,
+    } = useParameterAnnouncements();
 
     const disableFilters = !storeFilters && !!isDashboardAutomation;
 
@@ -355,6 +404,7 @@ export function AutomationFiltersSelect({
                             handleStoreFiltersChange={handleStoreFiltersChange}
                             handleKeyDown={handleKeyDown}
                             automationFilterSelectTooltipId={automationFilterSelectTooltipId}
+                            parametersEnabled={parametersEnabled}
                         />
                         <Divider />
                     </>
@@ -378,8 +428,17 @@ export function AutomationFiltersSelect({
                                 const tabEditedFilters = editedFiltersByTab?.[tab.tabId] ?? [];
                                 const tabAvailableFilters =
                                     filtersByTab?.find((t) => t.tabId === tab.tabId)?.availableFilters ?? [];
+                                const tabParameters = parametersByTab?.[tab.tabId] ?? [];
+                                const tabAvailableParameters = availableParametersByTab?.[tab.tabId] ?? [];
+                                const tabParameterDropdownItems: IParameterDropdownListItem[] =
+                                    tabAvailableParameters.map((parameter) => ({
+                                        type: "parameter",
+                                        ref: parameter.ref,
+                                        title: parameter.title,
+                                    }));
                                 const isTabAddButtonDisabled =
-                                    tabEditedFilters.length >= tabAvailableFilters.length;
+                                    tabEditedFilters.length >= tabAvailableFilters.length &&
+                                    tabAvailableParameters.length === 0;
                                 const tabTooltipText = isTabAddButtonDisabled
                                     ? tooltipTextValues.addDisabled
                                     : tooltipTextValues.add;
@@ -389,6 +448,7 @@ export function AutomationFiltersSelect({
                                         key={tab.tabId}
                                         tabTitle={tab.tabTitle}
                                         tabId={tab.tabId}
+                                        canAddItems={!isTabAddButtonDisabled}
                                         filters={tab.visibleFilters}
                                         attributeConfigs={tab.attributeConfigs}
                                         commonDateFilterId={commonDateFilterId}
@@ -399,6 +459,15 @@ export function AutomationFiltersSelect({
                                         onDelete={(filter) =>
                                             tabFiltersData.handleTabFilterDelete(tab.tabId, filter)
                                         }
+                                        parameters={tabParameters}
+                                        onParameterChange={(ref, value) => {
+                                            announceParameterChanged(tabParameters, ref, value);
+                                            onParameterChangeByTab?.(tab.tabId, ref, value);
+                                        }}
+                                        onParameterDelete={(ref) => {
+                                            announceParameterRemoved(tabParameters, ref);
+                                            onParameterDeleteByTab?.(tab.tabId, ref);
+                                        }}
                                         overlayPositionType={overlayPositionType}
                                         showDivider={index < tabFiltersData.processedFiltersByTab!.length - 1}
                                         readonlyFilters={disableFilters}
@@ -414,6 +483,11 @@ export function AutomationFiltersSelect({
                                                         tab.attributes,
                                                         tab.dateDatasets,
                                                     );
+                                                }}
+                                                parameters={tabParameterDropdownItems}
+                                                onParameterSelect={(ref) => {
+                                                    announceParameterAdded(tabAvailableParameters, ref);
+                                                    onParameterAddByTab?.(tab.tabId, ref);
                                                 }}
                                                 attributes={tab.attributes}
                                                 dateDatasets={tab.dateDatasets}
@@ -529,9 +603,16 @@ export function AutomationFiltersSelect({
                                     <AutomationParameter
                                         key={`parameter-${parameter.ref.identifier}`}
                                         parameter={parameter}
-                                        onChange={onParameterChange}
-                                        onDelete={onParameterDelete}
+                                        onChange={(ref, value) => {
+                                            announceParameterChanged(visibleParameters, ref, value);
+                                            onParameterChange?.(ref, value);
+                                        }}
+                                        onDelete={(ref) => {
+                                            announceParameterRemoved(visibleParameters, ref);
+                                            onParameterDelete?.(ref);
+                                        }}
                                         overlayPositionType={overlayPositionType}
+                                        isReadOnly={disableFilters}
                                     />
                                 )),
                             ].slice(0, showAllFilters || isExpanded ? undefined : COLLAPSED_FILTERS_COUNT)}
@@ -545,8 +626,11 @@ export function AutomationFiltersSelect({
                                     }}
                                     parameters={parameterDropdownItems}
                                     onParameterSelect={(ref) => {
+                                        announceParameterAdded(availableParameters, ref);
                                         onParameterAdd?.(ref);
                                         setIsExpanded(true);
+                                        // Restore "+" focus, else it falls to <body> when the chip's list node unmounts.
+                                        setTimeout(focusAddFilterButton);
                                     }}
                                     attributes={attributes}
                                     dateDatasets={dateDatasets}
@@ -624,6 +708,7 @@ export function AutomationFiltersSelect({
                             handleStoreFiltersChange={handleStoreFiltersChange}
                             handleKeyDown={handleKeyDown}
                             automationFilterSelectTooltipId={automationFilterSelectTooltipId}
+                            parametersEnabled={parametersEnabled}
                         />
                     </>
                 )}
@@ -642,6 +727,11 @@ export function AutomationFiltersSelect({
             {/* Screen reader announcement when filters are added, removed, or changed */}
             <div className="sr-only" aria-live="polite" aria-atomic="true" role="status">
                 {filterAnnouncement}
+            </div>
+
+            {/* Screen reader announcement when parameters are added, removed, or changed */}
+            <div className="sr-only" aria-live="polite" aria-atomic="true" role="status">
+                {parameterAnnouncement}
             </div>
         </div>
     );
@@ -742,11 +832,16 @@ interface IAutomationFiltersTabSectionProps {
     lockedFilters: FilterContextItem[];
     onChange: (filter: FilterContextItem | undefined) => void;
     onDelete: (filter: FilterContextItem) => void;
+    parameters: IAutomationParameter[];
+    onParameterChange: (ref: IdentifierRef, value: number) => void;
+    onParameterDelete: (ref: IdentifierRef) => void;
     overlayPositionType?: OverlayPositionType;
     /** Show divider after this tab section */
     showDivider?: boolean;
     /** Add filter button to render at the end of filters list */
     addFilterButton?: ReactNode;
+    /** Whether the tab has filters or parameters left to add — keeps an otherwise empty tab visible for its add button */
+    canAddItems: boolean;
     readonlyFilters: boolean;
 }
 
@@ -763,9 +858,13 @@ function AutomationFiltersTabSection({
     lockedFilters,
     onChange,
     onDelete,
+    parameters,
+    onParameterChange,
+    onParameterDelete,
     overlayPositionType,
     showDivider = false,
     addFilterButton,
+    canAddItems,
     readonlyFilters,
 }: IAutomationFiltersTabSectionProps) {
     const intl = useIntl();
@@ -775,7 +874,7 @@ function AutomationFiltersTabSection({
     const displayTitle = tabTitle || intl.formatMessage({ id: "dialogs.automation.filters.tab.untitled" });
     const tabLabel = intl.formatMessage({ id: "dialogs.automation.filters.tab.label" });
 
-    if (filters.length === 0) {
+    if (filters.length === 0 && parameters.length === 0 && !canAddItems) {
         return null;
     }
 
@@ -830,6 +929,16 @@ function AutomationFiltersTabSection({
                             />
                         );
                     })}
+                    {parameters.map((parameter) => (
+                        <AutomationParameter
+                            key={`parameter-${parameter.ref.identifier}`}
+                            parameter={parameter}
+                            onChange={onParameterChange}
+                            onDelete={onParameterDelete}
+                            overlayPositionType={overlayPositionType}
+                            isReadOnly={readonlyFilters}
+                        />
+                    ))}
                     {addFilterButton}
                 </div>
             </div>

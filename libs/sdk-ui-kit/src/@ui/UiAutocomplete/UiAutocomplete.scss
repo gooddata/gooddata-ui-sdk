@@ -1,0 +1,53 @@
+.gd-ui-kit-autocomplete {
+    position: relative;
+
+    &__list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        max-height: 320px;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    }
+
+    &__section-header {
+        padding: 4px 12px;
+    }
+
+    &__option {
+        display: flex;
+        align-items: baseline;
+        gap: 6px;
+        padding: 6px 12px;
+        line-height: 20px;
+        cursor: pointer;
+
+        &--isActive {
+            background: var(--gd-palette-complementary-2);
+        }
+
+        &:hover {
+            background: var(--gd-palette-complementary-2);
+        }
+    }
+
+    &__option-label {
+        color: var(--gd-palette-complementary-9);
+        font-size: 14px;
+    }
+
+    &__option-secondary {
+        color: var(--gd-palette-complementary-6);
+        font-size: 12px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &__state {
+        padding: 12px;
+        color: var(--gd-palette-complementary-6);
+        font-size: 14px;
+        text-align: center;
+    }
+}

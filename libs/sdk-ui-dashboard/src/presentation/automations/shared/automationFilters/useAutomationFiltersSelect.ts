@@ -9,7 +9,9 @@ import {
     isExportDefinitionDashboardRequestPayload,
 } from "@gooddata/sdk-model";
 
+import { getAutomationExportParametersByTab } from "../../../../_staging/automation/index.js";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { selectEnableParameters } from "../../../../model/store/config/configSelectors.js";
 import {
     type IAutomationFiltersTab,
     selectAutomationCommonDateFilterId,
@@ -139,6 +141,16 @@ function checkAreFiltersStored(automationToEdit: IAutomationMetadataObject | und
 }
 
 /**
+ * Whether the automation carries stored parameter overrides. The store-filters checkbox gates
+ * parameters too, so a dashboard with parameters but no persistable filters must still open with the
+ * box checked — otherwise the first toggle would drop the stored values. The field is present (even
+ * as an empty per-tab map) only when persistence was on, so its presence is the signal.
+ */
+function checkAreParametersStored(automationToEdit: IAutomationMetadataObject | undefined): boolean {
+    return getAutomationExportParametersByTab(automationToEdit) !== undefined;
+}
+
+/**
  * Hook to get data for AutomationFiltersSelect component.
  */
 export const useAutomationFiltersSelect = ({
@@ -186,10 +198,16 @@ export const useAutomationFiltersSelect = ({
     const hasMultipleTabs = allFiltersByTab.length > 1;
     const filtersByTab = isDashboardAutomation && hasMultipleTabs ? allFiltersByTab : undefined;
 
-    const areFiltersStored = useMemo(() => checkAreFiltersStored(automationToEdit), [automationToEdit]);
+    const parametersEnabled = useDashboardSelector(selectEnableParameters);
+    const areFiltersOrParametersStored = useMemo(
+        () =>
+            checkAreFiltersStored(automationToEdit) ||
+            (parametersEnabled && checkAreParametersStored(automationToEdit)),
+        [automationToEdit, parametersEnabled],
+    );
 
     // Store filters or not? (checkbox to use latest saved dashboard filters vs "freeze" filters state as is)
-    const [storeFilters, setStoreFilters] = useState(areFiltersStored);
+    const [storeFilters, setStoreFilters] = useState(areFiltersOrParametersStored);
 
     const isDashboardAutomationWithoutStoredFilters = useMemo(() => {
         return !widget && !storeFilters;

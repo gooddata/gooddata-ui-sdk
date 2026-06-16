@@ -2795,6 +2795,26 @@
         "text": "Everyone in this workspace can view this object.",
         "crowdinContext": "Description of the All-workspace-members general-access option on the OLP share dialog. Explains the resulting access for the whole workspace."
     },
+    "uiKit.autocomplete.searchPlaceholder": {
+        "text": "Search",
+        "crowdinContext": "Default placeholder text in the search input of the generic autocomplete primitive. Sentence case."
+    },
+    "uiKit.autocomplete.stateLoading": {
+        "text": "Loading…",
+        "crowdinContext": "Placeholder shown inside the autocomplete dropdown while results are loading."
+    },
+    "uiKit.autocomplete.stateError": {
+        "text": "Could not load options. Please try again.",
+        "crowdinContext": "Placeholder shown inside the autocomplete dropdown when the backend request failed."
+    },
+    "uiKit.autocomplete.stateNoMatch": {
+        "text": "No matching options.",
+        "crowdinContext": "Placeholder shown inside the autocomplete dropdown when the search query returned no options."
+    },
+    "uiKit.autocomplete.loadMore": {
+        "text": "Load more",
+        "crowdinContext": "Label of the interactive row at the bottom of the autocomplete dropdown that loads the next page of results. Sentence case."
+    },
     "shareDialog.olp.objectShareDialog.title": {
         "text": "Share \"{title}\"",
         "crowdinContext": "Title of the OLP share dialog. {title} is the human-readable name of the shared object (e.g. an attribute or dataset). Sentence case."

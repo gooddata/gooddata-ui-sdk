@@ -4,11 +4,13 @@ import {
     type DashboardParameterMode,
     DashboardParameterModeValues,
     type IAutomationMetadataObjectDefinition,
+    type IDashboardExportParameter,
     type IDashboardParameter,
     type IInsightParameterValue,
     type INumberParameterConstraints,
     type IParameterMetadataObject,
     type IdentifierRef,
+    idRef,
     isIdentifierRef,
     isNumberParameterDefinition,
     objRefToString,
@@ -56,6 +58,41 @@ export function reconstructAutomationParametersFromValues(
             ...(constraints ? { constraints } : {}),
         };
     });
+}
+
+/**
+ * Stored export overrides ({@link IDashboardExportParameter}) carry the value as a string; it is
+ * parsed back to a number and non-finite values are dropped. Title, mode and constraints are
+ * re-derived from the current dashboard and workspace catalog, mirroring
+ * {@link reconstructAutomationParametersFromValues}.
+ *
+ * @internal
+ */
+export function reconstructAutomationParametersFromExportParameters(
+    stored: IDashboardExportParameter[],
+    dashboardParameters: IDashboardParameter[],
+    catalog: IParameterMetadataObject[],
+): IAutomationParameter[] {
+    return reconstructAutomationParametersFromValues(
+        exportParametersToValues(stored),
+        dashboardParameters,
+        catalog,
+    );
+}
+
+/**
+ * The stored value is carried as a string; non-finite values are dropped.
+ *
+ * @internal
+ */
+export function exportParametersToValues(stored: IDashboardExportParameter[]): IInsightParameterValue[] {
+    return stored.reduce<IInsightParameterValue[]>((acc, row) => {
+        const value = Number(row.value);
+        if (Number.isFinite(value)) {
+            acc.push({ ref: idRef(row.id, "parameter"), value });
+        }
+        return acc;
+    }, []);
 }
 
 /**
@@ -132,6 +169,54 @@ export function setAlertExecutionParameters(
             },
         },
     };
+}
+
+/**
+ * Encodes the display-ready chip set back to the neutral export wire shape ({id, value:string,
+ * title}). The full per-tab execution set (including `hidden` entries) is converted, not just the
+ * visible chips, so the server resolver does not drop omitted parameters to the workspace default.
+ *
+ * @internal
+ */
+export function automationParametersToExportParameters(
+    parameters: IAutomationParameter[],
+): IDashboardExportParameter[] {
+    return parameters.map((parameter) => ({
+        id: parameter.ref.identifier,
+        value: String(parameter.value),
+        title: parameter.title,
+    }));
+}
+
+/**
+ * Encodes the per-tab execution sets to the neutral export wire shape, or `undefined` when
+ * `shouldStore` is false (feature off / store-filters unchecked — signals "omit the field; use
+ * latest defaults"). Inverse of {@link reconstructAutomationParametersFromExportParameters}.
+ *
+ * @internal
+ */
+export function toEffectiveParametersByTab(
+    parametersByTab: Record<string, IAutomationParameter[]>,
+    shouldStore: boolean,
+): Record<string, IDashboardExportParameter[]> | undefined {
+    if (!shouldStore) {
+        return undefined;
+    }
+    const result: Record<string, IDashboardExportParameter[]> = {};
+    for (const [tabId, parameters] of Object.entries(parametersByTab)) {
+        result[tabId] = automationParametersToExportParameters(parameters);
+    }
+    return Object.keys(result).length > 0 ? result : undefined;
+}
+
+/**
+ * The single home for "does this export persist its parameters": widget schedules always do (they
+ * have no store-filters checkbox), dashboard schedules follow the store-filters checkbox.
+ *
+ * @internal
+ */
+export function shouldStoreExportParameters(isWidgetSchedule: boolean, storeFilters = false): boolean {
+    return isWidgetSchedule || storeFilters;
 }
 
 function numberConstraints(

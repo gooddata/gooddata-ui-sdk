@@ -28,25 +28,17 @@ export function useCombobox(params: IUiComboboxParams): IUiComboboxState {
 
     const listboxId = useId();
 
-    const chrome = useComboboxChrome();
     const selection = useComboboxSelection({
         options,
         value,
         defaultValue,
         onValueChange,
         creatable,
-        setIsOpen: chrome.setIsOpen,
-        setActiveIndex: chrome.setActiveIndex,
+        setIsOpen: (open: boolean) => chrome.setIsOpen(open),
     });
 
-    // Clamp on read so a filter that shrinks the list doesn't leave us
-    // pointing past the end (Enter would otherwise be a silent no-op).
-    const optionCount = selection.availableOptions.length;
-    const safeActiveIndex = chrome.activeIndex == null ? null : Math.min(chrome.activeIndex, optionCount - 1);
-    const activeOption =
-        safeActiveIndex == null || optionCount === 0
-            ? undefined
-            : selection.availableOptions[safeActiveIndex];
+    const chrome = useComboboxChrome(selection.availableOptions);
+    const activeOption = chrome.activeOption;
 
     const onInputKeyDown = useMemo(() => {
         // Leave Enter unhandled when there's no selectable target so creatable
@@ -72,12 +64,12 @@ export function useCombobox(params: IUiComboboxParams): IUiComboboxState {
             : undefined;
 
         return comboboxKeys<KeyboardEvent<HTMLInputElement>>({
-            onArrowDown: () => chrome.focusByDelta(1, optionCount),
-            onArrowUp: () => chrome.focusByDelta(-1, optionCount),
+            onArrowDown: () => chrome.focusByDelta(1),
+            onArrowUp: () => chrome.focusByDelta(-1),
             onEnter,
             onEscape,
         });
-    }, [chrome, selection, activeOption, optionCount]);
+    }, [chrome, selection, activeOption]);
 
     return useMemo(
         () =>
@@ -96,10 +88,10 @@ export function useCombobox(params: IUiComboboxParams): IUiComboboxState {
                 selectOption: selection.selectOption,
                 anchorRef: chrome.anchorRef,
                 registerItemRef: chrome.registerItemRef,
-                shouldRenderPopup: optionCount > 0,
+                shouldRenderPopup: selection.availableOptions.length > 0,
                 creatable,
                 listboxId,
             }) satisfies IUiComboboxState,
-        [chrome, selection, onInputKeyDown, activeOption, creatable, listboxId, optionCount],
+        [chrome, selection, onInputKeyDown, activeOption, creatable, listboxId],
     );
 }

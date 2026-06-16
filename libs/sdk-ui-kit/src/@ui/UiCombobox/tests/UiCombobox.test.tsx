@@ -72,6 +72,24 @@ describe("UiCombobox", () => {
         expect(input.value).toBe("Apple");
     });
 
+    it("drops the highlight after the popup closes, so reopening + Enter selects nothing", () => {
+        render(<TestCombobox options={options} />);
+
+        const input: HTMLInputElement = screen.getByRole("combobox");
+
+        // Highlight the first option, then close the popup with Escape.
+        fireEvent.focus(input);
+        fireEvent.keyDown(input, { code: "ArrowDown" });
+        fireEvent.keyDown(input, { code: "Escape" });
+
+        // Reopen by clicking; without navigating, Enter must not confirm the
+        // previously-highlighted option.
+        fireEvent.click(input);
+        fireEvent.keyDown(input, { code: "Enter" });
+
+        expect(input.value).toBe("");
+    });
+
     it("shows all options again after selecting a value", () => {
         render(<TestCombobox options={options} />);
 

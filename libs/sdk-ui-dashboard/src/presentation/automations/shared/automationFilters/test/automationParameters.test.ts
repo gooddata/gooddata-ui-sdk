@@ -2,41 +2,17 @@
 
 import { describe, expect, it } from "vitest";
 
-import { type IDashboardParameter, type IParameterMetadataObject, idRef } from "@gooddata/sdk-model";
+import { idRef } from "@gooddata/sdk-model";
 
 import {
     type IAutomationParameter,
+    automationParametersToExportParameters,
     availableAutomationParameters,
+    reconstructAutomationParametersFromExportParameters,
     reconstructAutomationParametersFromValues,
 } from "../automationParameters.js";
 
-const workspaceParameter = (
-    id: string,
-    title: string,
-    defaultValue: number,
-    constraints?: { min?: number; max?: number },
-): IParameterMetadataObject => ({
-    type: "parameter",
-    id,
-    title,
-    ref: idRef(id, "parameter"),
-    uri: id,
-    production: true,
-    deprecated: false,
-    unlisted: false,
-    description: "",
-    definition: { type: "NUMBER", defaultValue, constraints },
-});
-
-const dashboardParameter = (
-    id: string,
-    overrides: Partial<IDashboardParameter> = {},
-): IDashboardParameter => ({
-    ref: idRef(id, "parameter"),
-    mode: "active",
-    parameterType: "NUMBER",
-    ...overrides,
-});
+import { dashboardParameter, workspaceParameter } from "./parameterFixtures.js";
 
 describe("availableAutomationParameters — addable workspace parameters", () => {
     const catalog = [
@@ -139,5 +115,51 @@ describe("reconstructAutomationParametersFromValues — reopen existing alert", 
             catalog,
         );
         expect(fallback[0].title).toBe("Top N (workspace)");
+    });
+});
+
+describe("reconstructAutomationParametersFromExportParameters — reopen existing export", () => {
+    const catalog = [workspaceParameter("topN", "Top N (workspace)", 3, { min: 1, max: 10 })];
+
+    it("parses the string wire value to a number and derives mode/constraints from the dashboard/catalog", () => {
+        const reconstructed = reconstructAutomationParametersFromExportParameters(
+            [{ id: "topN", value: "8", title: "Top N (stored)" }],
+            [dashboardParameter("topN", { mode: "readonly", label: "Customer Top N" })],
+            catalog,
+        );
+        expect(reconstructed).toEqual([
+            {
+                ref: idRef("topN", "parameter"),
+                title: "Customer Top N",
+                value: 8,
+                mode: "readonly",
+                constraints: { min: 1, max: 10 },
+            },
+        ]);
+    });
+
+    it("drops entries whose wire value is not a finite number", () => {
+        const reconstructed = reconstructAutomationParametersFromExportParameters(
+            [
+                { id: "topN", value: "not-a-number", title: "Top N" },
+                { id: "topN", value: "5", title: "Top N" },
+            ],
+            [dashboardParameter("topN")],
+            catalog,
+        );
+        expect(reconstructed.map((parameter) => parameter.value)).toEqual([5]);
+    });
+});
+
+describe("automationParametersToExportParameters — chip set to wire", () => {
+    it("encodes the value as a string and carries id + title", () => {
+        const parameters: IAutomationParameter[] = [
+            { ref: idRef("topN", "parameter"), title: "Top N", value: 8, mode: "active" },
+            { ref: idRef("limit", "parameter"), title: "Limit", value: 50, mode: "hidden" },
+        ];
+        expect(automationParametersToExportParameters(parameters)).toEqual([
+            { id: "topN", value: "8", title: "Top N" },
+            { id: "limit", value: "50", title: "Limit" },
+        ]);
     });
 });

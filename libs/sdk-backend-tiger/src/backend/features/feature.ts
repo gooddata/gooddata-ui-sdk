@@ -1230,13 +1230,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableIpAllowlistsUi,
-            "enableIpAllowlistsUi",
-            "BOOLEAN",
-            FeatureFlagsValues.enableIpAllowlistsUi,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableLdmModelerRemoteModule,
             "enableShellApplication_ldmModeler",
             "BOOLEAN",

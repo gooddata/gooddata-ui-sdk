@@ -182,7 +182,6 @@ export enum TigerFeaturesNames {
     EnableMetricEditorRemoteModule = "enableShellApplication_metricEditor",
     EnableAnalyticalDesignerRemoteModule = "enableShellApplication_analyticalDesigner",
     EnableDashboardSidebarResize = "enableDashboardSidebarResize",
-    EnableIpAllowlistsUi = "enableIpAllowlistsUi",
     EnableLdmModelerRemoteModule = "enableShellApplication_ldmModeler",
     EnableExportTimeoutFix = "enableExportTimeoutFix",
     EnableAiAssistantEmbedding = "enableAiAssistantEmbedding",
@@ -362,7 +361,6 @@ export type ITigerFeatureFlags = {
     enableShellApplication_metricEditor: (typeof FeatureFlagsValues)["enableShellApplication_metricEditor"][number];
     enableShellApplication_analyticalDesigner: (typeof FeatureFlagsValues)["enableShellApplication_analyticalDesigner"][number];
     enableDashboardSidebarResize: (typeof FeatureFlagsValues)["enableDashboardSidebarResize"][number];
-    enableIpAllowlistsUi: (typeof FeatureFlagsValues)["enableIpAllowlistsUi"][number];
     enableShellApplication_ldmModeler: (typeof FeatureFlagsValues)["enableShellApplication_ldmModeler"][number];
     enableExportTimeoutFix: (typeof FeatureFlagsValues)["enableExportTimeoutFix"][number];
 };
@@ -541,7 +539,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableShellApplication_metricEditor: true,
     enableShellApplication_analyticalDesigner: false,
     enableDashboardSidebarResize: false,
-    enableIpAllowlistsUi: false,
     enableShellApplication_ldmModeler: false,
     enableExportTimeoutFix: false,
 };
@@ -721,7 +718,6 @@ export const FeatureFlagsValues = {
     enableShellApplication_metricEditor: [true, false] as const,
     enableShellApplication_analyticalDesigner: [true, false] as const,
     enableDashboardSidebarResize: [true, false] as const,
-    enableIpAllowlistsUi: [false, true] as const,
     enableShellApplication_ldmModeler: [true, false] as const,
     enableExportTimeoutFix: [true, false] as const,
 };

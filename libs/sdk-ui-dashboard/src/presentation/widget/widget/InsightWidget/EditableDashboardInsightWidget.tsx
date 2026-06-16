@@ -16,11 +16,13 @@ import { DashboardItem } from "../../../presentationComponents/DashboardItems/Da
 import { DashboardItemVisualization } from "../../../presentationComponents/DashboardItems/DashboardItemVisualization.js";
 import { getVisTypeCssClass } from "../../../presentationComponents/DashboardItems/utils.js";
 import { DashboardInsight } from "../../insight/DashboardInsight.js";
+import { InsightWidgetWarningPartialResult } from "../warningPartialResult/InsightWidgetWarningPartialResult.js";
 
 import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard.js";
 import { EditableDashboardInsightWidgetHeader } from "./EditableDashboardInsightWidgetHeader.js";
 import { type IDefaultDashboardInsightWidgetProps } from "./types.js";
 import { useEditableInsightMenu } from "./useEditableInsightMenu.js";
+import { useInsightWarning } from "./useInsightWarning.js";
 
 export function EditableDashboardInsightWidget(props: Omit<IDefaultDashboardInsightWidgetProps, "insight">) {
     return <DashboardWidgetInsightGuard {...props} Component={EditableDashboardInsightWidgetCore} />;
@@ -39,10 +41,10 @@ function EditableDashboardInsightWidgetCore({
     dashboardItemClasses,
 }: IDefaultDashboardInsightWidgetProps & { insight?: IInsight }) {
     const visType = insight ? (insightVisualizationType(insight) as VisType) : undefined;
+    const ref = widgetRef(widget);
 
-    const { isSelectable, isSelected, onSelected, closeConfigPanel, hasConfigPanelOpen } = useWidgetSelection(
-        widgetRef(widget),
-    );
+    const { isSelectable, isSelected, onSelected, closeConfigPanel, hasConfigPanelOpen } =
+        useWidgetSelection(ref);
 
     const { menuItems } = useEditableInsightMenu({ closeMenu: closeConfigPanel, insight, widget });
 
@@ -57,6 +59,8 @@ function EditableDashboardInsightWidgetCore({
     const isSaving = useDashboardSelector(selectIsDashboardSaving);
     const isEditable = !isSaving;
     const isDraggingWidget = useIsDraggingWidget();
+
+    const { limitBreaks, executionResult } = useInsightWarning(ref);
 
     return (
         <DashboardItem
@@ -97,6 +101,21 @@ function EditableDashboardInsightWidgetCore({
                             )}
                         </>
                     );
+                }}
+                renderAfterVisualization={() => {
+                    if (limitBreaks.length > 0 && executionResult) {
+                        return (
+                            <InsightWidgetWarningPartialResult
+                                className="gd-warning-partial-result"
+                                limitBreaks={limitBreaks}
+                                isEditMode
+                                executionResult={executionResult}
+                                isLoading={executionResult.isLoading}
+                            />
+                        );
+                    }
+
+                    return null;
                 }}
                 contentClassName={cx({ "is-editable": isEditable, "is-dragging-widget": isDraggingWidget })}
                 visualizationClassName={cx({ "is-editable": isEditable })}

@@ -4,13 +4,17 @@ import { differenceBy, omit } from "lodash-es";
 
 import {
     type DashboardAttributeFilterSelectionType,
+    DashboardParameterModeValues,
     type FilterContextItem,
     type IAbsoluteDateFilter,
     type IAutomationMetadataObject,
     type IAutomationVisibleFilter,
+    type IDashboardExportParameter,
+    type IDashboardParameter,
     type IFilter,
     type IFilterableWidget,
     type IInsight,
+    type IParameterMetadataObject,
     type IRelativeDateFilter,
     dashboardFilterLocalIdentifier,
     filterLocalIdentifier,
@@ -25,6 +29,7 @@ import {
     isInsightWidget,
     isLocalIdRef,
     isNegativeAttributeFilter,
+    isNumberParameterDefinition,
     isPositiveAttributeFilter,
     isRelativeDateFilter,
     isSingleSelectionFilter,
@@ -34,11 +39,17 @@ import {
     getAutomationAlertFilters,
     getAutomationDashboardFilters,
     getAutomationDashboardFiltersByTab,
+    getAutomationExportParametersByTab,
     getAutomationVisualizationFilters,
 } from "../../../../../_staging/automation/index.js";
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../../../converters/filterConverters.js";
 import { isFilterTypeCompatibleWithSelectionType } from "../../../../../model/commandHandlers/dashboard/common/attributeFilterSelectionTypeCompatibility.js";
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
+import {
+    selectCatalogParameters,
+    selectCatalogParametersIsLoaded,
+} from "../../../../../model/store/catalog/catalogSelectors.js";
+import { selectEnableParameters } from "../../../../../model/store/config/configSelectors.js";
 import {
     selectAutomationCommonDateFilterId,
     selectAutomationFiltersByTab,
@@ -50,6 +61,9 @@ import {
     selectAttributeFilterConfigsSelectionTypeMap,
     selectAttributeFilterConfigsSelectionTypeMapByTab,
 } from "../../../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { selectWidgetLocalIdToTabIdMap } from "../../../../../model/store/tabs/layout/layoutSelectors.js";
+import { selectSmartPersistedTabsParameters } from "../../../../../model/store/tabs/parameters/parametersSelectors.js";
+import { selectTabs } from "../../../../../model/store/tabs/tabsSelectors.js";
 import type { ExtendedDashboardWidget } from "../../../../../model/types/layoutTypes.js";
 import { type IDashboardFilter } from "../../../../../types.js";
 import {
@@ -125,6 +139,11 @@ export interface IAutomationValidationResult {
     visibleFilterIsMissingInSavedFilters: boolean;
     visibleFiltersAreMissing: boolean;
     incompatibleSelectionTypeIsAppliedInSavedFilters: boolean;
+    /**
+     * A stored parameter override is stale: its ref left the catalog, its tab is gone, or a
+     * `readonly`/`hidden` parameter's pinned value drifted from the current dashboard.
+     */
+    parametersAreStale?: boolean;
 }
 
 const defaultValidState: IAutomationValidationResult = {
@@ -139,6 +158,7 @@ const defaultValidState: IAutomationValidationResult = {
     visibleFilterIsMissingInSavedFilters: false,
     visibleFiltersAreMissing: false,
     incompatibleSelectionTypeIsAppliedInSavedFilters: false,
+    parametersAreStale: false,
 };
 
 export function useValidateExistingAutomationFilters({
@@ -157,7 +177,80 @@ export function useValidateExistingAutomationFilters({
     const dashboardFiltersByTab = useDashboardSelector(selectAutomationFiltersByTab);
     const selectionTypeMap = useDashboardSelector(selectAttributeFilterConfigsSelectionTypeMap);
     const selectionTypeMapByTab = useDashboardSelector(selectAttributeFilterConfigsSelectionTypeMapByTab);
+    const parametersEnabled = useDashboardSelector(selectEnableParameters);
+    const catalogParameters = useDashboardSelector(selectCatalogParameters);
+    const catalogParametersIsLoaded = useDashboardSelector(selectCatalogParametersIsLoaded);
+    const dashboardParametersByTab = useDashboardSelector(selectSmartPersistedTabsParameters);
+    const tabs = useDashboardSelector(selectTabs);
+    const widgetTabMap = useDashboardSelector(selectWidgetLocalIdToTabIdMap);
 
+    // A widget export covers exactly the widget's current tab, so its stored overrides must live under
+    // that tab; a dashboard export covers every tab. Resolved here so the validator can flag a widget
+    // whose stored override was orphaned under its previous tab after a move.
+    const widgetTabId = widget?.localIdentifier ? widgetTabMap[widget.localIdentifier] : undefined;
+
+    // Before the catalog loads, every stored ref looks removed — treat loading as not-stale.
+    const parametersAreStale =
+        parametersEnabled && catalogParametersIsLoaded
+            ? validateExistingAutomationParameters({
+                  storedParametersByTab: getAutomationExportParametersByTab(automationToEdit),
+                  catalog: catalogParameters,
+                  dashboardParametersByTab,
+                  existingTabIds: new Set((tabs ?? []).map((tab) => tab.localIdentifier)),
+                  widgetTabId,
+              })
+            : false;
+
+    const filterValidation = resolveFilterValidation({
+        automationToEdit,
+        widget,
+        insight,
+        lockedFilters,
+        hiddenFilters,
+        dashboardFilters,
+        commonDateFilterId,
+        dashboardFiltersByTab,
+        selectionTypeMap,
+        selectionTypeMapByTab,
+    });
+
+    // Parameter staleness is resolved at this single hook boundary and folded into the filter result
+    // exactly once; the pure filter validators below never deal with the parameter concept.
+    return {
+        ...filterValidation,
+        isValid: filterValidation.isValid && !parametersAreStale,
+        parametersAreStale,
+    };
+}
+
+/**
+ * Resolves the filter-only validation result (no parameter staleness) for an existing automation.
+ * Pure: it takes everything the hook already read from the store, so the early-return branching stays
+ * testable and free of React hooks.
+ */
+function resolveFilterValidation({
+    automationToEdit,
+    widget,
+    insight,
+    lockedFilters,
+    hiddenFilters,
+    dashboardFilters,
+    commonDateFilterId,
+    dashboardFiltersByTab,
+    selectionTypeMap,
+    selectionTypeMapByTab,
+}: {
+    automationToEdit?: IAutomationMetadataObject;
+    widget?: ExtendedDashboardWidget;
+    insight?: IInsight;
+    lockedFilters: FilterContextItem[];
+    hiddenFilters: FilterContextItem[];
+    dashboardFilters: FilterContextItem[];
+    commonDateFilterId?: string;
+    dashboardFiltersByTab: IAutomationFiltersPerTabData[];
+    selectionTypeMap?: Map<string, DashboardAttributeFilterSelectionType | undefined>;
+    selectionTypeMapByTab?: Record<string, Map<string, DashboardAttributeFilterSelectionType | undefined>>;
+}): IAutomationValidationResult {
     const savedAutomationVisibleFilters = automationToEdit?.metadata?.visibleFilters;
     const savedAutomationVisibleFiltersByTab = automationToEdit?.metadata?.visibleFiltersByTab;
 
@@ -243,6 +336,66 @@ export function useValidateExistingAutomationFilters({
 //
 // Validations
 //
+
+/**
+ * Flags stale stored parameter overrides for an existing automation: a ref that left the workspace
+ * catalog, a tab that no longer exists, or a `readonly`/`hidden` parameter whose pinned value
+ * drifted from the current dashboard. `active` parameters are user-owned, so their drift is allowed.
+ */
+export function validateExistingAutomationParameters({
+    storedParametersByTab,
+    catalog,
+    dashboardParametersByTab,
+    existingTabIds,
+    widgetTabId,
+}: {
+    storedParametersByTab: Record<string, IDashboardExportParameter[]> | undefined;
+    catalog: IParameterMetadataObject[];
+    dashboardParametersByTab: Record<string, IDashboardParameter[]>;
+    existingTabIds: Set<string>;
+    /**
+     * For widget schedules, the widget's current tab. A stored override under any other tab is
+     * orphaned (the widget was moved) and flagged stale. Undefined for dashboard schedules and when
+     * the tab can't be resolved, where every existing tab is accepted.
+     */
+    widgetTabId?: string;
+}): boolean {
+    if (!storedParametersByTab) {
+        return false;
+    }
+    const workspaceById = new Map(catalog.map((parameter) => [parameter.id, parameter]));
+    for (const [tabId, storedParameters] of Object.entries(storedParametersByTab)) {
+        const tabIsValid = widgetTabId === undefined ? existingTabIds.has(tabId) : tabId === widgetTabId;
+        if (!tabIsValid) {
+            return true;
+        }
+        const dashboardById = new Map(
+            (dashboardParametersByTab[tabId] ?? []).map((parameter) => [parameter.ref.identifier, parameter]),
+        );
+        for (const stored of storedParameters) {
+            const workspaceParameter = workspaceById.get(stored.id);
+            if (!workspaceParameter) {
+                return true;
+            }
+            const dashboardParameter = dashboardById.get(stored.id);
+            const mode = dashboardParameter?.mode ?? DashboardParameterModeValues.ACTIVE;
+            const isPinnedByAuthor =
+                mode === DashboardParameterModeValues.READONLY ||
+                mode === DashboardParameterModeValues.HIDDEN;
+            if (!isPinnedByAuthor) {
+                continue;
+            }
+            const workspaceDefault = isNumberParameterDefinition(workspaceParameter.definition)
+                ? workspaceParameter.definition.defaultValue
+                : undefined;
+            const currentValue = dashboardParameter?.value ?? workspaceDefault;
+            if (typeof currentValue === "number" && Number(stored.value) !== currentValue) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 /**
  * Validate existing automation filters against current dashboard filter context and optionally saved widget / insight.

@@ -6008,6 +6008,60 @@ export interface IUiAsyncTableTitleProps {
 }
 
 // @internal (undocumented)
+export interface IUiAutocompleteLoadResult<T extends IUiAutocompleteOption = IUiAutocompleteOption> {
+    hasNextPage?: boolean;
+    // (undocumented)
+    sections: IUiAutocompleteSection<T>[];
+}
+
+// @internal
+export interface IUiAutocompleteMessages {
+    // (undocumented)
+    loadMore?: string;
+    // (undocumented)
+    searchPlaceholder?: string;
+    // (undocumented)
+    stateError?: string;
+    // (undocumented)
+    stateLoading?: string;
+    // (undocumented)
+    stateNoMatch?: string;
+}
+
+// @internal
+export interface IUiAutocompleteOption {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    label: string;
+    secondaryText?: string;
+}
+
+// @internal (undocumented)
+export interface IUiAutocompleteProps<T extends IUiAutocompleteOption = IUiAutocompleteOption> {
+    accessibilityConfig?: IAccessibilityConfigBase;
+    // (undocumented)
+    dataTestId?: string;
+    debounceMs?: number;
+    loadOptions: (search: string, page: number) => Promise<IUiAutocompleteLoadResult<T>>;
+    // (undocumented)
+    messages?: IUiAutocompleteMessages;
+    // (undocumented)
+    onSelect: (option: T) => void;
+    selectedIds?: ReadonlyArray<string>;
+}
+
+// @internal (undocumented)
+export interface IUiAutocompleteSection<T extends IUiAutocompleteOption = IUiAutocompleteOption> {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    label: string;
+    // (undocumented)
+    options: T[];
+}
+
+// @internal (undocumented)
 export interface IUiAutofocusOptions {
     // (undocumented)
     active?: boolean;
@@ -6211,7 +6265,7 @@ export interface IUiChipProps {
 
 // @internal (undocumented)
 export interface IUiComboboxInputProps {
-    "aria-label"?: string;
+    accessibilityConfig?: IAccessibilityConfigBase;
     // (undocumented)
     autoFocus?: boolean;
     // (undocumented)
@@ -8856,6 +8910,9 @@ export function UiAsyncTableTitle(input: IUiAsyncTableTitleProps): JSX.Element;
 
 // @internal
 export type UiAsyncTableVariant = "regular" | "small";
+
+// @internal
+export function UiAutocomplete<T extends IUiAutocompleteOption = IUiAutocompleteOption>(input: IUiAutocompleteProps<T>): JSX.Element;
 
 // @internal
 export function UiAutofocus(input: {

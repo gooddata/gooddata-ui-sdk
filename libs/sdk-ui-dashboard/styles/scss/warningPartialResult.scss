@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-.overlay.gd-dialog.gd-warning-partial-result {
+.overlay.gd-dialog.gd-warning-partial-result:not(.gd-dropdown) {
     position: absolute;
     z-index: 2;
     bottom: 10px;
