@@ -622,11 +622,6 @@ export interface IFeatureFlags {
     enableSmtp?: boolean;
 
     /**
-     * Enables IP allowlists management in organization settings.
-     */
-    enableIpAllowlistsUi?: boolean;
-
-    /**
      * Enables storing widget identifiers.
      */
     enableWidgetIdentifiersRollout?: boolean;

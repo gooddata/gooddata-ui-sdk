@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { version as moduleReactVersion } from "react";
+
 import { type Root, createRoot } from "react-dom/client";
 
 import {
@@ -9,7 +11,9 @@ import {
     type IPluggableAppTelemetryCallbacks,
     type IPluggableApplicationMountHandle,
     type IPluggableApplicationMountOptions,
+    LIB_VERSION as moduleSdkVersion,
 } from "@gooddata/sdk-pluggable-application-model";
+import { PluggableAppTelemetryProvider } from "@gooddata/sdk-ui-pluggable-application";
 
 import { App } from "./App.js";
 import { AppProviders } from "./AppProviders.js";
@@ -23,7 +27,13 @@ function renderApp(
 ) {
     root.render(
         <AppProviders ctx={ctx}>
-            <App onEvent={onEvent} onTelemetryEvent={onTelemetryEvent} />
+            <PluggableAppTelemetryProvider
+                onTelemetryEvent={onTelemetryEvent}
+                moduleReactVersion={moduleReactVersion}
+                moduleSdkVersion={moduleSdkVersion}
+            >
+                <App onEvent={onEvent} />
+            </PluggableAppTelemetryProvider>
         </AppProviders>,
     );
 }

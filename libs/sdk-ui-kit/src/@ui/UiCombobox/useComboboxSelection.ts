@@ -13,7 +13,6 @@ export interface IUseComboboxSelectionParams {
     onValueChange?: (value: string) => void;
     creatable?: boolean;
     setIsOpen: (open: boolean) => void;
-    setActiveIndex: (index: number | null) => void;
 }
 
 /**
@@ -26,7 +25,6 @@ export function useComboboxSelection({
     onValueChange,
     creatable = false,
     setIsOpen,
-    setActiveIndex,
 }: IUseComboboxSelectionParams) {
     const [inputValue, setInputValue] = useControlledValue({ value, defaultValue, onValueChange });
 
@@ -34,9 +32,8 @@ export function useComboboxSelection({
 
     const resetState = useCallback(() => {
         setInputValue(defaultValue);
-        setActiveIndex(null);
         setSelectedOption(undefined);
-    }, [defaultValue, setInputValue, setActiveIndex]);
+    }, [defaultValue, setInputValue]);
 
     const availableOptions = useMemo(() => {
         const value = normalizeValue(inputValue);
@@ -63,21 +60,18 @@ export function useComboboxSelection({
     }, [options, inputValue, selectedOption, creatable]);
 
     const selectOption = useCallback(
-        (option: IUiComboboxOption, index?: number) => {
-            // Hover sets activeIndex without checking `disabled`, so without
+        (option: IUiComboboxOption) => {
+            // Hover sets the highlight without checking `disabled`, so without
             // this guard a disabled row could be Enter-confirmed even though
             // clicking it is blocked in the list item.
             if (option.disabled) {
                 return;
             }
-            if (index !== undefined) {
-                setActiveIndex(index);
-            }
             setSelectedOption(option);
             setIsOpen(false);
             setInputValue(option.label);
         },
-        [setActiveIndex, setIsOpen, setInputValue],
+        [setIsOpen, setInputValue],
     );
 
     const onInputChange = useCallback(

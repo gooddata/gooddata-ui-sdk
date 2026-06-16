@@ -25,3 +25,10 @@ export {
     PluggableAppEventsProvider,
     usePluggableAppEvents,
 } from "./events.js";
+export {
+    type IModuleTelemetryMetadata,
+    type IPluggableAppTelemetryProviderProps,
+    enrichTelemetryCallbacks,
+    PluggableAppTelemetryProvider,
+    usePluggableAppTelemetry,
+} from "./telemetry.js";

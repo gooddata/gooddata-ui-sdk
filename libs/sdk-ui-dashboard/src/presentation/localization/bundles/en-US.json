@@ -831,9 +831,25 @@
         "text": "{title} is {value}",
         "crowdinContext": "Automation parameter chip label showing a parameter title and its value, e.g. 'Top N is 5'"
     },
+    "automationParameters.announcement.added": {
+        "text": "Parameter {title} added.",
+        "crowdinContext": "Screen reader announcement when a parameter is added to an automation"
+    },
+    "automationParameters.announcement.removed": {
+        "text": "Parameter {title} removed.",
+        "crowdinContext": "Screen reader announcement when a parameter is removed from an automation"
+    },
+    "automationParameters.announcement.changed": {
+        "text": "Parameter {title} changed to {value}.",
+        "crowdinContext": "Screen reader announcement when a parameter value is changed in an automation"
+    },
     "dialogs.automation.filters.useFiltersMessage.tooltip": {
         "text": "Check to keep these filters for every export. If unchecked, the export will use the latest default filters from the dashboard.",
         "crowdinContext": "Tooltip explaining filter persistence options for scheduled exports"
+    },
+    "dialogs.automation.filters.useFiltersMessage.parameters.tooltip": {
+        "text": "Check to keep these filter and parameter values for every export. If unchecked, exports use the dashboard's latest defaults.",
+        "crowdinContext": "Tooltip explaining filter and parameter persistence options for scheduled exports when parameters are enabled"
     },
     "dialogs.automation.filters.activeFilters": {
         "text": "Note: These filters will always be used for future exports.",

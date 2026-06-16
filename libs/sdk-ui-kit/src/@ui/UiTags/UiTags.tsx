@@ -308,7 +308,7 @@ export function UiTags({
                                             interactionState.current.input = node;
                                         }}
                                         name="add-input"
-                                        aria-label={nameLabel}
+                                        accessibilityConfig={{ ariaLabel: nameLabel }}
                                         onKeyDown={(event) => {
                                             if (event.isDefaultPrevented()) {
                                                 return;

@@ -7,6 +7,7 @@ import { defineMessage, useIntl } from "react-intl";
 
 import {
     type DashboardAttachmentType,
+    type FilterContextItem,
     type IAutomationMetadataObject,
     type IAutomationMetadataObjectDefinition,
     type WidgetAttachmentType,
@@ -58,6 +59,7 @@ import { IntlWrapper } from "../../../localization/IntlWrapper.js";
 import { ApplyCurrentFiltersConfirmDialog } from "../../shared/automationFilters/components/ApplyLatestFiltersConfirmDialog.js";
 import { AutomationFiltersSelect } from "../../shared/automationFilters/components/AutomationFiltersSelect.js";
 import { useValidateExistingAutomationFilters } from "../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
+import { useAutomationExportParameters } from "../../shared/automationFilters/useAutomationExportParameters.js";
 import { useAutomationFiltersSelect } from "../../shared/automationFilters/useAutomationFiltersSelect.js";
 import { DeleteScheduleConfirmDialog } from "../DefaultScheduledEmailManagementDialog/components/DeleteScheduleConfirmDialog.js";
 import { useScheduleEmailDialogAccessibility } from "../hooks/useScheduleEmailDialogAccessibility.js";
@@ -237,6 +239,7 @@ export function ScheduledMailDialogRenderer({
         onApplyCurrentFilters,
         onStoreFiltersChange,
         onFiltersByTabChange,
+        setParametersWire,
         enableAutomationEvaluationMode,
     } = useEditScheduledEmail({
         notificationChannels,
@@ -259,6 +262,40 @@ export function ScheduledMailDialogRenderer({
         setEditedAutomationFiltersByTab,
         availableFiltersAsVisibleFiltersByTab,
     });
+
+    const {
+        parametersEnabled,
+        visibleParametersByTab,
+        availableParametersByTab,
+        flatTabId,
+        onParameterAdd,
+        onParameterChange,
+        onParameterDelete,
+        onParameterAddByTab,
+        onParameterChangeByTab,
+        onParameterDeleteByTab,
+        applyLatest: applyLatestParameters,
+        onStoreParametersChange,
+    } = useAutomationExportParameters({
+        automationToEdit: scheduledExportToEdit,
+        widget,
+        storeParameters: storeFilters,
+        setParametersWire,
+    });
+
+    // The store-filters checkbox gates parameter persistence too; the new value is passed to both
+    // sides because the `storeFilters` prop still holds the old one at call time.
+    const handleStoreFiltersChange = useCallback(
+        (
+            value: boolean,
+            filters?: FilterContextItem[],
+            filtersByTabParam?: Record<string, FilterContextItem[]>,
+        ) => {
+            onStoreFiltersChange(value, filters, filtersByTabParam);
+            onStoreParametersChange(value);
+        },
+        [onStoreFiltersChange, onStoreParametersChange],
+    );
 
     const { isValid } = useValidateExistingAutomationFilters({
         automationToEdit: scheduledExportToEdit!,
@@ -380,6 +417,7 @@ export function ScheduledMailDialogRenderer({
                 onCancel={() => onCancel?.()}
                 onEdit={() => {
                     onApplyCurrentFilters();
+                    applyLatestParameters();
                     setIsApplyCurrentFiltersDialogOpen(false);
                 }}
             />
@@ -508,7 +546,7 @@ export function ScheduledMailDialogRenderer({
                                             selectedFilters={editedAutomationFilters}
                                             onFiltersChange={onFiltersChange}
                                             storeFilters={storeFilters}
-                                            onStoreFiltersChange={onStoreFiltersChange}
+                                            onStoreFiltersChange={handleStoreFiltersChange}
                                             isDashboardAutomation={!widget}
                                             overlayPositionType={OVERLAY_POSITION_TYPE}
                                             hideTitle
@@ -516,6 +554,21 @@ export function ScheduledMailDialogRenderer({
                                             filtersByTab={filtersByTab}
                                             editedFiltersByTab={editedAutomationFiltersByTab}
                                             onFiltersByTabChange={onFiltersByTabChange}
+                                            parameters={
+                                                flatTabId ? visibleParametersByTab[flatTabId] : undefined
+                                            }
+                                            availableParameters={
+                                                flatTabId ? availableParametersByTab[flatTabId] : undefined
+                                            }
+                                            onParameterChange={onParameterChange}
+                                            onParameterDelete={onParameterDelete}
+                                            onParameterAdd={onParameterAdd}
+                                            parametersByTab={visibleParametersByTab}
+                                            availableParametersByTab={availableParametersByTab}
+                                            onParameterChangeByTab={onParameterChangeByTab}
+                                            onParameterDeleteByTab={onParameterDeleteByTab}
+                                            onParameterAddByTab={onParameterAddByTab}
+                                            parametersEnabled={parametersEnabled}
                                         />
                                     </div>
                                 ) : (

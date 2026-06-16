@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-pluggable-application",
-    "version": "11.42.0-alpha.2",
+    "version": "11.42.0-alpha.3",
     "description": "GoodData SDK React helpers for pluggable applications",
     "license": "MIT",
     "author": "GoodData Corporation",
@@ -22,7 +22,7 @@
     "exports": "./esm/index.js",
     "scripts": {
         "_phase:build": "npm run build",
-        "_phase:test": "echo \"No tests for @gooddata/sdk-ui-pluggable-application\"",
+        "_phase:test": "npm run test-once",
         "_phase:validate": "npm run validate",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "build": "npm-run-all -p build-check build-ts && npm run api-extractor",

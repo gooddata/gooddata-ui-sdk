@@ -408,6 +408,7 @@ export const useAutomationFilters = ({
         filterAnnouncement,
         filterGroupRef,
         makeFilterGroupUnfocusable,
+        focusAddFilterButton,
         handleChangeFilter,
         handleDeleteFilter,
         handleAddFilter,

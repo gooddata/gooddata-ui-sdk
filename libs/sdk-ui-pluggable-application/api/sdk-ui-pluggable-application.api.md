@@ -9,6 +9,7 @@ import { IAuthCredentials } from '@gooddata/sdk-pluggable-application-model';
 import { ILocale } from '@gooddata/sdk-model';
 import { IPlatformContext } from '@gooddata/sdk-pluggable-application-model';
 import { IPluggableAppEvent } from '@gooddata/sdk-pluggable-application-model';
+import { IPluggableAppTelemetryCallbacks } from '@gooddata/sdk-pluggable-application-model';
 import { ITranslations } from '@gooddata/sdk-ui';
 import { JSX } from 'react/jsx-runtime';
 import { PropsWithChildren } from 'react';
@@ -18,6 +19,9 @@ export function AppProviders(input: PropsWithChildren<IAppProvidersProps>): JSX.
 
 // @alpha
 export function createBackendForModule(auth: IAuthCredentials, options: ICreateBackendForModuleOptions): IAnalyticalBackend;
+
+// @alpha
+export function enrichTelemetryCallbacks(callbacks: IPluggableAppTelemetryCallbacks | undefined, metadata: IModuleTelemetryMetadata): IPluggableAppTelemetryCallbacks | undefined;
 
 // @alpha
 export interface IAppProvidersProps {
@@ -40,6 +44,12 @@ export interface ICreateBackendForModuleOptions {
 }
 
 // @alpha
+export interface IModuleTelemetryMetadata {
+    moduleReactVersion?: string;
+    moduleSdkVersion?: string;
+}
+
+// @alpha
 export interface IPlatformContextProviderProps extends PropsWithChildren {
     value: IClientPlatformContext;
 }
@@ -57,10 +67,18 @@ export interface IPluggableAppEventsProviderProps extends PropsWithChildren {
 }
 
 // @alpha
+export interface IPluggableAppTelemetryProviderProps extends PropsWithChildren, IModuleTelemetryMetadata {
+    onTelemetryEvent?: IPluggableAppTelemetryCallbacks;
+}
+
+// @alpha
 export function PlatformContextProvider(input: IPlatformContextProviderProps): JSX.Element;
 
 // @alpha
 export function PluggableAppEventsProvider(input: IPluggableAppEventsProviderProps): JSX.Element;
+
+// @alpha
+export function PluggableAppTelemetryProvider(input: IPluggableAppTelemetryProviderProps): JSX.Element;
 
 // @alpha
 export function usePlatformContext(): IClientPlatformContext | undefined;
@@ -70,5 +88,8 @@ export function usePlatformContextStrict(context?: string): IClientPlatformConte
 
 // @alpha
 export function usePluggableAppEvents(): IPluggableAppEventsContextValue;
+
+// @alpha
+export function usePluggableAppTelemetry(): IPluggableAppTelemetryCallbacks;
 
 ```

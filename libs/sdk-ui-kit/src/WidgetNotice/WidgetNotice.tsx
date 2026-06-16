@@ -89,6 +89,7 @@ export function WidgetNotice({
                             <button
                                 type="button"
                                 className={e("toggle")}
+                                data-testid="widget-notice-toggle"
                                 aria-expanded={isExpanded}
                                 aria-controls={isExpanded ? detailId : undefined}
                                 onClick={() => setIsExpanded((wasExpanded) => !wasExpanded)}

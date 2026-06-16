@@ -14,11 +14,12 @@ import { type IExecutionResultEnvelope } from "../../../../model/store/execution
 interface IInsightWidgetWarningPartialResultProps {
     className: string;
     limitBreaks: IExecutionResultLimitBreak[];
-    isExporting: boolean;
-    isExportRawVisible: boolean;
     executionResult: IExecutionResultEnvelope;
+    isExporting?: boolean;
+    isExportRawVisible?: boolean;
     isLoading?: boolean;
-    onExportRawCSV: () => void;
+    isEditMode?: boolean;
+    onExportRawCSV?: () => void;
 }
 
 export function InsightWidgetWarningPartialResult({
@@ -28,6 +29,7 @@ export function InsightWidgetWarningPartialResult({
     isExporting,
     isExportRawVisible,
     executionResult,
+    isEditMode = false,
     onExportRawCSV,
 }: IInsightWidgetWarningPartialResultProps) {
     const intl = useIntl();
@@ -45,7 +47,7 @@ export function InsightWidgetWarningPartialResult({
 
     const exportFullResult = (event: MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();
-        onExportRawCSV();
+        onExportRawCSV?.();
     };
 
     return (
@@ -63,7 +65,7 @@ export function InsightWidgetWarningPartialResult({
                         message={<FormattedMessage id="partial_data_warning.title" />}
                         detail={<FormattedMessage {...detailMessage} />}
                         detailAction={
-                            isExportRawVisible ? (
+                            isExportRawVisible && !isEditMode ? (
                                 <UiLink
                                     isDisabled={isExporting}
                                     variant="primary"

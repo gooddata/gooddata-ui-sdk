@@ -7,6 +7,7 @@ import {
     type IAutomationMetadataObject,
     type IAutomationMetadataObjectDefinition,
     type IAutomationRecipient,
+    type IDashboardExportParameter,
     type IExportDefinitionDashboardRequestPayload,
     type IExportDefinitionMetadataObject,
     type IExportDefinitionMetadataObjectDefinition,
@@ -121,6 +122,66 @@ export const getAutomationDashboardFiltersByTab = (
         })?.requestPayload as IExportDefinitionDashboardRequestPayload
     )?.content.filtersByTab;
 };
+
+/**
+ * Extracts the per-tab parameter overrides from automation metadata. All export definitions carry
+ * the same `content.parametersByTab`, so the first dashboard or visualization-object definition
+ * that has them wins.
+ */
+export const getAutomationExportParametersByTab = (
+    automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | undefined,
+): Record<string, IDashboardExportParameter[]> | undefined => {
+    return automation?.exportDefinitions
+        ?.map((exportDefinition) => exportDefinition.requestPayload)
+        .find(
+            (requestPayload) =>
+                (isExportDefinitionDashboardRequestPayload(requestPayload) ||
+                    isExportDefinitionVisualizationObjectRequestPayload(requestPayload)) &&
+                !!requestPayload.content.parametersByTab,
+        )?.content.parametersByTab;
+};
+
+/**
+ * Returns a copy of the automation with `content.parametersByTab` replaced on every dashboard and
+ * visualization-object export definition. Passing `undefined` clears the field (the store-filters
+ * off path). No-op when the automation carries no export definitions. Write-side counterpart of
+ * {@link getAutomationExportParametersByTab}.
+ */
+export function setExportParametersByTab(
+    automation: IAutomationMetadataObjectDefinition,
+    parametersByTab: Record<string, IDashboardExportParameter[]> | undefined,
+): IAutomationMetadataObjectDefinition {
+    if (!automation.exportDefinitions?.length) {
+        return automation;
+    }
+    return {
+        ...automation,
+        exportDefinitions: automation.exportDefinitions.map((exportDefinition) => {
+            const { requestPayload } = exportDefinition;
+            // Both branches are identical on purpose: narrowing to one variant keeps `content`'s exact type.
+            // Spreading the raw union widens `dashboard` to `string | undefined`, matching neither.
+            if (isExportDefinitionDashboardRequestPayload(requestPayload)) {
+                return {
+                    ...exportDefinition,
+                    requestPayload: {
+                        ...requestPayload,
+                        content: { ...requestPayload.content, parametersByTab },
+                    },
+                };
+            }
+            if (isExportDefinitionVisualizationObjectRequestPayload(requestPayload)) {
+                return {
+                    ...exportDefinition,
+                    requestPayload: {
+                        ...requestPayload,
+                        content: { ...requestPayload.content, parametersByTab },
+                    },
+                };
+            }
+            return exportDefinition;
+        }),
+    };
+}
 
 export const getAutomationVisualizationFilters = (
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | undefined,

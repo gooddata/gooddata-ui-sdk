@@ -25,6 +25,7 @@ export interface IAutomationParameterProps {
     onChange?: (ref: IdentifierRef, value: number) => void;
     onDelete?: (ref: IdentifierRef) => void;
     overlayPositionType?: OverlayPositionType;
+    isReadOnly?: boolean;
 }
 
 /**
@@ -37,6 +38,7 @@ export function AutomationParameter({
     onChange,
     onDelete,
     overlayPositionType,
+    isReadOnly,
 }: IAutomationParameterProps): ReactNode {
     const intl = useIntl();
     const { ref, title, value, mode, constraints } = parameter;
@@ -45,6 +47,21 @@ export function AutomationParameter({
     const lockedTooltip = intl.formatMessage({ id: "dialogs.automation.filters.lockedTooltip" });
     const deleteAriaLabel = intl.formatMessage({ id: "dialogs.automation.filters.deleteAriaLabel" });
     const tooltipId = useIdPrefixed("automation-parameter-tooltip");
+
+    if (isReadOnly) {
+        // `isDisabled` renders a real disabled button — unfocusable, so keyboard users can't edit or
+        // delete. No lock icon/tooltip: unlike author-`READONLY` this chip is only frozen because
+        // persistence is off, so it must not read as author-locked.
+        return (
+            <UiChip
+                label={label}
+                iconBefore="parameter"
+                isDisabled
+                isExpandable={false}
+                dataTestId={testId}
+            />
+        );
+    }
 
     if (mode === DashboardParameterModeValues.READONLY) {
         return (

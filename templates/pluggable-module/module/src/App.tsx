@@ -2,21 +2,18 @@
 
 import { FormattedMessage } from "react-intl";
 
-import {
-    type IPluggableAppEvent,
-    type IPluggableAppTelemetryCallbacks,
-} from "@gooddata/sdk-pluggable-application-model";
+import { type IPluggableAppEvent } from "@gooddata/sdk-pluggable-application-model";
 import { useWorkspace } from "@gooddata/sdk-ui";
-import { usePlatformContextStrict } from "@gooddata/sdk-ui-pluggable-application";
+import { usePlatformContextStrict, usePluggableAppTelemetry } from "@gooddata/sdk-ui-pluggable-application";
 
 interface IAppProps {
     onEvent?: (e: IPluggableAppEvent) => void;
-    onTelemetryEvent?: IPluggableAppTelemetryCallbacks;
 }
 
-export function App({ onEvent: _onEvent, onTelemetryEvent: _onTelemetryEvent }: IAppProps) {
+export function App({ onEvent: _onEvent }: IAppProps) {
     const ctx = usePlatformContextStrict();
     const workspaceId = useWorkspace();
+    const { trackEvent: _trackEvent } = usePluggableAppTelemetry();
 
     return (
         <div style={{ display: "flex", flexDirection: "column", padding: "4rem" }}>
