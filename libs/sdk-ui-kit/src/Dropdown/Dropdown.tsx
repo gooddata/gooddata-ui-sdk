@@ -22,7 +22,7 @@ import { type IButtonAccessibilityConfig } from "../Button/typings.js";
 import { FullScreenOverlay } from "../Overlay/FullScreenOverlay.js";
 import { Overlay } from "../Overlay/Overlay.js";
 import { useMediaQuery } from "../responsive/useMediaQuery.js";
-import { type OverlayPositionType } from "../typings/overlay.js";
+import { type Alignment, type OverlayPositionType } from "../typings/overlay.js";
 import { type IAlignPoint } from "../typings/positioning.js";
 import { useId } from "../utils/useId.js";
 
@@ -137,6 +137,9 @@ export interface IDropdownProps {
 
     onOpenStateChanged?: (isOpen: boolean) => void;
 
+    /** Reports the align point the Overlay chose whenever it (re)positions the body. */
+    onAlign?: (alignment: Alignment) => void;
+
     overlayPositionType?: OverlayPositionType;
     overlayZIndex?: number;
 
@@ -190,6 +193,7 @@ export function Dropdown({
     renderButton,
 
     onOpenStateChanged,
+    onAlign,
 
     fullscreenOnMobile = true,
     enableEventPropagation = false,
@@ -351,6 +355,7 @@ export function Dropdown({
                 closeOnEscape={closeOnEscape}
                 shouldCloseOnClick={shouldCloseOnClick}
                 ignoreClicksOnByClass={ignoreClicksOnByClass}
+                onAlign={onAlign}
                 onClose={closeDropdown}
                 // Overlay prevents event propagation by default using defaultProps for these
                 onClick={enableEventPropagation ? () => {} : undefined}

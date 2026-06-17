@@ -176,4 +176,58 @@ describe("genAIConvertor", () => {
             });
         });
     });
+
+    describe("convertChatConversationItemFromBackend toolResult parsing", () => {
+        it("should parse tool result when it contains valid JSON string", () => {
+            const item: AiConversationItemResponse = {
+                conversationId: "conv-1",
+                itemIndex: 0,
+                itemId: "item-id",
+                role: "tool",
+                responseId: "resp-1",
+                createdAt: "2024-01-01T00:00:00Z",
+                content: {
+                    type: "toolResult",
+                    callId: "call-1",
+                    result: '{"foo":"bar","count":2}',
+                },
+            };
+
+            const converted = convertChatConversationItemFromBackend(item, [], dateNormalizer);
+
+            expect(converted.content).toEqual({
+                type: "toolResult",
+                callId: "call-1",
+                result: {
+                    foo: "bar",
+                    count: 2,
+                },
+            });
+        });
+
+        it("should keep tool result as string when JSON parsing fails", () => {
+            const invalidJson = "{not-valid-json}";
+            const item: AiConversationItemResponse = {
+                conversationId: "conv-1",
+                itemIndex: 1,
+                itemId: "item-id-2",
+                role: "tool",
+                responseId: "resp-2",
+                createdAt: "2024-01-01T00:00:00Z",
+                content: {
+                    type: "toolResult",
+                    callId: "call-2",
+                    result: invalidJson,
+                },
+            };
+
+            const converted = convertChatConversationItemFromBackend(item, [], dateNormalizer);
+
+            expect(converted.content).toEqual({
+                type: "toolResult",
+                callId: "call-2",
+                result: invalidJson,
+            });
+        });
+    });
 });

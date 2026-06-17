@@ -59,6 +59,7 @@ const supportedChartConfigProperties = new Set<keyof IChartConfig>([
     "inlineVisualizations",
     "hyperLinks",
     "thresholdMeasures",
+    "customTooltip",
 ]);
 
 export function chartConfigFromInsight(

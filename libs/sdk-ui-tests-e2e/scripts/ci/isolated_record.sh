@@ -20,30 +20,6 @@ export FILTER=${FILTER:-}
 export PLAYWRIGHT_GREP="${PLAYWRIGHT_GREP:-@pre-merge-isolated}"
 echo "Filtering by tag: $PLAYWRIGHT_GREP"
 
-if [ -n "$TEST_WORKSPACE_ID" ] && [ -n "$TEST_CHILD_WORKSPACE_ID" ]; then
-    echo "⭐️ Using pre-created workspaces TEST_WORKSPACE_ID=$TEST_WORKSPACE_ID TEST_CHILD_WORKSPACE_ID=$TEST_CHILD_WORKSPACE_ID"
-elif [ -n "$IMAGE_URL" ]; then
-    echo "⭐️ Create reference workspace (pre-built mode)"
-    pushd $REF_WS_DIR
-    eval "$(reference-workspace-cli create \
-        --prefix E2E_SDK_cypress_test \
-        --host "$HOST" \
-        --token "$TIGER_API_TOKEN" \
-        --datasource "$TIGER_DATASOURCES_NAME" \
-        --fixture-type "$FIXTURE_TYPE" \
-        --metadata-extension-local "fixtures/$FIXTURE_TYPE/tiger_metadata_extension.json")"
-    echo "TEST_WORKSPACE_ID=$TEST_WORKSPACE_ID"
-    echo "TEST_CHILD_WORKSPACE_ID=$TEST_CHILD_WORKSPACE_ID"
-    export TEST_WORKSPACE_ID TEST_CHILD_WORKSPACE_ID
-    popd
-else
-    echo "⭐️ Create reference workspace"
-    (cd $REF_WS_DIR && npm run create-ref-workspace)
-    # Read workspace IDs created by create-ref-workspace
-    export TEST_WORKSPACE_ID=$(grep "^TEST_WORKSPACE_ID=" $REF_WS_DIR/.env | cut -d= -f2)
-    export TEST_CHILD_WORKSPACE_ID=$(grep "^TEST_CHILD_WORKSPACE_ID=" $REF_WS_DIR/.env | cut -d= -f2)
-fi
-
 # Write .env for the e2e tests
 cat > $E2E_TEST_DIR/.env <<-EOF
 HOST=${HOST}

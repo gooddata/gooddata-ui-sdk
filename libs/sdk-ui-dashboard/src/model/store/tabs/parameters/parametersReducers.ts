@@ -4,7 +4,7 @@ import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/tool
 
 import { type IDashboardParameter, type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
-import { type ITabsState, getActiveTab } from "../tabsState.js";
+import { type ITabsState, getActiveTab, getTabOrActive } from "../tabsState.js";
 
 import { parametersInitialState } from "./parametersState.js";
 
@@ -59,6 +59,10 @@ const setParameterRuntimeValue: ParametersReducer<PayloadAction<ISetParameterRun
  */
 export interface ISetParameterRuntimeValuesPayload {
     values: ISetParameterRuntimeValuePayload[];
+    /**
+     * Target tab. When omitted, the active tab is used.
+     */
+    tabLocalIdentifier?: string;
 }
 
 const setParameterRuntimeValues: ParametersReducer<PayloadAction<ISetParameterRuntimeValuesPayload>> = (
@@ -66,7 +70,7 @@ const setParameterRuntimeValues: ParametersReducer<PayloadAction<ISetParameterRu
     action,
 ) => {
     for (const entry of action.payload.values) {
-        setRuntimeOverride(state, entry);
+        setRuntimeOverride(state, entry, action.payload.tabLocalIdentifier);
     }
 };
 
@@ -89,12 +93,16 @@ const removeParameter: ParametersReducer<PayloadAction<IRemoveParameterPayload>>
     };
 };
 
-function setRuntimeOverride(state: ITabsState, { ref, value }: ISetParameterRuntimeValuePayload): void {
-    const activeTab = getActiveTab(state);
-    if (!activeTab?.parameters) {
+function setRuntimeOverride(
+    state: ITabsState,
+    { ref, value }: ISetParameterRuntimeValuePayload,
+    tabLocalIdentifier?: string,
+): void {
+    const tab = getTabOrActive(state, tabLocalIdentifier);
+    if (!tab?.parameters) {
         return;
     }
-    const entry = activeTab.parameters.parameters.find((item) => areObjRefsEqual(item.parameter.ref, ref));
+    const entry = tab.parameters.parameters.find((item) => areObjRefsEqual(item.parameter.ref, ref));
     if (entry && entry.runtimeOverride !== value) {
         entry.runtimeOverride = value;
     }

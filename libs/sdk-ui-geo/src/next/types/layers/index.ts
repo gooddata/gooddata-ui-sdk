@@ -8,7 +8,7 @@ import {
     type ISortItem,
     type GeoLayerType as ModelGeoLayerType,
 } from "@gooddata/sdk-model";
-import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
+import { type IColorMapping, type ICustomTooltipConfig } from "@gooddata/sdk-ui-vis-commons";
 
 /**
  * Layer types supported by GeoChart.
@@ -41,6 +41,17 @@ export interface IGeoLayerConfig {
      * Optional custom color mappings override for this layer.
      */
     colorMapping?: IColorMapping[];
+
+    /**
+     * Optional custom tooltip configuration for this layer.
+     *
+     * @remarks
+     * Each layer renders its own custom tooltip. When omitted, the layer has no
+     * custom tooltip section (it does not inherit another layer's configuration).
+     *
+     * @alpha
+     */
+    customTooltip?: ICustomTooltipConfig;
 }
 
 /**

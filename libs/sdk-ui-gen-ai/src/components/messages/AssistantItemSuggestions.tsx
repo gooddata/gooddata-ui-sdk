@@ -8,6 +8,7 @@ import {
     type IChatConversationErrorContent,
     type IChatConversationLocalContent,
     type IChatConversationSystemContent,
+    type TextContentObject,
     makeUserItem,
 } from "../../model.js";
 import {
@@ -17,13 +18,21 @@ import {
 import { agentsAvailableSelector } from "../../store/messages/messagesSelectors.js";
 import { newMessageAction } from "../../store/messages/messagesSlice.js";
 
+import { MarkdownComponent } from "./contents/Markdown.js";
+
 export interface IAssistantItemSuggestionsProps {
     showSuggestions?: boolean;
+    references?: TextContentObject[];
     content: IChatConversationLocalContent | IChatConversationErrorContent | IChatConversationSystemContent;
     type: "followUp" | "actions";
 }
 
-export function AssistantItemSuggestions({ type, content, showSuggestions }: IAssistantItemSuggestionsProps) {
+export function AssistantItemSuggestions({
+    type,
+    content,
+    showSuggestions,
+    references,
+}: IAssistantItemSuggestionsProps) {
     const dispatch = useDispatch();
     const settings = useSelector(settingsSelector);
     const agentSwitchingActive = useSelector(agentSwitchingActiveSelector);
@@ -66,7 +75,9 @@ export function AssistantItemSuggestions({ type, content, showSuggestions }: IAs
             ) : null}
             {suggestions.followUpQuestion && type === "followUp" ? (
                 <div className="gd-gen-ai-chat__conversation__visualization__followUp">
-                    {suggestions.followUpQuestion}
+                    <MarkdownComponent allowMarkdown references={references ?? []}>
+                        {suggestions.followUpQuestion}
+                    </MarkdownComponent>
                 </div>
             ) : null}
         </>

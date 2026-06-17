@@ -56,6 +56,7 @@ function createMapFacadeStub(): IMapFacade {
         getZoom: vi.fn(() => 1),
         getStyle: vi.fn(() => style),
         getCanvas: vi.fn(() => document.createElement("canvas")),
+        project: vi.fn(() => ({ x: 0, y: 0 })),
         loaded: vi.fn(() => true),
         areTilesLoaded: vi.fn(() => true),
         queryRenderedFeatures: vi.fn(() => []),
@@ -75,9 +76,11 @@ function createPopupFacadeStub(): IPopupFacade {
         setLngLat: () => popup,
         setHTML: () => popup,
         setMaxWidth: () => popup,
+        setAnchor: () => popup,
         addTo: () => popup,
         remove: vi.fn(),
         isOpen: () => true,
+        getElement: () => undefined,
     };
     return popup;
 }

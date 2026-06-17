@@ -1,11 +1,11 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type FC, type ReactNode } from "react";
+import { type FC } from "react";
 
 import { defineMessage, useIntl } from "react-intl";
 import { connect } from "react-redux";
 
-import { Button, UiTooltip } from "@gooddata/sdk-ui-kit";
+import { type IUiButtonProps, UiButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import {
     makeAssistantItem,
@@ -37,7 +37,7 @@ const disabledTooltip = defineMessage({ id: "gd.gen-ai.agent.unavailable.disable
 export interface ILandingQuestionProps {
     question: string;
     answer: string;
-    icon?: ReactNode;
+    icon?: IUiButtonProps["iconBefore"];
     title?: string;
 }
 
@@ -57,8 +57,8 @@ function LandingQuestionComponent({
     const isDisabled = agentSwitchingActive && agentsAvailable !== true;
 
     const button = (
-        <Button
-            disabled={isDisabled}
+        <UiButton
+            isDisabled={isDisabled}
             onClick={() => {
                 if (isDisabled) {
                     return;
@@ -76,14 +76,10 @@ function LandingQuestionComponent({
                 });
             }}
             variant="secondary"
-        >
-            {icon ? (
-                <span role="presentation" className="gd-gen-ai-chat__messages__empty__icon">
-                    {icon}
-                </span>
-            ) : null}
-            <span className="gd-gen-ai-chat__messages__empty__text">{title}</span>
-        </Button>
+            size="medium"
+            iconBefore={icon}
+            label={title}
+        />
     );
 
     if (!isDisabled) {

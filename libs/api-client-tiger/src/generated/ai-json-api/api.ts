@@ -78,6 +78,86 @@ export interface AiAgentListResponse {
     'agents': Array<AiAgentListItemResponse>;
 }
 
+export interface AiAlertProposal {
+    [key: string]: any;
+
+    /**
+     * Alert title.
+     */
+    'title': string;
+    /**
+     * Metric identifier to monitor.
+     */
+    'metricId': string;
+    /**
+     * Alert condition operator.
+     */
+    'operator': string;
+    /**
+     * Notification channel identifier.
+     */
+    'notificationChannelId': string;
+    'description'?: AiDescription;
+    'automationId'?: AiAutomationid;
+    'metricTitle'?: AiMetrictitle;
+    'metricFormat'?: AiMetricformat;
+    'threshold'?: AiThreshold;
+    'fromValue'?: AiFromvalue;
+    'toValue'?: AiTovalue;
+    'compareMetricId'?: AiComparemetricid;
+    'compareMetricTitle'?: AiComparemetrictitle;
+    'compareMetricFormat'?: AiComparemetricformat;
+    'arithmeticOperator'?: AiArithmeticoperator;
+    'granularity'?: AiGranularity;
+    'dateDatasetId'?: AiDatedatasetid;
+    'dateDatasetTitle'?: AiDatedatasettitle;
+    'sensitivity'?: AiSensitivity;
+    /**
+     * Alert execution filters.
+     */
+    'filters': Array<object>;
+    /**
+     * Attribute slicing configuration.
+     */
+    'attributes': Array<object>;
+    'forMode'?: AiFormode;
+    'forLabel'?: AiForlabel;
+    'notificationChannelName'?: AiNotificationchannelname;
+    /**
+     * Recipients shown in the proposal.
+     */
+    'recipients': Array<AiAlertRecipient>;
+    'trigger'?: AiTrigger;
+    'triggerInterval'?: AiTriggerinterval;
+    'cron'?: AiCron;
+    'timezone'?: AiTimezone;
+    'dashboardId'?: AiDashboardid;
+    'dashboardTitle'?: AiDashboardtitle;
+    /**
+     * Confirmation call to action.
+     */
+    'cta': string;
+}
+
+export interface AiAlertProposalPart {
+    /**
+     * Type of multipart part.
+     */
+    'type'?: AiAlertProposalPartTypeEnum;
+    'alertProposal'?: AiAlertProposal | null;
+}
+
+export type AiAlertProposalPartTypeEnum = 'alertProposal';
+
+export interface AiAlertRecipient {
+    /**
+     * Recipient display label.
+     */
+    'label': string;
+    'id'?: string | null;
+    'email'?: string | null;
+}
+
 export interface AiAllTimeDateFilterBodyInput {
     'dataset': AiAfmObjectIdentifier;
     'granularity'?: AiDateGranularityInput | null;
@@ -165,6 +245,12 @@ export interface AiAppDomainConversationsVisualizationRankingFilter {
 
 export type AiAppDomainConversationsVisualizationRankingFilterTypeEnum = 'ranking_filter';
 
+/**
+ * Relative alert arithmetic operator.
+ */
+export interface AiArithmeticoperator {
+}
+
 export interface AiAttributeFilter {
     'type': AiAttributeFilterTypeEnum;
     'using': string;
@@ -193,6 +279,12 @@ export type AiAttributeSortItemTypeEnum = 'attribute_sort';
 export type AiAttributeSortItemDirectionEnum = 'ASC' | 'DESC';
 export type AiAttributeSortItemAggregationEnum = 'SUM';
 
+/**
+ * Automation identifier proposed for creation.
+ */
+export interface AiAutomationid {
+}
+
 export interface AiBoundedFilterInput {
     'granularity': AiDateGranularityInput;
     'from'?: number | null;
@@ -212,6 +304,24 @@ export interface AiBucketRefObject {
 }
 
 export interface AiClusteringAmount {
+}
+
+/**
+ * Comparison metric display format.
+ */
+export interface AiComparemetricformat {
+}
+
+/**
+ * Comparison metric identifier.
+ */
+export interface AiComparemetricid {
+}
+
+/**
+ * Comparison metric display title.
+ */
+export interface AiComparemetrictitle {
 }
 
 export interface AiComparisonMeasureValueFilter {
@@ -426,6 +536,24 @@ export interface AiCreateConversationRequest {
     'agentId'?: string | null;
 }
 
+/**
+ * Optional cron schedule.
+ */
+export interface AiCron {
+}
+
+/**
+ * Bound dashboard identifier.
+ */
+export interface AiDashboardid {
+}
+
+/**
+ * Bound dashboard display title.
+ */
+export interface AiDashboardtitle {
+}
+
 export interface AiDateFilterAbsolute {
     'type': AiDateFilterAbsoluteTypeEnum;
     'using': string;
@@ -494,11 +622,29 @@ export type AiDateGranularityInput = typeof AiDateGranularityInput[keyof typeof 
 
 
 /**
+ * Anomaly date dataset identifier.
+ */
+export interface AiDatedatasetid {
+}
+
+/**
+ * Anomaly date dataset display title.
+ */
+export interface AiDatedatasettitle {
+}
+
+/**
  * Response for DELETE /documents/{documentId}.
  */
 export interface AiDeleteDocumentResponse {
     'success': boolean;
     'message': string;
+}
+
+/**
+ * Alert description.
+ */
+export interface AiDescription {
 }
 
 /**
@@ -570,7 +716,25 @@ export type AiFilterByValueConditionEnum = 'contains' | 'doesNotContain' | 'star
 export interface AiForecastPeriod {
 }
 
+/**
+ * Human-readable \'For\' summary.
+ */
+export interface AiForlabel {
+}
+
+/**
+ * Display mode for the monitored population.
+ */
+export interface AiFormode {
+}
+
 export interface AiFrom {
+}
+
+/**
+ * Range lower bound.
+ */
+export interface AiFromvalue {
 }
 
 export interface AiFunctionCallContent {
@@ -614,6 +778,12 @@ export interface AiFunctionResultContent {
 }
 
 export type AiFunctionResultContentTypeEnum = 'toolResult';
+
+/**
+ * Anomaly granularity.
+ */
+export interface AiGranularity {
+}
 
 export interface AiHTTPValidationError {
     'detail'?: Array<AiValidationError>;
@@ -801,6 +971,18 @@ export const AiMetricValueFilterConditionRange = {
 export type AiMetricValueFilterConditionRange = typeof AiMetricValueFilterConditionRange[keyof typeof AiMetricValueFilterConditionRange];
 
 
+/**
+ * Metric display format.
+ */
+export interface AiMetricformat {
+}
+
+/**
+ * Metric display title.
+ */
+export interface AiMetrictitle {
+}
+
 export interface AiMultipartContent {
     /**
      * Type of item content.
@@ -818,7 +1000,7 @@ export type AiMultipartContentTypeEnum = 'multipart';
 /**
  * @type AiMultipartContentPartsInner
  */
-export type AiMultipartContentPartsInner = { type: 'kda' } & AiKeyDriverAnalysisPart | { type: 'searchResults' } & AiSearchResults | { type: 'text' } & AiTextPart | { type: 'visualization' } & AiVisualizationPart | { type: 'whatIf' } & AiWhatIfAnalysisPart;
+export type AiMultipartContentPartsInner = { type: 'alertProposal' } & AiAlertProposalPart | { type: 'kda' } & AiKeyDriverAnalysisPart | { type: 'searchResults' } & AiSearchResults | { type: 'text' } & AiTextPart | { type: 'visualization' } & AiVisualizationPart | { type: 'whatIf' } & AiWhatIfAnalysisPart;
 
 export interface AiNegativeAttributeFilter {
     'negativeAttributeFilter': AiNegativeAttributeFilterBody;
@@ -830,6 +1012,12 @@ export interface AiNegativeAttributeFilterBody {
     'applyOnResult'?: boolean | null;
     'localIdentifier'?: string | null;
     'usesArbitraryValues'?: boolean | null;
+}
+
+/**
+ * Notification channel display name.
+ */
+export interface AiNotificationchannelname {
 }
 
 
@@ -1181,6 +1369,12 @@ export interface AiSendMessageSearchOptions {
 }
 
 /**
+ * Anomaly sensitivity.
+ */
+export interface AiSensitivity {
+}
+
+/**
  * A single skill available to the organization.
  */
 export interface AiSkillResponse {
@@ -1303,7 +1497,37 @@ export interface AiTextPart {
 
 export type AiTextPartTypeEnum = 'text';
 
+/**
+ * Comparison threshold.
+ */
+export interface AiThreshold {
+}
+
+/**
+ * Schedule timezone.
+ */
+export interface AiTimezone {
+}
+
 export interface AiTo {
+}
+
+/**
+ * Range upper bound.
+ */
+export interface AiTovalue {
+}
+
+/**
+ * Alert trigger behavior.
+ */
+export interface AiTrigger {
+}
+
+/**
+ * Trigger interval for once-per-interval alerts.
+ */
+export interface AiTriggerinterval {
 }
 
 /**

@@ -348,6 +348,97 @@ describe("PluggableGeoPushpinChartNext", () => {
         expect(props.execution?.context?.id).toBe(PUSHPIN_LAYER_ID);
     });
 
+    it("carries a customVisualizationConfig custom tooltip onto the primary layer (F1-2543)", () => {
+        const { visualization } = createComponent();
+
+        // Tooltip supplied via customVisualizationConfig — NOT present in insight controls.
+        const customTooltip = { enabled: true, content: "city: {label/city}" };
+        visualization.update(
+            { messages, customVisualizationConfig: { customTooltip } },
+            insightWithLocation,
+            {},
+            executionFactory,
+        );
+
+        const chartCall = mockRenderFun.mock.calls.find(
+            ([node]) => (node as ReactElement)?.type === GeoChartInternal,
+        );
+        if (!chartCall) {
+            throw new Error("Missing GeoChartInternal render call.");
+        }
+        const props = (chartCall[0] as ReactElement).props as {
+            execution?: { context?: { config?: { customTooltip?: unknown } } };
+            config?: { customTooltip?: unknown };
+        };
+
+        // Primary layer self-carries the resolved tooltip...
+        expect(props.execution?.context?.config?.customTooltip).toEqual(customTooltip);
+        // ...and it is not left at chart level (would leak onto additional layers).
+        expect(props.config?.customTooltip).toBeUndefined();
+    });
+
+    it("keeps each layer's own custom tooltip in a multi-layer insight (F1-2543)", () => {
+        const { visualization } = createComponent();
+
+        // Primary (1st) layer's tooltip — resolved at chart level (here via the direct API).
+        const primaryTooltip = { enabled: true, content: "primary: {label/p}" };
+
+        const insightWithPerLayerTooltips = {
+            insight: {
+                ...insightWithLocation.insight,
+                layers: [
+                    {
+                        id: "layer_pushpins",
+                        name: "Pushpin layer",
+                        type: "pushpin",
+                        buckets: [
+                            newBucket(
+                                BucketNames.LOCATION,
+                                newAttribute("customer_city.city_latitude", (attribute) =>
+                                    attribute.localId("loc"),
+                                ),
+                            ),
+                        ],
+                        properties: {
+                            controls: {
+                                latitude: "customer_city.city_latitude",
+                                longitude: "customer_city.city_longitude",
+                                // Additional (2nd) layer's own, different tooltip.
+                                customTooltip: { enabled: true, content: "secondary: {label/s}" },
+                            },
+                        },
+                    },
+                ],
+            },
+        } as IInsightDefinition;
+
+        visualization.update(
+            { messages, customVisualizationConfig: { customTooltip: primaryTooltip } },
+            insightWithPerLayerTooltips,
+            {},
+            executionFactory,
+        );
+
+        const chartCall = mockRenderFun.mock.calls.find(
+            ([node]) => (node as ReactElement)?.type === GeoChartInternal,
+        );
+        if (!chartCall) {
+            throw new Error("Missing GeoChartInternal render call.");
+        }
+        const props = (chartCall[0] as ReactElement).props as {
+            execution?: { context?: { config?: { customTooltip?: { content?: string } } } };
+            executions?: Array<{ context?: { config?: { customTooltip?: { content?: string } } } }>;
+            config?: { customTooltip?: unknown };
+        };
+
+        // Primary layer keeps the top-level tooltip; the additional layer keeps its own
+        // (it must NOT inherit the 1st layer's tooltip — the bug being fixed).
+        expect(props.execution?.context?.config?.customTooltip?.content).toBe("primary: {label/p}");
+        expect(props.executions?.[0]?.context?.config?.customTooltip?.content).toBe("secondary: {label/s}");
+        // Nothing left at chart level to leak across layers.
+        expect(props.config?.customTooltip).toBeUndefined();
+    });
+
     it("should resolve clustering to false for rendering and the panel when tooltip measures are present", () => {
         const { visualization } = createComponent(vi.fn(), undefined, {
             visualizationProperties: {

@@ -9,6 +9,7 @@ import {
 } from "../../model.js";
 import { loadWhatIfScenarios } from "../../whatIf/whatIfMapping.js";
 
+import { ConversationAlertProposalContent } from "./conversationContents/ConversationAlertProposalContent.js";
 import { ConversationErrorContent } from "./conversationContents/ConversationErrorContent.js";
 import { ConversationKdaContent } from "./conversationContents/ConversationKdaContent.js";
 import { ConversationReasoningContent } from "./conversationContents/ConversationReasoningContent.js";
@@ -77,6 +78,17 @@ export function ConversationItemContents({ message, references, isLoading }: Con
                                 useMarkdown
                                 key={index}
                                 text={part.text}
+                                objects={[...(part.objects ?? []), ...references]}
+                            />
+                        );
+                    }
+                    if (part.type === "alertProposal") {
+                        return (
+                            <ConversationAlertProposalContent
+                                key={index}
+                                message={message}
+                                part={part}
+                                alertProposal={part.alertProposal}
                                 objects={[...(part.objects ?? []), ...references]}
                             />
                         );

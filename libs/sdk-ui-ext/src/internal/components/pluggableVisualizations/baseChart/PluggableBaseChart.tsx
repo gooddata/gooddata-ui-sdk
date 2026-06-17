@@ -21,7 +21,7 @@ import {
     updateForecastWithSettings,
     updateOutliersWithSettings,
 } from "@gooddata/sdk-ui-charts";
-import { buildTooltipExecution } from "@gooddata/sdk-ui-vis-commons";
+import { buildTooltipExecutionFromConfig } from "@gooddata/sdk-ui-vis-commons";
 
 import { messages } from "../../../../locales.js";
 import { BUCKETS } from "../../../constants/bucket.js";
@@ -254,12 +254,13 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         // Build secondary execution for custom tooltip external references.
         // Skip in export mode — tooltips are never hovered during PDF/scheduled export.
         const { isExportMode } = options.config ?? {};
-        const tooltipContent = supportedControls?.["customTooltip"]?.content;
-        const tooltipEnabled = supportedControls?.["customTooltip"]?.enabled;
-        const tooltipExecResult =
-            tooltipEnabled && tooltipContent && !isExportMode
-                ? buildTooltipExecution(executionFactory, execution.definition, tooltipContent)
-                : null;
+        const tooltipExecution = isExportMode
+            ? undefined
+            : buildTooltipExecutionFromConfig(
+                  executionFactory,
+                  execution.definition,
+                  supportedControls?.["customTooltip"],
+              );
 
         this.renderFun(
             <BaseChart
@@ -294,7 +295,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
                 LoadingComponent={undefined}
                 ErrorComponent={undefined}
                 theme={theme}
-                tooltipExecution={tooltipExecResult ?? undefined}
+                tooltipExecution={tooltipExecution}
                 {...enhanceBaseChartWithClusteringConfiguration(fullConfig)}
             />,
             this.getElement(),

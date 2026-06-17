@@ -35,6 +35,7 @@ import {
 } from "./adapter/HighChartsRenderer.js";
 import { buildLegendOptions } from "./adapter/legendBuilder.js";
 import { buildIdentifierMapping } from "./chartTypes/_chartCreators/customTooltip/identifierMapping.js";
+import { buildChartReferenceLookup } from "./chartTypes/_chartCreators/customTooltip/tooltipLookup.js";
 import { getHighchartsOptions } from "./chartTypes/_chartCreators/highChartsCreators.js";
 import {
     getDataTooLargeErrorMessage,
@@ -121,14 +122,18 @@ function ChartTransformationImpl({
     );
 
     if (config.customTooltip?.enabled) {
-        customTooltipRuntimeRef.current.identifierMapping = buildIdentifierMapping(
-            dataView.definition,
-            config.type,
-        );
+        const identifierMapping = buildIdentifierMapping(dataView.definition, config.type);
+        customTooltipRuntimeRef.current.identifierMapping = identifierMapping;
         customTooltipRuntimeRef.current.tooltipLookup = tooltipLookup;
+        customTooltipRuntimeRef.current.chartLookup = buildChartReferenceLookup(
+            dataView,
+            identifierMapping,
+            config.separators,
+        );
     } else {
         customTooltipRuntimeRef.current.identifierMapping = undefined;
         customTooltipRuntimeRef.current.tooltipLookup = undefined;
+        customTooltipRuntimeRef.current.chartLookup = undefined;
     }
     chartOptions.customTooltipRuntime = customTooltipRuntimeRef.current;
 

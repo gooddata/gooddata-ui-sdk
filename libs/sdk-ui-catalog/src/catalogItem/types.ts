@@ -14,7 +14,7 @@ import type { ObjectType } from "../objectType/types.js";
 
 /**
  * Catalog item reference.
- * @internal
+ * @public
  */
 export interface ICatalogItemRef extends IdentifierRef {
     type: ObjectType;
@@ -22,7 +22,7 @@ export interface ICatalogItemRef extends IdentifierRef {
 
 /**
  * Fields common to every catalog item variant.
- * @internal
+ * @public
  */
 export interface ICatalogItemBase extends ICatalogItemRef {
     title: string;
@@ -48,7 +48,7 @@ export interface ICatalogItemBase extends ICatalogItemRef {
  *
  * Narrow by `item.type` before accessing type-specific fields such as
  * `visualizationType`, `dataSet`, `definition`, `format`, or `metricType`.
- * @internal
+ * @public
  */
 export type ICatalogItem =
     | ICatalogItemDashboard
@@ -61,7 +61,7 @@ export type ICatalogItem =
 
 /**
  * Catalog item for analytical dashboards.
- * @internal
+ * @public
  */
 export interface ICatalogItemDashboard extends ICatalogItemBase {
     type: "analyticalDashboard";
@@ -69,7 +69,7 @@ export interface ICatalogItemDashboard extends ICatalogItemBase {
 
 /**
  * Catalog item for insights (visualizations).
- * @internal
+ * @public
  */
 export interface ICatalogItemInsight extends ICatalogItemBase {
     type: "insight";
@@ -78,7 +78,7 @@ export interface ICatalogItemInsight extends ICatalogItemBase {
 
 /**
  * Visualization type
- * @internal
+ * @public
  */
 export type VisualizationType =
     | "scatter"
@@ -105,7 +105,7 @@ export type VisualizationType =
 
 /**
  * Catalog item for measures (metrics).
- * @internal
+ * @public
  */
 export interface ICatalogItemMeasure extends ICatalogItemBase {
     type: "measure";
@@ -116,7 +116,7 @@ export interface ICatalogItemMeasure extends ICatalogItemBase {
 
 /**
  * Catalog item for parameters.
- * @internal
+ * @public
  */
 export interface ICatalogItemParameter extends ICatalogItemBase {
     type: "parameter";
@@ -125,7 +125,7 @@ export interface ICatalogItemParameter extends ICatalogItemBase {
 
 /**
  * Catalog item for attributes.
- * @internal
+ * @public
  */
 export interface ICatalogItemAttribute extends ICatalogItemBase {
     type: "attribute";
@@ -134,7 +134,7 @@ export interface ICatalogItemAttribute extends ICatalogItemBase {
 
 /**
  * Catalog item for facts.
- * @internal
+ * @public
  */
 export interface ICatalogItemFact extends ICatalogItemBase {
     type: "fact";
@@ -143,7 +143,7 @@ export interface ICatalogItemFact extends ICatalogItemBase {
 
 /**
  * Catalog item for date datasets.
- * @internal
+ * @public
  */
 export interface ICatalogItemDataSet extends ICatalogItemBase {
     type: "dataSet";

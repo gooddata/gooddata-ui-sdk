@@ -36,4 +36,23 @@ describe("buildGeoChartNextLayers", () => {
 
         expect(layers[0].geoIcon?.attribute.displayForm).toEqual(idRef("label.geoIcon", "displayForm"));
     });
+
+    it("preserves per-layer customTooltip for embedding (F1-2543)", () => {
+        const locationAttribute = newAttribute(idRef("label.location", "displayForm"), (attribute) =>
+            attribute.localId("location_df"),
+        );
+        const insight = newInsightDefinition("local:geoPushpin", (builder) =>
+            builder.buckets([newBucket(BucketNames.LOCATION, locationAttribute)]).properties({
+                controls: {
+                    latitude: "label.latitude",
+                    longitude: "label.longitude",
+                    customTooltip: { enabled: true, content: "city: {label/c}" },
+                },
+            }),
+        );
+
+        const layers = buildGeoChartNextLayers(insight, "pushpin");
+
+        expect(layers[0]?.config?.customTooltip).toEqual({ enabled: true, content: "city: {label/c}" });
+    });
 });

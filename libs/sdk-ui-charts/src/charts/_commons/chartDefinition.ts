@@ -4,7 +4,9 @@ import { omit } from "lodash-es";
 
 import { type IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { type IBucket } from "@gooddata/sdk-model";
+import { type ITooltipExecution, buildTooltipExecutionFromConfig } from "@gooddata/sdk-ui-vis-commons";
 
+import { type IChartConfig } from "../../interfaces/chartConfig.js";
 import { type IBucketChartProps, type ICoreChartProps } from "../../interfaces/chartProps.js";
 
 /**
@@ -71,8 +73,34 @@ export const getCoreChartProps =
             ...propOverrides,
             execution,
             exportTitle,
-            enableExecutionCancelling: props.config?.enableExecutionCancelling ?? false,
+            enableExecutionCancelling: propsToUse.config?.enableExecutionCancelling ?? false,
         };
+        const tooltipExecution = buildChartTooltipExecution(
+            propsToUse,
+            chart.chartName,
+            coreChartProps.config,
+            execution,
+        );
 
-        return omit(coreChartProps, NON_CORE_PROPS);
+        return omit({ ...coreChartProps, tooltipExecution }, NON_CORE_PROPS);
     };
+
+/**
+ * Builds the secondary execution resolving external custom-tooltip references, so that
+ * `config.customTooltip` is self-sufficient on public bucket charts. Note: `config` must
+ * be the post-override config (propOverridesFactory may replace `props.config`).
+ */
+function buildChartTooltipExecution(
+    props: IBucketChartProps,
+    chartName: string,
+    config: IChartConfig | undefined,
+    execution: IPreparedExecution,
+): ITooltipExecution | undefined {
+    const { backend, workspace } = props;
+    if (!config?.customTooltip || !backend || !workspace) {
+        return undefined;
+    }
+
+    const factory = backend.withTelemetry(chartName, props).workspace(workspace).execution();
+    return buildTooltipExecutionFromConfig(factory, execution.definition, config.customTooltip);
+}

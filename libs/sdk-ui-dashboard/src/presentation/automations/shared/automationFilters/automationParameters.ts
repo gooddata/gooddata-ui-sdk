@@ -10,11 +10,12 @@ import {
     type INumberParameterConstraints,
     type IParameterMetadataObject,
     type IdentifierRef,
-    idRef,
     isIdentifierRef,
     isNumberParameterDefinition,
     objRefToString,
 } from "@gooddata/sdk-model";
+
+import { exportParametersToValues } from "../../../../_staging/automation/index.js";
 
 /**
  * A workspace parameter resolved for display and editing inside an automation (alert/schedule)
@@ -78,21 +79,6 @@ export function reconstructAutomationParametersFromExportParameters(
         dashboardParameters,
         catalog,
     );
-}
-
-/**
- * The stored value is carried as a string; non-finite values are dropped.
- *
- * @internal
- */
-export function exportParametersToValues(stored: IDashboardExportParameter[]): IInsightParameterValue[] {
-    return stored.reduce<IInsightParameterValue[]>((acc, row) => {
-        const value = Number(row.value);
-        if (Number.isFinite(value)) {
-            acc.push({ ref: idRef(row.id, "parameter"), value });
-        }
-        return acc;
-    }, []);
 }
 
 /**

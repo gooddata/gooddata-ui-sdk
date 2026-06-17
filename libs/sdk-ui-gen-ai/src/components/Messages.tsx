@@ -157,7 +157,7 @@ function ConversationMessages({ messages, catalogItems }: IConversationMessagesP
                                     return (
                                         <UserItemComponent
                                             key={message.localId}
-                                            groups={[previousGroup, group]}
+                                            groups={groups}
                                             message={message}
                                             isLast={isLast}
                                         />
@@ -166,7 +166,7 @@ function ConversationMessages({ messages, catalogItems }: IConversationMessagesP
                                     return (
                                         <AssistantItemComponent
                                             key={message.localId}
-                                            groups={[previousGroup, group]}
+                                            groups={groups}
                                             message={message}
                                             isLast={isLast}
                                         />
@@ -175,7 +175,7 @@ function ConversationMessages({ messages, catalogItems }: IConversationMessagesP
                                     return (
                                         <ToolItemComponent
                                             key={message.localId}
-                                            groups={[previousGroup, group]}
+                                            groups={groups}
                                             message={message}
                                             isLast={isLast}
                                         />
@@ -184,7 +184,7 @@ function ConversationMessages({ messages, catalogItems }: IConversationMessagesP
                                     return (
                                         <SystemItemComponent
                                             key={message.localId}
-                                            groups={[previousGroup, group]}
+                                            groups={groups}
                                             message={message}
                                         />
                                     );

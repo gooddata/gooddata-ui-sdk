@@ -255,6 +255,98 @@
         "text": "Search",
         "crowdinContext": "Title shown above semantic search results."
     },
+    "gd.gen-ai.alert-proposal.title": {
+        "text": "Alerts",
+        "crowdinContext": "Title shown above alert proposal."
+    },
+    "gd.gen-ai.alert-proposal.summary.title": {
+        "text": "Title",
+        "crowdinContext": "Title for alert in alert proposal dialog."
+    },
+    "gd.gen-ai.alert-proposal.summary.attributes": {
+        "text": "Attributes",
+        "crowdinContext": "Attributes for alert in alert proposal dialog."
+    },
+    "gd.gen-ai.alert-proposal.summary.filters": {
+        "text": "Filters",
+        "crowdinContext": "Filters for alert in alert proposal dialog."
+    },
+    "gd.gen-ai.alert-proposal.summary.metric": {
+        "text": "Metric",
+        "crowdinContext": "Metric for alert in alert proposal dialog."
+    },
+    "gd.gen-ai.alert-proposal.summary.metric-compared": {
+        "text": "Compared to",
+        "crowdinContext": "Compared to metric for alert in alert proposal dialog."
+    },
+    "gd.gen-ai.alert-proposal.summary.date": {
+        "text": "Date",
+        "crowdinContext": "Date dataset for alert in alert proposal dialog."
+    },
+    "gd.gen-ai.alert-proposal.summary.notification-channel": {
+        "text": "Channel",
+        "crowdinContext": "Channel for alert in alert proposal dialog."
+    },
+    "gd.gen-ai.alert-proposal.summary.dashboard": {
+        "text": "Dashboard",
+        "crowdinContext": "Dashboard for alert in alert proposal dialog."
+    },
+    "gd.gen-ai.alert-proposal.summary.operator": {
+        "text": "Operator",
+        "crowdinContext": "Operator for alert in alert proposal dialog."
+    },
+    "gd.gen-ai.alert-proposal.summary.arithmeticOperator": {
+        "text": "Arithmetic operator",
+        "crowdinContext": "Arithmetic operator for alert in alert proposal dialog."
+    },
+    "gd.gen-ai.alert-proposal.summary.threshold": {
+        "text": "Threshold",
+        "crowdinContext": "Threshold for alert in alert proposal dialog."
+    },
+    "gd.gen-ai.alert-proposal.summary.range": {
+        "text": "Range",
+        "crowdinContext": "Range for alert in alert proposal dialog."
+    },
+    "gd.gen-ai.alert-proposal.summary.from": {
+        "text": "From",
+        "crowdinContext": "From for alert in alert proposal dialog."
+    },
+    "gd.gen-ai.alert-proposal.summary.to": {
+        "text": "To",
+        "crowdinContext": "To for alert in alert proposal dialog."
+    },
+    "gd.gen-ai.alert-proposal.summary.granularity": {
+        "text": "Granularity",
+        "crowdinContext": "Granularity for alert in alert proposal dialog."
+    },
+    "gd.gen-ai.alert-proposal.summary.sensitivity": {
+        "text": "Sensitivity",
+        "crowdinContext": "Sensitivity for alert in alert proposal dialog."
+    },
+    "gd.gen-ai.alert-proposal.summary.recipients": {
+        "text": "Recipients",
+        "crowdinContext": "recipients for alert in alert proposal dialog."
+    },
+    "gd.gen-ai.alert-proposal.summary.trigger": {
+        "text": "Trigger",
+        "crowdinContext": "Trigger title for alert in alert proposal dialog."
+    },
+    "gd.gen-ai.alert-proposal.summary.trigger.mode": {
+        "text": "Mode",
+        "crowdinContext": "Trigger mode for alert in alert proposal dialog."
+    },
+    "gd.gen-ai.alert-proposal.summary.trigger.interval": {
+        "text": "Interval",
+        "crowdinContext": "Interval for alert in alert proposal dialog."
+    },
+    "gd.gen-ai.alert-proposal.summary.trigger.cron": {
+        "text": "Cron",
+        "crowdinContext": "Cron for alert in alert proposal dialog."
+    },
+    "gd.gen-ai.alert-proposal.summary.trigger.timezone": {
+        "text": "Timezone",
+        "crowdinContext": "Timezone for alert in alert proposal dialog."
+    },
     "gd.gen-ai.conversations.close-label": {
         "text": "Close conversations",
         "crowdinContext": "Tooltip for button that closes the conversation history list"

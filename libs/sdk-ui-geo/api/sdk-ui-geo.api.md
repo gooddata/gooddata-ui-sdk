@@ -475,6 +475,8 @@ export interface IGeoLayerBase {
 export interface IGeoLayerConfig {
     colorMapping?: IColorMapping[];
     colorPalette?: IColorPalette;
+    // @alpha
+    customTooltip?: ICustomTooltipConfig;
 }
 
 // @public

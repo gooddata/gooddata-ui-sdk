@@ -20,20 +20,20 @@ export const REFERENCE_REGEX_PART = "[^{}\\/]+\\/[^{}]+";
 export const REFERENCE_REGEX = new RegExp(`\\{${REFERENCE_REGEX_PART}\\}`, "g");
 
 export function collectReferences(
-    text: string,
+    where: string | true,
     used: (CatalogItem | ICatalogDateAttribute)[],
 ): TextContentObject[] {
     const items: TextContentObject[] = [];
     used.forEach((item) => {
-        collectReference(items, text, item);
+        collectReference(items, where, item);
         if (isCatalogDateDataset(item)) {
             item.dateAttributes.forEach((dateAttribute) => {
-                collectReference(items, text, dateAttribute);
+                collectReference(items, where, dateAttribute);
             });
         }
         if (isCatalogAttribute(item)) {
             item.displayForms.forEach((displayForm) => {
-                collectReference(items, text, displayForm);
+                collectReference(items, where, displayForm);
             });
         }
     });
@@ -43,7 +43,7 @@ export function collectReferences(
 
 function collectReference(
     items: TextContentObject[],
-    text: string,
+    where: string | true,
     item: CatalogItem | ICatalogDateAttribute | IAttributeDisplayFormMetadataObject,
 ): void {
     const id = getCatalogItemId(item);
@@ -51,7 +51,7 @@ function collectReference(
 
     if (id && type) {
         const regex = new RegExp(`\\{${type}/${id}\\}`, "g");
-        if (regex.test(text)) {
+        if (where === true || regex.test(where)) {
             const title = getCatalogItemTitle(item);
             items.push({
                 id,
@@ -69,6 +69,11 @@ export function parseReferences<
         return content;
     }
     switch (content.type) {
+        case "alertProposal":
+            return {
+                ...content,
+                objects: collectReferences(true, catalogItems),
+            };
         case "reasoning":
             return {
                 ...content,

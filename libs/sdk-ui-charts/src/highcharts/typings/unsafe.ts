@@ -203,7 +203,10 @@ export interface IChartOptions {
 // Mutated in place across renders; the Chart wrapper diffs ignoring functions, so the bound tooltip formatter must dereference live values.
 export interface ICustomTooltipRuntime {
     identifierMapping?: IIdentifierMapping;
+    // Refs not on the chart, fetched via a secondary execution.
     tooltipLookup?: Map<string, IResolvedReferenceValues>;
+    // All in-chart metrics, per point (see buildChartReferenceLookup).
+    chartLookup?: Map<string, IResolvedReferenceValues>;
 }
 
 export interface IPatternOptionsObject {

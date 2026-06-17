@@ -49,6 +49,9 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate }: IHostUi
 
     const [headerOptions, setHeaderOptions] = useState<IAppHeaderOptions | undefined>(undefined);
     const [pageTitle, setPageTitle] = useState<string | undefined>(undefined);
+    // Host-owned chat open-state, reported by the host UI and forwarded to the active pluggable app.
+    const [aiAssistantOpen, setAiAssistantOpen] = useState(false);
+    const onAiAssistantOpenChange = useCallback((open: boolean) => setAiAssistantOpen(open), []);
     const activeAppRef = useAutoupdateRef(activeInternalApplication);
     const onHeaderChange = useCallback(
         (appId: string, header: IAppHeaderOptions) => {
@@ -81,7 +84,7 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate }: IHostUi
         },
         [navigateRef],
     );
-    const navigationMountRef = useAutoupdateRef({ navigate, replace });
+    const navigationMountRef = useAutoupdateRef({ navigate, replace, onAiAssistantOpenChange });
 
     // Mount the host UI once; obtain the app container for rendering active apps
     useEffect(() => {
@@ -106,6 +109,7 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate }: IHostUi
                 pathname: latestState.pathname,
                 navigate: navigationMountRef.current.navigate,
                 replace: navigationMountRef.current.replace,
+                onAiAssistantOpenChange: navigationMountRef.current.onAiAssistantOpenChange,
             });
 
             handleRef.current = handle;
@@ -206,6 +210,7 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate }: IHostUi
                         app={activeInternalApplication}
                         ctx={ctx}
                         pathname={pathname}
+                        aiAssistantOpen={aiAssistantOpen}
                         onHeaderChange={onHeaderChange}
                         onDocumentTitleChange={onDocumentTitleChange}
                     />
@@ -214,7 +219,15 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate }: IHostUi
         } else {
             appRootRef.current.render(null);
         }
-    }, [hostReady, activeInternalApplication, ctx, onHeaderChange, onDocumentTitleChange, pathname]);
+    }, [
+        hostReady,
+        activeInternalApplication,
+        ctx,
+        onHeaderChange,
+        onDocumentTitleChange,
+        pathname,
+        aiAssistantOpen,
+    ]);
 
     return <div ref={containerRef} className="gd-host-ui-container" />;
 }

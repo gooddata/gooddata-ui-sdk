@@ -1,7 +1,7 @@
 // (C) 2022-2026 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import { type ITheme } from "@gooddata/sdk-model";
 
@@ -145,5 +145,40 @@ describe("Styling editor dialog", () => {
         renderEditor({ disableSubmit: true });
 
         expect(screen.getByText("Save").closest("button")).toHaveClass("disabled");
+    });
+
+    it("should disable save when validateDefinition rejects the content and re-enable when valid", () => {
+        const validateDefinition = (content: ITheme) =>
+            content?.palette?.primary?.base === "bad" ? "Invalid color value." : undefined;
+        renderEditor({ validateDefinition });
+        const textarea = screen.getByLabelText("Styling item definition");
+        const saveButton = screen.getByText("Save").closest("button");
+
+        fireEvent.change(textarea, { target: { value: referenceTheme("bad") } });
+        expect(saveButton).toHaveClass("disabled");
+
+        fireEvent.change(textarea, { target: { value: referenceTheme("#001F5A") } });
+        expect(saveButton).not.toHaveClass("disabled");
+    });
+
+    it("should not crash and should not block saving when validateDefinition throws", () => {
+        const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+        try {
+            const validateDefinition = () => {
+                throw new Error("boom in validator");
+            };
+            renderEditor({ validateDefinition });
+            const textarea = screen.getByLabelText("Styling item definition");
+            const saveButton = screen.getByText("Save").closest("button");
+
+            fireEvent.change(textarea, { target: { value: referenceTheme("#001F5A") } });
+
+            // a buggy validator degrades gracefully: the dialog still renders and the user can save
+            expect(saveButton).not.toHaveClass("disabled");
+            expect(consoleErrorSpy).toHaveBeenCalled();
+        } finally {
+            // always restore so a failed assertion cannot leak the spy into later tests
+            consoleErrorSpy.mockRestore();
+        }
     });
 });

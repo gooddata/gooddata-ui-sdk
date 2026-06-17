@@ -171,4 +171,6 @@ export type IconType =
     | "density"
     | "parameter"
     | "pin"
-    | "unpin";
+    | "unpin"
+    | "speechBubble"
+    | "pieChart";

@@ -27,29 +27,45 @@
         "text": "The result exceeds the {columnLimit} columns limit.",
         "crowdinContext": "Partial data warning detail when the column limit is exceeded and the exact total is unknown."
     },
+    "partial_data_warning.cells.description": {
+        "text": "Full result exceeds the {cellLimit} datapoint limit by {cellOverflow} datapoints.",
+        "crowdinContext": "Partial data warning detail when only the datapoint limit is exceeded (e.g. on a chart)."
+    },
+    "partial_data_warning.cells.description.unknown_total": {
+        "text": "Full result exceeds the {cellLimit} datapoint limit.",
+        "crowdinContext": "Partial data warning detail when only the datapoint limit is exceeded (e.g. on a chart) and the exact total is unknown."
+    },
     "partial_data_warning.rows_columns.description": {
         "text": "The result exceeds both the {columnLimit} columns and the {rowLimit} row limit by {columnOverflow} columns and {rowOverflow} rows.",
-        "crowdinContext": "Partial data warning detail when both row and column limits are exceeded."
-    },
-    "partial_data_warning.rows_columns.description.unknown_column_total": {
-        "text": "The result exceeds both the {columnLimit} columns and the {rowLimit} row limit. It exceeds the row limit by {rowOverflow} rows.",
-        "crowdinContext": "Partial data warning detail when both row and column limits are exceeded, but only the row overflow is known."
-    },
-    "partial_data_warning.rows_columns.description.unknown_row_total": {
-        "text": "The result exceeds both the {columnLimit} columns and the {rowLimit} row limit. It exceeds the columns limit by {columnOverflow} columns.",
-        "crowdinContext": "Partial data warning detail when both row and column limits are exceeded, but only the column overflow is known."
+        "crowdinContext": "Partial data warning detail when both the column and row limits are exceeded."
     },
     "partial_data_warning.rows_columns.description.unknown_total": {
         "text": "The result exceeds both the {columnLimit} columns and the {rowLimit} row limit.",
-        "crowdinContext": "Partial data warning detail when both row and column limits are exceeded and exact totals are unknown."
+        "crowdinContext": "Partial data warning detail when both the column and row limits are exceeded and exact totals are unknown."
     },
-    "partial_data_warning.cells.description": {
-        "text": "The result exceeds the {cellLimit} datapoint limit by {cellOverflow} datapoints.",
-        "crowdinContext": "Partial data warning detail when the datapoint limit is exceeded."
+    "partial_data_warning.columns_cells.description": {
+        "text": "The result exceeds both the {columnLimit} columns and the {cellLimit} cell limit by {columnOverflow} columns and {cellOverflow} cells.",
+        "crowdinContext": "Partial data warning detail when both the column and cell limits are exceeded."
     },
-    "partial_data_warning.cells.description.unknown_total": {
-        "text": "The result exceeds the {cellLimit} datapoint limit.",
-        "crowdinContext": "Partial data warning detail when the datapoint limit is exceeded and the exact total is unknown."
+    "partial_data_warning.columns_cells.description.unknown_total": {
+        "text": "The result exceeds both the {columnLimit} columns and the {cellLimit} cell limit.",
+        "crowdinContext": "Partial data warning detail when both the column and cell limits are exceeded and exact totals are unknown."
+    },
+    "partial_data_warning.cells_rows.description": {
+        "text": "The result exceeds both the {cellLimit} cell and the {rowLimit} row limit by {cellOverflow} cells and {rowOverflow} rows.",
+        "crowdinContext": "Partial data warning detail when both the cell and row limits are exceeded."
+    },
+    "partial_data_warning.cells_rows.description.unknown_total": {
+        "text": "The result exceeds both the {cellLimit} cell and the {rowLimit} row limit.",
+        "crowdinContext": "Partial data warning detail when both the cell and row limits are exceeded and exact totals are unknown."
+    },
+    "partial_data_warning.columns_cells_rows.description": {
+        "text": "The result exceeds the {columnLimit} columns the {cellLimit} cell and {rowLimit} row limit by {columnOverflow} columns and {cellOverflow} cells and {rowOverflow} rows.",
+        "crowdinContext": "Partial data warning detail when the column, cell and row limits are all exceeded."
+    },
+    "partial_data_warning.columns_cells_rows.description.unknown_total": {
+        "text": "The result exceeds the {columnLimit} columns the {cellLimit} cell and {rowLimit} row limit.",
+        "crowdinContext": "Partial data warning detail when the column, cell and row limits are all exceeded and exact totals are unknown."
     },
     "gs.time": {
         "text": "time",

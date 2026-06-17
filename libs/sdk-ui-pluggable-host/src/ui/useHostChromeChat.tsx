@@ -2,6 +2,7 @@
 
 import { type ReactNode, useCallback, useState } from "react";
 
+import { type IGenAIUserContext } from "@gooddata/sdk-model";
 import {
     type IPlatformContext,
     type IPluggableAppTelemetryCallbacks,
@@ -16,6 +17,8 @@ import { type IHostChromeWorkspaceFeatures } from "./useHostChromeWorkspaceFeatu
 export interface IHostChromeChat {
     /** The `<GenAIChat>` element to mount, or `null` when chat is gated off. */
     element: ReactNode;
+    /** Whether the chat dialog is currently open. */
+    isOpen: boolean;
     /**
      * Whether the chat entry point should be visible in the header. Reflects both the
      * feature-flag/permission gate and the runtime LLM availability probe.
@@ -23,8 +26,20 @@ export interface IHostChromeChat {
     showChatItem: boolean;
     /** Open the chat dialog. */
     open: () => void;
-    /** Open the chat dialog with a pre-seeded user question. */
-    askAiAssistant: (question: string) => void;
+    /** Close the chat dialog. */
+    close: () => void;
+    /** Toggle the chat dialog open/closed — used by the header chat button. */
+    toggle: () => void;
+    /**
+     * Open the chat dialog with a pre-seeded user question and optional user-location context
+     * (e.g. the active dashboard a hosted application forwards alongside the question).
+     */
+    askAiAssistant: (question: string, userContext?: IGenAIUserContext) => void;
+    /**
+     * Set the assistant's object-search tag scope, reflecting the active hosted application's
+     * current view (e.g. AD's include/exclude tag route filters). Pass empty/undefined to clear.
+     */
+    setTags: (includeTags?: string[], excludeTags?: string[]) => void;
 }
 
 export interface IUseHostChromeChatArgs {
@@ -43,6 +58,13 @@ export interface IUseHostChromeChatArgs {
 export function useHostChromeChat({ features, ctx, telemetry }: IUseHostChromeChatArgs): IHostChromeChat {
     const [isChatOpen, setIsChatOpen] = useState(false);
     const [askedQuestion, setAskedQuestion] = useState<string | null>(null);
+    // Bumped on every ask so the chat re-seeds (clears the thread + sends the message) even when the
+    // same prompt is asked again — e.g. "Summarize" clicked twice, or repeated after a close (the
+    // seeding effect is otherwise keyed on the question text, which does not change on a repeat).
+    const [askSeq, setAskSeq] = useState(0);
+    const [userContext, setUserContext] = useState<IGenAIUserContext | undefined>(undefined);
+    const [includeTags, setIncludeTags] = useState<string[] | undefined>(undefined);
+    const [excludeTags, setExcludeTags] = useState<string[] | undefined>(undefined);
 
     const open = useCallback(() => {
         setIsChatOpen(true);
@@ -52,9 +74,23 @@ export function useHostChromeChat({ features, ctx, telemetry }: IUseHostChromeCh
         setIsChatOpen(false);
     }, []);
 
-    const askAiAssistant = useCallback((question: string) => {
+    // The header chat button toggles the dialog (click to open, click again to close),
+    // matching the standalone apps' behavior (LX-2544).
+    const toggle = useCallback(() => {
+        setIsChatOpen((isOpen) => !isOpen);
+    }, []);
+
+    const askAiAssistant = useCallback((question: string, questionUserContext?: IGenAIUserContext) => {
         setAskedQuestion(question);
+        setUserContext(questionUserContext);
+        setAskSeq((seq) => seq + 1);
         setIsChatOpen(true);
+    }, []);
+
+    const setTags = useCallback((nextIncludeTags?: string[], nextExcludeTags?: string[]) => {
+        // Normalize empty arrays to undefined so the chat treats "no scope" uniformly.
+        setIncludeTags(nextIncludeTags?.length ? nextIncludeTags : undefined);
+        setExcludeTags(nextExcludeTags?.length ? nextExcludeTags : undefined);
     }, []);
 
     const handleChatEvent = useCallback(
@@ -79,6 +115,10 @@ export function useHostChromeChat({ features, ctx, telemetry }: IUseHostChromeCh
                 onOpen={open}
                 onClose={close}
                 askedQuestion={askedQuestion}
+                askSeq={askSeq}
+                userContext={userContext}
+                includeTags={includeTags}
+                excludeTags={excludeTags}
                 canManageProject={features.canManageProject}
                 canAnalyzeProject={features.canAccessWorkbench}
                 canFullControl={features.canFullControl}
@@ -89,8 +129,12 @@ export function useHostChromeChat({ features, ctx, telemetry }: IUseHostChromeCh
 
     return {
         element,
+        isOpen: isChatOpen,
         showChatItem,
         open,
+        close,
+        toggle,
         askAiAssistant,
+        setTags,
     };
 }

@@ -45,6 +45,13 @@
     pointer-events: none;
 }
 
+// Cap tooltip images near the popover width so a square image fits and portraits shrink.
+.maplibregl-popup-content img {
+    display: block;
+    max-width: 100%;
+    max-height: 300px;
+}
+
 // Partially overwrite MapLibre blocker CSS
 .maplibregl-scroll-zoom-blocker,
 .maplibregl-touch-pan-blocker {

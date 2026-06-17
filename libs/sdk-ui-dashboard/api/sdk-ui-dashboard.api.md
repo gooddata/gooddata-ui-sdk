@@ -602,6 +602,7 @@ export function changeParameterValues(input: ChangeParameterValuesParams): IChan
 // @internal
 export type ChangeParameterValuesParams = {
     parameters: IInsightParameterValue[];
+    tabLocalIdentifier?: string;
     correlationId?: string;
 };
 
@@ -2794,6 +2795,8 @@ export interface IChangeParameterValues extends IDashboardCommand {
 export interface IChangeParameterValuesPayload {
     // (undocumented)
     readonly parameters: IInsightParameterValue[];
+    // (undocumented)
+    readonly tabLocalIdentifier?: string;
 }
 
 // @beta (undocumented)
@@ -8369,6 +8372,7 @@ export interface ISetParameterRuntimeValuePayload {
 
 // @alpha (undocumented)
 export interface ISetParameterRuntimeValuesPayload {
+    tabLocalIdentifier?: string;
     // (undocumented)
     values: ISetParameterRuntimeValuePayload[];
 }

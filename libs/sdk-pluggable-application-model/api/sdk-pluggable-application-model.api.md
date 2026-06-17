@@ -7,6 +7,7 @@
 import { ApplicationScope } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IEntitlementDescriptor } from '@gooddata/sdk-model';
+import { IGenAIUserContext } from '@gooddata/sdk-model';
 import { ILocale } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
@@ -16,6 +17,15 @@ import { IWhiteLabeling } from '@gooddata/sdk-model';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { PluggableApplicationRegistryItem } from '@gooddata/sdk-model';
+
+// @alpha
+export function aiAssistantContextChanged(payload?: {
+    includeTags?: string[];
+    excludeTags?: string[];
+}): IAiAssistantContextChangedEvent;
+
+// @alpha
+export function closeAiAssistantRequested(): ICloseAiAssistantRequestedEvent;
 
 // @alpha
 export const DefaultApplicationId: {
@@ -35,6 +45,25 @@ export type EmbeddingMode = "none" | "iframe" | "export";
 
 // @alpha
 export type HostUiMount = (options: IHostUiMountOptions) => IHostUiMountHandle;
+
+// @alpha
+export interface IAiAssistantContextChangedEvent extends IPluggableAppEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly includeTags?: string[];
+        readonly excludeTags?: string[];
+    };
+    // (undocumented)
+    readonly type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CONTEXT_CHANGED";
+}
+
+// @alpha
+export interface IAiAssistantContextHostUiNotification {
+    excludeTags?: string[];
+    includeTags?: string[];
+    // (undocumented)
+    type: "aiAssistantContext";
+}
 
 // @alpha
 export interface IApiTokenAuthCredentials {
@@ -64,6 +93,18 @@ export interface IAppInstance extends IPluggableApplicationMountHandle {
 
 // @alpha
 export type IAuthCredentials = IContextDeferredAuthCredentials | IApiTokenAuthCredentials | IJwtAuthCredentials;
+
+// @alpha
+export interface ICloseAiAssistantHostUiNotification {
+    // (undocumented)
+    type: "closeAiAssistant";
+}
+
+// @alpha
+export interface ICloseAiAssistantRequestedEvent extends IPluggableAppEvent {
+    // (undocumented)
+    readonly type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CLOSE_REQUESTED";
+}
 
 // @alpha
 export interface IContextDeferredAuthCredentials {
@@ -108,13 +149,14 @@ export interface IHostUiMountOptions {
     container: HTMLElement;
     ctx: IPlatformContext;
     navigate: (url: string) => void;
+    onAiAssistantOpenChange?: (open: boolean) => void;
     pathname: string;
     replace: (url: string) => void;
     resolvedApplications: PluggableApplicationRegistryItem[];
 }
 
 // @alpha
-export type IHostUiNotification = INewDeploymentAvailableHostUiNotification;
+export type IHostUiNotification = INewDeploymentAvailableHostUiNotification | IOpenAiAssistantHostUiNotification | ICloseAiAssistantHostUiNotification | IAiAssistantContextHostUiNotification;
 
 // @alpha
 export interface IJwtAuthCredentials {
@@ -132,6 +174,25 @@ export { ILocale }
 export interface INewDeploymentAvailableHostUiNotification {
     commitHash: string;
     type: "newDeploymentAvailable";
+}
+
+// @alpha
+export interface IOpenAiAssistantHostUiNotification {
+    question?: string;
+    // (undocumented)
+    type: "openAiAssistant";
+    userContext?: IGenAIUserContext;
+}
+
+// @alpha
+export interface IOpenAiAssistantRequestedEvent extends IPluggableAppEvent {
+    // (undocumented)
+    readonly payload: {
+        readonly question?: string;
+        readonly userContext?: IGenAIUserContext;
+    };
+    // (undocumented)
+    readonly type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.OPEN_REQUESTED";
 }
 
 // @alpha
@@ -217,6 +278,7 @@ export interface IPluggableAppEvent {
 
 // @alpha
 export interface IPluggableApplicationMountHandle {
+    setAiAssistantOpen?: (open: boolean) => void;
     unmount(): void;
     updateContext?: (ctx: IPlatformContext) => void;
 }
@@ -254,7 +316,16 @@ export interface IReloadPlatformContextRequestedEvent extends IPluggableAppEvent
 }
 
 // @alpha
+export function isAiAssistantContextChangedEvent(obj: unknown): obj is IAiAssistantContextChangedEvent;
+
+// @alpha
+export function isCloseAiAssistantRequestedEvent(obj: unknown): obj is ICloseAiAssistantRequestedEvent;
+
+// @alpha
 export function isDocumentTitleChangedEvent(obj: unknown): obj is IDocumentTitleChangedEvent;
+
+// @alpha
+export function isOpenAiAssistantRequestedEvent(obj: unknown): obj is IOpenAiAssistantRequestedEvent;
 
 // @alpha
 export function isPlatformContextV1(context: unknown): context is IPlatformContextV1;
@@ -283,6 +354,12 @@ export const LIB_NAME: string;
 export const LIB_VERSION: string;
 
 // @alpha
+export function openAiAssistantRequested(payload?: {
+    question?: string;
+    userContext?: IGenAIUserContext;
+}): IOpenAiAssistantRequestedEvent;
+
+// @alpha
 export enum PantherTier {
     // (undocumented)
     DEMO = "DEMO",
@@ -300,6 +377,9 @@ export enum PantherTier {
 export const PluggableAppEventType: {
     readonly RELOAD_PLATFORM_CONTEXT_REQUESTED: "GDC.PLUGGABLE_APP/EVT.RELOAD_PLATFORM_CONTEXT.REQUESTED";
     readonly DOCUMENT_TITLE_CHANGED: "GDC.PLUGGABLE_APP/EVT.DOCUMENT_TITLE.CHANGED";
+    readonly AI_ASSISTANT_OPEN_REQUESTED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.OPEN_REQUESTED";
+    readonly AI_ASSISTANT_CLOSE_REQUESTED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CLOSE_REQUESTED";
+    readonly AI_ASSISTANT_CONTEXT_CHANGED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CONTEXT_CHANGED";
 };
 
 // @alpha

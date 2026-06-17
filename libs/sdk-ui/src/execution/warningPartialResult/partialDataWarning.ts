@@ -10,7 +10,8 @@ const COMPACT_FORMAT_THRESHOLD = 10000;
 const COMPACT_FORMATTING_OPTIONS = { style: "decimal", notation: "compact" } as const;
 
 type LimitBreakKind = "rows" | "columns" | "cells" | "unknown";
-type KnownLimitBreaksByKind = Partial<Record<Exclude<LimitBreakKind, "unknown">, IExecutionResultLimitBreak>>;
+type KnownLimitBreakKind = Exclude<LimitBreakKind, "unknown">;
+type KnownLimitBreaksByKind = Partial<Record<KnownLimitBreakKind, IExecutionResultLimitBreak>>;
 
 /**
  * @internal
@@ -19,6 +20,52 @@ export interface IPartialDataWarningMessage {
     id: string;
     values?: Record<string, string | undefined>;
 }
+
+interface IMessagePair {
+    withOverflow: IPartialDataWarningMessage;
+    unknownTotal: IPartialDataWarningMessage;
+}
+
+// Canonical order in which limit break kinds appear in the combined messages.
+const KIND_ORDER: KnownLimitBreakKind[] = ["columns", "cells", "rows"];
+
+const VALUE_KEYS: Record<KnownLimitBreakKind, { limit: string; overflow: string }> = {
+    columns: { limit: "columnLimit", overflow: "columnOverflow" },
+    cells: { limit: "cellLimit", overflow: "cellOverflow" },
+    rows: { limit: "rowLimit", overflow: "rowOverflow" },
+};
+
+// Maps the set of broken limit kinds (in canonical order, comma-joined) to its message pair.
+const MESSAGES_BY_KINDS: Record<string, IMessagePair> = {
+    columns: {
+        withOverflow: messages.columnsDescription,
+        unknownTotal: messages.columnsDescriptionUnknownTotal,
+    },
+    cells: {
+        withOverflow: messages.cellsDescription,
+        unknownTotal: messages.cellsDescriptionUnknownTotal,
+    },
+    rows: {
+        withOverflow: messages.rowsDescription,
+        unknownTotal: messages.rowsDescriptionUnknownTotal,
+    },
+    "columns,rows": {
+        withOverflow: messages.columnsRowsDescription,
+        unknownTotal: messages.columnsRowsDescriptionUnknownTotal,
+    },
+    "columns,cells": {
+        withOverflow: messages.columnsCellsDescription,
+        unknownTotal: messages.columnsCellsDescriptionUnknownTotal,
+    },
+    "cells,rows": {
+        withOverflow: messages.cellsRowsDescription,
+        unknownTotal: messages.cellsRowsDescriptionUnknownTotal,
+    },
+    "columns,cells,rows": {
+        withOverflow: messages.columnsCellsRowsDescription,
+        unknownTotal: messages.columnsCellsRowsDescriptionUnknownTotal,
+    },
+};
 
 function getLimitBreakKind(limitBreak: IExecutionResultLimitBreak): LimitBreakKind {
     return executionResultLimitTypeToKind(limitBreak.limitType);
@@ -53,76 +100,21 @@ function getLimitBreaksByKind(limitBreaks: IExecutionResultLimitBreak[]): KnownL
     }, {} as KnownLimitBreaksByKind);
 }
 
-function getRowsAndColumnsDetailMessage(
-    rowLimitBreak: IExecutionResultLimitBreak,
-    columnLimitBreak: IExecutionResultLimitBreak,
+function buildValues(
+    byKind: KnownLimitBreaksByKind,
+    presentKinds: KnownLimitBreakKind[],
     intl: IntlShape,
-): IPartialDataWarningMessage {
-    const values = {
-        rowLimit: formatLimit(rowLimitBreak, intl),
-        columnLimit: formatLimit(columnLimitBreak, intl),
-        rowOverflow: formatOverflow(rowLimitBreak, intl),
-        columnOverflow: formatOverflow(columnLimitBreak, intl),
-    };
+): Record<string, string | undefined> {
+    const values: Record<string, string | undefined> = {};
 
-    if (values.rowOverflow && values.columnOverflow) {
-        return { ...messages.rowsColumnsDescription, values };
-    }
+    presentKinds.forEach((kind) => {
+        const limitBreak = byKind[kind]!;
+        const keys = VALUE_KEYS[kind];
+        values[keys.limit] = formatLimit(limitBreak, intl);
+        values[keys.overflow] = formatOverflow(limitBreak, intl);
+    });
 
-    if (values.rowOverflow) {
-        return { ...messages.rowsColumnsDescriptionUnknownColumnTotal, values };
-    }
-
-    if (values.columnOverflow) {
-        return { ...messages.rowsColumnsDescriptionUnknownRowTotal, values };
-    }
-
-    return { ...messages.rowsColumnsDescriptionUnknownTotal, values };
-}
-
-function getRowsDetailMessage(
-    rowLimitBreak: IExecutionResultLimitBreak,
-    intl: IntlShape,
-): IPartialDataWarningMessage {
-    const values = {
-        rowLimit: formatLimit(rowLimitBreak, intl),
-        rowOverflow: formatOverflow(rowLimitBreak, intl),
-    };
-
-    return {
-        ...(values.rowOverflow ? messages.rowsDescription : messages.rowsDescriptionUnknownTotal),
-        values,
-    };
-}
-
-function getColumnsDetailMessage(
-    columnLimitBreak: IExecutionResultLimitBreak,
-    intl: IntlShape,
-): IPartialDataWarningMessage {
-    const values = {
-        columnLimit: formatLimit(columnLimitBreak, intl),
-        columnOverflow: formatOverflow(columnLimitBreak, intl),
-    };
-
-    return {
-        ...(values.columnOverflow ? messages.columnsDescription : messages.columnsDescriptionUnknownTotal),
-        values,
-    };
-}
-
-function getCellsDetailMessage(
-    cellLimitBreak: IExecutionResultLimitBreak,
-    intl: IntlShape,
-): IPartialDataWarningMessage {
-    const values = {
-        cellLimit: formatLimit(cellLimitBreak, intl),
-        cellOverflow: formatOverflow(cellLimitBreak, intl),
-    };
-
-    return {
-        ...(values.cellOverflow ? messages.cellsDescription : messages.cellsDescriptionUnknownTotal),
-        values,
-    };
+    return values;
 }
 
 /**
@@ -133,23 +125,21 @@ export function getPartialDataWarningMessage(
     intl: IntlShape,
 ): IPartialDataWarningMessage {
     const byKind = getLimitBreaksByKind(limitBreaks);
-    const rowLimitBreak = byKind.rows;
-    const columnLimitBreak = byKind.columns;
+    const presentKinds = KIND_ORDER.filter((kind) => byKind[kind]);
 
-    if (rowLimitBreak) {
-        return columnLimitBreak
-            ? getRowsAndColumnsDetailMessage(rowLimitBreak, columnLimitBreak, intl)
-            : getRowsDetailMessage(rowLimitBreak, intl);
+    const messagePair = MESSAGES_BY_KINDS[presentKinds.join(",")];
+    if (!messagePair) {
+        return messages.description;
     }
 
-    if (columnLimitBreak) {
-        return getColumnsDetailMessage(columnLimitBreak, intl);
-    }
+    const values = buildValues(byKind, presentKinds, intl);
 
-    const cellLimitBreak = byKind.cells;
-    if (cellLimitBreak) {
-        return getCellsDetailMessage(cellLimitBreak, intl);
-    }
+    // Overflow can only be rendered when it is known for every broken limit; otherwise the
+    // warning omits the exact amounts and falls back to the "unknown total" wording.
+    const allOverflowsKnown = presentKinds.every((kind) => values[VALUE_KEYS[kind].overflow] !== undefined);
 
-    return messages.description;
+    return {
+        ...(allOverflowsKnown ? messagePair.withOverflow : messagePair.unknownTotal),
+        values,
+    };
 }

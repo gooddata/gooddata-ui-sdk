@@ -1,85 +1,40 @@
 // (C) 2026 GoodData Corporation
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import { IntlProvider } from "react-intl";
 import { action } from "storybook/actions";
 
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
-import {
-    type IUiLabelsPickerItem,
-    UiAddGranteeDialog,
-    UiGranteeRow,
-    UiGranteeRowControls,
-} from "@gooddata/sdk-ui-kit";
+import { type IUiPickedGrantee, UiAddGranteeDialog } from "@gooddata/sdk-ui-kit";
 
 import { type IStoryParameters, State } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
-const LABELS: IUiLabelsPickerItem[] = [
-    { id: "id", label: "Customer ID", kind: "primary", locked: true },
-    { id: "name", label: "Customer Name", kind: "default" },
-    { id: "email", label: "Customer Email" },
-    { id: "ssn", label: "Customer SSN" },
-];
+import { loadOptions } from "./_helpers/granteeTestData.js";
 
-function EmptyExample() {
-    const [searchQuery, setSearchQuery] = useState("");
+function Example({ initialPicked = [] as IUiPickedGrantee[] }) {
+    const [picked, setPicked] = useState<IUiPickedGrantee[]>(initialPicked);
+    const handleChange = useCallback((next: IUiPickedGrantee[]) => {
+        action("selected grantees change")(next);
+        setPicked(next);
+    }, []);
+
     return (
         <IntlProvider locale={DEFAULT_LANGUAGE} messages={DEFAULT_MESSAGES[DEFAULT_LANGUAGE]}>
-            <div className="screenshot-target" style={{ padding: 24, background: "rgba(20,56,93,0.08)" }}>
+            {/* Visible placeholder so the screenshot capture has a target in
+                the page DOM — the modal itself renders through `FloatingPortal`. */}
+            <div className="screenshot-target" style={{ minHeight: 400 }}>
                 <UiAddGranteeDialog
                     isOpen
                     objectTitle="Customer"
-                    searchQuery={searchQuery}
-                    onSearchQueryChange={(next) => {
-                        action("search change")(next);
-                        setSearchQuery(next);
-                    }}
+                    loadOptions={loadOptions}
+                    selectedGrantees={picked}
+                    onSelectedGranteesChange={handleChange}
                     onBack={action("back")}
                     onClose={action("close")}
                     onCancel={action("cancel")}
-                    onAdd={action("add")}
-                    isAddDisabled
-                />
-            </div>
-        </IntlProvider>
-    );
-}
-
-function WithGranteeExample() {
-    const [searchQuery, setSearchQuery] = useState("");
-    return (
-        <IntlProvider locale={DEFAULT_LANGUAGE} messages={DEFAULT_MESSAGES[DEFAULT_LANGUAGE]}>
-            <div className="screenshot-target" style={{ padding: 24, background: "rgba(20,56,93,0.08)" }}>
-                <UiAddGranteeDialog
-                    isOpen
-                    objectTitle="Customer"
-                    searchQuery={searchQuery}
-                    onSearchQueryChange={(next) => {
-                        action("search change")(next);
-                        setSearchQuery(next);
-                    }}
-                    onBack={action("back")}
-                    onClose={action("close")}
-                    onCancel={action("cancel")}
-                    onAdd={action("add")}
-                    selectedGrantee={
-                        <UiGranteeRow
-                            kind="user"
-                            name="Julie Better"
-                            email="julie.better@company.com"
-                            controls={
-                                <UiGranteeRowControls
-                                    labels={LABELS}
-                                    selectedLabelIds={["id", "name", "email", "ssn"]}
-                                    permissionLevel="VIEW"
-                                    onLabelsChange={action("Julie → labels change")}
-                                    onPermissionChange={action("Julie → permission change")}
-                                />
-                            }
-                        />
-                    }
+                    onShare={action("share")}
                 />
             </div>
         </IntlProvider>
@@ -90,24 +45,31 @@ export default {
     title: "15 Ui/UiAddGranteeDialog",
 };
 
-export function Empty() {
-    return <EmptyExample />;
-}
-Empty.parameters = {
-    kind: "empty",
+const screenshotParams = {
     screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
-} satisfies IStoryParameters;
+} as const;
+
+export function Empty() {
+    return <Example />;
+}
+Empty.parameters = { kind: "empty", ...screenshotParams } satisfies IStoryParameters;
 
 export function WithGrantee() {
-    return <WithGranteeExample />;
+    return (
+        <Example
+            initialPicked={[
+                {
+                    id: "u:julie",
+                    kind: "user",
+                    name: "Julie Better",
+                    email: "julie.better@company.com",
+                    permissionLevel: "VIEW",
+                },
+            ]}
+        />
+    );
 }
-WithGrantee.parameters = {
-    kind: "with-grantee",
-    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
-} satisfies IStoryParameters;
+WithGrantee.parameters = { kind: "with-grantee", ...screenshotParams } satisfies IStoryParameters;
 
-export const EmptyThemed = () => wrapWithTheme(<EmptyExample />);
-EmptyThemed.parameters = {
-    kind: "themed-empty",
-    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
-} satisfies IStoryParameters;
+export const EmptyThemed = () => wrapWithTheme(<Example />);
+EmptyThemed.parameters = { kind: "themed-empty", ...screenshotParams } satisfies IStoryParameters;

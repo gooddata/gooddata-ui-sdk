@@ -16,5 +16,10 @@ export function* changeParameterValuesHandler(
     _ctx: DashboardContext,
     cmd: IChangeParameterValues,
 ): SagaIterator<void> {
-    yield put(tabsActions.setParameterRuntimeValues({ values: cmd.payload.parameters }));
+    yield put(
+        tabsActions.setParameterRuntimeValues({
+            values: cmd.payload.parameters,
+            tabLocalIdentifier: cmd.payload.tabLocalIdentifier,
+        }),
+    );
 }

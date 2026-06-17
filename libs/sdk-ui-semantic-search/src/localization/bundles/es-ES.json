@@ -8,7 +8,7 @@
     "semantic-search.id": "ID",
     "semantic-search.tags": "Etiquetas",
     "semantic-search.match": "{score}% coincidencia",
-    "semantic-search.previous-search": "Búsqueda{query} anterior: ",
+    "semantic-search.previous-search": "Búsqueda anterior: {query}",
     "semantic-search.tree": "Árbol de búsqueda semántica",
     "semantic-search.tree.history": "Historial del árbol de búsqueda semántica",
     "semantic-search.edit": "Abrir",

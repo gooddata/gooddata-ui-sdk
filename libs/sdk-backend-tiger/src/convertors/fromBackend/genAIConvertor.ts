@@ -3,6 +3,7 @@
 import { v4 as uuidv4 } from "uuid";
 
 import {
+    type AiAlertProposal,
     type AiContent,
     type AiConversationItemResponse,
     type AiConversationResponse,
@@ -13,8 +14,11 @@ import {
     type AiSearchRelationship,
     type AiSuggestions,
     type AiWhatIfScenario,
+    type AttributeItem,
+    type FilterDefinition,
 } from "@gooddata/api-client-tiger";
 import {
+    type IAlertProposal,
     type IChatConversation,
     type IChatConversationContent,
     type IChatConversationError,
@@ -32,14 +36,21 @@ import {
 } from "@gooddata/sdk-code-convertors";
 import {
     type GenAIObjectType,
+    type IAlertAnomalyDetectionGranularity,
+    type IAlertAnomalyDetectionSensitivity,
+    type IAlertTriggerInterval,
+    type IAlertTriggerMode,
+    type IAutomationUserRecipient,
     type ISemanticSearchRelationship,
     type ISemanticSearchResultItem,
+    type IdentifierRef,
     type ObjectType,
     assertNever,
 } from "@gooddata/sdk-model";
 
 import { getFormatByGranularity } from "../../utils/dateUtils.js";
 
+import { convertFilter } from "./afm/FilterConverter.js";
 import { convertMeasure } from "./afm/MeasureConverter.js";
 import { convertAttribute } from "./AttributeConvertor.js";
 import type { FormattingLocale } from "./dateFormatting/defaultDateFormatter.js";
@@ -134,6 +145,11 @@ function convertChatConversationContentFromBackend(
                             return {
                                 type: "text",
                                 text: part.text,
+                            };
+                        case "alertProposal":
+                            return {
+                                type: "alertProposal",
+                                alertProposal: convertAlertProposalFrom(part.alertProposal),
                             };
                         case "visualization":
                             return {
@@ -258,10 +274,7 @@ function convertWhatIf(whatIf: AiWhatIfScenario): IChatWhatIfDefinition {
                 label: s.label,
                 adjustments: s.adjustments.map((a) => ({
                     scenarioMaql: a.scenarioMaql,
-                    ref: {
-                        identifier: a.metricId,
-                        type: (a.metricType === "metric" ? "measure" : a.metricType) as ObjectType,
-                    },
+                    ref: buildObjRef(a.metricId, a.metricType),
                 })),
             };
         }),
@@ -309,5 +322,99 @@ export function convertChatSuggestionItemFromBackend(
             label: action.label,
             query: action.query,
         })),
+    };
+}
+
+function convertAlertProposalFrom(
+    alertProposal: AiAlertProposal | null | undefined,
+): IAlertProposal | undefined {
+    if (!alertProposal) {
+        return undefined;
+    }
+
+    return {
+        title: alertProposal.title,
+        description: (alertProposal.description ?? "") as string,
+        baseMetric: {
+            id: buildObjRef(alertProposal.metricId, "metric"),
+            title: alertProposal.metricTitle as string,
+            format: alertProposal.metricFormat as string,
+        },
+        ...(alertProposal.compareMetricId
+            ? {
+                  compareMetric: {
+                      id: buildObjRef(alertProposal.compareMetricId as string, "metric"),
+                      title: alertProposal.compareMetricTitle as string,
+                      format: alertProposal.compareMetricFormat as string,
+                  },
+              }
+            : {}),
+        ...(alertProposal.dateDatasetId
+            ? {
+                  date: {
+                      id: buildObjRef(alertProposal.dateDatasetId as string, "dataset"),
+                      title: alertProposal.dateDatasetTitle as string,
+                  },
+              }
+            : {}),
+        ...(alertProposal.notificationChannelId
+            ? {
+                  notificationChannel: {
+                      id: buildObjRef(alertProposal.notificationChannelId as string, "notificationChannel"),
+                      name: alertProposal.notificationChannelName as string,
+                  },
+              }
+            : {}),
+        ...(alertProposal.dashboardId
+            ? {
+                  dashboard: {
+                      id: buildObjRef(alertProposal.dashboardId as string, "dashboard"),
+                      title: alertProposal.dashboardTitle as string,
+                  },
+              }
+            : {}),
+        ...(alertProposal.automationId
+            ? {
+                  automation: buildObjRef(alertProposal.automationId as string, "automation"),
+              }
+            : {}),
+
+        ...(alertProposal.trigger || alertProposal.triggerInterval || alertProposal.cron
+            ? {
+                  trigger: {
+                      trigger: alertProposal.trigger as IAlertTriggerMode,
+                      interval: alertProposal.triggerInterval as IAlertTriggerInterval,
+                      cron: alertProposal.cron as string,
+                      timezone: alertProposal.timezone as string,
+                  },
+              }
+            : {}),
+
+        operator: alertProposal.operator,
+        arithmeticOperator: alertProposal.arithmeticOperator as string,
+        threshold: alertProposal.threshold as number,
+        fromValue: alertProposal.fromValue as number,
+        toValue: alertProposal.toValue as number,
+        granularity: alertProposal.granularity as IAlertAnomalyDetectionGranularity,
+        sensitivity: alertProposal.sensitivity as IAlertAnomalyDetectionSensitivity,
+
+        filters: alertProposal.filters?.map((f) => convertFilter(f as FilterDefinition)),
+        attributes: alertProposal.attributes?.map((a) => convertAttribute(a as AttributeItem)),
+        recipients: alertProposal.recipients?.map(
+            (r) =>
+                ({
+                    type: "user",
+                    id: r.id,
+                    name: r.label,
+                    email: r.email,
+                }) as IAutomationUserRecipient,
+        ),
+    };
+}
+
+function buildObjRef(identifier: string, type: ObjectType | "metric" | string): IdentifierRef {
+    return {
+        identifier,
+        type: (type === "metric" ? "measure" : type) as ObjectType,
     };
 }

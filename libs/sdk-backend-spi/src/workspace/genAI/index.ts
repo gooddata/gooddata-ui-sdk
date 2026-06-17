@@ -6,8 +6,13 @@ import type {
     GenAIChatInteractionUserFeedback,
     GenAIChatInteractionUserVisualisation,
     GenAIObjectType,
+    IAlertAnomalyDetectionGranularity,
+    IAlertAnomalyDetectionSensitivity,
+    IAlertTriggerInterval,
+    IAlertTriggerMode,
     IAllowedRelationshipType,
     IAttribute,
+    IAutomationRecipient,
     IFilter,
     IGenAIChangeAnalysisParams,
     IGenAIChatInteraction,
@@ -976,6 +981,7 @@ export type IChatConversationContent =
 export type IChatConversationMultipartPart =
     | IChatConversationTextContent
     | IChatConversationVisualisationContent
+    | IChatConversationAlertProposalContent
     | IChatConversationKeyDriverAnalysisContent
     | IChatConversationWhatIfContent
     | IChatConversationSearchContent;
@@ -1097,6 +1103,76 @@ export function isChatConversationVisualisationContent(
     content: IChatConversationMultipartPart,
 ): content is IChatConversationVisualisationContent {
     return content.type === "visualization";
+}
+
+/**
+ * Represents a proposal for an alert
+ * @internal
+ */
+export interface IAlertProposal {
+    title: string;
+    description: string;
+    baseMetric: {
+        id: ObjRef;
+        title: string;
+        format: string;
+    };
+    compareMetric?: {
+        id: ObjRef;
+        title: string;
+        format: string;
+    };
+    date?: {
+        id: ObjRef;
+        title: string;
+    };
+    notificationChannel?: {
+        id: ObjRef;
+        name: string;
+    };
+    dashboard?: {
+        id: ObjRef;
+        title: string;
+    };
+    automation?: ObjRef;
+
+    operator?: string;
+    arithmeticOperator?: string;
+    threshold?: number | string;
+    fromValue?: number | string;
+    toValue?: number | string;
+    granularity?: IAlertAnomalyDetectionGranularity;
+    sensitivity?: IAlertAnomalyDetectionSensitivity;
+
+    trigger?: {
+        trigger?: IAlertTriggerMode;
+        interval?: IAlertTriggerInterval;
+        cron?: string;
+        timezone?: string;
+    };
+
+    filters?: IFilter[];
+    attributes?: IAttribute[];
+    recipients?: IAutomationRecipient[];
+}
+
+/**
+ * GenAI Chat Conversation proposal content
+ * @internal
+ */
+export type IChatConversationAlertProposalContent = {
+    type: "alertProposal";
+    alertProposal?: IAlertProposal;
+};
+
+/**
+ * Is chat conversation alert proposal content
+ * @internal
+ */
+export function isChatConversationAlertProposalContent(
+    content: IChatConversationMultipartPart,
+): content is IChatConversationAlertProposalContent {
+    return content.type === "alertProposal";
 }
 
 /**

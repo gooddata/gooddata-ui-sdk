@@ -2866,6 +2866,87 @@ export interface AIAgentsApiUpdateEntityAgentsRequest {
 }
 
 // @public (undocumented)
+export interface AiAlertProposal {
+    // (undocumented)
+    [key: string]: any;
+    // (undocumented)
+    'arithmeticOperator'?: AiArithmeticoperator;
+    'attributes': Array<object>;
+    // (undocumented)
+    'automationId'?: AiAutomationid;
+    // (undocumented)
+    'compareMetricFormat'?: AiComparemetricformat;
+    // (undocumented)
+    'compareMetricId'?: AiComparemetricid;
+    // (undocumented)
+    'compareMetricTitle'?: AiComparemetrictitle;
+    // (undocumented)
+    'cron'?: AiCron;
+    'cta': string;
+    // (undocumented)
+    'dashboardId'?: AiDashboardid;
+    // (undocumented)
+    'dashboardTitle'?: AiDashboardtitle;
+    // (undocumented)
+    'dateDatasetId'?: AiDatedatasetid;
+    // (undocumented)
+    'dateDatasetTitle'?: AiDatedatasettitle;
+    // (undocumented)
+    'description'?: AiDescription;
+    'filters': Array<object>;
+    // (undocumented)
+    'forLabel'?: AiForlabel;
+    // (undocumented)
+    'forMode'?: AiFormode;
+    // (undocumented)
+    'fromValue'?: AiFromvalue;
+    // (undocumented)
+    'granularity'?: AiGranularity;
+    // (undocumented)
+    'metricFormat'?: AiMetricformat;
+    'metricId': string;
+    // (undocumented)
+    'metricTitle'?: AiMetrictitle;
+    'notificationChannelId': string;
+    // (undocumented)
+    'notificationChannelName'?: AiNotificationchannelname;
+    'operator': string;
+    'recipients': Array<AiAlertRecipient>;
+    // (undocumented)
+    'sensitivity'?: AiSensitivity;
+    // (undocumented)
+    'threshold'?: AiThreshold;
+    // (undocumented)
+    'timezone'?: AiTimezone;
+    'title': string;
+    // (undocumented)
+    'toValue'?: AiTovalue;
+    // (undocumented)
+    'trigger'?: AiTrigger;
+    // (undocumented)
+    'triggerInterval'?: AiTriggerinterval;
+}
+
+// @public (undocumented)
+export interface AiAlertProposalPart {
+    // (undocumented)
+    'alertProposal'?: AiAlertProposal | null;
+    'type'?: AiAlertProposalPartTypeEnum;
+}
+
+// @public (undocumented)
+export type AiAlertProposalPartTypeEnum = 'alertProposal';
+
+// @public (undocumented)
+export interface AiAlertRecipient {
+    // (undocumented)
+    'email'?: string | null;
+    // (undocumented)
+    'id'?: string | null;
+    'label': string;
+}
+
+// @public (undocumented)
 export interface AiAllowedRelationshipType {
     // (undocumented)
     'allowOrphans'?: boolean;
@@ -3243,6 +3324,10 @@ export interface AiAppDomainConversationsVisualizationRankingFilter {
 // @public (undocumented)
 export type AiAppDomainConversationsVisualizationRankingFilterTypeEnum = 'ranking_filter';
 
+// @public
+export interface AiArithmeticoperator {
+}
+
 // @public (undocumented)
 export interface AiAttributeFilter {
     // (undocumented)
@@ -3291,6 +3376,10 @@ export type AiAttributeSortItemDirectionEnum = 'ASC' | 'DESC';
 // @public (undocumented)
 export type AiAttributeSortItemTypeEnum = 'attribute_sort';
 
+// @public
+export interface AiAutomationid {
+}
+
 // @public (undocumented)
 export class AiBaseAPI {
     constructor(configuration?: AiConfiguration, basePath?: string, axios?: AxiosInstance);
@@ -3330,6 +3419,18 @@ export interface AiBucketRefObject {
 
 // @public (undocumented)
 export interface AiClusteringAmount {
+}
+
+// @public
+export interface AiComparemetricformat {
+}
+
+// @public
+export interface AiComparemetricid {
+}
+
+// @public
+export interface AiComparemetrictitle {
 }
 
 // @public (undocumented)
@@ -3565,6 +3666,26 @@ export interface AiCreateConversationRequest {
     'agentId'?: string | null;
 }
 
+// @public
+export interface AiCron {
+}
+
+// @public
+export interface AiDashboardid {
+}
+
+// @public
+export interface AiDashboardtitle {
+}
+
+// @public
+export interface AiDatedatasetid {
+}
+
+// @public
+export interface AiDatedatasettitle {
+}
+
 // @public (undocumented)
 export interface AiDateFilterAbsolute {
     // (undocumented)
@@ -3651,6 +3772,10 @@ export interface AiDeleteDocumentResponse {
     'message': string;
     // (undocumented)
     'success': boolean;
+}
+
+// @public
+export interface AiDescription {
 }
 
 // @public
@@ -3756,8 +3881,20 @@ export type AiFilterByValueTypeEnum = 'attribute_filter' | 'date_filter' | 'rank
 export interface AiForecastPeriod {
 }
 
+// @public
+export interface AiForlabel {
+}
+
+// @public
+export interface AiFormode {
+}
+
 // @public (undocumented)
 export interface AiFrom {
+}
+
+// @public
+export interface AiFromvalue {
 }
 
 // @public (undocumented)
@@ -3780,6 +3917,10 @@ export interface AiFunctionResultContent {
 
 // @public (undocumented)
 export type AiFunctionResultContentTypeEnum = 'toolResult';
+
+// @public
+export interface AiGranularity {
+}
 
 // @public (undocumented)
 export interface AiHTTPValidationError {
@@ -3928,6 +4069,10 @@ export interface AiMeasureValueRangeInner {
     'to': number;
 }
 
+// @public
+export interface AiMetricformat {
+}
+
 // @public (undocumented)
 export interface AiMetricSortItem {
     // (undocumented)
@@ -3962,6 +4107,10 @@ export interface AiMetricSortLocatorItem {
     'element'?: string;
     // (undocumented)
     'function'?: string;
+}
+
+// @public
+export interface AiMetrictitle {
 }
 
 // @public (undocumented)
@@ -4010,6 +4159,8 @@ export interface AiMultipartContent {
 
 // @public
 export type AiMultipartContentPartsInner = ({
+    type: 'alertProposal';
+} & AiAlertProposalPart) | ({
     type: 'kda';
 } & AiKeyDriverAnalysisPart) | ({
     type: 'searchResults';
@@ -4042,6 +4193,10 @@ export interface AiNegativeAttributeFilterBody {
     'notIn': AiAttributeFilterElements;
     // (undocumented)
     'usesArbitraryValues'?: boolean | null;
+}
+
+// @public
+export interface AiNotificationchannelname {
 }
 
 // @public (undocumented)
@@ -4488,6 +4643,10 @@ export interface AiSendMessageSearchOptions {
 }
 
 // @public
+export interface AiSensitivity {
+}
+
+// @public
 export interface AiSkillResponse {
     // (undocumented)
     'description': string;
@@ -4621,8 +4780,28 @@ export interface AiTextPart {
 // @public (undocumented)
 export type AiTextPartTypeEnum = 'text';
 
+// @public
+export interface AiThreshold {
+}
+
+// @public
+export interface AiTimezone {
+}
+
 // @public (undocumented)
 export interface AiTo {
+}
+
+// @public
+export interface AiTovalue {
+}
+
+// @public
+export interface AiTrigger {
+}
+
+// @public
+export interface AiTriggerinterval {
 }
 
 // @public

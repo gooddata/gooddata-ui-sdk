@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type IGenAIUserContext } from "@gooddata/sdk-model";
+
 import { type IPlatformContext } from "./platformContext.js";
 
 /**
@@ -10,6 +12,9 @@ import { type IPlatformContext } from "./platformContext.js";
 export const PluggableAppEventType = {
     RELOAD_PLATFORM_CONTEXT_REQUESTED: "GDC.PLUGGABLE_APP/EVT.RELOAD_PLATFORM_CONTEXT.REQUESTED",
     DOCUMENT_TITLE_CHANGED: "GDC.PLUGGABLE_APP/EVT.DOCUMENT_TITLE.CHANGED",
+    AI_ASSISTANT_OPEN_REQUESTED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.OPEN_REQUESTED",
+    AI_ASSISTANT_CLOSE_REQUESTED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CLOSE_REQUESTED",
+    AI_ASSISTANT_CONTEXT_CHANGED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CONTEXT_CHANGED",
 } as const;
 
 /**
@@ -130,6 +135,177 @@ export function isDocumentTitleChangedEvent(obj: unknown): obj is IDocumentTitle
     }
     const pageTitle = (payload as { pageTitle?: unknown }).pageTitle;
     return typeof pageTitle === "string" || pageTitle === undefined;
+}
+
+/**
+ * Event requesting the host to open its AI assistant chat.
+ *
+ * @remarks
+ * The host shell owns the AI assistant on hosted-application routes — a pluggable application must
+ * not render its own chat dialog there (two assistants would overlay each other and a duplicate
+ * could auto-open from the shared open-state, see LX-2544). Instead, its in-content entry points
+ * (e.g. a "Summarize" action) emit this event and the host opens its chat, optionally seeded with a
+ * question and the user's location context. Tag scoping for the assistant's object search is carried
+ * separately via {@link IAiAssistantContextChangedEvent}, which reflects the app's current view.
+ *
+ * @alpha
+ */
+export interface IOpenAiAssistantRequestedEvent extends IPluggableAppEvent {
+    readonly type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.OPEN_REQUESTED";
+    readonly payload: {
+        /**
+         * Question to seed the chat with. When omitted, the chat just opens.
+         */
+        readonly question?: string;
+        /**
+         * Context of the user's current location (e.g. the active dashboard and its widgets),
+         * passed to the assistant alongside the seeded question.
+         */
+        readonly userContext?: IGenAIUserContext;
+    };
+}
+
+/**
+ * Creates an {@link IOpenAiAssistantRequestedEvent}.
+ *
+ * @alpha
+ */
+export function openAiAssistantRequested(payload?: {
+    question?: string;
+    userContext?: IGenAIUserContext;
+}): IOpenAiAssistantRequestedEvent {
+    return { type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.OPEN_REQUESTED", payload: payload ?? {} };
+}
+
+/**
+ * Type guard for {@link IOpenAiAssistantRequestedEvent}.
+ *
+ * @remarks
+ * Validates the payload shape too (not just the type), so a malformed event — e.g. one emitted
+ * from JS or a mismatched remote module — is rejected rather than narrowed to a type whose later
+ * `payload.question` access would throw.
+ *
+ * @alpha
+ */
+export function isOpenAiAssistantRequestedEvent(obj: unknown): obj is IOpenAiAssistantRequestedEvent {
+    if (
+        typeof obj !== "object" ||
+        obj === null ||
+        (obj as { type?: unknown }).type !== "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.OPEN_REQUESTED"
+    ) {
+        return false;
+    }
+    const payload = (obj as { payload?: unknown }).payload;
+    if (typeof payload !== "object" || payload === null || Array.isArray(payload)) {
+        return false;
+    }
+    const { question, userContext } = payload as { question?: unknown; userContext?: unknown };
+    const questionOk = typeof question === "string" || question === undefined;
+    // userContext is an opaque structured object; validate only that it is an object when present
+    // so a later property read on the host side cannot throw.
+    const userContextOk =
+        userContext === undefined || (typeof userContext === "object" && userContext !== null);
+    return questionOk && userContextOk;
+}
+
+/**
+ * Event requesting the host to close its AI assistant chat.
+ *
+ * @remarks
+ * Counterpart to {@link IOpenAiAssistantRequestedEvent}. A pluggable application emits this when one
+ * of its in-content controls toggles the assistant closed (e.g. an embedded AI button), so the
+ * host-owned chat closes in step with the application.
+ *
+ * @alpha
+ */
+export interface ICloseAiAssistantRequestedEvent extends IPluggableAppEvent {
+    readonly type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CLOSE_REQUESTED";
+}
+
+/**
+ * Creates an {@link ICloseAiAssistantRequestedEvent}.
+ *
+ * @alpha
+ */
+export function closeAiAssistantRequested(): ICloseAiAssistantRequestedEvent {
+    return { type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CLOSE_REQUESTED" };
+}
+
+/**
+ * Type guard for {@link ICloseAiAssistantRequestedEvent}.
+ *
+ * @alpha
+ */
+export function isCloseAiAssistantRequestedEvent(obj: unknown): obj is ICloseAiAssistantRequestedEvent {
+    return (
+        typeof obj === "object" &&
+        obj !== null &&
+        (obj as { type?: unknown }).type === "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CLOSE_REQUESTED"
+    );
+}
+
+/**
+ * Event informing the host of the active application's current AI-assistant tag scope.
+ *
+ * @remarks
+ * A hosted application can constrain its catalog to objects tagged in a certain way (e.g. AD's
+ * `includeObjectsWithTags` route filter). Because the host owns the single chat instance on hosted
+ * routes, the application forwards its current tag scope through this event so the host assistant's
+ * object search/autocomplete stays within the same scope the rest of the application enforces.
+ * The host keeps the latest reported scope and clears it (empty arrays / omitted) when the
+ * application no longer constrains its catalog.
+ *
+ * @alpha
+ */
+export interface IAiAssistantContextChangedEvent extends IPluggableAppEvent {
+    readonly type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CONTEXT_CHANGED";
+    readonly payload: {
+        /**
+         * Tag identifiers the assistant's object search should be restricted to. Empty/omitted
+         * means no include filter.
+         */
+        readonly includeTags?: string[];
+        /**
+         * Tag identifiers the assistant's object search should exclude. Empty/omitted means no
+         * exclude filter.
+         */
+        readonly excludeTags?: string[];
+    };
+}
+
+/**
+ * Creates an {@link IAiAssistantContextChangedEvent}.
+ *
+ * @alpha
+ */
+export function aiAssistantContextChanged(payload?: {
+    includeTags?: string[];
+    excludeTags?: string[];
+}): IAiAssistantContextChangedEvent {
+    return { type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CONTEXT_CHANGED", payload: payload ?? {} };
+}
+
+/**
+ * Type guard for {@link IAiAssistantContextChangedEvent}.
+ *
+ * @alpha
+ */
+export function isAiAssistantContextChangedEvent(obj: unknown): obj is IAiAssistantContextChangedEvent {
+    if (
+        typeof obj !== "object" ||
+        obj === null ||
+        (obj as { type?: unknown }).type !== "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CONTEXT_CHANGED"
+    ) {
+        return false;
+    }
+    const payload = (obj as { payload?: unknown }).payload;
+    if (typeof payload !== "object" || payload === null || Array.isArray(payload)) {
+        return false;
+    }
+    const { includeTags, excludeTags } = payload as { includeTags?: unknown; excludeTags?: unknown };
+    const isStringArrayOrUndefined = (value: unknown): boolean =>
+        value === undefined || (Array.isArray(value) && value.every((item) => typeof item === "string"));
+    return isStringArrayOrUndefined(includeTags) && isStringArrayOrUndefined(excludeTags);
 }
 
 /**
@@ -297,6 +473,18 @@ export interface IPluggableApplicationMountHandle {
      * Host uses this to push down context changes after initial mount.
      */
     updateContext?: (ctx: IPlatformContext) => void;
+
+    /**
+     * Pushes the host-owned AI assistant chat open-state into the pluggable application.
+     *
+     * @remarks
+     * On hosted routes the host owns the single chat instance; an application that exposes its own
+     * assistant controls (e.g. an embedded AI button, or the `toggleAIAssistant` postMessage command
+     * whose result is echoed to an embedding client) needs to know the real open-state to keep those
+     * controls and their reported results aligned with what the user sees. The host calls this
+     * whenever its chat opens or closes. Applications without such controls may omit it.
+     */
+    setAiAssistantOpen?: (open: boolean) => void;
 }
 
 /**

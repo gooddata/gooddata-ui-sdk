@@ -135,11 +135,13 @@ export { buildTooltipLocalizedStrings } from "./customTooltip/localizedStrings.j
 export { resolveMeasureLdmIdentifier } from "./customTooltip/measureLdmIdentifier.js";
 export {
     buildTooltipExecution,
+    buildTooltipExecutionFromConfig,
     type IBuildTooltipExecutionOptions,
     type ITooltipExecution,
     type ITooltipExecutionBundle,
     type ITooltipExecutionMeta,
 } from "./customTooltip/tooltipExecution.js";
+export { buildLookupTable } from "./customTooltip/tooltipLookup.js";
 export { buildKeySegment, joinKeySegments } from "./customTooltip/tooltipKey.js";
 export { composeCustomTooltipSectionHtml } from "./customTooltip/composeSectionHtml.js";
 export {

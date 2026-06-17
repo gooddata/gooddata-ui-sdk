@@ -3,7 +3,7 @@
 import type { ICatalogItem } from "../catalogItem/types.js";
 
 /**
- * @internal
+ * @public
  */
 export type OpenHandlerEvent = {
     /**
@@ -25,13 +25,13 @@ export type OpenHandlerEvent = {
 };
 
 /**
- * @internal
+ * @public
  */
 export type EditHandlerEvent = OpenHandlerEvent;
 
 /**
  * Generic detail drawer action definition.
- * @internal
+ * @public
  */
 export interface ICatalogDetailAction {
     id: string;

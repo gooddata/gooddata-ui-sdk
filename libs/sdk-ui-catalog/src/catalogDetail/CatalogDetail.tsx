@@ -7,7 +7,7 @@ import { UiDrawer } from "@gooddata/sdk-ui-kit";
 import { CatalogDetailContent, type ICatalogDetailContentProps } from "./CatalogDetailContent.js";
 
 /**
- * @internal
+ * @public
  */
 export interface ICatalogDetailProps extends ICatalogDetailContentProps {
     /**

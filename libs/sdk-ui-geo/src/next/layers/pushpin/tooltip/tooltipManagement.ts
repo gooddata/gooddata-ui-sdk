@@ -19,6 +19,7 @@ import {
 import { type IGeoLayerTooltipLookup } from "../../common/customTooltipExecution.js";
 import { buildCustomTooltipPieces, composeTooltipBody } from "../../common/customTooltipSection.js";
 import { type IPopupFacade } from "../../common/mapFacade.js";
+import { presentTooltip } from "../../common/tooltipPlacement.js";
 import {
     type TooltipFormatConfig,
     type TooltipPayload,
@@ -311,11 +312,7 @@ export function createPushpinTooltipConfig(
                 tooltipLookup,
             );
 
-            tooltip
-                .setLngLat(coordinates)
-                .setHTML(tooltipHtml)
-                .setMaxWidth(`${maxTooltipContentWidth}px`)
-                .addTo(map);
+            presentTooltip(tooltip, map, coordinates, tooltipHtml, maxTooltipContentWidth);
         },
 
         hideTooltip(map) {

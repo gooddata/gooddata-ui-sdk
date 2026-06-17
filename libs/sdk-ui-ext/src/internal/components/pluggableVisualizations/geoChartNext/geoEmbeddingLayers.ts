@@ -78,10 +78,11 @@ function attachLayerSpecificFilters(layer: IGeoLayer, routedByLayerId: Map<strin
 
 function sanitizeLayerForEmbedding(layer: IGeoLayer): IGeoLayer {
     const layerConfig =
-        layer.config?.colorPalette || layer.config?.colorMapping?.length
+        layer.config?.colorPalette || layer.config?.colorMapping?.length || layer.config?.customTooltip
             ? {
                   ...(layer.config?.colorPalette ? { colorPalette: layer.config.colorPalette } : {}),
                   ...(layer.config?.colorMapping?.length ? { colorMapping: layer.config.colorMapping } : {}),
+                  ...(layer.config?.customTooltip ? { customTooltip: layer.config.customTooltip } : {}),
               }
             : undefined;
     const base = {

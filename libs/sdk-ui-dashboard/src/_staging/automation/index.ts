@@ -13,8 +13,10 @@ import {
     type IExportDefinitionMetadataObjectDefinition,
     type IExportDefinitionVisualizationObjectRequestPayload,
     type IFilter,
+    type IInsightParameterValue,
     type IUser,
     type IWorkspaceUser,
+    idRef,
     isExportDefinitionDashboardRequestPayload,
     isExportDefinitionVisualizationObjectRequestPayload,
     isFilter,
@@ -181,6 +183,20 @@ export function setExportParametersByTab(
             return exportDefinition;
         }),
     };
+}
+
+/**
+ * Converts stored export parameter overrides ({@link IDashboardExportParameter}, value carried as a
+ * string) to {@link IInsightParameterValue} runtime values. Non-finite values are dropped.
+ */
+export function exportParametersToValues(stored: IDashboardExportParameter[]): IInsightParameterValue[] {
+    return stored.reduce<IInsightParameterValue[]>((acc, row) => {
+        const value = Number(row.value);
+        if (Number.isFinite(value)) {
+            acc.push({ ref: idRef(row.id, "parameter"), value });
+        }
+        return acc;
+    }, []);
 }
 
 export const getAutomationVisualizationFilters = (

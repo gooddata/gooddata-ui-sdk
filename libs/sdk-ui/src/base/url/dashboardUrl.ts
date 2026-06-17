@@ -111,7 +111,7 @@ export const buildDashboardUrl: IDashboardUrlBuilder = ({
     // standalone app instead carries the workspace inside the hash under /dashboards/#.
     if (useHostRoute) {
         const basePath = isEmbedded
-            ? `/workspace/${workspaceId}/dashboards/embedded/#`
+            ? `/embedded/workspace/${workspaceId}/dashboards/#`
             : `/workspace/${workspaceId}/dashboards/#`;
         return appendQueryParams(`${basePath}${route}`, queryParams);
     }

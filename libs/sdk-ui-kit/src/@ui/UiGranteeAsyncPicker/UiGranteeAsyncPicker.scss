@@ -1,0 +1,28 @@
+.gd-ui-kit-grantee-async-picker {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    &__empty-state {
+        min-height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-size: 14px;
+        line-height: 20px;
+        color: var(--gd-palette-complementary-6);
+    }
+
+    &__picked-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__picked-item {
+        display: block;
+    }
+}

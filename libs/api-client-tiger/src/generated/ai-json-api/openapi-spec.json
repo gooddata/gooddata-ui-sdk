@@ -2156,6 +2156,444 @@
                 "title": "AgentListResponse",
                 "description": "List of agents accessible to the calling user."
             },
+            "AlertProposal": {
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "title": "Title",
+                        "description": "Alert title."
+                    },
+                    "metricId": {
+                        "type": "string",
+                        "title": "Metricid",
+                        "description": "Metric identifier to monitor."
+                    },
+                    "operator": {
+                        "type": "string",
+                        "title": "Operator",
+                        "description": "Alert condition operator."
+                    },
+                    "notificationChannelId": {
+                        "type": "string",
+                        "title": "Notificationchannelid",
+                        "description": "Notification channel identifier."
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description",
+                        "description": "Alert description."
+                    },
+                    "automationId": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Automationid",
+                        "description": "Automation identifier proposed for creation."
+                    },
+                    "metricTitle": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Metrictitle",
+                        "description": "Metric display title."
+                    },
+                    "metricFormat": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Metricformat",
+                        "description": "Metric display format."
+                    },
+                    "threshold": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Threshold",
+                        "description": "Comparison threshold."
+                    },
+                    "fromValue": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Fromvalue",
+                        "description": "Range lower bound."
+                    },
+                    "toValue": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tovalue",
+                        "description": "Range upper bound."
+                    },
+                    "compareMetricId": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Comparemetricid",
+                        "description": "Comparison metric identifier."
+                    },
+                    "compareMetricTitle": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Comparemetrictitle",
+                        "description": "Comparison metric display title."
+                    },
+                    "compareMetricFormat": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Comparemetricformat",
+                        "description": "Comparison metric display format."
+                    },
+                    "arithmeticOperator": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Arithmeticoperator",
+                        "description": "Relative alert arithmetic operator."
+                    },
+                    "granularity": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Granularity",
+                        "description": "Anomaly granularity."
+                    },
+                    "dateDatasetId": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Datedatasetid",
+                        "description": "Anomaly date dataset identifier."
+                    },
+                    "dateDatasetTitle": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Datedatasettitle",
+                        "description": "Anomaly date dataset display title."
+                    },
+                    "sensitivity": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Sensitivity",
+                        "description": "Anomaly sensitivity."
+                    },
+                    "filters": {
+                        "items": {
+                            "additionalProperties": true,
+                            "type": "object"
+                        },
+                        "type": "array",
+                        "title": "Filters",
+                        "description": "Alert execution filters."
+                    },
+                    "attributes": {
+                        "items": {
+                            "additionalProperties": true,
+                            "type": "object"
+                        },
+                        "type": "array",
+                        "title": "Attributes",
+                        "description": "Attribute slicing configuration."
+                    },
+                    "forMode": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Formode",
+                        "description": "Display mode for the monitored population."
+                    },
+                    "forLabel": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Forlabel",
+                        "description": "Human-readable 'For' summary."
+                    },
+                    "notificationChannelName": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Notificationchannelname",
+                        "description": "Notification channel display name."
+                    },
+                    "recipients": {
+                        "items": {
+                            "$ref": "#/components/schemas/AlertRecipient"
+                        },
+                        "type": "array",
+                        "title": "Recipients",
+                        "description": "Recipients shown in the proposal."
+                    },
+                    "trigger": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Trigger",
+                        "description": "Alert trigger behavior."
+                    },
+                    "triggerInterval": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Triggerinterval",
+                        "description": "Trigger interval for once-per-interval alerts."
+                    },
+                    "cron": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Cron",
+                        "description": "Optional cron schedule."
+                    },
+                    "timezone": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Timezone",
+                        "description": "Schedule timezone."
+                    },
+                    "dashboardId": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Dashboardid",
+                        "description": "Bound dashboard identifier."
+                    },
+                    "dashboardTitle": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Dashboardtitle",
+                        "description": "Bound dashboard display title."
+                    },
+                    "cta": {
+                        "type": "string",
+                        "title": "Cta",
+                        "description": "Confirmation call to action."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "title",
+                    "metricId",
+                    "operator",
+                    "notificationChannelId",
+                    "filters",
+                    "attributes",
+                    "recipients",
+                    "cta"
+                ],
+                "title": "AlertProposal"
+            },
+            "AlertProposalPart": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "alertProposal",
+                        "title": "Type",
+                        "description": "Type of multipart part.",
+                        "default": "alertProposal"
+                    },
+                    "alertProposal": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/AlertProposal"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Optional full alert proposal payload when available."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "title": "AlertProposalPart"
+            },
+            "AlertRecipient": {
+                "properties": {
+                    "label": {
+                        "type": "string",
+                        "title": "Label",
+                        "description": "Recipient display label."
+                    },
+                    "id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Id",
+                        "description": "Internal user identifier when available."
+                    },
+                    "email": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Email",
+                        "description": "External recipient email when available."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "label"
+                ],
+                "title": "AlertRecipient"
+            },
             "AllTimeDateFilter-Input": {
                 "properties": {
                     "allTimeDateFilter": {
@@ -4126,11 +4564,15 @@
                                 },
                                 {
                                     "$ref": "#/components/schemas/SearchResults"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/AlertProposalPart"
                                 }
                             ],
                             "discriminator": {
                                 "propertyName": "type",
                                 "mapping": {
+                                    "alertProposal": "#/components/schemas/AlertProposalPart",
                                     "kda": "#/components/schemas/KeyDriverAnalysisPart",
                                     "searchResults": "#/components/schemas/SearchResults",
                                     "text": "#/components/schemas/TextPart",

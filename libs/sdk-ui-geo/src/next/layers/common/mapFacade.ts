@@ -97,6 +97,7 @@ export interface IMapFacade {
     getZoom(...args: []): ZoomResult;
     getStyle(): StyleResult;
     getCanvas(): HTMLCanvasElement;
+    project(lnglat: LngLatLike): { x: number; y: number };
     loaded(): LoadedResult;
     areTilesLoaded(): TilesLoadedResult;
     queryRenderedFeatures(...args: QueryRenderedFeaturesArgs): QueryRenderedFeaturesResult;
@@ -123,9 +124,11 @@ export interface IPopupFacade {
     setLngLat(...args: SetLngLatArgs): IPopupFacade;
     setHTML(...args: SetHtmlArgs): IPopupFacade;
     setMaxWidth(...args: SetMaxWidthArgs): IPopupFacade;
+    setAnchor(anchor: PopupOptions["anchor"]): IPopupFacade;
     addTo(map: IMapFacade): IPopupFacade;
     remove(): void;
     isOpen(): boolean;
+    getElement(): HTMLElement | undefined;
 }
 
 /**
@@ -201,6 +204,10 @@ export function createMapFacade(map: MapLibreMap): IMapFacade {
         getZoom: () => map.getZoom(),
         getStyle: () => map.getStyle(),
         getCanvas: () => map.getCanvas(),
+        project: (lnglat: LngLatLike) => {
+            const point = map.project(lnglat);
+            return { x: point.x, y: point.y };
+        },
         loaded: () => map.loaded(),
         areTilesLoaded: () => map.areTilesLoaded(),
         queryRenderedFeatures: (...args: QueryRenderedFeaturesArgs) => map.queryRenderedFeatures(...args),
@@ -245,6 +252,10 @@ export function createPopupFacade(popup: Popup): IPopupFacade {
             popup.setMaxWidth(...args);
             return facade;
         },
+        setAnchor: (anchor: PopupOptions["anchor"]) => {
+            popup.options.anchor = anchor;
+            return facade;
+        },
         addTo: (mapFacade: IMapFacade) => {
             const mapInstance = getUnderlyingMap(mapFacade);
             if (mapInstance) {
@@ -256,6 +267,7 @@ export function createPopupFacade(popup: Popup): IPopupFacade {
             popup.remove();
         },
         isOpen: () => popup.isOpen(),
+        getElement: () => (popup.isOpen() ? popup.getElement() : undefined),
     };
 
     return facade;

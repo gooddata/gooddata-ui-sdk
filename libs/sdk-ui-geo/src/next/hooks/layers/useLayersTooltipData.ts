@@ -14,6 +14,7 @@ import {
     type IGeoLayerCustomTooltipExecution,
     type IGeoLayerTooltipLookup,
 } from "../../layers/common/customTooltipExecution.js";
+import { resolveLayerCustomTooltip } from "../../layers/common/resolveLayerCustomTooltip.js";
 import { getLayerAdapter } from "../../layers/registry/adapterRegistry.js";
 import { type IGeoAdapterContext } from "../../layers/registry/adapterTypes.js";
 import { type IGeoChartConfig } from "../../types/config/unified.js";
@@ -106,13 +107,22 @@ export function useLayersTooltipData(params: IUseLayersTooltipDataParams): IGeoT
     const { layerExecutions, layerDataViews, backend, workspace, config, execConfig, intl } = params;
 
     const isExportMode = config?.isExportMode ?? false;
-    const customTooltip = config?.customTooltip;
-    const tooltipContent = customTooltip?.content ?? "";
-    const tooltipEnabled = !isExportMode && Boolean(customTooltip?.enabled) && Boolean(tooltipContent);
 
-    // Content arrives already debounced from the AD editor.
-    // `config` / `execConfig` are excluded from deps: any change that affects
-    // the tooltip execution is already baked into `record.execution` upstream.
+    const tooltipEnabled =
+        !isExportMode &&
+        layerExecutions.some((record) => {
+            const tooltip = resolveLayerCustomTooltip(record.layer, config);
+            return Boolean(tooltip?.enabled) && Boolean(tooltip?.content);
+        });
+
+    // Per-layer tooltip edits change `layerExecutions` identity (customTooltip is part of the
+    // normalization fingerprint). The chart-level fallback `config.customTooltip` — used by
+    // direct GeoChart consumers — is NOT in that fingerprint, so track its content here too;
+    // otherwise switching between two enabled chart-level templates would reuse the old plan.
+    const chartTooltipContent = config?.customTooltip?.content ?? "";
+
+    // `config` / `execConfig` are excluded from deps: any change that affects the tooltip
+    // execution is already baked into `record.execution` upstream (or captured above).
     // `intl` is read inside the planning function for forward-compat with future adapters.
     const planned = useMemo<IPlannedLayerTooltip[]>(() => {
         if (!tooltipEnabled || layerExecutions.length === 0) {
@@ -128,7 +138,7 @@ export function useLayersTooltipData(params: IUseLayersTooltipDataParams): IGeoT
             intl,
         );
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [tooltipEnabled, layerExecutions, layerDataViews, backend, workspace, tooltipContent]);
+    }, [tooltipEnabled, layerExecutions, layerDataViews, backend, workspace, chartTooltipContent]);
 
     const separators = config?.separators;
 

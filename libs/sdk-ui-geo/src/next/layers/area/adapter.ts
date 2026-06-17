@@ -26,6 +26,7 @@ import {
 } from "../common/customTooltipExecution.js";
 import { getGeoChartDimensions } from "../common/dimensions.js";
 import { canSetGeoJsonSourceData, trySetGeoJsonSourceData } from "../common/layerOps.js";
+import { resolveLayerCustomTooltip } from "../common/resolveLayerCustomTooltip.js";
 import { buildTooltipReferenceMaps } from "../common/tooltipReferenceMaps.js";
 import { createLayerInsight, sanitizeDeduplicatedGlobalFilters } from "../execution/layerInsightFactory.js";
 import { prepareExecutionWithTooltipText } from "../execution/prepareTooltipExecution.js";
@@ -121,7 +122,7 @@ function buildAreaTooltipExecution(
     context: IGeoAdapterContext,
     mainDefinition: IExecutionDefinition,
 ): IGeoLayerCustomTooltipExecution | null {
-    const customTooltip = context.config?.customTooltip;
+    const customTooltip = resolveLayerCustomTooltip(layer, context.config);
     if (!customTooltip?.enabled || !customTooltip.content) {
         return null;
     }
@@ -320,7 +321,10 @@ export const areaAdapter: IGeoLayerAdapter<IGeoLayerArea, IAreaLayerOutput> = {
             return undefined;
         }
 
-        const config = context.config ?? {};
+        const config = {
+            ...(context.config ?? {}),
+            customTooltip: resolveLayerCustomTooltip(layer, context.config),
+        };
         const ids = getAreaLayerIds(layer.id);
         const layerIds = [ids.fillLayerId, ids.outlineLayerId];
 

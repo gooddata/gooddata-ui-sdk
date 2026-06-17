@@ -10,13 +10,8 @@ import {
 import { type TextContentObject } from "../../model.js";
 import { type IChatMessagesGroup } from "../utils/groupUtility.js";
 
-export function useToolsReferences(
-    g: [IChatMessagesGroup | undefined, IChatMessagesGroup],
-): TextContentObject[] {
-    const [group1, group2] = g;
-
+export function useToolsReferences(groups: IChatMessagesGroup[]): TextContentObject[] {
     return useMemo(() => {
-        const groups = [group1, group2].filter((g) => g) as IChatMessagesGroup[];
         const references: TextContentObject[] = [];
 
         groups.forEach((group) => {
@@ -33,7 +28,7 @@ export function useToolsReferences(
         });
 
         return references;
-    }, [group1, group2]);
+    }, [groups]);
 }
 
 type ParsedObjectItem = {
