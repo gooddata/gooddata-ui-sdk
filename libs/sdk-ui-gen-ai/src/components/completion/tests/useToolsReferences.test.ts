@@ -60,7 +60,7 @@ describe("useToolsReferences", () => {
             ],
         } as IChatMessagesGroup;
 
-        const { result } = renderHook(() => useToolsReferences([undefined, group]));
+        const { result } = renderHook(() => useToolsReferences([group]));
 
         expect(result.current).toEqual([
             { type: "metric", id: "m.id", title: "Revenue" },
@@ -88,8 +88,67 @@ describe("useToolsReferences", () => {
             ],
         };
 
-        const { result } = renderHook(() => useToolsReferences([undefined as never, group as never]));
+        const { result } = renderHook(() => useToolsReferences([group as never]));
 
         expect(result.current).toEqual([]);
+    });
+
+    it("should ignore system/error messages and keep first non-empty title for duplicate reference", () => {
+        const group = {
+            type: "reasoning",
+            messages: [
+                {
+                    role: "assistant",
+                    content: {
+                        type: "system",
+                        text: "System info",
+                    },
+                },
+                {
+                    role: "assistant",
+                    content: {
+                        type: "error",
+                        message: "Error info",
+                    },
+                },
+                {
+                    role: "tool",
+                    content: toolResult({
+                        parsed_objects: [
+                            {
+                                object_id: "m.id",
+                                object_type: "metric",
+                                raw_match: "{metric/m.id}",
+                            },
+                        ],
+                        objects: [
+                            {
+                                id: "m.id",
+                                type: "metric",
+                                title: "Revenue",
+                                description: "",
+                            },
+                        ],
+                    }),
+                },
+                {
+                    role: "tool",
+                    content: toolResult({
+                        objects: [
+                            {
+                                id: "m.id",
+                                type: "metric",
+                                title: "",
+                                description: "",
+                            },
+                        ],
+                    }),
+                },
+            ],
+        } as IChatMessagesGroup;
+
+        const { result } = renderHook(() => useToolsReferences([group]));
+
+        expect(result.current).toEqual([{ type: "metric", id: "m.id", title: "Revenue" }]);
     });
 });

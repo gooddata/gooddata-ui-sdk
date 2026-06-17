@@ -5,18 +5,4 @@
     flex-direction: column;
     gap: var(--gd-spacing-10px);
     padding-bottom: var(--gd-spacing-5px);
-
-    &__preview {
-        display: flex;
-        align-items: center;
-        min-height: 50px;
-    }
-
-    &__empty-state {
-        flex: 1 1 auto;
-        text-align: center;
-        font-size: 14px;
-        line-height: 20px;
-        color: var(--gd-palette-complementary-6);
-    }
 }

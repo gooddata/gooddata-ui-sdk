@@ -5,7 +5,7 @@ import type { ObjectType as ModelObjectType } from "@gooddata/sdk-model";
 /**
  * Represents the supported catalog object types in the Analytics Catalog UI.
  *
- * @internal
+ * @public
  */
 export type ObjectType = Extract<
     ModelObjectType,
@@ -15,7 +15,7 @@ export type ObjectType = Extract<
 /**
  * Represents the object types that can be created from the Analytics Catalog.
  *
- * @internal
+ * @public
  */
 export type CatalogCreateObjectType = Extract<
     ObjectType,

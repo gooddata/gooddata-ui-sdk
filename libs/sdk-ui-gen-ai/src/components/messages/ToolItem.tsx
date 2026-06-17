@@ -12,7 +12,7 @@ import { getItemState } from "./itemState.js";
 
 type ToolItemProps = {
     message: IChatConversationLocalItem;
-    groups: [IChatMessagesGroup | undefined, IChatMessagesGroup];
+    groups: IChatMessagesGroup[];
     isLast?: boolean;
 };
 

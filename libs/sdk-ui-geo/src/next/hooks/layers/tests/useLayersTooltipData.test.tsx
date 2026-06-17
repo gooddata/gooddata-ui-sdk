@@ -2,7 +2,7 @@
 
 import { renderHook, waitFor } from "@testing-library/react";
 import { createIntl } from "react-intl";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackendEmptyData, dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { idRef, newAttribute } from "@gooddata/sdk-model";
@@ -64,6 +64,40 @@ function record(layerId: string, layer: ILayerExecutionRecord["layer"]): ILayerE
     return { layerId, layer, execution: survivingPrepared };
 }
 
+// These tests only exercise the tooltip-planning path, so the adapters only need
+// a real `buildTooltipExecution`. The remaining required methods are filled with
+// throwing/no-op stubs: a `() => never` is assignable to every method's return
+// type and is never invoked here, so the adapters stay fully typed without a cast.
+const unusedAdapterMethod = () => {
+    throw new Error("adapter method not used in this test");
+};
+
+function pushpinAdapterStub(
+    overrides: Partial<IGeoLayerAdapterByType<"pushpin">>,
+): IGeoLayerAdapterByType<"pushpin"> {
+    return {
+        type: "pushpin",
+        buildExecution: unusedAdapterMethod,
+        prepareLayer: unusedAdapterMethod,
+        syncToMap: () => {},
+        removeFromMap: () => {},
+        getMapLibreLayerIds: () => [],
+        ...overrides,
+    };
+}
+
+function areaAdapterStub(overrides: Partial<IGeoLayerAdapterByType<"area">>): IGeoLayerAdapterByType<"area"> {
+    return {
+        type: "area",
+        buildExecution: unusedAdapterMethod,
+        prepareLayer: unusedAdapterMethod,
+        syncToMap: () => {},
+        removeFromMap: () => {},
+        getMapLibreLayerIds: () => [],
+        ...overrides,
+    };
+}
+
 afterEach(() => {
     clearLayerAdapters();
     registerLayerAdapter("pushpin", pushpinAdapter);
@@ -72,17 +106,23 @@ afterEach(() => {
 
 describe("useLayersTooltipData", () => {
     it("isolates a layer whose plan-building throws and keeps the others", async () => {
-        registerLayerAdapter("area", {
-            buildTooltipExecution: () => {
-                throw new Error("plan boom");
-            },
-        } as unknown as IGeoLayerAdapterByType<"area">);
-        registerLayerAdapter("pushpin", {
-            buildTooltipExecution: () => ({
-                execution: survivingTooltipExecution,
-                buildFeatureKey: survivingBuildFeatureKey,
+        registerLayerAdapter(
+            "area",
+            areaAdapterStub({
+                buildTooltipExecution: () => {
+                    throw new Error("plan boom");
+                },
             }),
-        } as unknown as IGeoLayerAdapterByType<"pushpin">);
+        );
+        registerLayerAdapter(
+            "pushpin",
+            pushpinAdapterStub({
+                buildTooltipExecution: () => ({
+                    execution: survivingTooltipExecution,
+                    buildFeatureKey: survivingBuildFeatureKey,
+                }),
+            }),
+        );
 
         const { result } = renderHook(() =>
             useLayersTooltipData({
@@ -100,5 +140,121 @@ describe("useLayersTooltipData", () => {
         expect(result.current.tooltipLookups.has("throws")).toBe(false);
         expect(result.current.tooltipLookups.has("survives")).toBe(true);
         expect(result.current.tooltipLookups.get("survives")?.buildFeatureKey).toBe(survivingBuildFeatureKey);
+    });
+
+    it("plans a layer with its own customTooltip even when chart-level config has none (F1-2543)", async () => {
+        registerLayerAdapter(
+            "pushpin",
+            pushpinAdapterStub({
+                buildTooltipExecution: () => ({
+                    execution: survivingTooltipExecution,
+                    buildFeatureKey: survivingBuildFeatureKey,
+                }),
+            }),
+        );
+
+        const layerWithOwnTooltip = {
+            ...pushpinLayer,
+            config: { customTooltip: { enabled: true, content: "{label/x}" } },
+        };
+
+        const { result } = renderHook(() =>
+            useLayersTooltipData({
+                layerExecutions: [record("survives", layerWithOwnTooltip)],
+                layerDataViews,
+                backend,
+                workspace,
+                // No chart-level custom tooltip — only the layer carries one.
+                config: {},
+                intl,
+            }),
+        );
+
+        await waitFor(() => expect(result.current.tooltipLookups.has("survives")).toBe(true));
+    });
+
+    it("falls back to the chart-level config when a layer has no tooltip of its own (direct API)", async () => {
+        registerLayerAdapter(
+            "pushpin",
+            pushpinAdapterStub({
+                buildTooltipExecution: () => ({
+                    execution: survivingTooltipExecution,
+                    buildFeatureKey: survivingBuildFeatureKey,
+                }),
+            }),
+        );
+
+        const { result } = renderHook(() =>
+            useLayersTooltipData({
+                layerExecutions: [record("survives", pushpinLayer)],
+                layerDataViews,
+                backend,
+                workspace,
+                // Layer carries no config; tooltip comes only from chart-level config.
+                config: { customTooltip: { enabled: true, content: "{label/x}" } },
+                intl,
+            }),
+        );
+
+        await waitFor(() => expect(result.current.tooltipLookups.has("survives")).toBe(true));
+    });
+
+    it("re-plans when the chart-level custom tooltip content changes (direct API, F1-2543)", () => {
+        const buildTooltipExecution = vi.fn(() => ({
+            execution: survivingTooltipExecution,
+            buildFeatureKey: survivingBuildFeatureKey,
+        }));
+        registerLayerAdapter("pushpin", pushpinAdapterStub({ buildTooltipExecution }));
+
+        // Stable layerExecutions (no per-layer config): only the chart-level tooltip changes,
+        // so the normalization fingerprint / layerExecutions identity stay the same.
+        const stableLayerExecutions = [record("survives", pushpinLayer)];
+
+        const { rerender } = renderHook(
+            ({ content }) =>
+                useLayersTooltipData({
+                    layerExecutions: stableLayerExecutions,
+                    layerDataViews,
+                    backend,
+                    workspace,
+                    config: { customTooltip: { enabled: true, content } },
+                    intl,
+                }),
+            { initialProps: { content: "{label/a}" } },
+        );
+
+        const callsBefore = buildTooltipExecution.mock.calls.length;
+        // Guard the comparison below: without this, an initial-planning regression to
+        // zero calls would leave callsBefore at 0 and still satisfy `> 0` on rerender.
+        expect(callsBefore).toBeGreaterThan(0);
+        rerender({ content: "{label/b}" });
+
+        // Switching between two enabled chart-level templates must trigger a fresh plan.
+        expect(buildTooltipExecution.mock.calls.length).toBeGreaterThan(callsBefore);
+    });
+
+    it("plans nothing when neither the layer nor the chart config has a custom tooltip", () => {
+        registerLayerAdapter(
+            "pushpin",
+            pushpinAdapterStub({
+                buildTooltipExecution: () => ({
+                    execution: survivingTooltipExecution,
+                    buildFeatureKey: survivingBuildFeatureKey,
+                }),
+            }),
+        );
+
+        const { result } = renderHook(() =>
+            useLayersTooltipData({
+                layerExecutions: [record("survives", pushpinLayer)],
+                layerDataViews,
+                backend,
+                workspace,
+                config: {},
+                intl,
+            }),
+        );
+
+        expect(result.current.tooltipLookups.size).toBe(0);
     });
 });

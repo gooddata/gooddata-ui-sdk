@@ -15,25 +15,25 @@ import { MouseEvent as MouseEvent_2 } from 'react';
 import type { ObjectType as ObjectType_2 } from '@gooddata/sdk-model';
 import { ReactNode } from 'react';
 
-// @internal (undocumented)
+// @public (undocumented)
 export function AnalyticsCatalog(props: IAnalyticsCatalogProps): JSX.Element;
 
-// @internal (undocumented)
+// @public (undocumented)
 export function AnalyticsCatalogDetail(input: IAnalyticsCatalogDetailProps): JSX.Element;
 
-// @internal (undocumented)
+// @public (undocumented)
 export function AnalyticsCatalogDetailContent(input: IAnalyticsCatalogDetailContentProps): JSX.Element;
 
-// @internal
+// @public
 export function AnalyticsCatalogFilter<T>(props: IAnalyticsCatalogFilterProps<T>): JSX.Element;
 
-// @internal
+// @public
 export type CatalogCreateObjectType = Extract<ObjectType, "analyticalDashboard" | "insight" | "measure" | "parameter">;
 
-// @internal (undocumented)
+// @public (undocumented)
 export type EditHandlerEvent = OpenHandlerEvent;
 
-// @internal (undocumented)
+// @public (undocumented)
 export interface IAnalyticsCatalogDetailContentProps extends Omit<ICatalogDetailContentProps, "objectId" | "objectType"> {
     backend?: IAnalyticalBackend;
     locale?: string;
@@ -43,7 +43,7 @@ export interface IAnalyticsCatalogDetailContentProps extends Omit<ICatalogDetail
     workspace?: string;
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 export interface IAnalyticsCatalogDetailProps extends Omit<ICatalogDetailProps, "objectId" | "objectType"> {
     backend?: IAnalyticalBackend;
     locale?: string;
@@ -52,7 +52,7 @@ export interface IAnalyticsCatalogDetailProps extends Omit<ICatalogDetailProps, 
     workspace?: string;
 }
 
-// @internal
+// @public
 export interface IAnalyticsCatalogFilterProps<T> {
     actions?: ReactNode;
     dataTestId: string;
@@ -67,7 +67,7 @@ export interface IAnalyticsCatalogFilterProps<T> {
     statusBar?: ReactNode;
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 export interface IAnalyticsCatalogProps {
     backend?: IAnalyticalBackend;
     locale?: string;
@@ -80,7 +80,7 @@ export interface IAnalyticsCatalogProps {
     workspace?: string;
 }
 
-// @internal
+// @public
 export interface ICatalogDetailAction {
     // (undocumented)
     dataTestId?: string;
@@ -92,7 +92,7 @@ export interface ICatalogDetailAction {
     label: string;
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 export interface ICatalogDetailContentProps {
     objectDefinition?: ICatalogItemRef | ICatalogItem | null;
     objectId?: string | null;
@@ -106,7 +106,7 @@ export interface ICatalogDetailContentProps {
     onTagClick?: (tag: string) => void;
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 export interface ICatalogDetailProps extends ICatalogDetailContentProps {
     dataTestId?: string;
     node?: HTMLElement;
@@ -115,10 +115,10 @@ export interface ICatalogDetailProps extends ICatalogDetailContentProps {
     zIndex?: number;
 }
 
-// @internal
+// @public
 export type ICatalogItem = ICatalogItemDashboard | ICatalogItemInsight | ICatalogItemMeasure | ICatalogItemParameter | ICatalogItemAttribute | ICatalogItemFact | ICatalogItemDataSet;
 
-// @internal
+// @public
 export interface ICatalogItemAttribute extends ICatalogItemBase {
     // (undocumented)
     dataSet?: IDataSetMetadataObject;
@@ -126,7 +126,7 @@ export interface ICatalogItemAttribute extends ICatalogItemBase {
     type: "attribute";
 }
 
-// @internal
+// @public
 export interface ICatalogItemBase extends ICatalogItemRef {
     // (undocumented)
     certification?: {
@@ -157,13 +157,13 @@ export interface ICatalogItemBase extends ICatalogItemRef {
     updatedBy: string;
 }
 
-// @internal
+// @public
 export interface ICatalogItemDashboard extends ICatalogItemBase {
     // (undocumented)
     type: "analyticalDashboard";
 }
 
-// @internal
+// @public
 export interface ICatalogItemDataSet extends ICatalogItemBase {
     // (undocumented)
     dataSet: IDataSetMetadataObject;
@@ -171,7 +171,7 @@ export interface ICatalogItemDataSet extends ICatalogItemBase {
     type: "dataSet";
 }
 
-// @internal
+// @public
 export interface ICatalogItemFact extends ICatalogItemBase {
     // (undocumented)
     dataSet?: IDataSetMetadataObject;
@@ -179,7 +179,7 @@ export interface ICatalogItemFact extends ICatalogItemBase {
     type: "fact";
 }
 
-// @internal
+// @public
 export interface ICatalogItemInsight extends ICatalogItemBase {
     // (undocumented)
     type: "insight";
@@ -187,7 +187,7 @@ export interface ICatalogItemInsight extends ICatalogItemBase {
     visualizationType: VisualizationType;
 }
 
-// @internal
+// @public
 export interface ICatalogItemMeasure extends ICatalogItemBase {
     // (undocumented)
     format?: string | null;
@@ -199,7 +199,7 @@ export interface ICatalogItemMeasure extends ICatalogItemBase {
     type: "measure";
 }
 
-// @internal
+// @public
 export interface ICatalogItemParameter extends ICatalogItemBase {
     // (undocumented)
     definition: IParameterDefinition;
@@ -207,7 +207,7 @@ export interface ICatalogItemParameter extends ICatalogItemBase {
     type: "parameter";
 }
 
-// @internal
+// @public
 export interface ICatalogItemRef extends IdentifierRef {
     // (undocumented)
     type: ObjectType;
@@ -234,10 +234,10 @@ export function isCatalogItemMeasure(item: ICatalogItem | undefined | null): ite
 // @internal (undocumented)
 export function isCatalogItemParameter(item: ICatalogItem | undefined | null): item is ICatalogItemParameter;
 
-// @internal
+// @public
 export type ObjectType = Extract<ObjectType_2, "analyticalDashboard" | "insight" | "measure" | "parameter" | "fact" | "attribute" | "dataSet">;
 
-// @internal (undocumented)
+// @public (undocumented)
 export type OpenHandlerEvent = {
     item: ICatalogItem;
     workspaceId: string;
@@ -245,7 +245,7 @@ export type OpenHandlerEvent = {
     preventDefault: () => void;
 };
 
-// @internal
+// @public
 export type VisualizationType = "scatter" | "donut" | "area" | "table" | "headline" | "column" | "line" | "treemap" | "pyramid" | "funnel" | "heatmap" | "bubble" | "pie" | "bar" | "combo" | "bullet" | "waterfall" | "dependencywheel" | "sankey" | "pushpin" | "repeater";
 
 // (No @packageDocumentation comment for this package)

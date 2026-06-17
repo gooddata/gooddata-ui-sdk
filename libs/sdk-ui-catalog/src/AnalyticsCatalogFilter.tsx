@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -6,7 +6,7 @@ import { StaticFilter } from "./filter/StaticFilter.js";
 
 /**
  * Props for {@link AnalyticsCatalogFilter}.
- * @internal
+ * @public
  */
 export interface IAnalyticsCatalogFilterProps<T> {
     /**
@@ -59,7 +59,7 @@ export interface IAnalyticsCatalogFilterProps<T> {
  * Public wrapper of the internal static filter used in Analytics Catalog.
  * This component provides a stable, documented API surface for reuse.
  *
- * @internal
+ * @public
  */
 export function AnalyticsCatalogFilter<T>(props: IAnalyticsCatalogFilterProps<T>) {
     return <StaticFilter<T> {...props} />;

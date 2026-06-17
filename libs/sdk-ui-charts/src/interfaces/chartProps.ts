@@ -142,9 +142,10 @@ export interface ICoreChartProps extends ICommonChartProps {
     outliersConfig?: IOutliersConfig;
 
     /**
-     * Prepared execution + meta for custom tooltip reference resolution.
-     * Pre-built by the pluggable visualization with referenced measures
-     * sliced by the chart's attributes.
+     * Prepared execution + meta for custom tooltip reference resolution,
+     * with referenced measures sliced by the chart's attributes. Public bucket
+     * charts build it from `config.customTooltip`; the pluggable visualization
+     * pre-builds it and supplies it explicitly.
      * @internal
      */
     tooltipExecution?: ITooltipExecution;

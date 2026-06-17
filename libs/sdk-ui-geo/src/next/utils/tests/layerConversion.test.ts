@@ -13,7 +13,11 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
-import { insightLayerToGeoLayer, insightLayersToGeoLayers } from "../layerConversion.js";
+import {
+    geoLayerToInsightLayer,
+    insightLayerToGeoLayer,
+    insightLayersToGeoLayers,
+} from "../layerConversion.js";
 
 function createAttribute(localId: string) {
     return newAttribute(idRef(localId), (attribute) => attribute.localId(localId));
@@ -120,6 +124,78 @@ describe("layerConversion", () => {
         expect(result.config?.colorMapping).toHaveLength(1);
         expect(result.config?.colorMapping?.[0]?.color).toEqual(mappedColor);
         expect(result.config?.colorMapping?.[0]?.predicate).toEqual(expect.any(Function));
+    });
+
+    it("should extract per-layer customTooltip from layer controls (F1-2543)", () => {
+        const layerDef = createPushpinLayer(
+            [
+                newBucket(BucketNames.LATITUDE, createAttribute("latitude_attr")),
+                newBucket(BucketNames.LONGITUDE, createAttribute("longitude_attr")),
+            ],
+            {
+                controls: {
+                    customTooltip: {
+                        content: "short name in France: {label/nm_city_name_fr}",
+                        enabled: true,
+                    },
+                },
+            },
+        );
+
+        const result = insightLayerToGeoLayer(layerDef);
+
+        if (result?.type !== "pushpin") {
+            throw new Error("Expected pushpin layer");
+        }
+
+        expect(result.config?.customTooltip).toEqual({
+            content: "short name in France: {label/nm_city_name_fr}",
+            enabled: true,
+        });
+    });
+
+    it("should extract per-layer customTooltip on area layers", () => {
+        const areaLayerDef: IInsightLayerDefinition = {
+            id: "area-layer",
+            type: "area",
+            buckets: [newBucket(BucketNames.AREA, createAttribute("state"))],
+            properties: {
+                controls: { customTooltip: { content: "state: {label/state}", enabled: true } },
+            },
+        };
+
+        const result = insightLayerToGeoLayer(areaLayerDef);
+
+        if (result?.type !== "area") {
+            throw new Error("Expected area layer");
+        }
+
+        expect(result.config?.customTooltip).toEqual({ content: "state: {label/state}", enabled: true });
+    });
+
+    it("should roundtrip per-layer customTooltip back into layer controls", () => {
+        const layerDef = createPushpinLayer(
+            [
+                newBucket(BucketNames.LATITUDE, createAttribute("latitude_attr")),
+                newBucket(BucketNames.LONGITUDE, createAttribute("longitude_attr")),
+            ],
+            {
+                controls: {
+                    customTooltip: { content: "city: {label/city}", enabled: true, placement: "below" },
+                },
+            },
+        );
+
+        const geoLayer = insightLayerToGeoLayer(layerDef);
+        if (!geoLayer) {
+            throw new Error("Expected geo layer");
+        }
+
+        const serialized = geoLayerToInsightLayer(geoLayer);
+
+        expect(serialized.properties?.["controls"]).toMatchObject({
+            customTooltip: { content: "city: {label/city}", enabled: true, placement: "below" },
+        });
     });
 
     it("should keep LOCATION localId for latitude even if LATITUDE bucket exists", () => {

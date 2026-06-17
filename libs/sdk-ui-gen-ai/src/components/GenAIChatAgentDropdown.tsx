@@ -104,7 +104,7 @@ export function GenAIChatAgentDropdown({
                         <UiIcon
                             type="question"
                             size={12}
-                            color={isSelected ? "complementary-7" : "complementary-5"}
+                            color="complementary-5"
                             accessibilityConfig={{ ariaHidden: true }}
                         />
                     ) : undefined,
@@ -137,6 +137,7 @@ export function GenAIChatAgentDropdown({
                         onClick={toggleDropdown}
                         dataTestId="agent_dropdown_button"
                         accessibilityConfig={accessibilityConfig}
+                        disableIconAnimation
                     />
                 )}
                 renderBody={({ closeDropdown, ariaAttributes }) => (

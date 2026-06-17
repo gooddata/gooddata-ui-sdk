@@ -5,8 +5,6 @@ import { type ComponentType, type FC } from "react";
 import { FormattedMessage, defineMessage, useIntl } from "react-intl";
 import { connect } from "react-redux";
 
-import { IconChatBubble, IconNewVisualization, IconSearch } from "@gooddata/sdk-ui-kit";
-
 import { DefaultLandingContainer, DefaultLandingQuestions } from "./LandingContainer.js";
 import { DefaultLandingQuestion } from "./LandingQuestion.js";
 import { DefaultLandingTitle, DefaultLandingTitleAscent } from "./LandingTitle.js";
@@ -16,21 +14,21 @@ const quickOptions = [
         title: defineMessage({ id: "gd.gen-ai.welcome.option-1.title" }),
         question: defineMessage({ id: "gd.gen-ai.welcome.option-1.title" }),
         answer: defineMessage({ id: "gd.gen-ai.welcome.option-1.answer" }),
-        Icon: IconSearch,
+        icon: "search",
     },
     {
         title: defineMessage({ id: "gd.gen-ai.welcome.option-2.title" }),
         question: defineMessage({ id: "gd.gen-ai.welcome.option-2.title" }),
         answer: defineMessage({ id: "gd.gen-ai.welcome.option-2.answer" }),
-        Icon: IconNewVisualization,
+        icon: "pieChart",
     },
     {
         title: defineMessage({ id: "gd.gen-ai.welcome.option-3.title" }),
         question: defineMessage({ id: "gd.gen-ai.welcome.option-3.title" }),
         answer: defineMessage({ id: "gd.gen-ai.welcome.option-3.answer" }),
-        Icon: IconChatBubble,
+        icon: "speechBubble",
     },
-];
+] as const;
 
 /**
  * @beta
@@ -75,7 +73,7 @@ function LandingScreenComponent({
                         {quickOptions.map((option) => (
                             <DefaultLandingQuestion
                                 key={option.title.id}
-                                icon={<option.Icon width={18} height={18} ariaHidden />}
+                                icon={option.icon}
                                 title={intl.formatMessage(option.title)}
                                 question={intl.formatMessage(option.question)}
                                 answer={intl.formatMessage(option.answer)}

@@ -25,6 +25,7 @@ import type { IGenAIChangeAnalysisParams } from '@gooddata/sdk-model';
 import type { IGenAIVisualization } from '@gooddata/sdk-model';
 import type { ISemanticSearchRelationship } from '@gooddata/sdk-model';
 import type { ISemanticSearchResultItem } from '@gooddata/sdk-model';
+import { IUiButtonProps } from '@gooddata/sdk-ui-kit';
 import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { JSX } from 'react/jsx-runtime';
 import { ReactNode } from 'react';
@@ -349,7 +350,7 @@ export interface ILandingQuestionProps {
     // (undocumented)
     answer: string;
     // (undocumented)
-    icon?: ReactNode;
+    icon?: IUiButtonProps["iconBefore"];
     // (undocumented)
     question: string;
     // (undocumented)

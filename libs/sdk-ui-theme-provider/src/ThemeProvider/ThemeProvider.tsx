@@ -109,13 +109,30 @@ export function ThemeProvider({
     lastWorkspace.current = workspace;
 
     useEffect(() => {
+        // A malformed theme (e.g. an unparseable color) must never block rendering. Preparing and
+        // applying the theme is wrapped so any failure falls back to the default theme and always
+        // resolves the loading state, instead of leaving the app stuck on the loading screen.
+        const applyTheme = (themeToApply: ITheme) => {
+            try {
+                const preparedTheme = prepareTheme(themeToApply, enableComplementaryPalette);
+                setTheme(preparedTheme);
+                clearCssProperties();
+                setCssProperties(preparedTheme, isDarkTheme(preparedTheme));
+            } catch (error) {
+                console.error("Failed to apply the theme, falling back to the default theme.", error);
+                // reset both channels (context theme and global CSS) to the default theme so
+                // context consumers stay consistent with the cleared CSS variables
+                setTheme({});
+                clearCssProperties();
+            } finally {
+                setIsLoading(false);
+                setStatus("success");
+            }
+        };
+
         // no need to load anything if the themeParam is present
         if (themeParam) {
-            const preparedTheme = prepareTheme(themeParam, enableComplementaryPalette);
-            setTheme(preparedTheme);
-            setStatus("success");
-            clearCssProperties();
-            setCssProperties(preparedTheme, isDarkTheme(preparedTheme));
+            applyTheme(themeParam);
             return;
         }
 
@@ -127,16 +144,24 @@ export function ThemeProvider({
 
             setIsLoading(true);
             setStatus("loading");
-            const selectedTheme = await backend.workspace(workspace).styling().getTheme();
 
-            if (lastWorkspace.current === workspace) {
-                const modifiedTheme = modifier(selectedTheme);
-                const preparedTheme = prepareTheme(modifiedTheme, enableComplementaryPalette);
-                setTheme(preparedTheme);
-                clearCssProperties();
-                setCssProperties(preparedTheme, isDarkTheme(preparedTheme));
-                setIsLoading(false);
-                setStatus("success");
+            try {
+                const selectedTheme = await backend.workspace(workspace).styling().getTheme();
+
+                if (lastWorkspace.current === workspace) {
+                    applyTheme(modifier(selectedTheme));
+                }
+            } catch (error) {
+                if (lastWorkspace.current === workspace) {
+                    // covers both the backend fetch and the modifier transformation of the theme
+                    console.error("Failed to load or process the theme from the backend.", error);
+                    // reset both channels (context theme and global CSS) to the default theme so
+                    // context consumers stay consistent with the cleared CSS variables
+                    setTheme({});
+                    clearCssProperties();
+                    setIsLoading(false);
+                    setStatus("success");
+                }
             }
         };
 

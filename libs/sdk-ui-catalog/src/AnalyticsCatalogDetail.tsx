@@ -22,7 +22,7 @@ import { usePermissionsQuery } from "./permission/usePermissionsQuery.js";
 import { QualityProvider } from "./quality/QualityContext.js";
 
 /**
- * @internal
+ * @public
  */
 export interface IAnalyticsCatalogDetailProps extends Omit<ICatalogDetailProps, "objectId" | "objectType"> {
     /**
@@ -48,7 +48,7 @@ export interface IAnalyticsCatalogDetailProps extends Omit<ICatalogDetailProps, 
 }
 
 /**
- * @internal
+ * @public
  */
 export function AnalyticsCatalogDetail({
     backend,
@@ -64,7 +64,7 @@ export function AnalyticsCatalogDetail({
 }
 
 /**
- * @internal
+ * @public
  */
 export interface IAnalyticsCatalogDetailContentProps extends Omit<
     ICatalogDetailContentProps,
@@ -97,7 +97,7 @@ export interface IAnalyticsCatalogDetailContentProps extends Omit<
 }
 
 /**
- * @internal
+ * @public
  */
 export function AnalyticsCatalogDetailContent({
     backend,

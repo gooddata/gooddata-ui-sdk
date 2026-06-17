@@ -38,7 +38,13 @@ export class AttributeColorStrategy extends ColorStrategy {
 export function buildKeySegment(displayFormId: string, uri: string): string;
 
 // @internal
+export function buildLookupTable(dataView: IDataView, meta: ITooltipExecutionMeta, separators?: ISeparators): Map<string, IResolvedReferenceValues>;
+
+// @internal
 export function buildTooltipExecution(executionFactory: IExecutionFactory, chartDefinition: IExecutionDefinition, tooltipContent: string, options?: IBuildTooltipExecutionOptions): ITooltipExecution | null;
+
+// @internal
+export function buildTooltipExecutionFromConfig(executionFactory: IExecutionFactory, chartDefinition: IExecutionDefinition, customTooltip: ICustomTooltipConfig | undefined, options?: IBuildTooltipExecutionOptions): ITooltipExecution | undefined;
 
 // @internal
 export function buildTooltipLocalizedStrings(intl?: IntlShape): ITooltipLocalizedStrings;

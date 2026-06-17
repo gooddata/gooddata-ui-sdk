@@ -262,6 +262,65 @@ describe("parameters reducers (per tab)", () => {
             ]);
         });
 
+        it("writes to the tab named by tabLocalIdentifier, leaving the active tab untouched", () => {
+            const initial: ITabsState = {
+                tabs: [
+                    {
+                        localIdentifier: "tab-A",
+                        title: "Tab A",
+                        parameters: { parameters: [{ parameter: topNParameter, runtimeOverride: 10 }] },
+                    },
+                    {
+                        localIdentifier: "tab-B",
+                        title: "Tab B",
+                        parameters: { parameters: [{ parameter: topNParameter, runtimeOverride: 10 }] },
+                    },
+                ],
+                activeTabLocalIdentifier: "tab-A",
+            };
+
+            const next = produce(initial, (draft) =>
+                parametersReducers.setParameterRuntimeValues(
+                    draft,
+                    tabsActions.setParameterRuntimeValues({
+                        values: [{ ref: topNRef, value: 99 }],
+                        tabLocalIdentifier: "tab-B",
+                    }),
+                ),
+            );
+
+            expect(next.tabs?.[0]?.parameters?.parameters[0]?.runtimeOverride).toBe(10);
+            expect(next.tabs?.[1]?.parameters?.parameters[0]?.runtimeOverride).toBe(99);
+        });
+
+        it("ignores refs not present on the tab named by tabLocalIdentifier", () => {
+            const initial: ITabsState = {
+                tabs: [
+                    { localIdentifier: "tab-A", title: "Tab A" },
+                    {
+                        localIdentifier: "tab-B",
+                        title: "Tab B",
+                        parameters: { parameters: [{ parameter: topNParameter, runtimeOverride: 10 }] },
+                    },
+                ],
+                activeTabLocalIdentifier: "tab-A",
+            };
+
+            const next = produce(initial, (draft) =>
+                parametersReducers.setParameterRuntimeValues(
+                    draft,
+                    tabsActions.setParameterRuntimeValues({
+                        values: [{ ref: sampleRef, value: 500 }],
+                        tabLocalIdentifier: "tab-B",
+                    }),
+                ),
+            );
+
+            expect(next.tabs?.[1]?.parameters?.parameters).toEqual([
+                { parameter: topNParameter, runtimeOverride: 10 },
+            ]);
+        });
+
         it("clears runtimeOverride when the entry value is undefined", () => {
             const initial = makeState([{ parameter: topNParameter, runtimeOverride: 10 }]);
 

@@ -4,7 +4,7 @@ import { useMemo } from "react";
 
 import { type IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { type IDataVisualizationProps } from "@gooddata/sdk-ui";
-import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
+import { type IColorMapping, type ICustomTooltipConfig } from "@gooddata/sdk-ui-vis-commons";
 
 import { hasGeoLayerContext } from "../../layers/execution/layerContext.js";
 import { type GeoLayerType, type IGeoLayer } from "../../types/layers/index.js";
@@ -36,6 +36,15 @@ function colorMappingFingerprint(colorMapping: IColorMapping[] | undefined): str
         .join("|");
 }
 
+function customTooltipFingerprint(customTooltip: ICustomTooltipConfig | undefined): string {
+    if (!customTooltip) {
+        return "";
+    }
+    // Positional, content last: `|` inside content can't collide with the other fields.
+    const { enabled, placement, content } = customTooltip;
+    return `${enabled ?? false}|${placement ?? ""}|${content ?? ""}`;
+}
+
 /**
  * Props that may include layer type information for fallback layer creation.
  */
@@ -53,6 +62,9 @@ function executionContextFingerprint(execution: IPreparedExecution): string {
         `${type}:${id}:${name ?? ""}`,
         stringify(config?.colorPalette),
         colorMappingFingerprint(config?.colorMapping),
+        // customTooltip is per-layer config that is not part of the AFM, so it must be
+        // fingerprinted here or content/enabled edits would serve a stale cached layer.
+        customTooltipFingerprint(config?.customTooltip),
     ].join("|");
 }
 

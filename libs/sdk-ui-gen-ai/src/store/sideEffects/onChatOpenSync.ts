@@ -110,11 +110,29 @@ export function* onChatOpenSync({ payload: { isOpen } }: PayloadAction<{ isOpen:
         // to existing cached items), so re-creating items with fresh localIds cannot duplicate history.
         const items: IChatConversationLocalItem[] = yield call(fetchConversationItems, latest.id);
 
+        // Re-validate the "do not clobber" guard now that the backend round-trip is done. While we
+        // were awaiting the fetches the user may have started a fresh conversation in this runtime -
+        // most notably the dashboard "Summarize" path, which opens the chat and then, a beat later,
+        // clears the thread to seed a brand-new conversation + auto-prompt. The pre-fetch guard above
+        // sampled state before that clear ran, so it saw the previous (persisted) conversation and
+        // let us through. Switching now would hijack the fresh conversation and the seeded prompt
+        // would never be shown (LX-2577). Re-sampling the same conditions after the await catches it:
+        // a not-yet-persisted draft (no id) or an in-flight clear/evaluate means "leave it alone".
+        const currentNow: IChatConversationLocal | undefined = yield select(conversationSelector);
+        const asyncProcessNow: ReturnType<typeof asyncProcessSelector> = yield select(asyncProcessSelector);
+        if (
+            (currentNow && !currentNow.id) ||
+            asyncProcessNow === "evaluating" ||
+            asyncProcessNow === "clearing"
+        ) {
+            return;
+        }
+
         // Switch to the latest conversation if it differs from the current one. setMessagesAction
         // writes into whatever currentConversation points at, so the switch must come first - and
         // both puts are dispatched synchronously (no yield between them) so the UI never observes the
         // intermediate empty/unloaded state.
-        if (latest.id !== current?.id) {
+        if (latest.id !== currentNow?.id) {
             yield put(setCurrentConversationAction({ conversation: latest }));
         }
         yield put(setMessagesAction({ items }));

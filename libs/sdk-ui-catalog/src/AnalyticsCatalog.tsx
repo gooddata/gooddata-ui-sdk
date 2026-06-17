@@ -20,7 +20,7 @@ import { QualityProvider } from "./quality/QualityContext.js";
 import { FullTextSearchProvider } from "./search/FullTextSearchContext.js";
 
 /**
- * @internal
+ * @public
  */
 export interface IAnalyticsCatalogProps {
     /**
@@ -68,7 +68,7 @@ export interface IAnalyticsCatalogProps {
 }
 
 /**
- * @internal
+ * @public
  */
 export function AnalyticsCatalog(props: IAnalyticsCatalogProps) {
     const workspace = useWorkspaceStrict(props.workspace);

@@ -97,4 +97,38 @@ describe("ColumnChart", () => {
             );
         });
     });
+
+    describe("custom tooltip", () => {
+        it("should build tooltipExecution for external references", () => {
+            renderChart([ReferenceMd.Amount], {
+                customTooltip: { enabled: true, content: "Plan: {metric/some.external.metric}" },
+            });
+            expect(CoreColumnChart).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    tooltipExecution: expect.objectContaining({ batch: expect.anything() }),
+                }),
+                undefined,
+            );
+        });
+
+        it("should NOT build tooltipExecution when content has no external references", () => {
+            renderChart([ReferenceMd.Amount], {
+                customTooltip: { enabled: true, content: "static text only" },
+            });
+            expect(CoreColumnChart).toHaveBeenCalledWith(
+                expect.not.objectContaining({ tooltipExecution: expect.anything() }),
+                undefined,
+            );
+        });
+
+        it("should NOT build tooltipExecution when custom tooltip is disabled", () => {
+            renderChart([ReferenceMd.Amount], {
+                customTooltip: { enabled: false, content: "Plan: {metric/some.external.metric}" },
+            });
+            expect(CoreColumnChart).toHaveBeenCalledWith(
+                expect.not.objectContaining({ tooltipExecution: expect.anything() }),
+                undefined,
+            );
+        });
+    });
 });

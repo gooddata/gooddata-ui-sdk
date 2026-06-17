@@ -10,6 +10,7 @@ import { type IGeoAreaChartConfig } from "../../../types/config/areaChart.js";
 import { type IGeoLayerTooltipLookup } from "../../common/customTooltipExecution.js";
 import { buildCustomTooltipPieces, composeTooltipBody } from "../../common/customTooltipSection.js";
 import type { IPopupFacade } from "../../common/mapFacade.js";
+import { presentTooltip } from "../../common/tooltipPlacement.js";
 import {
     type TooltipFormatConfig,
     type TooltipPayload,
@@ -133,11 +134,7 @@ export function createAreaTooltipConfig(
             );
 
             if (tooltipHtml) {
-                tooltip
-                    .setLngLat([lngLat.lng, lngLat.lat])
-                    .setHTML(tooltipHtml)
-                    .setMaxWidth("320px")
-                    .addTo(map);
+                presentTooltip(tooltip, map, [lngLat.lng, lngLat.lat], tooltipHtml, 320);
                 map.getCanvas().style.cursor = "pointer";
             }
         },

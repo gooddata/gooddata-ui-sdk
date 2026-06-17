@@ -19,6 +19,17 @@ export function ConditionalScopedThemeProvider(input: {
 // @beta
 export const defaultHeaderTheme: IThemeHeader;
 
+// @internal
+export const findInvalidThemeColors: (theme: ITheme | undefined) => IInvalidThemeColor[];
+
+// @internal
+export interface IInvalidThemeColor {
+    // (undocumented)
+    path: string;
+    // (undocumented)
+    value: string;
+}
+
 // @internal (undocumented)
 export interface IScopedThemeProviderProps {
     backend?: IAnalyticalBackend;
@@ -32,6 +43,9 @@ export interface IScopedThemeProviderProps {
 
 // @internal (undocumented)
 export const isDarkTheme: (theme: ITheme | undefined) => boolean;
+
+// @internal
+export const isValidThemeColor: (color: unknown) => boolean;
 
 // @public (undocumented)
 export interface IThemeContextProviderProps {

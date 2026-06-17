@@ -15,7 +15,10 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 
-import { getAutomationExportParametersByTab } from "../../../../_staging/automation/index.js";
+import {
+    exportParametersToValues,
+    getAutomationExportParametersByTab,
+} from "../../../../_staging/automation/index.js";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { selectCatalogParameters } from "../../../../model/store/catalog/catalogSelectors.js";
 import { selectEnableParameters } from "../../../../model/store/config/configSelectors.js";
@@ -31,7 +34,6 @@ import type { ExtendedDashboardWidget } from "../../../../model/types/layoutType
 import {
     type IAutomationParameter,
     availableAutomationParameters,
-    exportParametersToValues,
     reconstructAutomationParametersFromExportParameters,
     shouldStoreExportParameters,
     toEffectiveParametersByTab,

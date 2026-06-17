@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useLayoutEffect, useRef, useState } from "react";
 
 import { flushSync } from "react-dom";
 import { type Root, createRoot } from "react-dom/client";
@@ -15,7 +15,7 @@ import {
     type IPlatformContext,
 } from "@gooddata/sdk-pluggable-application-model";
 
-import { HostChrome } from "./HostChrome.js";
+import { type IHostChromeAiContext, type IHostChromeAiVisibility, HostChrome } from "./HostChrome.js";
 import { e } from "./hostChromeBem.js";
 import "./DefaultHostUi.scss";
 
@@ -29,6 +29,7 @@ interface IHostUiBridgeProps {
     initialPathname: string;
     navigate: (url: string) => void;
     replace: (url: string) => void;
+    onAiAssistantOpenChange?: (open: boolean) => void;
     onAppContainerReady: (el: HTMLElement) => void;
     onReady: (
         setCtx: (ctx: IPlatformContext) => void,
@@ -46,6 +47,7 @@ function HostUiBridge({
     initialPathname,
     navigate,
     replace,
+    onAiAssistantOpenChange,
     onAppContainerReady,
     onReady,
 }: IHostUiBridgeProps) {
@@ -55,11 +57,48 @@ function HostUiBridge({
     const [headerOptions, setHeaderOptions] = useState<IAppHeaderOptions | undefined>(undefined);
     const [notification, setNotification] = useState<IHostUiNotification | null>(null);
     const [pageTitle, setPageTitle] = useState<string | undefined>(undefined);
+    // AI-assistant signals are kept in their own state slots, separate from the single generic
+    // `notification` slot. Open/close and context-change notifications can arrive in the same
+    // synchronous tick; routing them to independent state ensures one does not overwrite the
+    // other (a single shared slot would drop the earlier one — LX-2544).
+    const [aiVisibility, setAiVisibility] = useState<IHostChromeAiVisibility | null>(null);
+    const [aiContext, setAiContext] = useState<IHostChromeAiContext | null>(null);
+    const aiVisibilitySeqRef = useRef(0);
     const appContainerRef = useRef<HTMLDivElement>(null);
+
+    const handleNotify = useCallback((notification: IHostUiNotification | null) => {
+        if (notification === null) {
+            setNotification(null);
+            return;
+        }
+        switch (notification.type) {
+            case "openAiAssistant":
+                setAiVisibility({
+                    kind: "open",
+                    question: notification.question,
+                    userContext: notification.userContext,
+                    // A fresh seq on every request re-triggers the host effect even when the
+                    // question is identical to the previous one (e.g. "Summarize" clicked again).
+                    seq: ++aiVisibilitySeqRef.current,
+                });
+                break;
+            case "closeAiAssistant":
+                setAiVisibility({ kind: "close", seq: ++aiVisibilitySeqRef.current });
+                break;
+            case "aiAssistantContext":
+                setAiContext({
+                    includeTags: notification.includeTags,
+                    excludeTags: notification.excludeTags,
+                });
+                break;
+            default:
+                setNotification(notification);
+        }
+    }, []);
 
     // Layout effect runs in the same synchronous commit as flushSync.
     useLayoutEffect(() => {
-        onReady(setCtx, setApps, setPathname, setHeaderOptions, setNotification, setPageTitle);
+        onReady(setCtx, setApps, setPathname, setHeaderOptions, handleNotify, setPageTitle);
         if (appContainerRef.current) {
             onAppContainerReady(appContainerRef.current);
         }
@@ -76,6 +115,9 @@ function HostUiBridge({
             onReplace={replace}
             headerOptions={headerOptions}
             notification={notification}
+            aiVisibility={aiVisibility}
+            aiContext={aiContext}
+            onAiAssistantOpenChange={onAiAssistantOpenChange}
             appPageTitle={pageTitle}
         >
             <div ref={appContainerRef} className={e("app-container")} />
@@ -88,7 +130,8 @@ function HostUiBridge({
 // ---------------------------------------------------------------------------
 
 function mountDefaultHostUi(options: IHostUiMountOptions): IHostUiMountHandle {
-    const { container, ctx, resolvedApplications, pathname, navigate, replace } = options;
+    const { container, ctx, resolvedApplications, pathname, navigate, replace, onAiAssistantOpenChange } =
+        options;
 
     let reactRoot: Root | null = createRoot(container);
     let appContainer: HTMLElement | null = null;
@@ -110,6 +153,7 @@ function mountDefaultHostUi(options: IHostUiMountOptions): IHostUiMountHandle {
                 initialPathname={pathname}
                 navigate={navigate}
                 replace={replace}
+                onAiAssistantOpenChange={onAiAssistantOpenChange}
                 onAppContainerReady={(el) => {
                     appContainer = el;
                 }}

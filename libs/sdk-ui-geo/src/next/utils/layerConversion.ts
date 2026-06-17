@@ -21,7 +21,11 @@ import {
     newAttribute,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { type IColorMapping, getColorMappingPredicate } from "@gooddata/sdk-ui-vis-commons";
+import {
+    type IColorMapping,
+    type ICustomTooltipConfig,
+    getColorMappingPredicate,
+} from "@gooddata/sdk-ui-vis-commons";
 
 import {
     type IGeoLayer,
@@ -120,6 +124,40 @@ function getLayerColorPaletteFromControls(controls: unknown): IColorPalette | un
     });
 
     return palette.length > 0 ? palette : undefined;
+}
+
+function getLayerCustomTooltipFromControls(controls: unknown): ICustomTooltipConfig | undefined {
+    if (!isRecord(controls)) {
+        return undefined;
+    }
+    const raw = controls["customTooltip"];
+    if (!isRecord(raw) || typeof raw["content"] !== "string") {
+        return undefined;
+    }
+
+    const tooltip: ICustomTooltipConfig = { content: raw["content"] };
+    if (typeof raw["enabled"] === "boolean") {
+        tooltip.enabled = raw["enabled"];
+    }
+    if (raw["placement"] === "above" || raw["placement"] === "below" || raw["placement"] === "replace") {
+        tooltip.placement = raw["placement"];
+    }
+    return tooltip;
+}
+
+/** Assembles the per-layer {@link IGeoLayerConfig} from controls; `undefined` when empty. */
+function buildLayerConfigFromControls(controls: unknown): IGeoLayerConfig | undefined {
+    const colorPalette = getLayerColorPaletteFromControls(controls);
+    const colorMapping = getLayerColorMappingFromControls(controls);
+    const customTooltip = getLayerCustomTooltipFromControls(controls);
+
+    const config: IGeoLayerConfig = {
+        ...(colorPalette ? { colorPalette } : {}),
+        ...(colorMapping ? { colorMapping } : {}),
+        ...(customTooltip ? { customTooltip } : {}),
+    };
+
+    return Object.keys(config).length > 0 ? config : undefined;
 }
 
 /**
@@ -323,15 +361,7 @@ function convertToPushpinLayer(insightLayer: IInsightLayerDefinition): IGeoLayer
     if (!geoIcon && isGeoLayerControls(controls) && controls.geoIcon) {
         geoIcon = createAttributeFromDisplayFormId(controls.geoIcon, "geoIcon_df");
     }
-    const colorMapping = getLayerColorMappingFromControls(controls);
-    const colorPalette = getLayerColorPaletteFromControls(controls);
-    const layerConfig: IGeoLayerConfig | undefined = colorPalette || colorMapping ? {} : undefined;
-    if (layerConfig && colorPalette) {
-        layerConfig.colorPalette = colorPalette;
-    }
-    if (layerConfig && colorMapping) {
-        layerConfig.colorMapping = colorMapping;
-    }
+    const layerConfig = buildLayerConfigFromControls(controls);
 
     if (!latitude || !longitude) {
         return null;
@@ -385,15 +415,7 @@ function convertToAreaLayer(insightLayer: IInsightLayerDefinition): IGeoLayerAre
     const color = getAttributeOrMeasureFromBucket(buckets, BucketNames.COLOR);
     const segmentBy = getAttributeFromBucket(buckets, BucketNames.SEGMENT);
     const tooltipText = getAttributeFromBucket(buckets, BucketNames.TOOLTIP_TEXT);
-    const colorMapping = getLayerColorMappingFromControls(controls);
-    const colorPalette = getLayerColorPaletteFromControls(controls);
-    const layerConfig: IGeoLayerConfig | undefined = colorPalette || colorMapping ? {} : undefined;
-    if (layerConfig && colorPalette) {
-        layerConfig.colorPalette = colorPalette;
-    }
-    if (layerConfig && colorMapping) {
-        layerConfig.colorMapping = colorMapping;
-    }
+    const layerConfig = buildLayerConfigFromControls(controls);
 
     return {
         id,
@@ -534,6 +556,11 @@ function layerConfigToInsightProperties(
     const colorMapping = serializeLayerColorMapping(config.colorMapping);
     if (colorMapping) {
         controls["colorMapping"] = colorMapping;
+    }
+
+    // Mirror the read path (requires content) so write/read stay symmetric.
+    if (config.customTooltip?.content) {
+        controls["customTooltip"] = config.customTooltip;
     }
 
     if (Object.keys(controls).length === 0) {

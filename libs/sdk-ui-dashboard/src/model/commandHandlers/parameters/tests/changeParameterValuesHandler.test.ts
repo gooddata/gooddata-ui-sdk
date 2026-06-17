@@ -7,6 +7,7 @@ import { type IDashboardParameter, idRef } from "@gooddata/sdk-model";
 import { changeParameterValues } from "../../../commands/parameters.js";
 import { tabsActions } from "../../../store/tabs/index.js";
 import { selectParameterRuntimeOverrideByRef } from "../../../store/tabs/parameters/parametersSelectors.js";
+import { selectActiveTabLocalIdentifier } from "../../../store/tabs/tabsSelectors.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
 
@@ -45,5 +46,33 @@ describe("changeParameterValues handler", () => {
 
         expect(selectParameterRuntimeOverrideByRef(unknownRef)(Tester.state())).toBeUndefined();
         expect(selectParameterRuntimeOverrideByRef(topNRef)(Tester.state())).toBe(5);
+    });
+
+    describe("with tabLocalIdentifier", () => {
+        it("does not write the override when tabLocalIdentifier names a tab that does not exist", async () => {
+            await Tester.dispatchAndWaitFor(
+                changeParameterValues({
+                    parameters: [{ ref: topNRef, value: 3 }],
+                    tabLocalIdentifier: "no-such-tab",
+                }),
+                "GDC.DASH/CMD.PARAMETERS.CHANGE_VALUES",
+            );
+
+            expect(selectParameterRuntimeOverrideByRef(topNRef)(Tester.state())).toBe(5);
+        });
+
+        it("threads tabLocalIdentifier through to the named tab", async () => {
+            const activeTabId = selectActiveTabLocalIdentifier(Tester.state());
+
+            await Tester.dispatchAndWaitFor(
+                changeParameterValues({
+                    parameters: [{ ref: topNRef, value: 3 }],
+                    tabLocalIdentifier: activeTabId,
+                }),
+                "GDC.DASH/CMD.PARAMETERS.CHANGE_VALUES",
+            );
+
+            expect(selectParameterRuntimeOverrideByRef(topNRef)(Tester.state())).toBe(3);
+        });
     });
 });

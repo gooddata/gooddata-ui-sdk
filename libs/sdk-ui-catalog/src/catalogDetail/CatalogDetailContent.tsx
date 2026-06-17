@@ -36,7 +36,7 @@ const Tabs = {
 } as const;
 
 /**
- * @internal
+ * @public
  */
 export interface ICatalogDetailContentProps {
     /**

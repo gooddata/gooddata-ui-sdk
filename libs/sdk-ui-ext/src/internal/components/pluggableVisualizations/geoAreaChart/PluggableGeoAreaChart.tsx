@@ -401,6 +401,9 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
         const controlsForPrimaryLayer = {
             ...controlsWithFallback,
             ...(fullConfig.colorPalette ? { colorPalette: fullConfig.colorPalette } : {}),
+            // Resolved tooltip can come from options/customVisualizationConfig, not just
+            // controls — carry it to the primary layer before the chart-level clear below.
+            ...(fullConfig.customTooltip ? { customTooltip: fullConfig.customTooltip } : {}),
         };
 
         const primaryLayer = insightLayerToGeoLayer({
@@ -419,8 +422,14 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
 
         return {
             primaryLayer,
-            // Prevent treating chart-level colors as global. They are stored on the primary layer above.
-            config: { ...fullConfig, colorPalette: undefined, colorMapping: undefined },
+            // Prevent treating chart-level colors / custom tooltip as global. They are
+            // stored on the primary layer above; each layer renders its own.
+            config: {
+                ...fullConfig,
+                colorPalette: undefined,
+                colorMapping: undefined,
+                customTooltip: undefined,
+            },
             filters,
         };
     }

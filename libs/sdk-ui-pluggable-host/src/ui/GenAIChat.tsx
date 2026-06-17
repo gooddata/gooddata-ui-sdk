@@ -5,7 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { defineMessage, useIntl } from "react-intl";
 
 import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import type { GenAIObjectType } from "@gooddata/sdk-model";
+import type { GenAIObjectType, IGenAIUserContext } from "@gooddata/sdk-model";
 import { useBackendStrict } from "@gooddata/sdk-ui";
 import {
     type ChatAssistantMessageEvent,
@@ -34,6 +34,7 @@ import {
     makeTextContents,
     makeUserMessage,
     newMessageAction,
+    setUserContextAction,
 } from "@gooddata/sdk-ui-gen-ai/internal";
 import { HEADER_CHAT_BUTTON_ID, useToastMessage } from "@gooddata/sdk-ui-kit";
 
@@ -62,6 +63,25 @@ export interface IGenAIChatProps {
     onOpen: () => void;
     onClose: () => void;
     askedQuestion?: string | null;
+    /**
+     * Monotonic counter bumped on every ask. Keying the seeding effect on it re-seeds the chat
+     * (clear thread + send message) even when `askedQuestion` is identical to the previous ask.
+     */
+    askSeq?: number;
+    /**
+     * Context of the user's location when the question was asked (e.g. the active dashboard
+     * of a hosted application), passed to the assistant alongside the seeded question.
+     */
+    userContext?: IGenAIUserContext;
+    /**
+     * Tag identifiers the assistant's object search/autocomplete should be restricted to,
+     * reflecting the active hosted application's current view.
+     */
+    includeTags?: string[];
+    /**
+     * Tag identifiers the assistant's object search/autocomplete should exclude.
+     */
+    excludeTags?: string[];
     canManageProject?: boolean;
     canAnalyzeProject?: boolean;
     canFullControl?: boolean;
@@ -75,6 +95,10 @@ export function GenAIChat({
     onOpen,
     onClose,
     askedQuestion,
+    askSeq,
+    userContext,
+    includeTags,
+    excludeTags,
     canManageProject,
     canAnalyzeProject,
     canFullControl,
@@ -175,12 +199,17 @@ export function GenAIChat({
         }
 
         chatDispatcher(clearThreadAction());
+        // Always set (and thereby clear when undefined) so a follow-up ask without context does not
+        // inherit the previous ask's user context (LX-2544).
+        chatDispatcher(setUserContextAction({ userContext }));
         if (settings.enableAiAgenticConversations) {
             chatDispatcher(newMessageAction(makeUserItem({ type: "text", text: askedQuestion })));
         } else {
             chatDispatcher(newMessageAction(makeUserMessage([makeTextContents(askedQuestion, [])])));
         }
-    }, [chatDispatcher, askedQuestion, settings]);
+        // `askSeq` is included so a repeated identical question (same `askedQuestion`) still re-seeds.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [chatDispatcher, askedQuestion, askSeq, userContext, settings]);
 
     return (
         <GenAIChatDialog
@@ -190,6 +219,8 @@ export function GenAIChat({
             canAnalyze={canAnalyzeProject}
             canFullControl={canFullControl}
             objectTypes={objectTypes}
+            includeTags={includeTags}
+            excludeTags={excludeTags}
             onLinkClick={onLinkClick}
             onClose={onClose}
             onOpen={onOpen}

@@ -226,10 +226,10 @@
     &--agent-switching &__agent-change {
         display: flex;
         align-items: center;
-        gap: 20px;
+        gap: 15px;
         color: kit-variables.$gd-color-state-blank;
-        font-size: 14px;
-        line-height: 20px;
+        font-size: 12px;
+        line-height: 23px;
 
         &__line {
             flex: 1 1 0;
@@ -682,14 +682,17 @@
             flex-wrap: nowrap;
             gap: 10px;
 
-            & .gd-button {
-                flex: 0 0 auto;
-                min-width: 0;
+            & .gd-ui-kit-button {
                 margin-top: 1em;
 
-                & + .gd-button {
+                & + .gd-ui-kit-button {
                     margin-top: 1em;
                 }
+            }
+
+            & > .gd-ui-kit-button {
+                flex: 0 0 auto;
+                min-width: 0;
 
                 &:last-child {
                     flex-shrink: 1;
@@ -702,16 +705,16 @@
                 margin-top: 1em;
 
                 & ~ .gd-ui-kit-tooltip__anchor,
-                & ~ .gd-button {
+                & ~ .gd-ui-kit-button {
                     margin-top: 1em;
                 }
 
-                .gd-button {
+                .gd-ui-kit-button {
                     margin-top: 0;
                 }
             }
 
-            & > .gd-button ~ .gd-ui-kit-tooltip__anchor {
+            & > .gd-ui-kit-button ~ .gd-ui-kit-tooltip__anchor {
                 margin-top: 1em;
             }
         }
@@ -720,16 +723,16 @@
             margin-top: 2em;
 
             & ~ .gd-ui-kit-tooltip__anchor,
-            & ~ .gd-button {
+            & ~ .gd-ui-kit-button {
                 margin-top: 1em;
             }
 
-            .gd-button {
+            .gd-ui-kit-button {
                 margin-top: 0;
             }
         }
 
-        & > .gd-button ~ .gd-ui-kit-tooltip__anchor {
+        & > .gd-ui-kit-button ~ .gd-ui-kit-tooltip__anchor {
             margin-top: 1em;
         }
     }
@@ -738,32 +741,13 @@
         color: kit-variables.$gd-palette-primary-base;
     }
 
-    & .gd-button {
+    & .gd-ui-kit-button {
         margin-top: 2em;
 
-        & + .gd-button {
+        & + .gd-ui-kit-button {
             margin-top: 1em;
             margin-left: 0;
         }
-    }
-
-    & .gd-button-text {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        line-height: 20px;
-        gap: 10px;
-    }
-
-    &__icon {
-        width: 18px;
-        height: 18px;
-    }
-
-    &__text {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
     }
 }
 
@@ -1332,6 +1316,80 @@
             overflow-y: auto;
             overscroll-behavior: contain;
             margin: 0;
+        }
+    }
+
+    &--alertProposal {
+        display: grid;
+
+        .gd-gen-ai-chat__conversation__item__content-alertProposal-header {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 7px;
+            margin: 10px 0 5px 0;
+            font-size: 14px;
+            font-weight: 400;
+            color: kit-variables.$gd-color-link;
+        }
+
+        .gd-gen-ai-chat__conversation__item__content-alertProposal-subheader {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 7px;
+            margin: 10px 0 5px 0;
+            font-size: 14px;
+            font-weight: 400;
+            color: kit-variables.$gd-color-link;
+        }
+
+        .gd-gen-ai-chat__conversation__item__content-alertProposal-frame {
+            display: flex;
+            max-height: 500px;
+            padding: 10px;
+            flex-direction: column;
+            align-items: flex-start;
+            align-self: stretch;
+            border-radius: 8px;
+            border: 1px solid kit-variables.$gd-border-color;
+            background: kit-variables.$gd-color-white;
+            overflow-y: auto;
+            overscroll-behavior: auto;
+
+            ul {
+                padding: 0 0 0 20px;
+                margin: 0;
+            }
+
+            .gd-gen-ai-chat__conversation__item__content-alertProposal-item-title {
+                display: inline-block;
+                margin-right: 5px;
+            }
+
+            .gd-gen-ai-chat__conversation__item__content-alertProposal-item-description {
+                display: inline;
+
+                p {
+                    display: inline;
+                }
+
+                &.bold p {
+                    font-weight: bold;
+                }
+
+                code {
+                    background: kit-variables.$is-focused-background;
+                    padding: 2px 4px;
+                    border-radius: 4px;
+                }
+            }
+
+            .gd-gen-ai-chat__conversation__item__content-alertProposal-item-format {
+                margin-left: 5px;
+                display: inline;
+                color: kit-variables.$gd-color-state-blank;
+            }
         }
     }
 

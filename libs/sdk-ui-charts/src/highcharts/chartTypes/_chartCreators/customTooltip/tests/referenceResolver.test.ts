@@ -267,14 +267,13 @@ describe("resolveReferencesFromPoint", () => {
         expect(result["metric/raw"]).toEqual(value("7"));
     });
 
-    it("leaves a sibling measure unresolved on a multi-series point (WS3 / F1-2510 premise)", () => {
+    it("sees only the hovered point's measure; the sibling is filled in elsewhere (F1-2510)", () => {
         // Bar chart with viewBy=month and two measures [customers, returns],
         // tooltip referencing both. Hovering the *customers* bar produces a drill
         // intersection with only the customers measure — returns lives on another
-        // series. So {metric/returns} has no entry here → undefined → downstream
-        // the tooltip renders "(Data could not be retrieved)". This documents the
-        // gap WS3 fixes; flip the `returns` expectation once sibling resolution
-        // lands.
+        // series, so it has no entry HERE. resolveReferencesFromPoint intentionally
+        // sees only the hovered point; the sibling (and null cells) are supplied by
+        // the chart-wide lookup at the section layer (see section.test.ts), not here.
         const result = resolveReferencesFromPoint(
             point({
                 y: 1234,

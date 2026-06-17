@@ -1,9 +1,10 @@
 // (C) 2026 GoodData Corporation
 
-import { type KeyboardEvent, type MouseEvent, type ReactNode, useCallback, useMemo } from "react";
+import { type KeyboardEvent, type MouseEvent, type ReactNode, useCallback, useEffect, useMemo } from "react";
 
 import {
     isExternalPluggableApplicationRegistryItem,
+    type IGenAIUserContext,
     type IWorkspacePermissions,
     type PluggableApplicationRegistryItem,
 } from "@gooddata/sdk-model";
@@ -55,6 +56,25 @@ import "@gooddata/sdk-ui-semantic-search/styles/css/internal.css";
 
 const LOGOUT_MENU_ITEM_KEY = "gs.header.logout";
 
+/**
+ * AI-assistant open/close request pushed from the active pluggable application. `seq` changes on
+ * every request so an identical repeat (e.g. "Summarize" clicked again) still re-triggers the host.
+ */
+export interface IHostChromeAiVisibility {
+    kind: "open" | "close";
+    question?: string;
+    userContext?: IGenAIUserContext;
+    seq: number;
+}
+
+/**
+ * AI-assistant object-search tag scope reported by the active pluggable application.
+ */
+export interface IHostChromeAiContext {
+    includeTags?: string[];
+    excludeTags?: string[];
+}
+
 export interface IHostChromeProps {
     ctx: IPlatformContext;
     resolvedApplications: PluggableApplicationRegistryItem[];
@@ -63,6 +83,12 @@ export interface IHostChromeProps {
     onReplace: (url: string) => void;
     headerOptions?: IAppHeaderOptions;
     notification?: IHostUiNotification | null;
+    /** Latest AI-assistant open/close request from the active pluggable application. */
+    aiVisibility?: IHostChromeAiVisibility | null;
+    /** Latest AI-assistant tag scope reported by the active pluggable application. */
+    aiContext?: IHostChromeAiContext | null;
+    /** Reports the host chat open-state so the runtime can forward it to the active app. */
+    onAiAssistantOpenChange?: (open: boolean) => void;
     /**
      * Page-title segment set by the active pluggable application via a document-title-changed
      * event. When omitted, the active application's manifest title is used instead.
@@ -79,6 +105,9 @@ export function HostChrome({
     onReplace: _onReplace,
     headerOptions,
     notification = null,
+    aiVisibility = null,
+    aiContext = null,
+    onAiAssistantOpenChange,
     appPageTitle,
     children,
 }: IHostChromeProps) {
@@ -94,6 +123,59 @@ export function HostChrome({
 
     const pricing = useHostChromePricing(ctx, locale);
     const chat = useHostChromeChat({ features, ctx, telemetry: shellTelemetry });
+    const {
+        askAiAssistant: chatAskAiAssistant,
+        open: chatOpen,
+        close: chatClose,
+        setTags: chatSetTags,
+        isOpen: chatIsOpen,
+    } = chat;
+
+    // Report the host-owned chat open-state outward so the runtime can forward it to the active
+    // pluggable application, keeping app-side assistant controls (and their echoed results) aligned
+    // with the real state — e.g. the embedded dashboard's toggleAIAssistant result (LX-2544).
+    useEffect(() => {
+        onAiAssistantOpenChange?.(chatIsOpen);
+    }, [chatIsOpen, onAiAssistantOpenChange]);
+
+    // The active pluggable application must not render its own chat dialog on hosted routes — the
+    // chrome owns the single chat instance there (LX-2544). It drives that instance through these
+    // signals instead: the object-search tag scope of its current view and open/close requests.
+    //
+    // Effect order matters: the tag-scope effects are declared before the open/ask effect so that,
+    // when a tag-scope change and an open/ask request land in the same commit, the host chat is
+    // already scoped before the seeded question is sent.
+
+    // Clear any stale tag scope when the active application changes. The newly active app re-reports
+    // its own scope (or none) right after it mounts; without this reset, switching from a
+    // tag-scoped app to one that reports no scope (e.g. the metric editor) would leak the old scope.
+    // Declared before the context effect so that, in the rare commit where both change, the fresh
+    // scope wins over the reset.
+    const activeAppId = getActiveInternalApplication(resolvedApplications, ctx, pathname)?.id;
+    useEffect(() => {
+        chatSetTags(undefined, undefined);
+    }, [activeAppId, chatSetTags]);
+
+    useEffect(() => {
+        chatSetTags(aiContext?.includeTags, aiContext?.excludeTags);
+    }, [aiContext, chatSetTags]);
+
+    const aiVisibilitySeq = aiVisibility?.seq;
+    useEffect(() => {
+        if (!aiVisibility) {
+            return;
+        }
+        if (aiVisibility.kind === "close") {
+            chatClose();
+        } else if (aiVisibility.question) {
+            chatAskAiAssistant(aiVisibility.question, aiVisibility.userContext);
+        } else {
+            chatOpen();
+        }
+        // `seq` changes on every request, so a repeated identical open/ask still re-runs this.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [aiVisibilitySeq, chatAskAiAssistant, chatOpen, chatClose]);
+
     const search = useHostChromeSearch({
         features,
         isTrial: pricing.isTrial,
@@ -266,7 +348,7 @@ export function HostChrome({
                                     expiredDate={pricing.isTrial ? pricing.expiredDate : undefined}
                                     search={search.element}
                                     showChatItem={chat.showChatItem}
-                                    onChatItemClick={chat.open}
+                                    onChatItemClick={chat.toggle}
                                     notificationsPanel={
                                         ctx.userSettings.enableInPlatformNotifications
                                             ? ({ isMobile, closeNotificationsOverlay }) => (

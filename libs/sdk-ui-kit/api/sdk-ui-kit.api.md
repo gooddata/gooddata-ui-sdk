@@ -1879,7 +1879,7 @@ export function IconTrash(input: IIconProps): JSX.Element;
 export function IconTreeMap(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export type IconType = "aiAgent" | "aiAgentDisabled" | "brain" | "brainDisabled" | "check" | "checkCircle" | "certification" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "edit" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "infoCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "clockPaused" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "geoCollection" | "geoCollectionUpload" | "minimize" | "shrink" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderSmall" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minus" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "ldmKey" | "ldmLabel" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "history" | "history2" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "externalLink" | "click" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "aiDocument" | "recommendation" | "streamUp" | "streamDown" | "stream" | "density" | "parameter" | "pin" | "unpin";
+export type IconType = "aiAgent" | "aiAgentDisabled" | "brain" | "brainDisabled" | "check" | "checkCircle" | "certification" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "edit" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "infoCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "clockPaused" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "geoCollection" | "geoCollectionUpload" | "minimize" | "shrink" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderSmall" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minus" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "ldmKey" | "ldmLabel" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "history" | "history2" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "externalLink" | "click" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "aiDocument" | "recommendation" | "streamUp" | "streamDown" | "stream" | "density" | "parameter" | "pin" | "unpin" | "speechBubble" | "pieChart";
 
 // @internal (undocumented)
 export function IconUndo(input: IIconProps): JSX.Element;
@@ -2534,6 +2534,7 @@ export interface IDropdownProps {
     initialFocus?: RefObject<HTMLElement> | string;
     // (undocumented)
     isOpen?: boolean;
+    onAlign?: (alignment: Alignment) => void;
     // (undocumented)
     onOpenStateChanged?: (isOpen: boolean) => void;
     onToggle?: ((desiredState?: boolean) => void) | (() => void);
@@ -5500,6 +5501,7 @@ export interface IStylingEditorDialogProps<T extends StylingPickerItemContent> e
     title: string;
     // (undocumented)
     tooltip?: string;
+    validateDefinition?: (content: T) => string | undefined;
 }
 
 // @internal (undocumented)
@@ -5784,18 +5786,22 @@ export interface ITypographyProps {
 }
 
 // @internal (undocumented)
-export interface IUiAddGranteeDialogProps {
+export interface IUiAddGranteeDialogCardProps {
     dataTestId?: string;
-    isAddDisabled?: boolean;
-    isOpen: boolean;
+    initialPermissionLevel?: PermissionMenuLevel;
+    loadOptions: (search: string) => Promise<IUiGranteeAsyncOptions>;
     objectTitle: string;
-    onAdd: () => void;
     onBack: () => void;
     onCancel: () => void;
     onClose: () => void;
-    onSearchQueryChange: (next: string) => void;
-    searchQuery: string;
-    selectedGrantee?: ReactNode;
+    onSelectedGranteesChange: (next: IUiPickedGrantee[]) => void;
+    onShare: () => void;
+    selectedGrantees: ReadonlyArray<IUiPickedGrantee>;
+}
+
+// @internal (undocumented)
+export interface IUiAddGranteeDialogProps extends IUiAddGranteeDialogCardProps {
+    isOpen: boolean;
 }
 
 // @internal (undocumented)
@@ -6674,6 +6680,32 @@ export interface IUiGeneralAccessRadioProps {
     workspaceControls?: ReactNode;
 }
 
+// @internal
+export interface IUiGranteeAsyncOption {
+    email?: string;
+    id: string;
+    kind: GranteeAvatarKind;
+    name: string;
+}
+
+// @internal
+export interface IUiGranteeAsyncOptions {
+    // (undocumented)
+    groups: IUiGranteeAsyncOption[];
+    // (undocumented)
+    users: IUiGranteeAsyncOption[];
+}
+
+// @internal (undocumented)
+export interface IUiGranteeAsyncPickerProps {
+    dataTestId?: string;
+    loadOptions: (search: string) => Promise<IUiGranteeAsyncOptions>;
+    onPermissionChange?: (grantee: IUiPickedGrantee, next: PermissionMenuLevel) => void;
+    onRemove?: (grantee: IUiPickedGrantee) => void;
+    onSelect: (option: IUiGranteeAsyncOption) => void;
+    selectedGrantees?: ReadonlyArray<IUiPickedGrantee>;
+}
+
 // @internal (undocumented)
 export interface IUiGranteeAvatarProps {
     dataTestId?: string;
@@ -7402,6 +7434,11 @@ export interface IUiPermissionMenuProps {
     onRemoveAccess?: () => void;
     onTransferOwnership?: () => void;
     selectedLevel?: PermissionMenuLevel;
+}
+
+// @internal
+export interface IUiPickedGrantee extends IUiGranteeAsyncOption {
+    permissionLevel: PermissionMenuLevel;
 }
 
 // @internal (undocumented)
@@ -8871,6 +8908,9 @@ export type TypographyTagName = "h1" | "h2" | "h3" | "p";
 // @internal
 export function UiAddGranteeDialog(input: IUiAddGranteeDialogProps): JSX.Element;
 
+// @internal
+export function UiAddGranteeDialogCard(input: IUiAddGranteeDialogCardProps): JSX.Element;
+
 // @internal (undocumented)
 export function UiAsyncTable<T extends {
     id: string;
@@ -9040,6 +9080,9 @@ export function UiFocusTrap(input: {
 
 // @internal
 export function UiGeneralAccessRadio(input: IUiGeneralAccessRadioProps): JSX.Element;
+
+// @internal
+export function UiGranteeAsyncPicker(input: IUiGranteeAsyncPickerProps): JSX.Element;
 
 // @internal
 export function UiGranteeAvatar(input: IUiGranteeAvatarProps): JSX.Element;

@@ -20,6 +20,8 @@ import {
 } from "@gooddata/sdk-model";
 import { REFERENCE_REGEX_MATCH } from "@gooddata/sdk-ui-kit";
 
+import { type ICustomTooltipConfig } from "./types.js";
+
 interface IParsedReference {
     type: "metric" | "label";
     id: string;
@@ -310,4 +312,27 @@ export function buildTooltipExecution(
             .filter((bundle): bundle is ITooltipExecutionBundle => bundle !== null);
 
     return { batch, perRef };
+}
+
+/**
+ * Variant of {@link buildTooltipExecution} gated by the customTooltip config: this is the
+ * canonical "should a tooltip execution exist at all" check (enabled + non-empty string
+ * content), so call sites don't re-implement it. Returns `undefined` when the tooltip is
+ * off, has no usable content, or {@link buildTooltipExecution} itself yields nothing.
+ *
+ * @internal
+ */
+export function buildTooltipExecutionFromConfig(
+    executionFactory: IExecutionFactory,
+    chartDefinition: IExecutionDefinition,
+    customTooltip: ICustomTooltipConfig | undefined,
+    options?: IBuildTooltipExecutionOptions,
+): ITooltipExecution | undefined {
+    const { enabled, content } = customTooltip ?? {};
+    // The config may come from untyped visualization properties, so guard the content type too.
+    if (!enabled || typeof content !== "string" || !content) {
+        return undefined;
+    }
+
+    return buildTooltipExecution(executionFactory, chartDefinition, content, options) ?? undefined;
 }

@@ -14,14 +14,14 @@ import { ConversationItemContents } from "./ConversationItemContents.js";
 import { getItemState } from "./itemState.js";
 
 type AssistantItemProps = {
-    groups: [IChatMessagesGroup | undefined, IChatMessagesGroup];
+    groups: IChatMessagesGroup[];
     message: IChatConversationLocalItem;
     isLast?: boolean;
 };
 
 export function AssistantItemComponent({ message, groups, isLast }: AssistantItemProps) {
     const intl = useIntl();
-    const [, group] = groups;
+    const group = groups[groups.length - 1];
 
     const messageState = getItemState(message);
     const references = useToolsReferences(groups);
@@ -51,7 +51,12 @@ export function AssistantItemComponent({ message, groups, isLast }: AssistantIte
                 isLoading={messageState === "loading"}
                 isLast={isLast}
             />
-            <AssistantItemSuggestions type="followUp" content={message.content} showSuggestions />
+            <AssistantItemSuggestions
+                type="followUp"
+                content={message.content}
+                showSuggestions
+                references={references}
+            />
             <AssistantItemFeedback group={group} message={message} isLast={isLast} />
             <AssistantItemSuggestions type="actions" content={message.content} showSuggestions={isLast} />
         </div>

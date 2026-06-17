@@ -49,6 +49,14 @@ export interface IStylingEditorDialogProps<T extends StylingPickerItemContent>
     onExit?: (name: string, definition: string) => void;
     onInvalidDefinition?: (ref: ObjRef) => void;
     showBackButton?: boolean;
+    /**
+     * Optional validation of the parsed definition content (e.g. checking theme color values).
+     *
+     * @remarks
+     * Called only when the definition is valid JSON. Return a localized error message to block
+     * submission and display it, or undefined when the content is valid.
+     */
+    validateDefinition?: (content: T) => string | undefined;
 }
 
 /**
@@ -79,6 +87,7 @@ function StylingEditorDialogCore<T extends StylingPickerItemContent>({
     onExit = () => {},
     className,
     onInvalidDefinition = () => {},
+    validateDefinition,
 }: IStylingEditorDialogProps<T>) {
     const intl = useIntl();
     const providedExamples = !!examples && examples.length !== 0 && !!exampleToColorPreview;
@@ -110,7 +119,24 @@ function StylingEditorDialogCore<T extends StylingPickerItemContent>({
         }
     }, [definitionField]);
 
-    const validFields = useMemo(() => validName && validDefinition, [validName, validDefinition]);
+    // Content-level validation (e.g. theme color values) runs only on well-formed JSON.
+    const definitionContentError = useMemo((): string | undefined => {
+        if (!validateDefinition || !validDefinition) {
+            return undefined;
+        }
+        try {
+            return validateDefinition(JSON.parse(definitionField) as T);
+        } catch (error) {
+            // a buggy validator must not crash the dialog; degrade gracefully and let the user proceed
+            console.error("StylingEditorDialog: the provided validateDefinition callback threw.", error);
+            return undefined;
+        }
+    }, [validateDefinition, validDefinition, definitionField]);
+
+    const validFields = useMemo(
+        () => validName && validDefinition && !definitionContentError,
+        [validName, validDefinition, definitionContentError],
+    );
 
     const isSubmitDisabled = useMemo(
         () => !validFields || !fieldsChanged || disableSubmit,
@@ -132,8 +158,19 @@ function StylingEditorDialogCore<T extends StylingPickerItemContent>({
             }
             return intl.formatMessage({ id: "stylingEditor.dialog.definition.invalid" });
         }
+        if (definitionContentError) {
+            return definitionContentError;
+        }
         return undefined;
-    }, [validName, emptyDefinition, validDefinition, onInvalidDefinition, stylingItem?.ref, intl]);
+    }, [
+        validName,
+        emptyDefinition,
+        validDefinition,
+        definitionContentError,
+        onInvalidDefinition,
+        stylingItem?.ref,
+        intl,
+    ]);
 
     const getFinalStylingItem = (
         original: IStylingPickerItem<T>,

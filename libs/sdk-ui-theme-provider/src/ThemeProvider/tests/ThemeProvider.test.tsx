@@ -259,6 +259,81 @@ describe("ThemeProvider", () => {
         );
     });
 
+    it("should not hang and should still apply valid colors when the theme contains an invalid color", async () => {
+        // A full complementary palette where a single shade (c9) is an invalid hex value.
+        const themeWithInvalidColor: ITheme = {
+            palette: {
+                primary: { base: "#001F5A" },
+                complementary: {
+                    c0: "#ffffff",
+                    c1: "#2662FC",
+                    c2: "#BAD1F5",
+                    c3: "#F9F9F9",
+                    c4: "#00C2FF",
+                    c5: "#000C36",
+                    c6: "#082485",
+                    c7: "#0F3DB5",
+                    c8: "#E7F1FC",
+                    c9: "#1616D",
+                },
+            },
+        };
+
+        const TestComponent = vi.fn(() => null);
+        const TestComponentWithTheme = withTheme(TestComponent);
+        await renderComponent(
+            <ThemeProvider theme={themeWithInvalidColor}>
+                <TestComponentWithTheme />
+            </ThemeProvider>,
+        );
+
+        // loading gate is released - no infinite loading screen
+        expect(TestComponent).toHaveBeenLastCalledWith(
+            expect.objectContaining({ themeIsLoading: false, themeStatus: "success" }),
+            undefined,
+        );
+
+        const themeElement = document.getElementById("gdc-theme-properties");
+        // a valid color is preserved, the invalid one is dropped (no variable emitted for it)
+        expect(themeElement?.innerHTML.indexOf("--gd-palette-complementary-1: #2662FC;")).toBeGreaterThan(-1);
+        expect(themeElement?.innerHTML).not.toContain("1616D");
+    });
+
+    it("should not hang when loading or applying the backend theme fails", async () => {
+        // Simulate a failure while processing the loaded theme (e.g. an unrecoverable color error).
+        const throwingModifier: ThemeModifier = () => {
+            throw new Error("Boom while processing theme");
+        };
+        const TestComponent = vi.fn(() => null);
+        const TestComponentWithTheme = withTheme(TestComponent);
+
+        await suppressConsole(
+            () =>
+                act(() => {
+                    render(
+                        <ThemeProvider backend={backend} workspace={workspace} modifier={throwingModifier}>
+                            <TestComponentWithTheme />
+                        </ThemeProvider>,
+                    );
+                }),
+            "error",
+            [
+                {
+                    type: "startsWith",
+                    value: "The current testing environment is not configured to support act(...)",
+                },
+                { type: "startsWith", value: "Failed to load or process the theme from the backend." },
+            ],
+        );
+
+        // loading gate is released even though theme processing failed - no infinite loading screen,
+        // and the context theme is reset to the default so it stays consistent with the cleared CSS
+        expect(TestComponent).toHaveBeenLastCalledWith(
+            { themeIsLoading: false, theme: {}, themeStatus: "success" },
+            undefined,
+        );
+    });
+
     it("should not remove global theme styles on unmount when removeGlobalStylesOnUnmout is set to false", async () => {
         const { unmount } = await renderComponent(
             <ThemeProvider

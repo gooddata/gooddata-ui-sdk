@@ -8,13 +8,17 @@ import {
     type CatalogItem,
     type IAttributeDisplayFormMetadataObject,
     type ICatalogDateAttribute,
+    type ObjRef,
     isAttributeDisplayFormMetadataObject,
     isCatalogAttribute,
     isCatalogDateAttribute,
     isCatalogDateDataset,
     isCatalogFact,
     isCatalogMeasure,
+    isIdentifierRef,
 } from "@gooddata/sdk-model";
+
+import { type TextContentObject } from "../../model.js";
 
 import { getInfo } from "./InfoComponent.js";
 
@@ -198,6 +202,29 @@ function applyItem(view: EditorView, insert: string, from: number, to: number) {
         changes: { from: from - 1, to, insert },
         selection: { anchor: from - 1 + insert.length },
     });
+}
+
+// Utility: Get item for completion
+export function objRefToTextContentObject(
+    objRef: ObjRef,
+    title?: string,
+    forceType?: TextContentObject["type"],
+): TextContentObject | null {
+    if (isIdentifierRef(objRef)) {
+        const type = objRef.type;
+        return {
+            id: objRef.identifier,
+            title: title ?? objRef.identifier,
+            type:
+                forceType ??
+                ((type === "measure"
+                    ? "metric"
+                    : type === "displayForm"
+                      ? "label"
+                      : type) as TextContentObject["type"]),
+        };
+    }
+    return null;
 }
 
 // Utility: Get completion item ID

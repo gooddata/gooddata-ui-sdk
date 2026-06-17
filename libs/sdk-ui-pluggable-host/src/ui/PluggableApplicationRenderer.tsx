@@ -11,13 +11,17 @@ import {
     type IPluggableApp,
     type IPluggableAppEvent,
     type IPluggableApplicationMountHandle,
+    isAiAssistantContextChangedEvent,
+    isCloseAiAssistantRequestedEvent,
     isDocumentTitleChangedEvent,
+    isOpenAiAssistantRequestedEvent,
     isReloadPlatformContextRequestedEvent,
 } from "@gooddata/sdk-pluggable-application-model";
 import { LoadingComponent, useAutoupdateRef } from "@gooddata/sdk-ui";
 import { bemFactory } from "@gooddata/sdk-ui-kit";
 
 import { now } from "../debug.js";
+import { dispatchHostNotification } from "../lib/hostNotifications.js";
 import {
     type AppSecurityFailure,
     getSecuredRemoteAppValidUntil,
@@ -49,6 +53,8 @@ export interface IPluggableApplicationRendererProps {
     app: PluggableApplicationRegistryItem;
     ctx: IPlatformContext;
     pathname: string;
+    /** Host-owned AI assistant chat open-state, forwarded to the mounted app's handle. */
+    aiAssistantOpen?: boolean;
     onHeaderChange?: (appId: string, header: IAppHeaderOptions) => void;
     onDocumentTitleChange?: (appId: string, pageTitle: string | undefined) => void;
 }
@@ -57,6 +63,7 @@ export function PluggableApplicationRenderer({
     app,
     ctx,
     pathname,
+    aiAssistantOpen,
     onHeaderChange,
     onDocumentTitleChange,
 }: IPluggableApplicationRendererProps) {
@@ -90,6 +97,29 @@ export function PluggableApplicationRenderer({
         (event: IPluggableAppEvent) => {
             if (isReloadPlatformContextRequestedEvent(event)) {
                 void BackendPlatformContextProvider.load();
+                return;
+            }
+            // The active pluggable application owns no chat dialog on hosted routes; it requests
+            // the host's single assistant through these events (open/ask and tag-scope changes),
+            // which the host chrome consumes via the notification channel.
+            if (isOpenAiAssistantRequestedEvent(event)) {
+                dispatchHostNotification({
+                    type: "openAiAssistant",
+                    question: event.payload.question,
+                    userContext: event.payload.userContext,
+                });
+                return;
+            }
+            if (isCloseAiAssistantRequestedEvent(event)) {
+                dispatchHostNotification({ type: "closeAiAssistant" });
+                return;
+            }
+            if (isAiAssistantContextChangedEvent(event)) {
+                dispatchHostNotification({
+                    type: "aiAssistantContext",
+                    includeTags: event.payload.includeTags,
+                    excludeTags: event.payload.excludeTags,
+                });
                 return;
             }
             if (isDocumentTitleChangedEvent(event)) {
@@ -224,6 +254,15 @@ export function PluggableApplicationRenderer({
 
         handle.updateContext?.(ctx);
     }, [ctx, intlRef, lifecycle]);
+
+    // Forward the host-owned chat open-state to the mounted app once it is ready, and on every
+    // change, so app-side assistant controls stay aligned with the real (host) state (LX-2544).
+    useEffect(() => {
+        if (viewState.state !== "ready" || aiAssistantOpen === undefined) {
+            return;
+        }
+        mountHandleRef.current?.setAiAssistantOpen?.(aiAssistantOpen);
+    }, [aiAssistantOpen, viewState.state]);
 
     return (
         <section className={b()}>

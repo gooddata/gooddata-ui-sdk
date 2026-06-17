@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type PluggableApplicationRegistryItem } from "@gooddata/sdk-model";
+import { type IGenAIUserContext, type PluggableApplicationRegistryItem } from "@gooddata/sdk-model";
 
 import { type IAppHeaderOptions } from "./mount.js";
 import { type IPlatformContext } from "./platformContext.js";
@@ -53,6 +53,16 @@ export interface IHostUiMountOptions {
      * entry instead of pushing a new one.
      */
     replace: (url: string) => void;
+
+    /**
+     * Reports the host-owned AI assistant chat open-state whenever it changes.
+     *
+     * @remarks
+     * The host UI owns the single chat instance on hosted routes; the host runtime forwards this
+     * open-state to the active pluggable application (via its mount handle) so app-side assistant
+     * controls stay aligned with what the user sees.
+     */
+    onAiAssistantOpenChange?: (open: boolean) => void;
 }
 
 /**
@@ -80,6 +90,64 @@ export interface INewDeploymentAvailableHostUiNotification {
 }
 
 /**
+ * Notification requesting the host UI to open its AI assistant chat.
+ *
+ * @remarks
+ * Emitted when the active pluggable application requests the assistant (see
+ * `IOpenAiAssistantRequestedEvent`). The host UI owns the single chat instance on
+ * hosted-application routes and opens it, optionally seeded with a question and user context.
+ *
+ * @alpha
+ */
+export interface IOpenAiAssistantHostUiNotification {
+    type: "openAiAssistant";
+    /**
+     * Question to seed the chat with. When omitted, the chat just opens.
+     */
+    question?: string;
+    /**
+     * Context of the user's current location (e.g. the active dashboard), passed to the
+     * assistant alongside the seeded question.
+     */
+    userContext?: IGenAIUserContext;
+}
+
+/**
+ * Notification requesting the host UI to close its AI assistant chat.
+ *
+ * @remarks
+ * Emitted when the active pluggable application closes the assistant from one of its own controls
+ * (see `ICloseAiAssistantRequestedEvent`). The host UI closes its single chat instance.
+ *
+ * @alpha
+ */
+export interface ICloseAiAssistantHostUiNotification {
+    type: "closeAiAssistant";
+}
+
+/**
+ * Notification informing the host UI of the active application's current AI-assistant tag scope.
+ *
+ * @remarks
+ * Emitted when the active pluggable application's tag scope changes (see
+ * `IAiAssistantContextChangedEvent`). The host UI keeps the latest scope and applies it to its
+ * chat so the assistant's object search stays within the same scope the application enforces.
+ *
+ * @alpha
+ */
+export interface IAiAssistantContextHostUiNotification {
+    type: "aiAssistantContext";
+    /**
+     * Tag identifiers the assistant's object search should be restricted to.
+     */
+    includeTags?: string[];
+    /**
+     * Tag identifiers the assistant's object search should exclude.
+     */
+    excludeTags?: string[];
+}
+
+/**
  * Discriminated union of out-of-band notifications the host runtime can push into the
  * host UI module after mount. Lets the runtime signal events that should affect the UI
  * without coupling it to a specific rendering.
@@ -91,7 +159,11 @@ export interface INewDeploymentAvailableHostUiNotification {
  *
  * @alpha
  */
-export type IHostUiNotification = INewDeploymentAvailableHostUiNotification;
+export type IHostUiNotification =
+    | INewDeploymentAvailableHostUiNotification
+    | IOpenAiAssistantHostUiNotification
+    | ICloseAiAssistantHostUiNotification
+    | IAiAssistantContextHostUiNotification;
 
 /**
  * Handle returned from a host UI mount for lifecycle management.

@@ -23,7 +23,11 @@ import { IAgent } from '@gooddata/sdk-model';
 import { IAgentPatch } from '@gooddata/sdk-model';
 import { IAgentSkill } from '@gooddata/sdk-model';
 import { IAiRateLimit } from '@gooddata/sdk-model';
+import type { IAlertAnomalyDetectionGranularity } from '@gooddata/sdk-model';
+import type { IAlertAnomalyDetectionSensitivity } from '@gooddata/sdk-model';
 import { IAlertDefault } from '@gooddata/sdk-model';
+import type { IAlertTriggerInterval } from '@gooddata/sdk-model';
+import type { IAlertTriggerMode } from '@gooddata/sdk-model';
 import type { IAllowedRelationshipType } from '@gooddata/sdk-model';
 import { IAttribute } from '@gooddata/sdk-model';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
@@ -33,6 +37,7 @@ import { IAttributeMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IAutomationMetadataObject } from '@gooddata/sdk-model';
 import { IAutomationMetadataObjectDefinition } from '@gooddata/sdk-model';
+import type { IAutomationRecipient } from '@gooddata/sdk-model';
 import { IAvailableAccessGrantee } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { ICatalogAttribute } from '@gooddata/sdk-model';
@@ -299,6 +304,70 @@ export interface IAgentsQuery {
 
 // @alpha
 export type IAgentsQueryResult = IPagedResource<IAgent>;
+
+// @internal
+export interface IAlertProposal {
+    // (undocumented)
+    arithmeticOperator?: string;
+    // (undocumented)
+    attributes?: IAttribute[];
+    // (undocumented)
+    automation?: ObjRef;
+    // (undocumented)
+    baseMetric: {
+        id: ObjRef;
+        title: string;
+        format: string;
+    };
+    // (undocumented)
+    compareMetric?: {
+        id: ObjRef;
+        title: string;
+        format: string;
+    };
+    // (undocumented)
+    dashboard?: {
+        id: ObjRef;
+        title: string;
+    };
+    // (undocumented)
+    date?: {
+        id: ObjRef;
+        title: string;
+    };
+    // (undocumented)
+    description: string;
+    // (undocumented)
+    filters?: IFilter[];
+    // (undocumented)
+    fromValue?: number | string;
+    // (undocumented)
+    granularity?: IAlertAnomalyDetectionGranularity;
+    // (undocumented)
+    notificationChannel?: {
+        id: ObjRef;
+        name: string;
+    };
+    // (undocumented)
+    operator?: string;
+    // (undocumented)
+    recipients?: IAutomationRecipient[];
+    // (undocumented)
+    sensitivity?: IAlertAnomalyDetectionSensitivity;
+    // (undocumented)
+    threshold?: number | string;
+    // (undocumented)
+    title: string;
+    // (undocumented)
+    toValue?: number | string;
+    // (undocumented)
+    trigger?: {
+        trigger?: IAlertTriggerMode;
+        interval?: IAlertTriggerInterval;
+        cron?: string;
+        timezone?: string;
+    };
+}
 
 // @public
 export interface IAnalyticalBackend {
@@ -670,6 +739,12 @@ export type IChatConversation = {
 };
 
 // @internal
+export type IChatConversationAlertProposalContent = {
+    type: "alertProposal";
+    alertProposal?: IAlertProposal;
+};
+
+// @internal
 export type IChatConversationContent = IChatConversationTextContent | IChatConversationReasoningContent | IChatConversationMultipartContent | IChatConversationToolCallContent | IChatConversationToolResultContent;
 
 // @internal
@@ -734,7 +809,7 @@ export type IChatConversationMultipartContent = {
 };
 
 // @internal
-export type IChatConversationMultipartPart = IChatConversationTextContent | IChatConversationVisualisationContent | IChatConversationKeyDriverAnalysisContent | IChatConversationWhatIfContent | IChatConversationSearchContent;
+export type IChatConversationMultipartPart = IChatConversationTextContent | IChatConversationVisualisationContent | IChatConversationAlertProposalContent | IChatConversationKeyDriverAnalysisContent | IChatConversationWhatIfContent | IChatConversationSearchContent;
 
 // @internal
 export type IChatConversationReasoningContent = {
@@ -2370,6 +2445,9 @@ export function isAbortError(obj: unknown): obj is AbortError;
 
 // @public
 export function isAnalyticalBackendError(obj: unknown): obj is AnalyticalBackendError;
+
+// @internal
+export function isChatConversationAlertProposalContent(content: IChatConversationMultipartPart): content is IChatConversationAlertProposalContent;
 
 // @internal
 export function isChatConversationError(item: Partial<IChatConversationItem | IChatConversationError>): item is IChatConversationError;

@@ -95,15 +95,16 @@ export const useGenAIStore = (
     }, [objectTypes, optionsDispatcher, store]);
 
     useEffect(() => {
-        if (includeTags || excludeTags) {
-            optionsDispatcher.setTags(includeTags, excludeTags);
-            store.dispatch(
-                setTagsAction({
-                    includeTags,
-                    excludeTags,
-                }),
-            );
-        }
+        // Always sync, including when both are undefined: clearing the scope (e.g. the host shell
+        // switching to an app with no tag filter) must reset the store, otherwise object search
+        // keeps the previous tag filter (LX-2544). `undefined` means "no filter".
+        optionsDispatcher.setTags(includeTags, excludeTags);
+        store.dispatch(
+            setTagsAction({
+                includeTags,
+                excludeTags,
+            }),
+        );
     }, [includeTags, excludeTags, optionsDispatcher, store]);
 
     useEffect(() => {

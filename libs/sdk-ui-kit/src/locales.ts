@@ -120,3 +120,11 @@ export const uiAutocompleteMessages = defineMessages({
     stateNoMatch: { id: "uiKit.autocomplete.stateNoMatch" },
     loadMore: { id: "uiKit.autocomplete.loadMore" },
 });
+
+export const uiGranteeAsyncPickerMessages = defineMessages({
+    searchPlaceholder: { id: "shareDialog.share.grantee.add.search.placeholder" },
+    sectionGroups: { id: "shareDialog.share.grantee.add.label.group" },
+    sectionUsers: { id: "shareDialog.share.grantee.add.label.user" },
+    stateError: { id: "shareDialog.share.grantee.add.search.error.message" },
+    stateNoMatch: { id: "shareDialog.share.grantee.add.search.no.matching.items" },
+});

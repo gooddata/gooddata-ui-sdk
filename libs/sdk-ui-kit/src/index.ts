@@ -1171,6 +1171,14 @@ export type {
     IUiAutocompleteLoadResult,
 } from "./@ui/UiAutocomplete/types.js";
 
+export {
+    UiGranteeAsyncPicker,
+    type IUiGranteeAsyncPickerProps,
+    type IUiGranteeAsyncOption,
+    type IUiGranteeAsyncOptions,
+    type IUiPickedGrantee,
+} from "./@ui/UiGranteeAsyncPicker/UiGranteeAsyncPicker.js";
+
 export { UiCopyButton, type IUiCopyButtonProps } from "./@ui/UiCopyButton/UiCopyButton.js";
 export {
     UiInlineTextGenerator,
@@ -1243,6 +1251,10 @@ export {
     UiAddGranteeDialog,
     type IUiAddGranteeDialogProps,
 } from "./@ui/UiAddGranteeDialog/UiAddGranteeDialog.js";
+export {
+    UiAddGranteeDialogCard,
+    type IUiAddGranteeDialogCardProps,
+} from "./@ui/UiAddGranteeDialog/UiAddGranteeDialogCard.js";
 export {
     UiGeneralAccessRadio,
     type IUiGeneralAccessRadioProps,

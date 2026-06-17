@@ -39,12 +39,14 @@ import {
 } from "@gooddata/sdk-model";
 import { convertError } from "@gooddata/sdk-ui";
 
+import { getAutomationExportParametersByTab } from "../../../_staging/automation/index.js";
 import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/dashboardFilterContext.js";
 import { type IDashboardFilter, isDashboardFilter } from "../../../types.js";
 import {
     changeFilterContextSelection,
     changeFilterContextSelectionByParams,
 } from "../../commands/filters.js";
+import { changeParameterValues } from "../../commands/parameters.js";
 import { type IInitializeAutomations } from "../../commands/scheduledEmail.js";
 import { switchDashboardTab } from "../../commands/tabs.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
@@ -59,6 +61,7 @@ import {
     selectEnableInPlatformNotifications,
     selectEnableMatchFilterKD,
     selectEnableNotificationChannelIdentifiers,
+    selectEnableParameters,
     type selectEnableScheduling,
     selectExternalRecipient,
     selectFocusObject,
@@ -87,8 +90,10 @@ import { type DashboardContext } from "../../types/commonTypes.js";
 import { type PromiseFnReturnType } from "../../types/sagas.js";
 import { isFilterTypeCompatibleWithSelectionType } from "../dashboard/common/attributeFilterSelectionTypeCompatibility.js";
 import { changeFilterContextSelectionHandler } from "../filterContext/changeFilterContextSelectionHandler.js";
+import { changeParameterValuesHandler } from "../parameters/changeParameterValuesHandler.js";
 import { switchDashboardTabHandler } from "../tabs/switchDashboardTabHandler.js";
 
+import { extractAutomationParameterChanges } from "./automationParametersRestore.js";
 import { loadDashboardUserAutomations, loadWorkspaceAutomationsCount } from "./loadAutomations.js";
 import { loadNotificationChannels } from "./loadNotificationChannels.js";
 
@@ -345,6 +350,20 @@ export function* initializeAutomationsHandler(
                         yield call(changeFilterContextSelectionHandler, ctx, cmd);
                     }
                 }
+            }
+
+            // Restore the automation's stored parameter overrides, mirroring the filter restoration
+            // above: alert params apply to the active tab, export params apply per tab.
+            const enableParameters: ReturnType<typeof selectEnableParameters> =
+                yield select(selectEnableParameters);
+            const parameterChanges = extractAutomationParameterChanges(
+                enableParameters,
+                targetAutomation?.alert?.execution?.parameters,
+                getAutomationExportParametersByTab(targetAutomation),
+                automationId,
+            );
+            for (const change of parameterChanges) {
+                yield call(changeParameterValuesHandler, ctx, changeParameterValues(change));
             }
 
             if (targetAutomation && openAutomationOnLoad) {

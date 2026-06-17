@@ -10,7 +10,7 @@ import { type IChatMessagesGroup } from "../utils/groupUtility.js";
 import { AgentChangeItem } from "./AgentChangeItem.js";
 
 type SystemItemProps = {
-    groups: [IChatMessagesGroup | undefined, IChatMessagesGroup];
+    groups: IChatMessagesGroup[];
     message: IChatConversationLocalItem;
 };
 

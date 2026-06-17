@@ -23,25 +23,6 @@ export FILTER=${FILTER:-}
 export TIGER_API_TOKEN=${TIGER_API_TOKEN:?}
 export TIGER_DATASOURCES_NAME=${TIGER_DATASOURCES_NAME:?}
 
-if [ -z "$TEST_WORKSPACE_ID" ] || [ -z "$TEST_CHILD_WORKSPACE_ID" ]; then
-  pushd $REF_WS_DIR
-  CLI_CREATE_ARGS=(
-      --prefix E2E_SDK_cypress_test
-      --host "$HOST"
-      --token "$TIGER_API_TOKEN"
-      --datasource "$TIGER_DATASOURCES_NAME"
-      --fixture-type "$FIXTURE_TYPE"
-      --metadata-extension-local "fixtures/$FIXTURE_TYPE/tiger_metadata_extension.json"
-  )
-
-  echo "Creating reference workspaces..."
-  eval "$(reference-workspace-cli create "${CLI_CREATE_ARGS[@]}")"
-  echo "TEST_WORKSPACE_ID=$TEST_WORKSPACE_ID"
-  echo "TEST_CHILD_WORKSPACE_ID=$TEST_CHILD_WORKSPACE_ID"
-  export TEST_WORKSPACE_ID TEST_CHILD_WORKSPACE_ID
-  popd
-fi
-
 # Write .env for the e2e tests
 cat > $E2E_TEST_DIR/.env <<-EOF
 HOST=${HOST}

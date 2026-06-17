@@ -11,6 +11,10 @@ import { type IDashboardCommand } from "./base.js";
  */
 export type ChangeParameterValuesParams = {
     parameters: IInsightParameterValue[];
+    /**
+     * Target tab. When omitted, the runtime overrides are applied to the active tab.
+     */
+    tabLocalIdentifier?: string;
     correlationId?: string;
 };
 
@@ -21,6 +25,7 @@ export type ChangeParameterValuesParams = {
  */
 export interface IChangeParameterValuesPayload {
     readonly parameters: IInsightParameterValue[];
+    readonly tabLocalIdentifier?: string;
 }
 
 /**
@@ -52,6 +57,7 @@ export interface IChangeParameterValues extends IDashboardCommand {
  */
 export function changeParameterValues({
     parameters,
+    tabLocalIdentifier,
     correlationId,
 }: ChangeParameterValuesParams): IChangeParameterValues {
     return {
@@ -59,6 +65,7 @@ export function changeParameterValues({
         correlationId,
         payload: {
             parameters,
+            tabLocalIdentifier,
         },
     };
 }

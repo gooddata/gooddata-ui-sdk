@@ -15,16 +15,19 @@
             var(--gd-palette-complementary-6-from-theme, kit-variables.$gd-color-dark)
         )
     );
-    background-color: var(
+
+    --gd-viz-tooltip-bg: var(
         --gd-chart-tooltip-backgroundColor,
         var(
             --gd-chart-tooltipBackgroundColor,
             var(
                 --gd-palette-complementary-0-from-theme,
-                color.adjust(kit-variables.$default-gd-color-white, $alpha: -0.05)
+                #{color.adjust(kit-variables.$default-gd-color-white, $alpha: -0.05)}
             )
         )
     );
+
+    background-color: var(--gd-viz-tooltip-bg);
 
     .tt-name {
         font-family: variables.$font-stack-roman;
@@ -54,7 +57,10 @@
 }
 
 .gd-viz-tooltip-content {
+    position: relative;
     display: block;
+    max-height: var(--gd-viz-tooltip-max-height, none);
+    overflow-y: hidden;
     padding: 10px 9px 9px;
     border-radius: 3px;
     border: 1px solid;
@@ -74,6 +80,18 @@
     @media #{variables.$insight-small-only} {
         max-width: none;
     }
+}
+
+// Fades clipped content into the card background instead of showing a (non-scrollable) scrollbar.
+.gd-viz-tooltip-content--clipped::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 28px;
+    background: linear-gradient(to bottom, transparent, var(--gd-viz-tooltip-bg));
+    pointer-events: none;
 }
 
 .gd-viz-tooltip-item {
