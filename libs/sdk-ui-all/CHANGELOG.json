@@ -2,6 +2,108 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.42.0",
+            "tag": "@gooddata/sdk-ui-all_v11.42.0",
+            "date": "Thu, 18 Jun 2026 07:03:40 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-model: Add `parameters` to alert execution definition"
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Convert automation parameter overrides (alert execution `parameters` and tabular export `parametersByTab`)"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Add `iconNode` to `ITab`"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Add workspace parameter editing to alert automation dialogs"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Persist parameter values for scheduled exports"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Validate stale alert parameters when their workspace parameter has been deleted"
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Add organization-level AI memory items service to the organization genAI service."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Fixed missing dashboard filters on mobile."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: add data-testid to WidgetNotice toggle button for E2E test stability."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Add support for tool results references in ai chat."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Add support for alert proposals in GenAI chat."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Change APIs to public."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Add markdown support in follow-up suggestions."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Adjusted `HostChrome` to hide the AI Assistant chat element when `hideChrome` is true."
+                    },
+                    {
+                        "comment": "sdk-ui-theme-provider: Fixed incorrect color value handling in themes."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: In export mode, emit data-export-status=\"loading\" from the very first render (before any dashboard data is loaded), so the exporter gets an early signal that rendering has started. The existing loaded/empty statuses take over once the dashboard is initialized. The behavior is gated behind the enableExportTimeoutFix feature flag."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Introduce strict flag on ranking filter."
+                    },
+                    {
+                        "comment": "When an execution reaches a result limit: disable formatted exports (XLSX, formatted CSV, formatted PDF) with an explanatory tooltip in the widget and drill dialog menus, and show a partial-results warning next to the dashboard XLSX export."
+                    },
+                    {
+                        "comment": "Add Partial results (enablePartialDataResults) setting management at workspace and organization level, including the setEnablePartialDataResults backend service method."
+                    },
+                    {
+                        "comment": "Collocate alerting dialogs into _staging folder (pure move, preparatory step for separation)"
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Turn on sidebar resize feature flag by default."
+                    },
+                    {
+                        "comment": "Add UiAutocomplete, an async paged sectioned combobox primitive"
+                    },
+                    {
+                        "comment": "Refactor UiCombobox internals to compose on kit primitives + add UiFloatingPanel; no public API change"
+                    },
+                    {
+                        "comment": "Add UiGranteeAsyncPicker and async add-grantee dialog primitives"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: introduce UiModalDialog primitive; UiConfirmDialog and UiObjectShareDialog become real modals via Card composition."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: UiTextInput forwards keyboard, focus, blur and click handlers; a11y mapper emits aria-autocomplete and aria-activedescendant."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Implement Partial Result warning on Drill modal for enablePartialDataResults setting."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Expose the underlying Overlay's onAlign callback as an optional Dropdown prop, forwarding the chosen align point."
+                    },
+                    {
+                        "comment": "sdk-model: remove feature flag enableIpAllowlistsUi"
+                    },
+                    {
+                        "comment": "sdk-ui-pivot: Apply suppressKeyboardEvent and suppressHeaderKeyboardEvent on the stable defaultColDef so AG Grid no longer logs invalid gridOptions property warnings, without disturbing the growToFit column sizing."
+                    },
+                    {
+                        "comment": "sdk-ui-pluggable-host: Keep the organization favicon in the host shell when no custom white-label favicon is set, instead of resetting it to a missing /favicon.ico once a module mounts"
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.41.0",
             "tag": "@gooddata/sdk-ui-all_v11.41.0",
             "date": "Thu, 11 Jun 2026 11:20:41 GMT",

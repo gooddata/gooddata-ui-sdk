@@ -17,7 +17,6 @@ export TEST_BACKEND_NO_PREFIX=$(sed <<< $TEST_BACKEND -E "s#^https?:\/\/##")
 
 export HOST=${TEST_BACKEND}
 export TEST_BACKEND=${TEST_BACKEND:-}
-export PLAYWRIGHT_GREP=${PLAYWRIGHT_GREP:-}
 export FIXTURE_TYPE=goodsales
 export FILTER=${FILTER:-}
 export TIGER_API_TOKEN=${TIGER_API_TOKEN:?}
@@ -36,7 +35,6 @@ TIGER_DATASOURCES_NAME=${TIGER_DATASOURCES_NAME}
 EOF
 
 cleanup() {
-    echo "Executing cleanup before exiting..."
     rm -f $REF_WS_DIR/.env $E2E_TEST_DIR/.env
     if [ -z "$_PREBUILT" ]; then
       docker rmi --force $IMAGE_URL || true
@@ -48,7 +46,6 @@ trap cleanup EXIT
 export WORKSPACE_ID="$TEST_WORKSPACE_ID"
 
 if [ -n "$IMAGE_URL" ]; then
-    echo "Using pre-built app image: $IMAGE_URL"
     _PREBUILT=true
 else
     # Pack the pre-built dist into a tarball for Docker (WORKSPACE_ID is injected at container runtime)
