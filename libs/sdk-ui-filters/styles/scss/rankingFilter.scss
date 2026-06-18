@@ -21,6 +21,12 @@ $measure_dropdown_width: $ranking_filter_dropdown_width - 20px;
             padding: 0 1px;
             color: variables.$gd-color-text-dimmed;
         }
+
+        // When the strict-limit feature is on the tooltip icon is hidden; drop the value dropdown's
+        // right margin so the value input aligns with the right edge of the section.
+        &.gd-rf-value-section--strict-limit .gd-rf-value-dropdown-button {
+            margin-right: 0;
+        }
     }
 
     .gd-rf-dropdown-header {
@@ -37,6 +43,10 @@ $measure_dropdown_width: $ranking_filter_dropdown_width - 20px;
         .gd-rf-dropdown-section-title {
             padding-top: 10px;
             font-size: 12px;
+        }
+
+        .gd-rf-dropdown-section-title-first {
+            padding-top: 0;
         }
 
         .gd-rf-preview {
@@ -57,6 +67,13 @@ $measure_dropdown_width: $ranking_filter_dropdown_width - 20px;
     width: $operator_dropdown_width;
 }
 
+// In the strict-limit variant the value tooltip icon is removed; let the condition button grow to
+// fill the area it used to occupy.
+.gd-rf-operator-dropdown-button.gd-rf-operator-dropdown-button--strict-limit {
+    width: auto;
+    flex: 1 1 auto;
+}
+
 .gd-rf-operator-dropdown-body {
     width: $operator_dropdown_width;
 
@@ -69,6 +86,29 @@ $measure_dropdown_width: $ranking_filter_dropdown_width - 20px;
 
     .gd-button-link.is-selected {
         color: variables.$gd-palette-primary-base;
+    }
+
+    // Four-condition (strict limit) variant: wider to fit the "(with ties)" labels and the tooltip icon.
+    &.gd-rf-operator-dropdown-body--strict-limit {
+        width: 150px;
+
+        .gd-button-link {
+            display: flex;
+            align-items: center;
+        }
+
+        // Right-align the tooltip trigger within the menu item.
+        .gd-rf-operator-tooltip {
+            display: inline-flex;
+            align-items: center;
+            margin-left: auto;
+            padding-left: 5px;
+        }
+
+        .gd-rf-operator-tooltip-icon {
+            display: inline-flex;
+            color: variables.$gd-color-text-dimmed;
+        }
     }
 }
 

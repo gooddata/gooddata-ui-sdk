@@ -33,9 +33,9 @@ export interface IRepoInfo {
 }
 
 /**
- * Answers populated by the engine via the shared prompts (appName, title, scope).
- * Profile-specific extra prompts (e.g. `maintainer` for internal, `destPath` for
- * client) write into the same object under their declared `key`.
+ * Answers populated by the engine via the shared prompts (appName, title, scope,
+ * maintainer). Profile-specific extra prompts (e.g. `destPath` for client) write
+ * into the same object under their declared `key`.
  *
  * The index signature is intentional — profiles narrow with a local cast in
  * their callbacks since they know which extras they registered. Trying to make
@@ -46,6 +46,8 @@ export interface IScaffoldAnswers {
     appName: string;
     title: string;
     scope: ApplicationScope;
+    /** Owner contact for the new app — required for every profile. Preferably an email. */
+    maintainer: string;
     [extraKey: string]: string | undefined;
 }
 
@@ -143,7 +145,7 @@ export interface IOverlayPath {
 export interface IScaffoldProfile {
     readonly name: ProfileName;
 
-    /** Prompts displayed after the shared appName/title/scope prompts, in array order. */
+    /** Prompts displayed after the shared appName/title/scope/maintainer prompts, in array order. */
     readonly extraPrompts: readonly IPromptDescriptor[];
 
     /** Resolves where the scaffolded files will land. Receives raw cwd, not repoRoot. */

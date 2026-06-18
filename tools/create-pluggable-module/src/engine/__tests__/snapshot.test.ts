@@ -97,6 +97,7 @@ describe("snapshot: client profile end-to-end scaffold", () => {
                 appName: "gdc-snap-test",
                 title: "Snapshot Test",
                 scope: "workspace",
+                maintainer: "team@gooddata.com",
             },
             {
                 repo: {

@@ -11,8 +11,12 @@ import {
     areObjRefsEqual,
 } from "@gooddata/sdk-model";
 
+import { getAutomationAlertParameters } from "../../../../_staging/automation/index.js";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
-import { selectCatalogParameters } from "../../../../model/store/catalog/catalogSelectors.js";
+import {
+    selectCatalogParameters,
+    selectCatalogParametersIsLoaded,
+} from "../../../../model/store/catalog/catalogSelectors.js";
 import { selectEnableParameters } from "../../../../model/store/config/configSelectors.js";
 import {
     selectEffectiveDashboardParametersForWidget,
@@ -22,6 +26,8 @@ import {
 import {
     type IAutomationParameter,
     availableAutomationParameters,
+    dropStaleAlertParameters,
+    hasStaleAlertParameters,
     reconstructAutomationParametersFromValues,
     setAlertExecutionParameters,
 } from "./automationParameters.js";
@@ -44,6 +50,11 @@ export interface IUseAutomationAlertParameters {
     onParameterAdd: (ref: IdentifierRef) => void;
     onParameterChange: (ref: IdentifierRef, value: number) => void;
     onParameterDelete: (ref: IdentifierRef) => void;
+    /**
+     * Surgically drops stored parameters whose `ref` left the workspace catalog, keeping every
+     * other override. Used to repair an alert when "apply current filters" resolves staleness.
+     */
+    dropStaleParameters: () => void;
 }
 
 /**
@@ -63,9 +74,10 @@ export function useAutomationAlertParameters({
 }): IUseAutomationAlertParameters {
     const parametersEnabled = useDashboardSelector(selectEnableParameters);
     const catalog = useDashboardSelector(selectCatalogParameters);
+    const catalogIsLoaded = useDashboardSelector(selectCatalogParametersIsLoaded);
     const dashboardParameters = useDashboardSelector(selectEffectiveDashboardParametersForWidget(widgetRef));
     const widgetParameterValues = useDashboardSelector(selectEffectiveParameterValuesForWidget(widgetRef));
-    const storedParameters = editedAutomation?.alert?.execution?.parameters;
+    const storedParameters = getAutomationAlertParameters(editedAutomation);
 
     const automationParameters = useMemo(() => {
         if (!parametersEnabled || !storedParameters?.length) {
@@ -97,7 +109,7 @@ export function useAutomationAlertParameters({
                 definition?.alert
                     ? setAlertExecutionParameters(
                           definition,
-                          update(definition.alert.execution.parameters ?? []),
+                          update(getAutomationAlertParameters(definition) ?? []),
                       )
                     : definition,
             );
@@ -135,11 +147,27 @@ export function useAutomationAlertParameters({
         [availableParameters, updateAlertParameters],
     );
 
+    const dropStaleParameters = useCallback(() => {
+        // Pruning against an unloaded/gated (empty) catalog would wipe every still-valid override.
+        if (!parametersEnabled || !catalogIsLoaded) {
+            return;
+        }
+        // Write only when something is actually stale.
+        setEditedAutomation((definition) => {
+            const stored = getAutomationAlertParameters(definition);
+            if (!definition?.alert || !hasStaleAlertParameters(stored, catalog)) {
+                return definition;
+            }
+            return setAlertExecutionParameters(definition, dropStaleAlertParameters(stored ?? [], catalog));
+        });
+    }, [parametersEnabled, catalogIsLoaded, catalog, setEditedAutomation]);
+
     return {
         automationParameters,
         availableParameters,
         onParameterChange,
         onParameterDelete,
         onParameterAdd,
+        dropStaleParameters,
     };
 }

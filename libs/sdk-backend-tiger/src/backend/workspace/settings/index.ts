@@ -162,6 +162,10 @@ export class TigerWorkspaceSettings
         return this.setSetting("ENABLE_DRILL_TO_URL_BY_DEFAULT", { value: enabled });
     }
 
+    public async setEnablePartialDataResults(enabled: boolean): Promise<void> {
+        return this.setSetting("ENABLE_PARTIAL_DATA_RESULTS", { value: enabled });
+    }
+
     public async setExportCsvCustomDelimiter(delimiter: string): Promise<void> {
         return this.setSetting("EXPORT_CSV_CUSTOM_DELIMITER", { value: delimiter });
     }

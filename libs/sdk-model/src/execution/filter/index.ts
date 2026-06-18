@@ -487,6 +487,13 @@ export interface IRankingFilterBody extends IIdentifiableFilter {
     operator: RankingFilterOperator;
     value: number;
     applyOnResult?: boolean;
+
+    /**
+     * When set to true, the filter returns exactly {@link IRankingFilterBody.value} items and excludes
+     * additional items that share the boundary value (ties). When false or omitted, the backend default
+     * tie-handling behavior is used.
+     */
+    strictLimitOfRows?: boolean;
 }
 
 /**

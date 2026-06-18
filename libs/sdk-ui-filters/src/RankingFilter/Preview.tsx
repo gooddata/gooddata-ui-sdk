@@ -2,7 +2,7 @@
 
 import { type ReactNode } from "react";
 
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { type RankingFilterOperator } from "@gooddata/sdk-model";
 
@@ -15,6 +15,8 @@ interface IPreviewProps {
     attribute?: IAttributeDropdownItem;
     operator: RankingFilterOperator;
     value: number;
+    enableRankingStrictLimit?: boolean;
+    strictLimitOfRows?: boolean;
 }
 
 const getPreviewTemplate = (operator: RankingFilterOperator, attribute?: IAttributeDropdownItem) => {
@@ -28,7 +30,23 @@ const getPreviewTemplate = (operator: RankingFilterOperator, attribute?: IAttrib
     }
 };
 
-export function Preview({ operator, value, measure, attribute }: IPreviewProps) {
+export function Preview({
+    operator,
+    value,
+    measure,
+    attribute,
+    enableRankingStrictLimit = false,
+    strictLimitOfRows = false,
+}: IPreviewProps) {
+    const intl = useIntl();
+
+    // In the strict-limit variant, the "with ties" condition (strictLimitOfRows === false) is annotated
+    // in the summary, e.g. "Top 10 (with ties) of # of Orders".
+    const withTies =
+        enableRankingStrictLimit && !strictLimitOfRows
+            ? ` ${intl.formatMessage(messages["previewWithTies"])}`
+            : "";
+
     return (
         <div className="gd-rf-preview s-rf-preview">
             <FormattedMessage
@@ -39,6 +57,7 @@ export function Preview({ operator, value, measure, attribute }: IPreviewProps) 
                     attribute: attribute?.title,
                     operator,
                     value,
+                    withTies,
                     strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
                 }}
             />

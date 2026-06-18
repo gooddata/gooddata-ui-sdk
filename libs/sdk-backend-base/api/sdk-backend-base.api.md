@@ -760,6 +760,8 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
     // (undocumented)
     setEnableDrillToUrlByDefault(enabled: boolean): Promise<void>;
     // (undocumented)
+    setEnablePartialDataResults(enabled: boolean): Promise<void>;
+    // (undocumented)
     setExportCsvCustomDelimiter(delimiter: string): Promise<void>;
     // (undocumented)
     setFiscalCalendar(fiscalYear: IFiscalYear): Promise<void>;

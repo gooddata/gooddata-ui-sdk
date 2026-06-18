@@ -166,10 +166,7 @@ export { default } from "@gooddata/eslint-config/oxlint-react";
     "private": true,
     "description": "Standalone harness for gdc-snap-test module",
     "license": "UNLICENSED",
-    "author": {
-        "name": "Stellar",
-        "email": "stellar@gooddata.com"
-    },
+    "author": "team@gooddata.com",
     "repository": {
         "type": "git",
         "url": "https://github.com/gooddata/gdc-ui/",
@@ -610,10 +607,7 @@ export { default } from "@gooddata/eslint-config/oxlint-react-vitest";
     "private": true,
     "description": "Snapshot Test pluggable application module",
     "license": "UNLICENSED",
-    "author": {
-        "name": "Stellar",
-        "email": "stellar@gooddata.com"
-    },
+    "author": "team@gooddata.com",
     "repository": {
         "type": "git",
         "url": "https://github.com/gooddata/gdc-ui/",

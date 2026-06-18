@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-pluggable-host: Keep the organization favicon in the host shell when no custom white-label favicon is set, instead of resetting it to a missing /favicon.ico once a module mounts",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

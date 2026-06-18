@@ -1348,6 +1348,10 @@ export interface AutomationRankingFilterRankingFilter {
      * Number of top/bottom values to filter.
      */
     'value': number;
+    /**
+     * When true, filter returns requested number of rows at most. Default is false.
+     */
+    'strictLimitOfRows'?: boolean;
     'localIdentifier'?: string;
     'applyOnResult'?: boolean;
 }

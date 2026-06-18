@@ -2,9 +2,9 @@
 
 import { useDashboardAlerts } from "../../../model/react/useDashboardAlerting/useDashboardAlerts.js";
 import { useWorkspaceUsers } from "../../../model/react/useWorkspaceUsers.js";
-import { AlertingDialog } from "../../automations/alerting/AlertingDialog.js";
-import { AlertingManagementDialog } from "../../automations/alerting/AlertingManagementDialog.js";
-import { type IAlertingDialogProps } from "../../automations/alerting/types.js";
+import { AlertingDialog } from "../../automations/_staging/alerting/AlertingDialog.js";
+import { AlertingManagementDialog } from "../../automations/_staging/alerting/AlertingManagementDialog.js";
+import { type IAlertingDialogProps } from "../../automations/_staging/alerting/types.js";
 
 export function AlertingDialogProviderNew() {
     const {

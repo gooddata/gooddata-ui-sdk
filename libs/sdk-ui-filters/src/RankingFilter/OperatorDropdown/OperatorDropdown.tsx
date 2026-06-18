@@ -13,31 +13,70 @@ import { type IOperatorDropdownItem } from "../types.js";
 
 import { OperatorDropdownBody } from "./OperatorDropdownBody.js";
 
+// Two-operator variant used when the strict-limit feature is disabled (legacy behavior).
 const operatorItems = [
     { value: "TOP", translationId: messages["top"].id },
     { value: "BOTTOM", translationId: messages["bottom"].id },
 ] as IOperatorDropdownItem[];
 
-const getOperatorItemTranslation = (operator: RankingFilterOperator) => {
-    return operatorItems.find(({ value }) => value === operator)?.translationId ?? "";
+// Four-condition variant used when the strict-limit feature is enabled. Each operator has a strict
+// variant (exactly N) and a "with ties" variant (strictLimitOfRows = false).
+const strictLimitOperatorItems = [
+    { value: "TOP", strictLimitOfRows: true, translationId: messages["top"].id },
+    {
+        value: "TOP",
+        strictLimitOfRows: false,
+        translationId: messages["topWithTies"].id,
+        tooltipId: messages["withTiesTooltip"].id,
+    },
+    { value: "BOTTOM", strictLimitOfRows: true, translationId: messages["bottom"].id },
+    {
+        value: "BOTTOM",
+        strictLimitOfRows: false,
+        translationId: messages["bottomWithTies"].id,
+        tooltipId: messages["withTiesTooltip"].id,
+    },
+] as IOperatorDropdownItem[];
+
+const getSelectedItemTranslation = (
+    items: IOperatorDropdownItem[],
+    operator: RankingFilterOperator,
+    strictLimitOfRows: boolean,
+    enableRankingStrictLimit: boolean,
+) => {
+    const selected = items.find(({ value, strictLimitOfRows: itemStrict = false }) =>
+        enableRankingStrictLimit
+            ? value === operator && itemStrict === strictLimitOfRows
+            : value === operator,
+    );
+    return selected?.translationId ?? "";
 };
 
 interface IOperatorDropdownComponentProps {
     selectedValue: RankingFilterOperator;
-    onSelect: (value: RankingFilterOperator) => void;
+    selectedStrictLimitOfRows: boolean;
+    enableRankingStrictLimit: boolean;
+    onSelect: (value: RankingFilterOperator, strictLimitOfRows: boolean) => void;
 }
 
-export function OperatorDropdown({ selectedValue, onSelect }: IOperatorDropdownComponentProps) {
+export function OperatorDropdown({
+    selectedValue,
+    selectedStrictLimitOfRows,
+    enableRankingStrictLimit,
+    onSelect,
+}: IOperatorDropdownComponentProps) {
     const intl = useIntl();
 
     const [isOpen, setIsOpen] = useState(false);
+
+    const items = enableRankingStrictLimit ? strictLimitOperatorItems : operatorItems;
 
     const onButtonClick = () => {
         setIsOpen(!isOpen);
     };
 
-    const onItemSelect = (value: RankingFilterOperator) => {
-        onSelect(value);
+    const onItemSelect = (value: RankingFilterOperator, strictLimitOfRows: boolean) => {
+        onSelect(value, strictLimitOfRows);
         setIsOpen(false);
     };
 
@@ -52,17 +91,31 @@ export function OperatorDropdown({ selectedValue, onSelect }: IOperatorDropdownC
         },
         "gd-rf-operator-dropdown-button",
         "s-rf-operator-dropdown-button",
+        {
+            // When the strict-limit feature is on, the value tooltip icon is hidden; let the condition
+            // button grow into the freed area.
+            "gd-rf-operator-dropdown-button--strict-limit": enableRankingStrictLimit,
+        },
     );
 
-    const title = intl.formatMessage({ id: getOperatorItemTranslation(selectedValue) });
+    const title = intl.formatMessage({
+        id: getSelectedItemTranslation(
+            items,
+            selectedValue,
+            selectedStrictLimitOfRows,
+            enableRankingStrictLimit,
+        ),
+    });
 
     return (
         <>
             <Button className={buttonClassNames} value={title} onClick={onButtonClick} />
             {isOpen ? (
                 <OperatorDropdownBody
-                    items={operatorItems}
+                    items={items}
                     selectedValue={selectedValue}
+                    selectedStrictLimitOfRows={selectedStrictLimitOfRows}
+                    enableRankingStrictLimit={enableRankingStrictLimit}
                     onSelect={onItemSelect}
                     onClose={() => setIsOpen(false)}
                 />

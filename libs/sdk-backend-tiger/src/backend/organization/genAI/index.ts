@@ -2,6 +2,7 @@
 
 import type {
     IKnowledgeDocumentsService,
+    IMemoryItemsService,
     IOrganizationAIObservabilityService,
     IOrganizationGenAIService,
 } from "@gooddata/sdk-backend-spi";
@@ -9,6 +10,7 @@ import type {
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 import { OrganizationKnowledgeDocumentsService } from "./KnowledgeDocumentsService.js";
+import { OrganizationMemoryItemsService } from "./MemoryItemsService.js";
 import { OrganizationAIObservabilityService } from "./ObservabilityService.js";
 
 /**
@@ -19,6 +21,10 @@ export class TigerOrganizationGenAIService implements IOrganizationGenAIService 
 
     public getKnowledgeDocuments(): IKnowledgeDocumentsService {
         return new OrganizationKnowledgeDocumentsService(this.authCall);
+    }
+
+    public getMemoryItems(): IMemoryItemsService {
+        return new OrganizationMemoryItemsService(this.authCall);
     }
 
     public getObservability(): IOrganizationAIObservabilityService {

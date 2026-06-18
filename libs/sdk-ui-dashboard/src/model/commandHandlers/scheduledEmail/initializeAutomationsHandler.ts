@@ -39,7 +39,10 @@ import {
 } from "@gooddata/sdk-model";
 import { convertError } from "@gooddata/sdk-ui";
 
-import { getAutomationExportParametersByTab } from "../../../_staging/automation/index.js";
+import {
+    getAutomationAlertParameters,
+    getAutomationExportParametersByTab,
+} from "../../../_staging/automation/index.js";
 import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/dashboardFilterContext.js";
 import { type IDashboardFilter, isDashboardFilter } from "../../../types.js";
 import {
@@ -358,7 +361,7 @@ export function* initializeAutomationsHandler(
                 yield select(selectEnableParameters);
             const parameterChanges = extractAutomationParameterChanges(
                 enableParameters,
-                targetAutomation?.alert?.execution?.parameters,
+                getAutomationAlertParameters(targetAutomation),
                 getAutomationExportParametersByTab(targetAutomation),
                 automationId,
             );

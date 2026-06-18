@@ -100,15 +100,23 @@ export function convertAfmFilters(
                 computeRatioMeasureNumerators,
                 filter.rankingFilter.measure,
             );
-            const { attributes, operator, value, applyOnResult: filterApplyOnResult } = filter.rankingFilter;
+            const {
+                attributes,
+                operator,
+                value,
+                strictLimitOfRows,
+                applyOnResult: filterApplyOnResult,
+            } = filter.rankingFilter;
             const applyOnResultProp =
                 filterApplyOnResult === undefined ? {} : { applyOnResult: filterApplyOnResult };
+            const strictLimitOfRowsProp = strictLimitOfRows === undefined ? {} : { strictLimitOfRows };
             const transformedFilter = {
                 rankingFilter: {
                     measure: filteredMeasure,
                     attributes,
                     operator,
                     value,
+                    ...strictLimitOfRowsProp,
                     ...applyOnResultProp,
                 },
             };

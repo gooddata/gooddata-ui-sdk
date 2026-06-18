@@ -7,7 +7,7 @@ import { clientProfile } from "../client.js";
 
 function mockCtx(overrides: Partial<IProfileContext> = {}): IProfileContext {
     return {
-        answers: { appName: "gdc-mock", title: "Mock", scope: "workspace" },
+        answers: { appName: "gdc-mock", title: "Mock", scope: "workspace", maintainer: "team@gooddata.com" },
         derived: {
             route: "/mock",
             federationName: "gdc_mock",
@@ -72,7 +72,7 @@ describe("clientProfile", () => {
     describe("resolveDestRoot", () => {
         it("uses modules/<appName> when destPath is not overridden", () => {
             const destRoot = clientProfile.resolveDestRoot(
-                { appName: "gdc-x", title: "X", scope: "workspace" },
+                { appName: "gdc-x", title: "X", scope: "workspace", maintainer: "team@gooddata.com" },
                 "/fake/repo",
             );
             expect(destRoot).toBe("/fake/repo/modules/gdc-x");
@@ -80,7 +80,13 @@ describe("clientProfile", () => {
 
         it("accepts an in-cwd destPath override", () => {
             const destRoot = clientProfile.resolveDestRoot(
-                { appName: "gdc-x", title: "X", scope: "workspace", destPath: "apps/gdc-x" },
+                {
+                    appName: "gdc-x",
+                    title: "X",
+                    scope: "workspace",
+                    maintainer: "team@gooddata.com",
+                    destPath: "apps/gdc-x",
+                },
                 "/fake/repo",
             );
             expect(destRoot).toBe("/fake/repo/apps/gdc-x");
@@ -93,6 +99,7 @@ describe("clientProfile", () => {
                         appName: "gdc-x",
                         title: "X",
                         scope: "workspace",
+                        maintainer: "team@gooddata.com",
                         destPath: "../../../etc",
                     },
                     "/fake/repo",
@@ -107,6 +114,7 @@ describe("clientProfile", () => {
                         appName: "gdc-x",
                         title: "X",
                         scope: "workspace",
+                        maintainer: "team@gooddata.com",
                         destPath: "/somewhere/else",
                     },
                     "/fake/repo",
@@ -121,6 +129,7 @@ describe("clientProfile", () => {
                         appName: "gdc-x",
                         title: "X",
                         scope: "workspace",
+                        maintainer: "team@gooddata.com",
                         destPath: "../repo-other/sub",
                     },
                     "/fake/repo",
@@ -197,6 +206,21 @@ describe("clientProfile", () => {
             expect(scripts["_phase:build"]).toBeUndefined();
             expect(scripts.build).toBe("tsc");
             expect(scripts.test).toBe("vitest");
+        });
+
+        it("records the entered maintainer as the package author (so the prompt isn't discarded)", () => {
+            const after = clientProfile.transformPackageJson(
+                { author: "{applicationTemplateTitle} template author" },
+                mockCtx({
+                    answers: {
+                        appName: "gdc-mock",
+                        title: "Mock",
+                        scope: "workspace",
+                        maintainer: "owner@gooddata.com",
+                    },
+                }),
+            );
+            expect(after["author"]).toBe("owner@gooddata.com");
         });
     });
 });

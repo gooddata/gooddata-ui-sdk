@@ -113,6 +113,10 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
         return this.decorated.setEnableDrillToUrlByDefault(enabled);
     }
 
+    async setEnablePartialDataResults(enabled: boolean): Promise<void> {
+        return this.decorated.setEnablePartialDataResults(enabled);
+    }
+
     async setExportCsvCustomDelimiter(delimiter: string): Promise<void> {
         return this.decorated.setExportCsvCustomDelimiter(delimiter);
     }

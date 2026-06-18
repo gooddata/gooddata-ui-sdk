@@ -2396,6 +2396,7 @@ export interface AfmRankingFilterRankingFilter {
     'localIdentifier'?: string;
     'measures': Array<AfmModelIdentifier>;
     'operator': AfmRankingFilterRankingFilterOperatorEnum;
+    'strictLimitOfRows'?: boolean;
     'value': number;
 }
 
@@ -7982,6 +7983,7 @@ export interface AutomationRankingFilterRankingFilter {
     'localIdentifier'?: string;
     'measures': Array<AutomationAfmIdentifier>;
     'operator': AutomationRankingFilterRankingFilterOperatorEnum;
+    'strictLimitOfRows'?: boolean;
     'value': number;
 }
 
@@ -18568,6 +18570,7 @@ export interface ExportRankingFilterRankingFilter {
     'localIdentifier'?: string;
     'measures': Array<ExportAfmIdentifier>;
     'operator': ExportRankingFilterRankingFilterOperatorEnum;
+    'strictLimitOfRows'?: boolean;
     'value': number;
 }
 
@@ -26498,6 +26501,143 @@ export interface JsonApiOrganizationSettingPatchDocument {
 // @public (undocumented)
 export type JsonApiOrganizationSettingPatchTypeEnum = 'organizationSetting';
 
+// @public (undocumented)
+export interface JsonApiOrgMemoryItemIn {
+    // (undocumented)
+    'attributes': JsonApiOrgMemoryItemInAttributes;
+    'id': string;
+    'type': JsonApiOrgMemoryItemInTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiOrgMemoryItemInAttributes {
+    // (undocumented)
+    'description'?: string | null;
+    'instruction': string;
+    'isDisabled'?: boolean;
+    'keywords'?: Array<string>;
+    'strategy': JsonApiOrgMemoryItemInAttributesStrategyEnum;
+    // (undocumented)
+    'title'?: string | null;
+}
+
+// @public (undocumented)
+export type JsonApiOrgMemoryItemInAttributesStrategyEnum = 'ALWAYS' | 'AUTO';
+
+// @public (undocumented)
+export interface JsonApiOrgMemoryItemInDocument {
+    // (undocumented)
+    'data': JsonApiOrgMemoryItemIn;
+}
+
+// @public (undocumented)
+export type JsonApiOrgMemoryItemInTypeEnum = 'orgMemoryItem';
+
+// @public (undocumented)
+export interface JsonApiOrgMemoryItemOut {
+    // (undocumented)
+    'attributes': JsonApiOrgMemoryItemOutAttributes;
+    'id': string;
+    // (undocumented)
+    'relationships'?: JsonApiOrgMemoryItemOutRelationships;
+    'type': JsonApiOrgMemoryItemOutTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiOrgMemoryItemOutAttributes {
+    'createdAt'?: string | null;
+    // (undocumented)
+    'description'?: string | null;
+    'instruction': string;
+    'isDisabled'?: boolean;
+    'keywords'?: Array<string>;
+    'modifiedAt'?: string | null;
+    'strategy': JsonApiOrgMemoryItemOutAttributesStrategyEnum;
+    // (undocumented)
+    'title'?: string | null;
+}
+
+// @public (undocumented)
+export type JsonApiOrgMemoryItemOutAttributesStrategyEnum = 'ALWAYS' | 'AUTO';
+
+// @public (undocumented)
+export interface JsonApiOrgMemoryItemOutDocument {
+    // (undocumented)
+    'data': JsonApiOrgMemoryItemOut;
+    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
+    // (undocumented)
+    'links'?: ObjectLinks;
+}
+
+// @public (undocumented)
+export interface JsonApiOrgMemoryItemOutList {
+    // (undocumented)
+    'data': Array<JsonApiOrgMemoryItemOutWithLinks>;
+    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
+    // (undocumented)
+    'links'?: ListLinks;
+    // (undocumented)
+    'meta'?: JsonApiAgentOutListMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiOrgMemoryItemOutRelationships {
+    // (undocumented)
+    'createdBy'?: JsonApiAgentOutRelationshipsCreatedBy;
+    // (undocumented)
+    'modifiedBy'?: JsonApiAgentOutRelationshipsCreatedBy;
+}
+
+// @public (undocumented)
+export type JsonApiOrgMemoryItemOutTypeEnum = 'orgMemoryItem';
+
+// @public (undocumented)
+export interface JsonApiOrgMemoryItemOutWithLinks {
+    // (undocumented)
+    'attributes': JsonApiOrgMemoryItemOutAttributes;
+    'id': string;
+    // (undocumented)
+    'links'?: ObjectLinks;
+    // (undocumented)
+    'relationships'?: JsonApiOrgMemoryItemOutRelationships;
+    'type': JsonApiOrgMemoryItemOutWithLinksTypeEnum;
+}
+
+// @public (undocumented)
+export type JsonApiOrgMemoryItemOutWithLinksTypeEnum = 'orgMemoryItem';
+
+// @public (undocumented)
+export interface JsonApiOrgMemoryItemPatch {
+    // (undocumented)
+    'attributes': JsonApiOrgMemoryItemPatchAttributes;
+    'id': string;
+    'type': JsonApiOrgMemoryItemPatchTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiOrgMemoryItemPatchAttributes {
+    // (undocumented)
+    'description'?: string | null;
+    'instruction'?: string;
+    'isDisabled'?: boolean;
+    'keywords'?: Array<string>;
+    'strategy'?: JsonApiOrgMemoryItemPatchAttributesStrategyEnum;
+    // (undocumented)
+    'title'?: string | null;
+}
+
+// @public (undocumented)
+export type JsonApiOrgMemoryItemPatchAttributesStrategyEnum = 'ALWAYS' | 'AUTO';
+
+// @public (undocumented)
+export interface JsonApiOrgMemoryItemPatchDocument {
+    // (undocumented)
+    'data': JsonApiOrgMemoryItemPatch;
+}
+
+// @public (undocumented)
+export type JsonApiOrgMemoryItemPatchTypeEnum = 'orgMemoryItem';
+
 // @public
 export interface JsonApiParameterIn {
     // (undocumented)
@@ -32765,6 +32905,7 @@ export interface RankingFilterRankingFilter {
     'localIdentifier'?: string;
     'measures': Array<AfmIdentifier>;
     'operator': RankingFilterRankingFilterOperatorEnum;
+    'strictLimitOfRows'?: boolean;
     'value': number;
 }
 

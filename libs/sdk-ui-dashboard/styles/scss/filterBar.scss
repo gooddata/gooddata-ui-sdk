@@ -19,7 +19,7 @@ $attribute-filter-drag-handle-left: 10px;
         transform: translateX(-50%);
 
         @media #{kit-variables.$xsmall-only}, #{kit-variables.$small-only} {
-            display: none;
+            z-index: zIndexes.$filterbar-show-all;
         }
     }
 

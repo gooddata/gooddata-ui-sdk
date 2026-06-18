@@ -1088,6 +1088,7 @@ class DummyOrganization implements IOrganization {
             deleteAiRateLimit: () => Promise.resolve(),
             getAiRateLimit: () => Promise.resolve(undefined),
             setEnableDrillToUrlByDefault: () => Promise.resolve(),
+            setEnablePartialDataResults: () => Promise.resolve(),
             deleteTheme: () => Promise.resolve(),
             deleteColorPalette: () => Promise.resolve(),
             getSettings: () => Promise.resolve({}),
@@ -1243,6 +1244,9 @@ class DummyOrganization implements IOrganization {
             getKnowledgeDocuments: () => {
                 throw new NotSupported("not supported");
             },
+            getMemoryItems: () => {
+                throw new NotSupported("not supported");
+            },
             getObservability: () => {
                 throw new NotSupported("not supported");
             },
@@ -1377,6 +1381,10 @@ class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
     }
 
     setEnableDrillToUrlByDefault(_enabled: boolean): Promise<void> {
+        return Promise.resolve();
+    }
+
+    setEnablePartialDataResults(_enabled: boolean): Promise<void> {
         return Promise.resolve();
     }
 

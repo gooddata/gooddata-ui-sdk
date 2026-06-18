@@ -31,7 +31,14 @@ export type StoredConversation = {
      * - restoring: cached messages have been restored while the backend fetch is still in-flight
      * - clearing: the thread is being cleared
      * - evaluating: the new user message is being evaluated by assistant
-     * - switchingAgent: the active agent switch is being persisted
      */
-    asyncProcess?: "loading" | "restoring" | "clearing" | "evaluating" | "switchingAgent";
+    asyncProcess?: "loading" | "restoring" | "clearing" | "evaluating";
+    /**
+     * An agent switch selected by the user that has not yet been sent to the backend.
+     * It is flushed (switchAgent API + optimistic item) just before the next message is sent.
+     */
+    pendingAgentSwitch?: {
+        agentId: string;
+        previousAgentId: string | undefined;
+    };
 };

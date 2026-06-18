@@ -3018,6 +3018,10 @@ export interface RankingFilterRankingFilter {
     'value': number;
     'localIdentifier'?: string;
     'applyOnResult'?: boolean;
+    /**
+     * When true, filter returns requested number of rows at most. Default is false.
+     */
+    'strictLimitOfRows'?: boolean;
 }
 
 export type RankingFilterRankingFilterOperatorEnum = 'TOP' | 'BOTTOM';

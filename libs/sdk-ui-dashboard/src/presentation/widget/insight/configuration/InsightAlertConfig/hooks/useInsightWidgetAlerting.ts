@@ -56,14 +56,14 @@ import {
 } from "../../../../../../model/store/permissions/permissionsSelectors.js";
 import { selectExecutionTimestamp } from "../../../../../../model/store/ui/uiSelectors.js";
 import { selectCurrentUser } from "../../../../../../model/store/user/userSelectors.js";
-import { useSaveAlertToBackend } from "../../../../../automations/alerting/DefaultAlertingDialog/hooks/useSaveAlertToBackend.js";
-import { messages } from "../../../../../automations/alerting/DefaultAlertingDialog/messages.js";
-import { createDefaultAlert } from "../../../../../automations/alerting/DefaultAlertingDialog/utils/convertors.js";
-import { getMeasureFormatsFromExecution } from "../../../../../automations/alerting/DefaultAlertingDialog/utils/getters.js";
+import { useSaveAlertToBackend } from "../../../../../automations/_staging/alerting/DefaultAlertingDialog/hooks/useSaveAlertToBackend.js";
+import { messages } from "../../../../../automations/_staging/alerting/DefaultAlertingDialog/messages.js";
+import { createDefaultAlert } from "../../../../../automations/_staging/alerting/DefaultAlertingDialog/utils/convertors.js";
+import { getMeasureFormatsFromExecution } from "../../../../../automations/_staging/alerting/DefaultAlertingDialog/utils/getters.js";
 import {
     getSupportedInsightAttributesByInsight,
     getSupportedInsightMeasuresByInsight,
-} from "../../../../../automations/alerting/DefaultAlertingDialog/utils/items.js";
+} from "../../../../../automations/_staging/alerting/DefaultAlertingDialog/utils/items.js";
 import { useWidgetAutomationFilters } from "../../../../../automations/scheduledEmail/hooks/useWidgetAutomationFilters.js";
 type InsightWidgetAlertingViewMode = "list" | "edit" | "create";
 

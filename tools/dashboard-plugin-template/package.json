@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/dashboard-plugin-template",
-    "version": "11.42.0-alpha.4",
+    "version": "11.42.0-alpha.5",
     "private": true,
     "description": "GoodData Template for Dashboard Plugins",
     "license": "LicenseRef-LICENSE",
@@ -113,10 +113,10 @@
         "ts-loader": "^8.3.0",
         "typescript": "5.9.3",
         "vitest": "4.1.8",
-        "webpack": "5.93.0",
+        "webpack": "5.107.2",
         "webpack-bundle-analyzer": "4.10.2",
-        "webpack-cli": "6.0.1",
-        "webpack-dev-server": "5.2.2"
+        "webpack-cli": "7.0.3",
+        "webpack-dev-server": "5.2.4"
     },
     "peerDependencies": {
         "@gooddata/sdk-backend-spi": "workspace:*",

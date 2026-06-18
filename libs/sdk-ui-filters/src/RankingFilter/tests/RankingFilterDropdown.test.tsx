@@ -381,6 +381,71 @@ describe("RankingFilterDropdown", () => {
         });
     });
 
+    describe("Condition dropdown (strict limit)", () => {
+        it("should show only two operator options when enableRankingStrictLimit is off", () => {
+            renderComponent();
+            component.openOperatorDropdown();
+            expect(document.querySelectorAll(".s-rf-operator-dropdown-body .gd-list-item")).toHaveLength(2);
+        });
+
+        it("should show four condition options when enableRankingStrictLimit is on", () => {
+            renderComponent({ enableRankingStrictLimit: true });
+            component.openOperatorDropdown();
+            expect(document.querySelectorAll(".s-rf-operator-dropdown-body .gd-list-item")).toHaveLength(4);
+        });
+
+        it("should default a flagless filter to the 'Top (with ties)' condition", () => {
+            renderComponent({ enableRankingStrictLimit: true });
+            expect(component.getOperator()).toEqual("Top (with ties)");
+        });
+
+        it("should call onApply with strictLimitOfRows=false when a 'with ties' condition is picked", () => {
+            const onApply = vi.fn();
+            renderComponent({
+                onApply,
+                enableRankingStrictLimit: true,
+                // start from a strict filter so picking the with-ties condition is an actual change
+                filter: {
+                    rankingFilter: {
+                        measure: mockMeasure1Ref,
+                        operator: "TOP",
+                        value: 10,
+                        strictLimitOfRows: true,
+                    },
+                },
+            });
+
+            component.openOperatorDropdown().setOperator("Top (with ties)");
+            component.clickApply();
+
+            expect(onApply).toHaveBeenCalledWith({
+                rankingFilter: {
+                    measure: mockMeasure1Ref,
+                    operator: "TOP",
+                    value: 10,
+                    strictLimitOfRows: false,
+                },
+            });
+        });
+
+        it("should call onApply with strictLimitOfRows=true when a strict 'Bottom' condition is picked", () => {
+            const onApply = vi.fn();
+            renderComponent({ onApply, enableRankingStrictLimit: true });
+
+            component.openOperatorDropdown().setOperator("Bottom");
+            component.clickApply();
+
+            expect(onApply).toHaveBeenCalledWith({
+                rankingFilter: {
+                    measure: mockMeasure1Ref,
+                    operator: "BOTTOM",
+                    value: 10,
+                    strictLimitOfRows: true,
+                },
+            });
+        });
+    });
+
     describe("Preview", () => {
         it.each([
             ["top of measure", newRankingFilter(mockMeasure1Ref, "TOP", 42), "Top 42 of Measure 1"],
@@ -400,6 +465,32 @@ describe("RankingFilterDropdown", () => {
                 filter,
             });
             expect(component.getPreview()).toEqual(expectedPreview);
+        });
+
+        it("should annotate the preview with '(with ties)' for the non-strict condition", () => {
+            renderComponent({
+                filter: newRankingFilter(mockMeasure1Ref, "TOP", 10),
+                enableRankingStrictLimit: true,
+            });
+            component.openOperatorDropdown().setOperator("Top (with ties)");
+
+            expect(component.getPreview()).toEqual("Top 10 (with ties) of Measure 1");
+        });
+
+        it("should not annotate the preview for the strict condition", () => {
+            renderComponent({
+                filter: {
+                    rankingFilter: {
+                        measure: mockMeasure1Ref,
+                        operator: "TOP",
+                        value: 10,
+                        strictLimitOfRows: true,
+                    },
+                },
+                enableRankingStrictLimit: true,
+            });
+
+            expect(component.getPreview()).toEqual("Top 10 of Measure 1");
         });
     });
 });

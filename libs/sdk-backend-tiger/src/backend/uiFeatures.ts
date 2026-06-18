@@ -34,6 +34,7 @@ export enum TigerFeaturesNames {
     EnableMultipleDateFilters = "enableMultipleDateFilters",
     EnableMultipleMvfConditions = "enableMultipleMvfConditions",
     EnableRankingWithMvf = "enableRankingWithMvf",
+    EnableRankingStrictLimit = "enableRankingStrictLimit",
     EnableKDRichText = "enableKDRichText",
     EnableMySqlDataSource = "enableMySqlDataSource",
     EnableCreateUser = "enableCreateUser",
@@ -211,6 +212,7 @@ export type ITigerFeatureFlags = {
     enableMultipleDateFilters: (typeof FeatureFlagsValues)["enableMultipleDateFilters"][number];
     enableMultipleMvfConditions: (typeof FeatureFlagsValues)["enableMultipleMvfConditions"][number];
     enableRankingWithMvf: (typeof FeatureFlagsValues)["enableRankingWithMvf"][number];
+    enableRankingStrictLimit: (typeof FeatureFlagsValues)["enableRankingStrictLimit"][number];
     enableKDRichText: (typeof FeatureFlagsValues)["enableKDRichText"][number];
     enableMySqlDataSource: (typeof FeatureFlagsValues)["enableMySqlDataSource"][number];
     enableCreateUser: (typeof FeatureFlagsValues)["enableCreateUser"][number];
@@ -389,6 +391,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableMultipleDateFilters: true,
     enableMultipleMvfConditions: true,
     enableRankingWithMvf: false,
+    enableRankingStrictLimit: false,
     enableKDRichText: true,
     enableMySqlDataSource: false,
     enableCreateUser: true,
@@ -538,7 +541,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAiLlmAnthropicProvider: false,
     enableShellApplication_metricEditor: true,
     enableShellApplication_analyticalDesigner: false,
-    enableDashboardSidebarResize: false,
+    enableDashboardSidebarResize: true,
     enableShellApplication_ldmModeler: false,
     enableExportTimeoutFix: false,
 };
@@ -567,6 +570,7 @@ export const FeatureFlagsValues = {
     enableMultipleDateFilters: [true, false] as const,
     enableMultipleMvfConditions: [true, false] as const,
     enableRankingWithMvf: [true, false] as const,
+    enableRankingStrictLimit: [true, false] as const,
     enableKDRichText: [true, false] as const,
     enableMySqlDataSource: [true, false] as const,
     enableMotherDuckDataSource: [true, false] as const,

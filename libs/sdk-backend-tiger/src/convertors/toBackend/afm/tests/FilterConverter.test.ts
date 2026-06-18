@@ -7,6 +7,7 @@ import {
     DateGranularity,
     type IFilter,
     type IMeasureValueFilter,
+    type IRankingFilter,
     idRef,
     localIdRef,
     newAbsoluteDateFilter,
@@ -301,6 +302,15 @@ describe("tiger filter converter from model to AFM", () => {
             [
                 "ranking filter with attributes",
                 newRankingFilter(ReferenceMd.Won, [ReferenceMd.IsActive.attribute.displayForm], "TOP", 3),
+            ],
+            [
+                "ranking filter with strictLimitOfRows",
+                {
+                    rankingFilter: {
+                        ...newRankingFilter(ReferenceMd.Won, "TOP", 3).rankingFilter,
+                        strictLimitOfRows: true,
+                    },
+                } satisfies IRankingFilter,
             ],
             [
                 "comparison measure value filter with dimensionality",

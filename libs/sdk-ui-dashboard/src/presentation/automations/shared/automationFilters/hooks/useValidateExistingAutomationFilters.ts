@@ -37,6 +37,7 @@ import {
 
 import {
     getAutomationAlertFilters,
+    getAutomationAlertParameters,
     getAutomationDashboardFilters,
     getAutomationDashboardFiltersByTab,
     getAutomationExportParametersByTab,
@@ -66,6 +67,7 @@ import { selectSmartPersistedTabsParameters } from "../../../../../model/store/t
 import { selectTabs } from "../../../../../model/store/tabs/tabsSelectors.js";
 import type { ExtendedDashboardWidget } from "../../../../../model/types/layoutTypes.js";
 import { type IDashboardFilter } from "../../../../../types.js";
+import { hasStaleAlertParameters } from "../automationParameters.js";
 import {
     areFiltersEqual,
     isFilterIgnoredByWidget,
@@ -140,10 +142,16 @@ export interface IAutomationValidationResult {
     visibleFiltersAreMissing: boolean;
     incompatibleSelectionTypeIsAppliedInSavedFilters: boolean;
     /**
-     * A stored parameter override is stale: its ref left the catalog, its tab is gone, or a
-     * `readonly`/`hidden` parameter's pinned value drifted from the current dashboard.
+     * A stored parameter override is stale. A missing workspace parameter (its ref left the
+     * catalog) is the shared signal for both flows; export schedules additionally flag a removed
+     * tab or a `readonly`/`hidden` parameter whose pinned value drifted from the dashboard.
      */
     parametersAreStale?: boolean;
+    /**
+     * Filter staleness in isolation — kept separate because `isValid` folds it together with
+     * {@link parametersAreStale}, so a filters-only repair can't recover it from `!isValid`.
+     */
+    filtersAreStale?: boolean;
 }
 
 const defaultValidState: IAutomationValidationResult = {
@@ -198,7 +206,7 @@ export function useValidateExistingAutomationFilters({
                   dashboardParametersByTab,
                   existingTabIds: new Set((tabs ?? []).map((tab) => tab.localIdentifier)),
                   widgetTabId,
-              })
+              }) || validateExistingAutomationAlertParameters(automationToEdit, catalogParameters)
             : false;
 
     const filterValidation = resolveFilterValidation({
@@ -220,6 +228,7 @@ export function useValidateExistingAutomationFilters({
         ...filterValidation,
         isValid: filterValidation.isValid && !parametersAreStale,
         parametersAreStale,
+        filtersAreStale: !filterValidation.isValid,
     };
 }
 
@@ -395,6 +404,16 @@ export function validateExistingAutomationParameters({
         }
     }
     return false;
+}
+
+/**
+ * Sibling of {@link validateExistingAutomationParameters} for the alert path.
+ */
+function validateExistingAutomationAlertParameters(
+    automationToEdit: IAutomationMetadataObject | undefined,
+    catalog: IParameterMetadataObject[],
+): boolean {
+    return hasStaleAlertParameters(getAutomationAlertParameters(automationToEdit), catalog);
 }
 
 /**

@@ -203,7 +203,14 @@ function updateNonResettingFilter(
         }
 
         if (withoutApply) {
-            const needsInitialization = isEmpty(handler.getAllElements()) && filterChanged;
+            // A committed element missing from the loaded cache (selected beyond the first page or
+            // applied programmatically) renders as "None"; re-init so it is fetched by value.
+            const committedKeys = handler.getCommittedSelection().keys;
+            const isSelectionResolved =
+                committedKeys.length === 0 ||
+                handler.getElementsByKey(committedKeys).length === committedKeys.length;
+            const needsInitialization =
+                filterChanged && (isEmpty(handler.getAllElements()) || !isSelectionResolved);
 
             if (!needsInitialization) {
                 return undefined;

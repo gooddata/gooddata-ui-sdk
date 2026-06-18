@@ -42,7 +42,7 @@ export const hasMessagesSelector: (state: RootState) => boolean = createSelector
 
 export const asyncProcessSelector: (
     state: RootState,
-) => "loading" | "restoring" | "clearing" | "evaluating" | "switchingAgent" | undefined = createSelector(
+) => "loading" | "restoring" | "clearing" | "evaluating" | undefined = createSelector(
     messagesSliceSelector,
     (state) => {
         if (state.currentConversation) {
@@ -52,6 +52,12 @@ export const asyncProcessSelector: (
         return state.messageAsyncProcess;
     },
 );
+
+export const pendingAgentSwitchSelector = (
+    state: RootState,
+    conversationLocalId: string,
+): { agentId: string; previousAgentId: string | undefined } | undefined =>
+    state[messagesSliceName].conversationsData[conversationLocalId]?.pendingAgentSwitch;
 
 export const globalErrorSelector: (state: RootState) => Record<string, unknown> | null = createSelector(
     messagesSliceSelector,

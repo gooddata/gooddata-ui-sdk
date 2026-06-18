@@ -1610,6 +1610,10 @@ export function declarativeRankingFilterToYaml(
         }
     }
 
+    if (rankingFilter.strictLimitOfRows !== undefined) {
+        map.add(new Pair("strict_limit_of_rows", rankingFilter.strictLimitOfRows));
+    }
+
     return map;
 }
 

@@ -4357,7 +4357,11 @@
                     "type": "number",
                     "description": "Number of bottom N values to use in this filter."
                 },
-                "top": { "type": "number", "description": "Number of top N values to use in this filter." }
+                "top": { "type": "number", "description": "Number of top N values to use in this filter." },
+                "strict_limit_of_rows": {
+                    "type": "boolean",
+                    "description": "When true, the filter returns exactly N rows, excluding additional rows that share the same value (ties). Default is false."
+                }
             },
             "oneOf": [
                 { "title": "BOTTOM", "required": ["type", "using", "bottom"] },

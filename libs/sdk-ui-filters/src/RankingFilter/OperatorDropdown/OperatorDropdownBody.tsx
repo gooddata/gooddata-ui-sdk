@@ -1,5 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
+import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import { type RankingFilterOperator } from "@gooddata/sdk-model";
@@ -12,17 +13,32 @@ import { OperatorDropdownItem } from "./OperatorDropdownItem.js";
 interface IOperatorDropdownBodyComponentProps {
     items: IOperatorDropdownItem[];
     selectedValue: RankingFilterOperator;
-    onSelect: (value: RankingFilterOperator) => void;
+    selectedStrictLimitOfRows: boolean;
+    enableRankingStrictLimit: boolean;
+    onSelect: (value: RankingFilterOperator, strictLimitOfRows: boolean) => void;
     onClose: () => void;
 }
 
 export function OperatorDropdownBody({
     items,
     selectedValue,
+    selectedStrictLimitOfRows,
+    enableRankingStrictLimit,
     onSelect,
     onClose,
 }: IOperatorDropdownBodyComponentProps) {
     const intl = useIntl();
+
+    const bodyClassName = cx(
+        "gd-dropdown",
+        "overlay",
+        "gd-rf-inner-overlay-dropdown",
+        "gd-rf-operator-dropdown-body",
+        "s-rf-operator-dropdown-body",
+        {
+            "gd-rf-operator-dropdown-body--strict-limit": enableRankingStrictLimit,
+        },
+    );
 
     return (
         <Overlay
@@ -31,16 +47,21 @@ export function OperatorDropdownBody({
             alignPoints={[{ align: "bl tl" }, { align: "tl bl" }]}
             onClose={onClose}
         >
-            <div className="gd-dropdown overlay gd-rf-inner-overlay-dropdown gd-rf-operator-dropdown-body s-rf-operator-dropdown-body">
-                {items.map(({ value, translationId }) => {
+            <div className={bodyClassName}>
+                {items.map(({ value, translationId, strictLimitOfRows = false, tooltipId }) => {
                     const title = intl.formatMessage({ id: translationId });
+                    const isSelected = enableRankingStrictLimit
+                        ? value === selectedValue && strictLimitOfRows === selectedStrictLimitOfRows
+                        : value === selectedValue;
 
                     return (
                         <OperatorDropdownItem
-                            key={value}
+                            key={`${value}-${strictLimitOfRows}`}
                             title={title}
                             value={value}
-                            isSelected={value === selectedValue}
+                            strictLimitOfRows={strictLimitOfRows}
+                            isSelected={isSelected}
+                            tooltipId={tooltipId}
                             onSelect={onSelect}
                         />
                     );

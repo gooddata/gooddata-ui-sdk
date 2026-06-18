@@ -18,7 +18,7 @@ import {
 import {
     type CustomAlertingDialogComponent,
     type CustomAlertingManagementDialogComponent,
-} from "../automations/alerting/types.js";
+} from "../automations/_staging/alerting/types.js";
 import {
     type CustomScheduledEmailDialogComponent,
     type CustomScheduledEmailManagementDialogComponent,

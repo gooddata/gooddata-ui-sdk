@@ -441,8 +441,9 @@ function convertMeasureValueFilter(
 }
 
 function convertRankingFilter(filter: IRankingFilter, applyOnResultProp: ApplyOnResultProp): RankingFilter {
-    const { measure, attributes, operator, value } = filter.rankingFilter;
+    const { measure, attributes, operator, value, strictLimitOfRows } = filter.rankingFilter;
     const dimensionalityProp = attributes ? { dimensionality: attributes.map(toAfmIdentifier) } : {};
+    const strictLimitOfRowsProp = strictLimitOfRows === undefined ? {} : { strictLimitOfRows };
     const localIdentifier = filter.rankingFilter.localIdentifier;
     return {
         rankingFilter: {
@@ -452,6 +453,7 @@ function convertRankingFilter(filter: IRankingFilter, applyOnResultProp: ApplyOn
             value,
             localIdentifier,
             ...applyOnResultProp,
+            ...strictLimitOfRowsProp,
         },
     };
 }

@@ -59,9 +59,8 @@ type MessagesSliceState = {
      * - restoring: cached messages have been restored while the backend fetch is still in-flight
      * - clearing: the thread is being cleared
      * - evaluating: the new user message is being evaluated by assistant
-     * - switchingAgent: the active agent switch is being persisted
      */
-    messageAsyncProcess?: "loading" | "restoring" | "clearing" | "evaluating" | "switchingAgent";
+    messageAsyncProcess?: "loading" | "restoring" | "clearing" | "evaluating";
 
     /**
      * A list of conversations.
@@ -757,37 +756,52 @@ const messagesSlice = createSlice({
                 );
 
                 const data = getConversationData(state.conversationsData, state.currentConversation.localId);
-                // Only persisted conversations (with an id) are switched on the backend by onAgentSwitch.
-                // A draft conversation (empty id) is created with the selected agent on the first message,
-                // so it must not show a "switched agent" divider or enter the switching busy state - that
-                // switch never happened on the server.
+                // Only persisted conversations (with an id) need a backend switchAgent call.
+                // A draft conversation is created with the selected agent on the first message.
                 if (
                     data &&
                     state.currentConversation.id &&
                     payload.agentId &&
                     previousAgentId !== payload.agentId
                 ) {
-                    // Optimistically append the agentChange event for immediate in-session feedback -
-                    // nothing reloads the conversation history right after a switch. The backend persists
-                    // its own agentChange item, which is reconstructed by the history convertor when the
-                    // conversation is reopened (in-memory items are empty on a fresh load, so this does not
-                    // duplicate).
-                    const item = makeAgentChangeItem({
-                        agentId: payload.agentId,
-                        oldAgentId: previousAgentId,
-                    });
-                    data.items[item.localId] = item;
-                    data.order.push(item.localId);
-
-                    data.asyncProcess = "switchingAgent";
+                    // Track the last BE-confirmed agent so a round-trip switch (A→B→A) is a no-op.
+                    const originalPreviousAgentId =
+                        data.pendingAgentSwitch?.previousAgentId ?? previousAgentId;
+                    if (payload.agentId === originalPreviousAgentId) {
+                        // User switched back to the BE-confirmed agent — no switch needed.
+                        delete data.pendingAgentSwitch;
+                    } else {
+                        data.pendingAgentSwitch = {
+                            agentId: payload.agentId,
+                            previousAgentId: originalPreviousAgentId,
+                        };
+                    }
                 }
             }
         },
-        finishAgentSwitchAction: (state, { payload }: PayloadAction<{ conversationLocalId: string }>) => {
+        applyPendingAgentSwitchAction: (
+            state,
+            { payload }: PayloadAction<{ conversationLocalId: string; beforeItemLocalId?: string }>,
+        ) => {
             const data = state.conversationsData[payload.conversationLocalId];
-            if (data?.asyncProcess === "switchingAgent") {
-                delete data.asyncProcess;
+            if (!data?.pendingAgentSwitch) {
+                return;
             }
+            const { agentId, previousAgentId } = data.pendingAgentSwitch;
+            // Optimistically insert the agentChange event before the user message so the order is:
+            //   [...prior items, switch_item, user_message, assistant_placeholder]
+            // The backend persists its own agentChange item, which replaces this one when the
+            // conversation history is reloaded (onThreadLoad drops unconfirmed optimistic system
+            // items before merging the backend version).
+            const item = makeAgentChangeItem({ agentId, oldAgentId: previousAgentId });
+            data.items[item.localId] = item;
+            const insertIdx = payload.beforeItemLocalId ? data.order.indexOf(payload.beforeItemLocalId) : -1;
+            if (insertIdx >= 0) {
+                data.order.splice(insertIdx, 0, item.localId);
+            } else {
+                data.order.push(item.localId);
+            }
+            delete data.pendingAgentSwitch;
         },
         revertAgentSwitchAction: (
             state,
@@ -1336,7 +1350,7 @@ export const {
     saveVisualisationRenderStatusSuccessAction,
     visualizationErrorAction,
     setSelectedAgentAction,
-    finishAgentSwitchAction,
+    applyPendingAgentSwitchAction,
     revertAgentSwitchAction,
     setAgentsAction,
     pinConversationAction,

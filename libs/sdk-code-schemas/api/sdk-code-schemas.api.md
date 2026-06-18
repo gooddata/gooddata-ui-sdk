@@ -369,6 +369,7 @@ interface BarChart {
 interface BOTTOM {
     attribute?: AttributeIdentifier12;
     bottom: number;
+    strict_limit_of_rows?: boolean;
     top?: number;
     // (undocumented)
     type: "ranking_filter";
@@ -6263,6 +6264,10 @@ export const metadata_v1: {
                     type: string;
                     description: string;
                 };
+                strict_limit_of_rows: {
+                    type: string;
+                    description: string;
+                };
             };
             oneOf: {
                 title: string;
@@ -10108,6 +10113,7 @@ interface TextFilter2 {
 interface TOP {
     attribute?: AttributeIdentifier13;
     bottom?: number;
+    strict_limit_of_rows?: boolean;
     top: number;
     // (undocumented)
     type: "ranking_filter";

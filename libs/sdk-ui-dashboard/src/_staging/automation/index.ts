@@ -234,6 +234,17 @@ export const getAutomationAlertFilters = (
     return automation.alert?.execution?.filters?.filter(isFilter);
 };
 
+/**
+ * Extracts the parameter overrides stored on an alert. Unlike export schedules (per-tab
+ * `content.parametersByTab`), alerts keep a flat {@link IInsightParameterValue} list at
+ * `alert.execution.parameters`. Mirrors {@link getAutomationAlertFilters}.
+ */
+export const getAutomationAlertParameters = (
+    automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | undefined,
+): IInsightParameterValue[] | undefined => {
+    return automation?.alert?.execution?.parameters;
+};
+
 type ExportDefinitionSubset = Pick<IExportDefinitionMetadataObjectDefinition, "requestPayload" | "title">;
 
 const sortByFormat = (a: ExportDefinitionSubset, b: ExportDefinitionSubset) =>

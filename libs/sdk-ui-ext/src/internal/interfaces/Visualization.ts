@@ -309,6 +309,7 @@ export interface IBucketItem {
 export interface IFiltersBucketItem extends IBucketItem {
     autoCreated?: boolean;
     applyOnResult?: boolean;
+    strictLimitOfRows?: boolean;
 }
 
 // TODO: SDK8: rename this :) the original name IBucket conflicted with what we have in model;
