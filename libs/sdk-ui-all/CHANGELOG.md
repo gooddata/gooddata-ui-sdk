@@ -1,6 +1,44 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 11 Jun 2026 11:20:41 GMT and should not be manually modified.
+This log was last generated on Thu, 18 Jun 2026 07:03:40 GMT and should not be manually modified.
+
+## 11.42.0
+
+Thu, 18 Jun 2026 07:03:40 GMT
+
+### Updates
+
+- sdk-model: Add `parameters` to alert execution definition
+- sdk-backend-tiger: Convert automation parameter overrides (alert execution `parameters` and tabular export `parametersByTab`)
+- sdk-ui-kit: Add `iconNode` to `ITab`
+- sdk-ui-dashboard: Add workspace parameter editing to alert automation dialogs
+- sdk-ui-dashboard: Persist parameter values for scheduled exports
+- sdk-ui-dashboard: Validate stale alert parameters when their workspace parameter has been deleted
+- sdk-backend-tiger: Add organization-level AI memory items service to the organization genAI service.
+- sdk-ui-dashboard: Fixed missing dashboard filters on mobile.
+- sdk-ui-kit: add data-testid to WidgetNotice toggle button for E2E test stability.
+- sdk-ui-gen-ai: Add support for tool results references in ai chat.
+- sdk-ui-gen-ai: Add support for alert proposals in GenAI chat.
+- sdk-ui-catalog: Change APIs to public.
+- sdk-ui-catalog: Add markdown support in follow-up suggestions.
+- sdk-ui-all: Adjusted `HostChrome` to hide the AI Assistant chat element when `hideChrome` is true.
+- sdk-ui-theme-provider: Fixed incorrect color value handling in themes.
+- sdk-ui-dashboard: In export mode, emit data-export-status="loading" from the very first render (before any dashboard data is loaded), so the exporter gets an early signal that rendering has started. The existing loaded/empty statuses take over once the dashboard is initialized. The behavior is gated behind the enableExportTimeoutFix feature flag.
+- sdk-ui-all: Introduce strict flag on ranking filter.
+- When an execution reaches a result limit: disable formatted exports (XLSX, formatted CSV, formatted PDF) with an explanatory tooltip in the widget and drill dialog menus, and show a partial-results warning next to the dashboard XLSX export.
+- Add Partial results (enablePartialDataResults) setting management at workspace and organization level, including the setEnablePartialDataResults backend service method.
+- Collocate alerting dialogs into \_staging folder (pure move, preparatory step for separation)
+- sdk-backend-tiger: Turn on sidebar resize feature flag by default.
+- Add UiAutocomplete, an async paged sectioned combobox primitive
+- Refactor UiCombobox internals to compose on kit primitives + add UiFloatingPanel; no public API change
+- Add UiGranteeAsyncPicker and async add-grantee dialog primitives
+- sdk-ui-kit: introduce UiModalDialog primitive; UiConfirmDialog and UiObjectShareDialog become real modals via Card composition.
+- sdk-ui-kit: UiTextInput forwards keyboard, focus, blur and click handlers; a11y mapper emits aria-autocomplete and aria-activedescendant.
+- sdk-ui-dashboard: Implement Partial Result warning on Drill modal for enablePartialDataResults setting.
+- sdk-ui-kit: Expose the underlying Overlay's onAlign callback as an optional Dropdown prop, forwarding the chosen align point.
+- sdk-model: remove feature flag enableIpAllowlistsUi
+- sdk-ui-pivot: Apply suppressKeyboardEvent and suppressHeaderKeyboardEvent on the stable defaultColDef so AG Grid no longer logs invalid gridOptions property warnings, without disturbing the growToFit column sizing.
+- sdk-ui-pluggable-host: Keep the organization favicon in the host shell when no custom white-label favicon is set, instead of resetting it to a missing /favicon.ico once a module mounts
 
 ## 11.41.0
 

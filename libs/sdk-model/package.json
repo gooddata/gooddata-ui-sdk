@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-model",
-    "version": "11.42.0-alpha.5",
+    "version": "11.43.0-alpha.0",
     "description": "GoodData Model definitions used by UI components and Backend SPI",
     "license": "MIT",
     "author": "GoodData",

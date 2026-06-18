@@ -17,9 +17,7 @@ HOST=dummy.gooddata.com
 FILTER=${FILTER:-}
 EOF
 
-if [ -n "$IMAGE_URL" ]; then
-    echo "Using pre-built app image: $IMAGE_URL"
-else
+if [ -z "$IMAGE_URL" ]; then
     export IMAGE_URL=tiger-gooddata-ui-sdk-scenarios-${EXECUTOR_NUMBER}
     trap "rm -f $E2E_TEST_DIR/.env; docker rmi --force $IMAGE_URL || true" EXIT
     docker build --no-cache -t $IMAGE_URL $APP_DIR || exit 1
@@ -32,8 +30,6 @@ if [ -n "$E2E_IMAGE_URL" ]; then
     NO_BUILD="--no-build"
 fi
 
-export PLAYWRIGHT_GREP="${PLAYWRIGHT_GREP:-@pre-merge-isolated}"
-echo "Filtering by tag: $PLAYWRIGHT_GREP"
 NO_COLOR=1 docker compose -f docker-compose-isolated.yaml -p "$PROJECT_NAME" up $NO_BUILD \
   --abort-on-container-exit --exit-code-from isolated-tests \
   --force-recreate --always-recreate-deps --renew-anon-volumes --no-color

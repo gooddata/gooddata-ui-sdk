@@ -8,7 +8,6 @@ APP_DIR=$ROOT_DIR/libs/sdk-ui-tests-app
 REF_WS_DIR=$ROOT_DIR/libs/sdk-ui-tests-reference-workspace
 E2E_TEST_DIR=$ROOT_DIR/libs/sdk-ui-tests-e2e
 
-echo "⭐️ Preparing env for recording"
 if [[ ! "${TEST_BACKEND:?}" =~ 'https://' ]]; then
     export TEST_BACKEND="https://${TEST_BACKEND}"
 fi
@@ -17,8 +16,6 @@ export TIGER_DATASOURCES_NAME=vertica_staging-goodsales
 export HOST=$TEST_BACKEND
 export FIXTURE_TYPE=goodsales
 export FILTER=${FILTER:-}
-export PLAYWRIGHT_GREP="${PLAYWRIGHT_GREP:-@pre-merge-isolated}"
-echo "Filtering by tag: $PLAYWRIGHT_GREP"
 
 # Write .env for the e2e tests
 cat > $E2E_TEST_DIR/.env <<-EOF
@@ -32,7 +29,6 @@ TIGER_DATASOURCES_NAME=${TIGER_DATASOURCES_NAME}
 EOF
 
 cleanup() {
-    echo "Executing cleanup before exiting..."
     rm -f $REF_WS_DIR/.env $E2E_TEST_DIR/.env
     if [ -z "$_PREBUILT" ]; then
       docker rmi --force $IMAGE_URL || true
@@ -44,12 +40,9 @@ trap cleanup EXIT
 export WORKSPACE_ID="$TEST_WORKSPACE_ID"
 
 if [ -n "$IMAGE_URL" ]; then
-    echo "⭐️ Using pre-built app image: $IMAGE_URL"
     _PREBUILT=true
 else
-    echo "⭐️ Build gooddata-ui-sdk-scenarios"
     (cd $APP_DIR; npm run _phase:pack-build)
-    echo "⭐️ Build docker container from gooddata-ui-sdk-scenarios"
     export IMAGE_URL=tiger-gooddata-ui-sdk-scenarios-${EXECUTOR_NUMBER:-default}
     docker build --no-cache -t $IMAGE_URL $APP_DIR || exit 1
 fi
@@ -58,7 +51,6 @@ pushd $E2E_TEST_DIR
 rm -rf ./recordings/mappings
 mkdir -p ./recordings/mappings/TIGER
 
-echo "⭐️ Run isolated recording against TEST_BACKEND=$TEST_BACKEND (Playwright)"
 PROJECT_NAME=tiger-sdk-ui-tests-e2e-${EXECUTOR_NUMBER:-default}
 
 NO_BUILD=""
