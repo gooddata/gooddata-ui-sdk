@@ -67,6 +67,7 @@ export interface ITransformedRankingFilter {
     attributeLocalIdentifiers?: string[];
     operator: RankingFilterOperator;
     value: number;
+    strictLimitOfRows?: boolean;
 }
 
 export interface ITransformedMeasureValueFilter {
@@ -204,12 +205,13 @@ function isValidRankingFilterAttributes(attributes?: ILocalIdentifierQualifier[]
 }
 
 function isValidRankingFilterFormat(rankingFilterItem: IRankingFilter): boolean {
-    const { measure, attributes, value, operator } = rankingFilterItem.rankingFilter;
+    const { measure, attributes, value, operator, strictLimitOfRows } = rankingFilterItem.rankingFilter;
     return (
         isValidLocalIdentifier(measure) &&
         isValidRankingFilterAttributes(attributes) &&
         isValidRankingFilterOperator(operator) &&
-        isValidRankingFilterValue(value)
+        isValidRankingFilterValue(value) &&
+        (strictLimitOfRows === undefined || typeof strictLimitOfRows === "boolean")
     );
 }
 
@@ -476,18 +478,20 @@ function transformMatchAttributeFilterItem(
 }
 
 function transformRankingFilterItem(rankingFilterItem: IRankingFilter): ITransformedRankingFilter {
-    const { measure, attributes, value, operator } = rankingFilterItem.rankingFilter;
+    const { measure, attributes, value, operator, strictLimitOfRows } = rankingFilterItem.rankingFilter;
     const attributesProp = attributes
         ? {
               attributeLocalIdentifiers: attributes.map((attribute) => attribute.localIdentifier),
           }
         : {};
+    const strictLimitOfRowsProp = strictLimitOfRows === undefined ? {} : { strictLimitOfRows };
 
     return {
         measureLocalIdentifier: measure.localIdentifier,
         ...attributesProp,
         value,
         operator,
+        ...strictLimitOfRowsProp,
     };
 }
 

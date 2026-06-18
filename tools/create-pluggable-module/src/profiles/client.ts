@@ -149,6 +149,10 @@ export const clientProfile: IScaffoldProfile = {
             `${ctx.answers.appName}-harness`,
         ]);
         const out = { ...pkg } as Record<string, unknown>;
+        // Record the maintainer the user entered as the package owner. Without this
+        // the required maintainer prompt would be collected and silently discarded,
+        // leaving the scaffolded client metadata stuck with the template's author.
+        out.author = ctx.answers.maintainer;
         out.dependencies = rewriteWorkspaceDeps(
             pkg.dependencies as Record<string, string> | undefined,
             version,

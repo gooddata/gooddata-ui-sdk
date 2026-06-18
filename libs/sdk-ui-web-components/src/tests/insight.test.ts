@@ -43,6 +43,38 @@ const flushMicrotasks = async (count = 4) => {
     });
 };
 
+const waitForRenderProps = async (
+    predicate: (props: Record<string, unknown>) => boolean,
+    { timeout: waitTimeout = timeout, interval = 10 }: { timeout?: number; interval?: number } = {},
+) => {
+    const deadline = Date.now() + waitTimeout;
+    let scannedIndex = 0;
+
+    for (;;) {
+        const calls = renderSpy.mock.calls;
+        for (; scannedIndex < calls.length; scannedIndex++) {
+            const props = calls[scannedIndex]?.[0] as Record<string, unknown> | undefined;
+            if (props && predicate(props)) {
+                return props;
+            }
+        }
+
+        if (Date.now() >= deadline) {
+            const props = renderSpy.mock.lastCall?.[0] as Record<string, unknown> | undefined;
+            throw new Error(
+                `waitForRenderProps timed out after ${waitTimeout}ms; last render props: ${JSON.stringify(
+                    props,
+                )}`,
+            );
+        }
+
+        await flushMicrotasks(1);
+        await new Promise((resolve) => {
+            setTimeout(resolve, interval);
+        });
+    }
+};
+
 describe("Insight", () => {
     beforeEach(() => {
         vi.resetModules();
@@ -80,7 +112,7 @@ describe("Insight", () => {
             element.setAttribute("insight", "first-insight");
 
             document.body.append(element);
-            await flushMicrotasks();
+            await waitForRenderProps((props) => props["insight"] === "first-insight");
 
             expect(element.querySelector("gd-insight-embed")).toBeNull();
             expect(renderSpy.mock.lastCall?.[0]).toMatchObject({
@@ -88,7 +120,7 @@ describe("Insight", () => {
             });
 
             element.setAttribute("insight", "second-insight");
-            await flushMicrotasks();
+            await waitForRenderProps((props) => props["insight"] === "second-insight");
 
             expect(element.querySelector("gd-insight-embed")).toBeNull();
             expect(renderSpy.mock.lastCall?.[0]).toMatchObject({
@@ -130,7 +162,7 @@ describe("Insight", () => {
             element.insight = "property-insight";
             element.filters = [{ filter: "property" }];
             element.title = "Property Title";
-            await flushMicrotasks();
+            await waitForRenderProps((props) => props["insight"] === "property-insight");
 
             expect(renderSpy.mock.lastCall?.[0]).toMatchObject({
                 backend: propertyBackend,
@@ -165,9 +197,9 @@ describe("Insight", () => {
             await flushMicrotasks();
 
             const refreshPromise = element.refresh();
-            await flushMicrotasks(1);
-
-            const latestProps = renderSpy.mock.lastCall?.[0] as {
+            const latestProps = (await waitForRenderProps(
+                (props) => typeof props["onLoadingChanged"] === "function",
+            )) as {
                 onLoadingChanged: (state: { isLoading: boolean }) => void;
             };
 
@@ -239,9 +271,9 @@ describe("Insight", () => {
             await flushMicrotasks();
 
             const refreshPromise = element.refresh();
-            await flushMicrotasks(1);
-
-            const latestProps = renderSpy.mock.lastCall?.[0] as {
+            const latestProps = (await waitForRenderProps(
+                (props) => typeof props["onError"] === "function",
+            )) as {
                 onError: (error: Error) => void;
             };
             const error = new Error("Insight failed");

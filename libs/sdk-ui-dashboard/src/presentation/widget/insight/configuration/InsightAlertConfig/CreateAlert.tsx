@@ -12,8 +12,8 @@ import {
 } from "@gooddata/sdk-model";
 
 import { type IExecutionResultEnvelope } from "../../../../../model/store/executionResults/types.js";
-import { type IMeasureFormatMap } from "../../../../automations/alerting/DefaultAlertingDialog/utils/getters.js";
-import { type AlertAttribute, type AlertMetric } from "../../../../automations/alerting/types.js";
+import { type IMeasureFormatMap } from "../../../../automations/_staging/alerting/DefaultAlertingDialog/utils/getters.js";
+import { type AlertAttribute, type AlertMetric } from "../../../../automations/_staging/alerting/types.js";
 
 import { EditAlert } from "./EditAlert.js";
 

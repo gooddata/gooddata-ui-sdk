@@ -330,6 +330,10 @@ export const convertFilter = (filter: FilterDefinition): IFilter => {
             filter.rankingFilter.applyOnResult === undefined
                 ? {}
                 : { applyOnResult: filter.rankingFilter.applyOnResult };
+        const strictLimitOfRowsProp =
+            filter.rankingFilter.strictLimitOfRows === undefined
+                ? {}
+                : { strictLimitOfRows: filter.rankingFilter.strictLimitOfRows };
         return {
             rankingFilter: {
                 measure: filter.rankingFilter.measures[0] as ObjRefInScope,
@@ -337,6 +341,7 @@ export const convertFilter = (filter: FilterDefinition): IFilter => {
                 operator: filter.rankingFilter.operator,
                 value: filter.rankingFilter.value,
                 ...applyOnResultProp,
+                ...strictLimitOfRowsProp,
             },
         };
         // TODO: GDP-3208 May need to also handle arbitrary filters if they are stored as part of automation.

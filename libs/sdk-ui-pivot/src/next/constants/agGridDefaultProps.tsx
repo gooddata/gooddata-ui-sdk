@@ -1,11 +1,76 @@
 // (C) 2025-2026 GoodData Corporation
 
+import { type SuppressHeaderKeyboardEventParams, type SuppressKeyboardEventParams } from "ag-grid-enterprise";
 import { merge } from "lodash-es";
 
 import { LoadingComponent } from "@gooddata/sdk-ui";
 
 import { HEADER_CELL_CLASSNAME } from "../features/styling/bem.js";
 import { type AgGridProps } from "../types/agGrid.js";
+import { type AgGridRowData } from "../types/internal.js";
+
+/**
+ * AG Grid's suppressKeyboardEvent lets us control which keyboard events AG Grid processes
+ * vs which ones should bubble up to the browser.
+ *
+ * Returning true = suppress AG Grid's handling, let our custom handler process it.
+ * Returning false = let AG Grid handle the event.
+ *
+ * This is a column-level (ColDef) property, so it lives on defaultColDef. It is a static
+ * function kept on the stable default props on purpose: deriving it inside a hook would
+ * change the defaultColDef reference whenever the hook re-runs, making AG Grid re-apply
+ * column defaults and discard the growToFit column sizing applied on the initial render.
+ */
+function suppressKeyboardEvent(params: SuppressKeyboardEventParams<AgGridRowData, string | null>): boolean {
+    const { event } = params;
+    const { key } = event;
+
+    // Prevent Space key from scrolling the page
+    if (key === " " || key === "Space") {
+        event.preventDefault();
+    }
+
+    // Suppress Tab - handled in onCellKeyDown (useInteractionProps.ts)
+    if (key === "Tab") {
+        return true;
+    }
+
+    // Suppress custom navigation keys - handled in onCellKeyDown (useInteractionProps.ts):
+    // - Home/End (custom row navigation)
+    // - Ctrl+Home/End (jump to first/last cell in grid)
+    const isCustomNavigationKey = key === "Home" || key === "End";
+
+    if (isCustomNavigationKey) {
+        return true;
+    }
+
+    // Let AG Grid handle standard navigation keys:
+    const isStandardNavigationKey =
+        key === "ArrowUp" ||
+        key === "ArrowDown" ||
+        key === "ArrowLeft" ||
+        key === "ArrowRight" ||
+        key === "PageUp" ||
+        key === "PageDown";
+
+    return !isStandardNavigationKey;
+}
+
+function suppressHeaderKeyboardEvent(
+    params: SuppressHeaderKeyboardEventParams<AgGridRowData, string | null>,
+): boolean {
+    const { event } = params;
+    const { key } = event;
+
+    // Prevent Space key from scrolling the page
+    // The actual Space key handling for actions is done in header components via useEffect
+    if (key === " " || key === "Space") {
+        event.preventDefault();
+    }
+
+    // Let AG Grid handle all events normally
+    return false;
+}
 
 /**
  * Separator used to generate colId for pivoted values (by joining local identifiers and header values of the pivoting path to the value).
@@ -45,6 +110,10 @@ const NAVIGATION_PROPS: AgGridProps = {
     // Cells need to keep their tabindex so AG Grid can manage focus and call suppressKeyboardEvent
     processRowPostCreate: (params) => {
         params.eRow.setAttribute("tabindex", "-1");
+    },
+    defaultColDef: {
+        suppressKeyboardEvent,
+        suppressHeaderKeyboardEvent,
     },
 };
 

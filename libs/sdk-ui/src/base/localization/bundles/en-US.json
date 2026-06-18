@@ -2435,6 +2435,10 @@
         "text": "The visualization is sliced only by one attribute. The filter will apply to all its values.",
         "crowdinContext": "Tooltip when no options are available for attribute dropdown."
     },
+    "rankingFilter.condition": {
+        "text": "Condition",
+        "crowdinContext": "Section title above the ranking filter condition (Top/Bottom) selector and the value input."
+    },
     "rankingFilter.outOf": {
         "text": "Out of",
         "crowdinContext": "Section title to specify ranking attribute."
@@ -2456,20 +2460,24 @@
         "crowdinContext": "Section title that shows ranking filter preview."
     },
     "rankingFilter.preview.top_without_attribute": {
-        "text": "Top {value} of <strong>{measure}</strong>",
-        "crowdinContext": "Preview text showing the top N values based on a measure, where {value} is the number of items and {measure} is the measure name. Used when no attribute is specified for ranking."
+        "text": "Top {value}{withTies} of <strong>{measure}</strong>",
+        "crowdinContext": "Preview text showing the top N values based on a measure, where {value} is the number of items and {measure} is the measure name. {withTies} is an optional ' (with ties)' suffix. Used when no attribute is specified for ranking."
     },
     "rankingFilter.preview.bottom_without_attribute": {
-        "text": "Bottom {value} of <strong>{measure}</strong>",
-        "crowdinContext": "Preview text showing the bottom N values based on a measure, where {value} is the number of items and {measure} is the measure name. Used when no attribute is specified for ranking."
+        "text": "Bottom {value}{withTies} of <strong>{measure}</strong>",
+        "crowdinContext": "Preview text showing the bottom N values based on a measure, where {value} is the number of items and {measure} is the measure name. {withTies} is an optional ' (with ties)' suffix. Used when no attribute is specified for ranking."
     },
     "rankingFilter.preview.top_with_attribute": {
-        "text": "Top {value} out of <strong>{attribute}</strong> based on <strong>{measure}</strong>",
-        "crowdinContext": "Preview text showing the top N values of a specific attribute based on a measure, where {value} is the number of items, {attribute} is the attribute name, and {measure} is the measure name."
+        "text": "Top {value}{withTies} out of <strong>{attribute}</strong> based on <strong>{measure}</strong>",
+        "crowdinContext": "Preview text showing the top N values of a specific attribute based on a measure, where {value} is the number of items, {attribute} is the attribute name, and {measure} is the measure name. {withTies} is an optional ' (with ties)' suffix."
     },
     "rankingFilter.preview.bottom_with_attribute": {
-        "text": "Bottom {value} out of <strong>{attribute}</strong> based on <strong>{measure}</strong>",
-        "crowdinContext": "Preview text showing the bottom N values of a specific attribute based on a measure, where {value} is the number of items, {attribute} is the attribute name, and {measure} is the measure name."
+        "text": "Bottom {value}{withTies} out of <strong>{attribute}</strong> based on <strong>{measure}</strong>",
+        "crowdinContext": "Preview text showing the bottom N values of a specific attribute based on a measure, where {value} is the number of items, {attribute} is the attribute name, and {measure} is the measure name. {withTies} is an optional ' (with ties)' suffix."
+    },
+    "rankingFilter.preview.withTies": {
+        "text": "(with ties)",
+        "crowdinContext": "Suffix appended to the ranking filter summary when the 'with ties' condition is selected, e.g. 'Top 10 (with ties) of # of Orders'."
     },
     "rankingFilter.valueTooltip": {
         "text": "If multiple items have the same value, the filter shows all items with this value. The visualization may then display more items than the number set.",
@@ -2478,6 +2486,18 @@
     "rankingFilter.applyOnResultLabel": {
         "text": "Apply on result",
         "crowdinContext": "Checkbox label in the ranking filter. When enabled, the filter is applied after measure value filters."
+    },
+    "rankingFilter.topWithTies": {
+        "text": "Top (with ties)",
+        "crowdinContext": "Condition option in the ranking filter. Returns the top N items but also includes additional items that share the same value at the boundary (ties)."
+    },
+    "rankingFilter.bottomWithTies": {
+        "text": "Bottom (with ties)",
+        "crowdinContext": "Condition option in the ranking filter. Returns the bottom N items but also includes additional items that share the same value at the boundary (ties)."
+    },
+    "rankingFilter.withTiesTooltip": {
+        "text": "If multiple results share the same value, all are shown. The visualization may display more results than specified.",
+        "crowdinContext": "Tooltip explaining the 'with ties' condition options in the ranking filter."
     },
     "attributesDropdown.itemsFiltered.tooltip": {
         "text": "Values are filtered by: <strong>{filters}</strong>",

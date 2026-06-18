@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-pivot: Apply suppressKeyboardEvent and suppressHeaderKeyboardEvent on the stable defaultColDef so AG Grid no longer logs invalid gridOptions property warnings, without disturbing the growToFit column sizing.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

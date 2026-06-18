@@ -552,6 +552,14 @@ export interface IFeatureFlags {
     enableRankingWithMvf?: boolean;
 
     /**
+     * Enable the "Limit to N results" (strict limit of rows) option in the ranking filter.
+     *
+     * @remarks
+     * Defaults to false when not provided by the backend.
+     */
+    enableRankingStrictLimit?: boolean;
+
+    /**
      * Enables rich text widgets on dashboards.
      */
     enableKDRichText?: boolean;
@@ -1051,6 +1059,12 @@ export interface IFeatureFlags {
      * Renders table cells as hyperlinks.
      */
     enableDrillToUrlByDefault?: boolean;
+
+    /**
+     * This setting allows executions that reach a row/column/cell limit to return the partial data that was
+     * computed (along with limit-break metadata) instead of failing with an error.
+     */
+    enablePartialDataResults?: boolean;
 
     /**
      * Enable anomaly detection alert

@@ -6,6 +6,7 @@ import {
     buildContainsIcClause,
     buildFilterQuery,
     buildIsClause,
+    buildIsDisabledClause,
     buildIsNullClause,
     buildListClause,
     buildSingleOrListInClause,
@@ -109,6 +110,20 @@ describe("buildContainsIcClause", () => {
     });
 });
 
+describe("buildIsDisabledClause", () => {
+    it("should return undefined for undefined input", () => {
+        expect(buildIsDisabledClause(undefined)).toBeUndefined();
+    });
+
+    it("should match only true for the disabled state", () => {
+        expect(buildIsDisabledClause(true)).toBe("isDisabled==true");
+    });
+
+    it("should match false OR null for the enabled state (null is treated as enabled)", () => {
+        expect(buildIsDisabledClause(false)).toBe("(isDisabled==false,isDisabled=isnull=true)");
+    });
+});
+
 describe("joinClauses", () => {
     it("should return undefined for empty array", () => {
         expect(joinClauses([])).toBeUndefined();
@@ -172,6 +187,12 @@ describe("buildFilterQuery", () => {
 
     it("should build createdBy as equality for a single value", () => {
         expect(buildFilterQuery({ createdBy: ["user-1"] })).toBe('createdBy.id=="user-1"');
+    });
+
+    it("should restrict the search to the provided fields (e.g. no tags for org memory)", () => {
+        expect(buildFilterQuery({ search: "foo" }, ["id", "title", "description"])).toBe(
+            '(id=="foo",title=containsic="foo",description=containsic="foo")',
+        );
     });
 });
 

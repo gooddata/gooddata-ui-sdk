@@ -2660,6 +2660,10 @@ export interface BOTTOM {
      * Number of top N values to use in this filter.
      */
     top?: number;
+    /**
+     * When true, the filter returns exactly N rows, excluding additional rows that share the same value (ties). Default is false.
+     */
+    strict_limit_of_rows?: boolean;
 }
 export interface TOP {
     type: "ranking_filter";
@@ -2679,6 +2683,10 @@ export interface TOP {
      * Number of top N values to use in this filter.
      */
     top: number;
+    /**
+     * When true, the filter returns exactly N rows, excluding additional rows that share the same value (ties). Default is false.
+     */
+    strict_limit_of_rows?: boolean;
 }
 export interface MetricFieldGuard1 {
     /**

@@ -49,7 +49,7 @@ export const formatAlertSubtitle = (intl: IntlShape, alert?: IAutomationAlert) =
         )?.toLowerCase();
 
         return (
-            `${alert.condition.measure.left.title} ${relativeOperatorTitle} ${alert.condition.threshold}` +
+            `${alert.condition.measure.left.title ?? alert.condition.measure.left.id} ${relativeOperatorTitle} ${alert.condition.threshold}` +
             `${
                 alert.condition.measure.operator === ARITHMETIC_OPERATORS.ARITHMETIC_OPERATOR_CHANGE
                     ? " %"
@@ -62,11 +62,11 @@ export const formatAlertSubtitle = (intl: IntlShape, alert?: IAutomationAlert) =
             alert.condition.operator,
             intl,
         )?.toLowerCase();
-        return `${alert.condition.left.title} ${comparisonOperatorTitle} ${alert.condition.right}`;
+        return `${alert.condition.left.title ?? alert.condition.left.id} ${comparisonOperatorTitle} ${alert.condition.right}`;
     }
     if (alert?.condition.type === "anomalyDetection") {
         return getAnomalyDetectionOperatorTitle(
-            alert.condition.measure.title!,
+            alert.condition.measure.title ?? alert.condition.measure.id,
             alert.condition.sensitivity,
             alert.condition.granularity,
             intl,

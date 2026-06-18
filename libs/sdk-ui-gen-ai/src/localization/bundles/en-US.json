@@ -135,10 +135,6 @@
         "text": "Switched to {title} agent",
         "crowdinContext": "Divider message shown in an AI chatbot conversation after the user switches to another agent"
     },
-    "gd.gen-ai.agent.unknown": {
-        "text": "unknown",
-        "crowdinContext": "Placeholder shown in the 'Switched to {title} agent' message when the agent no longer exists"
-    },
     "gd.gen-ai.feedback.like": {
         "text": "Mark this message as helpful",
         "crowdinContext": "Button label to mark a message as helpful in the AI chatbot"

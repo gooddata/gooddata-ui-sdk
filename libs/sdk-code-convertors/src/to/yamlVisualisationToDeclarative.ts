@@ -1065,6 +1065,9 @@ function yamlRankingFilterToDeclarative(filter: RankingFilter): YamlFilterToDecl
                         : {}),
                     operator: filter.top === undefined ? "BOTTOM" : "TOP",
                     value: filter.top === undefined ? filter.bottom! : filter.top,
+                    ...(filter.strict_limit_of_rows === undefined
+                        ? {}
+                        : { strictLimitOfRows: filter.strict_limit_of_rows }),
                 },
             },
         ],

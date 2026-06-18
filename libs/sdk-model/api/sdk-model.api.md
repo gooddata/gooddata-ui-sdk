@@ -2709,10 +2709,12 @@ export interface IFeatureFlags {
     enableOracleDataSource?: boolean;
     enableOrchestratedTabularExports?: boolean;
     enableParameters?: boolean;
+    enablePartialDataResults?: boolean;
     enablePivotTableIncreaseBucketSize?: boolean;
     enablePivotTablePagination?: boolean;
     enablePreAggregationDatasets?: boolean;
     enableRadarChart?: boolean;
+    enableRankingStrictLimit?: boolean;
     enableRankingWithMvf?: boolean;
     enableRawExports?: boolean;
     enableRichTextDescriptions?: boolean;
@@ -4279,6 +4281,7 @@ export interface IRankingFilterBody extends IIdentifiableFilter {
     measure: ObjRefInScope;
     // (undocumented)
     operator: RankingFilterOperator;
+    strictLimitOfRows?: boolean;
     // (undocumented)
     value: number;
 }

@@ -23,9 +23,9 @@ export function getAbsoluteVisualizationHref(
 
 export function getSettingHref(section: string, action?: string) {
     if (!action) {
-        return `/settings/#/${section}`;
+        return `/ai-hub#/${section}`;
     }
-    return `/settings/#/${section}/${action}`;
+    return `/ai-hub#/${section}/${action}`;
 }
 
 export function getAbsoluteSettingHref(section: string, action?: string) {
@@ -50,9 +50,9 @@ export function getAbsoluteWorkspaceSettingHref(workspaceId: string, section: st
 // workspaces list.
 export function getShellAppOrgSettingHref(section: string, action?: string) {
     if (!action) {
-        return `/organization/settings/configuration#/${section}`;
+        return `/organization/settings/ai-hub#/${section}`;
     }
-    return `/organization/settings/configuration#/${section}/${action}`;
+    return `/organization/settings/ai-hub#/${section}/${action}`;
 }
 
 export function getAbsoluteShellAppOrgSettingHref(section: string, action?: string) {

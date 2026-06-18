@@ -2637,6 +2637,10 @@
                                 "format": "int32",
                                 "example": 5
                             },
+                            "strictLimitOfRows": {
+                                "type": "boolean",
+                                "description": "When true, filter returns requested number of rows at most. Default is false."
+                            },
                             "localIdentifier": {
                                 "type": "string"
                             },

@@ -119,10 +119,13 @@ $visualization-types:
         }
 
         .gd-visualizations-list-item-content-date {
+            overflow: hidden;
             line-height: 12px;
             color: variables.$gd-color-state-blank;
             font-size: 10px;
             text-transform: uppercase;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
     }
 

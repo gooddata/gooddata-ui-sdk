@@ -449,6 +449,22 @@ exports[`tiger filter converter from model to AFM > convert filter > should retu
 }
 `;
 
+exports[`tiger filter converter from model to AFM > convert filter > should return ranking filter with strictLimitOfRows 1`] = `
+{
+  "rankingFilter": {
+    "localIdentifier": undefined,
+    "measures": [
+      {
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+      },
+    ],
+    "operator": "TOP",
+    "strictLimitOfRows": true,
+    "value": 3,
+  },
+}
+`;
+
 exports[`tiger filter converter from model to AFM > convert filter > should return relative date filter 1`] = `
 {
   "relativeDateFilter": {

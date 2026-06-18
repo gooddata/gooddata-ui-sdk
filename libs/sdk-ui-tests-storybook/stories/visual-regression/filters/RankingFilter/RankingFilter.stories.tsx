@@ -165,6 +165,36 @@ DropdownWithCustomGranularitySelectionDisabled.parameters = {
     screenshots: customGranularityScenarios,
 } satisfies IStoryParameters;
 
+const strictLimitDropdownScenarios: INeobackstopConfig = {
+    default: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
+    conditionDropdownOpened: {
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        clickSelector: ".s-rf-operator-dropdown-button",
+        delay: { postOperation: 200 }, // element has .2s transition
+    },
+};
+
+export function DropdownWithStrictLimitEnabled() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <span className="dropdown-anchor-test" />
+            <RankingFilterDropdown
+                measureItems={measureDropdownItems}
+                attributeItems={attributeDropdownItems}
+                filter={rankingFilter}
+                onApply={action("apply")}
+                onCancel={action("cancel")}
+                anchorEl=".dropdown-anchor-test"
+                enableRankingStrictLimit
+            />
+        </div>
+    );
+}
+DropdownWithStrictLimitEnabled.parameters = {
+    kind: "dropdown with strict limit enabled",
+    screenshots: strictLimitDropdownScenarios,
+} satisfies IStoryParameters;
+
 export function DefaultButtonWithDropdown() {
     return (
         <div style={wrapperStyle} className="screenshot-target">

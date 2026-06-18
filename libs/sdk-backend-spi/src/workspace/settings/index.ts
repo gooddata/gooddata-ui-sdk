@@ -238,6 +238,20 @@ export interface IWorkspaceSettingsService {
     setEnableDrillToUrlByDefault(enabled: boolean): Promise<void>;
 
     /**
+     * Sets enable partial data results setting for workspace. Default is taken from organization setting.
+     *
+     * @remarks
+     * When enabled, executions that reach a row/column/cell limit return partial data (with limit-break
+     * metadata) instead of failing.
+     *
+     * @param enabled - whether to allow partial data results for executions in this workspace.
+     *
+     * @returns promise
+     * @alpha
+     */
+    setEnablePartialDataResults(enabled: boolean): Promise<void>;
+
+    /**
      * Sets default CSV delimiter for exports in workspace. Default is taken from organization setting.
      *
      * @param delimiter - single character delimiter to use for CSV exports.

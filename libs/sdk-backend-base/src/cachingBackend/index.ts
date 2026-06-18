@@ -908,6 +908,11 @@ class WithWorkspaceSettingsCaching extends DecoratedWorkspaceSettingsService {
         this.invalidateCache();
     }
 
+    public override async setEnablePartialDataResults(enabled: boolean): Promise<void> {
+        await super.setEnablePartialDataResults(enabled);
+        this.invalidateCache();
+    }
+
     public override async setExportCsvCustomDelimiter(delimiter: string): Promise<void> {
         await super.setExportCsvCustomDelimiter(delimiter);
         this.invalidateCache();

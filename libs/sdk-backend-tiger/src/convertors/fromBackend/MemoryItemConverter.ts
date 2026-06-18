@@ -5,21 +5,53 @@ import { invariant } from "ts-invariant";
 import {
     type AfmMemoryItemCreatedByUsers,
     type AfmMemoryItemUser,
-    type JsonApiMemoryItemOutWithLinks,
+    type JsonApiAgentOutRelationshipsCreatedBy,
+    type JsonApiExportDefinitionOutMeta,
     type JsonApiUserIdentifierOutWithLinks,
 } from "@gooddata/api-client-tiger";
 import { type IMemoryCreatedByUsers } from "@gooddata/sdk-backend-spi";
-import { type IMemoryItemMetadataObject, type IUser, idRef } from "@gooddata/sdk-model";
+import {
+    type IMemoryItemMetadataObject,
+    type IUser,
+    type MemoryItemStrategy,
+    idRef,
+} from "@gooddata/sdk-model";
 
 import { isInheritedObject } from "./ObjectInheritance.js";
 import { type IIncludedWithUserIdentifier, convertUserIdentifier } from "./UsersConverter.js";
+
+/**
+ * Structural shape of the fields {@link convertMemoryItem} reads, satisfied by both the
+ * workspace `JsonApiMemoryItemOutWithLinks` and the org `JsonApiOrgMemoryItemOutWithLinks`
+ * generated types. Lets both scopes call the converter without nominal casts (the two
+ * generated types differ in `tags`/`meta` presence and in their `title`/`description`
+ * nullability and strategy/type enum nominal identity).
+ * @internal
+ */
+export interface IConvertibleMemoryItem {
+    id: string;
+    type: string;
+    meta?: JsonApiExportDefinitionOutMeta;
+    relationships?: {
+        createdBy?: JsonApiAgentOutRelationshipsCreatedBy;
+    };
+    attributes: {
+        title?: string | null;
+        description?: string | null;
+        tags?: Array<string>;
+        strategy: MemoryItemStrategy;
+        instruction: string;
+        isDisabled?: boolean;
+        keywords?: Array<string>;
+    };
+}
 
 /**
  * Converts memory item from API response to domain model
  * @internal
  */
 export function convertMemoryItem(
-    memoryItem: JsonApiMemoryItemOutWithLinks,
+    memoryItem: IConvertibleMemoryItem,
     included: JsonApiUserIdentifierOutWithLinks[],
 ): IMemoryItemMetadataObject {
     const { createdBy } = memoryItem.relationships ?? {};

@@ -158,6 +158,36 @@ export function setAlertExecutionParameters(
 }
 
 /**
+ * A param dropped from the *dashboard* is not stale: parameters are workspace-scoped, so only
+ * removal from the workspace catalog counts.
+ *
+ * @internal
+ */
+export function hasStaleAlertParameters(
+    stored: IInsightParameterValue[] | undefined,
+    catalog: IParameterMetadataObject[],
+): boolean {
+    if (!stored?.length) {
+        return false;
+    }
+    const catalogParameterIds = new Set(catalog.map((parameter) => parameter.id));
+    return stored.some((parameter) => !alertParameterIsInCatalog(parameter, catalogParameterIds));
+}
+
+/**
+ * Removes the parameters {@link hasStaleAlertParameters} flags as stale.
+ *
+ * @internal
+ */
+export function dropStaleAlertParameters(
+    stored: IInsightParameterValue[],
+    catalog: IParameterMetadataObject[],
+): IInsightParameterValue[] {
+    const catalogParameterIds = new Set(catalog.map((parameter) => parameter.id));
+    return stored.filter((parameter) => alertParameterIsInCatalog(parameter, catalogParameterIds));
+}
+
+/**
  * Encodes the display-ready chip set back to the neutral export wire shape ({id, value:string,
  * title}). The full per-tab execution set (including `hidden` entries) is converted, not just the
  * visible chips, so the server resolver does not drop omitted parameters to the workspace default.
@@ -203,6 +233,13 @@ export function toEffectiveParametersByTab(
  */
 export function shouldStoreExportParameters(isWidgetSchedule: boolean, storeFilters = false): boolean {
     return isWidgetSchedule || storeFilters;
+}
+
+function alertParameterIsInCatalog(
+    parameter: IInsightParameterValue,
+    catalogParameterIds: Set<string>,
+): boolean {
+    return catalogParameterIds.has(parameter.ref.identifier);
 }
 
 function numberConstraints(

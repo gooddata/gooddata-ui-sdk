@@ -44,15 +44,18 @@ import {
     conversationMessagesByIdSelector,
     conversationSelector,
     messagesSelector,
+    pendingAgentSwitchSelector,
     selectedAgentIdSelector,
 } from "../messages/messagesSelectors.js";
 import {
+    applyPendingAgentSwitchAction,
     evaluateMessageAction,
     evaluateMessageCompleteAction,
     evaluateMessageErrorAction,
     evaluateMessageStreamingAction,
     evaluateMessageUpdateAction,
     type newMessageAction,
+    revertAgentSwitchAction,
     setCurrentConversationAction,
 } from "../messages/messagesSlice.js";
 
@@ -348,13 +351,68 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
             throw new Error("Conversation is not available.");
         }
 
-        // Set evaluation state in store
+        // Block input immediately so the user cannot send another message while
+        // the deferred switchAgent call (or the streaming response) is in flight.
         yield put(
             evaluateMessageAction({
                 message: initialAssistantMessage,
                 conversationId: conversation.localId,
             }),
         );
+
+        // Flush any pending agent switch before sending the message so that the
+        // "Switched to X" item and the switchAgent API call happen together with
+        // the first message sent to the new agent. evaluateMessageAction above is
+        // local-only state — the message stream does not start until after the
+        // switch is confirmed by the backend.
+        // Guard with the feature flag: when agent switching is off the pending
+        // switch should never be set, but skip defensively to preserve the
+        // original no-switching behaviour in that case.
+        const agentSwitchingActive: boolean = yield select(agentSwitchingActiveSelector);
+        const pendingSwitch: ReturnType<typeof pendingAgentSwitchSelector> = agentSwitchingActive
+            ? yield select(pendingAgentSwitchSelector, conversation.localId)
+            : undefined;
+        if (pendingSwitch) {
+            try {
+                yield put(
+                    applyPendingAgentSwitchAction({
+                        conversationLocalId: conversation.localId,
+                        beforeItemLocalId: message.localId,
+                    }),
+                );
+                const chatConversations = backend
+                    .workspace(workspace)
+                    .genAI()
+                    .getChatConversations({ isPreview });
+                const updatedConversation: IChatConversation = yield call(
+                    chatConversations.switchAgent.bind(chatConversations),
+                    conversation.id,
+                    pendingSwitch.agentId,
+                );
+                yield put(
+                    setCurrentConversationAction({
+                        conversation: { ...updatedConversation, localId: conversation.localId },
+                    }),
+                );
+            } catch (e) {
+                console.error("Failed to switch agent before sending message", e);
+                yield put(
+                    revertAgentSwitchAction({
+                        previousAgentId: pendingSwitch.previousAgentId,
+                        failedAgentId: pendingSwitch.agentId,
+                        conversationLocalId: conversation.localId,
+                    }),
+                );
+                yield put(
+                    evaluateMessageErrorAction({
+                        assistantMessageId: initialAssistantMessage.localId,
+                        error: extractError(e),
+                        conversationId: conversation.localId,
+                    }),
+                );
+                return;
+            }
+        }
 
         // Make the request to start the evaluation
         const chatThreadQuery = backend

@@ -56,6 +56,14 @@ import "@gooddata/sdk-ui-semantic-search/styles/css/internal.css";
 
 const LOGOUT_MENU_ITEM_KEY = "gs.header.logout";
 
+// The favicon that index.html shipped — resolved to "<cdnurl>/organization/favicon.ico" on the live
+// platform, "/favicon.ico" in dev. Captured once at module load, before DocumentHeader can overwrite
+// the <link rel="icon">, so the host can restore the organization favicon when no custom white-label
+// favicon is configured (see faviconUrl below).
+const initialFaviconUrl =
+    (typeof document !== "undefined" && document.querySelector("link[rel~='icon']")?.getAttribute("href")) ||
+    "/favicon.ico";
+
 /**
  * AI-assistant open/close request pushed from the active pluggable application. `seq` changes on
  * every request so an identical repeat (e.g. "Summarize" clicked again) still re-triggers the host.
@@ -286,11 +294,13 @@ export function HostChrome({
         ? ctx.user.organizationName || defaultLogoTitle
         : defaultLogoTitle;
 
-    // White-label icons are applied whenever their URLs are set, independent of the `enabled`
-    // flag (matching the standalone apps and the Appearance behavior). The favicon falls back to
-    // the default served at /favicon.ico so a previously applied custom favicon is reset once its
-    // URL is cleared, instead of leaving the stale icon in place.
-    const faviconUrl = ctx.whiteLabeling?.faviconUrl || "/favicon.ico";
+    // White-label icons are applied whenever their URLs are set, independent of the `enabled` flag
+    // (matching the standalone apps and the Appearance behavior). When no custom favicon is set we
+    // fall back to the favicon index.html shipped (the organization favicon) instead of a hardcoded
+    // "/favicon.ico": on the live platform index.html resolves the icon to
+    // "<cdnurl>/organization/favicon.ico", and "/favicon.ico" is not served at the origin root — so
+    // hardcoding it removed the favicon once a module mounted (DocumentHeader overwrites the link).
+    const faviconUrl = ctx.whiteLabeling?.faviconUrl || initialFaviconUrl;
 
     // The host owns the browser tab title as "{page} - {brand}". The page segment defaults to the
     // active application's manifest title, but an embedded app can override it dynamically by emitting
@@ -371,7 +381,7 @@ export function HostChrome({
                             </div>
                         )}
                         <main className={e("content")}>{children}</main>
-                        {chat.element}
+                        {hideChrome ? null : chat.element}
                         {pricing.element}
                         <HostNotificationDispatcher notification={notification} />
                     </div>

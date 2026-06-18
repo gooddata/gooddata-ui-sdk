@@ -318,6 +318,17 @@ export {
     type EntitiesApiUpdateEntityMemoryItemsRequest,
     type EntitiesApiPatchEntityMemoryItemsRequest,
     type EntitiesApiDeleteEntityMemoryItemsRequest,
+    // EntitiesApi - OrgMemoryItems
+    EntitiesApi_GetAllEntitiesOrgMemoryItems,
+    EntitiesApi_CreateEntityOrgMemoryItems,
+    EntitiesApi_UpdateEntityOrgMemoryItems,
+    EntitiesApi_PatchEntityOrgMemoryItems,
+    EntitiesApi_DeleteEntityOrgMemoryItems,
+    type EntitiesApiGetAllEntitiesOrgMemoryItemsRequest,
+    type EntitiesApiCreateEntityOrgMemoryItemsRequest,
+    type EntitiesApiUpdateEntityOrgMemoryItemsRequest,
+    type EntitiesApiPatchEntityOrgMemoryItemsRequest,
+    type EntitiesApiDeleteEntityOrgMemoryItemsRequest,
     // EntitiesApi - NotificationChannels
     EntitiesApi_GetAllEntitiesNotificationChannels,
     EntitiesApi_GetAllEntitiesNotificationChannelIdentifiers,

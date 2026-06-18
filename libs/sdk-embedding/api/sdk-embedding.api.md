@@ -939,6 +939,7 @@ export interface IRankingFilter {
         attributes?: ILocalIdentifierQualifier[];
         operator: RankingFilterOperator;
         value: number;
+        strictLimitOfRows?: boolean;
     };
 }
 

@@ -2,6 +2,7 @@
 
 import { type ChangeEvent, useCallback, useState } from "react";
 
+import cx from "classnames";
 import { isEmpty, isEqual, xorWith } from "lodash-es";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -29,6 +30,8 @@ const isApplyButtonDisabled = (
     filterState: IRankingFilter,
     enableRankingWithMvf: boolean,
     applyOnResult: boolean,
+    enableRankingStrictLimit: boolean,
+    strictLimitOfRows: boolean,
 ) => {
     const rankingFilter = filter.rankingFilter;
     const rankingFilterState = filterState.rankingFilter;
@@ -44,12 +47,18 @@ const isApplyButtonDisabled = (
     const applyOnResultNotChanged =
         !enableRankingWithMvf || (rankingFilter.applyOnResult ?? true) === applyOnResult;
 
+    // When flag is enabled, also check if strictLimitOfRows changed. A missing flag means "with ties"
+    // (legacy/default behavior); the strict condition is selected only when strictLimitOfRows === true.
+    const strictLimitOfRowsNotChanged =
+        !enableRankingStrictLimit || (rankingFilter.strictLimitOfRows ?? false) === strictLimitOfRows;
+
     return (
         operatorNotChanged &&
         valueNotChanged &&
         attributesNotChanged &&
         measureNotChanged &&
-        applyOnResultNotChanged
+        applyOnResultNotChanged &&
+        strictLimitOfRowsNotChanged
     );
 };
 
@@ -63,6 +72,7 @@ interface IRankingFilterDropdownBodyComponentProps {
     onDropDownItemMouseOut?: () => void;
     customGranularitySelection?: ICustomGranularitySelection;
     enableRankingWithMvf?: boolean;
+    enableRankingStrictLimit?: boolean;
 }
 
 export function RankingFilterDropdownBody({
@@ -75,6 +85,7 @@ export function RankingFilterDropdownBody({
     onDropDownItemMouseOut,
     customGranularitySelection,
     enableRankingWithMvf = false,
+    enableRankingStrictLimit = false,
 }: IRankingFilterDropdownBodyComponentProps) {
     const intl = useIntl();
 
@@ -84,6 +95,16 @@ export function RankingFilterDropdownBody({
     const [measure, setMeasureIdentifier] = useState(rankingFilter.measure);
     const [attribute, setAttributeIdentifier] = useState(rankingFilter.attributes?.[0]);
     const [applyOnResult, setApplyOnResult] = useState(rankingFilter.applyOnResult ?? true);
+    // A new filter prioritizes the strict ("+ flag") condition; an existing filter keeps its stored value.
+    const [strictLimitOfRows, setStrictLimitOfRows] = useState(rankingFilter.strictLimitOfRows ?? false);
+
+    const handleConditionSelect = useCallback(
+        (selectedOperator: typeof operator, selectedStrictLimitOfRows: boolean) => {
+            setOperator(selectedOperator);
+            setStrictLimitOfRows(selectedStrictLimitOfRows);
+        },
+        [],
+    );
 
     const selectedMeasure = measureItems.find((item) => areObjRefsEqual(item.ref, measure));
     const selectedAttribute = attributeItems.find((item) => areObjRefsEqual(item.ref, attribute));
@@ -93,18 +114,24 @@ export function RankingFilterDropdownBody({
             ? newRankingFilter(measure, [attribute], operator, value)
             : newRankingFilter(measure, operator, value);
 
-        // Add applyOnResult only when flag is enabled
-        if (enableRankingWithMvf) {
-            return {
-                rankingFilter: {
-                    ...baseFilter.rankingFilter,
-                    applyOnResult,
-                },
-            };
-        }
-
-        return baseFilter;
-    }, [measure, attribute, operator, value, enableRankingWithMvf, applyOnResult]);
+        // Add applyOnResult / strictLimitOfRows only when their flags are enabled
+        return {
+            rankingFilter: {
+                ...baseFilter.rankingFilter,
+                ...(enableRankingWithMvf ? { applyOnResult } : {}),
+                ...(enableRankingStrictLimit ? { strictLimitOfRows } : {}),
+            },
+        };
+    }, [
+        measure,
+        attribute,
+        operator,
+        value,
+        enableRankingWithMvf,
+        applyOnResult,
+        enableRankingStrictLimit,
+        strictLimitOfRows,
+    ]);
 
     const applyHandler = () => {
         const filterState = getFilterState();
@@ -124,18 +151,34 @@ export function RankingFilterDropdownBody({
                 <FormattedMessage id="rankingFilter.topBottom" />
             </div>
             <div className="gd-rf-dropdown-section">
-                <div className="gd-rf-value-section">
-                    <OperatorDropdown selectedValue={operator} onSelect={setOperator} />
+                {enableRankingStrictLimit ? (
+                    <div className="gd-rf-dropdown-section-title gd-rf-dropdown-section-title-first">
+                        <FormattedMessage id="rankingFilter.condition" />
+                    </div>
+                ) : null}
+                <div
+                    className={cx("gd-rf-value-section", {
+                        "gd-rf-value-section--strict-limit": enableRankingStrictLimit,
+                    })}
+                >
+                    <OperatorDropdown
+                        selectedValue={operator}
+                        selectedStrictLimitOfRows={strictLimitOfRows}
+                        enableRankingStrictLimit={enableRankingStrictLimit}
+                        onSelect={handleConditionSelect}
+                    />
                     <ValueDropdown selectedValue={value} onSelect={setValue} />
-                    <BubbleHoverTrigger showDelay={0} hideDelay={0}>
-                        <span className="gd-icon-circle-question gd-rf-value-tooltip-icon s-rf-value-tooltip-icon" />
-                        <Bubble
-                            className={`bubble-primary gd-rf-tooltip-bubble s-rf-value-tooltip`}
-                            alignPoints={[{ align: "cr cl" }, { align: "cl cr" }]}
-                        >
-                            <FormattedMessage id="rankingFilter.valueTooltip" />
-                        </Bubble>
-                    </BubbleHoverTrigger>
+                    {enableRankingStrictLimit ? null : (
+                        <BubbleHoverTrigger showDelay={0} hideDelay={0}>
+                            <span className="gd-icon-circle-question gd-rf-value-tooltip-icon s-rf-value-tooltip-icon" />
+                            <Bubble
+                                className={`bubble-primary gd-rf-tooltip-bubble s-rf-value-tooltip`}
+                                alignPoints={[{ align: "cr cl" }, { align: "cl cr" }]}
+                            >
+                                <FormattedMessage id="rankingFilter.valueTooltip" />
+                            </Bubble>
+                        </BubbleHoverTrigger>
+                    )}
                 </div>
                 <div className="gd-rf-dropdown-section-title">
                     <FormattedMessage id="rankingFilter.outOf" />
@@ -187,6 +230,8 @@ export function RankingFilterDropdownBody({
                     attribute={selectedAttribute}
                     operator={operator}
                     value={value}
+                    enableRankingStrictLimit={enableRankingStrictLimit}
+                    strictLimitOfRows={strictLimitOfRows}
                 />
             </div>
             <div className="gd-rf-dropdown-footer">
@@ -204,6 +249,8 @@ export function RankingFilterDropdownBody({
                         getFilterState(),
                         enableRankingWithMvf,
                         applyOnResult,
+                        enableRankingStrictLimit,
+                        strictLimitOfRows,
                     )}
                 />
             </div>

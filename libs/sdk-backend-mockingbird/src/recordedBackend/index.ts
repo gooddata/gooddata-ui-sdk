@@ -324,6 +324,9 @@ function recordedWorkspace(
                 async setEnableDrillToUrlByDefault(): Promise<void> {
                     return Promise.resolve();
                 },
+                async setEnablePartialDataResults(): Promise<void> {
+                    return Promise.resolve();
+                },
                 async deleteEnableDrillToUrlByDefault(): Promise<void> {
                     return Promise.resolve();
                 },
@@ -617,6 +620,7 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 deleteAiRateLimit: () => Promise.resolve(),
                 getAiRateLimit: () => Promise.resolve(undefined),
                 setEnableDrillToUrlByDefault: () => Promise.resolve(),
+                setEnablePartialDataResults: () => Promise.resolve(),
                 setAlertDefault: () => Promise.resolve(),
                 deleteTheme: () => Promise.resolve(),
                 deleteColorPalette: () => Promise.resolve(),
@@ -764,6 +768,9 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
         genAI() {
             return {
                 getKnowledgeDocuments: () => {
+                    throw new NotSupported("not supported");
+                },
+                getMemoryItems: () => {
                     throw new NotSupported("not supported");
                 },
                 getObservability: () => {

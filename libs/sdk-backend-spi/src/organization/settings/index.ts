@@ -261,6 +261,20 @@ export interface IOrganizationSettingsService {
     setEnableDrillToUrlByDefault(enabled: boolean): Promise<void>;
 
     /**
+     * Sets enable partial data results configuration for organization.
+     *
+     * @remarks
+     * When enabled, executions that reach a row/column/cell limit return partial data (with limit-break
+     * metadata) instead of failing. Workspaces inherit this value unless they override it.
+     *
+     * @param enabled - whether to allow partial data results for executions.
+     *
+     * @returns promise
+     * @alpha
+     */
+    setEnablePartialDataResults(enabled: boolean): Promise<void>;
+
+    /**
      * Deletes theme from organization settings returning workspace styling to default.
      *
      * @returns promise

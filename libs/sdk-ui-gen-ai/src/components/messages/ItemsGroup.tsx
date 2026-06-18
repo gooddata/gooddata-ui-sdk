@@ -29,6 +29,10 @@ export function ItemsGroup({ group, previousGroup, children }: IItemsGroupProps)
         );
     }
 
+    if (group.type === "system") {
+        return <>{children}</>;
+    }
+
     return (
         <DefaultItemsGroup classNames={classNames} previousGroup={previousGroup} group={group}>
             {children}

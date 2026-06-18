@@ -11,9 +11,9 @@ import type { IFilterBaseOptions } from "@gooddata/sdk-backend-spi";
  *
  * @internal
  */
-export function buildFilterQuery(filter: IFilterBaseOptions) {
+export function buildFilterQuery(filter: IFilterBaseOptions, searchFields?: string[]) {
     return joinClauses([
-        buildSearchClause(filter.search),
+        buildSearchClause(filter.search, searchFields),
         buildListClause("id", "in", filter.id),
         buildListClause("id", "out", filter.excludeId),
         buildContainsIcClause("title", filter.title),
@@ -29,14 +29,19 @@ export function buildFilterQuery(filter: IFilterBaseOptions) {
 /**
  * Builds the search clause applied across multiple fields
  */
-function buildSearchClause(search?: string): string | undefined {
-    if (!search) {
+function buildSearchClause(
+    search?: string,
+    fields: string[] = ["id", "title", "description", "tags"],
+): string | undefined {
+    // An empty field allowlist would yield an invalid empty `()` clause, so treat it as no search.
+    if (!search || fields.length === 0) {
         return undefined;
     }
     const value = formatValue(search);
     // Parentheses ensure the search filter is evaluated as a single condition.
     // The OR `,` operator is used to match any of the properties.
-    return `(id==${value},title=containsic=${value},description=containsic=${value},tags=containsic=${value})`;
+    const clauses = fields.map((field) => (field === "id" ? `id==${value}` : `${field}=containsic=${value}`));
+    return `(${clauses.join(",")})`;
 }
 
 /**
@@ -113,6 +118,26 @@ function buildIsHiddenClause(isHidden?: boolean): string | undefined {
         return "(isHidden==false,isHidden=isnull=true)";
     }
     return undefined;
+}
+
+/**
+ * Builds the enabled/disabled state clause for `isDisabled`.
+ *
+ * "Enabled" (`isDisabled === false`) matches items where `isDisabled` is false OR null,
+ * because a missing/null value is treated as enabled (consistent with how the UI renders
+ * the state). "Disabled" (`true`) matches only explicit `isDisabled == true`.
+ *
+ * @internal
+ */
+export function buildIsDisabledClause(isDisabled?: boolean): string | undefined {
+    if (isDisabled === undefined) {
+        return undefined;
+    }
+    if (isDisabled) {
+        return "isDisabled==true";
+    }
+    // Parentheses keep the OR clause a single condition.
+    return "(isDisabled==false,isDisabled=isnull=true)";
 }
 
 /**

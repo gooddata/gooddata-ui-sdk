@@ -17,10 +17,11 @@ const alignPoints = ["bl tl", "tl bl", "br tr", "tr br"];
 const DROPDOWN_ALIGNMENTS = alignPoints.map((align) => ({ align, offset: { x: 1, y: 0 } }));
 
 export const prepareRankingFilterState = (filter: IRankingFilter): IRankingFilter => {
-    const { measure, attributes, operator, value, applyOnResult } = filter.rankingFilter;
+    const { measure, attributes, operator, value, applyOnResult, strictLimitOfRows } = filter.rankingFilter;
     const firstAttribute = attributes?.[0];
     const attributesProp = firstAttribute ? { attributes: [firstAttribute] } : {};
     const applyOnResultProp = applyOnResult === undefined ? {} : { applyOnResult };
+    const strictLimitOfRowsProp = strictLimitOfRows === undefined ? {} : { strictLimitOfRows };
 
     return {
         rankingFilter: {
@@ -29,6 +30,7 @@ export const prepareRankingFilterState = (filter: IRankingFilter): IRankingFilte
             measure,
             ...attributesProp,
             ...applyOnResultProp,
+            ...strictLimitOfRowsProp,
         },
     };
 };
@@ -48,6 +50,7 @@ export interface IRankingFilterDropdownProps {
     customGranularitySelection?: ICustomGranularitySelection;
     locale?: string;
     enableRankingWithMvf?: boolean;
+    enableRankingStrictLimit?: boolean;
 }
 
 function RankingFilterDropdownComponent({
@@ -61,6 +64,7 @@ function RankingFilterDropdownComponent({
     onDropDownItemMouseOut,
     customGranularitySelection,
     enableRankingWithMvf,
+    enableRankingStrictLimit,
 }: IRankingFilterDropdownProps) {
     const [rankingFilter, setRankingFilter] = useState(prepareRankingFilterState(filter));
 
@@ -89,6 +93,7 @@ function RankingFilterDropdownComponent({
                 onDropDownItemMouseOut={onDropDownItemMouseOut}
                 customGranularitySelection={customGranularitySelection}
                 enableRankingWithMvf={enableRankingWithMvf}
+                enableRankingStrictLimit={enableRankingStrictLimit}
             />
         </Overlay>
     );

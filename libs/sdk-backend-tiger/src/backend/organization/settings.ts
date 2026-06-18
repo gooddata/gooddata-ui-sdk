@@ -154,6 +154,10 @@ export class OrganizationSettingsService
         return this.setSetting("ENABLE_DRILL_TO_URL_BY_DEFAULT", { value: enabled });
     }
 
+    public async setEnablePartialDataResults(enabled: boolean): Promise<void> {
+        return this.setSetting("ENABLE_PARTIAL_DATA_RESULTS", { value: enabled });
+    }
+
     public async setGeoIconSheet(url: string): Promise<void> {
         return this.setSetting("GEO_ICON_SHEET", { value: url });
     }

@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type IKnowledgeDocumentsService } from "../../workspace/genAI/index.js";
+import { type IKnowledgeDocumentsService, type IMemoryItemsService } from "../../workspace/genAI/index.js";
 
 /**
  * AI observability metric type.
@@ -62,6 +62,11 @@ export interface IOrganizationGenAIService {
      * Returns a service for listing and managing organization-level knowledge documents.
      */
     getKnowledgeDocuments(): IKnowledgeDocumentsService;
+
+    /**
+     * Returns a service for listing and managing organization-level AI memory items.
+     */
+    getMemoryItems(): IMemoryItemsService;
 
     /**
      * Returns a service for querying organization-level AI observability metrics.

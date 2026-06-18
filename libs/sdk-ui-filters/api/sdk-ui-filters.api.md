@@ -1384,6 +1384,8 @@ export interface IRankingFilterDropdownProps {
     // (undocumented)
     customGranularitySelection?: ICustomGranularitySelection;
     // (undocumented)
+    enableRankingStrictLimit?: boolean;
+    // (undocumented)
     enableRankingWithMvf?: boolean;
     // (undocumented)
     filter: IRankingFilter;

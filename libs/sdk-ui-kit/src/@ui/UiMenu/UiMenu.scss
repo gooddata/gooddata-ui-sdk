@@ -185,6 +185,7 @@
 
     &__item-title {
         width: 100%;
+        min-width: 0;
         white-space: nowrap;
     }
 }

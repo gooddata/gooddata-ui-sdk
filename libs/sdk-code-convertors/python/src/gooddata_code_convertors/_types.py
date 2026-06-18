@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: d503938a7507687be8b46028ec2dba5880fde55c0bcbcba95c4e15db39c14e8a
+# schema-hash: e9b004af97ee04c819b83bf11fce0e60a1d858b2bcbb048f3d7c6f992b504f46
 
 from __future__ import annotations
 
@@ -535,6 +535,7 @@ class QueryRankingFilter1(TypedDict):
     attribute: NotRequired[AttributeIdentifier | str]
     bottom: float
     top: NotRequired[float]
+    strict_limit_of_rows: NotRequired[bool]
 
 
 class QueryRankingFilter2(TypedDict):
@@ -543,6 +544,7 @@ class QueryRankingFilter2(TypedDict):
     attribute: NotRequired[AttributeIdentifier | str]
     bottom: NotRequired[float]
     top: float
+    strict_limit_of_rows: NotRequired[bool]
 
 
 QueryRankingFilter: TypeAlias = QueryRankingFilter1 | QueryRankingFilter2
@@ -2108,14 +2110,7 @@ Visualisation: TypeAlias = (
 
 
 Metadata: TypeAlias = Union[
-    Metadata1,
-    Metadata2,
-    Metadata3,
-    "Metadata4",
-    Metadata5,
-    Metadata6,
-    Metadata1,
-    Metadata8,
+    Metadata1, Metadata2, Metadata3, "Metadata4", Metadata5, Metadata6, Metadata8
 ]
 
 

@@ -14,7 +14,6 @@ import {
     saveVisualisationRenderStatusAction,
     saveVisualizationAction,
     saveVisualizationSuccessAction,
-    setSelectedAgentAction,
     setUserFeedback,
     setVerboseAction,
 } from "../messages/messagesSlice.js";
@@ -23,7 +22,6 @@ import { loadAgents } from "./loadAgents.js";
 import { loadCatalogItems } from "./loadCatalogItems.js";
 import { loadColorPalette } from "./loadColorPalette.js";
 import { loadSettings } from "./loadSettings.js";
-import { onAgentSwitch } from "./onAgentSwitch.js";
 import { onChatOpenSync } from "./onChatOpenSync.js";
 import { onConversationDelete } from "./onConversationDelete.js";
 import { onConversationPin } from "./onConversationPin.js";
@@ -59,7 +57,6 @@ export function* rootSaga() {
     yield takeEvery(pinConversationAction.type, onConversationPin);
     yield takeEvery(renameConversationAction.type, onConversationRename);
     yield takeEvery(deleteConversationAction.type, onConversationDelete);
-    yield takeEvery(setSelectedAgentAction.type, onAgentSwitch);
     yield takeEvery(evaluateMessageUpdateAction.type, onUserMessageUpdate);
     //others
     yield takeEvery(setVerboseAction.type, onVerboseStore);

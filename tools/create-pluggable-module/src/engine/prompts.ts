@@ -143,7 +143,16 @@ export async function runPrompts(extraPrompts: readonly IPromptDescriptor[]): Pr
 
         const scope = await askScope(reader);
 
-        const answers: IScaffoldAnswers = { appName, title, scope };
+        const maintainer = await askUntilValid(
+            reader,
+            "Maintainer (preferably email, but could be a person or team name)",
+            (v) => {
+                if (!v) return "Maintainer is required.";
+                return validateTextValue(v);
+            },
+        );
+
+        const answers: IScaffoldAnswers = { appName, title, scope, maintainer };
 
         for (const prompt of extraPrompts) {
             const value = await askExtra(reader, prompt);

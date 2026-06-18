@@ -2094,6 +2094,7 @@ export interface IOrganizationExportTemplatesService {
 // @alpha
 export interface IOrganizationGenAIService {
     getKnowledgeDocuments(): IKnowledgeDocumentsService;
+    getMemoryItems(): IMemoryItemsService;
     getObservability(): IOrganizationAIObservabilityService;
 }
 
@@ -2202,6 +2203,8 @@ export interface IOrganizationSettingsService {
     setEnableAiOnData(enabled: boolean): Promise<void>;
     // @alpha
     setEnableDrillToUrlByDefault(enabled: boolean): Promise<void>;
+    // @alpha
+    setEnablePartialDataResults(enabled: boolean): Promise<void>;
     // @alpha
     setExportCsvCustomDelimiter(delimiter: string): Promise<void>;
     setFiscalCalendar(fiscalYear: IFiscalYear): Promise<void>;
@@ -2975,6 +2978,8 @@ export interface IWorkspaceSettingsService {
     setEnableAiOnData(enabled: boolean): Promise<void>;
     // @alpha
     setEnableDrillToUrlByDefault(enabled: boolean): Promise<void>;
+    // @alpha
+    setEnablePartialDataResults(enabled: boolean): Promise<void>;
     // @alpha
     setExportCsvCustomDelimiter(delimiter: string): Promise<void>;
     setFiscalCalendar(fiscalYear: IFiscalYear): Promise<void>;

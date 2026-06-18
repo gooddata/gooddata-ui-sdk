@@ -8,6 +8,8 @@ import {
     type IAutomationParameter,
     automationParametersToExportParameters,
     availableAutomationParameters,
+    dropStaleAlertParameters,
+    hasStaleAlertParameters,
     reconstructAutomationParametersFromExportParameters,
     reconstructAutomationParametersFromValues,
 } from "../automationParameters.js";
@@ -161,5 +163,42 @@ describe("automationParametersToExportParameters — chip set to wire", () => {
             { id: "topN", value: "8", title: "Top N" },
             { id: "limit", value: "50", title: "Limit" },
         ]);
+    });
+});
+
+describe("alert parameter staleness — detector and repairer share one predicate", () => {
+    const catalog = [workspaceParameter("topN", "Top N", 3), workspaceParameter("limit", "Limit", 50)];
+
+    it("is not stale when there are no stored parameters", () => {
+        expect(hasStaleAlertParameters(undefined, catalog)).toBe(false);
+        expect(hasStaleAlertParameters([], catalog)).toBe(false);
+    });
+
+    it("is not stale when every stored ref is still in the workspace catalog", () => {
+        expect(hasStaleAlertParameters([{ ref: idRef("topN", "parameter"), value: 8 }], catalog)).toBe(false);
+    });
+
+    it("is stale when a stored ref left the workspace catalog", () => {
+        expect(
+            hasStaleAlertParameters(
+                [
+                    { ref: idRef("topN", "parameter"), value: 8 },
+                    { ref: idRef("removed", "parameter"), value: 1 },
+                ],
+                catalog,
+            ),
+        ).toBe(true);
+    });
+
+    it("drops exactly the catalog-absent refs the detector flags, keeping the present ones", () => {
+        expect(
+            dropStaleAlertParameters(
+                [
+                    { ref: idRef("topN", "parameter"), value: 8 },
+                    { ref: idRef("removed", "parameter"), value: 1 },
+                ],
+                catalog,
+            ),
+        ).toEqual([{ ref: idRef("topN", "parameter"), value: 8 }]);
     });
 });
