@@ -36,6 +36,7 @@ export type UiTagProps = {
     onDeleteKeyDown?: (event: KeyboardEvent<HTMLButtonElement>) => void;
     tabIndex?: number;
     deleteTabIndex?: number;
+    labelAs?: "button" | "span";
 };
 
 /**
@@ -54,6 +55,7 @@ export const UiTag = forwardRef<HTMLButtonElement, UiTagProps>(function UiTag(
         isDisabled,
         isDeletable,
         dataTestId,
+        labelAs,
         onClick,
         onDelete,
         onDeleteKeyDown,
@@ -75,19 +77,14 @@ export const UiTag = forwardRef<HTMLButtonElement, UiTagProps>(function UiTag(
     const iconSize = size === "small" ? 14 : 16;
     const defaultIconColor = variant === "decorated" ? "complementary-0" : "complementary-6";
     const iconColor = iconBeforeColor ?? defaultIconColor;
+    const labelIsButton = labelAs ? labelAs === "button" : onClick !== undefined;
+    const labelClassName = e("trigger", {
+        isDeletable: isDeletable ?? false,
+        isDisabled: isDisabled ?? false,
+    });
 
-    const button = (
-        <button
-            ref={ref}
-            tabIndex={tabIndex}
-            data-testid={dataTestId}
-            className={e("trigger", { isDeletable: isDeletable ?? false, isDisabled: isDisabled ?? false })}
-            disabled={isDisabled}
-            aria-disabled={isDisabled}
-            aria-label={ariaLabel}
-            aria-labelledby={ariaLabelledBy}
-            onClick={onClick}
-        >
+    const labelInner = (
+        <>
             {iconBefore ? (
                 <span className={e("icon-before")}>
                     <UiIcon type={iconBefore} size={iconSize} color={iconColor} />
@@ -96,20 +93,44 @@ export const UiTag = forwardRef<HTMLButtonElement, UiTagProps>(function UiTag(
             <span className={e("label")} ref={setLabelRef}>
                 {label}
             </span>
+        </>
+    );
+    const labelElement = labelIsButton ? (
+        <button
+            ref={ref}
+            tabIndex={tabIndex}
+            data-testid={dataTestId}
+            className={labelClassName}
+            disabled={isDisabled}
+            aria-disabled={isDisabled}
+            aria-label={ariaLabel}
+            aria-labelledby={ariaLabelledBy}
+            onClick={onClick}
+        >
+            {labelInner}
         </button>
+    ) : (
+        <span
+            className={labelClassName}
+            aria-label={ariaLabel}
+            aria-labelledby={ariaLabelledBy}
+            data-testid={dataTestId}
+        >
+            {labelInner}
+        </span>
     );
 
     return (
         <div className={b({ size, variant })}>
             {hasTooltip ? (
                 <UiTooltip
-                    anchor={button}
+                    anchor={labelElement}
                     content={<div className={e("tooltip")}>{label}</div>}
                     triggerBy={["hover"]}
                     arrowPlacement="top"
                 />
             ) : (
-                button
+                labelElement
             )}
             {isDeletable && !isDisabled ? (
                 <button

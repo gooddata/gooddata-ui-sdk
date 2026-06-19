@@ -11,12 +11,23 @@ import { type IInsightMenuItemButton } from "../../types.js";
 export const DashboardInsightMenuItemButton = (
     props: Omit<IInsightMenuItemButton, "type"> & { submenu?: boolean },
 ) => {
-    const { itemName, disabled, icon, onClick, tooltip, isFocused, className, submenu = false } = props;
+    const {
+        itemName,
+        itemId,
+        disabled,
+        icon,
+        onClick,
+        tooltip,
+        isFocused,
+        className,
+        submenu = false,
+    } = props;
 
     // for JSX icons we need an extra gd-icon-wrapper class to align the icon and the text vertically
     return renderButtonWithTooltip(
         <Item
             className={className}
+            testId={itemId}
             onClick={disabled ? undefined : onClick}
             disabled={disabled}
             subMenu={submenu}

@@ -165,6 +165,7 @@ export function RankingFilterDropdownBody({
                         selectedValue={operator}
                         selectedStrictLimitOfRows={strictLimitOfRows}
                         enableRankingStrictLimit={enableRankingStrictLimit}
+                        limitValue={value}
                         onSelect={handleConditionSelect}
                     />
                     <ValueDropdown selectedValue={value} onSelect={setValue} />

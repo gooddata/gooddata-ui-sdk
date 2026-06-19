@@ -32,6 +32,7 @@ import {
     selectIsExport,
     selectLocale,
     selectMapboxToken,
+    selectMaxZoomLevel,
     selectSeparators,
     selectSettings,
 } from "../../../../../model/store/config/configSelectors.js";
@@ -63,10 +64,19 @@ const selectCommonDashboardInsightProps = createSelector(
 );
 
 const selectChartConfig = createSelector(
-    [selectMapboxToken, selectAgGridToken, selectSeparators, selectDrillableItems, selectIsExport],
-    (mapboxToken, agGridToken, separators, drillableItems, isExport) => ({
+    [
+        selectMapboxToken,
+        selectAgGridToken,
+        selectMaxZoomLevel,
+        selectSeparators,
+        selectDrillableItems,
+        selectIsExport,
+    ],
+    (mapboxToken, agGridToken, maxZoomLevel, separators, drillableItems, isExport) => ({
         mapboxToken,
         agGridToken,
+        // Explicit undefined check — null is a meaningful value that clears the zoom limit
+        ...(typeof maxZoomLevel === "undefined" ? {} : { maxZoomLevel }),
         separators,
         forceDisableDrillOnAxes: !drillableItems.length, // to keep in line with KD, enable axes drilling only if using explicit drills
         isExportMode: isExport,

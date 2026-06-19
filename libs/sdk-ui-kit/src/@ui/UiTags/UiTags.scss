@@ -137,12 +137,12 @@ $tags_tooltip_viewport_margin: 160px;
     max-width: $tags_tooltip_max_width;
     width: $tags_tooltip_max_width;
     max-height: calc(100vh - #{$tags_tooltip_viewport_margin});
-    overflow-x: hidden;
     overflow-y: auto;
     overscroll-behavior: contain;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 5px;
+    padding: 2px;
 
     @include tag(0);
 
@@ -151,4 +151,8 @@ $tags_tooltip_viewport_margin: 160px;
 
         @include tagFocused();
     }
+}
+
+.gd-ui-kit-tags__hidden-tags button:focus-visible {
+    outline: 2px solid variables.$gd-input-text-border-outline;
 }

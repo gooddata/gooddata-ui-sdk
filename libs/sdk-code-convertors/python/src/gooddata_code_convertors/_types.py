@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: e9b004af97ee04c819b83bf11fce0e60a1d858b2bcbb048f3d7c6f992b504f46
+# schema-hash: 04b6228aef7d6556efe63a5dce31a00331222ff208c02b212bfc5f6550ef86bd
 
 from __future__ import annotations
 
@@ -257,6 +257,7 @@ class Permission(TypedDict):
 class Parents(TypedDict):
     using: str
     common: bool
+    date: NotRequired[str]
 
 
 class DashboardFilters2(TypedDict):

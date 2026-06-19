@@ -15,6 +15,7 @@ interface IOperatorDropdownBodyComponentProps {
     selectedValue: RankingFilterOperator;
     selectedStrictLimitOfRows: boolean;
     enableRankingStrictLimit: boolean;
+    limitValue: number;
     onSelect: (value: RankingFilterOperator, strictLimitOfRows: boolean) => void;
     onClose: () => void;
 }
@@ -24,6 +25,7 @@ export function OperatorDropdownBody({
     selectedValue,
     selectedStrictLimitOfRows,
     enableRankingStrictLimit,
+    limitValue,
     onSelect,
     onClose,
 }: IOperatorDropdownBodyComponentProps) {
@@ -62,6 +64,7 @@ export function OperatorDropdownBody({
                             strictLimitOfRows={strictLimitOfRows}
                             isSelected={isSelected}
                             tooltipId={tooltipId}
+                            limitValue={limitValue}
                             onSelect={onSelect}
                         />
                     );

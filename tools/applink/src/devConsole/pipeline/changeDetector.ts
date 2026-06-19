@@ -41,7 +41,7 @@ export class ChangeDetector implements IEventListener {
     /*
      * set after targetInitialized
      */
-    private watcher: Watchpack | undefined;
+    private watcher: any | undefined;
 
     private timeoutId: any;
     private accumulatedFileChanges: string[] = [];

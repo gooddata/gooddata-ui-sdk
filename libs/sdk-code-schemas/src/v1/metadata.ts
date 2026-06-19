@@ -2075,6 +2075,10 @@ export interface LocalDateFilter {
      * Whether the parent filter is common date or special date
      */
     common: boolean;
+    /**
+     * Date dataset the common date filter is applied through. Only valid when common is true; ignored and stripped on both import and export when common is false.
+     */
+    date?: string;
     [k: string]: unknown;
 }
 export interface LocalDateFilter1 {
@@ -2086,6 +2090,10 @@ export interface LocalDateFilter1 {
      * Whether the parent filter is common date or special date
      */
     common: boolean;
+    /**
+     * Date dataset the common date filter is applied through. Only valid when common is true; ignored and stripped on both import and export when common is false.
+     */
+    date?: string;
     [k: string]: unknown;
 }
 /**
@@ -2132,6 +2140,10 @@ export interface LocalDateFilter2 {
      * Whether the parent filter is common date or special date
      */
     common: boolean;
+    /**
+     * Date dataset the common date filter is applied through. Only valid when common is true; ignored and stripped on both import and export when common is false.
+     */
+    date?: string;
     [k: string]: unknown;
 }
 /**

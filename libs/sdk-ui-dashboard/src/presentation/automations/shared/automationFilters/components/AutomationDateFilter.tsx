@@ -4,20 +4,18 @@ import { type KeyboardEvent, type MutableRefObject, type ReactNode, useCallback,
 
 import { useIntl } from "react-intl";
 
-import { type FilterContextItem, type IDashboardDateFilter, areObjRefsEqual } from "@gooddata/sdk-model";
+import {
+    type FilterContextItem,
+    type ICatalogDateDataset,
+    type IDashboardDateFilter,
+    areObjRefsEqual,
+} from "@gooddata/sdk-model";
 import { type IDateFilterButtonProps } from "@gooddata/sdk-ui-filters";
 import { type OverlayPositionType, UiChip, UiTooltip, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
-import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
-import { selectCatalogDateDatasets } from "../../../../../model/store/catalog/catalogSelectors.js";
-import {
-    selectEffectiveDateFilterAvailableGranularities,
-    selectEffectiveDateFilterAvailableGranularitiesForTab,
-    selectEffectiveDateFilterOptions,
-    selectEffectiveDateFilterOptionsForTab,
-} from "../../../../../model/store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
 import { DefaultDashboardDateFilter } from "../../../../filterBar/dateFilter/DefaultDashboardDateFilter.js";
 import type { IDashboardDateFilterConfig } from "../../../../filterBar/dateFilter/types.js";
+import { useAutomationsContext } from "../../../contexts/AutomationsContext.js";
 
 import {
     AutomationDateFilterProvider,
@@ -138,29 +136,16 @@ export function AutomationDateFilter({
     const deleteTooltipContent = intl.formatMessage({ id: "dialogs.automation.filters.deleteTooltip" });
     const lockedTooltipContent = intl.formatMessage({ id: "dialogs.automation.filters.lockedTooltip" });
 
-    // Use tab-specific selectors when tabId is provided
-    const availableGranularitiesActive = useDashboardSelector(
-        selectEffectiveDateFilterAvailableGranularities,
-    );
-    const availableGranularitiesForTab = useDashboardSelector(
-        tabId
-            ? selectEffectiveDateFilterAvailableGranularitiesForTab(tabId)
-            : selectEffectiveDateFilterAvailableGranularities,
-    );
+    const { dateFilterConfig, catalogDateDatasets } = useAutomationsContext();
+    const tabGranularities = tabId ? dateFilterConfig.getGranularitiesForTab(tabId) : [];
     // Fallback to active tab granularities if tab-specific config is empty
     const availableGranularities =
-        tabId && availableGranularitiesForTab.length > 0
-            ? availableGranularitiesForTab
-            : availableGranularitiesActive;
-
-    const dateFilterOptionsActive = useDashboardSelector(selectEffectiveDateFilterOptions);
-    const dateFilterOptionsForTab = useDashboardSelector(
-        tabId ? selectEffectiveDateFilterOptionsForTab(tabId) : selectEffectiveDateFilterOptions,
-    );
+        tabId && tabGranularities.length > 0 ? tabGranularities : dateFilterConfig.availableGranularities;
+    const tabOptions = tabId ? dateFilterConfig.getOptionsForTab(tabId) : undefined;
+    // Fallback to active options if tab-specific options are absent or empty
     const dateFilterOptions =
-        tabId && dateFilterOptionsForTab ? dateFilterOptionsForTab : dateFilterOptionsActive;
-
-    const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
+        tabOptions && Object.keys(tabOptions).length > 0 ? tabOptions : dateFilterConfig.dateFilterOptions;
+    const allDateDatasets = catalogDateDatasets;
 
     const handleFilterChanged = useCallback(
         (newFilter: FilterContextItem | undefined) => {
@@ -174,7 +159,7 @@ export function AutomationDateFilter({
         dateFilterOptions,
     };
 
-    const defaultDateFilterName = allDateDatasets.find((ds) =>
+    const defaultDateFilterName = allDateDatasets.find((ds: ICatalogDateDataset) =>
         areObjRefsEqual(ds.dataSet.ref, filter.dateFilter.dataSet),
     )?.dataSet?.title;
 

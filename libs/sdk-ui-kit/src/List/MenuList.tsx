@@ -85,6 +85,7 @@ export interface IItemProps {
     children: ReactNode;
     className?: string;
     style?: CSSProperties;
+    testId?: string;
     onClick?: (e: MouseEvent<HTMLDivElement>) => void;
 }
 
@@ -98,6 +99,7 @@ export function Item({
     className,
     children,
     style,
+    testId,
     onClick,
 }: IItemProps) {
     return (
@@ -112,6 +114,7 @@ export function Item({
                 },
                 className,
             )}
+            data-testid={testId}
             style={style}
             onClick={onClick}
         >

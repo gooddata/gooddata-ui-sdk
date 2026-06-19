@@ -59,12 +59,26 @@ export interface IDashboardAttributeFilterParent {
 export interface IDashboardAttributeFilterByDate {
     /**
      * Local identifier of the date filter
+     *
+     * @remarks Historically, this can also be filled by a date dataset identifier
+     * (legacy format), so when matching, both forms should be considered.
      */
     filterLocalIdentifier: string;
     /**
      * To distinguish between different types of date filters (common, specific)
      */
     isCommonDate: boolean;
+    /**
+     * Target date dimension (date dataset) the dependency applies through.
+     *
+     * @remarks Only meaningful when {@link IDashboardAttributeFilterByDate.isCommonDate} is true: the
+     * common date filter has no dimension of its own, so this carries the dimension the common date
+     * range should be applied through, while {@link IDashboardAttributeFilterByDate.filterLocalIdentifier}
+     * references the common date filter by its own localIdentifier. For specific (non-common) date filters
+     * the dimension is derived from the referenced filter, so this is redundant and left unset. Absent on
+     * legacy records, where the dataset identifier was stored in `filterLocalIdentifier` instead.
+     */
+    dataSet?: ObjRef;
 }
 
 /**

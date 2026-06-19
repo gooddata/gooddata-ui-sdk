@@ -14,8 +14,6 @@ import {
     type AiSearchRelationship,
     type AiSuggestions,
     type AiWhatIfScenario,
-    type AttributeItem,
-    type FilterDefinition,
 } from "@gooddata/api-client-tiger";
 import {
     type IAlertProposal,
@@ -36,10 +34,6 @@ import {
 } from "@gooddata/sdk-code-convertors";
 import {
     type GenAIObjectType,
-    type IAlertAnomalyDetectionGranularity,
-    type IAlertAnomalyDetectionSensitivity,
-    type IAlertTriggerInterval,
-    type IAlertTriggerMode,
     type IAutomationUserRecipient,
     type ISemanticSearchRelationship,
     type ISemanticSearchResultItem,
@@ -50,9 +44,9 @@ import {
 
 import { getFormatByGranularity } from "../../utils/dateUtils.js";
 
-import { convertFilter } from "./afm/FilterConverter.js";
 import { convertMeasure } from "./afm/MeasureConverter.js";
 import { convertAttribute } from "./AttributeConvertor.js";
+import { convertAlert } from "./AutomationConverter.js";
 import type { FormattingLocale } from "./dateFormatting/defaultDateFormatter.js";
 import { type DateNormalizer } from "./dateFormatting/types.js";
 import { cloneWithSanitizedIds } from "./IdSanitization.js";
@@ -334,72 +328,33 @@ function convertAlertProposalFrom(
 
     return {
         title: alertProposal.title,
-        description: (alertProposal.description ?? "") as string,
-        baseMetric: {
-            id: buildObjRef(alertProposal.metricId, "metric"),
-            title: alertProposal.metricTitle as string,
-            format: alertProposal.metricFormat as string,
-        },
-        ...(alertProposal.compareMetricId
+        description: alertProposal.description ?? "",
+        alert: convertAlert(alertProposal.alert),
+        schedule: alertProposal.schedule?.cron
             ? {
-                  compareMetric: {
-                      id: buildObjRef(alertProposal.compareMetricId as string, "metric"),
-                      title: alertProposal.compareMetricTitle as string,
-                      format: alertProposal.compareMetricFormat as string,
-                  },
+                  cron: alertProposal.schedule.cron,
+                  timezone: alertProposal.schedule.timezone ?? undefined,
               }
-            : {}),
-        ...(alertProposal.dateDatasetId
+            : undefined,
+        ...(alertProposal.notificationChannel
             ? {
-                  date: {
-                      id: buildObjRef(alertProposal.dateDatasetId as string, "dataset"),
-                      title: alertProposal.dateDatasetTitle as string,
-                  },
-              }
-            : {}),
-        ...(alertProposal.notificationChannelId
-            ? {
-                  notificationChannel: {
-                      id: buildObjRef(alertProposal.notificationChannelId as string, "notificationChannel"),
-                      name: alertProposal.notificationChannelName as string,
-                  },
-              }
-            : {}),
-        ...(alertProposal.dashboardId
-            ? {
-                  dashboard: {
-                      id: buildObjRef(alertProposal.dashboardId as string, "dashboard"),
-                      title: alertProposal.dashboardTitle as string,
-                  },
+                  notificationChannel: alertProposal.notificationChannel.id,
+                  notificationChannelTitle: alertProposal.notificationChannel.name ?? undefined,
               }
             : {}),
         ...(alertProposal.automationId
             ? {
-                  automation: buildObjRef(alertProposal.automationId as string, "automation"),
+                  id: alertProposal.automationId,
               }
             : {}),
-
-        ...(alertProposal.trigger || alertProposal.triggerInterval || alertProposal.cron
+        ...(alertProposal.dashboard
             ? {
-                  trigger: {
-                      trigger: alertProposal.trigger as IAlertTriggerMode,
-                      interval: alertProposal.triggerInterval as IAlertTriggerInterval,
-                      cron: alertProposal.cron as string,
-                      timezone: alertProposal.timezone as string,
+                  dashboard: {
+                      id: alertProposal.dashboard.id,
+                      title: alertProposal.dashboard.title ?? undefined,
                   },
               }
             : {}),
-
-        operator: alertProposal.operator,
-        arithmeticOperator: alertProposal.arithmeticOperator as string,
-        threshold: alertProposal.threshold as number,
-        fromValue: alertProposal.fromValue as number,
-        toValue: alertProposal.toValue as number,
-        granularity: alertProposal.granularity as IAlertAnomalyDetectionGranularity,
-        sensitivity: alertProposal.sensitivity as IAlertAnomalyDetectionSensitivity,
-
-        filters: alertProposal.filters?.map((f) => convertFilter(f as FilterDefinition)),
-        attributes: alertProposal.attributes?.map((a) => convertAttribute(a as AttributeItem)),
         recipients: alertProposal.recipients?.map(
             (r) =>
                 ({
@@ -409,6 +364,9 @@ function convertAlertProposalFrom(
                     email: r.email,
                 }) as IAutomationUserRecipient,
         ),
+        forLabel: alertProposal.forLabel ?? undefined,
+        forMode: alertProposal.forMode ?? undefined,
+        cta: alertProposal.cta,
     };
 }
 

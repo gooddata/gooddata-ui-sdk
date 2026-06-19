@@ -118,6 +118,26 @@ describe("ExportDefinitionsConverter fromBackend", () => {
         expect(result.settings?.delimiter).toBe("|");
     });
 
+    it("restores content.parametersByTab from metadata in raw export", () => {
+        const parameter: IDashboardExportParameter = { id: "topN", value: "5", title: "Top N" };
+        const exportRequest = {
+            requestPayload: {
+                fileName: "raw-export",
+                format: "CSV",
+                execution: { attributes: [], filters: [], measures: [], auxMeasures: [] },
+                metadata: {
+                    widget: "widgetId",
+                    visualizationObject: "visId",
+                    parametersByTab: { tabOwning: [parameter] },
+                },
+            },
+        } as unknown as JsonApiWorkspaceAutomationOutAttributesRawExportsInner;
+
+        const result = convertToRawExportRequest(exportRequest);
+
+        expect(result.content.parametersByTab?.["tabOwning"]).toEqual([parameter]);
+    });
+
     it("converts dashboard tabular widget override filters through stored filter conversion", () => {
         const exportRequest = {
             requestPayload: {

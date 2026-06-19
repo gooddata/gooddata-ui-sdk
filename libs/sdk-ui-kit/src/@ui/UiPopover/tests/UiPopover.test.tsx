@@ -91,4 +91,42 @@ describe("UiPopover", () => {
         expect(onOpen).toHaveBeenCalled();
         expect(onClose).toHaveBeenCalled();
     });
+
+    describe("controlled open", () => {
+        it("renders content from isOpen without an anchor click", () => {
+            renderPopover({ isOpen: true });
+            expect(screen.getByText("Popover content")).toBeInTheDocument();
+        });
+
+        it("keeps content hidden while isOpen is false, even on anchor click", () => {
+            renderPopover({ isOpen: false });
+            fireEvent.click(screen.getByText("Anchor"));
+            expect(screen.queryByText("Popover content")).not.toBeInTheDocument();
+        });
+
+        it("does not toggle closed on its own anchor click while controlled-open", () => {
+            // Controlled mode suppresses the anchor's own click trigger so a
+            // shared anchor (e.g. the permission-menu button) cannot flip the
+            // labels popover; the parent owns the open state.
+            renderPopover({ isOpen: true });
+            fireEvent.mouseDown(screen.getByText("Anchor"));
+            fireEvent.click(screen.getByText("Anchor"));
+            expect(screen.getByText("Popover content")).toBeInTheDocument();
+        });
+
+        it("requests a close via onOpenChange on outside press", () => {
+            const onOpenChange = vi.fn();
+            const outside = document.createElement("button");
+            outside.textContent = "outside";
+            document.body.appendChild(outside);
+            try {
+                renderPopover({ isOpen: true, onOpenChange });
+                fireEvent.pointerDown(outside);
+                fireEvent.mouseDown(outside);
+                expect(onOpenChange).toHaveBeenCalledWith(false);
+            } finally {
+                outside.remove();
+            }
+        });
+    });
 });

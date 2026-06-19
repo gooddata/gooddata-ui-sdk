@@ -32,6 +32,10 @@ $tag_large_gap: 5px;
     overflow: hidden;
     text-overflow: ellipsis;
 
+    &:focus {
+        outline: 2px solid variables.$gd-input-text-border-outline;
+    }
+
     .gd-ui-kit-tooltip__anchor {
         display: inline-flex;
         overflow: hidden;

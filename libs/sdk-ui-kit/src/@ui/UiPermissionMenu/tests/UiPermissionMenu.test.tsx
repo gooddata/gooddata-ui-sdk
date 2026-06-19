@@ -46,7 +46,7 @@ describe("UiPermissionMenu", () => {
         expect(share).toHaveAttribute("aria-checked", "false");
         expect(view).toHaveAttribute("aria-checked", "true");
         expect(screen.queryByRole("menuitem", { name: /Transfer ownership/ })).not.toBeInTheDocument();
-        expect(screen.queryByRole("menuitem", { name: /Labels/ })).not.toBeInTheDocument();
+        expect(screen.queryByRole("menuitem", { name: /labels access/i })).not.toBeInTheDocument();
         expect(screen.queryByRole("menuitem", { name: /Remove access/ })).not.toBeInTheDocument();
     });
 
@@ -58,23 +58,11 @@ describe("UiPermissionMenu", () => {
         expect(closeSpy).toHaveBeenCalledOnce();
     });
 
-    it("shows Transfer ownership when handler is provided", () => {
-        const onTransferOwnership = vi.fn();
-        renderMenu({ onTransferOwnership });
-        fireEvent.click(screen.getByRole("menuitem", { name: /Transfer ownership/ }));
-        expect(onTransferOwnership).toHaveBeenCalledOnce();
-        expect(closeSpy).toHaveBeenCalledOnce();
-    });
-
-    it("shows the Labels sub-menu row with counter when handler is provided", () => {
-        const onLabelsClick = vi.fn();
-        renderMenu({ onLabelsClick, labelsCounter: "4/4" });
-        const row = screen.getByRole("menuitem", { name: /Labels/ });
-        expect(row).toBeInTheDocument();
-        expect(screen.getByText("4/4")).toBeInTheDocument();
-        fireEvent.click(row);
-        expect(onLabelsClick).toHaveBeenCalledOnce();
-        expect(closeSpy).toHaveBeenCalledOnce();
+    it("never renders the Labels or Transfer ownership rows", () => {
+        // Those moved to UiMoreOptionsMenu — the permission menu must not carry them.
+        renderMenu({ onRemoveAccess: () => {} });
+        expect(screen.queryByRole("menuitem", { name: /labels access/i })).not.toBeInTheDocument();
+        expect(screen.queryByRole("menuitem", { name: /Transfer ownership/ })).not.toBeInTheDocument();
     });
 
     it("shows Remove access when handler is provided", () => {

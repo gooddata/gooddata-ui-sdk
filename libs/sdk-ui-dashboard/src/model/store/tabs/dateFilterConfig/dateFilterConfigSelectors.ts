@@ -243,3 +243,44 @@ export const selectEffectiveDateFilterAvailableGranularitiesForTab: (
             effectiveDateFilterConfig?.relativeForm?.availableGranularities ?? [],
     ),
 );
+
+/**
+ * Returns effective date filter available granularities for all tabs as a map.
+ * Key is the tab local identifier; value is the array of available granularities.
+ *
+ * @internal
+ */
+export const selectEffectiveDateFilterGranularitiesPerTab: DashboardSelector<
+    Record<string, DateFilterGranularity[]>
+> = createSelector(selectTabs, (tabs) => {
+    if (!tabs?.length) {
+        return {};
+    }
+    return tabs.reduce<Record<string, DateFilterGranularity[]>>((acc, tab) => {
+        const identifier = tab.localIdentifier ?? DEFAULT_TAB_ID;
+        acc[identifier] =
+            tab.dateFilterConfig?.effectiveDateFilterConfig?.relativeForm?.availableGranularities ?? [];
+        return acc;
+    }, {});
+});
+
+/**
+ * Returns effective date filter options for all tabs as a map.
+ * Key is the tab local identifier; value is the date filter options (undefined when no config exists for that tab).
+ *
+ * @internal
+ */
+export const selectEffectiveDateFilterOptionsPerTab: DashboardSelector<
+    Record<string, IDateFilterOptionsByType | undefined>
+> = createSelector(selectTabs, (tabs) => {
+    if (!tabs?.length) {
+        return {};
+    }
+    return tabs.reduce<Record<string, IDateFilterOptionsByType | undefined>>((acc, tab) => {
+        const identifier = tab.localIdentifier ?? DEFAULT_TAB_ID;
+        acc[identifier] = tab.dateFilterConfig?.effectiveDateFilterConfig
+            ? convertDateFilterConfigToDateFilterOptions(tab.dateFilterConfig.effectiveDateFilterConfig)
+            : undefined;
+        return acc;
+    }, {});
+});

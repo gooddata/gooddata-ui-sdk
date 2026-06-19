@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-dashboard: Fix MAX_ZOOM_LEVEL setting not being applied to geochart inside drill-into-visualization modal",
+            "type": "patch",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "miroslav.koldus@gooddata.com"
+}

@@ -16,6 +16,7 @@ import {
 } from "../UiCombobox/UiComboboxListItem.js";
 import { UiComboboxPopup } from "../UiCombobox/UiComboboxPopup.js";
 import { UiPopover } from "../UiPopover/UiPopover.js";
+import { UiTooltip } from "../UiTooltip/UiTooltip.js";
 
 import { useResponsiveTags } from "./hooks/useResponsiveTags.js";
 import { useTagsInteractions } from "./interactions.js";
@@ -46,7 +47,7 @@ export function UiTags({
     canDeleteTags = true,
     canCreateTag = true,
     readOnly = false,
-    onTagClick = () => {},
+    onTagClick,
     onTagAdd = () => {},
     onTagRemove = () => {},
     accessibilityConfig = defaultAccessibilityConfig,
@@ -79,28 +80,33 @@ export function UiTags({
     const items = [...showedTags, hiddenTags];
 
     const {
-        handleKeyDown,
         interactionState,
-        onMoreOpen,
-        onMoreClose,
         onAddOpen,
         onAddClose,
-        showedFocusedIndex,
-        hiddenFocusedIndex,
+        onMoreOpen,
+        onMoreClose,
         tag,
         setTag,
         onTagClickHandler,
         onTagRemoveHandler,
         onTagAddHandler,
     } = useTagsInteractions(
-        rootRef,
+        tagsContainerRef,
         tooltipTagsContainerRef,
         showedTags,
         hiddenTags,
-        onTagClick,
         onTagAdd,
         onTagRemove,
+        onTagClick,
     );
+
+    const [morePopoverOpen, setMorePopoverOpen] = useState(false);
+    const morePopoverId = useId();
+    const groupLabelId = useId();
+    const hasTagClickHandler = onTagClick !== undefined;
+    const groupLabelledBy = accessibilityConfig?.ariaLabelledBy ?? groupLabelId;
+    const groupLabelText =
+        accessibilityConfig?.ariaLabel ?? (tags.length === 1 ? "Tags, 1" : `Tags, ${tags.length}`);
 
     const comboboxOptions: IUiComboboxOption[] = useMemo(() => {
         if (!tagOptions) {
@@ -115,14 +121,17 @@ export function UiTags({
     return (
         <div
             ref={rootRef}
-            tabIndex={tags.length === 0 ? -1 : 0}
-            onKeyDown={handleKeyDown}
             className={b({ readOnly, mode })}
-            aria-label={accessibilityConfig?.ariaLabel}
-            aria-labelledby={accessibilityConfig?.ariaLabelledBy}
+            aria-labelledby={groupLabelledBy}
             aria-describedby={accessibilityConfig?.ariaDescribedBy}
-            role={accessibilityConfig?.role ?? "list"}
+            role={accessibilityConfig?.role ?? "group"}
         >
+            {accessibilityConfig?.ariaLabelledBy ? null : (
+                <span className="sr-only" id={groupLabelId}>
+                    {groupLabelText}
+                </span>
+            )}
+
             <div className={e("shadow-container")} ref={allContainerRef}>
                 {tags.map((tag) => {
                     return (
@@ -144,8 +153,7 @@ export function UiTags({
                         return (
                             <div
                                 key={i}
-                                role="listitem"
-                                className={e("hidden-tags", { isFocused: showedFocusedIndex === i })}
+                                className={e("hidden-tags")}
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     e.preventDefault();
@@ -153,20 +161,33 @@ export function UiTags({
                             >
                                 {hiddenTags.length > 0 ? (
                                     <UiPopover
-                                        onOpen={onMoreOpen}
-                                        onClose={onMoreClose}
+                                        id={morePopoverId}
+                                        onOpen={() => {
+                                            setMorePopoverOpen(true);
+                                            onMoreOpen();
+                                        }}
+                                        onClose={() => {
+                                            setMorePopoverOpen(false);
+                                            onMoreClose();
+                                        }}
                                         enableFocusTrap
                                         initialFocus={tooltipTagsContainerRef as RefObject<HTMLElement>}
-                                        returnFocusTo={rootRef as RefObject<HTMLElement>}
+                                        returnFocusTo={hiddenTagsContainerRef as RefObject<HTMLElement>}
+                                        anchorAccessibilityConfig={{
+                                            ariaHaspopup: "dialog",
+                                            ariaControls: morePopoverId,
+                                        }}
                                         anchor={
                                             <UiButton
-                                                tabIndex={-1}
                                                 label={`+${hiddenTags.length}`}
                                                 size={"small"}
                                                 variant={"tertiary"}
+                                                accessibilityConfig={{
+                                                    ariaLabel: moreLabel,
+                                                    ariaExpanded: morePopoverOpen,
+                                                }}
                                                 ref={(ref) => {
                                                     hiddenTagsContainerRef.current = ref;
-                                                    interactionState.current.more = ref;
                                                 }}
                                             />
                                         }
@@ -174,13 +195,11 @@ export function UiTags({
                                         title={moreLabel}
                                         content={() => (
                                             <div
-                                                onKeyDown={handleKeyDown}
                                                 className={e("tags-more-tooltip")}
                                                 ref={(ref) => {
                                                     tooltipTagsContainerRef.current = ref;
                                                     setTooltipContainer(ref);
                                                 }}
-                                                tabIndex={0}
                                             >
                                                 {hiddenTags.map((tag, i) => {
                                                     return (
@@ -188,16 +207,16 @@ export function UiTags({
                                                             key={i}
                                                             tag={tag}
                                                             deleteLabel={removeLabel}
-                                                            ref={(ref) => {
-                                                                interactionState.current.tags[tag.id] = ref!;
-                                                            }}
                                                             isDeletable={isDeletable}
                                                             isDisabled={readOnly}
-                                                            isFocused={hiddenFocusedIndex === i}
                                                             size={size}
                                                             maxWidth={tooltipWidth}
                                                             onDelete={onTagRemoveHandler}
-                                                            onClick={onTagClickHandler}
+                                                            onClick={
+                                                                hasTagClickHandler
+                                                                    ? onTagClickHandler
+                                                                    : undefined
+                                                            }
                                                         />
                                                     );
                                                 })}
@@ -225,16 +244,12 @@ export function UiTags({
                     return (
                         <UiTag
                             tag={tag}
-                            ref={(ref) => {
-                                interactionState.current.tags[tag.id] = ref!;
-                            }}
                             isDeletable={isDeletable}
                             isDisabled={readOnly}
                             deleteLabel={removeLabel}
-                            isFocused={showedFocusedIndex === i}
                             size={size}
                             onDelete={onTagRemoveHandler}
-                            onClick={onTagClickHandler}
+                            onClick={hasTagClickHandler ? onTagClickHandler : undefined}
                             key={getKey(tag, isDeletable, readOnly)}
                             maxWidth={i === showedTags.length - 1 ? lastAvailableWidth : availableWidth}
                         />
@@ -276,21 +291,27 @@ export function UiTags({
                             }}
                             enableFocusTrap
                             anchor={
-                                <UiButton
-                                    label={showedTags.length > 0 ? "" : addLabel}
-                                    accessibilityConfig={{
-                                        ariaHaspopup: true,
-                                        ariaControls: popupId,
-                                        ariaLabel: showedTags.length > 0 ? addLabel : undefined,
-                                        ariaExpanded: popupOpen,
-                                        role: "listitem",
-                                    }}
-                                    size={"small"}
-                                    iconBefore={"plus"}
-                                    variant={"tertiary"}
-                                    ref={(ref) => {
-                                        interactionState.current.add = ref;
-                                    }}
+                                <UiTooltip
+                                    content={addLabel}
+                                    triggerBy={["hover", "focus"]}
+                                    anchorWrapperStyles={{ display: "flex", alignItems: "center" }}
+                                    anchor={
+                                        <UiButton
+                                            label={showedTags.length > 0 ? "" : addLabel}
+                                            accessibilityConfig={{
+                                                ariaHaspopup: true,
+                                                ariaControls: popupId,
+                                                ariaLabel: addLabel,
+                                                ariaExpanded: popupOpen,
+                                            }}
+                                            size={"small"}
+                                            iconBefore={"plus"}
+                                            variant={"tertiary"}
+                                            ref={(ref) => {
+                                                interactionState.current.add = ref;
+                                            }}
+                                        />
+                                    }
                                 />
                             }
                             title={addLabel}

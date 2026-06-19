@@ -30,6 +30,7 @@ import { convertSdkFiltersToTiger } from "../shared/storedFilterConverter.js";
 import { convertAfmFilters } from "./afm/AfmFiltersConverter.js";
 import { convertAttribute } from "./afm/AttributeConverter.js";
 import { convertMeasure } from "./afm/MeasureConverter.js";
+import { convertMeasureDefinitionOverrides, convertParameterValues } from "./afm/toAfmResultSpec.js";
 
 export const convertExportDefinitionMdObjectDefinition = (
     exportDefinition: IExportDefinitionMetadataObjectDefinition,
@@ -82,11 +83,18 @@ export const convertToRawExportRequest = (
             return { localIdentifier, label };
         }) ?? [];
 
+    const { measureDefinitionOverrides, parameterValues, ...settings } =
+        widgetExecution.executionConfig ?? {};
+
     const automationExecution = {
         attributes: automationAttributes,
         filters: convertedFilters ?? [],
         measures: automationMeasures,
         auxMeasures: automationAuxMeasuresFromFilters,
+        ...(parameterValues?.length && { parameters: convertParameterValues(parameterValues) }),
+        ...(measureDefinitionOverrides?.length && {
+            measureDefinitionOverrides: convertMeasureDefinitionOverrides(measureDefinitionOverrides),
+        }),
     };
 
     const customOverride =
@@ -104,14 +112,13 @@ export const convertToRawExportRequest = (
             visualizationObject: exportRequest.content.visualizationObject,
             dashboard: exportRequest.content.dashboard,
             filters: convertSdkFiltersToTiger(contentFilters),
+            // Round-trip storage only; the backend applies parameters from execution.parameters above.
+            parametersByTab: exportRequest.content.parametersByTab,
         },
         (value) => value === undefined || (Array.isArray(value) && value.length === 0),
     );
 
-    const executionSettings =
-        widgetExecution.executionConfig && !isEmpty(widgetExecution.executionConfig)
-            ? widgetExecution.executionConfig
-            : undefined;
+    const executionSettings = isEmpty(settings) ? undefined : settings;
     const delimiter = exportRequest.settings?.delimiter;
 
     return {

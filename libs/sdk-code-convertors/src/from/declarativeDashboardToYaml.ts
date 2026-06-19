@@ -1161,6 +1161,17 @@ export function declarativeFilterContextToYaml(
                             common: element.isCommonDate,
                         };
                     }
+                    // Common date: emit the target dimension so it round-trips. The common date filter
+                    // has no dimension of its own, so resolution needs it carried explicitly. Legacy
+                    // records without a dataSet fall back to the bare-string form, where
+                    // filterLocalIdentifier already holds the dataset id.
+                    if (element.isCommonDate && element.dataSet) {
+                        return {
+                            using: element.filterLocalIdentifier,
+                            common: true,
+                            date: getIdentifier(element.dataSet, true, errorContext),
+                        };
+                    }
                     return element.filterLocalIdentifier ?? null;
                 })
                 .filter(Boolean);

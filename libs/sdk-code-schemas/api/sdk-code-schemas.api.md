@@ -1800,6 +1800,7 @@ interface LocalDateFilter {
     // (undocumented)
     [k: string]: unknown;
     common: boolean;
+    date?: string;
     using: string;
 }
 
@@ -1810,6 +1811,7 @@ interface LocalDateFilter1 {
     // (undocumented)
     [k: string]: unknown;
     common: boolean;
+    date?: string;
     using: string;
 }
 
@@ -1820,6 +1822,7 @@ interface LocalDateFilter2 {
     // (undocumented)
     [k: string]: unknown;
     common: boolean;
+    date?: string;
     using: string;
 }
 
@@ -4842,6 +4845,14 @@ export const metadata_v1: {
                                     type: string;
                                     description: string;
                                 };
+                                date: {
+                                    type: string;
+                                    description: string;
+                                    $semantic: {
+                                        type: string;
+                                        source: string;
+                                    };
+                                };
                             };
                             required: string[];
                         })[];
@@ -4937,6 +4948,14 @@ export const metadata_v1: {
                                             type: string;
                                             description: string;
                                         };
+                                        date: {
+                                            type: string;
+                                            description: string;
+                                            $semantic: {
+                                                type: string;
+                                                source: string;
+                                            };
+                                        };
                                     };
                                     required: string[];
                                 })[];
@@ -5027,6 +5046,14 @@ export const metadata_v1: {
                                         common: {
                                             type: string;
                                             description: string;
+                                        };
+                                        date: {
+                                            type: string;
+                                            description: string;
+                                            $semantic: {
+                                                type: string;
+                                                source: string;
+                                            };
                                         };
                                     };
                                     required: string[];
@@ -5125,6 +5152,14 @@ export const metadata_v1: {
                                     type: string;
                                     description: string;
                                 };
+                                date: {
+                                    type: string;
+                                    description: string;
+                                    $semantic: {
+                                        type: string;
+                                        source: string;
+                                    };
+                                };
                             };
                             required: string[];
                         })[];
@@ -5222,6 +5257,14 @@ export const metadata_v1: {
                                     common: {
                                         type: string;
                                         description: string;
+                                    };
+                                    date: {
+                                        type: string;
+                                        description: string;
+                                        $semantic: {
+                                            type: string;
+                                            source: string;
+                                        };
                                     };
                                 };
                                 required: string[];

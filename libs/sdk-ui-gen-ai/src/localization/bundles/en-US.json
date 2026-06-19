@@ -267,14 +267,6 @@
         "text": "Filters",
         "crowdinContext": "Filters for alert in alert proposal dialog."
     },
-    "gd.gen-ai.alert-proposal.summary.metric": {
-        "text": "Metric",
-        "crowdinContext": "Metric for alert in alert proposal dialog."
-    },
-    "gd.gen-ai.alert-proposal.summary.metric-compared": {
-        "text": "Compared to",
-        "crowdinContext": "Compared to metric for alert in alert proposal dialog."
-    },
     "gd.gen-ai.alert-proposal.summary.date": {
         "text": "Date",
         "crowdinContext": "Date dataset for alert in alert proposal dialog."
@@ -287,41 +279,97 @@
         "text": "Dashboard",
         "crowdinContext": "Dashboard for alert in alert proposal dialog."
     },
-    "gd.gen-ai.alert-proposal.summary.operator": {
-        "text": "Operator",
-        "crowdinContext": "Operator for alert in alert proposal dialog."
-    },
-    "gd.gen-ai.alert-proposal.summary.arithmeticOperator": {
-        "text": "Arithmetic operator",
-        "crowdinContext": "Arithmetic operator for alert in alert proposal dialog."
-    },
-    "gd.gen-ai.alert-proposal.summary.threshold": {
-        "text": "Threshold",
-        "crowdinContext": "Threshold for alert in alert proposal dialog."
-    },
-    "gd.gen-ai.alert-proposal.summary.range": {
-        "text": "Range",
-        "crowdinContext": "Range for alert in alert proposal dialog."
-    },
-    "gd.gen-ai.alert-proposal.summary.from": {
-        "text": "From",
-        "crowdinContext": "From for alert in alert proposal dialog."
-    },
-    "gd.gen-ai.alert-proposal.summary.to": {
-        "text": "To",
-        "crowdinContext": "To for alert in alert proposal dialog."
-    },
-    "gd.gen-ai.alert-proposal.summary.granularity": {
-        "text": "Granularity",
-        "crowdinContext": "Granularity for alert in alert proposal dialog."
-    },
-    "gd.gen-ai.alert-proposal.summary.sensitivity": {
-        "text": "Sensitivity",
-        "crowdinContext": "Sensitivity for alert in alert proposal dialog."
-    },
     "gd.gen-ai.alert-proposal.summary.recipients": {
         "text": "Recipients",
-        "crowdinContext": "recipients for alert in alert proposal dialog."
+        "crowdinContext": "Recipients for alert in alert proposal dialog."
+    },
+    "gd.gen-ai.alert-proposal.summary.condition-comparison": {
+        "text": "Comparison",
+        "crowdinContext": "Comparison for alert in alert proposal dialog."
+    },
+    "gd.gen-ai.alert-proposal.summary.condition-relative": {
+        "text": "Relative",
+        "crowdinContext": "Relative for alert in alert proposal dialog."
+    },
+    "gd.gen-ai.alert-proposal.summary.condition-anomalyDetection": {
+        "text": "Anomaly Detection",
+        "crowdinContext": "Anomaly Detection for alert in alert proposal dialog."
+    },
+    "sdk.ui.genAi.alertProposal.operator.lessThan": {
+        "text": "<",
+        "crowdinContext": "Less than operator for alert in alert proposal dialog."
+    },
+    "sdk.ui.genAi.alertProposal.operator.lessThanOrEqualTo": {
+        "text": "<=",
+        "crowdinContext": "Less than or equal to operator for alert in alert proposal dialog."
+    },
+    "sdk.ui.genAi.alertProposal.operator.greaterThan": {
+        "text": ">",
+        "crowdinContext": "Greater than operator for alert in alert proposal dialog."
+    },
+    "sdk.ui.genAi.alertProposal.operator.greaterThanOrEqualTo": {
+        "text": ">=",
+        "crowdinContext": "Greater than or equal to operator for alert in alert proposal dialog."
+    },
+    "sdk.ui.genAi.alertProposal.operator.equalTo": {
+        "text": "=",
+        "crowdinContext": "Equal to operator for alert in alert proposal dialog."
+    },
+    "sdk.ui.genAi.alertProposal.operator.increasesBy": {
+        "text": "increases by",
+        "crowdinContext": "Increases by operator for alert in alert proposal dialog."
+    },
+    "sdk.ui.genAi.alertProposal.operator.decreasesBy": {
+        "text": "decreases by",
+        "crowdinContext": "Decreases by operator for alert in alert proposal dialog."
+    },
+    "sdk.ui.genAi.alertProposal.operator.changesBy": {
+        "text": "changes by",
+        "crowdinContext": "Changes by operator for alert in alert proposal dialog."
+    },
+    "sdk.ui.genAi.alertProposal.operator.change": {
+        "text": "-",
+        "crowdinContext": "Changes by operator for alert in alert proposal dialog."
+    },
+    "sdk.ui.genAi.alertProposal.operator.difference": {
+        "text": "%",
+        "crowdinContext": "Changes by operator for alert in alert proposal dialog."
+    },
+    "sdk.ui.genAi.alertProposal.granularity.hour": {
+        "text": "on <b>hourly</b> basis",
+        "crowdinContext": "Hour granularity for alert in alert proposal dialog."
+    },
+    "sdk.ui.genAi.alertProposal.granularity.day": {
+        "text": "on <b>daily</b> basis",
+        "crowdinContext": "Day granularity for alert in alert proposal dialog."
+    },
+    "sdk.ui.genAi.alertProposal.granularity.week": {
+        "text": "on <b>weekly</b> basis",
+        "crowdinContext": "Week granularity for alert in alert proposal dialog."
+    },
+    "sdk.ui.genAi.alertProposal.granularity.month": {
+        "text": "on <b>monthly</b> basis",
+        "crowdinContext": "Month granularity for alert in alert proposal dialog."
+    },
+    "sdk.ui.genAi.alertProposal.granularity.quarter": {
+        "text": "on <b>quarterly</b> basis",
+        "crowdinContext": "Quarter granularity for alert in alert proposal dialog."
+    },
+    "sdk.ui.genAi.alertProposal.granularity.year": {
+        "text": "on <b>yearly</b> basis",
+        "crowdinContext": "Year granularity for alert in alert proposal dialog."
+    },
+    "sdk.ui.genAi.alertProposal.senstivity.low": {
+        "text": "with <b>low</b> sensitivity",
+        "crowdinContext": "Low sensitivity for alert in alert proposal dialog."
+    },
+    "sdk.ui.genAi.alertProposal.senstivity.medium": {
+        "text": "with <b>medium</b> sensitivity",
+        "crowdinContext": "Medium sensitivity for alert in alert proposal dialog."
+    },
+    "sdk.ui.genAi.alertProposal.senstivity.high": {
+        "text": "with <b>high</b> sensitivity",
+        "crowdinContext": "High sensitivity for alert in alert proposal dialog."
     },
     "gd.gen-ai.alert-proposal.summary.trigger": {
         "text": "Trigger",

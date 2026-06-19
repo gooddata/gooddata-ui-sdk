@@ -185,8 +185,8 @@ export {
     selectDashboardFiltersWithoutCrossFiltering,
     selectDashboardHiddenFilters,
     selectDashboardLockedFilters,
-    type IAutomationFiltersTab,
 } from "./model/store/filtering/dashboardFilterSelectors.js";
+export type { IAutomationFiltersTab } from "./model/store/filtering/types.js";
 
 // Re-export from commands
 export { type DashboardCommands } from "./model/commands/index.js";
@@ -1664,6 +1664,7 @@ export {
     selectDashboardParameters,
     selectEffectiveParameterValuesForWidget,
     selectExportEffectiveParameters,
+    selectFilterViewParameters,
     selectHasAnyResettableParameterOnActiveTab,
     selectIsParametersChanged,
     selectParameterRuntimeOverrideByRef,

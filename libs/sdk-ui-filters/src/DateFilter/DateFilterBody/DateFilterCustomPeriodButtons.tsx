@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type MouseEvent, type RefObject, useCallback } from "react";
 
@@ -93,7 +93,7 @@ export function DateFilterCustomPeriodButtons({
                             popupType: "dialog",
                             popupId: absoluteFormId,
                             ariaExpanded: false,
-                            ariaCurrent:
+                            ariaPressed:
                                 selectedFilterOption.localIdentifier ===
                                 filterOptions.absoluteForm.localIdentifier,
                         }}
@@ -128,7 +128,7 @@ export function DateFilterCustomPeriodButtons({
                             popupType: "dialog",
                             popupId: relativeFormId,
                             ariaExpanded: false,
-                            ariaCurrent:
+                            ariaPressed:
                                 selectedFilterOption.localIdentifier ===
                                 filterOptions.relativeForm.localIdentifier,
                         }}

@@ -94,6 +94,7 @@ export const olpLabelMessages = defineMessages({
     suffixDefault: { id: "shareDialog.olp.label.suffix.default" },
     listHeading: { id: "shareDialog.olp.labels.heading" },
     popoverTitle: { id: "shareDialog.olp.labels.popoverTitle" },
+    backAriaLabel: { id: "shareDialog.olp.labels.back" },
 });
 
 export const olpPermissionMessages = defineMessages({
@@ -106,11 +107,10 @@ export const olpPermissionMessages = defineMessages({
     removeAccess: { id: "shareDialog.olp.permission.removeAccess" },
     menuLabel: { id: "shareDialog.olp.permission.menuLabel" },
     moreInfoAriaLabel: { id: "shareDialog.olp.permission.moreInfoAriaLabel" },
-});
-
-export const olpGranteeControlsMessages = defineMessages({
-    allLabels: { id: "shareDialog.olp.granteeControls.allLabels" },
-    labelsCount: { id: "shareDialog.olp.granteeControls.labelsCount" },
+    moreOptionsAriaLabel: { id: "shareDialog.olp.permission.moreOptions.ariaLabel" },
+    moreOptionsMenuLabel: { id: "shareDialog.olp.permission.moreOptions.menuLabel" },
+    effectivePermissionTooltipShare: { id: "shareDialog.olp.permission.effective.tooltip.share" },
+    effectivePermissionAriaLabel: { id: "shareDialog.olp.permission.effective.ariaLabel" },
 });
 
 export const uiAutocompleteMessages = defineMessages({

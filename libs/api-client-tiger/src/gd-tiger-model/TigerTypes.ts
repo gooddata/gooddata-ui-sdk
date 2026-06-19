@@ -780,6 +780,11 @@ export interface ITigerDashboardAttributeFilterParent {
 export interface ITigerDashboardAttributeFilterByDate {
     filterLocalIdentifier: string;
     isCommonDate: boolean;
+    /**
+     * Target date dimension; only set for common-date dependencies (the common date filter has no
+     * dimension of its own). Absent on legacy records, where the dataset id was stored in filterLocalIdentifier.
+     */
+    dataSet?: ObjRef;
 }
 
 /**

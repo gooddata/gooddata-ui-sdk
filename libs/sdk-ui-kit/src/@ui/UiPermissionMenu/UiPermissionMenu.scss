@@ -69,11 +69,4 @@
         text-overflow: ellipsis;
         white-space: nowrap;
     }
-
-    &__item-counter {
-        flex-shrink: 0;
-        font-size: 12px;
-        line-height: 18px;
-        color: var(--gd-palette-complementary-6);
-    }
 }

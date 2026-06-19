@@ -4,9 +4,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--gd-modal-outsideBackgroundColor);
+
+    // Dimmed backdrop on a pseudo-element so the overlay tint never bleeds onto
+    // the card. Matches the legacy `.modalityPlugin-mask` (outside colour at 0.9).
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: var(--gd-modal-outsideBackgroundColor);
+        opacity: 0.9;
+    }
 
     &__card {
+        position: relative;
         display: flex;
         flex-direction: column;
         max-height: calc(100vh - 80px);

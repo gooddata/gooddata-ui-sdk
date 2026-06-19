@@ -58,7 +58,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../../converters/filterConverters.js";
-import type { ExtendedDashboardWidget } from "../../../../model/types/layoutTypes.js";
+import { type ExtendedDashboardWidget } from "../../../../model/types/layoutTypes.js";
 import { removeIgnoredWidgetFilters } from "../../../../model/utils/widgetFilters.js";
 
 export const getFilterLocalIdentifier = (filter: FilterContextItem): string | undefined => {

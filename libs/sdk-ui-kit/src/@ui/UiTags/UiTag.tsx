@@ -13,9 +13,7 @@ export interface IUiTagProps {
     tag: IUiTagDef;
     isDeletable: boolean;
     deleteLabel?: string;
-    isReadOnly?: boolean;
     isDisabled?: boolean;
-    isFocused?: boolean;
     size?: "small" | "large";
     onDelete?: (tag: IUiTagDef) => void;
     onClick?: (tag: IUiTagDef) => void;
@@ -23,16 +21,22 @@ export interface IUiTagProps {
 }
 
 export const UiTag = forwardRef<HTMLButtonElement, IUiTagProps>(function UiTag(
-    { tag, maxWidth, isDeletable, isDisabled, isFocused, size, deleteLabel, onDelete, onClick }: IUiTagProps,
+    { tag, maxWidth, isDeletable, isDisabled, size, deleteLabel, onDelete, onClick }: IUiTagProps,
     ref,
 ) {
     const canBeDeleted = isDeletable && (tag.isDeletable ?? true);
+    const isClickable = onClick !== undefined;
     return (
-        <div className={e("tag", { isFocused: isFocused ?? false })} role="listitem" style={{ maxWidth }}>
+        <div
+            className={e("tag")}
+            style={{ maxWidth }}
+            data-tag-id={tag.id}
+            tabIndex={-1}
+            aria-label={tag.label}
+        >
             <UiTagComponent
-                ref={ref}
-                tabIndex={-1}
-                deleteTabIndex={-1}
+                ref={isClickable ? ref : undefined}
+                labelAs={isClickable ? "button" : "span"}
                 label={`${tag.label}`}
                 size={size}
                 iconBefore={tag.iconBefore}
@@ -42,14 +46,22 @@ export const UiTag = forwardRef<HTMLButtonElement, IUiTagProps>(function UiTag(
                     ariaLabel: tag.label,
                     deleteAriaLabel: `${deleteLabel ?? "Delete"} ${tag.label}`,
                 }}
-                onDelete={(e) => {
-                    onDelete?.(tag);
-                    e.stopPropagation();
-                }}
-                onClick={(e) => {
-                    onClick?.(tag);
-                    e.stopPropagation();
-                }}
+                onDelete={
+                    canBeDeleted
+                        ? (e) => {
+                              onDelete?.(tag);
+                              e.stopPropagation();
+                          }
+                        : undefined
+                }
+                onClick={
+                    isClickable
+                        ? (e) => {
+                              onClick(tag);
+                              e.stopPropagation();
+                          }
+                        : undefined
+                }
             />
         </div>
     );

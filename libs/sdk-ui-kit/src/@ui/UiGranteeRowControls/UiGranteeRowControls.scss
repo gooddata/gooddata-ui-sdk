@@ -5,4 +5,11 @@
     align-items: center;
     gap: var(--gd-spacing-10px);
     flex-shrink: 0;
+
+    // Warning badge shown when the effective permission exceeds the assigned one.
+    &__effective-warning {
+        display: inline-flex;
+        align-items: center;
+        cursor: default;
+    }
 }

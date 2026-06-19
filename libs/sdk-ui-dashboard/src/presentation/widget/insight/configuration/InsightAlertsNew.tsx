@@ -45,13 +45,13 @@ import {
 import { selectExecutionTimestamp } from "../../../../model/store/ui/uiSelectors.js";
 import { selectCurrentUser } from "../../../../model/store/user/userSelectors.js";
 import { AlertDeleteDialog } from "../../../automations/_staging/alerting/DefaultAlertingDialog/components/AlertDeleteDialog.js";
-import { useSaveAlertToBackend } from "../../../automations/_staging/alerting/DefaultAlertingDialog/hooks/useSaveAlertToBackend.js";
 import { messages } from "../../../automations/_staging/alerting/DefaultAlertingDialog/messages.js";
 import { getSupportedInsightMeasuresByInsight } from "../../../automations/_staging/alerting/DefaultAlertingDialog/utils/items.js";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/zIndex.js";
 import { type IInsightMenuSubmenuComponentProps } from "../../insightMenu/types.js";
 
 import { AlertsList } from "./InsightAlertConfig/AlertsList.js";
+import { useSaveAlertToBackend } from "./InsightAlertConfig/hooks/useSaveAlertToBackend.js";
 import { NoAvailableMeasures } from "./InsightAlertConfig/NoAvailableAlerts.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);

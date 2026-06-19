@@ -283,6 +283,33 @@ export const selectHasAnyResettableParameterOnActiveTab: DashboardSelector<boole
     (targets) => targets.length > 0,
 );
 
+// Shared base for the two parameter selectors below — the widget's insight, its metric-referenced
+// parameter refs, and the owning tab's entries. Memoized, so both share one computation per ref.
+const selectWidgetInsightAndReferencedRefs = createMemoizedSelector((ref: ObjRef | undefined) =>
+    createSelector(
+        selectAllTabsInsightWidgetContexts,
+        selectInsightsMap,
+        selectEnableParameters,
+        selectCatalogMeasureParameters,
+        selectCatalogMeasureParametersStatus,
+        (contexts, insights, isEnabled, measureParameters, measureParametersStatus) => {
+            if (!isEnabled || !ref || measureParametersStatus !== "loaded") {
+                return undefined;
+            }
+            const context = contexts.find((ctx) => areObjRefsEqual(ctx.widget.ref, ref));
+            const insight = context && insights.get(context.widget.insight);
+            if (!context || !insight) {
+                return undefined;
+            }
+            const referencedRefs = new Set(
+                collectReferencedParameterRefs(insight, measureParameters).map(objRefToString),
+            );
+            const entries = context.tab.parameters?.parameters ?? parametersInitialState.parameters;
+            return { insight, referencedRefs, entries };
+        },
+    ),
+);
+
 /**
  * Returns the parameter values to inject into the widget's `IExecutionConfig.parameterValues`.
  *
@@ -303,52 +330,60 @@ export const selectHasAnyResettableParameterOnActiveTab: DashboardSelector<boole
 export const selectEffectiveParameterValuesForWidget: (
     ref: ObjRef | undefined,
 ) => DashboardSelector<IInsightParameterValue[]> = createMemoizedSelector((ref: ObjRef | undefined) =>
-    createSelector(
-        selectAllTabsInsightWidgetContexts,
-        selectInsightsMap,
-        selectEnableParameters,
-        selectCatalogMeasureParameters,
-        selectCatalogMeasureParametersStatus,
-        (contexts, insights, isEnabled, measureParameters, measureParametersStatus) => {
-            if (!isEnabled || !ref || measureParametersStatus !== "loaded") {
-                return EMPTY_PARAMETER_VALUES;
+    createSelector(selectWidgetInsightAndReferencedRefs(ref), (resolved) => {
+        if (!resolved) {
+            return EMPTY_PARAMETER_VALUES;
+        }
+        const { insight, referencedRefs, entries } = resolved;
+        const result: IInsightParameterValue[] = [];
+        const seen = new Set<string>();
+        for (const entry of entries) {
+            if (entry.runtimeOverride === undefined) {
+                continue;
             }
-            const context = contexts.find((ctx) => areObjRefsEqual(ctx.widget.ref, ref));
-            if (!context) {
-                return EMPTY_PARAMETER_VALUES;
+            const refKey = objRefToString(entry.parameter.ref);
+            if (!referencedRefs.has(refKey)) {
+                continue;
             }
-            const insight = insights.get(context.widget.insight);
-            if (!insight) {
-                return EMPTY_PARAMETER_VALUES;
+            result.push({ ref: entry.parameter.ref, value: entry.runtimeOverride });
+            seen.add(refKey);
+        }
+        for (const insightParameter of insightParameters(insight)) {
+            const refKey = objRefToString(insightParameter.ref);
+            if (!referencedRefs.has(refKey) || seen.has(refKey)) {
+                continue;
             }
-            const referencedRefs = new Set(
-                collectReferencedParameterRefs(insight, measureParameters).map(objRefToString),
-            );
-            const entries = context.tab.parameters?.parameters ?? parametersInitialState.parameters;
-            const result: IInsightParameterValue[] = [];
-            const seen = new Set<string>();
-            for (const entry of entries) {
-                if (entry.runtimeOverride === undefined) {
-                    continue;
-                }
-                const refKey = objRefToString(entry.parameter.ref);
-                if (!referencedRefs.has(refKey)) {
-                    continue;
-                }
-                result.push({ ref: entry.parameter.ref, value: entry.runtimeOverride });
-                seen.add(refKey);
-            }
-            for (const insightParameter of insightParameters(insight)) {
-                const refKey = objRefToString(insightParameter.ref);
-                if (!referencedRefs.has(refKey) || seen.has(refKey)) {
-                    continue;
-                }
-                result.push(insightParameter);
-                seen.add(refKey);
-            }
-            return result.length === 0 ? EMPTY_PARAMETER_VALUES : result;
-        },
-    ),
+            result.push(insightParameter);
+            seen.add(refKey);
+        }
+        return result.length === 0 ? EMPTY_PARAMETER_VALUES : result;
+    }),
+);
+
+/**
+ * The insight half of {@link selectEffectiveParameterValuesForWidget}: insight-authored values for
+ * the metric-referenced refs, flag-gated and ref-filtered, with no dashboard chip overrides.
+ *
+ * @remarks
+ * Raw CSV export inlines a resolved AFM, so it must carry parameters explicitly rather than letting
+ * the backend re-resolve them. This is the base; the dialog's `content.parametersByTab` overrides go
+ * on top.
+ *
+ * @internal
+ */
+export const selectReferencedInsightParameterValuesForWidget: (
+    ref: ObjRef | undefined,
+) => DashboardSelector<IInsightParameterValue[]> = createMemoizedSelector((ref: ObjRef | undefined) =>
+    createSelector(selectWidgetInsightAndReferencedRefs(ref), (resolved) => {
+        if (!resolved) {
+            return EMPTY_PARAMETER_VALUES;
+        }
+        const { insight, referencedRefs } = resolved;
+        const result = insightParameters(insight).filter((parameter) =>
+            referencedRefs.has(objRefToString(parameter.ref)),
+        );
+        return result.length === 0 ? EMPTY_PARAMETER_VALUES : result;
+    }),
 );
 
 /**

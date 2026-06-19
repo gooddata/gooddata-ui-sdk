@@ -58,11 +58,12 @@ export function UiTooltip({
     isOpen: isOpenProp,
     onOpen,
     onClose,
+    onOpenChange,
     anchorWrapperStyles,
 }: IUiTooltipProps) {
     const [isOpenInternal, setIsOpen] = useState(false);
-    const isOpen =
-        !disabled && (isOpenProp === undefined ? isOpenInternal || triggerBy.length === 0 : isOpenProp);
+    const isControlled = isOpenProp !== undefined;
+    const isOpen = !disabled && (isControlled ? isOpenProp : isOpenInternal || triggerBy.length === 0);
 
     const arrowRef = useRef<SVGSVGElement>(null);
     const themeFromContext = useTheme();
@@ -72,19 +73,21 @@ export function UiTooltip({
     const handleOpenChange = useCallback(
         (open: boolean) => {
             setIsOpen(open);
+            onOpenChange?.(open);
             if (open) {
                 onOpen?.();
             } else {
                 onClose?.();
             }
         },
-        [onClose, onOpen],
+        [onClose, onOpen, onOpenChange],
     );
 
     const handleClose = useCallback(() => {
         setIsOpen(false);
+        onOpenChange?.(false);
         onClose?.();
-    }, [onClose]);
+    }, [onClose, onOpenChange]);
 
     // Custom shift middleware for tooltip arrow positioning
     const customShiftMiddleware: Middleware = useMemo(
@@ -137,9 +140,13 @@ export function UiTooltip({
         }
     }, [isOpen, refs.floating]);
 
-    // Trigger events using floating-ui interactions (handles hover, focus, click)
+    // Trigger events using floating-ui interactions (handles hover, focus, click).
+    // When controlled the open state is owned by the parent, so the anchor's own
+    // triggers are suppressed — otherwise an anchor that is shared with another
+    // popover (e.g. the labels picker reusing the permission-menu button) would
+    // toggle both.
     const hover = useHover(context, {
-        enabled: triggerBy.includes("hover"),
+        enabled: !isControlled && triggerBy.includes("hover"),
         move: false,
         handleClose: safePolygon({ requireIntent: true }),
         delay: {
@@ -149,11 +156,11 @@ export function UiTooltip({
     });
 
     const focus = useFocus(context, {
-        enabled: triggerBy.includes("focus"),
+        enabled: !isControlled && triggerBy.includes("focus"),
     });
 
     const click = useClick(context, {
-        enabled: triggerBy.includes("click"),
+        enabled: !isControlled && triggerBy.includes("click"),
     });
 
     // Read the anchor lazily — floating-ui's `refs.reference` is a mutable
@@ -163,8 +170,9 @@ export function UiTooltip({
         refs.reference.current instanceof Element ? refs.reference.current : null,
     );
 
+    // Dismiss stays enabled even when controlled so outside-click / Escape can
+    // request a close; the request is surfaced through handleOpenChange → onOpenChange.
     const dismiss = useDismiss(context, {
-        enabled: isOpenProp === undefined,
         outsidePress: (event) =>
             !isClickInsideOwnSubtree(event.target as Element | null, refs.floating.current),
     });

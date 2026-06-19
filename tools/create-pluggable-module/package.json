@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/create-pluggable-module",
-    "version": "11.43.0-alpha.0",
+    "version": "11.43.0-alpha.1",
     "description": "Scaffolder for GoodData pluggable applications. Invoked via `npm init @gooddata/pluggable-module`.",
     "license": "MIT",
     "author": "GoodData Corporation",

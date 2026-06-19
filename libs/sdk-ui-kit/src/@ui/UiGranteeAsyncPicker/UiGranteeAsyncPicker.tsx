@@ -153,24 +153,29 @@ export function UiGranteeAsyncPicker({
 
     const autocompleteMessages = useMemo(
         () => ({
-            searchPlaceholder: intl.formatMessage(uiGranteeAsyncPickerMessages.searchPlaceholder),
+            searchPlaceholder: intl.formatMessage(olpAddGranteeDialogMessages.searchPlaceholder),
             stateError: intl.formatMessage(uiGranteeAsyncPickerMessages.stateError),
             stateNoMatch: intl.formatMessage(uiGranteeAsyncPickerMessages.stateNoMatch),
         }),
         [intl],
     );
 
+    const fieldLabel = intl.formatMessage(olpAddGranteeDialogMessages.userOrGroup);
+
     return (
         <div className={b()} data-testid={dataTestId}>
-            <UiAutocomplete<IGranteeAutocompleteOption>
-                loadOptions={adaptedLoadOptions}
-                selectedIds={selectedIds}
-                onSelect={handleSelect}
-                messages={autocompleteMessages}
-                accessibilityConfig={{
-                    ariaLabel: intl.formatMessage(olpAddGranteeDialogMessages.userOrGroup),
-                }}
-            />
+            <div className={e("field")}>
+                <div className={e("field-label")}>{fieldLabel}</div>
+                <UiAutocomplete<IGranteeAutocompleteOption>
+                    loadOptions={adaptedLoadOptions}
+                    selectedIds={selectedIds}
+                    onSelect={handleSelect}
+                    messages={autocompleteMessages}
+                    accessibilityConfig={{
+                        ariaLabel: fieldLabel,
+                    }}
+                />
+            </div>
 
             {selectedGrantees.length === 0 ? (
                 <div className={e("empty-state")}>

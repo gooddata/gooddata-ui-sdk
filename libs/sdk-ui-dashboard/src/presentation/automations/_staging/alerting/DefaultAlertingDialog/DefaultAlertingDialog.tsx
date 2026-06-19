@@ -48,6 +48,9 @@ import { selectExecutionTimestamp } from "../../../../../model/store/ui/uiSelect
 import { getWidgetTitle } from "../../../../../model/utils/dashboardItemUtils.js";
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../../../constants/zIndex.js";
 import { IntlWrapper } from "../../../../localization/IntlWrapper.js";
+import { useSaveAlertToBackend } from "../../../../widget/insight/configuration/InsightAlertConfig/hooks/useSaveAlertToBackend.js";
+import { useBuildAutomationsContext } from "../../../connectors/hooks/useBuildAutomationsContext.js";
+import { AutomationsContextProvider } from "../../../contexts/AutomationsContext.js";
 import { RecipientsSelect } from "../../../scheduledEmail/DefaultScheduledEmailDialog/components/RecipientsSelect/RecipientsSelect.js";
 import { ApplyCurrentFiltersConfirmDialog } from "../../../shared/automationFilters/components/ApplyLatestFiltersConfirmDialog.js";
 import { AutomationFiltersSelect } from "../../../shared/automationFilters/components/AutomationFiltersSelect.js";
@@ -72,7 +75,6 @@ import { AlertTriggerModeSelect } from "./components/AlertTriggerModeSelect.js";
 import { ALERTING_DIALOG_ID } from "./constants.js";
 import { DefaultLoadingAlertingDialog } from "./DefaultLoadingAlertingDialog.js";
 import { useEditAlert } from "./hooks/useEditAlert.js";
-import { useSaveAlertToBackend } from "./hooks/useSaveAlertToBackend.js";
 import { getDescription, getValueSuffix } from "./utils/getters.js";
 import { isAnomalyDetection, isChangeOrDifferenceOperator } from "./utils/guards.js";
 import { isMobileView } from "./utils/responsive.js";
@@ -695,16 +697,22 @@ export function AlertingDialogRenderer({
  */
 export function DefaultAlertingDialog(props: IAlertingDialogProps) {
     const { isLoading, onCancel, alertToEdit } = props;
-    const locale = useDashboardSelector(selectLocale);
-
     if (isLoading) {
         return <DefaultLoadingAlertingDialog onCancel={onCancel} alertToEdit={alertToEdit} />;
     }
+    return <DefaultAlertingDialogBody {...props} />;
+}
+
+function DefaultAlertingDialogBody(props: IAlertingDialogProps) {
+    const locale = useDashboardSelector(selectLocale);
+    const automationsContext = useBuildAutomationsContext();
 
     return (
-        <IntlWrapper locale={locale}>
-            <AlertingDialogRenderer {...props} />
-        </IntlWrapper>
+        <AutomationsContextProvider value={automationsContext}>
+            <IntlWrapper locale={locale}>
+                <AlertingDialogRenderer {...props} />
+            </IntlWrapper>
+        </AutomationsContextProvider>
     );
 }
 

@@ -62,6 +62,7 @@ export const Button = forwardRef<HTMLElement, IButtonProps>(function Button(
         role = "button",
         ariaControls,
         ariaExpanded,
+        ariaPressed,
     } = accessibilityConfig ?? {};
 
     const ariaDropdownProps = {
@@ -134,6 +135,7 @@ export const Button = forwardRef<HTMLElement, IButtonProps>(function Button(
             aria-label={ariaLabel}
             aria-labelledby={ariaLabelledBy}
             aria-describedby={ariaDescribedBy}
+            aria-pressed={ariaPressed}
             {...ariaDropdownAttributesFromConfig}
             {...(tagName === "button" ? {} : { tabIndex })}
             {...(tagName !== "button" || role !== "button" ? { role } : {})}

@@ -23,11 +23,7 @@ import { IAgent } from '@gooddata/sdk-model';
 import { IAgentPatch } from '@gooddata/sdk-model';
 import { IAgentSkill } from '@gooddata/sdk-model';
 import { IAiRateLimit } from '@gooddata/sdk-model';
-import type { IAlertAnomalyDetectionGranularity } from '@gooddata/sdk-model';
-import type { IAlertAnomalyDetectionSensitivity } from '@gooddata/sdk-model';
 import { IAlertDefault } from '@gooddata/sdk-model';
-import type { IAlertTriggerInterval } from '@gooddata/sdk-model';
-import type { IAlertTriggerMode } from '@gooddata/sdk-model';
 import type { IAllowedRelationshipType } from '@gooddata/sdk-model';
 import { IAttribute } from '@gooddata/sdk-model';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
@@ -35,9 +31,11 @@ import { IAttributeElement } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IAttributeMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
+import type { IAutomationAlert } from '@gooddata/sdk-model';
 import { IAutomationMetadataObject } from '@gooddata/sdk-model';
 import { IAutomationMetadataObjectDefinition } from '@gooddata/sdk-model';
 import type { IAutomationRecipient } from '@gooddata/sdk-model';
+import type { IAutomationSchedule } from '@gooddata/sdk-model';
 import { IAvailableAccessGrantee } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { ICatalogAttribute } from '@gooddata/sdk-model';
@@ -71,6 +69,7 @@ import { IDataSourcePermissionAssignment } from '@gooddata/sdk-model';
 import type { IDateFilter } from '@gooddata/sdk-model';
 import { IDateFilterConfig } from '@gooddata/sdk-model';
 import { IDateHierarchyTemplate } from '@gooddata/sdk-model';
+import type { Identifier } from '@gooddata/sdk-model';
 import { IdentifierRef } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
 import { IDimensionDescriptor } from '@gooddata/sdk-model';
@@ -307,66 +306,21 @@ export type IAgentsQueryResult = IPagedResource<IAgent>;
 
 // @internal
 export interface IAlertProposal {
-    // (undocumented)
-    arithmeticOperator?: string;
-    // (undocumented)
-    attributes?: IAttribute[];
-    // (undocumented)
-    automation?: ObjRef;
-    // (undocumented)
-    baseMetric: {
-        id: ObjRef;
-        title: string;
-        format: string;
-    };
-    // (undocumented)
-    compareMetric?: {
-        id: ObjRef;
-        title: string;
-        format: string;
-    };
-    // (undocumented)
+    alert?: IAutomationAlert;
+    cta?: string;
     dashboard?: {
-        id: ObjRef;
-        title: string;
+        id?: Identifier;
+        title?: string;
     };
-    // (undocumented)
-    date?: {
-        id: ObjRef;
-        title: string;
-    };
-    // (undocumented)
     description: string;
-    // (undocumented)
-    filters?: IFilter[];
-    // (undocumented)
-    fromValue?: number | string;
-    // (undocumented)
-    granularity?: IAlertAnomalyDetectionGranularity;
-    // (undocumented)
-    notificationChannel?: {
-        id: ObjRef;
-        name: string;
-    };
-    // (undocumented)
-    operator?: string;
-    // (undocumented)
+    forLabel?: string;
+    forMode?: string;
+    id?: string;
+    notificationChannel?: string;
+    notificationChannelTitle?: string;
     recipients?: IAutomationRecipient[];
-    // (undocumented)
-    sensitivity?: IAlertAnomalyDetectionSensitivity;
-    // (undocumented)
-    threshold?: number | string;
-    // (undocumented)
+    schedule?: IAutomationSchedule;
     title: string;
-    // (undocumented)
-    toValue?: number | string;
-    // (undocumented)
-    trigger?: {
-        trigger?: IAlertTriggerMode;
-        interval?: IAlertTriggerInterval;
-        cron?: string;
-        timezone?: string;
-    };
 }
 
 // @public
@@ -862,6 +816,8 @@ export interface IChatConversationThreadQuery {
     stream(): ReadableStream<IChatConversationItem | IChatConversationError>;
     withAllowedRelationshipTypes(relationshipTypes?: IAllowedRelationshipType[]): IChatConversationThreadQuery;
     withCreateLimit(createLimit: number): IChatConversationThreadQuery;
+    withExcludeTags(excludeTags?: string[]): IChatConversationThreadQuery;
+    withIncludeTags(includeTags?: string[]): IChatConversationThreadQuery;
     withObjectTypes(objectTypes?: GenAIObjectType[]): IChatConversationThreadQuery;
     withSearchLimit(searchLimit: number): IChatConversationThreadQuery;
     withUserContext(userContext: IGenAIUserContext): IChatConversationThreadQuery;

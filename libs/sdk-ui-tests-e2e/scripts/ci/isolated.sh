@@ -7,10 +7,8 @@ APP_DIR=$ROOT_DIR/libs/sdk-ui-tests-app
 E2E_TEST_DIR=$ROOT_DIR/libs/sdk-ui-tests-e2e
 REF_WS_DIR=$ROOT_DIR/libs/sdk-ui-tests-reference-workspace
 
-# Export WORKSPACE_ID for the app container (injected at container runtime via entrypoint)
 export WORKSPACE_ID=$(jq -r '.workspaceId' $REF_WS_DIR/recordings_workspace.json)
 
-# Write .env for the e2e tests
 pushd $E2E_TEST_DIR
 cat > .env <<-EOF
 HOST=dummy.gooddata.com

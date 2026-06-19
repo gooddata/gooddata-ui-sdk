@@ -17,7 +17,6 @@ export HOST=$TEST_BACKEND
 export FIXTURE_TYPE=goodsales
 export FILTER=${FILTER:-}
 
-# Write .env for the e2e tests
 cat > $E2E_TEST_DIR/.env <<-EOF
 HOST=${HOST}
 TEST_WORKSPACE_ID=${TEST_WORKSPACE_ID}
