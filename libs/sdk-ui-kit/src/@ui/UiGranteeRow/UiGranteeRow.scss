@@ -9,6 +9,11 @@
     padding: var(--gd-spacing-5px) 0;
     box-sizing: border-box;
 
+    // Muted while a change for this row is being saved (its controls are disabled too).
+    &--pending {
+        opacity: 0.6;
+    }
+
     &__text {
         flex: 1 1 auto;
         min-width: 0;

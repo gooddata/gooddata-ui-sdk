@@ -3050,6 +3050,11 @@
                                     "common": {
                                         "type": "boolean",
                                         "description": "Whether the parent filter is common date or special date"
+                                    },
+                                    "date": {
+                                        "type": "string",
+                                        "description": "Date dataset the common date filter is applied through. Only valid when common is true; ignored and stripped on both import and export when common is false.",
+                                        "$semantic": { "type": "reference", "source": "dateDataset.id" }
                                     }
                                 },
                                 "required": ["using", "common"]
@@ -3134,6 +3139,14 @@
                                                 "common": {
                                                     "type": "boolean",
                                                     "description": "Whether the parent filter is common date or special date"
+                                                },
+                                                "date": {
+                                                    "type": "string",
+                                                    "description": "Date dataset the common date filter is applied through. Only valid when common is true; ignored and stripped on both import and export when common is false.",
+                                                    "$semantic": {
+                                                        "type": "reference",
+                                                        "source": "dateDataset.id"
+                                                    }
                                                 }
                                             },
                                             "required": ["using", "common"]
@@ -3220,6 +3233,14 @@
                                                 "common": {
                                                     "type": "boolean",
                                                     "description": "Whether the parent filter is common date or special date"
+                                                },
+                                                "date": {
+                                                    "type": "string",
+                                                    "description": "Date dataset the common date filter is applied through. Only valid when common is true; ignored and stripped on both import and export when common is false.",
+                                                    "$semantic": {
+                                                        "type": "reference",
+                                                        "source": "dateDataset.id"
+                                                    }
                                                 }
                                             },
                                             "required": ["using", "common"]
@@ -3315,6 +3336,11 @@
                                     "common": {
                                         "type": "boolean",
                                         "description": "Whether the parent filter is common date or special date"
+                                    },
+                                    "date": {
+                                        "type": "string",
+                                        "description": "Date dataset the common date filter is applied through. Only valid when common is true; ignored and stripped on both import and export when common is false.",
+                                        "$semantic": { "type": "reference", "source": "dateDataset.id" }
                                     }
                                 },
                                 "required": ["using", "common"]
@@ -3401,6 +3427,14 @@
                                             "common": {
                                                 "type": "boolean",
                                                 "description": "Whether the parent filter is common date or special date"
+                                            },
+                                            "date": {
+                                                "type": "string",
+                                                "description": "Date dataset the common date filter is applied through. Only valid when common is true; ignored and stripped on both import and export when common is false.",
+                                                "$semantic": {
+                                                    "type": "reference",
+                                                    "source": "dateDataset.id"
+                                                }
                                             }
                                         },
                                         "required": ["using", "common"]

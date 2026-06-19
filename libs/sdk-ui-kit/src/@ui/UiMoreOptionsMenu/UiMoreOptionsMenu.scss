@@ -1,0 +1,10 @@
+// (C) 2026 GoodData Corporation
+
+// Cancel UiPopover.__content's 10px padding so the menu spans edge-to-edge.
+
+.gd-ui-kit-more-options-menu {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    margin: calc(-1 * var(--gd-spacing-10px));
+}

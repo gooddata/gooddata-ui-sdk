@@ -39,7 +39,7 @@ import {
     useIdPrefixed,
 } from "@gooddata/sdk-ui-kit";
 
-import type { IAutomationFiltersTab } from "../../../../../model/store/filtering/dashboardFilterSelectors.js";
+import type { IAutomationFiltersTab } from "../../../../../model/store/filtering/types.js";
 import {
     AUTOMATION_FILTERS_DIALOG_ID,
     AUTOMATION_FILTERS_DIALOG_TITLE_ID,

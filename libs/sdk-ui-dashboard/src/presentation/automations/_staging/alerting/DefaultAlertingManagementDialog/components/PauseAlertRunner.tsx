@@ -8,7 +8,7 @@ import {
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError, convertError } from "@gooddata/sdk-ui";
 
-import { useSaveAlertToBackend } from "../../DefaultAlertingDialog/hooks/useSaveAlertToBackend.js";
+import { useSaveAlertToBackend } from "../../../../../widget/insight/configuration/InsightAlertConfig/hooks/useSaveAlertToBackend.js";
 
 interface IPauseAlertRunnerProps {
     alert: IAutomationMetadataObject | null;

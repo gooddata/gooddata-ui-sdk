@@ -223,6 +223,7 @@ export const convertToRawExportRequest = (
             widget: metadataObj.widget ?? "",
             ...(metadataObj.dashboard ? { dashboard: metadataObj.dashboard } : {}),
             ...filtersObj,
+            ...(metadataObj.parametersByTab ? { parametersByTab: metadataObj.parametersByTab } : {}),
         },
     };
 };

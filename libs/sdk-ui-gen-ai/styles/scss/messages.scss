@@ -1392,6 +1392,28 @@
                 color: kit-variables.$gd-color-state-blank;
             }
         }
+
+        .gd-gen-ai-chat__conversation__item__content-alertProposal-condition {
+            display: flex;
+            flex-direction: row;
+            gap: 5px;
+            align-items: center;
+            align-self: center;
+
+            .alertProposal-operand-number {
+                font-weight: bold;
+            }
+        }
+
+        .gd-gen-ai-chat__conversation__item__content-alertProposal-anomaly {
+            display: block;
+            padding: 5px 15px 0 15px;
+            text-align: center;
+
+            .alertProposal-operand {
+                display: inline-block;
+            }
+        }
     }
 
     &--kda {

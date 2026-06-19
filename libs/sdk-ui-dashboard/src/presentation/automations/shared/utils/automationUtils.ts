@@ -1,0 +1,236 @@
+// (C) 2024-2026 GoodData Corporation
+
+import { isEqual, omit, pick } from "lodash-es";
+
+import {
+    type FilterContextItem,
+    type IAutomationMetadataObject,
+    type IAutomationMetadataObjectDefinition,
+    type IAutomationRecipient,
+    type IExportDefinitionDashboardRequestPayload,
+    type IExportDefinitionMetadataObject,
+    type IExportDefinitionMetadataObjectDefinition,
+    type IExportDefinitionVisualizationObjectRequestPayload,
+    type IFilter,
+    type IUser,
+    type IWorkspaceUser,
+    isExportDefinitionDashboardRequestPayload,
+    isExportDefinitionVisualizationObjectRequestPayload,
+    isFilter,
+    isFilterContextItem,
+} from "@gooddata/sdk-model";
+
+export const isDashboardAutomation = (
+    automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | undefined,
+) => {
+    if (!automation) {
+        return false;
+    }
+
+    return (
+        automation.exportDefinitions?.some((exportDefinition) => {
+            return isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload);
+        }) ?? false
+    );
+};
+
+export const isVisualisationAutomation = (
+    automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | undefined,
+) => {
+    if (!automation) {
+        return false;
+    }
+
+    return (
+        automation.exportDefinitions?.some((exportDefinition) => {
+            return isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload);
+        }) ?? false
+    );
+};
+
+export const isCsvVisualizationAutomation = (
+    automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | undefined,
+) => {
+    if (!automation) {
+        return false;
+    }
+
+    return automation.exportDefinitions?.some(isCsvVisualizationExportDefinition) ?? false;
+};
+
+export const isCsvVisualizationExportDefinition = (
+    exportDefinition: IExportDefinitionMetadataObject | IExportDefinitionMetadataObjectDefinition | undefined,
+) => {
+    if (!exportDefinition) {
+        return false;
+    }
+
+    return (
+        isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload) &&
+        exportDefinition.requestPayload.format === "CSV"
+    );
+};
+
+export const isXlsxVisualizationAutomation = (
+    automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | undefined,
+) => {
+    if (!automation) {
+        return false;
+    }
+
+    return automation.exportDefinitions?.some(isXlsxVisualizationExportDefinition) ?? false;
+};
+
+export const isXlsxVisualizationExportDefinition = (
+    exportDefinition: IExportDefinitionMetadataObject | IExportDefinitionMetadataObjectDefinition | undefined,
+) => {
+    if (!exportDefinition) {
+        return false;
+    }
+
+    return (
+        isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload) &&
+        exportDefinition.requestPayload.format === "XLSX"
+    );
+};
+
+export const getAutomationDashboardFilters = (
+    automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | undefined,
+): FilterContextItem[] | undefined => {
+    if (!automation) {
+        return undefined;
+    }
+
+    return (
+        automation.exportDefinitions?.find((exportDefinition) => {
+            return isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload);
+        })?.requestPayload as IExportDefinitionDashboardRequestPayload
+    )?.content.filters?.filter((f) => isFilterContextItem(f));
+};
+
+/**
+ * Extracts dashboard filters structured by tab from automation metadata object.
+ * Returns filtersByTab from the first dashboard export definition.
+ */
+export const getAutomationDashboardFiltersByTab = (
+    automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | undefined,
+): Record<string, FilterContextItem[]> | undefined => {
+    if (!automation) {
+        return undefined;
+    }
+
+    return (
+        automation.exportDefinitions?.find((exportDefinition) => {
+            return isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload);
+        })?.requestPayload as IExportDefinitionDashboardRequestPayload
+    )?.content.filtersByTab;
+};
+
+export const getAutomationVisualizationFilters = (
+    automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | undefined,
+): { executionFilters: IFilter[] | undefined; filterContextItems: FilterContextItem[] | undefined } => {
+    if (!automation) {
+        return { executionFilters: undefined, filterContextItems: undefined };
+    }
+
+    const executionFilters = (
+        automation.exportDefinitions?.find((exportDefinition) => {
+            return isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload);
+        })?.requestPayload as IExportDefinitionVisualizationObjectRequestPayload
+    )?.content.filters?.filter((f) => isFilter(f)) as IFilter[] | undefined;
+
+    const filterContextItems = (
+        automation.exportDefinitions?.find((exportDefinition) => {
+            return isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload);
+        })?.requestPayload as IExportDefinitionVisualizationObjectRequestPayload
+    )?.content.filters?.filter((f) => isFilterContextItem(f));
+
+    return {
+        executionFilters: (executionFilters ?? []).length > 0 ? executionFilters : undefined,
+        filterContextItems: (filterContextItems ?? []).length > 0 ? filterContextItems : undefined,
+    };
+};
+
+export const getAutomationAlertFilters = (
+    automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | undefined,
+): IFilter[] | undefined => {
+    if (!automation) {
+        return undefined;
+    }
+
+    return automation.alert?.execution?.filters?.filter(isFilter);
+};
+
+type ExportDefinitionSubset = Pick<IExportDefinitionMetadataObjectDefinition, "requestPayload" | "title">;
+
+const sortByFormat = (a: ExportDefinitionSubset, b: ExportDefinitionSubset) =>
+    a.requestPayload.format.localeCompare(b.requestPayload.format);
+
+export const areAutomationsEqual = (
+    originalAutomation: IAutomationMetadataObjectDefinition,
+    updatedAutomation: IAutomationMetadataObjectDefinition,
+) => {
+    const automationWithoutExportDefinitions = omit(updatedAutomation, "exportDefinitions");
+    const origAutomationWithoutExportDefinitions = omit(originalAutomation, "exportDefinitions");
+
+    // We only want to compare requestPayload and title of exportDefinitions, rest may be omitted as it is just arbitrary
+    // metadata that is not relevant for the comparison and causes false positive results when comparing new and old def.
+    // Sorting is done just to avoid false positive result of different order of export definitions.
+    const automationExportDefinitions = updatedAutomation.exportDefinitions
+        ?.map((exportDefinition) => pick(exportDefinition, ["requestPayload", "title"]))
+        .sort(sortByFormat);
+    const origAutomationExportDefinitions = originalAutomation.exportDefinitions
+        ?.map((exportDefinition) => pick(exportDefinition, ["requestPayload", "title"]))
+        .sort(sortByFormat);
+
+    return (
+        isEqual(automationWithoutExportDefinitions, origAutomationWithoutExportDefinitions) &&
+        isEqual(automationExportDefinitions, origAutomationExportDefinitions)
+    );
+};
+
+export const convertCurrentUserToAutomationRecipient = (
+    users: IWorkspaceUser[],
+    user: IUser,
+): IAutomationRecipient => {
+    const foundUser = users.find((u) => u.login === user.login);
+
+    return convertUserToAutomationRecipient(foundUser ?? user);
+};
+
+export const convertCurrentUserToWorkspaceUser = (users: IWorkspaceUser[], user: IUser): IWorkspaceUser => {
+    const foundUser = users.find((u) => u.login === user.login);
+
+    return (
+        foundUser ?? {
+            email: user.email ?? "",
+            fullName: user.fullName,
+            status: "ENABLED",
+            login: user.login,
+            lastName: user.lastName,
+            firstName: user.firstName,
+            uri: user.login,
+            ref: user.ref,
+        }
+    );
+};
+
+export const convertUserToAutomationRecipient = (user: IUser): IAutomationRecipient => {
+    return {
+        id: user.login,
+        email: user.email,
+        name: user.fullName,
+        type: "user",
+    };
+};
+
+export const convertExternalRecipientToAutomationRecipient = (
+    externalRecipient: string,
+): IAutomationRecipient => {
+    return {
+        id: externalRecipient,
+        email: externalRecipient,
+        name: externalRecipient,
+        type: "externalUser",
+    };
+};

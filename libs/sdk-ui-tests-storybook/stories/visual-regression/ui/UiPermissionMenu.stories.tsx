@@ -9,24 +9,12 @@ import { UiButton, UiPermissionMenu } from "@gooddata/sdk-ui-kit";
 import { type IStoryParameters, State } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
-function MenuExample({
-    label,
-    withTransfer = false,
-    withLabels = false,
-    withRemove = false,
-}: {
-    label: string;
-    withTransfer?: boolean;
-    withLabels?: boolean;
-    withRemove?: boolean;
-}) {
+function MenuExample({ label, withRemove = false }: { label: string; withRemove?: boolean }) {
     return (
         <UiPermissionMenu
             anchor={<UiButton label={label} size="small" variant="secondary" iconAfter="chevronDown" />}
+            selectedLevel="VIEW"
             onPermissionChange={action(`${label} → permission change`)}
-            onTransferOwnership={withTransfer ? action(`${label} → transfer ownership`) : undefined}
-            onLabelsClick={withLabels ? action(`${label} → labels`) : undefined}
-            labelsCounter={withLabels ? "4/4" : undefined}
             onRemoveAccess={withRemove ? action(`${label} → remove access`) : undefined}
         />
     );
@@ -40,9 +28,7 @@ function UiPermissionMenuExample() {
                 style={{ display: "flex", gap: 24, padding: 24, flexWrap: "wrap" }}
             >
                 <MenuExample label="Levels only" />
-                <MenuExample label="Full" withTransfer withLabels withRemove />
-                <MenuExample label="Remove only" withRemove />
-                <MenuExample label="Labels only" withLabels />
+                <MenuExample label="With remove" withRemove />
             </div>
         </IntlProvider>
     );

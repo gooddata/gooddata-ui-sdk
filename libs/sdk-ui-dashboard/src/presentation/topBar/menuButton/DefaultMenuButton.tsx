@@ -461,7 +461,7 @@ function MenuItem({
 
 function renderMenuItemWarning(info: ReactNode | FC, suppressHover: boolean) {
     return (
-        <span className="gd-list-icon gd-list-icon-right">
+        <span className="gd-list-icon gd-list-icon-right" data-testid="menu-item-info-icon">
             {/* Hover-only tooltip for mouse users, anchored to the icon. Keyboard/screen-reader users get the
                 warning from the focus-triggered tooltip + aria-describedby on the whole menu item. The icon
                 itself is decorative and hidden from assistive tech. While the item is focused (and its

@@ -6,13 +6,11 @@ import type {
     GenAIChatInteractionUserFeedback,
     GenAIChatInteractionUserVisualisation,
     GenAIObjectType,
-    IAlertAnomalyDetectionGranularity,
-    IAlertAnomalyDetectionSensitivity,
-    IAlertTriggerInterval,
-    IAlertTriggerMode,
     IAllowedRelationshipType,
     IAttribute,
+    IAutomationAlert,
     IAutomationRecipient,
+    IAutomationSchedule,
     IFilter,
     IGenAIChangeAnalysisParams,
     IGenAIChatInteraction,
@@ -31,6 +29,7 @@ import type {
     ISemanticSearchResult,
     ISemanticSearchResultItem,
     IUser,
+    Identifier,
     MemoryItemStrategy,
     ObjRef,
     ObjectOrigin,
@@ -1110,50 +1109,64 @@ export function isChatConversationVisualisationContent(
  * @internal
  */
 export interface IAlertProposal {
+    /**
+     * Automation id.
+     */
+    id?: string;
+    /**
+     * Title of the alert.
+     */
     title: string;
+    /**
+     * Description of the alert.
+     */
     description: string;
-    baseMetric: {
-        id: ObjRef;
-        title: string;
-        format: string;
-    };
-    compareMetric?: {
-        id: ObjRef;
-        title: string;
-        format: string;
-    };
-    date?: {
-        id: ObjRef;
-        title: string;
-    };
-    notificationChannel?: {
-        id: ObjRef;
-        name: string;
-    };
+    /**
+     * Alerting configuration of the automation.
+     */
+    alert?: IAutomationAlert;
+    /**
+     * Schedule of the automation.
+     */
+    schedule?: IAutomationSchedule;
+    /**
+     * Target notificationChannel that automation will trigger.
+     * String with webhook (notificationChannel) id.
+     */
+    notificationChannel?: string;
+    /**
+     * Title of the notification channel.
+     */
+    notificationChannelTitle?: string;
+    /**
+     * Dashboard that automation is related to.
+     */
     dashboard?: {
-        id: ObjRef;
-        title: string;
+        /**
+         * Dashboard id.
+         */
+        id?: Identifier;
+        /**
+         * Dashboard title.
+         */
+        title?: string;
     };
-    automation?: ObjRef;
-
-    operator?: string;
-    arithmeticOperator?: string;
-    threshold?: number | string;
-    fromValue?: number | string;
-    toValue?: number | string;
-    granularity?: IAlertAnomalyDetectionGranularity;
-    sensitivity?: IAlertAnomalyDetectionSensitivity;
-
-    trigger?: {
-        trigger?: IAlertTriggerMode;
-        interval?: IAlertTriggerInterval;
-        cron?: string;
-        timezone?: string;
-    };
-
-    filters?: IFilter[];
-    attributes?: IAttribute[];
+    /**
+     * Recipients of the automation.
+     */
     recipients?: IAutomationRecipient[];
+    /**
+     * For mode of the automation.
+     */
+    forMode?: string;
+    /**
+     * For label of the automation.
+     */
+    forLabel?: string;
+    /**
+     * Call to action of the automation.
+     */
+    cta?: string;
 }
 
 /**
@@ -1384,6 +1397,14 @@ export interface IChatConversationThreadQuery {
     withAllowedRelationshipTypes(
         relationshipTypes?: IAllowedRelationshipType[],
     ): IChatConversationThreadQuery;
+    /**
+     * Sets the include tags
+     */
+    withIncludeTags(includeTags?: string[]): IChatConversationThreadQuery;
+    /**
+     * Sets the exclude tags
+     */
+    withExcludeTags(excludeTags?: string[]): IChatConversationThreadQuery;
     /**
      * Execute the chat thread.
      */

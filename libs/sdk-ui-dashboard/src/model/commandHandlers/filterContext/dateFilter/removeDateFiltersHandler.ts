@@ -51,13 +51,23 @@ export function* removeDateFiltersHandler(
     }
 
     for (const removedFilter of removedFilters) {
-        const localIdentifier = removedFilter.dateFilter.dataSet;
+        const dataSetRef = removedFilter.dateFilter.dataSet;
+        // dateFilter.localIdentifier is the new format stored by useDependentDateFilterConfigurationState;
+        // dataSetRef?.identifier (dataset identifier) is the legacy format. Both must be matched here
+        // so that cleanup works regardless of which format a dependent reference was saved in.
+        const filterLocalIdentifier = removedFilter.dateFilter.localIdentifier;
 
-        invariant(!isUriRef(localIdentifier));
+        invariant(!isUriRef(dataSetRef));
         const affectedDependentFilters = allAttributeFilters.filter((item) => {
             return item.attributeFilter.filterElementsByDate?.some((depdendentDateFilter) => {
                 return (
-                    localIdentifier?.identifier === depdendentDateFilter.filterLocalIdentifier &&
+                    // Guard the new-format clause: only compare against filterLocalIdentifier when it is
+                    // defined. An undefined filterLocalIdentifier (date filters without a localIdentifier
+                    // field, e.g. created by older backend versions) would otherwise match any entry whose
+                    // filterLocalIdentifier is also undefined, incorrectly tagging unrelated filters.
+                    ((filterLocalIdentifier !== undefined &&
+                        depdendentDateFilter.filterLocalIdentifier === filterLocalIdentifier) ||
+                        depdendentDateFilter.filterLocalIdentifier === dataSetRef?.identifier) &&
                     !depdendentDateFilter.isCommonDate
                 );
             });
@@ -69,7 +79,14 @@ export function* removeDateFiltersHandler(
                 tabsActions.setAttributeFilterDependentDateFilters({
                     filterLocalId: attributeFilter.localIdentifier!,
                     dependentDateFilters: attributeFilter.filterElementsByDate!.filter(
-                        (parent) => parent.filterLocalIdentifier !== localIdentifier?.identifier,
+                        // Remove entries in both new (localIdentifier) and legacy (dataset identifier)
+                        // formats. Guard the new-format clause symmetrically with detection above: when
+                        // filterLocalIdentifier is undefined the clause would be !== undefined (always
+                        // true), so skip it and rely solely on the legacy dataset-identifier check.
+                        (parent) =>
+                            (filterLocalIdentifier === undefined ||
+                                parent.filterLocalIdentifier !== filterLocalIdentifier) &&
+                            parent.filterLocalIdentifier !== dataSetRef?.identifier,
                     ),
                 }),
             ),

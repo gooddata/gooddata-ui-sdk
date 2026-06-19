@@ -6,12 +6,15 @@ import {
     type IExportDefinitionVisualizationObjectRequestPayload,
     type IFilter,
     type IInsight,
+    type IInsightParameterValue,
     isFilter,
     isFilterContextItem,
     isWidget,
     mergeFilters,
+    objRefToString,
 } from "@gooddata/sdk-model";
 
+import { exportParametersToValues } from "../../../_staging/automation/index.js";
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters/filterConverters.js";
 import { type ExtendedDashboardWidget } from "../../types/layoutTypes.js";
 
@@ -19,12 +22,34 @@ export function prepareCsvRawExecutionDefinition(
     executionDefinition: IExecutionDefinition | undefined,
     csvRawRequest: IExportDefinitionVisualizationObjectRequestPayload,
     insight: IInsight | undefined,
+    insightParameterValues: IInsightParameterValue[],
     widget: ExtendedDashboardWidget | undefined,
     commonDateFilterId: string | undefined,
 ): IExecutionDefinition | undefined {
+    if (!executionDefinition) {
+        return executionDefinition;
+    }
+
+    const withFilters = applyExportFilters(
+        executionDefinition,
+        csvRawRequest,
+        insight,
+        widget,
+        commonDateFilterId,
+    );
+    return applyExportParameters(withFilters, csvRawRequest, insightParameterValues);
+}
+
+function applyExportFilters(
+    executionDefinition: IExecutionDefinition,
+    csvRawRequest: IExportDefinitionVisualizationObjectRequestPayload,
+    insight: IInsight | undefined,
+    widget: ExtendedDashboardWidget | undefined,
+    commonDateFilterId: string | undefined,
+): IExecutionDefinition {
     const filters = csvRawRequest?.content?.filters;
 
-    if (!executionDefinition || !filters?.length || !insight) {
+    if (!filters?.length || !insight) {
         return executionDefinition;
     }
 
@@ -41,6 +66,42 @@ export function prepareCsvRawExecutionDefinition(
         ...executionDefinition,
         filters: mergedFilters,
     };
+}
+
+// Dialog overrides (`parametersByTab`) on top of the caller-resolved insight base. The base comes
+// from a selector, not the live execution, whose no-data fallback (`newDefForInsight`) has no params.
+function applyExportParameters(
+    executionDefinition: IExecutionDefinition,
+    csvRawRequest: IExportDefinitionVisualizationObjectRequestPayload,
+    insightParameterValues: IInsightParameterValue[],
+): IExecutionDefinition {
+    const stored = Object.values(csvRawRequest?.content?.parametersByTab ?? {}).flat();
+    const parameterValues = mergeParameterValues(insightParameterValues, exportParametersToValues(stored));
+
+    if (parameterValues.length === 0) {
+        return executionDefinition;
+    }
+
+    return {
+        ...executionDefinition,
+        executionConfig: {
+            ...executionDefinition.executionConfig,
+            parameterValues,
+        },
+    };
+}
+
+// Overlay overrides onto base by ref; override wins, base order preserved (`Map.set` on an existing
+// key keeps its position).
+function mergeParameterValues(
+    base: IInsightParameterValue[],
+    overrides: IInsightParameterValue[],
+): IInsightParameterValue[] {
+    const byRef = new Map(base.map((parameter) => [objRefToString(parameter.ref), parameter]));
+    for (const override of overrides) {
+        byRef.set(objRefToString(override.ref), override);
+    }
+    return [...byRef.values()];
 }
 
 function exportRequestFiltersToExecutionFilters(

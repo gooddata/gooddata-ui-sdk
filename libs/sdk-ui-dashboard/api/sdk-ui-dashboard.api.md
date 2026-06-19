@@ -11150,6 +11150,9 @@ export const selectFiltersWithInvalidSelection: DashboardSelector<string[]>;
 // @internal (undocumented)
 export const selectFilterValidationIncompatibleDefaultFiltersOverride: DashboardSelector<boolean>;
 
+// @internal
+export const selectFilterViewParameters: DashboardSelector<IDashboardParameter[] | undefined>;
+
 // @alpha (undocumented)
 export const selectFilterViews: DashboardSelector<IDashboardFilterView[]>;
 

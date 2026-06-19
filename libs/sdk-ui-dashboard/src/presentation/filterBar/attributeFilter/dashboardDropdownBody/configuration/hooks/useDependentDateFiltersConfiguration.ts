@@ -5,7 +5,13 @@ import { useCallback, useMemo, useState } from "react";
 import { isEqual } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { type IDashboardAttributeFilter, type IDashboardDateFilter, isUriRef } from "@gooddata/sdk-model";
+import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
+import {
+    type IDashboardAttributeFilter,
+    type IDashboardAttributeFilterByDate,
+    type IDashboardDateFilter,
+    isUriRef,
+} from "@gooddata/sdk-model";
 
 import { setAttributeFilterDependentDateFilters } from "../../../../../../model/commands/filters.js";
 import { useDispatchDashboardCommand } from "../../../../../../model/react/useDispatchDashboardCommand.js";
@@ -52,12 +58,14 @@ export function useDependentDateFiltersConfiguration(
         isSelected: boolean,
         isCommonDate: boolean,
     ) => {
-        const localIdentifier = item.dataSet;
-        invariant(!isUriRef(localIdentifier));
+        invariant(!isUriRef(item.dataSet));
 
+        // Match on item.localIdentifier rather than item.dataSet?.identifier (the dataset identifier):
+        // state entries now store dateFilter.localIdentifier as their key, which matches item.localIdentifier
+        // since both come from the same useDependentDateFilterConfigurationState initializer.
         const changedParentIndex = dependentDateFilters.findIndex(
             (dependentDateFilter) =>
-                dependentDateFilter.localIdentifier === localIdentifier?.identifier &&
+                dependentDateFilter.localIdentifier === item.localIdentifier &&
                 dependentDateFilter.isCommonDate === isCommonDate,
         );
 
@@ -94,12 +102,27 @@ export function useDependentDateFiltersConfiguration(
     const onDependentDateFiltersChange = useCallback(() => {
         // dispatch the command only if the configuration changed
         if (onDependentDateFiltersConfigurationChanged) {
-            const dateFilters = dependentDateFilters
+            // Common date filter has no dimension of its own, so we reference it by its own
+            // localIdentifier (falling back to the canonical common-date id) and carry the chosen
+            // dimension in the separate `dataSet` field. Specific date filters are referenced by their
+            // localIdentifier and need no dataSet (it is derived from the referenced filter).
+            const commonDateLocalId =
+                commonDateFilter?.dateFilter.localIdentifier ?? generateDateFilterLocalIdentifier(0);
+
+            const dateFilters: IDashboardAttributeFilterByDate[] = dependentDateFilters
                 .filter((filter) => filter.isSelected)
-                .map((filter) => ({
-                    filterLocalIdentifier: filter.localIdentifier,
-                    isCommonDate: filter.isCommonDate,
-                }));
+                .map((filter) =>
+                    filter.isCommonDate
+                        ? {
+                              filterLocalIdentifier: commonDateLocalId,
+                              isCommonDate: true,
+                              dataSet: filter.dataSet,
+                          }
+                        : {
+                              filterLocalIdentifier: filter.localIdentifier,
+                              isCommonDate: false,
+                          },
+                );
 
             saveDependentDateFilterCommand(currentFilter.attributeFilter.localIdentifier!, dateFilters);
         }
@@ -107,6 +130,7 @@ export function useDependentDateFiltersConfiguration(
         dependentDateFilters,
         onDependentDateFiltersConfigurationChanged,
         currentFilter,
+        commonDateFilter,
         saveDependentDateFilterCommand,
     ]);
 

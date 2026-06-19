@@ -148,6 +148,10 @@ export interface DeclarativeColumn {
      * Column is nullable
      */
     'isNullable'?: boolean;
+    /**
+     * Value used as sentinel for nullable columns
+     */
+    'nullValue'?: string;
 }
 
 export type DeclarativeColumnDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
@@ -296,6 +300,10 @@ export interface SqlColumn {
      * Column description/comment from database
      */
     'description'?: string;
+    /**
+     * Value used as sentinel for null values in the column
+     */
+    'nullValue'?: string;
 }
 
 export type SqlColumnDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';

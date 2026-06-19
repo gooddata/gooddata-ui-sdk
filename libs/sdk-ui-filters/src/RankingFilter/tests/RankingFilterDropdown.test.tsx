@@ -394,9 +394,9 @@ describe("RankingFilterDropdown", () => {
             expect(document.querySelectorAll(".s-rf-operator-dropdown-body .gd-list-item")).toHaveLength(4);
         });
 
-        it("should default a flagless filter to the 'Top (with ties)' condition", () => {
+        it("should default a flagless filter to the non-strict 'Top' condition", () => {
             renderComponent({ enableRankingStrictLimit: true });
-            expect(component.getOperator()).toEqual("Top (with ties)");
+            expect(component.getOperator()).toEqual("Top");
         });
 
         it("should call onApply with strictLimitOfRows=false when a 'with ties' condition is picked", () => {
@@ -415,7 +415,7 @@ describe("RankingFilterDropdown", () => {
                 },
             });
 
-            component.openOperatorDropdown().setOperator("Top (with ties)");
+            component.openOperatorDropdown().setOperator("Top");
             component.clickApply();
 
             expect(onApply).toHaveBeenCalledWith({
@@ -432,7 +432,7 @@ describe("RankingFilterDropdown", () => {
             const onApply = vi.fn();
             renderComponent({ onApply, enableRankingStrictLimit: true });
 
-            component.openOperatorDropdown().setOperator("Bottom");
+            component.openOperatorDropdown().setOperator("Bottom (strict)");
             component.clickApply();
 
             expect(onApply).toHaveBeenCalledWith({
@@ -467,24 +467,24 @@ describe("RankingFilterDropdown", () => {
             expect(component.getPreview()).toEqual(expectedPreview);
         });
 
-        it("should annotate the preview with '(with ties)' for the non-strict condition", () => {
+        it("should annotate the preview with '(strict)' for the strict condition", () => {
             renderComponent({
                 filter: newRankingFilter(mockMeasure1Ref, "TOP", 10),
                 enableRankingStrictLimit: true,
             });
-            component.openOperatorDropdown().setOperator("Top (with ties)");
+            component.openOperatorDropdown().setOperator("Top (strict)");
 
-            expect(component.getPreview()).toEqual("Top 10 (with ties) of Measure 1");
+            expect(component.getPreview()).toEqual("Top 10 (strict) of Measure 1");
         });
 
-        it("should not annotate the preview for the strict condition", () => {
+        it("should not annotate the preview for the non-strict condition", () => {
             renderComponent({
                 filter: {
                     rankingFilter: {
                         measure: mockMeasure1Ref,
                         operator: "TOP",
                         value: 10,
-                        strictLimitOfRows: true,
+                        strictLimitOfRows: false,
                     },
                 },
                 enableRankingStrictLimit: true,

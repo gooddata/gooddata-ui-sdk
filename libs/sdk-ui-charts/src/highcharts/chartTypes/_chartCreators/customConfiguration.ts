@@ -1363,6 +1363,15 @@ function getYAxisTickConfiguration(
     };
 }
 
+function isMeasureFormatInteger(format: string | undefined): boolean {
+    if (!format) return false;
+    return format.split(";").every((segment) => {
+        const dotIndex = segment.indexOf(".");
+        if (dotIndex === -1) return true;
+        return !/[0#]/.test(segment.slice(dotIndex + 1));
+    });
+}
+
 export const getFormatterProperty = (
     chartOptions: IChartOptions,
     axisPropsKey: "yAxisProps" | "xAxisProps" | "secondary_yAxisProps" | "secondary_xAxisProps",
@@ -1422,6 +1431,14 @@ const getYAxisConfiguration = (
 
         const tickConfiguration = getYAxisTickConfiguration(chartOptions, axisPropsKey);
 
+        // When the axis uses a custom integer format (e.g. Rounded "#,##0"), Highcharts may generate
+        // float tick positions (e.g. 0.5, 1.5) that the formatter rounds to the same integer, producing
+        // duplicate labels. Setting allowDecimals: false forces integer-only tick positions.
+        // This must not apply to decimal formats ("#,##0.00") where float ticks render distinctly.
+        const useCustomFormat = chartOptions?.[axisPropsKey]?.format === "inherit";
+        const allowDecimalsProp =
+            useCustomFormat && isMeasureFormatInteger(axis.format) ? { allowDecimals: false } : {};
+
         const titleTextProp = visible ? {} : { text: null }; // new way how to hide title instead of deprecated 'enabled'
         const isInvertedChart = isInvertedChartType(chartOptions.type, chartConfig?.orientation?.position);
 
@@ -1452,6 +1469,7 @@ const getYAxisConfiguration = (
             ...maxProp,
             ...minProp,
             ...tickConfiguration,
+            ...allowDecimalsProp,
         };
     });
 };

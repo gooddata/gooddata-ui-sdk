@@ -12,14 +12,10 @@ import {
 import { getAutomationExportParametersByTab } from "../../../../_staging/automation/index.js";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { selectEnableParameters } from "../../../../model/store/config/configSelectors.js";
-import {
-    type IAutomationFiltersTab,
-    selectAutomationCommonDateFilterId,
-    selectAutomationFiltersByTab,
-    selectDashboardFiltersWithoutCrossFiltering,
-} from "../../../../model/store/filtering/dashboardFilterSelectors.js";
-import type { ExtendedDashboardWidget } from "../../../../model/types/layoutTypes.js";
+import type { IAutomationFiltersTab } from "../../../../model/store/filtering/types.js";
+import { type ExtendedDashboardWidget } from "../../../../model/types/layoutTypes.js";
 import { removeIgnoredWidgetFilters } from "../../../../model/utils/widgetFilters.js";
+import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
 
 import {
     useAutomationVisibleFilters,
@@ -168,7 +164,11 @@ export const useAutomationFiltersSelect = ({
      */
     automationToEdit?: IAutomationMetadataObject;
 }): IUseAutomationFiltersSelect => {
-    const availableFilters = useDashboardSelector(selectDashboardFiltersWithoutCrossFiltering);
+    const {
+        availableFilters,
+        automationFiltersByTab: allFiltersByTab,
+        commonDateFilterId,
+    } = useAutomationsContext();
     const availableFiltersWithoutIgnoredWidgetFilters = removeIgnoredWidgetFilters(availableFilters, widget);
 
     const availableFiltersAsVisibleFilters = useAutomationVisibleFilters(
@@ -183,15 +183,12 @@ export const useAutomationFiltersSelect = ({
     );
 
     // Get filters per tab - only applicable for whole dashboard automations (no widget)
-    const allFiltersByTab = useDashboardSelector(selectAutomationFiltersByTab);
     const availableFiltersByTab = allFiltersByTab.reduce<Record<string, FilterContextItem[]>>((acc, tab) => {
         acc[tab.tabId] = tab.availableFilters;
         return acc;
     }, {});
 
     const availableFiltersAsVisibleFiltersByTab = useAutomationVisibleFiltersByTab(availableFiltersByTab);
-    // Safe to get from active tab selector as it's a consistent identifier
-    const commonDateFilterId = useDashboardSelector(selectAutomationCommonDateFilterId);
 
     // Only provide filtersPerTab for whole dashboard automations when there are multiple tabs
     const isDashboardAutomation = !widget;

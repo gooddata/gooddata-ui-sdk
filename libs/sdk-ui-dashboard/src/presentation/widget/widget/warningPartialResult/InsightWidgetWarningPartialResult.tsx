@@ -61,6 +61,7 @@ export function InsightWidgetWarningPartialResult({
                     autofocusOnOpen={false}
                 >
                     <WidgetNotice
+                        dataTestId="partial-data-warning"
                         type="warning"
                         message={<FormattedMessage id="partial_data_warning.title" />}
                         detail={<FormattedMessage {...detailMessage} />}

@@ -3,9 +3,13 @@
 import { compact } from "lodash-es";
 
 import {
+    type AiAlertProposal,
     type AnomalyDetectionWrapper,
+    type AutomationAttributeItem,
     type AutomationAutomationAlert,
     type AutomationAutomationExternalRecipient,
+    type AutomationFilterDefinition,
+    type AutomationMeasureItem,
     type AutomationParameterItem,
     type ComparisonWrapper,
     type JsonApiAnalyticalDashboardOutWithLinks,
@@ -23,6 +27,7 @@ import {
     type JsonApiWorkspaceAutomationOutRelationships,
     type JsonApiWorkspaceAutomationOutWithLinks,
     type JsonApiWorkspaceOutWithLinks,
+    type MeasureItem,
     type RangeWrapper,
     type RelativeWrapper,
 } from "@gooddata/api-client-tiger";
@@ -363,7 +368,7 @@ function convertParameterItems(items: AutomationParameterItem[]): IInsightParame
 }
 
 export const convertAlert = (
-    alert: AutomationAutomationAlert | undefined,
+    alert: AutomationAutomationAlert | AiAlertProposal["alert"] | undefined,
     state?: JsonApiAutomationOutAttributesStateEnum,
 ): IAutomationAlert | undefined => {
     if (!alert) {
@@ -384,16 +389,17 @@ export const convertAlert = (
 
     const base = {
         execution: {
-            attributes: execution.attributes?.map(convertAttribute) ?? [],
-            measures: execution.measures.map(convertMeasure),
-            auxMeasures: execution.auxMeasures?.map(convertMeasure) ?? [],
-            filters: execution.filters.map(convertFilter),
+            attributes:
+                execution.attributes?.map((a) => convertAttribute(a as AutomationAttributeItem)) ?? [],
+            measures: execution.measures?.map((m) => convertMeasure(m as AutomationMeasureItem)) ?? [],
+            auxMeasures: execution.auxMeasures?.map((m: MeasureItem) => convertMeasure(m)) ?? [],
+            filters: execution.filters?.map((f) => convertFilter(f as AutomationFilterDefinition)) ?? [],
             ...(parameters.length ? { parameters } : {}),
         },
         trigger: {
             state: state ?? "ACTIVE",
             mode: alert.trigger,
-            interval: alert.interval,
+            interval: alert.interval || undefined,
         },
     };
 

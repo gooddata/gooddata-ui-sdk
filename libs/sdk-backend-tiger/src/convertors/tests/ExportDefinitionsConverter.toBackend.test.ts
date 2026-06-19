@@ -108,6 +108,142 @@ describe("ExportDefinitionsConverter toBackend", () => {
         expect(result.delimiter).toBe("|");
     });
 
+    it("routes executionConfig.parameterValues to execution.parameters in raw export", () => {
+        const request: IExportDefinitionVisualizationObjectRequestPayload = {
+            type: "visualizationObject",
+            fileName: "raw-export",
+            format: "CSV_RAW",
+            content: {
+                visualizationObject: "visId",
+                widget: "widgetId",
+                dashboard: "dashboardId",
+            },
+        };
+        const widgetExecution: IExecutionDefinition = {
+            workspace: "workspaceId",
+            buckets: [],
+            attributes: [],
+            measures: [],
+            filters: [],
+            sortBy: [],
+            dimensions: [],
+            executionConfig: {
+                parameterValues: [{ ref: idRef("topN", "parameter"), value: 5 }],
+            },
+        };
+
+        const result = convertToRawExportRequest(request, widgetExecution);
+
+        expect(result.execution.parameters).toEqual([
+            { parameter: { identifier: { id: "topN", type: "parameter" } }, value: "5" },
+        ]);
+        // parameterValues must not leak into executionSettings (backend rejects unknown fields there)
+        expect(result.executionSettings).toBeUndefined();
+    });
+
+    it("keeps real execution settings in executionSettings, stripped of parameterValues, in raw export", () => {
+        const request: IExportDefinitionVisualizationObjectRequestPayload = {
+            type: "visualizationObject",
+            fileName: "raw-export",
+            format: "CSV_RAW",
+            content: {
+                visualizationObject: "visId",
+                widget: "widgetId",
+                dashboard: "dashboardId",
+            },
+        };
+        const widgetExecution: IExecutionDefinition = {
+            workspace: "workspaceId",
+            buckets: [],
+            attributes: [],
+            measures: [],
+            filters: [],
+            sortBy: [],
+            dimensions: [],
+            executionConfig: {
+                dataSamplingPercentage: 50,
+                parameterValues: [{ ref: idRef("topN", "parameter"), value: 5 }],
+            },
+        };
+
+        const result = convertToRawExportRequest(request, widgetExecution);
+
+        expect(result.executionSettings).toEqual({ dataSamplingPercentage: 50 });
+        expect(result.execution.parameters).toHaveLength(1);
+    });
+
+    it("routes executionConfig.measureDefinitionOverrides to execution.measureDefinitionOverrides in raw export", () => {
+        const request: IExportDefinitionVisualizationObjectRequestPayload = {
+            type: "visualizationObject",
+            fileName: "raw-export",
+            format: "CSV_RAW",
+            content: {
+                visualizationObject: "visId",
+                widget: "widgetId",
+                dashboard: "dashboardId",
+            },
+        };
+        const widgetExecution: IExecutionDefinition = {
+            workspace: "workspaceId",
+            buckets: [],
+            attributes: [],
+            measures: [],
+            filters: [],
+            sortBy: [],
+            dimensions: [],
+            executionConfig: {
+                measureDefinitionOverrides: [
+                    {
+                        item: { identifier: { id: "m1", type: "metric" } },
+                        definition: { inline: { maql: "SELECT 1" } },
+                    },
+                ],
+            },
+        };
+
+        const result = convertToRawExportRequest(request, widgetExecution);
+
+        expect(result.execution.measureDefinitionOverrides).toEqual([
+            {
+                item: { identifier: { id: "m1", type: "metric" } },
+                definition: { inline: { maql: "SELECT 1" } },
+            },
+        ]);
+        // like parameterValues, overrides must not leak into executionSettings
+        expect(result.executionSettings).toBeUndefined();
+    });
+
+    it("emits metadata.parametersByTab from viz-object content in raw export", () => {
+        const parameter: IDashboardExportParameter = { id: "topN", value: "5", title: "Top N" };
+        const request: IExportDefinitionVisualizationObjectRequestPayload = {
+            type: "visualizationObject",
+            fileName: "raw-export",
+            format: "CSV_RAW",
+            content: {
+                visualizationObject: "visId",
+                widget: "widgetId",
+                dashboard: "dashboardId",
+                parametersByTab: { tabOwning: [parameter] },
+            },
+        };
+        const widgetExecution: IExecutionDefinition = {
+            workspace: "workspaceId",
+            buckets: [],
+            attributes: [],
+            measures: [],
+            filters: [],
+            sortBy: [],
+            dimensions: [],
+        };
+
+        const result = convertToRawExportRequest(request, widgetExecution);
+        const metadata = result.metadata as {
+            parametersByTab?: Record<string, IDashboardExportParameter[]>;
+        };
+
+        expect(metadata.parametersByTab?.["tabOwning"]).toEqual([parameter]);
+    });
+
     it("converts dashboard filter context metadata in visual export", () => {
         const dashboardFilter: FilterContextItem = {
             attributeFilter: {

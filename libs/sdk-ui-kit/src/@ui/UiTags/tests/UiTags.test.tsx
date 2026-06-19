@@ -1,6 +1,8 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { fireEvent, render, screen } from "@testing-library/react";
+import { useState } from "react";
+
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type IAccessibilityConfigBase } from "../../../typings/accessibility.js";
@@ -168,6 +170,69 @@ describe("UiTags", () => {
         fireEvent.keyDown(screen.getByRole("button", { name: "Cancel" }), { code: "Tab", key: "Tab" });
         expect(screen.getByRole("button", { name: "Save" })).toHaveFocus();
     });
+
+    it("should focus the previous tag after deleting the last tag", async () => {
+        render(<StatefulTags initialTags={shortTags} />);
+
+        fireEvent.click(screen.getByLabelText("Remove Tag 3"));
+
+        await waitFor(() => {
+            expect(document.activeElement).toHaveClass("gd-ui-kit-tag");
+        });
+        expect(document.activeElement?.closest("[data-tag-id]")).toHaveAttribute("data-tag-id", "tag2");
+    });
+
+    it("should focus the next tag after deleting the first tag", async () => {
+        render(<StatefulTags initialTags={shortTags} />);
+
+        fireEvent.click(screen.getByLabelText("Remove Tag 1"));
+
+        await waitFor(() => {
+            expect(document.activeElement).toHaveClass("gd-ui-kit-tag");
+        });
+        expect(document.activeElement?.closest("[data-tag-id]")).toHaveAttribute("data-tag-id", "tag2");
+    });
+
+    it("should focus the add button when the last remaining tag is deleted", async () => {
+        const singleTag: IUiTagDef[] = [{ id: "single", label: "Single" }];
+
+        render(<StatefulTags initialTags={singleTag} canCreateTag />);
+
+        fireEvent.click(screen.getByLabelText("Remove Single"));
+
+        await waitFor(() => {
+            expect(screen.getByLabelText("Add tag")).toHaveFocus();
+        });
+    });
+
+    it("should focus the next hidden tag after deleting a hidden tag in dialog", async () => {
+        render(<StatefulTags initialTags={shortTags} mode="single-line" canCreateTag={false} />);
+
+        fireEvent.click(screen.getByRole("button", { name: "More tags" }));
+        fireEvent.click(screen.getByLabelText("Remove Tag 3"));
+
+        await waitFor(() => {
+            expect(document.activeElement).toHaveClass("gd-ui-kit-tag");
+        });
+        expect(document.activeElement?.closest("[data-tag-id]")).toHaveAttribute("data-tag-id", "tag2");
+    });
+
+    it("should focus the last visible tag when the last hidden tag is deleted in dialog", async () => {
+        const tags: IUiTagDef[] = [
+            { id: "visible", label: "Visible Tag" },
+            { id: "hidden", label: "Hidden Tag" },
+        ];
+
+        render(<StatefulTags initialTags={tags} mode="single-line" canCreateTag={false} />);
+
+        fireEvent.click(screen.getByRole("button", { name: "More tags" }));
+        fireEvent.click(screen.getByLabelText("Remove Hidden Tag"));
+
+        await waitFor(() => {
+            expect(document.activeElement).toHaveClass("gd-ui-kit-tag");
+        });
+        expect(document.activeElement?.closest("[data-tag-id]")).toHaveAttribute("data-tag-id", "visible");
+    });
 });
 
 function expectVisible(text: string, deletable: boolean) {
@@ -205,4 +270,23 @@ function expectNoTags() {
     expect(screen.queryByText("Tag 3")).not.toBeInTheDocument();
 
     expect(screen.queryByText("No tags")).toBeInTheDocument();
+}
+
+function StatefulTags(props: Partial<Omit<IUiTagsProps, "onTagRemove">> & { initialTags: IUiTagDef[] }) {
+    const { initialTags, ...rest } = props;
+    const [tags, setTags] = useState<IUiTagDef[]>(initialTags);
+
+    return (
+        <div style={{ width: 500 }}>
+            <UiTags
+                tags={tags}
+                onTagRemove={(tag) => setTags((t) => t.filter((t2) => t2.id !== tag.id))}
+                onTagAdd={vi.fn()}
+                accessibilityConfig={{ ariaLabel: "Tags" }}
+                mode="multi-line"
+                canDeleteTags
+                {...rest}
+            />
+        </div>
+    );
 }

@@ -56,6 +56,8 @@ import { selectExecutionTimestamp } from "../../../../model/store/ui/uiSelectors
 import { getWidgetTitle } from "../../../../model/utils/dashboardItemUtils.js";
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../../constants/zIndex.js";
 import { IntlWrapper } from "../../../localization/IntlWrapper.js";
+import { useBuildAutomationsContext } from "../../connectors/hooks/useBuildAutomationsContext.js";
+import { AutomationsContextProvider } from "../../contexts/AutomationsContext.js";
 import { ApplyCurrentFiltersConfirmDialog } from "../../shared/automationFilters/components/ApplyLatestFiltersConfirmDialog.js";
 import { AutomationFiltersSelect } from "../../shared/automationFilters/components/AutomationFiltersSelect.js";
 import { useValidateExistingAutomationFilters } from "../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
@@ -739,8 +741,6 @@ export function ScheduledMailDialogRenderer({
  */
 export function DefaultScheduledEmailDialog(props: IScheduledEmailDialogProps) {
     const { isLoading, onCancel, scheduledExportToEdit } = props;
-    const locale = useDashboardSelector(selectLocale);
-
     if (isLoading) {
         return (
             <DefaultLoadingScheduledEmailDialog
@@ -749,11 +749,19 @@ export function DefaultScheduledEmailDialog(props: IScheduledEmailDialogProps) {
             />
         );
     }
+    return <DefaultScheduledEmailDialogBody {...props} />;
+}
+
+function DefaultScheduledEmailDialogBody(props: IScheduledEmailDialogProps) {
+    const locale = useDashboardSelector(selectLocale);
+    const automationsContext = useBuildAutomationsContext();
 
     return (
-        <IntlWrapper locale={locale}>
-            <ScheduledMailDialogRenderer {...props} />
-        </IntlWrapper>
+        <AutomationsContextProvider value={automationsContext}>
+            <IntlWrapper locale={locale}>
+                <ScheduledMailDialogRenderer {...props} />
+            </IntlWrapper>
+        </AutomationsContextProvider>
     );
 }
 

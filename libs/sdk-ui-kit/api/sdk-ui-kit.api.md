@@ -3790,6 +3790,8 @@ export interface IItemProps {
     style?: CSSProperties;
     // (undocumented)
     subMenu?: boolean;
+    // (undocumented)
+    testId?: string;
 }
 
 // @internal (undocumented)
@@ -5427,7 +5429,7 @@ export interface ISingleSelectListItemProps {
 }
 
 // @internal
-export const isLabelsPickerItemChecked: (item: IUiLabelsPickerItem, selectedIds: readonly string[]) => boolean;
+export const isLabelsChecklistItemChecked: (item: IUiLabelsChecklistItem, selectedIds: readonly string[]) => boolean;
 
 // @internal (undocumented)
 export interface ISnapPoints {
@@ -6715,13 +6717,22 @@ export interface IUiGranteeAvatarProps {
 
 // @internal (undocumented)
 export interface IUiGranteeRowControlsProps {
+    // (undocumented)
     dataTestId?: string;
-    labels: ReadonlyArray<IUiLabelsPickerItem>;
+    effectivePermission?: PermissionMenuLevel;
+    isDisabled?: boolean;
+    labels: ReadonlyArray<IUiLabelsChecklistItem>;
+    // (undocumented)
     onLabelsChange: (selectedIds: string[]) => void;
+    // (undocumented)
     onPermissionChange: (level: PermissionMenuLevel) => void;
+    // (undocumented)
     onRemoveAccess?: () => void;
+    // (undocumented)
     onTransferOwnership?: () => void;
+    // (undocumented)
     permissionLevel: PermissionMenuLevel;
+    // (undocumented)
     selectedLabelIds: ReadonlyArray<string>;
 }
 
@@ -6731,6 +6742,7 @@ export interface IUiGranteeRowProps {
     dataTestId?: string;
     email?: string;
     isOwner?: boolean;
+    isPending?: boolean;
     kind: GranteeAvatarKind;
     name: string;
 }
@@ -6855,6 +6867,29 @@ export interface IUiLabelRowProps {
 }
 
 // @internal
+export interface IUiLabelsChecklistItem {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    kind?: LabelRowKind;
+    // (undocumented)
+    label: string;
+    locked?: boolean;
+}
+
+// @internal (undocumented)
+export interface IUiLabelsChecklistProps {
+    // (undocumented)
+    dataTestId?: string;
+    defaultSelectedIds: ReadonlyArray<string>;
+    // (undocumented)
+    items: ReadonlyArray<IUiLabelsChecklistItem>;
+    onApply: (selectedIds: string[]) => void;
+    onBack: () => void;
+    onClose: () => void;
+}
+
+// @internal
 export interface IUiLabelsListItem {
     id: string;
     kind?: LabelRowKind;
@@ -6865,23 +6900,6 @@ export interface IUiLabelsListItem {
 export interface IUiLabelsListProps {
     dataTestId?: string;
     items: ReadonlyArray<IUiLabelsListItem>;
-}
-
-// @internal
-export interface IUiLabelsPickerItem {
-    id: string;
-    kind?: LabelRowKind;
-    label: string;
-    locked?: boolean;
-}
-
-// @internal (undocumented)
-export interface IUiLabelsPickerProps {
-    anchor: ReactElement<any>;
-    dataTestId?: string;
-    defaultSelectedIds: ReadonlyArray<string>;
-    items: ReadonlyArray<IUiLabelsPickerItem>;
-    onApply: (selectedIds: string[]) => void;
 }
 
 // @internal (undocumented)
@@ -7282,6 +7300,19 @@ export interface IUiModalDialogProps {
 }
 
 // @internal (undocumented)
+export interface IUiMoreOptionsMenuProps {
+    // (undocumented)
+    dataTestId?: string;
+    // (undocumented)
+    isDisabled?: boolean;
+    labels?: ReadonlyArray<IUiLabelsChecklistItem>;
+    // (undocumented)
+    onLabelsChange?: (selectedIds: string[]) => void;
+    onTransferOwnership?: () => void;
+    selectedLabelIds?: ReadonlyArray<string>;
+}
+
+// @internal (undocumented)
 export interface IUiNavigationBypassProps {
     // (undocumented)
     items: IUiNavigationItem[];
@@ -7323,6 +7354,7 @@ export interface IUiObjectShareDialogGrantee {
     email?: string;
     id: string;
     isOwner?: boolean;
+    isPending?: boolean;
     kind: GranteeAvatarKind;
     name: string;
 }
@@ -7428,11 +7460,8 @@ export interface IUiPaginationButtonProps {
 export interface IUiPermissionMenuProps {
     anchor: ReactElement<any>;
     dataTestId?: string;
-    labelsCounter?: string;
-    onLabelsClick?: () => void;
     onPermissionChange: (level: PermissionMenuLevel) => void;
     onRemoveAccess?: () => void;
-    onTransferOwnership?: () => void;
     selectedLevel?: PermissionMenuLevel;
 }
 
@@ -7471,10 +7500,12 @@ export interface IUiPopoverProps {
     id?: string;
     // (undocumented)
     initialFocus?: RefObject<HTMLElement> | string;
+    isOpen?: boolean;
     // (undocumented)
     onClose?: () => void;
     // (undocumented)
     onOpen?: () => void;
+    onOpenChange?: (open: boolean) => void;
     // (undocumented)
     returnFocusAfterClose?: boolean;
     // (undocumented)
@@ -7870,6 +7901,7 @@ export interface IUiTooltipProps {
     offset?: number;
     onClose?: () => void;
     onOpen?: () => void;
+    onOpenChange?: (open: boolean) => void;
     optimalPlacement?: boolean;
     showArrow?: boolean;
     triggerBy?: Array<"hover" | "focus" | "click">;
@@ -9112,10 +9144,10 @@ export function UiLabelChecklistRow(input: IUiLabelChecklistRowProps): JSX.Eleme
 export function UiLabelRow(input: IUiLabelRowProps): JSX.Element;
 
 // @internal
-export function UiLabelsList(input: IUiLabelsListProps): JSX.Element;
+export function UiLabelsChecklist(input: IUiLabelsChecklistProps): JSX.Element;
 
 // @internal
-export function UiLabelsPicker(input: IUiLabelsPickerProps): JSX.Element;
+export function UiLabelsList(input: IUiLabelsListProps): JSX.Element;
 
 // @internal (undocumented)
 export type UiLeveledTreeView<Levels extends unknown[]> = UiTreeViewNode<Levels>;
@@ -9139,6 +9171,9 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
 
 // @internal
 export function UiModalDialog(input: IUiModalDialogProps): JSX.Element | null;
+
+// @internal
+export function UiMoreOptionsMenu(input: IUiMoreOptionsMenuProps): JSX.Element;
 
 // @internal (undocumented)
 export function UiNavigationBypass(input: IUiNavigationBypassProps): JSX.Element;
@@ -9232,6 +9267,7 @@ export type UiTagProps = {
     onDeleteKeyDown?: (event: KeyboardEvent_2<HTMLButtonElement>) => void;
     tabIndex?: number;
     deleteTabIndex?: number;
+    labelAs?: "button" | "span";
 };
 
 // @internal (undocumented)

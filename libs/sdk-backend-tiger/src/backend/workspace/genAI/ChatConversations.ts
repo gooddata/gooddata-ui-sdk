@@ -326,6 +326,8 @@ export type ChatConversationThreadQueryConfig = {
     userQuestion: string;
     limitSearch?: number;
     limitCreate?: number;
+    includeTags?: string[];
+    excludeTags?: string[];
     userContext?: IGenAIUserContext;
     objectTypes?: GenAIObjectType[];
     allowedRelationshipTypes?: IAllowedRelationshipType[];
@@ -366,6 +368,18 @@ export class ChatConversationThreadQuery implements IChatConversationThreadQuery
             objectTypes,
         });
     }
+    withExcludeTags(excludeTags?: string[]): IChatConversationThreadQuery {
+        return new ChatConversationThreadQuery(this.authCall, this.dateNormalizer, {
+            ...this.requestParameters,
+            excludeTags,
+        });
+    }
+    withIncludeTags(includeTags?: string[]): IChatConversationThreadQuery {
+        return new ChatConversationThreadQuery(this.authCall, this.dateNormalizer, {
+            ...this.requestParameters,
+            includeTags,
+        });
+    }
     withAllowedRelationshipTypes(
         relationshipTypes?: IAllowedRelationshipType[],
     ): IChatConversationThreadQuery {
@@ -395,6 +409,8 @@ export class ChatConversationThreadQuery implements IChatConversationThreadQuery
                                 objectTypes: this.requestParameters.objectTypes,
                                 searchLimit: this.requestParameters.limitSearch,
                                 allowedRelationshipTypes: this.requestParameters.allowedRelationshipTypes,
+                                excludeTags: this.requestParameters.excludeTags,
+                                includeTags: this.requestParameters.includeTags,
                             },
                         },
                         userContext: convertUserContext(
@@ -439,6 +455,8 @@ export class ChatConversationThreadQuery implements IChatConversationThreadQuery
                                         objectTypes: requestParameters.objectTypes,
                                         searchLimit: requestParameters.limitSearch,
                                         allowedRelationshipTypes: requestParameters.allowedRelationshipTypes,
+                                        excludeTags: requestParameters.excludeTags,
+                                        includeTags: requestParameters.includeTags,
                                     },
                                 },
                                 userContext: convertUserContext(

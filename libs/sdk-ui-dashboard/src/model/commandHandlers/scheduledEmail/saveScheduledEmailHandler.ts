@@ -38,6 +38,7 @@ import {
 } from "../../store/insights/insightsSelectors.js";
 import { selectPreloadedAttributesWithReferences } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { selectWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
+import { selectReferencedInsightParameterValuesForWidget } from "../../store/tabs/parameters/parametersSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { prepareGeoRawExportDefinition } from "../common/prepareGeoRawExportDefinition.js";
 
@@ -84,6 +85,9 @@ export function* saveScheduledEmailHandler(
     const insight: ReturnType<ReturnType<typeof selectInsightByWidgetRef>> = yield select(
         selectInsightByWidgetRef(ref),
     );
+    const insightParameterValues: ReturnType<
+        ReturnType<typeof selectReferencedInsightParameterValuesForWidget>
+    > = yield select(selectReferencedInsightParameterValuesForWidget(ref));
 
     const locale = yield select(selectLocale);
     const messages = yield call(resolveMessages, locale);
@@ -116,6 +120,7 @@ export function* saveScheduledEmailHandler(
         preparedExecutionDefinition,
         csvRawRequest,
         insight,
+        insightParameterValues,
         widget,
         commonDateFilterId,
     );

@@ -4,12 +4,17 @@ import { IntlProvider } from "react-intl";
 import { action } from "storybook/actions";
 
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
-import { type IUiLabelsPickerItem, UiGranteeRow, UiGranteeRowControls, UiIcon } from "@gooddata/sdk-ui-kit";
+import {
+    type IUiLabelsChecklistItem,
+    UiGranteeRow,
+    UiGranteeRowControls,
+    UiIcon,
+} from "@gooddata/sdk-ui-kit";
 
 import { type IStoryParameters, State } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
-const LABELS: IUiLabelsPickerItem[] = [
+const LABELS: IUiLabelsChecklistItem[] = [
     { id: "id", label: "Customer ID", kind: "primary", locked: true },
     { id: "name", label: "Customer Name", kind: "default" },
     { id: "email", label: "Customer Email" },

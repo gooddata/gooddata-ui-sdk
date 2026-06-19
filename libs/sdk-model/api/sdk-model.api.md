@@ -1732,6 +1732,7 @@ export interface IDashboardAttributeFilter {
 
 // @beta
 export interface IDashboardAttributeFilterByDate {
+    dataSet?: ObjRef;
     filterLocalIdentifier: string;
     isCommonDate: boolean;
 }

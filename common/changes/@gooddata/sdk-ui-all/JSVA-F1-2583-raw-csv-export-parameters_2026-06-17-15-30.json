@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "Send raw CSV export parameters via AFM execution",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

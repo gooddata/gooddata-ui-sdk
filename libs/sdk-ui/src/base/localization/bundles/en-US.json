@@ -2460,24 +2460,24 @@
         "crowdinContext": "Section title that shows ranking filter preview."
     },
     "rankingFilter.preview.top_without_attribute": {
-        "text": "Top {value}{withTies} of <strong>{measure}</strong>",
-        "crowdinContext": "Preview text showing the top N values based on a measure, where {value} is the number of items and {measure} is the measure name. {withTies} is an optional ' (with ties)' suffix. Used when no attribute is specified for ranking."
+        "text": "Top {value}{conditionSuffix} of <strong>{measure}</strong>",
+        "crowdinContext": "Preview text showing the top N values based on a measure, where {value} is the number of items and {measure} is the measure name. {conditionSuffix} is an optional ' (strict)' suffix. Used when no attribute is specified for ranking."
     },
     "rankingFilter.preview.bottom_without_attribute": {
-        "text": "Bottom {value}{withTies} of <strong>{measure}</strong>",
-        "crowdinContext": "Preview text showing the bottom N values based on a measure, where {value} is the number of items and {measure} is the measure name. {withTies} is an optional ' (with ties)' suffix. Used when no attribute is specified for ranking."
+        "text": "Bottom {value}{conditionSuffix} of <strong>{measure}</strong>",
+        "crowdinContext": "Preview text showing the bottom N values based on a measure, where {value} is the number of items and {measure} is the measure name. {conditionSuffix} is an optional ' (strict)' suffix. Used when no attribute is specified for ranking."
     },
     "rankingFilter.preview.top_with_attribute": {
-        "text": "Top {value}{withTies} out of <strong>{attribute}</strong> based on <strong>{measure}</strong>",
-        "crowdinContext": "Preview text showing the top N values of a specific attribute based on a measure, where {value} is the number of items, {attribute} is the attribute name, and {measure} is the measure name. {withTies} is an optional ' (with ties)' suffix."
+        "text": "Top {value}{conditionSuffix} out of <strong>{attribute}</strong> based on <strong>{measure}</strong>",
+        "crowdinContext": "Preview text showing the top N values of a specific attribute based on a measure, where {value} is the number of items, {attribute} is the attribute name, and {measure} is the measure name. {conditionSuffix} is an optional ' (strict)' suffix."
     },
     "rankingFilter.preview.bottom_with_attribute": {
-        "text": "Bottom {value}{withTies} out of <strong>{attribute}</strong> based on <strong>{measure}</strong>",
-        "crowdinContext": "Preview text showing the bottom N values of a specific attribute based on a measure, where {value} is the number of items, {attribute} is the attribute name, and {measure} is the measure name. {withTies} is an optional ' (with ties)' suffix."
+        "text": "Bottom {value}{conditionSuffix} out of <strong>{attribute}</strong> based on <strong>{measure}</strong>",
+        "crowdinContext": "Preview text showing the bottom N values of a specific attribute based on a measure, where {value} is the number of items, {attribute} is the attribute name, and {measure} is the measure name. {conditionSuffix} is an optional ' (strict)' suffix."
     },
-    "rankingFilter.preview.withTies": {
-        "text": "(with ties)",
-        "crowdinContext": "Suffix appended to the ranking filter summary when the 'with ties' condition is selected, e.g. 'Top 10 (with ties) of # of Orders'."
+    "rankingFilter.preview.strict": {
+        "text": "(strict)",
+        "crowdinContext": "Suffix appended to the ranking filter summary when the strict condition is selected, e.g. 'Top 10 (strict) of # of Orders'."
     },
     "rankingFilter.valueTooltip": {
         "text": "If multiple items have the same value, the filter shows all items with this value. The visualization may then display more items than the number set.",
@@ -2487,17 +2487,21 @@
         "text": "Apply on result",
         "crowdinContext": "Checkbox label in the ranking filter. When enabled, the filter is applied after measure value filters."
     },
-    "rankingFilter.topWithTies": {
-        "text": "Top (with ties)",
-        "crowdinContext": "Condition option in the ranking filter. Returns the top N items but also includes additional items that share the same value at the boundary (ties)."
+    "rankingFilter.topStrict": {
+        "text": "Top (strict)",
+        "crowdinContext": "Condition option in the ranking filter. Returns exactly the top N items, excluding additional items that share the same value at the boundary (ties)."
     },
-    "rankingFilter.bottomWithTies": {
-        "text": "Bottom (with ties)",
-        "crowdinContext": "Condition option in the ranking filter. Returns the bottom N items but also includes additional items that share the same value at the boundary (ties)."
+    "rankingFilter.bottomStrict": {
+        "text": "Bottom (strict)",
+        "crowdinContext": "Condition option in the ranking filter. Returns exactly the bottom N items, excluding additional items that share the same value at the boundary (ties)."
     },
     "rankingFilter.withTiesTooltip": {
         "text": "If multiple results share the same value, all are shown. The visualization may display more results than specified.",
         "crowdinContext": "Tooltip explaining the 'with ties' condition options in the ranking filter."
+    },
+    "rankingFilter.strictLimitTooltip": {
+        "text": "Returns exactly {n} results. Tied results beyond the limit are excluded.",
+        "crowdinContext": "Tooltip explaining the strict condition options in the ranking filter; {n} is the number of results set in the filter."
     },
     "attributesDropdown.itemsFiltered.tooltip": {
         "text": "Values are filtered by: <strong>{filters}</strong>",
@@ -2796,8 +2800,12 @@
         "crowdinContext": "Uppercase heading above the read-only list of an attribute's labels in the catalog detail view. Plain noun in capital letters."
     },
     "shareDialog.olp.labels.popoverTitle": {
-        "text": "Labels",
+        "text": "Manage labels access",
         "crowdinContext": "Title of the popover dialog that lets the user choose which of an attribute's labels are included in a share. Sentence case."
+    },
+    "shareDialog.olp.labels.back": {
+        "text": "Back",
+        "crowdinContext": "Accessibility label for the back-arrow button in the manage-labels-access popover. Returns the user to the grantee's more-options menu."
     },
     "shareDialog.olp.granteeAvatar.user": {
         "text": "User",
@@ -2887,20 +2895,12 @@
         "text": "Add",
         "crowdinContext": "Primary button at the bottom of the OLP add-grantee screen. Confirms granting access to the selected user or group and returns to the main share dialog."
     },
-    "shareDialog.olp.granteeControls.allLabels": {
-        "text": "All labels",
-        "crowdinContext": "Label of the trigger button that opens the labels picker on a grantee row in the OLP share dialog when every available label is selected."
-    },
-    "shareDialog.olp.granteeControls.labelsCount": {
-        "text": "{selected} of {total}",
-        "crowdinContext": "Label of the trigger button that opens the labels picker on a grantee row when a subset of labels is selected. {selected} is the number of selected labels, {total} is the total available."
-    },
     "shareDialog.olp.permission.transferOwnership": {
         "text": "Transfer ownership",
         "crowdinContext": "Menu item that promotes the selected grantee to the owner of the shared object. The current user loses ownership and becomes a regular grantee."
     },
     "shareDialog.olp.permission.labels": {
-        "text": "Labels",
+        "text": "Manage labels access",
         "crowdinContext": "Menu item that opens the labels picker for the selected grantee — lets the author choose which of the attribute's labels this grantee can access."
     },
     "shareDialog.olp.permission.removeAccess": {
@@ -2914,6 +2914,22 @@
     "shareDialog.olp.permission.moreInfoAriaLabel": {
         "text": "More information about {label}",
         "crowdinContext": "Accessibility label for the info-circle next to a permission level row in the OLP permission menu. {label} is the permission level name (e.g. 'Can view'). Sentence case."
+    },
+    "shareDialog.olp.permission.moreOptions.ariaLabel": {
+        "text": "More options",
+        "crowdinContext": "Accessibility label for the ellipsis (⋯) button on a grantee row in the OLP share dialog that opens the more-options menu (Manage labels access, Transfer ownership). Sentence case."
+    },
+    "shareDialog.olp.permission.moreOptions.menuLabel": {
+        "text": "More options",
+        "crowdinContext": "Accessibility label for the more-options menu on a grantee row in the OLP share dialog. Used by screen readers when entering the menu. Sentence case."
+    },
+    "shareDialog.olp.permission.effective.tooltip.share": {
+        "text": "This user inherits a higher permission from a group. Effective permission: Can view & share.",
+        "crowdinContext": "Tooltip on the warning badge shown when a grantee's directly-assigned permission is lower than the permission they inherit (e.g. from a group). Explains that the effective access is higher than the row's selected level."
+    },
+    "shareDialog.olp.permission.effective.ariaLabel": {
+        "text": "Effective permission is higher than the assigned permission",
+        "crowdinContext": "Accessibility label for the warning badge on a grantee row whose inherited permission exceeds the directly-assigned one. Sentence case."
     },
     "shareDialog.olp.permission.tooltip.share": {
         "text": "Grantee can view this object and re-share it with others.",

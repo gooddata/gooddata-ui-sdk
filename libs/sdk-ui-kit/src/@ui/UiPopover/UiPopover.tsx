@@ -81,6 +81,15 @@ export interface IUiPopoverProps {
      * When true, uses UiFocusManager's focus trap instead of tabOutHandler
      */
     enableFocusTrap?: boolean;
+    /**
+     * Controls the open state. When set, the popover ignores anchor clicks and
+     * opens/closes purely from this prop; pair with `onOpenChange` to
+     * react to outside-click / Escape. When omitted the popover stays
+     * uncontrolled and opens on anchor click as before.
+     */
+    isOpen?: boolean;
+    /** Fires when an interaction (outside-click, Escape) requests an open-state change. */
+    onOpenChange?: (open: boolean) => void;
     onOpen?: () => void;
     onClose?: () => void;
 }
@@ -107,6 +116,8 @@ export function UiPopover({
     returnFocusAfterClose = true,
     focusCheckFn = defaultFocusCheckFn,
     enableFocusTrap = false,
+    isOpen,
+    onOpenChange,
     onOpen,
     onClose,
 }: IUiPopoverProps) {
@@ -125,6 +136,8 @@ export function UiPopover({
 
     return (
         <UiTooltip
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
             onOpen={onOpen}
             onClose={onClose}
             accessibilityConfig={{

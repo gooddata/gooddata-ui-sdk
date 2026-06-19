@@ -1,64 +1,89 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type MutableRefObject, useCallback, useMemo, useRef, useState } from "react";
+import { type MutableRefObject, useCallback, useLayoutEffect, useRef, useState } from "react";
 
-import { makeTabsKeyboardNavigation } from "../@utils/keyboardNavigation.js";
+import { programaticFocusManagement } from "../UiFocusManager/utils.js";
 
 import { type IUiTagDef, type IUiTagsProps } from "./types.js";
+
+const TAG_SELECTOR = ".gd-ui-kit-tags__tag";
 
 type InteractionState = {
     moreOpen: boolean;
     addOpen: boolean;
-    tags: Record<string, HTMLButtonElement>;
-    more: HTMLButtonElement | null;
     add: HTMLButtonElement | null;
     close: HTMLButtonElement | null;
     save: HTMLButtonElement | null;
     input: HTMLInputElement | null;
 };
 
+type PendingTagFocus = {
+    area: "root" | "dialog";
+    deletedIndex: number;
+};
+
+function getTagElements(container: HTMLElement | null): HTMLElement[] {
+    if (!container) {
+        return [];
+    }
+
+    return Array.from(container.querySelectorAll<HTMLElement>(TAG_SELECTOR));
+}
+
+function findTagIndex(container: HTMLElement | null, tagId: string): number {
+    return getTagElements(container).findIndex((element) => element.dataset["tagId"] === tagId);
+}
+
 export function useTagsInteractions(
-    rootRef: MutableRefObject<HTMLDivElement | null>,
-    hiddenTagsRef: MutableRefObject<HTMLDivElement | null>,
+    tagsContainerRef: MutableRefObject<HTMLDivElement | null>,
+    tooltipTagsContainerRef: MutableRefObject<HTMLDivElement | null>,
     showedTags: IUiTagDef[],
     hiddenTags: IUiTagDef[],
-    onTagClick: IUiTagsProps["onTagClick"],
     onTagAdd: IUiTagsProps["onTagAdd"],
     onTagRemove: IUiTagsProps["onTagRemove"],
+    onTagClick: IUiTagsProps["onTagClick"],
 ) {
     const [tag, setTag] = useState<string>("");
-    const [showedFocusedIndex, setShowedFocusedIndex] = useState(0);
-    const [hiddenFocusedIndex, setHiddenFocusedIndex] = useState(0);
-
-    const rootItems = useMemo(() => {
-        return [...showedTags, ...(hiddenTags.length > 0 ? [hiddenTags] : [])];
-    }, [showedTags, hiddenTags]);
+    const pendingTagFocus = useRef<PendingTagFocus | null>(null);
 
     const interactionState = useRef<InteractionState>({
         moreOpen: false,
         addOpen: false,
-        tags: {},
-        more: null,
         add: null,
         close: null,
         save: null,
         input: null,
     });
 
+    const focusTagByIndex = (tagElements: HTMLElement[], index: number): boolean => {
+        if (tagElements.length === 0) {
+            interactionState.current.add?.focus();
+            return false;
+        }
+
+        const focusIndex = Math.min(Math.max(index, 0), tagElements.length - 1);
+        const tagWrapper = tagElements[focusIndex];
+        if (!tagWrapper) {
+            return false;
+        }
+
+        const innerTag = tagWrapper.querySelector<HTMLElement>(".gd-ui-kit-tag");
+        programaticFocusManagement(innerTag ?? tagWrapper);
+        return true;
+    };
+
     const onMoreOpen = useCallback(() => {
         interactionState.current.moreOpen = true;
-        setShowedFocusedIndex(rootItems.length - 1);
-        setHiddenFocusedIndex(0);
-    }, [rootItems]);
+    }, []);
+
     const onMoreClose = useCallback(() => {
         interactionState.current.moreOpen = false;
-        setShowedFocusedIndex(rootItems.length - 1);
-        setHiddenFocusedIndex(0);
-    }, [rootItems]);
+    }, []);
 
     const onAddOpen = useCallback(() => {
         interactionState.current.addOpen = true;
     }, []);
+
     const onAddClose = useCallback(() => {
         interactionState.current.addOpen = false;
     }, []);
@@ -72,228 +97,50 @@ export function useTagsInteractions(
     }, [tag, onTagAdd]);
 
     const onTagRemoveHandler = useCallback(
-        (tag: IUiTagDef) => {
-            const deletedShowedTag = showedTags.findIndex((t) => t === tag);
-            const deletedHiddenTag = hiddenTags.findIndex((t) => t === tag);
-            if (deletedShowedTag !== -1) {
-                setShowedFocusedIndex(Math.min(deletedShowedTag, showedTags.length - 1));
+        (removedTag: IUiTagDef) => {
+            let area: "root" | "dialog" = "root";
+            let deletedIndex = findTagIndex(tooltipTagsContainerRef.current, removedTag.id);
+
+            if (deletedIndex === -1) {
+                deletedIndex = findTagIndex(tagsContainerRef.current, removedTag.id);
+            } else {
+                area = "dialog";
             }
-            if (deletedHiddenTag !== -1) {
-                setHiddenFocusedIndex(Math.min(deletedHiddenTag, hiddenTags.length - 1));
+
+            if (deletedIndex !== -1) {
+                pendingTagFocus.current = { area, deletedIndex };
             }
-            onTagRemove?.(tag);
+
+            onTagRemove?.(removedTag);
         },
-        [hiddenTags, onTagRemove, showedTags],
+        [onTagRemove, tagsContainerRef, tooltipTagsContainerRef],
     );
+
     const onTagClickHandler = useCallback(
-        (tag: IUiTagDef) => {
-            const showedTag = showedTags.findIndex((t) => t === tag);
-            if (showedTag !== -1) {
-                setShowedFocusedIndex(showedTag);
-            }
-
-            const hiddenTag = hiddenTags.findIndex((t) => t === tag);
-            if (hiddenTag !== -1) {
-                setHiddenFocusedIndex(hiddenTag);
-            }
-
-            onTagClick?.(tag);
+        (clickedTag: IUiTagDef) => {
+            onTagClick?.(clickedTag);
         },
-        [hiddenTags, onTagClick, showedTags],
+        [onTagClick],
     );
 
-    const handleKeyDown = useMemo(
-        () =>
-            makeTabsKeyboardNavigation(
-                {
-                    onFocusPrevious: (event) => {
-                        if (interactionState.current.addOpen) {
-                            return;
-                        }
-                        if (event.target === interactionState.current.add) {
-                            return;
-                        }
+    useLayoutEffect(() => {
+        if (!pendingTagFocus.current) {
+            return;
+        }
 
-                        if (interactionState.current.moreOpen) {
-                            hiddenTagsRef.current?.focus();
-                            if (hiddenFocusedIndex === 0) {
-                                setHiddenFocusedIndex(hiddenTags.length - 1);
-                            } else {
-                                setHiddenFocusedIndex(
-                                    Math.min(hiddenFocusedIndex - 1, hiddenTags.length - 1),
-                                );
-                            }
-                        } else {
-                            rootRef.current?.focus();
-                            if (showedFocusedIndex === 0) {
-                                setShowedFocusedIndex(rootItems.length - 1);
-                            } else {
-                                setShowedFocusedIndex(
-                                    Math.min(showedFocusedIndex - 1, showedTags.length - 1),
-                                );
-                            }
-                        }
-                    },
-                    onFocusNext: (event) => {
-                        if (interactionState.current.addOpen) {
-                            return;
-                        }
-                        if (event.target === interactionState.current.add) {
-                            return;
-                        }
+        const { area, deletedIndex } = pendingTagFocus.current;
+        pendingTagFocus.current = null;
 
-                        if (interactionState.current.moreOpen) {
-                            hiddenTagsRef.current?.focus();
-                            if (hiddenTags.length - 1 <= hiddenFocusedIndex) {
-                                setHiddenFocusedIndex(0);
-                            } else {
-                                setHiddenFocusedIndex(hiddenFocusedIndex + 1);
-                            }
-                        } else {
-                            rootRef.current?.focus();
-                            if (rootItems.length - 1 <= showedFocusedIndex) {
-                                setShowedFocusedIndex(0);
-                            } else {
-                                setShowedFocusedIndex(showedFocusedIndex + 1);
-                            }
-                        }
-                    },
-                    onFocusFirst: (event) => {
-                        if (interactionState.current.addOpen) {
-                            return;
-                        }
-                        if (event.target === interactionState.current.add) {
-                            return;
-                        }
-                        if (interactionState.current.moreOpen) {
-                            hiddenTagsRef.current?.focus();
-                            setHiddenFocusedIndex(0);
-                        } else {
-                            rootRef.current?.focus();
-                            setShowedFocusedIndex(0);
-                        }
-                    },
-                    onFocusLast: (event) => {
-                        if (interactionState.current.addOpen) {
-                            return;
-                        }
-                        if (event.target === interactionState.current.add) {
-                            return;
-                        }
-                        if (interactionState.current.moreOpen) {
-                            hiddenTagsRef.current?.focus();
-                            setHiddenFocusedIndex(hiddenTags.length - 1);
-                        } else {
-                            rootRef.current?.focus();
-                            setShowedFocusedIndex(rootItems.length - 1);
-                        }
-                    },
-                    onSelect: (event) => {
-                        const { button, input } = loadActiveElement(
-                            interactionState,
-                            event.target as HTMLElement,
-                        );
+        const primaryContainer =
+            area === "dialog" ? tooltipTagsContainerRef.current : tagsContainerRef.current;
+        const primaryTagElements = getTagElements(primaryContainer);
+        if (focusTagByIndex(primaryTagElements, deletedIndex)) {
+            return;
+        }
 
-                        if (button) {
-                            button.click();
-                            event.preventDefault();
-                            event.stopPropagation();
-                            return;
-                        }
-
-                        // Do not handle any select if add is open
-                        if (input) {
-                            event.stopPropagation();
-                            return;
-                        }
-
-                        // Tags
-                        if (interactionState.current.moreOpen) {
-                            const item = loadActiveTag(
-                                interactionState,
-                                hiddenTags,
-                                hiddenFocusedIndex,
-                                false,
-                            );
-
-                            if (item) {
-                                item.click();
-                                event.preventDefault();
-                                event.stopPropagation();
-                            }
-                        } else {
-                            const item = loadActiveTag(
-                                interactionState,
-                                showedTags,
-                                showedFocusedIndex,
-                                true,
-                            );
-
-                            if (item) {
-                                item.click();
-                                event.preventDefault();
-                                event.stopPropagation();
-                            }
-                        }
-                    },
-                    onUnhandledKeyDown: (event) => {
-                        //Delete
-                        if (event.key === "Backspace" || event.key === "Delete") {
-                            const { button, input } = loadActiveElement(
-                                interactionState,
-                                event.target as HTMLElement,
-                            );
-
-                            if (button || input) {
-                                return;
-                            }
-
-                            if (interactionState.current.moreOpen) {
-                                const item = loadActiveTag(
-                                    interactionState,
-                                    hiddenTags,
-                                    hiddenFocusedIndex,
-                                    false,
-                                );
-
-                                if (item) {
-                                    onTagRemoveHandler(hiddenTags[hiddenFocusedIndex]);
-                                    event.preventDefault();
-                                    event.stopPropagation();
-                                }
-                            } else {
-                                const item = loadActiveTag(
-                                    interactionState,
-                                    showedTags,
-                                    showedFocusedIndex,
-                                    false,
-                                );
-
-                                if (item) {
-                                    onTagRemoveHandler(showedTags[showedFocusedIndex]);
-                                    event.preventDefault();
-                                    event.stopPropagation();
-                                }
-                            }
-                        }
-                    },
-                },
-                {
-                    shouldPreventDefault: false,
-                    shouldStopPropagation: false,
-                },
-            ),
-        [
-            hiddenTagsRef,
-            hiddenFocusedIndex,
-            hiddenTags,
-            rootRef,
-            showedFocusedIndex,
-            rootItems.length,
-            showedTags,
-            onTagRemoveHandler,
-        ],
-    );
+        const showedTagElements = getTagElements(tagsContainerRef.current);
+        focusTagByIndex(showedTagElements, showedTagElements.length - 1);
+    }, [showedTags, hiddenTags, tagsContainerRef, tooltipTagsContainerRef]);
 
     return {
         tag,
@@ -302,58 +149,9 @@ export function useTagsInteractions(
         onAddClose,
         onMoreOpen,
         onMoreClose,
-        handleKeyDown,
-        interactionState,
-        showedFocusedIndex,
-        hiddenFocusedIndex,
         onTagAddHandler,
         onTagRemoveHandler,
         onTagClickHandler,
+        interactionState,
     };
-}
-
-function loadActiveTag(
-    interactionState: MutableRefObject<InteractionState>,
-    tags: IUiTagDef[],
-    index: number,
-    allowMore: boolean,
-) {
-    // More
-    if (index === tags.length) {
-        if (!allowMore) {
-            return null;
-        }
-        const more = interactionState.current.more;
-        if (more) {
-            return more;
-        }
-        return null;
-    }
-    // Tag
-    const tag = tags[index];
-    const item = interactionState.current.tags[tag?.id];
-    if (item) {
-        return item;
-    }
-    return null;
-}
-
-function loadActiveElement(interactionState: MutableRefObject<InteractionState>, target?: HTMLElement) {
-    const buttons = [
-        interactionState.current.add,
-        interactionState.current.close,
-        interactionState.current.save,
-    ];
-
-    const button = buttons.find((b) => b === target);
-    if (button) {
-        return { button };
-    }
-
-    // Do not handle any select if add is open
-    if (target === interactionState.current.input) {
-        return { input: interactionState.current.input };
-    }
-
-    return {};
 }

@@ -78,65 +78,94 @@ export interface AiAgentListResponse {
     'agents': Array<AiAgentListItemResponse>;
 }
 
-export interface AiAlertProposal {
+export interface AiAlertDatasetIdentifier {
+    /**
+     * Date dataset identifier.
+     */
+    'id': string;
+    /**
+     * Dataset object type.
+     */
+    'type'?: AiAlertDatasetIdentifierTypeEnum;
+}
+
+export type AiAlertDatasetIdentifierTypeEnum = 'dataset';
+
+export interface AiAlertDatasetRef {
+    /**
+     * Date dataset identifier.
+     */
+    'identifier': AiAlertDatasetIdentifier;
+    'title'?: string | null;
+}
+
+/**
+ * The alert itself (mirrors canonical AutomationAlert).
+ */
+export interface AiAlertDefinition {
+    /**
+     * Execution (AFM) definition of the alert.
+     */
+    'execution': AiAlertExecution;
+    'condition': AiCondition;
+    /**
+     * Trigger behavior.
+     */
+    'trigger'?: AiAlertTrigger;
+    'interval'?: AiIntervalGranularity | null;
+}
+
+
+/**
+ * Execution definition (AFM) of the alert.  ``measures`` / ``attributes`` / ``filters`` are opaque AFM wire objects (same treatment as ``KeyDriverAnalysis.filters``); the semantic typing the FE renders lives on the typed ``condition`` union.
+ */
+export interface AiAlertExecution {
     [key: string]: any;
 
+    /**
+     * Metrics computed by the alert (1-2).
+     */
+    'measures'?: Array<object>;
+    /**
+     * Attribute slicing configuration.
+     */
+    'attributes'?: Array<object>;
+    /**
+     * Alert execution filters.
+     */
+    'filters'?: Array<object>;
+}
+
+/**
+ * Structured pre-creation alert proposal — the single model used as the HTTP DTO, the persisted shape, and the in-memory conversation-state object.
+ */
+export interface AiAlertProposal {
     /**
      * Alert title.
      */
     'title': string;
     /**
-     * Metric identifier to monitor.
+     * The alert definition (condition, execution, trigger).
      */
-    'metricId': string;
+    'alert': AiAlertDefinition;
     /**
-     * Alert condition operator.
+     * Notification channel for delivery.
      */
-    'operator': string;
-    /**
-     * Notification channel identifier.
-     */
-    'notificationChannelId': string;
-    'description'?: AiDescription;
-    'automationId'?: AiAutomationid;
-    'metricTitle'?: AiMetrictitle;
-    'metricFormat'?: AiMetricformat;
-    'threshold'?: AiThreshold;
-    'fromValue'?: AiFromvalue;
-    'toValue'?: AiTovalue;
-    'compareMetricId'?: AiComparemetricid;
-    'compareMetricTitle'?: AiComparemetrictitle;
-    'compareMetricFormat'?: AiComparemetricformat;
-    'arithmeticOperator'?: AiArithmeticoperator;
-    'granularity'?: AiGranularity;
-    'dateDatasetId'?: AiDatedatasetid;
-    'dateDatasetTitle'?: AiDatedatasettitle;
-    'sensitivity'?: AiSensitivity;
-    /**
-     * Alert execution filters.
-     */
-    'filters': Array<object>;
-    /**
-     * Attribute slicing configuration.
-     */
-    'attributes': Array<object>;
-    'forMode'?: AiFormode;
-    'forLabel'?: AiForlabel;
-    'notificationChannelName'?: AiNotificationchannelname;
+    'notificationChannel': AiNotificationChannelRef;
+    'description'?: string | null;
+    'automationId'?: string | null;
     /**
      * Recipients shown in the proposal.
      */
-    'recipients': Array<AiAlertRecipient>;
-    'trigger'?: AiTrigger;
-    'triggerInterval'?: AiTriggerinterval;
-    'cron'?: AiCron;
-    'timezone'?: AiTimezone;
-    'dashboardId'?: AiDashboardid;
-    'dashboardTitle'?: AiDashboardtitle;
+    'recipients'?: Array<AiAlertRecipient>;
+    'schedule'?: AiAlertSchedule | null;
+    'dashboard'?: AiDashboardRef | null;
+    'forMode'?: string | null;
+    'forLabel'?: string | null;
     /**
      * Confirmation call to action.
      */
-    'cta': string;
+    'cta'?: string;
 }
 
 export interface AiAlertProposalPart {
@@ -157,6 +186,24 @@ export interface AiAlertRecipient {
     'id'?: string | null;
     'email'?: string | null;
 }
+
+export interface AiAlertSchedule {
+    'cron'?: string | null;
+    'timezone'?: string | null;
+}
+
+/**
+ * Trigger behavior for the alert.
+ */
+
+export const AiAlertTrigger = {
+    ALWAYS: 'ALWAYS',
+    ONCE: 'ONCE',
+    ONCE_PER_INTERVAL: 'ONCE_PER_INTERVAL'
+} as const;
+
+export type AiAlertTrigger = typeof AiAlertTrigger[keyof typeof AiAlertTrigger];
+
 
 export interface AiAllTimeDateFilterBodyInput {
     'dataset': AiAfmObjectIdentifier;
@@ -189,6 +236,46 @@ export interface AiAllowedRelationshipType {
     'targetType': string;
     'allowOrphans'?: boolean;
 }
+
+export interface AiAnomalyCondition {
+    /**
+     * Anomaly detection condition.
+     */
+    'anomaly': AiAnomalyDetection;
+}
+
+export interface AiAnomalyDetection {
+    /**
+     * Metric analyzed for anomalies.
+     */
+    'measure': AiMetricOperand;
+    'sensitivity': AiSensitivity;
+    /**
+     * Time-based granularity of the analysis.
+     */
+    'granularity': AiAnomalyDetectionGranularity;
+    /**
+     * Date dataset used for anomaly detection.
+     */
+    'dataset': AiAlertDatasetRef;
+}
+
+
+/**
+ * Time-based granularity supported by anomaly detection.
+ */
+
+export const AiAnomalyDetectionGranularity = {
+    HOUR: 'HOUR',
+    DAY: 'DAY',
+    WEEK: 'WEEK',
+    MONTH: 'MONTH',
+    QUARTER: 'QUARTER',
+    YEAR: 'YEAR'
+} as const;
+
+export type AiAnomalyDetectionGranularity = typeof AiAnomalyDetectionGranularity[keyof typeof AiAnomalyDetectionGranularity];
+
 
 
 export const AiAppApplicationDtosAfmFilterDefinitionDateGranularity = {
@@ -245,11 +332,33 @@ export interface AiAppDomainConversationsVisualizationRankingFilter {
 
 export type AiAppDomainConversationsVisualizationRankingFilterTypeEnum = 'ranking_filter';
 
-/**
- * Relative alert arithmetic operator.
- */
-export interface AiArithmeticoperator {
+export interface AiArithmeticMeasure {
+    /**
+     * Arithmetic operator between the two metrics.
+     */
+    'operator': AiArithmeticOperator;
+    /**
+     * First metric.
+     */
+    'left': AiMetricOperand;
+    /**
+     * Second metric.
+     */
+    'right': AiMetricOperand;
 }
+
+
+/**
+ * Arithmetic operator between two metrics of a relative condition.
+ */
+
+export const AiArithmeticOperator = {
+    DIFFERENCE: 'DIFFERENCE',
+    CHANGE: 'CHANGE'
+} as const;
+
+export type AiArithmeticOperator = typeof AiArithmeticOperator[keyof typeof AiArithmeticOperator];
+
 
 export interface AiAttributeFilter {
     'type': AiAttributeFilterTypeEnum;
@@ -279,12 +388,6 @@ export type AiAttributeSortItemTypeEnum = 'attribute_sort';
 export type AiAttributeSortItemDirectionEnum = 'ASC' | 'DESC';
 export type AiAttributeSortItemAggregationEnum = 'SUM';
 
-/**
- * Automation identifier proposed for creation.
- */
-export interface AiAutomationid {
-}
-
 export interface AiBoundedFilterInput {
     'granularity': AiDateGranularityInput;
     'from'?: number | null;
@@ -306,23 +409,41 @@ export interface AiBucketRefObject {
 export interface AiClusteringAmount {
 }
 
-/**
- * Comparison metric display format.
- */
-export interface AiComparemetricformat {
+export interface AiComparison {
+    /**
+     * Comparison operator.
+     */
+    'operator': AiComparisonConditionOperator;
+    /**
+     * Metric being compared.
+     */
+    'left': AiMetricOperand;
+    'right': AiRight;
+}
+
+
+export interface AiComparisonCondition {
+    /**
+     * Scalar comparison condition.
+     */
+    'comparison': AiComparison;
 }
 
 /**
- * Comparison metric identifier.
+ * Operator of a scalar comparison condition.
  */
-export interface AiComparemetricid {
-}
 
-/**
- * Comparison metric display title.
- */
-export interface AiComparemetrictitle {
-}
+export const AiComparisonConditionOperator = {
+    GREATER_THAN: 'GREATER_THAN',
+    GREATER_THAN_OR_EQUAL_TO: 'GREATER_THAN_OR_EQUAL_TO',
+    LESS_THAN: 'LESS_THAN',
+    LESS_THAN_OR_EQUAL_TO: 'LESS_THAN_OR_EQUAL_TO',
+    EQUAL_TO: 'EQUAL_TO',
+    NOT_EQUAL_TO: 'NOT_EQUAL_TO'
+} as const;
+
+export type AiComparisonConditionOperator = typeof AiComparisonConditionOperator[keyof typeof AiComparisonConditionOperator];
+
 
 export interface AiComparisonMeasureValueFilter {
     'comparisonMeasureValueFilter': AiComparisonMeasureValueFilterBody;
@@ -374,6 +495,12 @@ export interface AiCompoundMeasureValueFilterBodyConditionsInner {
     'comparison': AiMeasureValueComparisonInner;
     'range': AiMeasureValueRangeInner;
 }
+
+/**
+ * @type AiCondition
+ * Alert trigger condition.
+ */
+export type AiCondition = AiAnomalyCondition | AiComparisonCondition | AiRangeCondition | AiRelativeCondition;
 
 /**
  * @type AiContent
@@ -536,22 +663,12 @@ export interface AiCreateConversationRequest {
     'agentId'?: string | null;
 }
 
-/**
- * Optional cron schedule.
- */
-export interface AiCron {
-}
-
-/**
- * Bound dashboard identifier.
- */
-export interface AiDashboardid {
-}
-
-/**
- * Bound dashboard display title.
- */
-export interface AiDashboardtitle {
+export interface AiDashboardRef {
+    /**
+     * Bound dashboard identifier.
+     */
+    'id': string;
+    'title'?: string | null;
 }
 
 export interface AiDateFilterAbsolute {
@@ -622,29 +739,11 @@ export type AiDateGranularityInput = typeof AiDateGranularityInput[keyof typeof 
 
 
 /**
- * Anomaly date dataset identifier.
- */
-export interface AiDatedatasetid {
-}
-
-/**
- * Anomaly date dataset display title.
- */
-export interface AiDatedatasettitle {
-}
-
-/**
  * Response for DELETE /documents/{documentId}.
  */
 export interface AiDeleteDocumentResponse {
     'success': boolean;
     'message': string;
-}
-
-/**
- * Alert description.
- */
-export interface AiDescription {
 }
 
 /**
@@ -716,25 +815,7 @@ export type AiFilterByValueConditionEnum = 'contains' | 'doesNotContain' | 'star
 export interface AiForecastPeriod {
 }
 
-/**
- * Human-readable \'For\' summary.
- */
-export interface AiForlabel {
-}
-
-/**
- * Display mode for the monitored population.
- */
-export interface AiFormode {
-}
-
 export interface AiFrom {
-}
-
-/**
- * Range lower bound.
- */
-export interface AiFromvalue {
 }
 
 export interface AiFunctionCallContent {
@@ -779,12 +860,6 @@ export interface AiFunctionResultContent {
 
 export type AiFunctionResultContentTypeEnum = 'toolResult';
 
-/**
- * Anomaly granularity.
- */
-export interface AiGranularity {
-}
-
 export interface AiHTTPValidationError {
     'detail'?: Array<AiValidationError>;
 }
@@ -798,6 +873,21 @@ export interface AiInlineFilterDefinitionBody {
     'applyOnResult'?: boolean | null;
     'localIdentifier'?: string | null;
 }
+
+/**
+ * Date granularity for the interval of an ONCE_PER_INTERVAL trigger.
+ */
+
+export const AiIntervalGranularity = {
+    DAY: 'DAY',
+    WEEK: 'WEEK',
+    MONTH: 'MONTH',
+    QUARTER: 'QUARTER',
+    YEAR: 'YEAR'
+} as const;
+
+export type AiIntervalGranularity = typeof AiIntervalGranularity[keyof typeof AiIntervalGranularity];
+
 
 export interface AiKeyDriverAnalysis {
     [key: string]: any;
@@ -920,6 +1010,18 @@ export interface AiMeasureValueRangeInner {
 }
 
 
+/**
+ * Reference to a metric by AFM local identifier.
+ */
+export interface AiMetricOperand {
+    /**
+     * Local identifier of the metric to be compared.
+     */
+    'localIdentifier': string;
+    'format'?: string | null;
+    'title'?: string | null;
+}
+
 export interface AiMetricSortItem {
     'type': AiMetricSortItemTypeEnum;
     'direction': AiMetricSortItemDirectionEnum;
@@ -971,18 +1073,6 @@ export const AiMetricValueFilterConditionRange = {
 export type AiMetricValueFilterConditionRange = typeof AiMetricValueFilterConditionRange[keyof typeof AiMetricValueFilterConditionRange];
 
 
-/**
- * Metric display format.
- */
-export interface AiMetricformat {
-}
-
-/**
- * Metric display title.
- */
-export interface AiMetrictitle {
-}
-
 export interface AiMultipartContent {
     /**
      * Type of item content.
@@ -1014,10 +1104,12 @@ export interface AiNegativeAttributeFilterBody {
     'usesArbitraryValues'?: boolean | null;
 }
 
-/**
- * Notification channel display name.
- */
-export interface AiNotificationchannelname {
+export interface AiNotificationChannelRef {
+    /**
+     * Notification channel identifier.
+     */
+    'id': string;
+    'name'?: string | null;
 }
 
 
@@ -1113,6 +1205,45 @@ export type AiQuerySortByInnerTypeEnum = 'attribute_sort' | 'metric_sort';
 export type AiQuerySortByInnerDirectionEnum = 'ASC' | 'DESC';
 export type AiQuerySortByInnerAggregationEnum = 'SUM';
 
+export interface AiRange {
+    /**
+     * Range operator.
+     */
+    'operator': AiRangeConditionOperator;
+    /**
+     * Metric being compared.
+     */
+    'measure': AiMetricOperand;
+    /**
+     * Range lower bound.
+     */
+    'from': AiValueOperand;
+    /**
+     * Range upper bound.
+     */
+    'to': AiValueOperand;
+}
+
+
+export interface AiRangeCondition {
+    /**
+     * Range condition.
+     */
+    'range': AiRange;
+}
+
+/**
+ * Operator of a range condition.
+ */
+
+export const AiRangeConditionOperator = {
+    BETWEEN: 'BETWEEN',
+    NOT_BETWEEN: 'NOT_BETWEEN'
+} as const;
+
+export type AiRangeConditionOperator = typeof AiRangeConditionOperator[keyof typeof AiRangeConditionOperator];
+
+
 export interface AiRangeMeasureValueFilter {
     'rangeMeasureValueFilter': AiRangeMeasureValueFilterBody;
 }
@@ -1174,6 +1305,42 @@ export interface AiReasoningContent {
 
 export type AiReasoningContentTypeEnum = 'reasoning';
 
+export interface AiRelative {
+    /**
+     * Relative condition operator.
+     */
+    'operator': AiRelativeConditionOperator;
+    /**
+     * Arithmetic combination of the two metrics.
+     */
+    'measure': AiArithmeticMeasure;
+    /**
+     * Threshold the relative change is compared to.
+     */
+    'threshold': AiValueOperand;
+}
+
+
+export interface AiRelativeCondition {
+    /**
+     * Relative (metric-to-metric) condition.
+     */
+    'relative': AiRelative;
+}
+
+/**
+ * Operator of a relative (metric-to-metric) condition.
+ */
+
+export const AiRelativeConditionOperator = {
+    INCREASES_BY: 'INCREASES_BY',
+    DECREASES_BY: 'DECREASES_BY',
+    CHANGES_BY: 'CHANGES_BY'
+} as const;
+
+export type AiRelativeConditionOperator = typeof AiRelativeConditionOperator[keyof typeof AiRelativeConditionOperator];
+
+
 export interface AiRelativeDateFilterBodyInput {
     'dataset': AiAfmObjectIdentifier;
     'granularity': AiDateGranularityInput;
@@ -1216,6 +1383,12 @@ export type AiResponseFeedbackTypeEnum = 'POSITIVE' | 'NEGATIVE';
 export interface AiResponseFeedbackRequest {
     'feedback': AiResponseFeedback | null;
 }
+
+/**
+ * @type AiRight
+ * Value or metric the left side is compared to.
+ */
+export type AiRight = AiMetricOperand | AiValueOperand;
 
 /**
  * Response for GET /search.
@@ -1365,14 +1538,23 @@ export interface AiSendMessageRequest {
 export interface AiSendMessageSearchOptions {
     'objectTypes'?: Array<AiObjectType> | null;
     'searchLimit'?: number | null;
+    'includeTags'?: Array<string> | null;
+    'excludeTags'?: Array<string> | null;
     'allowedRelationshipTypes'?: Array<AiAllowedRelationshipType> | null;
 }
 
 /**
- * Anomaly sensitivity.
+ * Sensitivity level for anomaly detection.
  */
-export interface AiSensitivity {
-}
+
+export const AiSensitivity = {
+    LOW: 'LOW',
+    MEDIUM: 'MEDIUM',
+    HIGH: 'HIGH'
+} as const;
+
+export type AiSensitivity = typeof AiSensitivity[keyof typeof AiSensitivity];
+
 
 /**
  * A single skill available to the organization.
@@ -1497,37 +1679,7 @@ export interface AiTextPart {
 
 export type AiTextPartTypeEnum = 'text';
 
-/**
- * Comparison threshold.
- */
-export interface AiThreshold {
-}
-
-/**
- * Schedule timezone.
- */
-export interface AiTimezone {
-}
-
 export interface AiTo {
-}
-
-/**
- * Range upper bound.
- */
-export interface AiTovalue {
-}
-
-/**
- * Alert trigger behavior.
- */
-export interface AiTrigger {
-}
-
-/**
- * Trigger interval for once-per-interval alerts.
- */
-export interface AiTriggerinterval {
 }
 
 /**
@@ -1627,7 +1779,20 @@ export interface AiValidationError {
 export interface AiValidationErrorLocInner {
 }
 
+/**
+ * Value of the alert threshold to compare the metric to.
+ */
 export interface AiValue {
+}
+
+export interface AiValue1 {
+}
+
+/**
+ * Literal threshold value.
+ */
+export interface AiValueOperand {
+    'value': AiValue | null;
 }
 
 export interface AiVisualization {
@@ -1718,7 +1883,7 @@ export interface AiVisualizationMetricValueComparisonFilter {
     'type': AiVisualizationMetricValueComparisonFilterTypeEnum;
     'using': string;
     'condition': AiMetricValueFilterConditionComparison;
-    'value': AiValue;
+    'value': AiValue1;
     'nullValuesAsZero': boolean;
 }
 

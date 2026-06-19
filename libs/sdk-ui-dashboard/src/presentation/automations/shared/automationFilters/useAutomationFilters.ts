@@ -20,32 +20,8 @@ import {
     isDashboardMeasureValueFilter,
 } from "@gooddata/sdk-model";
 
-import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
-import {
-    selectCatalogAttributes,
-    selectCatalogDateDatasets,
-    selectCatalogMeasures,
-} from "../../../../model/store/catalog/catalogSelectors.js";
-import { selectEnableNewScheduledExport } from "../../../../model/store/config/configSelectors.js";
-import {
-    type IAutomationFiltersTab,
-    selectAutomationCommonDateFilterId,
-    selectDashboardLockedFilters,
-} from "../../../../model/store/filtering/dashboardFilterSelectors.js";
-import { selectPersistedDashboardFilterContextDateFilterConfig } from "../../../../model/store/meta/metaSelectors.js";
-import {
-    selectAttributeFilterConfigsOverrides,
-    selectAttributeFilterConfigsOverridesByTab,
-} from "../../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
-import { selectDateFilterConfigOverridesByTab } from "../../../../model/store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
-import {
-    selectDateFilterConfigsOverrides,
-    selectDateFilterConfigsOverridesByTab,
-} from "../../../../model/store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
-import {
-    selectMeasureValueFilterConfigsOverrides,
-    selectMeasureValueFilterConfigsOverridesByTab,
-} from "../../../../model/store/tabs/measureValueFilterConfigs/measureValueFilterConfigsSelectors.js";
+import type { IAutomationFiltersTab } from "../../../../model/store/filtering/types.js";
+import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
 
 import {
     areFiltersMatchedByIdentifier,
@@ -171,16 +147,18 @@ export const useAutomationFilters = ({
     ) => void;
 }) => {
     const intl = useIntl();
-    const allAttributes = useDashboardSelector(selectCatalogAttributes);
-    const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
-    const allMeasures = useDashboardSelector(selectCatalogMeasures);
-    const attributeConfigs = useDashboardSelector(selectAttributeFilterConfigsOverrides);
-    const dateConfigs = useDashboardSelector(selectDateFilterConfigsOverrides);
-    const mvfConfigs = useDashboardSelector(selectMeasureValueFilterConfigsOverrides);
-    const dateFilterConfig = useDashboardSelector(selectPersistedDashboardFilterContextDateFilterConfig);
-    const commonDateFilterId = useDashboardSelector(selectAutomationCommonDateFilterId);
-    const lockedFilters = useDashboardSelector(selectDashboardLockedFilters);
-    const enableNewScheduledExport = useDashboardSelector(selectEnableNewScheduledExport);
+    const {
+        catalogAttributes: allAttributes,
+        catalogDateDatasets: allDateDatasets,
+        catalogMeasures: allMeasures,
+        attributeFilterConfigs: attributeConfigs,
+        dateFilterConfigs: dateConfigs,
+        measureValueFilterConfigs: mvfConfigs,
+        dateFilterContextConfig: dateFilterConfig,
+        commonDateFilterId,
+        lockedFilters,
+        enableNewScheduledExport,
+    } = useAutomationsContext();
 
     const [filterAnnouncement, setFilterAnnouncement] = useState<string>("");
 
@@ -439,20 +417,20 @@ export const useAutomationFiltersByTab = ({
     ) => void;
     disableDateFilters?: boolean;
 }) => {
-    const allAttributes = useDashboardSelector(selectCatalogAttributes);
-    const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
-    const allMeasures = useDashboardSelector(selectCatalogMeasures);
-    const commonDateFilterId = useDashboardSelector(selectAutomationCommonDateFilterId);
+    const {
+        catalogAttributes: allAttributes,
+        catalogDateDatasets: allDateDatasets,
+        catalogMeasures: allMeasures,
+        commonDateFilterId,
+        attributeFilterConfigsByTab: attributeConfigsByTab,
+        dateFilterConfigsByTab: dateConfigsByTab,
+        dateFilterConfigOverridesByTab: dateFilterConfigByTab,
+        measureValueFilterConfigsByTab: mvfConfigsByTab,
+    } = useAutomationsContext();
 
     const [filterAnnouncement] = useState<string>("");
     const addFilterButtonRef = useRef<HTMLButtonElement | HTMLDivElement>(null);
     const filterGroupRef = useRef<HTMLDivElement>(null);
-
-    // Get per-tab filter configs
-    const attributeConfigsByTab = useDashboardSelector(selectAttributeFilterConfigsOverridesByTab);
-    const dateConfigsByTab = useDashboardSelector(selectDateFilterConfigsOverridesByTab);
-    const dateFilterConfigByTab = useDashboardSelector(selectDateFilterConfigOverridesByTab);
-    const mvfConfigsByTab = useDashboardSelector(selectMeasureValueFilterConfigsOverridesByTab);
 
     const processedFiltersByTab = useMemo(() => {
         if (!filtersByTab || filtersByTab.length === 0) {

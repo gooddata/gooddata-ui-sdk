@@ -1010,8 +1010,20 @@ export function yamlFilterContextToDeclarative(
             );
         });
         const dateParents = parents?.filter((parent) => {
-            const item = normalizeLocalDateFilter(parent);
-            return dateFilters.some(([dateKey]) => dateKey === item.using);
+            // Common-date object parents WITH a date field are accepted unconditionally — the common
+            // date filter may not be materialized as a keyed entry (e.g. all-time), so it won't appear
+            // in dateFilters. Requiring `date` prevents a { using, common: true } entry without a
+            // dataset from bypassing validation: without `date`, mapDateParentToFilterElementByDate
+            // produces no dataSet, and the runtime legacy fallback then treats filterLocalIdentifier
+            // as a dataset id — wrong when using holds a date-filter localId like "0_dateFilter".
+            if (typeof parent === "object" && parent !== null && parent.common === true && parent.date) {
+                return true;
+            }
+            // Non-common object parents and plain string parents (including bare-string legacy common-date
+            // references) are validated against the existing date filter keys.
+            // For objects, extract .using so the comparison is always string vs string.
+            const key = typeof parent === "object" && parent !== null ? parent.using : parent;
+            return dateFilters.some(([dateKey]) => dateKey === key);
         });
 
         return { attributeParents, dateParents };
@@ -1062,13 +1074,7 @@ export function yamlFilterContextToDeclarative(
                             : {}),
                         ...(dateParents && dateParents.length > 0
                             ? {
-                                  filterElementsByDate: dateParents.map((parent) => {
-                                      const item = normalizeLocalDateFilter(parent);
-                                      return {
-                                          filterLocalIdentifier: item.using,
-                                          isCommonDate: item.common,
-                                      };
-                                  }),
+                                  filterElementsByDate: dateParents.map(mapDateParentToFilterElementByDate),
                               }
                             : {}),
                         ...(filter.metric_filters
@@ -1275,13 +1281,7 @@ export function yamlFilterContextToDeclarative(
                             : {}),
                         ...(dateParents && dateParents.length > 0
                             ? {
-                                  filterElementsByDate: dateParents.map((parent) => {
-                                      const item = normalizeLocalDateFilter(parent);
-                                      return {
-                                          filterLocalIdentifier: item.using,
-                                          isCommonDate: item.common,
-                                      };
-                                  }),
+                                  filterElementsByDate: dateParents.map(mapDateParentToFilterElementByDate),
                               }
                             : {}),
                         ...(filter.metric_filters
@@ -1376,6 +1376,21 @@ function serialiseParameters(params: object | string) {
     } catch {
         return params as string;
     }
+}
+
+function mapDateParentToFilterElementByDate(parent: string | LocalDateFilter) {
+    const item = normalizeLocalDateFilter(parent);
+    return {
+        filterLocalIdentifier: item.using,
+        isCommonDate: item.common,
+        ...(item.common && item.date
+            ? {
+                  dataSet: createIdentifier(item.date, {
+                      forceType: "dataset",
+                  }),
+              }
+            : {}),
+    };
 }
 
 function normalizeLocalDateFilter(item: string | LocalDateFilter): LocalDateFilter {

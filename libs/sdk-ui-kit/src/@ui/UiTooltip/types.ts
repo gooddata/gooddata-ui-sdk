@@ -81,9 +81,19 @@ export interface IUiTooltipProps {
     onClose?: () => void;
 
     /**
-     * Controls the open state of the tooltip, overrides the triggerBy prop if set
+     * Controls the open state of the tooltip, overrides the triggerBy prop if set.
+     * In controlled mode the anchor's own hover/focus/click triggers are
+     * suppressed — open state is driven solely by this prop — but outside-click
+     * and Escape still request a close via `onOpenChange`.
      */
     isOpen?: boolean;
+
+    /**
+     * Fires whenever an interaction requests an open-state change (anchor
+     * triggers when uncontrolled, outside-click / Escape always). Pair with
+     * `isOpen` to drive the tooltip from the parent.
+     */
+    onOpenChange?: (open: boolean) => void;
 
     /**
      * Custom styles for the anchor wrapper element

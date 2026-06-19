@@ -37,6 +37,7 @@ import {
     allowedRelationshipTypesSelector,
     objectTypesSelector,
     settingsSelector,
+    tagsSelector,
     userContextSelector,
 } from "../chatWindow/chatWindowSelectors.js";
 import { clearUserContextAction } from "../chatWindow/chatWindowSlice.js";
@@ -494,6 +495,7 @@ function* evaluateUserConversationMessage(
     let reader: ReadableStreamReader<IChatConversationItem | IChatConversationError> | undefined = undefined;
     const settings: IUserWorkspaceSettings | undefined = yield select(settingsSelector);
     const objectTypes: GenAIObjectType[] | undefined = yield select(objectTypesSelector);
+    const { includeTags, excludeTags }: ReturnType<typeof tagsSelector> = yield select(tagsSelector);
     const allowedRelationshipTypes: IAllowedRelationshipType[] | undefined = yield select(
         allowedRelationshipTypesSelector,
     );
@@ -509,6 +511,14 @@ function* evaluateUserConversationMessage(
     let queryBuilder = preparedChatThread
         .withSearchLimit(Number(settings?.["aiChatSearchLimit"]) || 5)
         .withObjectTypes(objectTypes);
+
+    if (excludeTags) {
+        queryBuilder = queryBuilder.withExcludeTags(excludeTags);
+    }
+
+    if (includeTags) {
+        queryBuilder = queryBuilder.withIncludeTags(includeTags);
+    }
 
     if (allowedRelationshipTypes?.length) {
         queryBuilder = queryBuilder.withAllowedRelationshipTypes(allowedRelationshipTypes);

@@ -1,6 +1,6 @@
 {
     "name": "gdc-app-template-name-harness",
-    "version": "11.43.0-alpha.0",
+    "version": "11.43.0-alpha.1",
     "private": true,
     "description": "Standalone harness for gdc-app-template-name module",
     "license": "UNLICENSED",
@@ -39,7 +39,7 @@
         "react": "19.1.1",
         "react-dom": "19.1.1",
         "react-intl": "7.1.11",
-        "react-router": "7.15.0"
+        "react-router": "^7.15.1"
     },
     "devDependencies": {
         "@gooddata/eslint-config": "workspace:*",

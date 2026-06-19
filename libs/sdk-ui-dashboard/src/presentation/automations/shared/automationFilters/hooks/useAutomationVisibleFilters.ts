@@ -6,10 +6,7 @@ import { compact } from "lodash-es";
 
 import { type FilterContextItem, type IAutomationVisibleFilter } from "@gooddata/sdk-model";
 
-import {
-    useFiltersByTabNamings,
-    useFiltersNamings,
-} from "../../../../../_staging/sharedHooks/useFiltersNamings.js";
+import { useFiltersByTabNamings, useFiltersNamings } from "../../hooks/useFiltersNamings.js";
 
 export const useAutomationVisibleFilters = (
     availableFilters: FilterContextItem[] | undefined = [],

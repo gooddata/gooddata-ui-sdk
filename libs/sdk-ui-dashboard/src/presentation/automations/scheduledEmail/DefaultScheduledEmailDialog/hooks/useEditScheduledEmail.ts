@@ -50,10 +50,10 @@ import {
     selectTimezone,
 } from "../../../../../model/store/config/configSelectors.js";
 import {
-    type IAutomationFiltersTab,
     selectAutomationCommonDateFilterId,
     selectDashboardHiddenFilters,
 } from "../../../../../model/store/filtering/dashboardFilterSelectors.js";
+import type { IAutomationFiltersTab } from "../../../../../model/store/filtering/types.js";
 import { selectDashboardId, selectDashboardTitle } from "../../../../../model/store/meta/metaSelectors.js";
 import { selectWidgetLocalIdToTabIdMap } from "../../../../../model/store/tabs/layout/layoutSelectors.js";
 import { selectExportEffectiveParameters } from "../../../../../model/store/tabs/parameters/parametersSelectors.js";

@@ -13,6 +13,8 @@ interface IOperatorDropdownItemProps {
     strictLimitOfRows: boolean;
     isSelected: boolean;
     tooltipId?: string;
+    /** Current ranking filter value (N); fills the {n} placeholder in the strict condition tooltip. */
+    limitValue: number;
     onSelect: (value: RankingFilterOperator, strictLimitOfRows: boolean) => void;
 }
 
@@ -22,6 +24,7 @@ export function OperatorDropdownItem({
     strictLimitOfRows,
     isSelected,
     tooltipId,
+    limitValue,
     onSelect,
 }: IOperatorDropdownItemProps) {
     const intl = useIntl();
@@ -53,7 +56,7 @@ export function OperatorDropdownItem({
                                 <UiIcon type="question" size={14} color="currentColor" layout="block" />
                             </span>
                         }
-                        content={intl.formatMessage({ id: tooltipId })}
+                        content={intl.formatMessage({ id: tooltipId }, { n: limitValue })}
                     />
                 </span>
             ) : null}

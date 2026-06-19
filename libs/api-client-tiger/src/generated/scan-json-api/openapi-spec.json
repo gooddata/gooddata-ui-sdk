@@ -760,6 +760,10 @@
                         "type": "string",
                         "description": "Column description/comment from database",
                         "example": "Customer unique identifier"
+                    },
+                    "nullValue": {
+                        "type": "string",
+                        "description": "Value used as sentinel for null values in the column"
                     }
                 },
                 "description": "A SQL query result column."
@@ -849,6 +853,10 @@
                     "isNullable": {
                         "type": "boolean",
                         "description": "Column is nullable"
+                    },
+                    "nullValue": {
+                        "type": "string",
+                        "description": "Value used as sentinel for nullable columns"
                     }
                 },
                 "description": "A table column."

@@ -99,6 +99,7 @@ $measure_dropdown_width: $ranking_filter_dropdown_width - 20px;
 
         // Right-align the tooltip trigger within the menu item.
         .gd-rf-operator-tooltip {
+            flex: 0 0 auto;
             display: inline-flex;
             align-items: center;
             margin-left: auto;
@@ -106,7 +107,6 @@ $measure_dropdown_width: $ranking_filter_dropdown_width - 20px;
         }
 
         .gd-rf-operator-tooltip-icon {
-            display: inline-flex;
             color: variables.$gd-color-text-dimmed;
         }
     }

@@ -41,6 +41,8 @@ import {
 import { selectTabs } from "../tabs/tabsSelectors.js";
 import { type DashboardSelector } from "../types.js";
 
+import { type IAutomationFiltersTab } from "./types.js";
+
 const commonDateFilter: FilterContextItem = newAllTimeDashboardDateFilter(
     undefined,
     generateDateFilterLocalIdentifier(0),
@@ -285,37 +287,6 @@ export const isFilterContextItemLocked = (
 //
 // Per-tab automation filter selectors
 //
-
-/**
- * Automation filters grouped by tab.
- * @alpha
- */
-export interface IAutomationFiltersTab {
-    /**
-     * Tab local identifier.
-     */
-    tabId: string;
-    /**
-     * Tab title.
-     */
-    tabTitle: string;
-    /**
-     * Automation-available filters for the tab (hidden filters removed).
-     */
-    availableFilters: FilterContextItem[];
-    /**
-     * Default selected filters for the tab (non-locked empty attribute filters removed).
-     */
-    defaultSelectedFilters: FilterContextItem[];
-    /**
-     * Locked filters for the tab.
-     */
-    lockedFilters: FilterContextItem[];
-    /**
-     * Hidden filters for the tab.
-     */
-    hiddenFilters: FilterContextItem[];
-}
 
 /**
  * Returns automation-available filters structured per tab.

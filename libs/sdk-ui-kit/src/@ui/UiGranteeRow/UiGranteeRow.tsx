@@ -23,6 +23,8 @@ export interface IUiGranteeRowProps {
     email?: string;
     /** When true, an "Owner" tag is rendered between the text block and the controls slot. */
     isOwner?: boolean;
+    /** When true, the row is visually muted to signal an in-flight save. */
+    isPending?: boolean;
     /** Trailing controls slot — typically the `UiGranteeRowControls` trigger pair. */
     controls?: ReactNode;
     /** Test id forwarded to the root element. */
@@ -35,10 +37,18 @@ export interface IUiGranteeRowProps {
  *
  * @internal
  */
-export function UiGranteeRow({ kind, name, email, isOwner, controls, dataTestId }: IUiGranteeRowProps) {
+export function UiGranteeRow({
+    kind,
+    name,
+    email,
+    isOwner,
+    isPending,
+    controls,
+    dataTestId,
+}: IUiGranteeRowProps) {
     const intl = useIntl();
     return (
-        <div className={b()} data-testid={dataTestId}>
+        <div className={b({ pending: Boolean(isPending) })} data-testid={dataTestId}>
             <UiGranteeAvatar kind={kind} decorative />
             <div className={e("text")}>
                 <span className={e("name")} title={name}>

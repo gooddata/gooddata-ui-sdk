@@ -75,7 +75,7 @@ export function toAfmExecution(def: IExecutionDefinition): AfmExecution {
     };
 }
 
-function convertMeasureDefinitionOverrides(
+export function convertMeasureDefinitionOverrides(
     overrides: IMeasureDefinitionOverride[],
 ): MetricDefinitionOverride[] {
     return overrides.map((override) => ({

@@ -5,7 +5,9 @@ import { type KeyboardEvent, type ReactElement, useRef } from "react";
 import { useIntl } from "react-intl";
 
 import { olpPermissionMessages } from "../../locales.js";
+import { type IconType } from "../@types/icon.js";
 import { bem } from "../@utils/bem.js";
+import { UiIcon } from "../UiIcon/UiIcon.js";
 import { UiIconButton } from "../UiIconButton/UiIconButton.js";
 import { UiPopover } from "../UiPopover/UiPopover.js";
 import { UiTooltip } from "../UiTooltip/UiTooltip.js";
@@ -29,18 +31,6 @@ export interface IUiPermissionMenuProps {
     selectedLevel?: PermissionMenuLevel;
     /** Fires when the user picks a permission level. */
     onPermissionChange: (level: PermissionMenuLevel) => void;
-    /** Fires when the user picks Transfer ownership. */
-    onTransferOwnership?: () => void;
-    /**
-     * Fires when the user picks the Labels entry. Display the count via
-     * `labelsCounter`.
-     */
-    onLabelsClick?: () => void;
-    /**
-     * Counter shown next to the Labels row (e.g. `"4/4"`). Hidden
-     * if omitted.
-     */
-    labelsCounter?: string;
     /** Fires when the user picks Remove access. */
     onRemoveAccess?: () => void;
     /** Test id forwarded to the menu body. */
@@ -51,7 +41,8 @@ interface IPermissionItem {
     key: string;
     label: string;
     tooltip?: string;
-    counter?: string;
+    /** Leading icon (action rows only, e.g. the trash icon on Remove access). */
+    icon?: IconType;
     /**
      * When set, the row participates in the radio group as a
      * `menuitemradio` with `aria-checked` driven by
@@ -65,8 +56,9 @@ interface IPermissionItem {
 /**
  * Per-grantee permission popover. Renders a fixed set of rows — two
  * permission levels (Can view & share / Can view), an optional divider,
- * and optional Transfer ownership / Labels / Remove access action rows.
- * Each level row carries an `infoCircle` tooltip.
+ * and an optional Remove access action row. Each level row carries an
+ * `infoCircle` tooltip. Labels and Transfer ownership live in the separate
+ * {@link UiMoreOptionsMenu}.
  *
  * @internal
  */
@@ -74,9 +66,6 @@ export function UiPermissionMenu({
     anchor,
     selectedLevel,
     onPermissionChange,
-    onTransferOwnership,
-    onLabelsClick,
-    labelsCounter,
     onRemoveAccess,
     dataTestId,
 }: IUiPermissionMenuProps) {
@@ -89,9 +78,6 @@ export function UiPermissionMenu({
                 <MenuBody
                     selectedLevel={selectedLevel}
                     onPermissionChange={onPermissionChange}
-                    onTransferOwnership={onTransferOwnership}
-                    onLabelsClick={onLabelsClick}
-                    labelsCounter={labelsCounter}
                     onRemoveAccess={onRemoveAccess}
                     onClose={onClose}
                     dataTestId={dataTestId}
@@ -104,9 +90,6 @@ export function UiPermissionMenu({
 interface IMenuBodyProps {
     selectedLevel?: PermissionMenuLevel;
     onPermissionChange: (level: PermissionMenuLevel) => void;
-    onTransferOwnership?: () => void;
-    onLabelsClick?: () => void;
-    labelsCounter?: string;
     onRemoveAccess?: () => void;
     onClose: () => void;
     dataTestId?: string;
@@ -115,9 +98,6 @@ interface IMenuBodyProps {
 function MenuBody({
     selectedLevel,
     onPermissionChange,
-    onTransferOwnership,
-    onLabelsClick,
-    labelsCounter,
     onRemoveAccess,
     onClose,
     dataTestId,
@@ -146,25 +126,11 @@ function MenuBody({
     ];
 
     const actionItems: IPermissionItem[] = [];
-    if (onTransferOwnership) {
-        actionItems.push({
-            key: "transfer",
-            label: intl.formatMessage(olpPermissionMessages.transferOwnership),
-            onClick: choose(onTransferOwnership),
-        });
-    }
-    if (onLabelsClick) {
-        actionItems.push({
-            key: "labels",
-            label: intl.formatMessage(olpPermissionMessages.labels),
-            counter: labelsCounter,
-            onClick: choose(onLabelsClick),
-        });
-    }
     if (onRemoveAccess) {
         actionItems.push({
             key: "remove",
             label: intl.formatMessage(olpPermissionMessages.removeAccess),
+            icon: "trash",
             onClick: choose(onRemoveAccess),
         });
     }
@@ -229,7 +195,7 @@ function PermissionMenuItem({ item, selectedLevel }: IPermissionMenuItemProps) {
     const intl = useIntl();
     // Tooltip anchor must live OUTSIDE the menu-item button so we don't nest an
     // interactive element inside a button (invalid HTML, breaks focus). The row
-    // wrapper provides the flex layout; the button covers label + counter; the
+    // wrapper provides the flex layout; the button covers the label; the
     // tooltip sits next to the button.
     const isRadio = !!item.radioValue;
     const isChecked = isRadio && item.radioValue === selectedLevel;
@@ -242,8 +208,8 @@ function PermissionMenuItem({ item, selectedLevel }: IPermissionMenuItemProps) {
                 className={e("item")}
                 onClick={item.onClick}
             >
+                {item.icon ? <UiIcon type={item.icon} size={16} color="complementary-7" /> : null}
                 <span className={e("item-label")}>{item.label}</span>
-                {item.counter ? <span className={e("item-counter")}>{item.counter}</span> : null}
             </button>
             {item.tooltip ? (
                 <UiTooltip

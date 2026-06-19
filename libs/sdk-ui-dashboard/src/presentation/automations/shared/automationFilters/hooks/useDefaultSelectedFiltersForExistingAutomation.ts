@@ -16,29 +16,25 @@ import {
     newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
+import { type ExtendedDashboardWidget } from "../../../../../model/types/layoutTypes.js";
+import { removeIgnoredWidgetFilters } from "../../../../../model/utils/widgetFilters.js";
+import { type IDashboardFilter, isDashboardFilter } from "../../../../../types.js";
+import { useAutomationsContext } from "../../../contexts/AutomationsContext.js";
 import {
     getAutomationAlertFilters,
     getAutomationDashboardFilters,
     getAutomationDashboardFiltersByTab,
     getAutomationVisualizationFilters,
-} from "../../../../../_staging/automation/index.js";
-import { dashboardFilterToFilterContextItem } from "../../../../../_staging/dashboard/dashboardFilterContext.js";
-import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
-import {
-    selectAutomationAvailableDashboardFilters,
-    selectAutomationCommonDateFilterId,
-} from "../../../../../model/store/filtering/dashboardFilterSelectors.js";
-import type { ExtendedDashboardWidget } from "../../../../../model/types/layoutTypes.js";
-import { removeIgnoredWidgetFilters } from "../../../../../model/utils/widgetFilters.js";
-import { type IDashboardFilter, isDashboardFilter } from "../../../../../types.js";
+} from "../../utils/automationUtils.js";
+import { dashboardFilterToFilterContextItem } from "../../utils/filterContextUtils.js";
 
 export function useDefaultSelectedFiltersForExistingAutomation(
     automationToEdit?: IAutomationMetadataObject,
     availableVisibleFilters?: IAutomationVisibleFilter[],
     widget?: ExtendedDashboardWidget,
 ) {
-    const availableDashboardFilters = useDashboardSelector(selectAutomationAvailableDashboardFilters);
-    const commonDateFilterId = useDashboardSelector(selectAutomationCommonDateFilterId);
+    const { automationAvailableFilters: availableDashboardFilters, commonDateFilterId } =
+        useAutomationsContext();
 
     const savedWidgetAlertFilters = getAutomationAlertFilters(automationToEdit);
     const {

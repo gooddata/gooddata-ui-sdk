@@ -46,6 +46,18 @@ vi.mock("../../../../../../model/react/DashboardStoreProvider.js", () => ({
     useDashboardSelector: (selector: unknown) => resolveSelectorValue(selector),
 }));
 
+vi.mock("../../../../contexts/AutomationsContext.js", () => ({
+    useAutomationsContext: () => ({
+        lockedFilters: [],
+        hiddenFilters: [],
+        availableFilters: [],
+        commonDateFilterId: undefined,
+        automationFiltersByTab: [],
+        attributeFilterSelectionTypeMap: undefined,
+        attributeFilterSelectionTypeMapByTab: undefined,
+    }),
+}));
+
 const alertWithParameters = (parameters: IInsightParameterValue[]): IAutomationMetadataObject => ({
     type: "automation",
     id: "alert-1",

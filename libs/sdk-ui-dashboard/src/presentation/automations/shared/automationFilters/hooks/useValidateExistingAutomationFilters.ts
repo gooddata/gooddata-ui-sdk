@@ -36,12 +36,8 @@ import {
 } from "@gooddata/sdk-model";
 
 import {
-    getAutomationAlertFilters,
     getAutomationAlertParameters,
-    getAutomationDashboardFilters,
-    getAutomationDashboardFiltersByTab,
     getAutomationExportParametersByTab,
-    getAutomationVisualizationFilters,
 } from "../../../../../_staging/automation/index.js";
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../../../converters/filterConverters.js";
 import { isFilterTypeCompatibleWithSelectionType } from "../../../../../model/commandHandlers/dashboard/common/attributeFilterSelectionTypeCompatibility.js";
@@ -51,22 +47,18 @@ import {
     selectCatalogParametersIsLoaded,
 } from "../../../../../model/store/catalog/catalogSelectors.js";
 import { selectEnableParameters } from "../../../../../model/store/config/configSelectors.js";
-import {
-    selectAutomationCommonDateFilterId,
-    selectAutomationFiltersByTab,
-    selectDashboardFiltersWithoutCrossFiltering,
-    selectDashboardHiddenFilters,
-    selectDashboardLockedFilters,
-} from "../../../../../model/store/filtering/dashboardFilterSelectors.js";
-import {
-    selectAttributeFilterConfigsSelectionTypeMap,
-    selectAttributeFilterConfigsSelectionTypeMapByTab,
-} from "../../../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectWidgetLocalIdToTabIdMap } from "../../../../../model/store/tabs/layout/layoutSelectors.js";
 import { selectSmartPersistedTabsParameters } from "../../../../../model/store/tabs/parameters/parametersSelectors.js";
 import { selectTabs } from "../../../../../model/store/tabs/tabsSelectors.js";
-import type { ExtendedDashboardWidget } from "../../../../../model/types/layoutTypes.js";
+import { type ExtendedDashboardWidget } from "../../../../../model/types/layoutTypes.js";
 import { type IDashboardFilter } from "../../../../../types.js";
+import { useAutomationsContext } from "../../../contexts/AutomationsContext.js";
+import {
+    getAutomationAlertFilters,
+    getAutomationDashboardFilters,
+    getAutomationDashboardFiltersByTab,
+    getAutomationVisualizationFilters,
+} from "../../utils/automationUtils.js";
 import { hasStaleAlertParameters } from "../automationParameters.js";
 import {
     areFiltersEqual,
@@ -178,13 +170,15 @@ export function useValidateExistingAutomationFilters({
     widget?: ExtendedDashboardWidget;
     insight?: IInsight;
 }): IAutomationValidationResult {
-    const lockedFilters = useDashboardSelector(selectDashboardLockedFilters);
-    const hiddenFilters = useDashboardSelector(selectDashboardHiddenFilters);
-    const dashboardFilters = useDashboardSelector(selectDashboardFiltersWithoutCrossFiltering);
-    const commonDateFilterId = useDashboardSelector(selectAutomationCommonDateFilterId);
-    const dashboardFiltersByTab = useDashboardSelector(selectAutomationFiltersByTab);
-    const selectionTypeMap = useDashboardSelector(selectAttributeFilterConfigsSelectionTypeMap);
-    const selectionTypeMapByTab = useDashboardSelector(selectAttributeFilterConfigsSelectionTypeMapByTab);
+    const {
+        lockedFilters,
+        hiddenFilters,
+        availableFilters: dashboardFilters,
+        commonDateFilterId,
+        automationFiltersByTab: dashboardFiltersByTab,
+        attributeFilterSelectionTypeMap: selectionTypeMap,
+        attributeFilterSelectionTypeMapByTab: selectionTypeMapByTab,
+    } = useAutomationsContext();
     const parametersEnabled = useDashboardSelector(selectEnableParameters);
     const catalogParameters = useDashboardSelector(selectCatalogParameters);
     const catalogParametersIsLoaded = useDashboardSelector(selectCatalogParametersIsLoaded);

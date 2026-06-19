@@ -40,11 +40,11 @@ export function Preview({
 }: IPreviewProps) {
     const intl = useIntl();
 
-    // In the strict-limit variant, the "with ties" condition (strictLimitOfRows === false) is annotated
-    // in the summary, e.g. "Top 10 (with ties) of # of Orders".
-    const withTies =
-        enableRankingStrictLimit && !strictLimitOfRows
-            ? ` ${intl.formatMessage(messages["previewWithTies"])}`
+    // In the strict-limit variant, the strict condition (strictLimitOfRows === true) is annotated in the
+    // summary to match the dropdown naming, e.g. "Top 10 (strict) of # of Orders".
+    const conditionSuffix =
+        enableRankingStrictLimit && strictLimitOfRows
+            ? ` ${intl.formatMessage(messages["previewStrict"])}`
             : "";
 
     return (
@@ -57,7 +57,7 @@ export function Preview({
                     attribute: attribute?.title,
                     operator,
                     value,
-                    withTies,
+                    conditionSuffix,
                     strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
                 }}
             />

@@ -28,7 +28,10 @@ const selectSelf = createSelector(
 
 const adapterSelectors = executionResultsAdapter.getSelectors(selectSelf);
 
-const selectExecutionResultEntities = adapterSelectors.selectEntities;
+/**
+ * @alpha
+ */
+export const selectExecutionResultEntities = adapterSelectors.selectEntities;
 
 /**
  * @alpha

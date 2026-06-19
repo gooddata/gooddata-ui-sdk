@@ -8,6 +8,7 @@ import {
     type DashboardAttributeFilterItem,
     type IDashboardAttributeFilterByDate,
     type IDashboardDateFilter,
+    type ObjRef,
     dashboardAttributeFilterItemFilterElementsByDate,
     objRefToString,
 } from "@gooddata/sdk-model";
@@ -79,25 +80,37 @@ export const useDependentDateFilters = (
     const dependentDateFilters = useMemo(() => {
         return filterElementsByDate?.map((dependentDateFilter: IDashboardAttributeFilterByDate) => {
             if (dependentDateFilter.isCommonDate) {
+                // The dimension to apply the common date range through.
+                // New format: the explicit `dataSet` field (filterLocalIdentifier references the common
+                // date filter itself). Legacy format: no `dataSet` field, so the dataset identifier was
+                // stored directly in filterLocalIdentifier.
+                const dataSet: ObjRef = dependentDateFilter.dataSet ?? {
+                    identifier: dependentDateFilter.filterLocalIdentifier,
+                    type: "dataSet",
+                };
+
                 const commonDashboardDateFilter: IDashboardDateFilter = {
                     dateFilter: {
                         type: commonDateFilterWithAllTime?.dateFilter.type,
                         granularity: commonDateFilterWithAllTime?.dateFilter.granularity,
                         from: commonDateFilterWithAllTime?.dateFilter.from,
                         to: commonDateFilterWithAllTime?.dateFilter.to,
-                        dataSet: {
-                            identifier: dependentDateFilter.filterLocalIdentifier,
-                            type: "dataSet",
-                        },
+                        dataSet,
                     },
                 };
 
                 return commonDashboardDateFilter;
             } else {
+                // Try localIdentifier first (new format), then fall back to dataset identifier
+                // (legacy format) for dashboards saved before the localIdentifier-based approach.
+                // NOTE: If a filter's localIdentifier happens to equal another filter's dataset
+                // identifier the wrong filter could be matched — this is an accepted theoretical
+                // risk given the practical namespace separation between the two.
                 const matchingFilter = allDateFilters.find(
                     (filter) =>
+                        filter.dateFilter.localIdentifier === dependentDateFilter.filterLocalIdentifier ||
                         objRefToString(filter.dateFilter.dataSet!) ===
-                        dependentDateFilter.filterLocalIdentifier,
+                            dependentDateFilter.filterLocalIdentifier,
                 );
 
                 invariant(matchingFilter); // if this blows up, the state is inconsistent
