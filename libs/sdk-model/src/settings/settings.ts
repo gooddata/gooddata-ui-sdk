@@ -471,6 +471,13 @@ export interface IFeatureFlags {
     enableMetricFormatOverrides?: boolean;
 
     /**
+     * Enables column-level (object-level) permissions: the backend enforces per-object
+     * access rules on attributes, facts and labels, and the UI for managing that access
+     * (e.g. the catalog share dialog) becomes available.
+     */
+    enableColumnLevelPermissions?: boolean;
+
+    /**
      * Enables Highcharts accessibility features.
      */
     enableHighchartsAccessibility?: boolean;

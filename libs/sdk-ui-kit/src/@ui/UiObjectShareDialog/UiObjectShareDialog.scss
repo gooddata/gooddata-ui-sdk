@@ -9,4 +9,11 @@
         display: flex;
         flex-direction: column;
     }
+
+    &__error {
+        padding-block: var(--gd-spacing-20px);
+        color: var(--gd-palette-complementary-6, #94a1ad);
+        font-size: 14px;
+        text-align: center;
+    }
 }

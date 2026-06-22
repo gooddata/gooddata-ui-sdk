@@ -303,10 +303,27 @@ export interface IPluggableApplicationNavigation {
 }
 
 // @alpha
+export interface IPluggableAppLogRecord {
+    attributes?: Record<string, unknown>;
+    body: string;
+    severityNumber?: number;
+    severityText?: string;
+}
+
+// @alpha
 export interface IPluggableAppTelemetryCallbacks {
+    logRecord?: (record: IPluggableAppLogRecord) => void;
     trackEvent: (eventName: string, data?: Record<string, unknown>, options?: ITelemetryEventOptions) => void;
-    trackPageView: (page: string) => void;
-    trackTiming: (variable: string, label: string, valueMs: number) => void;
+    trackPageView: (page: string, data?: IPluggableAppTelemetryEventData) => void;
+    trackTiming: (variable: string, label: string, valueMs: number, data?: IPluggableAppTelemetryEventData) => void;
+}
+
+// @alpha
+export interface IPluggableAppTelemetryEventData {
+    // (undocumented)
+    [key: string]: unknown;
+    identifiers?: Record<string, string>;
+    stats?: Record<string, string | number | boolean>;
 }
 
 // @alpha
@@ -339,6 +356,16 @@ export function isWorkspaceScopedSettings(settings: IEffectiveSettings): setting
 // @alpha
 export interface ITelemetryEventOptions {
     channel?: TelemetryChannel;
+}
+
+// @alpha
+export interface ITelemetryPropertySlot {
+    // (undocumented)
+    index: number;
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    scope: TelemetryPropertyScope;
 }
 
 // @alpha
@@ -392,6 +419,68 @@ export type PluggableApplicationMount = (options: IPluggableApplicationMountOpti
 export function reloadPlatformContextRequested(): IReloadPlatformContextRequestedEvent;
 
 // @alpha
+export const TELEMETRY_PROPERTIES: {
+    readonly deploymentId: {
+        readonly index: 1;
+        readonly name: "DeploymentId";
+        readonly scope: "visit";
+    };
+    readonly organizationId: {
+        readonly index: 2;
+        readonly name: "OrganizationId";
+        readonly scope: "visit";
+    };
+    readonly sessionId: {
+        readonly index: 3;
+        readonly name: "SessionId";
+        readonly scope: "visit";
+    };
+    readonly revHash: {
+        readonly index: 4;
+        readonly name: "RevHash";
+        readonly scope: "visit";
+    };
+    readonly isExport: {
+        readonly index: 5;
+        readonly name: "isExport";
+        readonly scope: "visit";
+    };
+    readonly hostReactVersion: {
+        readonly index: 6;
+        readonly name: "HostReactVersion";
+        readonly scope: "visit";
+    };
+    readonly hostSdkVersion: {
+        readonly index: 7;
+        readonly name: "HostSdkVersion";
+        readonly scope: "visit";
+    };
+    readonly multivalue: {
+        readonly index: 1;
+        readonly name: "Multivalue";
+        readonly scope: "page";
+    };
+    readonly statsValue: {
+        readonly index: 2;
+        readonly name: "StatsValue";
+        readonly scope: "page";
+    };
+    readonly moduleReactVersion: {
+        readonly index: 3;
+        readonly name: "ModuleReactVersion";
+        readonly scope: "page";
+    };
+    readonly moduleSdkVersion: {
+        readonly index: 4;
+        readonly name: "ModuleSdkVersion";
+        readonly scope: "page";
+    };
+};
+
+// @alpha
 export type TelemetryChannel = "standard" | "ai";
+
+// @alpha
+export type TelemetryPropertyScope = "visit" | "page";
 
 ```

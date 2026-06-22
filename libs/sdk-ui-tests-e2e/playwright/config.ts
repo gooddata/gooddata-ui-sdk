@@ -9,14 +9,16 @@ import {
     type IFeatureHubEnvironment,
     createTest,
     getBaseUrl,
+    getWorkspaceId,
 } from "@gooddata/sdk-e2e-utils";
-import recordings from "@gooddata/sdk-ui-tests-reference-workspace/recordings_workspace" with { type: "json" };
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 export const BASE_URL = getBaseUrl("http://gooddata-ui-sdk-scenarios:9500");
 export const API_TOKEN = process.env["TIGER_API_TOKEN"] ?? "";
+export const DEFAULT_WORKSPACE_ID = "c76e0537d0614abb0027f7c992656b964922506f";
+export const WORKSPACE_ID = getWorkspaceId(DEFAULT_WORKSPACE_ID);
 
 const RECORDINGS_DIR = resolve(__dirname, "../recordings/mappings/TIGER");
 
@@ -91,8 +93,8 @@ export const test = createTest({
         baseUrl: BASE_URL,
         getMappingPath,
         workspaceIdMappings: {
-            sourceWorkspaceId: process.env["TEST_WORKSPACE_ID"] ?? "",
-            targetWorkspaceId: recordings.workspaceId,
+            sourceWorkspaceId: WORKSPACE_ID,
+            targetWorkspaceId: DEFAULT_WORKSPACE_ID,
         },
     },
     featureHubResponse: FEATURE_HUB_RESPONSE,

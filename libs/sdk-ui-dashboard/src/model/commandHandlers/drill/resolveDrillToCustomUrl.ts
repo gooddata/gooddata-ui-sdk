@@ -11,7 +11,6 @@ import {
     type IAttributeDisplayFormMetadataObject,
     type IDashboardMeasureValueFilter,
     type IDrillToCustomUrl as IDrillToCustomUrlModel,
-    type IFilter,
     type IInsightWidget,
     type IMeasureValueFilter,
     type MatchFilterOperator,
@@ -29,6 +28,7 @@ import {
     isArbitraryAttributeFilter,
     isAttributeDescriptor,
     isAttributeElementsByValue,
+    isAttributeFilter,
     isComparisonCondition,
     isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
@@ -58,8 +58,6 @@ import {
 
 import { type IDrillToCustomUrl } from "../../commands/drill.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { queryWidgetFilters } from "../../queries/widgets.js";
-import { query } from "../../store/_infra/queryCall.js";
 import {
     selectAllCatalogDisplayFormsMap,
     selectAllCatalogMeasuresMap,
@@ -553,14 +551,23 @@ export function* getInsightAttributeFilterReplacements(
         return [];
     }
 
-    const widgetFilters: IFilter[] = yield call(query, queryWidgetFilters(widgetRef));
+    // The {attribute_filter_selection(...)} placeholder is scoped to the visualization, so it reads the
+    // insight's own filters. Resolving it against the widget's effective filters would let a dashboard
+    // filter on the same attribute take precedence and override the insight's selection.
+    const widget: IInsightWidget = yield select(selectAnalyticalWidgetByRef(widgetRef));
+    const insight: ReturnType<ReturnType<typeof selectInsightByRef>> = yield select(
+        selectInsightByRef(widget.insight),
+    );
+    const insightAttributeFilters = insight
+        ? insightDefinitionFilters(insight).filter(isAttributeFilter)
+        : [];
     const catalogDisplayForms: ReturnType<typeof selectAllCatalogDisplayFormsMap> = yield select(
         selectAllCatalogDisplayFormsMap,
     );
 
     return attributeFilterPlaceholders.map(
         ({ placeholder: toBeReplaced, ref }): IDrillToUrlPlaceholderReplacement => {
-            const usedFilter = widgetFilters.find((filter) => {
+            const usedFilter = insightAttributeFilters.find((filter) => {
                 const filterRef = filterObjRef(filter);
                 const df = filterRef && catalogDisplayForms.get(filterRef);
                 return df && areObjRefsEqual(idRef(df.id), ref);

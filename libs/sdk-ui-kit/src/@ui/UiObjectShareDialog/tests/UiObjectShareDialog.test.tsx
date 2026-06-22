@@ -6,12 +6,6 @@ import { describe, expect, it, vi } from "vitest";
 
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
 
-// UiTag (and indirectly UiTooltip) pulls the legacy Bubble stack which fails
-// under our pnpm hoist — mock it. The dialog wiring is what we cover here.
-vi.mock("../../UiTooltip/UiTooltip.js", () => ({
-    UiTooltip: ({ anchor }: { anchor: React.ReactNode }) => <>{anchor}</>,
-}));
-
 import { UiObjectShareDialog } from "../UiObjectShareDialog.js";
 import { type IUiObjectShareDialogGrantee } from "../UiObjectShareDialogCard.js";
 

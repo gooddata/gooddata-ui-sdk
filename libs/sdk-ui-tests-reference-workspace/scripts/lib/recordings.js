@@ -1,7 +1,5 @@
 // (C) 2021-2026 GoodData Corporation
 
-import recordings from "../../recordings_workspace.json" with { type: "json" };
-
 export function getRecordingsWorkspaceId() {
-    return recordings.workspaceId;
+    return "c76e0537d0614abb0027f7c992656b964922506f";
 }

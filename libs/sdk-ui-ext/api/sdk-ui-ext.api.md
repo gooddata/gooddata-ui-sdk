@@ -11,6 +11,7 @@ import { CopyCodeOriginType } from '@gooddata/sdk-ui-kit';
 import { Dispatch } from 'react';
 import { EmbedType } from '@gooddata/sdk-ui-kit';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
+import type { GeneralAccessValue } from '@gooddata/sdk-ui-kit';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAlertComparisonOperator } from '@gooddata/sdk-model';
 import { IAlertRelativeArithmeticOperator } from '@gooddata/sdk-model';
@@ -34,10 +35,13 @@ import { ILoadingProps } from '@gooddata/sdk-ui';
 import { ILocale } from '@gooddata/sdk-ui';
 import { INotification } from '@gooddata/sdk-model';
 import { IntlShape } from 'react-intl';
+import type { IObjectPermissionsObject } from '@gooddata/sdk-backend-spi';
 import { IPivotTableConfig } from '@gooddata/sdk-ui-pivot';
 import { ISettings } from '@gooddata/sdk-model';
 import { ITab } from '@gooddata/sdk-ui-kit';
 import { ITheme } from '@gooddata/sdk-model';
+import type { IUiGranteeAsyncOptions } from '@gooddata/sdk-ui-kit';
+import type { IUiPickedGrantee } from '@gooddata/sdk-ui-kit';
 import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IWidgetUrlBuilder } from '@gooddata/sdk-ui';
@@ -881,6 +885,104 @@ export function InsightRenderer(props: IInsightRendererProps): JSX.Element | nul
 // @public
 export function InsightView(props: IInsightViewProps): JSX.Element;
 
+// @internal
+export interface IObjectAccessSummary {
+    // (undocumented)
+    generalAccess: GeneralAccessValue;
+    // (undocumented)
+    granteeCount: number;
+    // (undocumented)
+    workspaceLevel: "VIEW" | "SHARE";
+}
+
+// @internal (undocumented)
+export interface IObjectShareController {
+    // (undocumented)
+    actions: IObjectShareControllerActions;
+    // (undocumented)
+    state: IObjectShareControllerState;
+}
+
+// @internal (undocumented)
+export interface IObjectShareControllerActions {
+    // (undocumented)
+    cancelGeneralAccessChange: () => void;
+    changeGranteeLabels: (granteeId: string, selectedLabelIds: string[]) => Promise<void>;
+    changePermissionLevel: (granteeId: string, level: ObjectSharePermissionLevel) => Promise<void>;
+    // (undocumented)
+    closeAddGrantee: () => void;
+    confirmAddGrantees: () => Promise<void>;
+    confirmGeneralAccessChange: () => Promise<void>;
+    loadOptions: (search: string) => Promise<IUiGranteeAsyncOptions>;
+    // (undocumented)
+    openAddGrantee: () => void;
+    removeGrantee: (granteeId: string) => Promise<void>;
+    requestGeneralAccessChange: (next: GeneralAccessValue) => void;
+    reset: () => void;
+    // (undocumented)
+    setPendingGrantees: (next: IUiPickedGrantee[]) => void;
+}
+
+// @internal (undocumented)
+export interface IObjectShareControllerState {
+    // (undocumented)
+    error?: Error;
+    // (undocumented)
+    generalAccess: GeneralAccessValue;
+    // (undocumented)
+    grantees: IObjectShareGrantee[];
+    labels: IObjectShareLabel[];
+    labelsResolved: boolean;
+    pendingGeneralAccess?: GeneralAccessValue;
+    pendingGrantees: IUiPickedGrantee[];
+    selectedLabelIdsByGrantee: Record<string, string[]>;
+    // (undocumented)
+    status: "idle" | "loading" | "success" | "error" | "saving";
+    // (undocumented)
+    subview: "main" | "addGrantee";
+    // (undocumented)
+    summary: IObjectAccessSummary | undefined;
+}
+
+// @internal
+export interface IObjectShareDialogProps {
+    controller?: IObjectShareController;
+    isOpen: boolean;
+    labels?: IObjectShareLabel[];
+    labelsError?: boolean;
+    labelsLoading?: boolean;
+    objectTitle: string;
+    onClose: () => void;
+    onSaved?: () => void;
+    target: IObjectPermissionsObject | undefined;
+}
+
+// @internal
+export interface IObjectShareGrantee {
+    effectivePermission?: ObjectSharePermissionLevel;
+    // (undocumented)
+    email?: string;
+    // (undocumented)
+    granteeRef: ObjRef;
+    id: string;
+    // (undocumented)
+    kind: "user" | "group";
+    // (undocumented)
+    level: ObjectSharePermissionLevel;
+    // (undocumented)
+    name: string;
+    pending?: "saving" | "removing";
+}
+
+// @internal
+export interface IObjectShareLabel {
+    id: string;
+    isDefault: boolean;
+    isPrimary: boolean;
+    ref: ObjRef;
+    title: string;
+}
+
 // @beta
 export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition;
 
@@ -932,6 +1034,14 @@ export interface ITabsIds {
     all: string;
     // (undocumented)
     my: string;
+}
+
+// @internal
+export interface IUseObjectShareOptions {
+    labels?: IObjectShareLabel[];
+    labelsError?: boolean;
+    labelsLoading?: boolean;
+    onSaved?: () => void;
 }
 
 // @internal
@@ -1086,6 +1196,12 @@ export const MIN_VISUALIZATION_WIDTH = 2;
 // @public (undocumented)
 export function NotificationsPanel(props: INotificationsPanelProps): JSX.Element;
 
+// @internal
+export function ObjectShareDialog(input: IObjectShareDialogProps): JSX.Element;
+
+// @internal
+export type ObjectSharePermissionLevel = "VIEW" | "SHARE";
+
 // @alpha (undocumented)
 export const PluggableVisualizationErrorCodes: {
     INVALID_BUCKETS: string;
@@ -1136,6 +1252,9 @@ export function useInsightPickerState(author?: string): {
     tagFilter: string[];
     onTagFilterChange: Dispatch<SetStateAction<string[]>>;
 };
+
+// @internal
+export function useObjectShare(target: IObjectPermissionsObject | undefined, options?: IUseObjectShareOptions): IObjectShareController;
 
 // @internal (undocumented)
 export const UserEditDialog: {

@@ -106,7 +106,7 @@ export function loadWhatIfScenarios(content: IChatConversationLocalContent): IWh
 
     // Search for visualizations
     const visualisation = content.parts?.find((p) => p.type === "visualization");
-    if (!visualisation) {
+    if (!visualisation?.visualization) {
         return undefined;
     }
 

@@ -13,6 +13,7 @@ export enum TigerFeaturesNames {
     DashboardEditModeDevRollout = "dashboardEditModeDevRollout",
     EnableMetricSqlAndDataExplain = "enableMetricSqlAndDataExplain",
     EnableMetricFormatOverrides = "enableMetricFormatOverrides",
+    EnableColumnLevelPermissions = "enableColumnLevelPermissions",
     EnableDescriptions = "enableDescriptions",
     EnableKPIDashboardExportPDF = "enableKPIDashboardExportPDF",
     EnableSqlDatasets = "enableSqlDatasets",
@@ -192,6 +193,7 @@ export type ITigerFeatureFlags = {
     dashboardEditModeDevRollout: (typeof FeatureFlagsValues)["dashboardEditModeDevRollout"][number];
     enableMetricSqlAndDataExplain: (typeof FeatureFlagsValues)["enableMetricSqlAndDataExplain"][number];
     enableMetricFormatOverrides: (typeof FeatureFlagsValues)["enableMetricFormatOverrides"][number];
+    enableColumnLevelPermissions: (typeof FeatureFlagsValues)["enableColumnLevelPermissions"][number];
     enableDescriptions: (typeof FeatureFlagsValues)["enableDescriptions"][number];
     enableKPIDashboardExportPDF: (typeof FeatureFlagsValues)["enableKPIDashboardExportPDF"][number];
     enableSqlDatasets: (typeof FeatureFlagsValues)["enableSqlDatasets"][number];
@@ -371,6 +373,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     dashboardEditModeDevRollout: true,
     enableMetricSqlAndDataExplain: false,
     enableMetricFormatOverrides: false,
+    enableColumnLevelPermissions: false,
     enableDescriptions: true,
     enableKPIDashboardExportPDF: true,
     enableSqlDatasets: false,
@@ -550,6 +553,7 @@ export const FeatureFlagsValues = {
     dashboardEditModeDevRollout: [true, false] as const,
     enableMetricSqlAndDataExplain: [true, false] as const,
     enableMetricFormatOverrides: [true, false] as const,
+    enableColumnLevelPermissions: [true, false] as const,
     enableDescriptions: [true, false] as const,
     enableKPIDashboardExportPDF: [true, false] as const,
     enableSqlDatasets: [true, false] as const,

@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "Add object-level permissions share dialog to the analytics catalog detail page, gated by the enableColumnLevelPermissions feature flag",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "matyas.kandl@gooddata.com"
+}

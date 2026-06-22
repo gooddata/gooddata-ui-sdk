@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-tests-reference-workspace",
-    "version": "11.43.0-alpha.1",
+    "version": "11.43.0-alpha.2",
     "private": true,
     "description": "GoodData SDK reference workspace",
     "license": "LicenseRef-LICENSE",
@@ -32,10 +32,6 @@
             "types": "./esm/goodsales/current_child_reference_workspace_objects_tiger.d.ts",
             "import": "./esm/goodsales/current_child_reference_workspace_objects_tiger.js",
             "require": "./esm/goodsales/current_child_reference_workspace_objects_tiger.js"
-        },
-        "./recordings_workspace": {
-            "import": "./recordings_workspace.json",
-            "require": "./recordings_workspace.json"
         }
     },
     "scripts": {

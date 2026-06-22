@@ -1,17 +1,24 @@
 // (C) 2026 GoodData Corporation
 
-// Cancel UiPopover.__content's 10px padding so rows reach edge-to-edge.
+// Rendered as a UiMenu content view — its parent (UiMoreOptionsMenu) already
+// cancels the popover padding, so this lays out normally (no negative margin).
 
 .gd-ui-kit-labels-checklist {
     align-self: stretch;
     display: flex;
     flex-direction: column;
-    margin: calc(-1 * var(--gd-spacing-10px));
+
+    // The submenu header is width:100% + content-box, so its 10px side padding
+    // would overflow the column by 20px. Make it border-box so it lines up with
+    // the rows and the actions strip below.
+    .gd-ui-kit-submenu-header {
+        box-sizing: border-box;
+    }
 
     &__items {
         display: flex;
         flex-direction: column;
-        padding: var(--gd-spacing-10px) 0;
+        padding: var(--gd-spacing-5px) 0;
     }
 
     &__actions {

@@ -38,7 +38,6 @@ import {
 
 import { dashboardAttributeFilterItemToAttributeFilter } from "../../../../converters/filterConverters.js";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
-import { useWidgetFilters } from "../../../../model/react/useWidgetFilters.js";
 import {
     selectAllCatalogDisplayFormsMap,
     selectAllCatalogMeasuresMap,
@@ -53,7 +52,6 @@ import {
     selectFilterContextAttributeFilterItems,
     selectFilterContextMeasureValueFilters,
 } from "../../../../model/store/tabs/filterContext/filterContextSelectors.js";
-import { selectFilterableWidgetByRef } from "../../../../model/store/tabs/layout/layoutSelectors.js";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/zIndex.js";
 import { useInvalidFilteringParametersIdentifiers } from "../../../widget/insight/configuration/DrillTargets/useInvalidFilteringParametersIdentifiers.js";
 import { type UrlDrillTarget, isDrillToCustomUrlConfig } from "../../types.js";
@@ -593,22 +591,22 @@ function useInsightMeasureValueFilters(widgetRef: ObjRef, enabled: boolean) {
 }
 
 function useSanitizedInsightFilters(widgetRef: ObjRef) {
-    const widget = useDashboardSelector(selectFilterableWidgetByRef(widgetRef));
-    const widgetFiltersResult = useWidgetFilters(widget);
+    const insight = useDashboardSelector(selectInsightByWidgetRef(widgetRef));
     const sanitizeAttributeFilter = useSanitizeAttributeFilter();
 
     return useMemo(() => {
-        return widgetFiltersResult.status === "success"
-            ? // Date filters are currently not supported, so filter them out
-              uniqBy(
-                  widgetFiltersResult.result
-                      ?.filter(isAttributeFilter)
-                      .map(sanitizeAttributeFilter)
-                      .filter(isAttributeFilter), // filter out undefined values (eg. filters with removed display forms)
-                  (f) => serializeObjRef(filterObjRef(f)),
-              )
-            : undefined;
-    }, [widgetFiltersResult.status, widgetFiltersResult.result, sanitizeAttributeFilter]);
+        if (!insight) {
+            return undefined;
+        }
+        // Date filters are currently not supported, so filter them out
+        return uniqBy(
+            insightDefinitionFilters(insight)
+                .filter(isAttributeFilter)
+                .map(sanitizeAttributeFilter)
+                .filter(isAttributeFilter), // filter out undefined values (eg. filters with removed display forms)
+            (f) => serializeObjRef(filterObjRef(f)),
+        );
+    }, [insight, sanitizeAttributeFilter]);
 }
 
 function useSanitizedDashboardFilters() {

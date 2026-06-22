@@ -68,6 +68,13 @@ $popover_footer_gap: 10px;
         > .gd-ui-kit-text-input {
             width: 100%;
         }
+
+        // Edge-to-edge content (e.g. a list whose rows carry their own inset):
+        // drop the surface padding and stretch the child to the full width.
+        &--padding-none {
+            padding: 0;
+            align-items: stretch;
+        }
     }
 
     &__footer {

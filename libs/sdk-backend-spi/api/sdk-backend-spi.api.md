@@ -842,7 +842,7 @@ export type IChatConversationToolResultContent = {
 // @internal
 export type IChatConversationVisualisationContent = {
     type: "visualization";
-    visualization: IInsight;
+    visualization: IInsight | null;
 };
 
 // @internal

@@ -47,6 +47,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableColumnLevelPermissions,
+            "enableColumnLevelPermissions",
+            "BOOLEAN",
+            FeatureFlagsValues.enableColumnLevelPermissions,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableDescriptions,
             "enableDescriptions",
             "BOOLEAN",
