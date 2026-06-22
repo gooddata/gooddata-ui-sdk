@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type KeyboardEvent, useCallback, useId, useMemo, useState } from "react";
+import { type KeyboardEvent, useId, useState } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -73,33 +73,24 @@ export function UiLabelsChecklist({
     // Staged toggles only; locked ids are folded in by the predicate, not stored here.
     const [selected, setSelected] = useState<ReadonlyArray<string>>(() => [...defaultSelectedIds]);
 
-    const toggle = useCallback((id: string, next: boolean) => {
+    const toggle = (id: string, next: boolean) => {
         setSelected((prev) =>
             next ? (prev.includes(id) ? prev : [...prev, id]) : prev.filter((x) => x !== id),
         );
-    }, []);
+    };
 
-    const handleApply = useCallback(() => {
+    const handleApply = () => {
         onApply(items.filter((item) => isLabelsChecklistItemChecked(item, selected)).map((item) => item.id));
         onClose();
-    }, [items, selected, onApply, onClose]);
+    };
 
-    const isDirty = useMemo(() => {
-        // Compare against the locked-augmented initial set, so an unchanged
-        // selection stays non-dirty even when defaultSelectedIds omits a locked id.
-        const initial = new Set<string>();
-        for (const id of defaultSelectedIds) initial.add(id);
-        for (const item of items) if (item.locked) initial.add(item.id);
-        const current = new Set<string>();
-        for (const item of items) {
-            if (isLabelsChecklistItemChecked(item, selected)) current.add(item.id);
-        }
-        if (initial.size !== current.size) return true;
-        for (const id of initial) {
-            if (!current.has(id)) return true;
-        }
-        return false;
-    }, [items, defaultSelectedIds, selected]);
+    // Dirty when any row's checked-state differs from its initial. Locked rows are
+    // checked on both sides, so they never count as a change.
+    const isDirty = items.some(
+        (item) =>
+            isLabelsChecklistItemChecked(item, defaultSelectedIds) !==
+            isLabelsChecklistItemChecked(item, selected),
+    );
 
     const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
         // Enter commits — scoped to the rows so the footer buttons keep native Enter.

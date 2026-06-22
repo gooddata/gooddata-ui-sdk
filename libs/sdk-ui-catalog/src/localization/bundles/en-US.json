@@ -235,6 +235,10 @@
         "text": "Dataset",
         "crowdinContext": "Title of the column containing the dataSet of the object."
     },
+    "analyticsCatalog.column.title.labels": {
+        "text": "Labels",
+        "crowdinContext": "Title of the header column listing the display-form labels of an attribute."
+    },
     "analyticsCatalog.column.title.createdBy": {
         "text": "Created by",
         "crowdinContext": "Title of the column containing the name of the creator of the object."
@@ -766,5 +770,45 @@
     "analyticsCatalog.parameter.delete.error": {
         "text": "Parameter could not be deleted.",
         "crowdinContext": "Error toast shown when parameter deletion fails."
+    },
+    "analyticsCatalog.share.button": {
+        "text": "Share",
+        "crowdinContext": "Button label opening the share dialog from the catalog detail page."
+    },
+    "analyticsCatalog.share.access.row.label": {
+        "text": "Access",
+        "crowdinContext": "Label for the row in the catalog detail metadata grid that shows the current sharing state of the object."
+    },
+    "analyticsCatalog.share.access.row.restricted": {
+        "text": "Restricted",
+        "crowdinContext": "State chip text shown when the object's access is restricted to explicitly listed grantees only."
+    },
+    "analyticsCatalog.share.access.row.workspace.view": {
+        "text": "All workspace users can view",
+        "crowdinContext": "State chip text shown when every workspace user has view access to the object."
+    },
+    "analyticsCatalog.share.access.row.workspace.share": {
+        "text": "All workspace users can share",
+        "crowdinContext": "State chip text shown when every workspace user has view+share access to the object."
+    },
+    "analyticsCatalog.share.access.row.sharedWith": {
+        "text": "Shared with {count, plural, one {# user or group} other {# users or groups}}",
+        "crowdinContext": "Clickable summary in the catalog detail Access row. Opens the share dialog. Placeholder is the count of named grantees (users and groups)."
+    },
+    "analyticsCatalog.labels.more": {
+        "text": "+{remaining} more",
+        "crowdinContext": "Count of additional labels beyond the primary one, shown as an underlined link after the primary label title in the catalog detail header (e.g. '+8 more'). Placeholder is the number of remaining labels."
+    },
+    "analyticsCatalog.labels.trigger.ariaLabel": {
+        "text": "Show all labels",
+        "crowdinContext": "Accessible name for the labels link in the catalog detail header that opens a popup listing all of the attribute's labels."
+    },
+    "analyticsCatalog.labels.popup.title": {
+        "text": "Labels",
+        "crowdinContext": "Title of the popup in the catalog detail header that lists all of an attribute's labels. Plain noun."
+    },
+    "analyticsCatalog.labels.popup.close": {
+        "text": "Close",
+        "crowdinContext": "Accessible name for the close (X) button of the labels popup in the catalog detail header."
     }
 }

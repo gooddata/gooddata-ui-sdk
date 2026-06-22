@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type ChangeEvent, useEffect, useRef, useState } from "react";
+import { type ChangeEvent, useEffect, useId, useRef, useState } from "react";
 
 import { cloneDeep, set } from "lodash-es";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -103,6 +103,7 @@ export function CustomTooltipSection({
         debouncedPushContent.flush();
     };
 
+    const textareaId = useId();
     const placementItems = getTranslatedDropdownItems(customTooltipPlacementDropdownItems, intl);
 
     return (
@@ -129,11 +130,12 @@ export function CustomTooltipSection({
                 items={placementItems}
                 width={220}
             />
-            <span className="input-label-text">
+            <label className="input-label-text" htmlFor={textareaId}>
                 <FormattedMessage id={messages.customTooltipContentLabel.id} />
-            </span>
+            </label>
             <DisabledBubbleMessage showDisabledMessage={contentDisabled}>
                 <textarea
+                    id={textareaId}
                     className="gd-input-field gd-custom-tooltip-textarea s-custom-tooltip-textarea"
                     value={localContent}
                     onChange={onContentChange}

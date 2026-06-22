@@ -2613,6 +2613,7 @@ export interface IFeatureFlags {
     enableCatalogTrendingObjects?: boolean;
     enableCertification?: boolean;
     enableChangeAnalysis?: boolean;
+    enableColumnLevelPermissions?: boolean;
     enableComparisonInAlerting?: boolean;
     enableCompositeGrain?: boolean;
     // (undocumented)

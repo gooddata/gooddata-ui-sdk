@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-theme-provider: Prevent the applied theme from being reset when hovering header items in the pluggable host (preloaded app bundles no longer override the theme's CSS variables).",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

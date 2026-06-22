@@ -445,11 +445,7 @@ export class WrappedDatePicker extends PureComponent<DatePickerProps, IDatePicke
                 onClick={this.handleWrapperClick}
             >
                 <input
-                    role="combobox"
                     autoComplete="off"
-                    aria-haspopup="dialog"
-                    aria-expanded={isOpen ? "true" : "false"}
-                    aria-controls={isOpen ? `datepicker-popup-${this.datePickerId}` : undefined}
                     aria-labelledby={accessibilityConfig?.ariaLabelledBy}
                     aria-label={
                         accessibilityConfig?.ariaLabel ||

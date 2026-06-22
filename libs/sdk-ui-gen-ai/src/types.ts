@@ -7,7 +7,9 @@ import { type IChatConversationLocalItem } from "./model.js";
 
 export type Config =
     | IGenAIVisualization["config"]
-    | IChatConversationVisualisationContent["visualization"]["insight"]["properties"]["controls"];
+    | NonNullable<
+          IChatConversationVisualisationContent["visualization"]
+      >["insight"]["properties"]["controls"];
 
 export type StoredConversation = {
     /**

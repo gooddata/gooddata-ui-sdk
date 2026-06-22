@@ -148,12 +148,14 @@ function convertChatConversationContentFromBackend(
                         case "visualization":
                             return {
                                 type: "visualization",
-                                visualization: visualizationObjectsItemToInsight(
-                                    yamlVisualisationToMetadataObject(
-                                        [],
-                                        part.visualization as AacVisualisation,
-                                    ),
-                                ),
+                                visualization: part.visualization
+                                    ? visualizationObjectsItemToInsight(
+                                          yamlVisualisationToMetadataObject(
+                                              [],
+                                              part.visualization as AacVisualisation,
+                                          ),
+                                      )
+                                    : null,
                             };
                         case "kda":
                             return {

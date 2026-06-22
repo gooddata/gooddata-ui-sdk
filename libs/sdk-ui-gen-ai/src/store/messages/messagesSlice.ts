@@ -977,7 +977,7 @@ const messagesSlice = createSlice({
                                 content.visualization?.insight.identifier === payload.visualizationId,
                         );
 
-                if (visualization) {
+                if (visualization?.visualization) {
                     visualization.visualization.insight.title = payload.visualizationTitle;
                     visualization.saving = {
                         started: true,
@@ -1111,7 +1111,7 @@ const messagesSlice = createSlice({
                                 content.visualization?.insight.identifier === payload.visualizationId,
                         );
 
-                if (visualization) {
+                if (visualization?.visualization) {
                     visualization.saving = {
                         started: true,
                         completed: true,

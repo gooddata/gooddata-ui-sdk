@@ -14,7 +14,7 @@ import { saveVisualizationAction, savedVisualizationAction } from "../../../stor
 export type SaveVisualizationDialogProps = {
     message: IChatConversationLocalItem;
     part: IChatConversationMultipartLocalPart;
-    visualization: IChatConversationVisualisationContent["visualization"];
+    visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>;
     type: "save" | "explore";
     onClose: () => void;
 };
@@ -90,7 +90,7 @@ function useVisualisationSaving(
     type: "save" | "explore",
     message: IChatConversationLocalItem,
     part: IChatConversationMultipartLocalPart,
-    visualization: IChatConversationVisualisationContent["visualization"],
+    visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>,
     saveVisualization: typeof saveVisualizationAction,
     savedVisualization: typeof savedVisualizationAction,
     onClose: () => void,

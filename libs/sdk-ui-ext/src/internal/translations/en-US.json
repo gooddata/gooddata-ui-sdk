@@ -2300,7 +2300,7 @@
         "crowdinContext": "Notifications filters detail: Label for a date filter that matches only records with empty (missing) date values."
     },
     "insightPicker.searchPlaceholder": {
-        "text": "Search all visualizations\u2026",
+        "text": "Search all visualizations…",
         "crowdinContext": "Placeholder text in the insight picker search field."
     },
     "insightPicker.tabs.all": {
@@ -2374,5 +2374,49 @@
     "insightPicker.resetFilters": {
         "text": "Reset filters",
         "crowdinContext": "Button/tooltip to reset all filters in the insight picker to their defaults."
+    },
+    "objectShare.confirm.restrict.title": {
+        "text": "Restrict access?",
+        "crowdinContext": "Title of the confirm dialog shown when the user is about to switch general access from workspace-wide to restricted."
+    },
+    "objectShare.confirm.restrict.description": {
+        "text": "This will restrict access to only the people and groups listed above.",
+        "crowdinContext": "Body text of the confirm dialog explaining what restricting access does."
+    },
+    "objectShare.confirm.grantWorkspace.title": {
+        "text": "Grant workspace-wide access?",
+        "crowdinContext": "Title of the confirm dialog shown when the user is about to switch general access from restricted to workspace-wide."
+    },
+    "objectShare.confirm.grantWorkspace.description": {
+        "text": "This will grant all workspace members access to \"{title}\".",
+        "crowdinContext": "Body text of the confirm dialog explaining what granting workspace-wide access does. Placeholder is the object's title."
+    },
+    "objectShare.confirm.button": {
+        "text": "Confirm",
+        "crowdinContext": "Primary action label in the general-access confirm dialog."
+    },
+    "objectShare.toast.granteeAdded": {
+        "text": "Access added.",
+        "crowdinContext": "Toast shown after a new user or group is granted access via the share dialog."
+    },
+    "objectShare.toast.accessUpdated": {
+        "text": "Access updated.",
+        "crowdinContext": "Toast shown after a grantee's permission level was changed or the grantee was removed."
+    },
+    "objectShare.toast.generalAccessUpdated": {
+        "text": "General access updated.",
+        "crowdinContext": "Toast shown after toggling general access between restricted and all workspace members."
+    },
+    "objectShare.toast.error": {
+        "text": "Access could not be updated.",
+        "crowdinContext": "Toast shown when an access change fails."
+    },
+    "objectShare.toast.labelScopePartial": {
+        "text": "Some label access could not be saved.",
+        "crowdinContext": "Warning toast when sharing an attribute succeeded but one or more of its per-label permission writes failed."
+    },
+    "objectShare.loadError": {
+        "text": "Sharing settings couldn't be loaded. Please close and try again.",
+        "crowdinContext": "Shown inside the share dialog when the object's access list failed to load, so the empty state isn't mistaken for a real policy."
     }
 }

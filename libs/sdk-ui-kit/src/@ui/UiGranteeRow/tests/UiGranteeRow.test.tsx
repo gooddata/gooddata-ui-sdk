@@ -2,16 +2,9 @@
 
 import { render, screen } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
-
-// UiTag transitively pulls the legacy Bubble stack via UiTooltip — mock it to
-// keep this unit test focused on row composition. The tag is exercised
-// visually in Storybook.
-vi.mock("../../UiTooltip/UiTooltip.js", () => ({
-    UiTooltip: ({ anchor }: { anchor: React.ReactNode }) => <>{anchor}</>,
-}));
 
 import { UiGranteeRow } from "../UiGranteeRow.js";
 

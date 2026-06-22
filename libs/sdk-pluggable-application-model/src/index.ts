@@ -42,7 +42,9 @@ export {
     type IPluggableApplicationMountHandle,
     type IPluggableApplicationMountOptions,
     type IPluggableAppEvent,
+    type IPluggableAppLogRecord,
     type IPluggableAppTelemetryCallbacks,
+    type IPluggableAppTelemetryEventData,
     type IReloadPlatformContextRequestedEvent,
     type ITelemetryEventOptions,
     documentTitleChanged,
@@ -60,6 +62,12 @@ export {
     reloadPlatformContextRequested,
     type TelemetryChannel,
 } from "./mount.js";
+
+export {
+    type ITelemetryPropertySlot,
+    type TelemetryPropertyScope,
+    TELEMETRY_PROPERTIES,
+} from "./telemetry/telemetryProperties.js";
 
 export {
     type IHostUiModule,

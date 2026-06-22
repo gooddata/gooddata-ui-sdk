@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 
 import { type ITheme } from "@gooddata/sdk-model";
 
@@ -10,6 +10,7 @@ import {
     generateShadowColor,
     handleUnits,
     parseThemeToCssProperties,
+    setCssProperties,
 } from "../cssProperties.js";
 
 describe("cssProperties", () => {
@@ -103,6 +104,23 @@ describe("cssProperties", () => {
 
             expect(document.getElementById(propertiesTagIdentifier)).toEqual(null);
             expect(document.getElementById(customFontTagIdentifier)).toEqual(null);
+        });
+    });
+
+    describe("setCssProperties", () => {
+        // Cleanup runs unconditionally so a failing assertion can't leak the injected
+        // <style> tag into sibling tests' DOM state.
+        afterEach(() => {
+            clearCssProperties();
+        });
+
+        it("should scope the global theme variables to a doubled :root selector so they win over the plain :root {} light defaults shipped in app bundles regardless of DOM order (LX-2608)", () => {
+            setCssProperties({ palette: { primary: { base: "#14b2e2" } } }, true);
+
+            const tag = document.getElementById("gdc-theme-properties");
+            expect(tag).not.toEqual(null);
+            expect(tag?.textContent).toContain(":root:root {");
+            expect(tag?.textContent).toContain("color-scheme: dark;");
         });
     });
 

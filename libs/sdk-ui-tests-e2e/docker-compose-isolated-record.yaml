@@ -1,8 +1,7 @@
 version: "3.7"
 services:
-    isolated-tests:
-        image: ${E2E_IMAGE_URL:-020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/mcr.microsoft.com/playwright:v1.61.0-noble}
-        build: .
+    e2e-tests:
+        image: ${E2E_IMAGE_URL}
         entrypoint: >
             bash -c "
               if [ -n \"$$FILTER\" ]; then
@@ -20,11 +19,11 @@ services:
             - ./nginx:/app/nginx:ro
         user: "root"
         depends_on:
-            - gooddata-ui-sdk-scenarios
-            - backend-mock
+            - application
+            - goodmock
         environment:
-            - BASE_URL=http://gooddata-ui-sdk-scenarios:9500
-            - GOODMOCK_HOST=backend-mock:8080
+            - BASE_URL=http://application:9500
+            - GOODMOCK_HOST=goodmock:8080
             - GOODMOCK_MODE=record
             - GDC_UI
             - HOST
@@ -36,16 +35,16 @@ services:
             - SHARD_TOTAL
             - FILTER
 
-    gooddata-ui-sdk-scenarios:
+    application:
         image: ${IMAGE_URL}
         environment:
-            - WORKSPACE_ID
+            - WORKSPACE_ID=${TEST_WORKSPACE_ID}
         volumes:
             - ./nginx/proxy-isolated-tests.conf:/etc/nginx/extra-conf.d/proxy-isolated-tests.conf
         depends_on:
-            - backend-mock
+            - goodmock
 
-    backend-mock:
+    goodmock:
         image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/gooddata/gooddata-goodmock:0.11.0
         command: record
         # Use environment variable "VERBOSE=true" for verbose logging
