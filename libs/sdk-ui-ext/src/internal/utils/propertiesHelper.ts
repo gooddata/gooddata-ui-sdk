@@ -11,7 +11,11 @@ import {
     type GrandTotalsPosition,
     type MeasureGroupDimension,
 } from "@gooddata/sdk-ui-pivot";
-import { type IPagination, type ITextWrapping } from "@gooddata/sdk-ui-pivot/next";
+import {
+    type IPagination,
+    type ITextWrapping,
+    type PivotTableNextConditionalFormattingConfig,
+} from "@gooddata/sdk-ui-pivot/next";
 
 import { AXIS } from "../constants/axis.js";
 import { PROPERTY_CONTROLS } from "../constants/properties.js";
@@ -299,6 +303,12 @@ export function getPaginationFromProperties(
     visualizationProperties: IVisualizationProperties,
 ): IPagination | undefined {
     return visualizationProperties?.controls?.["pagination"];
+}
+
+export function getConditionalFormattingFromProperties(
+    visualizationProperties: IVisualizationProperties,
+): PivotTableNextConditionalFormattingConfig["conditionalFormatting"] | undefined {
+    return visualizationProperties?.controls?.["conditionalFormatting"];
 }
 
 export function getPageSizeFromProperties(

@@ -87,6 +87,17 @@ $color-picker-spacing: 5px;
     }
 }
 
+.gd-color-list-item-none {
+    border-color: var(--gd-palette-complementary-4);
+    background-image: linear-gradient(
+        to top right,
+        transparent calc(50% - 1px),
+        var(--gd-palette-error-base) calc(50% - 1px),
+        var(--gd-palette-error-base) calc(50% + 1px),
+        transparent calc(50% + 1px)
+    );
+}
+
 .gd-chart-fill-section {
     border-top: 1px solid kit-variables.$gd-border-color;
     margin: 5px 10px 0;

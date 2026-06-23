@@ -58,6 +58,7 @@
     "analyticsCatalog.filter.reset": "Reset filters",
     "analyticsCatalog.column.title.label": "Title",
     "analyticsCatalog.column.title.dataSet": "Dataset",
+    "analyticsCatalog.column.title.labels": "Labels",
     "analyticsCatalog.column.title.createdBy": "Created by",
     "analyticsCatalog.column.title.createdAt": "Created on",
     "analyticsCatalog.column.title.tags": "Tags",
@@ -190,5 +191,15 @@
     "analyticsCatalog.parameter.dialog.delete.body": "Are you sure you want to delete <b>{name}</b>?",
     "analyticsCatalog.parameter.dialog.delete.submit": "Delete",
     "analyticsCatalog.parameter.delete.success": "Parameter deleted.",
-    "analyticsCatalog.parameter.delete.error": "Parameter could not be deleted."
+    "analyticsCatalog.parameter.delete.error": "Parameter could not be deleted.",
+    "analyticsCatalog.share.button": "Share",
+    "analyticsCatalog.share.access.row.label": "Access",
+    "analyticsCatalog.share.access.row.restricted": "Restricted",
+    "analyticsCatalog.share.access.row.workspace.view": "All workspace users can view",
+    "analyticsCatalog.share.access.row.workspace.share": "All workspace users can share",
+    "analyticsCatalog.share.access.row.sharedWith": "Shared with {count, plural, one {# user or group} other {# users or groups}}",
+    "analyticsCatalog.labels.more": "+{remaining} more",
+    "analyticsCatalog.labels.trigger.ariaLabel": "Show all labels",
+    "analyticsCatalog.labels.popup.title": "Labels",
+    "analyticsCatalog.labels.popup.close": "Close"
 }

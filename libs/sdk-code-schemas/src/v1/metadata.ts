@@ -3205,6 +3205,89 @@ export interface VisualisationConfig {
     enable_accessibility?: boolean;
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
+    /**
+     * Conditional formatting rules that color cells or rows based on their values.
+     */
+    conditional_formatting?: {
+        /**
+         * Conditional-formatting model version. "1" (default if omitted) — initial shape: discrete rules, one column per rule with stacked conditions. Readers must tolerate omission (treat as "1") and evolve under the same backward-compat contract as the dashboard model version, so server-side consumers (e.g. XLSX export) stay forward-compatible.
+         */
+        version?: string;
+        /**
+         * Master toggle for all conditional formatting rules.
+         */
+        enabled?: boolean;
+        /**
+         * Ordered list of rules; the first matching rule wins.
+         */
+        rules?: {
+            /**
+             * Stable, table-unique rule id.
+             */
+            id: string;
+            /**
+             * The measure or attribute the rule targets — exactly one of measure/attribute.
+             */
+            target:
+                | {
+                      /**
+                       * Local identifier of the targeted measure.
+                       */
+                      measure: string;
+                  }
+                | {
+                      /**
+                       * Local identifier of the targeted attribute.
+                       */
+                      attribute: string;
+                  };
+            /**
+             * Stacked conditions; the first matching condition wins.
+             */
+            conditions: {
+                id: string;
+                operator:
+                    | "all"
+                    | "equal_to"
+                    | "not_equal_to"
+                    | "less_than"
+                    | "less_than_or_equal_to"
+                    | "greater_than"
+                    | "greater_than_or_equal_to"
+                    | "between"
+                    | "not_between"
+                    | "contains"
+                    | "not_contains"
+                    | "starts_with"
+                    | "not_starts_with"
+                    | "ends_with"
+                    | "not_ends_with"
+                    | "is_empty"
+                    | "is_not_empty";
+                /**
+                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 */
+                value?:
+                    | number
+                    | string
+                    | {
+                          from: number;
+                          to: number;
+                      };
+                format: {
+                    /**
+                     * Text color as hex (e.g. #FFFFFF).
+                     */
+                    text?: string;
+                    /**
+                     * Background color as hex (e.g. #E54D40).
+                     */
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     [k: string]: unknown;
 }
 export interface Width {
@@ -3526,6 +3609,89 @@ export interface VisualisationConfig1 {
     enable_accessibility?: boolean;
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
+    /**
+     * Conditional formatting rules that color cells or rows based on their values.
+     */
+    conditional_formatting?: {
+        /**
+         * Conditional-formatting model version. "1" (default if omitted) — initial shape: discrete rules, one column per rule with stacked conditions. Readers must tolerate omission (treat as "1") and evolve under the same backward-compat contract as the dashboard model version, so server-side consumers (e.g. XLSX export) stay forward-compatible.
+         */
+        version?: string;
+        /**
+         * Master toggle for all conditional formatting rules.
+         */
+        enabled?: boolean;
+        /**
+         * Ordered list of rules; the first matching rule wins.
+         */
+        rules?: {
+            /**
+             * Stable, table-unique rule id.
+             */
+            id: string;
+            /**
+             * The measure or attribute the rule targets — exactly one of measure/attribute.
+             */
+            target:
+                | {
+                      /**
+                       * Local identifier of the targeted measure.
+                       */
+                      measure: string;
+                  }
+                | {
+                      /**
+                       * Local identifier of the targeted attribute.
+                       */
+                      attribute: string;
+                  };
+            /**
+             * Stacked conditions; the first matching condition wins.
+             */
+            conditions: {
+                id: string;
+                operator:
+                    | "all"
+                    | "equal_to"
+                    | "not_equal_to"
+                    | "less_than"
+                    | "less_than_or_equal_to"
+                    | "greater_than"
+                    | "greater_than_or_equal_to"
+                    | "between"
+                    | "not_between"
+                    | "contains"
+                    | "not_contains"
+                    | "starts_with"
+                    | "not_starts_with"
+                    | "ends_with"
+                    | "not_ends_with"
+                    | "is_empty"
+                    | "is_not_empty";
+                /**
+                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 */
+                value?:
+                    | number
+                    | string
+                    | {
+                          from: number;
+                          to: number;
+                      };
+                format: {
+                    /**
+                     * Text color as hex (e.g. #FFFFFF).
+                     */
+                    text?: string;
+                    /**
+                     * Background color as hex (e.g. #E54D40).
+                     */
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     [k: string]: unknown;
 }
 export interface ColumnChart {
@@ -3783,6 +3949,89 @@ export interface VisualisationConfig2 {
     enable_accessibility?: boolean;
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
+    /**
+     * Conditional formatting rules that color cells or rows based on their values.
+     */
+    conditional_formatting?: {
+        /**
+         * Conditional-formatting model version. "1" (default if omitted) — initial shape: discrete rules, one column per rule with stacked conditions. Readers must tolerate omission (treat as "1") and evolve under the same backward-compat contract as the dashboard model version, so server-side consumers (e.g. XLSX export) stay forward-compatible.
+         */
+        version?: string;
+        /**
+         * Master toggle for all conditional formatting rules.
+         */
+        enabled?: boolean;
+        /**
+         * Ordered list of rules; the first matching rule wins.
+         */
+        rules?: {
+            /**
+             * Stable, table-unique rule id.
+             */
+            id: string;
+            /**
+             * The measure or attribute the rule targets — exactly one of measure/attribute.
+             */
+            target:
+                | {
+                      /**
+                       * Local identifier of the targeted measure.
+                       */
+                      measure: string;
+                  }
+                | {
+                      /**
+                       * Local identifier of the targeted attribute.
+                       */
+                      attribute: string;
+                  };
+            /**
+             * Stacked conditions; the first matching condition wins.
+             */
+            conditions: {
+                id: string;
+                operator:
+                    | "all"
+                    | "equal_to"
+                    | "not_equal_to"
+                    | "less_than"
+                    | "less_than_or_equal_to"
+                    | "greater_than"
+                    | "greater_than_or_equal_to"
+                    | "between"
+                    | "not_between"
+                    | "contains"
+                    | "not_contains"
+                    | "starts_with"
+                    | "not_starts_with"
+                    | "ends_with"
+                    | "not_ends_with"
+                    | "is_empty"
+                    | "is_not_empty";
+                /**
+                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 */
+                value?:
+                    | number
+                    | string
+                    | {
+                          from: number;
+                          to: number;
+                      };
+                format: {
+                    /**
+                     * Text color as hex (e.g. #FFFFFF).
+                     */
+                    text?: string;
+                    /**
+                     * Background color as hex (e.g. #E54D40).
+                     */
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     [k: string]: unknown;
 }
 export interface LineChart {
@@ -4040,6 +4289,89 @@ export interface VisualisationConfig3 {
     enable_accessibility?: boolean;
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
+    /**
+     * Conditional formatting rules that color cells or rows based on their values.
+     */
+    conditional_formatting?: {
+        /**
+         * Conditional-formatting model version. "1" (default if omitted) — initial shape: discrete rules, one column per rule with stacked conditions. Readers must tolerate omission (treat as "1") and evolve under the same backward-compat contract as the dashboard model version, so server-side consumers (e.g. XLSX export) stay forward-compatible.
+         */
+        version?: string;
+        /**
+         * Master toggle for all conditional formatting rules.
+         */
+        enabled?: boolean;
+        /**
+         * Ordered list of rules; the first matching rule wins.
+         */
+        rules?: {
+            /**
+             * Stable, table-unique rule id.
+             */
+            id: string;
+            /**
+             * The measure or attribute the rule targets — exactly one of measure/attribute.
+             */
+            target:
+                | {
+                      /**
+                       * Local identifier of the targeted measure.
+                       */
+                      measure: string;
+                  }
+                | {
+                      /**
+                       * Local identifier of the targeted attribute.
+                       */
+                      attribute: string;
+                  };
+            /**
+             * Stacked conditions; the first matching condition wins.
+             */
+            conditions: {
+                id: string;
+                operator:
+                    | "all"
+                    | "equal_to"
+                    | "not_equal_to"
+                    | "less_than"
+                    | "less_than_or_equal_to"
+                    | "greater_than"
+                    | "greater_than_or_equal_to"
+                    | "between"
+                    | "not_between"
+                    | "contains"
+                    | "not_contains"
+                    | "starts_with"
+                    | "not_starts_with"
+                    | "ends_with"
+                    | "not_ends_with"
+                    | "is_empty"
+                    | "is_not_empty";
+                /**
+                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 */
+                value?:
+                    | number
+                    | string
+                    | {
+                          from: number;
+                          to: number;
+                      };
+                format: {
+                    /**
+                     * Text color as hex (e.g. #FFFFFF).
+                     */
+                    text?: string;
+                    /**
+                     * Background color as hex (e.g. #E54D40).
+                     */
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     [k: string]: unknown;
 }
 export interface AreaChart {
@@ -4297,6 +4629,89 @@ export interface VisualisationConfig4 {
     enable_accessibility?: boolean;
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
+    /**
+     * Conditional formatting rules that color cells or rows based on their values.
+     */
+    conditional_formatting?: {
+        /**
+         * Conditional-formatting model version. "1" (default if omitted) — initial shape: discrete rules, one column per rule with stacked conditions. Readers must tolerate omission (treat as "1") and evolve under the same backward-compat contract as the dashboard model version, so server-side consumers (e.g. XLSX export) stay forward-compatible.
+         */
+        version?: string;
+        /**
+         * Master toggle for all conditional formatting rules.
+         */
+        enabled?: boolean;
+        /**
+         * Ordered list of rules; the first matching rule wins.
+         */
+        rules?: {
+            /**
+             * Stable, table-unique rule id.
+             */
+            id: string;
+            /**
+             * The measure or attribute the rule targets — exactly one of measure/attribute.
+             */
+            target:
+                | {
+                      /**
+                       * Local identifier of the targeted measure.
+                       */
+                      measure: string;
+                  }
+                | {
+                      /**
+                       * Local identifier of the targeted attribute.
+                       */
+                      attribute: string;
+                  };
+            /**
+             * Stacked conditions; the first matching condition wins.
+             */
+            conditions: {
+                id: string;
+                operator:
+                    | "all"
+                    | "equal_to"
+                    | "not_equal_to"
+                    | "less_than"
+                    | "less_than_or_equal_to"
+                    | "greater_than"
+                    | "greater_than_or_equal_to"
+                    | "between"
+                    | "not_between"
+                    | "contains"
+                    | "not_contains"
+                    | "starts_with"
+                    | "not_starts_with"
+                    | "ends_with"
+                    | "not_ends_with"
+                    | "is_empty"
+                    | "is_not_empty";
+                /**
+                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 */
+                value?:
+                    | number
+                    | string
+                    | {
+                          from: number;
+                          to: number;
+                      };
+                format: {
+                    /**
+                     * Text color as hex (e.g. #FFFFFF).
+                     */
+                    text?: string;
+                    /**
+                     * Background color as hex (e.g. #E54D40).
+                     */
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     [k: string]: unknown;
 }
 export interface ScatterChart {
@@ -4554,6 +4969,89 @@ export interface VisualisationConfig5 {
     enable_accessibility?: boolean;
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
+    /**
+     * Conditional formatting rules that color cells or rows based on their values.
+     */
+    conditional_formatting?: {
+        /**
+         * Conditional-formatting model version. "1" (default if omitted) — initial shape: discrete rules, one column per rule with stacked conditions. Readers must tolerate omission (treat as "1") and evolve under the same backward-compat contract as the dashboard model version, so server-side consumers (e.g. XLSX export) stay forward-compatible.
+         */
+        version?: string;
+        /**
+         * Master toggle for all conditional formatting rules.
+         */
+        enabled?: boolean;
+        /**
+         * Ordered list of rules; the first matching rule wins.
+         */
+        rules?: {
+            /**
+             * Stable, table-unique rule id.
+             */
+            id: string;
+            /**
+             * The measure or attribute the rule targets — exactly one of measure/attribute.
+             */
+            target:
+                | {
+                      /**
+                       * Local identifier of the targeted measure.
+                       */
+                      measure: string;
+                  }
+                | {
+                      /**
+                       * Local identifier of the targeted attribute.
+                       */
+                      attribute: string;
+                  };
+            /**
+             * Stacked conditions; the first matching condition wins.
+             */
+            conditions: {
+                id: string;
+                operator:
+                    | "all"
+                    | "equal_to"
+                    | "not_equal_to"
+                    | "less_than"
+                    | "less_than_or_equal_to"
+                    | "greater_than"
+                    | "greater_than_or_equal_to"
+                    | "between"
+                    | "not_between"
+                    | "contains"
+                    | "not_contains"
+                    | "starts_with"
+                    | "not_starts_with"
+                    | "ends_with"
+                    | "not_ends_with"
+                    | "is_empty"
+                    | "is_not_empty";
+                /**
+                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 */
+                value?:
+                    | number
+                    | string
+                    | {
+                          from: number;
+                          to: number;
+                      };
+                format: {
+                    /**
+                     * Text color as hex (e.g. #FFFFFF).
+                     */
+                    text?: string;
+                    /**
+                     * Background color as hex (e.g. #E54D40).
+                     */
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     [k: string]: unknown;
 }
 export interface BubbleChart {
@@ -4811,6 +5309,89 @@ export interface VisualisationConfig6 {
     enable_accessibility?: boolean;
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
+    /**
+     * Conditional formatting rules that color cells or rows based on their values.
+     */
+    conditional_formatting?: {
+        /**
+         * Conditional-formatting model version. "1" (default if omitted) — initial shape: discrete rules, one column per rule with stacked conditions. Readers must tolerate omission (treat as "1") and evolve under the same backward-compat contract as the dashboard model version, so server-side consumers (e.g. XLSX export) stay forward-compatible.
+         */
+        version?: string;
+        /**
+         * Master toggle for all conditional formatting rules.
+         */
+        enabled?: boolean;
+        /**
+         * Ordered list of rules; the first matching rule wins.
+         */
+        rules?: {
+            /**
+             * Stable, table-unique rule id.
+             */
+            id: string;
+            /**
+             * The measure or attribute the rule targets — exactly one of measure/attribute.
+             */
+            target:
+                | {
+                      /**
+                       * Local identifier of the targeted measure.
+                       */
+                      measure: string;
+                  }
+                | {
+                      /**
+                       * Local identifier of the targeted attribute.
+                       */
+                      attribute: string;
+                  };
+            /**
+             * Stacked conditions; the first matching condition wins.
+             */
+            conditions: {
+                id: string;
+                operator:
+                    | "all"
+                    | "equal_to"
+                    | "not_equal_to"
+                    | "less_than"
+                    | "less_than_or_equal_to"
+                    | "greater_than"
+                    | "greater_than_or_equal_to"
+                    | "between"
+                    | "not_between"
+                    | "contains"
+                    | "not_contains"
+                    | "starts_with"
+                    | "not_starts_with"
+                    | "ends_with"
+                    | "not_ends_with"
+                    | "is_empty"
+                    | "is_not_empty";
+                /**
+                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 */
+                value?:
+                    | number
+                    | string
+                    | {
+                          from: number;
+                          to: number;
+                      };
+                format: {
+                    /**
+                     * Text color as hex (e.g. #FFFFFF).
+                     */
+                    text?: string;
+                    /**
+                     * Background color as hex (e.g. #E54D40).
+                     */
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     [k: string]: unknown;
 }
 export interface PieChart {
@@ -5064,6 +5645,89 @@ export interface VisualisationConfig7 {
     enable_accessibility?: boolean;
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
+    /**
+     * Conditional formatting rules that color cells or rows based on their values.
+     */
+    conditional_formatting?: {
+        /**
+         * Conditional-formatting model version. "1" (default if omitted) — initial shape: discrete rules, one column per rule with stacked conditions. Readers must tolerate omission (treat as "1") and evolve under the same backward-compat contract as the dashboard model version, so server-side consumers (e.g. XLSX export) stay forward-compatible.
+         */
+        version?: string;
+        /**
+         * Master toggle for all conditional formatting rules.
+         */
+        enabled?: boolean;
+        /**
+         * Ordered list of rules; the first matching rule wins.
+         */
+        rules?: {
+            /**
+             * Stable, table-unique rule id.
+             */
+            id: string;
+            /**
+             * The measure or attribute the rule targets — exactly one of measure/attribute.
+             */
+            target:
+                | {
+                      /**
+                       * Local identifier of the targeted measure.
+                       */
+                      measure: string;
+                  }
+                | {
+                      /**
+                       * Local identifier of the targeted attribute.
+                       */
+                      attribute: string;
+                  };
+            /**
+             * Stacked conditions; the first matching condition wins.
+             */
+            conditions: {
+                id: string;
+                operator:
+                    | "all"
+                    | "equal_to"
+                    | "not_equal_to"
+                    | "less_than"
+                    | "less_than_or_equal_to"
+                    | "greater_than"
+                    | "greater_than_or_equal_to"
+                    | "between"
+                    | "not_between"
+                    | "contains"
+                    | "not_contains"
+                    | "starts_with"
+                    | "not_starts_with"
+                    | "ends_with"
+                    | "not_ends_with"
+                    | "is_empty"
+                    | "is_not_empty";
+                /**
+                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 */
+                value?:
+                    | number
+                    | string
+                    | {
+                          from: number;
+                          to: number;
+                      };
+                format: {
+                    /**
+                     * Text color as hex (e.g. #FFFFFF).
+                     */
+                    text?: string;
+                    /**
+                     * Background color as hex (e.g. #E54D40).
+                     */
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     [k: string]: unknown;
 }
 export interface PieChart1 {
@@ -5317,6 +5981,89 @@ export interface VisualisationConfig8 {
     enable_accessibility?: boolean;
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
+    /**
+     * Conditional formatting rules that color cells or rows based on their values.
+     */
+    conditional_formatting?: {
+        /**
+         * Conditional-formatting model version. "1" (default if omitted) — initial shape: discrete rules, one column per rule with stacked conditions. Readers must tolerate omission (treat as "1") and evolve under the same backward-compat contract as the dashboard model version, so server-side consumers (e.g. XLSX export) stay forward-compatible.
+         */
+        version?: string;
+        /**
+         * Master toggle for all conditional formatting rules.
+         */
+        enabled?: boolean;
+        /**
+         * Ordered list of rules; the first matching rule wins.
+         */
+        rules?: {
+            /**
+             * Stable, table-unique rule id.
+             */
+            id: string;
+            /**
+             * The measure or attribute the rule targets — exactly one of measure/attribute.
+             */
+            target:
+                | {
+                      /**
+                       * Local identifier of the targeted measure.
+                       */
+                      measure: string;
+                  }
+                | {
+                      /**
+                       * Local identifier of the targeted attribute.
+                       */
+                      attribute: string;
+                  };
+            /**
+             * Stacked conditions; the first matching condition wins.
+             */
+            conditions: {
+                id: string;
+                operator:
+                    | "all"
+                    | "equal_to"
+                    | "not_equal_to"
+                    | "less_than"
+                    | "less_than_or_equal_to"
+                    | "greater_than"
+                    | "greater_than_or_equal_to"
+                    | "between"
+                    | "not_between"
+                    | "contains"
+                    | "not_contains"
+                    | "starts_with"
+                    | "not_starts_with"
+                    | "ends_with"
+                    | "not_ends_with"
+                    | "is_empty"
+                    | "is_not_empty";
+                /**
+                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 */
+                value?:
+                    | number
+                    | string
+                    | {
+                          from: number;
+                          to: number;
+                      };
+                format: {
+                    /**
+                     * Text color as hex (e.g. #FFFFFF).
+                     */
+                    text?: string;
+                    /**
+                     * Background color as hex (e.g. #E54D40).
+                     */
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     [k: string]: unknown;
 }
 export interface TreemapChart {
@@ -5570,6 +6317,89 @@ export interface VisualisationConfig9 {
     enable_accessibility?: boolean;
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
+    /**
+     * Conditional formatting rules that color cells or rows based on their values.
+     */
+    conditional_formatting?: {
+        /**
+         * Conditional-formatting model version. "1" (default if omitted) — initial shape: discrete rules, one column per rule with stacked conditions. Readers must tolerate omission (treat as "1") and evolve under the same backward-compat contract as the dashboard model version, so server-side consumers (e.g. XLSX export) stay forward-compatible.
+         */
+        version?: string;
+        /**
+         * Master toggle for all conditional formatting rules.
+         */
+        enabled?: boolean;
+        /**
+         * Ordered list of rules; the first matching rule wins.
+         */
+        rules?: {
+            /**
+             * Stable, table-unique rule id.
+             */
+            id: string;
+            /**
+             * The measure or attribute the rule targets — exactly one of measure/attribute.
+             */
+            target:
+                | {
+                      /**
+                       * Local identifier of the targeted measure.
+                       */
+                      measure: string;
+                  }
+                | {
+                      /**
+                       * Local identifier of the targeted attribute.
+                       */
+                      attribute: string;
+                  };
+            /**
+             * Stacked conditions; the first matching condition wins.
+             */
+            conditions: {
+                id: string;
+                operator:
+                    | "all"
+                    | "equal_to"
+                    | "not_equal_to"
+                    | "less_than"
+                    | "less_than_or_equal_to"
+                    | "greater_than"
+                    | "greater_than_or_equal_to"
+                    | "between"
+                    | "not_between"
+                    | "contains"
+                    | "not_contains"
+                    | "starts_with"
+                    | "not_starts_with"
+                    | "ends_with"
+                    | "not_ends_with"
+                    | "is_empty"
+                    | "is_not_empty";
+                /**
+                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 */
+                value?:
+                    | number
+                    | string
+                    | {
+                          from: number;
+                          to: number;
+                      };
+                format: {
+                    /**
+                     * Text color as hex (e.g. #FFFFFF).
+                     */
+                    text?: string;
+                    /**
+                     * Background color as hex (e.g. #E54D40).
+                     */
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     [k: string]: unknown;
 }
 export interface PyramidChart {
@@ -5823,6 +6653,89 @@ export interface VisualisationConfig10 {
     enable_accessibility?: boolean;
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
+    /**
+     * Conditional formatting rules that color cells or rows based on their values.
+     */
+    conditional_formatting?: {
+        /**
+         * Conditional-formatting model version. "1" (default if omitted) — initial shape: discrete rules, one column per rule with stacked conditions. Readers must tolerate omission (treat as "1") and evolve under the same backward-compat contract as the dashboard model version, so server-side consumers (e.g. XLSX export) stay forward-compatible.
+         */
+        version?: string;
+        /**
+         * Master toggle for all conditional formatting rules.
+         */
+        enabled?: boolean;
+        /**
+         * Ordered list of rules; the first matching rule wins.
+         */
+        rules?: {
+            /**
+             * Stable, table-unique rule id.
+             */
+            id: string;
+            /**
+             * The measure or attribute the rule targets — exactly one of measure/attribute.
+             */
+            target:
+                | {
+                      /**
+                       * Local identifier of the targeted measure.
+                       */
+                      measure: string;
+                  }
+                | {
+                      /**
+                       * Local identifier of the targeted attribute.
+                       */
+                      attribute: string;
+                  };
+            /**
+             * Stacked conditions; the first matching condition wins.
+             */
+            conditions: {
+                id: string;
+                operator:
+                    | "all"
+                    | "equal_to"
+                    | "not_equal_to"
+                    | "less_than"
+                    | "less_than_or_equal_to"
+                    | "greater_than"
+                    | "greater_than_or_equal_to"
+                    | "between"
+                    | "not_between"
+                    | "contains"
+                    | "not_contains"
+                    | "starts_with"
+                    | "not_starts_with"
+                    | "ends_with"
+                    | "not_ends_with"
+                    | "is_empty"
+                    | "is_not_empty";
+                /**
+                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 */
+                value?:
+                    | number
+                    | string
+                    | {
+                          from: number;
+                          to: number;
+                      };
+                format: {
+                    /**
+                     * Text color as hex (e.g. #FFFFFF).
+                     */
+                    text?: string;
+                    /**
+                     * Background color as hex (e.g. #E54D40).
+                     */
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     [k: string]: unknown;
 }
 export interface FunnelChart {
@@ -6076,6 +6989,89 @@ export interface VisualisationConfig11 {
     enable_accessibility?: boolean;
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
+    /**
+     * Conditional formatting rules that color cells or rows based on their values.
+     */
+    conditional_formatting?: {
+        /**
+         * Conditional-formatting model version. "1" (default if omitted) — initial shape: discrete rules, one column per rule with stacked conditions. Readers must tolerate omission (treat as "1") and evolve under the same backward-compat contract as the dashboard model version, so server-side consumers (e.g. XLSX export) stay forward-compatible.
+         */
+        version?: string;
+        /**
+         * Master toggle for all conditional formatting rules.
+         */
+        enabled?: boolean;
+        /**
+         * Ordered list of rules; the first matching rule wins.
+         */
+        rules?: {
+            /**
+             * Stable, table-unique rule id.
+             */
+            id: string;
+            /**
+             * The measure or attribute the rule targets — exactly one of measure/attribute.
+             */
+            target:
+                | {
+                      /**
+                       * Local identifier of the targeted measure.
+                       */
+                      measure: string;
+                  }
+                | {
+                      /**
+                       * Local identifier of the targeted attribute.
+                       */
+                      attribute: string;
+                  };
+            /**
+             * Stacked conditions; the first matching condition wins.
+             */
+            conditions: {
+                id: string;
+                operator:
+                    | "all"
+                    | "equal_to"
+                    | "not_equal_to"
+                    | "less_than"
+                    | "less_than_or_equal_to"
+                    | "greater_than"
+                    | "greater_than_or_equal_to"
+                    | "between"
+                    | "not_between"
+                    | "contains"
+                    | "not_contains"
+                    | "starts_with"
+                    | "not_starts_with"
+                    | "ends_with"
+                    | "not_ends_with"
+                    | "is_empty"
+                    | "is_not_empty";
+                /**
+                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 */
+                value?:
+                    | number
+                    | string
+                    | {
+                          from: number;
+                          to: number;
+                      };
+                format: {
+                    /**
+                     * Text color as hex (e.g. #FFFFFF).
+                     */
+                    text?: string;
+                    /**
+                     * Background color as hex (e.g. #E54D40).
+                     */
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     [k: string]: unknown;
 }
 export interface HeatmapChart {
@@ -6337,6 +7333,89 @@ export interface VisualisationConfig12 {
     enable_accessibility?: boolean;
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
+    /**
+     * Conditional formatting rules that color cells or rows based on their values.
+     */
+    conditional_formatting?: {
+        /**
+         * Conditional-formatting model version. "1" (default if omitted) — initial shape: discrete rules, one column per rule with stacked conditions. Readers must tolerate omission (treat as "1") and evolve under the same backward-compat contract as the dashboard model version, so server-side consumers (e.g. XLSX export) stay forward-compatible.
+         */
+        version?: string;
+        /**
+         * Master toggle for all conditional formatting rules.
+         */
+        enabled?: boolean;
+        /**
+         * Ordered list of rules; the first matching rule wins.
+         */
+        rules?: {
+            /**
+             * Stable, table-unique rule id.
+             */
+            id: string;
+            /**
+             * The measure or attribute the rule targets — exactly one of measure/attribute.
+             */
+            target:
+                | {
+                      /**
+                       * Local identifier of the targeted measure.
+                       */
+                      measure: string;
+                  }
+                | {
+                      /**
+                       * Local identifier of the targeted attribute.
+                       */
+                      attribute: string;
+                  };
+            /**
+             * Stacked conditions; the first matching condition wins.
+             */
+            conditions: {
+                id: string;
+                operator:
+                    | "all"
+                    | "equal_to"
+                    | "not_equal_to"
+                    | "less_than"
+                    | "less_than_or_equal_to"
+                    | "greater_than"
+                    | "greater_than_or_equal_to"
+                    | "between"
+                    | "not_between"
+                    | "contains"
+                    | "not_contains"
+                    | "starts_with"
+                    | "not_starts_with"
+                    | "ends_with"
+                    | "not_ends_with"
+                    | "is_empty"
+                    | "is_not_empty";
+                /**
+                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 */
+                value?:
+                    | number
+                    | string
+                    | {
+                          from: number;
+                          to: number;
+                      };
+                format: {
+                    /**
+                     * Text color as hex (e.g. #FFFFFF).
+                     */
+                    text?: string;
+                    /**
+                     * Background color as hex (e.g. #E54D40).
+                     */
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     [k: string]: unknown;
 }
 export interface BulletChart {
@@ -6590,6 +7669,89 @@ export interface VisualisationConfig13 {
     enable_accessibility?: boolean;
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
+    /**
+     * Conditional formatting rules that color cells or rows based on their values.
+     */
+    conditional_formatting?: {
+        /**
+         * Conditional-formatting model version. "1" (default if omitted) — initial shape: discrete rules, one column per rule with stacked conditions. Readers must tolerate omission (treat as "1") and evolve under the same backward-compat contract as the dashboard model version, so server-side consumers (e.g. XLSX export) stay forward-compatible.
+         */
+        version?: string;
+        /**
+         * Master toggle for all conditional formatting rules.
+         */
+        enabled?: boolean;
+        /**
+         * Ordered list of rules; the first matching rule wins.
+         */
+        rules?: {
+            /**
+             * Stable, table-unique rule id.
+             */
+            id: string;
+            /**
+             * The measure or attribute the rule targets — exactly one of measure/attribute.
+             */
+            target:
+                | {
+                      /**
+                       * Local identifier of the targeted measure.
+                       */
+                      measure: string;
+                  }
+                | {
+                      /**
+                       * Local identifier of the targeted attribute.
+                       */
+                      attribute: string;
+                  };
+            /**
+             * Stacked conditions; the first matching condition wins.
+             */
+            conditions: {
+                id: string;
+                operator:
+                    | "all"
+                    | "equal_to"
+                    | "not_equal_to"
+                    | "less_than"
+                    | "less_than_or_equal_to"
+                    | "greater_than"
+                    | "greater_than_or_equal_to"
+                    | "between"
+                    | "not_between"
+                    | "contains"
+                    | "not_contains"
+                    | "starts_with"
+                    | "not_starts_with"
+                    | "ends_with"
+                    | "not_ends_with"
+                    | "is_empty"
+                    | "is_not_empty";
+                /**
+                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 */
+                value?:
+                    | number
+                    | string
+                    | {
+                          from: number;
+                          to: number;
+                      };
+                format: {
+                    /**
+                     * Text color as hex (e.g. #FFFFFF).
+                     */
+                    text?: string;
+                    /**
+                     * Background color as hex (e.g. #E54D40).
+                     */
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     [k: string]: unknown;
 }
 export interface WaterfallChart {
@@ -6843,6 +8005,89 @@ export interface VisualisationConfig14 {
     enable_accessibility?: boolean;
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
+    /**
+     * Conditional formatting rules that color cells or rows based on their values.
+     */
+    conditional_formatting?: {
+        /**
+         * Conditional-formatting model version. "1" (default if omitted) — initial shape: discrete rules, one column per rule with stacked conditions. Readers must tolerate omission (treat as "1") and evolve under the same backward-compat contract as the dashboard model version, so server-side consumers (e.g. XLSX export) stay forward-compatible.
+         */
+        version?: string;
+        /**
+         * Master toggle for all conditional formatting rules.
+         */
+        enabled?: boolean;
+        /**
+         * Ordered list of rules; the first matching rule wins.
+         */
+        rules?: {
+            /**
+             * Stable, table-unique rule id.
+             */
+            id: string;
+            /**
+             * The measure or attribute the rule targets — exactly one of measure/attribute.
+             */
+            target:
+                | {
+                      /**
+                       * Local identifier of the targeted measure.
+                       */
+                      measure: string;
+                  }
+                | {
+                      /**
+                       * Local identifier of the targeted attribute.
+                       */
+                      attribute: string;
+                  };
+            /**
+             * Stacked conditions; the first matching condition wins.
+             */
+            conditions: {
+                id: string;
+                operator:
+                    | "all"
+                    | "equal_to"
+                    | "not_equal_to"
+                    | "less_than"
+                    | "less_than_or_equal_to"
+                    | "greater_than"
+                    | "greater_than_or_equal_to"
+                    | "between"
+                    | "not_between"
+                    | "contains"
+                    | "not_contains"
+                    | "starts_with"
+                    | "not_starts_with"
+                    | "ends_with"
+                    | "not_ends_with"
+                    | "is_empty"
+                    | "is_not_empty";
+                /**
+                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 */
+                value?:
+                    | number
+                    | string
+                    | {
+                          from: number;
+                          to: number;
+                      };
+                format: {
+                    /**
+                     * Text color as hex (e.g. #FFFFFF).
+                     */
+                    text?: string;
+                    /**
+                     * Background color as hex (e.g. #E54D40).
+                     */
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     [k: string]: unknown;
 }
 export interface DependencyWheelChart {
@@ -7098,6 +8343,89 @@ export interface VisualisationConfig15 {
     enable_accessibility?: boolean;
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
+    /**
+     * Conditional formatting rules that color cells or rows based on their values.
+     */
+    conditional_formatting?: {
+        /**
+         * Conditional-formatting model version. "1" (default if omitted) — initial shape: discrete rules, one column per rule with stacked conditions. Readers must tolerate omission (treat as "1") and evolve under the same backward-compat contract as the dashboard model version, so server-side consumers (e.g. XLSX export) stay forward-compatible.
+         */
+        version?: string;
+        /**
+         * Master toggle for all conditional formatting rules.
+         */
+        enabled?: boolean;
+        /**
+         * Ordered list of rules; the first matching rule wins.
+         */
+        rules?: {
+            /**
+             * Stable, table-unique rule id.
+             */
+            id: string;
+            /**
+             * The measure or attribute the rule targets — exactly one of measure/attribute.
+             */
+            target:
+                | {
+                      /**
+                       * Local identifier of the targeted measure.
+                       */
+                      measure: string;
+                  }
+                | {
+                      /**
+                       * Local identifier of the targeted attribute.
+                       */
+                      attribute: string;
+                  };
+            /**
+             * Stacked conditions; the first matching condition wins.
+             */
+            conditions: {
+                id: string;
+                operator:
+                    | "all"
+                    | "equal_to"
+                    | "not_equal_to"
+                    | "less_than"
+                    | "less_than_or_equal_to"
+                    | "greater_than"
+                    | "greater_than_or_equal_to"
+                    | "between"
+                    | "not_between"
+                    | "contains"
+                    | "not_contains"
+                    | "starts_with"
+                    | "not_starts_with"
+                    | "ends_with"
+                    | "not_ends_with"
+                    | "is_empty"
+                    | "is_not_empty";
+                /**
+                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 */
+                value?:
+                    | number
+                    | string
+                    | {
+                          from: number;
+                          to: number;
+                      };
+                format: {
+                    /**
+                     * Text color as hex (e.g. #FFFFFF).
+                     */
+                    text?: string;
+                    /**
+                     * Background color as hex (e.g. #E54D40).
+                     */
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     [k: string]: unknown;
 }
 export interface SankeyChart {
@@ -7353,6 +8681,89 @@ export interface VisualisationConfig16 {
     enable_accessibility?: boolean;
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
+    /**
+     * Conditional formatting rules that color cells or rows based on their values.
+     */
+    conditional_formatting?: {
+        /**
+         * Conditional-formatting model version. "1" (default if omitted) — initial shape: discrete rules, one column per rule with stacked conditions. Readers must tolerate omission (treat as "1") and evolve under the same backward-compat contract as the dashboard model version, so server-side consumers (e.g. XLSX export) stay forward-compatible.
+         */
+        version?: string;
+        /**
+         * Master toggle for all conditional formatting rules.
+         */
+        enabled?: boolean;
+        /**
+         * Ordered list of rules; the first matching rule wins.
+         */
+        rules?: {
+            /**
+             * Stable, table-unique rule id.
+             */
+            id: string;
+            /**
+             * The measure or attribute the rule targets — exactly one of measure/attribute.
+             */
+            target:
+                | {
+                      /**
+                       * Local identifier of the targeted measure.
+                       */
+                      measure: string;
+                  }
+                | {
+                      /**
+                       * Local identifier of the targeted attribute.
+                       */
+                      attribute: string;
+                  };
+            /**
+             * Stacked conditions; the first matching condition wins.
+             */
+            conditions: {
+                id: string;
+                operator:
+                    | "all"
+                    | "equal_to"
+                    | "not_equal_to"
+                    | "less_than"
+                    | "less_than_or_equal_to"
+                    | "greater_than"
+                    | "greater_than_or_equal_to"
+                    | "between"
+                    | "not_between"
+                    | "contains"
+                    | "not_contains"
+                    | "starts_with"
+                    | "not_starts_with"
+                    | "ends_with"
+                    | "not_ends_with"
+                    | "is_empty"
+                    | "is_not_empty";
+                /**
+                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 */
+                value?:
+                    | number
+                    | string
+                    | {
+                          from: number;
+                          to: number;
+                      };
+                format: {
+                    /**
+                     * Text color as hex (e.g. #FFFFFF).
+                     */
+                    text?: string;
+                    /**
+                     * Background color as hex (e.g. #E54D40).
+                     */
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     [k: string]: unknown;
 }
 export interface HeadlineChart {
@@ -7606,6 +9017,89 @@ export interface VisualisationConfig17 {
     enable_accessibility?: boolean;
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
+    /**
+     * Conditional formatting rules that color cells or rows based on their values.
+     */
+    conditional_formatting?: {
+        /**
+         * Conditional-formatting model version. "1" (default if omitted) — initial shape: discrete rules, one column per rule with stacked conditions. Readers must tolerate omission (treat as "1") and evolve under the same backward-compat contract as the dashboard model version, so server-side consumers (e.g. XLSX export) stay forward-compatible.
+         */
+        version?: string;
+        /**
+         * Master toggle for all conditional formatting rules.
+         */
+        enabled?: boolean;
+        /**
+         * Ordered list of rules; the first matching rule wins.
+         */
+        rules?: {
+            /**
+             * Stable, table-unique rule id.
+             */
+            id: string;
+            /**
+             * The measure or attribute the rule targets — exactly one of measure/attribute.
+             */
+            target:
+                | {
+                      /**
+                       * Local identifier of the targeted measure.
+                       */
+                      measure: string;
+                  }
+                | {
+                      /**
+                       * Local identifier of the targeted attribute.
+                       */
+                      attribute: string;
+                  };
+            /**
+             * Stacked conditions; the first matching condition wins.
+             */
+            conditions: {
+                id: string;
+                operator:
+                    | "all"
+                    | "equal_to"
+                    | "not_equal_to"
+                    | "less_than"
+                    | "less_than_or_equal_to"
+                    | "greater_than"
+                    | "greater_than_or_equal_to"
+                    | "between"
+                    | "not_between"
+                    | "contains"
+                    | "not_contains"
+                    | "starts_with"
+                    | "not_starts_with"
+                    | "ends_with"
+                    | "not_ends_with"
+                    | "is_empty"
+                    | "is_not_empty";
+                /**
+                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 */
+                value?:
+                    | number
+                    | string
+                    | {
+                          from: number;
+                          to: number;
+                      };
+                format: {
+                    /**
+                     * Text color as hex (e.g. #FFFFFF).
+                     */
+                    text?: string;
+                    /**
+                     * Background color as hex (e.g. #E54D40).
+                     */
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     [k: string]: unknown;
 }
 export interface ComboChart {
@@ -7859,6 +9353,89 @@ export interface VisualisationConfig18 {
     enable_accessibility?: boolean;
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
+    /**
+     * Conditional formatting rules that color cells or rows based on their values.
+     */
+    conditional_formatting?: {
+        /**
+         * Conditional-formatting model version. "1" (default if omitted) — initial shape: discrete rules, one column per rule with stacked conditions. Readers must tolerate omission (treat as "1") and evolve under the same backward-compat contract as the dashboard model version, so server-side consumers (e.g. XLSX export) stay forward-compatible.
+         */
+        version?: string;
+        /**
+         * Master toggle for all conditional formatting rules.
+         */
+        enabled?: boolean;
+        /**
+         * Ordered list of rules; the first matching rule wins.
+         */
+        rules?: {
+            /**
+             * Stable, table-unique rule id.
+             */
+            id: string;
+            /**
+             * The measure or attribute the rule targets — exactly one of measure/attribute.
+             */
+            target:
+                | {
+                      /**
+                       * Local identifier of the targeted measure.
+                       */
+                      measure: string;
+                  }
+                | {
+                      /**
+                       * Local identifier of the targeted attribute.
+                       */
+                      attribute: string;
+                  };
+            /**
+             * Stacked conditions; the first matching condition wins.
+             */
+            conditions: {
+                id: string;
+                operator:
+                    | "all"
+                    | "equal_to"
+                    | "not_equal_to"
+                    | "less_than"
+                    | "less_than_or_equal_to"
+                    | "greater_than"
+                    | "greater_than_or_equal_to"
+                    | "between"
+                    | "not_between"
+                    | "contains"
+                    | "not_contains"
+                    | "starts_with"
+                    | "not_starts_with"
+                    | "ends_with"
+                    | "not_ends_with"
+                    | "is_empty"
+                    | "is_not_empty";
+                /**
+                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 */
+                value?:
+                    | number
+                    | string
+                    | {
+                          from: number;
+                          to: number;
+                      };
+                format: {
+                    /**
+                     * Text color as hex (e.g. #FFFFFF).
+                     */
+                    text?: string;
+                    /**
+                     * Background color as hex (e.g. #E54D40).
+                     */
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     [k: string]: unknown;
 }
 export interface GeoChart {
@@ -8116,6 +9693,89 @@ export interface VisualisationConfig19 {
     enable_accessibility?: boolean;
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
+    /**
+     * Conditional formatting rules that color cells or rows based on their values.
+     */
+    conditional_formatting?: {
+        /**
+         * Conditional-formatting model version. "1" (default if omitted) — initial shape: discrete rules, one column per rule with stacked conditions. Readers must tolerate omission (treat as "1") and evolve under the same backward-compat contract as the dashboard model version, so server-side consumers (e.g. XLSX export) stay forward-compatible.
+         */
+        version?: string;
+        /**
+         * Master toggle for all conditional formatting rules.
+         */
+        enabled?: boolean;
+        /**
+         * Ordered list of rules; the first matching rule wins.
+         */
+        rules?: {
+            /**
+             * Stable, table-unique rule id.
+             */
+            id: string;
+            /**
+             * The measure or attribute the rule targets — exactly one of measure/attribute.
+             */
+            target:
+                | {
+                      /**
+                       * Local identifier of the targeted measure.
+                       */
+                      measure: string;
+                  }
+                | {
+                      /**
+                       * Local identifier of the targeted attribute.
+                       */
+                      attribute: string;
+                  };
+            /**
+             * Stacked conditions; the first matching condition wins.
+             */
+            conditions: {
+                id: string;
+                operator:
+                    | "all"
+                    | "equal_to"
+                    | "not_equal_to"
+                    | "less_than"
+                    | "less_than_or_equal_to"
+                    | "greater_than"
+                    | "greater_than_or_equal_to"
+                    | "between"
+                    | "not_between"
+                    | "contains"
+                    | "not_contains"
+                    | "starts_with"
+                    | "not_starts_with"
+                    | "ends_with"
+                    | "not_ends_with"
+                    | "is_empty"
+                    | "is_not_empty";
+                /**
+                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 */
+                value?:
+                    | number
+                    | string
+                    | {
+                          from: number;
+                          to: number;
+                      };
+                format: {
+                    /**
+                     * Text color as hex (e.g. #FFFFFF).
+                     */
+                    text?: string;
+                    /**
+                     * Background color as hex (e.g. #E54D40).
+                     */
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     [k: string]: unknown;
 }
 export interface VisualizationDataLayer {
@@ -8346,6 +10006,89 @@ export interface VisualisationConfig20 {
     enable_accessibility?: boolean;
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
+    /**
+     * Conditional formatting rules that color cells or rows based on their values.
+     */
+    conditional_formatting?: {
+        /**
+         * Conditional-formatting model version. "1" (default if omitted) — initial shape: discrete rules, one column per rule with stacked conditions. Readers must tolerate omission (treat as "1") and evolve under the same backward-compat contract as the dashboard model version, so server-side consumers (e.g. XLSX export) stay forward-compatible.
+         */
+        version?: string;
+        /**
+         * Master toggle for all conditional formatting rules.
+         */
+        enabled?: boolean;
+        /**
+         * Ordered list of rules; the first matching rule wins.
+         */
+        rules?: {
+            /**
+             * Stable, table-unique rule id.
+             */
+            id: string;
+            /**
+             * The measure or attribute the rule targets — exactly one of measure/attribute.
+             */
+            target:
+                | {
+                      /**
+                       * Local identifier of the targeted measure.
+                       */
+                      measure: string;
+                  }
+                | {
+                      /**
+                       * Local identifier of the targeted attribute.
+                       */
+                      attribute: string;
+                  };
+            /**
+             * Stacked conditions; the first matching condition wins.
+             */
+            conditions: {
+                id: string;
+                operator:
+                    | "all"
+                    | "equal_to"
+                    | "not_equal_to"
+                    | "less_than"
+                    | "less_than_or_equal_to"
+                    | "greater_than"
+                    | "greater_than_or_equal_to"
+                    | "between"
+                    | "not_between"
+                    | "contains"
+                    | "not_contains"
+                    | "starts_with"
+                    | "not_starts_with"
+                    | "ends_with"
+                    | "not_ends_with"
+                    | "is_empty"
+                    | "is_not_empty";
+                /**
+                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 */
+                value?:
+                    | number
+                    | string
+                    | {
+                          from: number;
+                          to: number;
+                      };
+                format: {
+                    /**
+                     * Text color as hex (e.g. #FFFFFF).
+                     */
+                    text?: string;
+                    /**
+                     * Background color as hex (e.g. #E54D40).
+                     */
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     [k: string]: unknown;
 }
 export interface GeoAreaChart {
@@ -8603,6 +10346,89 @@ export interface VisualisationConfig21 {
     enable_accessibility?: boolean;
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
+    /**
+     * Conditional formatting rules that color cells or rows based on their values.
+     */
+    conditional_formatting?: {
+        /**
+         * Conditional-formatting model version. "1" (default if omitted) — initial shape: discrete rules, one column per rule with stacked conditions. Readers must tolerate omission (treat as "1") and evolve under the same backward-compat contract as the dashboard model version, so server-side consumers (e.g. XLSX export) stay forward-compatible.
+         */
+        version?: string;
+        /**
+         * Master toggle for all conditional formatting rules.
+         */
+        enabled?: boolean;
+        /**
+         * Ordered list of rules; the first matching rule wins.
+         */
+        rules?: {
+            /**
+             * Stable, table-unique rule id.
+             */
+            id: string;
+            /**
+             * The measure or attribute the rule targets — exactly one of measure/attribute.
+             */
+            target:
+                | {
+                      /**
+                       * Local identifier of the targeted measure.
+                       */
+                      measure: string;
+                  }
+                | {
+                      /**
+                       * Local identifier of the targeted attribute.
+                       */
+                      attribute: string;
+                  };
+            /**
+             * Stacked conditions; the first matching condition wins.
+             */
+            conditions: {
+                id: string;
+                operator:
+                    | "all"
+                    | "equal_to"
+                    | "not_equal_to"
+                    | "less_than"
+                    | "less_than_or_equal_to"
+                    | "greater_than"
+                    | "greater_than_or_equal_to"
+                    | "between"
+                    | "not_between"
+                    | "contains"
+                    | "not_contains"
+                    | "starts_with"
+                    | "not_starts_with"
+                    | "ends_with"
+                    | "not_ends_with"
+                    | "is_empty"
+                    | "is_not_empty";
+                /**
+                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 */
+                value?:
+                    | number
+                    | string
+                    | {
+                          from: number;
+                          to: number;
+                      };
+                format: {
+                    /**
+                     * Text color as hex (e.g. #FFFFFF).
+                     */
+                    text?: string;
+                    /**
+                     * Background color as hex (e.g. #E54D40).
+                     */
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     [k: string]: unknown;
 }
 export interface RepeaterChart {
@@ -8864,6 +10690,89 @@ export interface VisualisationConfig22 {
     enable_accessibility?: boolean;
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
+    /**
+     * Conditional formatting rules that color cells or rows based on their values.
+     */
+    conditional_formatting?: {
+        /**
+         * Conditional-formatting model version. "1" (default if omitted) — initial shape: discrete rules, one column per rule with stacked conditions. Readers must tolerate omission (treat as "1") and evolve under the same backward-compat contract as the dashboard model version, so server-side consumers (e.g. XLSX export) stay forward-compatible.
+         */
+        version?: string;
+        /**
+         * Master toggle for all conditional formatting rules.
+         */
+        enabled?: boolean;
+        /**
+         * Ordered list of rules; the first matching rule wins.
+         */
+        rules?: {
+            /**
+             * Stable, table-unique rule id.
+             */
+            id: string;
+            /**
+             * The measure or attribute the rule targets — exactly one of measure/attribute.
+             */
+            target:
+                | {
+                      /**
+                       * Local identifier of the targeted measure.
+                       */
+                      measure: string;
+                  }
+                | {
+                      /**
+                       * Local identifier of the targeted attribute.
+                       */
+                      attribute: string;
+                  };
+            /**
+             * Stacked conditions; the first matching condition wins.
+             */
+            conditions: {
+                id: string;
+                operator:
+                    | "all"
+                    | "equal_to"
+                    | "not_equal_to"
+                    | "less_than"
+                    | "less_than_or_equal_to"
+                    | "greater_than"
+                    | "greater_than_or_equal_to"
+                    | "between"
+                    | "not_between"
+                    | "contains"
+                    | "not_contains"
+                    | "starts_with"
+                    | "not_starts_with"
+                    | "ends_with"
+                    | "not_ends_with"
+                    | "is_empty"
+                    | "is_not_empty";
+                /**
+                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 */
+                value?:
+                    | number
+                    | string
+                    | {
+                          from: number;
+                          to: number;
+                      };
+                format: {
+                    /**
+                     * Text color as hex (e.g. #FFFFFF).
+                     */
+                    text?: string;
+                    /**
+                     * Background color as hex (e.g. #E54D40).
+                     */
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     [k: string]: unknown;
 }
 export interface Metadata25 {

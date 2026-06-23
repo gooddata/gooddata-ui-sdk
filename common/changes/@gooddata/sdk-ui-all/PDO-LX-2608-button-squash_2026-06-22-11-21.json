@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-catalog: Prevent the Analytics Catalog object-type buttons from being squashed when hovering header items in the pluggable host (preloaded app bundles no longer override the button width).",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

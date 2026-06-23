@@ -1091,7 +1091,7 @@ export function isChatConversationToolResultContent(
  */
 export type IChatConversationVisualisationContent = {
     type: "visualization";
-    visualization: IInsight;
+    visualization: IInsight | null;
 };
 
 /**

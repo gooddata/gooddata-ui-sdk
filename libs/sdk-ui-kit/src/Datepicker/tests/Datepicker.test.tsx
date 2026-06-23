@@ -32,7 +32,7 @@ describe("DatePicker", () => {
     }
 
     const openCalendar = async () => {
-        await userEvent.click(screen.getByRole("combobox"));
+        await userEvent.click(screen.getByRole("textbox"));
     };
 
     const closeCalendar = async () => {
@@ -48,7 +48,7 @@ describe("DatePicker", () => {
     };
 
     const setDate = async (value: string) => {
-        await userEvent.clear(screen.getByRole("combobox"));
+        await userEvent.clear(screen.getByRole("textbox"));
         await userEvent.paste(value);
     };
 
@@ -114,7 +114,7 @@ describe("DatePicker", () => {
         it("should initially render date input", () => {
             createComponent();
 
-            expect(screen.getByRole("combobox")).toBeInTheDocument();
+            expect(screen.getByRole("textbox")).toBeInTheDocument();
         });
 
         it("should initially render without date picker", () => {
@@ -133,7 +133,7 @@ describe("DatePicker", () => {
                     date: parse("01/01/2015", defaultDateFormat, new Date()),
                 });
 
-                expect(screen.getByRole("combobox")).toHaveValue("01/01/2015");
+                expect(screen.getByRole("textbox")).toHaveValue("01/01/2015");
             });
 
             it("should show date in provided format", async () => {
@@ -153,7 +153,7 @@ describe("DatePicker", () => {
                     ],
                 );
 
-                expect(screen.getByRole("combobox")).toHaveValue("2015/02/01");
+                expect(screen.getByRole("textbox")).toHaveValue("2015/02/01");
             });
 
             it("should use provided className", () => {
@@ -181,7 +181,7 @@ describe("DatePicker", () => {
                 });
 
                 expect(screen.getByTestId("datepicker")).toHaveClass(smallClass);
-                expect(screen.getByRole("combobox")).toHaveClass(smallClass);
+                expect(screen.getByRole("textbox")).toHaveClass(smallClass);
             });
 
             it("should use provided tabIndex", () => {
@@ -189,7 +189,7 @@ describe("DatePicker", () => {
                     tabIndex: 4,
                 });
 
-                expect(screen.getByRole("combobox")).toHaveProperty("tabIndex", 4);
+                expect(screen.getByRole("textbox")).toHaveProperty("tabIndex", 4);
             });
 
             describe("onChange", () => {

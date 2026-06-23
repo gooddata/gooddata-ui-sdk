@@ -592,5 +592,16 @@
     "insightPicker.sortDirection.ascending": "Oplopend",
     "insightPicker.sortDirection.descending": "Aflopend",
     "insightPicker.menu.actions": "Acties",
-    "insightPicker.resetFilters": "Filters resetten"
+    "insightPicker.resetFilters": "Filters resetten",
+    "objectShare.confirm.restrict.title": "Toegang beperken?",
+    "objectShare.confirm.restrict.description": "Hiermee wordt de toegang beperkt tot alleen de hierboven vermelde personen en groepen.",
+    "objectShare.confirm.grantWorkspace.title": "Werkruimtebrede toegang verlenen?",
+    "objectShare.confirm.grantWorkspace.description": "Hiermee krijgen alle leden van de werkruimte toegang tot \"{title}\".",
+    "objectShare.confirm.button": "Bevestig",
+    "objectShare.toast.granteeAdded": "Toegang toegevoegd.",
+    "objectShare.toast.accessUpdated": "Toegang bijgewerkt.",
+    "objectShare.toast.generalAccessUpdated": "Algemene toegang bijgewerkt.",
+    "objectShare.toast.error": "Toegang kon niet worden bijgewerkt.",
+    "objectShare.toast.labelScopePartial": "Toegang tot sommige labels kon niet worden opgeslagen.",
+    "objectShare.loadError": "Instellingen voor delen konden niet worden geladen. Sluit dit venster en probeer het opnieuw."
 }

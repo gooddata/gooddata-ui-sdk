@@ -54,7 +54,6 @@ export interface IUserEditDialogProps extends IWithTelemetryProps {
     onSuccess: () => void;
     onClose: () => void;
     renderDataSourceIcon?: (dataSource: IGrantedDataSource) => ReactElement;
-    areFilterViewsEnabled?: boolean;
     isSystemAccountFilteringEnabled?: boolean;
     selectedTab?: UserTabId;
 }
@@ -68,7 +67,6 @@ function UserEditDialogComponent({
     initialView = "VIEW",
     changeUserMembership = false,
     renderDataSourceIcon,
-    areFilterViewsEnabled = false,
     isSystemAccountFilteringEnabled = false,
     selectedTab = undefined,
 }: IUserEditDialogProps) {
@@ -236,7 +234,6 @@ function UserEditDialogComponent({
                                             mode="VIEW"
                                             onDelete={removeGrantedWorkspace}
                                             onChange={updateGrantedWorkspace}
-                                            areFilterViewsEnabled={areFilterViewsEnabled}
                                             onClick={handleWorkspaceEdit}
                                         />
                                     )}
@@ -279,7 +276,6 @@ function UserEditDialogComponent({
                                     onSubmit={handleWorkspaceChanged}
                                     onCancel={isOpenedInEditMode ? onClose : handleWorkspaceCancel}
                                     onClose={onClose}
-                                    areFilterViewsEnabled={areFilterViewsEnabled}
                                     editWorkspace={workspaceToEdit}
                                 />
                             )}

@@ -4461,6 +4461,121 @@ export const metadata_v1: {
                             type: string;
                         };
                     };
+                    conditional_formatting: {
+                        type: string;
+                        description: string;
+                        additionalProperties: boolean;
+                        properties: {
+                            version: {
+                                type: string;
+                                description: string;
+                            };
+                            enabled: {
+                                type: string;
+                                description: string;
+                            };
+                            rules: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    type: string;
+                                    additionalProperties: boolean;
+                                    required: string[];
+                                    properties: {
+                                        id: {
+                                            type: string;
+                                            description: string;
+                                        };
+                                        target: {
+                                            type: string;
+                                            description: string;
+                                            oneOf: ({
+                                                type: string;
+                                                additionalProperties: boolean;
+                                                required: string[];
+                                                properties: {
+                                                    measure: {
+                                                        type: string;
+                                                        description: string;
+                                                    };
+                                                    attribute?: undefined;
+                                                };
+                                            } | {
+                                                type: string;
+                                                additionalProperties: boolean;
+                                                required: string[];
+                                                properties: {
+                                                    measure?: undefined;
+                                                    attribute: {
+                                                        type: string;
+                                                        description: string;
+                                                    };
+                                                };
+                                            })[];
+                                        };
+                                        conditions: {
+                                            type: string;
+                                            description: string;
+                                            items: {
+                                                type: string;
+                                                additionalProperties: boolean;
+                                                required: string[];
+                                                properties: {
+                                                    id: {
+                                                        type: string;
+                                                    };
+                                                    operator: {
+                                                        type: string;
+                                                        enum: string[];
+                                                    };
+                                                    value: {
+                                                        description: string;
+                                                        oneOf: ({
+                                                            properties?: undefined;
+                                                            required?: undefined;
+                                                            additionalProperties?: undefined;
+                                                            type: string;
+                                                        } | {
+                                                            type: string;
+                                                            additionalProperties: boolean;
+                                                            required: string[];
+                                                            properties: {
+                                                                from: {
+                                                                    type: string;
+                                                                };
+                                                                to: {
+                                                                    type: string;
+                                                                };
+                                                            };
+                                                        })[];
+                                                    };
+                                                    format: {
+                                                        type: string;
+                                                        additionalProperties: boolean;
+                                                        required: string[];
+                                                        properties: {
+                                                            text: {
+                                                                type: string;
+                                                                description: string;
+                                                            };
+                                                            fill: {
+                                                                type: string;
+                                                                description: string;
+                                                            };
+                                                            scope: {
+                                                                type: string;
+                                                                enum: string[];
+                                                            };
+                                                        };
+                                                    };
+                                                };
+                                            };
+                                        };
+                                    };
+                                };
+                            };
+                        };
+                    };
                 };
                 $defs: {};
             };
@@ -10805,6 +10920,31 @@ interface VisualisationConfig {
     comparison_enabled?: boolean;
     // (undocumented)
     comparison_type?: string;
+    conditional_formatting?: {
+        version?: string;
+        enabled?: boolean;
+        rules?: {
+            id: string;
+            target: {
+                measure: string;
+            } | {
+                attribute: string;
+            };
+            conditions: {
+                id: string;
+                operator: "all" | "equal_to" | "not_equal_to" | "less_than" | "less_than_or_equal_to" | "greater_than" | "greater_than_or_equal_to" | "between" | "not_between" | "contains" | "not_contains" | "starts_with" | "not_starts_with" | "ends_with" | "not_ends_with" | "is_empty" | "is_not_empty";
+                value?: number | string | {
+                    from: number;
+                    to: number;
+                };
+                format: {
+                    text?: string;
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     // (undocumented)
     continuous_line?: boolean;
     // (undocumented)
@@ -11060,6 +11200,31 @@ interface VisualisationConfig1 {
     comparison_enabled?: boolean;
     // (undocumented)
     comparison_type?: string;
+    conditional_formatting?: {
+        version?: string;
+        enabled?: boolean;
+        rules?: {
+            id: string;
+            target: {
+                measure: string;
+            } | {
+                attribute: string;
+            };
+            conditions: {
+                id: string;
+                operator: "all" | "equal_to" | "not_equal_to" | "less_than" | "less_than_or_equal_to" | "greater_than" | "greater_than_or_equal_to" | "between" | "not_between" | "contains" | "not_contains" | "starts_with" | "not_starts_with" | "ends_with" | "not_ends_with" | "is_empty" | "is_not_empty";
+                value?: number | string | {
+                    from: number;
+                    to: number;
+                };
+                format: {
+                    text?: string;
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     // (undocumented)
     continuous_line?: boolean;
     // (undocumented)
@@ -11315,6 +11480,31 @@ interface VisualisationConfig10 {
     comparison_enabled?: boolean;
     // (undocumented)
     comparison_type?: string;
+    conditional_formatting?: {
+        version?: string;
+        enabled?: boolean;
+        rules?: {
+            id: string;
+            target: {
+                measure: string;
+            } | {
+                attribute: string;
+            };
+            conditions: {
+                id: string;
+                operator: "all" | "equal_to" | "not_equal_to" | "less_than" | "less_than_or_equal_to" | "greater_than" | "greater_than_or_equal_to" | "between" | "not_between" | "contains" | "not_contains" | "starts_with" | "not_starts_with" | "ends_with" | "not_ends_with" | "is_empty" | "is_not_empty";
+                value?: number | string | {
+                    from: number;
+                    to: number;
+                };
+                format: {
+                    text?: string;
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     // (undocumented)
     continuous_line?: boolean;
     // (undocumented)
@@ -11570,6 +11760,31 @@ interface VisualisationConfig11 {
     comparison_enabled?: boolean;
     // (undocumented)
     comparison_type?: string;
+    conditional_formatting?: {
+        version?: string;
+        enabled?: boolean;
+        rules?: {
+            id: string;
+            target: {
+                measure: string;
+            } | {
+                attribute: string;
+            };
+            conditions: {
+                id: string;
+                operator: "all" | "equal_to" | "not_equal_to" | "less_than" | "less_than_or_equal_to" | "greater_than" | "greater_than_or_equal_to" | "between" | "not_between" | "contains" | "not_contains" | "starts_with" | "not_starts_with" | "ends_with" | "not_ends_with" | "is_empty" | "is_not_empty";
+                value?: number | string | {
+                    from: number;
+                    to: number;
+                };
+                format: {
+                    text?: string;
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     // (undocumented)
     continuous_line?: boolean;
     // (undocumented)
@@ -11825,6 +12040,31 @@ interface VisualisationConfig12 {
     comparison_enabled?: boolean;
     // (undocumented)
     comparison_type?: string;
+    conditional_formatting?: {
+        version?: string;
+        enabled?: boolean;
+        rules?: {
+            id: string;
+            target: {
+                measure: string;
+            } | {
+                attribute: string;
+            };
+            conditions: {
+                id: string;
+                operator: "all" | "equal_to" | "not_equal_to" | "less_than" | "less_than_or_equal_to" | "greater_than" | "greater_than_or_equal_to" | "between" | "not_between" | "contains" | "not_contains" | "starts_with" | "not_starts_with" | "ends_with" | "not_ends_with" | "is_empty" | "is_not_empty";
+                value?: number | string | {
+                    from: number;
+                    to: number;
+                };
+                format: {
+                    text?: string;
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     // (undocumented)
     continuous_line?: boolean;
     // (undocumented)
@@ -12080,6 +12320,31 @@ interface VisualisationConfig13 {
     comparison_enabled?: boolean;
     // (undocumented)
     comparison_type?: string;
+    conditional_formatting?: {
+        version?: string;
+        enabled?: boolean;
+        rules?: {
+            id: string;
+            target: {
+                measure: string;
+            } | {
+                attribute: string;
+            };
+            conditions: {
+                id: string;
+                operator: "all" | "equal_to" | "not_equal_to" | "less_than" | "less_than_or_equal_to" | "greater_than" | "greater_than_or_equal_to" | "between" | "not_between" | "contains" | "not_contains" | "starts_with" | "not_starts_with" | "ends_with" | "not_ends_with" | "is_empty" | "is_not_empty";
+                value?: number | string | {
+                    from: number;
+                    to: number;
+                };
+                format: {
+                    text?: string;
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     // (undocumented)
     continuous_line?: boolean;
     // (undocumented)
@@ -12335,6 +12600,31 @@ interface VisualisationConfig14 {
     comparison_enabled?: boolean;
     // (undocumented)
     comparison_type?: string;
+    conditional_formatting?: {
+        version?: string;
+        enabled?: boolean;
+        rules?: {
+            id: string;
+            target: {
+                measure: string;
+            } | {
+                attribute: string;
+            };
+            conditions: {
+                id: string;
+                operator: "all" | "equal_to" | "not_equal_to" | "less_than" | "less_than_or_equal_to" | "greater_than" | "greater_than_or_equal_to" | "between" | "not_between" | "contains" | "not_contains" | "starts_with" | "not_starts_with" | "ends_with" | "not_ends_with" | "is_empty" | "is_not_empty";
+                value?: number | string | {
+                    from: number;
+                    to: number;
+                };
+                format: {
+                    text?: string;
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     // (undocumented)
     continuous_line?: boolean;
     // (undocumented)
@@ -12590,6 +12880,31 @@ interface VisualisationConfig15 {
     comparison_enabled?: boolean;
     // (undocumented)
     comparison_type?: string;
+    conditional_formatting?: {
+        version?: string;
+        enabled?: boolean;
+        rules?: {
+            id: string;
+            target: {
+                measure: string;
+            } | {
+                attribute: string;
+            };
+            conditions: {
+                id: string;
+                operator: "all" | "equal_to" | "not_equal_to" | "less_than" | "less_than_or_equal_to" | "greater_than" | "greater_than_or_equal_to" | "between" | "not_between" | "contains" | "not_contains" | "starts_with" | "not_starts_with" | "ends_with" | "not_ends_with" | "is_empty" | "is_not_empty";
+                value?: number | string | {
+                    from: number;
+                    to: number;
+                };
+                format: {
+                    text?: string;
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     // (undocumented)
     continuous_line?: boolean;
     // (undocumented)
@@ -12845,6 +13160,31 @@ interface VisualisationConfig16 {
     comparison_enabled?: boolean;
     // (undocumented)
     comparison_type?: string;
+    conditional_formatting?: {
+        version?: string;
+        enabled?: boolean;
+        rules?: {
+            id: string;
+            target: {
+                measure: string;
+            } | {
+                attribute: string;
+            };
+            conditions: {
+                id: string;
+                operator: "all" | "equal_to" | "not_equal_to" | "less_than" | "less_than_or_equal_to" | "greater_than" | "greater_than_or_equal_to" | "between" | "not_between" | "contains" | "not_contains" | "starts_with" | "not_starts_with" | "ends_with" | "not_ends_with" | "is_empty" | "is_not_empty";
+                value?: number | string | {
+                    from: number;
+                    to: number;
+                };
+                format: {
+                    text?: string;
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     // (undocumented)
     continuous_line?: boolean;
     // (undocumented)
@@ -13100,6 +13440,31 @@ interface VisualisationConfig17 {
     comparison_enabled?: boolean;
     // (undocumented)
     comparison_type?: string;
+    conditional_formatting?: {
+        version?: string;
+        enabled?: boolean;
+        rules?: {
+            id: string;
+            target: {
+                measure: string;
+            } | {
+                attribute: string;
+            };
+            conditions: {
+                id: string;
+                operator: "all" | "equal_to" | "not_equal_to" | "less_than" | "less_than_or_equal_to" | "greater_than" | "greater_than_or_equal_to" | "between" | "not_between" | "contains" | "not_contains" | "starts_with" | "not_starts_with" | "ends_with" | "not_ends_with" | "is_empty" | "is_not_empty";
+                value?: number | string | {
+                    from: number;
+                    to: number;
+                };
+                format: {
+                    text?: string;
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     // (undocumented)
     continuous_line?: boolean;
     // (undocumented)
@@ -13355,6 +13720,31 @@ interface VisualisationConfig18 {
     comparison_enabled?: boolean;
     // (undocumented)
     comparison_type?: string;
+    conditional_formatting?: {
+        version?: string;
+        enabled?: boolean;
+        rules?: {
+            id: string;
+            target: {
+                measure: string;
+            } | {
+                attribute: string;
+            };
+            conditions: {
+                id: string;
+                operator: "all" | "equal_to" | "not_equal_to" | "less_than" | "less_than_or_equal_to" | "greater_than" | "greater_than_or_equal_to" | "between" | "not_between" | "contains" | "not_contains" | "starts_with" | "not_starts_with" | "ends_with" | "not_ends_with" | "is_empty" | "is_not_empty";
+                value?: number | string | {
+                    from: number;
+                    to: number;
+                };
+                format: {
+                    text?: string;
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     // (undocumented)
     continuous_line?: boolean;
     // (undocumented)
@@ -13610,6 +14000,31 @@ interface VisualisationConfig19 {
     comparison_enabled?: boolean;
     // (undocumented)
     comparison_type?: string;
+    conditional_formatting?: {
+        version?: string;
+        enabled?: boolean;
+        rules?: {
+            id: string;
+            target: {
+                measure: string;
+            } | {
+                attribute: string;
+            };
+            conditions: {
+                id: string;
+                operator: "all" | "equal_to" | "not_equal_to" | "less_than" | "less_than_or_equal_to" | "greater_than" | "greater_than_or_equal_to" | "between" | "not_between" | "contains" | "not_contains" | "starts_with" | "not_starts_with" | "ends_with" | "not_ends_with" | "is_empty" | "is_not_empty";
+                value?: number | string | {
+                    from: number;
+                    to: number;
+                };
+                format: {
+                    text?: string;
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     // (undocumented)
     continuous_line?: boolean;
     // (undocumented)
@@ -13865,6 +14280,31 @@ interface VisualisationConfig2 {
     comparison_enabled?: boolean;
     // (undocumented)
     comparison_type?: string;
+    conditional_formatting?: {
+        version?: string;
+        enabled?: boolean;
+        rules?: {
+            id: string;
+            target: {
+                measure: string;
+            } | {
+                attribute: string;
+            };
+            conditions: {
+                id: string;
+                operator: "all" | "equal_to" | "not_equal_to" | "less_than" | "less_than_or_equal_to" | "greater_than" | "greater_than_or_equal_to" | "between" | "not_between" | "contains" | "not_contains" | "starts_with" | "not_starts_with" | "ends_with" | "not_ends_with" | "is_empty" | "is_not_empty";
+                value?: number | string | {
+                    from: number;
+                    to: number;
+                };
+                format: {
+                    text?: string;
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     // (undocumented)
     continuous_line?: boolean;
     // (undocumented)
@@ -14120,6 +14560,31 @@ interface VisualisationConfig20 {
     comparison_enabled?: boolean;
     // (undocumented)
     comparison_type?: string;
+    conditional_formatting?: {
+        version?: string;
+        enabled?: boolean;
+        rules?: {
+            id: string;
+            target: {
+                measure: string;
+            } | {
+                attribute: string;
+            };
+            conditions: {
+                id: string;
+                operator: "all" | "equal_to" | "not_equal_to" | "less_than" | "less_than_or_equal_to" | "greater_than" | "greater_than_or_equal_to" | "between" | "not_between" | "contains" | "not_contains" | "starts_with" | "not_starts_with" | "ends_with" | "not_ends_with" | "is_empty" | "is_not_empty";
+                value?: number | string | {
+                    from: number;
+                    to: number;
+                };
+                format: {
+                    text?: string;
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     // (undocumented)
     continuous_line?: boolean;
     // (undocumented)
@@ -14375,6 +14840,31 @@ interface VisualisationConfig21 {
     comparison_enabled?: boolean;
     // (undocumented)
     comparison_type?: string;
+    conditional_formatting?: {
+        version?: string;
+        enabled?: boolean;
+        rules?: {
+            id: string;
+            target: {
+                measure: string;
+            } | {
+                attribute: string;
+            };
+            conditions: {
+                id: string;
+                operator: "all" | "equal_to" | "not_equal_to" | "less_than" | "less_than_or_equal_to" | "greater_than" | "greater_than_or_equal_to" | "between" | "not_between" | "contains" | "not_contains" | "starts_with" | "not_starts_with" | "ends_with" | "not_ends_with" | "is_empty" | "is_not_empty";
+                value?: number | string | {
+                    from: number;
+                    to: number;
+                };
+                format: {
+                    text?: string;
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     // (undocumented)
     continuous_line?: boolean;
     // (undocumented)
@@ -14630,6 +15120,31 @@ interface VisualisationConfig22 {
     comparison_enabled?: boolean;
     // (undocumented)
     comparison_type?: string;
+    conditional_formatting?: {
+        version?: string;
+        enabled?: boolean;
+        rules?: {
+            id: string;
+            target: {
+                measure: string;
+            } | {
+                attribute: string;
+            };
+            conditions: {
+                id: string;
+                operator: "all" | "equal_to" | "not_equal_to" | "less_than" | "less_than_or_equal_to" | "greater_than" | "greater_than_or_equal_to" | "between" | "not_between" | "contains" | "not_contains" | "starts_with" | "not_starts_with" | "ends_with" | "not_ends_with" | "is_empty" | "is_not_empty";
+                value?: number | string | {
+                    from: number;
+                    to: number;
+                };
+                format: {
+                    text?: string;
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     // (undocumented)
     continuous_line?: boolean;
     // (undocumented)
@@ -14885,6 +15400,31 @@ interface VisualisationConfig3 {
     comparison_enabled?: boolean;
     // (undocumented)
     comparison_type?: string;
+    conditional_formatting?: {
+        version?: string;
+        enabled?: boolean;
+        rules?: {
+            id: string;
+            target: {
+                measure: string;
+            } | {
+                attribute: string;
+            };
+            conditions: {
+                id: string;
+                operator: "all" | "equal_to" | "not_equal_to" | "less_than" | "less_than_or_equal_to" | "greater_than" | "greater_than_or_equal_to" | "between" | "not_between" | "contains" | "not_contains" | "starts_with" | "not_starts_with" | "ends_with" | "not_ends_with" | "is_empty" | "is_not_empty";
+                value?: number | string | {
+                    from: number;
+                    to: number;
+                };
+                format: {
+                    text?: string;
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     // (undocumented)
     continuous_line?: boolean;
     // (undocumented)
@@ -15140,6 +15680,31 @@ interface VisualisationConfig4 {
     comparison_enabled?: boolean;
     // (undocumented)
     comparison_type?: string;
+    conditional_formatting?: {
+        version?: string;
+        enabled?: boolean;
+        rules?: {
+            id: string;
+            target: {
+                measure: string;
+            } | {
+                attribute: string;
+            };
+            conditions: {
+                id: string;
+                operator: "all" | "equal_to" | "not_equal_to" | "less_than" | "less_than_or_equal_to" | "greater_than" | "greater_than_or_equal_to" | "between" | "not_between" | "contains" | "not_contains" | "starts_with" | "not_starts_with" | "ends_with" | "not_ends_with" | "is_empty" | "is_not_empty";
+                value?: number | string | {
+                    from: number;
+                    to: number;
+                };
+                format: {
+                    text?: string;
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     // (undocumented)
     continuous_line?: boolean;
     // (undocumented)
@@ -15395,6 +15960,31 @@ interface VisualisationConfig5 {
     comparison_enabled?: boolean;
     // (undocumented)
     comparison_type?: string;
+    conditional_formatting?: {
+        version?: string;
+        enabled?: boolean;
+        rules?: {
+            id: string;
+            target: {
+                measure: string;
+            } | {
+                attribute: string;
+            };
+            conditions: {
+                id: string;
+                operator: "all" | "equal_to" | "not_equal_to" | "less_than" | "less_than_or_equal_to" | "greater_than" | "greater_than_or_equal_to" | "between" | "not_between" | "contains" | "not_contains" | "starts_with" | "not_starts_with" | "ends_with" | "not_ends_with" | "is_empty" | "is_not_empty";
+                value?: number | string | {
+                    from: number;
+                    to: number;
+                };
+                format: {
+                    text?: string;
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     // (undocumented)
     continuous_line?: boolean;
     // (undocumented)
@@ -15650,6 +16240,31 @@ interface VisualisationConfig6 {
     comparison_enabled?: boolean;
     // (undocumented)
     comparison_type?: string;
+    conditional_formatting?: {
+        version?: string;
+        enabled?: boolean;
+        rules?: {
+            id: string;
+            target: {
+                measure: string;
+            } | {
+                attribute: string;
+            };
+            conditions: {
+                id: string;
+                operator: "all" | "equal_to" | "not_equal_to" | "less_than" | "less_than_or_equal_to" | "greater_than" | "greater_than_or_equal_to" | "between" | "not_between" | "contains" | "not_contains" | "starts_with" | "not_starts_with" | "ends_with" | "not_ends_with" | "is_empty" | "is_not_empty";
+                value?: number | string | {
+                    from: number;
+                    to: number;
+                };
+                format: {
+                    text?: string;
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     // (undocumented)
     continuous_line?: boolean;
     // (undocumented)
@@ -15905,6 +16520,31 @@ interface VisualisationConfig7 {
     comparison_enabled?: boolean;
     // (undocumented)
     comparison_type?: string;
+    conditional_formatting?: {
+        version?: string;
+        enabled?: boolean;
+        rules?: {
+            id: string;
+            target: {
+                measure: string;
+            } | {
+                attribute: string;
+            };
+            conditions: {
+                id: string;
+                operator: "all" | "equal_to" | "not_equal_to" | "less_than" | "less_than_or_equal_to" | "greater_than" | "greater_than_or_equal_to" | "between" | "not_between" | "contains" | "not_contains" | "starts_with" | "not_starts_with" | "ends_with" | "not_ends_with" | "is_empty" | "is_not_empty";
+                value?: number | string | {
+                    from: number;
+                    to: number;
+                };
+                format: {
+                    text?: string;
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     // (undocumented)
     continuous_line?: boolean;
     // (undocumented)
@@ -16160,6 +16800,31 @@ interface VisualisationConfig8 {
     comparison_enabled?: boolean;
     // (undocumented)
     comparison_type?: string;
+    conditional_formatting?: {
+        version?: string;
+        enabled?: boolean;
+        rules?: {
+            id: string;
+            target: {
+                measure: string;
+            } | {
+                attribute: string;
+            };
+            conditions: {
+                id: string;
+                operator: "all" | "equal_to" | "not_equal_to" | "less_than" | "less_than_or_equal_to" | "greater_than" | "greater_than_or_equal_to" | "between" | "not_between" | "contains" | "not_contains" | "starts_with" | "not_starts_with" | "ends_with" | "not_ends_with" | "is_empty" | "is_not_empty";
+                value?: number | string | {
+                    from: number;
+                    to: number;
+                };
+                format: {
+                    text?: string;
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     // (undocumented)
     continuous_line?: boolean;
     // (undocumented)
@@ -16415,6 +17080,31 @@ interface VisualisationConfig9 {
     comparison_enabled?: boolean;
     // (undocumented)
     comparison_type?: string;
+    conditional_formatting?: {
+        version?: string;
+        enabled?: boolean;
+        rules?: {
+            id: string;
+            target: {
+                measure: string;
+            } | {
+                attribute: string;
+            };
+            conditions: {
+                id: string;
+                operator: "all" | "equal_to" | "not_equal_to" | "less_than" | "less_than_or_equal_to" | "greater_than" | "greater_than_or_equal_to" | "between" | "not_between" | "contains" | "not_contains" | "starts_with" | "not_starts_with" | "ends_with" | "not_ends_with" | "is_empty" | "is_not_empty";
+                value?: number | string | {
+                    from: number;
+                    to: number;
+                };
+                format: {
+                    text?: string;
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
     // (undocumented)
     continuous_line?: boolean;
     // (undocumented)

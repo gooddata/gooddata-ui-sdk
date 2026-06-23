@@ -278,6 +278,127 @@
             "items": {
                 "type": "string"
             }
+        },
+        "conditional_formatting": {
+            "type": "object",
+            "description": "Conditional formatting rules that color cells or rows based on their values.",
+            "additionalProperties": false,
+            "properties": {
+                "version": {
+                    "type": "string",
+                    "description": "Conditional-formatting model version. \"1\" (default if omitted) — initial shape: discrete rules, one column per rule with stacked conditions. Readers must tolerate omission (treat as \"1\") and evolve under the same backward-compat contract as the dashboard model version, so server-side consumers (e.g. XLSX export) stay forward-compatible."
+                },
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Master toggle for all conditional formatting rules."
+                },
+                "rules": {
+                    "type": "array",
+                    "description": "Ordered list of rules; the first matching rule wins.",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": ["id", "target", "conditions"],
+                        "properties": {
+                            "id": { "type": "string", "description": "Stable, table-unique rule id." },
+                            "target": {
+                                "type": "object",
+                                "description": "The measure or attribute the rule targets — exactly one of measure/attribute.",
+                                "oneOf": [
+                                    {
+                                        "type": "object",
+                                        "additionalProperties": false,
+                                        "required": ["measure"],
+                                        "properties": {
+                                            "measure": {
+                                                "type": "string",
+                                                "description": "Local identifier of the targeted measure."
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "type": "object",
+                                        "additionalProperties": false,
+                                        "required": ["attribute"],
+                                        "properties": {
+                                            "attribute": {
+                                                "type": "string",
+                                                "description": "Local identifier of the targeted attribute."
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            "conditions": {
+                                "type": "array",
+                                "description": "Stacked conditions; the first matching condition wins.",
+                                "items": {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "required": ["id", "operator", "format"],
+                                    "properties": {
+                                        "id": { "type": "string" },
+                                        "operator": {
+                                            "type": "string",
+                                            "enum": [
+                                                "all",
+                                                "equal_to",
+                                                "not_equal_to",
+                                                "less_than",
+                                                "less_than_or_equal_to",
+                                                "greater_than",
+                                                "greater_than_or_equal_to",
+                                                "between",
+                                                "not_between",
+                                                "contains",
+                                                "not_contains",
+                                                "starts_with",
+                                                "not_starts_with",
+                                                "ends_with",
+                                                "not_ends_with",
+                                                "is_empty",
+                                                "is_not_empty"
+                                            ]
+                                        },
+                                        "value": {
+                                            "description": "Literal (number or string); a {from,to} range for between/not_between; omitted for all/is_empty/is_not_empty.",
+                                            "oneOf": [
+                                                { "type": "number" },
+                                                { "type": "string" },
+                                                {
+                                                    "type": "object",
+                                                    "additionalProperties": false,
+                                                    "required": ["from", "to"],
+                                                    "properties": {
+                                                        "from": { "type": "number" },
+                                                        "to": { "type": "number" }
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "format": {
+                                            "type": "object",
+                                            "additionalProperties": false,
+                                            "required": ["scope"],
+                                            "properties": {
+                                                "text": {
+                                                    "type": "string",
+                                                    "description": "Text color as hex (e.g. #FFFFFF)."
+                                                },
+                                                "fill": {
+                                                    "type": "string",
+                                                    "description": "Background color as hex (e.g. #E54D40)."
+                                                },
+                                                "scope": { "type": "string", "enum": ["cell", "row"] }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "$defs": {

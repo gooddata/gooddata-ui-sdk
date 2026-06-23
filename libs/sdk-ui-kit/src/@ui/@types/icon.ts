@@ -100,6 +100,7 @@ export type IconType =
     | "settings"
     | "search"
     | "university"
+    | "building"
     | "printer"
     | "picture"
     | "visualization"

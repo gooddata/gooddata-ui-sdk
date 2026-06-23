@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type ReactElement, useMemo, useState } from "react";
 
@@ -48,7 +48,6 @@ export interface IUserGroupEditDialogProps extends IWithTelemetryProps {
     onSuccess: () => void;
     onClose: () => void;
     renderDataSourceIcon?: (dataSource: IGrantedDataSource) => ReactElement;
-    areFilterViewsEnabled?: boolean;
 }
 
 function UserGroupEditDialogComponent({
@@ -59,7 +58,6 @@ function UserGroupEditDialogComponent({
     onClose,
     initialView = "VIEW",
     renderDataSourceIcon,
-    areFilterViewsEnabled = false,
 }: IUserGroupEditDialogProps) {
     const intl = useIntl();
     const { dialogMode, setDialogMode } = useUserGroupDialogMode(initialView);
@@ -236,7 +234,6 @@ function UserGroupEditDialogComponent({
                                             mode="VIEW"
                                             onDelete={removeGrantedWorkspace}
                                             onChange={updateGrantedWorkspace}
-                                            areFilterViewsEnabled={areFilterViewsEnabled}
                                             onClick={handleWorkspaceEdit}
                                         />
                                     )}
@@ -273,7 +270,6 @@ function UserGroupEditDialogComponent({
                                     onSubmit={handleWorkspaceChanged}
                                     onCancel={isOpenedInEditMode ? onClose : handleWorkspaceCancel}
                                     onClose={onClose}
-                                    areFilterViewsEnabled={areFilterViewsEnabled}
                                     editWorkspace={workspaceToEdit}
                                 />
                             )}

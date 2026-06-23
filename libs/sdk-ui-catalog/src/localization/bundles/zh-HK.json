@@ -58,6 +58,7 @@
     "analyticsCatalog.filter.reset": "重設篩選器",
     "analyticsCatalog.column.title.label": "標題",
     "analyticsCatalog.column.title.dataSet": "數據",
+    "analyticsCatalog.column.title.labels": "標籤",
     "analyticsCatalog.column.title.createdBy": "創建者",
     "analyticsCatalog.column.title.createdAt": "創建時間",
     "analyticsCatalog.column.title.tags": "標籤",
@@ -190,5 +191,15 @@
     "analyticsCatalog.parameter.dialog.delete.body": "您確定要刪除 <b>{name}</b>？",
     "analyticsCatalog.parameter.dialog.delete.submit": "刪除",
     "analyticsCatalog.parameter.delete.success": "參數已刪除。",
-    "analyticsCatalog.parameter.delete.error": "無法刪除參數。"
+    "analyticsCatalog.parameter.delete.error": "無法刪除參數。",
+    "analyticsCatalog.share.button": "共享",
+    "analyticsCatalog.share.access.row.label": "存取權",
+    "analyticsCatalog.share.access.row.restricted": "受限制",
+    "analyticsCatalog.share.access.row.workspace.view": "所有工作區使用者可檢視",
+    "analyticsCatalog.share.access.row.workspace.share": "所有工作區使用者可共享",
+    "analyticsCatalog.share.access.row.sharedWith": "已與 {count, plural, other {# 位使用者或群組}} 共享",
+    "analyticsCatalog.labels.more": "+{remaining} 個更多",
+    "analyticsCatalog.labels.trigger.ariaLabel": "顯示所有標籤",
+    "analyticsCatalog.labels.popup.title": "標籤",
+    "analyticsCatalog.labels.popup.close": "關閉"
 }

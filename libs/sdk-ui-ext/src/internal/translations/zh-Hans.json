@@ -592,5 +592,16 @@
     "insightPicker.sortDirection.ascending": "升序",
     "insightPicker.sortDirection.descending": "降序",
     "insightPicker.menu.actions": "操作",
-    "insightPicker.resetFilters": "重置筛选器"
+    "insightPicker.resetFilters": "重置筛选器",
+    "objectShare.confirm.restrict.title": "限制访问权限？",
+    "objectShare.confirm.restrict.description": "这会将访问权限限制为仅限上方列出的人员和组。",
+    "objectShare.confirm.grantWorkspace.title": "授予整个工作区访问权限？",
+    "objectShare.confirm.grantWorkspace.description": "这会向所有工作区成员授予对“{title}”的访问权限。",
+    "objectShare.confirm.button": "确认",
+    "objectShare.toast.granteeAdded": "已添加访问权限。",
+    "objectShare.toast.accessUpdated": "已更新访问权限。",
+    "objectShare.toast.generalAccessUpdated": "已更新常规访问权限。",
+    "objectShare.toast.error": "无法更新访问权限。",
+    "objectShare.toast.labelScopePartial": "无法保存某些标签访问权限。",
+    "objectShare.loadError": "无法加载共享设置。请关闭并重试。"
 }

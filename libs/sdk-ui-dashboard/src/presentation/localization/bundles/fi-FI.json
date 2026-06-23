@@ -740,7 +740,7 @@
     "insightAlert.config.accessibility.title": "Hälytyksen mukautettu nimi",
     "insightAlert.config.when": "Milloin",
     "insightAlert.config.for": "Kohteelle",
-    "insightAlert.config.condition": "Kunto",
+    "insightAlert.config.condition": "Ehto",
     "insightAlert.config.threshold": "Kynnysarvo",
     "insightAlert.config.comparison": "Vertailu",
     "insightAlert.config.recipients": "Vastaanottajat",

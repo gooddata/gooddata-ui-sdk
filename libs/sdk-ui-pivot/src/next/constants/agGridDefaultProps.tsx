@@ -25,9 +25,11 @@ function suppressKeyboardEvent(params: SuppressKeyboardEventParams<AgGridRowData
     const { event } = params;
     const { key } = event;
 
-    // Prevent Space key from scrolling the page
+    // Prevent Space key from scrolling the page. Space itself is custom-handled in
+    // onCellKeyDown (drilling, Ctrl+Space/Shift+Space selection), so suppress AG Grid's default.
     if (key === " " || key === "Space") {
         event.preventDefault();
+        return true;
     }
 
     // Suppress Tab - handled in onCellKeyDown (useInteractionProps.ts)
@@ -38,22 +40,15 @@ function suppressKeyboardEvent(params: SuppressKeyboardEventParams<AgGridRowData
     // Suppress custom navigation keys - handled in onCellKeyDown (useInteractionProps.ts):
     // - Home/End (custom row navigation)
     // - Ctrl+Home/End (jump to first/last cell in grid)
-    const isCustomNavigationKey = key === "Home" || key === "End";
-
-    if (isCustomNavigationKey) {
+    if (key === "Home" || key === "End") {
         return true;
     }
 
-    // Let AG Grid handle standard navigation keys:
-    const isStandardNavigationKey =
-        key === "ArrowUp" ||
-        key === "ArrowDown" ||
-        key === "ArrowLeft" ||
-        key === "ArrowRight" ||
-        key === "PageUp" ||
-        key === "PageDown";
-
-    return !isStandardNavigationKey;
+    // Let AG Grid handle everything else. This covers its standard cell navigation (arrows,
+    // Page Up/Down) as well as its built-in clipboard shortcuts (Ctrl/Cmd+C copy via
+    // processCellForClipboard, Ctrl/Cmd+A select all). Returning a blanket true here would
+    // suppress those clipboard shortcuts and break copy (LX-2606).
+    return false;
 }
 
 function suppressHeaderKeyboardEvent(

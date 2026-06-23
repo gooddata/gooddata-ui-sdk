@@ -1,5 +1,7 @@
 // (C) 2024-2026 GoodData Corporation
 
+import { useIntl } from "react-intl";
+
 import {
     type IChatConversationErrorContent,
     type IChatConversationLocalContent,
@@ -29,6 +31,7 @@ type ConversationItemContentsProps = {
 };
 
 export function ConversationItemContents({ message, references, isLoading }: ConversationItemContentsProps) {
+    const intl = useIntl();
     const content = message.content as IChatConversationLocalContent | IChatConversationErrorContent;
 
     if (content.type === "error") {
@@ -94,13 +97,17 @@ export function ConversationItemContents({ message, references, isLoading }: Con
                         );
                     }
                     if (part.type === "visualization" && !whatIf) {
-                        return (
+                        return part.visualization ? (
                             <ConversationVisualizationContent
                                 key={index}
                                 message={message}
                                 part={part}
                                 visualization={part.visualization}
                             />
+                        ) : (
+                            <div key={index} className="gd-gen-ai-chat__messages__content--error">
+                                {intl.formatMessage({ id: "gd.gen-ai.visualization.unavailable" })}
+                            </div>
                         );
                     }
                     if (part.type === "searchResults") {

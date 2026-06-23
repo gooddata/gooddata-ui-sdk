@@ -592,5 +592,16 @@
     "insightPicker.sortDirection.ascending": "За зростанням",
     "insightPicker.sortDirection.descending": "За спаданням",
     "insightPicker.menu.actions": "Дії",
-    "insightPicker.resetFilters": "Скинути фільтри"
+    "insightPicker.resetFilters": "Скинути фільтри",
+    "objectShare.confirm.restrict.title": "Обмежити доступ?",
+    "objectShare.confirm.restrict.description": "Це обмежить доступ лише для людей і груп, перелічених вище.",
+    "objectShare.confirm.grantWorkspace.title": "Надати доступ у межах робочої області?",
+    "objectShare.confirm.grantWorkspace.description": "Це надасть усім учасникам робочої області доступ до \"{title}\".",
+    "objectShare.confirm.button": "Підтвердити",
+    "objectShare.toast.granteeAdded": "Доступ додано.",
+    "objectShare.toast.accessUpdated": "Доступ оновлено.",
+    "objectShare.toast.generalAccessUpdated": "Загальний доступ оновлено.",
+    "objectShare.toast.error": "Не вдалося оновити доступ.",
+    "objectShare.toast.labelScopePartial": "Не вдалося зберегти доступ до деяких міток.",
+    "objectShare.loadError": "Не вдалося завантажити налаштування спільного доступу. Закрийте й повторіть спробу."
 }

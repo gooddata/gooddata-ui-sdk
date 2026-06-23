@@ -1,12 +1,13 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type MouseEvent, useCallback, useMemo, useRef } from "react";
+import { type MouseEvent, useCallback, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import { type SemanticQualityIssueAttributeName } from "@gooddata/sdk-model";
 import { useLocalStorage } from "@gooddata/sdk-ui";
+import { ObjectShareDialog, useObjectShare } from "@gooddata/sdk-ui-ext";
 import { type IUiTab, UiSkeleton, UiTabs } from "@gooddata/sdk-ui-kit";
 
 import { canEditCatalogItem } from "../catalogItem/permission.js";
@@ -26,6 +27,8 @@ import { CatalogDetailTabLineage } from "./CatalogDetailTabLineage.js";
 import { CatalogDetailTabMetadata } from "./CatalogDetailTabMetadata.js";
 import { CatalogDetailTabQuality } from "./CatalogDetailTabQuality.js";
 import { useCatalogItemUpdate } from "./hooks/useCatalogItemUpdate.js";
+import { isShareableCatalogItem, toShareTarget } from "./share/guards.js";
+import { useShareableLabels } from "./share/useShareableLabels.js";
 import type { OpenHandlerEvent } from "./types.js";
 
 const Tabs = {
@@ -126,6 +129,43 @@ export function CatalogDetailContent({
 
     const canEdit = canEditCatalogItem(permissions, item);
 
+    // Sharing (object-level permissions) — gated by the column-level-permissions
+    // flag and limited to shareable item kinds (attributes, facts).
+    const enableColumnLevelPermissions = Boolean(settings?.enableColumnLevelPermissions);
+    const shareableItem =
+        item && enableColumnLevelPermissions && isShareableCatalogItem(item) ? item : undefined;
+    const shareTarget = useMemo(
+        () => (shareableItem ? toShareTarget(shareableItem) : undefined),
+        [shareableItem],
+    );
+    // Labels of the shared attribute drive the per-grantee label-scope picker.
+    const shareLabels = useShareableLabels(shareableItem);
+    // One controller drives both the dialog and the inline access row; the row
+    // reads `state.summary`, so a save inside the dialog refreshes it too.
+    // `labelsLoading`/`labelsError` keep the controller label-unresolved while labels
+    // are still pending, disabling every access-changing control (a write would
+    // otherwise diff against an empty label set and orphan real per-label grants).
+    const shareController = useObjectShare(shareTarget, {
+        labels: shareLabels.labels,
+        labelsError: shareLabels.error,
+        labelsLoading: shareLabels.loading,
+    });
+    const [isShareOpen, setIsShareOpen] = useState(false);
+    // The detail view is reused as the user navigates between objects, so reset the
+    // open dialog when the shareable target changes (or becomes non-shareable) —
+    // otherwise it would linger open on the next object. Reset during render (React's
+    // "adjust state on prop change" idiom) rather than in an effect.
+    const shareTargetKey = shareableItem?.identifier;
+    const [openForKey, setOpenForKey] = useState<string | undefined>(undefined);
+    if (isShareOpen && openForKey !== shareTargetKey) {
+        setIsShareOpen(false);
+    }
+    const openShare = useCallback(() => {
+        setOpenForKey(shareTargetKey);
+        setIsShareOpen(true);
+    }, [shareTargetKey]);
+    const closeShare = useCallback(() => setIsShareOpen(false), []);
+
     const separators = settings?.separators;
     const enableMetricFormatOverrides = Boolean(settings?.["enableMetricFormatOverrides"]);
     const currencyFormatOverride = settings?.currencyFormatOverride ?? null;
@@ -207,6 +247,9 @@ export function CatalogDetailContent({
                             updateItemDescription={updateItemDescription}
                             isDescriptionGenerationEnabled={isDescriptionGenerationEnabled}
                             headerRef={headerRef}
+                            labels={shareableItem ? shareLabels.labels : undefined}
+                            labelsLoading={shareableItem ? shareLabels.loading : false}
+                            showInfoRow={enableColumnLevelPermissions}
                             actions={
                                 <CatalogDetailActions
                                     item={item}
@@ -215,6 +258,7 @@ export function CatalogDetailContent({
                                     onCatalogItemCreate={onCatalogItemCreate}
                                     onCatalogItemUpdate={applyItemUpdate}
                                     onCatalogItemDelete={applyItemDelete}
+                                    onShareClick={shareableItem ? openShare : undefined}
                                 />
                             }
                         />
@@ -228,6 +272,9 @@ export function CatalogDetailContent({
                             <CatalogDetailTabMetadata
                                 item={item}
                                 canEdit={canEdit}
+                                // With OLP off the dataset isn't relocated to the header,
+                                // so keep the Dataset row in the metadata tab.
+                                showDatasetRow={!enableColumnLevelPermissions}
                                 onTagClick={(tag) => {
                                     onTagClick?.(tag.label);
                                 }}
@@ -255,6 +302,11 @@ export function CatalogDetailContent({
                                     enableMetricFormatOverrides ? currencyFormatOverride : undefined
                                 }
                                 enableMetricFormatOverrides={enableMetricFormatOverrides}
+                                accessSummary={shareableItem ? shareController.state.summary : undefined}
+                                accessUnavailable={
+                                    shareableItem ? shareController.state.status !== "success" : false
+                                }
+                                onAccessOpen={shareableItem ? openShare : undefined}
                             />
                         )}
                         {selectedTabId === Tabs.CERTIFICATION && isCertificationVisible ? (
@@ -282,6 +334,16 @@ export function CatalogDetailContent({
                     </div>
                 ) : null}
             </CatalogDetailStatus>
+            {shareableItem ? (
+                <ObjectShareDialog
+                    target={shareTarget}
+                    objectTitle={shareableItem.title}
+                    isOpen={isShareOpen}
+                    onClose={closeShare}
+                    labelsLoading={shareLabels.loading}
+                    controller={shareController}
+                />
+            ) : null}
         </div>
     );
 }

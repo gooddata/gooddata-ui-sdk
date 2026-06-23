@@ -58,6 +58,7 @@
     "analyticsCatalog.filter.reset": "Resetuj filtry",
     "analyticsCatalog.column.title.label": "Tytuł",
     "analyticsCatalog.column.title.dataSet": "Zestaw danych",
+    "analyticsCatalog.column.title.labels": "Etykiety",
     "analyticsCatalog.column.title.createdBy": "Utworzone przez",
     "analyticsCatalog.column.title.createdAt": "Utworzono dnia",
     "analyticsCatalog.column.title.tags": "Tagi",
@@ -190,5 +191,15 @@
     "analyticsCatalog.parameter.dialog.delete.body": "Czy na pewno chcesz usunąć <b>{name}</b>?",
     "analyticsCatalog.parameter.dialog.delete.submit": "Usuń",
     "analyticsCatalog.parameter.delete.success": "Parametr został usunięty.",
-    "analyticsCatalog.parameter.delete.error": "Nie udało się usunąć parametru."
+    "analyticsCatalog.parameter.delete.error": "Nie udało się usunąć parametru.",
+    "analyticsCatalog.share.button": "Udostępnij",
+    "analyticsCatalog.share.access.row.label": "Dostęp",
+    "analyticsCatalog.share.access.row.restricted": "Ograniczone",
+    "analyticsCatalog.share.access.row.workspace.view": "Wszyscy użytkownicy przestrzeni roboczej mogą wyświetlać",
+    "analyticsCatalog.share.access.row.workspace.share": "Wszyscy użytkownicy przestrzeni roboczej mogą udostępniać",
+    "analyticsCatalog.share.access.row.sharedWith": "Udostępniono {count, plural, one {# użytkownikowi lub grupie} few {# użytkownikom lub grupom} many {# użytkownikom lub grupom} other {# użytkownika lub grupy}}",
+    "analyticsCatalog.labels.more": "+{remaining} więcej",
+    "analyticsCatalog.labels.trigger.ariaLabel": "Pokaż wszystkie etykiety",
+    "analyticsCatalog.labels.popup.title": "Etykiety",
+    "analyticsCatalog.labels.popup.close": "Zamknij"
 }

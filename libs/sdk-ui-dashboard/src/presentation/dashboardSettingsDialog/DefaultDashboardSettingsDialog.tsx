@@ -30,7 +30,6 @@ import {
     selectDateFormat,
     selectEnableAlertsEvaluationFrequencySetup,
     selectEnableDashboardSectionHeadersDateDataSet,
-    selectEnableFilterViews,
     selectIsWhiteLabeled,
     selectLocale,
     selectSettings,
@@ -61,7 +60,6 @@ export function DefaultDashboardSettingsDialog({
     const enableAlertsEvaluationFrequencySetup = useDashboardSelector(
         selectEnableAlertsEvaluationFrequencySetup,
     );
-    const isFilterViewsFeatureEnabled = useDashboardSelector(selectEnableFilterViews);
     const settings = useDashboardSelector(selectSettings);
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
     const enableDashboardSectionHeadersDateDataSet = useDashboardSelector(
@@ -145,26 +143,24 @@ export function DefaultDashboardSettingsDialog({
                             />
                         </>
                     ) : null}
-                    {isFilterViewsFeatureEnabled ? (
-                        <ConfigurationOption
-                            label={intl.formatMessage({
-                                id: "filters.configurationPanel.filterViews.toggle",
-                            })}
-                            tooltip={intl.formatMessage(
-                                { id: "filters.configurationPanel.filterViews.toggle.tooltip" },
-                                {
-                                    p: (chunks: ReactNode) => <p>{chunks}</p>,
-                                },
-                            )}
-                            isChecked={!currentData.disableFilterViews}
-                            onChange={(newValue: boolean) => {
-                                setCurrentData({
-                                    ...currentData,
-                                    disableFilterViews: newValue,
-                                });
-                            }}
-                        />
-                    ) : null}
+                    <ConfigurationOption
+                        label={intl.formatMessage({
+                            id: "filters.configurationPanel.filterViews.toggle",
+                        })}
+                        tooltip={intl.formatMessage(
+                            { id: "filters.configurationPanel.filterViews.toggle.tooltip" },
+                            {
+                                p: (chunks: ReactNode) => <p>{chunks}</p>,
+                            },
+                        )}
+                        isChecked={!currentData.disableFilterViews}
+                        onChange={(newValue: boolean) => {
+                            setCurrentData({
+                                ...currentData,
+                                disableFilterViews: newValue,
+                            });
+                        }}
+                    />
                     <ConfigurationOption
                         label={intl.formatMessage({ id: "filters.configurationPanel.userFilterSave.toggle" })}
                         tooltip={intl.formatMessage({

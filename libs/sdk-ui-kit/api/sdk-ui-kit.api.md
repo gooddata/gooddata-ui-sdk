@@ -1879,7 +1879,7 @@ export function IconTrash(input: IIconProps): JSX.Element;
 export function IconTreeMap(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export type IconType = "aiAgent" | "aiAgentDisabled" | "brain" | "brainDisabled" | "check" | "checkCircle" | "certification" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "edit" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "infoCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "clockPaused" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "geoCollection" | "geoCollectionUpload" | "minimize" | "shrink" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderSmall" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minus" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "ldmKey" | "ldmLabel" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "history" | "history2" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "externalLink" | "click" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "aiDocument" | "recommendation" | "streamUp" | "streamDown" | "stream" | "density" | "parameter" | "pin" | "unpin" | "speechBubble" | "pieChart";
+export type IconType = "aiAgent" | "aiAgentDisabled" | "brain" | "brainDisabled" | "check" | "checkCircle" | "certification" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "edit" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "infoCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "clockPaused" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "geoCollection" | "geoCollectionUpload" | "minimize" | "shrink" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderSmall" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minus" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "building" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "ldmKey" | "ldmLabel" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "history" | "history2" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "externalLink" | "click" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "aiDocument" | "recommendation" | "streamUp" | "streamDown" | "stream" | "density" | "parameter" | "pin" | "unpin" | "speechBubble" | "pieChart";
 
 // @internal (undocumented)
 export function IconUndo(input: IIconProps): JSX.Element;
@@ -6677,6 +6677,7 @@ export type IUiFocusManagerProps = {
 // @internal (undocumented)
 export interface IUiGeneralAccessRadioProps {
     dataTestId?: string;
+    disabled?: boolean;
     onChange: (value: GeneralAccessValue) => void;
     value: GeneralAccessValue;
     workspaceControls?: ReactNode;
@@ -6900,6 +6901,7 @@ export interface IUiLabelsListItem {
 export interface IUiLabelsListProps {
     dataTestId?: string;
     items: ReadonlyArray<IUiLabelsListItem>;
+    showHeading?: boolean;
 }
 
 // @internal (undocumented)
@@ -7339,8 +7341,11 @@ export interface IUiNavigationItem {
 // @internal (undocumented)
 export interface IUiObjectShareDialogCardProps {
     dataTestId?: string;
+    error?: ReactNode;
     generalAccess: GeneralAccessValue;
     grantees: IUiObjectShareDialogGrantee[];
+    isAddDisabled?: boolean;
+    isGeneralAccessDisabled?: boolean;
     objectTitle: string;
     onAddClick: () => void;
     onClose: () => void;
@@ -7480,6 +7485,7 @@ export interface IUiPopoverProps {
         ariaHaspopup?: "dialog" | "menu" | "listbox" | "tree" | "grid" | false;
         ariaControls?: AriaAttributes["aria-controls"];
     };
+    arrowPlacement?: IUiTooltipProps["arrowPlacement"];
     // (undocumented)
     closeText?: string;
     // (undocumented)
@@ -7488,6 +7494,7 @@ export interface IUiPopoverProps {
     content?: ReactNode | ((args: {
         onClose: () => void;
     }) => ReactNode);
+    contentPadding?: "default" | "none";
     // (undocumented)
     disabled?: boolean;
     enableFocusTrap?: boolean;
@@ -7506,6 +7513,7 @@ export interface IUiPopoverProps {
     // (undocumented)
     onOpen?: () => void;
     onOpenChange?: (open: boolean) => void;
+    optimalPlacement?: boolean;
     // (undocumented)
     returnFocusAfterClose?: boolean;
     // (undocumented)

@@ -592,5 +592,16 @@
     "insightPicker.sortDirection.ascending": "Naraščajoče",
     "insightPicker.sortDirection.descending": "Padajoče",
     "insightPicker.menu.actions": "Dejanja",
-    "insightPicker.resetFilters": "Ponastavi filtre"
+    "insightPicker.resetFilters": "Ponastavi filtre",
+    "objectShare.confirm.restrict.title": "Omejiti dostop?",
+    "objectShare.confirm.restrict.description": "S tem boste omejili dostop samo na zgoraj navedene osebe in skupine.",
+    "objectShare.confirm.grantWorkspace.title": "Odobriti dostop za celoten delovni prostor?",
+    "objectShare.confirm.grantWorkspace.description": "S tem boste vsem članom delovnega prostora odobrili dostop do \"{title}\".",
+    "objectShare.confirm.button": "Potrdi",
+    "objectShare.toast.granteeAdded": "Dostop je dodan.",
+    "objectShare.toast.accessUpdated": "Dostop je posodobljen.",
+    "objectShare.toast.generalAccessUpdated": "Splošni dostop je posodobljen.",
+    "objectShare.toast.error": "Dostopa ni bilo mogoče posodobiti.",
+    "objectShare.toast.labelScopePartial": "Nekaterih dostopov do oznak ni bilo mogoče shraniti.",
+    "objectShare.loadError": "Nastavitev deljenja ni bilo mogoče naložiti. Zaprite in poskusite znova."
 }

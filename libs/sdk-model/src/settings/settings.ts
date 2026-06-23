@@ -471,6 +471,13 @@ export interface IFeatureFlags {
     enableMetricFormatOverrides?: boolean;
 
     /**
+     * Enables column-level (object-level) permissions: the backend enforces per-object
+     * access rules on attributes, facts and labels, and the UI for managing that access
+     * (e.g. the catalog share dialog) becomes available.
+     */
+    enableColumnLevelPermissions?: boolean;
+
+    /**
      * Enables Highcharts accessibility features.
      */
     enableHighchartsAccessibility?: boolean;
@@ -504,11 +511,6 @@ export interface IFeatureFlags {
      * Enable usage of insights, widgets, kpis descriptions.
      */
     enableDescriptions?: boolean;
-
-    /**
-     * Enable use of composite grain
-     */
-    enableCompositeGrain?: boolean;
 
     /**
      * Enable new max bucket size items limit for Pivot Table
@@ -696,11 +698,6 @@ export interface IFeatureFlags {
      * Allow sending aggregated data to LLM.
      */
     enableAiOnData?: boolean;
-
-    /**
-     * Enable multiple data sources to be used in a single workspace.
-     */
-    enableDashboardFilterViews?: boolean;
 
     /**
      * Enable system account filtering.
@@ -963,6 +960,11 @@ export interface IFeatureFlags {
     enableNewPivotTable?: boolean;
 
     /**
+     * Enable conditional formatting for the pivot table
+     */
+    enableConditionalFormatting?: boolean;
+
+    /**
      * Enable new geo pushpin chart
      */
     enableNewGeoPushpin?: boolean;
@@ -1023,6 +1025,11 @@ export interface IFeatureFlags {
      * Enable GenAI memory feature
      */
     enableGenAIMemory?: boolean;
+
+    /**
+     * Enable organization-level AI memory inherited into workspaces
+     */
+    enableOrgLevelAIMemory?: boolean;
 
     /**
      * Enable AI Knowledge feature

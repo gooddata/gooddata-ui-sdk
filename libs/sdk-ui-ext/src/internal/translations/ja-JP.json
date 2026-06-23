@@ -592,5 +592,16 @@
     "insightPicker.sortDirection.ascending": "昇順",
     "insightPicker.sortDirection.descending": "降順",
     "insightPicker.menu.actions": "アクション",
-    "insightPicker.resetFilters": "フィルターをリセット"
+    "insightPicker.resetFilters": "フィルターをリセット",
+    "objectShare.confirm.restrict.title": "アクセスを制限しますか？",
+    "objectShare.confirm.restrict.description": "これにより、アクセスは上記に記載されたユーザーとグループのみに制限されます。",
+    "objectShare.confirm.grantWorkspace.title": "ワークスペース全体のアクセス権を付与しますか？",
+    "objectShare.confirm.grantWorkspace.description": "これにより、すべてのワークスペースメンバーに「{title}」へのアクセス権が付与されます。",
+    "objectShare.confirm.button": "確認",
+    "objectShare.toast.granteeAdded": "アクセスが追加されました。",
+    "objectShare.toast.accessUpdated": "アクセスが更新されました。",
+    "objectShare.toast.generalAccessUpdated": "一般アクセスが更新されました。",
+    "objectShare.toast.error": "アクセスを更新できませんでした。",
+    "objectShare.toast.labelScopePartial": "一部のラベルアクセスを保存できませんでした。",
+    "objectShare.loadError": "共有設定を読み込めませんでした。閉じてからもう一度お試しください。"
 }

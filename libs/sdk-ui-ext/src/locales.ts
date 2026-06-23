@@ -2,6 +2,8 @@
 
 import { type MessageDescriptor, defineMessages } from "react-intl";
 
+import { type ConditionalFormattingOperator } from "@gooddata/sdk-ui-pivot/next";
+
 //NOTE: Follow up ticket for move all messages: https://gooddata.atlassian.net/browse/FET-1050
 export const titles: Record<string, MessageDescriptor> = defineMessages({
     measures_column: { id: "dashboard.bucket.measures_title.column" },
@@ -458,3 +460,52 @@ export const comparisonMessages = defineMessages({
     positionRight: { id: "properties.comparison.position.right" },
     positionLeft: { id: "properties.comparison.position.left" },
 });
+
+export const conditionalFormattingMessages = defineMessages({
+    sectionTitle: { id: "properties.conditionalFormatting.title" },
+    empty: { id: "properties.conditionalFormatting.empty" },
+    rulesLabel: { id: "properties.conditionalFormatting.rulesLabel" },
+    addRule: { id: "properties.conditionalFormatting.addRule" },
+    ruleInvalid: { id: "properties.conditionalFormatting.rule.invalid" },
+    ruleEdit: { id: "properties.conditionalFormatting.rule.edit" },
+    ruleDelete: { id: "properties.conditionalFormatting.rule.delete" },
+    dialogAddTitle: { id: "properties.conditionalFormatting.dialog.addTitle" },
+    dialogEditTitle: { id: "properties.conditionalFormatting.dialog.editTitle" },
+    dialogTarget: { id: "properties.conditionalFormatting.dialog.target" },
+    dialogSelectTarget: { id: "properties.conditionalFormatting.dialog.selectTarget" },
+    dialogCondition: { id: "properties.conditionalFormatting.dialog.condition" },
+    dialogFormat: { id: "properties.conditionalFormatting.dialog.format" },
+    dialogAddCondition: { id: "properties.conditionalFormatting.dialog.addCondition" },
+    dialogRemoveCondition: { id: "properties.conditionalFormatting.dialog.removeCondition" },
+    dialogTextColor: { id: "properties.conditionalFormatting.dialog.textColor" },
+    dialogFillColor: { id: "properties.conditionalFormatting.dialog.fillColor" },
+    dialogNoColor: { id: "properties.conditionalFormatting.dialog.noColor" },
+    dialogScopeCell: { id: "properties.conditionalFormatting.dialog.scope.cell" },
+    dialogScopeRow: { id: "properties.conditionalFormatting.dialog.scope.row" },
+    dialogValuePlaceholder: { id: "properties.conditionalFormatting.dialog.value" },
+    dialogFromPlaceholder: { id: "properties.conditionalFormatting.dialog.from" },
+    dialogToPlaceholder: { id: "properties.conditionalFormatting.dialog.to" },
+    dialogCancel: { id: "properties.conditionalFormatting.dialog.cancel" },
+    dialogSave: { id: "properties.conditionalFormatting.dialog.save" },
+});
+
+export const conditionalFormattingOperatorMessages: Record<ConditionalFormattingOperator, MessageDescriptor> =
+    defineMessages({
+        ALL: { id: "properties.conditionalFormatting.operator.all" },
+        EQUAL_TO: { id: "properties.conditionalFormatting.operator.equalTo" },
+        NOT_EQUAL_TO: { id: "properties.conditionalFormatting.operator.notEqualTo" },
+        GREATER_THAN: { id: "properties.conditionalFormatting.operator.greaterThan" },
+        GREATER_THAN_OR_EQUAL_TO: { id: "properties.conditionalFormatting.operator.greaterThanOrEqualTo" },
+        LESS_THAN: { id: "properties.conditionalFormatting.operator.lessThan" },
+        LESS_THAN_OR_EQUAL_TO: { id: "properties.conditionalFormatting.operator.lessThanOrEqualTo" },
+        BETWEEN: { id: "properties.conditionalFormatting.operator.between" },
+        NOT_BETWEEN: { id: "properties.conditionalFormatting.operator.notBetween" },
+        CONTAINS: { id: "properties.conditionalFormatting.operator.contains" },
+        NOT_CONTAINS: { id: "properties.conditionalFormatting.operator.notContains" },
+        STARTS_WITH: { id: "properties.conditionalFormatting.operator.startsWith" },
+        NOT_STARTS_WITH: { id: "properties.conditionalFormatting.operator.notStartsWith" },
+        ENDS_WITH: { id: "properties.conditionalFormatting.operator.endsWith" },
+        NOT_ENDS_WITH: { id: "properties.conditionalFormatting.operator.notEndsWith" },
+        IS_EMPTY: { id: "properties.conditionalFormatting.operator.isEmpty" },
+        IS_NOT_EMPTY: { id: "properties.conditionalFormatting.operator.isNotEmpty" },
+    });

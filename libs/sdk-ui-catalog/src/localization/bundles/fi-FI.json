@@ -58,6 +58,7 @@
     "analyticsCatalog.filter.reset": "Nollaa suodattimet",
     "analyticsCatalog.column.title.label": "Otsikko",
     "analyticsCatalog.column.title.dataSet": "Tietojoukko",
+    "analyticsCatalog.column.title.labels": "Tarrat",
     "analyticsCatalog.column.title.createdBy": "Luotu",
     "analyticsCatalog.column.title.createdAt": "Luotu",
     "analyticsCatalog.column.title.tags": "Tagit",
@@ -190,5 +191,15 @@
     "analyticsCatalog.parameter.dialog.delete.body": "Haluatko varmasti poistaa kohteen <b>{name}</b>?",
     "analyticsCatalog.parameter.dialog.delete.submit": "Poista",
     "analyticsCatalog.parameter.delete.success": "Parametri poistettu.",
-    "analyticsCatalog.parameter.delete.error": "Parametria ei voitu poistaa."
+    "analyticsCatalog.parameter.delete.error": "Parametria ei voitu poistaa.",
+    "analyticsCatalog.share.button": "Jaa",
+    "analyticsCatalog.share.access.row.label": "Käyttöoikeus",
+    "analyticsCatalog.share.access.row.restricted": "Rajoitettu",
+    "analyticsCatalog.share.access.row.workspace.view": "Kaikki työtilan käyttäjät voivat tarkastella",
+    "analyticsCatalog.share.access.row.workspace.share": "Kaikki työtilan käyttäjät voivat jakaa",
+    "analyticsCatalog.share.access.row.sharedWith": "Jaettu {count, plural, one {# käyttäjälle tai ryhmälle} other {# käyttäjälle tai ryhmälle}}",
+    "analyticsCatalog.labels.more": "+{remaining} lisää",
+    "analyticsCatalog.labels.trigger.ariaLabel": "Näytä kaikki merkinnät",
+    "analyticsCatalog.labels.popup.title": "Tarrat",
+    "analyticsCatalog.labels.popup.close": "Sulje"
 }

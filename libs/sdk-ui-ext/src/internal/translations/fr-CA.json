@@ -592,5 +592,16 @@
     "insightPicker.sortDirection.ascending": "Ordre croissant",
     "insightPicker.sortDirection.descending": "Ordre décroissant",
     "insightPicker.menu.actions": "Actions",
-    "insightPicker.resetFilters": "Réinitialiser les filtres"
+    "insightPicker.resetFilters": "Réinitialiser les filtres",
+    "objectShare.confirm.restrict.title": "Restreindre l’accès?",
+    "objectShare.confirm.restrict.description": "Cela restreindra l’accès aux seules personnes et groupes répertoriés ci-dessus.",
+    "objectShare.confirm.grantWorkspace.title": "Accorder l’accès à l’échelle de l’espace de travail?",
+    "objectShare.confirm.grantWorkspace.description": "Cela accordera à tous les membres de l’espace de travail l’accès à \"{title}\".",
+    "objectShare.confirm.button": "Confirmer",
+    "objectShare.toast.granteeAdded": "Accès ajouté.",
+    "objectShare.toast.accessUpdated": "Accès mis à jour.",
+    "objectShare.toast.generalAccessUpdated": "Accès général mis à jour.",
+    "objectShare.toast.error": "L’accès n’a pas pu être mis à jour.",
+    "objectShare.toast.labelScopePartial": "Certains accès aux libellés n’ont pas pu être enregistrés.",
+    "objectShare.loadError": "Les paramètres de partage n’ont pas pu être chargés. Veuillez fermer et réessayer."
 }

@@ -740,7 +740,7 @@
     "insightAlert.config.accessibility.title": "警报的自定义名称",
     "insightAlert.config.when": "何时",
     "insightAlert.config.for": "为了",
-    "insightAlert.config.condition": "健康）状况",
+    "insightAlert.config.condition": "条件",
     "insightAlert.config.threshold": "临界点",
     "insightAlert.config.comparison": "比较",
     "insightAlert.config.recipients": "收件人",

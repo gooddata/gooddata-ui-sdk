@@ -11,7 +11,9 @@ import { type IAxis, type ISeriesItem } from "../../typings/unsafe.js";
 import {
     isBarChart,
     isBubbleChart,
+    isComboChart,
     isHeatmap,
+    isLineChart,
     isOneOfTypes,
     isScatterPlot,
     isSupportingJoinedAttributeAxisName,
@@ -165,14 +167,51 @@ function getDualAxesYAxes(
     return compact([firstAxis, secondAxis]);
 }
 
-function getDefaultYAxes(measureGroupItems: any[], firstMeasureGroupItem: any): IAxis[] {
-    // if more than one measure and NOT dual, then have empty item name
-    const hasMoreThanOneMeasure = measureGroupItems.length > 1;
-    const nonDualMeasureAxis = hasMoreThanOneMeasure ? { label: "" } : {};
+// Control (threshold) measures style the regular measures (e.g. dashed line segments) instead of being
+// drawn on their own, so they must not count as plotted measures. Only relevant for line/combo with the
+// feature flag on - mirrors the gating in `isThresholdSetupValid` (chartThresholds.ts).
+function getThresholdMeasureLocalIds(config: IChartConfig): Set<string> {
+    const isThresholdCapableChart = isLineChart(config.type) || isComboChart(config.type);
+    const applies = config.enableLineChartTrendThreshold && isThresholdCapableChart;
+    return new Set(applies ? (config.thresholdMeasures ?? []) : []);
+}
+
+// The title is shown only when a single regular (non-control) measure is plotted; otherwise the axis
+// would mix metrics and stays unnamed.
+function getDefaultYAxisLabel(
+    config: IChartConfig,
+    measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
+    measureGroupItems: any[],
+): string {
+    const thresholdMeasureLocalIds = getThresholdMeasureLocalIds(config);
+
+    // Indices of the regular (non-control) measures; aligned 1:1 with measureGroupItems.
+    const visibleMeasureIndices = measureGroup.items.reduce<number[]>((indices, item, index) => {
+        if (!thresholdMeasureLocalIds.has(unwrap(item).localIdentifier)) {
+            indices.push(index);
+        }
+        return indices;
+    }, []);
+
+    if (visibleMeasureIndices.length === 1) {
+        // yLabel override wins, else the surviving measure's name (which may not be the first in the bucket).
+        return config.yLabel || measureGroupItems[visibleMeasureIndices[0]].label;
+    }
+    return "";
+}
+
+// Dual-axis charts go through createYAxisItem and are intentionally left unchanged.
+function getDefaultYAxes(
+    config: IChartConfig,
+    measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
+    measureGroupItems: any[],
+    firstMeasureGroupItem: any,
+): IAxis[] {
     return [
         {
+            // Keep the first measure's metadata (e.g. format) and only override the title text.
             ...firstMeasureGroupItem,
-            ...nonDualMeasureAxis,
+            label: getDefaultYAxisLabel(config, measureGroup, measureGroupItems),
             seriesIndices: range(measureGroupItems.length),
         },
     ];
@@ -214,7 +253,7 @@ export function getYAxes(
         return getDualAxesYAxes(secondaryAxisMeasures, measureGroup);
     }
 
-    return getDefaultYAxes(measureGroupItems, firstMeasureGroupItem);
+    return getDefaultYAxes(config, measureGroup, measureGroupItems, firstMeasureGroupItem);
 }
 
 function assignMeasuresToAxes(

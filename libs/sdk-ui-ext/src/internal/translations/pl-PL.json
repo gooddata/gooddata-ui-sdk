@@ -592,5 +592,16 @@
     "insightPicker.sortDirection.ascending": "Rosnąco",
     "insightPicker.sortDirection.descending": "Malejąco",
     "insightPicker.menu.actions": "Akcje",
-    "insightPicker.resetFilters": "Resetuj filtry"
+    "insightPicker.resetFilters": "Resetuj filtry",
+    "objectShare.confirm.restrict.title": "Ograniczyć dostęp?",
+    "objectShare.confirm.restrict.description": "Spowoduje to ograniczenie dostępu tylko do osób i grup wymienionych powyżej.",
+    "objectShare.confirm.grantWorkspace.title": "Przyznać dostęp w całej przestrzeni roboczej?",
+    "objectShare.confirm.grantWorkspace.description": "Spowoduje to przyznanie wszystkim członkom przestrzeni roboczej dostępu do „{title}”.",
+    "objectShare.confirm.button": "Potwierdź",
+    "objectShare.toast.granteeAdded": "Dodano dostęp.",
+    "objectShare.toast.accessUpdated": "Zaktualizowano dostęp.",
+    "objectShare.toast.generalAccessUpdated": "Zaktualizowano dostęp ogólny.",
+    "objectShare.toast.error": "Nie udało się zaktualizować dostępu.",
+    "objectShare.toast.labelScopePartial": "Nie udało się zapisać części dostępu do etykiet.",
+    "objectShare.loadError": "Nie udało się wczytać ustawień udostępniania. Zamknij i spróbuj ponownie."
 }

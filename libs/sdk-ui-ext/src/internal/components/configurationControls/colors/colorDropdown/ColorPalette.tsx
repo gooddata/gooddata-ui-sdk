@@ -17,6 +17,11 @@ export interface IColorPaletteProps {
     onColorSelected: (color: IColor) => void;
     chartFill?: IChartFillConfig;
     patternFillIndex?: number | PatternFillName;
+    showNoneColor?: boolean;
+    isNoneSelected?: boolean;
+    onNoneSelected?: () => void;
+    /** Accessibility label for the "no color" swatch; supplied (localized) by the caller that opts in. */
+    noneColorAriaLabel?: string;
 }
 
 export const ColorPalette = memo(function ColorPalette({
@@ -25,6 +30,10 @@ export const ColorPalette = memo(function ColorPalette({
     onColorSelected,
     chartFill,
     patternFillIndex,
+    showNoneColor = false,
+    isNoneSelected = false,
+    onNoneSelected,
+    noneColorAriaLabel,
 }: IColorPaletteProps) {
     const isColorPaletteLarge = (): boolean => {
         return colorPalette.length > MAX_SMALL_PALETTE_SIZE;
@@ -62,6 +71,15 @@ export const ColorPalette = memo(function ColorPalette({
 
     return (
         <div aria-label="Color palette" className={getClassNames()}>
+            {showNoneColor ? (
+                <div
+                    aria-label={noneColorAriaLabel}
+                    onClick={onNoneSelected}
+                    className={cx("gd-color-list-item", "gd-color-list-item-none", "s-color-list-item-none", {
+                        "gd-color-list-item-active": isNoneSelected,
+                    })}
+                />
+            ) : null}
             {renderItems()}
         </div>
     );

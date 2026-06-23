@@ -592,5 +592,16 @@
     "insightPicker.sortDirection.ascending": "In salita",
     "insightPicker.sortDirection.descending": "In discesa",
     "insightPicker.menu.actions": "Azioni",
-    "insightPicker.resetFilters": "Reimposta filtri"
+    "insightPicker.resetFilters": "Reimposta filtri",
+    "objectShare.confirm.restrict.title": "Limitare l'accesso?",
+    "objectShare.confirm.restrict.description": "Questo limiterà l'accesso solo alle persone e ai gruppi elencati sopra.",
+    "objectShare.confirm.grantWorkspace.title": "Concedere l'accesso all'intera area di lavoro?",
+    "objectShare.confirm.grantWorkspace.description": "Questo concederà a tutti i membri dell'area di lavoro l'accesso a \"{title}\".",
+    "objectShare.confirm.button": "Confermare",
+    "objectShare.toast.granteeAdded": "Accesso aggiunto.",
+    "objectShare.toast.accessUpdated": "Accesso aggiornato.",
+    "objectShare.toast.generalAccessUpdated": "Accesso generale aggiornato.",
+    "objectShare.toast.error": "Impossibile aggiornare l'accesso.",
+    "objectShare.toast.labelScopePartial": "Impossibile salvare alcuni accessi alle etichette.",
+    "objectShare.loadError": "Impossibile caricare le impostazioni di condivisione. Chiudere e riprovare."
 }

@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 04b6228aef7d6556efe63a5dce31a00331222ff208c02b212bfc5f6550ef86bd
+# schema-hash: 6df0eeaa31b12992b78fcd255321fef5104761494582bb7d54062fcaedffca58
 
 from __future__ import annotations
 
@@ -24,6 +24,8 @@ __all__ = [
     "ColorItems",
     "ColumnOverride",
     "ComplexColorItem",
+    "Condition",
+    "ConditionalFormatting",
     "Config",
     "Dashboard",
     "Dashboard1",
@@ -81,6 +83,7 @@ __all__ = [
     "Fields2",
     "Fields3",
     "Fields4",
+    "Format",
     "GeoAreaConfig",
     "Identifier",
     "IgnoredDrillDown",
@@ -168,6 +171,7 @@ __all__ = [
     "QueryTextFilter1",
     "QueryTextFilter2",
     "Reference",
+    "Rule",
     "Section",
     "SimpleColorItem",
     "Source",
@@ -175,6 +179,8 @@ __all__ = [
     "State",
     "Tab",
     "Tags",
+    "Target",
+    "Target1",
     "TextWrapping",
     "Title",
     "TotalItem",
@@ -183,6 +189,7 @@ __all__ = [
     "Using2",
     "Using3",
     "Using4",
+    "Value",
     "Visualisation",
     "Visualisation1",
     "Visualisation10",
@@ -730,6 +737,48 @@ class TextWrapping(TypedDict):
     wrap_text: NotRequired[bool]
     wrap_header_text: NotRequired[bool]
     column_overrides: NotRequired[list[ColumnOverride]]
+
+
+class Target(TypedDict):
+    measure: str
+
+
+class Target1(TypedDict):
+    attribute: str
+
+
+Value = TypedDict(
+    'Value',
+    {
+        'from': float,
+        'to': float,
+    },
+)
+
+
+class Format(TypedDict):
+    text: NotRequired[str]
+    fill: NotRequired[str]
+    scope: Literal['cell', 'row']
+
+
+class Condition(TypedDict):
+    id: str
+    operator: Literal['all', 'equal_to', 'not_equal_to', 'less_than', 'less_than_or_equal_to', 'greater_than', 'greater_than_or_equal_to', 'between', 'not_between', 'contains', 'not_contains', 'starts_with', 'not_starts_with', 'ends_with', 'not_ends_with', 'is_empty', 'is_not_empty']
+    value: NotRequired[float | str | Value]
+    format: Format
+
+
+class Rule(TypedDict):
+    id: str
+    target: Target | Target1
+    conditions: list[Condition]
+
+
+class ConditionalFormatting(TypedDict):
+    version: NotRequired[str]
+    enabled: NotRequired[bool]
+    rules: NotRequired[list[Rule]]
 
 
 DashboardFilters9 = TypedDict(
@@ -1377,6 +1426,7 @@ class Config(TypedDict):
     enable_accessibility: NotRequired[bool]
     line_style_control_metrics: NotRequired[list[str]]
     line_style_excluded_metrics: NotRequired[list[str]]
+    conditional_formatting: NotRequired[ConditionalFormatting]
 
 
 class DashboardFilters16(TypedDict):

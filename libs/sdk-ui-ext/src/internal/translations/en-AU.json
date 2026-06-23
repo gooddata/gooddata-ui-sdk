@@ -592,5 +592,16 @@
     "insightPicker.sortDirection.ascending": "Ascending",
     "insightPicker.sortDirection.descending": "Descending",
     "insightPicker.menu.actions": "Actions",
-    "insightPicker.resetFilters": "Reset filters"
+    "insightPicker.resetFilters": "Reset filters",
+    "objectShare.confirm.restrict.title": "Restrict access?",
+    "objectShare.confirm.restrict.description": "This will restrict access to only the people and groups listed above.",
+    "objectShare.confirm.grantWorkspace.title": "Grant workspace-wide access?",
+    "objectShare.confirm.grantWorkspace.description": "This will grant all workspace members access to \"{title}\".",
+    "objectShare.confirm.button": "Confirm",
+    "objectShare.toast.granteeAdded": "Access added.",
+    "objectShare.toast.accessUpdated": "Access updated.",
+    "objectShare.toast.generalAccessUpdated": "General access updated.",
+    "objectShare.toast.error": "Access could not be updated.",
+    "objectShare.toast.labelScopePartial": "Some label access could not be saved.",
+    "objectShare.loadError": "Sharing settings could not be loaded. Please close and try again."
 }

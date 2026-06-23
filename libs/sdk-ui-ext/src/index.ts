@@ -325,3 +325,14 @@ export {
     type InsightListSortBy,
     type InsightListSortDirection,
 } from "./internal/components/insightList/useInsightPagedList.js";
+
+export { ObjectShareDialog, type IObjectShareDialogProps } from "./share/ObjectShareDialog.js";
+export { useObjectShare, type IUseObjectShareOptions } from "./share/useObjectShare.js";
+export type { IObjectAccessSummary, IObjectShareLabel } from "./share/types.js";
+export type {
+    IObjectShareController,
+    IObjectShareControllerActions,
+    IObjectShareControllerState,
+    IObjectShareGrantee,
+    ObjectSharePermissionLevel,
+} from "./share/objectShareController.types.js";

@@ -58,6 +58,7 @@
     "analyticsCatalog.filter.reset": "Đặt lại bộ lọc",
     "analyticsCatalog.column.title.label": "Tiêu đề",
     "analyticsCatalog.column.title.dataSet": "Tập dữ liệu",
+    "analyticsCatalog.column.title.labels": "Nhãn",
     "analyticsCatalog.column.title.createdBy": "Được tạo bởi",
     "analyticsCatalog.column.title.createdAt": "Được tạo lúc",
     "analyticsCatalog.column.title.tags": "Thẻ",
@@ -190,5 +191,15 @@
     "analyticsCatalog.parameter.dialog.delete.body": "Bạn có chắc chắn muốn xóa <b>{name}</b> không?",
     "analyticsCatalog.parameter.dialog.delete.submit": "Xóa",
     "analyticsCatalog.parameter.delete.success": "Đã xóa tham số.",
-    "analyticsCatalog.parameter.delete.error": "Không thể xóa tham số."
+    "analyticsCatalog.parameter.delete.error": "Không thể xóa tham số.",
+    "analyticsCatalog.share.button": "Chia sẻ",
+    "analyticsCatalog.share.access.row.label": "Quyền truy cập",
+    "analyticsCatalog.share.access.row.restricted": "Bị hạn chế",
+    "analyticsCatalog.share.access.row.workspace.view": "Tất cả người dùng không gian làm việc có thể xem",
+    "analyticsCatalog.share.access.row.workspace.share": "Tất cả người dùng không gian làm việc có thể chia sẻ",
+    "analyticsCatalog.share.access.row.sharedWith": "Được chia sẻ với {count, plural, other {# người dùng hoặc nhóm}}",
+    "analyticsCatalog.labels.more": "+{remaining} nữa",
+    "analyticsCatalog.labels.trigger.ariaLabel": "Hiển thị tất cả nhãn",
+    "analyticsCatalog.labels.popup.title": "Nhãn",
+    "analyticsCatalog.labels.popup.close": "Đóng"
 }

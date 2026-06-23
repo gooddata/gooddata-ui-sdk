@@ -27,11 +27,11 @@ import { selectInsightsMap } from "../../insights/insightsSelectors.js";
 import { selectIsInEditMode } from "../../renderMode/renderModeSelectors.js";
 import { type DashboardSelector } from "../../types.js";
 import { selectAllTabsInsightWidgetContexts } from "../layout/layoutSelectors.js";
-import { selectActiveTab, selectTabs } from "../tabsSelectors.js";
+import { selectActiveOrDefaultTabLocalIdentifier, selectActiveTab, selectTabs } from "../tabsSelectors.js";
 import { DEFAULT_TAB_ID } from "../tabsState.js";
 
 import {
-    EMPTY_EXPORT_PARAMETERS,
+    EMPTY_EXPORT_PARAMETERS_BY_TAB,
     applyRuntimeOverride,
     buildPersistedByTabAndRef,
     buildWidgetScopeTabRefSelections,
@@ -49,6 +49,7 @@ import {
 } from "./parametersState.js";
 
 const EMPTY_PARAMETERS: IDashboardParameter[] = [];
+const EMPTY_EXPORT_PARAMETERS: IDashboardExportParameter[] = [];
 const EMPTY_PARAMETER_VALUES: IInsightParameterValue[] = [];
 const EMPTY_TABS: IDashboardTab[] = [];
 const EMPTY_RESET_TARGETS: { ref: ObjRef; value: number | undefined }[] = [];
@@ -449,7 +450,7 @@ const selectExportEffectiveParametersDashboardScope: DashboardSelector<
     selectCatalogParametersIsLoaded,
     (tabs, isEnabled, catalogParameters, isCatalogLoaded) => {
         if (!isEnabled || !isCatalogLoaded || !tabs?.length) {
-            return EMPTY_EXPORT_PARAMETERS;
+            return EMPTY_EXPORT_PARAMETERS_BY_TAB;
         }
         const workspaceByRef = new Map(
             catalogParameters.map((parameter) => [objRefToString(parameter.ref), parameter]),
@@ -483,7 +484,7 @@ const selectExportEffectiveParametersForWidgets: (
                 measureParametersStatus,
             ) => {
                 if (!isEnabled || !isCatalogLoaded || measureParametersStatus !== "loaded") {
-                    return EMPTY_EXPORT_PARAMETERS;
+                    return EMPTY_EXPORT_PARAMETERS_BY_TAB;
                 }
                 const workspaceByRef = new Map(
                     catalogParameters.map((parameter) => [objRefToString(parameter.ref), parameter]),
@@ -497,4 +498,15 @@ const selectExportEffectiveParametersForWidgets: (
                 return collectExportOverrides(tabRefSelections, workspaceByRef);
             },
         ),
+);
+
+/**
+ * Active-tab slice of {@link selectExportEffectiveParameters}.
+ *
+ * @internal
+ */
+export const selectActiveTabExportParameters: DashboardSelector<IDashboardExportParameter[]> = createSelector(
+    selectExportEffectiveParametersDashboardScope,
+    selectActiveOrDefaultTabLocalIdentifier,
+    (parametersByTab, activeTabId) => parametersByTab[activeTabId] ?? EMPTY_EXPORT_PARAMETERS,
 );

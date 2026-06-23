@@ -592,5 +592,16 @@
     "insightPicker.sortDirection.ascending": "上行",
     "insightPicker.sortDirection.descending": "遞延",
     "insightPicker.menu.actions": "所作所為",
-    "insightPicker.resetFilters": "重設篩選器"
+    "insightPicker.resetFilters": "重設篩選器",
+    "objectShare.confirm.restrict.title": "限制存取權？",
+    "objectShare.confirm.restrict.description": "這將限制只有上方列出的人員和群組可存取。",
+    "objectShare.confirm.grantWorkspace.title": "授予整個工作區的存取權？",
+    "objectShare.confirm.grantWorkspace.description": "這將授予所有工作區成員存取「{title}」的權限。",
+    "objectShare.confirm.button": "確認",
+    "objectShare.toast.granteeAdded": "已新增存取權。",
+    "objectShare.toast.accessUpdated": "已更新存取權。",
+    "objectShare.toast.generalAccessUpdated": "已更新一般存取權。",
+    "objectShare.toast.error": "無法更新存取權。",
+    "objectShare.toast.labelScopePartial": "無法儲存部分標籤存取權。",
+    "objectShare.loadError": "無法載入共享設定。請關閉並重試。"
 }

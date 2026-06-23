@@ -2613,8 +2613,9 @@ export interface IFeatureFlags {
     enableCatalogTrendingObjects?: boolean;
     enableCertification?: boolean;
     enableChangeAnalysis?: boolean;
+    enableColumnLevelPermissions?: boolean;
     enableComparisonInAlerting?: boolean;
-    enableCompositeGrain?: boolean;
+    enableConditionalFormatting?: boolean;
     // (undocumented)
     enableCrateDbDataSource?: boolean;
     enableCreateUser?: boolean;
@@ -2628,7 +2629,6 @@ export interface IFeatureFlags {
     enableDashboardDensitySetting?: boolean;
     enableDashboardDescriptionDynamicHeight?: boolean;
     enableDashboardFilterGroups?: boolean;
-    enableDashboardFilterViews?: boolean;
     // @alpha
     enableDashboardSectionHeadersDateDataSet?: boolean;
     enableDashboardShareDialogLink?: boolean;
@@ -2709,6 +2709,7 @@ export interface IFeatureFlags {
     // (undocumented)
     enableOracleDataSource?: boolean;
     enableOrchestratedTabularExports?: boolean;
+    enableOrgLevelAIMemory?: boolean;
     enableParameters?: boolean;
     enablePartialDataResults?: boolean;
     enablePivotTableIncreaseBucketSize?: boolean;

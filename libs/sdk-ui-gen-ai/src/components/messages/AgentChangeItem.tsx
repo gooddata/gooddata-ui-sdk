@@ -23,7 +23,7 @@ export function AgentChangeItem({ message }: AgentChangeItemProps) {
     return (
         <div className="gd-gen-ai-chat__messages__agent-change">
             <div className="gd-gen-ai-chat__messages__agent-change__line" />
-            <div className="gd-gen-ai-chat__messages__agent-change__label">
+            <div className="gd-gen-ai-chat__messages__agent-change__label" data-testid="agent_change_label">
                 <FormattedMessage id="gd.gen-ai.agent.switched" values={{ title: agent.title }} />
             </div>
             <div className="gd-gen-ai-chat__messages__agent-change__line" />

@@ -592,5 +592,16 @@
     "insightPicker.sortDirection.ascending": "По возрастанию",
     "insightPicker.sortDirection.descending": "По убыванию",
     "insightPicker.menu.actions": "Действия",
-    "insightPicker.resetFilters": "Сбросить фильтры"
+    "insightPicker.resetFilters": "Сбросить фильтры",
+    "objectShare.confirm.restrict.title": "Ограничить доступ?",
+    "objectShare.confirm.restrict.description": "Доступ будет ограничен только пользователями и группами, перечисленными выше.",
+    "objectShare.confirm.grantWorkspace.title": "Предоставить доступ на уровне всей рабочей области?",
+    "objectShare.confirm.grantWorkspace.description": "Это предоставит всем участникам рабочей области доступ к \"{title}\".",
+    "objectShare.confirm.button": "Подтвердить",
+    "objectShare.toast.granteeAdded": "Доступ добавлен.",
+    "objectShare.toast.accessUpdated": "Доступ обновлен.",
+    "objectShare.toast.generalAccessUpdated": "Общий доступ обновлен.",
+    "objectShare.toast.error": "Не удалось обновить доступ.",
+    "objectShare.toast.labelScopePartial": "Не удалось сохранить доступ к некоторым меткам.",
+    "objectShare.loadError": "Не удалось загрузить настройки общего доступа. Закройте диалоговое окно и повторите попытку."
 }

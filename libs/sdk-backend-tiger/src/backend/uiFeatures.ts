@@ -13,6 +13,7 @@ export enum TigerFeaturesNames {
     DashboardEditModeDevRollout = "dashboardEditModeDevRollout",
     EnableMetricSqlAndDataExplain = "enableMetricSqlAndDataExplain",
     EnableMetricFormatOverrides = "enableMetricFormatOverrides",
+    EnableColumnLevelPermissions = "enableColumnLevelPermissions",
     EnableDescriptions = "enableDescriptions",
     EnableKPIDashboardExportPDF = "enableKPIDashboardExportPDF",
     EnableSqlDatasets = "enableSqlDatasets",
@@ -23,7 +24,6 @@ export enum TigerFeaturesNames {
     EnableSankeyChart = "enableSankeyChart",
     EnableDependencyWheelChart = "enableDependencyWheelChart",
     EnableWaterfallChart = "enableWaterfallChart",
-    EnableCompositeGrain = "enableCompositeGrain",
     EnableTableTotalRows = "enableTableTotalRows",
     EnablePivotTableIncreaseBucketSize = "enablePivotTableIncreaseBucketSize",
     EnableUserManagement = "enableUserManagement",
@@ -80,7 +80,6 @@ export enum TigerFeaturesNames {
     EnableCatalogLineage = "enableCatalogLineage",
     EnableCertification = "enableCertification",
     EnableAIDataSetting = "enableAIDataSetting",
-    EnableDashboardFilterViews = "enableDashboardFilterViews",
     EnableSystemAccountFiltering = "enableSystemAccountFiltering",
     EnableCustomizedDashboardsWithoutPluginOverlay = "enableCustomizedDashboardsWithoutPluginOverlay",
     EnableAlertingRollout = "enableAlertingRollout",
@@ -128,6 +127,7 @@ export enum TigerFeaturesNames {
     EnableToDateFilters = "enableToDateFilters",
     EnableCyclicalToDateFilters = "enableCyclicalToDateFilters",
     EnableNewPivotTable = "enableNewPivotTable",
+    EnableConditionalFormatting = "enableConditionalFormatting",
     EnableNewGeoPushpin = "enableNewGeoPushpin",
     EnableGeoArea = "enableGeoArea",
     EnableHLL = "enableHLL",
@@ -141,6 +141,7 @@ export enum TigerFeaturesNames {
     EnableAutomationManagement = "enableAutomationManagement",
     EnableNewPdfTabularExport = "enableNewPdfTabularExport",
     EnableGenAIMemory = "enableGenAIMemory",
+    EnableOrgLevelAIMemory = "enableOrgLevelAIMemory",
     EnableAIKnowledge = "enableAIKnowledge",
     EnableAiAgenticSuggestions = "enableAiAgenticSuggestions",
     EnableGenAIReasoningVisibility = "enableGenAIReasoningVisibility",
@@ -192,6 +193,7 @@ export type ITigerFeatureFlags = {
     dashboardEditModeDevRollout: (typeof FeatureFlagsValues)["dashboardEditModeDevRollout"][number];
     enableMetricSqlAndDataExplain: (typeof FeatureFlagsValues)["enableMetricSqlAndDataExplain"][number];
     enableMetricFormatOverrides: (typeof FeatureFlagsValues)["enableMetricFormatOverrides"][number];
+    enableColumnLevelPermissions: (typeof FeatureFlagsValues)["enableColumnLevelPermissions"][number];
     enableDescriptions: (typeof FeatureFlagsValues)["enableDescriptions"][number];
     enableKPIDashboardExportPDF: (typeof FeatureFlagsValues)["enableKPIDashboardExportPDF"][number];
     enableSqlDatasets: (typeof FeatureFlagsValues)["enableSqlDatasets"][number];
@@ -201,7 +203,6 @@ export type ITigerFeatureFlags = {
     enableSankeyChart: (typeof FeatureFlagsValues)["enableSankeyChart"][number];
     enableDependencyWheelChart: (typeof FeatureFlagsValues)["enableDependencyWheelChart"][number];
     enableWaterfallChart: (typeof FeatureFlagsValues)["enableWaterfallChart"][number];
-    enableCompositeGrain: (typeof FeatureFlagsValues)["enableCompositeGrain"][number];
     enableTableTotalRows: (typeof FeatureFlagsValues)["enableTableTotalRows"][number];
     enablePivotTableIncreaseBucketSize: (typeof FeatureFlagsValues)["enablePivotTableIncreaseBucketSize"][number];
     enableUserManagement: (typeof FeatureFlagsValues)["enableUserManagement"][number];
@@ -258,7 +259,6 @@ export type ITigerFeatureFlags = {
     enableCertification: (typeof FeatureFlagsValues)["enableCertification"][number];
     enableAIDataSetting: (typeof FeatureFlagsValues)["enableAIDataSetting"][number];
     enableAlertingRollout: (typeof FeatureFlagsValues)["enableAlertingRollout"][number];
-    enableDashboardFilterViews: (typeof FeatureFlagsValues)["enableDashboardFilterViews"][number];
     enableSystemAccountFiltering: (typeof FeatureFlagsValues)["enableSystemAccountFiltering"][number];
     enableCustomizedDashboardsWithoutPluginOverlay: (typeof FeatureFlagsValues)["enableCustomizedDashboardsWithoutPluginOverlay"][number];
     enableNewInsightChangedPostMessageEvent: (typeof FeatureFlagsValues)["enableNewInsightChangedPostMessageEvent"][number];
@@ -308,6 +308,7 @@ export type ITigerFeatureFlags = {
     enableToDateFilters: (typeof FeatureFlagsValues)["enableToDateFilters"][number];
     enableCyclicalToDateFilters: (typeof FeatureFlagsValues)["enableCyclicalToDateFilters"][number];
     enableNewPivotTable: (typeof FeatureFlagsValues)["enableNewPivotTable"][number];
+    enableConditionalFormatting: (typeof FeatureFlagsValues)["enableConditionalFormatting"][number];
     enableNewGeoPushpin: (typeof FeatureFlagsValues)["enableNewGeoPushpin"][number];
     enableGeoArea: (typeof FeatureFlagsValues)["enableGeoArea"][number];
     enableHLL: (typeof FeatureFlagsValues)["enableHLL"][number];
@@ -321,6 +322,7 @@ export type ITigerFeatureFlags = {
     enableAutomationManagement: (typeof FeatureFlagsValues)["enableAutomationManagement"][number];
     enableNewPdfTabularExport: (typeof FeatureFlagsValues)["enableNewPdfTabularExport"][number];
     enableGenAIMemory: (typeof FeatureFlagsValues)["enableGenAIMemory"][number];
+    enableOrgLevelAIMemory: (typeof FeatureFlagsValues)["enableOrgLevelAIMemory"][number];
     enableAIKnowledge: (typeof FeatureFlagsValues)["enableAIKnowledge"][number];
     enableAiAgenticSuggestions: (typeof FeatureFlagsValues)["enableAiAgenticSuggestions"][number];
     enableAiAssistantEmbedding: (typeof FeatureFlagsValues)["enableAiAssistantEmbedding"][number];
@@ -371,6 +373,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     dashboardEditModeDevRollout: true,
     enableMetricSqlAndDataExplain: false,
     enableMetricFormatOverrides: false,
+    enableColumnLevelPermissions: false,
     enableDescriptions: true,
     enableKPIDashboardExportPDF: true,
     enableSqlDatasets: false,
@@ -380,7 +383,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableSankeyChart: true,
     enableDependencyWheelChart: true,
     enableWaterfallChart: true,
-    enableCompositeGrain: false,
     enableTableTotalRows: true,
     enablePivotTableIncreaseBucketSize: true,
     enableUserManagement: true,
@@ -437,7 +439,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableCertification: false,
     enableAIDataSetting: false,
     enableAlertingRollout: false,
-    enableDashboardFilterViews: true,
     enableSystemAccountFiltering: true,
     enableCustomizedDashboardsWithoutPluginOverlay: true,
     enableNewInsightChangedPostMessageEvent: false,
@@ -487,6 +488,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableToDateFilters: true,
     enableCyclicalToDateFilters: true,
     enableNewPivotTable: true,
+    enableConditionalFormatting: false,
     enableNewGeoPushpin: true,
     enableGeoArea: true,
     enableHLL: false,
@@ -500,6 +502,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAutomationManagement: true,
     enableNewPdfTabularExport: true,
     enableGenAIMemory: false,
+    enableOrgLevelAIMemory: false,
     enableAIKnowledge: false,
     enableAiAgenticSuggestions: false,
     enableAiAssistantEmbedding: false,
@@ -550,6 +553,7 @@ export const FeatureFlagsValues = {
     dashboardEditModeDevRollout: [true, false] as const,
     enableMetricSqlAndDataExplain: [true, false] as const,
     enableMetricFormatOverrides: [true, false] as const,
+    enableColumnLevelPermissions: [true, false] as const,
     enableDescriptions: [true, false] as const,
     enableKPIDashboardExportPDF: [true, false] as const,
     enableSqlDatasets: [true, false] as const,
@@ -559,7 +563,6 @@ export const FeatureFlagsValues = {
     enableSankeyChart: [true, false] as const,
     enableDependencyWheelChart: [true, false] as const,
     enableWaterfallChart: [true, false] as const,
-    enableCompositeGrain: [true, false] as const,
     enableTableTotalRows: [true, false] as const,
     enablePivotTableIncreaseBucketSize: [true, false] as const,
     enableUserManagement: [true, false] as const,
@@ -616,7 +619,6 @@ export const FeatureFlagsValues = {
     enableCertification: [true, false] as const,
     enableAIDataSetting: [true, false] as const,
     enableAlertingRollout: [true, false] as const,
-    enableDashboardFilterViews: [true, false] as const,
     enableSystemAccountFiltering: [true, false] as const,
     enableCustomizedDashboardsWithoutPluginOverlay: [true, false] as const,
     enableNewInsightChangedPostMessageEvent: [true, false] as const,
@@ -667,6 +669,7 @@ export const FeatureFlagsValues = {
     enableToDateFilters: [true, false] as const,
     enableCyclicalToDateFilters: [true, false] as const,
     enableNewPivotTable: [true, false] as const,
+    enableConditionalFormatting: [true, false] as const,
     enableNewGeoPushpin: [true, false] as const,
     enableGeoArea: [true, false] as const,
     enableHLL: [true, false] as const,
@@ -680,6 +683,7 @@ export const FeatureFlagsValues = {
     enableAutomationManagement: [true, false] as const,
     enableNewPdfTabularExport: [true, false] as const,
     enableGenAIMemory: [false, true] as const,
+    enableOrgLevelAIMemory: [false, true] as const,
     enableAIKnowledge: [false, true] as const,
     enableAiAgenticSuggestions: [true, false] as const,
     enableAiAssistantEmbedding: [true, false] as const,

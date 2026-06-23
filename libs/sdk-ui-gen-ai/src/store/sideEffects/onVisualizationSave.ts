@@ -61,18 +61,19 @@ export function* onVisualizationSave({
             const visualizationContent: IChatConversationMultipartLocalPart | undefined =
                 assistantMessage.content.parts
                     .filter((filter) => filter.type === "visualization")
-                    .find((content) => content.visualization.insight.identifier === payload.visualizationId);
+                    .find((content) => content.visualization?.insight.identifier === payload.visualizationId);
 
-            if (!visualizationContent) {
+            if (!visualizationContent?.visualization) {
                 return;
             }
+            const sourceVisualization = visualizationContent.visualization;
 
             const savedVisualization: IInsight = yield call(
                 backend.workspace(workspace).insights().createInsight,
                 {
-                    ...visualizationContent.visualization,
+                    ...sourceVisualization,
                     insight: {
-                        ...visualizationContent.visualization.insight,
+                        ...sourceVisualization.insight,
                         title: payload.visualizationTitle,
                     },
                 },
@@ -85,7 +86,7 @@ export function* onVisualizationSave({
                 .getConversationThread(conversation.id);
             yield call(
                 resave.resaveVisualisation.bind(resave),
-                visualizationContent.visualization.insight.identifier,
+                sourceVisualization.insight.identifier,
                 savedVisualization.insight.identifier,
             );
 

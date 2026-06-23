@@ -622,15 +622,6 @@ export const selectEnableRichTextDescriptions: DashboardSelector<boolean> = crea
 );
 
 /**
- * Returns whether filter views are enabled.
- *
- * @internal
- */
-export const selectEnableFilterViews: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
-    return state.settings?.enableDashboardFilterViews ?? true;
-});
-
-/**
  * Returns whether customized dashboards without plugin overlay are enabled.
  * When enabled, the plugin overlay will not be displayed on dashboard items.
  *

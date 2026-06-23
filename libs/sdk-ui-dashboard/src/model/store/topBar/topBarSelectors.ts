@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
 
@@ -6,7 +6,6 @@ import { selectSupportsCrossFiltering } from "../backendCapabilities/backendCapa
 import {
     selectEnableAutomationManagement,
     selectEnableDashboardShareDialogLink,
-    selectEnableFilterViews,
     selectEnableKDCrossFiltering,
     selectEnableKPIDashboardExportPDF,
     selectEnableSlideshowExports,
@@ -314,9 +313,8 @@ export const selectDeleteVisible: DashboardSelector<boolean> = createSelector(
  * @internal
  */
 export const selectFilterViewsVisible: DashboardSelector<boolean> = createSelector(
-    selectEnableFilterViews,
     selectDisableFilterViews,
-    (enableFilterViews, disableFilterViews) => {
-        return enableFilterViews && !disableFilterViews;
+    (disableFilterViews) => {
+        return !disableFilterViews;
     },
 );

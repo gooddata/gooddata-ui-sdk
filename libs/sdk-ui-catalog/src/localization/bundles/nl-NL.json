@@ -56,8 +56,9 @@
     "analyticsCatalog.filter.qualityCodes.title": "Validaties",
     "analyticsCatalog.filter.qualityCodes.noOptions": "Geen validaties beschikbaar",
     "analyticsCatalog.filter.reset": "Filters resetten",
-    "analyticsCatalog.column.title.label": "titel",
+    "analyticsCatalog.column.title.label": "Titel",
     "analyticsCatalog.column.title.dataSet": "Dataset",
+    "analyticsCatalog.column.title.labels": "Labels",
     "analyticsCatalog.column.title.createdBy": "Gemaakt door",
     "analyticsCatalog.column.title.createdAt": "Gemaakt op",
     "analyticsCatalog.column.title.tags": "Tags",
@@ -190,5 +191,15 @@
     "analyticsCatalog.parameter.dialog.delete.body": "Weet u zeker dat u <b>{name}</b> wilt verwijderen?",
     "analyticsCatalog.parameter.dialog.delete.submit": "Verwijderen",
     "analyticsCatalog.parameter.delete.success": "Parameter verwijderd.",
-    "analyticsCatalog.parameter.delete.error": "Parameter kon niet worden verwijderd."
+    "analyticsCatalog.parameter.delete.error": "Parameter kon niet worden verwijderd.",
+    "analyticsCatalog.share.button": "Deel",
+    "analyticsCatalog.share.access.row.label": "Toegang",
+    "analyticsCatalog.share.access.row.restricted": "Beperkt",
+    "analyticsCatalog.share.access.row.workspace.view": "Alle werkruimtegebruikers kunnen bekijken",
+    "analyticsCatalog.share.access.row.workspace.share": "Alle werkruimtegebruikers kunnen delen",
+    "analyticsCatalog.share.access.row.sharedWith": "Gedeeld met {count, plural, one {# gebruiker of groep} other {# gebruikers of groepen}}",
+    "analyticsCatalog.labels.more": "+{remaining} meer",
+    "analyticsCatalog.labels.trigger.ariaLabel": "Toon alle labels",
+    "analyticsCatalog.labels.popup.title": "Labels",
+    "analyticsCatalog.labels.popup.close": "Sluiten"
 }

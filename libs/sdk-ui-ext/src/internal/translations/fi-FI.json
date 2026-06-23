@@ -592,5 +592,16 @@
     "insightPicker.sortDirection.ascending": "Nouseva",
     "insightPicker.sortDirection.descending": "Laskeva",
     "insightPicker.menu.actions": "Toiminnot",
-    "insightPicker.resetFilters": "Nollaa suodattimet"
+    "insightPicker.resetFilters": "Nollaa suodattimet",
+    "objectShare.confirm.restrict.title": "Rajoitetaanko käyttöoikeutta?",
+    "objectShare.confirm.restrict.description": "Tämä rajoittaa käyttöoikeuden vain yllä lueteltuihin henkilöihin ja ryhmiin.",
+    "objectShare.confirm.grantWorkspace.title": "Myönnetäänkö koko työtilan kattava käyttöoikeus?",
+    "objectShare.confirm.grantWorkspace.description": "Tämä myöntää kaikille työtilan jäsenille käyttöoikeuden kohteeseen \"{title}\".",
+    "objectShare.confirm.button": "Vahvista",
+    "objectShare.toast.granteeAdded": "Käyttöoikeus lisätty.",
+    "objectShare.toast.accessUpdated": "Käyttöoikeus päivitetty.",
+    "objectShare.toast.generalAccessUpdated": "Yleinen käyttöoikeus päivitetty.",
+    "objectShare.toast.error": "Käyttöoikeutta ei voitu päivittää.",
+    "objectShare.toast.labelScopePartial": "Joitakin merkinnän käyttöoikeuksia ei voitu tallentaa.",
+    "objectShare.loadError": "Jakamisasetuksia ei voitu ladata. Sulje ja yritä uudelleen."
 }

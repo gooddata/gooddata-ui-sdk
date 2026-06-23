@@ -1,28 +1,22 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { compact, isEmpty } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, all, call, select } from "redux-saga/effects";
-import { invariant } from "ts-invariant";
 
 import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 import {
-    type IAttributeDisplayFormMetadataObject,
     type IAttributeFilter,
     type IDateFilter,
     type IFilter,
     type IInsightDefinition,
     type IKpiWidget,
     type IMeasureValueFilter,
-    type IMetadataObject,
     type IRichTextWidget,
     type IVisualizationSwitcherWidget,
     type ObjRef,
-    type ObjectType,
     areObjRefsEqual,
     filterLocalIdentifier,
     filterObjRef,
-    idRef,
     insightFilters,
     isAttributeFilter,
     isDashboardAttributeFilterReference,
@@ -35,7 +29,6 @@ import {
     isRankingFilter,
     newAllTimeFilter,
     objRefToString,
-    uriRef,
 } from "@gooddata/sdk-model";
 
 import { invalidQueryArguments } from "../events/general.js";
@@ -51,49 +44,12 @@ import {
 } from "../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../types/commonTypes.js";
 import { type FilterableDashboardWidget, type ICustomWidget } from "../types/layoutTypes.js";
-import { resolveDisplayFormMetadata } from "../utils/displayFormResolver.js";
 
 export const QueryWidgetFiltersService = createQueryService("GDC.DASH/QUERY.WIDGET.FILTERS", queryService);
-
-function refMatchesMdObject(ref: ObjRef, mdObject: IMetadataObject, type?: ObjectType): boolean {
-    return (
-        areObjRefsEqual(ref, mdObject.ref) ||
-        areObjRefsEqual(ref, idRef(mdObject.id, type)) ||
-        areObjRefsEqual(ref, uriRef(mdObject.uri))
-    );
-}
-
-interface IFilterDisplayFormPair {
-    filter: IAttributeFilter;
-    displayForm: IAttributeDisplayFormMetadataObject;
-}
 
 interface IFilterDateDatasetPair {
     filter: IDateFilter;
     dateDatasetLink: ObjRef | undefined;
-}
-
-function* loadDisplayFormsForAttributeFilters(
-    ctx: DashboardContext,
-    filters: IAttributeFilter[],
-): SagaIterator<IFilterDisplayFormPair[]> {
-    const refs = filters.map(filterObjRef);
-
-    const resolvedObjects: SagaReturnType<typeof resolveDisplayFormMetadata> = yield call(
-        resolveDisplayFormMetadata,
-        ctx,
-        compact(refs),
-    );
-
-    // if some display forms could not be resolved then there is something seriously amiss
-    invariant(isEmpty(resolvedObjects.missing));
-
-    return filters.map((filter) => {
-        return {
-            filter,
-            displayForm: resolvedObjects.resolved.get(filterObjRef(filter))!,
-        };
-    });
 }
 
 function selectDateDatasetsForDateFilters(filters: IDateFilter[]): IFilterDateDatasetPair[] {
@@ -106,7 +62,6 @@ function selectDateDatasetsForDateFilters(filters: IDateFilter[]): IFilterDateDa
 }
 
 function* getResolvedInsightAttributeFilters(
-    ctx: DashboardContext,
     widget: FilterableDashboardWidget,
     dashboardAttributeFilters: IAttributeFilter[],
     insightAttributeFilters: IAttributeFilter[],
@@ -114,7 +69,6 @@ function* getResolvedInsightAttributeFilters(
     // only dashboard filters are subject to widget ignores
     const resolvedDashboardFilters: SagaReturnType<typeof getResolvedAttributeFilters> = yield call(
         getResolvedAttributeFilters,
-        ctx,
         widget,
         dashboardAttributeFilters,
     );
@@ -123,38 +77,34 @@ function* getResolvedInsightAttributeFilters(
 }
 
 function* getResolvedAttributeFilters(
-    ctx: DashboardContext,
     widget: FilterableDashboardWidget,
     attributeFilters: IAttributeFilter[],
 ): SagaIterator<IAttributeFilter[]> {
-    const attributeFilterDisplayFormPairs: SagaReturnType<typeof loadDisplayFormsForAttributeFilters> =
-        yield call(loadDisplayFormsForAttributeFilters, ctx, attributeFilters);
     const displayAsLabelMap: ReturnType<typeof selectAttributeFilterConfigsDisplayAsLabelMap> = yield select(
         selectAttributeFilterConfigsDisplayAsLabelMap,
     );
 
-    const attributeFilterDisplayFormPairsWithIgnoreResolved = resolveWidgetFilterIgnore(
-        widget,
-        attributeFilterDisplayFormPairs,
-        displayAsLabelMap,
-    );
-
-    return attributeFilterDisplayFormPairsWithIgnoreResolved.map((item) => item.filter);
+    return resolveWidgetFilterIgnore(widget, attributeFilters, displayAsLabelMap);
 }
 
 function resolveWidgetFilterIgnore(
     widget: FilterableDashboardWidget,
-    dashboardNonDateFilterDisplayFormPairs: IFilterDisplayFormPair[],
+    dashboardNonDateFilters: IAttributeFilter[],
     displayAsLabelMap: Map<string, ObjRef>,
-): IFilterDisplayFormPair[] {
-    return dashboardNonDateFilterDisplayFormPairs.filter(({ filter, displayForm }) => {
+): IAttributeFilter[] {
+    return dashboardNonDateFilters.filter((filter) => {
+        const filterDisplayForm = filterObjRef(filter);
         const matches =
-            displayForm &&
+            filterDisplayForm &&
             widget.ignoreDashboardFilters?.filter(isDashboardAttributeFilterReference).some((ignored) => {
                 const filterLocalId = filterLocalIdentifier(filter);
                 const displayAsLabel = filterLocalId ? displayAsLabelMap.get(filterLocalId) : undefined;
+                // The filter definition already carries the refs needed to decide the ignore:
+                // its primary display form (filterObjRef) and its displayAsLabel. Comparing these
+                // local refs directly avoids fetching the display form metadata object per widget
+                // (getAttributeDisplayForms), which previously fired once per widget on every load.
                 return (
-                    refMatchesMdObject(ignored.displayForm, displayForm, "displayForm") ||
+                    areObjRefsEqual(ignored.displayForm, filterDisplayForm) ||
                     areObjRefsEqual(ignored.displayForm, displayAsLabel)
                 );
             });
@@ -289,7 +239,7 @@ function resolveDateFilters(
 }
 
 export function* queryWithInsight(
-    ctx: DashboardContext,
+    _ctx: DashboardContext,
     widget: FilterableDashboardWidget,
     insight: IInsightDefinition,
 ): SagaIterator<IFilter[]> {
@@ -328,7 +278,6 @@ export function* queryWithInsight(
         ),
         call(
             getResolvedInsightAttributeFilters,
-            ctx,
             widget,
             widgetAwareDashboardOtherFilters.filter(isAttributeFilter),
             effectiveInsightFilters.filter(isAttributeFilter),
@@ -373,7 +322,6 @@ export function* queryWithInsight(
 }
 
 function* queryWithoutInsight(
-    ctx: DashboardContext,
     widget: IKpiWidget | ICustomWidget | IRichTextWidget | IVisualizationSwitcherWidget,
 ): SagaIterator<IFilter[]> {
     const widgetAwareDashboardFiltersSelector = selectAllFiltersForWidgetByRef(widget.ref);
@@ -391,12 +339,7 @@ function* queryWithoutInsight(
             widgetAwareDashboardOtherFilters.filter(isDateFilter),
             supportsMultipleDateFilters,
         ),
-        call(
-            getResolvedAttributeFilters,
-            ctx,
-            widget,
-            widgetAwareDashboardOtherFilters.filter(isAttributeFilter),
-        ),
+        call(getResolvedAttributeFilters, widget, widgetAwareDashboardOtherFilters.filter(isAttributeFilter)),
     ]);
 
     const dashboardMeasureValueFilters = resolveDashboardMeasureValueFilters(
@@ -441,7 +384,7 @@ function* queryService(ctx: DashboardContext, query: IQueryWidgetFilters): SagaI
 
             return yield call(queryWithInsight, ctx, widget, linkedInsight);
         } else {
-            return yield call(queryWithoutInsight, ctx, widget);
+            return yield call(queryWithoutInsight, widget);
         }
     }
 }

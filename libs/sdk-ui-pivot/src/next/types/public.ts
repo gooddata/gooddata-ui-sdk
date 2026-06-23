@@ -30,6 +30,12 @@ import { type PivotTableNextTranspositionConfig } from "./transposition.js";
 /**
  * Configuration for the pivot table next.
  *
+ * @remarks
+ * `PivotTableNextConditionalFormattingConfig` is intentionally NOT folded into this intersection
+ * while conditional formatting is `@alpha`: a `@public` type cannot reference an `@alpha` one
+ * (api-extractor `ae-incompatible-release-tags`). Call sites intersect it explicitly until the
+ * feature graduates to `@public`, at which point it should be added here.
+ *
  * @public
  */
 export type PivotTableNextConfig = PivotTableNextTranspositionConfig &

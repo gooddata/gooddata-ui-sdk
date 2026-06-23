@@ -476,6 +476,7 @@ export const PIVOT_TABLE_NEXT_SUPPORTED_PROPERTIES = [
     "textWrapping",
     "pagination",
     "pageSize",
+    "conditionalFormatting",
 ];
 
 export const SANKEY_CHART_SUPPORTED_PROPERTIES = [

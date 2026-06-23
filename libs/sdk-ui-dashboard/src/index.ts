@@ -1293,7 +1293,6 @@ export {
     selectIsDisableUserFilterReset,
     selectEnableScheduling,
     selectEnableParameters,
-    selectEnableFilterViews,
     selectEnableCustomizedDashboardsWithoutPluginOverlay,
     selectEnableAlerting,
     selectEnableAlertAttributes,

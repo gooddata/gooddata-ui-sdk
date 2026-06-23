@@ -58,6 +58,7 @@
     "analyticsCatalog.filter.reset": "Réinitialiser les filtres",
     "analyticsCatalog.column.title.label": "Titre",
     "analyticsCatalog.column.title.dataSet": "Ensemble de données",
+    "analyticsCatalog.column.title.labels": "Libellés",
     "analyticsCatalog.column.title.createdBy": "Créé par",
     "analyticsCatalog.column.title.createdAt": "Créé à",
     "analyticsCatalog.column.title.tags": "Balises",
@@ -190,5 +191,15 @@
     "analyticsCatalog.parameter.dialog.delete.body": "Voulez-vous vraiment supprimer <b>{name}</b> ?",
     "analyticsCatalog.parameter.dialog.delete.submit": "Supprimer",
     "analyticsCatalog.parameter.delete.success": "Paramètre supprimé.",
-    "analyticsCatalog.parameter.delete.error": "Le paramètre n'a pas pu être supprimé."
+    "analyticsCatalog.parameter.delete.error": "Le paramètre n'a pas pu être supprimé.",
+    "analyticsCatalog.share.button": "Partage",
+    "analyticsCatalog.share.access.row.label": "Accès",
+    "analyticsCatalog.share.access.row.restricted": "Restreint",
+    "analyticsCatalog.share.access.row.workspace.view": "Tous les utilisateurs de l’espace de travail peuvent afficher",
+    "analyticsCatalog.share.access.row.workspace.share": "Tous les utilisateurs de l’espace de travail peuvent partager",
+    "analyticsCatalog.share.access.row.sharedWith": "Partagé avec {count, plural, one {# utilisateur ou groupe} other {# utilisateurs ou groupes}}",
+    "analyticsCatalog.labels.more": "+{remaining} de plus",
+    "analyticsCatalog.labels.trigger.ariaLabel": "Afficher tous les libellés",
+    "analyticsCatalog.labels.popup.title": "Libellés",
+    "analyticsCatalog.labels.popup.close": "Fermer"
 }

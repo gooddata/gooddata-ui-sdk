@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-dashboard: Remove DefaultMenu and DrillDialogExport menus focus traps",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "nikola.cech@gooddata.com"
+}

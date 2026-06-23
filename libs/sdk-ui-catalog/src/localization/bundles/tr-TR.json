@@ -58,6 +58,7 @@
     "analyticsCatalog.filter.reset": "Filtreleri sıfırla",
     "analyticsCatalog.column.title.label": "Başlık",
     "analyticsCatalog.column.title.dataSet": "Veri kümesi",
+    "analyticsCatalog.column.title.labels": "Etiketler",
     "analyticsCatalog.column.title.createdBy": "Oluşturan",
     "analyticsCatalog.column.title.createdAt": "Oluşturulma tarihi",
     "analyticsCatalog.column.title.tags": "Etiketler",
@@ -190,5 +191,15 @@
     "analyticsCatalog.parameter.dialog.delete.body": "<b>{name}</b> parametresini silmek istediğinizden emin misiniz?",
     "analyticsCatalog.parameter.dialog.delete.submit": "Sil",
     "analyticsCatalog.parameter.delete.success": "Parametre silindi.",
-    "analyticsCatalog.parameter.delete.error": "Parametre silinemedi."
+    "analyticsCatalog.parameter.delete.error": "Parametre silinemedi.",
+    "analyticsCatalog.share.button": "Paylaş",
+    "analyticsCatalog.share.access.row.label": "Erişim",
+    "analyticsCatalog.share.access.row.restricted": "Kısıtlı",
+    "analyticsCatalog.share.access.row.workspace.view": "Tüm çalışma alanı kullanıcıları görüntüleyebilir",
+    "analyticsCatalog.share.access.row.workspace.share": "Tüm çalışma alanı kullanıcıları paylaşabilir",
+    "analyticsCatalog.share.access.row.sharedWith": "Paylaşıldığı kişiler: {count, plural, one {# kullanıcı veya grup} other {# kullanıcı veya grup}}",
+    "analyticsCatalog.labels.more": "+{remaining} daha",
+    "analyticsCatalog.labels.trigger.ariaLabel": "Tüm etiketleri göster",
+    "analyticsCatalog.labels.popup.title": "Etiketler",
+    "analyticsCatalog.labels.popup.close": "Kapat"
 }

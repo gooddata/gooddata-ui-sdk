@@ -592,5 +592,16 @@
     "insightPicker.sortDirection.ascending": "Ascendiendo",
     "insightPicker.sortDirection.descending": "Descendiendo",
     "insightPicker.menu.actions": "Acciones",
-    "insightPicker.resetFilters": "Restablecer filtros"
+    "insightPicker.resetFilters": "Restablecer filtros",
+    "objectShare.confirm.restrict.title": "¿Restringir acceso?",
+    "objectShare.confirm.restrict.description": "Esto restringirá el acceso solo a las personas y los grupos indicados arriba.",
+    "objectShare.confirm.grantWorkspace.title": "¿Otorgar acceso a todo el espacio de trabajo?",
+    "objectShare.confirm.grantWorkspace.description": "Esto otorgará acceso a todos los miembros del espacio de trabajo a \"{title}\".",
+    "objectShare.confirm.button": "Confirme",
+    "objectShare.toast.granteeAdded": "Acceso agregado.",
+    "objectShare.toast.accessUpdated": "Acceso actualizado.",
+    "objectShare.toast.generalAccessUpdated": "Acceso general actualizado.",
+    "objectShare.toast.error": "No se pudo actualizar el acceso.",
+    "objectShare.toast.labelScopePartial": "No se pudo guardar algún acceso de etiqueta.",
+    "objectShare.loadError": "No se pudieron cargar los ajustes de uso compartido. Cierre e inténtelo de nuevo."
 }

@@ -1,6 +1,6 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -59,7 +59,6 @@ interface IGranularPermissionsDropdownProps {
     onChange: (workspace: IGrantedWorkspace) => void;
     onDelete: (workspace: IGrantedWorkspace) => void;
     className: string;
-    areFilterViewsEnabled: boolean;
 }
 
 const trackPermissionChange = (
@@ -129,7 +128,6 @@ function Dropdown({
     onChange,
     onDelete,
     className,
-    areFilterViewsEnabled,
 }: IGranularPermissionsDropdownProps) {
     const intl = useIntl();
     const [selectedPermission, setSelectedPermission] = useState<WorkspacePermission>(
@@ -154,16 +152,6 @@ function Dropdown({
     }, [isDropdownDisabled, toggleDropdown]);
 
     const buttonValue = intl.formatMessage(getPermissionTitle(selectedPermission));
-
-    const enabledItems = useMemo(
-        () =>
-            items.filter(
-                (item) =>
-                    areFilterViewsEnabled ||
-                    (item.id !== "VIEW_AND_SAVE_VIEWS" && item.id !== "VIEW_AND_EXPORT_AND_SAVE_VIEWS"),
-            ),
-        [areFilterViewsEnabled],
-    );
 
     return (
         <div className={className}>
@@ -190,7 +178,7 @@ function Dropdown({
             </div>
             <PermissionsDropdownList
                 selectedPermission={selectedPermission}
-                items={enabledItems}
+                items={items}
                 subjectType={subjectType}
                 onSelect={handleOnSelect}
                 onDelete={handleOnDelete}

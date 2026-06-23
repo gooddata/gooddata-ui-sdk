@@ -778,6 +778,183 @@ describe("visualisation conversion", () => {
         });
     });
 
+    describe("table conditional formatting round-trip", () => {
+        it("round-trips measure + attribute rules with cell/row scope", () => {
+            const conditionalFormatting = {
+                enabled: true,
+                rules: [
+                    {
+                        id: "variance_rule",
+                        target: { measure: "m1" },
+                        conditions: [
+                            {
+                                id: "low",
+                                operator: "less_than",
+                                value: -10,
+                                format: { text: "#FFFFFF", fill: "#E54D40", scope: "cell" },
+                            },
+                        ],
+                    },
+                    {
+                        id: "status_rule",
+                        target: { attribute: "a1" },
+                        conditions: [
+                            {
+                                id: "high_risk",
+                                operator: "equal_to",
+                                value: "High risk",
+                                format: { fill: "#E54D40", scope: "row" },
+                            },
+                        ],
+                    },
+                ],
+            };
+            const input = {
+                type: "table",
+                id: "cf_table",
+                query: { fields: { m1: { using: "metric/revenue" }, a1: { using: "label/status" } } },
+                metrics: [{ field: "m1" }],
+                view_by: [{ field: "a1" }],
+                config: { conditional_formatting: conditionalFormatting },
+            } as any;
+
+            // YAML -> internal (save)
+            const declarative = yamlVisualisationToDeclarative(emptyEntities, input);
+            const cf = (declarative.content as any).properties.controls.conditionalFormatting;
+            expect(cf.enabled).toBe(true);
+            expect(cf.rules[0].target).toEqual({ kind: "measure", measureIdentifier: "m1" });
+            expect(cf.rules[0].conditions[0]).toEqual({
+                id: "low",
+                operator: "LESS_THAN",
+                value: { kind: "literal", value: -10 },
+                format: { color: "#FFFFFF", backgroundColor: "#E54D40", scope: "cell" },
+            });
+            expect(cf.rules[1].target).toEqual({ kind: "attribute", attributeIdentifier: "a1" });
+            expect(cf.rules[1].conditions[0].format).toEqual({ backgroundColor: "#E54D40", scope: "row" });
+
+            // internal -> YAML (load): must come back byte-identical
+            const { json } = declarativeVisualisationToYaml(emptyFromEntities, declarative);
+            expect(json!.config!["conditional_formatting"]).toEqual(conditionalFormatting);
+        });
+
+        it("round-trips between (range), all and is_empty (no-operand) value shapes", () => {
+            const conditionalFormatting = {
+                enabled: true,
+                rules: [
+                    {
+                        id: "banded",
+                        target: { measure: "m1" },
+                        conditions: [
+                            {
+                                id: "mid",
+                                operator: "between",
+                                value: { from: 0, to: 10 },
+                                format: { fill: "#FFF3BF", scope: "cell" },
+                            },
+                            { id: "rest", operator: "all", format: { fill: "#00C18D", scope: "cell" } },
+                        ],
+                    },
+                    {
+                        id: "empty_status",
+                        target: { attribute: "a1" },
+                        conditions: [
+                            { id: "blank", operator: "is_empty", format: { fill: "#CCCCCC", scope: "row" } },
+                        ],
+                    },
+                ],
+            };
+            const input = {
+                type: "table",
+                id: "cf_values",
+                query: { fields: { m1: { using: "metric/revenue" }, a1: { using: "label/status" } } },
+                metrics: [{ field: "m1" }],
+                view_by: [{ field: "a1" }],
+                config: { conditional_formatting: conditionalFormatting },
+            } as any;
+
+            const declarative = yamlVisualisationToDeclarative(emptyEntities, input);
+            const cf = (declarative.content as any).properties.controls.conditionalFormatting;
+            expect(cf.rules[0].conditions[0].value).toEqual({ kind: "literalRange", from: 0, to: 10 });
+            expect(cf.rules[0].conditions[1].operator).toBe("ALL");
+            expect(cf.rules[0].conditions[1].value).toEqual({ kind: "none" });
+            expect(cf.rules[1].conditions[0].operator).toBe("IS_EMPTY");
+            expect(cf.rules[1].conditions[0].value).toEqual({ kind: "none" });
+
+            const { json } = declarativeVisualisationToYaml(emptyFromEntities, declarative);
+            expect(json!.config!["conditional_formatting"]).toEqual(conditionalFormatting);
+        });
+
+        it("omits conditional_formatting when there are no rules", () => {
+            const input = {
+                type: "table",
+                id: "cf_empty",
+                query: { fields: { m1: { using: "metric/revenue" } } },
+                metrics: [{ field: "m1" }],
+                config: { conditional_formatting: { enabled: false, rules: [] } },
+            } as any;
+
+            const declarative = yamlVisualisationToDeclarative(emptyEntities, input);
+            expect((declarative.content as any).properties.controls?.conditionalFormatting).toBeUndefined();
+
+            const { json } = declarativeVisualisationToYaml(emptyFromEntities, declarative);
+            expect(json?.config?.["conditional_formatting"]).toBeUndefined();
+        });
+
+        it("preserves an enabled-but-ruleless config symmetrically (the guard-fix case)", () => {
+            const conditionalFormatting = { enabled: true, rules: [] };
+            const input = {
+                type: "table",
+                id: "cf_enabled_empty",
+                query: { fields: { m1: { using: "metric/revenue" } } },
+                metrics: [{ field: "m1" }],
+                config: { conditional_formatting: conditionalFormatting },
+            } as any;
+
+            const declarative = yamlVisualisationToDeclarative(emptyEntities, input);
+            expect((declarative.content as any).properties.controls.conditionalFormatting).toEqual({
+                enabled: true,
+                rules: [],
+            });
+
+            const { json } = declarativeVisualisationToYaml(emptyFromEntities, declarative);
+            expect(json!.config!["conditional_formatting"]).toEqual(conditionalFormatting);
+        });
+
+        it("carries the model version through the round-trip", () => {
+            const conditionalFormatting = {
+                version: "1",
+                enabled: true,
+                rules: [
+                    {
+                        id: "r",
+                        target: { measure: "m1" },
+                        conditions: [
+                            {
+                                id: "c",
+                                operator: "less_than",
+                                value: 0,
+                                format: { fill: "#E54D40", scope: "cell" },
+                            },
+                        ],
+                    },
+                ],
+            };
+            const input = {
+                type: "table",
+                id: "cf_versioned",
+                query: { fields: { m1: { using: "metric/revenue" } } },
+                metrics: [{ field: "m1" }],
+                config: { conditional_formatting: conditionalFormatting },
+            } as any;
+
+            const declarative = yamlVisualisationToDeclarative(emptyEntities, input);
+            expect((declarative.content as any).properties.controls.conditionalFormatting.version).toBe("1");
+
+            const { json } = declarativeVisualisationToYaml(emptyFromEntities, declarative);
+            expect(json!.config!["conditional_formatting"]).toEqual(conditionalFormatting);
+        });
+    });
+
     describe("declarativeVisualisationToYaml", () => {
         it("should convert a bar chart declarative object to YAML", () => {
             const input = {

@@ -24,6 +24,7 @@ import {
     UiFocusManager,
     UiIcon,
     UiTooltip,
+    findFocusableElementOutsideContainer,
     getFocusableElements,
     isActionKey,
     makeMenuKeyboardNavigation,
@@ -56,6 +57,7 @@ export function DefaultMenuButton({ menuItems }: IMenuButtonProps): ReactElement
     const backLabel = intl.formatMessage({ id: "controlButtons.options.back" });
     const closeLabel = intl.formatMessage({ id: "controlButtons.options.closeMenu" });
     const menuWrapperRef = useRef<HTMLDivElement>(null);
+    const triggerButtonRef = useRef<HTMLElement>(null);
     const [parentItemId, setParentItemId] = useState<string | null>(null);
     const menuItemRefs = useRef<Map<string, HTMLElement>>(new Map());
     const density = useDashboardSelector(selectDashboardDensity);
@@ -155,29 +157,17 @@ export function DefaultMenuButton({ menuItems }: IMenuButtonProps): ReactElement
 
             event.stopPropagation();
             event.preventDefault();
-            if (!selectedMenuItem || event.key !== "Tab" || !menuWrapperRef.current) {
+
+            if (event.key !== "Tab") {
                 return;
             }
-            const { focusableElements } = getFocusableElements(menuWrapperRef.current);
-            let currentIndex = Array.from(focusableElements).indexOf(document.activeElement as HTMLElement);
-            let nextElement;
 
-            const isMenuItemExceptTheFirstOne = (element: HTMLElement) =>
-                element.getAttribute("role") === "menuitem" &&
-                element !== Array.from(menuItemRefs.current.values())[0];
+            const triggerButton = triggerButtonRef.current;
+            const nextElement = triggerButton
+                ? findFocusableElementOutsideContainer(triggerButton, event.shiftKey ? "backward" : "forward")
+                : null;
 
-            const getNextElementIndex = (currentIndex: number, isShiftKey: boolean) => {
-                if (isShiftKey) {
-                    return currentIndex <= 0 ? focusableElements.length - 1 : currentIndex - 1;
-                }
-                return (currentIndex + 1) % focusableElements.length;
-            };
-
-            do {
-                currentIndex = getNextElementIndex(currentIndex, event.shiftKey);
-                nextElement = focusableElements[currentIndex];
-            } while (isMenuItemExceptTheFirstOne(nextElement));
-
+            onClose();
             nextElement?.focus();
         },
     });
@@ -213,7 +203,7 @@ export function DefaultMenuButton({ menuItems }: IMenuButtonProps): ReactElement
                 closeOnOutsideClick
                 onClose={onMenuButtonClick}
             >
-                <UiFocusManager enableAutofocus enableFocusTrap enableReturnFocusOnUnmount>
+                <UiFocusManager enableAutofocus enableReturnFocusOnUnmount>
                     <div onKeyDown={menuKeyboardNavigationHandler}>
                         <ItemsWrapper smallItemsSpacing className="gd-menu" wrapperRef={menuWrapperRef}>
                             {selectedMenuItem ? (
@@ -258,6 +248,7 @@ export function DefaultMenuButton({ menuItems }: IMenuButtonProps): ReactElement
                 content={tooltipText}
                 anchor={
                     <Button
+                        ref={triggerButtonRef}
                         onClick={onMenuButtonClick}
                         value="&#8943;"
                         id={DEFAULT_MENU_BUTTON_ID}

@@ -50,6 +50,7 @@ export interface IConfigurationPanelContentProps<PanelConfig = any> {
     isError?: boolean;
     isLoading?: boolean;
     insight?: IInsightDefinition;
+    titlesByLocalId?: Record<string, string>;
     featureFlags?: ISettings;
     permissions?: IWorkspacePermissions;
     axis?: string;

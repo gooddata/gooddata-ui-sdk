@@ -47,6 +47,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableColumnLevelPermissions,
+            "enableColumnLevelPermissions",
+            "BOOLEAN",
+            FeatureFlagsValues.enableColumnLevelPermissions,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableDescriptions,
             "enableDescriptions",
             "BOOLEAN",
@@ -100,13 +107,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableSqlDatasets",
             "BOOLEAN",
             FeatureFlagsValues.enableSqlDatasets,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableCompositeGrain,
-            "enableCompositeGrain",
-            "BOOLEAN",
-            FeatureFlagsValues.enableCompositeGrain,
         ),
         ...loadFeature(
             features,
@@ -509,13 +509,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableDashboardFilterViews,
-            "enableDashboardFilterViews",
-            "BOOLEAN",
-            FeatureFlagsValues.enableDashboardFilterViews,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableSystemAccountFiltering,
             "enableSystemAccountFiltering",
             "BOOLEAN",
@@ -852,6 +845,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableConditionalFormatting,
+            "enableConditionalFormatting",
+            "BOOLEAN",
+            FeatureFlagsValues.enableConditionalFormatting,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableNewGeoPushpin,
             "enableNewGeoPushpin",
             "BOOLEAN",
@@ -940,6 +940,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableGenAIMemory",
             "BOOLEAN",
             FeatureFlagsValues.enableGenAIMemory,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableOrgLevelAIMemory,
+            "enableOrgLevelAIMemory",
+            "BOOLEAN",
+            FeatureFlagsValues.enableOrgLevelAIMemory,
         ),
         ...loadFeature(
             features,

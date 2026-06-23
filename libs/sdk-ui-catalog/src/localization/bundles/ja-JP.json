@@ -58,6 +58,7 @@
     "analyticsCatalog.filter.reset": "フィルターをリセット",
     "analyticsCatalog.column.title.label": "タイトル",
     "analyticsCatalog.column.title.dataSet": "データセット",
+    "analyticsCatalog.column.title.labels": "ラベル",
     "analyticsCatalog.column.title.createdBy": "作成者",
     "analyticsCatalog.column.title.createdAt": "で作成された。",
     "analyticsCatalog.column.title.tags": "タグ",
@@ -190,5 +191,15 @@
     "analyticsCatalog.parameter.dialog.delete.body": "<b>{name}</b> を削除してもよろしいですか？",
     "analyticsCatalog.parameter.dialog.delete.submit": "削除",
     "analyticsCatalog.parameter.delete.success": "パラメーターが削除されました。",
-    "analyticsCatalog.parameter.delete.error": "パラメーターを削除できませんでした。"
+    "analyticsCatalog.parameter.delete.error": "パラメーターを削除できませんでした。",
+    "analyticsCatalog.share.button": "共有する",
+    "analyticsCatalog.share.access.row.label": "アクセス",
+    "analyticsCatalog.share.access.row.restricted": "制限あり",
+    "analyticsCatalog.share.access.row.workspace.view": "すべてのワークスペースユーザーが表示可能",
+    "analyticsCatalog.share.access.row.workspace.share": "すべてのワークスペースユーザーが共有可能",
+    "analyticsCatalog.share.access.row.sharedWith": "{count, plural, other {# 人のユーザーまたはグループと共有済み}}",
+    "analyticsCatalog.labels.more": "+{remaining} 件追加",
+    "analyticsCatalog.labels.trigger.ariaLabel": "すべてのラベルを表示",
+    "analyticsCatalog.labels.popup.title": "ラベル",
+    "analyticsCatalog.labels.popup.close": "閉じる"
 }
