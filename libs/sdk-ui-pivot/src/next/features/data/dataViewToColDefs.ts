@@ -8,6 +8,7 @@ import { type ISeparators } from "@gooddata/sdk-model";
 import { type DataViewFacade, type ExplicitDrill } from "@gooddata/sdk-ui";
 
 import { type AgGridColumnDef, type AgGridColumnGroupDef } from "../../types/agGrid.js";
+import { type IConditionalFormatting } from "../../types/conditionalFormatting.js";
 import { type ITableColumnDefinitionByColId } from "../../types/internal.js";
 import { type ColumnWidthItem } from "../../types/resizing.js";
 import { type ITextWrapping } from "../../types/textWrapping.js";
@@ -16,6 +17,7 @@ import { applyAllFeaturesToColDef } from "../columns/applyAllFeaturesToColDef.js
 import { columnDefinitionToColId } from "../columns/colId.js";
 import { createColDef } from "../columns/createColDef.js";
 import { columnDefsToPivotGroups } from "../pivoting/columnDefsToPivotGroups.js";
+import { resolveConditionalFormattingTriggers } from "../styling/conditionalFormatting.js";
 import { applyTextWrappingToGroupDef } from "../textWrapping/applyTextWrappingToGroupDef.js";
 
 import { getTableData } from "./valueFormatter.js";
@@ -33,6 +35,7 @@ export function dataViewToColDefs({
     textWrapping,
     intl,
     separators,
+    conditionalFormatting,
 }: {
     dataView: DataViewFacade;
     columnHeadersPosition: ColumnHeadersPosition;
@@ -41,6 +44,7 @@ export function dataViewToColDefs({
     textWrapping: ITextWrapping;
     intl: IntlShape;
     separators?: ISeparators;
+    conditionalFormatting?: IConditionalFormatting;
 }): {
     columnDefinitionByColId: ITableColumnDefinitionByColId;
     columnDefs: (AgGridColumnDef | AgGridColumnGroupDef)[];
@@ -56,6 +60,16 @@ export function dataViewToColDefs({
         columnDefinitionByColId[colId] = columnDefinition;
     });
 
+    // Resolve each rule's trigger column to a colId ONCE for this render pass, so the per-cell
+    // cellStyle path is O(rules) lookups instead of re-matching every column on every cell.
+    const conditionalFormattingTriggers = conditionalFormatting?.enabled
+        ? resolveConditionalFormattingTriggers(
+              conditionalFormatting,
+              tableData.columnDefinitions,
+              columnHeadersPosition,
+          )
+        : [];
+
     const colDefs = tableData.columnDefinitions.map((columnDefinition) => {
         const colDef = createColDef(columnDefinition, columnHeadersPosition, intl, dataView);
         return applyAllFeaturesToColDef({
@@ -64,6 +78,8 @@ export function dataViewToColDefs({
             textWrapping,
             drillableItemsRef,
             dataViewFacade: dataView,
+            conditionalFormatting,
+            conditionalFormattingTriggers,
         })(colDef);
     });
 

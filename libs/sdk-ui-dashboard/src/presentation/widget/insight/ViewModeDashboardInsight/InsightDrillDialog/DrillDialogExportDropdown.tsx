@@ -112,6 +112,7 @@ export function DrillDialogExportDropdown({
         <div className={classNames}>
             <Dropdown
                 autofocusOnOpen
+                shouldTrapFocus={false}
                 alignPoints={dropdownAlignPoints}
                 renderBody={({ closeDropdown, ariaAttributes }) => (
                     <div className="gd-drill-dialog-export">

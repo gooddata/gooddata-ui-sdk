@@ -56,17 +56,29 @@ export interface IUiObjectShareDialogCardProps {
     grantees: IUiObjectShareDialogGrantee[];
     /** Fires when the user clicks the + Add link in the SHARED WITH heading. */
     onAddClick: () => void;
+    /** Disables the + Add action — e.g. while the object's labels are still loading. */
+    isAddDisabled?: boolean;
 
     /** Selected general-access option. */
     generalAccess: GeneralAccessValue;
     /** Fires when the user picks a different general-access option. */
     onGeneralAccessChange: (value: GeneralAccessValue) => void;
+    /** Disables the general-access radio — e.g. while the access list is still loading. */
+    isGeneralAccessDisabled?: boolean;
     /**
      * Optional slot rendered next to the "All workspace members" row — typically a
      * `UiGranteeRowControls` pair for the workspace-wide labels picker
      * and permission level.
      */
     workspaceControls?: ReactNode;
+
+    /**
+     * Optional error notice. When set, it replaces the grantee list and
+     * general-access sections (which can't reflect a real policy on a failed
+     * load), so the dialog shows why it's empty instead of a misleading
+     * "restricted, no one has access".
+     */
+    error?: ReactNode;
 
     /** Test id forwarded to the root element. */
     dataTestId?: string;
@@ -85,9 +97,12 @@ export function UiObjectShareDialogCard({
     onClose,
     grantees,
     onAddClick,
+    isAddDisabled,
     generalAccess,
     onGeneralAccessChange,
+    isGeneralAccessDisabled,
     workspaceControls,
+    error,
     dataTestId,
 }: IUiObjectShareDialogCardProps) {
     const intl = useIntl();
@@ -96,38 +111,50 @@ export function UiObjectShareDialogCard({
         <div className={b()} data-testid={dataTestId}>
             <UiDialogHeader title={dialogTitle} onClose={onClose} />
 
-            <UiSectionHeading
-                label={intl.formatMessage(olpObjectShareDialogMessages.sharedWith)}
-                action={
-                    <UiButton
-                        label={intl.formatMessage(olpObjectShareDialogMessages.add)}
-                        variant="popout"
-                        size="small"
-                        iconBefore="plus"
-                        onClick={onAddClick}
+            {error ? (
+                <div className={e("error")} role="alert">
+                    {error}
+                </div>
+            ) : (
+                <>
+                    <UiSectionHeading
+                        label={intl.formatMessage(olpObjectShareDialogMessages.sharedWith)}
+                        action={
+                            <UiButton
+                                label={intl.formatMessage(olpObjectShareDialogMessages.add)}
+                                variant="popout"
+                                size="small"
+                                iconBefore="plus"
+                                isDisabled={isAddDisabled}
+                                onClick={onAddClick}
+                            />
+                        }
                     />
-                }
-            />
-            <div className={e("grantees")}>
-                {grantees.map((grantee) => (
-                    <UiGranteeRow
-                        key={grantee.id}
-                        kind={grantee.kind}
-                        name={grantee.name}
-                        email={grantee.email}
-                        isOwner={grantee.isOwner}
-                        isPending={grantee.isPending}
-                        controls={grantee.controls}
-                    />
-                ))}
-            </div>
+                    <div className={e("grantees")}>
+                        {grantees.map((grantee) => (
+                            <UiGranteeRow
+                                key={grantee.id}
+                                kind={grantee.kind}
+                                name={grantee.name}
+                                email={grantee.email}
+                                isOwner={grantee.isOwner}
+                                isPending={grantee.isPending}
+                                controls={grantee.controls}
+                            />
+                        ))}
+                    </div>
 
-            <UiSectionHeading label={intl.formatMessage(olpObjectShareDialogMessages.generalAccess)} />
-            <UiGeneralAccessRadio
-                value={generalAccess}
-                onChange={onGeneralAccessChange}
-                workspaceControls={workspaceControls}
-            />
+                    <UiSectionHeading
+                        label={intl.formatMessage(olpObjectShareDialogMessages.generalAccess)}
+                    />
+                    <UiGeneralAccessRadio
+                        value={generalAccess}
+                        onChange={onGeneralAccessChange}
+                        disabled={isGeneralAccessDisabled}
+                        workspaceControls={workspaceControls}
+                    />
+                </>
+            )}
 
             <UiDialogFooter divider>
                 <UiButton

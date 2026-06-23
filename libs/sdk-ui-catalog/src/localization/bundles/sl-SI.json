@@ -58,6 +58,7 @@
     "analyticsCatalog.filter.reset": "Ponastavi filtre",
     "analyticsCatalog.column.title.label": "Naslov",
     "analyticsCatalog.column.title.dataSet": "Podatkovni sklop",
+    "analyticsCatalog.column.title.labels": "Oznake",
     "analyticsCatalog.column.title.createdBy": "Ustvaril/-a",
     "analyticsCatalog.column.title.createdAt": "Ustvarjeno na",
     "analyticsCatalog.column.title.tags": "Oznake",
@@ -190,5 +191,15 @@
     "analyticsCatalog.parameter.dialog.delete.body": "Ali ste prepričani, da želite izbrisati <b>{name}</b>?",
     "analyticsCatalog.parameter.dialog.delete.submit": "Izbriši",
     "analyticsCatalog.parameter.delete.success": "Parameter je izbrisan.",
-    "analyticsCatalog.parameter.delete.error": "Parametra ni bilo mogoče izbrisati."
+    "analyticsCatalog.parameter.delete.error": "Parametra ni bilo mogoče izbrisati.",
+    "analyticsCatalog.share.button": "Deli",
+    "analyticsCatalog.share.access.row.label": "Dostop",
+    "analyticsCatalog.share.access.row.restricted": "Omejeno",
+    "analyticsCatalog.share.access.row.workspace.view": "Vsi uporabniki delovnega prostora si lahko ogledajo",
+    "analyticsCatalog.share.access.row.workspace.share": "Vsi uporabniki delovnega prostora lahko delijo",
+    "analyticsCatalog.share.access.row.sharedWith": "Deljeno {count, plural, one {z # uporabnikom ali skupino} two {z # uporabnikoma ali skupinama} few {s # uporabniki ali skupinami} other {s # uporabniki ali skupinami}}",
+    "analyticsCatalog.labels.more": "+ še {remaining}",
+    "analyticsCatalog.labels.trigger.ariaLabel": "Prikaži vse oznake",
+    "analyticsCatalog.labels.popup.title": "Oznake",
+    "analyticsCatalog.labels.popup.close": "Zapri"
 }

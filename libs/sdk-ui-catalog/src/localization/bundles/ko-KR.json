@@ -58,6 +58,7 @@
     "analyticsCatalog.filter.reset": "필터 재설정",
     "analyticsCatalog.column.title.label": "제목",
     "analyticsCatalog.column.title.dataSet": "데이터셋",
+    "analyticsCatalog.column.title.labels": "레이블",
     "analyticsCatalog.column.title.createdBy": "작성자",
     "analyticsCatalog.column.title.createdAt": "생성일",
     "analyticsCatalog.column.title.tags": "태그",
@@ -190,5 +191,15 @@
     "analyticsCatalog.parameter.dialog.delete.body": "<b>{name}</b>을(를) 삭제하시겠습니까?",
     "analyticsCatalog.parameter.dialog.delete.submit": "삭제",
     "analyticsCatalog.parameter.delete.success": "매개변수가 삭제되었습니다.",
-    "analyticsCatalog.parameter.delete.error": "매개변수를 삭제할 수 없습니다."
+    "analyticsCatalog.parameter.delete.error": "매개변수를 삭제할 수 없습니다.",
+    "analyticsCatalog.share.button": "공유",
+    "analyticsCatalog.share.access.row.label": "액세스",
+    "analyticsCatalog.share.access.row.restricted": "제한됨",
+    "analyticsCatalog.share.access.row.workspace.view": "모든 작업 공간 사용자가 볼 수 있음",
+    "analyticsCatalog.share.access.row.workspace.share": "모든 작업 공간 사용자가 공유할 수 있음",
+    "analyticsCatalog.share.access.row.sharedWith": "{count, plural, other {#명의 사용자 또는 그룹과 공유됨}}",
+    "analyticsCatalog.labels.more": "+{remaining}개 더 보기",
+    "analyticsCatalog.labels.trigger.ariaLabel": "모든 레이블 표시",
+    "analyticsCatalog.labels.popup.title": "레이블",
+    "analyticsCatalog.labels.popup.close": "닫기"
 }

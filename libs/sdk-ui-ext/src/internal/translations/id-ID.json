@@ -592,5 +592,16 @@
     "insightPicker.sortDirection.ascending": "Naik",
     "insightPicker.sortDirection.descending": "Turun",
     "insightPicker.menu.actions": "Tindakan",
-    "insightPicker.resetFilters": "Atur ulang filter"
+    "insightPicker.resetFilters": "Atur ulang filter",
+    "objectShare.confirm.restrict.title": "Batasi akses?",
+    "objectShare.confirm.restrict.description": "Ini akan membatasi akses hanya untuk orang dan grup yang tercantum di atas.",
+    "objectShare.confirm.grantWorkspace.title": "Berikan akses di seluruh ruang kerja?",
+    "objectShare.confirm.grantWorkspace.description": "Ini akan memberikan akses kepada semua anggota ruang kerja ke \"{title}\".",
+    "objectShare.confirm.button": "Konfirmasi",
+    "objectShare.toast.granteeAdded": "Akses ditambahkan.",
+    "objectShare.toast.accessUpdated": "Akses diperbarui.",
+    "objectShare.toast.generalAccessUpdated": "Akses umum diperbarui.",
+    "objectShare.toast.error": "Akses tidak dapat diperbarui.",
+    "objectShare.toast.labelScopePartial": "Beberapa akses label tidak dapat disimpan.",
+    "objectShare.loadError": "Pengaturan berbagi tidak dapat dimuat. Harap tutup dan coba lagi."
 }

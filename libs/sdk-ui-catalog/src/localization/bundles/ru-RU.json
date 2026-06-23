@@ -58,6 +58,7 @@
     "analyticsCatalog.filter.reset": "Сбросить фильтры",
     "analyticsCatalog.column.title.label": "Заголовок",
     "analyticsCatalog.column.title.dataSet": "Датасет",
+    "analyticsCatalog.column.title.labels": "Метки",
     "analyticsCatalog.column.title.createdBy": "Создано пользователем",
     "analyticsCatalog.column.title.createdAt": "Создано в",
     "analyticsCatalog.column.title.tags": "Теги",
@@ -190,5 +191,15 @@
     "analyticsCatalog.parameter.dialog.delete.body": "Вы уверены, что хотите удалить <b>{name}</b>?",
     "analyticsCatalog.parameter.dialog.delete.submit": "Удалить",
     "analyticsCatalog.parameter.delete.success": "Параметр удален.",
-    "analyticsCatalog.parameter.delete.error": "Не удалось удалить параметр."
+    "analyticsCatalog.parameter.delete.error": "Не удалось удалить параметр.",
+    "analyticsCatalog.share.button": "Поделиться",
+    "analyticsCatalog.share.access.row.label": "Доступ",
+    "analyticsCatalog.share.access.row.restricted": "Ограничено",
+    "analyticsCatalog.share.access.row.workspace.view": "Все пользователи рабочей области могут просматривать",
+    "analyticsCatalog.share.access.row.workspace.share": "Все пользователи рабочей области могут предоставлять доступ",
+    "analyticsCatalog.share.access.row.sharedWith": "Доступ предоставлен {count, plural, one {# пользователю или группе} few {# пользователям или группам} many {# пользователям или группам} other {# пользователя или группы}}",
+    "analyticsCatalog.labels.more": "+ еще {remaining}",
+    "analyticsCatalog.labels.trigger.ariaLabel": "Показать все метки",
+    "analyticsCatalog.labels.popup.title": "Метки",
+    "analyticsCatalog.labels.popup.close": "Закрыть"
 }

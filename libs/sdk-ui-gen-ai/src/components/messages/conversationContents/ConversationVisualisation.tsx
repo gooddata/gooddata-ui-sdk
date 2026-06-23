@@ -7,7 +7,6 @@ import { useDispatch } from "react-redux";
 
 import { type IChatConversationVisualisationContent } from "@gooddata/sdk-backend-spi";
 import {
-    type IAttributeOrMeasure,
     type IBucket,
     type IColorPalette,
     type IDrillOrigin,
@@ -16,16 +15,13 @@ import {
     type IKeyDriveAnalysis,
     type ISortItem,
     type ITheme,
-    type ObjRef,
     isAttribute,
     isMeasure,
-    isMeasureDescriptor,
 } from "@gooddata/sdk-model";
 import {
     type ExplicitDrill,
     type GoodDataSdkError,
     type IDrillEvent,
-    type IHeaderPredicate,
     type OnError,
     type OnExportReady,
     type OnFiredDrillEvent,
@@ -59,6 +55,7 @@ import {
 import { getHeadlineComparison } from "../../../utils.js";
 
 import { useExecution } from "./useExecution.js";
+import { changeAnalysisDrills } from "./utils/changeAnalysisDrills.js";
 
 const VIS_HEIGHT = 250;
 
@@ -76,7 +73,7 @@ const legendTooltipOptions = {
 
 export type ConversationVisualisationProps = {
     message: IChatConversationLocalItem;
-    visualization: IChatConversationVisualisationContent["visualization"];
+    visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>;
     colorPalette?: IColorPalette;
     execConfig?: IExecutionConfig;
     agGridToken?: string;
@@ -117,27 +114,8 @@ export function ConversationVisualisation({
     const bucketsData = useBucketData(buckets);
 
     const drillableItems = useMemo(() => {
-        if (visualization && enableChangeAnalysis && enableDrilling) {
-            if (visualization.insight.visualizationUrl === "local:table") {
-                return visualization.insight.buckets
-                    .map((bucket) => {
-                        return bucket.items.map(headerPredicate);
-                    })
-                    .flat();
-            }
-            return visualization.insight.buckets
-                .map((bucket) => {
-                    return bucket.items.map((attr) => {
-                        if (isAttribute(attr)) {
-                            return attr.attribute.displayForm;
-                        }
-                        return undefined;
-                    });
-                })
-                .flat()
-                .filter(Boolean) as ObjRef[];
-        }
-        return undefined;
+        const items = [...changeAnalysisDrills(visualization, enableDrilling, enableChangeAnalysis)];
+        return items.length ? items : undefined;
     }, [enableChangeAnalysis, visualization, enableDrilling]);
 
     const handleSdkError = useCallback(
@@ -481,7 +459,7 @@ const renderColumnChart = (
 
 const renderLineChart = (
     locale: string,
-    visualization: IChatConversationVisualisationContent["visualization"],
+    visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>,
     buckets: ReturnType<typeof useBucketData>,
     filters: IFilter[],
     sortBy: ISortItem[],
@@ -580,7 +558,7 @@ const renderPieChart = (
 
 const renderScatterPlot = (
     locale: string,
-    visualization: IChatConversationVisualisationContent["visualization"],
+    visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>,
     buckets: ReturnType<typeof useBucketData>,
     filters: IFilter[],
     sortBy: ISortItem[],
@@ -703,15 +681,6 @@ const renderHeadline = (
         </ScopedThemeProvider>
     );
 };
-
-function headerPredicate(m: IAttributeOrMeasure): IHeaderPredicate {
-    return (header) => {
-        if (isMeasureDescriptor(header) && isMeasure(m)) {
-            return header.measureHeaderItem.localIdentifier === m.measure.localIdentifier;
-        }
-        return false;
-    };
-}
 
 function useBucketData(buckets: IBucket[]) {
     return useMemo(() => {

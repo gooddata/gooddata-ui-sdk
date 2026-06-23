@@ -4,7 +4,8 @@ import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import type { ISeparators, MetricType } from "@gooddata/sdk-model";
-import { type IUiTagDef, UiDate, UiIcon, UiTooltip } from "@gooddata/sdk-ui-kit";
+import type { IObjectAccessSummary } from "@gooddata/sdk-ui-ext";
+import { type IUiTagDef, UiDate, UiIcon, UiSkeleton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import {
     isCatalogItemAttribute,
@@ -19,6 +20,7 @@ import { CatalogDetailContentRow } from "./CatalogDetailContentRow.js";
 import { CatalogDetailGranularities } from "./CatalogDetailGranularities.js";
 import { CatalogDetailMetricSettings } from "./CatalogDetailMetricSettings.js";
 import { CatalogDetailTags } from "./CatalogDetailTags.js";
+import { CatalogDetailAccessRow } from "./share/CatalogDetailAccessRow.js";
 
 type Props = {
     item: ICatalogItem;
@@ -33,6 +35,21 @@ type Props = {
     separators?: ISeparators;
     currencyFormatOverride?: string | null;
     enableMetricFormatOverrides?: boolean;
+    /** Access summary for the inline row. Undefined when sharing is unavailable for this item. */
+    accessSummary?: IObjectAccessSummary;
+    /**
+     * True while the access summary isn't available yet (loading or load error) for a
+     * shareable item. The Access row then shows a placeholder instead of vanishing —
+     * the row must stay because Share is still reachable for the object.
+     */
+    accessUnavailable?: boolean;
+    /** Opens the share dialog from the access row. Required for the row to render. */
+    onAccessOpen?: () => void;
+    /**
+     * Show the Dataset row here. True when object-level permissions are off — with
+     * the flag on the dataset is relocated to the header info row instead.
+     */
+    showDatasetRow?: boolean;
 };
 
 export function CatalogDetailTabMetadata({
@@ -48,18 +65,34 @@ export function CatalogDetailTabMetadata({
     separators,
     currencyFormatOverride,
     enableMetricFormatOverrides,
+    accessSummary,
+    accessUnavailable,
+    onAccessOpen,
+    showDatasetRow,
 }: Props) {
     const intl = useIntl();
     const isMeasure = isCatalogItemMeasure(item);
     const isDataSet = isCatalogItemDataSet(item);
     const granularities = isDataSet ? (item.dataSet.attributes ?? []) : [];
+    const datasetTitle =
+        isCatalogItemAttribute(item) || isCatalogItemFact(item) ? item.dataSet?.title : undefined;
 
     return (
         <dl className="gd-analytics-catalog-detail__tab-content">
-            {(isCatalogItemAttribute(item) || isCatalogItemFact(item)) && item.dataSet ? (
+            {accessSummary && onAccessOpen ? (
+                <CatalogDetailAccessRow summary={accessSummary} onOpen={onAccessOpen} />
+            ) : accessUnavailable && onAccessOpen ? (
+                // Summary not available yet (loading or load error). Keep the row —
+                // Share is still reachable — with a placeholder rather than omitting it.
+                <CatalogDetailContentRow
+                    title={<FormattedMessage id="analyticsCatalog.share.access.row.label" />}
+                    content={<UiSkeleton itemWidth={200} itemHeight={20} />}
+                />
+            ) : null}
+            {showDatasetRow && datasetTitle ? (
                 <CatalogDetailContentRow
                     title={<FormattedMessage id="analyticsCatalog.column.title.dataSet" />}
-                    content={item.dataSet.title}
+                    content={datasetTitle}
                 />
             ) : null}
             {isDataSet && granularities.length > 0 ? (

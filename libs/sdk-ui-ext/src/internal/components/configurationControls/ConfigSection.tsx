@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ChangeEvent, type ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 
@@ -24,6 +24,8 @@ export interface IConfigSectionProps {
     pushData?(data: any): void;
     children?: ReactNode;
     toggleMessageId?: string;
+    // Overrides the default `valuePath` write so the section can persist a richer shape on toggle.
+    onToggle?(checked: boolean): void;
 }
 
 export function ConfigSection({
@@ -41,6 +43,7 @@ export function ConfigSection({
     pushData = () => {},
     children,
     toggleMessageId,
+    onToggle,
 }: IConfigSectionProps) {
     const intl = useIntl();
     const [collapsed, setCollapsed] = useState(() => propertiesMeta?.[id]?.collapsed ?? true);
@@ -64,6 +67,10 @@ export function ConfigSection({
 
     const toggleValue = useCallback(
         (event: ChangeEvent<HTMLInputElement>) => {
+            if (onToggle) {
+                onToggle(event.target.checked);
+                return;
+            }
             if (valuePath && properties && pushData) {
                 const clonedProperties = cloneDeep(properties);
                 set(clonedProperties, `controls.${valuePath}`, event.target.checked);
@@ -71,7 +78,7 @@ export function ConfigSection({
                 pushData({ properties: clonedProperties });
             }
         },
-        [valuePath, properties, pushData],
+        [onToggle, valuePath, properties, pushData],
     );
 
     const getToggleLabelClassNames = useMemo(

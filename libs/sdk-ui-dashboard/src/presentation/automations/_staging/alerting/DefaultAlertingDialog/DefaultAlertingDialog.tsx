@@ -257,9 +257,8 @@ export function AlertingDialogRenderer({
                     message: validationErrorMessage,
                     severity: isInvalidConnectionToInsight ? "error" : "warning",
                 }),
-            !!thresholdErrorMessage && createInvalidDatapoint({ message: thresholdErrorMessage }),
         ]);
-    }, [validationErrorMessage, thresholdErrorMessage, isInvalidConnectionToInsight, setInvalidDatapoints]);
+    }, [validationErrorMessage, isInvalidConnectionToInsight, setInvalidDatapoints]);
 
     const helpTextId = isMobileView()
         ? defineMessage({ id: "dialogs.alerting.footer.title.short" }).id

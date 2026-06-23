@@ -58,6 +58,7 @@
     "analyticsCatalog.filter.reset": "Скинути фільтри",
     "analyticsCatalog.column.title.label": "Назва",
     "analyticsCatalog.column.title.dataSet": "Набір даних",
+    "analyticsCatalog.column.title.labels": "Мітки",
     "analyticsCatalog.column.title.createdBy": "Створено",
     "analyticsCatalog.column.title.createdAt": "Створено",
     "analyticsCatalog.column.title.tags": "Теги",
@@ -190,5 +191,15 @@
     "analyticsCatalog.parameter.dialog.delete.body": "Ви впевнені, що хочете видалити <b>{name}</b>?",
     "analyticsCatalog.parameter.dialog.delete.submit": "Видалити",
     "analyticsCatalog.parameter.delete.success": "Параметр видалено.",
-    "analyticsCatalog.parameter.delete.error": "Не вдалося видалити параметр."
+    "analyticsCatalog.parameter.delete.error": "Не вдалося видалити параметр.",
+    "analyticsCatalog.share.button": "Надати спільний доступ",
+    "analyticsCatalog.share.access.row.label": "Доступ",
+    "analyticsCatalog.share.access.row.restricted": "Обмежено",
+    "analyticsCatalog.share.access.row.workspace.view": "Усі користувачі робочої області можуть переглядати",
+    "analyticsCatalog.share.access.row.workspace.share": "Усі користувачі робочої області можуть поділитися",
+    "analyticsCatalog.share.access.row.sharedWith": "Поділилися з {count, plural, one {# користувачем або групою} few {# користувачами або групами} many {# користувачами або групами} other {# користувача або групи}}",
+    "analyticsCatalog.labels.more": "+ще {remaining}",
+    "analyticsCatalog.labels.trigger.ariaLabel": "Показати всі мітки",
+    "analyticsCatalog.labels.popup.title": "Мітки",
+    "analyticsCatalog.labels.popup.close": "Закрити"
 }

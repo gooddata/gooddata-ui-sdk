@@ -58,6 +58,7 @@
     "analyticsCatalog.filter.reset": "重置筛选器",
     "analyticsCatalog.column.title.label": "标题",
     "analyticsCatalog.column.title.dataSet": "数据集",
+    "analyticsCatalog.column.title.labels": "标签",
     "analyticsCatalog.column.title.createdBy": "创建人",
     "analyticsCatalog.column.title.createdAt": "创建于",
     "analyticsCatalog.column.title.tags": "标签",
@@ -190,5 +191,15 @@
     "analyticsCatalog.parameter.dialog.delete.body": "您确定要删除<b>{name}</b>吗？",
     "analyticsCatalog.parameter.dialog.delete.submit": "删除",
     "analyticsCatalog.parameter.delete.success": "参数已删除。",
-    "analyticsCatalog.parameter.delete.error": "无法删除参数。"
+    "analyticsCatalog.parameter.delete.error": "无法删除参数。",
+    "analyticsCatalog.share.button": "共享",
+    "analyticsCatalog.share.access.row.label": "访问权限",
+    "analyticsCatalog.share.access.row.restricted": "受限",
+    "analyticsCatalog.share.access.row.workspace.view": "所有工作区用户均可查看",
+    "analyticsCatalog.share.access.row.workspace.share": "所有工作区用户均可共享",
+    "analyticsCatalog.share.access.row.sharedWith": "已与 {count, plural, other {# 个用户或组}} 共享",
+    "analyticsCatalog.labels.more": "+{remaining} 个更多",
+    "analyticsCatalog.labels.trigger.ariaLabel": "显示所有标签",
+    "analyticsCatalog.labels.popup.title": "标签",
+    "analyticsCatalog.labels.popup.close": "关闭"
 }

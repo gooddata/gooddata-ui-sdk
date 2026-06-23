@@ -3336,6 +3336,39 @@ export type TableConfigProperties = {
     };
     pageSize: number;
     grandTotalsPosition: "pinnedBottom" | "pinnedTop" | "bottom" | "top";
+    conditionalFormatting: {
+        version?: string;
+        enabled: boolean;
+        rules: Array<{
+            id: string;
+            target: {
+                kind: "measure";
+                measureIdentifier: string;
+            } | {
+                kind: "attribute";
+                attributeIdentifier: string;
+            };
+            conditions: Array<{
+                id: string;
+                operator: string;
+                value: {
+                    kind: "none";
+                } | {
+                    kind: "literal";
+                    value: string | number;
+                } | {
+                    kind: "literalRange";
+                    from: number;
+                    to: number;
+                };
+                format: {
+                    color?: string;
+                    backgroundColor?: string;
+                    scope: "cell" | "row";
+                };
+            }>;
+        }>;
+    };
 };
 
 // @internal (undocumented)
@@ -3411,6 +3444,39 @@ export function tableSave(fields: Visualisation["query"]["fields"] | undefined, 
     } | undefined;
     pageSize: number | undefined;
     grandTotalsPosition: "bottom" | "pinnedBottom" | "pinnedTop" | "top" | undefined;
+    conditionalFormatting: {
+        version?: string | undefined;
+        enabled: boolean;
+        rules: {
+            id: string;
+            target: {
+                kind: "measure";
+                measureIdentifier: string;
+            } | {
+                kind: "attribute";
+                attributeIdentifier: string;
+            };
+            conditions: {
+                id: string;
+                operator: string;
+                value: {
+                    kind: "none";
+                } | {
+                    kind: "literal";
+                    value: string | number;
+                } | {
+                    kind: "literalRange";
+                    from: number;
+                    to: number;
+                };
+                format: {
+                    color?: string | undefined;
+                    backgroundColor?: string | undefined;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    } | undefined;
 } | undefined;
 
 // @public (undocumented)

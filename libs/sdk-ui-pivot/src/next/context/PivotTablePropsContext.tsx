@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactNode, createContext, useContext } from "react";
 
@@ -18,6 +18,7 @@ import {
     EMPTY_TOTALS,
     PAGE_SIZE,
 } from "../constants/internal.js";
+import { type PivotTableNextConditionalFormattingConfig } from "../types/conditionalFormatting.js";
 import { type ICorePivotTableNextProps } from "../types/internal.js";
 import { type IMenu } from "../types/menu.js";
 import { type PivotTableNextConfig } from "../types/public.js";
@@ -56,10 +57,11 @@ type ConfigDefaults =
     | "textWrapping"
     | "menu";
 
-type ConfigWithDefaults = WithRequired<PivotTableNextConfig, ConfigDefaults> & {
-    columnSizing: ColumnSizingWithDefaults;
-    menu: MenuWithDefaults;
-};
+type ConfigWithDefaults = WithRequired<PivotTableNextConfig, ConfigDefaults> &
+    PivotTableNextConditionalFormattingConfig & {
+        columnSizing: ColumnSizingWithDefaults;
+        menu: MenuWithDefaults;
+    };
 
 type RootPropsDefaults =
     | "rows"

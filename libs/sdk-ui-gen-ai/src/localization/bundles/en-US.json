@@ -95,6 +95,10 @@
         "text": "<b>Data too large.</b> Ask for reduce a data by applying filters.",
         "crowdinContext": "Error message when data is too large"
     },
+    "gd.gen-ai.visualization.unavailable": {
+        "text": "Visualization could not be displayed.",
+        "crowdinContext": "Message shown in place of a chart when the requested visualization is not available to display"
+    },
     "gd.gen-ai.permission-error": {
         "text": "Insufficient permissions",
         "crowdinContext": "Error message when user does not have sufficient permissions to access the chatbot"

@@ -38,6 +38,7 @@ import { extractAttributeUri, getAttributeColIds, parentsMatch } from "../column
 import { isCellDrillable } from "../drilling/isDrillable.js";
 
 import { CELL_CLASSNAME, e } from "./bem.js";
+import { isEmptyCell } from "./cellClassification.js";
 
 /**
  * Common parameters shared between CellClassParams and ICellRendererParams
@@ -153,7 +154,7 @@ export const getCellTypes = (
     const isRowSubtotal = colData.rowDefinition?.type === "subtotal";
     const isTotalHeader = isTotalHeaderValue(colData);
     const isSubtotalHeader = isSubtotalHeaderValue(colData);
-    const isNull = isNullValue(colData);
+    const isNull = isEmptyCell(colData);
     const isGrouped = isAttributeGroupedCell(params, colId);
     const isSeparated = isGroupFirstRow(params) && !isGrouped;
     const isMetric = !isAttribute && !isTotalHeader;
@@ -497,10 +498,6 @@ const isColumnGrandTotal = (colData: ITableDataValue) => {
     const columnDefinition = colData.columnDefinition;
 
     return columnDefinition?.type === "grandTotal";
-};
-
-const isNullValue = (colData: ITableDataValue) => {
-    return !isTableAttributeHeaderValue(colData) && colData.formattedValue === "";
 };
 
 /**

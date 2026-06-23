@@ -35,7 +35,7 @@ jobs:
         env:
           VERSION: ${{ inputs.version }}
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
             ref: ${{ inputs.source-branch }}
             token: ${{ secrets.TOKEN_GITHUB_YENKINS_ADMIN }}
@@ -62,7 +62,7 @@ jobs:
 
       # checkout gooddata-ui-apidocs only after full root of the repo is built with rush, otherwise rush commands fail when something is present in a subdirectory
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: 'gooddata/gooddata-ui-apidocs'
           ref: 'master'

@@ -14,7 +14,6 @@ interface IGranularGranteeUserGroupItemProps {
     subjectType: WorkspacePermissionSubject;
     onChange: (grantee: IGrantedWorkspace) => void;
     onDelete: (grantee: IGrantedWorkspace) => void;
-    areFilterViewsEnabled: boolean;
 }
 
 export function WorkspaceItem({
@@ -22,7 +21,6 @@ export function WorkspaceItem({
     subjectType,
     onChange,
     onDelete,
-    areFilterViewsEnabled,
 }: IGranularGranteeUserGroupItemProps) {
     const { isDropdownOpen, toggleDropdown } = usePermissionsDropdownState();
     const { isDropdownOpen: isHierarchicalDropdownOpen, toggleDropdown: toggleHierarchicalDropdown } =
@@ -50,7 +48,6 @@ export function WorkspaceItem({
                 onChange={onChange}
                 onDelete={onDelete}
                 className="gd-grantee-granular-permission"
-                areFilterViewsEnabled={areFilterViewsEnabled}
             />
             <div className="gd-grantee-content">
                 <div className="gd-grantee-content-label">{workspace.title}</div>

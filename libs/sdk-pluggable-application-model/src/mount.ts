@@ -334,6 +334,54 @@ export interface ITelemetryEventOptions {
 }
 
 /**
+ * A structured OpenTelemetry log record forwarded by a pluggable application to the host shell.
+ *
+ * @remarks
+ * Mirrors the shape of an OpenTelemetry `LogRecord` body/severity/attributes. The host emits it through
+ * its own page-level OTel logger (see {@link IPluggableAppTelemetryCallbacks.logRecord}), so the module
+ * does not need its own `LoggerProvider`. The host fills in the timestamp, resource and shared context
+ * (deployment / organization / user / source application) — the module supplies only the event-specific
+ * fields.
+ *
+ * @alpha
+ */
+export interface IPluggableAppLogRecord {
+    /** Log body — typically an event name such as `"timing-dashboard-load-kd"`. */
+    body: string;
+    /** OTel severity number (1–24). Defaults to `9` (INFO) when omitted. */
+    severityNumber?: number;
+    /** OTel severity text, e.g. `"INFO"`. Defaults to `"INFO"` when omitted. */
+    severityText?: string;
+    /** Event-specific attributes (e.g. `{ duration }`). Merged with the host's shared context. */
+    attributes?: Record<string, unknown>;
+}
+
+/**
+ * Transport-neutral structured data a pluggable application may attach to a telemetry event.
+ *
+ * @remarks
+ * Pluggable applications describe an event with these neutral groups and must NOT assume any particular
+ * analytics backend (Matomo, Amplitude, …) — the host shell decides how to record them. `identifiers` are
+ * sensitive entity ids (workspace, dashboard, report, …) the shell may hash and aggregate; `stats` are
+ * contextual metrics (counts, types, …). Any other key is a free-form event property. Passed as the `data`
+ * argument of {@link IPluggableAppTelemetryCallbacks.trackEvent}.
+ *
+ * @alpha
+ */
+export interface IPluggableAppTelemetryEventData {
+    [key: string]: unknown;
+    /**
+     * Sensitive entity identifiers for the event (e.g. `{ workspaceId, dashboardId }`). The shell decides
+     * how to record them — modules must not hash, pack or otherwise format them for a specific backend.
+     */
+    identifiers?: Record<string, string>;
+    /**
+     * Contextual metrics / stats for the event (e.g. `{ insightsCount, attributeFiltersCount }`).
+     */
+    stats?: Record<string, string | number | boolean>;
+}
+
+/**
  * Telemetry callbacks provided by the shell to pluggable applications.
  *
  * @remarks
@@ -352,10 +400,40 @@ export interface IPluggableAppTelemetryCallbacks {
      * @param options - Optional event configuration (e.g. channel routing).
      */
     trackEvent: (eventName: string, data?: Record<string, unknown>, options?: ITelemetryEventOptions) => void;
-    /** Track a page view within the pluggable application. */
-    trackPageView: (page: string) => void;
-    /** Track a timing measurement from the pluggable application. */
-    trackTiming: (variable: string, label: string, valueMs: number) => void;
+    /**
+     * Track a page view within the pluggable application.
+     *
+     * @param page - The page path/identifier.
+     * @param data - Optional neutral event data ({@link IPluggableAppTelemetryEventData}); `identifiers`
+     *   keep the page view's workspace/dashboard attribution, `stats` carry contextual metrics.
+     */
+    trackPageView: (page: string, data?: IPluggableAppTelemetryEventData) => void;
+    /**
+     * Track a timing measurement from the pluggable application.
+     *
+     * @param variable - The timing variable name.
+     * @param label - The timing label.
+     * @param valueMs - The measured duration in milliseconds.
+     * @param data - Optional neutral event data ({@link IPluggableAppTelemetryEventData}); a `category`
+     *   property attributes the timing to the source app rather than the shell, `stats` carry metrics.
+     */
+    trackTiming: (
+        variable: string,
+        label: string,
+        valueMs: number,
+        data?: IPluggableAppTelemetryEventData,
+    ) => void;
+    /**
+     * Forward a structured OpenTelemetry log record to the host's page-level OTel logger.
+     *
+     * @remarks
+     * Unlike {@link IPluggableAppTelemetryCallbacks.trackEvent} (which routes to the analytics
+     * trackers — Matomo / Amplitude), this targets the host's OpenTelemetry logging pipeline (OTLP
+     * `/v1/logs`). It exists because the OTel Logs API cannot be reliably shared across module-federation
+     * bundles the way the global tracer is, so module logs are forwarded as plain data and re-emitted by
+     * the host. Optional: a host that has no OTel logger configured simply omits it (the call is a no-op).
+     */
+    logRecord?: (record: IPluggableAppLogRecord) => void;
 }
 
 /**

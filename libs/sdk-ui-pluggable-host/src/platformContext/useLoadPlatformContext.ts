@@ -61,13 +61,18 @@ export function useLoadPlatformContext(): IPlatformContextLoadResult<IPlatformCo
             return backendContext;
         }
 
-        // Block rendering until workspace permissions AND settings are available when inside a workspace route.
+        // Block rendering until workspace permissions, settings AND theme are available when inside a
+        // workspace route. The theme is gated so content never paints with the bootstrap/default theme
+        // first and then re-themes once the workspace theme resolves (the visible theme flash, LX-2608).
+        // Only `loading`/`idle` block; `forbidden`/`error` are terminal, so a missing or failed theme
+        // still renders (falling back to the bootstrap theme below) rather than hanging on the loader.
         const permissionsLoading =
             workspacePermissionsState.state === "loading" || workspacePermissionsState.state === "idle";
         const settingsLoading =
             workspaceSettingsState.state === "loading" || workspaceSettingsState.state === "idle";
+        const themeLoading = workspaceThemeState.state === "loading" || workspaceThemeState.state === "idle";
 
-        if (workspaceId !== undefined && (permissionsLoading || settingsLoading)) {
+        if (workspaceId !== undefined && (permissionsLoading || settingsLoading || themeLoading)) {
             return { state: "loading" };
         }
 

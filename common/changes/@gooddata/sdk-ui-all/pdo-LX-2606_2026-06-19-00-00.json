@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-pivot: Stop suppressKeyboardEvent from blanket-suppressing non-navigation keys so AG Grid's built-in clipboard shortcuts (Ctrl/Cmd+C copy, Ctrl/Cmd+A select all) work again in the new pivot table.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

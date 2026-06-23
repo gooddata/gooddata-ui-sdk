@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-catalog",
-    "version": "11.43.0-alpha.1",
+    "version": "11.43.0-alpha.3",
     "description": "GoodData SDK - Analytics Catalog",
     "license": "MIT",
     "author": "GoodData Corporation",
@@ -66,6 +66,7 @@
         "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",
         "@gooddata/sdk-ui": "workspace:*",
+        "@gooddata/sdk-ui-ext": "workspace:*",
         "@gooddata/sdk-ui-kit": "workspace:*",
         "@gooddata/sdk-ui-semantic-search": "workspace:*",
         "@gooddata/sdk-ui-theme-provider": "workspace:*",

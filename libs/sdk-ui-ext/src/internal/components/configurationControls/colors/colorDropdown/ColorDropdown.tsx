@@ -46,6 +46,10 @@ export interface IColorDropdownOwnProps {
     children?: ReactNode;
     chartFill?: IChartFillConfig;
     patternFillIndex?: number | PatternFillName;
+    /** When provided, the palette shows a "no color" swatch that calls this to clear the selection. */
+    onClear?: () => void;
+    /** Accessibility label for the "no color" swatch (localized by the caller); required when onClear is set. */
+    noneColorAriaLabel?: string;
 }
 
 export type IColorDropdownProps = IColorDropdownOwnProps;
@@ -64,6 +68,8 @@ export const ColorDropdown = memo(function ColorDropdown({
     children,
     chartFill,
     patternFillIndex,
+    onClear,
+    noneColorAriaLabel,
 }: IColorDropdownProps) {
     const [id] = useState(() => uuidv4());
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -124,6 +130,15 @@ export const ColorDropdown = memo(function ColorDropdown({
         [onColorSelectedProp],
     );
 
+    const onNoneSelected = useCallback(() => {
+        setIsDropdownOpen(false);
+        setDropdownVersion(DropdownVersionType.ColorPalette);
+
+        setTimeout(() => {
+            onClear?.();
+        }, 100);
+    }, [onClear]);
+
     const onColorPickerSubmit = useCallback(
         (color: IRgbColorValue) => {
             const item: IColor = {
@@ -173,6 +188,10 @@ export const ColorDropdown = memo(function ColorDropdown({
                     onColorSelected={onColorSelected}
                     chartFill={chartFill}
                     patternFillIndex={patternFillIndex}
+                    showNoneColor={!!onClear}
+                    isNoneSelected={!selectedColorItem}
+                    onNoneSelected={onNoneSelected}
+                    noneColorAriaLabel={noneColorAriaLabel}
                 />
                 <CustomColorButton onClick={onCustomColorButtonClick} />
             </div>
@@ -184,6 +203,10 @@ export const ColorDropdown = memo(function ColorDropdown({
         onCustomColorButtonClick,
         chartFill,
         patternFillIndex,
+        onClear,
+        selectedColorItem,
+        onNoneSelected,
+        noneColorAriaLabel,
     ]);
 
     const renderColorPickerContent = useCallback(() => {

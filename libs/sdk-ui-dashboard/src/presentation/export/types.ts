@@ -58,7 +58,7 @@ export type CommonExportDataAttributes = {
  */
 export type MetaExportDataAttributes = {
     "data-export-meta-type"?: ExportMetaType;
-    "data-export-meta-filter-type"?: "date" | "attribute" | "measureValue";
+    "data-export-meta-filter-type"?: "date" | "attribute" | "measureValue" | "parameter";
     "data-export-meta-filter-mode"?: "readonly" | "hidden" | "active";
     "data-export-meta-filter-status"?: "loading" | "loaded" | "error";
     "data-export-meta-filters-status"?: "loading" | "loaded" | "error";
@@ -89,6 +89,7 @@ export type MetaExportData = {
         dateFilter: MetaExportDataAttributes;
         attributeFilter: MetaExportDataAttributes;
         measureValueFilter: MetaExportDataAttributes;
+        parameter: MetaExportDataAttributes;
         filter: {
             name: MetaExportDataAttributes;
             value: MetaExportDataAttributes;

@@ -39,6 +39,25 @@ export type TableConfigProperties = {
     };
     pageSize: number;
     grandTotalsPosition: "pinnedBottom" | "pinnedTop" | "bottom" | "top";
+    conditionalFormatting: {
+        version?: string;
+        enabled: boolean;
+        rules: Array<{
+            id: string;
+            target:
+                | { kind: "measure"; measureIdentifier: string }
+                | { kind: "attribute"; attributeIdentifier: string };
+            conditions: Array<{
+                id: string;
+                operator: string;
+                value:
+                    | { kind: "none" }
+                    | { kind: "literal"; value: string | number }
+                    | { kind: "literalRange"; from: number; to: number };
+                format: { color?: string; backgroundColor?: string; scope: "cell" | "row" };
+            }>;
+        }>;
+    };
 };
 
 /** @internal */
@@ -62,10 +81,16 @@ const DEFAULTS: ConfigDefaults<TableConfigProperties> = {
     pageSize: 100,
     enableAccessibility: false,
     grandTotalsPosition: "pinnedBottom",
+    conditionalFormatting: { enabled: false, rules: [] },
 };
 
 type TextWrapping = TableConfigProperties["textWrapping"];
 type TextWrappingOverride = TextWrapping["columnOverrides"][number];
+
+type ConditionalFormatting = TableConfigProperties["conditionalFormatting"];
+type ConditionalFormattingRule = ConditionalFormatting["rules"][number];
+type ConditionalFormattingCondition = ConditionalFormattingRule["conditions"][number];
+type ConditionalFormattingValue = ConditionalFormattingCondition["value"];
 
 function loadTextWrapping(value: TextWrapping | undefined): object | undefined {
     if (!value) {
@@ -146,6 +171,121 @@ function saveTextWrapping(value: YamlTextWrapping | undefined): TextWrapping | u
     };
 }
 
+type YamlConditionalFormatting = {
+    version?: string;
+    enabled?: boolean;
+    rules?: Array<{
+        id: string;
+        target: { measure?: string; attribute?: string };
+        conditions: Array<{
+            id: string;
+            operator: string;
+            value?: number | string | { from: number; to: number } | null;
+            format: { text?: string; fill?: string; scope: "cell" | "row" };
+        }>;
+    }>;
+};
+
+// internal -> YAML (condensed authoring form)
+
+function loadConditionalFormattingValue(value: ConditionalFormattingValue): object {
+    if (value.kind === "literal") {
+        return { value: value.value };
+    }
+    if (value.kind === "literalRange") {
+        return { value: { from: value.from, to: value.to } };
+    }
+    return {};
+}
+
+function loadConditionalFormattingCondition(condition: ConditionalFormattingCondition): object {
+    return {
+        id: condition.id,
+        operator: condition.operator.toLowerCase(),
+        ...loadConditionalFormattingValue(condition.value),
+        format: {
+            ...(condition.format.color ? { text: condition.format.color } : {}),
+            ...(condition.format.backgroundColor ? { fill: condition.format.backgroundColor } : {}),
+            scope: condition.format.scope,
+        },
+    };
+}
+
+function loadConditionalFormattingRule(rule: ConditionalFormattingRule): object {
+    return {
+        id: rule.id,
+        target:
+            rule.target.kind === "measure"
+                ? { measure: rule.target.measureIdentifier }
+                : { attribute: rule.target.attributeIdentifier },
+        conditions: rule.conditions.map(loadConditionalFormattingCondition),
+    };
+}
+
+function loadConditionalFormatting(value: ConditionalFormatting | undefined): object | undefined {
+    if (!value || (value.rules.length === 0 && !value.enabled)) {
+        return undefined;
+    }
+    return {
+        ...(value.version ? { version: value.version } : {}),
+        enabled: value.enabled,
+        rules: value.rules.map(loadConditionalFormattingRule),
+    };
+}
+
+// YAML -> internal
+
+function saveConditionalFormattingValue(
+    value: number | string | { from: number; to: number } | null | undefined,
+): ConditionalFormattingValue {
+    if (value === null || value === undefined) {
+        return { kind: "none" };
+    }
+    // Only a {from,to} object is a range; guard "from" so a stray object can't crash the conversion.
+    if (typeof value === "object" && "from" in value) {
+        return { kind: "literalRange", from: value.from, to: value.to };
+    }
+    return { kind: "literal", value };
+}
+
+function saveConditionalFormattingRule(
+    rule: NonNullable<YamlConditionalFormatting["rules"]>[number],
+): ConditionalFormattingRule {
+    return {
+        id: rule.id,
+        target:
+            rule.target.measure === undefined
+                ? { kind: "attribute", attributeIdentifier: rule.target.attribute ?? "" }
+                : { kind: "measure", measureIdentifier: rule.target.measure },
+        conditions: rule.conditions.map((condition) => ({
+            id: condition.id,
+            operator: condition.operator.toUpperCase(),
+            value: saveConditionalFormattingValue(condition.value),
+            format: {
+                ...(condition.format.text ? { color: condition.format.text } : {}),
+                ...(condition.format.fill ? { backgroundColor: condition.format.fill } : {}),
+                scope: condition.format.scope,
+            },
+        })),
+    };
+}
+
+function saveConditionalFormatting(
+    value: YamlConditionalFormatting | undefined,
+): ConditionalFormatting | undefined {
+    const rules = value?.rules ?? [];
+    // Same drop condition as loadConditionalFormatting: drop only the fully-empty default so the
+    // config round-trips symmetrically (an enabled-but-ruleless config is preserved on both sides).
+    if (!value || (rules.length === 0 && !value.enabled)) {
+        return undefined;
+    }
+    return {
+        ...(value.version ? { version: value.version } : {}),
+        enabled: value.enabled ?? false,
+        rules: rules.map(saveConditionalFormattingRule),
+    };
+}
+
 /** @internal */
 export const TABLE_DEFAULTS = DEFAULTS;
 
@@ -212,6 +352,10 @@ export function tableLoad(props: VisualisationConfig<TableConfigProperties>) {
                 const val = value as (typeof DEFAULTS)["grandTotalsPosition"];
                 return [["grand_totals_position", getValueOrDefault(val, DEFAULTS.grandTotalsPosition)]];
             }
+            case "conditionalFormatting": {
+                const val = value as (typeof DEFAULTS)["conditionalFormatting"];
+                return [["conditional_formatting", loadConditionalFormatting(val)]];
+            }
             default:
                 return [];
         }
@@ -253,6 +397,9 @@ export function tableSave(
         pagination: savePagination(config.pagination),
         pageSize: getValueOrDefault(config.page_size, DEFAULTS.pageSize, "number"),
         grandTotalsPosition: getValueOrDefault(config.grand_totals_position, DEFAULTS.grandTotalsPosition),
+        conditionalFormatting: saveConditionalFormatting(
+            config.conditional_formatting as YamlConditionalFormatting | undefined,
+        ),
     });
 }
 

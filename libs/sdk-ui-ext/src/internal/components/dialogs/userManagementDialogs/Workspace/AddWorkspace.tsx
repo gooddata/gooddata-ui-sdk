@@ -25,7 +25,6 @@ export interface IAddWorkspaceProps {
     onSubmit: (workspaces: IGrantedWorkspace[]) => void;
     onCancel: () => void;
     onClose: () => void;
-    areFilterViewsEnabled: boolean;
     editWorkspace?: IGrantedWorkspace;
 }
 
@@ -37,7 +36,6 @@ export function AddWorkspace({
     onSubmit,
     onCancel,
     onClose,
-    areFilterViewsEnabled,
     editWorkspace,
 }: IAddWorkspaceProps) {
     const intl = useIntl();
@@ -102,7 +100,6 @@ export function AddWorkspace({
             <GranularPermissions
                 workspace={addedWorkspaces[0]}
                 onChange={onChange}
-                areFilterViewsEnabled={areFilterViewsEnabled}
                 showRedundancyWarningMessage={showRedundancyWarningMessage}
             />
         </ConfirmDialogBase>

@@ -6,13 +6,6 @@ import { describe, expect, it, vi } from "vitest";
 
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
 
-// UiTag (and indirectly UiTooltip) pulls the legacy Bubble stack which fails
-// under our pnpm hoist — mock it. The dialog wiring is what we cover here;
-// the Owner tag itself is exercised in the UiGranteeRow tests.
-vi.mock("../../UiTooltip/UiTooltip.js", () => ({
-    UiTooltip: ({ anchor }: { anchor: React.ReactNode }) => <>{anchor}</>,
-}));
-
 import { type IUiObjectShareDialogGrantee, UiObjectShareDialogCard } from "../UiObjectShareDialogCard.js";
 
 const GRANTEES: IUiObjectShareDialogGrantee[] = [
@@ -90,5 +83,17 @@ describe("UiObjectShareDialogCard", () => {
     it("forwards dataTestId to the root element", () => {
         renderWithIntl(<UiObjectShareDialogCard {...baseProps} dataTestId="share-dialog" />);
         expect(screen.getByTestId("share-dialog")).toBeInTheDocument();
+    });
+
+    it("shows the error notice instead of the grantee list and access radio when error is set", () => {
+        renderWithIntl(<UiObjectShareDialogCard {...baseProps} error="Could not load." />);
+        // The error notice is shown...
+        expect(screen.getByRole("alert")).toHaveTextContent("Could not load.");
+        // ...and the empty/placeholder body is suppressed (no misleading "restricted").
+        expect(screen.queryByText("Marek Stránský")).not.toBeInTheDocument();
+        expect(screen.queryByRole("radio", { name: /All workspace members/ })).not.toBeInTheDocument();
+        // The header title and footer Close still render so the user can dismiss.
+        expect(screen.getByRole("heading", { name: 'Share "Customer"' })).toBeInTheDocument();
+        expect(screen.getAllByRole("button", { name: "Close" }).length).toBeGreaterThan(0);
     });
 });

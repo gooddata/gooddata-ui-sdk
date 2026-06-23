@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { transparentize } from "polished";
 
@@ -320,9 +320,14 @@ export function setCssProperties(
         const cssPropertiesRules = cssProperties.map(({ key, value }) => `${key}: ${value};`).join("");
         const styleTag = document.createElement("style");
         styleTag.id = "gdc-theme-properties";
+        // Doubled `:root` (specificity 0,2,0) so the theme always wins over the plain `:root {}`
+        // light defaults shipped in every app's compiled CSS — regardless of DOM order. In the
+        // pluggable host, hovering a header item preloads an app whose bundle injects those defaults
+        // into <head> *after* this tag; at equal specificity the later rule would win and reset the
+        // theme (LX-2608). The higher specificity makes the outcome order-independent.
         styleTag.appendChild(
             document.createTextNode(`
-                :root {
+                :root:root {
                     ${cssPropertiesRules}
                     color-scheme: ${isDarkTheme ? "dark" : "light"};
                 }

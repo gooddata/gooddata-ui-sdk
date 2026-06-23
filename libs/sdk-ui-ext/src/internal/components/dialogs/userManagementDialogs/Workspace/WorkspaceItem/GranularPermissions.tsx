@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { type ReactNode, useCallback, useMemo } from "react";
+import { type ReactNode, useCallback } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -39,13 +39,11 @@ const granularPermissions: IPermissionsItem[] = [
 interface IGranularPermissionsProps {
     workspace: IGrantedWorkspace | undefined;
     onChange: (workspace: IGrantedWorkspace) => void;
-    areFilterViewsEnabled: boolean;
     showRedundancyWarningMessage: boolean;
 }
 
 export function GranularPermissions({
     workspace,
-    areFilterViewsEnabled,
     onChange,
     showRedundancyWarningMessage,
 }: IGranularPermissionsProps) {
@@ -54,10 +52,7 @@ export function GranularPermissions({
     const selectedWorkspacePermission = getWorkspacePermission(selectedPermissions);
     const selectedGranularPermissions = getGranularPermissions(selectedPermissions);
 
-    const granularItems = useMemo(
-        () => granularPermissions.filter((item) => areFilterViewsEnabled || item.id !== "CREATE_FILTER_VIEW"),
-        [areFilterViewsEnabled],
-    );
+    const granularItems = granularPermissions;
 
     const handleChange = useCallback(
         (permissions: WorkspacePermissions, isHierarchical: boolean) => {

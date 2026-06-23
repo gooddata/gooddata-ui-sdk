@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "gdc-catalog: Show inherited organization AI memory read-only in the workspace catalog — composite memory service merging workspace + organization memory, inherited badge/view-only UI, i18n and e2e.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

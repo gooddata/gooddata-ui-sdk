@@ -32,12 +32,13 @@ export interface IModuleTelemetryMetadata {
 }
 
 /**
- * Wraps host telemetry callbacks so every `trackEvent` call also reports the module's runtime metadata.
+ * Wraps host telemetry callbacks so every `trackEvent` / `trackPageView` / `trackTiming` call also reports
+ * the module's runtime metadata.
  *
  * @remarks
- * The metadata is merged into the event `data` before the host's own `data` keys, so an explicit key in
- * the call site's `data` wins on collision (mirroring how the host merges its common properties).
- * `trackPageView` and `trackTiming` are passed through unchanged — they carry no `data` slot today.
+ * The metadata is merged into the `data` argument before the call site's own keys, so an explicit key in
+ * `data` wins on collision (mirroring how the host merges its common properties). This applies to all three
+ * methods so module React / SDK versions are stamped on events, page views and timings alike.
  * Returns `undefined` when given `undefined`, so a standalone module (mounted outside the host) stays a no-op.
  *
  * @alpha
@@ -53,6 +54,12 @@ export function enrichTelemetryCallbacks(
         ...callbacks,
         trackEvent(eventName, data, options) {
             callbacks.trackEvent(eventName, { ...metadata, ...data }, options);
+        },
+        trackPageView(page, data) {
+            callbacks.trackPageView(page, { ...metadata, ...data });
+        },
+        trackTiming(variable, label, valueMs, data) {
+            callbacks.trackTiming(variable, label, valueMs, { ...metadata, ...data });
         },
     };
 }

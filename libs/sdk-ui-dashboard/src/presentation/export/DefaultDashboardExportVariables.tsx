@@ -8,6 +8,7 @@ import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
 import { selectConfig } from "../../model/store/config/configSelectors.js";
 import { selectDashboardDescriptor, selectDashboardId } from "../../model/store/meta/metaSelectors.js";
+import { selectActiveTabExportParameters } from "../../model/store/tabs/parameters/parametersSelectors.js";
 import { selectCurrentUser } from "../../model/store/user/userSelectors.js";
 import { type RenderMode } from "../../types.js";
 
@@ -34,11 +35,20 @@ export function DefaultDashboardExportVariables({ renderMode }: IDefaultDashboar
     const dashboardDescriptor = useDashboardSelector(selectDashboardDescriptor);
     const { dateFilters, attributeFilters, measureValueFilters, isError, isLoading } =
         useDashboardRelatedFilters(run);
+    const parameters = useDashboardSelector(selectActiveTabExportParameters);
     const theme = useTheme();
 
     if (!run) {
         return null;
     }
+
+    const filterGroups = [
+        { kind: "date", items: dateFilters, attrs: exportData?.filters?.dateFilter },
+        { kind: "attribute", items: attributeFilters, attrs: exportData?.filters?.attributeFilter },
+        { kind: "measureValue", items: measureValueFilters, attrs: exportData?.filters?.measureValueFilter },
+    ];
+    const hasEntries =
+        dateFilters.length + attributeFilters.length + measureValueFilters.length + parameters.length > 0;
 
     return (
         <div className="gd-dashboard-meta" {...exportData?.root}>
@@ -57,36 +67,24 @@ export function DefaultDashboardExportVariables({ renderMode }: IDefaultDashboar
                 </div>
             ) : null}
             <div {...exportData?.filters?.root} {...exportData?.filters?.rootData(isLoading, isError)}>
-                {dateFilters.length > 0 || attributeFilters.length > 0 || measureValueFilters.length > 0 ? (
+                {hasEntries ? (
                     <>
-                        {dateFilters.map((filter, i: number) => (
-                            <div
-                                key={i}
-                                {...exportData?.filters?.dateFilter}
-                                {...exportData?.filters?.filter.filterData(filter, isLoading, isError)}
-                            >
-                                <span {...exportData?.filters?.filter.name}>{filter?.title}</span> -{" "}
-                                <span {...exportData?.filters?.filter.value}>{filter?.subtitle}</span>
-                            </div>
-                        ))}
-                        {attributeFilters.map((filter, i: number) => (
-                            <div
-                                key={i}
-                                {...exportData?.filters?.attributeFilter}
-                                {...exportData?.filters?.filter.filterData(filter, isLoading, isError)}
-                            >
-                                <span {...exportData?.filters?.filter.name}>{filter?.title}</span> -{" "}
-                                <span {...exportData?.filters?.filter.value}>{filter?.subtitle}</span>
-                            </div>
-                        ))}
-                        {measureValueFilters.map((filter, i: number) => (
-                            <div
-                                key={i}
-                                {...exportData?.filters?.measureValueFilter}
-                                {...exportData?.filters?.filter.filterData(filter, isLoading, isError)}
-                            >
-                                <span {...exportData?.filters?.filter.name}>{filter?.title}</span> -{" "}
-                                <span {...exportData?.filters?.filter.value}>{filter?.subtitle}</span>
+                        {filterGroups.flatMap(({ kind, items, attrs }) =>
+                            items.map((filter, i: number) => (
+                                <div
+                                    key={`${kind}-${i}`}
+                                    {...attrs}
+                                    {...exportData?.filters?.filter.filterData(filter, isLoading, isError)}
+                                >
+                                    <span {...exportData?.filters?.filter.name}>{filter?.title}</span> -{" "}
+                                    <span {...exportData?.filters?.filter.value}>{filter?.subtitle}</span>
+                                </div>
+                            )),
+                        )}
+                        {parameters.map((parameter, i: number) => (
+                            <div key={`parameter-${i}`} {...exportData?.filters?.parameter}>
+                                <span {...exportData?.filters?.filter.name}>{parameter.title}</span> -{" "}
+                                <span {...exportData?.filters?.filter.value}>{parameter.value}</span>
                             </div>
                         ))}
                     </>

@@ -8,7 +8,6 @@ import {
     type IDashboardFilterView,
     type IDashboardParameter,
     type IFilterContext,
-    type ISettings,
     type MeasureValueFilterCondition,
     idRef,
 } from "@gooddata/sdk-model";
@@ -30,7 +29,6 @@ const topNParameter: IDashboardParameter = {
     parameterType: "NUMBER",
     mode: "active",
 };
-const filterViewsSettings = { enableDashboardFilterViews: true } as ISettings;
 
 function buildDashboard(dashboard: Partial<IDashboard>): IDashboard {
     return {
@@ -83,7 +81,7 @@ describe("filterViews", () => {
                 parameters: [{ ...topNParameter, value: 99 }],
             });
 
-            const updated = applyDefaultFilterView(dashboard, [filterView], filterViewsSettings);
+            const updated = applyDefaultFilterView(dashboard, [filterView]);
 
             expect(updated.tabs?.[0]?.parameters).toEqual([{ ...topNParameter, value: 99 }]);
         });
@@ -104,7 +102,7 @@ describe("filterViews", () => {
                 parameters: [topNParameter],
             });
 
-            const updated = applyDefaultFilterView(dashboard, [filterView], filterViewsSettings);
+            const updated = applyDefaultFilterView(dashboard, [filterView]);
 
             expect(updated.tabs?.[0]?.parameters).toEqual([topNParameter]);
         });
@@ -129,7 +127,7 @@ describe("filterViews", () => {
                 parameters: [{ ...topNParameter, value: 99 }],
             });
 
-            const updated = applyDefaultFilterView(dashboard, [filterView], filterViewsSettings);
+            const updated = applyDefaultFilterView(dashboard, [filterView]);
 
             expect(updated.tabs?.[0]?.parameters).toBeUndefined();
             expect(updated.tabs?.[1]?.parameters).toBeUndefined();

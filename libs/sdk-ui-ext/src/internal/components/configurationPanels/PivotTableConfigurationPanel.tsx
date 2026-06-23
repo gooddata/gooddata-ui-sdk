@@ -18,6 +18,7 @@ import {
 import { isSetColumnHeadersPositionToLeftAllowed } from "../../utils/controlsHelper.js";
 import { CellsControl } from "../configurationControls/CellsControl.js";
 import { ColumnHeadersPositionControl } from "../configurationControls/ColumnHeadersPositionControl.js";
+import { ConditionalFormattingSection } from "../configurationControls/conditionalFormatting/ConditionalFormattingSection.js";
 import { ConfigDummySection } from "../configurationControls/ConfigDummySection.js";
 import { ConfigSection } from "../configurationControls/ConfigSection.js";
 import { GrandTotalsControl } from "../configurationControls/GrandTotalsControl.js";
@@ -50,6 +51,7 @@ export class PivotTableConfigurationPanel extends ConfigurationPanelContent {
         const { featureFlags } = this.props;
         const enableNewPivotTable = featureFlags?.enableNewPivotTable ?? true;
         const enablePivotTablePagination = featureFlags?.enablePivotTablePagination ?? true;
+        const enableConditionalFormatting = featureFlags?.enableConditionalFormatting ?? false;
 
         return (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
@@ -57,6 +59,9 @@ export class PivotTableConfigurationPanel extends ConfigurationPanelContent {
                     {this.renderInteractionsSection()}
                     {enableNewPivotTable && enablePivotTablePagination ? this.renderPagingSection() : null}
                     {this.renderCanvasSection()}
+                    {enableNewPivotTable && enableConditionalFormatting
+                        ? this.renderConditionalFormattingSection()
+                        : null}
                 </div>
                 <Bubble
                     className={this.getBubbleClassNames()}
@@ -150,6 +155,21 @@ export class PivotTableConfigurationPanel extends ConfigurationPanelContent {
             </ConfigSection>
         ) : (
             canvasSection
+        );
+    }
+
+    private renderConditionalFormattingSection() {
+        const { properties, propertiesMeta, insight, titlesByLocalId, pushData, isLoading } = this.props;
+
+        return (
+            <ConditionalFormattingSection
+                properties={properties}
+                propertiesMeta={propertiesMeta}
+                insight={insight}
+                titlesByLocalId={titlesByLocalId}
+                pushData={pushData}
+                isLoading={isLoading}
+            />
         );
     }
 

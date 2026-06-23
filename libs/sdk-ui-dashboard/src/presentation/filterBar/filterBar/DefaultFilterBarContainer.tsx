@@ -35,7 +35,6 @@ import { isDashboardParametersSelectionReset } from "../../../model/events/param
 import { useDashboardEventsContext } from "../../../model/react/DashboardEventsContext.js";
 import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import {
-    selectEnableFilterViews,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
     selectLocale,
 } from "../../../model/store/config/configSelectors.js";
@@ -69,7 +68,6 @@ function DefaultFilterBarContainerCore({ children }: { children?: ReactNode }) {
         setFilterBarExpanded,
     );
 
-    const isFilterViewsFeatureFlagEnabled = useDashboardSelector(selectEnableFilterViews);
     const isWorkingFilterContextChanged = useDashboardSelector(selectIsWorkingFilterContextChanged);
     const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
     const filtersWithInvalidSelection = useDashboardSelector(selectNamesOfFiltersWithInvalidSelection);
@@ -161,7 +159,7 @@ function DefaultFilterBarContainerCore({ children }: { children?: ReactNode }) {
                                 }
                             />
                         ) : null}
-                        {isFilterViewsFeatureFlagEnabled ? <FilterViews /> : null}
+                        <FilterViews />
                     </div>
                 </div>
                 <ShowAllFiltersButton

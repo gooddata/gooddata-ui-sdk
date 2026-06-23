@@ -56,11 +56,30 @@ describe("enrichTelemetryCallbacks", () => {
         );
     });
 
-    it("passes trackPageView and trackTiming through unchanged", () => {
+    it("injects module metadata into trackPageView and trackTiming data", () => {
         const callbacks = createCallbacks();
         const enriched = enrichTelemetryCallbacks(callbacks, metadata)!;
 
-        expect(enriched.trackPageView).toBe(callbacks.trackPageView);
-        expect(enriched.trackTiming).toBe(callbacks.trackTiming);
+        enriched.trackPageView("/dashboards", { identifiers: { workspaceId: "ws-1" } });
+        expect(callbacks.trackPageView).toHaveBeenCalledWith("/dashboards", {
+            moduleReactVersion: "19.1.1",
+            moduleSdkVersion: "1.2.3",
+            identifiers: { workspaceId: "ws-1" },
+        });
+
+        enriched.trackTiming("load", "kd", 123, { category: "dashboards" });
+        expect(callbacks.trackTiming).toHaveBeenCalledWith("load", "kd", 123, {
+            moduleReactVersion: "19.1.1",
+            moduleSdkVersion: "1.2.3",
+            category: "dashboards",
+        });
+    });
+
+    it("passes the optional logRecord callback through unchanged", () => {
+        const logRecord = vi.fn();
+        const callbacks: IPluggableAppTelemetryCallbacks = { ...createCallbacks(), logRecord };
+        const enriched = enrichTelemetryCallbacks(callbacks, metadata)!;
+
+        expect(enriched.logRecord).toBe(logRecord);
     });
 });

@@ -58,6 +58,7 @@
     "analyticsCatalog.filter.reset": "Reimposta filtri",
     "analyticsCatalog.column.title.label": "Titolo",
     "analyticsCatalog.column.title.dataSet": "Set di dati",
+    "analyticsCatalog.column.title.labels": "Etichette",
     "analyticsCatalog.column.title.createdBy": "Creato da",
     "analyticsCatalog.column.title.createdAt": "Creato presso",
     "analyticsCatalog.column.title.tags": "Tag",
@@ -190,5 +191,15 @@
     "analyticsCatalog.parameter.dialog.delete.body": "Eliminare <b>{name}</b>?",
     "analyticsCatalog.parameter.dialog.delete.submit": "Elimina",
     "analyticsCatalog.parameter.delete.success": "Parametro eliminato.",
-    "analyticsCatalog.parameter.delete.error": "Impossibile eliminare il parametro."
+    "analyticsCatalog.parameter.delete.error": "Impossibile eliminare il parametro.",
+    "analyticsCatalog.share.button": "Condividi",
+    "analyticsCatalog.share.access.row.label": "Accesso",
+    "analyticsCatalog.share.access.row.restricted": "Limitato",
+    "analyticsCatalog.share.access.row.workspace.view": "Tutti gli utenti dell'area di lavoro possono visualizzare",
+    "analyticsCatalog.share.access.row.workspace.share": "Tutti gli utenti dell'area di lavoro possono condividere",
+    "analyticsCatalog.share.access.row.sharedWith": "Condiviso con {count, plural, one {# utente o gruppo} other {# utenti o gruppi}}",
+    "analyticsCatalog.labels.more": "+{remaining} altre",
+    "analyticsCatalog.labels.trigger.ariaLabel": "Mostra tutte le etichette",
+    "analyticsCatalog.labels.popup.title": "Etichette",
+    "analyticsCatalog.labels.popup.close": "Chiudere"
 }

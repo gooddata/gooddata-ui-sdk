@@ -6,6 +6,7 @@
 
 import { AttributesMeasuresOrPlaceholders } from '@gooddata/sdk-ui';
 import { AttributesOrPlaceholders } from '@gooddata/sdk-ui';
+import { ComparisonConditionOperator } from '@gooddata/sdk-model';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
@@ -22,6 +23,7 @@ import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IVisualizationProps } from '@gooddata/sdk-ui';
 import { JSX } from 'react/jsx-runtime';
 import { NullableFiltersOrPlaceholders } from '@gooddata/sdk-ui';
+import { RangeConditionOperator } from '@gooddata/sdk-model';
 import { SortsOrPlaceholders } from '@gooddata/sdk-ui';
 import { TotalsOrPlaceholders } from '@gooddata/sdk-ui';
 import { TotalType } from '@gooddata/sdk-model';
@@ -56,6 +58,33 @@ export type ColumnWidthItemNext = IAttributeColumnWidthItemNext | IMeasureColumn
 
 // @public (undocumented)
 export type ColumnWidthNext = IAbsoluteColumnWidthNext | IAutoColumnWidthNext;
+
+// @alpha
+export type ConditionalFormattingOperator = "ALL" | ComparisonConditionOperator | RangeConditionOperator | ConditionalFormattingTextOperator;
+
+// @alpha
+export type ConditionalFormattingTarget = {
+    kind: "attribute";
+    attributeIdentifier: string;
+} | {
+    kind: "measure";
+    measureIdentifier: string;
+};
+
+// @alpha
+export type ConditionalFormattingTextOperator = "CONTAINS" | "NOT_CONTAINS" | "STARTS_WITH" | "NOT_STARTS_WITH" | "ENDS_WITH" | "NOT_ENDS_WITH" | "IS_EMPTY" | "IS_NOT_EMPTY";
+
+// @alpha
+export type ConditionalFormattingValue = {
+    kind: "none";
+} | {
+    kind: "literal";
+    value: string | number;
+} | {
+    kind: "literalRange";
+    from: number;
+    to: number;
+};
 
 // @internal (undocumented)
 export function CorePivotTable(props: ICorePivotTableProps): JSX.Element;
@@ -199,6 +228,44 @@ export interface IColumnTextWrappingItem {
     matchType?: "column" | "pivotGroup";
     wrapHeaderText?: boolean;
     wrapText?: boolean;
+}
+
+// @alpha
+export interface IConditionalFormatting {
+    // (undocumented)
+    enabled: boolean;
+    // (undocumented)
+    rules: readonly IConditionalFormattingRule[];
+    version?: string;
+}
+
+// @alpha
+export interface IConditionalFormattingCondition {
+    // (undocumented)
+    format: IConditionalFormattingFormat;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    operator: ConditionalFormattingOperator;
+    // (undocumented)
+    value: ConditionalFormattingValue;
+}
+
+// @alpha
+export interface IConditionalFormattingFormat {
+    backgroundColor?: string;
+    color?: string;
+    scope: "cell" | "row";
+}
+
+// @alpha
+export interface IConditionalFormattingRule {
+    // (undocumented)
+    conditions: readonly IConditionalFormattingCondition[];
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    target: ConditionalFormattingTarget;
 }
 
 // @internal (undocumented)
@@ -534,6 +601,11 @@ export type PivotTableNextCellSelectionConfig = {
 // @public (undocumented)
 export type PivotTableNextColumnsSizingConfig = {
     columnSizing?: IColumnSizingNext;
+};
+
+// @alpha
+export type PivotTableNextConditionalFormattingConfig = {
+    conditionalFormatting?: IConditionalFormatting;
 };
 
 // @public

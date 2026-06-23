@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type IAlignPoint, Overlay } from "@gooddata/sdk-ui-kit";
 
@@ -19,7 +19,6 @@ export interface IAddWorkspaceToSubjectsProps extends IWithTelemetryProps {
     organizationId: string;
     onSuccess: () => void;
     onClose: () => void;
-    areFilterViewsEnabled?: boolean;
 }
 
 function AddWorkspaceToSubjectsComponent({
@@ -28,7 +27,6 @@ function AddWorkspaceToSubjectsComponent({
     organizationId,
     onSuccess,
     onClose,
-    areFilterViewsEnabled = false,
 }: IAddWorkspaceToSubjectsProps) {
     return (
         <OrganizationIdProvider organizationId={organizationId}>
@@ -47,7 +45,6 @@ function AddWorkspaceToSubjectsComponent({
                     onSubmit={onSuccess}
                     onCancel={onClose}
                     onClose={onClose}
-                    areFilterViewsEnabled={areFilterViewsEnabled}
                 />
             </Overlay>
         </OrganizationIdProvider>

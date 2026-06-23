@@ -17,5 +17,8 @@
     &__items {
         display: flex;
         flex-direction: column;
+        // Vertical breathing room when the list is the sole popover content
+        // (rows carry their own horizontal inset, so the list sits flush).
+        padding-block: var(--gd-spacing-10px);
     }
 }

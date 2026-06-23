@@ -592,5 +592,16 @@
     "insightPicker.sortDirection.ascending": "Ascendente",
     "insightPicker.sortDirection.descending": "Descendente",
     "insightPicker.menu.actions": "Ações",
-    "insightPicker.resetFilters": "Redefinir filtros"
+    "insightPicker.resetFilters": "Redefinir filtros",
+    "objectShare.confirm.restrict.title": "Restringir acesso?",
+    "objectShare.confirm.restrict.description": "Isso restringirá o acesso apenas às pessoas e aos grupos listados acima.",
+    "objectShare.confirm.grantWorkspace.title": "Conceder acesso a todo o espaço de trabalho?",
+    "objectShare.confirm.grantWorkspace.description": "Isso concederá a todos os membros do espaço de trabalho acesso a \"{title}\".",
+    "objectShare.confirm.button": "Confirmar",
+    "objectShare.toast.granteeAdded": "Acesso adicionado.",
+    "objectShare.toast.accessUpdated": "Acesso atualizado.",
+    "objectShare.toast.generalAccessUpdated": "Acesso geral atualizado.",
+    "objectShare.toast.error": "Não foi possível atualizar o acesso.",
+    "objectShare.toast.labelScopePartial": "Não foi possível salvar alguns acessos a rótulos.",
+    "objectShare.loadError": "Não foi possível carregar as configurações de compartilhamento. Feche e tente novamente."
 }

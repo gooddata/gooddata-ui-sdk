@@ -18,9 +18,6 @@
                     "glob": "reference_workspace/**/*"
                 },
                 {
-                    "glob": "scripts/**/*"
-                },
-                {
                     "glob": "playwright/**/*",
                     "type": "fine-grained",
                     "filter": "playwright/tests/**/*.spec.ts"

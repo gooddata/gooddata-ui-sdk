@@ -162,7 +162,7 @@ export default defineConfig(({ mode }) => {
             alias: mode === "development" ? getDevelopmentAliases() : getProductionAliases(),
         },
         server: {
-            port: 9500,
+            port: 9600,
             fs: {
                 strict: false,
             },

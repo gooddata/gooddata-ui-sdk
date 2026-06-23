@@ -20,7 +20,7 @@ export default defineConfig({
     retries: isRecording ? 0 : 2, // no retries when recording — they break mapping storage
     reporter: [["list"], ["json", { outputFile: "results/results.json" }]],
     use: {
-        baseURL: process.env["BASE_URL"] || "http://gooddata-ui-sdk-scenarios:9500",
+        baseURL: process.env["BASE_URL"] || "http://gooddata-ui-sdk-scenarios:9600",
         ignoreHTTPSErrors: true,
         trace: "on",
         video: "retain-on-failure",

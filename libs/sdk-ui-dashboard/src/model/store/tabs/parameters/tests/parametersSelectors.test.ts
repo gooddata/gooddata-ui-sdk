@@ -23,6 +23,7 @@ import { type DashboardState } from "../../../types.js";
 import { computeParameterResetTargets } from "../parametersHelpers.js";
 import {
     selectActiveParameterRefKeys,
+    selectActiveTabExportParameters,
     selectDashboardParameterEntries,
     selectDashboardParameters,
     selectEffectiveDashboardParametersForWidget,
@@ -1624,6 +1625,46 @@ describe("parameter selectors (per tab)", () => {
                     [TAB_ID]: [{ id: "topN", value: "25", title: "Top N" }],
                 });
             });
+        });
+    });
+
+    describe("selectActiveTabExportParameters", () => {
+        const makeTwoTabState = (activeTabLocalIdentifier: string | undefined, firstTabId: string) =>
+            ({
+                tabs: {
+                    tabs: [
+                        {
+                            localIdentifier: firstTabId,
+                            title: "First",
+                            parameters: { parameters: [{ parameter: topNParameter, runtimeOverride: 10 }] },
+                        },
+                        {
+                            localIdentifier: "tab-B",
+                            title: "Second",
+                            parameters: { parameters: [{ parameter: topNParameter, runtimeOverride: 99 }] },
+                        },
+                    ],
+                    activeTabLocalIdentifier,
+                },
+                catalog: { parameters: { status: "loaded", parameters: [topNWorkspace] } },
+                meta: { persistedDashboard: undefined },
+                config: { config: { settings: { enableParameters: true } } },
+            }) as unknown as DashboardState;
+
+        it("returns only the active tab's rows", () => {
+            expect(selectActiveTabExportParameters(makeTwoTabState("tab-B", "tab-A"))).toEqual([
+                { id: "topN", value: "99", title: "Top N" },
+            ]);
+        });
+
+        it("scopes to the active tab, not other tabs", () => {
+            expect(selectActiveTabExportParameters(makeTwoTabState("tab-A", "tab-A"))).toEqual([
+                { id: "topN", value: "10", title: "Top N" },
+            ]);
+        });
+
+        it("falls back to the default tab id when no active tab is set", () => {
+            expect(selectActiveTabExportParameters(makeTwoTabState(undefined, "tab-A"))).toEqual([]);
         });
     });
 });

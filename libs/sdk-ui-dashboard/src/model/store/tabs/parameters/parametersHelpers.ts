@@ -30,7 +30,7 @@ const EMPTY_PARAMETERS: IDashboardParameter[] = [];
 /**
  * @internal
  */
-export const EMPTY_EXPORT_PARAMETERS: Record<string, IDashboardExportParameter[]> = {};
+export const EMPTY_EXPORT_PARAMETERS_BY_TAB: Record<string, IDashboardExportParameter[]> = {};
 
 /**
  * Walks the insight's metric buckets and returns the parameter refs they reference,
@@ -294,7 +294,7 @@ export function collectExportOverrides(
             result[tab.localIdentifier] = rows;
         }
     }
-    return Object.keys(result).length === 0 ? EMPTY_EXPORT_PARAMETERS : result;
+    return Object.keys(result).length === 0 ? EMPTY_EXPORT_PARAMETERS_BY_TAB : result;
 }
 
 /**

@@ -29,6 +29,19 @@ export type {
 } from "./types/transposition.js";
 export type { PivotTableNextExperimentalConfig } from "./types/experimental.js";
 
+// Conditional formatting (Increment 1, @alpha)
+export type {
+    PivotTableNextConditionalFormattingConfig,
+    IConditionalFormatting,
+    IConditionalFormattingRule,
+    IConditionalFormattingCondition,
+    IConditionalFormattingFormat,
+    ConditionalFormattingTarget,
+    ConditionalFormattingOperator,
+    ConditionalFormattingTextOperator,
+    ConditionalFormattingValue,
+} from "./types/conditionalFormatting.js";
+
 // Pluggable Visualization
 export { CorePivotTableNext } from "./PivotTableNextPluggable.js";
 export type { ICorePivotTableNextProps } from "./types/internal.js";

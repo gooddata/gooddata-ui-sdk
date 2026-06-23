@@ -83,7 +83,7 @@ export type ConversationVisualizationContentProps = {
     message: IChatConversationLocalItem;
     part: IChatConversationMultipartLocalPart;
     scenario?: IWhatIfRenderableScenario;
-    visualization: IChatConversationVisualisationContent["visualization"];
+    visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>;
     colorPalette?: IColorPalette;
     className?: string;
     agGridToken?: string;
@@ -212,7 +212,7 @@ function ConversationVisualizationContentCore({
 
 interface IWrapperProps {
     containerRef: RefObject<HTMLDivElement | null>;
-    visualization: IChatConversationVisualisationContent["visualization"];
+    visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>;
     children: ReactNode;
 }
 
@@ -235,7 +235,7 @@ function Wrapper({ containerRef, visualization, children }: IWrapperProps) {
 }
 
 interface ITitleProps {
-    visualization: IChatConversationVisualisationContent["visualization"];
+    visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>;
     scenario?: IWhatIfRenderableScenario;
     id: string;
 }
@@ -249,7 +249,7 @@ function Title({ id, visualization, scenario }: ITitleProps) {
 }
 
 interface IVisualisationMenuProps {
-    visualization: IChatConversationVisualisationContent["visualization"];
+    visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>;
     scenario?: IWhatIfRenderableScenario;
     hasError: boolean;
     //state
@@ -673,7 +673,7 @@ function getRelativeOffset(child?: HTMLElement, ancestor?: HTMLDivElement | null
 interface IUseSaveDialogProps {
     message: IChatConversationLocalItem;
     part: IChatConversationMultipartLocalPart;
-    visualization: IChatConversationVisualisationContent["visualization"];
+    visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>;
 }
 
 function useSaveDialog({ message, part, visualization }: IUseSaveDialogProps) {
@@ -703,7 +703,7 @@ function useSaveDialog({ message, part, visualization }: IUseSaveDialogProps) {
 }
 
 interface IUseHandlersProps {
-    visualization: IChatConversationVisualisationContent["visualization"];
+    visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>;
     setSaveDialogOpen: (value: "save" | "explore" | null) => void;
     onCopyToClipboard?: (data: { content: string }) => void;
 }

@@ -15,7 +15,6 @@ import {
     type IDashboardMeasureValueFilter,
     type IDashboardParameter,
     type IFilterContext,
-    type ISettings,
     type ObjRef,
     areObjRefsEqual,
     dashboardAttributeFilterItemDisplayForm,
@@ -462,14 +461,7 @@ export const changeFilterContextSelection = (
 export function applyDefaultFilterView(
     dashboard: IDashboard,
     filterViews: IDashboardFilterView[],
-    settings: ISettings,
 ): IDashboard {
-    const areFilterViewsEnabled = settings.enableDashboardFilterViews;
-
-    if (!areFilterViewsEnabled) {
-        return dashboard;
-    }
-
     // If dashboard has tabs, apply default views per tab
     if (dashboard.tabs && dashboard.tabs.length > 0) {
         // Find legacy global default view (without tabLocalIdentifier) as fallback for first tab

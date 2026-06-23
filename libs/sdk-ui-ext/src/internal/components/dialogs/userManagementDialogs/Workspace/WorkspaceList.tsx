@@ -15,7 +15,6 @@ export interface IWorkspaceListProps {
     onDelete: (workspace: IGrantedWorkspace) => void;
     onChange?: (workspace: IGrantedWorkspace) => void;
     onClick?: (workspace: IGrantedWorkspace) => void;
-    areFilterViewsEnabled: boolean;
 }
 
 export function WorkspaceList({ workspaces, subjectType, mode, onDelete, onClick }: IWorkspaceListProps) {

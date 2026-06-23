@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 
 import { useIntl } from "react-intl";
 import { invariant } from "ts-invariant";
@@ -285,14 +285,20 @@ export function useEditScheduledEmail({
 
     const [originalAutomation] = useState(editedAutomation);
 
+    // Holds the wire outside the automation so it survives a rebuild from zero export definitions —
+    // with no definitions `setExportParametersByTab` has nowhere to store it.
+    // Seeded from the stored wire.
+    const latestParametersWireRef = useRef<Record<string, IDashboardExportParameter[]> | undefined>(
+        getAutomationExportParametersByTab(editedAutomation),
+    );
+
     // The user-edit path into `content.parametersByTab`: re-encoded wire in, every export definition
     // patched. Handed to `useAutomationExportParameters`, which owns when to call it. Definition
     // rebuilds preserve the wire separately via `withRebuiltExportDefinitions`.
-    const setParametersWire = useCallback(
-        (wire: Record<string, IDashboardExportParameter[]> | undefined) =>
-            setEditedAutomation((automation) => setExportParametersByTab(automation, wire)),
-        [],
-    );
+    const setParametersWire = useCallback((wire: Record<string, IDashboardExportParameter[]> | undefined) => {
+        latestParametersWireRef.current = wire;
+        setEditedAutomation((automation) => setExportParametersByTab(automation, wire));
+    }, []);
 
     const selectedAttachments = useMemo(() => {
         return (
@@ -312,7 +318,7 @@ export function useEditScheduledEmail({
         setEditedAutomation((s) => ({
             ...s,
             schedule: {
-                ...(s.schedule ?? {}),
+                ...s.schedule,
                 cron: cronExpression,
                 firstRun: toModifiedISOStringToTimezone(startDate ?? new Date(), timezone).iso,
             },
@@ -345,7 +351,7 @@ export function useEditScheduledEmail({
         setEditedAutomation((s) => ({
             ...s,
             details: {
-                ...(s.details ?? {}),
+                ...s.details,
                 subject: value as string,
             },
         }));
@@ -356,7 +362,7 @@ export function useEditScheduledEmail({
         setEditedAutomation((s) => ({
             ...s,
             details: {
-                ...(s.details ?? {}),
+                ...s.details,
                 message: value,
             },
         }));
@@ -394,7 +400,7 @@ export function useEditScheduledEmail({
             );
 
             const updatedExportDefinitions = [...keptExportDefinitions, ...newExportDefinitions];
-            return withRebuiltExportDefinitions(s, updatedExportDefinitions);
+            return withRebuiltExportDefinitions(s, updatedExportDefinitions, latestParametersWireRef.current);
         });
     };
 
@@ -435,7 +441,7 @@ export function useEditScheduledEmail({
             );
 
             const updatedExportDefinitions = [...keptExportDefinitions, ...newExportDefinitions];
-            return withRebuiltExportDefinitions(s, updatedExportDefinitions);
+            return withRebuiltExportDefinitions(s, updatedExportDefinitions, latestParametersWireRef.current);
         });
     };
 
@@ -1005,17 +1011,16 @@ export function useEditScheduledEmail({
 }
 
 /**
- * Replaces an automation's export definitions while preserving the current parameter wire. Freshly
- * built definitions carry no `content.parametersByTab`, so without this the stored parameters would
- * silently drop on any attachment-format change — the one place "rebuild definitions" stays paired
- * with "keep parameters".
+ * Rebuilds the export definitions and re-applies the parameter wire (fresh definitions carry no
+ * `content.parametersByTab`). The wire is passed in rather than read off `automation` so it survives
+ * a rebuild from zero definitions — see `latestParametersWireRef`.
  */
 function withRebuiltExportDefinitions(
     automation: IAutomationMetadataObjectDefinition,
     exportDefinitions: NonNullable<IAutomationMetadataObjectDefinition["exportDefinitions"]>,
+    parametersByTab: Record<string, IDashboardExportParameter[]> | undefined,
 ): IAutomationMetadataObjectDefinition {
     const next = { ...automation, exportDefinitions };
-    const parametersByTab = getAutomationExportParametersByTab(automation);
     return parametersByTab ? setExportParametersByTab(next, parametersByTab) : next;
 }
 

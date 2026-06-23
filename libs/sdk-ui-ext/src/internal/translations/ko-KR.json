@@ -592,5 +592,16 @@
     "insightPicker.sortDirection.ascending": "오름차순",
     "insightPicker.sortDirection.descending": "내림차순",
     "insightPicker.menu.actions": "작업",
-    "insightPicker.resetFilters": "필터 재설정"
+    "insightPicker.resetFilters": "필터 재설정",
+    "objectShare.confirm.restrict.title": "액세스를 제한하시겠습니까?",
+    "objectShare.confirm.restrict.description": "이렇게 하면 위에 나열된 사용자 및 그룹으로만 액세스가 제한됩니다.",
+    "objectShare.confirm.grantWorkspace.title": "작업 공간 전체 액세스를 부여하시겠습니까?",
+    "objectShare.confirm.grantWorkspace.description": "이렇게 하면 모든 작업 공간 구성원에게 \"{title}\"에 대한 액세스가 부여됩니다.",
+    "objectShare.confirm.button": "확인",
+    "objectShare.toast.granteeAdded": "액세스가 추가되었습니다.",
+    "objectShare.toast.accessUpdated": "액세스가 업데이트되었습니다.",
+    "objectShare.toast.generalAccessUpdated": "일반 액세스가 업데이트되었습니다.",
+    "objectShare.toast.error": "액세스를 업데이트할 수 없습니다.",
+    "objectShare.toast.labelScopePartial": "일부 레이블 액세스를 저장할 수 없습니다.",
+    "objectShare.loadError": "공유 설정을 로드할 수 없습니다. 닫은 후 다시 시도하십시오."
 }

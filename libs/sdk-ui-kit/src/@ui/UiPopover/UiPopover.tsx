@@ -64,8 +64,27 @@ export interface IUiPopoverProps {
     accessibilityConfig?: IAccessibilityConfigBase;
     title?: string | ReactNode;
     content?: ReactNode | ((args: { onClose: () => void }) => ReactNode);
+    /**
+     * Padding around the content surface. Defaults to `"default"`. Use `"none"`
+     * for edge-to-edge content whose own children carry their inset (e.g. a list
+     * of full-bleed rows); the surface then also stretches the content to its
+     * full width.
+     */
+    contentPadding?: "default" | "none";
     footer?: ReactNode | ((args: { onClose: () => void }) => ReactNode);
     triggerBy?: IUiTooltipProps["triggerBy"];
+    /**
+     * Where the popover sits relative to its anchor (the arrow side; the panel
+     * opens on the opposite side). Defaults to `"top-start"` — i.e. the panel
+     * opens below the anchor, left-aligned.
+     */
+    arrowPlacement?: IUiTooltipProps["arrowPlacement"];
+    /**
+     * Allow the popover to flip to the opposite side when the preferred side
+     * would overflow. Defaults to `true`. Set `false` to pin it to
+     * `arrowPlacement` (e.g. an anchor that should always open downward).
+     */
+    optimalPlacement?: boolean;
     closeText?: string;
     closeVisible?: boolean;
     initialFocus?: RefObject<HTMLElement> | string;
@@ -107,12 +126,15 @@ export function UiPopover({
     tabIndex,
     disabled,
     content,
+    contentPadding = "default",
     footer,
     closeText,
     closeVisible,
     initialFocus,
     returnFocusTo,
     triggerBy = ["click"],
+    arrowPlacement = "top-start",
+    optimalPlacement = true,
     returnFocusAfterClose = true,
     focusCheckFn = defaultFocusCheckFn,
     enableFocusTrap = false,
@@ -208,7 +230,7 @@ export function UiPopover({
                                 </div>
                             ) : null}
                             {content ? (
-                                <div className={e("content")}>
+                                <div className={e("content", { padding: contentPadding })}>
                                     {typeof content === "function" ? content({ onClose }) : content}
                                 </div>
                             ) : null}
@@ -225,8 +247,8 @@ export function UiPopover({
             behaviour="popover"
             triggerBy={triggerBy}
             showArrow={false}
-            optimalPlacement
-            arrowPlacement="top-start"
+            optimalPlacement={optimalPlacement}
+            arrowPlacement={arrowPlacement}
             disabled={disabled}
         />
     );

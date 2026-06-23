@@ -275,11 +275,12 @@ export function DashboardInsight({
 
     const effectiveError = filtersError ?? visualizationError;
 
+    const execConfig = useWidgetExecConfig(ref);
+
     useEffect(() => {
-        // need reset custom error when filters changed
-        // one of custom error is no data
+        // Clear a stale error (e.g. "no data") on any execution change — parameters flow via execConfig, not filters.
         setVisualizationError(undefined);
-    }, [filtersForInsightHash]);
+    }, [filtersForInsightHash, execConfig]);
 
     // CSS
     const insightPositionStyle = useInsightPositionStyle();
@@ -301,8 +302,6 @@ export function DashboardInsight({
         isVisualizationInitializing || isVisualizationLoading,
         !!effectiveError,
     );
-
-    const execConfig = useWidgetExecConfig(ref);
 
     const { setContent, isTooSmall, fontSize } = useMinimalSizeValidation(
         minimalWidth,

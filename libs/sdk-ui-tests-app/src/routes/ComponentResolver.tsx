@@ -49,6 +49,7 @@ import {
     ChartTooManyDataScenario,
     TooManyDataInsightViewScenario,
 } from "../components/Scenarios/Visualizations/ManyData/TooManyDataScenario";
+import { PivotTableConditionalFormatting } from "../components/Scenarios/Visualizations/PivotTable/PivotTableConditionalFormattingScenario";
 import {
     PivotTableTransposeHasC_Left,
     PivotTableTransposeHasMR_RowTop,
@@ -113,6 +114,7 @@ export const SCENARIO_KEYS = {
     VIS_PIVOT_TABLE_TRANSPOSED_HAS_M_ROW_TOP:
         "visualizations/pivot-table/pivot-table-transposed-has-m-row-top",
     VIS_PIVOT_TABLE_TRANSPOSED_HAS_C_LEFT: "visualizations/pivot-table/pivot-table-transposed-has-c-left",
+    VIS_PIVOT_TABLE_CONDITIONAL_FORMATTING: "visualizations/pivot-table/pivot-table-conditional-formatting",
     DASHBOARD_ATTRIBUTE_FILTER_CONFIG: "dashboard/attribute-filter-config",
     INSIGHT_ON_DASHBOARD: "dashboard/insight",
     HEADER_SECTION: "dashboard/header",
@@ -183,6 +185,7 @@ const scenarios = new Map<string, ComponentType>([
     [SCENARIO_KEYS.VIS_PIVOT_TABLE_TRANSPOSED_HAS_R_ROW_TOP, PivotTableTransposeHasR_RowTop],
     [SCENARIO_KEYS.VIS_PIVOT_TABLE_TRANSPOSED_HAS_M_ROW_TOP, PivotTableTransposeHasM_RowTop],
     [SCENARIO_KEYS.VIS_PIVOT_TABLE_TRANSPOSED_HAS_C_LEFT, PivotTableTransposeHasC_Left],
+    [SCENARIO_KEYS.VIS_PIVOT_TABLE_CONDITIONAL_FORMATTING, PivotTableConditionalFormatting],
     [SCENARIO_KEYS.DASHBOARD_ATTRIBUTE_FILTER_CONFIG, DashboardFilterConfigurationScenario],
     [SCENARIO_KEYS.INSIGHT_ON_DASHBOARD, InsightOnDashboardScenario],
     [SCENARIO_KEYS.HEADER_SECTION, HeaderSectionScenario],

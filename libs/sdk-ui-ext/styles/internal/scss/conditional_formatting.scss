@@ -1,0 +1,269 @@
+// (C) 2026 GoodData Corporation
+
+.gd-cf-section__subcategory {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 5px;
+}
+
+.gd-cf-section__rules-label {
+    flex: 0 0 auto;
+    color: var(--gd-palette-complementary-6);
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.gd-cf-section__divider {
+    flex: 1 1 auto;
+    height: 1px;
+    background: var(--gd-palette-complementary-3);
+}
+
+.gd-cf-section__add {
+    flex: 0 0 auto;
+}
+
+.gd-cf-section__empty {
+    padding: 5px 0 10px;
+    color: var(--gd-palette-complementary-6);
+    font-size: 12px;
+}
+
+.gd-cf-section__rules {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 5px;
+}
+
+.gd-cf-type-icon {
+    display: inline-block;
+    flex: 0 0 auto;
+    width: 16px;
+    height: 16px;
+
+    &::before {
+        width: 16px;
+        height: 16px;
+        background-size: contain;
+    }
+}
+
+.gd-cf-rule {
+    display: flex;
+    align-items: center;
+    border-radius: 3px;
+
+    &:hover {
+        background: var(--gd-palette-complementary-2);
+    }
+
+    &:has(.gd-cf-rule__delete:hover) {
+        background: var(--gd-palette-error-dimmed);
+    }
+
+    &__body {
+        display: flex;
+        flex: 1 1 auto;
+        align-items: center;
+        gap: 5px;
+        min-width: 0;
+        padding: 5px 8px;
+        border: none;
+        background: none;
+        text-align: left;
+        cursor: pointer;
+    }
+
+    &__title {
+        overflow: hidden;
+        font-size: 12px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &__invalid {
+        flex: 0 0 auto;
+        color: var(--gd-palette-error-base);
+        font-size: 10px;
+    }
+
+    &__delete {
+        flex: 0 0 auto;
+        visibility: hidden;
+    }
+
+    &:hover &__delete,
+    &:focus-within &__delete {
+        visibility: visible;
+    }
+}
+
+.gd-cf-rule .gd-cf-rule__delete::before {
+    color: var(--gd-palette-complementary-6);
+}
+
+.gd-cf-rule .gd-cf-rule__delete:hover::before {
+    color: var(--gd-palette-error-base);
+}
+
+.gd-cf-section__anchor {
+    display: block;
+    width: 0;
+    height: 0;
+}
+
+.gd-cf-dialog {
+    display: flex;
+    flex-direction: column;
+    width: 260px;
+    max-height: 80vh;
+    overflow: hidden;
+    border: 1px solid var(--gd-palette-complementary-3);
+    border-radius: 3px;
+    background: var(--gd-palette-complementary-0);
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+
+    &__header {
+        display: flex;
+        flex: 0 0 auto;
+        align-items: center;
+        height: 36px;
+        padding: 0 5px 0 10px;
+        background: var(--gd-palette-complementary-2);
+    }
+
+    &__title {
+        flex: 1 1 auto;
+        margin: 0;
+        color: var(--gd-palette-complementary-7);
+        font-size: 11px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    &__body {
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    }
+
+    &__label {
+        color: var(--gd-palette-complementary-7);
+        font-size: 12px;
+    }
+
+    &__add-condition {
+        align-self: flex-start;
+    }
+
+    &__footer {
+        display: flex;
+        flex: 0 0 auto;
+        justify-content: flex-end;
+        gap: 10px;
+        padding: 10px;
+        border-top: 1px solid var(--gd-palette-complementary-3);
+    }
+
+    .dropdown-button,
+    .gd-input-field {
+        width: 100%;
+    }
+}
+
+.gd-cf-condition {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 5px 10px 10px;
+    border-radius: 3px;
+    background: var(--gd-palette-complementary-2);
+
+    &__header {
+        display: flex;
+        align-items: center;
+    }
+
+    &__title {
+        flex: 1 1 auto;
+        color: var(--gd-palette-complementary-7);
+        font-size: 12px;
+    }
+
+    &__range {
+        display: flex;
+        gap: 5px;
+    }
+
+    &__format-row {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    &__edit {
+        flex: 0 0 auto;
+    }
+}
+
+.gd-cf-preview {
+    display: flex;
+    flex: 1 1 auto;
+    justify-content: flex-end;
+    gap: 2px;
+
+    &__cell {
+        flex: 0 0 auto;
+        overflow: hidden;
+        padding: 4px 8px;
+        border: 1px dashed var(--gd-palette-complementary-4);
+        border-radius: 3px;
+        color: var(--gd-palette-complementary-8);
+        font-size: 12px;
+        text-align: right;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+.gd-cf-format {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px;
+    border: 1px solid var(--gd-palette-complementary-3);
+    border-radius: 3px;
+    background: var(--gd-palette-complementary-0);
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+
+    &__label {
+        color: var(--gd-palette-complementary-7);
+        font-size: 12px;
+    }
+}
+
+.gd-cf-swatch {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--gd-palette-complementary-4);
+    border-radius: 2px;
+    background: var(--gd-palette-complementary-0);
+
+    &--none {
+        background-image: linear-gradient(
+            to top right,
+            transparent calc(50% - 1px),
+            var(--gd-palette-error-base) calc(50% - 1px),
+            var(--gd-palette-error-base) calc(50% + 1px),
+            transparent calc(50% + 1px)
+        );
+    }
+}

@@ -1,14 +1,13 @@
 version: "3.7"
 services:
-    isolated-tests:
-        image: ${E2E_IMAGE_URL:-}
-        build: .
+    e2e-tests:
+        image: ${E2E_IMAGE_URL}
         entrypoint: >
             bash -c "
               EXTRA_ARGS='';
               if [ \"$$PLAYWRIGHT_UPDATE_SNAPSHOTS\" = '1' ]; then EXTRA_ARGS='--update-snapshots'; fi;
               if [ -n \"$$FILTER\" ]; then
-                npx playwright test --config ./playwright/playwright.config.mjs $$EXTRA_ARGS --grep \"$$PLAYWRIGHT_GREP\" $$(echo \"$$FILTER\" | tr ',' ' ');
+                npx playwright test --config ./playwright/playwright.config.mjs --grep \"$$PLAYWRIGHT_GREP\" $$EXTRA_ARGS $$(echo \"$$FILTER\" | tr ',' ' ');
               else
                 SHARD_ARGS='';
                 if [ -n \"$$SHARD_INDEX\" ] && [ -n \"$$SHARD_TOTAL\" ]; then SHARD_ARGS=\"--shard=$$SHARD_INDEX/$$SHARD_TOTAL\"; fi;
@@ -16,41 +15,45 @@ services:
               fi
             "
         volumes:
-            - ./recordings:/app/playwright/recordings:ro
+            - ./recordings:/app/playwright/recordings:${REC_MODE:-ro}
             - ./test-results/:/app/test-results:rw
             - ./playwright/results:/app/playwright/results:rw
             - ./nginx:/app/nginx:ro
         user: "root"
         depends_on:
-            - gooddata-ui-sdk-scenarios
-            - backend-mock
+            - application
+            - goodmock
         environment:
-            - BASE_URL=http://gooddata-ui-sdk-scenarios:9500
-            - GOODMOCK_HOST=backend-mock:8080
-            - GOODMOCK_MODE=${GOODMOCK_MODE:-replay}
-            - GDC_UI
+            - BASE_URL=http://application:9600
+            - GOODMOCK_HOST=goodmock:8080
+            - GOODMOCK_MODE
             - HOST
             - NO_COLOR
             - TIGER_API_TOKEN
+            - TIGER_DATASOURCES_NAME
             - BACKEND_ENVIRONMENT
-            - PLAYWRIGHT_UPDATE_SNAPSHOTS
+            - FIXTURE_TYPE
+            - TEST_WORKSPACE_ID
             - PLAYWRIGHT_GREP
+            - PLAYWRIGHT_UPDATE_SNAPSHOTS
             - SHARD_INDEX
             - SHARD_TOTAL
             - FILTER
 
-    gooddata-ui-sdk-scenarios:
+    application:
         image: ${IMAGE_URL}
         environment:
-            - WORKSPACE_ID
+            - WORKSPACE_ID=${TEST_WORKSPACE_ID}
+            - TEST_BACKEND
+            - TEST_BACKEND_NO_PREFIX
         volumes:
-            - ./nginx/proxy-isolated-tests.conf:/etc/nginx/extra-conf.d/proxy-isolated-tests.conf
+            - ${APP_PROXY_SRC:-./nginx/proxy-isolated-tests.conf}:${APP_PROXY_DST:-/etc/nginx/extra-conf.d/proxy-isolated-tests.conf}:ro
         depends_on:
-            - backend-mock
+            - goodmock
 
-    backend-mock:
+    goodmock:
         image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/gooddata/gooddata-goodmock:0.11.0
-        command: ${GOODMOCK_MODE:-replay}
+        command: ${GOODMOCK_MODE}
         environment:
             - REFERER_PATH=/dashboards/
-            - PROXY_HOST=${HOST:-https://staging3.intgdc.com}
+            - PROXY_HOST=${HOST}

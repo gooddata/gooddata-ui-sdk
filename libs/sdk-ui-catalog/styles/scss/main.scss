@@ -123,7 +123,13 @@ $content-font-size: 14px;
             max-width: 240px;
         }
 
-        &__object-type .gd-ui-kit-icon-button {
+        // LX-2608: these declarations and sdk-ui-kit's small icon-button rule
+        // (`.gd-ui-kit-icon-button--size-small.--type-button`) both have (0,2,0) specificity,
+        // so DOM order decides the winner. When the pluggable host preloads another app on
+        // header hover, that app's bundle re-injects kit's CSS after ours, flipping the winner
+        // and squashing these buttons to the bare 27px icon size (width/padding reset). Double
+        // the class (→0,3,0) so the catalog styling always wins, regardless of injection order.
+        &__object-type .gd-ui-kit-icon-button.gd-ui-kit-icon-button {
             --gd-icon-fill-color: var(--gd-palette-complementary-7);
             background-color: var(--gd-palette-complementary-1);
             padding: 0 15px;

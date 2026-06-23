@@ -58,6 +58,7 @@
     "analyticsCatalog.filter.reset": "รีเซ็ตตัวกรอง",
     "analyticsCatalog.column.title.label": "ชื่อเรื่อง",
     "analyticsCatalog.column.title.dataSet": "ชุดข้อมูล",
+    "analyticsCatalog.column.title.labels": "ป้ายกำกับ",
     "analyticsCatalog.column.title.createdBy": "สร้างโดย",
     "analyticsCatalog.column.title.createdAt": "สร้างเมื่อ",
     "analyticsCatalog.column.title.tags": "แท็ก",
@@ -190,5 +191,15 @@
     "analyticsCatalog.parameter.dialog.delete.body": "คุณแน่ใจหรือไม่ว่าต้องการลบ <b>{name}</b>?",
     "analyticsCatalog.parameter.dialog.delete.submit": "ลบ",
     "analyticsCatalog.parameter.delete.success": "ลบพารามิเตอร์แล้ว",
-    "analyticsCatalog.parameter.delete.error": "ไม่สามารถลบพารามิเตอร์ได้"
+    "analyticsCatalog.parameter.delete.error": "ไม่สามารถลบพารามิเตอร์ได้",
+    "analyticsCatalog.share.button": "แชร์",
+    "analyticsCatalog.share.access.row.label": "การเข้าถึง",
+    "analyticsCatalog.share.access.row.restricted": "ถูกจำกัด",
+    "analyticsCatalog.share.access.row.workspace.view": "ผู้ใช้พื้นที่ทำงานทั้งหมดสามารถดูได้",
+    "analyticsCatalog.share.access.row.workspace.share": "ผู้ใช้พื้นที่ทำงานทั้งหมดสามารถแชร์ได้",
+    "analyticsCatalog.share.access.row.sharedWith": "แชร์กับ {count, plural, other {# ผู้ใช้หรือกลุ่ม}}",
+    "analyticsCatalog.labels.more": "+{remaining} เพิ่มเติม",
+    "analyticsCatalog.labels.trigger.ariaLabel": "แสดงป้ายกำกับทั้งหมด",
+    "analyticsCatalog.labels.popup.title": "ป้ายกำกับ",
+    "analyticsCatalog.labels.popup.close": "ปิด"
 }

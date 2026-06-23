@@ -2300,7 +2300,7 @@
         "crowdinContext": "Notifications filters detail: Label for a date filter that matches only records with empty (missing) date values."
     },
     "insightPicker.searchPlaceholder": {
-        "text": "Search all visualizations\u2026",
+        "text": "Search all visualizations…",
         "crowdinContext": "Placeholder text in the insight picker search field."
     },
     "insightPicker.tabs.all": {
@@ -2374,5 +2374,217 @@
     "insightPicker.resetFilters": {
         "text": "Reset filters",
         "crowdinContext": "Button/tooltip to reset all filters in the insight picker to their defaults."
+    },
+    "objectShare.confirm.restrict.title": {
+        "text": "Restrict access?",
+        "crowdinContext": "Title of the confirm dialog shown when the user is about to switch general access from workspace-wide to restricted."
+    },
+    "objectShare.confirm.restrict.description": {
+        "text": "This will restrict access to only the people and groups listed above.",
+        "crowdinContext": "Body text of the confirm dialog explaining what restricting access does."
+    },
+    "objectShare.confirm.grantWorkspace.title": {
+        "text": "Grant workspace-wide access?",
+        "crowdinContext": "Title of the confirm dialog shown when the user is about to switch general access from restricted to workspace-wide."
+    },
+    "objectShare.confirm.grantWorkspace.description": {
+        "text": "This will grant all workspace members access to \"{title}\".",
+        "crowdinContext": "Body text of the confirm dialog explaining what granting workspace-wide access does. Placeholder is the object's title."
+    },
+    "objectShare.confirm.button": {
+        "text": "Confirm",
+        "crowdinContext": "Primary action label in the general-access confirm dialog."
+    },
+    "objectShare.toast.granteeAdded": {
+        "text": "Access added.",
+        "crowdinContext": "Toast shown after a new user or group is granted access via the share dialog."
+    },
+    "objectShare.toast.accessUpdated": {
+        "text": "Access updated.",
+        "crowdinContext": "Toast shown after a grantee's permission level was changed or the grantee was removed."
+    },
+    "objectShare.toast.generalAccessUpdated": {
+        "text": "General access updated.",
+        "crowdinContext": "Toast shown after toggling general access between restricted and all workspace members."
+    },
+    "objectShare.toast.error": {
+        "text": "Access could not be updated.",
+        "crowdinContext": "Toast shown when an access change fails."
+    },
+    "objectShare.toast.labelScopePartial": {
+        "text": "Some label access could not be saved.",
+        "crowdinContext": "Warning toast when sharing an attribute succeeded but one or more of its per-label permission writes failed."
+    },
+    "objectShare.loadError": {
+        "text": "Sharing settings couldn't be loaded. Please close and try again.",
+        "crowdinContext": "Shown inside the share dialog when the object's access list failed to load, so the empty state isn't mistaken for a real policy."
+    },
+    "properties.conditionalFormatting.title": {
+        "text": "Conditional formatting",
+        "crowdinContext": "Title of the table conditional-formatting configuration section."
+    },
+    "properties.conditionalFormatting.empty": {
+        "text": "Highlight cells or rows that match a rule.",
+        "crowdinContext": "Empty-state hint shown before any conditional-formatting rule is added."
+    },
+    "properties.conditionalFormatting.rulesLabel": {
+        "text": "Rules",
+        "crowdinContext": "Uppercase subsection label above the list of conditional-formatting rules."
+    },
+    "properties.conditionalFormatting.addRule": {
+        "text": "Add",
+        "crowdinContext": "Button (in the Rules subsection header) that opens the dialog to create a new conditional-formatting rule."
+    },
+    "properties.conditionalFormatting.rule.invalid": {
+        "text": "Column not found",
+        "crowdinContext": "Badge on a rule whose target column is no longer present on the insight."
+    },
+    "properties.conditionalFormatting.rule.edit": {
+        "text": "Edit rule",
+        "crowdinContext": "Accessible label for the button that edits a conditional-formatting rule."
+    },
+    "properties.conditionalFormatting.rule.delete": {
+        "text": "Delete rule",
+        "crowdinContext": "Accessible label for the button that deletes a conditional-formatting rule."
+    },
+    "properties.conditionalFormatting.dialog.addTitle": {
+        "text": "Add rule",
+        "crowdinContext": "Headline of the dialog when creating a new conditional-formatting rule."
+    },
+    "properties.conditionalFormatting.dialog.editTitle": {
+        "text": "Edit rule",
+        "crowdinContext": "Headline of the dialog when editing an existing conditional-formatting rule."
+    },
+    "properties.conditionalFormatting.dialog.target": {
+        "text": "When",
+        "crowdinContext": "Label above the dropdown selecting which measure or attribute a rule targets."
+    },
+    "properties.conditionalFormatting.dialog.selectTarget": {
+        "text": "Select a measure or attribute",
+        "crowdinContext": "Placeholder for the target dropdown before a measure or attribute is chosen."
+    },
+    "properties.conditionalFormatting.dialog.condition": {
+        "text": "Condition",
+        "crowdinContext": "Header label of a single condition block in the rule editor."
+    },
+    "properties.conditionalFormatting.dialog.format": {
+        "text": "Format",
+        "crowdinContext": "Label for the color/scope formatting controls of a condition."
+    },
+    "properties.conditionalFormatting.dialog.addCondition": {
+        "text": "Add condition",
+        "crowdinContext": "Button that appends another condition to the rule being edited."
+    },
+    "properties.conditionalFormatting.dialog.removeCondition": {
+        "text": "Remove condition",
+        "crowdinContext": "Accessible label for the button that removes a condition from a rule."
+    },
+    "properties.conditionalFormatting.dialog.textColor": {
+        "text": "Text",
+        "crowdinContext": "Label for the text (font) color picker of a condition."
+    },
+    "properties.conditionalFormatting.dialog.fillColor": {
+        "text": "Fill",
+        "crowdinContext": "Label for the background (fill) color picker of a condition."
+    },
+    "properties.conditionalFormatting.dialog.noColor": {
+        "text": "No color",
+        "crowdinContext": "Accessibility label for the swatch that clears a condition's color (transparent)."
+    },
+    "properties.conditionalFormatting.dialog.scope.cell": {
+        "text": "Cell",
+        "crowdinContext": "Option to apply a condition's format to the matched cell only."
+    },
+    "properties.conditionalFormatting.dialog.scope.row": {
+        "text": "Row",
+        "crowdinContext": "Option to apply a condition's format to the whole matched row."
+    },
+    "properties.conditionalFormatting.dialog.value": {
+        "text": "Value",
+        "crowdinContext": "Placeholder for a condition's threshold value input."
+    },
+    "properties.conditionalFormatting.dialog.from": {
+        "text": "From",
+        "crowdinContext": "Placeholder for the lower bound of a between/not-between condition."
+    },
+    "properties.conditionalFormatting.dialog.to": {
+        "text": "To",
+        "crowdinContext": "Placeholder for the upper bound of a between/not-between condition."
+    },
+    "properties.conditionalFormatting.dialog.cancel": {
+        "text": "Cancel",
+        "crowdinContext": "Button that discards changes in the conditional-formatting rule dialog."
+    },
+    "properties.conditionalFormatting.dialog.save": {
+        "text": "Save",
+        "crowdinContext": "Button that saves the conditional-formatting rule being edited."
+    },
+    "properties.conditionalFormatting.operator.all": {
+        "text": "All values",
+        "crowdinContext": "Conditional-formatting operator that always matches."
+    },
+    "properties.conditionalFormatting.operator.equalTo": {
+        "text": "Equal to",
+        "crowdinContext": "Conditional-formatting comparison operator."
+    },
+    "properties.conditionalFormatting.operator.notEqualTo": {
+        "text": "Not equal to",
+        "crowdinContext": "Conditional-formatting comparison operator."
+    },
+    "properties.conditionalFormatting.operator.greaterThan": {
+        "text": "Greater than",
+        "crowdinContext": "Conditional-formatting numeric operator."
+    },
+    "properties.conditionalFormatting.operator.greaterThanOrEqualTo": {
+        "text": "Greater than or equal to",
+        "crowdinContext": "Conditional-formatting numeric operator."
+    },
+    "properties.conditionalFormatting.operator.lessThan": {
+        "text": "Less than",
+        "crowdinContext": "Conditional-formatting numeric operator."
+    },
+    "properties.conditionalFormatting.operator.lessThanOrEqualTo": {
+        "text": "Less than or equal to",
+        "crowdinContext": "Conditional-formatting numeric operator."
+    },
+    "properties.conditionalFormatting.operator.between": {
+        "text": "Between",
+        "crowdinContext": "Conditional-formatting numeric range operator."
+    },
+    "properties.conditionalFormatting.operator.notBetween": {
+        "text": "Not between",
+        "crowdinContext": "Conditional-formatting numeric range operator."
+    },
+    "properties.conditionalFormatting.operator.contains": {
+        "text": "Contains",
+        "crowdinContext": "Conditional-formatting text operator."
+    },
+    "properties.conditionalFormatting.operator.notContains": {
+        "text": "Does not contain",
+        "crowdinContext": "Conditional-formatting text operator."
+    },
+    "properties.conditionalFormatting.operator.startsWith": {
+        "text": "Starts with",
+        "crowdinContext": "Conditional-formatting text operator."
+    },
+    "properties.conditionalFormatting.operator.notStartsWith": {
+        "text": "Does not start with",
+        "crowdinContext": "Conditional-formatting text operator."
+    },
+    "properties.conditionalFormatting.operator.endsWith": {
+        "text": "Ends with",
+        "crowdinContext": "Conditional-formatting text operator."
+    },
+    "properties.conditionalFormatting.operator.notEndsWith": {
+        "text": "Does not end with",
+        "crowdinContext": "Conditional-formatting text operator."
+    },
+    "properties.conditionalFormatting.operator.isEmpty": {
+        "text": "Is empty",
+        "crowdinContext": "Conditional-formatting operator matching empty cells."
+    },
+    "properties.conditionalFormatting.operator.isNotEmpty": {
+        "text": "Is not empty",
+        "crowdinContext": "Conditional-formatting operator matching non-empty cells."
     }
 }

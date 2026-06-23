@@ -28,6 +28,11 @@ export interface IUiLabelsListItem {
 export interface IUiLabelsListProps {
     /** Label items to render in source order. */
     items: ReadonlyArray<IUiLabelsListItem>;
+    /**
+     * Whether to render the uppercase "LABELS" heading. Defaults to `true`.
+     * Set `false` when a wrapping popover already supplies the title.
+     */
+    showHeading?: boolean;
     /** Test id forwarded to the root element. */
     dataTestId?: string;
 }
@@ -38,7 +43,7 @@ export interface IUiLabelsListProps {
  *
  * @internal
  */
-export function UiLabelsList({ items, dataTestId }: IUiLabelsListProps) {
+export function UiLabelsList({ items, showHeading = true, dataTestId }: IUiLabelsListProps) {
     const intl = useIntl();
     const suffixFor = (kind: LabelRowKind | undefined) => {
         if (!kind) return undefined;
@@ -48,7 +53,9 @@ export function UiLabelsList({ items, dataTestId }: IUiLabelsListProps) {
     };
     return (
         <div className={b()} data-testid={dataTestId}>
-            <div className={e("heading")}>{intl.formatMessage(olpLabelMessages.listHeading)}</div>
+            {showHeading ? (
+                <div className={e("heading")}>{intl.formatMessage(olpLabelMessages.listHeading)}</div>
+            ) : null}
             <div className={e("items")} role="list">
                 {items.map((item) => (
                     <div key={item.id} role="listitem">

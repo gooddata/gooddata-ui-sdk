@@ -19,7 +19,13 @@ import {
     insightSanitize,
     insightSorts,
 } from "@gooddata/sdk-model";
-import { BucketNames, type VisualizationEnvironment, VisualizationTypes } from "@gooddata/sdk-ui";
+import {
+    BucketNames,
+    type DataViewFacade,
+    type ILoadingState,
+    type VisualizationEnvironment,
+    VisualizationTypes,
+} from "@gooddata/sdk-ui";
 import {
     type ColumnHeadersPosition,
     type ColumnWidthItem,
@@ -28,6 +34,7 @@ import {
 import {
     CorePivotTableNext,
     type ICorePivotTableNextProps,
+    type PivotTableNextConditionalFormattingConfig,
     type PivotTableNextConfig,
 } from "@gooddata/sdk-ui-pivot/next";
 
@@ -59,6 +66,7 @@ import { generateDimensions } from "../../../utils/dimensions.js";
 import {
     getColumnHeadersPositionFromProperties,
     getColumnWidthsFromProperties,
+    getConditionalFormattingFromProperties,
     getGrandTotalsPositionFromProperties,
     getMeasureGroupDimensionFromProperties,
     getPageSizeFromProperties,
@@ -73,6 +81,7 @@ import {
     getPivotTableNextMeasuresLimit,
     setPivotTableNextUiConfig,
 } from "../../../utils/uiConfigHelpers/pivotTableNextUiConfigHelper.js";
+import { buildTitlesByLocalId } from "../../configurationControls/conditionalFormatting/conditionalFormattingModel.js";
 import { PivotTableConfigurationPanel } from "../../configurationPanels/PivotTableConfigurationPanel.js";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
 import {
@@ -130,6 +139,9 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
     private readonly settings: ISettings;
     private backendCapabilities: IBackendCapabilities;
     private environment: VisualizationEnvironment | undefined;
+    // Resolved from the data view (attribute titles aren't on the insight). Populated on data view;
+    // the config panel re-renders on load completion and reads it.
+    private titlesByLocalId: Record<string, string> = {};
 
     constructor(props: IVisConstruct) {
         super(props);
@@ -321,6 +333,24 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
         });
     }
 
+    // Capture data-view column titles (notably attribute names, absent from the insight). On initial
+    // load this fires *after* onLoadingChanged(false) has already re-rendered the panel, so re-render
+    // it here to surface the resolved titles instead of leaving fallback names until the next render.
+    private handleDataView = (dataView: DataViewFacade): void => {
+        this.onDataView(dataView);
+        this.titlesByLocalId = buildTitlesByLocalId(dataView);
+        this.renderConfigurationPanel(this.currentInsight, this.currentOptions);
+    };
+
+    // A new execution (e.g. the insight's columns changed) begins with isLoading=true; drop stale
+    // titles so the config panel never shows a previous insight's names. handleDataView repopulates.
+    private handleLoadingChanged = (loadingState: ILoadingState): void => {
+        if (loadingState.isLoading) {
+            this.titlesByLocalId = {};
+        }
+        this.onLoadingChanged(loadingState);
+    };
+
     private createCorePivotTableProps = () => {
         return {
             intl: this.intl,
@@ -329,11 +359,11 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
 
             onDrill: this.onDrill,
             afterRender: this.afterRender,
-            onLoadingChanged: this.onLoadingChanged,
+            onLoadingChanged: this.handleLoadingChanged,
             pushData: this.handlePushData,
             onError: this.onError,
             onExportReady: this.onExportReady,
-            onDataView: this.onDataView,
+            onDataView: this.handleDataView,
             onColumnResized: this.onColumnResized,
         };
     };
@@ -403,7 +433,8 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
         const growToFit = this.environment === DASHBOARDS_ENVIRONMENT;
         const isInEditMode = config?.isInEditMode;
         const pagination = getPaginationFromProperties(insightProperties(insight));
-        const tableConfig: PivotTableNextConfig = {
+        const enableConditionalFormatting = this.settings.enableConditionalFormatting ?? false;
+        const tableConfig: PivotTableNextConfig & PivotTableNextConditionalFormattingConfig = {
             ...createPivotTableNextConfig(config, this.environment!, this.settings),
             ...customVisualizationConfig,
             measureGroupDimension,
@@ -419,6 +450,13 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
             grandTotalsPosition: getGrandTotalsPositionFromProperties(insightProperties(insight)),
             pagination,
             enableCellSelection: !isInEditMode,
+            // Gated behind the feature flag: when disabled, never pass any CF config so an insight
+            // saved with rules (or a runtime InsightView config) renders plain, with no UI to edit it.
+            // Prefer a runtime config (InsightView config prop) over the insight's saved rules.
+            conditionalFormatting: enableConditionalFormatting
+                ? (customVisualizationConfig?.conditionalFormatting ??
+                  getConditionalFormattingFromProperties(insightProperties(insight)))
+                : undefined,
         };
 
         // Only pass pageSize when pagination is enabled
@@ -457,6 +495,7 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
                     properties={this.visualizationProperties}
                     propertiesMeta={this.propertiesMeta}
                     insight={insight}
+                    titlesByLocalId={this.titlesByLocalId}
                     pushData={this.handlePushData}
                     isError={this.getIsError()}
                     isLoading={this.isLoading}

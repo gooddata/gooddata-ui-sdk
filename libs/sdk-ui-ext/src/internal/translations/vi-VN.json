@@ -592,5 +592,16 @@
     "insightPicker.sortDirection.ascending": "Tăng dần",
     "insightPicker.sortDirection.descending": "Giảm dần",
     "insightPicker.menu.actions": "Hành động",
-    "insightPicker.resetFilters": "Đặt lại bộ lọc"
+    "insightPicker.resetFilters": "Đặt lại bộ lọc",
+    "objectShare.confirm.restrict.title": "Hạn chế quyền truy cập?",
+    "objectShare.confirm.restrict.description": "Điều này sẽ hạn chế quyền truy cập chỉ cho những người và nhóm được liệt kê ở trên.",
+    "objectShare.confirm.grantWorkspace.title": "Cấp quyền truy cập trên toàn không gian làm việc?",
+    "objectShare.confirm.grantWorkspace.description": "Điều này sẽ cấp cho tất cả thành viên không gian làm việc quyền truy cập vào \"{title}\".",
+    "objectShare.confirm.button": "Xác nhận",
+    "objectShare.toast.granteeAdded": "Đã thêm quyền truy cập.",
+    "objectShare.toast.accessUpdated": "Đã cập nhật quyền truy cập.",
+    "objectShare.toast.generalAccessUpdated": "Đã cập nhật quyền truy cập chung.",
+    "objectShare.toast.error": "Không thể cập nhật quyền truy cập.",
+    "objectShare.toast.labelScopePartial": "Không thể lưu một số quyền truy cập vào nhãn.",
+    "objectShare.loadError": "Không thể tải cài đặt chia sẻ. Vui lòng đóng và thử lại."
 }

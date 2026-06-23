@@ -592,5 +592,16 @@
     "insightPicker.sortDirection.ascending": "Aufsteigend",
     "insightPicker.sortDirection.descending": "Absteigend",
     "insightPicker.menu.actions": "Aktionen",
-    "insightPicker.resetFilters": "Filter zurücksetzen"
+    "insightPicker.resetFilters": "Filter zurücksetzen",
+    "objectShare.confirm.restrict.title": "Zugriff beschränken?",
+    "objectShare.confirm.restrict.description": "Dadurch wird der Zugriff auf die oben aufgeführten Personen und Gruppen beschränkt.",
+    "objectShare.confirm.grantWorkspace.title": "Workspace-weiten Zugriff gewähren?",
+    "objectShare.confirm.grantWorkspace.description": "Dadurch erhalten alle Workspace-Mitglieder Zugriff auf \"{title}\".",
+    "objectShare.confirm.button": "Bestätigen",
+    "objectShare.toast.granteeAdded": "Zugriff hinzugefügt.",
+    "objectShare.toast.accessUpdated": "Zugriff aktualisiert.",
+    "objectShare.toast.generalAccessUpdated": "Allgemeiner Zugriff aktualisiert.",
+    "objectShare.toast.error": "Zugriff konnte nicht aktualisiert werden.",
+    "objectShare.toast.labelScopePartial": "Einiger Zugriff auf Beschriftungen konnte nicht gespeichert werden.",
+    "objectShare.loadError": "Freigabeeinstellungen konnten nicht geladen werden. Bitte schließen und erneut versuchen."
 }

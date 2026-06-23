@@ -58,6 +58,7 @@
     "analyticsCatalog.filter.reset": "Atur ulang filter",
     "analyticsCatalog.column.title.label": "Judul",
     "analyticsCatalog.column.title.dataSet": "Dataset",
+    "analyticsCatalog.column.title.labels": "Label",
     "analyticsCatalog.column.title.createdBy": "Dibuat oleh",
     "analyticsCatalog.column.title.createdAt": "Dibuat pada",
     "analyticsCatalog.column.title.tags": "Tag",
@@ -190,5 +191,15 @@
     "analyticsCatalog.parameter.dialog.delete.body": "Apakah Anda yakin ingin menghapus <b>{name}</b>?",
     "analyticsCatalog.parameter.dialog.delete.submit": "Hapus",
     "analyticsCatalog.parameter.delete.success": "Parameter dihapus.",
-    "analyticsCatalog.parameter.delete.error": "Parameter tidak dapat dihapus."
+    "analyticsCatalog.parameter.delete.error": "Parameter tidak dapat dihapus.",
+    "analyticsCatalog.share.button": "Bagikan",
+    "analyticsCatalog.share.access.row.label": "Akses",
+    "analyticsCatalog.share.access.row.restricted": "Dibatasi",
+    "analyticsCatalog.share.access.row.workspace.view": "Semua pengguna ruang kerja dapat melihat",
+    "analyticsCatalog.share.access.row.workspace.share": "Semua pengguna ruang kerja dapat membagikan",
+    "analyticsCatalog.share.access.row.sharedWith": "Dibagikan dengan {count, plural, other {# pengguna atau grup}}",
+    "analyticsCatalog.labels.more": "+{remaining} lagi",
+    "analyticsCatalog.labels.trigger.ariaLabel": "Tampilkan semua label",
+    "analyticsCatalog.labels.popup.title": "Label",
+    "analyticsCatalog.labels.popup.close": "Tutup"
 }

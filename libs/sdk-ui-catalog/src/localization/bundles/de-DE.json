@@ -58,6 +58,7 @@
     "analyticsCatalog.filter.reset": "Filter zurücksetzen",
     "analyticsCatalog.column.title.label": "Titel",
     "analyticsCatalog.column.title.dataSet": "Dataset",
+    "analyticsCatalog.column.title.labels": "Beschriftung",
     "analyticsCatalog.column.title.createdBy": "Erstellt von",
     "analyticsCatalog.column.title.createdAt": "Erstellt am",
     "analyticsCatalog.column.title.tags": "Tags",
@@ -190,5 +191,15 @@
     "analyticsCatalog.parameter.dialog.delete.body": "Möchten Sie <b>{name}</b> wirklich löschen?",
     "analyticsCatalog.parameter.dialog.delete.submit": "Löschen",
     "analyticsCatalog.parameter.delete.success": "Parameter gelöscht.",
-    "analyticsCatalog.parameter.delete.error": "Parameter konnte nicht gelöscht werden."
+    "analyticsCatalog.parameter.delete.error": "Parameter konnte nicht gelöscht werden.",
+    "analyticsCatalog.share.button": "Teilen",
+    "analyticsCatalog.share.access.row.label": "Zugriff",
+    "analyticsCatalog.share.access.row.restricted": "Eingeschränkt",
+    "analyticsCatalog.share.access.row.workspace.view": "Alle Workspace-Benutzer können anzeigen",
+    "analyticsCatalog.share.access.row.workspace.share": "Alle Workspace-Benutzer können teilen",
+    "analyticsCatalog.share.access.row.sharedWith": "Geteilt mit {count, plural, one {# Benutzer oder Gruppe} other {# Benutzern oder Gruppen}}",
+    "analyticsCatalog.labels.more": "+{remaining} weitere",
+    "analyticsCatalog.labels.trigger.ariaLabel": "Alle Beschriftungen anzeigen",
+    "analyticsCatalog.labels.popup.title": "Beschriftung",
+    "analyticsCatalog.labels.popup.close": "Schließen"
 }

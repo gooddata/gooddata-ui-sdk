@@ -27,7 +27,7 @@ TIGER_API_TOKEN=<token>
 3. In your browser, specify the scenario you want to view:
 
     ```
-    http://localhost:9500/gooddata-ui-sdk?scenario=dashboard/dashboard
+    http://localhost:9600/gooddata-ui-sdk?scenario=dashboard/dashboard
     ```
 
 ### Reference workspace
@@ -56,7 +56,7 @@ In production builds, the HTML includes a `<script src="./config.js"></script>` 
 ```bash
 npm run dist && npm run _phase:pack-build
 docker build -t sdk-ui-tests-app .
-docker run -e WORKSPACE_ID=<your-workspace-id> -p 9500:9500 sdk-ui-tests-app
+docker run -e WORKSPACE_ID=<your-workspace-id> -p 9600:9600 sdk-ui-tests-app
 ```
 
 ### CI flow

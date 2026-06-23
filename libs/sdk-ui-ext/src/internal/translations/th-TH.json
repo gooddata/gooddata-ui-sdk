@@ -592,5 +592,16 @@
     "insightPicker.sortDirection.ascending": "จากน้อยไปมาก",
     "insightPicker.sortDirection.descending": "จากมากไปน้อย",
     "insightPicker.menu.actions": "การดำเนินการ",
-    "insightPicker.resetFilters": "รีเซ็ตตัวกรอง"
+    "insightPicker.resetFilters": "รีเซ็ตตัวกรอง",
+    "objectShare.confirm.restrict.title": "จำกัดการเข้าถึงหรือไม่?",
+    "objectShare.confirm.restrict.description": "การดำเนินการนี้จะจำกัดการเข้าถึงไว้เฉพาะบุคคลและกลุ่มที่ระบุไว้ด้านบน",
+    "objectShare.confirm.grantWorkspace.title": "ให้สิทธิ์การเข้าถึงทั่วทั้งพื้นที่ทำงานหรือไม่?",
+    "objectShare.confirm.grantWorkspace.description": "การดำเนินการนี้จะให้สิทธิ์การเข้าถึง \"{title}\" แก่สมาชิกพื้นที่ทำงานทั้งหมด",
+    "objectShare.confirm.button": "ยืนยัน",
+    "objectShare.toast.granteeAdded": "เพิ่มสิทธิ์การเข้าถึงแล้ว",
+    "objectShare.toast.accessUpdated": "อัปเดตสิทธิ์การเข้าถึงแล้ว",
+    "objectShare.toast.generalAccessUpdated": "อัปเดตการเข้าถึงทั่วไปแล้ว",
+    "objectShare.toast.error": "ไม่สามารถอัปเดตสิทธิ์การเข้าถึงได้",
+    "objectShare.toast.labelScopePartial": "ไม่สามารถบันทึกการเข้าถึงป้ายกำกับบางรายการได้",
+    "objectShare.loadError": "ไม่สามารถโหลดการตั้งค่าการแชร์ได้ โปรดปิดแล้วลองอีกครั้ง"
 }

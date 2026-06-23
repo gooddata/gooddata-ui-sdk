@@ -592,5 +592,16 @@
     "insightPicker.sortDirection.ascending": "Artan",
     "insightPicker.sortDirection.descending": "Azalan",
     "insightPicker.menu.actions": "Eylemler",
-    "insightPicker.resetFilters": "Filtreleri sıfırla"
+    "insightPicker.resetFilters": "Filtreleri sıfırla",
+    "objectShare.confirm.restrict.title": "Erişimi kısıtla?",
+    "objectShare.confirm.restrict.description": "Bu, erişimi yalnızca yukarıda listelenen kişiler ve gruplarla kısıtlar.",
+    "objectShare.confirm.grantWorkspace.title": "Çalışma alanı genelinde erişim verilsin mi?",
+    "objectShare.confirm.grantWorkspace.description": "Bu, tüm çalışma alanı üyelerine \"{title}\" için erişim verir.",
+    "objectShare.confirm.button": "Onayla",
+    "objectShare.toast.granteeAdded": "Erişim eklendi.",
+    "objectShare.toast.accessUpdated": "Erişim güncellendi.",
+    "objectShare.toast.generalAccessUpdated": "Genel erişim güncellendi.",
+    "objectShare.toast.error": "Erişim güncellenemedi.",
+    "objectShare.toast.labelScopePartial": "Bazı etiket erişimleri kaydedilemedi.",
+    "objectShare.loadError": "Paylaşım ayarları yüklenemedi. Lütfen kapatıp yeniden deneyin."
 }

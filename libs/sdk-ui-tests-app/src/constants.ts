@@ -12,7 +12,7 @@
 // The ID of workspace that is selected by default in the optional workspace picker component (located in the web
 // application header). It is also a default setting for script that refreshes MD data used by the application.
 // MD script shows list of available workspaces on backend in the case when the value is not set to any ID.
-export const workspace = WORKSPACE_ID || window.WORKSPACE_ID;
+export const workspace = WORKSPACE_ID || window.WORKSPACE_ID || "c76e0537d0614abb0027f7c992656b964922506f";
 
 // RegExp used by optional workspace picker component (located in the web application header) to filter out
 // workspaces that should not be rendered to the application user. Only the workspaces with title that match

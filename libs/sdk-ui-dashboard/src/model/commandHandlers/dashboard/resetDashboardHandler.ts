@@ -206,11 +206,7 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
 
         const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
         const filterViews: ReturnType<typeof selectFilterViews> = yield select(selectFilterViews);
-        const dashboardWithUpdatedFilterContext = applyDefaultFilterView(
-            persistedDashboard,
-            filterViews,
-            settings,
-        );
+        const dashboardWithUpdatedFilterContext = applyDefaultFilterView(persistedDashboard, filterViews);
 
         const insightRefsFromWidgets = insightReferencesFromDashboard(dashboardWithUpdatedFilterContext);
         const uniqueInsightRefsFromWidgets = uniqWith(insightRefsFromWidgets, areObjRefsEqual);

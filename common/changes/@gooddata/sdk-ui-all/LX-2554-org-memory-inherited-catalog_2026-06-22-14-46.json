@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "comment": "Add enableOrgLevelAIMemory feature flag for inherited org AI memory",
+      "type": "none",
+      "packageName": "@gooddata/sdk-ui-all"
+    }
+  ],
+  "packageName": "@gooddata/sdk-ui-all",
+  "email": "roman.rakus@gooddata.com"
+}

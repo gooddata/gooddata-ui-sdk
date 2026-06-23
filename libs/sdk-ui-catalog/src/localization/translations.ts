@@ -2,11 +2,13 @@
 
 import { memoize, merge } from "lodash-es";
 
+import type { ITranslations } from "@gooddata/sdk-ui";
+// sdk-ui-ext bundles its own strings (e.g. the object-share dialog) on top of sdk-ui's,
+// so resolving through ext gives us both layers in one merge.
 import {
-    DEFAULT_MESSAGES as DEFAULT_MESSAGES_SDK_UI,
-    type ITranslations,
-    resolveMessages as resolveMessagesSdkUi,
-} from "@gooddata/sdk-ui";
+    DEFAULT_MESSAGES as DEFAULT_MESSAGES_SDK_UI_EXT,
+    resolveMessages as resolveMessagesSdkUiExt,
+} from "@gooddata/sdk-ui-ext/internal";
 import { removeMetadata } from "@gooddata/util";
 
 import { en_US } from "./bundles/en-US.localization-bundle.js";
@@ -51,11 +53,11 @@ const asyncCatalogTranslations: { [locale: string]: () => Promise<ITranslations>
  */
 const resolveMessagesInternal = async (locale: string): Promise<ITranslations> => {
     const catalogLoader = asyncCatalogTranslations[locale] || asyncCatalogTranslations["en-US"];
-    const [catalogTranslations, sdkUiTranslations] = await Promise.all([
+    const [catalogTranslations, sdkUiExtTranslations] = await Promise.all([
         catalogLoader!(),
-        resolveMessagesSdkUi(locale),
+        resolveMessagesSdkUiExt(locale),
     ]);
-    return merge({}, sdkUiTranslations, catalogTranslations);
+    return merge({}, sdkUiExtTranslations, catalogTranslations);
 };
 
 /**
@@ -69,7 +71,7 @@ export const resolveMessages: (locale: string) => Promise<ITranslations> = memoi
 export const DEFAULT_LANGUAGE = "en-US";
 export const DEFAULT_MESSAGES = {
     [DEFAULT_LANGUAGE]: {
-        ...DEFAULT_MESSAGES_SDK_UI[DEFAULT_LANGUAGE],
+        ...DEFAULT_MESSAGES_SDK_UI_EXT[DEFAULT_LANGUAGE],
         ...removeMetadata(en_US),
     },
 };

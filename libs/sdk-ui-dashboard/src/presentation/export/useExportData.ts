@@ -282,6 +282,12 @@ export const useMetaExportData = (): MetaExportData | undefined => {
                 "data-export-meta-type": "dashboard-filter",
                 "data-export-meta-filter-type": "measureValue",
             },
+            parameter: {
+                "data-export-meta-type": "dashboard-filter",
+                "data-export-meta-filter-type": "parameter",
+                // No per-row fetch like filters. A rendered row is always complete.
+                "data-export-meta-filter-status": "loaded",
+            },
             filter: {
                 name: {
                     "data-export-meta-type": "dashboard-filter-name",
