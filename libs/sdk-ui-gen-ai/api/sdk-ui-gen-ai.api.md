@@ -236,7 +236,7 @@ export function GenAIAssistant(props: GenAIAssistantProps): JSX.Element;
 // @public
 export type GenAIAssistantProps = Omit<GenAiStoreProps, "children"> & {
     locale?: string;
-    onLinkClick?: (linkClickEvent: LinkHandlerEvent) => void;
+    onLinkClick?: (linkClickEvent: LinkHandlerEvent) => string | undefined;
     allowNativeLinks?: boolean;
     disableManage?: boolean;
     disableAnalyze?: boolean;
@@ -272,6 +272,8 @@ export type GenAiStoreProps = {
     workspace?: string;
     catalogItems?: CatalogItem[];
     settings?: IUserWorkspaceSettings;
+    onLinkClick?: (linkClickEvent: LinkHandlerEvent) => string | undefined;
+    allowNativeLinks?: boolean;
     eventHandlers?: ChatEventHandler[];
     objectTypes?: GenAIObjectType[];
     includeTags?: string[];

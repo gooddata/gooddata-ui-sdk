@@ -1187,6 +1187,29 @@
             animation: pulsate-opacity 1s infinite ease-in-out;
         }
     }
+
+    &--content--loading {
+        position: relative;
+        padding-left: 15px;
+
+        &::before {
+            content: "";
+            position: absolute;
+            left: 5px;
+            top: 0;
+            bottom: 16px;
+            width: 1px;
+            background-color: kit-variables.$gd-color-state-blank;
+            opacity: 0.3;
+        }
+
+        &--spinner {
+            svg {
+                width: 16px;
+                height: 16px;
+            }
+        }
+    }
 }
 
 .gd-gen-ai-chat__messages__conversation {

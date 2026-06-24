@@ -221,6 +221,7 @@ export function DrillSelectDropdown({
                             onUnhandledKeyDown={handleKeyDown}
                             maxHeight={160}
                             containerBottomPadding="medium"
+                            size="small"
                             ariaAttributes={{
                                 id: "drill-select-menu",
                                 "aria-label": intl.formatMessage({

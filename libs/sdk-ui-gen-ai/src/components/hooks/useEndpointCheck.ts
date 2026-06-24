@@ -7,7 +7,7 @@ import { useBackendStrict, useCancelablePromise } from "@gooddata/sdk-ui";
 
 import { hasUnsupportedActiveProvider } from "../utils/modelCheckUtility.js";
 
-export function useEndpointCheck(settings: IUserWorkspaceSettings | undefined, canFullControl: boolean) {
+export function useEndpointCheck(settings: IUserWorkspaceSettings | undefined, canFullControl?: boolean) {
     const backend = useBackendStrict();
     const [tries, retry] = useReducer((x) => x + 1, 0);
 

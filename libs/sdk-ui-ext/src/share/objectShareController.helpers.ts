@@ -61,6 +61,7 @@ export function granteesFromAccessList(list: IObjectAccessList | undefined): IOb
                 email: g.user.email,
                 level,
                 effectivePermission: effectivePermissionAbove(level, g.inheritedPermissions),
+                inheritsShare: g.inheritedPermissions.includes("SHARE"),
             });
         } else if (isGranularUserGroupAccess(g)) {
             const level = directLevel(g.permissions);
@@ -71,63 +72,11 @@ export function granteesFromAccessList(list: IObjectAccessList | undefined): IOb
                 name: g.userGroup.name ?? objRefToString(g.userGroup.ref),
                 level,
                 effectivePermission: effectivePermissionAbove(level, g.inheritedPermissions),
+                inheritsShare: g.inheritedPermissions.includes("SHARE"),
             });
         }
     }
     return out;
-}
-
-/**
- * Optimistic overlay entry for a single grantee id. `"set"` carries the intended
- * row (a fresh add or a level change); `"remove"` marks a removal. `pending` is
- * true while the backend write is in flight.
- */
-export type IGranteeOverlayEntry =
-    | { op: "set"; grantee: IObjectShareGrantee; pending: boolean }
-    | { op: "remove"; pending: boolean };
-
-/**
- * Merge the committed rows with the optimistic overlay: `set` replaces/inserts a
- * row (annotated pending), `remove` drops it. Entries with no committed effect
- * still apply so the UI reflects the user's intent during read-after-write lag.
- */
-export function mergeOverlay(
-    committed: IObjectShareGrantee[],
-    overlay: Record<string, IGranteeOverlayEntry>,
-): IObjectShareGrantee[] {
-    const byId = new Map(committed.map((g) => [g.id, g]));
-    for (const [id, entry] of Object.entries(overlay)) {
-        if (entry.op === "remove") {
-            byId.delete(id);
-        } else {
-            byId.set(id, { ...entry.grantee, pending: entry.pending ? "saving" : undefined });
-        }
-    }
-    return [...byId.values()];
-}
-
-/**
- * Drop overlay entries the freshly-fetched list now confirms: a `set` whose
- * committed level matches the intended level, or a `remove` whose grantee is
- * gone. Unconfirmed entries are kept (server still lagging) but lose `pending`
- * so the row shows the intended value without a spinner.
- */
-export function reconcileOverlay(
-    committed: IObjectShareGrantee[],
-    overlay: Record<string, IGranteeOverlayEntry>,
-): Record<string, IGranteeOverlayEntry> {
-    const byId = new Map(committed.map((g) => [g.id, g]));
-    const next: Record<string, IGranteeOverlayEntry> = {};
-    for (const [id, entry] of Object.entries(overlay)) {
-        if (entry.op === "remove") {
-            if (byId.has(id)) {
-                next[id] = { op: "remove", pending: false };
-            }
-        } else if (byId.get(id)?.level !== entry.grantee.level) {
-            next[id] = { op: "set", grantee: entry.grantee, pending: false };
-        }
-    }
-    return next;
 }
 
 export function toGranularGrantee(

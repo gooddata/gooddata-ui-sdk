@@ -399,6 +399,104 @@ describe("Dashboard", () => {
     );
 
     it(
+        "should map unset pluginMode to adaptive when moduleFederationIntegration is provided",
+        async () => {
+            const { DashboardLoaderBridge } =
+                await import("../visualizations/internal/DashboardLoaderBridge.js");
+            const extraPlugin: IEmbeddedPlugin = { factory: vi.fn() };
+            const moduleFederationIntegration = createModuleFederationIntegration();
+            const props = createBridgeProps({
+                pluginMode: undefined,
+                extraPlugins: [extraPlugin],
+                moduleFederationIntegration,
+            });
+
+            const rendered = await renderReact(createElement(DashboardLoaderBridge, props));
+
+            expect(useDashboardLoaderMock).toHaveBeenCalledTimes(1);
+            expect(useDashboardLoaderMock).toHaveBeenCalledWith({
+                backend: props.backend,
+                workspace: props.workspace,
+                dashboard: props.dashboard,
+                config: props.config,
+                loadingMode: "adaptive",
+                extraPlugins: [extraPlugin],
+                adaptiveLoadOptions: {
+                    moduleFederationIntegration,
+                },
+            });
+            expect(props.onError).not.toHaveBeenCalled();
+            expect(props.onWarning).not.toHaveBeenCalled();
+
+            await rendered.unmount();
+        },
+        timeout,
+    );
+
+    it(
+        "should fall back to staticOnly and warn when pluginMode is unset and moduleFederationIntegration is missing",
+        async () => {
+            const { DashboardLoaderBridge } =
+                await import("../visualizations/internal/DashboardLoaderBridge.js");
+            const extraPlugin: IEmbeddedPlugin = { factory: vi.fn() };
+            const props = createBridgeProps({
+                pluginMode: undefined,
+                extraPlugins: [extraPlugin],
+                moduleFederationIntegration: undefined,
+            });
+
+            const rendered = await renderReact(createElement(DashboardLoaderBridge, props));
+
+            // The dashboard still loads (with static plugins) instead of rendering null.
+            expect(useDashboardLoaderMock).toHaveBeenCalledTimes(1);
+            expect(useDashboardLoaderMock).toHaveBeenCalledWith({
+                backend: props.backend,
+                workspace: props.workspace,
+                dashboard: props.dashboard,
+                config: props.config,
+                loadingMode: "staticOnly",
+                extraPlugins: [extraPlugin],
+            });
+            // No hard failure - only an actionable warning about skipped backend plugins.
+            expect(props.onError).not.toHaveBeenCalled();
+            expect(props.onWarning).toHaveBeenCalledWith({
+                phase: "pluginMode",
+                ignoredSource: "backendPlugins",
+                pluginMode: "all",
+                dashboard: "dashboard-id",
+                message: expect.stringContaining("moduleFederationIntegration"),
+            });
+
+            await rendered.unmount();
+        },
+        timeout,
+    );
+
+    it(
+        "should emit init error when explicit all mode misses moduleFederationIntegration",
+        async () => {
+            const { DashboardLoaderBridge } =
+                await import("../visualizations/internal/DashboardLoaderBridge.js");
+            const props = createBridgeProps({
+                pluginMode: "all",
+            });
+
+            const rendered = await renderReact(createElement(DashboardLoaderBridge, props));
+
+            expect(useDashboardLoaderMock).not.toHaveBeenCalled();
+            expect(props.onError).toHaveBeenCalledWith({
+                phase: "init",
+                dashboard: "dashboard-id",
+                message: expect.stringContaining("moduleFederationIntegration"),
+                cause: expect.any(Error),
+            });
+
+            await rendered.unmount();
+        },
+        timeout,
+    );
+
+    it(
         "should call onReady again when the same dashboard gets a new runtime instance",
         async () => {
             const { DashboardLoaderBridge } =

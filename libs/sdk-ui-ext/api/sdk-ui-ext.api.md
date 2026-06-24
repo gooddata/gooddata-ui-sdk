@@ -963,6 +963,7 @@ export interface IObjectShareGrantee {
     // (undocumented)
     granteeRef: ObjRef;
     id: string;
+    inheritsShare?: boolean;
     // (undocumented)
     kind: "user" | "group";
     // (undocumented)

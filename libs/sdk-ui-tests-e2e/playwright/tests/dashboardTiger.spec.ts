@@ -108,7 +108,7 @@ test.topLevelDescribe(
                 },
                 async ({ page }) => {
                     await visit(page, "dashboard/dashboard-tiger");
-                    await expect(page.locator(".s-header-options-button")).toBeVisible();
+                    await expect(page.locator('[data-testid="s-header-options-button"]')).toBeVisible();
                 },
             );
 
@@ -119,8 +119,8 @@ test.topLevelDescribe(
                 },
                 async ({ page }) => {
                     await visit(page, "dashboard/dashboard-tiger");
-                    await expect(page.locator(".s-header-options-button")).toBeVisible();
-                    await page.locator(".s-header-options-button").click();
+                    await expect(page.locator('[data-testid="s-header-options-button"]')).toBeVisible();
+                    await page.locator('[data-testid="s-header-options-button"]').click();
                     await expect(page.locator(".s-export_to_pdf")).toBeVisible();
                     await expect(page.locator(".s-schedule_emailing")).toBeVisible();
                 },

@@ -2,7 +2,6 @@
 @use "zIndexes";
 @use "@gooddata/sdk-ui-kit/styles/scss/Bubble/variables" as bubble-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/Button/variables" as button-variables;
-@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
 .gd-drill-modal-picker-overlay-mask {
     position: absolute;
@@ -21,8 +20,6 @@
     border: 1px solid
         var(--gd-palette-complementary-3-from-theme, button-variables.$default-button-normal-border-color);
     box-shadow: bubble-variables.$bubble-boxShadow;
-    $item-padding-side: 12px;
-    $item-height: 27px;
 
     .gd-drill-modal-picker-title {
         font-weight: 400;
@@ -41,68 +38,6 @@
         overflow-y: auto;
         overscroll-behavior: contain;
         padding: 0 0 10px 0;
-    }
-
-    .gd-drill-modal-picker-list-item {
-        display: flex;
-        align-items: center;
-        height: $item-height;
-        padding: 0 10px;
-        cursor: pointer;
-        text-decoration: none;
-        background: none;
-        border: none;
-        width: 100%;
-
-        .gd-drill-modal-picker-selector-list & {
-            padding: 4px 10px;
-        }
-
-        p {
-            font-family: kit-variables.$gd-font-primary;
-            font-size: 12px;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-            color: var(--gd-palette-complementary-8, #464e56);
-
-            span {
-                color: var(--gd-palette-complementary-5, #b0beca);
-            }
-        }
-
-        .gd-drill-modal-picker-icon-wrapper {
-            height: 100%;
-        }
-
-        svg {
-            margin-left: 4px;
-            margin-right: 4px;
-            width: 12px;
-            height: 100%;
-        }
-
-        &:hover {
-            // stylelint-disable-next-line declaration-no-important
-            background: var(--gd-palette-complementary-2, #ebeff4) !important;
-
-            span {
-                color: var(--gd-palette-complementary-9-from-theme);
-            }
-        }
-
-        &.is-disabled {
-            cursor: default;
-
-            p {
-                color: var(--gd-palette-complementary-5);
-            }
-
-            &:hover {
-                // stylelint-disable-next-line declaration-no-important
-                background: none !important;
-            }
-        }
     }
 }
 

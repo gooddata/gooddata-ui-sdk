@@ -1,13 +1,12 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type MouseEvent, useCallback, useMemo, useRef, useState } from "react";
+import { type MouseEvent, useCallback, useMemo, useRef } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import { type SemanticQualityIssueAttributeName } from "@gooddata/sdk-model";
 import { useLocalStorage } from "@gooddata/sdk-ui";
-import { ObjectShareDialog, useObjectShare } from "@gooddata/sdk-ui-ext";
 import { type IUiTab, UiSkeleton, UiTabs } from "@gooddata/sdk-ui-kit";
 
 import { canEditCatalogItem } from "../catalogItem/permission.js";
@@ -27,6 +26,9 @@ import { CatalogDetailTabLineage } from "./CatalogDetailTabLineage.js";
 import { CatalogDetailTabMetadata } from "./CatalogDetailTabMetadata.js";
 import { CatalogDetailTabQuality } from "./CatalogDetailTabQuality.js";
 import { useCatalogItemUpdate } from "./hooks/useCatalogItemUpdate.js";
+import { CatalogItemAccessRow } from "./share/CatalogItemAccessRow.js";
+import { CatalogItemShareDialog } from "./share/CatalogItemShareDialog.js";
+import { CatalogItemShareProvider } from "./share/CatalogItemShareProvider.js";
 import { isShareableCatalogItem, toShareTarget } from "./share/guards.js";
 import { useShareableLabels } from "./share/useShareableLabels.js";
 import type { OpenHandlerEvent } from "./types.js";
@@ -138,33 +140,9 @@ export function CatalogDetailContent({
         () => (shareableItem ? toShareTarget(shareableItem) : undefined),
         [shareableItem],
     );
-    // Labels of the shared attribute drive the per-grantee label-scope picker.
+    // Labels of the shared attribute drive both the header info row and the per-grantee
+    // label-scope picker; fetched once here and passed to the share provider.
     const shareLabels = useShareableLabels(shareableItem);
-    // One controller drives both the dialog and the inline access row; the row
-    // reads `state.summary`, so a save inside the dialog refreshes it too.
-    // `labelsLoading`/`labelsError` keep the controller label-unresolved while labels
-    // are still pending, disabling every access-changing control (a write would
-    // otherwise diff against an empty label set and orphan real per-label grants).
-    const shareController = useObjectShare(shareTarget, {
-        labels: shareLabels.labels,
-        labelsError: shareLabels.error,
-        labelsLoading: shareLabels.loading,
-    });
-    const [isShareOpen, setIsShareOpen] = useState(false);
-    // The detail view is reused as the user navigates between objects, so reset the
-    // open dialog when the shareable target changes (or becomes non-shareable) —
-    // otherwise it would linger open on the next object. Reset during render (React's
-    // "adjust state on prop change" idiom) rather than in an effect.
-    const shareTargetKey = shareableItem?.identifier;
-    const [openForKey, setOpenForKey] = useState<string | undefined>(undefined);
-    if (isShareOpen && openForKey !== shareTargetKey) {
-        setIsShareOpen(false);
-    }
-    const openShare = useCallback(() => {
-        setOpenForKey(shareTargetKey);
-        setIsShareOpen(true);
-    }, [shareTargetKey]);
-    const closeShare = useCallback(() => setIsShareOpen(false), []);
 
     const separators = settings?.separators;
     const enableMetricFormatOverrides = Boolean(settings?.["enableMetricFormatOverrides"]);
@@ -232,119 +210,107 @@ export function CatalogDetailContent({
 
     const [selectedTabId, setSelectedTabId] = useSelectedTabId(tabs);
     return (
-        <div className="gd-analytics-catalog-detail">
-            <CatalogDetailStatus status={status} error={error}>
-                {item ? (
-                    <div
-                        className={cx("gd-analytics-catalog-detail__content", {
-                            lineage: selectedTabId === Tabs.LINEAGE,
-                        })}
-                    >
-                        <CatalogDetailHeader
-                            item={item}
-                            canEdit={canEdit}
-                            updateItemTitle={updateItemTitle}
-                            updateItemDescription={updateItemDescription}
-                            isDescriptionGenerationEnabled={isDescriptionGenerationEnabled}
-                            headerRef={headerRef}
-                            labels={shareableItem ? shareLabels.labels : undefined}
-                            labelsLoading={shareableItem ? shareLabels.loading : false}
-                            showInfoRow={enableColumnLevelPermissions}
-                            actions={
-                                <CatalogDetailActions
-                                    item={item}
-                                    canEdit={canEdit}
-                                    onOpen={onOpenClick}
-                                    onCatalogItemCreate={onCatalogItemCreate}
-                                    onCatalogItemUpdate={applyItemUpdate}
-                                    onCatalogItemDelete={applyItemDelete}
-                                    onShareClick={shareableItem ? openShare : undefined}
-                                />
-                            }
-                        />
-                        <UiTabs
-                            size="large"
-                            tabs={tabs}
-                            onTabSelect={(tab) => setSelectedTabId(tab.id)}
-                            selectedTabId={selectedTabId}
-                        />
-                        {selectedTabId === Tabs.METADATA && (
-                            <CatalogDetailTabMetadata
+        <CatalogItemShareProvider shareableItem={shareableItem} target={shareTarget} labels={shareLabels}>
+            <div className="gd-analytics-catalog-detail">
+                <CatalogDetailStatus status={status} error={error}>
+                    {item ? (
+                        <div
+                            className={cx("gd-analytics-catalog-detail__content", {
+                                lineage: selectedTabId === Tabs.LINEAGE,
+                            })}
+                        >
+                            <CatalogDetailHeader
                                 item={item}
                                 canEdit={canEdit}
-                                // With OLP off the dataset isn't relocated to the header,
-                                // so keep the Dataset row in the metadata tab.
-                                showDatasetRow={!enableColumnLevelPermissions}
-                                onTagClick={(tag) => {
-                                    onTagClick?.(tag.label);
-                                }}
-                                onTagAdd={(tag) => {
-                                    // Adding unique tags only
-                                    updateItemTags([...new Set([...item.tags, tag.label])]);
-                                }}
-                                onTagRemove={(tag) => {
-                                    updateItemTags(item.tags.filter((t) => t !== tag.label));
-                                }}
-                                onIsHiddenChange={(isHidden) => {
-                                    updateItemIsHidden(isHidden);
-                                }}
-                                onIsHiddenFromKdaChange={(isHiddenFromKda) => {
-                                    updateItemIsHiddenFromKda(isHiddenFromKda);
-                                }}
-                                onMetricTypeChange={(metricType) => {
-                                    updateItemMetricType(metricType);
-                                }}
-                                onFormatChange={(format) => {
-                                    updateItemFormat(format);
-                                }}
-                                separators={separators}
-                                currencyFormatOverride={
-                                    enableMetricFormatOverrides ? currencyFormatOverride : undefined
+                                updateItemTitle={updateItemTitle}
+                                updateItemDescription={updateItemDescription}
+                                isDescriptionGenerationEnabled={isDescriptionGenerationEnabled}
+                                headerRef={headerRef}
+                                labels={shareableItem ? shareLabels.labels : undefined}
+                                labelsLoading={shareableItem ? shareLabels.loading : false}
+                                showInfoRow={enableColumnLevelPermissions}
+                                actions={
+                                    <CatalogDetailActions
+                                        item={item}
+                                        canEdit={canEdit}
+                                        onOpen={onOpenClick}
+                                        onCatalogItemCreate={onCatalogItemCreate}
+                                        onCatalogItemUpdate={applyItemUpdate}
+                                        onCatalogItemDelete={applyItemDelete}
+                                    />
                                 }
-                                enableMetricFormatOverrides={enableMetricFormatOverrides}
-                                accessSummary={shareableItem ? shareController.state.summary : undefined}
-                                accessUnavailable={
-                                    shareableItem ? shareController.state.status !== "success" : false
-                                }
-                                onAccessOpen={shareableItem ? openShare : undefined}
                             />
-                        )}
-                        {selectedTabId === Tabs.CERTIFICATION && isCertificationVisible ? (
-                            <CatalogDetailTabCertification
-                                item={item}
-                                canEdit={canEdit}
-                                onCertificationChange={(certification) => {
-                                    updateItemCertification(certification);
-                                }}
+                            <UiTabs
+                                size="large"
+                                tabs={tabs}
+                                onTabSelect={(tab) => setSelectedTabId(tab.id)}
+                                selectedTabId={selectedTabId}
                             />
-                        ) : null}
-                        {selectedTabId === Tabs.QUALITY &&
-                            (isQualityLoading ? (
-                                <UiSkeleton itemsCount={2} itemHeight={65} itemsGap={10} />
-                            ) : (
-                                <CatalogDetailTabQuality
+                            {selectedTabId === Tabs.METADATA && (
+                                <CatalogDetailTabMetadata
                                     item={item}
-                                    issues={issues}
                                     canEdit={canEdit}
-                                    onEditClick={handleEditClick}
-                                    onCatalogItemNavigation={onCatalogItemNavigation}
+                                    // With OLP off the dataset isn't relocated to the header,
+                                    // so keep the Dataset row in the metadata tab.
+                                    showDatasetRow={!enableColumnLevelPermissions}
+                                    onTagClick={(tag) => {
+                                        onTagClick?.(tag.label);
+                                    }}
+                                    onTagAdd={(tag) => {
+                                        // Adding unique tags only
+                                        updateItemTags([...new Set([...item.tags, tag.label])]);
+                                    }}
+                                    onTagRemove={(tag) => {
+                                        updateItemTags(item.tags.filter((t) => t !== tag.label));
+                                    }}
+                                    onIsHiddenChange={(isHidden) => {
+                                        updateItemIsHidden(isHidden);
+                                    }}
+                                    onIsHiddenFromKdaChange={(isHiddenFromKda) => {
+                                        updateItemIsHiddenFromKda(isHiddenFromKda);
+                                    }}
+                                    onMetricTypeChange={(metricType) => {
+                                        updateItemMetricType(metricType);
+                                    }}
+                                    onFormatChange={(format) => {
+                                        updateItemFormat(format);
+                                    }}
+                                    separators={separators}
+                                    currencyFormatOverride={
+                                        enableMetricFormatOverrides ? currencyFormatOverride : undefined
+                                    }
+                                    enableMetricFormatOverrides={enableMetricFormatOverrides}
+                                    accessRow={<CatalogItemAccessRow />}
                                 />
-                            ))}
-                        {selectedTabId === Tabs.LINEAGE && <CatalogDetailTabLineage item={item} />}
-                    </div>
-                ) : null}
-            </CatalogDetailStatus>
-            {shareableItem ? (
-                <ObjectShareDialog
-                    target={shareTarget}
-                    objectTitle={shareableItem.title}
-                    isOpen={isShareOpen}
-                    onClose={closeShare}
-                    labelsLoading={shareLabels.loading}
-                    controller={shareController}
-                />
-            ) : null}
-        </div>
+                            )}
+                            {selectedTabId === Tabs.CERTIFICATION && isCertificationVisible ? (
+                                <CatalogDetailTabCertification
+                                    item={item}
+                                    canEdit={canEdit}
+                                    onCertificationChange={(certification) => {
+                                        updateItemCertification(certification);
+                                    }}
+                                />
+                            ) : null}
+                            {selectedTabId === Tabs.QUALITY &&
+                                (isQualityLoading ? (
+                                    <UiSkeleton itemsCount={2} itemHeight={65} itemsGap={10} />
+                                ) : (
+                                    <CatalogDetailTabQuality
+                                        item={item}
+                                        issues={issues}
+                                        canEdit={canEdit}
+                                        onEditClick={handleEditClick}
+                                        onCatalogItemNavigation={onCatalogItemNavigation}
+                                    />
+                                ))}
+                            {selectedTabId === Tabs.LINEAGE && <CatalogDetailTabLineage item={item} />}
+                        </div>
+                    ) : null}
+                </CatalogDetailStatus>
+                <CatalogItemShareDialog />
+            </div>
+        </CatalogItemShareProvider>
     );
 }
 

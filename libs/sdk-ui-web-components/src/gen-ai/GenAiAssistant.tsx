@@ -16,7 +16,7 @@ export class GenAIAssistant
 {
     //HANDLES: CLICK
 
-    declare onLinkClick?: (event: CustomEvent<IGenAIAssistantLinkClick>) => void;
+    declare onLinkClick?: (event: CustomEvent<IGenAIAssistantLinkClick>) => string | undefined;
 
     //DISPATCHER
 

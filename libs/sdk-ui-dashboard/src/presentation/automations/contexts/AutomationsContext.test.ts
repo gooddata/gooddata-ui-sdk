@@ -8,7 +8,7 @@ import { useAutomationsContext } from "./AutomationsContext.js";
 describe("useAutomationsContext", () => {
     it("throws when used outside provider", () => {
         expect(() => renderHook(() => useAutomationsContext())).toThrow(
-            "useAutomationsContext must be used within AutomationsContextProvider",
+            "useAutomationsContext must be used within an AutomationsContextProvider",
         );
     });
 });

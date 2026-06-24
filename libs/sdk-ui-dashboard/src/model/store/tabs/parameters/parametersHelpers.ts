@@ -11,6 +11,7 @@ import {
     type IParameterMetadataObject,
     type IdentifierRef,
     insightMeasures,
+    insightParameters,
     isMeasureDefinition,
     isNumberParameterDefinition,
     objRefToString,
@@ -27,6 +28,7 @@ import {
 } from "./parametersState.js";
 
 const EMPTY_PARAMETERS: IDashboardParameter[] = [];
+const EMPTY_PARAMETER_VALUES: IInsightParameterValue[] = [];
 /**
  * @internal
  */
@@ -60,6 +62,68 @@ export function collectReferencedParameterRefs(
         }
     }
     return result;
+}
+
+/**
+ * Effective execution parameters, limited to `referencedRefs`. Precedence per ref: the dashboard
+ * `runtimeOverride`, else the insight's own parameter value, else nothing (backend uses the workspace default).
+ *
+ * @internal
+ */
+export function resolveEffectiveParameterValuesForRefs(
+    entries: IDashboardParameterEntry[],
+    referencedRefs: IdentifierRef[],
+    insightParameterValues: IInsightParameterValue[],
+): IInsightParameterValue[] {
+    const referencedKeys = new Set(referencedRefs.map(objRefToString));
+    const result: IInsightParameterValue[] = [];
+    const seen = new Set<string>();
+    for (const entry of entries) {
+        if (entry.runtimeOverride === undefined) {
+            continue;
+        }
+        const refKey = objRefToString(entry.parameter.ref);
+        if (!referencedKeys.has(refKey)) {
+            continue;
+        }
+        result.push({ ref: entry.parameter.ref, value: entry.runtimeOverride });
+        seen.add(refKey);
+    }
+    for (const insightParameterValue of insightParameterValues) {
+        const refKey = objRefToString(insightParameterValue.ref);
+        if (!referencedKeys.has(refKey) || seen.has(refKey)) {
+            continue;
+        }
+        result.push(insightParameterValue);
+        seen.add(refKey);
+    }
+    return result.length === 0 ? EMPTY_PARAMETER_VALUES : result;
+}
+
+interface IParameterResolutionContext {
+    entries: IDashboardParameterEntry[];
+    measureParameters: Record<string, IdentifierRef[]>;
+}
+
+/**
+ * Effective execution parameters for `insight` given a widget's parameter context: resolves the refs
+ * the insight references, then applies {@link resolveEffectiveParameterValuesForRefs}.
+ *
+ * @internal
+ */
+export function resolveEffectiveParameterValuesForInsight(
+    context: IParameterResolutionContext | undefined,
+    insight: IInsightDefinition,
+): IInsightParameterValue[] {
+    if (!context) {
+        return EMPTY_PARAMETER_VALUES;
+    }
+    const referencedRefs = collectReferencedParameterRefs(insight, context.measureParameters);
+    return resolveEffectiveParameterValuesForRefs(
+        context.entries,
+        referencedRefs,
+        insightParameters(insight),
+    );
 }
 
 /**

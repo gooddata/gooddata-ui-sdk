@@ -853,10 +853,48 @@ const messagesSlice = createSlice({
             state.globalError = errorToObject(error);
         },
         cancelAsyncAction: (state) => {
+            // Aborting the in-flight thread load. A conversation switch can move
+            // currentConversation between load-start (loadThreadAction) and this cancel
+            // (the useThreadLoading cleanup runs after the new conversation is already
+            // current), so keying the clear only to the live current conversation would
+            // orphan the "loading" flag on the conversation that was actually loading -
+            // its skeleton then spins forever when it is reopened (LX-2577). Clear the
+            // load flag wherever it sits; there is only ever one load in flight.
+            if (state.messageAsyncProcess === "loading" || state.messageAsyncProcess === "restoring") {
+                delete state.messageAsyncProcess;
+            }
+            for (const data of Object.values(state.conversationsData)) {
+                if (data.asyncProcess === "loading" || data.asyncProcess === "restoring") {
+                    delete data.asyncProcess;
+                }
+            }
+            // Preserve the original behaviour for the current conversation's non-load
+            // async states (e.g. "evaluating"/"clearing").
             if (state.currentConversation) {
                 const data = getConversationData(state.conversationsData, state.currentConversation.localId);
                 delete data?.asyncProcess;
             } else {
+                delete state.messageAsyncProcess;
+            }
+        },
+        /**
+         * Clear the "loading"/"restoring" flag for a specific conversation.
+         *
+         * Used when a thread load is superseded by a newer one (takeLatest cancels the
+         * running onThreadLoad saga without dispatching cancelAsyncAction). The clear must
+         * target the conversation that was actually loading - identified by its localId -
+         * rather than whichever conversation is current now, which may already have changed.
+         */
+        clearConversationLoadingAction: (
+            state,
+            { payload: { conversationLocalId } }: PayloadAction<{ conversationLocalId?: string }>,
+        ) => {
+            if (conversationLocalId) {
+                const data = state.conversationsData[conversationLocalId];
+                if (data?.asyncProcess === "loading" || data?.asyncProcess === "restoring") {
+                    delete data.asyncProcess;
+                }
+            } else if (state.messageAsyncProcess === "loading" || state.messageAsyncProcess === "restoring") {
                 delete state.messageAsyncProcess;
             }
         },
@@ -1339,6 +1377,7 @@ export const {
     setVerboseAction,
     setGlobalErrorAction,
     cancelAsyncAction,
+    clearConversationLoadingAction,
     setUserFeedback,
     setUserFeedbackError,
     clearUserFeedbackError,

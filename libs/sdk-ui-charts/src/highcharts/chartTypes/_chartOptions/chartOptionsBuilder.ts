@@ -25,7 +25,12 @@ import {
 import { type StackingType } from "../../constants/stacking.js";
 import { type ColorAxisDataClassesOptions } from "../../lib/index.js";
 import { type IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
-import { type IChartOptions, type ISeriesItem, type ITooltipFactory } from "../../typings/unsafe.js";
+import {
+    type IAxis,
+    type IChartOptions,
+    type ISeriesItem,
+    type ITooltipFactory,
+} from "../../typings/unsafe.js";
 import { getChartProperties } from "../_chartCreators/helpers.js";
 import {
     isAreaChart,
@@ -672,10 +677,16 @@ export function getChartOptions(
             measures.push(measureGroup.items[0] ? measureGroupCopy.items.shift()! : null);
         }
 
+        let zAxes: IAxis[] | undefined;
         if (dv.def().isBucketEmpty(BucketNames.TERTIARY_MEASURES)) {
             measures.push(null);
         } else {
-            measures.push(measureGroup.items[0] ? measureGroupCopy.items.shift()! : null);
+            const zMeasureDescriptor = measureGroup.items[0] ? measureGroupCopy.items.shift()! : null;
+            measures.push(zMeasureDescriptor);
+            if (zMeasureDescriptor) {
+                const { name, format } = unwrap(zMeasureDescriptor);
+                zAxes = [{ label: name, format }];
+            }
         }
 
         return {
@@ -686,6 +697,7 @@ export function getChartOptions(
             legendLabel: getLegendLabel(type, viewByAttribute, stackByAttribute),
             yAxes,
             xAxes,
+            zAxes,
             data: {
                 series,
                 categories: [[""]],

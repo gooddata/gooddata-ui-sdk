@@ -23,56 +23,29 @@ import {
     type IInsightWidget,
     type INotificationChannelIdentifier,
     type INotificationChannelMetadataObject,
+    type IWidget,
+    type IWorkspaceUser,
     isAutomationExternalUserRecipient,
     isAutomationUnknownUserRecipient,
     isAutomationUserRecipient,
 } from "@gooddata/sdk-model";
 import { fillMissingTitles } from "@gooddata/sdk-ui";
 
-import {
-    convertCurrentUserToAutomationRecipient,
-    convertCurrentUserToWorkspaceUser,
-    convertExternalRecipientToAutomationRecipient,
-} from "../../../../../../_staging/automation/index.js";
-import { useDashboardSelector } from "../../../../../../model/react/DashboardStoreProvider.js";
-import {
-    selectCatalogAttributes,
-    selectCatalogDateDatasets,
-} from "../../../../../../model/store/catalog/catalogSelectors.js";
-import {
-    selectEnableAlertAttributes,
-    selectEnableAlertOncePerInterval,
-    selectEnableComparisonInAlerting,
-    selectEnableExternalRecipients,
-    selectLocale,
-    selectSeparators,
-    selectSettings,
-    selectTimezone,
-    selectWeekStart,
-} from "../../../../../../model/store/config/configSelectors.js";
-import { selectEntitlementMinimumRecurrenceMinutes } from "../../../../../../model/store/entitlements/entitlementsSelectors.js";
-import { selectExecutionResultByRef } from "../../../../../../model/store/executionResults/executionResultsSelectors.js";
-import {
-    selectAutomationCommonDateFilterId,
-    selectDashboardHiddenFilters,
-} from "../../../../../../model/store/filtering/dashboardFilterSelectors.js";
-import {
-    selectDashboardDescriptor,
-    selectDashboardId,
-} from "../../../../../../model/store/meta/metaSelectors.js";
-import { selectWidgetLocalIdToTabIdMap } from "../../../../../../model/store/tabs/layout/layoutSelectors.js";
-import { selectEffectiveParameterValuesForWidget } from "../../../../../../model/store/tabs/parameters/parametersSelectors.js";
-import { selectCurrentUser } from "../../../../../../model/store/user/userSelectors.js";
-import { selectUsers } from "../../../../../../model/store/users/usersSelectors.js";
-import type { ExtendedDashboardWidget } from "../../../../../../model/types/layoutTypes.js";
-import { isEmail } from "../../../../scheduledEmail/utils/validate.js";
-import { setAlertExecutionParameters } from "../../../../shared/automationFilters/automationParameters.js";
-import { useAutomationAlertParameters } from "../../../../shared/automationFilters/useAutomationAlertParameters.js";
+import { useAlertingDialogContext } from "../../../contexts/AlertingDialogContext.js";
+import { useAutomationsContext } from "../../../contexts/AutomationsContext.js";
+import { isEmail } from "../../../scheduledEmail/utils/validate.js";
+import { setAlertExecutionParameters } from "../../../shared/automationFilters/automationParameters.js";
+import { useAutomationAlertParameters } from "../../../shared/automationFilters/useAutomationAlertParameters.js";
 import {
     getAppliedWidgetFilters,
     getVisibleFiltersByFilters,
     resolveMvfDimensionalityLocalRefs,
-} from "../../../../shared/automationFilters/utils.js";
+} from "../../../shared/automationFilters/utils.js";
+import {
+    convertCurrentUserToAutomationRecipient,
+    convertCurrentUserToWorkspaceUser,
+    convertExternalRecipientToAutomationRecipient,
+} from "../../../shared/utils/automationUtils.js";
 import { type AlertAttribute, type AlertMetric, type AlertMetricComparatorType } from "../../types.js";
 import { createDefaultAlert } from "../utils/convertors.js";
 import {
@@ -107,13 +80,12 @@ import { useAlertValidation } from "./useAlertValidation.js";
 import { useAttributeValuesFromExecResults } from "./useAttributeValuesFromExecResults.js";
 import { useThresholdValue } from "./useThresholdValue.js";
 
-const DEFAULT_MIN_RECURRENCE_MINUTES = "60";
-
 export interface IUseEditAlertProps {
     alertToEdit?: IAutomationMetadataObject;
     notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
     maxAutomationsRecipients: number;
-    widget?: ExtendedDashboardWidget;
+    users: IWorkspaceUser[];
+    widget?: IWidget;
     insight?: IInsight;
     editedAutomationFilters?: FilterContextItem[];
 
@@ -128,6 +100,7 @@ export function useEditAlert({
     notificationChannels,
     insight,
     widget,
+    users,
     editedAutomationFilters,
     maxAutomationsRecipients,
     setEditedAutomationFilters,
@@ -137,36 +110,37 @@ export function useEditAlert({
 }: IUseEditAlertProps) {
     const intl = useIntl();
 
-    // Selectors
-    const locale = useDashboardSelector(selectLocale);
-    const canManageComparison = useDashboardSelector(selectEnableComparisonInAlerting);
-    const catalogDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
-    const execResult = useDashboardSelector(selectExecutionResultByRef(widget?.ref));
-    const catalogAttributes = useDashboardSelector(selectCatalogAttributes);
-    const currentUser = useDashboardSelector(selectCurrentUser);
-    const users = useDashboardSelector(selectUsers);
-    const enabledExternalRecipients = useDashboardSelector(selectEnableExternalRecipients);
-    const descriptor = useDashboardSelector(selectDashboardDescriptor);
-    const settings = useDashboardSelector(selectSettings);
-    const canManageAttributes = useDashboardSelector(selectEnableAlertAttributes);
-    const dashboardId = useDashboardSelector(selectDashboardId);
-    const separators = useDashboardSelector(selectSeparators);
-    const dashboardHiddenFilters = useDashboardSelector(selectDashboardHiddenFilters);
-    const enableAlertOncePerInterval = useDashboardSelector(selectEnableAlertOncePerInterval);
-    const commonDateFilterId = useDashboardSelector(selectAutomationCommonDateFilterId);
-    const weekStart = useDashboardSelector(selectWeekStart);
-    const timezone = useDashboardSelector(selectTimezone);
-    const parameterValues = useDashboardSelector(selectEffectiveParameterValuesForWidget(widget?.ref));
+    const {
+        locale,
+        catalogDateDatasets,
+        catalogAttributes,
+        currentUser,
+        separators,
+        weekStart,
+        timezone,
+        settings,
+        allowHourlyRecurrence,
+        features: {
+            enableComparisonInAlerting: canManageComparison,
+            enableExternalRecipients: enabledExternalRecipients,
+            enableAlertAttributes: canManageAttributes,
+            enableAlertOncePerInterval,
+        },
+    } = useAutomationsContext();
 
     const isInvalidConnectionToInsight = alertToEdit?.metadata?.widget && !insight;
 
-    const minimumRecurrenceMinutesEntitlement = useDashboardSelector(
-        selectEntitlementMinimumRecurrenceMinutes,
-    );
-    const allowHourlyRecurrence =
-        parseInt(minimumRecurrenceMinutesEntitlement?.value ?? DEFAULT_MIN_RECURRENCE_MINUTES, 10) === 60;
+    const {
+        executionResultByRef,
+        dashboardId,
+        hiddenFilters: dashboardHiddenFilters,
+        commonDateFilterId,
+        dashboardEvaluationFrequency,
+        widgetLocalIdToTabIdMap: widgetTabMap,
+        parameterValues,
+    } = useAlertingDialogContext();
 
-    const widgetTabMap = useDashboardSelector(selectWidgetLocalIdToTabIdMap);
+    const execResult = executionResultByRef(widget?.ref);
 
     // Determine target tab ID if widget is present
     const targetTabIdentifier = widget?.localIdentifier ? widgetTabMap[widget.localIdentifier] : undefined;
@@ -269,10 +243,10 @@ export function useEditAlert({
                 defaultRecipient,
                 measureFormatMap,
                 undefined,
-                descriptor.evaluationFrequency
+                dashboardEvaluationFrequency
                     ? {
-                          cron: descriptor.evaluationFrequency,
-                          timezone: settings.alertDefault?.defaultTimezone,
+                          cron: dashboardEvaluationFrequency,
+                          timezone: settings?.alertDefault?.defaultTimezone,
                       }
                     : undefined,
                 getVisibleFiltersByFilters(editedAutomationFilters, availableFiltersAsVisibleFilters, true),
@@ -324,6 +298,11 @@ export function useEditAlert({
 
     const { isValid: isOriginalAutomationValid, invalidityReason } = useAlertValidation(
         originalAutomation as IAutomationMetadataObject,
+        widget,
+        insight,
+        catalogDateDatasets,
+        undefined,
+        canManageComparison,
     );
     const isParentValid = invalidityReason !== "missingWidget";
 

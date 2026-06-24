@@ -29,6 +29,9 @@ function AssistantItemFeedbackCore({ message, group, isLast, setUserFeedback }: 
     if (group.type !== "assistant" || !message.complete) {
         return null;
     }
+    if (message.content.type === "reasoning") {
+        return null;
+    }
 
     const thumbsUpLabel = intl.formatMessage({ id: "gd.gen-ai.feedback.like" });
     const thumbsDownLabel = intl.formatMessage({ id: "gd.gen-ai.feedback.dislike" });

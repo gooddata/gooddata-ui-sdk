@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-dashboard: Drill to Insight now inherits dashboard parameter values from the executed (target) insight, so the drill target picks up active parameter overrides even when the source widget is not connected to the parameter.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

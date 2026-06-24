@@ -2586,8 +2586,6 @@ export interface IFeatureFlags {
     enableAiAgenticMultiConversations?: boolean;
     enableAiAgenticSuggestions?: boolean;
     enableAIDataSetting?: boolean;
-    // @deprecated
-    enableAIFunctions?: boolean;
     enableAiHub?: boolean;
     enableAIKnowledge?: boolean;
     enableAiLlmAnthropicProvider?: boolean;
@@ -2618,7 +2616,6 @@ export interface IFeatureFlags {
     enableConditionalFormatting?: boolean;
     // (undocumented)
     enableCrateDbDataSource?: boolean;
-    enableCreateUser?: boolean;
     // @internal
     enableCrossFilteringAliasTitles?: boolean;
     enableCustomGeoCollection?: boolean;
@@ -2659,7 +2656,6 @@ export interface IFeatureFlags {
     enableGenAiAgentSwitching?: boolean;
     enableGenAICatalogQualityChecker?: boolean;
     enableGenAIChat?: boolean;
-    enableGenAIChatRollout?: boolean;
     enableGenAIMemory?: boolean;
     enableGenAiObservability?: boolean;
     enableGenAIReasoningVisibility?: boolean;
@@ -2702,10 +2698,8 @@ export interface IFeatureFlags {
     enableNewPdfTabularExport?: boolean;
     enableNewPivotTable?: boolean;
     enableNewScheduledExport?: boolean;
-    enableNewUserCreationFlow?: boolean;
     enableNotificationChannelIdentifiers?: boolean;
     enableNullJoins?: boolean;
-    enableNumberSeparators?: boolean;
     // (undocumented)
     enableOracleDataSource?: boolean;
     enableOrchestratedTabularExports?: boolean;
@@ -2728,7 +2722,6 @@ export interface IFeatureFlags {
     enableScheduling?: boolean;
     enableSeamlessIdpSwitch?: boolean;
     enableSemanticSearch?: boolean;
-    enableSemanticSearchRollout?: boolean;
     enableShellApplication?: boolean;
     enableShellApplication_analyticalDesigner?: boolean;
     enableShellApplication_catalog?: boolean;
@@ -5312,6 +5305,9 @@ export const isUserGroupWorkspaceAccessGrantee: (obj: unknown) => obj is IUserGr
 
 // @alpha
 export const isUserWorkspaceAccessGrantee: (obj: unknown) => obj is IUserWorkspaceAccessGrantee;
+
+// @alpha
+export function isValidNumberParameterValue(value: number, constraints?: INumberParameterConstraints): boolean;
 
 // @public
 export function isVariableMetadataObject(obj: unknown): obj is IVariableMetadataObject;

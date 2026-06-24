@@ -92,12 +92,14 @@ function DefaultFilterBarContainerCore({ children }: { children?: ReactNode }) {
     const intl = useIntl();
 
     const [expandedAutomatically, setExpandedAutomatically] = useState(false);
+    const [collapseAnnouncement, setCollapseAnnouncement] = useState("");
 
     const onContainerFocus = useCallback(() => {
         // detect if event is mouse
         if (!isFocusVisible()) {
             return;
         }
+        setCollapseAnnouncement("");
         setFilterBarExpanded(true);
         setExpandedAutomatically(true);
     }, [setFilterBarExpanded]);
@@ -106,8 +108,14 @@ function DefaultFilterBarContainerCore({ children }: { children?: ReactNode }) {
         if (isFocusVisible() && expandedAutomatically) {
             setFilterBarExpanded(false);
             setExpandedAutomatically(false);
+            const message = `${intl.formatMessage({ id: "filterBar.label" })}. ${intl.formatMessage({
+                id: "filterBar.filterListAutoCollapsed",
+            })}`;
+            setCollapseAnnouncement(message);
+        } else {
+            setCollapseAnnouncement("");
         }
-    }, [setFilterBarExpanded, expandedAutomatically]);
+    }, [setFilterBarExpanded, expandedAutomatically, intl]);
 
     const bubbleText = hasInvalidFilterSelections
         ? intl.formatMessage(
@@ -217,6 +225,11 @@ function DefaultFilterBarContainerCore({ children }: { children?: ReactNode }) {
                             }}
                         />
                     </Message>
+                </div>
+            ) : null}
+            {!isFilterBarExpanded && collapseAnnouncement ? (
+                <div className="sr-only" role="alert">
+                    {collapseAnnouncement}
                 </div>
             ) : null}
         </>

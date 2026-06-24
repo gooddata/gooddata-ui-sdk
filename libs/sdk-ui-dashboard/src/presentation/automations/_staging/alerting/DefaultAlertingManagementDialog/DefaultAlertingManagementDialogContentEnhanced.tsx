@@ -42,10 +42,10 @@ import {
 } from "../../../../../model/store/ui/uiSelectors.js";
 import { AUTOMATIONS_COLUMN_CONFIG, AUTOMATIONS_MAX_HEIGHT } from "../../../../constants/automations.js";
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../../../constants/zIndex.js";
-import { ALERTING_DIALOG_ID } from "../DefaultAlertingDialog/constants.js";
-import { isMobileView } from "../DefaultAlertingDialog/utils/responsive.js";
+import { ALERTING_DIALOG_ID } from "../../../alerting/DefaultAlertingDialog/constants.js";
+import { isMobileView } from "../../../alerting/DefaultAlertingDialog/utils/responsive.js";
+import { useGetSupportedMeasures } from "../../../alerting/hooks/useGetSupportedMeasures.js";
 import { useAlertingDialogAccessibility } from "../hooks/useAlertingDialogAccessibility.js";
-import { useGetSupportedMeasures } from "../hooks/useGetSupportedMeasures.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 

@@ -611,16 +611,8 @@
         "text": "Bot:",
         "crowdinContext": "Label identifying messages sent by the AI assistant in the chat conversation"
     },
-    "gd.gen-ai.message.label.tool": {
-        "text": "Tool:",
-        "crowdinContext": "Label identifying messages sent by the AI assistant tool in the chat conversation"
-    },
     "gd.gen-ai.message.reasoning.tool-call": {
         "text": "<b>Calling tool</b>: {name}",
-        "crowdinContext": "Contextual label identifying the AI assistant tool call in the chat conversation"
-    },
-    "gd.gen-ai.message.reasoning.tool-call.plain": {
-        "text": "Calling tool: \"{name}\"",
         "crowdinContext": "Contextual label identifying the AI assistant tool call in the chat conversation"
     },
     "gd.gen-ai.message.reasoned.tool-call": {
@@ -631,17 +623,9 @@
         "text": "<b>Collecting data from tool</b>",
         "crowdinContext": "Contextual label identifying the AI assistant tool result in the chat conversation"
     },
-    "gd.gen-ai.message.reasoning.tool-result.plain": {
-        "text": "Collecting data from tool",
-        "crowdinContext": "Contextual label identifying the AI assistant tool result in the chat conversation"
-    },
     "gd.gen-ai.message.reasoned.tool-result": {
         "text": "<b>Collected data from tool</b>",
         "crowdinContext": "Contextual label identifying the AI assistant tool result in the chat conversation"
-    },
-    "gd.gen-ai.message.reasoning.waiting_for_server": {
-        "text": "Waiting for response from server...",
-        "crowdinContext": "Contextual label identifying that the AI assistant tool is waiting for a response from the server"
     },
     "gd.gen-ai.skip-messages-history": {
         "text": "Skip to AI assistant input",

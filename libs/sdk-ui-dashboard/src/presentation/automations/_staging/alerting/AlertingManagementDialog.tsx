@@ -3,8 +3,7 @@
 import { type ReactElement } from "react";
 
 import { useDashboardComponentsContext } from "../../../dashboardContexts/DashboardComponentsContext.js";
-
-import { type IAlertingManagementDialogProps } from "./types.js";
+import { type IAlertingManagementDialogProps } from "../../alerting/types.js";
 
 /**
  * @internal

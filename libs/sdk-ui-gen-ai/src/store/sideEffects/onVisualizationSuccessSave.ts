@@ -1,6 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
 import { type PayloadAction } from "@reduxjs/toolkit";
+import noop from "lodash-es/noop.js";
 import { call, getContext, select } from "redux-saga/effects";
 
 import { type IAnalyticalBackend, type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
@@ -10,6 +11,7 @@ import { type IChatConversationLocal, type Message } from "../../model.js";
 import { getVisualizationHref } from "../../utils.js";
 import { settingsSelector } from "../chatWindow/chatWindowSelectors.js";
 import { conversationSelector, messagesSelector } from "../messages/messagesSelectors.js";
+import { type OptionsDispatcher } from "../options.js";
 
 export function* onVisualizationSuccessSave({
     payload,
@@ -22,17 +24,35 @@ export function* onVisualizationSuccessSave({
     // Retrieve backend from context
     const backend: IAnalyticalBackend = yield getContext("backend");
     const workspace: string = yield getContext("workspace");
+    const options: OptionsDispatcher = yield getContext("optionsDispatcher");
     const conversation: IChatConversationLocal = yield select(conversationSelector);
     const settings: IUserWorkspaceSettings | undefined = yield select(settingsSelector);
     const useHostedAnalyticalDesigner = Boolean(settings?.enableShellApplication_analyticalDesigner);
 
+    const { onLinkClick, allowNativeLinks } = options.getOnLinkClick();
+
     if (conversation) {
         if (payload.explore) {
-            window.location.href = getVisualizationHref(
-                workspace,
-                payload.savedVisualizationId,
-                useHostedAnalyticalDesigner,
-            );
+            if (allowNativeLinks) {
+                window.location.href = getVisualizationHref(
+                    workspace,
+                    payload.savedVisualizationId,
+                    useHostedAnalyticalDesigner,
+                );
+            } else {
+                onLinkClick?.({
+                    id: payload.savedVisualizationId,
+                    type: "visualization",
+                    workspaceId: workspace,
+                    newTab: true,
+                    preventDefault: noop,
+                    itemUrl: getVisualizationHref(
+                        workspace,
+                        payload.savedVisualizationId,
+                        useHostedAnalyticalDesigner,
+                    ),
+                });
+            }
         }
 
         //NOTE: In new conversations, save call is already done before
@@ -41,11 +61,26 @@ export function* onVisualizationSuccessSave({
         const message = messages.find((message) => message.localId === payload.assistantMessageId);
 
         if (payload.explore) {
-            window.location.href = getVisualizationHref(
-                workspace,
-                payload.savedVisualizationId,
-                useHostedAnalyticalDesigner,
-            );
+            if (allowNativeLinks) {
+                window.location.href = getVisualizationHref(
+                    workspace,
+                    payload.savedVisualizationId,
+                    useHostedAnalyticalDesigner,
+                );
+            } else {
+                onLinkClick?.({
+                    id: payload.savedVisualizationId,
+                    type: "visualization",
+                    workspaceId: workspace,
+                    newTab: true,
+                    preventDefault: noop,
+                    itemUrl: getVisualizationHref(
+                        workspace,
+                        payload.savedVisualizationId,
+                        useHostedAnalyticalDesigner,
+                    ),
+                });
+            }
         }
 
         if (!message?.id) {

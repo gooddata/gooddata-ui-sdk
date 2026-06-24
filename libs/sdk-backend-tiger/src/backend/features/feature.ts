@@ -138,13 +138,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableClickHouseDataSource,
-            "enableClickHouseDataSource",
-            "BOOLEAN",
-            FeatureFlagsValues.enableClickHouseDataSource,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableKDCrossFiltering,
             "enableKDCrossFiltering",
             "BOOLEAN",
@@ -198,13 +191,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableMySqlDataSource",
             "BOOLEAN",
             FeatureFlagsValues.enableMySqlDataSource,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableCreateUser,
-            "enableCreateUser",
-            "BOOLEAN",
-            FeatureFlagsValues.enableCreateUser,
         ),
         ...loadFeature(
             features,
@@ -341,13 +327,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableKeyDriverAnalysis,
-            "enableKeyDriverAnalysis",
-            "BOOLEAN",
-            FeatureFlagsValues.enableKeyDriverAnalysis,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableDataProfiling,
             "enableDataProfiling",
             "BOOLEAN",
@@ -432,24 +411,10 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableAIFunctions,
-            "enableAIFunctions",
-            "BOOLEAN",
-            FeatureFlagsValues.enableAIFunctions,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableSemanticSearch,
             "enableSemanticSearch",
             "BOOLEAN",
             FeatureFlagsValues.enableSemanticSearch,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableSemanticSearchRollout,
-            "enableSemanticSearchRollout",
-            "BOOLEAN",
-            FeatureFlagsValues.enableSemanticSearchRollout,
         ),
         ...loadFeature(
             features,
@@ -464,13 +429,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableGenAIChat",
             "BOOLEAN",
             FeatureFlagsValues.enableGenAIChat,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableGenAIChatRollout,
-            "enableGenAIChatRollout",
-            "BOOLEAN",
-            FeatureFlagsValues.enableGenAIChatRollout,
         ),
         ...loadFeature(
             features,
@@ -569,13 +527,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableDefaultSmtp",
             "BOOLEAN",
             FeatureFlagsValues.enableDefaultSmtp,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableNumberSeparators,
-            "enableNumberSeparators",
-            "BOOLEAN",
-            FeatureFlagsValues.enableNumberSeparators,
         ),
         ...loadFeature(
             features,

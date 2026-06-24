@@ -14,6 +14,8 @@ import { chatWindowSliceName } from "../store/chatWindow/chatWindowSlice.js";
 import { type ChatEventHandler } from "../store/events.js";
 import { messagesSliceName } from "../store/messages/messagesSlice.js";
 
+import { ConfigProvider, type LinkHandlerEvent } from "./ConfigContext.js";
+
 /**
  * Props for the GenAiStore component.
  * @public
@@ -39,6 +41,15 @@ export type GenAiStoreProps = {
      * User settings to use for the chat UI.
      */
     settings?: IUserWorkspaceSettings;
+
+    /**
+     * Callback to handle link clicks.
+     */
+    onLinkClick?: (linkClickEvent: LinkHandlerEvent) => string | undefined;
+    /**
+     * Whether to allow native links to be opened in a new tab.
+     */
+    allowNativeLinks?: boolean;
     /**
      * Event handlers to subscribe to chat events.
      */
@@ -119,19 +130,27 @@ export function GenAiStore(props: GenAiStoreProps) {
 
     if (externalStore) {
         return (
-            <ExternalStore {...props} currentStore={externalStore}>
-                {children}
-            </ExternalStore>
+            <ConfigProvider allowNativeLinks={props.allowNativeLinks} linkHandler={props.onLinkClick}>
+                <ExternalStore {...props} currentStore={externalStore}>
+                    {children}
+                </ExternalStore>
+            </ConfigProvider>
         );
     }
     if (injectedStore) {
         return (
-            <InjectedStore {...props} currentStore={injectedStore}>
-                {children}
-            </InjectedStore>
+            <ConfigProvider allowNativeLinks={props.allowNativeLinks} linkHandler={props.onLinkClick}>
+                <InjectedStore {...props} currentStore={injectedStore}>
+                    {children}
+                </InjectedStore>
+            </ConfigProvider>
         );
     }
-    return <InternalStore {...props}>{children}</InternalStore>;
+    return (
+        <ConfigProvider allowNativeLinks={props.allowNativeLinks} linkHandler={props.onLinkClick}>
+            <InternalStore {...props}>{children}</InternalStore>
+        </ConfigProvider>
+    );
 }
 
 function ExternalStore({
@@ -171,6 +190,8 @@ function InternalStore({
     includeTags,
     excludeTags,
     objectTypes,
+    allowNativeLinks,
+    onLinkClick,
     isPreview,
     colorPalette,
 }: GenAiStoreProps) {
@@ -186,6 +207,8 @@ function InternalStore({
         excludeTags,
         catalogItems,
         isPreview,
+        allowNativeLinks,
+        onLinkClick,
     });
 
     useEffect(() => {

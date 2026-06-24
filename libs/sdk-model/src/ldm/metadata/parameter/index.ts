@@ -83,6 +83,21 @@ export function isNumberParameterDefinition(def: IParameterDefinition): def is I
     return def.type === "NUMBER";
 }
 
+/**
+ * Tests whether `value` is a finite number within the optional `min`/`max` bounds (inclusive).
+ *
+ * @alpha
+ */
+export function isValidNumberParameterValue(
+    value: number,
+    constraints: INumberParameterConstraints = {},
+): boolean {
+    const { min, max } = constraints;
+    return (
+        Number.isFinite(value) && (min === undefined || value >= min) && (max === undefined || value <= max)
+    );
+}
+
 function isObjectRecord(value: unknown): value is Record<string, unknown> {
     return value !== null && typeof value === "object";
 }

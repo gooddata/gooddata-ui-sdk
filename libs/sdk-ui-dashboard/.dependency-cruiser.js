@@ -50,6 +50,9 @@ export default {
                 "src/presentation/flexibleLayout/*",
                 "src/presentation/localization/*",
                 "src/presentation/automations/scheduledEmail/*",
+                "src/presentation/automations/alerting/*",
+                "src/presentation/automations/connectors/*",
+                "src/presentation/automations/shared/utils/*",
                 "src/presentation/shareDialog/*",
                 "src/presentation/deleteDialog/*",
                 "src/presentation/widgetDeleteDialog/*",
@@ -74,7 +77,7 @@ export default {
             "src/presentation/filterBar/*",
             "src/presentation/flexibleLayout/*",
             "src/presentation/saveAs/*",
-            "src/presentation/automations/_staging/alerting/*",
+            "src/presentation/automations/alerting/*",
             "src/presentation/automations/scheduledEmail/*",
             "src/presentation/shareDialog/*",
             "src/presentation/dashboardSettingsDialog/*",
@@ -198,23 +201,74 @@ export default {
             "src/converters/*",
             "src/types.ts",
         ]),
-        moduleWithDependencies("alerting", "src/presentation/automations/_staging/alerting", [
+        moduleWithDependencies("alerting", "src/presentation/automations/alerting", [
             "src/_staging/*",
-            "src/model/*",
             "src/presentation/dashboardContexts/*",
             "src/presentation/localization/*",
             "src/presentation/constants/*",
-            "src/presentation/automations/connectors/*",
             "src/presentation/automations/contexts/*",
             "src/presentation/automations/shared/automationFilters/*",
             "src/presentation/automations/shared/utils/*",
             "src/presentation/automations/scheduledEmail/*",
-            // Temporary until the alerting tree leaves _staging: useSaveAlertToBackend is
-            // widget-owned, but the staged dialogs still call it directly.
-            "src/presentation/widget/insight/configuration/InsightAlertConfig/hooks/useSaveAlertToBackend.ts",
             "src/converters/*",
             "src/types.ts",
         ]),
+        moduleWithDependencies(
+            "alertingManagementStaging",
+            "src/presentation/automations/_staging/alerting",
+            [
+                "src/_staging/*",
+                "src/model/*",
+                "src/presentation/dashboardContexts/*",
+                "src/presentation/localization/*",
+                "src/presentation/constants/*",
+                "src/presentation/automations/connectors/*",
+                "src/presentation/automations/contexts/*",
+                "src/presentation/automations/alerting/*",
+                "src/presentation/automations/shared/automationFilters/*",
+                "src/presentation/automations/shared/utils/*",
+                "src/presentation/automations/scheduledEmail/*",
+                // Temporary: the staging management dialog still calls the widget-owned save hook
+                // directly. This allowance is removed in PR 5 when management migrates out of _staging.
+                "src/presentation/widget/insight/configuration/InsightAlertConfig/hooks/*",
+                "src/converters/*",
+                "src/types.ts",
+            ],
+        ),
+        moduleWithDependencies("contexts", "src/presentation/automations/contexts", [
+            "src/presentation/automations/contexts/*",
+            "src/presentation/automations/shared/automationFilters/*",
+            // IAutomationFiltersTab is a pure-data type defined in model/store/filtering/types.ts.
+            // It is used in IAutomationsContextValue; allowing the single-file import keeps
+            // the context layer clean while avoiding a full model/* allowance.
+            "src/model/store/filtering/types.ts",
+            "src/types.ts",
+        ]),
+        {
+            name: "no-model-imports-in-clean-alerting",
+            comment:
+                "The clean alerting tree and contexts must not import from src/model/ or from the " +
+                "heavy presentation subtrees (dashboard, dashboardContexts, filterBar, topBar, widget). " +
+                "Only the connectors layer may cross those boundaries. " +
+                "DashboardComponentsContext is explicitly allowed: AlertingDialog and " +
+                "AlertingManagementDialog use it to resolve the wholesale slot components. " +
+                "TODO(GDP-3167 phase3): move this lookup to AlertingConnector so the " +
+                "clean alerting tree has no dashboardContexts dependency at all.",
+            severity: "error",
+            from: {
+                path: "^src/presentation/automations/(alerting|contexts)/",
+            },
+            to: {
+                path: "^src/(model/|presentation/(dashboard/|dashboardContexts/|filterBar/|topBar/|widget/))",
+                pathNot: [
+                    "dashboardContexts/DashboardComponentsContext",
+                    // IAutomationFiltersTab is a pure-data type; the contexts rule above
+                    // explicitly permits this single-file import.
+                    "model/store/filtering/types\.ts",
+                ],
+                dependencyTypes: ["local"],
+            },
+        },
         moduleWithDependencies("saveAs", "src/presentation/saveAs", [
             "src/model/*",
             "src/presentation/dashboardContexts/*",
@@ -247,8 +301,10 @@ export default {
             "src/presentation/presentationComponents/*",
             "src/presentation/export/*",
             "src/presentation/automations/scheduledEmail/*",
+            "src/presentation/automations/alerting/*",
             "src/presentation/automations/_staging/alerting/*",
             "src/presentation/automations/shared/hooks/*",
+            "src/presentation/automations/shared/utils/*",
             "src/presentation/topBar/*",
             "src/presentation/flexibleLayout/*",
             "src/presentation/dashboard/*",

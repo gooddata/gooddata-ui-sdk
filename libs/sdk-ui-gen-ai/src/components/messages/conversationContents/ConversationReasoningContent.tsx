@@ -1,7 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
 import cx from "classnames";
-import { useIntl } from "react-intl";
 
 import type { TextContentObject } from "../../../model.js";
 import { MarkdownComponent } from "../contents/Markdown.js";
@@ -19,7 +18,6 @@ export function ConversationReasoningContent({
     className,
     useMarkdown,
 }: ConversationReasoningContentProps) {
-    const intl = useIntl();
     const classNames = cx(
         "gd-gen-ai-chat__conversation__item__content",
         "gd-gen-ai-chat__conversation__item__content--reasoning",
@@ -31,9 +29,7 @@ export function ConversationReasoningContent({
 
     return (
         <div className={classNames}>
-            <MarkdownComponent allowMarkdown={useMarkdown}>
-                {summary || intl.formatMessage({ id: "gd.gen-ai.message.reasoning.waiting_for_server" })}
-            </MarkdownComponent>
+            <MarkdownComponent allowMarkdown={useMarkdown}>{summary}</MarkdownComponent>
         </div>
     );
 }

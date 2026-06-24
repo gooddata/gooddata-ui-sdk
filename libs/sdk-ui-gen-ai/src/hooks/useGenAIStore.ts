@@ -7,6 +7,7 @@ import { type EnhancedStore } from "@reduxjs/toolkit";
 import { type IAnalyticalBackend, type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { type CatalogItem, type GenAIObjectType, type IColorPalette } from "@gooddata/sdk-model";
 
+import type { LinkHandlerEvent } from "../components/ConfigContext.js";
 import {
     setCatalogItemsActions,
     setColorPaletteAction,
@@ -31,6 +32,8 @@ export const useGenAIStore = (
         excludeTags?: string[];
         catalogItems?: CatalogItem[];
         isPreview?: boolean;
+        onLinkClick?: (linkClickEvent: LinkHandlerEvent) => string | undefined;
+        allowNativeLinks?: boolean;
     },
 ): EnhancedStore => {
     const {
@@ -42,6 +45,8 @@ export const useGenAIStore = (
         excludeTags,
         catalogItems,
         isPreview,
+        onLinkClick,
+        allowNativeLinks,
     } = opts;
 
     // Instantiate EventDispatcher. It's a designed to hold a reference to the handlers, so that
@@ -67,6 +72,10 @@ export const useGenAIStore = (
             );
         }
     }, [colorPalette, optionsDispatcher, store]);
+
+    useEffect(() => {
+        optionsDispatcher.setOnLinkClick(onLinkClick, allowNativeLinks);
+    }, [allowNativeLinks, colorPalette, onLinkClick, optionsDispatcher, store]);
 
     useEffect(() => {
         if (settings) {

@@ -17,7 +17,9 @@ import type {
     IDashboardMeasureValueFilterConfig,
     ISeparators,
     ISettings,
+    IUser,
     ObjRef,
+    WeekStart,
 } from "@gooddata/sdk-model";
 import type { ILocale } from "@gooddata/sdk-ui";
 import type { IDateFilterOptionsByType } from "@gooddata/sdk-ui-filters";
@@ -68,6 +70,25 @@ export interface IAutomationsContextValue {
     defaultSelectedFilters: FilterContextItem[];
     automationAvailableFilters: FilterContextItem[];
     enableNewScheduledExport: boolean;
+    maxAutomationsRecipients: number;
+    isExecutionTimestampMode: boolean;
+    allowHourlyRecurrence: boolean;
+    currentUser: IUser;
+    weekStart: WeekStart;
+    timezone: string | undefined;
+    isWhiteLabeled: boolean;
+    isSecondaryTitleVisible: boolean;
+    externalRecipient: string | undefined;
+    features: {
+        enableAlertOncePerInterval: boolean;
+        enableAnomalyDetectionAlert: boolean;
+        enableAutomationManagement: boolean;
+        canUseAiAssistant: boolean;
+        enableComparisonInAlerting: boolean;
+        enableExternalRecipients: boolean;
+        enableAlertAttributes: boolean;
+        canManageWorkspace: boolean;
+    };
     getCatalogAttributeByRef: (ref: ObjRef) => ICatalogAttribute | ICatalogDateAttribute | undefined;
     getAttributeFilterDisplayForm: (displayForm: ObjRef) => IAttributeDisplayFormMetadataObject | undefined;
 }
@@ -79,7 +100,12 @@ export const AutomationsContextProvider = AutomationsContext.Provider;
 export function useAutomationsContext(): IAutomationsContextValue {
     const ctx = useContext(AutomationsContext);
     if (!ctx) {
-        throw new Error("useAutomationsContext must be used within AutomationsContextProvider");
+        throw new Error(
+            "useAutomationsContext must be used within an AutomationsContextProvider. " +
+                "The automation dialogs (e.g. DefaultAlertingDialog) are pure context consumers; " +
+                "render them inside a Dashboard — which supplies the provider via the alerting " +
+                "connector — or wrap them in AutomationsContextProvider yourself.",
+        );
     }
     return ctx;
 }

@@ -1,15 +1,13 @@
 // (C) 2026 GoodData Corporation
 
-import { type MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { type IObjectPermissionsObject, isUnexpectedResponseError } from "@gooddata/sdk-backend-spi";
-import type { IObjectAccessList } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import {
     type LabelScopePrincipal,
     buildLabelMutations,
-    granteesFromAccessList,
     isGranteeGrantedIn,
 } from "./objectShareController.helpers.js";
 import type { IObjectShareLabel } from "./types.js";
@@ -51,11 +49,6 @@ export interface ILabelScope {
     selectedLabelIdsByGrantee: Record<string, string[]>;
     setSelectedLabelIdsByGrantee: React.Dispatch<React.SetStateAction<Record<string, string[]>>>;
     /**
-     * Grantee ids whose scope was just written optimistically; the resolution
-     * effect keeps these instead of overwriting them through read-after-write lag.
-     */
-    optimisticScopeRef: MutableRefObject<Set<string>>;
-    /**
      * The single per-label write path. Diffs `desired` vs `current` over the
      * permissionable labels and grants/revokes for one principal. Returns false
      * if any write fails (callers surface the error and roll back).
@@ -73,14 +66,19 @@ export interface ILabelScope {
  * which labels are permissionable, and exposes one reconcile primitive shared by
  * add / remove / general-access / the labels picker so their behavior can't drift.
  *
+ * The resolved scope is local-authoritative: the probe seeds a scope only for
+ * grantees it doesn't already know, so an optimistic scope written for a freshly
+ * added grantee is never overwritten by the backend's lagging read. Local scopes
+ * are dropped on a target switch so the next object re-resolves from scratch.
+ *
  * @internal
  */
 export function useLabelScope(
     target: IObjectPermissionsObject | undefined,
     targetKey: string | undefined,
     labels: IObjectShareLabel[],
-    currentAccessList: IObjectAccessList | undefined,
-    granteeIdsKey: string,
+    hasList: boolean,
+    committedGranteeIds: string[],
     labelsError: boolean,
     labelsLoading: boolean,
 ): ILabelScope {
@@ -88,7 +86,6 @@ export function useLabelScope(
     const workspace = useWorkspaceStrict();
 
     const [selectedLabelIdsByGrantee, setSelectedLabelIdsByGrantee] = useState<Record<string, string[]>>({});
-    const optimisticScopeRef = useRef<Set<string>>(new Set());
     // Label ids whose permissions endpoint responded — not every display form is
     // independently permissionable (some 404). `undefined` means "not resolved
     // yet" (assume all).
@@ -107,19 +104,32 @@ export function useLabelScope(
         setPermissionableLabelIds(undefined);
     }, [targetKey, labelsKey]);
 
+    // A target switch — or a label-set change under the same target (labels finish
+    // loading, a label added/removed) — drops every resolved scope so the seeding
+    // effect below re-resolves from the current label set's per-label lists rather
+    // than preserving scopes computed against the old labels. Without the labelsKey
+    // reset, an existing grantee would keep a scope missing a newly-added label even
+    // when the backend grants them access to it. (An add under the SAME labels only
+    // changes granteeIdsKey, not labelsKey, so an optimistic scope still survives.)
+    useEffect(() => {
+        setSelectedLabelIdsByGrantee({});
+    }, [targetKey, labelsKey]);
+
+    // Stable string key of the committed grantee ids — the array is rebuilt each
+    // render, so the effect keys on this instead to re-resolve only on a real change.
+    const granteeIdsKey = committedGranteeIds.slice().sort().join(",");
+
     // Resolve each grantee's label scope: fetch every label's access list once and
     // record, per grantee, which labels they appear in (primary label always counts).
     // Keyed on the committed grantee ids + labels so it re-resolves after add/remove.
-    // `hasAccessList` is a dep too: a list that loads with no named grantees keeps
+    // `hasList` is a dep too: a list that loads with no named grantees keeps
     // `granteeIdsKey` empty, so without it the effect would never run and the
     // permissionable set (404 filtering) would never resolve.
-    const hasAccessList = currentAccessList !== undefined;
     useEffect(() => {
-        if (!target || labels.length === 0 || !currentAccessList) {
+        if (!target || labels.length === 0 || !hasList) {
             return;
         }
         let cancelled = false;
-        const committedGranteeIds = granteesFromAccessList(currentAccessList).map((g) => g.id);
         Promise.all(
             labels.map((label) =>
                 backend
@@ -161,13 +171,14 @@ export function useLabelScope(
                 }
             }
             setSelectedLabelIdsByGrantee((prev) => {
-                // Keep a just-written optimistic scope through read-after-write lag;
-                // take the freshly-resolved scope for everyone else.
-                const next = { ...resolved };
-                for (const id of optimisticScopeRef.current) {
-                    if (prev[id]) {
-                        next[id] = prev[id]!;
-                    }
+                // Seed a scope only for grantees we don't already have one for. A
+                // scope written optimistically (a fresh add, a labels edit) is
+                // local-authoritative and must survive the re-resolution that the
+                // grantee-set change triggers — the backend's lagging read would
+                // otherwise reset it. Grantees gone from the list are dropped.
+                const next: Record<string, string[]> = {};
+                for (const id of committedGranteeIds) {
+                    next[id] = prev[id] ?? resolved[id]!;
                 }
                 return next;
             });
@@ -177,17 +188,7 @@ export function useLabelScope(
             cancelled = true;
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [backend, workspace, targetKey, labelsKey, granteeIdsKey, hasAccessList]);
-
-    // A label-set change OR a target switch re-resolves scopes; drop the optimistic-
-    // scope guard so the freshly-resolved scopes aren't held stale. Keying on
-    // labelsKey alone leaked across objects that happen to share a labelsKey (e.g.
-    // during navigation, before the new object's labels load): the prior object's
-    // optimistic entries would then merge over the new object's resolved scopes and
-    // show/save the wrong label grants. targetKey makes the guard per-object.
-    useEffect(() => {
-        optimisticScopeRef.current = new Set();
-    }, [labelsKey, targetKey]);
+    }, [backend, workspace, targetKey, labelsKey, granteeIdsKey, hasList]);
 
     // Only labels whose permissions endpoint responded are scope-controllable; until
     // resolution completes (permissionableLabelIds undefined) assume all are usable.
@@ -195,10 +196,10 @@ export function useLabelScope(
     // left over from a previous object so we never mis-filter the new labels.
     const effectiveLabels = useMemo<IObjectShareLabel[]>(
         () =>
-            currentAccessList && permissionableLabelIds
+            hasList && permissionableLabelIds
                 ? labels.filter((l) => permissionableLabelIds.has(l.id))
                 : labels,
-        [labels, permissionableLabelIds, currentAccessList],
+        [labels, permissionableLabelIds, hasList],
     );
 
     // Resolution is done when the probe has produced a permissionable set, or when
@@ -244,7 +245,6 @@ export function useLabelScope(
         labelsResolved,
         selectedLabelIdsByGrantee,
         setSelectedLabelIdsByGrantee,
-        optimisticScopeRef,
         reconcileLabelScope,
     };
 }

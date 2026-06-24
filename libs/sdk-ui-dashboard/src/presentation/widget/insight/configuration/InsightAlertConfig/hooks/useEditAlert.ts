@@ -25,10 +25,6 @@ import {
     isAutomationUserRecipient,
 } from "@gooddata/sdk-model";
 
-import {
-    convertCurrentUserToAutomationRecipient,
-    convertCurrentUserToWorkspaceUser,
-} from "../../../../../../_staging/automation/index.js";
 import { useDashboardSelector } from "../../../../../../model/react/DashboardStoreProvider.js";
 import {
     selectEnableAnomalyDetectionAlert,
@@ -43,11 +39,11 @@ import { selectUsers } from "../../../../../../model/store/users/usersSelectors.
 import {
     type IMeasureFormatMap,
     getDescription,
-} from "../../../../../automations/_staging/alerting/DefaultAlertingDialog/utils/getters.js";
+} from "../../../../../automations/alerting/DefaultAlertingDialog/utils/getters.js";
 import {
     isAlertRecipientsValid,
     isAlertValueDefined,
-} from "../../../../../automations/_staging/alerting/DefaultAlertingDialog/utils/guards.js";
+} from "../../../../../automations/alerting/DefaultAlertingDialog/utils/guards.js";
 import {
     transformAlertByAnomalyDetection,
     transformAlertByAttribute,
@@ -59,13 +55,17 @@ import {
     transformAlertBySensitivity,
     transformAlertByTitle,
     transformAlertByValue,
-} from "../../../../../automations/_staging/alerting/DefaultAlertingDialog/utils/transformation.js";
+} from "../../../../../automations/alerting/DefaultAlertingDialog/utils/transformation.js";
 import {
     type AlertAttribute,
     type AlertMetric,
     type AlertMetricComparatorType,
-} from "../../../../../automations/_staging/alerting/types.js";
+} from "../../../../../automations/alerting/types.js";
 import { isEmail } from "../../../../../automations/scheduledEmail/utils/validate.js";
+import {
+    convertCurrentUserToAutomationRecipient,
+    convertCurrentUserToWorkspaceUser,
+} from "../../../../../automations/shared/utils/automationUtils.js";
 
 const DEFAULT_MIN_RECURRENCE_MINUTES = "60";
 

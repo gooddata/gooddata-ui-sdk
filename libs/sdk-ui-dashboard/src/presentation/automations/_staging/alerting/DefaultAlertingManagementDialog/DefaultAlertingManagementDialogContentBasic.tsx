@@ -19,7 +19,7 @@ import { useDashboardSelector } from "../../../../../model/react/DashboardStoreP
 import { selectIsWhiteLabeled } from "../../../../../model/store/config/configSelectors.js";
 import { selectIsAlertingDialogOpen } from "../../../../../model/store/ui/uiSelectors.js";
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../../../constants/zIndex.js";
-import { isMobileView } from "../DefaultAlertingDialog/utils/responsive.js";
+import { isMobileView } from "../../../alerting/DefaultAlertingDialog/utils/responsive.js";
 import { useAlertingDialogAccessibility } from "../hooks/useAlertingDialogAccessibility.js";
 
 import { Alerts } from "./components/AlertsList.js";

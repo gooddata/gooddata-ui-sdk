@@ -275,7 +275,7 @@ export function DashboardInsight({
 
     const effectiveError = filtersError ?? visualizationError;
 
-    const execConfig = useWidgetExecConfig(ref);
+    const execConfig = useWidgetExecConfig(ref, insight);
 
     useEffect(() => {
         // Clear a stale error (e.g. "no data") on any execution change — parameters flow via execConfig, not filters.

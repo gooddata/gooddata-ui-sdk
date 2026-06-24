@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-model: Add `isValidNumberParameterValue` parameter helper",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

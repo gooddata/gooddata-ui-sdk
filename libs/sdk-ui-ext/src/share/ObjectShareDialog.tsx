@@ -15,7 +15,7 @@ import {
 import { objectShareMessages } from "./messages.js";
 import type { IObjectShareController } from "./objectShareController.types.js";
 import type { IObjectShareLabel } from "./types.js";
-import { useObjectShare } from "./useObjectShare.js";
+import { useObjectShareController } from "./useObjectShareController.js";
 
 /**
  * Props for {@link ObjectShareDialog}.
@@ -96,7 +96,7 @@ export function ObjectShareDialog({
     // unconditionally (rules of hooks), so when a controller is injected we pass
     // it an undefined target — it then no-ops and never duplicates the fetch the
     // injected controller already owns.
-    const ownController = useObjectShare(controller ? undefined : target, {
+    const ownController = useObjectShareController(controller ? undefined : target, {
         onSaved,
         labels,
         labelsError,

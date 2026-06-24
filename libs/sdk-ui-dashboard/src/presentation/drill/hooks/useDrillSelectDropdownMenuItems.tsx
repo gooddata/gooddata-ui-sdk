@@ -2,9 +2,10 @@
 
 import { useMemo } from "react";
 
+import { compact } from "lodash-es";
 import { defineMessages, useIntl } from "react-intl";
 
-import { type IUiMenuItem } from "@gooddata/sdk-ui-kit";
+import { type IUiMenuItem, type IconType, UiIcon } from "@gooddata/sdk-ui-kit";
 
 import { type DashboardDrillDefinition } from "../../../types.js";
 import { DrillType, type IDrillSelectItem } from "../DrillSelect/types.js";
@@ -17,13 +18,23 @@ const groupMenuItemMessages = defineMessages({
     drillToUrl: { id: "drill_modal_picker.drill-to-url" },
 });
 
+const DRILL_ICON_NAME: Record<DrillType, IconType> = {
+    [DrillType.DRILL_TO_DASHBOARD]: "drillTo",
+    [DrillType.DRILL_TO_INSIGHT]: "drillTo",
+    [DrillType.DRILL_TO_URL]: "link",
+    [DrillType.DRILL_DOWN]: "trendDown",
+    [DrillType.CROSS_FILTERING]: "filter",
+    [DrillType.KEY_DRIVER_ANALYSIS]: "explainai",
+};
+
+function getMenuItemStringTitle(item: IDrillSelectItem): string {
+    return compact([item.name, item.attributeValue ? `(${item.attributeValue})` : null]).join(" ");
+}
+
 export interface IDrillSelectDropdownMenuItemData {
     interactive: {
         type: DrillType;
-        name: string;
         drillDefinition: DashboardDrillDefinition;
-        context?: unknown;
-        attributeValue?: string | null;
         onSelect: () => void;
     };
 }
@@ -60,7 +71,8 @@ export const useDrillSelectDropdownMenuItems = ({
             subItems: items.map((item, index) => ({
                 type: "interactive" as const,
                 id: `${groupId}-${index}`,
-                stringTitle: item.name,
+                stringTitle: getMenuItemStringTitle(item),
+                iconLeft: <UiIcon type={DRILL_ICON_NAME[item.type]} size={16} color="complementary-5" />,
                 isDisabled: item.isDisabled,
                 tooltip: item.tooltipText,
                 ariaAttributes: {
@@ -71,8 +83,6 @@ export const useDrillSelectDropdownMenuItems = ({
                 },
                 data: {
                     type: item.type,
-                    name: item.name,
-                    attributeValue: item.attributeValue,
                     drillDefinition: item.drillDefinition,
                     onSelect: () => {
                         onSelect(item.drillDefinition, item.context);

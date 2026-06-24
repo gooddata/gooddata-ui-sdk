@@ -72,7 +72,7 @@ docker-build-web-components:
     - cd ${CI_PROJECT_DIR}/libs/sdk-ui-web-components
     - docker buildx build --push --cache-from $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
       --build-arg REPO_PREFIX=$CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX/
-      -t $IMAGE_ID -t $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG -f Dockerfile_nas .
+      -t $IMAGE_ID -t $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG -f Dockerfile .
   dependencies:
     - build-web-components
 

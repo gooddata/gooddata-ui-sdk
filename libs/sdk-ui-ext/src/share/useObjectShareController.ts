@@ -1,8 +1,9 @@
 // (C) 2026 GoodData Corporation
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 
 import type { IObjectPermissionsObject } from "@gooddata/sdk-backend-spi";
+import type { IGranularAccessGrantee } from "@gooddata/sdk-model";
 import { type GeneralAccessValue, type IUiPickedGrantee, useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { objectShareMessages } from "./messages.js";
@@ -10,6 +11,7 @@ import {
     EMPTY_IDS,
     type LabelScopePrincipal,
     NO_LABELS,
+    effectivePermissionAbove,
     granularGranteeFor,
     toGranularGrantee,
 } from "./objectShareController.helpers.js";
@@ -18,38 +20,40 @@ import {
     type IObjectShareControllerActions,
     type IObjectShareControllerState,
     type IObjectShareGrantee,
+    type IUseObjectShareOptions,
     type ObjectSharePermissionLevel,
 } from "./objectShareController.types.js";
-import type { IObjectShareLabel } from "./types.js";
 import { useAccessList } from "./useAccessList.js";
 import { useLabelScope } from "./useLabelScope.js";
 
 /**
- * Manages the share dialog state and backend I/O for a single shareable
- * object.
+ * Manages the share dialog state and backend I/O for a single shareable object.
  *
- * The access list is fetched (and re-fetched after every save) via
- * `useCancelablePromise`; everything that reflects the backend — the grantee
- * rows, general-access value, summary — is derived from it on render, never
- * copied into local state. Local state is only the dialog's own transient UI:
- * the active subview, the add-grantee buffer, the pending general-access
- * confirm, and an in-flight save flag. Top-level open/close is the consumer's
- * concern (see {@link ObjectShareDialog}).
+ * The access list is fetched once and seeded into local state, which is the
+ * source of truth while the dialog/summary is mounted. Each access change is
+ * written through to local state immediately and sent to the backend; on failure
+ * the one changed entry is rolled back. There is no post-write refetch, so the
+ * grantee list never blanks and never fights the backend's read-after-write lag.
+ * Top-level open/close is the consumer's concern (see {@link ObjectShareDialog}).
  *
- * Mutations follow a **commit-on-interaction** model: each access change is
- * sent immediately; the general-access toggle goes through a confirm step
- * because it is high-impact. There is no batched Save. The list is fetched
- * eagerly so `state.summary` also drives an inline access row while closed.
+ * Mutations follow a **commit-on-interaction** model: each access change is sent
+ * immediately; the general-access toggle goes through a confirm step because it
+ * is high-impact. There is no batched Save. The list is fetched eagerly so
+ * `state.summary` also drives an inline access row while closed.
+ *
+ * Most consumers do not call this directly — render {@link ObjectShareDialog} with
+ * plain props and it owns its controller. Call this (exported as `useObjectShare`)
+ * only to share a single access-list fetch between the dialog and an inline summary
+ * row: call it once, read `state.summary` for the row, and pass the controller into
+ * the dialog.
  *
  * @internal
  */
 export function useObjectShareController(
     target: IObjectPermissionsObject | undefined,
-    onSaved?: () => void,
-    labels: IObjectShareLabel[] = NO_LABELS,
-    labelsError = false,
-    labelsLoading = false,
+    options?: IUseObjectShareOptions,
 ): IObjectShareController {
+    const { onSaved, labels = NO_LABELS, labelsError = false, labelsLoading = false } = options ?? {};
     const toast = useToastMessage();
 
     // UI-local buffers — never backend data.
@@ -59,24 +63,41 @@ export function useObjectShareController(
         undefined,
     );
 
-    // The backend access list + optimistic overlay (rows, general access, summary,
-    // the commit/picker primitives) live in their own hook.
+    // The backend access list, seeded into local state (rows, general access,
+    // summary, the commit/picker primitives) lives in its own hook.
     const {
         targetKey,
-        currentAccessList,
+        hasList,
         grantees,
-        granteeIdsKey,
         generalAccess,
+        workspaceLevel,
         summary,
         status,
         loadError,
         commit,
         loadOptions,
         refForId,
-        setOverlay,
+        setGrantees,
+        setGeneralAccess,
+        setWorkspaceLevel,
         setKnownNames,
-        setOptimisticGeneralAccess,
     } = useAccessList(target, onSaved);
+
+    // Always-current target key, read inside async mutation finalizers that captured
+    // an older one. A write started for object A resolves after the user navigated to
+    // object B; because local state is authoritative (no refetch), applying A's
+    // finalizer to B's seeded list would corrupt B (e.g. clobber a same-id row, or
+    // revert B's general access). Each finalizer captures the target it started for
+    // and bails if it no longer matches.
+    const targetKeyRef = useRef(targetKey);
+    targetKeyRef.current = targetKey;
+
+    // The committed grantee ids the label-scope probe resolves against (a removing
+    // row is excluded so its scope is dropped, not re-seeded).
+    const committedGranteeIds = useMemo(
+        () => grantees.filter((g) => g.pending !== "removing").map((g) => g.id),
+        [grantees],
+    );
 
     // Per-label scope resolution + the single label-write path live in their own hook.
     const {
@@ -84,17 +105,8 @@ export function useObjectShareController(
         labelsResolved,
         selectedLabelIdsByGrantee,
         setSelectedLabelIdsByGrantee,
-        optimisticScopeRef,
         reconcileLabelScope,
-    } = useLabelScope(
-        target,
-        targetKey,
-        labels,
-        currentAccessList,
-        granteeIdsKey,
-        labelsError,
-        labelsLoading,
-    );
+    } = useLabelScope(target, targetKey, labels, hasList, committedGranteeIds, labelsError, labelsLoading);
 
     // Drop the transient UI buffers when the permission target changes. The detail
     // view is reused across objects and closes the dialog by toggling `isOpen`
@@ -126,37 +138,81 @@ export function useObjectShareController(
         setPendingGrantees([]);
     }, []);
 
+    // The single object+labels write path shared by remove and general access (the
+    // two changes that must keep the object grant and its label mirror consistent).
+    // Mirrors the labels first, then writes the object; if the object write fails it
+    // undoes the label mirror so the two never drift. `abortIfLabelsFail` distinguishes
+    // the two callers' label-failure policy: general access aborts (labels and object
+    // are one logical change), remove proceeds (the object revoke is what matters; a
+    // leftover label grant is only surfaced as a warning). Returns the object-write
+    // result and whether the label mirror fully applied; the caller owns the local
+    // write-through, the revert and any toast beyond `commit`'s own.
+    const applyAccessChange = useCallback(
+        async (params: {
+            principal: LabelScopePrincipal;
+            objectMutation: IGranularAccessGrantee;
+            successMessage: { id: string };
+            labelDesired: ReadonlySet<string>;
+            labelCurrent: ReadonlySet<string>;
+            abortIfLabelsFail: boolean;
+        }): Promise<{ ok: boolean; labelsOk: boolean }> => {
+            const { principal, objectMutation, successMessage, labelDesired, labelCurrent } = params;
+            const labelsOk = await reconcileLabelScope(principal, labelDesired, labelCurrent);
+            if (!labelsOk && params.abortIfLabelsFail) {
+                // Don't write the object on a half-applied label scope: undo whatever
+                // mirrored and surface the failure to the caller.
+                await reconcileLabelScope(principal, labelCurrent, labelDesired);
+                return { ok: false, labelsOk: false };
+            }
+            const ok = await commit([objectMutation], successMessage);
+            if (!ok) {
+                // Object write failed — undo the label mirror so labels and object
+                // don't drift.
+                await reconcileLabelScope(principal, labelCurrent, labelDesired);
+            }
+            return { ok, labelsOk };
+        },
+        [commit, reconcileLabelScope],
+    );
+
     const confirmAddGrantees = useCallback(async (): Promise<void> => {
         if (pendingGrantees.length === 0) {
             return;
         }
-        // Optimistically insert the picked grantees as pending rows, carrying the
-        // picker's display name so the new row never renders a raw id.
-        const added = pendingGrantees.map((g) => ({
-            id: g.id,
-            grantee: {
+        const startedFor = targetKey;
+        // Insert the picked grantees as pending rows, carrying the picker's display
+        // name so the new row never renders a raw id.
+        const addedIds = pendingGrantees.map((g) => g.id);
+        const addedRows = pendingGrantees.map(
+            (g): IObjectShareGrantee => ({
                 id: g.id,
                 kind: g.kind,
                 granteeRef: refForId(g.id),
                 name: g.name,
                 level: g.permissionLevel,
-            } satisfies IObjectShareGrantee,
-        }));
+                pending: "saving",
+            }),
+        );
         const mutations = pendingGrantees.map((g) =>
             toGranularGrantee(g.kind, refForId(g.id), g.permissionLevel),
         );
-        setOverlay((prev) => {
+        // Default each new grantee to ALL labels (the picker's Add is gated until
+        // labels have loaded, so the set is known here). Reflect the full scope
+        // before the writes so the row shows it immediately.
+        const allLabelIds = effectiveLabels.map((l) => l.id);
+        const allLabelIdSet = new Set(allLabelIds);
+        setGrantees((prev) => [...prev.filter((g) => !addedIds.includes(g.id)), ...addedRows]);
+        setKnownNames((prev) => {
             const next = { ...prev };
-            for (const { id, grantee } of added) {
-                next[id] = { op: "set", grantee, pending: true };
+            for (const g of pendingGrantees) {
+                next[g.id] = g.name;
             }
             return next;
         });
-        // Cache the picked names so the rows keep them after the overlay reconciles.
-        setKnownNames((prev) => {
+        setSelectedLabelIdsByGrantee((prev) => {
             const next = { ...prev };
-            for (const { id, grantee } of added) {
-                next[id] = grantee.name;
+            for (const id of addedIds) {
+                next[id] = allLabelIds;
             }
             return next;
         });
@@ -164,40 +220,36 @@ export function useObjectShareController(
         closeAddGrantee();
 
         const ok = await commit(mutations, objectShareMessages.toastGranteeAdded);
+        // Bail if the target switched mid-add: the new object's list was already
+        // seeded, so rolling back / clearing markers / mirroring labels by these ids
+        // would hit the wrong object.
+        if (targetKeyRef.current !== startedFor) {
+            return;
+        }
         if (!ok) {
-            // Roll back the failed adds; refresh() already reconciled on success.
-            setOverlay((prev) => {
+            // Roll back the failed adds.
+            setGrantees((prev) => prev.filter((g) => !addedIds.includes(g.id)));
+            setSelectedLabelIdsByGrantee((prev) => {
                 const next = { ...prev };
-                for (const { id } of added) {
+                for (const id of addedIds) {
                     delete next[id];
                 }
                 return next;
             });
             return;
         }
+        // Object grant landed — clear the saving marker on the new rows.
+        setGrantees((prev) => prev.map((g) => (addedIds.includes(g.id) ? { ...g, pending: undefined } : g)));
 
-        // Default each new grantee to ALL labels (the picker's Add is gated until
-        // labels have loaded, so the set is known here). Reflect the full scope
-        // optimistically and hold it through read-after-write lag; if any label
-        // write fails, surface it and drop that grantee's optimistic scope rather
-        // than claim access that didn't persist.
-        const allLabelIds = effectiveLabels.map((l) => l.id);
-        const allLabelIdSet = new Set(allLabelIds);
-        for (const g of pendingGrantees) {
-            optimisticScopeRef.current.add(g.id);
-        }
-        setSelectedLabelIdsByGrantee((prev) => {
-            const next = { ...prev };
-            for (const g of pendingGrantees) {
-                next[g.id] = allLabelIds;
-            }
-            return next;
-        });
+        // Mirror each new grantee's full label scope; pin failures to primary-only.
         const scoped = await Promise.all(
             pendingGrantees.map((g) =>
                 reconcileLabelScope({ kind: g.kind, granteeRef: refForId(g.id) }, allLabelIdSet, EMPTY_IDS),
             ),
         );
+        if (targetKeyRef.current !== startedFor) {
+            return;
+        }
         const failed = pendingGrantees.filter((_, i) => !scoped[i]);
         if (failed.length > 0) {
             toast.addWarning(objectShareMessages.toastLabelScopePartial);
@@ -216,16 +268,16 @@ export function useObjectShareController(
         }
     }, [
         pendingGrantees,
+        targetKey,
         commit,
         closeAddGrantee,
         effectiveLabels,
         reconcileLabelScope,
         refForId,
         toast,
-        setOverlay,
+        setGrantees,
         setKnownNames,
         setSelectedLabelIdsByGrantee,
-        optimisticScopeRef,
     ]);
 
     const changePermissionLevel = useCallback(
@@ -234,26 +286,45 @@ export function useObjectShareController(
             if (!grantee || grantee.level === level || grantee.pending) {
                 return;
             }
+            const startedFor = targetKey;
             const previousLevel = grantee.level;
-            // Show the new level immediately; keep it through the backend's
-            // read-after-write lag (reconcileOverlay clears it once confirmed).
-            setOverlay((prev) => ({
-                ...prev,
-                [granteeId]: { op: "set", grantee: { ...grantee, level }, pending: true },
-            }));
+            // Recompute the inherited-SHARE badge for the new direct level: raising a
+            // VIEW grant to SHARE makes the inherited SHARE no longer "above" the
+            // direct grant (badge hidden); lowering it back surfaces the warning again.
+            const nextEffective = effectivePermissionAbove(level, grantee.inheritsShare ? ["SHARE"] : []);
+            // Show the new level immediately (marked saving), then write it through.
+            setGrantees((prev) =>
+                prev.map((g) =>
+                    g.id === granteeId
+                        ? { ...g, level, effectivePermission: nextEffective, pending: "saving" }
+                        : g,
+                ),
+            );
             const ok = await commit(
                 [toGranularGrantee(grantee.kind, grantee.granteeRef, level)],
                 objectShareMessages.toastAccessUpdated,
             );
-            if (!ok) {
-                // Revert to the prior level on failure.
-                setOverlay((prev) => ({
-                    ...prev,
-                    [granteeId]: { op: "set", grantee: { ...grantee, level: previousLevel }, pending: false },
-                }));
+            // The target may have changed while the write was in flight; applying this
+            // finalizer to the newly seeded list would corrupt the other object's row.
+            if (targetKeyRef.current !== startedFor) {
+                return;
             }
+            setGrantees((prev) =>
+                prev.map((g) =>
+                    g.id === granteeId
+                        ? {
+                              ...g,
+                              level: ok ? level : previousLevel,
+                              effectivePermission: ok
+                                  ? nextEffective
+                                  : effectivePermissionAbove(previousLevel, g.inheritsShare ? ["SHARE"] : []),
+                              pending: undefined,
+                          }
+                        : g,
+                ),
+            );
         },
-        [grantees, commit, setOverlay],
+        [grantees, targetKey, commit, setGrantees],
     );
 
     const removeGrantee = useCallback(
@@ -262,36 +333,56 @@ export function useObjectShareController(
             if (!grantee || grantee.pending) {
                 return;
             }
+            const startedFor = targetKey;
             // Mark the row removed but keep it visible (muted) until the write lands.
-            setOverlay((prev) => ({ ...prev, [granteeId]: { op: "remove", pending: true } }));
+            setGrantees((prev) => prev.map((g) => (g.id === granteeId ? { ...g, pending: "removing" } : g)));
             // Revoke the grantee's per-label grants too — they are independent
-            // access-list entries, so the object revoke alone would leave them
-            // behind. Reconcile to an empty scope (current = all permissionable).
-            const allCurrent = new Set(effectiveLabels.map((l) => l.id));
-            const principal = { kind: grantee.kind, granteeRef: grantee.granteeRef };
-            const labelsRevoked = await reconcileLabelScope(principal, EMPTY_IDS, allCurrent);
-            const ok = await commit(
-                [toGranularGrantee(grantee.kind, grantee.granteeRef, "none")],
-                objectShareMessages.toastAccessUpdated,
-            );
+            // access-list entries, so the object revoke alone would leave them behind
+            // (current = all permissionable). The object revoke is what matters; a
+            // label revoke that fails is non-fatal (surfaced as a warning), so don't
+            // abort on it.
+            const { ok, labelsOk } = await applyAccessChange({
+                principal: { kind: grantee.kind, granteeRef: grantee.granteeRef },
+                objectMutation: toGranularGrantee(grantee.kind, grantee.granteeRef, "none"),
+                successMessage: objectShareMessages.toastAccessUpdated,
+                labelDesired: EMPTY_IDS,
+                labelCurrent: new Set(effectiveLabels.map((l) => l.id)),
+                abortIfLabelsFail: false,
+            });
+            // Bail if the target switched mid-write: the row no longer belongs to the
+            // seeded list, and dropping/restoring "it" would hit the other object.
+            if (targetKeyRef.current !== startedFor) {
+                return;
+            }
             if (!ok) {
-                // Restore the row on failure — and re-grant the labels we just
-                // revoked, so a failed object revoke doesn't strip label access
-                // while the grantee row stays.
-                if (labelsRevoked) {
-                    await reconcileLabelScope(principal, allCurrent, EMPTY_IDS);
-                }
-                setOverlay((prev) => {
-                    const { [granteeId]: _omit, ...rest } = prev;
-                    return rest;
-                });
-            } else if (!labelsRevoked) {
+                // Object revoke failed (applyAccessChange already re-granted the
+                // labels) — restore the row.
+                setGrantees((prev) =>
+                    prev.map((g) => (g.id === granteeId ? { ...g, pending: undefined } : g)),
+                );
+                return;
+            }
+            // Object revoke landed — drop the row from local state.
+            setGrantees((prev) => prev.filter((g) => g.id !== granteeId));
+            setSelectedLabelIdsByGrantee((prev) => {
+                const { [granteeId]: _omit, ...rest } = prev;
+                return rest;
+            });
+            if (!labelsOk) {
                 // Object access is gone but some per-label grants couldn't be
                 // revoked — warn so the leftover scope isn't mistaken for success.
                 toast.addWarning(objectShareMessages.toastLabelScopePartial);
             }
         },
-        [grantees, commit, effectiveLabels, reconcileLabelScope, toast, setOverlay],
+        [
+            grantees,
+            targetKey,
+            applyAccessChange,
+            effectiveLabels,
+            toast,
+            setGrantees,
+            setSelectedLabelIdsByGrantee,
+        ],
     );
 
     const changeGranteeLabels = useCallback(
@@ -307,9 +398,9 @@ export function useObjectShareController(
             const desired = new Set(nextScope);
             const current = new Set(currentScope);
 
-            // Optimistic: reflect the new scope immediately and hold it through lag.
+            const startedFor = targetKey;
+            // Reflect the new scope immediately; restore it on failure.
             const previousScope = currentScope;
-            optimisticScopeRef.current.add(granteeId);
             setSelectedLabelIdsByGrantee((prev) => ({ ...prev, [granteeId]: nextScope }));
 
             const ok = await reconcileLabelScope(
@@ -317,12 +408,14 @@ export function useObjectShareController(
                 desired,
                 current,
             );
+            // Bail if the target switched mid-write — the scope map now belongs to the
+            // other object, so neither the success no-op nor the rollback applies here.
+            if (targetKeyRef.current !== startedFor) {
+                return;
+            }
             if (ok) {
                 toast.addSuccess(objectShareMessages.toastAccessUpdated);
                 onSaved?.();
-                // Keep the optimistic scope as the source of truth — re-resolving now
-                // would clobber it with the backend's read-after-write-stale value
-                // (same lag the grantee overlay handles).
             } else {
                 toast.addError(objectShareMessages.toastError);
                 setSelectedLabelIdsByGrantee((prev) => ({ ...prev, [granteeId]: previousScope }));
@@ -331,13 +424,13 @@ export function useObjectShareController(
         [
             grantees,
             target,
+            targetKey,
             effectiveLabels,
             selectedLabelIdsByGrantee,
             reconcileLabelScope,
             toast,
             onSaved,
             setSelectedLabelIdsByGrantee,
-            optimisticScopeRef,
         ],
     );
 
@@ -356,47 +449,60 @@ export function useObjectShareController(
             setPendingGeneralAccess(undefined);
             return;
         }
+        const startedFor = targetKey;
         const previous = generalAccess;
-        // Apply optimistically and close the confirm at once — the radio + summary
-        // reflect `next` immediately; the write commits in the background.
-        setOptimisticGeneralAccess(next);
+        const previousWorkspaceLevel = workspaceLevel;
+        // Apply the new value and close the confirm at once — the radio + summary
+        // reflect `next` immediately; the write commits in the background. The
+        // workspace rule is always written as VIEW, so reflect VIEW now too —
+        // otherwise the summary would keep a SHARE level left over from the fetch.
+        setGeneralAccess(next);
+        if (next === "WORKSPACE") {
+            setWorkspaceLevel("VIEW");
+        }
         setPendingGeneralAccess(undefined);
 
         const principal: LabelScopePrincipal = { allWorkspaceUsers: true };
         const allIds = new Set(effectiveLabels.map((l) => l.id));
-        // The workspace rule must cover every label too, or the workspace would
-        // hold object access while non-primary labels stay ungranted. Mirror it
-        // first (WORKSPACE → all labels, RESTRICTED → none), then write the object.
+        // The workspace rule must cover every label too, or the workspace would hold
+        // object access while non-primary labels stay ungranted. Mirror the labels
+        // (WORKSPACE → all, RESTRICTED → none) then write the object; the two are one
+        // logical change, so abort if the labels fail.
         const [desired, current] = next === "WORKSPACE" ? [allIds, EMPTY_IDS] : [EMPTY_IDS, allIds];
-        const mirrored = await reconcileLabelScope(principal, desired, current);
-        if (!mirrored) {
-            // The label mirror failed: don't write the object grant on top of a
-            // half-applied label scope. Undo whatever mirrored, revert the
-            // optimistic override and surface the error.
-            await reconcileLabelScope(principal, current, desired);
-            setOptimisticGeneralAccess((value) => (value === next ? previous : value));
-            toast.addError(objectShareMessages.toastError);
+        const { ok, labelsOk } = await applyAccessChange({
+            principal,
+            objectMutation: granularGranteeFor(principal, next === "WORKSPACE" ? "VIEW" : "none"),
+            successMessage: objectShareMessages.toastGeneralAccessUpdated,
+            labelDesired: desired,
+            labelCurrent: current,
+            abortIfLabelsFail: true,
+        });
+        // Bail if the target switched mid-write — reverting now would change the
+        // other object's general access.
+        if (targetKeyRef.current !== startedFor) {
             return;
         }
-
-        const ok = await commit(
-            [granularGranteeFor(principal, next === "WORKSPACE" ? "VIEW" : "none")],
-            objectShareMessages.toastGeneralAccessUpdated,
-        );
         if (!ok) {
-            // Object write failed: undo the label mirror too, so labels and object
-            // don't drift, and revert the optimistic override.
-            await reconcileLabelScope(principal, current, desired);
-            setOptimisticGeneralAccess((value) => (value === next ? previous : value));
+            // Labels or object write failed (applyAccessChange already undid the
+            // label mirror) — revert the value (and the workspace level). The
+            // label-abort path produced no toast, so surface the error here; a
+            // failed object write already toasted via commit, so don't double up.
+            setGeneralAccess(previous);
+            setWorkspaceLevel(previousWorkspaceLevel);
+            if (!labelsOk) {
+                toast.addError(objectShareMessages.toastError);
+            }
         }
     }, [
         pendingGeneralAccess,
         generalAccess,
-        commit,
+        workspaceLevel,
+        targetKey,
+        applyAccessChange,
         effectiveLabels,
-        reconcileLabelScope,
         toast,
-        setOptimisticGeneralAccess,
+        setGeneralAccess,
+        setWorkspaceLevel,
     ]);
 
     const actions = useMemo<IObjectShareControllerActions>(

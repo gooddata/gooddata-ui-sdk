@@ -13,7 +13,7 @@ import {
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { convertUserToAutomationRecipient } from "../../../../../../_staging/automation/index.js";
+import { convertUserToAutomationRecipient } from "../../../../shared/utils/automationUtils.js";
 import { createUser, matchUser } from "../../../utils/users.js";
 import { isEmail } from "../../../utils/validate.js";
 

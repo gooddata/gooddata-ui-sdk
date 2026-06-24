@@ -7,8 +7,8 @@ import { selectCatalogDateDatasets } from "../../../../../../model/store/catalog
 import { selectEnableComparisonInAlerting } from "../../../../../../model/store/config/configSelectors.js";
 import { selectInsightByWidgetRef } from "../../../../../../model/store/insights/insightsSelectors.js";
 import { selectWidgetByRef } from "../../../../../../model/store/tabs/layout/layoutSelectors.js";
-import { getAlertMeasure } from "../utils/getters.js";
-import { getSupportedInsightMeasuresByInsight } from "../utils/items.js";
+import { getAlertMeasure } from "../../../../alerting/DefaultAlertingDialog/utils/getters.js";
+import { getSupportedInsightMeasuresByInsight } from "../../../../alerting/DefaultAlertingDialog/utils/items.js";
 
 export type AlertInvalidityReason = "missingMetric" | "missingWidget";
 

@@ -5,12 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { type IInsight } from "@gooddata/sdk-model";
 import { fillMissingTitles } from "@gooddata/sdk-ui";
 
-import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
-import { selectCatalogDateDatasets } from "../../../../../model/store/catalog/catalogSelectors.js";
-import {
-    selectEnableComparisonInAlerting,
-    selectLocale,
-} from "../../../../../model/store/config/configSelectors.js";
+import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
 import { getSupportedInsightMeasuresByInsight } from "../DefaultAlertingDialog/utils/items.js";
 import { type AlertMetric } from "../types.js";
 
@@ -22,9 +17,11 @@ import { type AlertMetric } from "../types.js";
  * @internal
  */
 export const useGetSupportedMeasures = (insight: IInsight | undefined): AlertMetric[] => {
-    const catalogDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
-    const canManageComparison = useDashboardSelector(selectEnableComparisonInAlerting);
-    const locale = useDashboardSelector(selectLocale);
+    const {
+        catalogDateDatasets,
+        locale,
+        features: { enableComparisonInAlerting: canManageComparison },
+    } = useAutomationsContext();
     const [effectiveInsight, setEffectiveInsight] = useState<IInsight | undefined>(undefined);
     useEffect(() => {
         if (insight) {

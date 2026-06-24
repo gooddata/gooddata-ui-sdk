@@ -86,7 +86,7 @@ export const selectLocale: DashboardSelector<ILocale> = createSelector(selectCon
  * @public
  */
 export const selectTimezone: DashboardSelector<string | undefined> = createSelector(selectConfig, (state) => {
-    return state.settings.timezone ?? undefined;
+    return state.settings?.timezone ?? undefined;
 });
 
 /**

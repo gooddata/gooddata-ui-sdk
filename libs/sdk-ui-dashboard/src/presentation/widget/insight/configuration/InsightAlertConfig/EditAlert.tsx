@@ -7,6 +7,7 @@ import {
     type IAutomationMetadataObjectDefinition,
     type ICatalogAttribute,
     type ICatalogDateDataset,
+    type IInsightWidget,
     type INotificationChannelIdentifier,
     type INotificationChannelMetadataObject,
     type ISeparators,
@@ -21,20 +22,23 @@ import {
     type OverlayPositionType,
 } from "@gooddata/sdk-ui-kit";
 
+import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import { type IExecutionResultEnvelope } from "../../../../../model/store/executionResults/types.js";
-import { AlertAttributeSelect } from "../../../../automations/_staging/alerting/DefaultAlertingDialog/components/AlertAttributeSelect.js";
-import { AlertComparisonOperatorSelect } from "../../../../automations/_staging/alerting/DefaultAlertingDialog/components/AlertComparisonOperatorSelect.js";
-import { AlertComparisonPeriodSelect } from "../../../../automations/_staging/alerting/DefaultAlertingDialog/components/AlertComparisonPeriodSelect.js";
-import { AlertDestinationSelect } from "../../../../automations/_staging/alerting/DefaultAlertingDialog/components/AlertDestinationSelect.js";
-import { AlertGranularitySelect } from "../../../../automations/_staging/alerting/DefaultAlertingDialog/components/AlertGranularitySelect.js";
-import { AlertMeasureSelect } from "../../../../automations/_staging/alerting/DefaultAlertingDialog/components/AlertMeasureSelect.js";
-import { AlertSensitivitySelect } from "../../../../automations/_staging/alerting/DefaultAlertingDialog/components/AlertSensitivitySelect.js";
+import { selectInsightByWidgetRef } from "../../../../../model/store/insights/insightsSelectors.js";
+import { selectWidgets } from "../../../../../model/store/tabs/layout/layoutSelectors.js";
+import { AlertAttributeSelect } from "../../../../automations/alerting/DefaultAlertingDialog/components/AlertAttributeSelect.js";
+import { AlertComparisonOperatorSelect } from "../../../../automations/alerting/DefaultAlertingDialog/components/AlertComparisonOperatorSelect.js";
+import { AlertComparisonPeriodSelect } from "../../../../automations/alerting/DefaultAlertingDialog/components/AlertComparisonPeriodSelect.js";
+import { AlertDestinationSelect } from "../../../../automations/alerting/DefaultAlertingDialog/components/AlertDestinationSelect.js";
+import { AlertGranularitySelect } from "../../../../automations/alerting/DefaultAlertingDialog/components/AlertGranularitySelect.js";
+import { AlertMeasureSelect } from "../../../../automations/alerting/DefaultAlertingDialog/components/AlertMeasureSelect.js";
+import { AlertSensitivitySelect } from "../../../../automations/alerting/DefaultAlertingDialog/components/AlertSensitivitySelect.js";
 import {
     type AlertInvalidityReason,
     useAlertValidation,
-} from "../../../../automations/_staging/alerting/DefaultAlertingDialog/hooks/useAlertValidation.js";
-import { useAttributeValuesFromExecResults } from "../../../../automations/_staging/alerting/DefaultAlertingDialog/hooks/useAttributeValuesFromExecResults.js";
-import { useThresholdValue } from "../../../../automations/_staging/alerting/DefaultAlertingDialog/hooks/useThresholdValue.js";
+} from "../../../../automations/alerting/DefaultAlertingDialog/hooks/useAlertValidation.js";
+import { useAttributeValuesFromExecResults } from "../../../../automations/alerting/DefaultAlertingDialog/hooks/useAttributeValuesFromExecResults.js";
+import { useThresholdValue } from "../../../../automations/alerting/DefaultAlertingDialog/hooks/useThresholdValue.js";
 import {
     type IMeasureFormatMap,
     getAlertAiOperator,
@@ -47,13 +51,13 @@ import {
     getAlertRelativeOperator,
     getAlertSensitivity,
     getValueSuffix,
-} from "../../../../automations/_staging/alerting/DefaultAlertingDialog/utils/getters.js";
-import { translateGranularity } from "../../../../automations/_staging/alerting/DefaultAlertingDialog/utils/granularity.js";
+} from "../../../../automations/alerting/DefaultAlertingDialog/utils/getters.js";
+import { translateGranularity } from "../../../../automations/alerting/DefaultAlertingDialog/utils/granularity.js";
 import {
     isAnomalyDetection,
     isChangeOrDifferenceOperator,
-} from "../../../../automations/_staging/alerting/DefaultAlertingDialog/utils/guards.js";
-import { type AlertAttribute, type AlertMetric } from "../../../../automations/_staging/alerting/types.js";
+} from "../../../../automations/alerting/DefaultAlertingDialog/utils/guards.js";
+import { type AlertAttribute, type AlertMetric } from "../../../../automations/alerting/types.js";
 import { RecipientsSelect } from "../../../../automations/scheduledEmail/DefaultScheduledEmailDialog/components/RecipientsSelect/RecipientsSelect.js";
 import { DashboardInsightSubmenuContainer } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightSubmenuContainer.js";
 
@@ -180,7 +184,20 @@ export function EditAlert({
     const selectedSensitivity = getAlertSensitivity(updatedAlert.alert);
     const selectedGranularity = getAlertGranularity(updatedAlert.alert);
 
-    const { isValid, invalidityReason } = useAlertValidation(alert, isNewAlert);
+    const widgetLocalId = alert?.metadata?.widget;
+    const allWidgets = useDashboardSelector(selectWidgets);
+    const alertWidget = widgetLocalId
+        ? allWidgets.find((w) => w.localIdentifier === widgetLocalId)
+        : undefined;
+    const alertInsight = useDashboardSelector(selectInsightByWidgetRef(alertWidget?.ref));
+    const { isValid, invalidityReason } = useAlertValidation(
+        alert,
+        alertWidget as IInsightWidget | undefined,
+        alertInsight,
+        catalogDateDatasets,
+        isNewAlert,
+        canManageComparison,
+    );
     const showFilterInfo = filters.length > 0 || Boolean(selectedComparator?.granularity);
 
     const { isResultLoading, getAttributeValues, getMetricValue } =

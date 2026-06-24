@@ -14,6 +14,7 @@ import {
     collectChangedParameterValues,
     collectReferencedParameterRefs,
     formatDashboardParameter,
+    resolveEffectiveParameterValuesForRefs,
 } from "../parametersHelpers.js";
 import { type IDashboardParameterEntry } from "../parametersState.js";
 
@@ -213,5 +214,61 @@ describe("collectChangedParameterValues", () => {
         expect(collectChangedParameterValues(entries, [topNWorkspace])).toEqual([
             { ref: sampleSizeRef, value: 3 },
         ]);
+    });
+});
+
+describe("resolveEffectiveParameterValuesForRefs", () => {
+    const overrideEntry = (
+        ref: IdentifierRef,
+        runtimeOverride: number | undefined,
+    ): IDashboardParameterEntry => ({
+        parameter: { ref, parameterType: "NUMBER", mode: "active" },
+        runtimeOverride,
+    });
+
+    it("includes a dashboard override for a referenced ref", () => {
+        const result = resolveEffectiveParameterValuesForRefs([overrideEntry(topNRef, 1000)], [topNRef], []);
+        expect(result).toEqual([{ ref: topNRef, value: 1000 }]);
+    });
+
+    it("excludes a dashboard override whose ref the executed insight does not reference", () => {
+        const result = resolveEffectiveParameterValuesForRefs(
+            [overrideEntry(topNRef, 1000)],
+            [sampleSizeRef],
+            [],
+        );
+        expect(result).toEqual([]);
+    });
+
+    it("skips an entry without a runtimeOverride", () => {
+        const result = resolveEffectiveParameterValuesForRefs(
+            [overrideEntry(topNRef, undefined)],
+            [topNRef],
+            [],
+        );
+        expect(result).toEqual([]);
+    });
+
+    it("falls back to the insight's own parameter value when no dashboard override exists", () => {
+        const result = resolveEffectiveParameterValuesForRefs([], [topNRef], [{ ref: topNRef, value: 50 }]);
+        expect(result).toEqual([{ ref: topNRef, value: 50 }]);
+    });
+
+    it("prefers the dashboard override over the insight's own parameter value for the same ref", () => {
+        const result = resolveEffectiveParameterValuesForRefs(
+            [overrideEntry(topNRef, 1000)],
+            [topNRef],
+            [{ ref: topNRef, value: 50 }],
+        );
+        expect(result).toEqual([{ ref: topNRef, value: 1000 }]);
+    });
+
+    it("excludes an insight's own parameter value whose ref the executed insight does not reference", () => {
+        const result = resolveEffectiveParameterValuesForRefs(
+            [],
+            [topNRef],
+            [{ ref: sampleSizeRef, value: 50 }],
+        );
+        expect(result).toEqual([]);
     });
 });

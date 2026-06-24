@@ -53,10 +53,33 @@ vi.mock("../../../../model/store/catalog/catalogSelectors.js", () => ({
 }));
 
 vi.mock("../../../../model/store/config/configSelectors.js", () => ({
+    selectEnableAlertAttributes: () => false,
+    selectEnableAlertOncePerInterval: () => false,
+    selectEnableAnomalyDetectionAlert: () => false,
+    selectEnableAutomationManagement: () => false,
+    selectEnableComparisonInAlerting: () => false,
+    selectEnableExternalRecipients: () => false,
     selectEnableNewScheduledExport: () => false,
+    selectExternalRecipient: () => undefined,
+    selectIsWhiteLabeled: () => false,
     selectLocale: () => "en-US",
     selectSeparators: () => ({ decimal: ".", thousand: "," }),
     selectSettings: () => undefined,
+    selectTimezone: () => undefined,
+    selectWeekStart: () => "Sunday",
+}));
+
+vi.mock("../../../../model/store/permissions/permissionsSelectors.js", () => ({
+    selectCanManageWorkspace: () => false,
+    selectCanUseAiAssistant: () => false,
+}));
+
+vi.mock("../../../../model/store/topBar/topBarSelectors.js", () => ({
+    selectIsAutomationDialogSecondaryTitleVisible: () => false,
+}));
+
+vi.mock("../../../../model/store/user/userSelectors.js", () => ({
+    selectCurrentUser: () => ({ login: "test@example.com", ref: { identifier: "test" } }),
 }));
 
 vi.mock("../../../../model/store/filtering/dashboardFilterSelectors.js", () => ({
@@ -95,6 +118,15 @@ vi.mock("../../../../model/store/tabs/dateFilterConfigs/dateFilterConfigsSelecto
 
 vi.mock("../../../../model/store/tabs/filterContext/filterContextSelectors.js", () => ({
     selectAttributeFilterDisplayFormsMap: () => new Map(),
+}));
+
+vi.mock("../../../../model/store/entitlements/entitlementsSelectors.js", () => ({
+    selectMaxAutomationRecipients: () => 10,
+    selectEntitlementMinimumRecurrenceMinutes: () => undefined,
+}));
+
+vi.mock("../../../../model/store/ui/uiSelectors.js", () => ({
+    selectExecutionTimestamp: () => undefined,
 }));
 
 vi.mock(

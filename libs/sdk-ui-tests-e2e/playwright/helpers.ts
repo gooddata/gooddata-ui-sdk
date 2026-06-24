@@ -134,7 +134,7 @@ export async function visitCopyOf(page: Page, scenarioName: string): Promise<voi
     await visit(page, scenarioName);
 
     // Open the header options menu and click "Save as new"
-    const menuButton = page.locator(".s-header-options-button");
+    const menuButton = page.locator('[data-testid="s-header-options-button"]');
     await expect(menuButton).toBeVisible();
     await menuButton.click();
     await page.locator(".gd-header-menu-overlay .gd-list-item").filter({ hasText: "Save as new" }).click();
@@ -382,7 +382,7 @@ export async function assertInEditMode(page: Page): Promise<void> {
  * Toggle the dashboard header options menu.
  */
 export async function toggleDashboardMenu(page: Page): Promise<void> {
-    const menuButton = page.locator(".s-header-options-button");
+    const menuButton = page.locator('[data-testid="s-header-options-button"]');
     await expect(menuButton).toBeVisible();
     await menuButton.click();
 }
