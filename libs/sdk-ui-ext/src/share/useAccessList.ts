@@ -1,71 +1,73 @@
 // (C) 2026 GoodData Corporation
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import type { IObjectPermissionsObject } from "@gooddata/sdk-backend-spi";
-import {
-    type IGranularAccessGrantee,
-    type IObjectAccessList,
-    type ObjRef,
-    objRefToString,
-} from "@gooddata/sdk-model";
+import { type IGranularAccessGrantee, type ObjRef, objRefToString } from "@gooddata/sdk-model";
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { type GeneralAccessValue, type IUiGranteeAsyncOptions, useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { deriveGeneralAccess, deriveWorkspacePermissionLevel } from "./accessSummary.js";
 import { objectShareMessages } from "./messages.js";
-import {
-    type IGranteeOverlayEntry,
-    assigneeMatchesQuery,
-    granteeId,
-    granteesFromAccessList,
-    mergeOverlay,
-    reconcileOverlay,
-} from "./objectShareController.helpers.js";
+import { assigneeMatchesQuery, granteeId, granteesFromAccessList } from "./objectShareController.helpers.js";
 import type { IObjectShareControllerState, IObjectShareGrantee } from "./objectShareController.types.js";
 import type { IObjectAccessSummary } from "./types.js";
 
 /**
- * The owned access list + optimistic overlay for {@link useObjectShareController}.
+ * The owned access list for {@link useObjectShareController}.
  *
  * @internal
  */
 export interface IAccessList {
     /** Stable serialized key of the current target's ref, or undefined when none. */
     targetKey: string | undefined;
-    /** The owned list as it applies to the *current* target (undefined while a switch is pending). */
-    currentAccessList: IObjectAccessList | undefined;
-    /** Committed grantee rows overlaid with optimistic intent (add/level/remove). */
+    /** True once the current target's list has been fetched and seeded into local state. */
+    hasList: boolean;
+    /** Local grantee rows — seeded from the fetch, then authoritative; mutations write through. */
     grantees: IObjectShareGrantee[];
-    /** Sorted, comma-joined committed grantee ids — a stable key for resolution effects. */
-    granteeIdsKey: string;
-    /** Optimistic-aware general access (workspace vs restricted). */
+    /** Workspace vs restricted general access — local state; mutations write through. */
     generalAccess: GeneralAccessValue;
-    /** Inline access summary (optimistic-aware), or undefined before the first load. */
+    /** Workspace-rule permission level (VIEW/SHARE) — local state; mutations write through. */
+    workspaceLevel: "VIEW" | "SHARE";
+    /** Inline access summary, or undefined before the first load. */
     summary: IObjectAccessSummary | undefined;
     /** Top-level load status surfaced as the controller status. */
     status: IObjectShareControllerState["status"];
     /** Error from the initial/target-change load. */
     loadError: Error | undefined;
 
-    /** Commit a grant change, toast on success, then background-refresh. False on failure. */
+    /** Write a grant change to the backend and toast. False on failure; no refetch. */
     commit: (mutate: IGranularAccessGrantee[], successMessage: { id: string }) => Promise<boolean>;
     /** Picker loader — available assignees minus already-granted, filtered by query. */
     loadOptions: (search: string) => Promise<IUiGranteeAsyncOptions>;
     /** Resolve a grantee id back to the picker's original ObjRef (preserves Uri vs Id ref). */
     refForId: (id: string) => ObjRef;
 
-    setOverlay: React.Dispatch<React.SetStateAction<Record<string, IGranteeOverlayEntry>>>;
+    /** Write through a local grantee-row change (insert / level / remove); rolled back by the caller. */
+    setGrantees: React.Dispatch<React.SetStateAction<IObjectShareGrantee[]>>;
+    /** Write through a local general-access change; rolled back by the caller. */
+    setGeneralAccess: React.Dispatch<React.SetStateAction<GeneralAccessValue>>;
+    /**
+     * Write through the local workspace-rule permission level. A general-access write
+     * always grants workspace VIEW, so the caller sets this to keep the summary from
+     * showing a stale SHARE inherited from the initial fetch.
+     */
+    setWorkspaceLevel: React.Dispatch<React.SetStateAction<"VIEW" | "SHARE">>;
     setKnownNames: React.Dispatch<React.SetStateAction<Record<string, string>>>;
-    setOptimisticGeneralAccess: React.Dispatch<React.SetStateAction<GeneralAccessValue | undefined>>;
 }
 
 /**
- * Owns the backend access list and its optimistic overlay. The list is fetched
- * via `useCancelablePromise` then owned locally: mutations patch the overlay and
- * a background refresh reconciles it, so the grantee list never blanks between a
- * change and the server response. A target switch is handled by stamping the
- * fetched list with its target and reading through `currentAccessList`.
+ * Owns the backend access list. It is fetched once (per target) then seeded into
+ * local state, which is authoritative while the dialog/summary is mounted:
+ * mutations write through to it directly and roll back the one changed entry on
+ * failure. There is no post-write refetch, so the grantee list never blanks and
+ * never fights the backend's read-after-write lag. A target switch re-seeds from
+ * the new fetch; the seed is gated on a per-target stamp so a late fetch for a
+ * previous target can't clobber the current one.
+ *
+ * Effective (inherited) permissions and display names come from that single
+ * fetch: inherited access doesn't change as a result of editing a direct grant,
+ * so the badge stays correct for the session without re-reading.
  *
  * @internal
  */
@@ -77,42 +79,26 @@ export function useAccessList(
     const workspace = useWorkspaceStrict();
     const toast = useToastMessage();
 
-    const [accessList, setAccessList] = useState<IObjectAccessList | undefined>(undefined);
-    const [accessListTarget, setAccessListTarget] = useState<string | undefined>(undefined);
-    const [loadStatus, setLoadStatus] = useState<"idle" | "loading" | "error">(target ? "loading" : "idle");
+    // Authoritative local state, seeded from the fetch below.
+    const [grantees, setGrantees] = useState<IObjectShareGrantee[]>([]);
+    const [generalAccess, setGeneralAccess] = useState<GeneralAccessValue>("RESTRICTED");
+    const [workspaceLevel, setWorkspaceLevel] = useState<"VIEW" | "SHARE">("VIEW");
+    // The target the local state was seeded for; undefined until the first seed.
+    // Reading state as belonging to the current target hinges on this matching
+    // `targetKey` — a target switch makes the old state stale until the re-seed.
+    const [seededTarget, setSeededTarget] = useState<string | undefined>(undefined);
     const [loadError, setLoadError] = useState<Error | undefined>(undefined);
-    // Optimistic overlay keyed by grantee id. Each entry holds the *intended* row
-    // (add/level-change) or a removal, plus a pending flag while the write is in
-    // flight. The backend has read-after-write lag, so we show the intended state
-    // and clear an entry only once a refresh confirms it (or the write fails).
-    const [overlay, setOverlay] = useState<Record<string, IGranteeOverlayEntry>>({});
-    // Display names learned from the picker; keep a human name on a row after the
-    // optimistic overlay reconciles away (the grant often returns only a raw id).
+    // Display names learned from the picker; used to give a fetched row a human
+    // name when its grant carried only a raw id.
     const [knownNames, setKnownNames] = useState<Record<string, string>>({});
     // Original ObjRef per grantee id, learned from the picker (the access-list id
     // is a serialized `kind:identifier`, which loses Uri-vs-Id). Reused for writes.
     const [knownRefs, setKnownRefs] = useState<Record<string, ObjRef>>({});
-    // Optimistic general-access override — held from confirm until the fetched list
-    // reflects it, so the radio + summary update instantly.
-    const [optimisticGeneralAccess, setOptimisticGeneralAccess] = useState<GeneralAccessValue | undefined>(
-        undefined,
-    );
 
     const targetKey = target ? objRefToString(target.ref) : undefined;
-    // The owned list as it applies to the *current* target. A target switch makes
-    // the previous fetch's list stale until the new one lands; gating on the stamp
-    // means everything derived ignores it immediately — no reset effect.
-    const currentAccessList = accessListTarget === targetKey ? accessList : undefined;
 
-    // Always-current target key, read inside async callbacks that captured an older
-    // one. A background refresh started for the previous target can resolve after a
-    // switch; without this it would stamp the list back to the stale target, leaving
-    // the new target's `currentAccessList` undefined (and, with the load-gated
-    // status, stuck "loading" since its own fetch already settled).
-    const targetKeyRef = useRef(targetKey);
-    targetKeyRef.current = targetKey;
-
-    // Initial (and target-change) load. Feeds setAccessList once; thereafter we own it.
+    // Initial (and target-change) load. Seeds local state once per target; thereafter
+    // local state is authoritative and mutations write through it.
     const {
         result: fetchedList,
         status: fetchStatus,
@@ -128,124 +114,89 @@ export function useAccessList(
         [backend, workspace, target?.kind, targetKey],
     );
 
+    // Local state belongs to the current target only once its list has been seeded
+    // AND no fetch is in flight for it. Requiring `fetchStatus === "success"` (not
+    // just a matching `seededTarget`) matters when the same object is reopened after
+    // navigating away: the deps change re-runs `useCancelablePromise`, which resets to
+    // `loading` while it refetches. Without this, the still-matching previous
+    // `seededTarget` would keep `hasList` true and surface the prior session's
+    // grantees as `success` (mutations enabled) until the new list lands.
+    const hasList = seededTarget === targetKey && targetKey !== undefined && fetchStatus === "success";
+
     useEffect(() => {
         if (fetchStatus === "success" && fetchedList) {
             // The cancelable promise is keyed on targetKey, so this list is for it.
-            setAccessList(fetchedList);
-            setAccessListTarget(targetKey);
-            setLoadStatus("idle");
+            setGrantees(granteesFromAccessList(fetchedList));
+            setGeneralAccess(deriveGeneralAccess(fetchedList.grants));
+            setWorkspaceLevel(deriveWorkspacePermissionLevel(fetchedList.grants));
+            setSeededTarget(targetKey);
             setLoadError(undefined);
-            setOverlay({}); // a target-change load is authoritative; drop stale overlay
-            setOptimisticGeneralAccess(undefined);
         } else if (fetchStatus === "error") {
-            setLoadStatus("error");
             setLoadError(fetchError instanceof Error ? fetchError : new Error(String(fetchError)));
         } else if (fetchStatus === "loading") {
-            setLoadStatus("loading");
+            // A (re)fetch is in flight — including when the same object is reopened
+            // after navigating away. Drop the seed stamp so the previous session's
+            // list isn't surfaced as the current one until the fresh fetch is seeded.
+            setSeededTarget(undefined);
         }
     }, [fetchStatus, fetchedList, fetchError, targetKey]);
 
-    // Background refresh — pulls server truth without nulling the current list,
-    // then reconciles the overlay (clears entries the server now confirms).
-    const refresh = useCallback(async (): Promise<void> => {
-        if (!target) {
-            return;
-        }
-        try {
-            const fresh = await backend.workspace(workspace).objectPermissions().getAccessList(target);
-            // The target may have changed while this refresh was in flight. Stamping
-            // a stale target's list now would clobber the new target's stamp and
-            // strand it loading, so drop the result if we've since switched away.
-            if (targetKeyRef.current !== targetKey) {
-                return;
-            }
-            setAccessList(fresh);
-            setAccessListTarget(targetKey);
-            setOverlay((prev) => reconcileOverlay(granteesFromAccessList(fresh), prev));
-            // Drop the optimistic general-access override once the server confirms it.
-            const freshGeneralAccess = deriveGeneralAccess(fresh.grants);
-            setOptimisticGeneralAccess((prev) => (prev === freshGeneralAccess ? undefined : prev));
-        } catch {
-            // The refresh failed, but the mutation that triggered it already
-            // succeeded. The overlay can't be reconciled against fresh data now, so
-            // settle it optimistically: keep each entry's intended state (a `set`
-            // value stays, a `remove` keeps hiding the row) but clear its `pending`
-            // flag. Otherwise rows would spin on "saving"/"removing" forever even
-            // though the change persisted and a success toast was shown.
-            setOverlay((prev) => {
-                let changed = false;
-                const next: Record<string, IGranteeOverlayEntry> = {};
-                for (const [id, entry] of Object.entries(prev)) {
-                    if (entry.pending) {
-                        changed = true;
-                        next[id] = { ...entry, pending: false };
-                    } else {
-                        next[id] = entry;
-                    }
-                }
-                return changed ? next : prev;
-            });
-        }
-    }, [backend, workspace, target, targetKey]);
-
-    // Committed rows overlaid with optimistic intent; backfill a human name from
-    // the picker cache where the grant only carried a raw id.
-    const grantees = useMemo<IObjectShareGrantee[]>(() => {
-        if (!currentAccessList) {
-            return [];
-        }
-        const committed = granteesFromAccessList(currentAccessList).map((g) => {
-            const known = knownNames[g.id];
-            return known && g.name === objRefToString(g.granteeRef) ? { ...g, name: known } : g;
-        });
-        return mergeOverlay(committed, overlay);
-    }, [currentAccessList, overlay, knownNames]);
-
-    const granteeIdsKey = granteesFromAccessList(currentAccessList)
-        .map((g) => g.id)
-        .sort()
-        .join(",");
-
-    const committedGeneralAccess = useMemo<GeneralAccessValue>(
-        () => (currentAccessList ? deriveGeneralAccess(currentAccessList.grants) : "RESTRICTED"),
-        [currentAccessList],
+    // The current target's rows, with a human name backfilled from the picker
+    // cache where the grant returned only a raw id. Empty until the current
+    // target's list is seeded, so a stale previous target's rows never show
+    // through the switch window. Derivation, not state — re-applies as the cache grows.
+    const namedGrantees = useMemo<IObjectShareGrantee[]>(
+        () =>
+            hasList
+                ? grantees.map((g) => {
+                      const known = knownNames[g.id];
+                      return known && g.name === objRefToString(g.granteeRef) ? { ...g, name: known } : g;
+                  })
+                : [],
+        [hasList, grantees, knownNames],
     );
-    const generalAccess = optimisticGeneralAccess ?? committedGeneralAccess;
+
+    // Stable sorted key of the currently-granted ids — drives the picker's
+    // "exclude already-granted" filter. Keyed on ids only (not names), so the
+    // picker's own name-cache writes can't change loadOptions' identity and
+    // re-trigger its fetch.
+    const excludedIdsKey = useMemo(
+        () =>
+            grantees
+                .filter((g) => g.pending !== "removing")
+                .map((g) => g.id)
+                .sort()
+                .join(","),
+        [grantees],
+    );
 
     const summary = useMemo<IObjectAccessSummary | undefined>(() => {
-        if (!currentAccessList) {
+        if (!hasList) {
             return undefined;
         }
         return {
             generalAccess,
-            // While the optimistic override is active we just wrote the workspace
-            // rule as VIEW, so report VIEW rather than the stale fetched grant
-            // (which can still read SHARE through read-after-write lag).
-            workspaceLevel: optimisticGeneralAccess
-                ? "VIEW"
-                : deriveWorkspacePermissionLevel(currentAccessList.grants),
-            granteeCount: grantees.length,
+            workspaceLevel: generalAccess === "WORKSPACE" ? workspaceLevel : "VIEW",
+            granteeCount: namedGrantees.filter((g) => g.pending !== "removing").length,
         };
-    }, [currentAccessList, generalAccess, optimisticGeneralAccess, grantees]);
+    }, [hasList, generalAccess, workspaceLevel, namedGrantees]);
 
-    // "success" only once the *current* target's list has actually landed. After a
-    // target switch the stamp clears `currentAccessList` immediately, but
-    // `loadStatus` still reads "idle" from the previous target's completed load
-    // until the effect re-runs — so gating on loadStatus alone would briefly report
-    // "success" with no list, letting the dialog enable mutations and the catalog
-    // row hide both summary and skeleton. Treat "no list for this target yet" as
-    // loading.
+    // "success" only once the *current* target's list has been seeded. After a
+    // target switch the previous seed is stale (seededTarget !== targetKey), so
+    // gating on hasList keeps the status at "loading" until the new list lands —
+    // never "success" with no list, which would let the dialog enable mutations
+    // and the catalog row hide both summary and skeleton.
     const status: IObjectShareControllerState["status"] = target
-        ? loadStatus === "error"
+        ? fetchStatus === "error"
             ? "error"
-            : loadStatus === "loading" || !currentAccessList
-              ? "loading"
-              : "success"
+            : hasList
+              ? "success"
+              : "loading"
         : "idle";
 
-    // Commit a single grant change against the backend, then reconcile via refresh.
-    // Optimistic state is applied by the caller; on failure the caller's rollback
-    // runs and a toast is shown.
+    // Write a single grant change to the backend, then toast. The caller applies
+    // the optimistic local write-through and rolls it back on failure; there is no
+    // refetch — local state stays authoritative.
     const commit = useCallback(
         async (mutate: IGranularAccessGrantee[], successMessage: { id: string }): Promise<boolean> => {
             if (!target) {
@@ -258,20 +209,19 @@ export function useAccessList(
                     .manageObjectPermissions(target, mutate);
                 toast.addSuccess(successMessage);
                 onSaved?.();
-                await refresh();
                 return true;
             } catch {
                 toast.addError(objectShareMessages.toastError);
                 return false;
             }
         },
-        [backend, workspace, target, toast, onSaved, refresh],
+        [backend, workspace, target, toast, onSaved],
     );
 
     // Picker loader — fetches available assignees on demand, filters by the typed
-    // query, excludes anything already granted. Depends only on the grant sources
-    // (accessList, overlay), so its identity changes only when the granted set
-    // actually changes. It must NOT write state that feeds its own deps.
+    // query, excludes anything already granted. Depends only on the granted set
+    // (grantees), so its identity changes only when that set actually changes. It
+    // must NOT write state that feeds its own deps.
     const loadOptions = useCallback(
         async (search: string): Promise<IUiGranteeAsyncOptions> => {
             if (!target) {
@@ -303,9 +253,7 @@ export function useAccessList(
                 }
                 return next;
             });
-            const excluded = new Set(
-                mergeOverlay(granteesFromAccessList(currentAccessList), overlay).map((g) => g.id),
-            );
+            const excluded = new Set(excludedIdsKey ? excludedIdsKey.split(",") : []);
             const selectable = withIds
                 .filter(({ id }) => !excluded.has(id)) // hide anyone already granted
                 .filter(({ assignee }) => assigneeMatchesQuery(assignee, query));
@@ -324,7 +272,7 @@ export function useAccessList(
                     .map(({ assignee, id }) => ({ id, kind: "group" as const, name: assignee.name })),
             };
         },
-        [backend, workspace, target, currentAccessList, overlay],
+        [backend, workspace, target, excludedIdsKey],
     );
 
     // Reuse the picker's original ref (preserves UriRef vs IdentifierRef);
@@ -336,18 +284,19 @@ export function useAccessList(
 
     return {
         targetKey,
-        currentAccessList,
-        grantees,
-        granteeIdsKey,
+        hasList,
+        grantees: namedGrantees,
         generalAccess,
+        workspaceLevel,
         summary,
         status,
         loadError,
         commit,
         loadOptions,
         refForId,
-        setOverlay,
+        setGrantees,
+        setGeneralAccess,
+        setWorkspaceLevel,
         setKnownNames,
-        setOptimisticGeneralAccess,
     };
 }

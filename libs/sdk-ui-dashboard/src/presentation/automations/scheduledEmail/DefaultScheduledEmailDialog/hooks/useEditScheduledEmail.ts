@@ -35,10 +35,6 @@ import {
 } from "@gooddata/sdk-model";
 
 import {
-    areAutomationsEqual,
-    convertCurrentUserToAutomationRecipient,
-    convertCurrentUserToWorkspaceUser,
-    convertExternalRecipientToAutomationRecipient,
     getAutomationExportParametersByTab,
     setExportParametersByTab,
 } from "../../../../../_staging/automation/index.js";
@@ -68,6 +64,12 @@ import {
     getVisibleFiltersByFilters,
     getVisibleFiltersByFiltersByTab,
 } from "../../../shared/automationFilters/utils.js";
+import {
+    areAutomationsEqual,
+    convertCurrentUserToAutomationRecipient,
+    convertCurrentUserToWorkspaceUser,
+    convertExternalRecipientToAutomationRecipient,
+} from "../../../shared/utils/automationUtils.js";
 import {
     toModifiedISOStringToTimezone,
     toNormalizedFirstRunAndCron,

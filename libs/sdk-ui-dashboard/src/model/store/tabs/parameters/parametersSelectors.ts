@@ -8,6 +8,7 @@ import {
     type IDashboardParameter,
     type IDashboardTab,
     type IInsightParameterValue,
+    type IdentifierRef,
     type ObjRef,
     areObjRefsEqual,
     insightParameters,
@@ -39,6 +40,7 @@ import {
     collectReferencedParameterRefs,
     computeParameterResetTargets,
     computeParameterResetValue,
+    resolveEffectiveParameterValuesForRefs,
     smartPersistResolvedEntry,
     workspaceParametersByRef,
 } from "./parametersHelpers.js";
@@ -284,31 +286,56 @@ export const selectHasAnyResettableParameterOnActiveTab: DashboardSelector<boole
     (targets) => targets.length > 0,
 );
 
-// Shared base for the two parameter selectors below — the widget's insight, its metric-referenced
-// parameter refs, and the owning tab's entries. Memoized, so both share one computation per ref.
+interface IWidgetParameterContext {
+    entries: IDashboardParameterEntry[];
+    measureParameters: Record<string, IdentifierRef[]>;
+    // The executed insight can differ from the widget's own (e.g. a drill overlay).
+    widgetInsightRef: ObjRef;
+}
+
+/**
+ * Owning-tab parameter entries and the metric → parameter map for a widget, keyed by ref.
+ *
+ * @internal
+ */
+export const selectWidgetParameterContext: (
+    ref: ObjRef | undefined,
+) => DashboardSelector<IWidgetParameterContext | undefined> = createMemoizedSelector(
+    (ref: ObjRef | undefined) =>
+        createSelector(
+            selectAllTabsInsightWidgetContexts,
+            selectEnableParameters,
+            selectCatalogMeasureParameters,
+            selectCatalogMeasureParametersStatus,
+            (contexts, isEnabled, measureParameters, measureParametersStatus) => {
+                if (!isEnabled || !ref || measureParametersStatus !== "loaded") {
+                    return undefined;
+                }
+                const context = contexts.find((ctx) => areObjRefsEqual(ctx.widget.ref, ref));
+                if (!context) {
+                    return undefined;
+                }
+                const entries = context.tab.parameters?.parameters ?? parametersInitialState.parameters;
+                return { entries, measureParameters, widgetInsightRef: context.widget.insight };
+            },
+        ),
+);
+
+// Adds the widget's *own* insight and referenced refs for the ref-based selectors below (alerting and
+// CSV export, which always concern the widget itself — never a drill target).
 const selectWidgetInsightAndReferencedRefs = createMemoizedSelector((ref: ObjRef | undefined) =>
-    createSelector(
-        selectAllTabsInsightWidgetContexts,
-        selectInsightsMap,
-        selectEnableParameters,
-        selectCatalogMeasureParameters,
-        selectCatalogMeasureParametersStatus,
-        (contexts, insights, isEnabled, measureParameters, measureParametersStatus) => {
-            if (!isEnabled || !ref || measureParametersStatus !== "loaded") {
-                return undefined;
-            }
-            const context = contexts.find((ctx) => areObjRefsEqual(ctx.widget.ref, ref));
-            const insight = context && insights.get(context.widget.insight);
-            if (!context || !insight) {
-                return undefined;
-            }
-            const referencedRefs = new Set(
-                collectReferencedParameterRefs(insight, measureParameters).map(objRefToString),
-            );
-            const entries = context.tab.parameters?.parameters ?? parametersInitialState.parameters;
-            return { insight, referencedRefs, entries };
-        },
-    ),
+    createSelector(selectWidgetParameterContext(ref), selectInsightsMap, (resolved, insights) => {
+        if (!resolved) {
+            return undefined;
+        }
+        const { entries, measureParameters, widgetInsightRef } = resolved;
+        const insight = insights.get(widgetInsightRef);
+        if (!insight) {
+            return undefined;
+        }
+        const referencedRefs = collectReferencedParameterRefs(insight, measureParameters);
+        return { insight, referencedRefs, entries };
+    }),
 );
 
 /**
@@ -336,28 +363,7 @@ export const selectEffectiveParameterValuesForWidget: (
             return EMPTY_PARAMETER_VALUES;
         }
         const { insight, referencedRefs, entries } = resolved;
-        const result: IInsightParameterValue[] = [];
-        const seen = new Set<string>();
-        for (const entry of entries) {
-            if (entry.runtimeOverride === undefined) {
-                continue;
-            }
-            const refKey = objRefToString(entry.parameter.ref);
-            if (!referencedRefs.has(refKey)) {
-                continue;
-            }
-            result.push({ ref: entry.parameter.ref, value: entry.runtimeOverride });
-            seen.add(refKey);
-        }
-        for (const insightParameter of insightParameters(insight)) {
-            const refKey = objRefToString(insightParameter.ref);
-            if (!referencedRefs.has(refKey) || seen.has(refKey)) {
-                continue;
-            }
-            result.push(insightParameter);
-            seen.add(refKey);
-        }
-        return result.length === 0 ? EMPTY_PARAMETER_VALUES : result;
+        return resolveEffectiveParameterValuesForRefs(entries, referencedRefs, insightParameters(insight));
     }),
 );
 
@@ -381,7 +387,7 @@ export const selectReferencedInsightParameterValuesForWidget: (
         }
         const { insight, referencedRefs } = resolved;
         const result = insightParameters(insight).filter((parameter) =>
-            referencedRefs.has(objRefToString(parameter.ref)),
+            referencedRefs.some((ref) => areObjRefsEqual(ref, parameter.ref)),
         );
         return result.length === 0 ? EMPTY_PARAMETER_VALUES : result;
     }),

@@ -572,11 +572,6 @@ export interface IFeatureFlags {
     enableKDVisualizationSwitcher?: boolean;
 
     /**
-     * Enable creating users in user management.
-     */
-    enableCreateUser?: boolean;
-
-    /**
      * Enable attribute filter values validation by date filters.
      */
     enableKDAttributeFilterDatesValidation?: boolean;
@@ -649,12 +644,6 @@ export interface IFeatureFlags {
     enableCrateDbDataSource?: boolean;
 
     /**
-     * Enable GenAI-powered functionality, such as semantic-search.
-     * @deprecated Use separate flags for semantic search and GenAI chat below.
-     */
-    enableAIFunctions?: boolean;
-
-    /**
      * Enable Semantic Search in the UI.
      */
     enableSemanticSearch?: boolean;
@@ -665,19 +654,9 @@ export interface IFeatureFlags {
     enableCatalogSmartSearchResults?: boolean;
 
     /**
-     * Enable Semantic Search rollout in the UI.
-     */
-    enableSemanticSearchRollout?: boolean;
-
-    /**
      * Enable Gen AI Chatbot in UI.
      */
     enableGenAIChat?: boolean;
-
-    /**
-     * Enable Gen AI Chatbot rollout in UI.
-     */
-    enableGenAIChatRollout?: boolean;
 
     /**
      * Enable GenAI catalog quality checker in Analytics Catalog.
@@ -730,16 +709,6 @@ export interface IFeatureFlags {
      * Enable the use of default SMTP in destinations.
      */
     enableDefaultSmtp?: boolean;
-
-    /**
-     * Enable number separators configuration in home-ui (both organization and workspace level).
-     */
-    enableNumberSeparators?: boolean;
-
-    /**
-     * Enable the use of new user creation flow.
-     */
-    enableNewUserCreationFlow?: boolean;
 
     /**
      * Enable the possibility to test destinations (emails, webhooks) in the UI.

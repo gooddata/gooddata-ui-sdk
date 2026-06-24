@@ -13,7 +13,6 @@ import {
 import { fillMissingTitles, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
-import { convertCurrentUserToAutomationRecipient } from "../../../../../../_staging/automation/index.js";
 import { refreshAutomations } from "../../../../../../model/commands/scheduledEmail.js";
 import {
     useDashboardDispatch,
@@ -56,13 +55,14 @@ import {
 } from "../../../../../../model/store/permissions/permissionsSelectors.js";
 import { selectExecutionTimestamp } from "../../../../../../model/store/ui/uiSelectors.js";
 import { selectCurrentUser } from "../../../../../../model/store/user/userSelectors.js";
-import { messages } from "../../../../../automations/_staging/alerting/DefaultAlertingDialog/messages.js";
-import { createDefaultAlert } from "../../../../../automations/_staging/alerting/DefaultAlertingDialog/utils/convertors.js";
-import { getMeasureFormatsFromExecution } from "../../../../../automations/_staging/alerting/DefaultAlertingDialog/utils/getters.js";
+import { messages } from "../../../../../automations/alerting/DefaultAlertingDialog/messages.js";
+import { createDefaultAlert } from "../../../../../automations/alerting/DefaultAlertingDialog/utils/convertors.js";
+import { getMeasureFormatsFromExecution } from "../../../../../automations/alerting/DefaultAlertingDialog/utils/getters.js";
 import {
     getSupportedInsightAttributesByInsight,
     getSupportedInsightMeasuresByInsight,
-} from "../../../../../automations/_staging/alerting/DefaultAlertingDialog/utils/items.js";
+} from "../../../../../automations/alerting/DefaultAlertingDialog/utils/items.js";
+import { convertCurrentUserToAutomationRecipient } from "../../../../../automations/shared/utils/automationUtils.js";
 
 import { useSaveAlertToBackend } from "./useSaveAlertToBackend.js";
 import { useWidgetAutomationFilters } from "./useWidgetAutomationFilters.js";

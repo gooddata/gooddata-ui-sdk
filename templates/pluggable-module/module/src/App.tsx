@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 
 import { type IPluggableAppEvent } from "@gooddata/sdk-pluggable-application-model";
 import { useWorkspace } from "@gooddata/sdk-ui";
-import { usePlatformContextStrict, usePluggableAppTelemetry } from "@gooddata/sdk-ui-pluggable-application";
+import { usePlatformContextStrict } from "@gooddata/sdk-ui-pluggable-application";
 
 interface IAppProps {
     onEvent?: (e: IPluggableAppEvent) => void;
@@ -13,7 +13,10 @@ interface IAppProps {
 export function App({ onEvent: _onEvent }: IAppProps) {
     const ctx = usePlatformContextStrict();
     const workspaceId = useWorkspace();
-    const { trackEvent: _trackEvent } = usePluggableAppTelemetry();
+
+    // The mount page view that reports this module's React / SDK versions is fired once per lifecycle
+    // in pluggableApp.tsx. To send telemetry from inside the app (e.g. on a user action), pull the
+    // host callbacks with `usePluggableAppTelemetry()` and call `trackEvent` / `trackTiming`.
 
     return (
         <div style={{ display: "flex", flexDirection: "column", padding: "4rem" }}>

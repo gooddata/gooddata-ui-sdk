@@ -15,11 +15,11 @@ import {
 } from "@gooddata/sdk-model";
 import { type DateFilterOption } from "@gooddata/sdk-ui-filters";
 
-import { useFiltersNamings } from "../../../../../_staging/sharedHooks/useFiltersNamings.js";
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import { selectEffectiveAttributeFiltersModeMap } from "../../../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectEffectiveDateFilterMode } from "../../../../../model/store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
 import { selectEffectiveDateFiltersModeMap } from "../../../../../model/store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
+import { useFiltersNamings } from "../../../shared/hooks/useFiltersNamings.js";
 
 export interface IAttachmentFilterInfo {
     id: string;

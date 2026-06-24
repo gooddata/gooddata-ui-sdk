@@ -206,7 +206,7 @@ export function DrillDialogInsight({
         onWidgetFiltersReady?.(filtersForInsight);
     }, [filtersForInsight, onWidgetFiltersReady]);
 
-    const execConfig = useWidgetExecConfig(widget.ref);
+    const execConfig = useWidgetExecConfig(widget.ref, insight);
 
     return (
         <div style={insightStyle}>

@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "Migrate alerting create/edit dialog out of _staging into alerting/DefaultAlertingDialog; add AlertingConnector (create/edit only); arm create/edit clean-tree dep-cruiser rule",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "jan.kruza@gooddata.com"
+}

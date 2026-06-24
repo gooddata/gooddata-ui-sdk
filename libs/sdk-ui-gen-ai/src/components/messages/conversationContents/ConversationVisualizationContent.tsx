@@ -754,18 +754,40 @@ function useHandlers({ visualization, setSaveDialogOpen, onCopyToClipboard }: IU
         [config, setSaveDialogOpen, visualization, workspaceId, useHostedAnalyticalDesigner],
     );
 
-    const onCopy = useCallback(() => {
-        if (!visualization) {
-            return;
-        }
-        const link = getAbsoluteVisualizationHref(
-            workspaceId,
-            visualization.insight.identifier,
-            useHostedAnalyticalDesigner,
-        );
-        copy(link);
-        onCopyToClipboard?.({ content: link });
-    }, [onCopyToClipboard, visualization, workspaceId, useHostedAnalyticalDesigner]);
+    const onCopy = useCallback(
+        (e: MouseEvent | KeyboardEvent) => {
+            if (!visualization) {
+                return;
+            }
+
+            let link: string | undefined = undefined;
+            if (config.allowNativeLinks) {
+                link = getAbsoluteVisualizationHref(
+                    workspaceId,
+                    visualization.insight.identifier,
+                    useHostedAnalyticalDesigner,
+                );
+            } else {
+                link = config.linkHandler?.({
+                    id: visualization.insight.identifier,
+                    type: "visualization",
+                    workspaceId,
+                    newTab: e.metaKey,
+                    preventDefault: e.preventDefault.bind(e),
+                    itemUrl: getAbsoluteVisualizationHref(
+                        workspaceId,
+                        visualization.insight.identifier,
+                        useHostedAnalyticalDesigner,
+                    ),
+                });
+            }
+            if (link) {
+                copy(link);
+                onCopyToClipboard?.({ content: link });
+            }
+        },
+        [visualization, config, workspaceId, useHostedAnalyticalDesigner, onCopyToClipboard],
+    );
 
     return {
         onSave,

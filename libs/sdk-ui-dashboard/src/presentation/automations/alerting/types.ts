@@ -11,11 +11,10 @@ import {
     type IMeasure,
     type INotificationChannelIdentifier,
     type INotificationChannelMetadataObject,
+    type IWidget,
     type IWorkspaceUser,
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
-
-import type { ExtendedDashboardWidget } from "../../../../model/types/layoutTypes.js";
 
 ///
 /// Component props
@@ -49,8 +48,11 @@ export interface IAlertingDialogProps {
      * Widget to be used for alert.
      *
      * Note: this is available only when alerting for widget, not dashboard.
+     * Typed as IWidget (not ExtendedDashboardWidget) because the dialog only
+     * supports insight widgets; custom widgets and nested layouts are not valid
+     * alert targets and were silently discarded at the connector boundary anyway.
      */
-    widget?: ExtendedDashboardWidget;
+    widget?: IWidget;
 
     /**
      * Insight to be used for alert.

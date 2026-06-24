@@ -41,6 +41,7 @@ export function SemanticSearchTreeViewImpl({ workspace, content, maxHeight }: Se
     const canEdit = canFullControl || canManage || canAnalyze;
     const useHostMetricEditor = Boolean(settings?.enableShellApplication_metricEditor);
     const useHostAnalyticalDesigner = Boolean(settings?.enableShellApplication_analyticalDesigner);
+    const useHostLdmModeler = Boolean(settings?.enableShellApplication_ldmModeler);
     const useHostDashboards = Boolean(settings?.enableShellApplication_dashboards);
 
     const items = buildSemanticSearchTreeViewItems({
@@ -53,6 +54,7 @@ export function SemanticSearchTreeViewImpl({ workspace, content, maxHeight }: Se
         uiPathOptions: {
             useHostedMetricEditor: useHostMetricEditor,
             useHostedAnalyticalDesigner: useHostAnalyticalDesigner,
+            useHostedLdmModeler: useHostLdmModeler,
             useHostedDashboards: useHostDashboards,
         },
     });

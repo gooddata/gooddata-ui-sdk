@@ -21,11 +21,11 @@ import {
 } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { isVisualisationAutomation } from "../../../../../_staging/automation/index.js";
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import { selectCanManageWorkspace } from "../../../../../model/store/permissions/permissionsSelectors.js";
 import { selectCurrentUser } from "../../../../../model/store/user/userSelectors.js";
 import { gdColorNegative, gdColorStateBlank } from "../../../../constants/colors.js";
+import { isVisualisationAutomation } from "../../../shared/utils/automationUtils.js";
 import { useScheduleValidation } from "../../DefaultScheduledEmailDialog/hooks/useScheduleValidation.js";
 
 type IAction = "scheduleEmail" | "delete" | typeof SELECT_ITEM_ACTION;

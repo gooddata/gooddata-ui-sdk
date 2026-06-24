@@ -1460,7 +1460,7 @@ export const DEFAULT_MESSAGES: Record<string, ITranslations>;
 // @internal
 export const DEFAULT_TAB_ID = "defaultTabId";
 
-// @alpha (undocumented)
+// @alpha
 export function DefaultAlertingDialog(props: IAlertingDialogProps): JSX.Element;
 
 // @alpha (undocumented)
@@ -2319,7 +2319,7 @@ export interface IAlertingDialogProps {
     onSuccess?: (alertDefinition: IAutomationMetadataObject) => void;
     users: IWorkspaceUser[];
     usersError?: GoodDataSdkError;
-    widget?: ExtendedDashboardWidget;
+    widget?: IWidget;
 }
 
 // @alpha (undocumented)

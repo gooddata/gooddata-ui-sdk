@@ -5,9 +5,20 @@ import { describe, expect, it } from "vitest";
 import { type IChatConversationLocal, makeUserItem } from "../../../model.js";
 import {
     applyPendingAgentSwitchAction,
+    cancelAsyncAction,
+    clearConversationLoadingAction,
     messagesSliceReducer,
     setSelectedAgentAction,
 } from "../messagesSlice.js";
+
+const makeConversation = (id: string): IChatConversationLocal => ({
+    id,
+    localId: id,
+    title: id,
+    createdAt: new Date(1).toISOString(),
+    updatedAt: new Date(1).toISOString(),
+    agentId: "gold",
+});
 
 describe("messagesSlice", () => {
     it("should store a pending agent switch without adding an item or blocking input", () => {
@@ -148,5 +159,70 @@ describe("messagesSlice", () => {
             }),
         );
         expect(data.order[1]).toBe(userMessage.localId);
+    });
+
+    describe("orphaned loading flag (LX-2577)", () => {
+        it("cancelAsyncAction clears a loading flag left on a non-current conversation", () => {
+            // conversationB was loading, then the user switched to conversationS before the
+            // load resolved. The cleanup-dispatched cancelAsyncAction must not orphan B's flag.
+            const conversationB = makeConversation("conversation-b");
+            const conversationS = makeConversation("conversation-s");
+
+            const state = messagesSliceReducer(
+                {
+                    ...messagesSliceReducer(undefined, { type: "test/init" }),
+                    currentConversation: conversationS,
+                    conversations: [conversationS, conversationB],
+                    conversationsData: {
+                        [conversationB.localId]: { order: [], items: {}, asyncProcess: "loading" },
+                        [conversationS.localId]: { order: [], items: {} },
+                    },
+                },
+                cancelAsyncAction(),
+            );
+
+            expect(state.conversationsData[conversationB.localId].asyncProcess).toBeUndefined();
+        });
+
+        it("cancelAsyncAction preserves a non-load async state on the current conversation", () => {
+            const conversation = makeConversation("conversation-1");
+
+            const state = messagesSliceReducer(
+                {
+                    ...messagesSliceReducer(undefined, { type: "test/init" }),
+                    currentConversation: conversation,
+                    conversations: [conversation],
+                    conversationsData: {
+                        [conversation.localId]: { order: [], items: {}, asyncProcess: "evaluating" },
+                    },
+                },
+                clearConversationLoadingAction({ conversationLocalId: "another-conversation" }),
+            );
+
+            // clearConversationLoadingAction must only touch load flags, and only on the keyed id.
+            expect(state.conversationsData[conversation.localId].asyncProcess).toBe("evaluating");
+        });
+
+        it("clearConversationLoadingAction clears only the keyed conversation's load flag", () => {
+            const conversationB = makeConversation("conversation-b");
+            const conversationS = makeConversation("conversation-s");
+
+            const state = messagesSliceReducer(
+                {
+                    ...messagesSliceReducer(undefined, { type: "test/init" }),
+                    currentConversation: conversationS,
+                    conversations: [conversationS, conversationB],
+                    conversationsData: {
+                        [conversationB.localId]: { order: [], items: {}, asyncProcess: "loading" },
+                        [conversationS.localId]: { order: [], items: {}, asyncProcess: "loading" },
+                    },
+                },
+                clearConversationLoadingAction({ conversationLocalId: conversationB.localId }),
+            );
+
+            expect(state.conversationsData[conversationB.localId].asyncProcess).toBeUndefined();
+            // The newer load that superseded B must keep its flag.
+            expect(state.conversationsData[conversationS.localId].asyncProcess).toBe("loading");
+        });
     });
 });

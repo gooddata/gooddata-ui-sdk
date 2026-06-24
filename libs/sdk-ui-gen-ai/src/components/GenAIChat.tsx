@@ -8,7 +8,7 @@ import { IntlWrapper } from "../localization/IntlWrapper.js";
 import { PermissionsProvider } from "../permissions/PermissionsContext.js";
 import { usePermissions } from "../permissions/usePermissions.js";
 
-import { ConfigProvider, type LinkHandlerEvent } from "./ConfigContext.js";
+import { ConfigProvider, type LinkHandlerEvent, useConfig } from "./ConfigContext.js";
 import { CustomizationProvider } from "./CustomizationProvider.js";
 import { GenAIChatWrapper } from "./GenAIChatWrapper.js";
 import { GenAiStore, type GenAiStoreProps } from "./GenAiStore.js";
@@ -26,7 +26,7 @@ export type GenAIAssistantProps = Omit<GenAiStoreProps, "children"> & {
      * When provided, references to the metadata objects will be rendered as clickable links.
      * Otherwise, the metadata objects will be rendered as plain text (using object title).
      */
-    onLinkClick?: (linkClickEvent: LinkHandlerEvent) => void;
+    onLinkClick?: (linkClickEvent: LinkHandlerEvent) => string | undefined;
 
     /**
      * When true, allows the chat to render links that open in a new tab or window. This
@@ -92,6 +92,8 @@ export function GenAIAssistant(props: GenAIAssistantProps) {
         isPreview,
         providedStore,
         onDispatcher,
+        onLinkClick,
+        allowNativeLinks,
     } = props;
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
@@ -104,6 +106,8 @@ export function GenAIAssistant(props: GenAIAssistantProps) {
                 onDispatcher={onDispatcher}
                 colorPalette={colorPalette}
                 eventHandlers={eventHandlers}
+                allowNativeLinks={allowNativeLinks}
+                onLinkClick={onLinkClick}
                 settings={settings}
                 objectTypes={objectTypes}
                 includeTags={includeTags}
@@ -140,12 +144,13 @@ function GenAIContent(props: GenAIChatProps) {
         className,
     } = props;
     const { permissions, loading } = usePermissions();
+    const { allowNativeLinks } = useConfig();
 
     return (
         <ConfigProvider
             linkHandler={onLinkClick}
             catalogItems={catalogItems}
-            allowNativeLinks={props.allowNativeLinks ?? false}
+            allowNativeLinks={allowNativeLinks ?? props.allowNativeLinks}
             canFullControl={props.disableFullControl ? false : (permissions.canManageProject ?? false)}
             canManage={props.disableManage ? false : (permissions.canManageProject ?? false)}
             canAnalyze={props.disableAnalyze ? false : (permissions.canCreateVisualization ?? false)}

@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-web-components: fix gd-dashboard-embed silently rendering blank when pluginMode is unset and moduleFederationIntegration is unavailable; now falls back gracefully to static-only loading with an actionable warning",
+            "type": "patch"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "jan.kruza@gooddata.com"
+}

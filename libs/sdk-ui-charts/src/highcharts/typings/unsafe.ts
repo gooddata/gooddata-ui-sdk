@@ -176,6 +176,7 @@ export interface IChartOptions {
     legendLayout?: string;
     xAxes?: IAxis[];
     yAxes?: IAxis[];
+    zAxes?: IAxis[];
     data?: IChartOptionsData;
     actions?: {
         tooltip: ITooltipFactory;

@@ -86,6 +86,7 @@ export interface IDropdownButtonRenderProps {
         | "role"
         | "isExpanded"
         | "popupId"
+        | "popupType"
         | "ariaLabel"
         | "ariaDescribedBy"
         | "ariaControls"

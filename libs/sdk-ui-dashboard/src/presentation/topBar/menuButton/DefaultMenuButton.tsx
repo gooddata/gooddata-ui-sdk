@@ -16,13 +16,13 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import {
-    Button,
     type IAlignPoint,
     ItemsWrapper,
     Overlay,
     SingleSelectListItem,
     UiFocusManager,
     UiIcon,
+    UiIconButton,
     UiTooltip,
     findFocusableElementOutsideContainer,
     getFocusableElements,
@@ -30,6 +30,7 @@ import {
     makeMenuKeyboardNavigation,
     useId,
     useIdPrefixed,
+    useMediaQuery,
 } from "@gooddata/sdk-ui-kit";
 
 import { DEFAULT_MENU_BUTTON_ID } from "../../../_staging/accessibility/elementId.js";
@@ -53,11 +54,12 @@ export function DefaultMenuButton({ menuItems }: IMenuButtonProps): ReactElement
     const [isOpen, setIsOpen] = useState(false);
     const [autofocusSubmenu, setAutofocusSubmenu] = useState(false);
     const intl = useIntl();
+    const smallScreen = useMediaQuery("mobileDevice");
     const tooltipText = intl.formatMessage({ id: "controlButtons.options.tooltip" });
     const backLabel = intl.formatMessage({ id: "controlButtons.options.back" });
     const closeLabel = intl.formatMessage({ id: "controlButtons.options.closeMenu" });
     const menuWrapperRef = useRef<HTMLDivElement>(null);
-    const triggerButtonRef = useRef<HTMLElement>(null);
+    const triggerButtonRef = useRef<HTMLButtonElement>(null);
     const [parentItemId, setParentItemId] = useState<string | null>(null);
     const menuItemRefs = useRef<Map<string, HTMLElement>>(new Map());
     const density = useDashboardSelector(selectDashboardDensity);
@@ -243,33 +245,31 @@ export function DefaultMenuButton({ menuItems }: IMenuButtonProps): ReactElement
 
     return (
         <>
-            <UiTooltip
-                arrowPlacement="top-end"
-                content={tooltipText}
-                anchor={
-                    <Button
-                        ref={triggerButtonRef}
-                        onClick={onMenuButtonClick}
-                        value="&#8943;"
-                        id={DEFAULT_MENU_BUTTON_ID}
-                        className={cx(
-                            "gd-button-primary dash-header-options-button s-header-options-button gd-button",
-                            dropdownAnchorClassName,
-                            {
-                                "gd-button-small": density === "compact",
-                            },
-                        )}
-                        accessibilityConfig={{
-                            ariaLabel: tooltipText,
-                            role: "button",
-                            isExpanded: isOpen,
-                            popupId: menuId,
-                        }}
-                    />
-                }
-                triggerBy={["hover", "focus"]}
-            />
-
+            <div className={cx("dash-header-options-button", dropdownAnchorClassName)}>
+                <UiTooltip
+                    arrowPlacement="top-end"
+                    content={tooltipText}
+                    anchor={
+                        <UiIconButton
+                            ref={triggerButtonRef}
+                            onClick={onMenuButtonClick}
+                            icon="ellipsis"
+                            id={DEFAULT_MENU_BUTTON_ID}
+                            dataTestId="s-header-options-button"
+                            variant={smallScreen ? "tertiary" : "secondary"}
+                            size={smallScreen ? "xlarge" : density === "compact" ? "small" : "medium"}
+                            accessibilityConfig={{
+                                role: "button",
+                                ariaLabel: tooltipText,
+                                ariaExpanded: isOpen,
+                                ariaHaspopup: "menu",
+                                ariaControls: isOpen ? menuId : undefined,
+                            }}
+                        />
+                    }
+                    triggerBy={["hover", "focus"]}
+                />
+            </div>
             {isOpen ? renderMenuItems() : null}
         </>
     );

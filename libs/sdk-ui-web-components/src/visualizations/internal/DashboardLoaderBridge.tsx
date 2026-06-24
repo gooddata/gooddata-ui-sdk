@@ -44,7 +44,7 @@ type DashboardLoaderBridgeOptions = {
     workspace?: string;
     dashboard: string;
     config?: DashboardConfig;
-    pluginMode: DashboardPluginMode;
+    pluginMode?: DashboardPluginMode;
     extraPlugins?: DashboardExtraPlugins;
     moduleFederationIntegration?: ModuleFederationIntegration;
 };
@@ -54,7 +54,12 @@ export type DashboardLoaderBridgeProps = {
     workspace?: string;
     dashboard: string;
     config?: DashboardConfig;
-    pluginMode: DashboardPluginMode;
+    /**
+     * Controls which plugins are loaded. When left unset, the bridge picks a safe default:
+     * adaptive loading when `moduleFederationIntegration` is available, otherwise a graceful
+     * fallback to static-only loading (the dashboard still renders; a warning is emitted).
+     */
+    pluginMode?: DashboardPluginMode;
     extraPlugins?: DashboardExtraPlugins;
     moduleFederationIntegration?: ModuleFederationIntegration;
     onReady: (runtimeId: DashboardRuntimeId) => void;
@@ -103,7 +108,7 @@ function hasExtraPlugins(extraPlugins: DashboardExtraPlugins | undefined): boole
 
 function getSuppressedPluginsWarning(
     dashboard: string,
-    pluginMode: DashboardPluginMode,
+    pluginMode: DashboardPluginMode | undefined,
     extraPlugins: DashboardExtraPlugins | undefined,
 ): DashboardLoaderWarning | undefined {
     if (!hasExtraPlugins(extraPlugins) || (pluginMode !== "backendOnly" && pluginMode !== "disabled")) {
@@ -129,6 +134,21 @@ function getSuppressedBackendPluginsWarning(
         pluginMode,
         dashboard,
         message: `Backend-linked plugins are ignored for dashboard "${dashboard}" when pluginMode="${pluginMode}".`,
+    };
+}
+
+function getMissingModuleFederationWarning(dashboard: string): DashboardLoaderWarning {
+    return {
+        phase: "pluginMode",
+        ignoredSource: "backendPlugins",
+        // The user did not pick a mode; "all" is the effective default that was degraded.
+        pluginMode: "all",
+        dashboard,
+        message:
+            `Backend-linked plugins for dashboard "${dashboard}" were skipped because ` +
+            `moduleFederationIntegration was not provided; the dashboard was loaded with static plugins only. ` +
+            `Provide moduleFederationIntegration to enable adaptive loading of backend-linked plugins, ` +
+            `or set pluginMode="disabled" to silence this warning.`,
     };
 }
 
@@ -221,6 +241,34 @@ function resolveBridge(props: DashboardLoaderBridgeOptions): RunnableResolution 
                     ...baseOptions,
                     loadingMode: "adaptive",
                     adaptiveLoadOptions,
+                },
+            };
+        }
+        default: {
+            // No pluginMode was explicitly requested. Prefer full (adaptive) loading when the
+            // host can supply moduleFederationIntegration, but never hard-fail the whole dashboard
+            // when it cannot: degrade to static-only loading and surface an actionable warning.
+            // This keeps the unconfigured "just embed it" path working, while explicit
+            // "all"/"backendOnly" remain strict (they error when moduleFederationIntegration is missing).
+            if (moduleFederationIntegration) {
+                return {
+                    kind: "runnable",
+                    loaderOptions: {
+                        ...baseOptions,
+                        loadingMode: "adaptive",
+                        extraPlugins,
+                        adaptiveLoadOptions: { moduleFederationIntegration },
+                    },
+                };
+            }
+
+            return {
+                kind: "runnable",
+                warning: getMissingModuleFederationWarning(dashboard),
+                loaderOptions: {
+                    ...baseOptions,
+                    loadingMode: "staticOnly",
+                    extraPlugins,
                 },
             };
         }

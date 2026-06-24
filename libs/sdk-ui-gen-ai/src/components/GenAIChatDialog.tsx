@@ -30,7 +30,7 @@ export type GenAIChatDialogProps = Omit<GenAiStoreProps, "children"> & {
     onOpen: () => void;
     onClose: () => void;
     returnFocusTo?: RefObject<HTMLElement | null> | string;
-    onLinkClick?: (linkClickEvent: LinkHandlerEvent) => void;
+    onLinkClick?: (linkClickEvent: LinkHandlerEvent) => string | undefined;
     LandingScreenComponentProvider?: () => ComponentType;
 };
 
@@ -49,6 +49,7 @@ export function GenAIChatDialog({
     settings,
     className,
     dialogPosition,
+    allowNativeLinks = true,
     returnFocusTo,
     objectTypes,
     includeTags,
@@ -74,6 +75,8 @@ export function GenAIChatDialog({
                 onDispatcher={onDispatcher}
                 eventHandlers={eventHandlers}
                 colorPalette={colorPalette}
+                allowNativeLinks={allowNativeLinks}
+                onLinkClick={onLinkClick}
                 settings={settings}
                 objectTypes={objectTypes}
                 includeTags={includeTags}
@@ -91,6 +94,7 @@ export function GenAIChatDialog({
                         onOpen={onOpen}
                         onClose={onClose}
                         returnFocusTo={returnFocusTo}
+                        allowNativeLinks={allowNativeLinks}
                         onLinkClick={onLinkClick}
                         catalogItems={catalogItems}
                         canManage={canManage}
@@ -114,7 +118,8 @@ type GenAIChatDialogContentProps = {
     onOpen: () => void;
     onClose: () => void;
     returnFocusTo?: RefObject<HTMLElement | null> | string;
-    onLinkClick?: (linkClickEvent: LinkHandlerEvent) => void;
+    allowNativeLinks?: boolean;
+    onLinkClick?: (linkClickEvent: LinkHandlerEvent) => string | undefined;
     catalogItems?: CatalogItem[];
     canManage: boolean;
     canAnalyze: boolean;
@@ -133,6 +138,7 @@ function GenAIChatDialogContent({
     onClose,
     returnFocusTo,
     onLinkClick,
+    allowNativeLinks,
     catalogItems,
     canManage,
     canAnalyze,
@@ -189,7 +195,7 @@ function GenAIChatDialogContent({
             <WorkspaceProvider workspace={workspace}>
                 <OverlayControllerProvider overlayController={chatOverlayController}>
                     <ConfigProvider
-                        allowNativeLinks
+                        allowNativeLinks={allowNativeLinks}
                         linkHandler={onLinkClick}
                         catalogItems={catalogItems}
                         canManage={canManage}

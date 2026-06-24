@@ -16,7 +16,7 @@ type IGenAIConversations = typeof OriginalGenAIConversations;
 export class GenAIConversations extends CustomElementAdapter<IGenAIConversations> {
     //HANDLES: CLICK
 
-    declare onLinkClick?: (event: CustomEvent<IGenAIAssistantLinkClick>) => void;
+    declare onLinkClick?: (event: CustomEvent<IGenAIAssistantLinkClick>) => string | undefined;
 
     //DISPATCHER
 

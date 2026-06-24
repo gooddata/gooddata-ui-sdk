@@ -66,6 +66,8 @@ export function GenAIConversations(props: GenAIConversationsProps) {
         excludeTags,
         colorPalette,
         providedStore,
+        allowNativeLinks,
+        onLinkClick,
     } = props;
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
@@ -78,6 +80,8 @@ export function GenAIConversations(props: GenAIConversationsProps) {
                 workspace={effectiveWorkspace}
                 onDispatcher={onDispatcher}
                 eventHandlers={eventHandlers}
+                allowNativeLinks={allowNativeLinks}
+                onLinkClick={onLinkClick}
                 settings={settings}
                 catalogItems={catalogItems}
                 isPreview={isPreview}

@@ -28,8 +28,8 @@ import { selectCanManageWorkspace } from "../../../../../../model/store/permissi
 import { selectWidgetByRef } from "../../../../../../model/store/tabs/layout/layoutSelectors.js";
 import { selectCurrentUser } from "../../../../../../model/store/user/userSelectors.js";
 import { gdColorNegative, gdColorStateBlank } from "../../../../../constants/colors.js";
-import { useAlertValidation } from "../../DefaultAlertingDialog/hooks/useAlertValidation.js";
-import { getSubtitle } from "../../DefaultAlertingDialog/utils/getters.js";
+import { getSubtitle } from "../../../../alerting/DefaultAlertingDialog/utils/getters.js";
+import { useAlertValidation } from "../hooks/useAlertValidation.js";
 
 interface IAlertProps {
     onDelete: () => void;

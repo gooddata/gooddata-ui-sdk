@@ -32,6 +32,7 @@ import {
 } from "../messages/messagesSelectors.js";
 import {
     cancelAsyncAction,
+    clearConversationLoadingAction,
     loadConversationSuccessAction,
     loadConversationsSuccessAction,
     loadThreadErrorAction,
@@ -48,6 +49,13 @@ import { convertToLocalContent } from "./converters/toLocalContent.js";
  * @internal
  */
 export function* onThreadLoad() {
+    // Remember which conversation this load marked as "loading" (loadThreadAction keyed the
+    // flag to the conversation that was current when this saga was dispatched). If a newer
+    // load supersedes us, takeLatest cancels this saga without dispatching cancelAsyncAction,
+    // so we must clear that conversation's flag ourselves - otherwise its skeleton spins
+    // forever when reopened (LX-2577).
+    const loadingConversation: IChatConversationLocal | undefined = yield select(conversationSelector);
+    const loadingConversationLocalId = loadingConversation?.localId;
     try {
         const settings: IUserWorkspaceSettings | undefined = yield select(settingsSelector);
         if (settings?.enableAiAgenticConversations) {
@@ -57,6 +65,24 @@ export function* onThreadLoad() {
         }
     } catch (e) {
         yield put(loadThreadErrorAction({ error: e as Error }));
+    } finally {
+        const wasCancelled: boolean = yield cancelled();
+        if (wasCancelled) {
+            // Only clear when the load was genuinely orphaned, i.e. the conversation we were
+            // loading is no longer the current one (the user switched away mid-load). When a
+            // newer load supersedes us on the SAME conversation - e.g. a split layout mounts
+            // both GenAIConversations and GenAIAssistant and each useThreadLoading dispatches
+            // loadThreadAction - the replacement saga has already re-set the "loading" flag and
+            // is still fetching, so clearing it here would prematurely hide the skeleton and
+            // re-enable the input.
+            const currentConversation: IChatConversationLocal | undefined =
+                yield select(conversationSelector);
+            if (currentConversation?.localId !== loadingConversationLocalId) {
+                yield put(
+                    clearConversationLoadingAction({ conversationLocalId: loadingConversationLocalId }),
+                );
+            }
+        }
     }
 }
 

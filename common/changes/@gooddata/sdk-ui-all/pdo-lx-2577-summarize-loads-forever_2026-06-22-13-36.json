@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-gen-ai: Fix a chat conversation loading forever when reopened after a conversation switch (e.g. the dashboard Summarize flow) cancelled its history load mid-flight; the per-conversation loading flag is now cleared on the conversation that was actually loading instead of whichever one is current.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "petr.dolejsi@gooddata.com"
+}

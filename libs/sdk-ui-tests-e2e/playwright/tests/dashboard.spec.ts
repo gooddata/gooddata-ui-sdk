@@ -42,7 +42,7 @@ test.topLevelDescribe(
                     await enterEditMode(page);
 
                     // Open header options menu and delete the dashboard
-                    const menuButton = page.locator(".s-header-options-button");
+                    const menuButton = page.locator('[data-testid="s-header-options-button"]');
                     await expect(menuButton).toBeVisible();
                     await menuButton.click();
                     await page.locator(".s-delete_dashboard").click();

@@ -5,7 +5,7 @@ import { type ReactNode, useMemo, useState } from "react";
 import cx from "classnames";
 import { type IntlShape, defineMessages, useIntl } from "react-intl";
 
-import { UiButton } from "@gooddata/sdk-ui-kit";
+import { LoadingSpinner, UiButton } from "@gooddata/sdk-ui-kit";
 
 import { type IChatMessagesGroup } from "../utils/groupUtility.js";
 import { removeMarkdown } from "../utils/markdownUtils.js";
@@ -100,6 +100,11 @@ function ReasoningItemsGroup({ classNames, group, previousGroup, children }: IRe
                     data-testid="gen-ai-reasoning-group-content"
                 >
                     {children}
+                    {isCompleted ? null : (
+                        <div className="gd-gen-ai-chat__messages__conversation-group--content--loading">
+                            <LoadingSpinner className="gd-gen-ai-chat__messages__conversation-group--content--loading--spinner" />
+                        </div>
+                    )}
                 </div>
             ) : null}
         </div>
@@ -130,25 +135,20 @@ function useReasoningGroup(previousGroup: IChatMessagesGroup | undefined, group:
     }, [group.messages]);
 
     const messages = useMemo(() => {
+        let last = "";
         return group.messages.map((m) => {
-            if (m.complete) {
-                return undefined;
-            }
             switch (m.content.type) {
                 case "reasoning":
-                    return m.content.summary
+                    last = m.content.summary
                         ? removeMarkdown(m.content.summary.slice(0, 40))
                         : intl.formatMessage({ id: "gd.gen-ai.state.thinking" });
+                    break;
                 case "toolCall":
-                    return intl.formatMessage(
-                        { id: "gd.gen-ai.message.reasoning.tool-call.plain" },
-                        { name: m.content.name },
-                    );
                 case "toolResult":
-                    return intl.formatMessage({ id: "gd.gen-ai.message.reasoning.tool-result.plain" });
                 default:
-                    return undefined;
+                    break;
             }
+            return last;
         });
     }, [group.messages, intl]);
 
@@ -158,7 +158,7 @@ function useReasoningGroup(previousGroup: IChatMessagesGroup | undefined, group:
         }
 
         const lastMessageContent = messages[messages.length - 1];
-        return `${lastMessageContent ?? intl.formatMessage({ id: "gd.gen-ai.state.thinking" })}...`;
+        return `${lastMessageContent || intl.formatMessage({ id: "gd.gen-ai.state.thinking" })}...`;
     }, [intl, isCompleted, messages]);
 
     const duration = useMemo(() => {

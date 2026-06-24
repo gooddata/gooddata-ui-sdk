@@ -20,7 +20,10 @@ import {
 } from "../../../catalog/catalogState.js";
 import { insightsAdapter } from "../../../insights/insightsEntityAdapter.js";
 import { type DashboardState } from "../../../types.js";
-import { computeParameterResetTargets } from "../parametersHelpers.js";
+import {
+    computeParameterResetTargets,
+    resolveEffectiveParameterValuesForInsight,
+} from "../parametersHelpers.js";
 import {
     selectActiveParameterRefKeys,
     selectActiveTabExportParameters,
@@ -35,6 +38,7 @@ import {
     selectParameterResetValueByRef,
     selectParameterRuntimeOverrideByRef,
     selectSmartPersistedTabsParameters,
+    selectWidgetParameterContext,
 } from "../parametersSelectors.js";
 import { type IDashboardParameterEntry } from "../parametersState.js";
 
@@ -567,6 +571,63 @@ describe("parameter selectors (per tab)", () => {
                 workspaceParameters: [],
             });
             expect(selectIsParametersChanged(state)).toBe(false);
+        });
+    });
+
+    // Regression for F1-2562: drilling executes the drill target, not the source widget's own insight.
+    describe("selectWidgetParameterContext (drill resolves against the target insight)", () => {
+        const widgetRef = W1_REF;
+        const sourceMetricRef = idRef("m-source", "measure");
+        const targetMetricRef = idRef("m-target", "measure");
+        // Source widget's own insight references no parameter; the drill target references topN.
+        const sourceInsight: IInsight = makeInsightWithMetric(W1_INSIGHT_REF, sourceMetricRef);
+        const targetInsight: IInsight = makeInsightWithMetric(
+            idRef("drill-target", "insight"),
+            targetMetricRef,
+        );
+        const measureParameters = { [objRefToString(targetMetricRef)]: [topNRef] };
+
+        // Mirrors useWidgetExecConfig: owning-tab context (by source ref) + the executed insight.
+        const resolveAgainst = (insight: IInsight, state: DashboardState) =>
+            resolveEffectiveParameterValuesForInsight(
+                selectWidgetParameterContext(widgetRef)(state),
+                insight,
+            );
+
+        it("inherits the active parameter override when the source widget is not connected to the parameter", () => {
+            const state = makeFullState({
+                entries: [{ parameter: topNParameter, runtimeOverride: 1000 }],
+                insights: [sourceInsight],
+                measureParameters,
+            });
+            // Old bug: against the source insight (no parameter ref), the override was dropped.
+            expect(resolveAgainst(sourceInsight, state)).toEqual([]);
+            // Fix: against the drill target, the parameter override is inherited.
+            expect(resolveAgainst(targetInsight, state)).toEqual([{ ref: topNRef, value: 1000 }]);
+        });
+
+        it("exposes the owning-tab entries and measure→parameter map keyed by the source widget ref", () => {
+            const ctx = selectWidgetParameterContext(widgetRef)(
+                makeFullState({
+                    entries: [{ parameter: topNParameter, runtimeOverride: 1000 }],
+                    insights: [sourceInsight],
+                    measureParameters,
+                }),
+            );
+            expect(ctx?.entries).toEqual([{ parameter: topNParameter, runtimeOverride: 1000 }]);
+            expect(ctx?.measureParameters).toEqual(measureParameters);
+        });
+
+        it("returns undefined while the measure→parameter map has not loaded", () => {
+            const ctx = selectWidgetParameterContext(widgetRef)(
+                makeFullState({
+                    entries: [{ parameter: topNParameter, runtimeOverride: 1000 }],
+                    insights: [sourceInsight],
+                    measureParameters,
+                    measureParametersStatus: "loading",
+                }),
+            );
+            expect(ctx).toBeUndefined();
         });
     });
 

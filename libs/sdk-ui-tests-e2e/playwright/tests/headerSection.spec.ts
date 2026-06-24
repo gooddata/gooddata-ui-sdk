@@ -27,7 +27,7 @@ test.topLevelDescribe(
                     await expect(page.locator(".s-saving_button")).toBeHidden();
 
                     // Open menu and verify "Save as new" option exists
-                    const menuButton = page.locator(".s-header-options-button");
+                    const menuButton = page.locator('[data-testid="s-header-options-button"]');
                     await expect(menuButton).toBeVisible();
                     await menuButton.click();
                     const saveAsNewItem = page

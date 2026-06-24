@@ -296,13 +296,31 @@ function VisualizationContentsComponentCore({
                 break;
             case "button-copy":
                 if (visualization?.savedVisualizationId) {
-                    const link = getAbsoluteVisualizationHref(
-                        workspaceId,
-                        visualization.savedVisualizationId,
-                        useHostedAnalyticalDesigner,
-                    );
-                    copy(link);
-                    onCopyToClipboard?.({ content: link });
+                    let link: string | undefined = undefined;
+                    if (config.allowNativeLinks) {
+                        link = getAbsoluteVisualizationHref(
+                            workspaceId,
+                            visualization.savedVisualizationId,
+                            useHostedAnalyticalDesigner,
+                        );
+                    } else {
+                        link = config.linkHandler?.({
+                            id: visualization.savedVisualizationId,
+                            type: "visualization",
+                            workspaceId,
+                            newTab: e.metaKey,
+                            preventDefault: e.preventDefault.bind(e),
+                            itemUrl: getAbsoluteVisualizationHref(
+                                workspaceId,
+                                visualization.savedVisualizationId,
+                                useHostedAnalyticalDesigner,
+                            ),
+                        });
+                    }
+                    if (link) {
+                        copy(link);
+                        onCopyToClipboard?.({ content: link });
+                    }
                 }
                 setMenuButtonOpen(false);
                 break;

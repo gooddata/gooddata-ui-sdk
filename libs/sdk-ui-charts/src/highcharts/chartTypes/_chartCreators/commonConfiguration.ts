@@ -14,11 +14,12 @@ import {
     getBlackStackedLabelStyle,
 } from "../../constants/label.js";
 import { DEFAULT_CATEGORIES_LIMIT } from "../../constants/limits.js";
-import { type DrilldownEventObject, type HTMLDOMElement } from "../../lib/index.js";
+import { type DrilldownEventObject, type HTMLDOMElement, type Point } from "../../lib/index.js";
 import { type IHighchartsAxisExtend } from "../../typings/extend.js";
-import { type IChartOptions } from "../../typings/unsafe.js";
+import { type IChartOptions, type UnsafeInternals } from "../../typings/unsafe.js";
 import { isHighContrastMode } from "../../utils/highContrastMode.js";
 import { supportedDualAxesChartTypes } from "../_chartOptions/chartCapabilities.js";
+import { formatValueForTooltip } from "../_chartOptions/tooltip.js";
 import { isOneOfTypes } from "../_util/common.js";
 
 import { chartClick } from "./drilldownEventing.js";
@@ -103,12 +104,28 @@ function handleTouchDeviceClick(context: any): void {
     }
 }
 
-function getThemedConfiguration(theme: ITheme | undefined, config?: IChartConfig): any {
+function decodeHtmlEntities(str: string): string {
+    return str.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
+}
+
+function getThemedConfiguration(
+    theme: ITheme | undefined,
+    config?: IChartConfig,
+    chartOptions?: IChartOptions,
+): any {
     // Check if Windows High Contrast Mode is active
     const isHighContrast = isHighContrastMode();
     const backgroundColor = getBackgroundColor(theme);
     const axisLineColor = getAxisLineColor(theme);
     const isBackplateStyle = config?.dataLabels?.style === "backplate";
+
+    const stackByTitle = decodeHtmlEntities(
+        chartOptions?.hasStackByAttribute ? (chartOptions?.legendLabel ?? "") : "",
+    );
+    const viewByTitle = decodeHtmlEntities(
+        chartOptions?.hasStackByAttribute ? "" : (chartOptions?.legendLabel ?? ""),
+    );
+    const measureName = decodeHtmlEntities(chartOptions?.yAxes?.[0]?.label ?? "");
 
     return {
         credits: {
@@ -116,6 +133,89 @@ function getThemedConfiguration(theme: ITheme | undefined, config?: IChartConfig
         },
         accessibility: {
             enabled: config?.enableHighchartsAccessibility ?? true,
+            point: {
+                descriptionFormatter: (point: Point): string => {
+                    const anyPoint = point as UnsafeInternals;
+                    const xAxisTitle: string = decodeHtmlEntities(
+                        anyPoint.series?.xAxis?.axisTitle?.textStr ?? "",
+                    );
+                    const rawCategory = anyPoint.category;
+                    const category: string = decodeHtmlEntities(
+                        typeof rawCategory === "object" && rawCategory?.name
+                            ? rawCategory.name
+                            : typeof rawCategory === "string"
+                              ? rawCategory
+                              : "",
+                    );
+                    const seriesName: string = decodeHtmlEntities(point.series.name);
+                    const pointName: string = decodeHtmlEntities(anyPoint.name ?? "");
+                    // treemaps store the data value in point.value; other charts use point.y
+                    const rawValue = anyPoint.value ?? point.y;
+                    const yValue: string =
+                        formatValueForTooltip(rawValue, anyPoint.format, config?.separators) ??
+                        String(rawValue ?? "");
+
+                    // Bubble chart: series type is "bubble"; x/y/z are measures, not categories
+                    if (anyPoint.series?.type === "bubble") {
+                        const xAxisLabel = decodeHtmlEntities(chartOptions?.xAxes?.[0]?.label ?? "");
+                        const yAxisLabel = decodeHtmlEntities(chartOptions?.yAxes?.[0]?.label ?? "");
+                        const zAxisLabel = decodeHtmlEntities(chartOptions?.zAxes?.[0]?.label ?? "");
+                        const xVal =
+                            formatValueForTooltip(
+                                anyPoint.x,
+                                chartOptions?.xAxes?.[0]?.format,
+                                config?.separators,
+                            ) ?? String(anyPoint.x ?? "");
+                        const yVal =
+                            formatValueForTooltip(
+                                anyPoint.y,
+                                chartOptions?.yAxes?.[0]?.format,
+                                config?.separators,
+                            ) ?? String(anyPoint.y ?? "");
+                        const zVal =
+                            formatValueForTooltip(
+                                anyPoint.z,
+                                chartOptions?.zAxes?.[0]?.format,
+                                config?.separators,
+                            ) ?? String(anyPoint.z ?? "");
+
+                        // Bubble charts use viewByTitle (hasStackByAttribute is not set for bubble)
+                        const attrTitle = stackByTitle || viewByTitle;
+                        const namePart = attrTitle && pointName ? `${attrTitle}: ${pointName}` : pointName;
+
+                        const parts: string[] = [];
+                        if (namePart) parts.push(namePart);
+                        parts.push(xAxisLabel ? `${xAxisLabel}: ${xVal}` : `x: ${xVal}`);
+                        // Only include y/z when the measures are actually configured
+                        if (yAxisLabel) parts.push(`${yAxisLabel}: ${yVal}`);
+                        if (Number.isFinite(anyPoint.z)) {
+                            parts.push(zAxisLabel ? `${zAxisLabel}: ${zVal}` : `z: ${zVal}`);
+                        }
+
+                        return `${parts.join(", ")}.`;
+                    }
+
+                    const xPart = xAxisTitle && category ? `${xAxisTitle}: ${category}` : category;
+
+                    if (xPart) {
+                        if (stackByTitle && measureName) {
+                            // Stacked: "Department: Direct Sales, Region: East Coast, Won: $8 384 271,02."
+                            return `${xPart}, ${stackByTitle}: ${seriesName}, ${measureName}: ${yValue}.`;
+                        }
+                        return `${xPart}, ${seriesName}: ${yValue}.`;
+                    }
+
+                    // For pie/treemap/funnel etc.: point.name is the slice label.
+                    // When there is a viewBy, include its title and the measure name.
+                    if (pointName) {
+                        if (viewByTitle && pointName !== seriesName) {
+                            return `${viewByTitle}: ${pointName}, ${seriesName}: ${yValue}.`;
+                        }
+                        return `${pointName}: ${yValue}.`;
+                    }
+                    return `${seriesName}: ${yValue}.`;
+                },
+            },
         },
         title: {
             // setting title to empty string prevents it from being shown
@@ -246,7 +346,7 @@ export function getCommonConfiguration(
     theme?: ITheme,
     config?: IChartConfig,
 ): any {
-    const commonConfiguration = getThemedConfiguration(theme, config);
+    const commonConfiguration = getThemedConfiguration(theme, config, chartOptions);
 
     const handlers = [registerDrilldownHandler, registerRenderHandler];
 

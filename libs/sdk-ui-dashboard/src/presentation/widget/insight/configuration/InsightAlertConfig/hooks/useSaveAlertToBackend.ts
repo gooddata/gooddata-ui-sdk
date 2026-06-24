@@ -14,17 +14,6 @@ import {
 import { useCreateAlert } from "./useCreateAlert.js";
 import { useUpdateAlert } from "./useUpdateAlert.js";
 
-/**
- * @internal
- * @param onCreateSuccess - callback to be called when alert is created successfully
- * @param onCreateError - callback to be called when alert creation fails
- * @param onUpdateSuccess - callback to be called when alert is updated successfully
- * @param onUpdateError - callback to be called when alert update fails
- * @param onPauseSuccess - callback to be called when alert is paused successfully
- * @param onPauseError - callback to be called when alert pausing fails
- * @param onResumeSuccess - callback to be called when alert is resumed successfully
- * @param onResumeError - callback to be called when alert resuming fails
- */
 export function useSaveAlertToBackend({
     onCreateSuccess,
     onCreateError,
@@ -107,8 +96,8 @@ function sanitizeAutomation(automationToSave: IAutomationMetadataObject): IAutom
     let automation = {
         ...automationToSave,
     };
-    // We want to omit the cronDescription as it is a variable created on backend that cannot
-    // be overriden and BE has hard time handling it with each PUT
+    // cronDescription is a variable created on backend that cannot be overridden and BE has hard time
+    // handling it with each PUT
     if (automation.schedule) {
         automation.schedule = omit(automation.schedule, ["cronDescription"]);
     }
@@ -129,10 +118,6 @@ function sanitizeAutomation(automationToSave: IAutomationMetadataObject): IAutom
     return automation;
 }
 
-/**
- * Strip noop filters that have no effect on execution and should not appear in alert email notifications.
- * - "All values" attribute filters are always stripped.
- */
 function removeNoopFiltersFromAlertFilters(filters: IFilter[]): IFilter[] {
     return filters.filter((filter) => !isAllValuesAttributeFilter(filter));
 }

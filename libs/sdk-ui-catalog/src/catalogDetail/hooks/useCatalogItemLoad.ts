@@ -1,7 +1,13 @@
 // (C) 2025-2026 GoodData Corporation
 
 import type { IAnalyticalWorkspace } from "@gooddata/sdk-backend-spi";
-import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import {
+    convertError,
+    isNotFound,
+    useBackendStrict,
+    useCancelablePromise,
+    useWorkspaceStrict,
+} from "@gooddata/sdk-ui";
 
 import {
     convertAttributeToCatalogItem,
@@ -45,7 +51,13 @@ export function useCatalogItemLoad({ objectDefinition, objectId, objectType }: I
                 if (filled) {
                     return Promise.resolve(objectDefinition);
                 }
-                return loadObjectDefinition(backend.workspace(workspace), id, type);
+                // A 404 must reach CatalogDetailStatus as a NotFoundSdkError so isNotFound() shows
+                // the not-found page; convertError maps it. Other errors are rethrown untouched so
+                // their original status/message survives in the generic error description.
+                return loadObjectDefinition(backend.workspace(workspace), id, type).catch((e) => {
+                    const converted = convertError(e);
+                    throw isNotFound(converted) ? converted : e;
+                });
             },
         },
         [backend, workspace, id, type, filled],

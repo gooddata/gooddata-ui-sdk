@@ -3,6 +3,8 @@
 import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { type CatalogItem, type GenAIObjectType, type IColorPalette } from "@gooddata/sdk-model";
 
+import type { LinkHandlerEvent } from "../components/ConfigContext.js";
+
 /**
  * A dispatcher for chat events.
  * @internal
@@ -14,6 +16,8 @@ export class OptionsDispatcher {
     private includeTags: string[] | undefined = undefined;
     private excludeTags: string[] | undefined = undefined;
     private catalogItems: CatalogItem[] | undefined = undefined;
+    private onLinkClick: ((linkClickEvent: LinkHandlerEvent) => string | undefined) | undefined = undefined;
+    private allowNativeLinks: boolean | undefined = undefined;
 
     public setColorPalette(colorPalette: IColorPalette | undefined): void {
         this.colorPalette = colorPalette;
@@ -21,6 +25,24 @@ export class OptionsDispatcher {
 
     public getColorPalette(): IColorPalette | undefined {
         return this.colorPalette;
+    }
+
+    public setOnLinkClick(
+        onLinkClick?: (linkClickEvent: LinkHandlerEvent) => string | undefined,
+        allowNativeLinks?: boolean,
+    ): void {
+        this.onLinkClick = onLinkClick;
+        this.allowNativeLinks = allowNativeLinks;
+    }
+
+    public getOnLinkClick(): {
+        onLinkClick?: (linkClickEvent: LinkHandlerEvent) => string | undefined;
+        allowNativeLinks?: boolean;
+    } {
+        return {
+            onLinkClick: this.onLinkClick,
+            allowNativeLinks: this.allowNativeLinks,
+        };
     }
 
     public setSettings(settings: IUserWorkspaceSettings | undefined): void {

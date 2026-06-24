@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "Show a not-found page instead of a generic error when a catalog object detail returns 404",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "matyas.kandl@gooddata.com"
+}

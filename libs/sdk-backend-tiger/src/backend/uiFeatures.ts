@@ -28,7 +28,6 @@ export enum TigerFeaturesNames {
     EnablePivotTableIncreaseBucketSize = "enablePivotTableIncreaseBucketSize",
     EnableUserManagement = "enableUserManagement",
     EnableKDSavedFilters = "enableKDSavedFilters",
-    EnableClickHouseDataSource = "enableClickHouseDataSource",
     EnableKDCrossFiltering = "enableKDCrossFiltering",
     EnableChangeAnalysis = "enableChangeAnalysis",
     EnableMultipleDateFilters = "enableMultipleDateFilters",
@@ -37,7 +36,6 @@ export enum TigerFeaturesNames {
     EnableRankingStrictLimit = "enableRankingStrictLimit",
     EnableKDRichText = "enableKDRichText",
     EnableMySqlDataSource = "enableMySqlDataSource",
-    EnableCreateUser = "enableCreateUser",
     EnableMariaDbDataSource = "enableMariaDbDataSource",
     EnableRepeaterChart = "enableRepeaterChart",
     EnableKDAttributeFilterDatesValidation = "enableKDAttributeFilterDatesValidation",
@@ -56,7 +54,6 @@ export enum TigerFeaturesNames {
     EnableMongoDbDataSource = "enableMongoDbDataSource",
     EnableStarrocksDataSource = "enableStarrocksDataSource",
     EnableLabsSmartFunctions = "enableLabsSmartFunctions",
-    EnableKeyDriverAnalysis = "enableKeyDriverAnalysis",
     EnableDataProfiling = "enableDataProfiling",
     EnableExperimentalFeaturesUI = "enableExperimentalFeaturesUI",
     EnableSingleStoreDataSource = "enableSingleStoreDataSource",
@@ -69,12 +66,9 @@ export enum TigerFeaturesNames {
     EnableRichTextDescriptions = "enableRichTextDescriptions",
     EnableSchedulingRollout = "enableSchedulingRollout",
     EnableWidgetIdentifiersRollout = "enableWidgetIdentifiersRollout",
-    EnableAIFunctions = "enableAIFunctions",
     EnableSemanticSearch = "enableSemanticSearch",
     EnableCatalogSmartSearchResults = "enableCatalogSmartSearchResults",
-    EnableSemanticSearchRollout = "enableSemanticSearchRollout",
     EnableGenAIChat = "enableGenAIChat",
-    EnableGenAIChatRollout = "enableGenAIChatRollout",
     EnableGenAICatalogQualityChecker = "enableGenAICatalogQualityChecker",
     EnableCatalogTrendingObjects = "enableCatalogTrendingObjects",
     EnableCatalogLineage = "enableCatalogLineage",
@@ -89,7 +83,6 @@ export enum TigerFeaturesNames {
     EarlyAccessFeatures = "earlyAccessFeatures",
     EnableCrossFilteringAliasTitles = "enableCrossFilteringAliasTitles",
     EnableDefaultSmtp = "enableDefaultSmtp",
-    EnableNumberSeparators = "enableNumberSeparators",
     EnableDestinationTesting = "enableDestinationTesting",
     EnableInPlatformNotifications = "enableInPlatformNotifications",
     EnableExternalRecipients = "enableExternalRecipients",
@@ -207,7 +200,6 @@ export type ITigerFeatureFlags = {
     enablePivotTableIncreaseBucketSize: (typeof FeatureFlagsValues)["enablePivotTableIncreaseBucketSize"][number];
     enableUserManagement: (typeof FeatureFlagsValues)["enableUserManagement"][number];
     enableKDSavedFilters: (typeof FeatureFlagsValues)["enableKDSavedFilters"][number];
-    enableClickHouseDataSource: (typeof FeatureFlagsValues)["enableClickHouseDataSource"][number];
     enableKDCrossFiltering: (typeof FeatureFlagsValues)["enableKDCrossFiltering"][number];
     enableChangeAnalysis: (typeof FeatureFlagsValues)["enableChangeAnalysis"][number];
     enableMultipleDateFilters: (typeof FeatureFlagsValues)["enableMultipleDateFilters"][number];
@@ -216,7 +208,6 @@ export type ITigerFeatureFlags = {
     enableRankingStrictLimit: (typeof FeatureFlagsValues)["enableRankingStrictLimit"][number];
     enableKDRichText: (typeof FeatureFlagsValues)["enableKDRichText"][number];
     enableMySqlDataSource: (typeof FeatureFlagsValues)["enableMySqlDataSource"][number];
-    enableCreateUser: (typeof FeatureFlagsValues)["enableCreateUser"][number];
     enableMariaDbDataSource: (typeof FeatureFlagsValues)["enableMariaDbDataSource"][number];
     enableRepeaterChart: (typeof FeatureFlagsValues)["enableRepeaterChart"][number];
     enableKDAttributeFilterDatesValidation: (typeof FeatureFlagsValues)["enableKDAttributeFilterDatesValidation"][number];
@@ -234,7 +225,6 @@ export type ITigerFeatureFlags = {
     enableMotherDuckDataSource: (typeof FeatureFlagsValues)["enableMotherDuckDataSource"][number];
     enableMongoDbDataSource: (typeof FeatureFlagsValues)["enableMongoDbDataSource"][number];
     enableStarrocksDataSource: (typeof FeatureFlagsValues)["enableStarrocksDataSource"][number];
-    enableKeyDriverAnalysis: (typeof FeatureFlagsValues)["enableKeyDriverAnalysis"][number];
     enableDataProfiling: (typeof FeatureFlagsValues)["enableDataProfiling"][number];
     enableExperimentalFeaturesUI: (typeof FeatureFlagsValues)["enableExperimentalFeaturesUI"][number];
     enableSingleStoreDataSource: (typeof FeatureFlagsValues)["enableSingleStoreDataSource"][number];
@@ -247,12 +237,9 @@ export type ITigerFeatureFlags = {
     enableRichTextDescriptions: (typeof FeatureFlagsValues)["enableRichTextDescriptions"][number];
     enableSchedulingRollout: (typeof FeatureFlagsValues)["enableSchedulingRollout"][number];
     enableWidgetIdentifiersRollout: (typeof FeatureFlagsValues)["enableWidgetIdentifiersRollout"][number];
-    enableAIFunctions: (typeof FeatureFlagsValues)["enableAIFunctions"][number];
     enableSemanticSearch: (typeof FeatureFlagsValues)["enableSemanticSearch"][number];
     enableCatalogSmartSearchResults: (typeof FeatureFlagsValues)["enableCatalogSmartSearchResults"][number];
-    enableSemanticSearchRollout: (typeof FeatureFlagsValues)["enableSemanticSearchRollout"][number];
     enableGenAIChat: (typeof FeatureFlagsValues)["enableGenAIChat"][number];
-    enableGenAIChatRollout: (typeof FeatureFlagsValues)["enableGenAIChatRollout"][number];
     enableGenAICatalogQualityChecker: (typeof FeatureFlagsValues)["enableGenAICatalogQualityChecker"][number];
     enableCatalogTrendingObjects: (typeof FeatureFlagsValues)["enableCatalogTrendingObjects"][number];
     enableCatalogLineage: (typeof FeatureFlagsValues)["enableCatalogLineage"][number];
@@ -268,7 +255,6 @@ export type ITigerFeatureFlags = {
     earlyAccessFeatures: (typeof FeatureFlagsValues)["earlyAccessFeatures"][number];
     enableCrossFilteringAliasTitles: (typeof FeatureFlagsValues)["enableCrossFilteringAliasTitles"][number];
     enableDefaultSmtp: (typeof FeatureFlagsValues)["enableDefaultSmtp"][number];
-    enableNumberSeparators: (typeof FeatureFlagsValues)["enableNumberSeparators"][number];
     enableDestinationTesting: (typeof FeatureFlagsValues)["enableDestinationTesting"][number];
     enableInPlatformNotifications: (typeof FeatureFlagsValues)["enableInPlatformNotifications"][number];
     enableVisualizationFilteringByTags: (typeof FeatureFlagsValues)["enableVisualizationFilteringByTags"][number];
@@ -387,7 +373,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enablePivotTableIncreaseBucketSize: true,
     enableUserManagement: true,
     enableKDSavedFilters: true,
-    enableClickHouseDataSource: false,
     enableKDCrossFiltering: true,
     enableChangeAnalysis: false,
     enableMultipleDateFilters: true,
@@ -396,7 +381,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableRankingStrictLimit: false,
     enableKDRichText: true,
     enableMySqlDataSource: false,
-    enableCreateUser: true,
     enableMariaDbDataSource: false,
     enableRepeaterChart: true,
     enableKDAttributeFilterDatesValidation: true,
@@ -414,7 +398,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableLabsSmartFunctions: false,
     enableSmartFunctions: true,
     enableCustomTooltip: true,
-    enableKeyDriverAnalysis: false,
     enableDataProfiling: false,
     enableExperimentalFeaturesUI: false,
     enableSingleStoreDataSource: false,
@@ -427,12 +410,9 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableRichTextDescriptions: true,
     enableSchedulingRollout: false,
     enableWidgetIdentifiersRollout: true,
-    enableAIFunctions: false,
     enableSemanticSearch: false,
     enableCatalogSmartSearchResults: false,
-    enableSemanticSearchRollout: false,
     enableGenAIChat: false,
-    enableGenAIChatRollout: false,
     enableGenAICatalogQualityChecker: false,
     enableCatalogTrendingObjects: false,
     enableCatalogLineage: false,
@@ -448,7 +428,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     earlyAccessFeatures: undefined,
     enableCrossFilteringAliasTitles: true,
     enableDefaultSmtp: false,
-    enableNumberSeparators: true,
     enableDestinationTesting: true,
     enableInPlatformNotifications: true,
     enableVisualizationFilteringByTags: false,
@@ -545,7 +524,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableShellApplication_metricEditor: true,
     enableShellApplication_analyticalDesigner: false,
     enableDashboardSidebarResize: true,
-    enableShellApplication_ldmModeler: false,
+    enableShellApplication_ldmModeler: true,
     enableExportTimeoutFix: false,
 };
 
@@ -567,7 +546,6 @@ export const FeatureFlagsValues = {
     enablePivotTableIncreaseBucketSize: [true, false] as const,
     enableUserManagement: [true, false] as const,
     enableKDSavedFilters: [true, false] as const,
-    enableClickHouseDataSource: [true, false] as const,
     enableKDCrossFiltering: [true, false] as const,
     enableChangeAnalysis: [true, false] as const,
     enableMultipleDateFilters: [true, false] as const,
@@ -579,7 +557,6 @@ export const FeatureFlagsValues = {
     enableMotherDuckDataSource: [true, false] as const,
     enableMongoDbDataSource: [true, false] as const,
     enableStarrocksDataSource: [true, false] as const,
-    enableCreateUser: [true, false] as const,
     enableMariaDbDataSource: [true, false] as const,
     enableRepeaterChart: [true, false] as const,
     enableKDAttributeFilterDatesValidation: [true, false] as const,
@@ -594,7 +571,6 @@ export const FeatureFlagsValues = {
     enableLabsSmartFunctions: [true, false] as const,
     enableSmartFunctions: [true, false] as const,
     enableCustomTooltip: [true, false] as const,
-    enableKeyDriverAnalysis: [true, false] as const,
     enableDataProfiling: [true, false] as const,
     enableExperimentalFeaturesUI: [true, false] as const,
     enableSingleStoreDataSource: [true, false] as const,
@@ -607,12 +583,9 @@ export const FeatureFlagsValues = {
     enableRichTextDescriptions: [true, false] as const,
     enableSchedulingRollout: [true, false] as const,
     enableWidgetIdentifiersRollout: [true, false] as const,
-    enableAIFunctions: [true, false] as const,
     enableSemanticSearch: [true, false] as const,
     enableCatalogSmartSearchResults: [true, false] as const,
-    enableSemanticSearchRollout: [true, false] as const,
     enableGenAIChat: [true, false] as const,
-    enableGenAIChatRollout: [true, false] as const,
     enableGenAICatalogQualityChecker: [false, true] as const,
     enableCatalogTrendingObjects: [true, false] as const,
     enableCatalogLineage: [false, true] as const,
@@ -628,8 +601,6 @@ export const FeatureFlagsValues = {
     earlyAccessFeatures: [undefined, {} as IEarlyAccessFeaturesConfig] as const,
     enableCrossFilteringAliasTitles: [true, false] as const,
     enableDefaultSmtp: [true, false] as const,
-    enableNumberSeparators: [true, false] as const,
-    enableNewUserCreationFlow: [true, false] as const,
     enableDestinationTesting: [true, false] as const,
     enableInPlatformNotifications: [true, false] as const,
     enableVisualizationFilteringByTags: [true, false] as const,

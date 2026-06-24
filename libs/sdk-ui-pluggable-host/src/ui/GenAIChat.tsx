@@ -109,16 +109,20 @@ export function GenAIChat({
     const intl = useIntl();
     const backend = useBackendStrict();
 
-    const onLinkClick = useCallback(({ itemUrl, newTab, preventDefault }: LinkHandlerEvent) => {
-        if (itemUrl) {
-            preventDefault();
-            if (newTab) {
-                window.open(itemUrl, "_blank");
-            } else {
-                window.location.assign(itemUrl);
+    const onLinkClick = useCallback(
+        ({ itemUrl, newTab, preventDefault }: LinkHandlerEvent): string | undefined => {
+            if (itemUrl) {
+                preventDefault();
+                if (newTab) {
+                    window.open(itemUrl, "_blank");
+                } else {
+                    window.location.assign(itemUrl);
+                }
             }
-        }
-    }, []);
+            return itemUrl;
+        },
+        [],
+    );
 
     const events = useMemo(() => {
         return [

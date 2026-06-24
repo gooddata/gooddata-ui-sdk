@@ -2355,7 +2355,7 @@ export interface IDropdownButtonProps {
 
 // @internal (undocumented)
 export interface IDropdownButtonRenderProps {
-    accessibilityConfig: Pick<IButtonAccessibilityConfig, "role" | "isExpanded" | "popupId" | "ariaLabel" | "ariaDescribedBy" | "ariaControls" | "ariaExpanded" | "ariaHaspopup" | "ariaPressed">;
+    accessibilityConfig: Pick<IButtonAccessibilityConfig, "role" | "isExpanded" | "popupId" | "popupType" | "ariaLabel" | "ariaDescribedBy" | "ariaControls" | "ariaExpanded" | "ariaHaspopup" | "ariaPressed">;
     ariaAttributes: {
         role: AriaRole;
     } & Pick<AriaAttributes, "aria-haspopup" | "aria-expanded" | "aria-controls">;

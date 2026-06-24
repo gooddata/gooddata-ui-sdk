@@ -1,32 +1,19 @@
-# Stage 1: Build the Go app
-FROM 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/library/golang:1.26.4-alpine@sha256:3ad57304ad93bbec8548a0437ad9e06a455660655d9af011d58b993f6f615648 AS builder
-WORKDIR /app
+# TODO - dockerfile can be adapted to be used in both current product and NAS
+# Create final image with nginx serving built files; the nginx-unprivileged variant is used
+# as we must not run images in the context of the superuser. This image comes with user 'nginx' with UID 101 and
+# runs as that user by default. The UID of this user is also used in runAsUser directive in the deployment chart.
+# !!! Do not change base image to Alpine flavors due to compliance reasons !!!
+FROM 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/nginxinc/nginx-unprivileged:1.31.2@sha256:12687e757fa0cedfd6b4f15302000d62d1872def3f24bcf76c6d52f09f7f9b77
 
-# Copy Go module files and download dependencies
-COPY tiny_web_server/go.mod tiny_web_server/go.sum ./
-RUN go mod download
+# BEGIN OF Mastercard security compliance - do not alter or remove
+USER 0
+RUN /usr/bin/rm -rf /etc/crontab /etc/cron.d /etc/cron.hourly /etc/cron.daily /etc/cron.weekly /etc/cron.monthly ; \
+    /usr/bin/sed -i '/^CREATE_HOME/ s/^CREATE_HOME.*/CREATE_HOME yes/; t; $ aCREATE_HOME yes' /etc/login.defs ; \
+    /usr/bin/sed -i -e 's:/usr/sbin/nologin$:/sbin/nologin:' /etc/passwd
+ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+USER 101
+# END OF Mastercard security compliance
 
-# Copy the application source code
-COPY tiny_web_server/ .
-
-# Build the Go application
-RUN CGO_ENABLED=0 GOOS=linux go build -o app .
-
-# Stage 2: Run the app
-FROM scratch
-WORKDIR /
-
-# Copy the built Go app binary
-COPY --from=builder /app/app /usr/bin/app
-
-# Copy static dir (dashboard-test.html)
-COPY tiny_web_server/static/ ./static/
-
-# Add web components tgz (packed by package.json script _phase:pack-build)
-ADD sdk-ui-web-components.tgz ./static/components/
-
-# Expose port
-EXPOSE 3001
-
-# Run the Go app
-CMD ["/usr/bin/app"]
+#COPY readme.txt / # TODO - There are some auto-generated license files in the bundle, do we need to add extra onces?
+COPY nginx.conf /etc/nginx/nginx.conf
+ADD sdk-ui-web-components.tgz /usr/share/nginx/html/components/

@@ -31,10 +31,12 @@ export class GenAiProvider extends HTMLElement implements ICommonPropertiesDefin
     private storeEle: GenAiStore | null = null;
     private store: string = Math.random().toString(36).substring(2, 15);
 
-    _onLinkClick?: (event: CustomEvent<IGenAIAssistantLinkClick>) => void;
+    _onLinkClick?: (event: CustomEvent<IGenAIAssistantLinkClick>) => string | undefined;
     _onDispatcher?: Required<GenAiStoreProps>["onDispatcher"];
 
-    set onLinkClick(onLinkClick: ((event: CustomEvent<IGenAIAssistantLinkClick>) => void) | undefined) {
+    set onLinkClick(
+        onLinkClick: ((event: CustomEvent<IGenAIAssistantLinkClick>) => string | undefined) | undefined,
+    ) {
         this._onLinkClick = onLinkClick;
         const store = this.storeEle;
         if (store) {
@@ -42,7 +44,7 @@ export class GenAiProvider extends HTMLElement implements ICommonPropertiesDefin
         }
     }
 
-    get onLinkClick(): ((event: CustomEvent<IGenAIAssistantLinkClick>) => void) | undefined {
+    get onLinkClick(): ((event: CustomEvent<IGenAIAssistantLinkClick>) => string | undefined) | undefined {
         return this._onLinkClick;
     }
 
@@ -108,7 +110,7 @@ function deferredStore<T>() {
 class GenAiStore extends CustomElementAdapter<IGenAiStore> {
     //HANDLES: CLICK
 
-    declare onLinkClick?: (event: CustomEvent<IGenAIAssistantLinkClick>) => void;
+    declare onLinkClick?: (event: CustomEvent<IGenAIAssistantLinkClick>) => string | undefined;
 
     //DISPATCHER
 

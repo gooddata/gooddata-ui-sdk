@@ -155,7 +155,7 @@ export class DashboardEmbed extends CustomElementAdapter<IDashboard> {
                     mapboxToken,
                     agGridToken,
                 })}
-                pluginMode={this.getLivePropertyValue<DashboardPluginMode>("pluginMode") ?? "all"}
+                pluginMode={this.getLivePropertyValue<DashboardPluginMode>("pluginMode")}
                 extraPlugins={this.getLivePropertyValue<IEmbeddedPlugin | IEmbeddedPlugin[]>("extraPlugins")}
                 moduleFederationIntegration={this.getLivePropertyValue<ModuleFederationIntegration>(
                     "moduleFederationIntegration",

@@ -13,11 +13,25 @@ import {
     selectCatalogMeasures,
 } from "../../../../model/store/catalog/catalogSelectors.js";
 import {
+    selectEnableAlertAttributes,
+    selectEnableAlertOncePerInterval,
+    selectEnableAnomalyDetectionAlert,
+    selectEnableAutomationManagement,
+    selectEnableComparisonInAlerting,
+    selectEnableExternalRecipients,
     selectEnableNewScheduledExport,
+    selectExternalRecipient,
+    selectIsWhiteLabeled,
     selectLocale,
     selectSeparators,
     selectSettings,
+    selectTimezone,
+    selectWeekStart,
 } from "../../../../model/store/config/configSelectors.js";
+import {
+    selectEntitlementMinimumRecurrenceMinutes,
+    selectMaxAutomationRecipients,
+} from "../../../../model/store/entitlements/entitlementsSelectors.js";
 import {
     selectAutomationAvailableDashboardFilters,
     selectAutomationCommonDateFilterId,
@@ -28,6 +42,10 @@ import {
     selectDashboardLockedFilters,
 } from "../../../../model/store/filtering/dashboardFilterSelectors.js";
 import { selectPersistedDashboardFilterContextDateFilterConfig } from "../../../../model/store/meta/metaSelectors.js";
+import {
+    selectCanManageWorkspace,
+    selectCanUseAiAssistant,
+} from "../../../../model/store/permissions/permissionsSelectors.js";
 import {
     selectAttributeFilterConfigsOverrides,
     selectAttributeFilterConfigsOverridesByTab,
@@ -50,10 +68,15 @@ import {
     selectMeasureValueFilterConfigsOverrides,
     selectMeasureValueFilterConfigsOverridesByTab,
 } from "../../../../model/store/tabs/measureValueFilterConfigs/measureValueFilterConfigsSelectors.js";
+import { selectIsAutomationDialogSecondaryTitleVisible } from "../../../../model/store/topBar/topBarSelectors.js";
+import { selectExecutionTimestamp } from "../../../../model/store/ui/uiSelectors.js";
+import { selectCurrentUser } from "../../../../model/store/user/userSelectors.js";
 import type {
     IAutomationsContextValue,
     IAutomationsDateFilterConfig,
 } from "../../contexts/AutomationsContext.js";
+
+const DEFAULT_MIN_RECURRENCE_MINUTES = "60";
 
 export function useBuildAutomationsContext(): IAutomationsContextValue {
     const locale = useDashboardSelector(selectLocale);
@@ -97,6 +120,28 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
     const automationFiltersByTab = useDashboardSelector(selectAutomationFiltersByTab);
     const defaultSelectedFilters = useDashboardSelector(selectAutomationDefaultSelectedFilters);
     const automationAvailableFilters = useDashboardSelector(selectAutomationAvailableDashboardFilters);
+    const currentUser = useDashboardSelector(selectCurrentUser);
+    const weekStart = useDashboardSelector(selectWeekStart);
+    const timezone = useDashboardSelector(selectTimezone);
+    const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
+    const isSecondaryTitleVisible = useDashboardSelector(selectIsAutomationDialogSecondaryTitleVisible);
+    const externalRecipient = useDashboardSelector(selectExternalRecipient);
+    const enableAlertOncePerInterval = useDashboardSelector(selectEnableAlertOncePerInterval);
+    const enableAnomalyDetectionAlert = useDashboardSelector(selectEnableAnomalyDetectionAlert);
+    const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
+    const canUseAiAssistant = useDashboardSelector(selectCanUseAiAssistant);
+    const canManageWorkspace = useDashboardSelector(selectCanManageWorkspace);
+    const enableComparisonInAlerting = useDashboardSelector(selectEnableComparisonInAlerting);
+    const enableExternalRecipients = useDashboardSelector(selectEnableExternalRecipients);
+    const enableAlertAttributes = useDashboardSelector(selectEnableAlertAttributes);
+    const maxAutomationsRecipients = useDashboardSelector(selectMaxAutomationRecipients);
+    const minimumRecurrenceMinutesEntitlement = useDashboardSelector(
+        selectEntitlementMinimumRecurrenceMinutes,
+    );
+    const allowHourlyRecurrence =
+        parseInt(minimumRecurrenceMinutesEntitlement?.value ?? DEFAULT_MIN_RECURRENCE_MINUTES, 10) === 60;
+    const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
+    const isExecutionTimestampMode = !!executionTimestamp;
 
     const getCatalogAttributeByRef = useCallback(
         (ref: ObjRef) => allCatalogAttributesMap.get(ref),
@@ -118,12 +163,38 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
         [availableGranularities, dateFilterOptions, granularitiesPerTab, optionsPerTab],
     );
 
+    const features = useMemo(
+        () => ({
+            enableAlertOncePerInterval,
+            enableAnomalyDetectionAlert,
+            enableAutomationManagement,
+            canUseAiAssistant,
+            enableComparisonInAlerting,
+            enableExternalRecipients,
+            enableAlertAttributes,
+            canManageWorkspace,
+        }),
+        [
+            enableAlertOncePerInterval,
+            enableAnomalyDetectionAlert,
+            enableAutomationManagement,
+            canUseAiAssistant,
+            enableComparisonInAlerting,
+            enableExternalRecipients,
+            enableAlertAttributes,
+            canManageWorkspace,
+        ],
+    );
+
     return useMemo(
         () => ({
             locale,
             separators,
             settings,
             enableNewScheduledExport,
+            maxAutomationsRecipients,
+            isExecutionTimestampMode,
+            allowHourlyRecurrence,
             catalogAttributes,
             catalogDateDatasets,
             dateFilterConfig,
@@ -145,6 +216,13 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
             automationFiltersByTab,
             defaultSelectedFilters,
             automationAvailableFilters,
+            currentUser,
+            weekStart,
+            timezone,
+            isWhiteLabeled,
+            isSecondaryTitleVisible,
+            externalRecipient,
+            features,
             getCatalogAttributeByRef,
             getAttributeFilterDisplayForm,
         }),
@@ -153,6 +231,9 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
             separators,
             settings,
             enableNewScheduledExport,
+            maxAutomationsRecipients,
+            isExecutionTimestampMode,
+            allowHourlyRecurrence,
             catalogAttributes,
             catalogDateDatasets,
             dateFilterConfig,
@@ -174,6 +255,13 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
             automationFiltersByTab,
             defaultSelectedFilters,
             automationAvailableFilters,
+            currentUser,
+            weekStart,
+            timezone,
+            isWhiteLabeled,
+            isSecondaryTitleVisible,
+            externalRecipient,
+            features,
             getCatalogAttributeByRef,
             getAttributeFilterDisplayForm,
         ],

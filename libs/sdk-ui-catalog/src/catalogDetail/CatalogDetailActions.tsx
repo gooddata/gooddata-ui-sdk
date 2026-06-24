@@ -16,6 +16,7 @@ import { ParameterDeleteDialog } from "../parameter/ParameterDeleteDialog.js";
 import { ParameterEditDialog } from "../parameter/ParameterEditDialog.js";
 
 import { CatalogDetailActionBar } from "./CatalogDetailActionBar.js";
+import { useCatalogItemShareActions } from "./share/CatalogItemShareProvider.js";
 import { ShareButton } from "./share/ShareButton.js";
 import type { ICatalogDetailAction, OpenHandlerEvent } from "./types.js";
 
@@ -41,8 +42,6 @@ export interface ICatalogDetailActionsProps {
     onCatalogItemCreate?: (item: ICatalogItem) => void;
     onCatalogItemUpdate?: (item: ICatalogItem) => void;
     onCatalogItemDelete?: (ref: ICatalogItemRef) => void;
-    /** When set, a Share button is shown next to Open. Undefined hides it (not shareable / flag off). */
-    onShareClick?: () => void;
 }
 
 /**
@@ -55,11 +54,13 @@ export function CatalogDetailActions({
     onCatalogItemCreate,
     onCatalogItemUpdate,
     onCatalogItemDelete,
-    onShareClick,
 }: ICatalogDetailActionsProps) {
     const intl = useIntl();
     const workspaceId = useWorkspaceStrict();
     const [dialog, setDialog] = useState<DialogState | undefined>(undefined);
+    // The Share button reads the share context directly (actions only), so it never
+    // re-renders as access is edited and is shown only when sharing is available.
+    const share = useCatalogItemShareActions();
 
     const parameterActions = useMemo<ICatalogDetailAction[]>(
         () => [
@@ -179,7 +180,7 @@ export function CatalogDetailActions({
 
     return (
         <div className="gd-analytics-catalog-detail__header-actions">
-            {onShareClick ? <ShareButton onClick={onShareClick} /> : null}
+            {share.active ? <ShareButton onClick={share.open} /> : null}
             <UiButton
                 label={intl.formatMessage({ id: "analyticsCatalog.catalogItem.open" })}
                 variant="primary"

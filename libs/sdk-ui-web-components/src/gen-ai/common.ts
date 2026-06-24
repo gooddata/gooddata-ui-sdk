@@ -18,7 +18,7 @@ export type CommonProperties = Pick<
 export interface ICommonPropertiesDefinition {
     _dispatch?: (action: any) => void;
     _onDispatcher?: (action: any) => void;
-    onLinkClick?: (event: CustomEvent<IGenAIAssistantLinkClick>) => void;
+    onLinkClick?: (event: CustomEvent<IGenAIAssistantLinkClick>) => string | undefined;
     onDispatcher?: Required<GenAIAssistantProps>["onDispatcher"];
 
     // Actions
@@ -63,17 +63,20 @@ export function getProperties<T>(
     }
 
     // Emit custom DOM event when link is clicked
-    extraProps.onLinkClick = (e) => {
+    extraProps.onLinkClick = (e): string | undefined => {
         const type = "linkClick";
         const detail = omit(e, ["preventDefault"]) as IGenAIAssistantLinkClick;
 
+        let link: string | undefined = detail.itemUrl;
+
         element[EVENT_HANDLER](type)(detail);
         if (typeof element.onLinkClick === "function") {
-            element.onLinkClick(element[EVENT_BUILDER](type, detail));
+            link = element.onLinkClick(element[EVENT_BUILDER](type, detail));
         }
         // Prevent default behavior of the link click, we created
         // the custom event to handle it in the application
         e.preventDefault();
+        return link;
     };
 
     //Save dispatcher

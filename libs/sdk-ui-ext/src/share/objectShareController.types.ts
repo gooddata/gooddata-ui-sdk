@@ -34,6 +34,12 @@ export interface IObjectShareGrantee {
      */
     effectivePermission?: ObjectSharePermissionLevel;
     /**
+     * Whether the grantee inherits SHARE (e.g. via a group), regardless of the
+     * current direct `level`. Retained from the fetch so `effectivePermission` can
+     * be recomputed locally when the direct level changes (no refetch).
+     */
+    inheritsShare?: boolean;
+    /**
      * Row-level in-flight state for optimistic updates: `"saving"` while a level
      * change or freshly-added grant is being committed, `"removing"` while a
      * removal is in flight. Undefined when the row reflects committed state.
@@ -120,4 +126,38 @@ export interface IObjectShareControllerActions {
 export interface IObjectShareController {
     state: IObjectShareControllerState;
     actions: IObjectShareControllerActions;
+}
+
+/**
+ * Options for {@link useObjectShare}.
+ *
+ * @internal
+ */
+export interface IUseObjectShareOptions {
+    /**
+     * Fires after each successful access mutation (add grantee, change level,
+     * remove, general access toggle). Use it to keep UI outside the dialog in
+     * sync with edits made inside it (e.g. refresh an inline access row).
+     */
+    onSaved?: () => void;
+    /**
+     * Labels (display forms) of the shared attribute, enabling the per-grantee
+     * label-scope picker. Omit for objects without labels (e.g. facts).
+     */
+    labels?: IObjectShareLabel[];
+    /**
+     * Whether loading the object's labels failed. While true the controller stays
+     * label-unresolved so every access-changing control is disabled: with the
+     * label set unknown, reconciling access would diff against an empty set and
+     * silently orphan any real per-label grants. Distinct from an object that
+     * genuinely has no labels (omit `labels`), where editing is safe.
+     */
+    labelsError?: boolean;
+    /**
+     * Whether the object's labels are still loading. While true the controller stays
+     * label-unresolved (same gating as `labelsError`): the labels aren't passed yet,
+     * so an empty list must not be mistaken for a label-free object — otherwise row
+     * controls would reconcile against an empty set and orphan real per-label grants.
+     */
+    labelsLoading?: boolean;
 }

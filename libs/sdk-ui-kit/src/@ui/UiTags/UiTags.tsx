@@ -173,10 +173,6 @@ export function UiTags({
                                         enableFocusTrap
                                         initialFocus={tooltipTagsContainerRef as RefObject<HTMLElement>}
                                         returnFocusTo={hiddenTagsContainerRef as RefObject<HTMLElement>}
-                                        anchorAccessibilityConfig={{
-                                            ariaHaspopup: "dialog",
-                                            ariaControls: morePopoverId,
-                                        }}
                                         anchor={
                                             <UiButton
                                                 label={`+${hiddenTags.length}`}
@@ -185,6 +181,8 @@ export function UiTags({
                                                 accessibilityConfig={{
                                                     ariaLabel: moreLabel,
                                                     ariaExpanded: morePopoverOpen,
+                                                    ariaHaspopup: "dialog",
+                                                    ariaControls: morePopoverId,
                                                 }}
                                                 ref={(ref) => {
                                                     hiddenTagsContainerRef.current = ref;

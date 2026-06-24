@@ -32,30 +32,15 @@ import {
     useId,
 } from "@gooddata/sdk-ui-kit";
 
-import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
-import {
-    selectEnableAlertOncePerInterval,
-    selectEnableAnomalyDetectionAlert,
-    selectEnableAutomationManagement,
-    selectExternalRecipient,
-    selectIsWhiteLabeled,
-    selectLocale,
-} from "../../../../../model/store/config/configSelectors.js";
-import { selectMaxAutomationRecipients } from "../../../../../model/store/entitlements/entitlementsSelectors.js";
-import { selectCanUseAiAssistant } from "../../../../../model/store/permissions/permissionsSelectors.js";
-import { selectIsAutomationDialogSecondaryTitleVisible } from "../../../../../model/store/topBar/topBarSelectors.js";
-import { selectExecutionTimestamp } from "../../../../../model/store/ui/uiSelectors.js";
-import { getWidgetTitle } from "../../../../../model/utils/dashboardItemUtils.js";
-import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../../../constants/zIndex.js";
-import { IntlWrapper } from "../../../../localization/IntlWrapper.js";
-import { useSaveAlertToBackend } from "../../../../widget/insight/configuration/InsightAlertConfig/hooks/useSaveAlertToBackend.js";
-import { useBuildAutomationsContext } from "../../../connectors/hooks/useBuildAutomationsContext.js";
-import { AutomationsContextProvider } from "../../../contexts/AutomationsContext.js";
-import { RecipientsSelect } from "../../../scheduledEmail/DefaultScheduledEmailDialog/components/RecipientsSelect/RecipientsSelect.js";
-import { ApplyCurrentFiltersConfirmDialog } from "../../../shared/automationFilters/components/ApplyLatestFiltersConfirmDialog.js";
-import { AutomationFiltersSelect } from "../../../shared/automationFilters/components/AutomationFiltersSelect.js";
-import { useValidateExistingAutomationFilters } from "../../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
-import { useAutomationFiltersSelect } from "../../../shared/automationFilters/useAutomationFiltersSelect.js";
+import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../../constants/zIndex.js";
+import { IntlWrapper } from "../../../localization/IntlWrapper.js";
+import { useAlertingDialogContext } from "../../contexts/AlertingDialogContext.js";
+import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
+import { RecipientsSelect } from "../../scheduledEmail/DefaultScheduledEmailDialog/components/RecipientsSelect/RecipientsSelect.js";
+import { ApplyCurrentFiltersConfirmDialog } from "../../shared/automationFilters/components/ApplyLatestFiltersConfirmDialog.js";
+import { AutomationFiltersSelect } from "../../shared/automationFilters/components/AutomationFiltersSelect.js";
+import { useValidateExistingAutomationFilters } from "../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
+import { useAutomationFiltersSelect } from "../../shared/automationFilters/useAutomationFiltersSelect.js";
 import { DeleteAlertConfirmDialog } from "../DefaultAlertingManagementDialog/components/DeleteAlertConfirmDialog.js";
 import { type IAlertingDialogProps } from "../types.js";
 
@@ -103,13 +88,18 @@ export function AlertingDialogRenderer({
 
     const dialogTitleRef = useRef<HTMLInputElement | null>(null);
 
-    const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
-    const externalRecipientOverride = useDashboardSelector(selectExternalRecipient);
-    const isSecondaryTitleVisible = useDashboardSelector(selectIsAutomationDialogSecondaryTitleVisible);
-    const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
-    const enableAnomalyDetectionAlert = useDashboardSelector(selectEnableAnomalyDetectionAlert);
-    const enableAiAssistant = useDashboardSelector(selectCanUseAiAssistant);
-    const enableAlertOncePerInterval = useDashboardSelector(selectEnableAlertOncePerInterval);
+    const {
+        isWhiteLabeled,
+        isSecondaryTitleVisible,
+        externalRecipient: externalRecipientOverride,
+        features: {
+            enableAlertOncePerInterval,
+            enableAnomalyDetectionAlert,
+            enableAutomationManagement,
+            canUseAiAssistant: enableAiAssistant,
+        },
+    } = useAutomationsContext();
+    const { widgetTitle, createAlert, saveAlert } = useAlertingDialogContext();
 
     const [alertToDelete, setAlertToDelete] = useState<IAutomationMetadataObject | null>(null);
 
@@ -136,12 +126,12 @@ export function AlertingDialogRenderer({
         onRecipientsChange,
         onFiltersChange,
         onApplyCurrentFilters,
+        dropStaleParameters,
         automationParameters,
         availableParameters,
         onParameterChange,
         onParameterDelete,
         onParameterAdd,
-        dropStaleParameters,
         onMeasureChange,
         getAttributeValues,
         onAttributeChange,
@@ -191,6 +181,7 @@ export function AlertingDialogRenderer({
         insight,
         widget,
         alertToEdit,
+        users,
         editedAutomationFilters,
         maxAutomationsRecipients,
         availableFiltersAsVisibleFilters,
@@ -207,23 +198,10 @@ export function AlertingDialogRenderer({
     });
     const [isApplyCurrentFiltersDialogOpen, setIsApplyCurrentFiltersDialogOpen] = useState(!isValid);
 
-    const { isSavingAlert, handleCreateAlert, handleUpdateAlert } = useSaveAlertToBackend({
-        onCreateSuccess: (alert) => {
-            onSuccess?.(alert);
-        },
-        onCreateError: (err) => {
-            onError?.(convertError(err));
-        },
-        onUpdateSuccess: (alert) => {
-            onSaveSuccess?.(alert);
-        },
-        onUpdateError: (err) => {
-            onSaveError?.(convertError(err));
-        },
-    });
+    const [isSavingAlert, setIsSavingAlert] = useState(false);
 
-    const handleSaveAlert = () => {
-        if (!editedAutomation) {
+    const handleSaveAlert = async () => {
+        if (!editedAutomation || isSavingAlert) {
             return;
         }
 
@@ -239,10 +217,23 @@ export function AlertingDialogRenderer({
                   ...editedAutomation,
                   title,
               };
-        if (alertToEdit) {
-            handleUpdateAlert(sanitizedAutomation);
-        } else {
-            handleCreateAlert(sanitizedAutomation);
+        setIsSavingAlert(true);
+        try {
+            if (alertToEdit) {
+                const saved = await saveAlert(sanitizedAutomation as IAutomationMetadataObject);
+                onSaveSuccess?.(saved);
+            } else {
+                const created = await createAlert(sanitizedAutomation);
+                onSuccess?.(created);
+            }
+        } catch (err) {
+            if (alertToEdit) {
+                onSaveError?.(convertError(err));
+            } else {
+                onError?.(convertError(err));
+            }
+        } finally {
+            setIsSavingAlert(false);
         }
     };
 
@@ -268,7 +259,7 @@ export function AlertingDialogRenderer({
 
     const { secondaryTitle, secondaryTitleIcon } = useMemo(() => {
         return {
-            secondaryTitle: getWidgetTitle(widget),
+            secondaryTitle: widgetTitle,
             secondaryTitleIcon: (
                 <UiIcon
                     type="visualization"
@@ -282,7 +273,7 @@ export function AlertingDialogRenderer({
                 />
             ),
         };
-    }, [widget, intl]);
+    }, [widgetTitle, intl]);
 
     if (isApplyCurrentFiltersDialogOpen) {
         return (
@@ -358,7 +349,9 @@ export function AlertingDialogRenderer({
                             initialFocus={dialogTitleRef}
                             submitOnEnterKey={false}
                             onCancel={onCancel}
-                            onSubmit={handleSaveAlert}
+                            onSubmit={() => {
+                                void handleSaveAlert();
+                            }}
                             headline={undefined}
                             headerLeftButtonRenderer={() => (
                                 <AlertingDialogHeader
@@ -692,32 +685,39 @@ export function AlertingDialogRenderer({
 }
 
 /**
+ * Default implementation of the alerting create/edit dialog.
+ *
+ * This component is a pure consumer of `AutomationsContext` and `AlertingDialogContext`: it reads
+ * org/workspace data and per-dialog state from those contexts rather than from the dashboard store.
+ * It must therefore be rendered within an `AutomationsContextProvider` (and, for the create/edit
+ * flow, an `AlertingDialogContextProvider`). Inside a `Dashboard`, the alerting connector supplies
+ * both providers above the `AlertingDialogComponent` slot — so the default component, and any
+ * wholesale slot replacement, inherit the contexts automatically and require no extra wiring.
+ *
+ * The providers are intentionally hoisted above the slot rather than built inside this component:
+ * that is what lets a wholesale replacement receive the same contexts (see the Phase-2 boundary in
+ * `docs/tasks/26Q1 - Automation Dialog Separation.md`). Rendering this component outside those
+ * providers throws at runtime.
+ *
  * @alpha
  */
 export function DefaultAlertingDialog(props: IAlertingDialogProps) {
     const { isLoading, onCancel, alertToEdit } = props;
+    const { locale } = useAutomationsContext();
+
     if (isLoading) {
         return <DefaultLoadingAlertingDialog onCancel={onCancel} alertToEdit={alertToEdit} />;
     }
-    return <DefaultAlertingDialogBody {...props} />;
-}
-
-function DefaultAlertingDialogBody(props: IAlertingDialogProps) {
-    const locale = useDashboardSelector(selectLocale);
-    const automationsContext = useBuildAutomationsContext();
 
     return (
-        <AutomationsContextProvider value={automationsContext}>
-            <IntlWrapper locale={locale}>
-                <AlertingDialogRenderer {...props} />
-            </IntlWrapper>
-        </AutomationsContextProvider>
+        <IntlWrapper locale={locale}>
+            <AlertingDialogRenderer {...props} />
+        </IntlWrapper>
     );
 }
 
 function useDefaultAlertingDialogData() {
-    const maxAutomationsRecipients = useDashboardSelector(selectMaxAutomationRecipients);
-    const isExecutionTimestampMode = !!useDashboardSelector(selectExecutionTimestamp);
+    const { maxAutomationsRecipients, isExecutionTimestampMode } = useAutomationsContext();
 
     return {
         maxAutomationsRecipients,

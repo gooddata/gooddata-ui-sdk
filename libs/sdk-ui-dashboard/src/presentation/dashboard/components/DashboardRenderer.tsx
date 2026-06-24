@@ -13,8 +13,8 @@ import { OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-k
 import { ThemeProvider } from "@gooddata/sdk-ui-theme-provider";
 
 import { DashboardStoreProvider } from "../../../model/react/DashboardStoreProvider.js";
-import { DefaultAlertingDialog } from "../../automations/_staging/alerting/DefaultAlertingDialog/DefaultAlertingDialog.js";
 import { DefaultAlertingManagementDialogNew } from "../../automations/_staging/alerting/DefaultAlertingManagementDialog/DefaultAlertingManagementDialogNew.js";
+import { DefaultAlertingDialog } from "../../automations/alerting/DefaultAlertingDialog/DefaultAlertingDialog.js";
 import { DefaultScheduledEmailDialog } from "../../automations/scheduledEmail/DefaultScheduledEmailDialog/DefaultScheduledEmailDialog.js";
 import { ScheduledEmailManagementDialog as DefaultScheduledEmailManagementDialog } from "../../automations/scheduledEmail/DefaultScheduledEmailManagementDialog/DefaultScheduledEmailManagementDialog.js";
 import { DASHBOARD_OVERLAYS_Z_INDEX } from "../../constants/zIndex.js";

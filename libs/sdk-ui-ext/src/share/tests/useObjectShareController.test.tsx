@@ -96,7 +96,7 @@ function renderController(
             </BackendProvider>
         </IntlProvider>
     );
-    return renderHook(() => useObjectShareController(target, undefined, labels, labelsError, labelsLoading), {
+    return renderHook(() => useObjectShareController(target, { labels, labelsError, labelsLoading }), {
         wrapper,
     });
 }
@@ -185,6 +185,33 @@ describe("useObjectShareController", () => {
         expect(result.current.state.grantees[0]?.effectivePermission).toBeUndefined();
     });
 
+    it("recomputes the effectivePermission badge when the direct level changes", async () => {
+        // u1 inherits SHARE but is directly granted VIEW → badge shows SHARE. Raising
+        // the direct grant to SHARE makes the inherited SHARE no longer "above" it, so
+        // the badge must clear (there's no refetch to recompute it).
+        const INHERITED: AccessGranteeDetail = {
+            type: "granularUser",
+            user: { ref: idRef("u1"), uri: "/u1", login: "jane", email: "jane@x.com", fullName: "Jane Good" },
+            permissions: ["VIEW"],
+            inheritedPermissions: ["SHARE", "VIEW"],
+        } as AccessGranteeDetail;
+        const { result } = renderController(makeService([INHERITED]), TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        expect(result.current.state.grantees[0]?.effectivePermission).toBe("SHARE");
+
+        await act(async () => {
+            await result.current.actions.changePermissionLevel("user:u1", "SHARE");
+        });
+        // Direct grant now equals the inherited level → no "effective above" badge.
+        expect(result.current.state.grantees[0]?.effectivePermission).toBeUndefined();
+
+        // Lowering it back to VIEW surfaces the inherited-SHARE warning again.
+        await act(async () => {
+            await result.current.actions.changePermissionLevel("user:u1", "VIEW");
+        });
+        expect(result.current.state.grantees[0]?.effectivePermission).toBe("SHARE");
+    });
+
     it("does not fetch and stays idle when there is no target", async () => {
         const svc = makeService();
         const { result } = renderController(svc, undefined);
@@ -256,7 +283,7 @@ describe("useObjectShareController", () => {
         expect(result.current.actions.loadOptions).toBe(before);
     });
 
-    it("confirmAddGrantees sends granular grants and refetches", async () => {
+    it("confirmAddGrantees sends granular grants without refetching", async () => {
         const svc = makeService();
         const { result } = renderController(svc, TARGET);
         await waitFor(() => expect(result.current.state.status).toBe("success"));
@@ -276,8 +303,11 @@ describe("useObjectShareController", () => {
         expect(grantees).toEqual([
             expect.objectContaining({ type: "granularGroup", permissions: ["SHARE", "VIEW"] }),
         ]);
-        expect(svc.getAccessList).toHaveBeenCalledTimes(2); // initial + post-save refresh
+        // Local state is authoritative — no post-write refetch of the object list.
+        expect(svc.getAccessList).toHaveBeenCalledTimes(1);
         expect(addSuccess).toHaveBeenCalledTimes(1);
+        // The grantee is now in local state (written through from the add).
+        expect(result.current.state.grantees.some((g) => g.id === "group:g1")).toBe(true);
         expect(result.current.state.subview).toBe("main"); // closes add-grantee on success
     });
 
@@ -312,7 +342,7 @@ describe("useObjectShareController", () => {
             resolveSave();
             await savePromise;
         });
-        // After refresh the optimistic marker is gone (reconciled with server truth).
+        // Once the write resolves the saving marker clears from local state.
         expect(result.current.state.grantees.find((g) => g.id === "group:g1")?.pending).toBeUndefined();
     });
 
@@ -362,9 +392,10 @@ describe("useObjectShareController", () => {
         expect(result.current.state.grantees.find((g) => g.id === "user:u2")?.name).toBe("Marek");
     });
 
-    it("keeps the intended level through backend read-after-write lag", async () => {
-        // getAccessList always returns the stale VIEW grant — simulating a backend
-        // whose read replica hasn't caught up to the just-committed SHARE write.
+    it("writes the new level through to local state and keeps it", async () => {
+        // The initial fetch reports VIEW. After committing SHARE, the row reflects
+        // SHARE from local state (which is authoritative) and is no longer pending —
+        // there is no refetch that could revert it to the fetched VIEW.
         const svc = makeService();
         const { result } = renderController(svc, TARGET);
         await waitFor(() => expect(result.current.state.status).toBe("success"));
@@ -373,8 +404,6 @@ describe("useObjectShareController", () => {
             await result.current.actions.changePermissionLevel("user:u1", "SHARE");
         });
 
-        // Even though the post-write refetch still reports VIEW, the row shows the
-        // intended SHARE (and is no longer pending) — it must not revert.
         const row = result.current.state.grantees.find((g) => g.id === "user:u1");
         expect(row?.level).toBe("SHARE");
         expect(row?.pending).toBeUndefined();
@@ -416,22 +445,11 @@ describe("useObjectShareController", () => {
         ]);
     });
 
-    it("settles the row (not stuck pending) when the post-write refresh fails", async () => {
-        // The write succeeds and a success toast fires, but the follow-up refetch
-        // fails. The optimistic row must drop its pending flag — otherwise it spins
-        // on "saving" forever despite the change having persisted.
-        let call = 0;
-        const svc: IMockService = {
-            getAccessList: vi.fn(async () => {
-                call += 1;
-                if (call === 1) {
-                    return { grants: [USER_GRANT] }; // initial load OK
-                }
-                throw new Error("refresh boom"); // the post-write refresh fails
-            }),
-            manageObjectPermissions: vi.fn(async () => undefined), // write succeeds
-            getAvailableAssignees: vi.fn(async () => ASSIGNEES),
-        };
+    it("settles the row from local state after a write (no refetch)", async () => {
+        // The object list is fetched exactly once. After a successful write the row
+        // reflects the new level and drops its pending flag from local state alone —
+        // there is no post-write refetch to reconcile against.
+        const svc = makeService();
         const { result } = renderController(svc, TARGET);
         await waitFor(() => expect(result.current.state.status).toBe("success"));
 
@@ -439,12 +457,31 @@ describe("useObjectShareController", () => {
             await result.current.actions.changePermissionLevel("user:u1", "SHARE");
         });
 
-        // Write persisted (success toast), refresh failed — the row reflects the new
-        // level and is no longer pending.
         expect(addSuccess).toHaveBeenCalled();
         const row = result.current.state.grantees.find((g) => g.id === "user:u1");
         expect(row?.level).toBe("SHARE");
         expect(row?.pending).toBeUndefined();
+        // The list is never re-read — local state is authoritative.
+        expect(svc.getAccessList).toHaveBeenCalledTimes(1);
+    });
+
+    it("reverts the level to its prior value when a permission change fails", async () => {
+        // Single-field rollback: the failed write must restore exactly the level
+        // that was there before — and clear the saving marker.
+        const svc = makeService();
+        svc.manageObjectPermissions.mockRejectedValueOnce(new Error("nope"));
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        expect(result.current.state.grantees.find((g) => g.id === "user:u1")?.level).toBe("VIEW");
+
+        await act(async () => {
+            await result.current.actions.changePermissionLevel("user:u1", "SHARE");
+        });
+
+        const row = result.current.state.grantees.find((g) => g.id === "user:u1");
+        expect(row?.level).toBe("VIEW"); // rolled back
+        expect(row?.pending).toBeUndefined();
+        expect(addError).toHaveBeenCalledTimes(1);
     });
 
     it("removeGrantee sends empty permissions", async () => {
@@ -459,9 +496,7 @@ describe("useObjectShareController", () => {
         expect(grantees).toEqual([expect.objectContaining({ type: "granularUser", permissions: [] })]);
     });
 
-    it("drops the grantee from the summary count immediately on remove (incl. read-after-write lag)", async () => {
-        // getAccessList always returns the still-granted user, mimicking a stale read
-        // replica after the removal write succeeds.
+    it("drops the grantee from the summary count on remove", async () => {
         const svc = makeService();
         const { result } = renderController(svc, TARGET);
         await waitFor(() => expect(result.current.state.status).toBe("success"));
@@ -470,9 +505,8 @@ describe("useObjectShareController", () => {
         await act(async () => {
             await result.current.actions.removeGrantee("user:u1");
         });
-        // The inline access row reads summary.granteeCount; it must reflect the removal
-        // (0) even though the backend still reports the grant — otherwise it would
-        // wrongly keep saying "shared with 1 user".
+        // The inline access row reads summary.granteeCount; the removal drops the row
+        // from local state, so the count reflects it immediately (no refetch).
         expect(result.current.state.grantees).toEqual([]);
         expect(result.current.state.summary?.granteeCount).toBe(0);
     });
@@ -543,6 +577,41 @@ describe("useObjectShareController", () => {
         expect(svc.manageObjectPermissions).not.toHaveBeenCalled();
     });
 
+    it("reports workspace VIEW in the summary after re-enabling workspace access", async () => {
+        // The backend initially returns an all-workspace SHARE rule. A general-access
+        // write always grants workspace VIEW, so once the user restricts and re-enables
+        // workspace access, the summary must report VIEW — not the SHARE the initial
+        // fetch carried (there's no refetch to correct it).
+        const WORKSPACE_SHARE: AccessGranteeDetail = {
+            type: "allWorkspaceUsers",
+            permissions: ["SHARE", "VIEW"],
+            inheritedPermissions: [],
+        };
+        const { result } = renderController(makeService([WORKSPACE_SHARE]), TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        // Initial state from the fetch: workspace-wide SHARE.
+        expect(result.current.state.summary).toMatchObject({
+            generalAccess: "WORKSPACE",
+            workspaceLevel: "SHARE",
+        });
+
+        // Restrict, then re-enable workspace access.
+        act(() => result.current.actions.requestGeneralAccessChange("RESTRICTED"));
+        await act(async () => {
+            await result.current.actions.confirmGeneralAccessChange();
+        });
+        act(() => result.current.actions.requestGeneralAccessChange("WORKSPACE"));
+        await act(async () => {
+            await result.current.actions.confirmGeneralAccessChange();
+        });
+
+        // We wrote workspace VIEW, so the summary must read VIEW, not the stale SHARE.
+        expect(result.current.state.summary).toMatchObject({
+            generalAccess: "WORKSPACE",
+            workspaceLevel: "VIEW",
+        });
+    });
+
     it("surfaces an error toast and does not refetch when a mutation fails", async () => {
         const svc = makeService();
         svc.manageObjectPermissions.mockRejectedValueOnce(new Error("nope"));
@@ -609,7 +678,7 @@ describe("useObjectShareController", () => {
         );
         const { result, rerender } = renderHook(
             ({ labels, labelsLoading }: { labels: IObjectShareLabel[]; labelsLoading: boolean }) =>
-                useObjectShareController(TARGET, undefined, labels, false, labelsLoading),
+                useObjectShareController(TARGET, { labels, labelsLoading }),
             { wrapper, initialProps: { labels: [] as IObjectShareLabel[], labelsLoading: true } },
         );
         await waitFor(() => expect(result.current.state.status).toBe("success"));
@@ -650,8 +719,7 @@ describe("useObjectShareController", () => {
             </IntlProvider>
         );
         const { result, rerender } = renderHook(
-            ({ labels }: { labels: IObjectShareLabel[] }) =>
-                useObjectShareController(TARGET, undefined, labels),
+            ({ labels }: { labels: IObjectShareLabel[] }) => useObjectShareController(TARGET, { labels }),
             { wrapper, initialProps: { labels: [PRIMARY_LABEL, NAME_LABEL] } },
         );
         // First set resolves (both labels permissionable).
@@ -676,6 +744,45 @@ describe("useObjectShareController", () => {
             "lbl.name",
             "lbl.primary",
         ]);
+    });
+
+    it("re-resolves a grantee's scope when a label is added under the same target", async () => {
+        // u1 is granted on every label that exists. Starting with {primary,name}, u1's
+        // scope resolves to both. When a third label (email) is added under the same
+        // target — and the backend grants u1 on it — u1's scope must widen to include
+        // email. A stale per-grantee scope kept across the label-set change would
+        // leave email out even though the grantee can reach it.
+        const svc = makeLabelAwareService(); // grants u1 on every label by default
+        const backend = makeBackend(svc);
+        const wrapper = ({ children }: PropsWithChildren) => (
+            <IntlProvider locale="en-US" messages={{}}>
+                <BackendProvider backend={backend}>
+                    <WorkspaceProvider workspace={WORKSPACE}>{children}</WorkspaceProvider>
+                </BackendProvider>
+            </IntlProvider>
+        );
+        const { result, rerender } = renderHook(
+            ({ labels }: { labels: IObjectShareLabel[] }) => useObjectShareController(TARGET, { labels }),
+            { wrapper, initialProps: { labels: [PRIMARY_LABEL, NAME_LABEL] } },
+        );
+        await waitFor(() =>
+            expect(result.current.state.selectedLabelIdsByGrantee["user:u1"]?.sort()).toEqual([
+                "lbl.name",
+                "lbl.primary",
+            ]),
+        );
+
+        // Add the email label under the same target; u1's scope must include it.
+        await act(async () => {
+            rerender({ labels: LABELS });
+        });
+        await waitFor(() =>
+            expect(result.current.state.selectedLabelIdsByGrantee["user:u1"]?.sort()).toEqual([
+                "lbl.email",
+                "lbl.name",
+                "lbl.primary",
+            ]),
+        );
     });
 
     it("resolves permissionable labels even when the object has no grantees", async () => {
@@ -846,10 +953,11 @@ describe("useObjectShareController", () => {
         expect(result.current.state.selectedLabelIdsByGrantee["user:u2"]).toEqual(["lbl.primary"]);
     });
 
-    it("keeps the new grantee's full label scope through read-after-write lag", async () => {
-        // Per-label lists never report u2 (simulating a stale backend after the
-        // add-time label grants). The optimistic full scope must survive the
-        // resolution effect that refresh() triggers.
+    it("keeps the new grantee's full label scope after the add re-resolves", async () => {
+        // Per-label lists never report u2 (the backend's read lags the add-time label
+        // grants). Adding u2 changes the committed grantee set, which re-runs the
+        // resolution probe — but u2 already has a local scope, so the probe seeds
+        // only unknown grantees and the optimistic full scope survives.
         const svc = makeLabelAwareService(["lbl.primary", "lbl.name", "lbl.email"]); // only u1 granted
         const { result } = renderController(svc, TARGET, LABELS);
         await waitFor(() => expect(result.current.state.status).toBe("success"));
@@ -887,7 +995,7 @@ describe("useObjectShareController", () => {
         const TARGET_B: IObjectPermissionsObject = { kind: "attribute", ref: idRef("attr.b") };
         const { result, rerender } = renderHook(
             ({ target, labels }: { target: IObjectPermissionsObject; labels: IObjectShareLabel[] }) =>
-                useObjectShareController(target, undefined, labels),
+                useObjectShareController(target, { labels }),
             { wrapper, initialProps: { target: TARGET_A, labels: [] as IObjectShareLabel[] } },
         );
         await waitFor(() => expect(result.current.state.status).toBe("success"));
@@ -923,11 +1031,12 @@ describe("useObjectShareController", () => {
     it("drops a prior object's optimistic label scope on target switch (same labelsKey)", async () => {
         // u1 is granted on every label on both objects. The two objects share the
         // same label set, so labelsKey is identical across the switch. After
-        // optimistically narrowing u1 to primary-only on A, switching to B must show
-        // B's freshly-resolved scope (all labels) — NOT A's stale optimistic scope.
-        // The optimistic-scope guard must be cleared on target change, not only on
-        // labelsKey change, or it would merge A's scope over B's. The service grants
-        // u1 on the object and on every label, for BOTH attribute targets.
+        // narrowing u1 to primary-only on A, switching to B must show B's
+        // freshly-resolved scope (all labels) — NOT A's local scope. Local scopes
+        // must be dropped on target change (keyed on targetKey, which differs even
+        // when labelsKey matches), or A's primary-only entry would survive — the
+        // probe seeds only unknown grantees, so it would never overwrite it. The
+        // service grants u1 on the object and on every label, for BOTH targets.
         const ATTR_IDS = new Set(["attr.a", "attr.b"]);
         const LABEL_IDS = new Set(["lbl.primary", "lbl.name", "lbl.email"]);
         const svc: IMockService = {
@@ -950,20 +1059,20 @@ describe("useObjectShareController", () => {
         const TARGET_B: IObjectPermissionsObject = { kind: "attribute", ref: idRef("attr.b") };
         const { result, rerender } = renderHook(
             ({ target }: { target: IObjectPermissionsObject }) =>
-                useObjectShareController(target, undefined, LABELS),
+                useObjectShareController(target, { labels: LABELS }),
             { wrapper, initialProps: { target: TARGET_A } },
         );
         await waitFor(() => expect(result.current.state.status).toBe("success"));
         await waitFor(() => expect(result.current.state.selectedLabelIdsByGrantee["user:u1"]).toBeDefined());
 
-        // Optimistically narrow u1 to primary-only on A (sets the optimistic guard).
+        // Narrow u1 to primary-only on A (writes a local scope for u1).
         await act(async () => {
             await result.current.actions.changeGranteeLabels("user:u1", []);
         });
         expect(result.current.state.selectedLabelIdsByGrantee["user:u1"]!.sort()).toEqual(["lbl.primary"]);
 
-        // Switch to B (same labelsKey). B resolves u1 to all labels; the stale
-        // primary-only optimistic scope must NOT survive the switch.
+        // Switch to B (same labelsKey). B resolves u1 to all labels; A's local
+        // primary-only scope must NOT survive the switch.
         await act(async () => {
             rerender({ target: TARGET_B });
         });
@@ -994,7 +1103,7 @@ describe("useObjectShareController", () => {
         const TARGET_A: IObjectPermissionsObject = { kind: "attribute", ref: idRef("attr.a") };
         const TARGET_B: IObjectPermissionsObject = { kind: "attribute", ref: idRef("attr.b") };
         const { result, rerender } = renderHook(
-            ({ target }: { target: IObjectPermissionsObject }) => useObjectShareController(target, undefined),
+            ({ target }: { target: IObjectPermissionsObject }) => useObjectShareController(target),
             { wrapper, initialProps: { target: TARGET_A } },
         );
         await waitFor(() => expect(result.current.state.status).toBe("success"));
@@ -1052,7 +1161,7 @@ describe("useObjectShareController", () => {
         const TARGET_A: IObjectPermissionsObject = { kind: "attribute", ref: idRef("attr.a") };
         const TARGET_B: IObjectPermissionsObject = { kind: "attribute", ref: idRef("attr.b") };
         const { result, rerender } = renderHook(
-            ({ target }: { target: IObjectPermissionsObject }) => useObjectShareController(target, undefined),
+            ({ target }: { target: IObjectPermissionsObject }) => useObjectShareController(target),
             { wrapper, initialProps: { target: TARGET_A } },
         );
         await waitFor(() => expect(result.current.state.status).toBe("success"));
@@ -1071,28 +1180,25 @@ describe("useObjectShareController", () => {
         await waitFor(() => expect(result.current.state.status).toBe("success"));
     });
 
-    it("ignores a stale refresh that lands after switching targets", async () => {
-        // Mutate A → A's background refresh is in flight → switch to B → B's fetch
-        // lands → A's refresh resolves late. The stale refresh must NOT stamp the
-        // list back to A: doing so would clear B's currentAccessList and, with the
-        // load-gated status, strand B "loading" forever (B's own fetch already
-        // settled and won't re-stamp). B must stay success on its own list.
-        let releaseRefreshA: (list: { grants: AccessGranteeDetail[] }) => void = () => {};
+    it("re-fetches and reports loading when the same object is reopened after closing", async () => {
+        // Open A (grant set #1) → target clears (dialog closed / a non-shareable item
+        // selected) → reopen the SAME A. The seed stamp from visit #1 still equals A's
+        // key (the cleared target doesn't re-seed), so without re-checking the fetch
+        // status `hasList` would stay true and surface A's first-visit grantees as
+        // success while the reopen fetch is still in flight. The fix must report
+        // loading with no grantees, and have genuinely re-fetched.
         const aCalls = { n: 0 };
+        let releaseReopenA: (list: { grants: AccessGranteeDetail[] }) => void = () => {};
         const svc: IMockService = {
-            getAccessList: vi.fn((t: IObjectPermissionsObject) => {
-                const id = (t.ref as { identifier: string }).identifier;
-                if (id === "attr.a") {
-                    aCalls.n += 1;
-                    // 1st call = initial load (immediate); 2nd = the post-mutate
-                    // refresh, which we hold so it can resolve after the B switch.
-                    if (aCalls.n >= 2) {
-                        return new Promise((resolve) => {
-                            releaseRefreshA = resolve;
-                        });
-                    }
+            getAccessList: vi.fn(() => {
+                aCalls.n += 1;
+                if (aCalls.n === 1) {
+                    return Promise.resolve({ grants: [USER_GRANT] }); // first visit
                 }
-                return Promise.resolve({ grants: [USER_GRANT] });
+                // Reopen: held so the loading window stays observable after the act flush.
+                return new Promise<{ grants: AccessGranteeDetail[] }>((resolve) => {
+                    releaseReopenA = resolve;
+                });
             }),
             manageObjectPermissions: vi.fn(async () => undefined),
             getAvailableAssignees: vi.fn(async () => ASSIGNEES),
@@ -1106,34 +1212,140 @@ describe("useObjectShareController", () => {
             </IntlProvider>
         );
         const TARGET_A: IObjectPermissionsObject = { kind: "attribute", ref: idRef("attr.a") };
+        const { result, rerender } = renderHook(
+            ({ target }: { target: IObjectPermissionsObject | undefined }) =>
+                useObjectShareController(target),
+            { wrapper, initialProps: { target: TARGET_A as IObjectPermissionsObject | undefined } },
+        );
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        expect(result.current.state.grantees.map((g) => g.id)).toEqual(["user:u1"]);
+
+        // Clear the target (no fetch → seed stamp stays at A), then reopen A. A's
+        // reopen fetch is held, so it is still in flight after the act flush.
+        await act(async () => {
+            rerender({ target: undefined });
+        });
+        await waitFor(() => expect(result.current.state.status).toBe("idle"));
+        await act(async () => {
+            rerender({ target: TARGET_A });
+        });
+        expect(result.current.state.status).toBe("loading");
+        expect(result.current.state.grantees).toEqual([]);
+        expect(result.current.state.summary).toBeUndefined();
+        expect(aCalls.n).toBe(2); // A was genuinely re-fetched, not served from the seed
+
+        // Release the held fetch so the test doesn't leak a pending promise.
+        await act(async () => {
+            releaseReopenA({ grants: [USER_GRANT] });
+        });
+    });
+
+    it("does not corrupt the switched-to target's row when an old-target write resolves late", async () => {
+        // Mutate A → switch to B (which has the SAME grantee id user:u1) → A's
+        // in-flight level write resolves late. Because local state is authoritative
+        // (no refetch), an unguarded finalizer would rewrite B's user:u1 row to the
+        // level A wrote. The finalizer must bail when the target has changed: B's row
+        // keeps its own level and B's summary stays intact.
+        let releaseWriteA: () => void = () => {};
+        const svc: IMockService = {
+            getAccessList: vi.fn(async () => ({ grants: [USER_GRANT] })), // u1 @ VIEW on both
+            manageObjectPermissions: vi.fn(
+                () =>
+                    new Promise<void>((resolve) => {
+                        releaseWriteA = () => resolve(undefined);
+                    }),
+            ),
+            getAvailableAssignees: vi.fn(async () => ASSIGNEES),
+        };
+        const backend = makeBackend(svc);
+        const wrapper = ({ children }: PropsWithChildren) => (
+            <IntlProvider locale="en-US" messages={{}}>
+                <BackendProvider backend={backend}>
+                    <WorkspaceProvider workspace={WORKSPACE}>{children}</WorkspaceProvider>
+                </BackendProvider>
+            </IntlProvider>
+        );
+        const TARGET_A: IObjectPermissionsObject = { kind: "attribute", ref: idRef("attr.a") };
         const TARGET_B: IObjectPermissionsObject = { kind: "attribute", ref: idRef("attr.b") };
         const { result, rerender } = renderHook(
-            ({ target }: { target: IObjectPermissionsObject }) => useObjectShareController(target, undefined),
+            ({ target }: { target: IObjectPermissionsObject }) => useObjectShareController(target),
             { wrapper, initialProps: { target: TARGET_A } },
         );
         await waitFor(() => expect(result.current.state.status).toBe("success"));
 
-        // Start a mutation on A; commit awaits refresh(), which is now in flight.
+        // Raise user:u1 to SHARE on A; the object write is held in flight.
         let mutation: Promise<void> = Promise.resolve();
         act(() => {
             mutation = result.current.actions.changePermissionLevel("user:u1", "SHARE");
         });
 
-        // Switch to B; B's fetch lands immediately and stamps B.
+        // Switch to B; B's fetch lands immediately and seeds B with user:u1 @ VIEW.
+        await act(async () => {
+            rerender({ target: TARGET_B });
+        });
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        expect(result.current.state.grantees.find((g) => g.id === "user:u1")?.level).toBe("VIEW");
+
+        // Let A's late write resolve — B's row must NOT flip to SHARE.
+        await act(async () => {
+            releaseWriteA();
+            await mutation;
+        });
+
+        expect(result.current.state.status).toBe("success");
+        expect(result.current.state.summary).toBeDefined();
+        const row = result.current.state.grantees.find((g) => g.id === "user:u1");
+        expect(row?.level).toBe("VIEW"); // A's SHARE write did not bleed into B
+        expect(row?.pending).toBeUndefined();
+    });
+
+    it("does not remove the switched-to target's row when an old-target removal resolves late", async () => {
+        // Same hazard for removeGrantee: A's in-flight removal of user:u1 must not
+        // drop B's user:u1 row after the switch.
+        let releaseWriteA: () => void = () => {};
+        const svc: IMockService = {
+            getAccessList: vi.fn(async () => ({ grants: [USER_GRANT] })),
+            manageObjectPermissions: vi.fn(
+                () =>
+                    new Promise<void>((resolve) => {
+                        releaseWriteA = () => resolve(undefined);
+                    }),
+            ),
+            getAvailableAssignees: vi.fn(async () => ASSIGNEES),
+        };
+        const backend = makeBackend(svc);
+        const wrapper = ({ children }: PropsWithChildren) => (
+            <IntlProvider locale="en-US" messages={{}}>
+                <BackendProvider backend={backend}>
+                    <WorkspaceProvider workspace={WORKSPACE}>{children}</WorkspaceProvider>
+                </BackendProvider>
+            </IntlProvider>
+        );
+        const TARGET_A: IObjectPermissionsObject = { kind: "attribute", ref: idRef("attr.a") };
+        const TARGET_B: IObjectPermissionsObject = { kind: "attribute", ref: idRef("attr.b") };
+        const { result, rerender } = renderHook(
+            ({ target }: { target: IObjectPermissionsObject }) => useObjectShareController(target),
+            { wrapper, initialProps: { target: TARGET_A } },
+        );
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+        let mutation: Promise<void> = Promise.resolve();
+        act(() => {
+            mutation = result.current.actions.removeGrantee("user:u1");
+        });
         await act(async () => {
             rerender({ target: TARGET_B });
         });
         await waitFor(() => expect(result.current.state.status).toBe("success"));
 
-        // Now let A's stale refresh resolve — it must be ignored.
         await act(async () => {
-            releaseRefreshA({ grants: [USER_GRANT] });
+            releaseWriteA();
             await mutation;
         });
 
-        // B is still loaded on its own list, not stranded loading by A's refresh.
-        expect(result.current.state.status).toBe("success");
-        expect(result.current.state.summary).toBeDefined();
+        // B's row survives — A's removal did not drop it.
+        expect(result.current.state.grantees.some((g) => g.id === "user:u1")).toBe(true);
+        expect(result.current.state.grantees.find((g) => g.id === "user:u1")?.pending).toBeUndefined();
     });
 
     it("revokes the grantee from every label when removing them", async () => {

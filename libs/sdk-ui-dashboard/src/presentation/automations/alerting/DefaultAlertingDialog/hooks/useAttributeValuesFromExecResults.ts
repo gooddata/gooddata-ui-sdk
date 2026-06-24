@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 
+import type { IExecutionResult } from "@gooddata/sdk-backend-spi";
 import {
     type IAttribute,
     type IAttributeDescriptor,
@@ -12,7 +13,7 @@ import {
 } from "@gooddata/sdk-model";
 import { DataViewFacade, type IDataSeries } from "@gooddata/sdk-ui";
 
-import type { IExecutionResultEnvelope } from "../../../../../../model/store/executionResults/types.js";
+type IExecutionResultEnvelope = { isLoading?: boolean; executionResult?: IExecutionResult };
 
 export type AttributeValue = {
     title: string;
@@ -21,16 +22,41 @@ export type AttributeValue = {
 };
 
 export function useAttributeValuesFromExecResults(execResult: IExecutionResultEnvelope | undefined) {
-    const [isResultLoading, setIsResultLoading] = useState(!execResult || execResult.isLoading);
+    // Derive loading from the envelope's own isLoading flag, not from the
+    // presence of executionResult: an errored execution has no executionResult
+    // but is no longer loading, and there is no readAll() promise to clear the
+    // flag, so keying off executionResult would leave it stuck true forever.
+    const [isResultLoading, setIsResultLoading] = useState(!execResult || !!execResult.isLoading);
     const [dataView, setDataView] = useState<DataViewFacade | null>(null);
 
     useEffect(() => {
-        if (execResult) {
-            void execResult.executionResult?.readAll().then((data) => {
-                setDataView(DataViewFacade.for(data));
-                setIsResultLoading(false);
-            });
+        let cancelled = false;
+        if (execResult?.executionResult) {
+            setIsResultLoading(true);
+            setDataView(null);
+            void execResult.executionResult
+                .readAll()
+                .then((data) => {
+                    if (!cancelled) {
+                        setDataView(DataViewFacade.for(data));
+                        setIsResultLoading(false);
+                    }
+                })
+                .catch(() => {
+                    if (!cancelled) {
+                        setIsResultLoading(false);
+                    }
+                });
+        } else {
+            // No execution result to read (terminal error, or none yet): reflect
+            // the envelope's own loading flag so an errored execution doesn't stay
+            // stuck loading.
+            setDataView(null);
+            setIsResultLoading(!execResult || !!execResult.isLoading);
         }
+        return () => {
+            cancelled = true;
+        };
     }, [execResult]);
 
     const getAttributeValues = useCallback(

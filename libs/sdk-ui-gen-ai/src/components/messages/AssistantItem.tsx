@@ -34,6 +34,15 @@ export function AssistantItemComponent({ message, groups, isLast }: AssistantIte
         isLast && "gd-gen-ai-chat__messages__conversation--isLast",
     );
 
+    //NOTE: For now we want to hide all tool calls
+    if (message.content.type === "toolCall" || message.content.type === "toolResult") {
+        return null;
+    }
+    //NOTE: For now we want to hide all reasoning messages without summary
+    if (message.content.type === "reasoning" && !message.content.summary) {
+        return null;
+    }
+
     return (
         <div
             className={classNames}

@@ -832,6 +832,7 @@ export {
     isNumberParameterDefinition,
     isParameterMetadataObject,
     isParameterMetadataObjectDefinition,
+    isValidNumberParameterValue,
 } from "./ldm/metadata/parameter/index.js";
 export {
     type IMemoryItemDefinition,

@@ -99,6 +99,10 @@
         "text": "Filter list has been auto-expanded",
         "crowdinContext": "Screen reader announcement when the filter bar is automatically expanded to show all filters on keyboard focus."
     },
+    "filterBar.filterListAutoCollapsed": {
+        "text": "Filter list has been auto-collapsed",
+        "crowdinContext": "Screen reader announcement when the filter bar is automatically collapsed to show fewer filters on keyboard focus out."
+    },
     "filterBar.unappliedFiltersNotification": {
         "text": "<link>Apply filters</link> to see updated data.",
         "crowdinContext": "Message banner shown when filters are changed but not yet applied. The <link> tags create a clickable action to apply the filters."

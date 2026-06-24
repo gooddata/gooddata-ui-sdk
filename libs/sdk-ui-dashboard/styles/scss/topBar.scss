@@ -153,21 +153,15 @@ $gd-dashboards-section-title-lineColor: var(
     text-align: center;
 
     @media #{kit-variables.$xsmall-only}, #{kit-variables.$small-only} {
-        width: 45px;
+        width: 46px;
         align-self: stretch;
         padding: 0;
+        font-size: 20px;
         border-radius: 0;
         border-width: 0 0 0 1px;
-        font-size: 20px;
+        border-style: solid;
         background: variables.$gd-dashboards-title-backgroundColor;
         border-color: var(--gd-dashboards-title-borderColor, kit-variables.$gd-border-color);
-
-        &,
-        &:hover,
-        &:active,
-        &:focus {
-            box-shadow: none;
-        }
     }
 
     @media #{kit-variables.$medium-up} {
