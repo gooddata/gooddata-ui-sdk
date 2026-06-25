@@ -75,6 +75,7 @@ function createAutomationsContextValue(
         isSecondaryTitleVisible: false,
         externalRecipient: undefined,
         features: {
+            canCreateAutomation: false,
             enableAlertOncePerInterval: false,
             enableAnomalyDetectionAlert: false,
             enableAutomationManagement: false,

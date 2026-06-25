@@ -8,7 +8,7 @@ import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { type GoodDataSdkError, convertError, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { ConfirmDialog } from "@gooddata/sdk-ui-kit";
 
-import { useAutomationsContext } from "../../../contexts/AutomationsContext.js";
+import { useAlertingManagementDialogContext } from "../../../contexts/AlertingManagementDialogContext.js";
 
 interface IDeleteAlertConfirmDialogProps {
     alert: IAutomationMetadataObject;
@@ -26,10 +26,7 @@ export function DeleteAlertConfirmDialog({
     const effectiveBackend = useBackendStrict();
     const effectiveWorkspace = useWorkspaceStrict();
     const intl = useIntl();
-    const {
-        features: { canManageWorkspace: canManageAutomations },
-        currentUser,
-    } = useAutomationsContext();
+    const { canManageWorkspace: canManageAutomations, currentUser } = useAlertingManagementDialogContext();
 
     const handleDeleteAlert = async () => {
         try {

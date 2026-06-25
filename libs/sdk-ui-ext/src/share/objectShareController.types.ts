@@ -61,6 +61,19 @@ export interface IObjectShareControllerState {
 
     grantees: IObjectShareGrantee[];
     generalAccess: GeneralAccessValue;
+    /**
+     * Permission level of the all-workspace-members rule when general access is
+     * WORKSPACE. Drives the workspace row's permission dropdown. Meaningless (and
+     * not shown) while general access is RESTRICTED. Capped at VIEW/SHARE — EDIT is
+     * never offered for the workspace rule.
+     */
+    workspaceLevel: "VIEW" | "SHARE";
+    /**
+     * Whether a workspace-level re-grade is in flight. Consumers disable the
+     * workspace permission dropdown while true so rapid toggles can't issue
+     * overlapping writes that settle out of order.
+     */
+    workspaceLevelSaving: boolean;
 
     /**
      * Labels (display forms) of the shared attribute, in source order. Empty for
@@ -121,6 +134,13 @@ export interface IObjectShareControllerActions {
     cancelGeneralAccessChange: () => void;
     /** Commit the pending general access change. Auto-saves. */
     confirmGeneralAccessChange: () => Promise<void>;
+    /**
+     * Change the all-workspace-members rule's permission level (VIEW/SHARE).
+     * Only meaningful while general access is WORKSPACE. Auto-saves, no confirm —
+     * unlike the high-impact RESTRICTED↔WORKSPACE toggle, this only re-grades an
+     * already-granted rule.
+     */
+    changeWorkspaceLevel: (level: "VIEW" | "SHARE") => Promise<void>;
 }
 
 /**

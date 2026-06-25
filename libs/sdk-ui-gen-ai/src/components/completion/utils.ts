@@ -49,16 +49,21 @@ export function getOptions(
         canManage,
         canAnalyze,
         onCompletionSelected = () => {},
+        includeTags,
+        excludeTags,
     }: {
         items: CatalogItem[];
         search?: string;
         canManage?: boolean;
         canAnalyze?: boolean;
         onCompletionSelected?: (completion: ICompletionItem) => void;
+        includeTags?: string[];
+        excludeTags?: string[];
     },
 ): ICompletionItem[] {
     const options = items
         .filter((item) => !isCatalogItemHidden(item))
+        .filter((item) => matchTags(item, includeTags, excludeTags))
         .map((item): ICompletionItem[] => {
             return getItems(intl, item, { canManage, canAnalyze, onCompletionSelected });
         })
@@ -324,4 +329,33 @@ function isCatalogItemHidden(item: CatalogItem): boolean {
         return item.dataSet.isHidden === true;
     }
     return false;
+}
+
+// Utility: Match tags
+export function matchTags(item: CatalogItem, includeTags?: string[], excludeTags?: string[]) {
+    function getTags() {
+        if (isCatalogAttribute(item)) {
+            return item.attribute.tags ?? [];
+        }
+        if (isCatalogMeasure(item)) {
+            return item.measure.tags ?? [];
+        }
+        if (isCatalogFact(item)) {
+            return item.fact.tags ?? [];
+        }
+        if (isCatalogDateDataset(item)) {
+            return item.dataSet.tags ?? [];
+        }
+        return [];
+    }
+
+    if (includeTags?.length || excludeTags?.length) {
+        const tags = getTags();
+
+        const hasIncludeTags = includeTags?.length ? includeTags.some((tag) => tags.includes(tag)) : true;
+        const hasExcludeTags = excludeTags?.length ? excludeTags.some((tag) => tags.includes(tag)) : false;
+
+        return hasIncludeTags && !hasExcludeTags;
+    }
+    return true;
 }

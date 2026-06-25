@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/reference-workspace-mgmt",
-    "version": "11.43.0-alpha.5",
+    "version": "11.44.0-alpha.0",
     "description": "Command line tools for reference workspace management",
     "license": "MIT",
     "author": "GoodData",

@@ -17,6 +17,11 @@ import type { IObjectShareController } from "./objectShareController.types.js";
 import type { IObjectShareLabel } from "./types.js";
 import { useObjectShareController } from "./useObjectShareController.js";
 
+// The workspace row has no labels menu (see workspaceControls below), so its
+// required onLabelsChange never fires; a stable no-op satisfies the prop type
+// without churning the controls' identity each render.
+const noop = () => {};
+
 /**
  * Props for {@link ObjectShareDialog}.
  *
@@ -177,10 +182,37 @@ export function ObjectShareDialog({
                 isAddDisabled={isAddDisabled}
                 generalAccess={state.generalAccess}
                 onGeneralAccessChange={actions.requestGeneralAccessChange}
+                // Permission dropdown on the "All workspace members" row — only while
+                // workspace access is on (the rule must exist to be re-graded). No
+                // labels (⋯) menu and no remove: per the Figma spec the workspace row
+                // carries the permission picker alone; the workspace rule's label
+                // scope is managed implicitly with the RESTRICTED↔WORKSPACE toggle.
+                workspaceControls={
+                    state.generalAccess === "WORKSPACE" ? (
+                        <UiGranteeRowControls
+                            labels={[]}
+                            selectedLabelIds={[]}
+                            permissionLevel={state.workspaceLevel}
+                            // Also disabled while its own re-grade is committing, so
+                            // rapid toggles can't queue overlapping writes.
+                            isDisabled={!isMutable || state.workspaceLevelSaving}
+                            onLabelsChange={noop}
+                            onPermissionChange={(level) => {
+                                void actions.changeWorkspaceLevel(level);
+                            }}
+                        />
+                    ) : undefined
+                }
+                // Keep the "All workspace members" description in sync with the picked
+                // level ("can view" vs "can view and share").
+                workspaceLevel={state.workspaceLevel}
                 // Gated on the same condition as Add: changing general access also
                 // mirrors the label scope, so it must wait for resolution and stay
-                // disabled when label metadata failed to load.
-                isGeneralAccessDisabled={!isMutable}
+                // disabled when label metadata failed to load. Also gated while a
+                // workspace-level re-grade is in flight: switching to Restricted then
+                // would issue an allWorkspaceUsers:none write that could race the
+                // pending re-grade and leave the backend on the wrong rule.
+                isGeneralAccessDisabled={!isMutable || state.workspaceLevelSaving}
                 // On a failed load the empty grantee list + RESTRICTED radio are a
                 // placeholder, not the real policy — show why instead of letting it
                 // read as "no one has access".

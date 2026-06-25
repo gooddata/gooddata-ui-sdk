@@ -71,6 +71,11 @@ export interface IUiObjectShareDialogCardProps {
      * and permission level.
      */
     workspaceControls?: ReactNode;
+    /**
+     * Workspace-wide permission level, so the "All workspace members" description
+     * matches the level picked in `workspaceControls`. Defaults to `view`.
+     */
+    workspaceLevel?: "VIEW" | "SHARE";
 
     /**
      * Optional error notice. When set, it replaces the grantee list and
@@ -102,6 +107,7 @@ export function UiObjectShareDialogCard({
     onGeneralAccessChange,
     isGeneralAccessDisabled,
     workspaceControls,
+    workspaceLevel,
     error,
     dataTestId,
 }: IUiObjectShareDialogCardProps) {
@@ -152,6 +158,7 @@ export function UiObjectShareDialogCard({
                         onChange={onGeneralAccessChange}
                         disabled={isGeneralAccessDisabled}
                         workspaceControls={workspaceControls}
+                        workspaceLevel={workspaceLevel}
                     />
                 </>
             )}

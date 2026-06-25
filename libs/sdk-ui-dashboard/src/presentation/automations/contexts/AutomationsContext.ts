@@ -80,6 +80,7 @@ export interface IAutomationsContextValue {
     isSecondaryTitleVisible: boolean;
     externalRecipient: string | undefined;
     features: {
+        canCreateAutomation: boolean;
         enableAlertOncePerInterval: boolean;
         enableAnomalyDetectionAlert: boolean;
         enableAutomationManagement: boolean;

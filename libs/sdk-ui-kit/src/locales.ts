@@ -87,6 +87,7 @@ export const olpGeneralAccessMessages = defineMessages({
     restrictedDescription: { id: "shareDialog.olp.generalAccess.restricted.description" },
     workspaceTitle: { id: "shareDialog.olp.generalAccess.workspace.title" },
     workspaceDescription: { id: "shareDialog.olp.generalAccess.workspace.description" },
+    workspaceDescriptionShare: { id: "shareDialog.olp.generalAccess.workspace.description.share" },
 });
 
 export const olpLabelMessages = defineMessages({

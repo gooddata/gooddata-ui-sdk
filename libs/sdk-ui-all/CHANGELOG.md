@@ -1,6 +1,74 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 18 Jun 2026 07:03:40 GMT and should not be manually modified.
+This log was last generated on Thu, 25 Jun 2026 06:50:37 GMT and should not be manually modified.
+
+## 11.43.0
+
+Thu, 25 Jun 2026 06:50:37 GMT
+
+### Patches
+
+- sdk-ui-web-components: fix gd-dashboard-embed silently rendering blank when pluginMode is unset and moduleFederationIntegration is unavailable; now falls back gracefully to static-only loading with an actionable warning
+- sdk-ui-charts: Show the Y axis title on line and combo charts when a single regular metric is rendered alongside control (threshold) metrics
+- sdk-ui-dashboard: Fix MAX_ZOOM_LEVEL setting not being applied to geochart inside drill-into-visualization modal
+
+### Updates
+
+- sdk-ui-dashboard: Include dashboard parameter filters in the embedded dashboard URL when "Include applied filters" is enabled (previously only attribute and date filters were captured).
+- sdk-ui-dashboard: Show active dashboard parameter overrides in the Filters section of slide exports (PDF/PPTX) (previously only attribute, date, and measure-value filters were shown).
+- sdk-ui-dashboard: Drill to Insight now inherits dashboard parameter values from the executed (target) insight, so the drill target picks up active parameter overrides even when the source widget is not connected to the parameter.
+- Send raw CSV export parameters via AFM execution
+- sdk-model: Add `isValidNumberParameterValue` parameter helper
+- gdc-catalog: Show inherited organization AI memory read-only in the workspace catalog — composite memory service merging workspace + organization memory, inherited badge/view-only UI, i18n and e2e.
+- Add enableOrgLevelAIMemory feature flag for inherited org AI memory
+- sdk-ui-kit: Changed default background color of `<UiTabs>` to transparent.
+- sdk-ui-catalog: Prevent the Analytics Catalog object-type buttons from being squashed when hovering header items in the pluggable host (preloaded app bundles no longer override the button width).
+- sdk-ui-pluggable-host: Wait for the workspace theme to load before rendering content in the host, so the app no longer flashes the default theme before the workspace theme is applied.
+- sdk-ui-theme-provider: Prevent the applied theme from being reset when hovering header items in the pluggable host (preloaded app bundles no longer override the theme's CSS variables).
+- Add data-testid attributes to export menu items, partial data warning banner, and menu info icon for E2E test stability
+- sdk-ui-gen-ai: Key driver analysis can be triggered in ai for metrics with key driver analysis hidden
+- sdk-ui-all: Use ui kit buttons in dashboard top bar
+- sdk-ui-gen-ai: Hide tool and reasoning messages without summary in ai chat
+- sdk-ui-gen-ai: Better support for custom link handling in ai chat
+- sdk-ui-gen-ai: Pass locale prop to SemanticSearch components across modules
+- fix bug with dashboard tabs going offscreen when resizing the sidebar
+- sdk-ui-dashboard: Improve dashboard execution and remove unnecessary API call.
+- sdk-ui-all: Conditional formatting for pivot table.
+- sdk-ui-all: remove fixed-data-table-2 dependency from ListComponents
+- sdk-ui-filters: Fixed excessive height of the date filter dropdown that left a large empty gap below the preset list when only a few presets were configured
+- Add shared automation infra: AutomationsContext, connectors, shared filters/utils layer (ExtendedDashboardWidget signatures, no users in context)
+- Move widget-owned alert hooks (useCreateAlert, useUpdateAlert, useSaveAlertToBackend) into InsightAlertConfig/hooks
+- Migrate alerting create/edit dialog out of \_staging into alerting/DefaultAlertingDialog; add AlertingConnector (create/edit only); arm create/edit clean-tree dep-cruiser rule
+- Migrate alerting management dialog out of \_staging into alerting/DefaultAlertingManagementDialog; extend AlertingConnector to management; arm management clean-tree dep-cruiser rule
+- sdk-ui-charts: Fix duplicit labels in bullet chart in integer cases.
+- sdk-ui-dashboard: Use true filterLocalIdentifier in filterElementsByDate object as a part of dependent filters feature.
+- sdk-ui-all: Remove enableCompositeGrain feature flag, composite (compound) primary keys are now always enabled.
+- sdk-ui-all: Remove enableDashboardFilterViews feature flag from codebase.
+- api-client-tiger: Add `visualizationObjectCustomParameters` to tabular export request
+- sdk-backend-tiger: Round-trip formatted-CSV export parameter overrides
+- sdk-ui-dashboard: Reload an insight widget when a parameter changes after it entered the "No data" empty state.
+- Update radar chart icons
+- Add a permission-level dropdown to the All workspace members row of the object-level-permissions share dialog, so workspace-wide access can be granted as view or view & share
+- Show a not-found page instead of a generic error when a catalog object detail returns 404
+- Object share dialog shows EDIT-level grants as a read-only "Can edit" label
+- Make the share dialog "Manage labels access" panel scroll its label rows so the list and the Cancel/Apply buttons stay fully visible when an attribute has many labels.
+- Add object-level permissions share dialog to the analytics catalog detail page, gated by the enableColumnLevelPermissions feature flag
+- Simplify the object-level-permissions share controller (no post-write refetch, unified access mutations) and isolate it behind a catalog provider with a lazy-loaded dialog
+- Add object-level-permissions share dialog row controls (permission menu, more-options menu, labels-access picker) and dim the modal backdrop
+- sdk-ui-gen-ai: Add a data-testid to the agent-switch divider (AgentChangeItem) to support a stable E2E locator.
+- sdk-ui-dashboard: Remove DefaultMenu and DrillDialogExport menus focus traps
+- sdk-ui-dashboard: Announce to screen readers when the dashboard filter bar auto-collapses (after keyboard focus leaves the expanded filter list).
+- sdk-ui-dashboard: Remove the redundant missing-threshold error from the alerting dialog. The error was shown both inline under the threshold field and again in the form-level validation summary; it now appears only inline.
+- sdk-ui-pivot: Stop suppressKeyboardEvent from blanket-suppressing non-navigation keys so AG Grid's built-in clipboard shortcuts (Ctrl/Cmd+C copy, Ctrl/Cmd+A select all) work again in the new pivot table.
+- Enable the pluggable (hosted) LDM Modeler shell application by default (enableShellApplication_ldmModeler defaults to on).
+- sdk-ui-gen-ai: Fix a chat conversation loading forever when reopened after a conversation switch (e.g. the dashboard Summarize flow) cancelled its history load mid-flight; the per-conversation loading flag is now cleared on the conversation that was actually loading instead of whichever one is current.
+- sdk-ui-dashboard: Use ui kit menu items in drill select dropdown
+- sdk-ui-kit: Stop making UiPopover dialog container focusable
+- sdk-ui-kit: improve UiTags accessibility
+- sdk-ui-charts: Improve aria-label on Highcharts data points to match tooltip format
+- Add aria-pressed to Button and use it in Static/Relative date filter buttons to expose selected state to screen readers
+- sdk-ui-kit: Remove misleading popup ARIA attributes from Datepicker input
+- sdk-ui-ext: Add accessible label and required state to Custom Tooltip textarea
 
 ## 11.42.0
 

@@ -87,7 +87,6 @@ export function InsightAlertsNew({ widget, onClose, onGoBack }: IInsightMenuSubm
     const { onAlertingOpen } = useDashboardAlerts();
     const { refreshAutomations } = useDashboardAutomations();
     const { addSuccess, addError } = useToastMessage();
-
     const { handlePauseAlert, handleResumeAlert, isSavingAlert } = useSaveAlertToBackend({
         onPauseSuccess: () => {
             refreshAutomations();
