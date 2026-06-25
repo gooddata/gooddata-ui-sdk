@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 
 import { type CatalogItem, type ICatalogDateAttribute } from "@gooddata/sdk-model";
 
-import { catalogItemsSelector } from "../../store/chatWindow/chatWindowSelectors.js";
+import { catalogItemsSelector, tagsSelector } from "../../store/chatWindow/chatWindowSelectors.js";
 
 import { type ICompletionItem, getCatalogItemId, getCompletionItemId, getOptions } from "./utils.js";
 
@@ -28,6 +28,8 @@ export function useCompletion(
     { canManage, canAnalyze }: { canManage?: boolean; canAnalyze?: boolean },
 ): IUseCompletion {
     const catalogItemsList = useSelector(catalogItemsSelector);
+    const { includeTags, excludeTags } = useSelector(tagsSelector);
+
     const usedItems = useRef<(CatalogItem | ICatalogDateAttribute)[]>(selected ?? []);
     const intl = useIntl();
 
@@ -65,6 +67,8 @@ export function useCompletion(
                 onCompletionSelected,
                 canManage,
                 canAnalyze,
+                includeTags,
+                excludeTags,
             });
             // No options were found at all
             if (options.length === 0) {
@@ -79,7 +83,7 @@ export function useCompletion(
                 },
             };
         },
-        [catalogItemsList, intl, onCompletionSelected, canManage, canAnalyze],
+        [catalogItemsList, intl, onCompletionSelected, canManage, canAnalyze, includeTags, excludeTags],
     );
 
     const onCompletion = useCallback(

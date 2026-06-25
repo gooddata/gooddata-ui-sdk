@@ -643,6 +643,139 @@ describe("useObjectShareController", () => {
         });
     });
 
+    it("exposes the fetched workspace level and re-grades it to SHARE on demand", async () => {
+        const WORKSPACE_VIEW: AccessGranteeDetail = {
+            type: "allWorkspaceUsers",
+            permissions: ["VIEW"],
+            inheritedPermissions: [],
+        };
+        const svc = makeService([WORKSPACE_VIEW]);
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        expect(result.current.state.generalAccess).toBe("WORKSPACE");
+        expect(result.current.state.workspaceLevel).toBe("VIEW");
+
+        await act(async () => {
+            await result.current.actions.changeWorkspaceLevel("SHARE");
+        });
+        // Optimistically reflects SHARE and writes the rule with SHARE+VIEW.
+        expect(result.current.state.workspaceLevel).toBe("SHARE");
+        expect(result.current.state.summary).toMatchObject({ workspaceLevel: "SHARE" });
+        const [, grantees] = svc.manageObjectPermissions.mock.calls[0] as [unknown, IGranularAccessGrantee[]];
+        expect(grantees).toEqual([
+            expect.objectContaining({ type: "allWorkspaceUsers", permissions: ["SHARE", "VIEW"] }),
+        ]);
+    });
+
+    it("blocks overlapping workspace-level writes while one is in flight", async () => {
+        const WORKSPACE_VIEW: AccessGranteeDetail = {
+            type: "allWorkspaceUsers",
+            permissions: ["VIEW"],
+            inheritedPermissions: [],
+        };
+        const svc = makeService([WORKSPACE_VIEW]);
+        // Hold the first write open so a second toggle lands while it's pending.
+        let resolveSave: () => void = () => {};
+        svc.manageObjectPermissions.mockImplementationOnce(
+            () => new Promise<void>((res) => (resolveSave = () => res(undefined))),
+        );
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+        let first: Promise<void>;
+        act(() => {
+            first = result.current.actions.changeWorkspaceLevel("SHARE");
+        });
+        // The write is in flight: flag is set and the optimistic level shows SHARE.
+        expect(result.current.state.workspaceLevelSaving).toBe(true);
+        expect(result.current.state.workspaceLevel).toBe("SHARE");
+
+        // A second toggle while saving is a no-op — no extra write queued.
+        await act(async () => {
+            await result.current.actions.changeWorkspaceLevel("VIEW");
+        });
+        expect(svc.manageObjectPermissions).toHaveBeenCalledTimes(1);
+        expect(result.current.state.workspaceLevel).toBe("SHARE");
+
+        // Release the first write; the flag clears and the level sticks.
+        await act(async () => {
+            resolveSave();
+            await first;
+        });
+        expect(result.current.state.workspaceLevelSaving).toBe(false);
+        expect(result.current.state.workspaceLevel).toBe("SHARE");
+        expect(svc.manageObjectPermissions).toHaveBeenCalledTimes(1);
+    });
+
+    it("blocks restricting general access while a workspace re-grade is in flight", async () => {
+        // A late re-grade landing after a switch to Restricted would re-create the
+        // allWorkspaceUsers rule; block the toggle until the re-grade settles.
+        const WORKSPACE_VIEW_GRANT: AccessGranteeDetail = {
+            type: "allWorkspaceUsers",
+            permissions: ["VIEW"],
+            inheritedPermissions: [],
+        };
+        const svc = makeService([WORKSPACE_VIEW_GRANT]);
+        let resolveSave: () => void = () => {};
+        svc.manageObjectPermissions.mockImplementationOnce(
+            () => new Promise<void>((res) => (resolveSave = () => res(undefined))),
+        );
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+        let regrade: Promise<void>;
+        act(() => {
+            regrade = result.current.actions.changeWorkspaceLevel("SHARE");
+        });
+        expect(result.current.state.workspaceLevelSaving).toBe(true);
+
+        // Try to restrict while the re-grade is pending — must be a no-op.
+        act(() => result.current.actions.requestGeneralAccessChange("RESTRICTED"));
+        await act(async () => {
+            await result.current.actions.confirmGeneralAccessChange();
+        });
+        expect(result.current.state.generalAccess).toBe("WORKSPACE");
+        expect(svc.manageObjectPermissions).toHaveBeenCalledTimes(1); // only the re-grade
+
+        await act(async () => {
+            resolveSave();
+            await regrade;
+        });
+        expect(result.current.state.workspaceLevelSaving).toBe(false);
+        expect(result.current.state.generalAccess).toBe("WORKSPACE");
+    });
+
+    it("rolls the workspace level back when the re-grade write fails", async () => {
+        const WORKSPACE_VIEW: AccessGranteeDetail = {
+            type: "allWorkspaceUsers",
+            permissions: ["VIEW"],
+            inheritedPermissions: [],
+        };
+        const svc = makeService([WORKSPACE_VIEW]);
+        svc.manageObjectPermissions.mockRejectedValueOnce(new Error("nope"));
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+        await act(async () => {
+            await result.current.actions.changeWorkspaceLevel("SHARE");
+        });
+        expect(addError).toHaveBeenCalledTimes(1);
+        expect(result.current.state.workspaceLevel).toBe("VIEW");
+    });
+
+    it("ignores a workspace-level change while access is restricted", async () => {
+        const svc = makeService(); // RESTRICTED — no workspace rule
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        expect(result.current.state.generalAccess).toBe("RESTRICTED");
+
+        await act(async () => {
+            await result.current.actions.changeWorkspaceLevel("SHARE");
+        });
+        expect(svc.manageObjectPermissions).not.toHaveBeenCalled();
+        expect(result.current.state.workspaceLevel).toBe("VIEW");
+    });
+
     it("surfaces an error toast and does not refetch when a mutation fails", async () => {
         const svc = makeService();
         svc.manageObjectPermissions.mockRejectedValueOnce(new Error("nope"));

@@ -1,25 +1,37 @@
 // (C) 2026 GoodData Corporation
 
-import { type ReactElement, type ReactNode } from "react";
+import { type ReactElement, type ReactNode, useCallback } from "react";
 
-import { isWidget } from "@gooddata/sdk-model";
+import { type IAutomationMetadataObject, isWidget } from "@gooddata/sdk-model";
+import { buildAutomationUrl, navigate, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { useDashboardAlerts } from "../../../model/react/useDashboardAlerting/useDashboardAlerts.js";
 import { useWorkspaceUsers } from "../../../model/react/useWorkspaceUsers.js";
+import {
+    selectEnableAutomationManagement,
+    selectExternalRecipient,
+    selectIsEmbedded,
+    selectSettings,
+} from "../../../model/store/config/configSelectors.js";
+import { selectDashboardId } from "../../../model/store/meta/metaSelectors.js";
 import { AlertingDialog } from "../alerting/AlertingDialog.js";
+import { AlertingManagementDialog } from "../alerting/AlertingManagementDialog.js";
 import { type IAlertingDialogProps } from "../alerting/types.js";
 import { AlertingDialogContextProvider } from "../contexts/AlertingDialogContext.js";
+import { AlertingManagementDialogContextProvider } from "../contexts/AlertingManagementDialogContext.js";
 import { AutomationsContextProvider } from "../contexts/AutomationsContext.js";
 
 import { useBuildAlertingDialogContext } from "./hooks/useBuildAlertingDialogContext.js";
+import { useBuildAlertingManagementDialogContext } from "./hooks/useBuildAlertingManagementDialogContext.js";
 import { useBuildAutomationsContext } from "./hooks/useBuildAutomationsContext.js";
 
 type AlertsProps = ReturnType<typeof useDashboardAlerts>;
 
 /**
  * Provides AutomationsContext to its children, built from dashboard Redux state.
- * Use this to wrap alerting dialog subtrees that need access to automation data
- * (e.g. the management dialog bridge in AlertingDialogProvider).
+ * Wraps the alerting dialog subtree (both the create/edit and management dialogs reach
+ * AutomationsContext through this provider).
  *
  * @internal
  */
@@ -30,7 +42,7 @@ export function AlertingAutomationsProvider({ children }: { children: ReactNode 
 
 /**
  * Connector component that reads from the dashboard Redux store and wires up
- * the alerting dialog tree via context providers.
+ * the alerting dialog tree (create/edit and management) via context providers.
  *
  * This is the primary bridge between dashboard store state and the alerting
  * dialog tree. One transitive exception remains: useAutomationAlertParameters
@@ -39,6 +51,9 @@ export function AlertingAutomationsProvider({ children }: { children: ReactNode 
  * carve-out frozen in the `automationFilters` allowlist of .dependency-cruiser.js
  * (see the GDP-3167 note there) and is tracked for a Phase 3 move behind this
  * connector.
+ *
+ * AutomationsContext is provided by AlertingAutomationsProvider, which wraps this
+ * connector (see AlertingDialogProvider).
  *
  * @internal
  */
@@ -51,7 +66,10 @@ export function AlertingConnector(): ReactElement | null {
 }
 
 function AlertingConnectorInitialized(alerts: AlertsProps): ReactElement | null {
-    if (!alerts.isAlertDialogOpen) {
+    const { isAlertDialogOpen, isAlertManagementDialogOpen } = alerts;
+
+    // Defer store reads and user loading until at least one dialog is open.
+    if (!isAlertDialogOpen && !isAlertManagementDialogOpen) {
         return null;
     }
     return <AlertingConnectorWithData alerts={alerts} />;
@@ -59,20 +77,75 @@ function AlertingConnectorInitialized(alerts: AlertsProps): ReactElement | null 
 
 function AlertingConnectorWithData({ alerts }: { alerts: AlertsProps }): ReactElement {
     const {
+        // Shared Local State
         alertToEdit,
+        // Data
+        automations,
+        automationsError,
         automationsLoading,
         notificationChannels,
+        // Single Alert Dialog
         isAlertDialogOpen,
         onAlertingCancel,
         onAlertingCreateSuccess,
         onAlertingCreateError,
         onAlertingSaveSuccess,
         onAlertingSaveError,
+        // Management / List Dialog
+        isAlertManagementDialogOpen,
+        onAlertingManagementClose,
+        onAlertingManagementAdd,
+        onAlertingManagementEdit,
         onAlertingManagementDeleteSuccess,
         onAlertingManagementDeleteError,
+        onAlertingManagementPauseSuccess,
+        onAlertingManagementPauseError,
         widget,
         insight,
     } = alerts;
+
+    const workspace = useWorkspaceStrict();
+    const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
+    const dashboardId = useDashboardSelector(selectDashboardId);
+    const isEmbedded = useDashboardSelector(selectIsEmbedded);
+    const externalRecipientOverride = useDashboardSelector(selectExternalRecipient);
+    const settings = useDashboardSelector(selectSettings);
+    const useHostRoute =
+        Boolean(settings?.enableShellApplication) && Boolean(settings?.enableShellApplication_dashboards);
+
+    // Cross-dashboard edit routing lives in the connector (which may read router + store).
+    // The management dialog only invokes this injected callback.
+    const handleManagementEdit = useCallback(
+        (alert: IAutomationMetadataObject) => {
+            const targetDashboardId = alert.dashboard?.id;
+
+            if (enableAutomationManagement && targetDashboardId && targetDashboardId !== dashboardId) {
+                navigate(
+                    buildAutomationUrl({
+                        workspaceId: workspace,
+                        dashboardId: targetDashboardId,
+                        automationId: alert.id,
+                        isEmbedded,
+                        useHostRoute,
+                        queryParams: externalRecipientOverride
+                            ? { recipient: externalRecipientOverride }
+                            : undefined,
+                    }),
+                );
+                return;
+            }
+            onAlertingManagementEdit(alert);
+        },
+        [
+            onAlertingManagementEdit,
+            enableAutomationManagement,
+            dashboardId,
+            workspace,
+            isEmbedded,
+            useHostRoute,
+            externalRecipientOverride,
+        ],
+    );
 
     const insightWidget = isWidget(widget) ? widget : undefined;
 
@@ -82,28 +155,53 @@ function AlertingConnectorWithData({ alerts }: { alerts: AlertsProps }): ReactEl
         insight,
     });
 
+    const managementCtx = useBuildAlertingManagementDialogContext();
+
+    const isManagementLoading = automationsLoading;
+
     return (
         <AlertingDialogContextProvider value={alertingCtx}>
-            {isAlertDialogOpen ? (
-                // TODO(GDP-3167 phase3): notificationChannels, users, usersError, and isLoading
-                // are still prop-threaded here because DefaultAlertingDialog reads them from props,
-                // not from AutomationsContext. Once all dialog fields are migrated to read from
-                // context, remove these props and the corresponding prop types.
-                <AlertingDialogWithUsers
-                    alertToEdit={alertToEdit}
-                    notificationChannels={notificationChannels}
-                    widget={insightWidget}
-                    insight={insight}
-                    isLoading={automationsLoading}
-                    onCancel={onAlertingCancel}
-                    onError={onAlertingCreateError}
-                    onSuccess={onAlertingCreateSuccess}
-                    onSaveError={onAlertingSaveError}
-                    onSaveSuccess={onAlertingSaveSuccess}
-                    onDeleteSuccess={onAlertingManagementDeleteSuccess}
-                    onDeleteError={onAlertingManagementDeleteError}
-                />
-            ) : null}
+            <AlertingManagementDialogContextProvider value={managementCtx}>
+                {isAlertManagementDialogOpen ? (
+                    // TODO(GDP-3167 phase3): automations, notificationChannels, and alertDataError
+                    // are still prop-threaded here because DefaultAlertingManagementDialog reads
+                    // them from props, not from AutomationsContext. Once all dialog fields are
+                    // migrated to read from context, remove these props and the corresponding prop types.
+                    <AlertingManagementDialog
+                        automations={automations}
+                        notificationChannels={notificationChannels}
+                        alertDataError={automationsError}
+                        isLoadingAlertingData={isManagementLoading}
+                        onAdd={onAlertingManagementAdd}
+                        onEdit={handleManagementEdit}
+                        onClose={onAlertingManagementClose}
+                        onDeleteSuccess={onAlertingManagementDeleteSuccess}
+                        onDeleteError={onAlertingManagementDeleteError}
+                        onPauseSuccess={onAlertingManagementPauseSuccess}
+                        onPauseError={onAlertingManagementPauseError}
+                    />
+                ) : null}
+                {isAlertDialogOpen ? (
+                    // TODO(GDP-3167 phase3): notificationChannels, users, usersError, and isLoading
+                    // are still prop-threaded here because DefaultAlertingDialog reads them from props,
+                    // not from AutomationsContext. Once all dialog fields are migrated to read from
+                    // context, remove these props and the corresponding prop types.
+                    <AlertingDialogWithUsers
+                        alertToEdit={alertToEdit}
+                        notificationChannels={notificationChannels}
+                        widget={insightWidget}
+                        insight={insight}
+                        isLoading={automationsLoading}
+                        onCancel={onAlertingCancel}
+                        onError={onAlertingCreateError}
+                        onSuccess={onAlertingCreateSuccess}
+                        onSaveError={onAlertingSaveError}
+                        onSaveSuccess={onAlertingSaveSuccess}
+                        onDeleteSuccess={onAlertingManagementDeleteSuccess}
+                        onDeleteError={onAlertingManagementDeleteError}
+                    />
+                ) : null}
+            </AlertingManagementDialogContextProvider>
         </AlertingDialogContextProvider>
     );
 }

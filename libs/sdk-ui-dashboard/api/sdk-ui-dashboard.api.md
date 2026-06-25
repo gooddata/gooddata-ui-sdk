@@ -1463,8 +1463,8 @@ export const DEFAULT_TAB_ID = "defaultTabId";
 // @alpha
 export function DefaultAlertingDialog(props: IAlertingDialogProps): JSX.Element;
 
-// @alpha (undocumented)
-export function DefaultAlertingManagementDialogNew(input: IAlertingManagementDialogProps): JSX.Element;
+// @alpha
+export function DefaultAlertingManagementDialogNew(props: IAlertingManagementDialogProps): JSX.Element;
 
 // @alpha (undocumented)
 export function DefaultButtonBar(input: IButtonBarProps): ReactElement;

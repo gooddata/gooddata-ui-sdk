@@ -2837,7 +2837,11 @@
     },
     "shareDialog.olp.generalAccess.workspace.description": {
         "text": "Everyone in this workspace can view this object.",
-        "crowdinContext": "Description of the All-workspace-members general-access option on the OLP share dialog. Explains the resulting access for the whole workspace."
+        "crowdinContext": "Description of the All-workspace-members general-access option on the OLP share dialog, shown when the workspace permission level is 'Can view'. Explains the resulting view access for the whole workspace."
+    },
+    "shareDialog.olp.generalAccess.workspace.description.share": {
+        "text": "Everyone in this workspace can view and share this object.",
+        "crowdinContext": "Description of the All-workspace-members general-access option on the OLP share dialog, shown when the workspace permission level is 'Can view & share'. Explains the resulting view-and-share access for the whole workspace."
     },
     "uiKit.autocomplete.searchPlaceholder": {
         "text": "Search",

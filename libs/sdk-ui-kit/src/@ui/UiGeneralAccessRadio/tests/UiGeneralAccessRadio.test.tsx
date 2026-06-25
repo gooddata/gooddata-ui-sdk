@@ -56,6 +56,22 @@ describe("UiGeneralAccessRadio", () => {
         expect(screen.getByText("Everyone in this workspace can view this object.")).toBeInTheDocument();
     });
 
+    it("reflects the workspace level in the workspace description", () => {
+        const { rerender } = renderWithIntl(
+            <UiGeneralAccessRadio value="WORKSPACE" onChange={() => {}} workspaceLevel="VIEW" />,
+        );
+        expect(screen.getByText("Everyone in this workspace can view this object.")).toBeInTheDocument();
+
+        rerender(
+            <IntlProvider locale={DEFAULT_LANGUAGE} messages={DEFAULT_MESSAGES[DEFAULT_LANGUAGE]}>
+                <UiGeneralAccessRadio value="WORKSPACE" onChange={() => {}} workspaceLevel="SHARE" />
+            </IntlProvider>,
+        );
+        expect(
+            screen.getByText("Everyone in this workspace can view and share this object."),
+        ).toBeInTheDocument();
+    });
+
     it("forwards dataTestId to the root element", () => {
         renderWithIntl(
             <UiGeneralAccessRadio value="RESTRICTED" onChange={() => {}} dataTestId="general-access" />,

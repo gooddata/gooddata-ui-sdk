@@ -14,7 +14,7 @@ import {
     useListWithActionsKeyboardNavigation,
 } from "@gooddata/sdk-ui-kit";
 
-import { Alert } from "../../../../automations/_staging/alerting/DefaultAlertingManagementDialog/components/Alert.js";
+import { Alert } from "../../../../automations/alerting/DefaultAlertingManagementDialog/components/Alert.js";
 import { DashboardInsightSubmenuContainer } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightSubmenuContainer.js";
 
 interface IAlertsListProps {

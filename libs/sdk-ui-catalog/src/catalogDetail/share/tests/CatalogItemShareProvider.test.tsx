@@ -22,6 +22,8 @@ const stubState: IObjectShareControllerState = {
     summary: undefined,
     grantees: [],
     generalAccess: "RESTRICTED",
+    workspaceLevel: "VIEW",
+    workspaceLevelSaving: false,
     labels: [],
     labelsResolved: true,
     selectedLabelIdsByGrantee: {},
@@ -42,6 +44,7 @@ const stubActions: IObjectShareControllerActions = {
     requestGeneralAccessChange: noop,
     cancelGeneralAccessChange: noop,
     confirmGeneralAccessChange: asyncNoop,
+    changeWorkspaceLevel: asyncNoop,
 };
 const controllerStub: IObjectShareController = { state: stubState, actions: stubActions };
 
