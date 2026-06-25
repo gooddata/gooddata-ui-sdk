@@ -100,6 +100,7 @@ export const olpLabelMessages = defineMessages({
 export const olpPermissionMessages = defineMessages({
     canViewAndShare: { id: "shareDialog.share.granular.grantee.permission.share" },
     canView: { id: "shareDialog.share.granular.grantee.permission.view" },
+    canEdit: { id: "shareDialog.olp.permission.edit" },
     canViewAndShareTooltip: { id: "shareDialog.olp.permission.tooltip.share" },
     canViewTooltip: { id: "shareDialog.olp.permission.tooltip.view" },
     transferOwnership: { id: "shareDialog.olp.permission.transferOwnership" },

@@ -27,9 +27,12 @@ export function assigneeMatchesQuery(assignee: IAvailableAccessGrantee, query: s
     return `${assignee.name} ${email}`.toLowerCase().includes(query);
 }
 
-/** The row's directly-granted level. SHARE outranks VIEW. */
+/** Permission levels from strongest to weakest; the row shows the strongest it holds. */
+const LEVELS_STRONGEST_FIRST = ["EDIT", "SHARE", "VIEW"] as const satisfies ObjectSharePermissionLevel[];
+
+/** The row's directly-granted level — the strongest permission present, defaulting to VIEW. */
 export function directLevel(permissions: readonly string[]): ObjectSharePermissionLevel {
-    return permissions.includes("SHARE") ? "SHARE" : "VIEW";
+    return LEVELS_STRONGEST_FIRST.find((level) => permissions.includes(level)) ?? "VIEW";
 }
 
 /**
@@ -42,7 +45,18 @@ export function effectivePermissionAbove(
     direct: ObjectSharePermissionLevel,
     inheritedPermissions: readonly string[],
 ): ObjectSharePermissionLevel | undefined {
-    return direct !== "SHARE" && inheritedPermissions.includes("SHARE") ? "SHARE" : undefined;
+    // A direct EDIT already outranks any inherited SHARE — never warn in that case.
+    return direct === "VIEW" && inheritedPermissions.includes("SHARE") ? "SHARE" : undefined;
+}
+
+/** The permission-derived fields shared by every grantee row, regardless of kind. */
+function granteeAccess(permissions: readonly string[], inheritedPermissions: readonly string[]) {
+    const level = directLevel(permissions);
+    return {
+        level,
+        effectivePermission: effectivePermissionAbove(level, inheritedPermissions),
+        inheritsShare: inheritedPermissions.includes("SHARE"),
+    };
 }
 
 export function granteesFromAccessList(list: IObjectAccessList | undefined): IObjectShareGrantee[] {
@@ -52,40 +66,41 @@ export function granteesFromAccessList(list: IObjectAccessList | undefined): IOb
     const out: IObjectShareGrantee[] = [];
     for (const g of list.grants) {
         if (isGranularUserAccess(g)) {
-            const level = directLevel(g.permissions);
             out.push({
                 id: granteeId("user", g.user.ref),
                 kind: "user",
                 granteeRef: g.user.ref,
                 name: g.user.fullName ?? g.user.email ?? g.user.login,
                 email: g.user.email,
-                level,
-                effectivePermission: effectivePermissionAbove(level, g.inheritedPermissions),
-                inheritsShare: g.inheritedPermissions.includes("SHARE"),
+                ...granteeAccess(g.permissions, g.inheritedPermissions),
             });
         } else if (isGranularUserGroupAccess(g)) {
-            const level = directLevel(g.permissions);
             out.push({
                 id: granteeId("group", g.userGroup.ref),
                 kind: "group",
                 granteeRef: g.userGroup.ref,
                 name: g.userGroup.name ?? objRefToString(g.userGroup.ref),
-                level,
-                effectivePermission: effectivePermissionAbove(level, g.inheritedPermissions),
-                inheritsShare: g.inheritedPermissions.includes("SHARE"),
+                ...granteeAccess(g.permissions, g.inheritedPermissions),
             });
         }
     }
     return out;
 }
 
+/** The permission set a grant carries at each level; a higher level always implies VIEW. */
+const PERMISSIONS_BY_LEVEL = {
+    none: [],
+    VIEW: ["VIEW"],
+    SHARE: ["SHARE", "VIEW"],
+    EDIT: ["EDIT", "VIEW"],
+} satisfies Record<ObjectSharePermissionLevel | "none", ObjectSharePermissionLevel[]>;
+
 export function toGranularGrantee(
     kind: "user" | "group",
     granteeRef: ObjRef,
     level: ObjectSharePermissionLevel | "none",
 ): IGranularAccessGrantee {
-    const permissions: ObjectSharePermissionLevel[] =
-        level === "none" ? [] : level === "SHARE" ? ["SHARE", "VIEW"] : ["VIEW"];
+    const permissions = PERMISSIONS_BY_LEVEL[level];
     return kind === "user"
         ? { type: "granularUser", granteeRef, permissions, inheritedPermissions: [] }
         : { type: "granularGroup", granteeRef, permissions, inheritedPermissions: [] };

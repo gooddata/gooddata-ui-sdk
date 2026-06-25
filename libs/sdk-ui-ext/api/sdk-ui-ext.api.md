@@ -4,6 +4,7 @@
 
 ```ts
 
+import type { AccessGranularPermission } from '@gooddata/sdk-model';
 import { AutomationType } from '@gooddata/sdk-backend-spi';
 import { ChartInlineVisualizationType } from '@gooddata/sdk-ui-charts';
 import { ComponentType } from 'react';
@@ -1195,7 +1196,7 @@ export function NotificationsPanel(props: INotificationsPanelProps): JSX.Element
 export function ObjectShareDialog(input: IObjectShareDialogProps): JSX.Element;
 
 // @internal
-export type ObjectSharePermissionLevel = "VIEW" | "SHARE";
+export type ObjectSharePermissionLevel = AccessGranularPermission;
 
 // @alpha (undocumented)
 export const PluggableVisualizationErrorCodes: {

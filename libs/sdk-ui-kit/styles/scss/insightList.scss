@@ -53,9 +53,7 @@ $visualization-types:
 }
 
 .gd-visualizations-list {
-    .public_fixedDataTableRow_main,
-    .public_fixedDataTableCell_main,
-    .fixedDataTableCellGroupLayout_cellGroup {
+    .gd-infinite-list-item {
         overflow: visible;
     }
 }

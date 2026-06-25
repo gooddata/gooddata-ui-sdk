@@ -162,6 +162,37 @@ describe("useObjectShareController", () => {
         expect(result.current.state.generalAccess).toBe("RESTRICTED");
     });
 
+    it("surfaces an EDIT grant as level EDIT without collapsing it to VIEW", async () => {
+        const EDIT_GRANT: AccessGranteeDetail = {
+            type: "granularUser",
+            user: { ref: idRef("u1"), uri: "/u1", login: "jane", email: "jane@x.com", fullName: "Jane Good" },
+            permissions: ["EDIT", "VIEW"],
+            inheritedPermissions: [],
+        } as AccessGranteeDetail;
+        const { result } = renderController(makeService([EDIT_GRANT]), TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+        const row = result.current.state.grantees.find((g) => g.id === "user:u1");
+        expect(row?.level).toBe("EDIT");
+        // A direct EDIT already outranks any inherited SHARE — no "effective above" badge.
+        expect(row?.effectivePermission).toBeUndefined();
+    });
+
+    it("does not warn about inherited SHARE when the direct grant is EDIT", async () => {
+        const EDIT_INHERITS_SHARE: AccessGranteeDetail = {
+            type: "granularUser",
+            user: { ref: idRef("u1"), uri: "/u1", login: "jane", email: "jane@x.com", fullName: "Jane Good" },
+            permissions: ["EDIT", "VIEW"],
+            inheritedPermissions: ["SHARE", "VIEW"],
+        } as AccessGranteeDetail;
+        const { result } = renderController(makeService([EDIT_INHERITS_SHARE]), TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+        const row = result.current.state.grantees.find((g) => g.id === "user:u1");
+        expect(row?.level).toBe("EDIT");
+        expect(row?.effectivePermission).toBeUndefined();
+    });
+
     it("flags effectivePermission when inherited access exceeds the direct grant", async () => {
         // Direct VIEW, but inherits SHARE (e.g. via a group) → effective is SHARE.
         const INHERITED: AccessGranteeDetail = {

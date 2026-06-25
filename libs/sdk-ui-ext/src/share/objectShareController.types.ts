@@ -1,17 +1,20 @@
 // (C) 2026 GoodData Corporation
 
-import type { ObjRef } from "@gooddata/sdk-model";
+import type { AccessGranularPermission, ObjRef } from "@gooddata/sdk-model";
 import type { GeneralAccessValue, IUiGranteeAsyncOptions, IUiPickedGrantee } from "@gooddata/sdk-ui-kit";
 
 import type { IObjectAccessSummary, IObjectShareLabel } from "./types.js";
 
 /**
- * Permission level surfaced in the share dialog. `EDIT` is intentionally
- * not represented — the underlying permission menu caps at VIEW/SHARE.
+ * Permission level surfaced in the share dialog — the model's granular access
+ * permission (VIEW / EDIT / SHARE). `EDIT` is display-only: the dialog reflects
+ * an EDIT grant as a read-only "Can edit" row but cannot assign or change it
+ * (granting EDIT is not part of the share UI), so only VIEW and SHARE are
+ * selectable in the permission menu.
  *
  * @internal
  */
-export type ObjectSharePermissionLevel = "VIEW" | "SHARE";
+export type ObjectSharePermissionLevel = AccessGranularPermission;
 
 /**
  * Dialog row derived from a backend grant.

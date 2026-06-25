@@ -740,7 +740,7 @@
     "insightAlert.config.accessibility.title": "自訂警報名稱",
     "insightAlert.config.when": "什麼時候",
     "insightAlert.config.for": "為了",
-    "insightAlert.config.condition": "狀態",
+    "insightAlert.config.condition": "條件",
     "insightAlert.config.threshold": "臨界點",
     "insightAlert.config.comparison": "比較",
     "insightAlert.config.recipients": "收件者",

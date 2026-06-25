@@ -2,6 +2,8 @@
 
 import { useIntl } from "react-intl";
 
+import { type AccessGranularPermission } from "@gooddata/sdk-model";
+
 import { olpPermissionMessages } from "../../locales.js";
 import { bem } from "../@utils/bem.js";
 import { UiButton } from "../UiButton/UiButton.js";
@@ -20,13 +22,15 @@ export interface IUiGranteeRowControlsProps {
     /** Locked items are always treated as selected. */
     labels: ReadonlyArray<IUiLabelsChecklistItem>;
     selectedLabelIds: ReadonlyArray<string>;
-    permissionLevel: PermissionMenuLevel;
+    /** The level to display. `EDIT` renders read-only; VIEW/SHARE are selectable. */
+    permissionLevel: AccessGranularPermission;
     /**
      * Set only when the grantee inherits a higher permission than `permissionLevel`
      * (e.g. from a group); drives the warning badge. Undefined when not elevated.
      */
-    effectivePermission?: PermissionMenuLevel;
+    effectivePermission?: AccessGranularPermission;
     onLabelsChange: (selectedIds: string[]) => void;
+    /** Fires only for selectable rows (VIEW/SHARE); EDIT rows have no level control. */
     onPermissionChange: (level: PermissionMenuLevel) => void;
     onTransferOwnership?: () => void;
     onRemoveAccess?: () => void;
@@ -59,12 +63,26 @@ export function UiGranteeRowControls({
 
     const hasLabels = labels.length > 0;
 
+    // EDIT is display-only: the dialog can't assign or change it, and offering the
+    // VIEW/SHARE menu on an EDIT row would silently downgrade the grant on pick.
+    // So an EDIT row shows a static, non-interactive "Can edit" label instead of
+    // the permission dropdown.
+    const isReadOnlyLevel = permissionLevel === "EDIT";
+
     const permissionTriggerText = intl.formatMessage(
-        permissionLevel === "SHARE" ? olpPermissionMessages.canViewAndShare : olpPermissionMessages.canView,
+        isReadOnlyLevel
+            ? olpPermissionMessages.canEdit
+            : permissionLevel === "SHARE"
+              ? olpPermissionMessages.canViewAndShare
+              : olpPermissionMessages.canView,
     );
 
-    // No labels and no transfer → nothing in the ⋯ menu, so drop it.
-    const hasMoreOptions = hasLabels || !!onTransferOwnership;
+    // A read-only level has no permission dropdown to host Remove access, so that
+    // action moves into the ⋯ menu for those rows (dropdown rows keep it in the menu).
+    const removeInMoreOptions = isReadOnlyLevel ? onRemoveAccess : undefined;
+
+    // Nothing to put in the ⋯ menu → drop it.
+    const hasMoreOptions = hasLabels || !!onTransferOwnership || !!removeInMoreOptions;
 
     // Guard on permissionLevel too, so the badge can't show when the assigned
     // level already matches the inherited one.
@@ -93,26 +111,31 @@ export function UiGranteeRowControls({
                     }
                 />
             ) : null}
-            <UiPermissionMenu
-                anchor={
-                    <UiButton
-                        label={permissionTriggerText}
-                        size="small"
-                        variant="dropdownInline"
-                        iconAfter="navigateDown"
-                        isDisabled={isDisabled}
-                    />
-                }
-                selectedLevel={permissionLevel}
-                onPermissionChange={onPermissionChange}
-                onRemoveAccess={onRemoveAccess}
-            />
+            {permissionLevel === "EDIT" ? (
+                <span className={e("readonly-permission")}>{permissionTriggerText}</span>
+            ) : (
+                <UiPermissionMenu
+                    anchor={
+                        <UiButton
+                            label={permissionTriggerText}
+                            size="small"
+                            variant="dropdownInline"
+                            iconAfter="navigateDown"
+                            isDisabled={isDisabled}
+                        />
+                    }
+                    selectedLevel={permissionLevel}
+                    onPermissionChange={onPermissionChange}
+                    onRemoveAccess={onRemoveAccess}
+                />
+            )}
             {hasMoreOptions ? (
                 <UiMoreOptionsMenu
                     labels={hasLabels ? labels : undefined}
                     selectedLabelIds={selectedLabelIds}
                     onLabelsChange={onLabelsChange}
                     onTransferOwnership={onTransferOwnership}
+                    onRemoveAccess={removeInMoreOptions}
                     isDisabled={isDisabled}
                 />
             ) : null}

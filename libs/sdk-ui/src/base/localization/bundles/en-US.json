@@ -2895,6 +2895,10 @@
         "text": "Add",
         "crowdinContext": "Primary button at the bottom of the OLP add-grantee screen. Confirms granting access to the selected user or group and returns to the main share dialog."
     },
+    "shareDialog.olp.permission.edit": {
+        "text": "Can edit",
+        "crowdinContext": "Read-only permission label shown for a grantee who has edit rights on the shared object. Edit access is granted outside this dialog, so the label is not selectable — it only reflects the grantee's existing level."
+    },
     "shareDialog.olp.permission.transferOwnership": {
         "text": "Transfer ownership",
         "crowdinContext": "Menu item that promotes the selected grantee to the owner of the shared object. The current user loses ownership and becomes a regular grantee."

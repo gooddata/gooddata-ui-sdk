@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { type DashboardTabularExportRequestV2 } from "@gooddata/api-client-tiger";
+import { type DashboardTabularExportRequestV2, type TabularExportRequest } from "@gooddata/api-client-tiger";
 import {
     type FilterContextItem,
     type IDashboardAttributeFilter,
@@ -244,6 +244,85 @@ describe("ExportDefinitionsConverter toBackend", () => {
         expect(metadata.parametersByTab?.["tabOwning"]).toEqual([parameter]);
     });
 
+    it("emits metadata.parametersByTab from viz-object content in formatted CSV export", () => {
+        const parameter: IDashboardExportParameter = { id: "topN", value: "5", title: "Top N" };
+        const request: IExportDefinitionVisualizationObjectRequestPayload = {
+            type: "visualizationObject",
+            fileName: "formatted-csv",
+            format: "CSV",
+            content: {
+                visualizationObject: "visId",
+                widget: "widgetId",
+                dashboard: "dashboardId",
+                parametersByTab: { tabOwning: [parameter] },
+            },
+        };
+
+        const result = convertToTabularExportRequest(request);
+        const metadata = result.metadata as {
+            parametersByTab?: Record<string, IDashboardExportParameter[]>;
+        };
+
+        expect(metadata.parametersByTab?.["tabOwning"]).toEqual([parameter]);
+    });
+
+    it("omits metadata.parametersByTab from formatted CSV export when content has none", () => {
+        const request: IExportDefinitionVisualizationObjectRequestPayload = {
+            type: "visualizationObject",
+            fileName: "formatted-csv",
+            format: "CSV",
+            content: {
+                visualizationObject: "visId",
+                widget: "widgetId",
+                dashboard: "dashboardId",
+            },
+        };
+
+        const result = convertToTabularExportRequest(request);
+        const metadata = result.metadata as {
+            parametersByTab?: Record<string, IDashboardExportParameter[]>;
+        };
+
+        expect(metadata.parametersByTab).toBeUndefined();
+    });
+
+    it("sends visualizationObjectCustomParameters flattened from parametersByTab in formatted CSV export", () => {
+        const paramA: IDashboardExportParameter = { id: "topN", value: "5", title: "Top N" };
+        const paramB: IDashboardExportParameter = { id: "year", value: "2026", title: "Year" };
+        const request: IExportDefinitionVisualizationObjectRequestPayload = {
+            type: "visualizationObject",
+            fileName: "formatted-csv",
+            format: "CSV",
+            content: {
+                visualizationObject: "visId",
+                widget: "widgetId",
+                dashboard: "dashboardId",
+                parametersByTab: { tab1: [paramA], tab2: [paramB] },
+            },
+        };
+
+        const result = convertToTabularExportRequest(request);
+
+        expect(result.visualizationObjectCustomParameters).toEqual([paramA, paramB]);
+    });
+
+    it("omits visualizationObjectCustomParameters when there are no parameter overrides", () => {
+        const request: IExportDefinitionVisualizationObjectRequestPayload = {
+            type: "visualizationObject",
+            fileName: "formatted-csv",
+            format: "CSV",
+            content: {
+                visualizationObject: "visId",
+                widget: "widgetId",
+                dashboard: "dashboardId",
+            },
+        };
+
+        const result = convertToTabularExportRequest(request);
+
+        expect(result.visualizationObjectCustomParameters).toBeUndefined();
+    });
+
     it("converts dashboard filter context metadata in visual export", () => {
         const dashboardFilter: FilterContextItem = {
             attributeFilter: {
@@ -442,6 +521,48 @@ describe("ExportDefinitionsConverter toBackend", () => {
         };
 
         expect(metadata.parametersByTab?.["tab1"]).toEqual([parameter]);
+    });
+
+    it("sends visualizationObjectCustomParameters from viz-object content in standalone export definition", () => {
+        const paramA: IDashboardExportParameter = { id: "topN", value: "5", title: "Top N" };
+        const paramB: IDashboardExportParameter = { id: "year", value: "2026", title: "Year" };
+        const request: IExportDefinitionVisualizationObjectRequestPayload = {
+            type: "visualizationObject",
+            fileName: "viz-export-definition",
+            format: "CSV",
+            content: {
+                visualizationObject: "visId",
+                widget: "widgetId",
+                dashboard: "dashboardId",
+                parametersByTab: { tab1: [paramA], tab2: [paramB] },
+            },
+        };
+
+        const result = convertExportDefinitionRequestPayload(request) as TabularExportRequest;
+
+        expect(result.visualizationObjectCustomParameters).toEqual([paramA, paramB]);
+    });
+
+    it("emits metadata.parametersByTab from viz-object content in standalone export definition", () => {
+        const parameter: IDashboardExportParameter = { id: "topN", value: "5", title: "Top N" };
+        const request: IExportDefinitionVisualizationObjectRequestPayload = {
+            type: "visualizationObject",
+            fileName: "viz-export-definition",
+            format: "CSV",
+            content: {
+                visualizationObject: "visId",
+                widget: "widgetId",
+                dashboard: "dashboardId",
+                parametersByTab: { tabOwning: [parameter] },
+            },
+        };
+
+        const result = convertExportDefinitionRequestPayload(request);
+        const metadata = result.metadata as {
+            parametersByTab?: Record<string, IDashboardExportParameter[]>;
+        };
+
+        expect(metadata.parametersByTab?.["tabOwning"]).toEqual([parameter]);
     });
 
     it("maps FilterContextItem filters to dashboard override in dashboard tabular export", () => {

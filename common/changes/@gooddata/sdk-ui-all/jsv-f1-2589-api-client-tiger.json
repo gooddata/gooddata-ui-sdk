@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "api-client-tiger: Add `visualizationObjectCustomParameters` to tabular export request",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

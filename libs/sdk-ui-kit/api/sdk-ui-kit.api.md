@@ -6720,19 +6720,17 @@ export interface IUiGranteeAvatarProps {
 export interface IUiGranteeRowControlsProps {
     // (undocumented)
     dataTestId?: string;
-    effectivePermission?: PermissionMenuLevel;
+    effectivePermission?: AccessGranularPermission;
     isDisabled?: boolean;
     labels: ReadonlyArray<IUiLabelsChecklistItem>;
     // (undocumented)
     onLabelsChange: (selectedIds: string[]) => void;
-    // (undocumented)
     onPermissionChange: (level: PermissionMenuLevel) => void;
     // (undocumented)
     onRemoveAccess?: () => void;
     // (undocumented)
     onTransferOwnership?: () => void;
-    // (undocumented)
-    permissionLevel: PermissionMenuLevel;
+    permissionLevel: AccessGranularPermission;
     // (undocumented)
     selectedLabelIds: ReadonlyArray<string>;
 }
@@ -7310,6 +7308,7 @@ export interface IUiMoreOptionsMenuProps {
     labels?: ReadonlyArray<IUiLabelsChecklistItem>;
     // (undocumented)
     onLabelsChange?: (selectedIds: string[]) => void;
+    onRemoveAccess?: () => void;
     onTransferOwnership?: () => void;
     selectedLabelIds?: ReadonlyArray<string>;
 }

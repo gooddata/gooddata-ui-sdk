@@ -330,11 +330,18 @@ export const convertToTabularExportRequest = (
         (exportRequest.format === "CSV" || exportRequest.format === "XLSX") &&
         isExportDefinitionVisualizationObjectRequestPayload(exportRequest)
     ) {
-        const { visualizationObject, filters, widget, dashboard } = exportRequest.content;
+        const { visualizationObject, filters, widget, dashboard, parametersByTab } = exportRequest.content;
         const { mergeHeaders, orientation, exportInfo, grandTotalsPosition, delimiter } =
             exportRequest.settings ?? {};
         const filtersObj = filters
             ? { visualizationObjectCustomFilters: convertSdkFiltersToTiger(filters) }
+            : {};
+
+        // A viz-object export executes one visualization, so its parametersByTab carries only the
+        // widget's owning tab; collapse that single bucket into the flat execution field.
+        const flatParameters = Object.values(parametersByTab ?? {}).flat();
+        const parametersObj = flatParameters.length
+            ? { visualizationObjectCustomParameters: flatParameters }
             : {};
 
         return {
@@ -342,6 +349,7 @@ export const convertToTabularExportRequest = (
             format: exportRequest.format,
             visualizationObject,
             ...filtersObj,
+            ...parametersObj,
             relatedDashboardId: dashboard,
             settings: {
                 ...(delimiter ? { delimiter } : {}),
@@ -352,6 +360,9 @@ export const convertToTabularExportRequest = (
             },
             metadata: {
                 widget,
+                // The execution field above is flat and loses tab keys; persist the tab-keyed map so
+                // reopening the schedule can rebuild the per-tab parameter UI. Backend ignores metadata.
+                ...(parametersByTab ? { parametersByTab } : {}),
                 ...(title ? { title } : {}),
             },
         };
@@ -442,14 +453,22 @@ export const convertExportDefinitionRequestPayload = (
     }
 
     const { mergeHeaders, orientation, grandTotalsPosition, delimiter } = exportRequest.settings ?? {};
-    const { visualizationObject, filters, widget, dashboard } = exportRequest.content;
+    const { visualizationObject, filters, widget, dashboard, parametersByTab } = exportRequest.content;
     const filtersObj = filters ? { visualizationObjectCustomFilters: convertSdkFiltersToTiger(filters) } : {};
+
+    // A viz-object export executes one visualization, so its parametersByTab carries only the
+    // widget's owning tab; collapse that single bucket into the flat execution field.
+    const flatParameters = Object.values(parametersByTab ?? {}).flat();
+    const parametersObj = flatParameters.length
+        ? { visualizationObjectCustomParameters: flatParameters }
+        : {};
 
     return {
         fileName: exportRequest.fileName,
         format: exportRequest.format,
         visualizationObject,
         ...filtersObj,
+        ...parametersObj,
         relatedDashboardId: dashboard,
         settings: {
             ...(delimiter ? { delimiter } : {}),
@@ -459,6 +478,9 @@ export const convertExportDefinitionRequestPayload = (
         },
         metadata: {
             widget,
+            // The execution field above is flat and loses tab keys; persist the tab-keyed map so
+            // reopening the schedule can rebuild the per-tab parameter UI. Backend ignores metadata.
+            ...(parametersByTab ? { parametersByTab } : {}),
             ...(title ? { title } : {}),
         },
     } as TabularExportRequest;

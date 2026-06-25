@@ -71,6 +71,7 @@ export type LineChartConfigProperties = {
         color: string | number;
     };
     disableDrillDown: boolean;
+    disableDrillIntoURL: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
@@ -135,6 +136,7 @@ const DEFAULTS: ConfigDefaults<LineChartConfigProperties> = {
         color: "rgb(255, 0, 0)",
     },
     disableDrillDown: false,
+    disableDrillIntoURL: false,
     disableAlerts: false,
     disableScheduledExports: false,
     disableKeyDriveAnalysisOn: {},
@@ -271,6 +273,9 @@ export function lineChartLoad(props: VisualisationConfig<LineChartConfigProperti
                         getValueOrDefault(value as boolean, DEFAULTS.disableDrillDown, "bool"),
                     ],
                 ];
+            case "disableDrillIntoURL":
+                // Org-specific default (enableDrillToUrlByDefault); always serialise when set so it round-trips.
+                return [["disable_drill_into_url", value === undefined ? undefined : !!value]];
             case "disableAlerts":
                 return [
                     ["disable_alerts", getValueOrDefault(value as boolean, DEFAULTS.disableAlerts, "bool")],
@@ -381,6 +386,8 @@ export function lineChartSave(
             color: getValueOrDefault(config.anomaly_detection_color, DEFAULTS.anomalies.color),
         }),
         disableDrillDown: getValueOrDefault(config.disable_drill_down, DEFAULTS.disableDrillDown, "bool"),
+        disableDrillIntoURL:
+            config.disable_drill_into_url === undefined ? undefined : !!config.disable_drill_into_url,
         disableAlerts: getValueOrDefault(config.disable_alerts, DEFAULTS.disableAlerts, "bool"),
         disableScheduledExports: getValueOrDefault(
             config.disable_scheduled_exports,

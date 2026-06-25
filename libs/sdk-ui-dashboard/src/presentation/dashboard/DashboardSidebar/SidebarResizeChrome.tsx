@@ -4,7 +4,6 @@ import {
     type ReactElement,
     type ReactNode,
     type PointerEvent as ReactPointerEvent,
-    useEffect,
     useRef,
     useState,
 } from "react";
@@ -12,14 +11,11 @@ import {
 import cx from "classnames";
 import { clamp } from "lodash-es";
 
-import { useLocalStorage } from "@gooddata/sdk-ui";
 import { makeKeyboardNavigation, useCloseOnEscape } from "@gooddata/sdk-ui-kit";
 
-const SIDEBAR_MIN_WIDTH = 230;
-const SIDEBAR_MAX_WIDTH = 500;
-const EDITOR_MIN_WIDTH = 960;
+import { useResizableSidebar } from "./SidebarResizeContext.js";
+
 const KEYBOARD_STEP = 10;
-const LOCAL_STORAGE_KEY = "gd-dashboard-sidebar-width";
 
 const handleSeparatorKeyboardNavigation = makeKeyboardNavigation({
     shrink: [{ code: "ArrowLeft" }],
@@ -29,27 +25,12 @@ const handleSeparatorKeyboardNavigation = makeKeyboardNavigation({
 });
 
 /**
- * Returns the current `window.innerWidth`, kept in sync with the `resize` event.
- */
-function useWindowWidth(): number {
-    const [width, setWidth] = useState<number>(() => window.innerWidth);
-
-    useEffect(() => {
-        const handleResize = () => setWidth(window.innerWidth);
-        window.addEventListener("resize", handleResize);
-
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
-
-    return width;
-}
-
-/**
- * Internal presentational wrapper that holds the dashboard sidebar drag-to-resize state.
+ * Internal presentational wrapper that drives the dashboard sidebar drag-to-resize interaction.
  *
- * Owns: committed width (persisted to localStorage), live drag width (only used for the dashed
- * indicator transform), drag phase, and a window-width tracker that enforces a minimum editor
- * canvas width without overwriting the user's persisted preference.
+ * Owns only the live drag state (drag width — used for the dashed indicator transform — and drag
+ * phase). The committed width, min/max, and the editor-canvas constraint live in the shared
+ * {@link useResizableSidebar} state, so the same value also feeds the content area's width via the
+ * `--gd-dashboard-sidebar-width` custom property.
  *
  * Renders `.gd-sidebar-container` itself so the resize handle can be positioned absolutely inside
  * it — that element is sticky+100vh, so the handle (and the grip centered inside it) tracks the
@@ -74,15 +55,11 @@ export function SidebarResizeChrome({
         pointerId: number;
     } | null>(null);
 
-    const containerWidth = useWindowWidth();
-    const [persistedWidth, setPersistedWidth] = useLocalStorage<number>(LOCAL_STORAGE_KEY, SIDEBAR_MIN_WIDTH);
-
-    const effectiveMax = clamp(containerWidth - EDITOR_MIN_WIDTH, SIDEBAR_MIN_WIDTH, SIDEBAR_MAX_WIDTH);
-    const effectiveWidth = clamp(persistedWidth, SIDEBAR_MIN_WIDTH, effectiveMax);
+    const { width, min, max, canResize, setWidth } = useResizableSidebar();
 
     const isDragging = dragWidth !== null;
-    const isResizable = effectiveMax > SIDEBAR_MIN_WIDTH;
 
+    // Tear down the drag without committing — used when the user presses Escape.
     const endDrag = () => {
         dragOriginRef.current = null;
         setDragWidth(null);
@@ -91,11 +68,10 @@ export function SidebarResizeChrome({
     useCloseOnEscape(isDragging, endDrag);
 
     const handleKeyDown = handleSeparatorKeyboardNavigation({
-        shrink: () =>
-            setPersistedWidth(clamp(effectiveWidth - KEYBOARD_STEP, SIDEBAR_MIN_WIDTH, effectiveMax)),
-        grow: () => setPersistedWidth(clamp(effectiveWidth + KEYBOARD_STEP, SIDEBAR_MIN_WIDTH, effectiveMax)),
-        minimize: () => setPersistedWidth(SIDEBAR_MIN_WIDTH),
-        maximize: () => setPersistedWidth(effectiveMax),
+        shrink: () => setWidth(width - KEYBOARD_STEP),
+        grow: () => setWidth(width + KEYBOARD_STEP),
+        minimize: () => setWidth(min),
+        maximize: () => setWidth(max),
     });
 
     const handlePointerDown = (event: ReactPointerEvent<HTMLButtonElement>) => {
@@ -103,11 +79,11 @@ export function SidebarResizeChrome({
         event.currentTarget.setPointerCapture(event.pointerId);
         dragOriginRef.current = {
             clientX: event.clientX,
-            width: effectiveWidth,
+            width,
             pointerId: event.pointerId,
         };
 
-        setDragWidth(effectiveWidth);
+        setDragWidth(width);
     };
 
     const handlePointerMove = (event: ReactPointerEvent<HTMLButtonElement>) => {
@@ -115,22 +91,20 @@ export function SidebarResizeChrome({
             return;
         }
 
-        const width = widthFromClientX(event.clientX);
+        const nextWidth = widthFromClientX(event.clientX);
 
-        if (width !== null) {
-            setDragWidth(width);
+        if (nextWidth !== null) {
+            setDragWidth(nextWidth);
         }
     };
 
-    const handlePointerUp = (event: ReactPointerEvent<HTMLButtonElement>) => {
-        if (event.pointerId !== dragOriginRef.current?.pointerId) {
-            return;
-        }
-
-        const width = widthFromClientX(event.clientX);
-
-        if (width !== null) {
-            setPersistedWidth(width);
+    // Commit the last dragged width, then tear the drag down. onLostPointerCapture fires whenever the
+    // captured pointer is released for any reason — pointerup, pointercancel, or the pointer being
+    // lost (e.g. the mouse released outside the iframe/window) — so the final width is always
+    // persisted even if a plain pointerup never reaches us.
+    const handleLostPointerCapture = () => {
+        if (dragWidth !== null) {
+            setWidth(dragWidth);
         }
 
         endDrag();
@@ -143,16 +117,16 @@ export function SidebarResizeChrome({
             return null;
         }
 
-        return clamp(origin.width + (clientX - origin.clientX), SIDEBAR_MIN_WIDTH, effectiveMax);
+        return clamp(origin.width + (clientX - origin.clientX), min, max);
     };
 
     return (
         <div
             className={cx("gd-resizable-sidebar", {
-                "gd-resizable-sidebar--resizable": isResizable,
+                "gd-resizable-sidebar--resizable": canResize,
                 "gd-resizable-sidebar--dragging": isDragging,
             })}
-            style={{ width: effectiveWidth }}
+            style={{ width }}
         >
             <div
                 className="col gd-flex-item gd-sidebar-container gd-sidebar-container--resizable"
@@ -164,22 +138,21 @@ export function SidebarResizeChrome({
                     type="button"
                     style={
                         {
-                            "--drag-x": `${isDragging ? dragWidth : effectiveWidth}px`,
+                            "--drag-x": `${isDragging ? dragWidth : width}px`,
                         } as React.CSSProperties
                     }
                     className={cx("gd-resizable-sidebar__handle", {
                         "gd-resizable-sidebar__handle--dragging": isDragging,
                     })}
-                    disabled={!isResizable}
+                    disabled={!canResize}
                     role="separator"
                     aria-orientation="vertical"
-                    aria-valuemin={SIDEBAR_MIN_WIDTH}
-                    aria-valuemax={effectiveMax}
-                    aria-valuenow={effectiveWidth}
-                    onPointerDown={isResizable ? handlePointerDown : undefined}
+                    aria-valuemin={min}
+                    aria-valuemax={max}
+                    aria-valuenow={width}
+                    onPointerDown={canResize ? handlePointerDown : undefined}
                     onPointerMove={handlePointerMove}
-                    onPointerUp={handlePointerUp}
-                    onPointerCancel={endDrag}
+                    onLostPointerCapture={handleLostPointerCapture}
                     onKeyDown={isDragging ? undefined : handleKeyDown}
                 >
                     <span className="gd-resizable-sidebar__handle-grip" aria-hidden="true" />

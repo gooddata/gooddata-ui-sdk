@@ -116,6 +116,7 @@ export function SemanticSearch({
     return (
         <SearchOverlay
             limit={RESULTS_LIMIT}
+            locale={intl.locale}
             onSelect={onSelect}
             onSearch={onSearchMetrics}
             deepSearch={false}

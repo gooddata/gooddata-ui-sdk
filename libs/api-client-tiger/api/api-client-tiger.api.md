@@ -7534,13 +7534,6 @@ export interface AutomationDashboardMeasureValueFilterDashboardMeasureValueFilte
     'title'?: string;
 }
 
-// @public
-export interface AutomationDashboardParameterValue {
-    'id': string;
-    'title': string;
-    'value': string;
-}
-
 // @public (undocumented)
 export interface AutomationDashboardTabularExport {
     // (undocumented)
@@ -7551,12 +7544,12 @@ export interface AutomationDashboardTabularExport {
 export interface AutomationDashboardTabularExportRequestV2 {
     'dashboardFiltersOverride'?: Array<AutomationDashboardFilter>;
     'dashboardId': string;
-    'dashboardParametersOverride'?: Array<AutomationDashboardParameterValue>;
+    'dashboardParametersOverride'?: Array<AutomationParameterValue>;
     'dashboardTabsFiltersOverrides'?: {
         [key: string]: Array<AutomationDashboardFilter>;
     };
     'dashboardTabsParametersOverrides'?: {
-        [key: string]: Array<AutomationDashboardParameterValue>;
+        [key: string]: Array<AutomationParameterValue>;
     };
     'fileName': string;
     'format': AutomationDashboardTabularExportRequestV2FormatEnum;
@@ -7915,6 +7908,13 @@ export interface AutomationOver {
 export interface AutomationParameterItem {
     // (undocumented)
     'parameter': AutomationAfmObjectIdentifierParameter;
+    'value': string;
+}
+
+// @public
+export interface AutomationParameterValue {
+    'id': string;
+    'title': string;
     'value': string;
 }
 
@@ -8682,6 +8682,7 @@ export interface AutomationTabularExportRequest {
     'settings'?: AutomationSettings;
     'visualizationObject'?: string;
     'visualizationObjectCustomFilters'?: Array<object>;
+    'visualizationObjectCustomParameters'?: Array<AutomationParameterValue>;
 }
 
 // @public (undocumented)
@@ -10386,13 +10387,6 @@ export interface DashboardMeasureValueFilterDashboardMeasureValueFilter {
     'title'?: string;
 }
 
-// @public
-export interface DashboardParameterValue {
-    'id': string;
-    'title': string;
-    'value': string;
-}
-
 // @public (undocumented)
 export interface DashboardPermissions {
     'rules': Array<RulePermission>;
@@ -10683,12 +10677,12 @@ export type DashboardSlidesTemplateAppliedOnEnum = 'PDF' | 'PPTX';
 export interface DashboardTabularExportRequestV2 {
     'dashboardFiltersOverride'?: Array<DashboardFilter>;
     'dashboardId': string;
-    'dashboardParametersOverride'?: Array<DashboardParameterValue>;
+    'dashboardParametersOverride'?: Array<ParameterValue>;
     'dashboardTabsFiltersOverrides'?: {
         [key: string]: Array<DashboardFilter>;
     };
     'dashboardTabsParametersOverrides'?: {
-        [key: string]: Array<DashboardParameterValue>;
+        [key: string]: Array<ParameterValue>;
     };
     'fileName': string;
     'format': DashboardTabularExportRequestV2FormatEnum;
@@ -18094,21 +18088,14 @@ export interface ExportDashboardMeasureValueFilterDashboardMeasureValueFilter {
 }
 
 // @public
-export interface ExportDashboardParameterValue {
-    'id': string;
-    'title': string;
-    'value': string;
-}
-
-// @public
 export interface ExportDashboardTabularExportRequest {
     'dashboardFiltersOverride'?: Array<ExportDashboardFilter>;
-    'dashboardParametersOverride'?: Array<ExportDashboardParameterValue>;
+    'dashboardParametersOverride'?: Array<ExportParameterValue>;
     'dashboardTabsFiltersOverrides'?: {
         [key: string]: Array<ExportDashboardFilter>;
     };
     'dashboardTabsParametersOverrides'?: {
-        [key: string]: Array<ExportDashboardParameterValue>;
+        [key: string]: Array<ExportParameterValue>;
     };
     'fileName': string;
     'format': ExportDashboardTabularExportRequestFormatEnum;
@@ -18556,6 +18543,13 @@ export interface ExportParameterItem {
 }
 
 // @public
+export interface ExportParameterValue {
+    'id': string;
+    'title': string;
+    'value': string;
+}
+
+// @public
 export interface ExportPdfTableStyle {
     'properties'?: Array<ExportPdfTableStyleProperty>;
     'selector': string;
@@ -18859,6 +18853,7 @@ export interface ExportTabularExportRequest {
     'settings'?: ExportSettings;
     'visualizationObject'?: string;
     'visualizationObjectCustomFilters'?: Array<object>;
+    'visualizationObjectCustomParameters'?: Array<ExportParameterValue>;
 }
 
 // @public (undocumented)
@@ -32358,6 +32353,13 @@ export interface ParametersApiUpdateEntityParametersRequest {
 }
 
 // @public
+export interface ParameterValue {
+    'id': string;
+    'title': string;
+    'value': string;
+}
+
+// @public
 export interface PdfTableStyle {
     'properties'?: Array<PdfTableStyleProperty>;
     'selector': string;
@@ -34043,6 +34045,7 @@ export interface TabularExportRequest {
     'settings'?: Settings;
     'visualizationObject'?: string;
     'visualizationObjectCustomFilters'?: Array<object>;
+    'visualizationObjectCustomParameters'?: Array<ParameterValue>;
 }
 
 // @public (undocumented)

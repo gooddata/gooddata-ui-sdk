@@ -12,4 +12,12 @@
         align-items: center;
         cursor: default;
     }
+
+    // Static label for a display-only level (EDIT): the grant can't be managed
+    // from this dialog, so it reads as plain text with no dropdown affordance.
+    &__readonly-permission {
+        font-size: 12px;
+        color: var(--gd-palette-complementary-6);
+        white-space: nowrap;
+    }
 }

@@ -68,6 +68,50 @@ describe("UiGranteeRowControls", () => {
         expect(screen.getByRole("button", { name: /^Can view & share$/ })).toBeInTheDocument();
     });
 
+    it("renders EDIT as a static, non-interactive 'Can edit' label with no permission dropdown", () => {
+        renderControls({ permissionLevel: "EDIT", selectedLabelIds: ["id"] });
+        // Shown as plain text, not a button — the grant can't be managed here.
+        expect(screen.getByText("Can edit")).toBeInTheDocument();
+        expect(screen.queryByRole("button", { name: /Can edit/ })).not.toBeInTheDocument();
+        expect(screen.queryByRole("button", { name: /Can view/ })).not.toBeInTheDocument();
+    });
+
+    it("still exposes the ⋯ labels menu for an EDIT-level grantee", () => {
+        // Label scope is independent of the permission level, so it stays editable.
+        renderControls({ permissionLevel: "EDIT" });
+        openMoreOptions();
+        expect(screen.getByRole("menuitem", { name: /labels access/i })).toBeInTheDocument();
+    });
+
+    it("keeps Remove access reachable for an EDIT row via the ⋯ menu", () => {
+        // EDIT has no permission dropdown to host Remove access, so it moves to the ⋯ menu.
+        const onRemoveAccess = vi.fn();
+        renderControls({ permissionLevel: "EDIT", onRemoveAccess });
+        openMoreOptions();
+        const removeItem = screen.getByRole("menuitem", { name: /Remove access/i });
+        fireEvent.click(removeItem);
+        expect(onRemoveAccess).toHaveBeenCalledOnce();
+    });
+
+    it("shows the ⋯ menu with Remove access for a label-less EDIT grantee", () => {
+        // Even with no labels and no transfer, an EDIT row must stay removable.
+        renderControls({
+            permissionLevel: "EDIT",
+            labels: [],
+            selectedLabelIds: [],
+            onRemoveAccess: () => {},
+        });
+        openMoreOptions();
+        expect(screen.getByRole("menuitem", { name: /Remove access/i })).toBeInTheDocument();
+    });
+
+    it("does not duplicate Remove access into the ⋯ menu for a VIEW row", () => {
+        // VIEW keeps Remove in its permission dropdown; the ⋯ menu must not repeat it.
+        renderControls({ permissionLevel: "VIEW", onRemoveAccess: () => {} });
+        openMoreOptions();
+        expect(screen.queryByRole("menuitem", { name: /Remove access/i })).not.toBeInTheDocument();
+    });
+
     it("shows the effective-permission warning badge only when effectivePermission is set", () => {
         const { rerender } = renderControls({ permissionLevel: "VIEW" });
         // No badge when the assigned permission is already effective.

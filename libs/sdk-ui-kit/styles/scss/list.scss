@@ -1,5 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-@use "fixed-data-table-2/dist/fixed-data-table.css";
 @use "sass:color";
 @use "animations";
 @use "List/_mixins" as list-mixins;
@@ -461,85 +460,36 @@ button.gd-list-item {
 }
 
 .gd-infinite-list {
-    .fixedDataTableLayout_topShadow,
-    .fixedDataTableLayout_bottomShadow {
-        display: none;
-    }
+    .gd-infinite-list-scroll-container {
+        overflow-x: hidden;
+        overflow-y: auto;
+        overscroll-behavior: contain;
 
-    .public_fixedDataTable_main,
-    .fixedDataTableCellLayout_main,
-    .fixedDataTableRowLayout_main {
-        border: none;
-    }
-
-    .public_fixedDataTable_main:focus-visible {
-        outline: revert;
-    }
-
-    .public_Scrollbar_main {
-        &,
-        &.public_Scrollbar_mainActive {
-            border-color: transparent;
+        &::-webkit-scrollbar {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 6px;
         }
 
-        &,
-        &Active {
-            background-color: transparent;
-        }
-
-        &:hover,
-        &Active {
-            .public_Scrollbar_face::after {
-                background-color: variables.$gd-color-disabled;
-            }
-        }
-    }
-
-    .public_Scrollbar_face {
-        &::after {
+        &::-webkit-scrollbar-thumb {
+            border-radius: 3px;
             background-color: color.adjust(variables.$default-gd-color-disabled, $alpha: -0.7);
         }
 
-        &Active::after {
+        &:hover::-webkit-scrollbar-thumb {
             background-color: variables.$gd-color-disabled;
         }
-    }
 
-    .public_fixedDataTable_header,
-    .public_fixedDataTable_header .public_fixedDataTableCell_main,
-    .public_fixedDataTable_scrollbarSpacer {
-        background: none;
-    }
-
-    .public_fixedDataTableRow_main,
-    .public_fixedDataTableCell_main,
-    .public_fixedDataTableRow_highlighted,
-    .public_fixedDataTableRow_highlighted .public_fixedDataTableCell_main {
-        background-color: transparent;
-    }
-
-    .public_fixedDataTableCell_cellContent {
-        padding: 0;
-        white-space: nowrap;
-        color: variables.$gd-color-text;
-
-        &:hover {
-            background-color: transparent;
+        &:focus-visible {
+            outline: revert;
         }
     }
 
-    .fixedDataTableCellLayout_wrap1 {
-        table-layout: fixed;
+    .gd-infinite-list-item {
+        white-space: nowrap;
+        color: variables.$gd-color-text;
     }
 
-    .fixedDataTableCellLayout_wrap2,
-    .fixedDataTableCellLayout_wrap3 {
-        width: inherit;
-    }
-
-    .fixedDataTableCellLayout_wrap2,
-    .fixedDataTableCellLayout_wrap3,
-    .public_fixedDataTableCell_cellContent,
     .gd-project-list-item {
         height: inherit;
     }

@@ -334,6 +334,7 @@ export const convertTabularExportRequest = (
             filters: convertTigerToSdkFilters(visualizationObjectCustomFilters),
             dashboard: relatedDashboardId,
             widget: metadata?.widget,
+            ...(metadata?.parametersByTab ? { parametersByTab: metadata.parametersByTab } : {}),
         },
     };
 };
@@ -401,7 +402,7 @@ const convertExportDefinitionRequestPayload = (
     exportRequest: VisualExportRequest | TabularExportRequest,
 ): IExportDefinitionRequestPayload => {
     if (isTabularRequest(exportRequest)) {
-        const { widget } = (exportRequest.metadata as MetadataObjectDefinition) ?? {};
+        const { widget, parametersByTab } = (exportRequest.metadata as MetadataObjectDefinition) ?? {};
 
         const filters = exportRequest.visualizationObjectCustomFilters as ITigerFilter[] | undefined;
         const filtersObj = filters ? { filters: convertTigerToSdkFilters(filters) } : {};
@@ -427,6 +428,7 @@ const convertExportDefinitionRequestPayload = (
                 dashboard: exportRequest.relatedDashboardId ?? "",
                 widget,
                 ...filtersObj,
+                ...(parametersByTab ? { parametersByTab } : {}),
             },
             ...settingsObj,
         };

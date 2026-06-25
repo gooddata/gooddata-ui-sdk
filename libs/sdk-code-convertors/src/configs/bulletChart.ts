@@ -55,6 +55,7 @@ export type BulletChartConfigProperties = {
         enabled: boolean;
     };
     disableDrillDown: boolean;
+    disableDrillIntoURL: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
@@ -95,6 +96,7 @@ const DEFAULTS: ConfigDefaults<BulletChartConfigProperties> = {
         enabled: true,
     },
     disableDrillDown: false,
+    disableDrillIntoURL: false,
     disableAlerts: false,
     disableScheduledExports: false,
     disableKeyDriveAnalysisOn: {},
@@ -176,6 +178,9 @@ export function bulletChartLoad(props: VisualisationConfig<BulletChartConfigProp
                         getValueOrDefault(value as boolean, DEFAULTS.disableDrillDown, "bool"),
                     ],
                 ];
+            case "disableDrillIntoURL":
+                // Org-specific default (enableDrillToUrlByDefault); always serialise when set so it round-trips.
+                return [["disable_drill_into_url", value === undefined ? undefined : !!value]];
             case "disableAlerts":
                 return [
                     ["disable_alerts", getValueOrDefault(value as boolean, DEFAULTS.disableAlerts, "bool")],
@@ -236,6 +241,8 @@ export function bulletChartSave(
             enabled: getValueOrDefault(config.grid_enabled, DEFAULTS.grid.enabled, "bool"),
         }),
         disableDrillDown: getValueOrDefault(config.disable_drill_down, DEFAULTS.disableDrillDown, "bool"),
+        disableDrillIntoURL:
+            config.disable_drill_into_url === undefined ? undefined : !!config.disable_drill_into_url,
         disableAlerts: getValueOrDefault(config.disable_alerts, DEFAULTS.disableAlerts, "bool"),
         disableScheduledExports: getValueOrDefault(
             config.disable_scheduled_exports,

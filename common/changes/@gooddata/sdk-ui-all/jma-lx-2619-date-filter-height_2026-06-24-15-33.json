@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-filters: Fixed excessive height of the date filter dropdown that left a large empty gap below the preset list when only a few presets were configured",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "jakub.matuska@gooddata.com"
+}
