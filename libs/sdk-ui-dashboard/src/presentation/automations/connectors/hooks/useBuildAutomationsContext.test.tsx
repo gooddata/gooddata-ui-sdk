@@ -70,6 +70,7 @@ vi.mock("../../../../model/store/config/configSelectors.js", () => ({
 }));
 
 vi.mock("../../../../model/store/permissions/permissionsSelectors.js", () => ({
+    selectCanCreateAutomation: () => true,
     selectCanManageWorkspace: () => false,
     selectCanUseAiAssistant: () => false,
 }));
@@ -155,5 +156,6 @@ describe("useBuildAutomationsContext", () => {
         );
         expect(result.current.dateFilterConfig.getGranularitiesForTab("missing-tab")).toEqual([]);
         expect(result.current.dateFilterConfig.getOptionsForTab("missing-tab")).toBeUndefined();
+        expect(result.current.features.canCreateAutomation).toBe(true);
     });
 });

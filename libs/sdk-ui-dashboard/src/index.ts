@@ -2227,9 +2227,9 @@ export type {
     CustomScheduledEmailManagementDialogComponent,
 } from "./presentation/automations/scheduledEmail/types.js";
 export { DefaultAlertingDialog } from "./presentation/automations/alerting/DefaultAlertingDialog/DefaultAlertingDialog.js";
-export { DefaultAlertingManagementDialogNew } from "./presentation/automations/_staging/alerting/DefaultAlertingManagementDialog/DefaultAlertingManagementDialogNew.js";
+export { DefaultAlertingManagementDialogNew } from "./presentation/automations/connectors/DefaultAlertingManagementDialogConnected.js";
 export { AlertingDialog } from "./presentation/automations/alerting/AlertingDialog.js";
-export { AlertingManagementDialog } from "./presentation/automations/_staging/alerting/AlertingManagementDialog.js";
+export { AlertingManagementDialog } from "./presentation/automations/alerting/AlertingManagementDialog.js";
 export type {
     CustomAlertingManagementDialogComponent,
     CustomAlertingDialogComponent,

@@ -87,13 +87,14 @@ function UiObjectShareDialogExample() {
                     }}
                     workspaceControls={
                         <UiGranteeRowControls
-                            labels={LABELS}
-                            selectedLabelIds={["id", "name", "email", "ssn"]}
+                            labels={[]}
+                            selectedLabelIds={[]}
                             permissionLevel="VIEW"
                             onLabelsChange={action("Workspace → labels change")}
                             onPermissionChange={action("Workspace → permission change")}
                         />
                     }
+                    workspaceLevel="VIEW"
                 />
             </div>
         </IntlProvider>

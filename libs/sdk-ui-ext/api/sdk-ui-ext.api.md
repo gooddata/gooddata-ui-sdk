@@ -908,6 +908,7 @@ export interface IObjectShareControllerActions {
     cancelGeneralAccessChange: () => void;
     changeGranteeLabels: (granteeId: string, selectedLabelIds: string[]) => Promise<void>;
     changePermissionLevel: (granteeId: string, level: ObjectSharePermissionLevel) => Promise<void>;
+    changeWorkspaceLevel: (level: "VIEW" | "SHARE") => Promise<void>;
     // (undocumented)
     closeAddGrantee: () => void;
     confirmAddGrantees: () => Promise<void>;
@@ -941,6 +942,8 @@ export interface IObjectShareControllerState {
     subview: "main" | "addGrantee";
     // (undocumented)
     summary: IObjectAccessSummary | undefined;
+    workspaceLevel: "VIEW" | "SHARE";
+    workspaceLevelSaving: boolean;
 }
 
 // @internal

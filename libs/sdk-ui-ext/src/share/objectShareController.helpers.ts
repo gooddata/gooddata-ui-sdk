@@ -119,7 +119,7 @@ export function granularGranteeFor(
     level: ObjectSharePermissionLevel | "none",
 ) {
     if ("allWorkspaceUsers" in principal) {
-        const permissions: ObjectSharePermissionLevel[] = level === "none" ? [] : ["VIEW"];
+        const permissions = PERMISSIONS_BY_LEVEL[level];
         return { type: "allWorkspaceUsers", permissions, inheritedPermissions: [] } as IGranularAccessGrantee;
     }
     return toGranularGrantee(principal.kind, principal.granteeRef, level);

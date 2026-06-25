@@ -43,6 +43,7 @@ import {
 } from "../../../../model/store/filtering/dashboardFilterSelectors.js";
 import { selectPersistedDashboardFilterContextDateFilterConfig } from "../../../../model/store/meta/metaSelectors.js";
 import {
+    selectCanCreateAutomation,
     selectCanManageWorkspace,
     selectCanUseAiAssistant,
 } from "../../../../model/store/permissions/permissionsSelectors.js";
@@ -129,6 +130,7 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
     const enableAlertOncePerInterval = useDashboardSelector(selectEnableAlertOncePerInterval);
     const enableAnomalyDetectionAlert = useDashboardSelector(selectEnableAnomalyDetectionAlert);
     const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
+    const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);
     const canUseAiAssistant = useDashboardSelector(selectCanUseAiAssistant);
     const canManageWorkspace = useDashboardSelector(selectCanManageWorkspace);
     const enableComparisonInAlerting = useDashboardSelector(selectEnableComparisonInAlerting);
@@ -165,6 +167,7 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
 
     const features = useMemo(
         () => ({
+            canCreateAutomation,
             enableAlertOncePerInterval,
             enableAnomalyDetectionAlert,
             enableAutomationManagement,
@@ -175,6 +178,7 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
             canManageWorkspace,
         }),
         [
+            canCreateAutomation,
             enableAlertOncePerInterval,
             enableAnomalyDetectionAlert,
             enableAutomationManagement,

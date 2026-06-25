@@ -62,6 +62,11 @@ export function useObjectShareController(
     const [pendingGeneralAccess, setPendingGeneralAccess] = useState<GeneralAccessValue | undefined>(
         undefined,
     );
+    // True while a workspace-level re-grade is committing. The workspace rule has no
+    // grantee row to carry a `pending` flag (unlike named grantees), so this gates
+    // re-entry and disables the dropdown to keep rapid VIEW↔SHARE toggles from issuing
+    // overlapping writes that could settle out of order.
+    const [workspaceLevelSaving, setWorkspaceLevelSaving] = useState(false);
 
     // The backend access list, seeded into local state (rows, general access,
     // summary, the commit/picker primitives) lives in its own hook.
@@ -120,12 +125,14 @@ export function useObjectShareController(
         setSubview("main");
         setPendingGrantees([]);
         setPendingGeneralAccess(undefined);
+        setWorkspaceLevelSaving(false);
     }
 
     const reset = useCallback(() => {
         setSubview("main");
         setPendingGrantees([]);
         setPendingGeneralAccess(undefined);
+        setWorkspaceLevelSaving(false);
     }, []);
 
     const openAddGrantee = useCallback(() => {
@@ -449,6 +456,13 @@ export function useObjectShareController(
             setPendingGeneralAccess(undefined);
             return;
         }
+        // Don't toggle general access while a workspace-level re-grade is committing:
+        // the two write the same allWorkspaceUsers rule, so a late re-grade could land
+        // after this and leave the backend broader than the UI shows. The dialog also
+        // disables the radio in this window; this guards the controller directly.
+        if (workspaceLevelSaving) {
+            return;
+        }
         const startedFor = targetKey;
         const previous = generalAccess;
         const previousWorkspaceLevel = workspaceLevel;
@@ -497,6 +511,7 @@ export function useObjectShareController(
         pendingGeneralAccess,
         generalAccess,
         workspaceLevel,
+        workspaceLevelSaving,
         targetKey,
         applyAccessChange,
         effectiveLabels,
@@ -504,6 +519,39 @@ export function useObjectShareController(
         setGeneralAccess,
         setWorkspaceLevel,
     ]);
+
+    const changeWorkspaceLevel = useCallback(
+        async (level: "VIEW" | "SHARE"): Promise<void> => {
+            // Only re-grade an already-granted workspace rule; ignore no-ops, calls made
+            // while access is restricted (no rule to re-grade), and re-entry while a
+            // previous re-grade is still in flight (would overlap writes).
+            if (generalAccess !== "WORKSPACE" || level === workspaceLevel || workspaceLevelSaving) {
+                return;
+            }
+            const startedFor = targetKey;
+            const previousLevel = workspaceLevel;
+            // Reflect the new level immediately and mark the write in flight, then commit
+            // it. Labels are untouched — they were already mirrored when workspace access
+            // was granted; this changes only the rule's permission grade.
+            setWorkspaceLevel(level);
+            setWorkspaceLevelSaving(true);
+            const ok = await commit(
+                [granularGranteeFor({ allWorkspaceUsers: true }, level)],
+                objectShareMessages.toastGeneralAccessUpdated,
+            );
+            // Bail if the target switched mid-write — the workspace level now belongs to
+            // the other object, so neither keeping nor rolling back applies here. The
+            // saving flag is reset on the new target's seed, so don't touch it.
+            if (targetKeyRef.current !== startedFor) {
+                return;
+            }
+            if (!ok) {
+                setWorkspaceLevel(previousLevel);
+            }
+            setWorkspaceLevelSaving(false);
+        },
+        [generalAccess, workspaceLevel, workspaceLevelSaving, targetKey, commit, setWorkspaceLevel],
+    );
 
     const actions = useMemo<IObjectShareControllerActions>(
         () => ({
@@ -519,6 +567,7 @@ export function useObjectShareController(
             requestGeneralAccessChange,
             cancelGeneralAccessChange: () => setPendingGeneralAccess(undefined),
             confirmGeneralAccessChange,
+            changeWorkspaceLevel,
         }),
         [
             reset,
@@ -531,6 +580,7 @@ export function useObjectShareController(
             changeGranteeLabels,
             requestGeneralAccessChange,
             confirmGeneralAccessChange,
+            changeWorkspaceLevel,
         ],
     );
 
@@ -542,6 +592,11 @@ export function useObjectShareController(
             summary,
             grantees,
             generalAccess,
+            // The workspace rule isn't granted while restricted, so its level is
+            // meaningless then — pin to VIEW so the (hidden) dropdown never shows a
+            // stale SHARE left over from a prior workspace grant.
+            workspaceLevel: generalAccess === "WORKSPACE" ? workspaceLevel : "VIEW",
+            workspaceLevelSaving,
             labels: effectiveLabels,
             labelsResolved,
             selectedLabelIdsByGrantee,
@@ -555,6 +610,8 @@ export function useObjectShareController(
             summary,
             grantees,
             generalAccess,
+            workspaceLevel,
+            workspaceLevelSaving,
             effectiveLabels,
             labelsResolved,
             selectedLabelIdsByGrantee,

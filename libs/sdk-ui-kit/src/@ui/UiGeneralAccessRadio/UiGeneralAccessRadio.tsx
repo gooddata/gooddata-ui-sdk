@@ -33,6 +33,12 @@ export interface IUiGeneralAccessRadioProps {
      * author pick labels and the workspace-wide permission level.
      */
     workspaceControls?: ReactNode;
+    /**
+     * Workspace-wide permission level, used to keep the `All workspace members`
+     * description in sync with the level picked in `workspaceControls`
+     * (`view` → "can view", `share` → "can view and share"). Defaults to `view`.
+     */
+    workspaceLevel?: "VIEW" | "SHARE";
     /** Test id forwarded to the root element. */
     dataTestId?: string;
 }
@@ -49,6 +55,7 @@ export function UiGeneralAccessRadio({
     onChange,
     disabled,
     workspaceControls,
+    workspaceLevel = "VIEW",
     dataTestId,
 }: IUiGeneralAccessRadioProps) {
     const intl = useIntl();
@@ -75,7 +82,11 @@ export function UiGeneralAccessRadio({
                 checked={value === "WORKSPACE"}
                 disabled={disabled}
                 title={intl.formatMessage(olpGeneralAccessMessages.workspaceTitle)}
-                description={intl.formatMessage(olpGeneralAccessMessages.workspaceDescription)}
+                description={intl.formatMessage(
+                    workspaceLevel === "SHARE"
+                        ? olpGeneralAccessMessages.workspaceDescriptionShare
+                        : olpGeneralAccessMessages.workspaceDescription,
+                )}
                 onChange={() => onChange("WORKSPACE")}
                 trailing={workspaceControls}
             />
