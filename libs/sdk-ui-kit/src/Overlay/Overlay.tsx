@@ -72,8 +72,8 @@ function alignExceedsThreshold(firstAlignment: Alignment, secondAlignment: Align
  * Stops React synthetic event propagation but re-dispatches native events
  * to document and documentElement so that:
  * - Other Overlays can detect outside clicks and close themselves
- * - Libraries listening on document.documentElement (like fixed-data-table-2's
- *   DOMMouseMoveTracker for scrollbar drag release) receive the events
+ * - Libraries listening on document / document.documentElement (e.g. for drag/scroll
+ *   release tracking) still receive the events
  */
 const stopPropagation = (e: ReactMouseEvent<HTMLDivElement, MouseEvent>): void => {
     e.stopPropagation();

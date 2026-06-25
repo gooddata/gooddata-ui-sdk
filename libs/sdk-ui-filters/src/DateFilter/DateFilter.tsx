@@ -210,7 +210,7 @@ export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState
             nextProps.workingSelectedFilterOption &&
             nextProps.excludeCurrentPeriod !== undefined &&
             (!isEqual(nextProps.workingSelectedFilterOption, prevState.initWorkingSelectedFilterOption) ||
-                nextProps.excludeCurrentPeriod !== prevState.initWorkingExcludeCurrentPeriod)
+                nextProps.workingExcludeCurrentPeriod !== prevState.initWorkingExcludeCurrentPeriod)
         ) {
             return DateFilter.getStateFromWorkingProps(nextProps);
         }

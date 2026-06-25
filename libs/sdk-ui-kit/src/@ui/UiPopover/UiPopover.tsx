@@ -198,7 +198,6 @@ export function UiPopover({
                     >
                         <div
                             id={id ?? currentId}
-                            tabIndex={0}
                             className={b()}
                             style={{ width: width === "default" ? undefined : width }}
                         >

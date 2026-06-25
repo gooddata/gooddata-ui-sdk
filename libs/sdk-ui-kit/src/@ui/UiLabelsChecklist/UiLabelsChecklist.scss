@@ -7,22 +7,33 @@
     align-self: stretch;
     display: flex;
     flex-direction: column;
+    // Fill the menu's bounded height so the header and actions stay pinned while
+    // only the rows scroll (see &__items).
+    min-height: 0;
+    flex: 1 1 auto;
 
     // The submenu header is width:100% + content-box, so its 10px side padding
     // would overflow the column by 20px. Make it border-box so it lines up with
     // the rows and the actions strip below.
     .gd-ui-kit-submenu-header {
         box-sizing: border-box;
+        flex: none;
     }
 
     &__items {
         display: flex;
         flex-direction: column;
         padding: var(--gd-spacing-5px) 0;
+        // Scroll the rows when the label list is taller than the menu, keeping the
+        // header and Cancel/Apply footer always visible.
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        min-height: 0;
     }
 
     &__actions {
         display: flex;
+        flex: none;
         justify-content: flex-end;
         gap: var(--gd-spacing-10px);
         padding: var(--gd-spacing-10px);

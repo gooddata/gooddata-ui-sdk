@@ -325,6 +325,7 @@ export function yamlReportToDeclarative(
         entities,
         query.filter_by,
         attrFilterConfig,
+        true,
     );
 
     return {
@@ -865,11 +866,15 @@ function yamlPositiveAttributeFilterToDeclarative(
     entities: ExportEntities,
     key: string,
     filter: AttributeFilter,
+    assignFilterLocalId = false,
 ): YamlFilterToDeclarativeResult {
     return {
         filters: [
             {
                 positiveAttributeFilter: {
+                    // Filter must carry the same localIdentifier the attributeFilterConfig is keyed by,
+                    // otherwise the displayAsLabel can't be correlated with the filter and is dropped.
+                    ...(assignFilterLocalId && filter.display_as ? { localIdentifier: key } : {}),
                     displayForm: createIdentifier<any>(filter.using),
                     in: {
                         values: parseDateValues(entities, filter.using, filter.state?.include ?? []),
@@ -895,11 +900,15 @@ function yamlNegativeAttributeFilterToDeclarative(
     entities: ExportEntities,
     key: string,
     filter: AttributeFilter,
+    assignFilterLocalId = false,
 ): YamlFilterToDeclarativeResult {
     return {
         filters: [
             {
                 negativeAttributeFilter: {
+                    // Filter must carry the same localIdentifier the attributeFilterConfig is keyed by,
+                    // otherwise the displayAsLabel can't be correlated with the filter and is dropped.
+                    ...(assignFilterLocalId && filter.display_as ? { localIdentifier: key } : {}),
                     displayForm: createIdentifier<any>(filter.using),
                     notIn: {
                         values: parseDateValues(entities, filter.using, filter.state?.exclude ?? []),
@@ -1078,6 +1087,9 @@ function yamlFilterToDeclarative(
     entities: ExportEntities,
     key: string,
     filter: QueryFilters[string],
+    // Only view-level (report/layer) filters need a localIdentifier so their displayAsLabel can be
+    // correlated via attributeFilterConfigs. Measure-scoped filters must NOT carry one.
+    assignFilterLocalId = false,
 ): YamlFilterToDeclarativeResult {
     if (isAbsoluteDateFilter(filter)) {
         return yamlAbsoluteDateFilterToDeclarative(entities, filter);
@@ -1086,10 +1098,10 @@ function yamlFilterToDeclarative(
         return yamlRelativeDateFilterToDeclarative(entities, filter);
     }
     if (isPositiveAttributeFilter(filter)) {
-        return yamlPositiveAttributeFilterToDeclarative(entities, key, filter);
+        return yamlPositiveAttributeFilterToDeclarative(entities, key, filter, assignFilterLocalId);
     }
     if (isNegativeAttributeFilter(filter)) {
-        return yamlNegativeAttributeFilterToDeclarative(entities, key, filter);
+        return yamlNegativeAttributeFilterToDeclarative(entities, key, filter, assignFilterLocalId);
     }
     if (isArbitraryTextFilter(filter)) {
         return yamlTextFilterToDeclarative(key, filter);
@@ -1131,6 +1143,9 @@ export function yamlFiltersToDeclarative(
     entities: ExportEntities,
     filters_by: QueryFilters | Filter[] | undefined,
     attributeFilterConfigs: IAttributeFilterConfigs = {},
+    // View-level (report/layer) filters set this so their displayAsLabel correlates via localIdentifier;
+    // measure-scoped filters leave it false.
+    assignFilterLocalId = false,
 ): {
     filters: IFilter[];
     attributeFilterConfigs: IAttributeFilterConfigs | undefined;
@@ -1140,11 +1155,13 @@ export function yamlFiltersToDeclarative(
         { filters: [], attributeFilterConfig: attributeFilterConfigs },
         ...(filters_by && !isArray
             ? Object.entries(filters_by).map(([key, filter]) =>
-                  yamlFilterToDeclarative(entities, key, filter),
+                  yamlFilterToDeclarative(entities, key, filter, assignFilterLocalId),
               )
             : []),
         ...(filters_by && isArray
-            ? filters_by.map((filter, i) => yamlFilterToDeclarative(entities, i.toString(), filter))
+            ? filters_by.map((filter, i) =>
+                  yamlFilterToDeclarative(entities, i.toString(), filter, assignFilterLocalId),
+              )
             : []),
     );
 
@@ -1489,6 +1506,7 @@ function yamlLayersToDeclarative(
             entities,
             baseQuery?.filter_by,
             attrFilterConfig,
+            true,
         );
 
         const layerProperties =

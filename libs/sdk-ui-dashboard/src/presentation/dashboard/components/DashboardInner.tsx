@@ -1,6 +1,6 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { useEffect, useRef } from "react";
+import { type CSSProperties, useEffect, useRef } from "react";
 
 import cx from "classnames";
 
@@ -34,6 +34,10 @@ import { DashboardContent } from "../DashboardContent.js";
 import { DashboardHeader } from "../DashboardHeader/DashboardHeader.js";
 import { DashboardSidebar } from "../DashboardSidebar/DashboardSidebar.js";
 import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeAwareDashboardSidebar.js";
+import {
+    ResizableSidebarProvider,
+    useResizableSidebarState,
+} from "../DashboardSidebar/SidebarResizeContext.js";
 import { type IDashboardProps } from "../types.js";
 
 import { DashboardScreenSizeProvider } from "./DashboardScreenSizeContext.js";
@@ -79,6 +83,17 @@ export function DashboardInner(props: IDashboardProps) {
         "gd-dash-content--density-compact": density === "compact",
     });
 
+    const resizableSidebar = useResizableSidebarState();
+
+    // When the sidebar can be resized, expose its live width so the sibling content area can subtract
+    // it (see `--gd-dashboard-sidebar-width` in sdk-dashboard.scss). Otherwise leave it unset so the
+    // content falls back to the static sidebar width.
+    const dashboardsRootStyle = resizableSidebar.canResize
+        ? ({
+              "--gd-dashboard-sidebar-width": `${resizableSidebar.width}px`,
+          } as CSSProperties)
+        : undefined;
+
     return (
         <IntlWrapper locale={locale}>
             <ToastsCenterContextProvider skipAutomaticMessageRendering>
@@ -87,50 +102,53 @@ export function DashboardInner(props: IDashboardProps) {
                 </OverlayControllerProvider>
 
                 {/* we need wrapping element for drag layer and dashboard for proper rendering in flex layout */}
-                <div
-                    className={cx("component-root", {
-                        "sdk-edit-mode-on": isEditMode,
-                        "catalog-is-loaded": isCatalogLoaded,
-                        "accessible-dashboards-loaded": accessibleDashboardsLoaded,
-                    })}
-                >
-                    <DragLayerComponent />
+                <ResizableSidebarProvider value={resizableSidebar}>
                     <div
-                        className={cx("gd-dashboards-root gd-flex-container", {
-                            "gd-dashboards-root--floating-toolbar": enableEnhancedInsightPicker,
+                        className={cx("component-root", {
+                            "sdk-edit-mode-on": isEditMode,
+                            "catalog-is-loaded": isCatalogLoaded,
+                            "accessible-dashboards-loaded": accessibleDashboardsLoaded,
                         })}
                     >
-                        <DashboardSidebar
-                            DefaultSidebar={RenderModeAwareDashboardSidebar}
-                            DeleteDropZoneComponent={DeleteDropZone}
-                            WrapCreatePanelItemWithDragComponent={WrapCreatePanelItemWithDrag}
-                            WrapInsightListItemWithDragComponent={WrapInsightListItemWithDrag}
-                        />
-                        <main className={dashboardContentClassNames} {...mainContentNavigationProps}>
-                            {/* gd-dash-header-wrapper-sdk-8-12 style is added because we should keep old styles unchanged to not brake plugins */}
-                            <div
-                                className="gd-dash-header-wrapper gd-dash-header-wrapper-sdk-8-12"
-                                ref={headerRef}
-                            >
-                                {/* Header z-index start at  6000, so we need force all overlays z-indexes start at 6000 to be under header */}
-                                <OverlayControllerProvider overlayController={overlayController}>
-                                    <DashboardHeader />
-                                </OverlayControllerProvider>
-                            </div>
-                            <div
-                                className="gd-flex-item-stretch dash-section dash-section-kpis"
-                                ref={layoutRef}
-                            >
-                                <DashboardScreenSizeProvider>
-                                    <DashboardContent {...props} />
-                                </DashboardScreenSizeProvider>
-                                {enableEnhancedInsightPicker ? <FilterDeleteOverlay /> : null}
-                            </div>
-                            <div className="gd-dash-bottom-position-pixel" ref={bottomRef} />
-                        </main>
+                        <DragLayerComponent />
+                        <div
+                            className={cx("gd-dashboards-root gd-flex-container", {
+                                "gd-dashboards-root--floating-toolbar": enableEnhancedInsightPicker,
+                            })}
+                            style={dashboardsRootStyle}
+                        >
+                            <DashboardSidebar
+                                DefaultSidebar={RenderModeAwareDashboardSidebar}
+                                DeleteDropZoneComponent={DeleteDropZone}
+                                WrapCreatePanelItemWithDragComponent={WrapCreatePanelItemWithDrag}
+                                WrapInsightListItemWithDragComponent={WrapInsightListItemWithDrag}
+                            />
+                            <main className={dashboardContentClassNames} {...mainContentNavigationProps}>
+                                {/* gd-dash-header-wrapper-sdk-8-12 style is added because we should keep old styles unchanged to not brake plugins */}
+                                <div
+                                    className="gd-dash-header-wrapper gd-dash-header-wrapper-sdk-8-12"
+                                    ref={headerRef}
+                                >
+                                    {/* Header z-index start at  6000, so we need force all overlays z-indexes start at 6000 to be under header */}
+                                    <OverlayControllerProvider overlayController={overlayController}>
+                                        <DashboardHeader />
+                                    </OverlayControllerProvider>
+                                </div>
+                                <div
+                                    className="gd-flex-item-stretch dash-section dash-section-kpis"
+                                    ref={layoutRef}
+                                >
+                                    <DashboardScreenSizeProvider>
+                                        <DashboardContent {...props} />
+                                    </DashboardScreenSizeProvider>
+                                    {enableEnhancedInsightPicker ? <FilterDeleteOverlay /> : null}
+                                </div>
+                                <div className="gd-dash-bottom-position-pixel" ref={bottomRef} />
+                            </main>
+                        </div>
+                        <Toolbar />
                     </div>
-                    <Toolbar />
-                </div>
+                </ResizableSidebarProvider>
             </ToastsCenterContextProvider>
         </IntlWrapper>
     );

@@ -195,6 +195,7 @@ export type AreaChartConfigProperties = {
         enabled: boolean;
     };
     disableDrillDown: boolean;
+    disableDrillIntoURL: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
@@ -252,6 +253,7 @@ export function areaChartSave(_fields: Visualisation["query"]["fields"] | undefi
         enabled: boolean | undefined;
     } | undefined;
     disableDrillDown: boolean | undefined;
+    disableDrillIntoURL: boolean | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
     disableKeyDriveAnalysisOn: {
@@ -356,6 +358,7 @@ export type BarChartConfigProperties = {
         enabled: boolean;
     };
     disableDrillDown: boolean;
+    disableDrillIntoURL: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
@@ -407,6 +410,7 @@ export function barChartSave(_fields: Visualisation["query"]["fields"] | undefin
         enabled: boolean | undefined;
     } | undefined;
     disableDrillDown: boolean | undefined;
+    disableDrillIntoURL: boolean | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
     disableKeyDriveAnalysisOn: {
@@ -501,6 +505,7 @@ export type BubbleChartConfigProperties = {
         enabled: boolean;
     };
     disableDrillDown: boolean;
+    disableDrillIntoURL: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
@@ -548,6 +553,7 @@ export function bubbleChartSave(_fields: Visualisation["query"]["fields"] | unde
         enabled: boolean | undefined;
     } | undefined;
     disableDrillDown: boolean | undefined;
+    disableDrillIntoURL: boolean | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
     disableKeyDriveAnalysisOn: {
@@ -688,6 +694,7 @@ export type BulletChartConfigProperties = {
         enabled: boolean;
     };
     disableDrillDown: boolean;
+    disableDrillIntoURL: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
@@ -732,6 +739,7 @@ export function bulletChartSave(_fields: Visualisation["query"]["fields"] | unde
         enabled: boolean | undefined;
     } | undefined;
     disableDrillDown: boolean | undefined;
+    disableDrillIntoURL: boolean | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
     disableKeyDriveAnalysisOn: {
@@ -857,6 +865,7 @@ export type ColumnChartConfigProperties = {
         enabled: boolean;
     };
     disableDrillDown: boolean;
+    disableDrillIntoURL: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
@@ -908,6 +917,7 @@ export function columnChartSave(_fields: Visualisation["query"]["fields"] | unde
         enabled: boolean | undefined;
     } | undefined;
     disableDrillDown: boolean | undefined;
+    disableDrillIntoURL: boolean | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
     disableKeyDriveAnalysisOn: {
@@ -1040,6 +1050,7 @@ export type ComboChartConfigProperties = {
         enabled: boolean;
     };
     disableDrillDown: boolean;
+    disableDrillIntoURL: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
@@ -1118,6 +1129,7 @@ export function comboChartSave(_fields: Visualisation["query"]["fields"] | undef
         enabled: boolean | undefined;
     } | undefined;
     disableDrillDown: boolean | undefined;
+    disableDrillIntoURL: boolean | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
     disableKeyDriveAnalysisOn: {
@@ -1397,6 +1409,7 @@ export type DependencyWheelChartConfigProperties = {
         position: "top" | "bottom" | "left" | "right" | "auto";
     };
     disableDrillDown: boolean;
+    disableDrillIntoURL: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
@@ -1416,6 +1429,7 @@ export function dependencyWheelChartSave(_fields: Visualisation["query"]["fields
         position: string | undefined;
     } | undefined;
     disableDrillDown: boolean | undefined;
+    disableDrillIntoURL: boolean | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
     disableKeyDriveAnalysisOn: {
@@ -1487,6 +1501,7 @@ export type DonutChartConfigProperties = {
         position: "top" | "bottom" | "left" | "right" | "auto";
     };
     disableDrillDown: boolean;
+    disableDrillIntoURL: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
@@ -1511,6 +1526,7 @@ export function donutChartSave(_fields: Visualisation["query"]["fields"] | undef
         position: string | undefined;
     } | undefined;
     disableDrillDown: boolean | undefined;
+    disableDrillIntoURL: boolean | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
     disableKeyDriveAnalysisOn: {
@@ -1631,6 +1647,7 @@ export type FunnelChartConfigProperties = {
         position: "top" | "bottom" | "left" | "right" | "auto";
     };
     disableDrillDown: boolean;
+    disableDrillIntoURL: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
@@ -1655,6 +1672,7 @@ export function funnelChartSave(_fields: Visualisation["query"]["fields"] | unde
         position: string | undefined;
     } | undefined;
     disableDrillDown: boolean | undefined;
+    disableDrillIntoURL: boolean | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
     disableKeyDriveAnalysisOn: {
@@ -2097,6 +2115,7 @@ export type HeatmapChartConfigProperties = {
         visible: boolean;
     };
     disableDrillDown: boolean;
+    disableDrillIntoURL: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
@@ -2135,6 +2154,7 @@ export function heatmapChartSave(_fields: Visualisation["query"]["fields"] | und
         labelsEnabled: boolean | undefined;
     } | undefined;
     disableDrillDown: boolean | undefined;
+    disableDrillIntoURL: boolean | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
     disableKeyDriveAnalysisOn: {
@@ -2631,6 +2651,7 @@ export type LineChartConfigProperties = {
         color: string | number;
     };
     disableDrillDown: boolean;
+    disableDrillIntoURL: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
@@ -2699,6 +2720,7 @@ export function lineChartSave(_fields: Visualisation["query"]["fields"] | undefi
         color: string | number | undefined;
     } | undefined;
     disableDrillDown: boolean | undefined;
+    disableDrillIntoURL: boolean | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
     disableKeyDriveAnalysisOn: {
@@ -2801,6 +2823,7 @@ export type PieChartConfigProperties = {
         position: "top" | "bottom" | "left" | "right" | "auto";
     };
     disableDrillDown: boolean;
+    disableDrillIntoURL: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
@@ -2825,6 +2848,7 @@ export function pieChartSave(_fields: Visualisation["query"]["fields"] | undefin
         position: string | undefined;
     } | undefined;
     disableDrillDown: boolean | undefined;
+    disableDrillIntoURL: boolean | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
     disableKeyDriveAnalysisOn: {
@@ -2910,6 +2934,7 @@ export type PyramidChartConfigProperties = {
         position: "top" | "bottom" | "left" | "right" | "auto";
     };
     disableDrillDown: boolean;
+    disableDrillIntoURL: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
@@ -2934,6 +2959,7 @@ export function pyramidChartSave(_fields: Visualisation["query"]["fields"] | und
         position: string | undefined;
     } | undefined;
     disableDrillDown: boolean | undefined;
+    disableDrillIntoURL: boolean | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
     disableKeyDriveAnalysisOn: {
@@ -3083,6 +3109,7 @@ export type SankeyChartConfigProperties = {
         position: "top" | "bottom" | "left" | "right" | "auto";
     };
     disableDrillDown: boolean;
+    disableDrillIntoURL: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
@@ -3103,6 +3130,7 @@ export function sankeyChartSave(_fields: Visualisation["query"]["fields"] | unde
         position: string | undefined;
     } | undefined;
     disableDrillDown: boolean | undefined;
+    disableDrillIntoURL: boolean | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
     disableKeyDriveAnalysisOn: {
@@ -3207,6 +3235,7 @@ export type ScatterChartConfigProperties = {
         threshold: number;
     };
     disableDrillDown: boolean;
+    disableDrillIntoURL: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
@@ -3255,6 +3284,7 @@ export function scatterChartSave(_fields: Visualisation["query"]["fields"] | und
         threshold: number | undefined;
     } | undefined;
     disableDrillDown: boolean | undefined;
+    disableDrillIntoURL: boolean | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
     disableKeyDriveAnalysisOn: {
@@ -3517,6 +3547,7 @@ export type TreemapChartConfigProperties = {
         position: "top" | "bottom" | "left" | "right" | "auto";
     };
     disableDrillDown: boolean;
+    disableDrillIntoURL: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
@@ -3541,6 +3572,7 @@ export function treemapChartSave(_fields: Visualisation["query"]["fields"] | und
         position: string | undefined;
     } | undefined;
     disableDrillDown: boolean | undefined;
+    disableDrillIntoURL: boolean | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
     disableKeyDriveAnalysisOn: {
@@ -3659,6 +3691,7 @@ export type WaterfallChartConfigProperties = {
         enabled: boolean;
     };
     disableDrillDown: boolean;
+    disableDrillIntoURL: boolean;
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
@@ -3714,6 +3747,7 @@ export function waterfallChartSave(_fields: Visualisation["query"]["fields"] | u
         enabled: boolean | undefined;
     } | undefined;
     disableDrillDown: boolean | undefined;
+    disableDrillIntoURL: boolean | undefined;
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
     disableKeyDriveAnalysisOn: {
@@ -3840,7 +3874,7 @@ export type YamlFilters = {
 };
 
 // @internal (undocumented)
-export function yamlFiltersToDeclarative(entities: ExportEntities, filters_by: QueryFilters | Filter[] | undefined, attributeFilterConfigs?: IAttributeFilterConfigs): {
+export function yamlFiltersToDeclarative(entities: ExportEntities, filters_by: QueryFilters | Filter[] | undefined, attributeFilterConfigs?: IAttributeFilterConfigs, assignFilterLocalId?: boolean): {
     filters: IFilter[];
     attributeFilterConfigs: IAttributeFilterConfigs | undefined;
 };

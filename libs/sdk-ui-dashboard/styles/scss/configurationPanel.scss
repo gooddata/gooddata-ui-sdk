@@ -444,14 +444,13 @@
             margin-right: 15px;
         }
 
-        .fixedDataTableRowLayout_rowWrapper:hover {
+        .gd-infinite-list-item:hover {
             // overwrite
             // stylelint-disable-next-line declaration-no-important
             z-index: 1 !important;
         }
 
-        .public_fixedDataTableRow_main,
-        .public_fixedDataTableCell_main {
+        .gd-infinite-list-item {
             background: none;
         }
 

@@ -19,7 +19,10 @@ function ContentWrapper(props: {
     return (
         // autofocus always first element in the custom content for now
         <UiAutofocus>
-            <div onKeyDown={props.keyboardNavigationHandler}>{props.children}</div>
+            {/* Fills the menu's max-height as a flex child so tall content can scroll inside it. */}
+            <div className={e("content-wrapper")} onKeyDown={props.keyboardNavigationHandler}>
+                {props.children}
+            </div>
         </UiAutofocus>
     );
 }

@@ -6,14 +6,18 @@ import { IntlProvider } from "react-intl";
 import { action } from "storybook/actions";
 
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
-import { type IUiGranteeAsyncOption, UiGranteeAsyncPicker } from "@gooddata/sdk-ui-kit";
+import {
+    type IUiGranteeAsyncOption,
+    type PermissionMenuLevel,
+    UiGranteeAsyncPicker,
+} from "@gooddata/sdk-ui-kit";
 
 import { type IStoryParameters, State } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 import { loadOptions } from "./_helpers/granteeTestData.js";
 
-type Picked = IUiGranteeAsyncOption & { permissionLevel: "VIEW" | "SHARE" };
+type Picked = IUiGranteeAsyncOption & { permissionLevel: PermissionMenuLevel };
 
 function Example({ initialPicked = [] as Picked[] }) {
     const [picked, setPicked] = useState<Picked[]>(initialPicked);
@@ -21,7 +25,7 @@ function Example({ initialPicked = [] as Picked[] }) {
         action("select")(option);
         setPicked((prev) => [...prev, { ...option, permissionLevel: "VIEW" }]);
     }, []);
-    const handlePermissionChange = useCallback((grantee: Picked, next: "VIEW" | "SHARE") => {
+    const handlePermissionChange = useCallback((grantee: Picked, next: PermissionMenuLevel) => {
         action("permission change")(grantee, next);
         setPicked((prev) => prev.map((p) => (p.id === grantee.id ? { ...p, permissionLevel: next } : p)));
     }, []);

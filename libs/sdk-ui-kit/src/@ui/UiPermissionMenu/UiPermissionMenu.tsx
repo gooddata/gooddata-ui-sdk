@@ -15,7 +15,9 @@ import { UiTooltip } from "../UiTooltip/UiTooltip.js";
 const { b, e } = bem("gd-ui-kit-permission-menu");
 
 /**
- * Permission level offered by the menu.
+ * Selectable permission level. The menu and the add-grantee picker only ever
+ * assign VIEW or SHARE — EDIT is shown as a read-only row (via the model's
+ * `AccessGranularPermission`) and is never selectable from the UI.
  *
  * @internal
  */

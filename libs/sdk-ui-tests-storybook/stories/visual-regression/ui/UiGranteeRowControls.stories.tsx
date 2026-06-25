@@ -103,6 +103,16 @@ function UiGranteeRowControlsExample() {
                         onRemoveAccess={action("Jana → remove")}
                     />
                 </MockRow>
+                <MockRow name="Petra Králová" email="petra.kralova@gooddata.com">
+                    <UiGranteeRowControls
+                        labels={LABELS}
+                        selectedLabelIds={["id", "name", "email", "ssn"]}
+                        permissionLevel="EDIT"
+                        onLabelsChange={action("Petra → labels change")}
+                        onPermissionChange={action("Petra → permission change")}
+                        onRemoveAccess={action("Petra → remove")}
+                    />
+                </MockRow>
             </div>
         </IntlProvider>
     );

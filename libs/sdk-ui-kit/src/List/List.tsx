@@ -1,11 +1,18 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { type ReactElement, useCallback, useEffect, useMemo } from "react";
+import {
+    type CSSProperties,
+    type ReactElement,
+    type UIEvent,
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+} from "react";
 
+import { useVirtualizer } from "@tanstack/react-virtual";
 import cx from "classnames";
-import { Cell, Column, Table } from "fixed-data-table-2";
 
-import { DROPDOWN_BODY_CLASS } from "../Dropdown/Dropdown.js";
 import { type IAccessibilityConfigBase } from "../typings/accessibility.js";
 
 // it configures max number of records due to
@@ -13,8 +20,9 @@ import { type IAccessibilityConfigBase } from "../typings/accessibility.js";
 // that causes application crash (TNT-787)
 const MAX_NUMBER_OF_ROWS = 1000000;
 
-const BORDER_HEIGHT = 1;
 const HALF_ROW = 0.5;
+// delay (ms) after the last scroll event before onScrollEnd is fired
+const SCROLL_END_DELAY = 100;
 export const MAX_VISIBLE_ITEMS_COUNT = 10;
 export const DEFAULT_ITEM_HEIGHT = 28;
 
@@ -24,6 +32,8 @@ export const DEFAULT_ITEM_HEIGHT = 28;
 export interface IListProps<T> {
     id?: string;
     className?: string;
+    // No longer has any effect since the list no longer renders a fixed-data-table border.
+    // Kept for backward compatibility; ignored.
     compensateBorder?: boolean;
 
     height?: number;
@@ -70,7 +80,6 @@ export type ScrollCallback = (visibleRowsStartIndex: number, visibleRowsEndIndex
 export function List<T>({
     id,
     className = "",
-    compensateBorder = true,
 
     width = 200,
     height,
@@ -91,141 +100,178 @@ export function List<T>({
 
     accessibilityConfig,
 }: IListProps<T>): ReactElement {
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+    const rowsCount = Math.min(itemsCount, MAX_NUMBER_OF_ROWS);
+
+    // when there are more items than fit, show half of the next row to hint scrollability
     const currentItemsCount =
         itemsCount > maxVisibleItemsCount ? maxVisibleItemsCount + HALF_ROW : itemsCount;
 
     const listHeight = height || currentItemsCount * itemHeight;
-    const listHeightWithBorder = compensateBorder ? listHeight + BORDER_HEIGHT * 2 : listHeight;
+    // the visible viewport height; the list is prop-sized so this is deterministic
+    const viewportHeight = maxHeight ? Math.min(maxHeight, listHeight) : listHeight;
 
+    const estimateSize = useCallback(
+        (index: number) => (itemHeightGetter ? itemHeightGetter(index) : itemHeight),
+        [itemHeightGetter, itemHeight],
+    );
+
+    // Report the viewport size to the virtualizer from the known props, falling back from a real
+    // measurement when the DOM has no layout (e.g. jsdom in tests). Keeps virtualization correct
+    // without depending on layout being available.
+    const observeElementRect = useCallback(
+        (_instance: unknown, cb: (rect: { width: number; height: number }) => void) => {
+            const el = scrollContainerRef.current;
+            if (!el) {
+                return undefined;
+            }
+            const report = () => {
+                const rect = el.getBoundingClientRect();
+                cb({ width: rect.width || width, height: rect.height || viewportHeight });
+            };
+            report();
+            if (typeof ResizeObserver === "undefined") {
+                return undefined;
+            }
+            const resizeObserver = new ResizeObserver(report);
+            resizeObserver.observe(el);
+            return () => resizeObserver.disconnect();
+        },
+        [width, viewportHeight],
+    );
+
+    const rowVirtualizer = useVirtualizer({
+        count: rowsCount,
+        getScrollElement: () => scrollContainerRef.current,
+        estimateSize,
+        observeElementRect,
+        overscan: 5,
+    });
+
+    const virtualItems = rowVirtualizer.getVirtualItems();
+
+    // scroll the requested item into view (preserves the legacy +scrollDirection offset)
     const scrollToItemRowIndex = useMemo(() => {
         if (!scrollToItem) {
             return undefined;
         }
-
-        return items.indexOf(scrollToItem) + (scrollDirection ?? 1);
+        const index = items.indexOf(scrollToItem);
+        if (index < 0) {
+            return undefined;
+        }
+        return index + (scrollDirection ?? 1);
     }, [items, scrollToItem, scrollDirection]);
 
+    useEffect(() => {
+        if (scrollToItemRowIndex === undefined || rowsCount === 0) {
+            return;
+        }
+        rowVirtualizer.scrollToIndex(Math.min(Math.max(scrollToItemRowIndex, 0), rowsCount - 1));
+        // rowVirtualizer identity is stable; intentionally only react to the target index changing
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [scrollToItemRowIndex, rowsCount]);
+
+    // converts vertical scroll position to the [first, last] visible item index range,
+    // matching the legacy fixed-data-table-based behavior consumers (e.g. AsyncList) depend on
     const getVisibleScrollRange = useCallback(
         (scrollY: number): [number, number] => {
             const rowIndex = Math.floor(scrollY / itemHeight);
             const visibleRange = Math.ceil(listHeight / itemHeight);
-
             return [rowIndex, rowIndex + visibleRange];
         },
         [itemHeight, listHeight],
     );
 
-    const handleScrollStart = useCallback(
-        (_: unknown, y: number) => {
-            if (onScrollStart) {
-                const [startIndex, endIndex] = getVisibleScrollRange(y);
-                onScrollStart(startIndex, endIndex);
+    const isScrollingRef = useRef(false);
+    const scrollEndTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+
+    const handleScroll = useCallback(
+        (event: UIEvent<HTMLDivElement>) => {
+            const scrollY = event.currentTarget.scrollTop;
+            const [startIndex, endIndex] = getVisibleScrollRange(scrollY);
+
+            if (!isScrollingRef.current) {
+                isScrollingRef.current = true;
+                onScrollStart?.(startIndex, endIndex);
             }
+
+            if (scrollEndTimerRef.current) {
+                clearTimeout(scrollEndTimerRef.current);
+            }
+            scrollEndTimerRef.current = setTimeout(() => {
+                isScrollingRef.current = false;
+                onScrollEnd?.(startIndex, endIndex);
+            }, SCROLL_END_DELAY);
         },
-        [onScrollStart, getVisibleScrollRange],
+        [getVisibleScrollRange, onScrollStart, onScrollEnd],
     );
 
-    const handleScrollEnd = useCallback(
-        (_: unknown, y: number) => {
-            if (onScrollEnd) {
-                const [startIndex, endIndex] = getVisibleScrollRange(y);
-                onScrollEnd(startIndex, endIndex);
-            }
-        },
-        [onScrollEnd, getVisibleScrollRange],
-    );
-
+    // clear any pending scroll-end timer on unmount so callbacks don't fire on an unmounted tree
     useEffect(() => {
         return () => {
-            enablePageScrolling();
+            if (scrollEndTimerRef.current) {
+                clearTimeout(scrollEndTimerRef.current);
+            }
         };
     }, []);
 
-    const styles = useMemo(() => {
-        return {
+    const containerStyle = useMemo<CSSProperties>(
+        () => ({
             width,
-        };
-    }, [width]);
+            height: maxHeight ? undefined : listHeight,
+            maxHeight,
+        }),
+        [width, maxHeight, listHeight],
+    );
 
     return (
         <div
             id={id}
             data-testid="gd-list"
             className={cx("gd-list gd-infinite-list", className)}
-            style={styles}
-            onMouseOver={disablePageScrolling}
-            onMouseOut={enablePageScrolling}
+            style={{ width }}
             role={accessibilityConfig?.role}
             aria-labelledby={accessibilityConfig?.ariaLabelledBy}
         >
-            <Table
-                width={width}
-                // compensates for https://github.com/facebook/fixed-data-table/blob/5373535d98b08b270edd84d7ce12833a4478c6b6/src/FixedDataTableNew.react.js#L872
-                height={maxHeight ? undefined : listHeightWithBorder}
-                maxHeight={maxHeight}
-                headerHeight={0}
-                rowHeight={itemHeight}
-                rowHeightGetter={itemHeightGetter}
-                rowsCount={Math.min(itemsCount, MAX_NUMBER_OF_ROWS)}
-                onScrollStart={handleScrollStart}
-                onScrollEnd={handleScrollEnd}
-                scrollToRow={scrollToItemRowIndex}
-                touchScrollEnabled={isTouchDevice()}
-                keyboardScrollEnabled
+            <div
+                ref={scrollContainerRef}
+                className="gd-infinite-list-scroll-container"
+                style={containerStyle}
+                onScroll={handleScroll}
             >
-                <Column
-                    flexGrow={1}
-                    width={1}
-                    cell={({
-                        columnKey,
-                        height,
-                        width,
-                        rowIndex,
-                    }: {
-                        columnKey: string;
-                        height: number;
-                        width: number;
-                        rowIndex: number;
-                    }) => {
-                        const item = items[rowIndex];
+                <div
+                    className="gd-infinite-list-sizer"
+                    style={{ height: rowVirtualizer.getTotalSize(), width: "100%", position: "relative" }}
+                >
+                    {virtualItems.map((virtualRow) => {
+                        const item = items[virtualRow.index];
                         return (
-                            <Cell width={width} height={height} rowIndex={rowIndex} columnKey={columnKey}>
+                            <div
+                                key={virtualRow.key}
+                                className="gd-infinite-list-item"
+                                style={{
+                                    position: "absolute",
+                                    top: 0,
+                                    left: 0,
+                                    width: "100%",
+                                    height: virtualRow.size,
+                                    transform: `translateY(${virtualRow.start}px)`,
+                                }}
+                            >
                                 {renderItem({
-                                    rowIndex,
+                                    rowIndex: virtualRow.index,
                                     item,
                                     width,
-                                    height,
-                                    isFirst: rowIndex === 0,
-                                    isLast: rowIndex === itemsCount - 1,
+                                    height: virtualRow.size,
+                                    isFirst: virtualRow.index === 0,
+                                    isLast: virtualRow.index === itemsCount - 1,
                                 })}
-                            </Cell>
+                            </div>
                         );
-                    }}
-                />
-            </Table>
+                    })}
+                </div>
+            </div>
         </div>
     );
-}
-
-function preventDefault(e: Event) {
-    const wheelEvent = e;
-    const target = wheelEvent.target as HTMLElement | null;
-    const isDropdownBodyScroll = target?.closest?.(`.${DROPDOWN_BODY_CLASS}`);
-    if (isDropdownBodyScroll) {
-        // allow to scroll another lists placed in dropdowns (e.g. in Filter Groups)
-        return;
-    }
-    e.preventDefault();
-}
-
-function isTouchDevice() {
-    return "ontouchstart" in document.documentElement;
-}
-
-function disablePageScrolling() {
-    document.body.addEventListener("wheel", preventDefault, { passive: false });
-}
-
-function enablePageScrolling() {
-    document.body.removeEventListener("wheel", preventDefault);
 }

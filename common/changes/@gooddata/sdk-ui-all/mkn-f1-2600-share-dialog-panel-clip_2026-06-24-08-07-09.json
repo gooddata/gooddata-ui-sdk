@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "Make the share dialog \"Manage labels access\" panel scroll its label rows so the list and the Cancel/Apply buttons stay fully visible when an attribute has many labels.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "matyas.kandl@gooddata.com"
+}

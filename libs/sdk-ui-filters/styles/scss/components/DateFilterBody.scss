@@ -265,10 +265,6 @@ $gd-date-filter-mobile-sticky-z-index: 1;
         }
     }
 
-    &-body-scrollable {
-        min-height: 350px; // This makes sure date-picker and relative-form select is not clipped when not enought presets are visible
-    }
-
     &-body-scrollable-small-screen {
         max-height: 350px;
     }

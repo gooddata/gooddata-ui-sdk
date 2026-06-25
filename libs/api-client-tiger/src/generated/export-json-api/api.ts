@@ -537,24 +537,6 @@ export interface ExportDashboardMeasureValueFilterDashboardMeasureValueFilter {
 }
 
 /**
- * Parameter value override applied to the export. The (id, value) pair drives the execution; the title is FE-supplied for info-sheet display.
- */
-export interface ExportDashboardParameterValue {
-    /**
-     * Identifier of the workspace parameter (matches the parameter entity id).
-     */
-    'id': string;
-    /**
-     * Value to use for this parameter when executing the export.
-     */
-    'value': string;
-    /**
-     * Display title of the parameter as the client wants it rendered on the info sheet.
-     */
-    'title': string;
-}
-
-/**
  * Export request object describing the export properties for dashboard tabular exports.
  */
 export interface ExportDashboardTabularExportRequest {
@@ -582,11 +564,11 @@ export interface ExportDashboardTabularExportRequest {
     /**
      * Parameter value overrides applied to the export\'s executions. Each entry carries the parameter id (used as an AFM execution override) plus the FE-supplied title for the info sheet. Applied uniformly across all tabs; use dashboardTabsParametersOverrides for tab-scoped overrides.
      */
-    'dashboardParametersOverride'?: Array<ExportDashboardParameterValue>;
+    'dashboardParametersOverride'?: Array<ExportParameterValue>;
     /**
      * Map of tab-specific parameter overrides. Key is tabId, value is a list of (id, value, title) entries that override the dashboard-level parameters for that tab only. Mirrors dashboardTabsFiltersOverrides. When a tab is present in this map, its entries take precedence over dashboardParametersOverride for that tab\'s executions and info-sheet display.
      */
-    'dashboardTabsParametersOverrides'?: { [key: string]: Array<ExportDashboardParameterValue>; };
+    'dashboardTabsParametersOverrides'?: { [key: string]: Array<ExportParameterValue>; };
 }
 
 export type ExportDashboardTabularExportRequestFormatEnum = 'XLSX' | 'PDF';
@@ -810,6 +792,24 @@ export interface ExportParameterItem {
      * Value to use for this parameter instead of its default.
      */
     'value': string;
+}
+
+/**
+ * Parameter value override applied to the export. The (id, value) pair drives the execution; the title is FE-supplied for info-sheet display.
+ */
+export interface ExportParameterValue {
+    /**
+     * Identifier of the workspace parameter (matches the parameter entity id).
+     */
+    'id': string;
+    /**
+     * Value to use for this parameter when executing the export.
+     */
+    'value': string;
+    /**
+     * Display title of the parameter as the client wants it rendered on the info sheet.
+     */
+    'title': string;
 }
 
 /**
@@ -1234,6 +1234,10 @@ export interface ExportTabularExportRequest {
      * Optional custom filters (as array of IFilter objects defined in UI SDK) to be applied when visualizationObject is given. Those filters override the original filters defined in the visualization.
      */
     'visualizationObjectCustomFilters'?: Array<object>;
+    /**
+     * Optional custom parameters to be applied when visualizationObject is given. Those parameters override the original parameters defined in the visualization.
+     */
+    'visualizationObjectCustomParameters'?: Array<ExportParameterValue>;
     /**
      * Analytical dashboard identifier. Optional identifier, which informs the system that the export is related to a specific dashboard.
      */

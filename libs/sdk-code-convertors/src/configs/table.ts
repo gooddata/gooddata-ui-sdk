@@ -67,7 +67,11 @@ const DEFAULTS: ConfigDefaults<TableConfigProperties> = {
     columnHeadersPosition: "top",
     disableAlerts: false,
     disableDrillDown: false,
-    disableDrillIntoURL: true,
+    // The effective platform default for drill-into-URL is org-specific (driven by the
+    // `enableDrillToUrlByDefault` setting), so there is no fixed default to omit against.
+    // This entry only satisfies the type; the value is intentionally always serialised
+    // (see tableLoad/tableSave below) instead of being compared against this default.
+    disableDrillIntoURL: false,
     disableScheduledExports: false,
     disableKeyDriveAnalysisOn: {},
     textWrapping: {
@@ -312,12 +316,11 @@ export function tableLoad(props: VisualisationConfig<TableConfigProperties>) {
                     ],
                 ];
             case "disableDrillIntoURL":
-                return [
-                    [
-                        "disable_drill_into_url",
-                        getValueOrDefault(value as boolean, DEFAULTS.disableDrillIntoURL, "bool"),
-                    ],
-                ];
+                // Always serialise the explicit value when present. The platform default is
+                // org-specific (`enableDrillToUrlByDefault`), so omitting a value that matches
+                // a hardcoded default would lose the setting on round-trip in orgs whose default
+                // differs.
+                return [["disable_drill_into_url", value === undefined ? undefined : !!value]];
             case "disableAlerts":
                 return [
                     ["disable_alerts", getValueOrDefault(value as boolean, DEFAULTS.disableAlerts, "bool")],
@@ -376,11 +379,8 @@ export function tableSave(
         columnHeadersPosition: getValueOrDefault(config.column_header, DEFAULTS.columnHeadersPosition),
         measureGroupDimension: getValueOrDefault(config.metrics_in, DEFAULTS.measureGroupDimension),
         disableDrillDown: getValueOrDefault(config.disable_drill_down, DEFAULTS.disableDrillDown, "bool"),
-        disableDrillIntoURL: getValueOrDefault(
-            config.disable_drill_into_url,
-            DEFAULTS.disableDrillIntoURL,
-            "bool",
-        ),
+        disableDrillIntoURL:
+            config.disable_drill_into_url === undefined ? undefined : !!config.disable_drill_into_url,
         disableAlerts: getValueOrDefault(config.disable_alerts, DEFAULTS.disableAlerts, "bool"),
         disableScheduledExports: getValueOrDefault(
             config.disable_scheduled_exports,

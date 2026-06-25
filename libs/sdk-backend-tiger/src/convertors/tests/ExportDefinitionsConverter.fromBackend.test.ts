@@ -138,6 +138,41 @@ describe("ExportDefinitionsConverter fromBackend", () => {
         expect(result.content.parametersByTab?.["tabOwning"]).toEqual([parameter]);
     });
 
+    it("restores content.parametersByTab from metadata in formatted CSV export", () => {
+        const parameter: IDashboardExportParameter = { id: "topN", value: "5", title: "Top N" };
+        const exportRequest = {
+            requestPayload: {
+                fileName: "formatted-csv",
+                format: "CSV",
+                visualizationObject: "visId",
+                relatedDashboardId: "dashboardId",
+                metadata: { widget: "widgetId", parametersByTab: { tabOwning: [parameter] } },
+                settings: {},
+            },
+        } as unknown as AutomationAutomationTabularExport;
+
+        const result = convertTabularExportRequest(exportRequest);
+
+        expect(result.content.parametersByTab?.["tabOwning"]).toEqual([parameter]);
+    });
+
+    it("omits content.parametersByTab when formatted CSV export metadata has none", () => {
+        const exportRequest = {
+            requestPayload: {
+                fileName: "formatted-csv",
+                format: "CSV",
+                visualizationObject: "visId",
+                relatedDashboardId: "dashboardId",
+                metadata: { widget: "widgetId" },
+                settings: {},
+            },
+        } as AutomationAutomationTabularExport;
+
+        const result = convertTabularExportRequest(exportRequest);
+
+        expect(result.content.parametersByTab).toBeUndefined();
+    });
+
     it("converts dashboard tabular widget override filters through stored filter conversion", () => {
         const exportRequest = {
             requestPayload: {
@@ -266,6 +301,31 @@ describe("ExportDefinitionsConverter fromBackend", () => {
 
         expect(result.requestPayload.type).toBe("dashboard");
         expect(content.parametersByTab?.["tab1"]).toEqual([parameter]);
+    });
+
+    it("restores content.parametersByTab from metadata in standalone visualization-object export definition", () => {
+        const parameter: IDashboardExportParameter = { id: "topN", value: "5", title: "Top N" };
+        const exportDefinitionOut = {
+            id: "ed1",
+            attributes: {
+                title: "viz-export-definition",
+                requestPayload: {
+                    fileName: "viz-export-definition",
+                    format: "CSV",
+                    visualizationObject: "visId",
+                    relatedDashboardId: "dashboardId",
+                    metadata: { widget: "widgetId", parametersByTab: { tabOwning: [parameter] } },
+                },
+            },
+        } as unknown as JsonApiExportDefinitionOutWithLinks;
+
+        const result = convertExportDefinitionMdObject(exportDefinitionOut);
+        const content = result.requestPayload.content as {
+            parametersByTab?: Record<string, IDashboardExportParameter[]>;
+        };
+
+        expect(result.requestPayload.type).toBe("visualizationObject");
+        expect(content.parametersByTab?.["tabOwning"]).toEqual([parameter]);
     });
 
     it("converts dashboard tab-level filters to FilterContextItem[]", () => {

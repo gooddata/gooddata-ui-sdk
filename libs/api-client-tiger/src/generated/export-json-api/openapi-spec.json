@@ -1109,6 +1109,32 @@
                 },
                 "description": "Custom cell value overrides (IDs will be replaced with specified values)."
             },
+            "ParameterValue": {
+                "required": [
+                    "id",
+                    "title",
+                    "value"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Identifier of the workspace parameter (matches the parameter entity id).",
+                        "example": "year"
+                    },
+                    "value": {
+                        "type": "string",
+                        "description": "Value to use for this parameter when executing the export.",
+                        "example": "2026"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Display title of the parameter as the client wants it rendered on the info sheet.",
+                        "example": "Year"
+                    }
+                },
+                "description": "Parameter value override applied to the export. The (id, value) pair drives the execution; the title is FE-supplied for info-sheet display."
+            },
             "PdfTableStyle": {
                 "required": [
                     "selector"
@@ -1300,6 +1326,13 @@
                         "example": "[{\"negativeAttributeFilter\":{\"displayForm\":{\"identifier\":{\"id\":\"products.category\",\"type\":\"label\"}},\"notIn\":{\"values\":[\"Books\"]}}}]",
                         "items": {
                             "type": "object"
+                        }
+                    },
+                    "visualizationObjectCustomParameters": {
+                        "type": "array",
+                        "description": "Optional custom parameters to be applied when visualizationObject is given. Those parameters override the original parameters defined in the visualization.",
+                        "items": {
+                            "$ref": "#/components/schemas/ParameterValue"
                         }
                     },
                     "relatedDashboardId": {
@@ -3420,32 +3453,6 @@
                     }
                 }
             },
-            "DashboardParameterValue": {
-                "required": [
-                    "id",
-                    "title",
-                    "value"
-                ],
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "string",
-                        "description": "Identifier of the workspace parameter (matches the parameter entity id).",
-                        "example": "year"
-                    },
-                    "value": {
-                        "type": "string",
-                        "description": "Value to use for this parameter when executing the export.",
-                        "example": "2026"
-                    },
-                    "title": {
-                        "type": "string",
-                        "description": "Display title of the parameter as the client wants it rendered on the info sheet.",
-                        "example": "Year"
-                    }
-                },
-                "description": "Parameter value override applied to the export. The (id, value) pair drives the execution; the title is FE-supplied for info-sheet display."
-            },
             "DashboardTabularExportRequest": {
                 "required": [
                     "fileName",
@@ -3500,7 +3507,7 @@
                         "type": "array",
                         "description": "Parameter value overrides applied to the export's executions. Each entry carries the parameter id (used as an AFM execution override) plus the FE-supplied title for the info sheet. Applied uniformly across all tabs; use dashboardTabsParametersOverrides for tab-scoped overrides.",
                         "items": {
-                            "$ref": "#/components/schemas/DashboardParameterValue"
+                            "$ref": "#/components/schemas/ParameterValue"
                         }
                     },
                     "dashboardTabsParametersOverrides": {
@@ -3508,7 +3515,7 @@
                         "additionalProperties": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/components/schemas/DashboardParameterValue"
+                                "$ref": "#/components/schemas/ParameterValue"
                             }
                         },
                         "description": "Map of tab-specific parameter overrides. Key is tabId, value is a list of (id, value, title) entries that override the dashboard-level parameters for that tab only. Mirrors dashboardTabsFiltersOverrides. When a tab is present in this map, its entries take precedence over dashboardParametersOverride for that tab's executions and info-sheet display."

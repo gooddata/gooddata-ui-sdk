@@ -4353,9 +4353,6 @@ importers:
       default-import:
         specifier: 1.1.5
         version: 1.1.5
-      fixed-data-table-2:
-        specifier: 2.0.22
-        version: 2.0.22(react-dom@19.1.1(react@19.1.1))(react-redux@9.2.0(@types/react@19.1.11)(react@19.1.1)(redux@5.0.1))(react@19.1.1)
       js-yaml:
         specifier: ^4.1.1
         version: 4.2.0
@@ -4588,9 +4585,6 @@ importers:
       downshift:
         specifier: ^3.4.7
         version: 3.4.8(react@19.1.1)
-      fixed-data-table-2:
-        specifier: 2.0.22
-        version: 2.0.22(react-dom@19.1.1(react@19.1.1))(react-redux@9.2.0(@types/react@19.1.11)(react@19.1.1)(redux@5.0.1))(react@19.1.1)
       json-stable-stringify:
         specifier: 1.3.0
         version: 1.3.0
@@ -5272,9 +5266,6 @@ importers:
       default-import:
         specifier: 1.1.5
         version: 1.1.5
-      fixed-data-table-2:
-        specifier: 2.0.22
-        version: 2.0.22(react-dom@19.1.1(react@19.1.1))(react-redux@9.2.0(@types/react@19.1.11)(react@19.1.1)(redux@5.0.1))(react@19.1.1)
       lodash-es:
         specifier: ^4.17.23
         version: 4.18.1
@@ -5652,9 +5643,6 @@ importers:
       classnames:
         specifier: 2.5.1
         version: 2.5.1
-      fixed-data-table-2:
-        specifier: 2.0.22
-        version: 2.0.22(react-dom@19.1.1(react@19.1.1))(react-redux@9.2.0(@types/react@19.1.11)(react@19.1.1)(redux@5.0.1))(react@19.1.1)
       lodash-es:
         specifier: ^4.17.23
         version: 4.18.1
@@ -14359,12 +14347,6 @@ packages:
     resolution: {integrity: sha512-mX98PYCWpLwJD7tuMvBXWJtQ5Se6eEiwC77VDP0s3xFvtNgixLGm95ebvEK16cbffV2doO5Vs9Jjg9RuNvhXYQ==}
     hasBin: true
 
-  fixed-data-table-2@2.0.22:
-    resolution: {integrity: sha512-GsuEbE/Ln+8TJkzA/QRgkJ25i3lZvylZYZN/cZNMiiZjcilZEDi0iaSAoRxPYYLqktx0XsXbKEUHKsJHmt9ajQ==}
-    peerDependencies:
-      react: '>=17.0.1'
-      react-dom: '>=17.0.1'
-
   flat-cache@4.0.1:
     resolution: {integrity: sha512-f7ccFPK3SXFHpx15UIGyRJ/FJQctuKZ0zVuN3frBo4HnK3cay9VEW0R6yPYFHC0AgqhukPzKjq22t5DmAyqGyw==}
     engines: {node: '>=16'}
@@ -16521,9 +16503,6 @@ packages:
   react-is@18.3.1:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
 
-  react-lifecycles-compat@3.0.4:
-    resolution: {integrity: sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==}
-
   react-lines-ellipsis@0.16.1:
     resolution: {integrity: sha512-cQefaTdPlmvOAoQlcBOuv3AG2csThsdzCWSGydUZhv6VrrIsLShJ+WmxnCEHa3jAQeH4lxlsNVBd6i4bE5h2+g==}
     peerDependencies:
@@ -16757,9 +16736,6 @@ packages:
 
   requires-port@1.0.0:
     resolution: {integrity: sha512-KigOCHcocU3XODJxsu8i/j8T9tzT4adHiecwORRQ0ZZFcp7ahwXuRU1m+yuO90C5ZUyGeGfocHDI14M3L3yDAQ==}
-
-  reselect@4.1.8:
-    resolution: {integrity: sha512-ab9EmR80F/zQTMNeneUr4cv+jSwPJgIlvEmVwLerwrWVbpLlBuls9XHzIeTFy4cegU2NHBp3va0LKOzU5qFEYQ==}
 
   reselect@5.1.1:
     resolution: {integrity: sha512-K/BG6eIky/SBpzfHZv/dd+9JBFiS4SWV7FIujVyJRux6e45+73RaUHXLmIR1f7WOMaQ0U1km6qwklRQxpJJY0w==}
@@ -23604,20 +23580,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  fixed-data-table-2@2.0.22(react-dom@19.1.1(react@19.1.1))(react-redux@9.2.0(@types/react@19.1.11)(react@19.1.1)(redux@5.0.1))(react@19.1.1):
-    dependencies:
-      '@reduxjs/toolkit': 2.9.0(react-redux@9.2.0(@types/react@19.1.11)(react@19.1.1)(redux@5.0.1))(react@19.1.1)
-      lodash: 4.18.1
-      prop-types: 15.8.1
-      react: 19.1.1
-      react-dom: 19.1.1(react@19.1.1)
-      react-lifecycles-compat: 3.0.4
-      react-portal: 4.3.0(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
-      redux: 4.2.1
-      reselect: 4.1.8
-    transitivePeerDependencies:
-      - react-redux
-
   flat-cache@4.0.1:
     dependencies:
       flatted: 3.4.2
@@ -26082,8 +26044,6 @@ snapshots:
 
   react-is@18.3.1: {}
 
-  react-lifecycles-compat@3.0.4: {}
-
   react-lines-ellipsis@0.16.1(react-dom@19.1.1(react@19.1.1))(react@19.1.1):
     dependencies:
       react: 19.1.1
@@ -26412,8 +26372,6 @@ snapshots:
   require-from-string@2.0.2: {}
 
   requires-port@1.0.0: {}
-
-  reselect@4.1.8: {}
 
   reselect@5.1.1: {}
 
