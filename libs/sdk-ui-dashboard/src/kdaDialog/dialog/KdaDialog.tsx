@@ -83,6 +83,7 @@ export function KdaDialog({
                     alignPoints={minimizedAlignPoints}
                     accessibilityConfig={{
                         ...accessibilityConfig,
+                        titleElementId: accessibilityConfig.labelElementId,
                         title: undefined,
                     }}
                     displayCloseButton={displayCloseButton}
@@ -91,7 +92,9 @@ export function KdaDialog({
                     dataTestId={KDA_DIALOG_MINIMIZED_DATA_TEST_ID}
                 >
                     <KdaDialogFloatingStatusBar
-                        titleElementId={accessibilityConfig.descriptionElementId}
+                        labelElementId={accessibilityConfig.labelElementId}
+                        dialogTitle={accessibilityConfig.title}
+                        descriptionElementId={accessibilityConfig.descriptionElementId}
                         status={status}
                         onClose={onClose}
                     />

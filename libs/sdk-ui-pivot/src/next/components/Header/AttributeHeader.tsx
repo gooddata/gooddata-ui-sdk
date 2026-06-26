@@ -15,6 +15,7 @@ import {
 import { type AgGridColumnDef, type AgGridHeaderParams } from "../../types/agGrid.js";
 
 import { HeaderMenu } from "./HeaderCell/HeaderMenu.js";
+import { HeaderKeyboardHint, isFirstDisplayedColumn } from "./HeaderKeyboardHint.js";
 import { SortIndicator } from "./SortIndicator.js";
 
 /**
@@ -74,47 +75,54 @@ export function AttributeHeader(params: AgGridHeaderParams) {
     useHeaderCellAriaLabel(params.eGridHeader, headerCellAriaLabel);
 
     return (
-        <div
-            className={e("header-cell", {
-                "is-menu-open": isMenuOpen,
-                drillable: isDrillable,
-            })}
-            {...getPivotHeaderTestIdProps({ drillable: isDrillable })}
+        <HeaderKeyboardHint
+            eGridHeader={params.eGridHeader}
+            enabled={isFirstDisplayedColumn(params)}
+            canSort={allowSorting}
+            canOpenMenu={hasMenuItems}
         >
-            <div className="gd-header-content" aria-hidden="true">
-                <span className="gd-header-text" {...getPivotHeaderTextTestIdProps()}>
-                    {params.displayName}
-                </span>
-                {!!colDef.sortable && sortDirection ? (
-                    <SortIndicator sortDirection={sortDirection} sortIndex={sortIndex} />
+            <div
+                className={e("header-cell", {
+                    "is-menu-open": isMenuOpen,
+                    drillable: isDrillable,
+                })}
+                {...getPivotHeaderTestIdProps({ drillable: isDrillable })}
+            >
+                <div className="gd-header-content" aria-hidden="true">
+                    <span className="gd-header-text" {...getPivotHeaderTextTestIdProps()}>
+                        {params.displayName}
+                    </span>
+                    {!!colDef.sortable && sortDirection ? (
+                        <SortIndicator sortDirection={sortDirection} sortIndex={sortIndex} />
+                    ) : null}
+                </div>
+                {!!colDef.sortable || !!isDrillable ? (
+                    <div
+                        className="gd-header-cell-clickable-area"
+                        aria-hidden="true"
+                        {...getPivotHeaderClickableAreaTestIdProps()}
+                        onClick={handleHeaderClick}
+                    ></div>
+                ) : null}
+                {hasMenuItems ? (
+                    <HeaderMenu
+                        aggregationsItems={aggregationsItems}
+                        textWrappingItems={textWrappingItems}
+                        sortingItems={sortingItems}
+                        onAggregationsItemClick={handleAggregationsItemClick}
+                        onTextWrappingItemClick={handleTextWrappingItemClick}
+                        onSortingItemClick={handleSortingItemClick}
+                        isMenuOpened={isMenuOpen}
+                        onMenuOpenedChange={(opened) => {
+                            setIsMenuOpen(opened);
+                            if (!opened) {
+                                setIsKeyboardTriggered(false);
+                            }
+                        }}
+                        isKeyboardTriggered={isKeyboardTriggered}
+                    />
                 ) : null}
             </div>
-            {!!colDef.sortable || !!isDrillable ? (
-                <div
-                    className="gd-header-cell-clickable-area"
-                    aria-hidden="true"
-                    {...getPivotHeaderClickableAreaTestIdProps()}
-                    onClick={handleHeaderClick}
-                ></div>
-            ) : null}
-            {hasMenuItems ? (
-                <HeaderMenu
-                    aggregationsItems={aggregationsItems}
-                    textWrappingItems={textWrappingItems}
-                    sortingItems={sortingItems}
-                    onAggregationsItemClick={handleAggregationsItemClick}
-                    onTextWrappingItemClick={handleTextWrappingItemClick}
-                    onSortingItemClick={handleSortingItemClick}
-                    isMenuOpened={isMenuOpen}
-                    onMenuOpenedChange={(opened) => {
-                        setIsMenuOpen(opened);
-                        if (!opened) {
-                            setIsKeyboardTriggered(false);
-                        }
-                    }}
-                    isKeyboardTriggered={isKeyboardTriggered}
-                />
-            ) : null}
-        </div>
+        </HeaderKeyboardHint>
     );
 }

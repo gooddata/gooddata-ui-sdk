@@ -2,13 +2,14 @@
 
 import { useCallback } from "react";
 
-import { type IDataView, type IExecutionResult } from "@gooddata/sdk-backend-spi";
+import { type IDataView, type IExecutionResult, isNoDataError } from "@gooddata/sdk-backend-spi";
 import { type IExecutionResultLimitBreak, type IResultWarning, type ObjRef } from "@gooddata/sdk-model";
-import { type IPushData, type OnError, type OnLoadingChanged } from "@gooddata/sdk-ui";
+import { type IPushData, type OnError, type OnLoadingChanged, isNoDataSdkError } from "@gooddata/sdk-ui";
 
 import {
     setExecutionResultData,
     setExecutionResultError,
+    setExecutionResultErrorWithResult,
     setExecutionResultLoading,
 } from "../commands/executionResults.js";
 
@@ -27,12 +28,25 @@ export function useWidgetExecutionsHandler(widgetRef: ObjRef) {
     const startLoading = useDispatchDashboardCommand(setExecutionResultLoading);
     const setData = useDispatchDashboardCommand(setExecutionResultData);
     const setError = useDispatchDashboardCommand(setExecutionResultError);
+    const setErrorWithResult = useDispatchDashboardCommand(setExecutionResultErrorWithResult);
 
     const onError = useCallback<OnError>(
         (error) => {
-            setError(widgetRef, error);
+            // A no-data error may carry the computed (empty) result, which has a valid resultId
+            // (a result computed to emptiness, as opposed to e.g. an unsatisfiable filter that
+            // never executes). When present, record both so consumers can reference the result
+            // by id, while the error keeps the widget in its terminal no-data state.
+            const noDataResult =
+                isNoDataSdkError(error) && isNoDataError(error.cause)
+                    ? error.cause.dataView?.result
+                    : undefined;
+            if (noDataResult) {
+                setErrorWithResult({ id: widgetRef, error, executionResult: noDataResult });
+            } else {
+                setError(widgetRef, error);
+            }
         },
-        [setError, widgetRef],
+        [setError, setErrorWithResult, widgetRef],
     );
 
     const onSuccess = useCallback(

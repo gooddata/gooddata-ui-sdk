@@ -4,10 +4,12 @@ import { describe, expect, it } from "vitest";
 
 import { type IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { type IExecutionResultLimitBreak, idRef } from "@gooddata/sdk-model";
+import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import {
     setExecutionResultData,
     setExecutionResultError,
+    setExecutionResultErrorWithResult,
     setExecutionResultLoading,
 } from "../executionResults.js";
 
@@ -42,5 +44,15 @@ describe("executionResults commands", () => {
 
         expect(command.payload.limitBreaks).toBeUndefined();
         expect(command.payload.isLoading).toBe(false);
+    });
+
+    it("should carry both the error and the result for a no-data execution", () => {
+        const error = { seType: "NO_DATA" } as unknown as GoodDataSdkError;
+        const command = setExecutionResultErrorWithResult({ id: ref, error, executionResult });
+
+        expect(command.payload.error).toBe(error);
+        expect(command.payload.executionResult).toBe(executionResult);
+        expect(command.payload.isLoading).toBe(false);
+        expect(command.payload.limitBreaks).toBeUndefined();
     });
 });

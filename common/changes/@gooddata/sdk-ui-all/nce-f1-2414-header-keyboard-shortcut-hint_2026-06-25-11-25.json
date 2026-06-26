@@ -1,0 +1,16 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-pivot: Explain column header keyboard shortcuts via a focus hint on the first column",
+            "type": "none"
+        },
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-kit: Add UiTooltip accessibilityHidden prop for visual-only tooltips",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "nikola.cech@gooddata.com"
+}

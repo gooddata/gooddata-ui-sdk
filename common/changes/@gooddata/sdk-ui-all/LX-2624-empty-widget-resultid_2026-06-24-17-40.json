@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-dashboard: Keep the computed result (and its resultId) for widgets that finish with no data, so consumers such as the AI summary recognize them as computed-but-empty instead of not yet computed.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

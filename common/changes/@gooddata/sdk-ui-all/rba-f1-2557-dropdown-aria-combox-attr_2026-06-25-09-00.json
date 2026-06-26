@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-dashboard, sdk-ui-kit: Fix focus order in the My views dialog — move initial focus to the first interactive element on open, and add tabIndex support to Typography",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "rodrigo.balsells@gooddata.com"
+}

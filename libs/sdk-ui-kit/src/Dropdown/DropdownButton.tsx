@@ -79,7 +79,7 @@ export function DropdownButton({
                   ariaLabelledBy,
                   ariaExpanded: effectiveAriaExpanded,
                   ariaDescribedBy,
-                  ariaControls: ariaControls ?? (isOpen ? dropdownId : undefined),
+                  ariaControls: ariaControls ?? dropdownId,
                   role: role ?? "combobox",
                   popupType,
               }

@@ -7,9 +7,9 @@
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2026-6-24
+Date generated: 2026-6-25
 
-Revision ID: 4838c40a1bdb1dd1318b0819ce66f98fc8191678
+Revision ID: 0a5f939a51ae353e6a1a14ee39a716f9b1edb4f8
 
 ================================================================================
 ================================================================================
@@ -200,14 +200,14 @@ Revision ID: 4838c40a1bdb1dd1318b0819ce66f98fc8191678
 - @jsonjoy.com/buffers (17.67.0) [Apache-2.0, MIT]
 - @jsonjoy.com/codegen (1.0.0) [Apache-2.0]
 - @jsonjoy.com/codegen (17.67.0) [Apache-2.0]
-- @jsonjoy.com/fs-core (4.57.7) [Apache-2.0]
-- @jsonjoy.com/fs-fsa (4.57.7) [Apache-2.0]
-- @jsonjoy.com/fs-node (4.57.7) [Apache-2.0]
-- @jsonjoy.com/fs-node-builtins (4.57.7) [Apache-2.0]
-- @jsonjoy.com/fs-node-to-fsa (4.57.7) [Apache-2.0]
-- @jsonjoy.com/fs-node-utils (4.57.7) [Apache-2.0]
-- @jsonjoy.com/fs-print (4.57.7) [Apache-2.0]
-- @jsonjoy.com/fs-snapshot (4.57.7) [Apache-2.0]
+- @jsonjoy.com/fs-core (4.57.8) [Apache-2.0]
+- @jsonjoy.com/fs-fsa (4.57.8) [Apache-2.0]
+- @jsonjoy.com/fs-node (4.57.8) [Apache-2.0]
+- @jsonjoy.com/fs-node-builtins (4.57.8) [Apache-2.0]
+- @jsonjoy.com/fs-node-to-fsa (4.57.8) [Apache-2.0]
+- @jsonjoy.com/fs-node-utils (4.57.8) [Apache-2.0]
+- @jsonjoy.com/fs-print (4.57.8) [Apache-2.0]
+- @jsonjoy.com/fs-snapshot (4.57.8) [Apache-2.0]
 - @jsonjoy.com/json-pack (1.21.0) [Apache-2.0]
 - @jsonjoy.com/json-pack (17.67.0) [Apache-2.0]
 - @jsonjoy.com/json-pointer (1.0.2) [Apache-2.0]
@@ -258,7 +258,7 @@ Revision ID: 4838c40a1bdb1dd1318b0819ce66f98fc8191678
 - @react-dnd/invariant (2.0.0) [MIT]
 - @react-dnd/invariant (4.0.2) [MIT]
 - @react-dnd/shallowequal (4.0.2) [MIT]
-- @react-types/shared (3.35.0) [Apache-2.0]
+- @react-types/shared (3.36.0) [Apache-2.0]
 - @redux-saga/core (1.5.0) [MIT]
 - @redux-saga/deferred (1.3.1) [MIT]
 - @redux-saga/delay-p (1.3.1) [MIT]
@@ -299,7 +299,7 @@ Revision ID: 4838c40a1bdb1dd1318b0819ce66f98fc8191678
 - @types/mime (1.3.5) [MIT]
 - @types/ms (2.1.0) [MIT]
 - @types/node (24.12.0) [MIT]
-- @types/node (22.19.21) [MIT]
+- @types/node (22.20.0) [MIT]
 - @types/parse-json (4.0.2) [MIT]
 - @types/pbf (3.0.5) [MIT]
 - @types/qs (6.15.1) [MIT]
@@ -317,7 +317,7 @@ Revision ID: 4838c40a1bdb1dd1318b0819ce66f98fc8191678
 - @types/unist (2.0.11) [MIT]
 - @types/use-sync-external-store (0.0.6) [MIT]
 - @types/ws (8.18.1) [MIT]
-- @ungap/structured-clone (1.3.1) [ISC]
+- @ungap/structured-clone (1.3.2) [ISC]
 - @vtaits/use-lazy-ref (0.1.4) [MIT]
 - @webassemblyjs/ast (1.14.1) [MIT]
 - @webassemblyjs/floating-point-hex-parser (1.13.2) [MIT]
@@ -378,7 +378,7 @@ Revision ID: 4838c40a1bdb1dd1318b0819ce66f98fc8191678
 - binary-extensions (2.3.0) [MIT]
 - bl (4.1.0) [MIT]
 - body-parser (1.20.5) [MIT]
-- bonjour-service (1.4.1) [MIT]
+- bonjour-service (1.4.2) [MIT]
 - brace-expansion (1.1.15) [MIT]
 - brace-expansion (5.0.6) [MIT]
 - braces (3.0.3) [MIT]
@@ -403,7 +403,7 @@ Revision ID: 4838c40a1bdb1dd1318b0819ce66f98fc8191678
 - character-entities-html4 (2.1.0) [MIT]
 - character-entities-legacy (3.0.0) [MIT]
 - character-reference-invalid (2.0.1) [MIT]
-- chardet (2.1.1) [MIT]
+- chardet (2.2.0) [MIT]
 - chokidar (3.6.0) [MIT]
 - chownr (3.0.0) [ISC]
 - chrome-trace-event (1.0.4) [MIT]
@@ -446,7 +446,7 @@ Revision ID: 4838c40a1bdb1dd1318b0819ce66f98fc8191678
 - cosmiconfig (7.1.0) [MIT]
 - cosmiconfig (9.0.2) [MIT]
 - crelt (1.0.6) [MIT]
-- cron-parser (5.5.0) [MIT]
+- cron-parser (5.6.1) [MIT]
 - cross-spawn (7.0.6) [MIT]
 - css-functions-list (3.3.3) [MIT]
 - css-mediaquery (0.1.2) [BSD-3-Clause]
@@ -487,13 +487,13 @@ Revision ID: 4838c40a1bdb1dd1318b0819ce66f98fc8191678
 - earcut (2.2.4) [ISC]
 - earcut (3.0.2) [ISC]
 - ee-first (1.1.1) [MIT]
-- electron-to-chromium (1.5.375) [ISC]
+- electron-to-chromium (1.5.378) [ISC]
 - emailjs-base64 (1.1.4) [MIT]
 - emoji-regex (8.0.0) [MIT]
 - emojilib (2.4.0) [MIT]
 - emoticon (4.1.0) [MIT]
 - encodeurl (2.0.0) [MIT]
-- enhanced-resolve (5.24.0) [MIT]
+- enhanced-resolve (5.24.1) [MIT]
 - env-paths (2.2.1) [MIT]
 - envinfo (7.21.0) [MIT]
 - error-ex (1.3.4) [MIT]
@@ -593,7 +593,7 @@ Revision ID: 4838c40a1bdb1dd1318b0819ce66f98fc8191678
 - http-errors (2.0.1) [MIT]
 - http-parser-js (0.5.10) [MIT]
 - http-proxy (1.18.1) [MIT]
-- http-proxy-middleware (2.0.9) [MIT]
+- http-proxy-middleware (2.0.10) [MIT]
 - http-status-codes (2.1.4) [MIT]
 - http-vary (1.0.3) [MIT]
 - https-proxy-agent (5.0.1) [MIT]
@@ -715,7 +715,7 @@ Revision ID: 4838c40a1bdb1dd1318b0819ce66f98fc8191678
 - mdn-data (2.27.1) [CC0-1.0]
 - mdn-data (2.28.1) [CC0-1.0]
 - media-typer (0.3.0) [MIT]
-- memfs (4.57.7) [Unlicense]
+- memfs (4.57.8) [Unlicense]
 - memoize-one (6.0.0) [MIT]
 - meow (13.2.0) [MIT, ISC, Apache-2.0, BSD-2-Clause]
 - merge-descriptors (1.0.3) [MIT]
@@ -770,12 +770,12 @@ Revision ID: 4838c40a1bdb1dd1318b0819ce66f98fc8191678
 - multicast-dns (7.2.5) [MIT]
 - murmurhash-js (1.0.0) [MIT]
 - mute-stream (1.0.0) [ISC]
-- nanoid (3.3.12) [MIT]
+- nanoid (3.3.15) [MIT]
 - negotiator (0.6.3) [MIT]
 - negotiator (0.6.4) [MIT]
 - neo-async (2.6.2) [MIT]
 - node-emoji (2.2.0) [MIT]
-- node-releases (2.0.48) [MIT]
+- node-releases (2.0.50) [MIT]
 - normalize-path (3.0.0) [MIT]
 - object-assign (4.1.1) [MIT]
 - object-code (2.0.0) [MIT]
@@ -838,7 +838,7 @@ Revision ID: 4838c40a1bdb1dd1318b0819ce66f98fc8191678
 - pvtsutils (1.3.6) [MIT]
 - pvutils (1.1.5) [MIT]
 - qified (0.10.1) [MIT]
-- qs (6.15.2) [BSD-3-Clause]
+- qs (6.15.3) [BSD-3-Clause]
 - queue-microtask (1.2.3) [MIT]
 - quickselect (2.0.0) [ISC]
 - quickselect (3.0.0) [ISC]
@@ -846,7 +846,7 @@ Revision ID: 4838c40a1bdb1dd1318b0819ce66f98fc8191678
 - range-parser (1.2.1) [MIT]
 - raw-body (2.5.3) [MIT]
 - react (19.1.1) [MIT]
-- react-aria (3.49.0) [Apache-2.0]
+- react-aria (3.50.0) [Apache-2.0]
 - react-content-loader (7.1.2) [MIT, Apache-2.0]
 - react-day-picker (9.9.0) [MIT]
 - react-dnd-html5-backend (14.1.0) [MIT]
@@ -864,7 +864,7 @@ Revision ID: 4838c40a1bdb1dd1318b0819ce66f98fc8191678
 - react-router (7.18.0) [MIT]
 - react-select (5.10.2) [MIT]
 - react-select-async-paginate (0.7.11) [MIT]
-- react-stately (3.47.0) [Apache-2.0]
+- react-stately (3.48.0) [Apache-2.0]
 - react-textarea-autosize (8.5.6) [MIT]
 - react-transition-group (4.4.5) [BSD-3-Clause]
 - readable-stream (2.3.8) [MIT]
@@ -971,7 +971,7 @@ Revision ID: 4838c40a1bdb1dd1318b0819ce66f98fc8191678
 - supports-hyperlinks (3.2.0) [MIT]
 - supports-preserve-symlinks-flag (1.0.0) [MIT]
 - svg-tags (1.0.0) [MIT]
-- tabbable (6.4.0) [MIT]
+- tabbable (6.5.0) [MIT]
 - table (6.9.0) [BSD-3-Clause]
 - tapable (2.3.3) [MIT]
 - tar (7.5.16) [ISC]
@@ -3188,21 +3188,9 @@ Apache-2.0
 
 
 --------------------------------------------------------------------------------
-Package Title: @jsonjoy.com/fs-core (4.57.7)
+Package Title: @jsonjoy.com/fs-core (4.57.8)
 
-Package Locator: npm+@jsonjoy.com/fs-core$4.57.7
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-Apache-2.0
-
-
---------------------------------------------------------------------------------
-Package Title: @jsonjoy.com/fs-fsa (4.57.7)
-
-Package Locator: npm+@jsonjoy.com/fs-fsa$4.57.7
+Package Locator: npm+@jsonjoy.com/fs-core$4.57.8
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -3212,21 +3200,9 @@ Apache-2.0
 
 
 --------------------------------------------------------------------------------
-Package Title: @jsonjoy.com/fs-node (4.57.7)
+Package Title: @jsonjoy.com/fs-fsa (4.57.8)
 
-Package Locator: npm+@jsonjoy.com/fs-node$4.57.7
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-Apache-2.0
-
-
---------------------------------------------------------------------------------
-Package Title: @jsonjoy.com/fs-node-builtins (4.57.7)
-
-Package Locator: npm+@jsonjoy.com/fs-node-builtins$4.57.7
+Package Locator: npm+@jsonjoy.com/fs-fsa$4.57.8
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -3236,21 +3212,9 @@ Apache-2.0
 
 
 --------------------------------------------------------------------------------
-Package Title: @jsonjoy.com/fs-node-to-fsa (4.57.7)
+Package Title: @jsonjoy.com/fs-node (4.57.8)
 
-Package Locator: npm+@jsonjoy.com/fs-node-to-fsa$4.57.7
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-Apache-2.0
-
-
---------------------------------------------------------------------------------
-Package Title: @jsonjoy.com/fs-node-utils (4.57.7)
-
-Package Locator: npm+@jsonjoy.com/fs-node-utils$4.57.7
+Package Locator: npm+@jsonjoy.com/fs-node$4.57.8
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -3260,9 +3224,9 @@ Apache-2.0
 
 
 --------------------------------------------------------------------------------
-Package Title: @jsonjoy.com/fs-print (4.57.7)
+Package Title: @jsonjoy.com/fs-node-builtins (4.57.8)
 
-Package Locator: npm+@jsonjoy.com/fs-print$4.57.7
+Package Locator: npm+@jsonjoy.com/fs-node-builtins$4.57.8
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -3272,9 +3236,45 @@ Apache-2.0
 
 
 --------------------------------------------------------------------------------
-Package Title: @jsonjoy.com/fs-snapshot (4.57.7)
+Package Title: @jsonjoy.com/fs-node-to-fsa (4.57.8)
 
-Package Locator: npm+@jsonjoy.com/fs-snapshot$4.57.7
+Package Locator: npm+@jsonjoy.com/fs-node-to-fsa$4.57.8
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+Apache-2.0
+
+
+--------------------------------------------------------------------------------
+Package Title: @jsonjoy.com/fs-node-utils (4.57.8)
+
+Package Locator: npm+@jsonjoy.com/fs-node-utils$4.57.8
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+Apache-2.0
+
+
+--------------------------------------------------------------------------------
+Package Title: @jsonjoy.com/fs-print (4.57.8)
+
+Package Locator: npm+@jsonjoy.com/fs-print$4.57.8
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+Apache-2.0
+
+
+--------------------------------------------------------------------------------
+Package Title: @jsonjoy.com/fs-snapshot (4.57.8)
+
+Package Locator: npm+@jsonjoy.com/fs-snapshot$4.57.8
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -3884,9 +3884,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: @react-types/shared (3.35.0)
+Package Title: @react-types/shared (3.36.0)
 
-Package Locator: npm+@react-types/shared$3.35.0
+Package Locator: npm+@react-types/shared$3.36.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -4380,9 +4380,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: @types/node (22.19.21)
+Package Title: @types/node (22.20.0)
 
-Package Locator: npm+@types/node$22.19.21
+Package Locator: npm+@types/node$22.20.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -4596,9 +4596,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: @ungap/structured-clone (1.3.1)
+Package Title: @ungap/structured-clone (1.3.2)
 
-Package Locator: npm+@ungap/structured-clone$1.3.1
+Package Locator: npm+@ungap/structured-clone$1.3.2
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -5336,9 +5336,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: bonjour-service (1.4.1)
+Package Title: bonjour-service (1.4.2)
 
-Package Locator: npm+bonjour-service$1.4.1
+Package Locator: npm+bonjour-service$1.4.2
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -5636,9 +5636,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: chardet (2.1.1)
+Package Title: chardet (2.2.0)
 
-Package Locator: npm+chardet$2.1.1
+Package Locator: npm+chardet$2.2.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -6152,9 +6152,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: cron-parser (5.5.0)
+Package Title: cron-parser (5.6.1)
 
-Package Locator: npm+cron-parser$5.5.0
+Package Locator: npm+cron-parser$5.6.1
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -6648,9 +6648,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: electron-to-chromium (1.5.375)
+Package Title: electron-to-chromium (1.5.378)
 
-Package Locator: npm+electron-to-chromium$1.5.375
+Package Locator: npm+electron-to-chromium$1.5.378
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -6720,9 +6720,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: enhanced-resolve (5.24.0)
+Package Title: enhanced-resolve (5.24.1)
 
-Package Locator: npm+enhanced-resolve$5.24.0
+Package Locator: npm+enhanced-resolve$5.24.1
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -7926,9 +7926,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: http-proxy-middleware (2.0.9)
+Package Title: http-proxy-middleware (2.0.10)
 
-Package Locator: npm+http-proxy-middleware$2.0.9
+Package Locator: npm+http-proxy-middleware$2.0.10
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -9398,9 +9398,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: memfs (4.57.7)
+Package Title: memfs (4.57.8)
 
-Package Locator: npm+memfs$4.57.7
+Package Locator: npm+memfs$4.57.8
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -10062,9 +10062,9 @@ ISC
 
 
 --------------------------------------------------------------------------------
-Package Title: nanoid (3.3.12)
+Package Title: nanoid (3.3.15)
 
-Package Locator: npm+nanoid$3.3.12
+Package Locator: npm+nanoid$3.3.15
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -10122,9 +10122,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: node-releases (2.0.48)
+Package Title: node-releases (2.0.50)
 
-Package Locator: npm+node-releases$2.0.48
+Package Locator: npm+node-releases$2.0.50
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -10904,9 +10904,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: qs (6.15.2)
+Package Title: qs (6.15.3)
 
-Package Locator: npm+qs$6.15.2
+Package Locator: npm+qs$6.15.3
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -11000,9 +11000,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: react-aria (3.49.0)
+Package Title: react-aria (3.50.0)
 
-Package Locator: npm+react-aria$3.49.0
+Package Locator: npm+react-aria$3.50.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -11224,9 +11224,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: react-stately (3.47.0)
+Package Title: react-stately (3.48.0)
 
-Package Locator: npm+react-stately$3.47.0
+Package Locator: npm+react-stately$3.48.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -12520,9 +12520,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: tabbable (6.4.0)
+Package Title: tabbable (6.5.0)
 
-Package Locator: npm+tabbable$6.4.0
+Package Locator: npm+tabbable$6.5.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -29272,4 +29272,4 @@ POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2026-6-24
+Report Generated by FOSSA on 2026-6-25

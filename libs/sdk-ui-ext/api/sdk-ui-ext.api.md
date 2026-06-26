@@ -925,6 +925,7 @@ export interface IObjectShareControllerActions {
 
 // @internal (undocumented)
 export interface IObjectShareControllerState {
+    accessUnavailable: boolean;
     // (undocumented)
     error?: Error;
     // (undocumented)

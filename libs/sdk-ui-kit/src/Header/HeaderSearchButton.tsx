@@ -66,6 +66,7 @@ export function HeaderSearchButton({ children, title }: HeaderSearchProps) {
                     isModal={false}
                     alignTo=".gd-header-search"
                     alignPoints={ALIGN_POINTS}
+                    resizeObserverThreshold={0.2}
                     closeOnEscape
                     closeOnOutsideClick
                     closeOnParentScroll={false}

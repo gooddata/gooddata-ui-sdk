@@ -29,8 +29,9 @@ export function CatalogItemAccessRow() {
     if (summary) {
         return <CatalogDetailAccessRow summary={summary} onOpen={open} />;
     }
-    // Summary not available yet (loading or load error). Keep the row — Share is
-    // still reachable — with a placeholder rather than omitting it.
+    // Summary not available yet — still loading. A definitive not-permissionable
+    // load failure makes the provider inactive (the row is gone via the guard
+    // above), so this placeholder only covers the genuine loading window.
     return (
         <CatalogDetailContentRow
             title={<FormattedMessage id="analyticsCatalog.share.access.row.label" />}

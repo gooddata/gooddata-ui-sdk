@@ -106,9 +106,18 @@ export function CatalogItemShareProvider({
     }, [targetKey]);
     const close = useCallback(() => setIsOpen(false), []);
 
+    // Sharing is offered only while the access list is reachable. The permissions
+    // endpoint is manage-gated, so a user who can only view/analyze the object gets
+    // a 404 (surfaced as `accessUnavailable`); we then hide both the Share button and
+    // the inline access row — there is nothing they can act on, and the row would
+    // otherwise load forever. A transient load error does not set the flag, so a flaky
+    // fetch doesn't strip the UI. The access list loads optimistically, so the row and
+    // button show until the 404 lands, then disappear.
+    const active = Boolean(shareableItem) && !controller.state.accessUnavailable;
+
     const state = useMemo<ICatalogItemShareState>(
         () =>
-            shareableItem
+            active && shareableItem
                 ? {
                       active: true,
                       controller,
@@ -118,12 +127,12 @@ export function CatalogItemShareProvider({
                       labelsLoading: labels.loading,
                   }
                 : INACTIVE_STATE,
-        [shareableItem, controller, target, isOpen, labels.loading],
+        [active, shareableItem, controller, target, isOpen, labels.loading],
     );
 
     const actions = useMemo<ICatalogItemShareActions>(
-        () => (shareableItem ? { active: true, open, close } : INACTIVE_ACTIONS),
-        [shareableItem, open, close],
+        () => (active ? { active: true, open, close } : INACTIVE_ACTIONS),
+        [active, open, close],
     );
 
     return (

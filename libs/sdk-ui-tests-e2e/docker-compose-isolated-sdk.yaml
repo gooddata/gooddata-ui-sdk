@@ -5,7 +5,7 @@ services:
         entrypoint: >
             bash -c "
               EXTRA_ARGS='';
-              if [ \"$$PLAYWRIGHT_UPDATE_SNAPSHOTS\" = '1' ]; then EXTRA_ARGS='--update-snapshots'; fi;
+              if [ \"$$PLAYWRIGHT_UPDATE_SNAPSHOTS\" = '1' ]; then EXTRA_ARGS='--update-snapshots=all'; fi;
               if [ -n \"$$FILTER\" ]; then
                 npx playwright test --config ./playwright/playwright.config.ts $$EXTRA_ARGS --grep '@pre-merge-isolated' $$(echo \"$$FILTER\" | tr ',' ' ');
               else

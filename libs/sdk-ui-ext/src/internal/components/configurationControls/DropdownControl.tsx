@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { type ComponentType, memo, useCallback, useState } from "react";
+import { type ComponentType, memo, useCallback, useId, useState } from "react";
 
 import { cloneDeep, set } from "lodash-es";
 import { type WrappedComponentProps, injectIntl } from "react-intl";
@@ -59,6 +59,8 @@ export const DropdownControl = injectIntl(
     }: IDropdownControlProps & WrappedComponentProps) {
         const [searchString, setSearchString] = useState("");
         const onSearch = useCallback((value: string) => setSearchString(value), []);
+        const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+        const popupId = useId();
 
         const filteredItems =
             showSearch && searchString
@@ -102,6 +104,7 @@ export const DropdownControl = injectIntl(
                     isOpen={isOpen}
                     onClick={toggleDropdown}
                     disabled={disabled}
+                    dropdownId={popupId}
                 />
             );
         };
@@ -117,20 +120,23 @@ export const DropdownControl = injectIntl(
                     <span className="input-label-text">{getTranslation(labelText, intl)}</span>
                     <label className="adi-bucket-inputfield gd-input gd-input-small">
                         <Dropdown
+                            autofocusOnOpen
                             renderButton={({ isOpen, toggleDropdown }) => {
                                 return getDropdownButton(selectedItem, disabled, isOpen, toggleDropdown);
                             }}
                             closeOnParentScroll
                             closeOnMouseDrag
                             alignPoints={DROPDOWN_ALIGNMENTS}
-                            onOpenStateChanged={(isOpen) => {
-                                if (!isOpen) {
+                            onOpenStateChanged={(open) => {
+                                setIsDropdownOpen(open);
+                                if (!open) {
                                     setSearchString("");
                                 }
                             }}
                             renderBody={({ closeDropdown, isMobile }) => {
                                 return (
                                     <DropdownList
+                                        id={popupId}
                                         width={width}
                                         isMobile={isMobile}
                                         items={filteredItems}
@@ -138,6 +144,10 @@ export const DropdownControl = injectIntl(
                                         searchString={searchString}
                                         onSearch={onSearch}
                                         searchPlaceholder={searchPlaceholder}
+                                        onKeyDownSelect={(item: IDropdownItem) => {
+                                            onSelect(item);
+                                            closeDropdown();
+                                        }}
                                         renderItem={({ item }) => (
                                             <ListItem
                                                 title={item.title}
@@ -157,6 +167,7 @@ export const DropdownControl = injectIntl(
                             className="adi-bucket-dropdown"
                         />
                     </label>
+                    {!isDropdownOpen && <div id={popupId} style={{ display: "none" }} aria-hidden="true" />}
                 </div>
             </DisabledBubbleMessage>
         );

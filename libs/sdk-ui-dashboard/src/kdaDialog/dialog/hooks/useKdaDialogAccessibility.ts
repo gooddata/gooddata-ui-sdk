@@ -6,12 +6,14 @@ import { useIntl } from "react-intl";
 
 export function useKdaDialogAccessibility(metric: string, isMinimized: boolean, titleElementId?: string) {
     const intl = useIntl();
-    const generatedTitleElementId = useId();
-    const titleId = titleElementId ?? generatedTitleElementId;
+    const labelElementId = useId();
+    const generatedDescriptionElementId = useId();
+    const descriptionElementId = titleElementId ?? generatedDescriptionElementId;
 
     return useMemo(() => {
         return {
-            descriptionElementId: titleId,
+            labelElementId,
+            descriptionElementId,
             title: intl.formatMessage(
                 {
                     id: "kdaDialog.dialog.title",
@@ -28,5 +30,5 @@ export function useKdaDialogAccessibility(metric: string, isMinimized: boolean, 
                 }),
             },
         };
-    }, [intl, metric, titleId, isMinimized]);
+    }, [intl, metric, labelElementId, descriptionElementId, isMinimized]);
 }

@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type MessageDescriptor, defineMessages } from "react-intl";
 
@@ -33,6 +33,10 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     openHeaderMenuAria: { id: "visualizations.menu.header.openAriaLabel" },
     keyboardInstructionsMac: { id: "visualizations.table.header.keyboardInstructions.mac" },
     keyboardInstructionsWindows: { id: "visualizations.table.header.keyboardInstructions.windows" },
+    keyboardHintOpenMenu: { id: "visualizations.table.header.keyboardHint.openMenu" },
+    keyboardHintSort: { id: "visualizations.table.header.keyboardHint.sort" },
+    keyboardHintMultiSort: { id: "visualizations.table.header.keyboardHint.multiSort" },
+    keyboardHintColumnWidth: { id: "visualizations.table.header.keyboardHint.columnWidth" },
     ariaSortedAscending: { id: "visualizations.table.header.aria.sortedAscending" },
     ariaSortedDescending: { id: "visualizations.table.header.aria.sortedDescending" },
     ariaPriority: { id: "visualizations.table.header.aria.priority" },

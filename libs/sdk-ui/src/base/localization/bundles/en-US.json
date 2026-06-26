@@ -739,6 +739,22 @@
         "text": "Open menu with Alt + Down Arrow. Sort with Enter. Add to multi-sort with Shift + Enter. Resize column with Alt + Left or Right Arrow.",
         "crowdinContext": "ARIA description for column header keyboard shortcuts on Windows/Linux. Screen readers announce this when users focus on a sortable column header."
     },
+    "visualizations.table.header.keyboardHint.openMenu": {
+        "text": "Open menu",
+        "crowdinContext": "Action label in the compact keyboard-shortcut hint shown on a focused column header. Rendered as 'Open menu (⌥ + ↓)' / 'Open menu (Alt + ↓)'; the key combo in parentheses is appended in code and is not translated."
+    },
+    "visualizations.table.header.keyboardHint.sort": {
+        "text": "Sort",
+        "crowdinContext": "Action label in the compact keyboard-shortcut hint shown on a focused column header. Rendered as 'Sort (⏎)' / 'Sort (Enter)'; the key combo in parentheses is appended in code and is not translated."
+    },
+    "visualizations.table.header.keyboardHint.multiSort": {
+        "text": "Multi-sort",
+        "crowdinContext": "Action label in the compact keyboard-shortcut hint shown on a focused column header. Rendered as 'Multi-sort (⇧ + ⏎)' / 'Multi-sort (Shift + Enter)'; the key combo in parentheses is appended in code and is not translated."
+    },
+    "visualizations.table.header.keyboardHint.columnWidth": {
+        "text": "Column width",
+        "crowdinContext": "Action label in the compact keyboard-shortcut hint shown on a focused column header. Rendered as 'Column width (⌥ + ←/→)' / 'Column width (Alt + ←/→)'; the key combo in parentheses is appended in code and is not translated."
+    },
     "visualizations.table.header.aria.sortedAscending": {
         "text": "ascending",
         "crowdinContext": "ARIA label indicating the column is sorted in ascending order. Used in screen reader announcements for sorted columns."

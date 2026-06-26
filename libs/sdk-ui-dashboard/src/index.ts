@@ -486,6 +486,7 @@ export {
     type IUpsertExecutionResult,
     setExecutionResultData,
     setExecutionResultError,
+    setExecutionResultErrorWithResult,
     setExecutionResultLoading,
 } from "./model/commands/executionResults.js";
 export {

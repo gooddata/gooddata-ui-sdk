@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -9,8 +9,10 @@ import { type AgGridProps } from "../types/agGrid.js";
 
 /**
  * Detect if the user is on macOS for OS-specific keyboard shortcut instructions.
+ *
+ * @internal
  */
-function isMacOS(): boolean {
+export function isMacOS(): boolean {
     return typeof navigator !== "undefined" && /Mac|iPhone|iPad|iPod/.test(navigator.userAgent);
 }
 

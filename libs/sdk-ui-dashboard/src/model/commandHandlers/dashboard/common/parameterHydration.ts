@@ -8,8 +8,8 @@ import {
 } from "@gooddata/sdk-model";
 
 import {
+    buildWorkspaceParametersByRef,
     computeHydratedRuntimeOverride,
-    workspaceParametersByRef,
 } from "../../../store/tabs/parameters/parametersHelpers.js";
 import {
     type IDashboardParameterEntry,
@@ -33,7 +33,7 @@ export function hydrateParameterEntries(
     if (!dashboardParameters || dashboardParameters.length === 0) {
         return [];
     }
-    const workspaceByRef = workspaceParametersByRef(workspaceParameters);
+    const workspaceByRef = buildWorkspaceParametersByRef(workspaceParameters);
     return dashboardParameters.map((parameter) => ({
         parameter,
         runtimeOverride: computeHydratedRuntimeOverride(

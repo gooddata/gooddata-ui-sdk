@@ -14,6 +14,7 @@ export interface IKdaDialogActionButtonsProps {
     // oxlint-disable-next-line typescript-eslint/no-redundant-type-constituents
     status?: "done" | "error" | string;
     titleElementId?: string;
+    toggleAriaDescribedBy?: string;
     onClose?: () => void;
     className?: string;
 }
@@ -29,6 +30,7 @@ export function KdaDialogActionButtons({
     className,
     status,
     titleElementId,
+    toggleAriaDescribedBy,
 }: IKdaDialogActionButtonsProps) {
     const intl = useIntl();
     const { state, setState } = useKdaState();
@@ -48,6 +50,7 @@ export function KdaDialogActionButtons({
             status={status}
             size={size}
             titleElementId={titleElementId}
+            toggleAriaDescribedBy={toggleAriaDescribedBy}
             isMinimized={isMinimized}
             expandLabel={expandLabel}
             shrinkLabel={shrinkLabel}
@@ -70,6 +73,7 @@ interface IKdaDialogActionButtonsViewProps extends IKdaDialogActionButtonsProps 
     shrinkLabel: string;
     closeLabel: string;
     titleElementId?: string;
+    toggleAriaDescribedBy?: string;
     onToggle: () => void;
 }
 
@@ -80,6 +84,7 @@ function KdaDialogActionButtonsView(props: IKdaDialogActionButtonsViewProps) {
         isMinimized,
         expandLabel,
         titleElementId,
+        toggleAriaDescribedBy,
         shrinkLabel,
         closeLabel,
         onToggle,
@@ -89,6 +94,8 @@ function KdaDialogActionButtonsView(props: IKdaDialogActionButtonsViewProps) {
     const intl = useIntl();
     const text = status && buttonMessages[status] ? intl.formatMessage(buttonMessages[status]) : "";
     const isFinished = status === "done" || status === "error";
+    const toggleDescribedBy = toggleAriaDescribedBy ?? titleElementId;
+    const expandedHeaderDescribedBy = isMinimized ? undefined : toggleDescribedBy;
 
     return (
         <div
@@ -110,7 +117,7 @@ function KdaDialogActionButtonsView(props: IKdaDialogActionButtonsViewProps) {
                         <UiButton
                             label={text}
                             accessibilityConfig={{
-                                ariaDescribedBy: titleElementId,
+                                ariaDescribedBy: toggleDescribedBy,
                             }}
                             variant="tooltip"
                             size="medium"
@@ -122,7 +129,8 @@ function KdaDialogActionButtonsView(props: IKdaDialogActionButtonsViewProps) {
                         label={isMinimized ? expandLabel : shrinkLabel}
                         icon={isMinimized ? "expand" : "shrink"}
                         accessibilityConfig={{
-                            ariaDescribedBy: titleElementId,
+                            ariaDescribedBy: toggleDescribedBy,
+                            ariaLabel: isMinimized ? expandLabel : shrinkLabel,
                         }}
                         iconColor="complementary-7"
                         variant="tertiary"
@@ -146,6 +154,9 @@ function KdaDialogActionButtonsView(props: IKdaDialogActionButtonsViewProps) {
                     variant="tertiary"
                     size={size}
                     onClick={onClose}
+                    accessibilityConfig={
+                        expandedHeaderDescribedBy ? { ariaDescribedBy: expandedHeaderDescribedBy } : undefined
+                    }
                     iconColor={isFinished ? "complementary-0" : "complementary-7"}
                 />
             </div>

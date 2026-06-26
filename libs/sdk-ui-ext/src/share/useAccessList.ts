@@ -7,6 +7,7 @@ import { type IGranularAccessGrantee, type ObjRef, objRefToString } from "@goodd
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { type GeneralAccessValue, type IUiGranteeAsyncOptions, useToastMessage } from "@gooddata/sdk-ui-kit";
 
+import { isPermissionsNotAvailable } from "./accessErrors.js";
 import { deriveGeneralAccess, deriveWorkspacePermissionLevel } from "./accessSummary.js";
 import { objectShareMessages } from "./messages.js";
 import { assigneeMatchesQuery, granteeId, granteesFromAccessList } from "./objectShareController.helpers.js";
@@ -35,6 +36,13 @@ export interface IAccessList {
     status: IObjectShareControllerState["status"];
     /** Error from the initial/target-change load. */
     loadError: Error | undefined;
+    /**
+     * Whether the current target's load was denied because the caller can't manage
+     * its permissions (manage-gated endpoint returns 404). Derived from the live
+     * fetch, not the persisted `loadError`, so it can't lag a target switch and
+     * flag a new target with the previous one's 404.
+     */
+    accessUnavailable: boolean;
 
     /** Write a grant change to the backend and toast. False on failure; no refetch. */
     commit: (mutate: IGranularAccessGrantee[], successMessage: { id: string }) => Promise<boolean>;
@@ -194,6 +202,11 @@ export function useAccessList(
               : "loading"
         : "idle";
 
+    // Derived from the live fetch (status + error travel together), not the
+    // persisted loadError — so a target switch can't briefly flag the new target
+    // with the previous target's 404 before the load effect updates loadError.
+    const accessUnavailable = fetchStatus === "error" && isPermissionsNotAvailable(fetchError);
+
     // Write a single grant change to the backend, then toast. The caller applies
     // the optimistic local write-through and rolls it back on failure; there is no
     // refetch — local state stays authoritative.
@@ -291,6 +304,7 @@ export function useAccessList(
         summary,
         status,
         loadError,
+        accessUnavailable,
         commit,
         loadOptions,
         refForId,

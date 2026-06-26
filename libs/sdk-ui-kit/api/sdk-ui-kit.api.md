@@ -7894,6 +7894,7 @@ export interface IUiToastsContainerProps {
 // @internal (undocumented)
 export interface IUiTooltipProps {
     accessibilityConfig?: IAccessibilityConfigBase;
+    accessibilityHidden?: boolean;
     anchor: ReactNode;
     anchorWrapperStyles?: CSSProperties;
     arrowPlacement?: TooltipArrowPlacement;

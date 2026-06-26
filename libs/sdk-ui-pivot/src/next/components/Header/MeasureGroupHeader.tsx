@@ -17,6 +17,7 @@ import {
 } from "../../types/agGrid.js";
 
 import { HeaderMenu } from "./HeaderCell/HeaderMenu.js";
+import { HeaderKeyboardHint, isFirstDisplayedColumn } from "./HeaderKeyboardHint.js";
 import {
     getColumnMeasureIdentifier,
     getPivotAttributeDescriptorsForMeasureGroup,
@@ -101,33 +102,39 @@ export function MeasureGroupHeader(params: AgGridCellRendererParams | AgGridHead
         : (effectiveMeasure?.descriptor.measureHeaderItem.name ?? params.value);
 
     return (
-        <div
-            className={e("header-cell", {
-                "is-menu-open": isMenuOpen,
-            })}
+        <HeaderKeyboardHint
+            eGridHeader={isHeader ? params.eGridHeader : undefined}
+            enabled={isHeader && isFirstDisplayedColumn(params)}
+            canOpenMenu={hasMenuItems}
         >
-            <div className="gd-header-content" aria-hidden="true">
-                <span className="gd-header-text">{displayName}</span>
+            <div
+                className={e("header-cell", {
+                    "is-menu-open": isMenuOpen,
+                })}
+            >
+                <div className="gd-header-content" aria-hidden="true">
+                    <span className="gd-header-text">{displayName}</span>
+                </div>
+                {hasMenuItems ? (
+                    <HeaderMenu
+                        aggregationsItems={aggregationsItems}
+                        textWrappingItems={textWrappingItems}
+                        sortingItems={sortingItems}
+                        onAggregationsItemClick={handleAggregationsItemClick}
+                        onTextWrappingItemClick={handleTextWrappingItemClick}
+                        onSortingItemClick={handleSortingItemClick}
+                        isMenuOpened={isMenuOpen}
+                        onMenuOpenedChange={(opened) => {
+                            setIsMenuOpen(opened);
+                            if (!opened) {
+                                setIsKeyboardTriggered(false);
+                            }
+                        }}
+                        isKeyboardTriggered={isKeyboardTriggered}
+                    />
+                ) : null}
             </div>
-            {hasMenuItems ? (
-                <HeaderMenu
-                    aggregationsItems={aggregationsItems}
-                    textWrappingItems={textWrappingItems}
-                    sortingItems={sortingItems}
-                    onAggregationsItemClick={handleAggregationsItemClick}
-                    onTextWrappingItemClick={handleTextWrappingItemClick}
-                    onSortingItemClick={handleSortingItemClick}
-                    isMenuOpened={isMenuOpen}
-                    onMenuOpenedChange={(opened) => {
-                        setIsMenuOpen(opened);
-                        if (!opened) {
-                            setIsKeyboardTriggered(false);
-                        }
-                    }}
-                    isKeyboardTriggered={isKeyboardTriggered}
-                />
-            ) : null}
-        </div>
+        </HeaderKeyboardHint>
     );
 }
 

@@ -57,6 +57,14 @@ export interface IObjectShareControllerState {
     subview: "main" | "addGrantee";
     status: "idle" | "loading" | "success" | "error" | "saving";
     error?: Error;
+    /**
+     * Whether object-level permissions are unavailable to the current user — the
+     * manage-gated access-list endpoint returned 404, the backend's signal that
+     * the caller cannot manage this object's sharing. Distinct from a transient
+     * load error (5xx / network), which may still resolve: consumers use this to
+     * hide the share UI entirely rather than to retry.
+     */
+    accessUnavailable: boolean;
     summary: IObjectAccessSummary | undefined;
 
     grantees: IObjectShareGrantee[];

@@ -164,7 +164,35 @@ export default {
         ]),
         moduleWithDependencies("automationFilters", "src/presentation/automations/shared/automationFilters", [
             "src/_staging/*",
-            "src/model/*",
+            // GDP-3167 Phase-3 debt: frozen exact-file carve-out list (replaces the former
+            // "src/model/*" / "src/presentation/filterBar/*" globs). The shared automationFilters
+            // layer still reads the dashboard store directly and renders filterBar components
+            // directly; each entry below is deliberate Phase-3 debt whose removal means moving the
+            // coupling behind an injected prop or a connector callback. Do NOT widen these back to
+            // globs. Add any genuinely new dependency as its own entry with a GDP-3167 Phase-3 note
+            // so reviewers can track the remaining coupling — the depcruiserBoundary test fails when
+            // a new unlisted model/filterBar import appears.
+            //
+            // model coupling — store selectors / hooks / types read by automationFilters:
+            "src/model/commandHandlers/dashboard/common/attributeFilterSelectionTypeCompatibility.ts",
+            "src/model/react/DashboardStoreProvider.tsx",
+            "src/model/store/catalog/catalogSelectors.ts",
+            "src/model/store/config/configSelectors.ts",
+            "src/model/store/filtering/types.ts",
+            "src/model/store/tabs/layout/layoutSelectors.ts",
+            "src/model/store/tabs/parameters/parametersSelectors.ts",
+            "src/model/store/tabs/tabsSelectors.ts",
+            "src/model/store/tabs/tabsState.ts",
+            // kept because ExtendedDashboardWidget stays in Phase 2 (D2 — IWidget deferred to Phase 3):
+            "src/model/types/layoutTypes.ts",
+            "src/model/utils/widgetFilters.ts",
+            // filterBar coupling — components rendered directly by the Automation* filter components
+            // (kandl inline #5 carve-out: the filter slot components are not yet injected):
+            "src/presentation/filterBar/attributeFilter/DefaultDashboardAttributeFilter.tsx",
+            "src/presentation/filterBar/attributeFilter/addAttributeFilter/AttributesDropdown.tsx",
+            "src/presentation/filterBar/dateFilter/DefaultDashboardDateFilter.tsx",
+            "src/presentation/filterBar/dateFilter/types.ts",
+            "src/presentation/filterBar/measureValueFilter/useDashboardMeasureValueFilterData.ts",
             "src/presentation/dashboardContexts/*",
             "src/presentation/localization/*",
             "src/presentation/constants/*",
@@ -172,7 +200,6 @@ export default {
             "src/presentation/automations/shared/hooks/*",
             "src/presentation/automations/shared/utils/*",
             "src/presentation/automations/contexts/*",
-            "src/presentation/filterBar/*",
             "src/presentation/utils.ts",
             "src/converters/*",
             "src/types.ts",

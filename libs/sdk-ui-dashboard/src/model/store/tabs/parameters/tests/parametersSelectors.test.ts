@@ -35,8 +35,11 @@ import {
     selectFilterViewParameters,
     selectHasAnyResettableParameterOnActiveTab,
     selectIsParametersChanged,
+    selectParameterReconciliationByRef,
+    selectParameterReconciliations,
     selectParameterResetValueByRef,
     selectParameterRuntimeOverrideByRef,
+    selectReferencedInsightParameterValuesForWidget,
     selectSmartPersistedTabsParameters,
     selectWidgetParameterContext,
 } from "../parametersSelectors.js";
@@ -649,6 +652,22 @@ describe("parameter selectors (per tab)", () => {
             ]);
         });
 
+        it("substitutes the workspace default for an out-of-range runtimeOverride (recovery at execution)", () => {
+            const boundedTopN: IParameterMetadataObject = {
+                ...topNWorkspace,
+                definition: { type: "NUMBER", defaultValue: 10, constraints: { min: 0, max: 100 } },
+            };
+            const state = makeFullState({
+                entries: [{ parameter: topNParameter, runtimeOverride: 999 }],
+                workspaceParameters: [boundedTopN],
+                insights: [insightWithTopN],
+                measureParameters: depMapTopN,
+            });
+            expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([
+                { ref: topNRef, value: 10 },
+            ]);
+        });
+
         it("returns nothing when the metric has no MAQL parameter references", () => {
             const insightWithLegacyParam = makeInsightWithMetric(W1_INSIGHT_REF, metricRef, [
                 { ref: topNRef, value: 0 },
@@ -1074,6 +1093,46 @@ describe("parameter selectors (per tab)", () => {
             } as unknown as DashboardState;
 
             expect(selectEffectiveParameterValuesForWidget(switcherChildRef)(state)).toEqual([
+                { ref: topNRef, value: 42 },
+            ]);
+        });
+    });
+
+    describe("selectReferencedInsightParameterValuesForWidget", () => {
+        const widgetRef = W1_REF;
+        const metricRef = idRef("m1", "measure");
+        const depMapTopN = { m1: [topNRef] };
+        const boundedTopN: IParameterMetadataObject = {
+            ...topNWorkspace,
+            definition: { type: "NUMBER", defaultValue: 10, constraints: { min: 0, max: 100 } },
+        };
+
+        it("recovers an out-of-range insight-authored value to the workspace default (CSV_RAW export)", () => {
+            const insightWithBadParam = makeInsightWithMetric(W1_INSIGHT_REF, metricRef, [
+                { ref: topNRef, value: 999 },
+            ]);
+            const state = makeFullState({
+                entries: [],
+                workspaceParameters: [boundedTopN],
+                insights: [insightWithBadParam],
+                measureParameters: depMapTopN,
+            });
+            expect(selectReferencedInsightParameterValuesForWidget(widgetRef)(state)).toEqual([
+                { ref: topNRef, value: 10 },
+            ]);
+        });
+
+        it("ignores dashboard chip overrides (insight-only)", () => {
+            const insightWithParam = makeInsightWithMetric(W1_INSIGHT_REF, metricRef, [
+                { ref: topNRef, value: 42 },
+            ]);
+            const state = makeFullState({
+                entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
+                workspaceParameters: [boundedTopN],
+                insights: [insightWithParam],
+                measureParameters: depMapTopN,
+            });
+            expect(selectReferencedInsightParameterValuesForWidget(widgetRef)(state)).toEqual([
                 { ref: topNRef, value: 42 },
             ]);
         });
@@ -1726,6 +1785,161 @@ describe("parameter selectors (per tab)", () => {
 
         it("falls back to the default tab id when no active tab is set", () => {
             expect(selectActiveTabExportParameters(makeTwoTabState(undefined, "tab-A"))).toEqual([]);
+        });
+    });
+});
+
+describe("parameter reconciliation selectors", () => {
+    const boundedTopNWorkspace: IParameterMetadataObject = {
+        ...topNWorkspace,
+        definition: { type: "NUMBER", defaultValue: 10, constraints: { min: 0, max: 100 } },
+    };
+
+    describe("selectParameterReconciliations", () => {
+        it("lists an out-of-range persisted value as a reset reconciliation", () => {
+            const state = makeFullState({
+                entries: [{ parameter: { ...topNParameter, value: 999 }, runtimeOverride: 10 }],
+                workspaceParameters: [boundedTopNWorkspace],
+            });
+            expect(selectParameterReconciliations(state)).toEqual([
+                { ref: topNRef, name: "Top N", kind: "reset" },
+            ]);
+        });
+
+        it("gathers entries across tabs, deduped by ref, surfacing a ref out of range on any tab", () => {
+            // tab-1 holds topN in range (no reconciliation); tab-2 holds it out of range. The ref
+            // is surfaced exactly once, from the tab where it actually fails to reconcile.
+            const state = {
+                tabs: {
+                    tabs: [
+                        {
+                            localIdentifier: "tab-1",
+                            title: "Tab 1",
+                            parameters: {
+                                parameters: [
+                                    { parameter: { ...topNParameter, value: 42 }, runtimeOverride: 42 },
+                                ],
+                            },
+                        },
+                        {
+                            localIdentifier: "tab-2",
+                            title: "Tab 2",
+                            parameters: {
+                                parameters: [
+                                    { parameter: { ...topNParameter, value: 999 }, runtimeOverride: 10 },
+                                ],
+                            },
+                        },
+                    ],
+                    activeTabLocalIdentifier: "tab-1",
+                },
+                catalog: { parameters: { status: "loaded", parameters: [boundedTopNWorkspace] } },
+                config: { config: { settings: { enableParameters: true } } },
+            } as unknown as DashboardState;
+            expect(selectParameterReconciliations(state)).toEqual([
+                { ref: topNRef, name: "Top N", kind: "reset" },
+            ]);
+        });
+
+        it("returns empty when enableParameters is off", () => {
+            const state = makeFullState({
+                entries: [{ parameter: { ...topNParameter, value: 999 }, runtimeOverride: 10 }],
+                workspaceParameters: [boundedTopNWorkspace],
+                enableParameters: false,
+            });
+            expect(selectParameterReconciliations(state)).toEqual([]);
+        });
+
+        it.each(["uninitialized", "loading", "failed", "gated-off"] as const)(
+            "returns empty when catalog status is %s (no false removed/reset before load)",
+            (status) => {
+                const state = makeFullState({
+                    entries: [{ parameter: { ...topNParameter, value: 999 }, runtimeOverride: 10 }],
+                    workspaceParameters: [boundedTopNWorkspace],
+                    catalogStatus: status,
+                });
+                expect(selectParameterReconciliations(state)).toEqual([]);
+            },
+        );
+
+        it("keeps surfacing the reset on load without marking the dashboard dirty", () => {
+            // Post-load: persisted value 999 is out of range; it is seeded verbatim into the runtime
+            // override (recovery happens at execution, not here), so it still reconciles as `reset`.
+            const persisted: IDashboardParameter = {
+                ref: topNRef,
+                parameterType: "NUMBER",
+                mode: "active",
+                value: 999,
+            };
+            const state = makeFullState({
+                entries: [{ parameter: persisted, runtimeOverride: 999 }],
+                workspaceParameters: [boundedTopNWorkspace],
+                persistedDashboardParameters: [persisted],
+            });
+            expect(selectParameterReconciliations(state)).toEqual([
+                { ref: topNRef, name: "Top N", kind: "reset" },
+            ]);
+            // The runtime override still equals the persisted value, so the dashboard is not dirty on
+            // load and smart-persist keeps the out-of-range value untouched.
+            expect(selectIsParametersChanged(state)).toBe(false);
+            expect(selectSmartPersistedTabsParameters(state)).toEqual({
+                [TAB_ID]: [{ ref: topNRef, parameterType: "NUMBER", mode: "active", value: 999 }],
+            });
+        });
+
+        it("becomes dirty once the user edits the out-of-range value to a valid one (the fix)", () => {
+            const persisted: IDashboardParameter = {
+                ref: topNRef,
+                parameterType: "NUMBER",
+                mode: "active",
+                value: 999,
+            };
+            // The user picked a valid value in the dropdown → runtimeOverride is now 50.
+            const state = makeFullState({
+                entries: [{ parameter: persisted, runtimeOverride: 50 }],
+                workspaceParameters: [boundedTopNWorkspace],
+                persistedDashboardParameters: [persisted],
+            });
+            // The warning still shows (keyed off the persisted value) until the dashboard is saved...
+            expect(selectParameterReconciliationByRef(topNRef)(state)).toBe("reset");
+            // ...but the dashboard is now dirty and a save would persist the valid value.
+            expect(selectIsParametersChanged(state)).toBe(true);
+            expect(selectSmartPersistedTabsParameters(state)).toEqual({
+                [TAB_ID]: [{ ref: topNRef, parameterType: "NUMBER", mode: "active", value: 50 }],
+            });
+        });
+    });
+
+    describe("selectParameterReconciliationByRef", () => {
+        it("returns the reconciliation kind for the active tab's parameter", () => {
+            const state = makeFullState({
+                entries: [{ parameter: { ...topNParameter, value: 999 }, runtimeOverride: 10 }],
+                workspaceParameters: [boundedTopNWorkspace],
+            });
+            expect(selectParameterReconciliationByRef(topNRef)(state)).toBe("reset");
+        });
+
+        it("returns undefined when enableParameters is off", () => {
+            const state = makeFullState({
+                entries: [{ parameter: { ...topNParameter, value: 999 }, runtimeOverride: 10 }],
+                workspaceParameters: [boundedTopNWorkspace],
+                enableParameters: false,
+            });
+            expect(selectParameterReconciliationByRef(topNRef)(state)).toBeUndefined();
+        });
+
+        it("returns undefined while the catalog is not loaded", () => {
+            const state = makeFullState({
+                entries: [{ parameter: { ...topNParameter, value: 999 }, runtimeOverride: 10 }],
+                workspaceParameters: [boundedTopNWorkspace],
+                catalogStatus: "loading",
+            });
+            expect(selectParameterReconciliationByRef(topNRef)(state)).toBeUndefined();
+        });
+
+        it("returns undefined when the active tab holds no entry for the ref", () => {
+            const state = makeFullState({ entries: [], workspaceParameters: [boundedTopNWorkspace] });
+            expect(selectParameterReconciliationByRef(topNRef)(state)).toBeUndefined();
         });
     });
 });
