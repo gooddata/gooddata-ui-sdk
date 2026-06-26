@@ -1,7 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import { act, render } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { idRef } from "@gooddata/sdk-model";
 import type {
@@ -19,6 +19,7 @@ import type { ShareableCatalogItem } from "../types.js";
 const stubState: IObjectShareControllerState = {
     subview: "main",
     status: "success",
+    accessUnavailable: false,
     summary: undefined,
     grantees: [],
     generalAccess: "RESTRICTED",
@@ -46,7 +47,8 @@ const stubActions: IObjectShareControllerActions = {
     confirmGeneralAccessChange: asyncNoop,
     changeWorkspaceLevel: asyncNoop,
 };
-const controllerStub: IObjectShareController = { state: stubState, actions: stubActions };
+// Mutable so a test can drive the controller into the not-permissionable state.
+let controllerStub: IObjectShareController = { state: stubState, actions: stubActions };
 
 vi.mock("@gooddata/sdk-ui-ext", () => ({
     useObjectShare: () => controllerStub,
@@ -80,6 +82,10 @@ const attribute: ShareableCatalogItem = {
 const target = { kind: "attribute" as const, ref: idRef("attr.region", "attribute") };
 
 describe("CatalogItemShareProvider", () => {
+    beforeEach(() => {
+        controllerStub = { state: stubState, actions: stubActions };
+    });
+
     it("re-renders state consumers on an open/close tick but not actions-only consumers", () => {
         const stateRenders = vi.fn();
         const actionsRenders = vi.fn();
@@ -136,5 +142,63 @@ describe("CatalogItemShareProvider", () => {
         );
 
         expect(active).toBe(false);
+    });
+
+    it("reports inactive for a shareable item when access is unavailable (404)", () => {
+        // A view/analyze-only user gets a 404 on the manage-gated permissions
+        // endpoint; the controller surfaces it as accessUnavailable. The share UI
+        // (Share button + inline access row) must then hide.
+        controllerStub = {
+            state: { ...stubState, status: "error", accessUnavailable: true },
+            actions: stubActions,
+        };
+
+        let stateActive = true;
+        let actionsActive = true;
+        function Probe() {
+            stateActive = useCatalogItemShareState().active;
+            actionsActive = useCatalogItemShareActions().active;
+            return null;
+        }
+
+        render(
+            <CatalogItemShareProvider
+                shareableItem={attribute}
+                target={target}
+                labels={{ labels: [], loading: false, error: false }}
+            >
+                <Probe />
+            </CatalogItemShareProvider>,
+        );
+
+        expect(stateActive).toBe(false);
+        expect(actionsActive).toBe(false);
+    });
+
+    it("stays active for a shareable item on a transient load error", () => {
+        // A transient failure does not set accessUnavailable, so the share UI must
+        // not be stripped — the fetch may still resolve.
+        controllerStub = {
+            state: { ...stubState, status: "error", accessUnavailable: false },
+            actions: stubActions,
+        };
+
+        let active = false;
+        function Probe() {
+            active = useCatalogItemShareState().active;
+            return null;
+        }
+
+        render(
+            <CatalogItemShareProvider
+                shareableItem={attribute}
+                target={target}
+                labels={{ labels: [], loading: false, error: false }}
+            >
+                <Probe />
+            </CatalogItemShareProvider>,
+        );
+
+        expect(active).toBe(true);
     });
 });

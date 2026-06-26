@@ -53,6 +53,7 @@ export function UiTooltip({
     offset: offsetProp,
     optimalPlacement = false,
     accessibilityConfig,
+    accessibilityHidden = false,
     variant = "default",
     disabled,
     isOpen: isOpenProp,
@@ -189,14 +190,16 @@ export function UiTooltip({
                 {anchor}
             </div>
 
-            {/* Accessibility: make the tooltip accessible to screen readers */}
-            <span className="sr-only" id={id}>
-                {isOpen
-                    ? typeof content === "function"
-                        ? content({ onClose: handleClose, type: "screen-reader" })
-                        : content
-                    : null}
-            </span>
+            {/* Screen-reader copy of the content; skipped when accessibilityHidden (anchor conveys it). */}
+            {accessibilityHidden ? null : (
+                <span className="sr-only" id={id}>
+                    {isOpen
+                        ? typeof content === "function"
+                            ? content({ onClose: handleClose, type: "screen-reader" })
+                            : content
+                        : null}
+                </span>
+            )}
 
             {isOpen ? (
                 <FloatingPortal>
@@ -213,6 +216,7 @@ export function UiTooltip({
                                 width: width === "same-as-anchor" ? triggerDimensions?.width : width,
                             }}
                             {...{ [FLOATING_ELEMENT_DATA_ATTR]: true }}
+                            aria-hidden={accessibilityHidden || undefined}
                             aria-label={accessibilityConfig?.ariaLabel}
                             aria-labelledby={accessibilityConfig?.ariaLabelledBy}
                             aria-describedby={accessibilityConfig?.ariaDescribedBy}

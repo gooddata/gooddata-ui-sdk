@@ -10,10 +10,12 @@ import {
     type IInsightParameterValue,
     type IParameterMetadataObject,
     type IdentifierRef,
+    type ObjRef,
     insightMeasures,
     insightParameters,
     isMeasureDefinition,
     isNumberParameterDefinition,
+    isValidNumberParameterValue,
     objRefToString,
 } from "@gooddata/sdk-model";
 
@@ -66,7 +68,9 @@ export function collectReferencedParameterRefs(
 
 /**
  * Effective execution parameters, limited to `referencedRefs`. Precedence per ref: the dashboard
- * `runtimeOverride`, else the insight's own parameter value, else nothing (backend uses the workspace default).
+ * `runtimeOverride`, else the insight's own parameter value, else nothing (backend uses the workspace
+ * default). An out-of-range value from either source is replaced by the workspace default (recovery),
+ * so the backend never receives a bad value.
  *
  * @internal
  */
@@ -74,19 +78,24 @@ export function resolveEffectiveParameterValuesForRefs(
     entries: IDashboardParameterEntry[],
     referencedRefs: IdentifierRef[],
     insightParameterValues: IInsightParameterValue[],
+    workspaceParameterByRef: Map<string, IParameterMetadataObject>,
 ): IInsightParameterValue[] {
     const referencedKeys = new Set(referencedRefs.map(objRefToString));
     const result: IInsightParameterValue[] = [];
     const seen = new Set<string>();
     for (const entry of entries) {
-        if (entry.runtimeOverride === undefined) {
+        const { runtimeOverride } = entry;
+        if (runtimeOverride === undefined) {
             continue;
         }
         const refKey = objRefToString(entry.parameter.ref);
         if (!referencedKeys.has(refKey)) {
             continue;
         }
-        result.push({ ref: entry.parameter.ref, value: entry.runtimeOverride });
+        result.push({
+            ref: entry.parameter.ref,
+            value: recoverParameterExecutionValue(runtimeOverride, workspaceParameterByRef.get(refKey)),
+        });
         seen.add(refKey);
     }
     for (const insightParameterValue of insightParameterValues) {
@@ -94,7 +103,13 @@ export function resolveEffectiveParameterValuesForRefs(
         if (!referencedKeys.has(refKey) || seen.has(refKey)) {
             continue;
         }
-        result.push(insightParameterValue);
+        result.push({
+            ref: insightParameterValue.ref,
+            value: recoverParameterExecutionValue(
+                insightParameterValue.value,
+                workspaceParameterByRef.get(refKey),
+            ),
+        });
         seen.add(refKey);
     }
     return result.length === 0 ? EMPTY_PARAMETER_VALUES : result;
@@ -103,6 +118,7 @@ export function resolveEffectiveParameterValuesForRefs(
 interface IParameterResolutionContext {
     entries: IDashboardParameterEntry[];
     measureParameters: Record<string, IdentifierRef[]>;
+    workspaceParameterByRef: Map<string, IParameterMetadataObject>;
 }
 
 /**
@@ -123,6 +139,7 @@ export function resolveEffectiveParameterValuesForInsight(
         context.entries,
         referencedRefs,
         insightParameters(insight),
+        context.workspaceParameterByRef,
     );
 }
 
@@ -137,14 +154,14 @@ export function collectChangedParameterValues(
     entries: IDashboardParameterEntry[],
     workspaceParameters: IParameterMetadataObject[],
 ): IInsightParameterValue[] {
-    const workspaceByRef = workspaceParametersByRef(workspaceParameters);
+    const workspaceParameterByRef = buildWorkspaceParametersByRef(workspaceParameters);
     const result: IInsightParameterValue[] = [];
     for (const entry of entries) {
         const { runtimeOverride } = entry;
         if (runtimeOverride === undefined) {
             continue;
         }
-        const workspaceParameter = workspaceByRef.get(objRefToString(entry.parameter.ref));
+        const workspaceParameter = workspaceParameterByRef.get(objRefToString(entry.parameter.ref));
         if (runtimeOverride === computeHydratedRuntimeOverride(entry.parameter, workspaceParameter)) {
             continue;
         }
@@ -154,7 +171,7 @@ export function collectChangedParameterValues(
 }
 
 /**
- * The value hydration seeds into `runtimeOverride`: the persisted dashboard `value`, else the
+ * The value hydration seeds into `runtimeOverride`: the dashboard parameter's `value`, else the
  * workspace number default, else `undefined`. Single source of truth for the hydrated baseline so
  * override detection here and in `hydrateParameterEntries` cannot drift apart.
  *
@@ -173,11 +190,130 @@ export function computeHydratedRuntimeOverride(
 }
 
 /**
+ * The value to execute for a runtime override: an out-of-range NUMBER value is replaced by the
+ * workspace default so the dashboard renders the default instead of failing (recovery), while the
+ * chip keeps showing the user's saved value. In-range values, and values with no NUMBER definition to
+ * validate against (removed / incompatible — meant to surface as the standard widget error), pass
+ * through unchanged.
+ *
+ * @internal
+ */
+function recoverParameterExecutionValue(
+    runtimeOverride: number,
+    workspaceParameter: IParameterMetadataObject | undefined,
+): number {
+    if (workspaceParameter && isNumberParameterDefinition(workspaceParameter.definition)) {
+        const { defaultValue, constraints } = workspaceParameter.definition;
+        if (!isValidNumberParameterValue(runtimeOverride, constraints)) {
+            return defaultValue;
+        }
+    }
+    return runtimeOverride;
+}
+
+/**
+ * Why a dashboard parameter no longer matches its workspace catalog entry:
+ * - `removed`: the workspace has no parameter for this ref.
+ * - `incompatible`: the workspace parameter is a different type (e.g. STRING, not NUMBER).
+ * - `reset`: same type, but the value is outside the workspace constraints.
+ *
+ * @internal
+ */
+export type ParameterReconciliation = "reset" | "removed" | "incompatible";
+
+/**
+ * A mismatched dashboard parameter surfaced to the load-time toast: the ref, a display name, and
+ * the kind of mismatch.
+ *
+ * @internal
+ */
+export interface IParameterReconciliationEntry {
+    ref: ObjRef;
+    name: string;
+    kind: ParameterReconciliation;
+}
+
+/**
+ * Classifies one dashboard parameter against its workspace catalog entry — the single source of
+ * truth for the reconciliation kinds.
+ *
+ * Callers must only classify once the catalog is loaded: before load every `workspaceParameter` is
+ * `undefined`, which would classify as `removed` and flag every parameter. The reconciliation
+ * selectors own that gate (`isCatalogLoaded`).
+ *
+ * @internal
+ */
+export function classifyParameterReconciliation(
+    dashboardParameter: IDashboardParameter,
+    workspaceParameter: IParameterMetadataObject | undefined,
+): ParameterReconciliation | undefined {
+    if (!workspaceParameter) {
+        return "removed";
+    }
+    if (!isNumberParameterDefinition(workspaceParameter.definition)) {
+        return "incompatible";
+    }
+    if (
+        dashboardParameter.value !== undefined &&
+        !isValidNumberParameterValue(dashboardParameter.value, workspaceParameter.definition.constraints)
+    ) {
+        return "reset";
+    }
+    return undefined;
+}
+
+/**
+ * Collects the entries that no longer reconcile, deduped by ref — the first failing entry per ref
+ * wins, so a ref in range on one tab but out of range on another is still surfaced. Callers pass
+ * entries from a known-loaded catalog.
+ *
+ * @internal
+ */
+export function collectParameterReconciliations(
+    entries: IDashboardParameterEntry[],
+    workspaceParameters: IParameterMetadataObject[],
+): IParameterReconciliationEntry[] {
+    const workspaceParameterByRef = buildWorkspaceParametersByRef(workspaceParameters);
+    const result: IParameterReconciliationEntry[] = [];
+    const seen = new Set<string>();
+    for (const entry of entries) {
+        const refKey = objRefToString(entry.parameter.ref);
+        if (seen.has(refKey)) {
+            continue;
+        }
+        const workspaceParameter = workspaceParameterByRef.get(refKey);
+        const kind = classifyParameterReconciliation(entry.parameter, workspaceParameter);
+        if (kind === undefined) {
+            continue;
+        }
+        seen.add(refKey);
+        result.push({
+            ref: entry.parameter.ref,
+            name: resolveParameterTitle(entry.parameter, workspaceParameter),
+            kind,
+        });
+    }
+    return result;
+}
+
+/**
+ * Display title for a dashboard parameter: `parameter.label` → workspace title → `ref.identifier`.
+ *
+ * @internal
+ */
+export function resolveParameterTitle(
+    parameter: IDashboardParameter,
+    workspaceParameter: IParameterMetadataObject | undefined,
+): string {
+    return parameter.label || workspaceParameter?.title || parameter.ref.identifier;
+}
+
+/**
  * Indexes the workspace parameter catalog by ref string for O(1) lookup.
  *
  * @internal
  */
-export function workspaceParametersByRef(
+export function buildWorkspaceParametersByRef(
     workspaceParameters: IParameterMetadataObject[],
 ): Map<string, IParameterMetadataObject> {
     return new Map(workspaceParameters.map((parameter) => [objRefToString(parameter.ref), parameter]));
@@ -202,6 +338,10 @@ export function applyRuntimeOverride(entry: IDashboardParameterEntry): IDashboar
  * by the backend; sending a row in those cases would override the backend's resolution with a stale
  * FE snapshot (matches the live-render path in `selectEffectiveParameterValuesForWidget`).
  *
+ * An out-of-range value is replaced by the workspace default (recovery): unlike the live AFM, an
+ * omitted export override falls back to the *persisted* (bad) value, so the default must be sent
+ * explicitly to override it.
+ *
  * Title precedence (when a row is emitted): `parameter.label` → workspace title → `ref.identifier`.
  *
  * @internal
@@ -210,14 +350,14 @@ export function formatDashboardParameter(
     entry: IDashboardParameterEntry,
     workspaceParameter: IParameterMetadataObject | undefined,
 ): IDashboardExportParameter | undefined {
-    if (entry.runtimeOverride === undefined) {
+    const { runtimeOverride } = entry;
+    if (runtimeOverride === undefined) {
         return undefined;
     }
-    const ref = entry.parameter.ref;
     return {
-        id: ref.identifier,
-        value: String(entry.runtimeOverride),
-        title: entry.parameter.label || workspaceParameter?.title || ref.identifier,
+        id: entry.parameter.ref.identifier,
+        value: String(recoverParameterExecutionValue(runtimeOverride, workspaceParameter)),
+        title: resolveParameterTitle(entry.parameter, workspaceParameter),
     };
 }
 
@@ -317,7 +457,7 @@ export function computeParameterResetTargets(
     workspaceParameters: IParameterMetadataObject[],
     isInEditMode: boolean,
 ): { ref: IDashboardParameterEntry["parameter"]["ref"]; value: number | undefined }[] {
-    const workspaceByRef = workspaceParametersByRef(workspaceParameters);
+    const workspaceParameterByRef = buildWorkspaceParametersByRef(workspaceParameters);
     const result: { ref: IDashboardParameterEntry["parameter"]["ref"]; value: number | undefined }[] = [];
     for (const entry of entries) {
         if (entry.parameter.mode !== DashboardParameterModeValues.ACTIVE) {
@@ -326,7 +466,7 @@ export function computeParameterResetTargets(
         if (entry.runtimeOverride === undefined) {
             continue;
         }
-        const workspaceParameter = workspaceByRef.get(objRefToString(entry.parameter.ref));
+        const workspaceParameter = workspaceParameterByRef.get(objRefToString(entry.parameter.ref));
         const resetValue = computeParameterResetValue(entry, workspaceParameter, isInEditMode);
         if (resetValue !== undefined && resetValue !== entry.runtimeOverride) {
             result.push({ ref: entry.parameter.ref, value: resetValue });
@@ -345,7 +485,7 @@ export function computeParameterResetTargets(
  */
 export function collectExportOverrides(
     tabRefSelections: ReadonlyArray<{ tab: ITabState; allowedRefs?: Set<string> }>,
-    workspaceByRef: Map<string, IParameterMetadataObject>,
+    workspaceParameterByRef: Map<string, IParameterMetadataObject>,
 ): Record<string, IDashboardExportParameter[]> {
     const result: Record<string, IDashboardExportParameter[]> = {};
     for (const { tab, allowedRefs } of tabRefSelections) {
@@ -353,7 +493,7 @@ export function collectExportOverrides(
         const scoped = allowedRefs
             ? entries.filter((entry) => allowedRefs.has(objRefToString(entry.parameter.ref)))
             : entries;
-        const rows = formatEntries(scoped, workspaceByRef);
+        const rows = formatEntries(scoped, workspaceParameterByRef);
         if (rows.length > 0) {
             result[tab.localIdentifier] = rows;
         }
@@ -400,11 +540,11 @@ export function buildWidgetScopeTabRefSelections(
 
 function formatEntries(
     entries: IDashboardParameterEntry[],
-    workspaceByRef: Map<string, IParameterMetadataObject>,
+    workspaceParameterByRef: Map<string, IParameterMetadataObject>,
 ): IDashboardExportParameter[] {
     const rows: IDashboardExportParameter[] = [];
     for (const entry of entries) {
-        const workspaceParameter = workspaceByRef.get(objRefToString(entry.parameter.ref));
+        const workspaceParameter = workspaceParameterByRef.get(objRefToString(entry.parameter.ref));
         const row = formatDashboardParameter(entry, workspaceParameter);
         if (row !== undefined) {
             rows.push(row);

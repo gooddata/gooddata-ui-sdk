@@ -53,6 +53,7 @@ import {
     visualizationErrorAction,
 } from "../../../store/messages/messagesSlice.js";
 import { getHeadlineComparison } from "../../../utils.js";
+import { storeKdaReturnFocusFromDrillContext } from "../../../utils/kdaReturnFocus.js";
 
 import { useExecution } from "./useExecution.js";
 import { changeAnalysisDrills } from "./utils/changeAnalysisDrills.js";
@@ -181,6 +182,7 @@ export function ConversationVisualisation({
     }, [dispatch, visualization, message.localId]);
     const handlerDrill = useCallback(
         (event: IDrillEvent) => {
+            storeKdaReturnFocusFromDrillContext(event.drillContext);
             const keyDriverData = getKdaKeyDriverCombinations(
                 {
                     type: "keyDriveAnalysis",

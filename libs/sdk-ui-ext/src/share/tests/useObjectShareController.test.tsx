@@ -265,6 +265,41 @@ describe("useObjectShareController", () => {
         await waitFor(() => expect(result.current.state.status).toBe("error"));
         expect(result.current.state.error).toBeInstanceOf(Error);
         expect(result.current.state.grantees).toEqual([]);
+        // A transient error is not a permanent loss of access — consumers must not
+        // strip the share UI on it.
+        expect(result.current.state.accessUnavailable).toBe(false);
+    });
+
+    it("flags accessUnavailable when the access list 404s (manage-gated, user can't manage)", async () => {
+        // The permissions endpoint returns 404 for a user who can only view/analyze.
+        // The controller must distinguish this from a transient error so consumers
+        // can hide the share UI rather than retry.
+        const svc: IMockService = {
+            getAccessList: vi.fn(async () => {
+                throw notFound();
+            }),
+            manageObjectPermissions: vi.fn(async () => undefined),
+            getAvailableAssignees: vi.fn(async () => ASSIGNEES),
+        };
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("error"));
+        expect(result.current.state.accessUnavailable).toBe(true);
+    });
+
+    it("does not flag accessUnavailable on a non-404 error (e.g. 501)", async () => {
+        // accessUnavailable matches the backend's actual deny status (404) only.
+        // A 501 — or any other non-404 — is not treated as "can't manage", so the
+        // share UI is not hidden on it.
+        const svc: IMockService = {
+            getAccessList: vi.fn(async () => {
+                throw new UnexpectedResponseError("Not Implemented", 501, {});
+            }),
+            manageObjectPermissions: vi.fn(async () => undefined),
+            getAvailableAssignees: vi.fn(async () => ASSIGNEES),
+        };
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("error"));
+        expect(result.current.state.accessUnavailable).toBe(false);
     });
 
     it("reset returns to the main subview and clears pending buffers", async () => {

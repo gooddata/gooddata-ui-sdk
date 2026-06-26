@@ -18,7 +18,9 @@ const floatingStatusMessages: Record<KdaFloatingStatus, MessageDescriptor> = def
 });
 
 interface IKdaDialogFloatingStatusBarProps {
-    titleElementId: string;
+    labelElementId: string;
+    dialogTitle: string;
+    descriptionElementId: string;
     status: KdaFloatingStatus;
     onClose?: () => void;
 }
@@ -29,7 +31,9 @@ interface IKdaDialogFloatingStatusBarProps {
 export function KdaDialogFloatingStatusBar({
     onClose,
     status,
-    titleElementId,
+    labelElementId,
+    dialogTitle,
+    descriptionElementId,
 }: IKdaDialogFloatingStatusBarProps) {
     const intl = useIntl();
 
@@ -37,19 +41,23 @@ export function KdaDialogFloatingStatusBar({
 
     return (
         <div className="gd-kda-floating-status-bar">
+            <span id={labelElementId} className="sr-only">
+                {dialogTitle}
+            </span>
             <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">
                 {status === "done" || status === "error" ? statusText : null}
             </div>
             <div className="gd-kda-floating-status-bar__content">
                 <StatusIndicator status={status} />
-                <p className="gd-kda-floating-status-bar__text" id={titleElementId} tabIndex={0}>
+                <p className="gd-kda-floating-status-bar__text" id={descriptionElementId} tabIndex={0}>
                     {statusText}
                 </p>
             </div>
             <KdaDialogActionButtons
                 size="small"
                 status={status}
-                titleElementId={titleElementId}
+                titleElementId={descriptionElementId}
+                toggleAriaDescribedBy={`${labelElementId} ${descriptionElementId}`}
                 onClose={onClose}
             />
         </div>

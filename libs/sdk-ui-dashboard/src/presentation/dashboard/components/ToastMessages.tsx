@@ -1,8 +1,10 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback, useMemo } from "react";
 
 import { NonContextToastsInterop } from "@gooddata/sdk-ui-kit";
+
+import { useParameterToastMessages } from "../../filterBar/parameterFilter/useParameterToastMessages.js";
 
 import { useCrossFilteringMessages } from "./useCrossFilteringMessages.js";
 import { useDrillValidationMessages } from "./useDrillValidationMessages.js";
@@ -18,6 +20,7 @@ export function ToastMessages() {
         useFilterContextValidationMessages();
 
     useCrossFilteringMessages();
+    useParameterToastMessages();
 
     const messages = useMemo(
         () => [...drillValidationMessages, ...filterContextValidationMessages],

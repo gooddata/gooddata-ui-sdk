@@ -10,6 +10,7 @@ import { type ChangeAnalysisContents } from "../../../model.js";
 import { settingsSelector } from "../../../store/chatWindow/chatWindowSelectors.js";
 import { setKeyDriverAnalysisAction } from "../../../store/chatWindow/chatWindowSlice.js";
 import { type RootState } from "../../../store/types.js";
+import { storeKdaReturnFocusFromActiveElement } from "../../../utils/kdaReturnFocus.js";
 
 import { useKdaDefinition, useKdaInfo } from "./useKdaDefinition.js";
 
@@ -63,6 +64,7 @@ function ChangeAnalysisContentsComponentCore({
                     variant="secondary"
                     iconBefore="explainai"
                     onClick={() => {
+                        storeKdaReturnFocusFromActiveElement();
                         setKeyDriverAnalysis?.({ keyDriverAnalysis: definition });
                     }}
                 />

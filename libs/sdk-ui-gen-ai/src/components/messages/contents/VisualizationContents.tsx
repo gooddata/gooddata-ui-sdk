@@ -96,6 +96,7 @@ import {
 } from "../../../store/messages/messagesSlice.js";
 import { type RootState } from "../../../store/types.js";
 import { getAbsoluteVisualizationHref, getHeadlineComparison, getVisualizationHref } from "../../../utils.js";
+import { storeKdaReturnFocusFromDrillContext } from "../../../utils/kdaReturnFocus.js";
 import { mapVisualizationWhatIfToScenarios } from "../../../whatIf/whatIfMapping.js";
 import { useConfig } from "../../ConfigContext.js";
 import { convertIntersectionToAttributeFilters, mergeFilters } from "../../utils/intersectionUtils.js";
@@ -346,6 +347,7 @@ function VisualizationContentsComponentCore({
         event: IDrillEvent;
     } | null>(null);
     const handlerDrill = useCallback((event: IDrillEvent) => {
+        storeKdaReturnFocusFromDrillContext(event.drillContext);
         const keyDriverData = getKdaKeyDriverCombinations(
             {
                 type: "keyDriveAnalysis",

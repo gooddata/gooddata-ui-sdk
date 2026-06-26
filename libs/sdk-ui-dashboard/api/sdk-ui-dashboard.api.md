@@ -11902,6 +11902,14 @@ export function setExecutionResultData(id: ObjRef | string, executionResult: IEx
 export function setExecutionResultError(id: ObjRef | string, error: GoodDataSdkError, correlationId?: string): IUpsertExecutionResult;
 
 // @beta
+export function setExecutionResultErrorWithResult(options: {
+    id: ObjRef | string;
+    error: GoodDataSdkError;
+    executionResult: IExecutionResult;
+    correlationId?: string;
+}): IUpsertExecutionResult;
+
+// @beta
 export function setExecutionResultLoading(id: ObjRef | string, correlationId?: string): IUpsertExecutionResult;
 
 // @alpha

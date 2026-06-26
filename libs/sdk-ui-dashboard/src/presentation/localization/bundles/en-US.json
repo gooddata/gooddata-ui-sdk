@@ -2671,6 +2671,18 @@
         "text": "Failure! Your view was not applied. Please try again.",
         "crowdinContext": "Text shown when filter view was not applied."
     },
+    "parameter.toast.reset": {
+        "text": "<b>Warning:</b> Parameter \"{name}\" is out of range, so the default value is applied until you set a valid one.",
+        "crowdinContext": "Warning toast shown on dashboard load when a saved parameter value is outside the parameter's allowed range; the workspace default is executed in its place. {name} is the parameter title; <b> renders the leading 'Warning:' label in bold."
+    },
+    "parameter.toast.removed": {
+        "text": "<b>Warning:</b> Parameter \"{name}\" was removed because it no longer exists.",
+        "crowdinContext": "Warning toast shown on dashboard load when a referenced parameter no longer exists in the workspace. {name} is the parameter title; <b> renders the leading 'Warning:' label in bold."
+    },
+    "parameter.toast.incompatible": {
+        "text": "<b>Warning:</b> Parameter \"{name}\" is no longer compatible and has been ignored.",
+        "crowdinContext": "Warning toast shown on dashboard load when a referenced parameter changed to a non-numeric type and can no longer be applied. {name} is the parameter title; <b> renders the leading 'Warning:' label in bold."
+    },
     "filters.filterViews.list.ariaLabel.withActions": {
         "text": "List of saved views. Use the right arrow key to move to the ‘Set as default’ action, then to the ‘delete’ action.",
         "crowdinContext": "Screen reader description for the list of saved views. Includes the possible keyboard actions."

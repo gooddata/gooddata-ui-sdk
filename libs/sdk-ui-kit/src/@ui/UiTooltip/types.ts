@@ -60,6 +60,11 @@ export interface IUiTooltipProps {
     /** ARIA attributes configuration for accessibility */
     accessibilityConfig?: IAccessibilityConfigBase;
     /**
+     * When true, the tooltip is purely visual — hidden from assistive technologies (the anchor conveys it).
+     * @defaultValue false
+     */
+    accessibilityHidden?: boolean;
+    /**
      * Tooltip styling variant
      * @defaultValue "default"
      */

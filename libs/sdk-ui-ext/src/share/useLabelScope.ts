@@ -2,24 +2,16 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import { type IObjectPermissionsObject, isUnexpectedResponseError } from "@gooddata/sdk-backend-spi";
+import type { IObjectPermissionsObject } from "@gooddata/sdk-backend-spi";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
+import { isPermissionsNotAvailable } from "./accessErrors.js";
 import {
     type LabelScopePrincipal,
     buildLabelMutations,
     isGranteeGrantedIn,
 } from "./objectShareController.helpers.js";
 import type { IObjectShareLabel } from "./types.js";
-
-/**
- * Whether a label's access-list error means the label is genuinely not
- * independently permissionable (a definitive 404 / 501), as opposed to a
- * transient failure (5xx / 403 / network) that should NOT drop a real label.
- */
-function isNotPermissionable(error: unknown): boolean {
-    return isUnexpectedResponseError(error) && (error.httpStatus === 404 || error.httpStatus === 501);
-}
 
 /**
  * Per-label access scope for the share dialog: which labels each grantee can
@@ -137,10 +129,13 @@ export function useLabelScope(
                     .objectPermissions()
                     .getAccessList({ kind: "label", ref: label.ref })
                     .then((list) => ({ label, list }) as const)
-                    // Only a definitive 404/501 means the label can't take a per-label
+                    // Only a definitive 404 means the label can't take a per-label
                     // grant. A transient failure (5xx / 403 / network) must NOT drop a
                     // real label — return it without grant info so it stays grantable.
-                    .catch((error: unknown) => ({ label, transient: !isNotPermissionable(error) }) as const),
+                    .catch(
+                        (error: unknown) =>
+                            ({ label, transient: !isPermissionsNotAvailable(error) }) as const,
+                    ),
             ),
         ).then((results) => {
             if (cancelled) {
@@ -154,7 +149,7 @@ export function useLabelScope(
             for (const result of results) {
                 if ("transient" in result) {
                     // Keep transiently-failed labels permissionable (don't hide a real
-                    // label); skip definitively-not-permissionable ones (404/501).
+                    // label); skip definitively-not-permissionable ones (404).
                     if (result.transient) {
                         permissionable.add(result.label.id);
                     }

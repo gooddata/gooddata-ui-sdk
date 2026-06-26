@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-ext, sdk-ui-kit: Fix accessibility errors on DropdownControl — add aria-expanded, aria-controls always referencing a valid DOM element, and fix arrow key navigation in the placement dropdown",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "rodrigo.balsells@gooddata.com"
+}

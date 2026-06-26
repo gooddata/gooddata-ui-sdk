@@ -17,6 +17,7 @@ import {
 } from "../store/chatWindow/chatWindowSelectors.js";
 import { setKeyDriverAnalysisAction } from "../store/chatWindow/chatWindowSlice.js";
 import { type RootState } from "../store/types.js";
+import { returnFocusToKdaTrigger } from "../utils/kdaReturnFocus.js";
 
 interface IKeyDriverAnalysisProps {
     keyDriverAnalysis?: IKdaDefinition;
@@ -49,6 +50,10 @@ function KeyDriverAnalysisComponent(props: IKeyDriverAnalysisProps) {
         [setKeyDriverAnalysis],
     );
 
+    const onCloseKeyDriverAnalysis = useCallback(() => {
+        returnFocusToKdaTrigger();
+    }, []);
+
     if (!keyDriverAnalysis) {
         return null;
     }
@@ -65,6 +70,7 @@ function KeyDriverAnalysisComponent(props: IKeyDriverAnalysisProps) {
                     includeTags={includeTags}
                     excludeTags={excludeTags}
                     onRequestedDefinitionChange={onRequestedDefinitionChange}
+                    onClose={onCloseKeyDriverAnalysis}
                 />
             </KdaStoreProvider>
         </IntlWrapper>

@@ -220,6 +220,7 @@ export function FilterViewsList({
     const canCreateFilterView = useDashboardSelector(selectCanCreateFilterView);
     const id = useId();
     const createViewId = `create-view-${id}`;
+    const infoButtonId = `filter-view-info-${id}`;
     const filterViewTooltipId = `filter-view-tooltip-${id}`;
     const titleId = titleIdProp ?? `filter-views-title-${id}`;
 
@@ -322,7 +323,7 @@ export function FilterViewsList({
     );
 
     return (
-        <UiFocusManager enableFocusTrap enableAutofocus={{ refocusKey, initialFocus: createViewId }}>
+        <UiFocusManager enableFocusTrap enableAutofocus={{ refocusKey, initialFocus: infoButtonId }}>
             {filterViewToDelete ? (
                 <FilterViewDeleteConfirm
                     filterView={filterViewToDelete}
@@ -345,6 +346,7 @@ export function FilterViewsList({
                             content={contentTooltip}
                             anchor={
                                 <UiIconButton
+                                    id={infoButtonId}
                                     icon="question"
                                     variant="tertiary"
                                     size="small"

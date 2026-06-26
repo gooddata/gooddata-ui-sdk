@@ -5,7 +5,7 @@ services:
         entrypoint: >
             bash -c "
               EXTRA_ARGS='';
-              if [ \"$$PLAYWRIGHT_UPDATE_SNAPSHOTS\" = '1' ]; then EXTRA_ARGS='--update-snapshots'; fi;
+              if [ \"$$PLAYWRIGHT_UPDATE_SNAPSHOTS\" = '1' ]; then EXTRA_ARGS='--update-snapshots=all'; fi;
               if [ -n \"$$FILTER\" ]; then
                 npx playwright test --config ./playwright/playwright.config.mjs --grep \"$$PLAYWRIGHT_GREP\" $$EXTRA_ARGS $$(echo \"$$FILTER\" | tr ',' ' ');
               else

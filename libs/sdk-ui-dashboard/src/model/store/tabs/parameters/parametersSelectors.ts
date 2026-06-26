@@ -8,6 +8,7 @@ import {
     type IDashboardParameter,
     type IDashboardTab,
     type IInsightParameterValue,
+    type IParameterMetadataObject,
     type IdentifierRef,
     type ObjRef,
     areObjRefsEqual,
@@ -33,16 +34,20 @@ import { DEFAULT_TAB_ID } from "../tabsState.js";
 
 import {
     EMPTY_EXPORT_PARAMETERS_BY_TAB,
+    type IParameterReconciliationEntry,
+    type ParameterReconciliation,
     applyRuntimeOverride,
     buildPersistedByTabAndRef,
     buildWidgetScopeTabRefSelections,
+    buildWorkspaceParametersByRef,
+    classifyParameterReconciliation,
     collectExportOverrides,
+    collectParameterReconciliations,
     collectReferencedParameterRefs,
     computeParameterResetTargets,
     computeParameterResetValue,
     resolveEffectiveParameterValuesForRefs,
     smartPersistResolvedEntry,
-    workspaceParametersByRef,
 } from "./parametersHelpers.js";
 import {
     type IDashboardParameterEntry,
@@ -55,6 +60,7 @@ const EMPTY_EXPORT_PARAMETERS: IDashboardExportParameter[] = [];
 const EMPTY_PARAMETER_VALUES: IInsightParameterValue[] = [];
 const EMPTY_TABS: IDashboardTab[] = [];
 const EMPTY_RESET_TARGETS: { ref: ObjRef; value: number | undefined }[] = [];
+const EMPTY_RECONCILIATIONS: IParameterReconciliationEntry[] = [];
 
 const selectParametersState = createSelector(
     selectActiveTab,
@@ -66,6 +72,11 @@ const selectPersistedParametersFromMeta: DashboardSelector<IDashboardParameter[]
 
 const selectPersistedDashboardTabsRaw: DashboardSelector<IDashboardTab[]> = (state) =>
     state.meta?.persistedDashboard?.tabs ?? EMPTY_TABS;
+
+// Built once and shared by reference, so the per-widget execution selectors don't each
+// reconstruct an identical catalog-by-ref map.
+const selectWorkspaceParametersByRef: DashboardSelector<Map<string, IParameterMetadataObject>> =
+    createSelector(selectCatalogParameters, buildWorkspaceParametersByRef);
 
 /**
  * Returns the persisted-shape parameter entries currently held by the active tab.
@@ -177,23 +188,24 @@ export const selectParameterResetValueByRef: (ref: ObjRef) => DashboardSelector<
 export const selectSmartPersistedTabsParameters: DashboardSelector<Record<string, IDashboardParameter[]>> =
     createSelector(
         selectTabs,
-        selectCatalogParameters,
+        selectWorkspaceParametersByRef,
         selectCatalogParametersIsLoaded,
         selectPersistedDashboardTabsRaw,
         selectPersistedParametersFromMeta,
-        (tabs, workspaceParameters, isCatalogLoaded, persistedTabs, rootPersistedParameters) => {
+        (tabs, workspaceParameterByRef, isCatalogLoaded, persistedTabs, rootPersistedParameters) => {
             const result: Record<string, IDashboardParameter[]> = {};
             if (!tabs) {
                 return result;
             }
-            const workspaceByRef = workspaceParametersByRef(workspaceParameters);
             const persistedByTabAndRef = buildPersistedByTabAndRef(persistedTabs, rootPersistedParameters);
             for (const tab of tabs) {
                 const entries = tab.parameters?.parameters ?? [];
                 const persistedForTab = persistedByTabAndRef.get(tab.localIdentifier) ?? new Map();
                 result[tab.localIdentifier] = entries.map((entry) => {
                     const refKey = objRefToString(entry.parameter.ref);
-                    const workspaceParameter = isCatalogLoaded ? workspaceByRef.get(refKey) : undefined;
+                    const workspaceParameter = isCatalogLoaded
+                        ? workspaceParameterByRef.get(refKey)
+                        : undefined;
                     if (!workspaceParameter) {
                         return persistedForTab.get(refKey) ?? entry.parameter;
                     }
@@ -286,9 +298,55 @@ export const selectHasAnyResettableParameterOnActiveTab: DashboardSelector<boole
     (targets) => targets.length > 0,
 );
 
+/**
+ * Dashboard-wide list of parameters that no longer reconcile against the workspace parameters
+ * (per {@link classifyParameterReconciliation}), deduped by ref across tabs.
+ *
+ * @internal
+ */
+export const selectParameterReconciliations: DashboardSelector<IParameterReconciliationEntry[]> =
+    createSelector(
+        selectTabs,
+        selectCatalogParameters,
+        selectCatalogParametersIsLoaded,
+        selectEnableParameters,
+        (tabs, workspaceParameters, isCatalogLoaded, isEnabled) => {
+            if (!isEnabled || !isCatalogLoaded || !tabs) {
+                return EMPTY_RECONCILIATIONS;
+            }
+            const entries = tabs.flatMap((tab) => tab.parameters?.parameters ?? []);
+            const result = collectParameterReconciliations(entries, workspaceParameters);
+            return result.length === 0 ? EMPTY_RECONCILIATIONS : result;
+        },
+    );
+
+/**
+ * Per-ref reconciliation status for the active tab's parameter chip (per {@link classifyParameterReconciliation}).
+ *
+ * @internal
+ */
+export const selectParameterReconciliationByRef: (
+    ref: ObjRef,
+) => DashboardSelector<ParameterReconciliation | undefined> = createMemoizedSelector((ref: ObjRef) =>
+    createSelector(
+        selectDashboardParameterEntryByRef(ref),
+        selectCatalogParameterByRef(ref),
+        selectCatalogParametersIsLoaded,
+        selectEnableParameters,
+        (entry, workspaceParameter, isCatalogLoaded, isEnabled) => {
+            if (!isEnabled || !isCatalogLoaded || !entry) {
+                return undefined;
+            }
+            return classifyParameterReconciliation(entry.parameter, workspaceParameter);
+        },
+    ),
+);
+
 interface IWidgetParameterContext {
     entries: IDashboardParameterEntry[];
     measureParameters: Record<string, IdentifierRef[]>;
+    // Workspace catalog keyed by ref, so out-of-range runtime values recover to the default at execution.
+    workspaceParameterByRef: Map<string, IParameterMetadataObject>;
     // The executed insight can differ from the widget's own (e.g. a drill overlay).
     widgetInsightRef: ObjRef;
 }
@@ -307,7 +365,8 @@ export const selectWidgetParameterContext: (
             selectEnableParameters,
             selectCatalogMeasureParameters,
             selectCatalogMeasureParametersStatus,
-            (contexts, isEnabled, measureParameters, measureParametersStatus) => {
+            selectWorkspaceParametersByRef,
+            (contexts, isEnabled, measureParameters, measureParametersStatus, workspaceParameterByRef) => {
                 if (!isEnabled || !ref || measureParametersStatus !== "loaded") {
                     return undefined;
                 }
@@ -316,7 +375,12 @@ export const selectWidgetParameterContext: (
                     return undefined;
                 }
                 const entries = context.tab.parameters?.parameters ?? parametersInitialState.parameters;
-                return { entries, measureParameters, widgetInsightRef: context.widget.insight };
+                return {
+                    entries,
+                    measureParameters,
+                    workspaceParameterByRef,
+                    widgetInsightRef: context.widget.insight,
+                };
             },
         ),
 );
@@ -328,13 +392,13 @@ const selectWidgetInsightAndReferencedRefs = createMemoizedSelector((ref: ObjRef
         if (!resolved) {
             return undefined;
         }
-        const { entries, measureParameters, widgetInsightRef } = resolved;
+        const { entries, measureParameters, workspaceParameterByRef, widgetInsightRef } = resolved;
         const insight = insights.get(widgetInsightRef);
         if (!insight) {
             return undefined;
         }
         const referencedRefs = collectReferencedParameterRefs(insight, measureParameters);
-        return { insight, referencedRefs, entries };
+        return { insight, referencedRefs, entries, workspaceParameterByRef };
     }),
 );
 
@@ -362,8 +426,13 @@ export const selectEffectiveParameterValuesForWidget: (
         if (!resolved) {
             return EMPTY_PARAMETER_VALUES;
         }
-        const { insight, referencedRefs, entries } = resolved;
-        return resolveEffectiveParameterValuesForRefs(entries, referencedRefs, insightParameters(insight));
+        const { insight, referencedRefs, entries, workspaceParameterByRef } = resolved;
+        return resolveEffectiveParameterValuesForRefs(
+            entries,
+            referencedRefs,
+            insightParameters(insight),
+            workspaceParameterByRef,
+        );
     }),
 );
 
@@ -385,11 +454,13 @@ export const selectReferencedInsightParameterValuesForWidget: (
         if (!resolved) {
             return EMPTY_PARAMETER_VALUES;
         }
-        const { insight, referencedRefs } = resolved;
-        const result = insightParameters(insight).filter((parameter) =>
-            referencedRefs.some((ref) => areObjRefsEqual(ref, parameter.ref)),
+        const { insight, referencedRefs, workspaceParameterByRef } = resolved;
+        return resolveEffectiveParameterValuesForRefs(
+            [],
+            referencedRefs,
+            insightParameters(insight),
+            workspaceParameterByRef,
         );
-        return result.length === 0 ? EMPTY_PARAMETER_VALUES : result;
     }),
 );
 
@@ -452,18 +523,15 @@ const selectExportEffectiveParametersDashboardScope: DashboardSelector<
 > = createSelector(
     selectTabs,
     selectEnableParameters,
-    selectCatalogParameters,
+    selectWorkspaceParametersByRef,
     selectCatalogParametersIsLoaded,
-    (tabs, isEnabled, catalogParameters, isCatalogLoaded) => {
+    (tabs, isEnabled, workspaceParameterByRef, isCatalogLoaded) => {
         if (!isEnabled || !isCatalogLoaded || !tabs?.length) {
             return EMPTY_EXPORT_PARAMETERS_BY_TAB;
         }
-        const workspaceByRef = new Map(
-            catalogParameters.map((parameter) => [objRefToString(parameter.ref), parameter]),
-        );
         return collectExportOverrides(
             tabs.map((tab) => ({ tab })),
-            workspaceByRef,
+            workspaceParameterByRef,
         );
     },
 );
@@ -476,7 +544,7 @@ const selectExportEffectiveParametersForWidgets: (
             selectAllTabsInsightWidgetContexts,
             selectInsightsMap,
             selectEnableParameters,
-            selectCatalogParameters,
+            selectWorkspaceParametersByRef,
             selectCatalogParametersIsLoaded,
             selectCatalogMeasureParameters,
             selectCatalogMeasureParametersStatus,
@@ -484,7 +552,7 @@ const selectExportEffectiveParametersForWidgets: (
                 widgetContexts,
                 insights,
                 isEnabled,
-                catalogParameters,
+                workspaceParameterByRef,
                 isCatalogLoaded,
                 measureParameters,
                 measureParametersStatus,
@@ -492,16 +560,13 @@ const selectExportEffectiveParametersForWidgets: (
                 if (!isEnabled || !isCatalogLoaded || measureParametersStatus !== "loaded") {
                     return EMPTY_EXPORT_PARAMETERS_BY_TAB;
                 }
-                const workspaceByRef = new Map(
-                    catalogParameters.map((parameter) => [objRefToString(parameter.ref), parameter]),
-                );
                 const tabRefSelections = buildWidgetScopeTabRefSelections(
                     widgetContexts,
                     widgetIds,
                     insights,
                     measureParameters,
                 );
-                return collectExportOverrides(tabRefSelections, workspaceByRef);
+                return collectExportOverrides(tabRefSelections, workspaceParameterByRef);
             },
         ),
 );
