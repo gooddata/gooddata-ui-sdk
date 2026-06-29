@@ -1568,7 +1568,6 @@ export interface IGenAIService {
     // @internal
     getSemanticQuality(): ISemanticQualityService;
     getSemanticSearchQuery(): ISemanticSearchQuery;
-    semanticSearchIndex(): Promise<void>;
     summarizeDashboard(request: IDashboardSummaryRequest, options?: {
         signal?: AbortSignal;
     }): Promise<IDashboardSummary>;

@@ -15,10 +15,7 @@ import {
 } from "@gooddata/sdk-model";
 import { type DateFilterOption } from "@gooddata/sdk-ui-filters";
 
-import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
-import { selectEffectiveAttributeFiltersModeMap } from "../../../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
-import { selectEffectiveDateFilterMode } from "../../../../../model/store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
-import { selectEffectiveDateFiltersModeMap } from "../../../../../model/store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
+import { useScheduledEmailDialogContext } from "../../../contexts/ScheduledEmailDialogContext.js";
 import { useFiltersNamings } from "../../../shared/hooks/useFiltersNamings.js";
 
 export interface IAttachmentFilterInfo {
@@ -41,9 +38,8 @@ export const useFiltersForDashboardScheduledExportInfo = ({
     effectiveFilters = [],
 }: IUseFiltersForDashboardScheduledExportInfoProps) => {
     // Remove hidden dashboard filters, we don't want to display them.
-    const commonDateFilterMode = useDashboardSelector(selectEffectiveDateFilterMode);
-    const dateFiltersModeMap = useDashboardSelector(selectEffectiveDateFiltersModeMap);
-    const attributeFiltersModeMap = useDashboardSelector(selectEffectiveAttributeFiltersModeMap);
+    const { commonDateFilterMode, dateFiltersModeMap, attributeFiltersModeMap } =
+        useScheduledEmailDialogContext();
     const filtersToDisplay = removeHiddenFilters(
         effectiveFilters,
         commonDateFilterMode,

@@ -10,6 +10,7 @@ import type {
     ObjectOrigin,
 } from "@gooddata/sdk-model";
 
+import { type AsyncStatus } from "../async/types.js";
 import type { ObjectType } from "../objectType/types.js";
 
 /**
@@ -175,4 +176,12 @@ export interface ICatalogItemQueryOptions {
     isHidden?: boolean;
     certification?: boolean;
     pageSize?: number;
+}
+
+export interface ICatalogItemSemanticSearchOptions {
+    queryOptions: ICatalogItemQueryOptions;
+    items: ICatalogItem[];
+    status: AsyncStatus;
+    types: ObjectType[];
+    search?: string;
 }

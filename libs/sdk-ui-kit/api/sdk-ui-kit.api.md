@@ -240,6 +240,9 @@ export const Button: ForwardRefExoticComponent<IButtonProps & RefAttributes<HTML
 export const CatalogItemPicker: NamedExoticComponent<ICatalogItemPickerProps<unknown, unknown>>;
 
 // @internal
+export const CatalogItemPickerContent: NamedExoticComponent<ICatalogItemPickerProps<unknown, unknown>>;
+
+// @internal
 export type CatalogItemPickerSelectionMode = "single" | "multiple";
 
 // @internal

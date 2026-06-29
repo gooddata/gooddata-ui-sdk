@@ -2227,6 +2227,22 @@
         "text": "Apply",
         "crowdinContext": "Apply button in the parameter control dropdown"
     },
+    "parameter_filter.dropdown.error.notANumber": {
+        "text": "Enter a valid number.",
+        "crowdinContext": "Inline validation error in the parameter control dropdown when the typed value is empty or not a number"
+    },
+    "parameter_filter.dropdown.error.outOfRange": {
+        "text": "Value is out of range. Enter a value between {min} and {max}.",
+        "crowdinContext": "Inline validation error in the parameter control dropdown when the value is outside the allowed range; {min} and {max} are the lower and upper bounds"
+    },
+    "parameter_filter.dropdown.error.outOfRange.min": {
+        "text": "Value is out of range. Enter a value of {min} or more.",
+        "crowdinContext": "Inline validation error in the parameter control dropdown when only a lower bound is set; {min} is the lowest allowed value"
+    },
+    "parameter_filter.dropdown.error.outOfRange.max": {
+        "text": "Value is out of range. Enter a value of {max} or less.",
+        "crowdinContext": "Inline validation error in the parameter control dropdown when only an upper bound is set; {max} is the highest allowed value"
+    },
     "mvf.applyButton.tooltip.noChanges": {
         "text": "No changes to apply.",
         "crowdinContext": "Tooltip shown on the Apply button when it is disabled because there are no changes to apply in the Measure Value Filter."
@@ -2476,12 +2492,12 @@
         "crowdinContext": "Section title that shows ranking filter preview."
     },
     "rankingFilter.preview.top_without_attribute": {
-        "text": "Top {value}{conditionSuffix} of <strong>{measure}</strong>",
-        "crowdinContext": "Preview text showing the top N values based on a measure, where {value} is the number of items and {measure} is the measure name. {conditionSuffix} is an optional ' (strict)' suffix. Used when no attribute is specified for ranking."
+        "text": "Top {value}{conditionSuffix} records by <strong>{measure}</strong>",
+        "crowdinContext": "Preview text showing the top N records ranked by a measure, where {value} is the number of records and {measure} is the measure name. {conditionSuffix} is an optional ' (strict)' suffix. Used when no granularity attribute is specified for ranking."
     },
     "rankingFilter.preview.bottom_without_attribute": {
-        "text": "Bottom {value}{conditionSuffix} of <strong>{measure}</strong>",
-        "crowdinContext": "Preview text showing the bottom N values based on a measure, where {value} is the number of items and {measure} is the measure name. {conditionSuffix} is an optional ' (strict)' suffix. Used when no attribute is specified for ranking."
+        "text": "Bottom {value}{conditionSuffix} records by <strong>{measure}</strong>",
+        "crowdinContext": "Preview text showing the bottom N records ranked by a measure, where {value} is the number of records and {measure} is the measure name. {conditionSuffix} is an optional ' (strict)' suffix. Used when no granularity attribute is specified for ranking."
     },
     "rankingFilter.preview.top_with_attribute": {
         "text": "Top {value}{conditionSuffix} out of <strong>{attribute}</strong> based on <strong>{measure}</strong>",

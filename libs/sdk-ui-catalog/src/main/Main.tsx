@@ -57,7 +57,7 @@ export function Main({
     const intl = useIntl();
     const { addError } = useToastMessage();
     const { toggleTag } = useFilterActions();
-    const { items, status, hasNext, totalCount } = useCatalogFeedState();
+    const { items, status, hasNext, totalCount, relatedItems, relatedItemsStatus } = useCatalogFeedState();
     const { next, updateItem, removeItem, refetchObjectType } = useCatalogFeedActions();
     const isQualityEnabled = useIsCatalogQualityEnabled();
 
@@ -85,6 +85,8 @@ export function Main({
                 totalCount={totalCount}
                 onItemClick={onOpenDetail}
                 onTagClick={toggleTag}
+                relatedItems={relatedItems}
+                relatedItemsStatus={relatedItemsStatus}
             />
             <CatalogDetail
                 open={open}

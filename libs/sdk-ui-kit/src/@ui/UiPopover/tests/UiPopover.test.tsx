@@ -1,5 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
+import { FloatingPortal } from "@floating-ui/react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
@@ -121,9 +122,41 @@ describe("UiPopover", () => {
             document.body.appendChild(outside);
             try {
                 renderPopover({ isOpen: true, onOpenChange });
-                fireEvent.pointerDown(outside);
-                fireEvent.mouseDown(outside);
+                fireEvent.click(outside);
                 expect(onOpenChange).toHaveBeenCalledWith(false);
+            } finally {
+                outside.remove();
+            }
+        });
+    });
+
+    // Reproduces F1-2608: when a popover's anchor lives inside another
+    // FloatingPortal (e.g. the OLP share dialog, a modal that portals its body),
+    // floating-ui's React-tree-based dismiss treated every click in that tree as
+    // "inside" and never closed. The DOM-based outside-click hook keys off real
+    // DOM containment instead, so an outside click still closes it.
+    describe("inside a parent floating portal (modal)", () => {
+        it("closes on outside click when anchor is portalled", () => {
+            const onClose = vi.fn();
+            const outside = document.createElement("button");
+            outside.textContent = "outside";
+            document.body.appendChild(outside);
+            try {
+                render(
+                    <FloatingPortal>
+                        <UiPopover
+                            anchor={<div tabIndex={0}>Anchor</div>}
+                            content={() => <div>Popover content</div>}
+                            onClose={onClose}
+                        />
+                    </FloatingPortal>,
+                );
+                fireEvent.click(screen.getByText("Anchor"));
+                expect(screen.getByText("Popover content")).toBeInTheDocument();
+
+                fireEvent.click(outside);
+                expect(onClose).toHaveBeenCalled();
+                expect(screen.queryByText("Popover content")).not.toBeInTheDocument();
             } finally {
                 outside.remove();
             }

@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "Separate scheduled-email create/edit dialog from the dashboard store behind automation contexts and a connector (GDP-3167)",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "jan@sixtease.net"
+}

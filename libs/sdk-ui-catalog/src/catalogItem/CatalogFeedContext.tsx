@@ -13,6 +13,8 @@ import { useCatalogItemFeed } from "./useCatalogItemFeed.js";
 export interface ICatalogFeedState {
     items: ICatalogItem[];
     status: AsyncStatus;
+    relatedItems: ICatalogItem[];
+    relatedItemsStatus: AsyncStatus;
     error: Error | null;
     totalCount: number;
     totalCountByType: Readonly<Record<ObjectType, number>>;
@@ -44,6 +46,8 @@ export function CatalogFeedProvider({ children, ...props }: CatalogFeedProviderP
         totalCount,
         totalCountByType,
         hasNext,
+        relatedItems,
+        relatedItemsStatus,
         next,
         updateItem,
         removeItem,
@@ -54,12 +58,14 @@ export function CatalogFeedProvider({ children, ...props }: CatalogFeedProviderP
         () => ({
             items,
             status,
+            relatedItems,
+            relatedItemsStatus,
             error,
             totalCount,
             totalCountByType,
             hasNext,
         }),
-        [items, status, error, totalCount, totalCountByType, hasNext],
+        [items, status, relatedItems, relatedItemsStatus, error, totalCount, totalCountByType, hasNext],
     );
 
     const actions = useMemo<ICatalogFeedActions>(

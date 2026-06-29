@@ -11,7 +11,9 @@ import {
     type IElementsQueryResult,
     type IExecutionResult,
     type IGeoService,
+    type IGetInsightOptions,
     type IPreparedExecution,
+    type IWorkspaceInsightsService,
 } from "@gooddata/sdk-backend-spi";
 import {
     type IAttributeDisplayFormMetadataObject,
@@ -19,8 +21,10 @@ import {
     type IAttributeOrMeasure,
     type IBucket,
     type IGeoJsonFeature,
+    type IInsight,
     type ObjRef,
     geoFeatureId,
+    idRef,
     newBucket,
     newInsightDefinition,
 } from "@gooddata/sdk-model";
@@ -32,6 +36,7 @@ import {
     DecoratedPreparedExecution,
 } from "../../decoratedBackend/execution.js";
 import { decoratedBackend } from "../../decoratedBackend/index.js";
+import { DecoratedWorkspaceInsightsService } from "../../decoratedBackend/insights.js";
 import { dummyBackend, dummyBackendEmptyData } from "../../dummyBackend/index.js";
 import { withEventing } from "../../eventingBackend/index.js";
 import { type CacheControl, type CachingConfiguration, withCaching } from "../index.js";
@@ -60,6 +65,7 @@ function withCachingForTests(
         maxAttributeWorkspaces: 1,
         maxWorkspaceSettings: 1,
         maxAutomationsWorkspaces: 1,
+        maxInsightsPerWorkspace: 2,
         cacheGeoStyles: true,
         onCacheReady,
         ...configOverrides,
@@ -138,6 +144,58 @@ function createGeoFeature(value: string): IGeoJsonFeature {
         geometry: {
             type: "Point",
             coordinates: [0, 0],
+        },
+    };
+}
+
+type InsightGetter = (ref: ObjRef, options?: IGetInsightOptions) => Promise<IInsight>;
+
+/**
+ * A call-counting decorator for the insights service. It counts how many times the underlying
+ * (decorated) getInsight gets invoked - used to assert that the caching layer de-duplicates
+ * concurrent reads of the same insight into a single underlying call.
+ */
+class CallCountingInsightsService extends DecoratedWorkspaceInsightsService {
+    constructor(
+        decorated: IWorkspaceInsightsService,
+        workspace: string,
+        private readonly counter: { calls: number },
+        private readonly getter: InsightGetter,
+    ) {
+        super(decorated, workspace);
+    }
+
+    public override getInsight = (ref: ObjRef, options?: IGetInsightOptions): Promise<IInsight> => {
+        this.counter.calls += 1;
+        return this.getter(ref, options);
+    };
+
+    public override async updateInsight(insight: IInsight): Promise<IInsight> {
+        return insight;
+    }
+}
+
+function createInsightCountingBackend(getter: InsightGetter): {
+    backend: IAnalyticalBackend;
+    counter: { calls: number };
+} {
+    const counter = { calls: 0 };
+    const backend = decoratedBackend(dummyBackendEmptyData(), {
+        insights: (decorated, workspace) =>
+            new CallCountingInsightsService(decorated, workspace, counter, getter),
+    });
+
+    return { backend, counter };
+}
+
+function createTestInsight(id: string): IInsight {
+    return {
+        insight: {
+            ...newInsightDefinition("local:table").insight,
+            identifier: id,
+            uri: `/insights/${id}`,
+            ref: idRef(id, "insight"),
+            title: id,
         },
     };
 }
@@ -691,6 +749,107 @@ describe("withCaching", () => {
             const second = backend.workspace("test").settings().getSettingsForCurrentUser();
 
             expect(second).not.toBe(first);
+        });
+    });
+
+    describe("insights", () => {
+        const REF = idRef("insight-1", "insight");
+
+        it("caches getInsight", async () => {
+            const insight = createTestInsight("insight-1");
+            const { backend, counter } = createInsightCountingBackend(async () => insight);
+            const cachedBackend = withCachingForTests(backend);
+
+            const first = await cachedBackend.workspace("test").insights().getInsight(REF);
+            const second = await cachedBackend.workspace("test").insights().getInsight(REF);
+
+            expect(second).toBe(first);
+            expect(counter.calls).toEqual(1);
+        });
+
+        it("de-duplicates concurrent getInsight calls for the same ref into a single underlying call", async () => {
+            const insight = createTestInsight("insight-1");
+            // resolve only after all concurrent callers have registered on the in-flight promise
+            const { backend, counter } = createInsightCountingBackend(
+                () => new Promise<IInsight>((resolve) => setTimeout(() => resolve(insight), 10)),
+            );
+            const cachedBackend = withCachingForTests(backend);
+
+            const service = cachedBackend.workspace("test").insights();
+            const results = await Promise.all([
+                service.getInsight(REF),
+                service.getInsight(REF),
+                service.getInsight(REF),
+                service.getInsight(REF),
+                service.getInsight(REF),
+            ]);
+
+            // a single underlying call serves all concurrent callers
+            expect(counter.calls).toEqual(1);
+            // and they all observe identical results
+            results.forEach((result) => expect(result).toBe(insight));
+        });
+
+        it("does not share cache entries for different options", async () => {
+            const insight = createTestInsight("insight-1");
+            const { backend, counter } = createInsightCountingBackend(async () => insight);
+            const cachedBackend = withCachingForTests(backend);
+
+            const service = cachedBackend.workspace("test").insights();
+            await service.getInsight(REF);
+            await service.getInsight(REF, { loadUserData: true });
+
+            expect(counter.calls).toEqual(2);
+        });
+
+        it("evicts the cache entry when getInsight fails", async () => {
+            let shouldFail = true;
+            const insight = createTestInsight("insight-1");
+            const { backend, counter } = createInsightCountingBackend(async () => {
+                if (shouldFail) {
+                    throw new Error("boom");
+                }
+                return insight;
+            });
+            const cachedBackend = withCachingForTests(backend);
+            const service = cachedBackend.workspace("test").insights();
+
+            await expect(service.getInsight(REF)).rejects.toThrow("boom");
+
+            // the failed entry is evicted, so a subsequent call hits the backend again
+            shouldFail = false;
+            const result = await service.getInsight(REF);
+
+            expect(result).toBe(insight);
+            expect(counter.calls).toEqual(2);
+        });
+
+        it("invalidates the getInsight cache after updateInsight so edits are not served stale", async () => {
+            const insight = createTestInsight("insight-1");
+            const { backend, counter } = createInsightCountingBackend(async () => insight);
+            const cachedBackend = withCachingForTests(backend);
+            const service = cachedBackend.workspace("test").insights();
+
+            await service.getInsight(REF);
+            await service.updateInsight(insight);
+            await service.getInsight(REF);
+
+            // the edit invalidated the cache, so the second read hits the backend again
+            expect(counter.calls).toEqual(2);
+        });
+
+        it("resets insights cache", async () => {
+            let cacheControl: CacheControl | undefined;
+            const insight = createTestInsight("insight-1");
+            const { backend, counter } = createInsightCountingBackend(async () => insight);
+            const cachedBackend = withCachingForTests(backend, (cc) => (cacheControl = cc));
+            const service = cachedBackend.workspace("test").insights();
+
+            await service.getInsight(REF);
+            cacheControl?.resetInsights();
+            await service.getInsight(REF);
+
+            expect(counter.calls).toEqual(2);
         });
     });
 

@@ -98,10 +98,17 @@ import { IForecastResult } from '@gooddata/sdk-backend-spi';
 import { IGeoService } from '@gooddata/sdk-backend-spi';
 import { IGetDashboardOptions } from '@gooddata/sdk-backend-spi';
 import { IGetDashboardPluginOptions } from '@gooddata/sdk-backend-spi';
+import { IGetInsightOptions } from '@gooddata/sdk-backend-spi';
 import { IGetScheduledMailOptions } from '@gooddata/sdk-backend-spi';
+import { IGetVisualizationClassesOptions } from '@gooddata/sdk-backend-spi';
 import { IGroupableCatalogItemBase } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
+import { IInsightReferences } from '@gooddata/sdk-backend-spi';
+import { IInsightReferencing } from '@gooddata/sdk-backend-spi';
+import { IInsightsQuery } from '@gooddata/sdk-backend-spi';
+import { IInsightsQueryOptions } from '@gooddata/sdk-backend-spi';
+import { IInsightsQueryResult } from '@gooddata/sdk-backend-spi';
 import { IInsightWidget } from '@gooddata/sdk-model';
 import { IInsightWidgetDefinition } from '@gooddata/sdk-model';
 import { IKpi } from '@gooddata/sdk-model';
@@ -113,6 +120,8 @@ import { IListedDashboard } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureMetadataObject } from '@gooddata/sdk-model';
 import { IMetadataObject } from '@gooddata/sdk-model';
+import { IMetadataObjectBase } from '@gooddata/sdk-model';
+import { IMetadataObjectIdentity } from '@gooddata/sdk-model';
 import { IMetricFormatOverrideSetting } from '@gooddata/sdk-model';
 import { InsightDrillDefinition } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
@@ -138,6 +147,7 @@ import { ISortItem } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
 import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { IVariableMetadataObject } from '@gooddata/sdk-model';
+import { IVisualizationClass } from '@gooddata/sdk-model';
 import { IWidget } from '@gooddata/sdk-model';
 import { IWidgetAlert } from '@gooddata/sdk-model';
 import { IWidgetAlertCount } from '@gooddata/sdk-backend-spi';
@@ -150,6 +160,7 @@ import { IWorkspaceCatalogAvailableItemsFactory } from '@gooddata/sdk-backend-sp
 import { IWorkspaceCatalogFactory } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalogFactoryOptions } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceDashboardsService } from '@gooddata/sdk-backend-spi';
+import { IWorkspaceInsightsService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceSettingsService } from '@gooddata/sdk-backend-spi';
 import { KpiDrillDefinition } from '@gooddata/sdk-model';
@@ -159,6 +170,7 @@ import { MetricType } from '@gooddata/sdk-model';
 import { NotAuthenticated } from '@gooddata/sdk-backend-spi';
 import { ObjRef } from '@gooddata/sdk-model';
 import { SupportedDashboardReferenceTypes } from '@gooddata/sdk-backend-spi';
+import { SupportedInsightReferenceTypes } from '@gooddata/sdk-backend-spi';
 import { SupportedWidgetReferenceTypes } from '@gooddata/sdk-backend-spi';
 import { ValidationContext } from '@gooddata/sdk-backend-spi';
 import { VisualizationProperties } from '@gooddata/sdk-model';
@@ -306,6 +318,7 @@ export type CacheControl = {
     resetWorkspaceSettings: () => void;
     resetGeoStyles: () => void;
     resetExportTemplates: () => void;
+    resetInsights: () => void;
     resetAll: () => void;
 };
 
@@ -323,6 +336,7 @@ export type CachingConfiguration = {
     maxSecuritySettingsOrgUrlsAge?: number;
     maxAttributeWorkspaces?: number;
     maxAutomationsWorkspaces?: number;
+    maxInsightsPerWorkspace?: number;
     maxExportTemplatesOrgs?: number;
     maxExportTemplatesWorkspaces?: number;
     maxAttributeDisplayFormsPerWorkspace?: number;
@@ -710,6 +724,46 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     workspace: string;
 }
 
+// @alpha
+export abstract class DecoratedWorkspaceInsightsService implements IWorkspaceInsightsService {
+    protected constructor(decorated: IWorkspaceInsightsService, workspace: string);
+    // (undocumented)
+    createInsight(insight: IInsightDefinition): Promise<IInsight>;
+    // (undocumented)
+    protected readonly decorated: IWorkspaceInsightsService;
+    // (undocumented)
+    deleteInsight(ref: ObjRef): Promise<void>;
+    // (undocumented)
+    getInsight(ref: ObjRef, options?: IGetInsightOptions): Promise<IInsight>;
+    // (undocumented)
+    getInsightReferencedObjects(insight: IInsight, types?: SupportedInsightReferenceTypes[]): Promise<IInsightReferences>;
+    // (undocumented)
+    getInsightReferencingObjects(ref: ObjRef): Promise<IInsightReferencing>;
+    // (undocumented)
+    getInsights(options?: IInsightsQueryOptions): Promise<IInsightsQueryResult>;
+    // (undocumented)
+    getInsightsQuery(): IInsightsQuery;
+    // (undocumented)
+    getInsightWithAddedFilters<T extends IInsightDefinition>(insight: T, filters: IFilter[]): Promise<T>;
+    // (undocumented)
+    getInsightWithCatalogItems(ref: ObjRef): Promise<{
+        insight: IInsight;
+        catalogItems: Array<ICatalogFact | ICatalogMeasure | ICatalogAttribute>;
+    }>;
+    // (undocumented)
+    getVisualizationClass(ref: ObjRef): Promise<IVisualizationClass>;
+    // (undocumented)
+    getVisualizationClasses(options?: IGetVisualizationClassesOptions): Promise<IVisualizationClass[]>;
+    // (undocumented)
+    setCertification(ref: ObjRef, certification?: IObjectCertificationWrite): Promise<void>;
+    // (undocumented)
+    updateInsight(insight: IInsight): Promise<IInsight>;
+    // (undocumented)
+    updateInsightMeta(insight: Partial<IMetadataObjectBase> & IMetadataObjectIdentity): Promise<IInsight>;
+    // (undocumented)
+    readonly workspace: string;
+}
+
 // @alpha (undocumented)
 export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSettingsService {
     protected constructor(decorated: IWorkspaceSettingsService);
@@ -791,6 +845,7 @@ export type DecoratorFactories = {
     workspaceSettings?: WorkspaceSettingsDecoratorFactory;
     attributes?: AttributesDecoratorFactory;
     automations?: AutomationsDecoratorFactory;
+    insights?: InsightsDecoratorFactory;
     dashboards?: DashboardsDecoratorFactory;
     geo?: GeoDecoratorFactory;
     organizationExportTemplates?: OrganizationExportTemplatesDecoratorFactory;
@@ -1033,6 +1088,9 @@ export class InMemoryPaging<T> implements IPagedResource<T> {
 export interface INormalizerOptions {
     keepRemovableProperties?: boolean;
 }
+
+// @alpha (undocumented)
+export type InsightsDecoratorFactory = (insights: IWorkspaceInsightsService, workspace: string) => IWorkspaceInsightsService;
 
 // @alpha (undocumented)
 export class InsightWidgetBuilder extends WidgetBaseBuilder<IInsightWidget> implements IInsightWidgetBuilder {

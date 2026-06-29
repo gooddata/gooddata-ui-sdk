@@ -1401,6 +1401,7 @@ export interface IRankingFilterDropdownProps {
     onDropDownItemMouseOut?: () => void;
     // (undocumented)
     onDropDownItemMouseOver?: (ref: ObjRefInScope) => void;
+    renderMeasureDropdownBody?: RenderMeasureDropdownBody;
 }
 
 // @beta (undocumented)
@@ -1425,6 +1426,13 @@ export interface IRankingFilterProps {
     onDropDownItemMouseOut?: () => void;
     // (undocumented)
     onDropDownItemMouseOver?: (ref: ObjRefInScope) => void;
+}
+
+// @beta
+export interface IRankingMeasureDropdownBodyRenderProps {
+    onClose: () => void;
+    onSelect: (ref: ObjRefInScope) => void;
+    selectedItemRef: ObjRefInScope;
 }
 
 // @public
@@ -1761,6 +1769,9 @@ export function RankingFilterDropdown(props: IRankingFilterDropdownProps): JSX.E
 
 // @public
 export type RelativeDateFilterOption = IUiRelativeDateFilterForm | IRelativeDateFilterPreset;
+
+// @beta
+export type RenderMeasureDropdownBody = (props: IRankingMeasureDropdownBodyRenderProps) => ReactNode;
 
 // @public
 export type SelectionTypeControllerCallbacks = {

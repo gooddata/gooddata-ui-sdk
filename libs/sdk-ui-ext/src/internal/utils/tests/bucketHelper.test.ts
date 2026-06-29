@@ -395,6 +395,56 @@ describe("sanitizeFilters", () => {
         expect(newExtendedReferencePoint.filters.items).toHaveLength(1);
     });
 
+    it("should keep a ranking filter that references a catalog measure by ref even with no attributes", () => {
+        const newReferencePoint = cloneDeep(measureValueFilterReferencePoint);
+        // No attributes and the ranked measure is not in the buckets - this is the improved ranking filter.
+        newReferencePoint.buckets[2].items = [];
+        const catalogRankingFilter: any = {
+            measureRef: { identifier: "catalogMetric", type: "measure" },
+            operator: "TOP",
+            value: 10,
+        };
+        newReferencePoint.filters.items = [
+            {
+                localIdentifier: "fbr1",
+                filters: [catalogRankingFilter],
+            },
+        ];
+        const extendedReferencePoint: IExtendedReferencePoint = {
+            ...newReferencePoint,
+            uiConfig: DEFAULT_BASE_CHART_UICONFIG,
+        };
+
+        const newExtendedReferencePoint = sanitizeFilters(extendedReferencePoint, extendedReferencePoint);
+
+        expect(newExtendedReferencePoint.filters.items).toHaveLength(1);
+        // The filter must be preserved as a ranking filter (operator/value intact), not mutated into an MVF.
+        expect(newExtendedReferencePoint.filters.items[0].filters![0]).toEqual(catalogRankingFilter);
+    });
+
+    it("should remove a legacy ranking filter whose bucket measure is missing", () => {
+        const newReferencePoint = cloneDeep(measureValueFilterReferencePoint);
+        const legacyRankingFilter: any = {
+            measure: "non_existent_measure",
+            operator: "TOP",
+            value: 10,
+        };
+        newReferencePoint.filters.items = [
+            {
+                localIdentifier: "fbr1",
+                filters: [legacyRankingFilter],
+            },
+        ];
+        const extendedReferencePoint: IExtendedReferencePoint = {
+            ...newReferencePoint,
+            uiConfig: DEFAULT_BASE_CHART_UICONFIG,
+        };
+
+        const newExtendedReferencePoint = sanitizeFilters(extendedReferencePoint, extendedReferencePoint);
+
+        expect(newExtendedReferencePoint.filters.items).toHaveLength(0);
+    });
+
     it("should remove filter with mixed dimensionality when local ID is invalid", () => {
         const newReferencePoint = cloneDeep(measureValueFilterReferencePoint);
         newReferencePoint.filters.items = [

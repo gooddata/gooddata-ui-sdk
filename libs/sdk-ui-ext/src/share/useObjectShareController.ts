@@ -112,6 +112,7 @@ export function useObjectShareController(
         selectedLabelIdsByGrantee,
         setSelectedLabelIdsByGrantee,
         reconcileLabelScope,
+        reconcileLabelScopeMany,
     } = useLabelScope(target, targetKey, labels, hasList, committedGranteeIds, labelsError, labelsLoading);
 
     // Drop the transient UI buffers when the permission target changes. The detail
@@ -249,27 +250,28 @@ export function useObjectShareController(
         // Object grant landed — clear the saving marker on the new rows.
         setGrantees((prev) => prev.map((g) => (addedIds.includes(g.id) ? { ...g, pending: undefined } : g)));
 
-        // Mirror each new grantee's full label scope; pin failures to primary-only.
-        const scoped = await Promise.all(
-            pendingGrantees.map((g) =>
-                reconcileLabelScope({ kind: g.kind, granteeRef: refForId(g.id) }, allLabelIdSet, EMPTY_IDS),
-            ),
+        // One label write per label carrying all added grantees, not one per grantee.
+        const principals = pendingGrantees.map(
+            (g): LabelScopePrincipal => ({ kind: g.kind, granteeRef: refForId(g.id) }),
+        );
+        const { ok: labelsOk, failedLabelIds } = await reconcileLabelScopeMany(
+            principals,
+            allLabelIdSet,
+            EMPTY_IDS,
         );
         if (targetKeyRef.current !== startedFor) {
             return;
         }
-        const failed = pendingGrantees.filter((_, i) => !scoped[i]);
-        if (failed.length > 0) {
+        if (!labelsOk) {
             toast.addWarning(objectShareMessages.toastLabelScopePartial);
-            // Some non-primary label writes didn't persist. Don't drop the entry —
-            // a missing entry means "all selected", which would falsely show full
-            // access. Pin the failed grantees to the primary label only (the one
-            // that's always granted with the object), reflecting what actually stuck.
-            const primaryIds = effectiveLabels.filter((l) => l.isPrimary).map((l) => l.id);
+            // Drop only the failed labels, keeping those that landed — otherwise local
+            // scope under-reports and changeGranteeLabels later skips their revokes.
+            const failed = new Set(failedLabelIds);
+            const survived = allLabelIds.filter((id) => !failed.has(id));
             setSelectedLabelIdsByGrantee((prev) => {
                 const next = { ...prev };
-                for (const g of failed) {
-                    next[g.id] = primaryIds;
+                for (const id of addedIds) {
+                    next[id] = survived;
                 }
                 return next;
             });
@@ -280,7 +282,7 @@ export function useObjectShareController(
         commit,
         closeAddGrantee,
         effectiveLabels,
-        reconcileLabelScope,
+        reconcileLabelScopeMany,
         refForId,
         toast,
         setGrantees,

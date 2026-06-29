@@ -436,8 +436,11 @@ describe("useObjectShareController", () => {
         expect(result.current.state.grantees.find((g) => g.id === "user:u1")?.pending).toBeUndefined();
     });
 
-    it("backfills a granted row's name from the picker when the grant has only a raw id", async () => {
-        // u2 is granted but the access-list grant carries only the raw id as its name.
+    it("resolves a granted row's name eagerly when the grant carries only a raw id", async () => {
+        // The permissions endpoint returns grants without names (only ids) — the
+        // state after a page reload. The row must show the real name without the
+        // user ever opening the picker: the controller eagerly resolves names from
+        // the available-assignees listing when any granted row is still a raw id.
         const RAW: AccessGranteeDetail = {
             type: "granularUser",
             user: { ref: idRef("u2"), uri: "/u2", login: "u2", email: "u2", fullName: "u2" },
@@ -448,14 +451,93 @@ describe("useObjectShareController", () => {
         const { result } = renderController(svc, TARGET);
         await waitFor(() => expect(result.current.state.status).toBe("success"));
 
-        // Before the picker is consulted, the row shows the raw id (no better source).
-        expect(result.current.state.grantees.find((g) => g.id === "user:u2")?.name).toBe("u2");
+        // No picker interaction — the name resolves from the eager assignee fetch.
+        await waitFor(() =>
+            expect(result.current.state.grantees.find((g) => g.id === "user:u2")?.name).toBe("Marek"),
+        );
+        expect(svc.getAvailableAssignees).toHaveBeenCalled();
+    });
 
-        // Loading picker options teaches the controller u2's real name ("Marek").
+    it("resolves a group row's name eagerly when the grant carries only a raw id", async () => {
+        // Same reload scenario for a user group — g1's grant returns the raw id as
+        // its name, which must resolve to "Marketing" from the assignee listing.
+        const RAW_GROUP: AccessGranteeDetail = {
+            type: "granularGroup",
+            userGroup: { ref: idRef("g1"), name: "g1" },
+            permissions: ["VIEW"],
+            inheritedPermissions: [],
+        } as AccessGranteeDetail;
+        const svc = makeService([RAW_GROUP]);
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+        await waitFor(() =>
+            expect(result.current.state.grantees.find((g) => g.id === "group:g1")?.name).toBe("Marketing"),
+        );
+    });
+
+    it("still resolves names when the target object identity churns mid-resolve", async () => {
+        // A consumer that rebuilds the target object each render (new identity, same
+        // id) must not abort the eager name resolve. The resolve is keyed on the
+        // serialized targetKey, not the target object, so an identity-only re-render
+        // while the assignee fetch is in flight must let it complete and name the row.
+        const RAW: AccessGranteeDetail = {
+            type: "granularUser",
+            user: { ref: idRef("u2"), uri: "/u2", login: "u2", email: "u2", fullName: "u2" },
+            permissions: ["VIEW"],
+            inheritedPermissions: [],
+        } as AccessGranteeDetail;
+        const svc = makeService([RAW]);
+        let resolveAssignees: (a: IAvailableAccessGrantee[]) => void = () => {};
+        svc.getAvailableAssignees.mockImplementationOnce(
+            () => new Promise<IAvailableAccessGrantee[]>((res) => (resolveAssignees = res)),
+        );
+        const backend = makeBackend(svc);
+        const wrapper = ({ children }: PropsWithChildren) => (
+            <IntlProvider locale="en-US" messages={{}}>
+                <BackendProvider backend={backend}>
+                    <WorkspaceProvider workspace={WORKSPACE}>{children}</WorkspaceProvider>
+                </BackendProvider>
+            </IntlProvider>
+        );
+        const { result, rerender } = renderHook(
+            ({ target }: { target: IObjectPermissionsObject }) => useObjectShareController(target),
+            // Each rerender passes a fresh object with the same id — identity churn.
+            { wrapper, initialProps: { target: { kind: "label", ref: idRef("label.country") } } },
+        );
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        await waitFor(() => expect(svc.getAvailableAssignees).toHaveBeenCalledTimes(1));
+
+        // Re-render with a brand-new target object (same id) while the fetch is in
+        // flight. A target-object-keyed effect would cancel and never retry here.
         await act(async () => {
-            await result.current.actions.loadOptions("");
+            rerender({ target: { kind: "label", ref: idRef("label.country") } });
         });
-        expect(result.current.state.grantees.find((g) => g.id === "user:u2")?.name).toBe("Marek");
+        await act(async () => {
+            resolveAssignees(ASSIGNEES);
+        });
+
+        await waitFor(() =>
+            expect(result.current.state.grantees.find((g) => g.id === "user:u2")?.name).toBe("Marek"),
+        );
+        // The identity churn must not have triggered a second fetch.
+        expect(svc.getAvailableAssignees).toHaveBeenCalledTimes(1);
+    });
+
+    it("does not fetch assignees when every granted row already has a name", async () => {
+        // USER_GRANT carries a real fullName ("Jane Good"), so there is nothing to
+        // resolve — the eager assignee fetch must be skipped entirely. This keeps the
+        // happy path free of an extra workspace user/group listing on every open.
+        const svc = makeService(); // [USER_GRANT] — already named
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        expect(result.current.state.grantees.find((g) => g.id === "user:u1")?.name).toBe("Jane Good");
+
+        // Give any stray eager effect a chance to fire, then assert it did not.
+        await act(async () => {
+            await Promise.resolve();
+        });
+        expect(svc.getAvailableAssignees).not.toHaveBeenCalled();
     });
 
     it("writes the new level through to local state and keeps it", async () => {
@@ -1123,6 +1205,87 @@ describe("useObjectShareController", () => {
         ]);
     });
 
+    it("adds several grantees with one label write per label (not per grantee)", async () => {
+        const svc = makeLabelAwareService();
+        const { result } = renderController(svc, TARGET, LABELS);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        svc.manageObjectPermissions.mockClear();
+
+        act(() => result.current.actions.openAddGrantee());
+        act(() =>
+            result.current.actions.setPendingGrantees([
+                { id: "user:u2", kind: "user", name: "Marek", permissionLevel: "VIEW" },
+                { id: "group:g1", kind: "group", name: "Marketing", permissionLevel: "VIEW" },
+            ]),
+        );
+        await act(async () => {
+            await result.current.actions.confirmAddGrantees();
+        });
+
+        const calls = svc.manageObjectPermissions.mock.calls as Array<
+            [IObjectPermissionsObject, IGranularAccessGrantee[]]
+        >;
+        const idOf = (t: IObjectPermissionsObject) => (t.ref as { identifier: string }).identifier;
+        const objectCalls = calls.filter(([t]) => idOf(t) === "label.country");
+        expect(objectCalls).toHaveLength(1);
+        expect(objectCalls[0]![1]).toHaveLength(2);
+        // Two labels, not two labels × two grantees.
+        const labelCalls = calls.filter(([t]) => idOf(t).startsWith("lbl."));
+        expect(labelCalls).toHaveLength(2);
+        const byLabel = new Map(labelCalls.map(([t, g]) => [idOf(t), g]));
+        expect(byLabel.has("lbl.primary")).toBe(false);
+        for (const id of ["lbl.name", "lbl.email"]) {
+            const grantees = byLabel.get(id)!;
+            expect(grantees.map((g) => g.type).sort()).toEqual(["granularGroup", "granularUser"]);
+            expect(grantees.every((g) => g.permissions.includes("VIEW"))).toBe(true);
+        }
+        expect(result.current.state.selectedLabelIdsByGrantee["user:u2"]!.sort()).toEqual([
+            "lbl.email",
+            "lbl.name",
+            "lbl.primary",
+        ]);
+        expect(result.current.state.selectedLabelIdsByGrantee["group:g1"]!.sort()).toEqual([
+            "lbl.email",
+            "lbl.name",
+            "lbl.primary",
+        ]);
+    });
+
+    it("drops only the failed label from every added grantee on a partial batch failure", async () => {
+        const svc = makeLabelAwareService();
+        // Only the lbl.email write fails; the object grant and lbl.name succeed.
+        svc.manageObjectPermissions.mockImplementation(async (t: IObjectPermissionsObject) => {
+            if ((t.ref as { identifier: string }).identifier === "lbl.email") {
+                throw new Error("label write failed");
+            }
+            return undefined;
+        });
+        const { result } = renderController(svc, TARGET, LABELS);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+        act(() => result.current.actions.openAddGrantee());
+        act(() =>
+            result.current.actions.setPendingGrantees([
+                { id: "user:u2", kind: "user", name: "Marek", permissionLevel: "VIEW" },
+                { id: "group:g1", kind: "group", name: "Marketing", permissionLevel: "VIEW" },
+            ]),
+        );
+        await act(async () => {
+            await result.current.actions.confirmAddGrantees();
+        });
+
+        // lbl.email dropped, lbl.name + primary kept.
+        expect(addWarning).toHaveBeenCalledTimes(1);
+        expect(result.current.state.selectedLabelIdsByGrantee["user:u2"]!.sort()).toEqual([
+            "lbl.name",
+            "lbl.primary",
+        ]);
+        expect(result.current.state.selectedLabelIdsByGrantee["group:g1"]!.sort()).toEqual([
+            "lbl.name",
+            "lbl.primary",
+        ]);
+    });
+
     it("warns and drops the optimistic scope if a label grant fails on add (#E)", async () => {
         const svc = makeLabelAwareService();
         // The object add succeeds; a per-label write then fails.
@@ -1145,11 +1308,12 @@ describe("useObjectShareController", () => {
             await result.current.actions.confirmAddGrantees();
         });
 
-        // A real per-label failure surfaces (not swallowed). The grantee's scope is
-        // pinned to the primary label only — the one always granted with the object
-        // — rather than dropped (a missing entry would falsely render as all-selected).
+        // Failure surfaces; only the failed lbl.email is dropped, lbl.name + primary stay.
         expect(addWarning).toHaveBeenCalledTimes(1);
-        expect(result.current.state.selectedLabelIdsByGrantee["user:u2"]).toEqual(["lbl.primary"]);
+        expect(result.current.state.selectedLabelIdsByGrantee["user:u2"]!.sort()).toEqual([
+            "lbl.name",
+            "lbl.primary",
+        ]);
     });
 
     it("keeps the new grantee's full label scope after the add re-resolves", async () => {

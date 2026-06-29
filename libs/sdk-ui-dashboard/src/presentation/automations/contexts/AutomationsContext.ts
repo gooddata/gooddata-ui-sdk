@@ -89,6 +89,8 @@ export interface IAutomationsContextValue {
         enableExternalRecipients: boolean;
         enableAlertAttributes: boolean;
         canManageWorkspace: boolean;
+        enableCustomizableCsvDelimiter: boolean;
+        enableAutomationEvaluationMode: boolean;
     };
     getCatalogAttributeByRef: (ref: ObjRef) => ICatalogAttribute | ICatalogDateAttribute | undefined;
     getAttributeFilterDisplayForm: (displayForm: ObjRef) => IAttributeDisplayFormMetadataObject | undefined;

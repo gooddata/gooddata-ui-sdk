@@ -22,6 +22,8 @@ import {
     type IInsight,
     type INotificationChannelIdentifier,
     type INotificationChannelMetadataObject,
+    type IWidget,
+    type IWorkspaceUser,
     type WidgetAttachmentType,
     insightProperties,
     isAutomationExternalUserRecipient,
@@ -30,32 +32,15 @@ import {
     isExportDefinitionDashboardRequestPayload,
     isExportDefinitionVisualizationObjectRequestPayload,
     isInsightWidget,
-    isWidget,
-    objRefToString,
 } from "@gooddata/sdk-model";
 
 import {
     getAutomationExportParametersByTab,
     setExportParametersByTab,
 } from "../../../../../_staging/automation/index.js";
-import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
-import {
-    selectEnableAutomationEvaluationMode,
-    selectEnableExternalRecipients,
-    selectSettings,
-    selectTimezone,
-} from "../../../../../model/store/config/configSelectors.js";
-import {
-    selectAutomationCommonDateFilterId,
-    selectDashboardHiddenFilters,
-} from "../../../../../model/store/filtering/dashboardFilterSelectors.js";
 import type { IAutomationFiltersTab } from "../../../../../model/store/filtering/types.js";
-import { selectDashboardId, selectDashboardTitle } from "../../../../../model/store/meta/metaSelectors.js";
-import { selectWidgetLocalIdToTabIdMap } from "../../../../../model/store/tabs/layout/layoutSelectors.js";
-import { selectExportEffectiveParameters } from "../../../../../model/store/tabs/parameters/parametersSelectors.js";
-import { selectCurrentUser } from "../../../../../model/store/user/userSelectors.js";
-import { selectUsers } from "../../../../../model/store/users/usersSelectors.js";
-import { type ExtendedDashboardWidget } from "../../../../../model/types/layoutTypes.js";
+import { useAutomationsContext } from "../../../contexts/AutomationsContext.js";
+import { useScheduledEmailDialogContext } from "../../../contexts/ScheduledEmailDialogContext.js";
 import { shouldStoreExportParameters } from "../../../shared/automationFilters/automationParameters.js";
 import { getDefaultSelectedFiltersFromFiltersByTab } from "../../../shared/automationFilters/useAutomationFiltersSelect.js";
 import {
@@ -84,7 +69,9 @@ export interface IUseEditScheduledEmailProps {
     scheduledExportToEdit?: IAutomationMetadataObject;
     notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
     maxAutomationsRecipients: number;
-    widget?: ExtendedDashboardWidget;
+    /** Workspace users, lazy-loaded in the connector and passed via dialog props. */
+    users: IWorkspaceUser[];
+    widget?: IWidget;
     insight?: IInsight;
     widgetFilters?: IFilter[];
     editedAutomationFilters?: FilterContextItem[];
@@ -118,6 +105,7 @@ export function useEditScheduledEmail({
     notificationChannels,
     insight,
     widget,
+    users,
     editedAutomationFilters,
     dashboardFilters,
     editedAutomationFiltersByTab,
@@ -135,6 +123,20 @@ export function useEditScheduledEmail({
     availableFiltersAsVisibleFiltersByTab,
 }: IUseEditScheduledEmailProps) {
     const intl = useIntl();
+    const {
+        settings,
+        timezone,
+        currentUser,
+        features: { enableExternalRecipients: enabledExternalRecipients, enableAutomationEvaluationMode },
+    } = useAutomationsContext();
+    const {
+        dashboardId,
+        dashboardTitle,
+        hiddenFilters: dashboardHiddenFilters,
+        commonDateFilterId,
+        widgetLocalIdToTabIdMap: widgetTabMap,
+        exportParametersByTab: effectiveExportParametersByTab,
+    } = useScheduledEmailDialogContext();
     const [isCronValid, setIsCronValid] = useState(true);
     const [isTitleValid, setIsTitleValid] = useState(true);
     const [isSubjectValid, setIsSubjectValid] = useState(true);
@@ -142,29 +144,17 @@ export function useEditScheduledEmail({
     const isWidget = !!widget && !!insight;
 
     // Dashboard
-    const dashboardId = useDashboardSelector(selectDashboardId);
-    const dashboardTitle = useDashboardSelector(selectDashboardTitle);
-    const settings = useDashboardSelector(selectSettings);
-    const timezone = useDashboardSelector(selectTimezone);
     const resolvedDefaultCsvDelimiter = settings?.exportCsvCustomDelimiter ?? DEFAULT_CSV_DELIMITER;
 
     const areDashboardFiltersChanged = !!dashboardFilters;
 
-    const currentUser = useDashboardSelector(selectCurrentUser);
-    const users = useDashboardSelector(selectUsers);
     const defaultUser = convertCurrentUserToWorkspaceUser(users ?? [], currentUser);
 
     const defaultRecipient = externalRecipientOverride
         ? convertExternalRecipientToAutomationRecipient(externalRecipientOverride)
         : convertCurrentUserToAutomationRecipient(users ?? [], currentUser);
-    const enabledExternalRecipients = useDashboardSelector(selectEnableExternalRecipients);
-    const enableAutomationEvaluationMode = useDashboardSelector(selectEnableAutomationEvaluationMode);
 
     const firstChannel = notificationChannels[0]?.id;
-
-    const dashboardHiddenFilters = useDashboardSelector(selectDashboardHiddenFilters);
-    const commonDateFilterId = useDashboardSelector(selectAutomationCommonDateFilterId);
-    const widgetTabMap = useDashboardSelector(selectWidgetLocalIdToTabIdMap);
 
     // Determine target tab ID if widget is present
     const targetTabId = widget?.localIdentifier ? widgetTabMap[widget.localIdentifier] : undefined;
@@ -236,9 +226,6 @@ export function useEditScheduledEmail({
         storeFilters,
     );
 
-    const effectiveExportParametersByTab = useDashboardSelector(
-        selectExportEffectiveParameters(widget ? [objRefToString(widget.ref)] : undefined),
-    );
     // Mirrors the filters seed above, for parameters.
     const parametersByTabForNewAutomation =
         shouldStoreExportParameters(isWidget, storeFilters) &&
@@ -1080,7 +1067,7 @@ function newWidgetExportDefinitionMetadataObjectDefinition({
     defaultCsvDelimiter,
 }: {
     insight: IInsight;
-    widget: ExtendedDashboardWidget;
+    widget: IWidget;
     dashboardId: string;
     format: WidgetAttachmentType;
     widgetFilters?: IFilter[];
@@ -1090,7 +1077,7 @@ function newWidgetExportDefinitionMetadataObjectDefinition({
     defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
     defaultCsvDelimiter?: string;
 }): IExportDefinitionMetadataObjectDefinition {
-    const widgetTitle = isWidget(widget) ? widget?.title : widget?.identifier;
+    const widgetTitle = widget.title;
 
     // Determine which filters to use based on format:
     // - CSV: Use widgetFiltersWithInsight (insight filters merged on frontend)
@@ -1183,7 +1170,7 @@ function newAutomationMetadataObjectDefinition({
     notificationChannel: string;
     title?: string;
     insight?: IInsight;
-    widget?: ExtendedDashboardWidget;
+    widget?: IWidget;
     recipient: IAutomationRecipient;
     dashboardFilters?: FilterContextItem[];
     filtersByTab?: Record<string, FilterContextItem[]>;

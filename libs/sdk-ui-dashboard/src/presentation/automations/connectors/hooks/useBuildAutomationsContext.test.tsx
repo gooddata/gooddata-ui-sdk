@@ -53,11 +53,14 @@ vi.mock("../../../../model/store/catalog/catalogSelectors.js", () => ({
 }));
 
 vi.mock("../../../../model/store/config/configSelectors.js", () => ({
+    selectDateFormat: () => "MM/dd/yyyy",
     selectEnableAlertAttributes: () => false,
     selectEnableAlertOncePerInterval: () => false,
     selectEnableAnomalyDetectionAlert: () => false,
+    selectEnableAutomationEvaluationMode: () => false,
     selectEnableAutomationManagement: () => false,
     selectEnableComparisonInAlerting: () => false,
+    selectEnableCustomizableCsvDelimiter: () => false,
     selectEnableExternalRecipients: () => false,
     selectEnableNewScheduledExport: () => false,
     selectExternalRecipient: () => undefined,
@@ -67,6 +70,14 @@ vi.mock("../../../../model/store/config/configSelectors.js", () => ({
     selectSettings: () => undefined,
     selectTimezone: () => undefined,
     selectWeekStart: () => "Sunday",
+}));
+
+vi.mock("../../../../model/store/drill/drillSelectors.js", () => ({
+    selectIsCrossFiltering: () => false,
+}));
+
+vi.mock("../../../../model/store/tabs/tabsSelectors.js", () => ({
+    selectTabs: () => [],
 }));
 
 vi.mock("../../../../model/store/permissions/permissionsSelectors.js", () => ({
@@ -102,12 +113,14 @@ vi.mock("../../../../model/store/tabs/attributeFilterConfigs/attributeFilterConf
     selectAttributeFilterConfigsOverridesByTab: () => ({}),
     selectAttributeFilterConfigsSelectionTypeMap: () => new Map(),
     selectAttributeFilterConfigsSelectionTypeMapByTab: () => ({}),
+    selectEffectiveAttributeFiltersModeMap: () => new Map(),
 }));
 
 vi.mock("../../../../model/store/tabs/dateFilterConfig/dateFilterConfigSelectors.js", () => ({
     selectDateFilterConfigOverridesByTab: () => ({}),
     selectEffectiveDateFilterAvailableGranularities: () => selectors.availableGranularities,
     selectEffectiveDateFilterGranularitiesPerTab: () => selectors.granularitiesPerTab,
+    selectEffectiveDateFilterMode: () => "active",
     selectEffectiveDateFilterOptions: () => selectors.dateFilterOptions,
     selectEffectiveDateFilterOptionsPerTab: () => selectors.optionsPerTab,
 }));
@@ -115,6 +128,7 @@ vi.mock("../../../../model/store/tabs/dateFilterConfig/dateFilterConfigSelectors
 vi.mock("../../../../model/store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js", () => ({
     selectDateFilterConfigsOverrides: () => [],
     selectDateFilterConfigsOverridesByTab: () => ({}),
+    selectEffectiveDateFiltersModeMap: () => new Map(),
 }));
 
 vi.mock("../../../../model/store/tabs/filterContext/filterContextSelectors.js", () => ({
@@ -137,6 +151,10 @@ vi.mock(
         selectMeasureValueFilterConfigsOverridesByTab: () => ({}),
     }),
 );
+
+vi.mock("../../../../model/store/tabs/layout/layoutSelectors.js", () => ({
+    selectWidgetsMap: () => ({ get: () => undefined }),
+}));
 
 import { useBuildAutomationsContext } from "./useBuildAutomationsContext.js";
 

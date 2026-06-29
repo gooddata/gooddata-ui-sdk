@@ -443,9 +443,6 @@ function recordedWorkspace(
                 getSemanticSearchQuery: () => {
                     return new DummySemanticSearchQueryBuilder(workspace);
                 },
-                semanticSearchIndex: () => {
-                    throw new NotSupported("not supported");
-                },
                 getLlmConfigured(): Promise<boolean> {
                     throw new NotSupported("not supported");
                 },

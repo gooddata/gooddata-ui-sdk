@@ -546,9 +546,6 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
                 getSemanticSearchQuery(): ISemanticSearchQuery {
                     return new DummySemanticSearchQueryBuilder(workspace);
                 },
-                semanticSearchIndex(): Promise<void> {
-                    throw new NotSupported("not supported");
-                },
                 getLlmConfigured(): Promise<boolean> {
                     throw new NotSupported("not supported");
                 },

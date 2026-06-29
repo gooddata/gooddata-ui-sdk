@@ -7600,7 +7600,7 @@ export interface IScheduledEmailDialogProps {
     scheduledExportToEdit?: IAutomationMetadataObject;
     users: IWorkspaceUser[];
     usersError?: GoodDataSdkError;
-    widget?: ExtendedDashboardWidget;
+    widget?: IWidget;
     widgetFilters?: IFilter[];
 }
 

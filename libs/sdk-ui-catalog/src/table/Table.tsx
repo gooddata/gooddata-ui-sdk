@@ -29,6 +29,8 @@ const tableWidth = 1100;
 export interface ITableProps {
     status: AsyncStatus;
     items: ICatalogItem[];
+    relatedItems: ICatalogItem[];
+    relatedItemsStatus: AsyncStatus;
     totalCount: number;
     next: () => Promise<void>;
     hasNext: boolean;
@@ -36,7 +38,17 @@ export interface ITableProps {
     onItemClick?: (item: ICatalogItem) => void;
 }
 
-export function Table({ items, status, next, hasNext, totalCount, onTagClick, onItemClick }: ITableProps) {
+export function Table({
+    items,
+    status,
+    next,
+    hasNext,
+    totalCount,
+    relatedItemsStatus,
+    relatedItems,
+    onTagClick,
+    onItemClick,
+}: ITableProps) {
     const intl = useIntl();
     const { searchTerm } = useFullTextSearchState();
     const { ref, height, width } = useElementSize<HTMLDivElement>();
@@ -53,9 +65,15 @@ export function Table({ items, status, next, hasNext, totalCount, onTagClick, on
     }, [intl, onTagClick, availableWidth]);
 
     const isLoading = status === "loading" || status === "idle";
+    const isRelatedLoading = relatedItemsStatus === "loading";
     const isSearching = searchTerm.length > 0;
-    const effectiveItems = useMemo(() => items.map((item) => ({ ...item, id: item.identifier })), [items]);
-    const skeletonItemsCount = isLoading ? 3 : totalCount - items.length;
+    const effectiveItems = useMemo(
+        () => [...items, ...relatedItems].map((item) => ({ ...item, id: item.identifier })),
+        [items, relatedItems],
+    );
+    const skeletonItemsCount = isLoading
+        ? 3
+        : totalCount - effectiveItems.length + (isRelatedLoading ? 3 : 0);
     const announcedTotalResults = isSearching && status === "success" ? totalCount : undefined;
 
     if (status === "error") {
@@ -82,7 +100,7 @@ export function Table({ items, status, next, hasNext, totalCount, onTagClick, on
                     void next();
                 }}
                 maxHeight={height - UiAsyncTableRowHeightNormal}
-                isLoading={isLoading}
+                isLoading={isLoading || (items.length === 0 && isRelatedLoading)}
                 //events
                 onItemClick={onItemClick}
                 //renderers

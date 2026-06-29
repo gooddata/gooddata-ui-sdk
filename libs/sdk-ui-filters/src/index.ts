@@ -116,6 +116,8 @@ export type {
     IMeasureDropdownItem,
     IAttributeDropdownItem,
     ICustomGranularitySelection,
+    IRankingMeasureDropdownBodyRenderProps,
+    RenderMeasureDropdownBody,
 } from "./RankingFilter/types.js";
 
 export type {

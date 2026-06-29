@@ -113,7 +113,7 @@ jobs:
           RUNNERS_COUNT: ${{ needs.e2e-prepare-matrix.outputs.count }}
           USER_FILTER: ${{ inputs.filter }}
       - name: Archive the test artifacts
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v7.0.1
         if: ${{ !cancelled() }}
         with:
           name: e2e-sdk-${{matrix.runner}}

@@ -3,14 +3,24 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import type { IObjectPermissionsObject } from "@gooddata/sdk-backend-spi";
-import { type IGranularAccessGrantee, type ObjRef, objRefToString } from "@gooddata/sdk-model";
+import {
+    type IAvailableAccessGrantee,
+    type IGranularAccessGrantee,
+    type ObjRef,
+    objRefToString,
+} from "@gooddata/sdk-model";
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { type GeneralAccessValue, type IUiGranteeAsyncOptions, useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { isPermissionsNotAvailable } from "./accessErrors.js";
 import { deriveGeneralAccess, deriveWorkspacePermissionLevel } from "./accessSummary.js";
 import { objectShareMessages } from "./messages.js";
-import { assigneeMatchesQuery, granteeId, granteesFromAccessList } from "./objectShareController.helpers.js";
+import {
+    assigneeMatchesQuery,
+    granteeId,
+    granteeNameUnresolved,
+    granteesFromAccessList,
+} from "./objectShareController.helpers.js";
 import type { IObjectShareControllerState, IObjectShareGrantee } from "./objectShareController.types.js";
 import type { IObjectAccessSummary } from "./types.js";
 
@@ -105,6 +115,32 @@ export function useAccessList(
 
     const targetKey = target ? objRefToString(target.ref) : undefined;
 
+    // Learn each assignee's real name + ref into the caches, keyed by the same
+    // grantee id the rows use. Written from both the picker (loadOptions) and the
+    // eager resolve below, so a granted row can show a human name even when its
+    // access-list grant carried only a raw id. Must not depend on the caches it
+    // writes, or it would re-trigger loadOptions' fetch.
+    const cacheAssignees = useCallback((assignees: IAvailableAccessGrantee[]) => {
+        const withIds = assignees.map((a) => ({
+            assignee: a,
+            id: granteeId(a.type === "user" ? "user" : "group", a.ref),
+        }));
+        setKnownNames((prev) => {
+            const next = { ...prev };
+            for (const { assignee, id } of withIds) {
+                next[id] = assignee.name;
+            }
+            return next;
+        });
+        setKnownRefs((prev) => {
+            const next = { ...prev };
+            for (const { assignee, id } of withIds) {
+                next[id] = assignee.ref;
+            }
+            return next;
+        });
+    }, []);
+
     // Initial (and target-change) load. Seeds local state once per target; thereafter
     // local state is authoritative and mutations write through it.
     const {
@@ -158,10 +194,34 @@ export function useAccessList(
             hasList
                 ? grantees.map((g) => {
                       const known = knownNames[g.id];
-                      return known && g.name === objRefToString(g.granteeRef) ? { ...g, name: known } : g;
+                      return known && granteeNameUnresolved(g) ? { ...g, name: known } : g;
                   })
                 : [],
         [hasList, grantees, knownNames],
+    );
+
+    // Eagerly resolve display names when a fetched grant carried only a raw id.
+    // The permissions endpoint returns grants without user/group names, so after a
+    // page reload a row would show the raw id until the picker is opened. Fetch the
+    // available assignees (the same source the picker uses) to fill the name cache,
+    // but only when something is actually unresolved — a backend that does return
+    // names skips the extra request entirely. Keyed on the serialized targetKey, not
+    // the target object, so an inline-ref consumer re-rendering mid-fetch doesn't
+    // cancel it. Once the cache lands, `needsNameResolve` flips false and the promise
+    // is withdrawn, so it never refetches — an id the listing can't name just stays.
+    const needsNameResolve = hasList && grantees.some((g) => granteeNameUnresolved(g) && !knownNames[g.id]);
+    useCancelablePromise<IAvailableAccessGrantee[]>(
+        {
+            promise:
+                target && needsNameResolve
+                    ? () => backend.workspace(workspace).objectPermissions().getAvailableAssignees(target)
+                    : undefined,
+            onSuccess: cacheAssignees,
+            // Best-effort backfill: on error the raw id stays (pre-fix behavior, no
+            // regression) and the picker can still resolve it on demand. No toast.
+            onError: () => {},
+        },
+        [backend, workspace, targetKey, needsNameResolve],
     );
 
     // Stable sorted key of the currently-granted ids — drives the picker's
@@ -251,21 +311,8 @@ export function useAccessList(
             }));
             // Remember every assignee's real name + ref so granted rows can show them
             // even when the access-list grant later returns only a raw id. Safe here:
-            // neither is a dependency of loadOptions, so this won't re-trigger it.
-            setKnownNames((prev) => {
-                const next = { ...prev };
-                for (const { assignee, id } of withIds) {
-                    next[id] = assignee.name;
-                }
-                return next;
-            });
-            setKnownRefs((prev) => {
-                const next = { ...prev };
-                for (const { assignee, id } of withIds) {
-                    next[id] = assignee.ref;
-                }
-                return next;
-            });
+            // the caches aren't dependencies of loadOptions, so this won't re-trigger it.
+            cacheAssignees(assignees);
             const excluded = new Set(excludedIdsKey ? excludedIdsKey.split(",") : []);
             const selectable = withIds
                 .filter(({ id }) => !excluded.has(id)) // hide anyone already granted
@@ -285,7 +332,7 @@ export function useAccessList(
                     .map(({ assignee, id }) => ({ id, kind: "group" as const, name: assignee.name })),
             };
         },
-        [backend, workspace, target, excludedIdsKey],
+        [backend, workspace, target, excludedIdsKey, cacheAssignees],
     );
 
     // Reuse the picker's original ref (preserves UriRef vs IdentifierRef);

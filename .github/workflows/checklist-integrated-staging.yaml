@@ -123,7 +123,7 @@ jobs:
         steps:
             - name: Decide whether the needed jobs succeeded or failed
               id: alls-green
-              uses: re-actors/alls-green@release/v1
+              uses: re-actors/alls-green@v1.2.2
               with:
                   allowed-skips: checklist-SDK, checklist-export, checklist-boiler-app
                   jobs: ${{ toJSON(needs) }}

@@ -1,9 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import {
-    ActionsApi_MetadataSync,
-    ActionsApi_ResolveLlmProviders,
-} from "@gooddata/api-client-tiger/endpoints/actions";
+import { ActionsApi_ResolveLlmProviders } from "@gooddata/api-client-tiger/endpoints/actions";
 import {
     type GenAiApiSummarizeRequest,
     GenAiApi_SummarizeDashboard,
@@ -49,14 +46,6 @@ export class GenAIService implements IGenAIService {
 
     getSemanticSearchQuery(): ISemanticSearchQuery {
         return new SemanticSearchQuery(this.authCall, this.workspaceId);
-    }
-
-    async semanticSearchIndex(): Promise<void> {
-        await this.authCall((client) =>
-            ActionsApi_MetadataSync(client.axios, client.basePath, {
-                workspaceId: this.workspaceId,
-            }),
-        );
     }
 
     async getLlmConfigured(): Promise<boolean> {

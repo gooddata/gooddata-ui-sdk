@@ -22,6 +22,7 @@ import {
     type IAttributeDropdownItem,
     type ICustomGranularitySelection,
     type IMeasureDropdownItem,
+    type RenderMeasureDropdownBody,
 } from "./types.js";
 import { ValueDropdown } from "./ValueDropdown/ValueDropdown.js";
 
@@ -73,6 +74,7 @@ interface IRankingFilterDropdownBodyComponentProps {
     customGranularitySelection?: ICustomGranularitySelection;
     enableRankingWithMvf?: boolean;
     enableRankingStrictLimit?: boolean;
+    renderMeasureDropdownBody?: RenderMeasureDropdownBody;
 }
 
 export function RankingFilterDropdownBody({
@@ -86,6 +88,7 @@ export function RankingFilterDropdownBody({
     customGranularitySelection,
     enableRankingWithMvf = false,
     enableRankingStrictLimit = false,
+    renderMeasureDropdownBody,
 }: IRankingFilterDropdownBodyComponentProps) {
     const intl = useIntl();
 
@@ -201,6 +204,7 @@ export function RankingFilterDropdownBody({
                     onSelect={setMeasureIdentifier}
                     onDropDownItemMouseOver={onDropDownItemMouseOver}
                     onDropDownItemMouseOut={onDropDownItemMouseOut}
+                    renderMeasureDropdownBody={renderMeasureDropdownBody}
                 />
                 {enableRankingWithMvf ? (
                     <div className="gd-rf-apply-on-result">

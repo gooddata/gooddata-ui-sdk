@@ -260,7 +260,16 @@ export interface IMeasureValueFilter {
 export type RankingFilterOperator = "TOP" | "BOTTOM";
 
 export interface IRankingFilter {
-    measure: string;
+    /**
+     * Local identifier of the ranked measure when it is present in the buckets. Absent for a catalog
+     * ranking filter, which references the measure by {@link IRankingFilter.measureRef} instead.
+     */
+    measure?: string;
+    /**
+     * Object reference to the ranked measure when it is NOT in the buckets (a catalog metric picked
+     * for ranking). Mirrors {@link IMeasureValueFilter.measureRef}.
+     */
+    measureRef?: ObjRef;
     attributes?: string[];
     operator: RankingFilterOperator;
     value: number;

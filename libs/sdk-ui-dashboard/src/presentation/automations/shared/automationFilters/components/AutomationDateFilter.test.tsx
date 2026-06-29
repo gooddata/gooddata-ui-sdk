@@ -84,6 +84,8 @@ function createAutomationsContextValue(
             enableExternalRecipients: false,
             enableAlertAttributes: false,
             canManageWorkspace: false,
+            enableCustomizableCsvDelimiter: false,
+            enableAutomationEvaluationMode: false,
         },
         getCatalogAttributeByRef: () => undefined,
         getAttributeFilterDisplayForm: () => undefined,

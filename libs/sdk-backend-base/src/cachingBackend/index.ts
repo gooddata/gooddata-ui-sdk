@@ -33,6 +33,7 @@ import {
     type IGetAutomationOptions,
     type IGetAutomationsOptions,
     type IGetAutomationsQueryOptions,
+    type IGetInsightOptions,
     type IOrganizationExportTemplatesService,
     type IOutliersConfig,
     type IOutliersResult,
@@ -45,6 +46,7 @@ import {
     type IWorkspaceCatalog,
     type IWorkspaceCatalogFactory,
     type IWorkspaceCatalogFactoryOptions,
+    type IWorkspaceInsightsService,
     type IWorkspaceSettings,
     type IWorkspaceSettingsService,
     type ValidationContext,
@@ -64,12 +66,15 @@ import {
     type IExportTemplate,
     type IFiscalYear,
     type IGeoJsonFeature,
+    type IInsight,
+    type IInsightDefinition,
     type IMeasure,
     type IMeasureDefinitionType,
     type IMetadataObject,
     type IMetadataObjectBase,
     type IMetadataObjectIdentity,
     type IMetricFormatOverrideSetting,
+    type IObjectCertificationWrite,
     type IRelativeDateFilter,
     type ISeparators,
     type ObjRef,
@@ -98,6 +103,7 @@ import {
     type PreparedExecutionWrapper,
 } from "../decoratedBackend/execution.js";
 import { decoratedBackend } from "../decoratedBackend/index.js";
+import { DecoratedWorkspaceInsightsService } from "../decoratedBackend/insights.js";
 import { DecoratedOrganizationExportTemplatesService } from "../decoratedBackend/organizationExportTemplates.js";
 import { DecoratedSecuritySettingsService } from "../decoratedBackend/securitySettings.js";
 import {
@@ -106,6 +112,7 @@ import {
     type CatalogDecoratorFactory,
     type ExecutionDecoratorFactory,
     type GeoDecoratorFactory,
+    type InsightsDecoratorFactory,
     type OrganizationExportTemplatesDecoratorFactory,
     type SecuritySettingsDecoratorFactory,
     type WorkspaceSettingsDecoratorFactory,
@@ -141,6 +148,10 @@ type AutomationCacheEntry = {
     queries: LRUCache<string, Promise<IAutomationsQueryResult>>;
 };
 
+type InsightsCacheEntry = {
+    insights: LRUCache<string, Promise<IInsight>>;
+};
+
 type CollectionItemsCacheEntry = {
     values: LRUCache<string, IGeoJsonFeature[]>;
     bbox?: number[];
@@ -167,6 +178,7 @@ type CachingContext = {
         securitySettings?: LRUCache<string, SecuritySettingsCacheEntry>;
         workspaceAttributes?: LRUCache<string, AttributeCacheEntry>;
         workspaceAutomations?: LRUCache<string, AutomationCacheEntry>;
+        workspaceInsights?: LRUCache<string, InsightsCacheEntry>;
         organizationExportTemplates?: LRUCache<string, Promise<IExportTemplate[]>>;
         workspaceSettings?: LRUCache<string, WorkspaceSettingsCacheEntry>;
         geo?: GeoCacheEntry;
@@ -1689,6 +1701,114 @@ class WithAutomationsCaching extends DecoratedWorkspaceAutomationsService {
 }
 
 //
+// INSIGHTS CACHING
+//
+
+function insightCacheKey(ref: ObjRef, options?: IGetInsightOptions): string {
+    const fingerprint = stringify(options ?? {}) || "undefined";
+    return new SparkMD5().append(objRefToString(ref)).append(fingerprint).end();
+}
+
+function getOrCreateInsightsCache(ctx: CachingContext, workspace: string): InsightsCacheEntry {
+    const cache = ctx.caches.workspaceInsights!;
+    let cacheEntry = cache.get(workspace);
+
+    if (!cacheEntry) {
+        cacheEntry = {
+            insights: new LRUCache<string, Promise<IInsight>>({
+                max: ctx.config.maxInsightsPerWorkspace!,
+            }),
+        };
+        cache.set(workspace, cacheEntry);
+    }
+
+    return cacheEntry;
+}
+
+class WithInsightsCaching extends DecoratedWorkspaceInsightsService {
+    constructor(
+        decorated: IWorkspaceInsightsService,
+        private readonly ctx: CachingContext,
+        workspace: string,
+    ) {
+        super(decorated, workspace);
+    }
+
+    public override getInsight = (ref: ObjRef, options?: IGetInsightOptions): Promise<IInsight> => {
+        const cache = getOrCreateInsightsCache(this.ctx, this.workspace).insights;
+        const cacheKey = insightCacheKey(ref, options);
+
+        let insight = cache.get(cacheKey);
+
+        if (!insight) {
+            insight = this.decorated.getInsight(ref, options).catch((e) => {
+                cache.delete(cacheKey);
+                throw e;
+            });
+
+            cache.set(cacheKey, insight);
+        }
+
+        return insight;
+    };
+
+    // Insight mutations are not cached, but they must invalidate the read cache so that edits
+    // made during a session are never served stale (the SDK has no separate invalidation signal).
+    public override async createInsight(insight: IInsightDefinition): Promise<IInsight> {
+        try {
+            return await super.createInsight(insight);
+        } finally {
+            this.invalidateCache();
+        }
+    }
+
+    public override async updateInsight(insight: IInsight): Promise<IInsight> {
+        try {
+            return await super.updateInsight(insight);
+        } finally {
+            this.invalidateCache();
+        }
+    }
+
+    public override async updateInsightMeta(
+        insight: Partial<IMetadataObjectBase> & IMetadataObjectIdentity,
+    ): Promise<IInsight> {
+        try {
+            return await super.updateInsightMeta(insight);
+        } finally {
+            this.invalidateCache();
+        }
+    }
+
+    public override async setCertification(
+        ref: ObjRef,
+        certification?: IObjectCertificationWrite,
+    ): Promise<void> {
+        try {
+            await super.setCertification(ref, certification);
+        } finally {
+            this.invalidateCache();
+        }
+    }
+
+    public override async deleteInsight(ref: ObjRef): Promise<void> {
+        try {
+            await super.deleteInsight(ref);
+        } finally {
+            this.invalidateCache();
+        }
+    }
+
+    private invalidateCache = (): void => {
+        getOrCreateInsightsCache(this.ctx, this.workspace).insights.clear();
+    };
+}
+
+function cachedInsights(ctx: CachingContext): InsightsDecoratorFactory {
+    return (original, workspace) => new WithInsightsCaching(original, ctx, workspace);
+}
+
+//
 // ORGANIZATION EXPORT TEMPLATES CACHING
 //
 
@@ -1910,6 +2030,10 @@ function cacheControl(ctx: CachingContext): CacheControl {
             ctx.caches.organizationExportTemplates?.clear();
         },
 
+        resetInsights: () => {
+            ctx.caches.workspaceInsights?.clear();
+        },
+
         resetAll: () => {
             control.resetExecutions();
             control.resetCatalogs();
@@ -1918,6 +2042,7 @@ function cacheControl(ctx: CachingContext): CacheControl {
             control.resetWorkspaceSettings();
             control.resetGeoStyles();
             control.resetExportTemplates();
+            control.resetInsights();
         },
     };
 
@@ -1972,6 +2097,11 @@ export type CacheControl = {
      * Resets the export templates cache.
      */
     resetExportTemplates: () => void;
+
+    /**
+     * Resets all workspace insight caches.
+     */
+    resetInsights: () => void;
 
     /**
      * Convenience method to reset all caches (calls all the particular resets).
@@ -2151,6 +2281,22 @@ export type CachingConfiguration = {
     maxAutomationsWorkspaces?: number;
 
     /**
+     * Maximum number of insights to cache per workspace.
+     *
+     * Only the read-only, idempotent {@link @gooddata/sdk-backend-spi#IWorkspaceInsightsService.getInsight}
+     * call is cached. The insight reference (plus any options that change the response) is used as cache key.
+     * This mainly serves to de-duplicate in-flight requests so that concurrent dashboard widgets referencing
+     * the same insight share a single network request.
+     *
+     * When limit is reached, cache entries will be evicted using LRU policy.
+     *
+     * When no maximum number is specified, the cache will be unbounded and no evictions will happen.
+     *
+     * When non-positive number is specified, then no caching of insights will be done.
+     */
+    maxInsightsPerWorkspace?: number;
+
+    /**
      * Maximum number of organizations for which to cache export templates.
      * Export templates are organization-level, so typically a single entry suffices.
      *
@@ -2265,6 +2411,7 @@ export const RecommendedCachingConfiguration: CachingConfiguration = {
     maxAttributeElementResultsPerWorkspace: 100,
     maxWorkspaceSettings: 1,
     maxAutomationsWorkspaces: 1,
+    maxInsightsPerWorkspace: 50,
     maxExportTemplatesOrgs: 1,
     cacheGeoStyles: true,
 };
@@ -2295,6 +2442,7 @@ export function withCaching(
     const attributeCaching = cachingEnabled(config.maxAttributeWorkspaces);
     const workspaceSettingsCaching = cachingEnabled(config.maxWorkspaceSettings);
     const automationsCaching = cachingEnabled(config.maxAutomationsWorkspaces);
+    const insightsCaching = cachingEnabled(config.maxInsightsPerWorkspace);
     // Accept both the new and deprecated config names for backward compatibility
     const exportTemplatesMaxOrgs = config.maxExportTemplatesOrgs ?? config.maxExportTemplatesWorkspaces;
     const exportTemplatesCaching = cachingEnabled(exportTemplatesMaxOrgs);
@@ -2321,6 +2469,9 @@ export function withCaching(
             workspaceAutomations: automationsCaching
                 ? new LRUCache({ max: config.maxAutomationsWorkspaces! })
                 : undefined,
+            workspaceInsights: insightsCaching
+                ? new LRUCache({ max: config.maxInsightsPerWorkspace! })
+                : undefined,
             organizationExportTemplates: exportTemplatesCaching
                 ? new LRUCache({ max: exportTemplatesMaxOrgs! })
                 : undefined,
@@ -2340,6 +2491,7 @@ export function withCaching(
     const securitySettings = securitySettingsCaching ? cachedSecuritySettings(ctx) : (v: any) => v;
     const attributes = attributeCaching ? cachedAttributes(ctx) : (v: any) => v;
     const automations = automationsCaching ? cachedAutomations(ctx) : (v: any) => v;
+    const insights = insightsCaching ? cachedInsights(ctx) : (v: any) => v;
     const organizationExportTemplates = exportTemplatesCaching
         ? cachedOrganizationExportTemplates(ctx)
         : undefined;
@@ -2357,6 +2509,7 @@ export function withCaching(
         attributes,
         workspaceSettings,
         automations,
+        insights,
         organizationExportTemplates,
         geo,
     });

@@ -1189,6 +1189,7 @@ export {
 export { DomainHomepageLink, type IDomainHomepageLinkProps } from "./Header/HomepageLink.js";
 
 export { CatalogItemPicker } from "./CatalogItemPicker/CatalogItemPicker.js";
+export { CatalogItemPickerContent } from "./CatalogItemPicker/CatalogItemPickerContent.js";
 
 export type {
     CatalogItemPickerSelectionMode,

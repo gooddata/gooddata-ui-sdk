@@ -31,33 +31,10 @@ import {
     useIdPrefixed,
 } from "@gooddata/sdk-ui-kit";
 
-import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
-import { useExportTemplates } from "../../../../model/react/useExportTemplates.js";
-import {
-    selectDateFormat,
-    selectEnableAutomationManagement,
-    selectEnableCustomizableCsvDelimiter,
-    selectEnableNewScheduledExport,
-    selectExternalRecipient,
-    selectIsWhiteLabeled,
-    selectLocale,
-    selectSettings,
-    selectWeekStart,
-} from "../../../../model/store/config/configSelectors.js";
-import { selectIsCrossFiltering } from "../../../../model/store/drill/drillSelectors.js";
-import {
-    selectEntitlementMinimumRecurrenceMinutes,
-    selectMaxAutomationRecipients,
-} from "../../../../model/store/entitlements/entitlementsSelectors.js";
-import { selectDashboardTitle } from "../../../../model/store/meta/metaSelectors.js";
-import { selectTabs } from "../../../../model/store/tabs/tabsSelectors.js";
-import { selectIsAutomationDialogSecondaryTitleVisible } from "../../../../model/store/topBar/topBarSelectors.js";
-import { selectExecutionTimestamp } from "../../../../model/store/ui/uiSelectors.js";
-import { getWidgetTitle } from "../../../../model/utils/dashboardItemUtils.js";
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../../constants/zIndex.js";
 import { IntlWrapper } from "../../../localization/IntlWrapper.js";
-import { useBuildAutomationsContext } from "../../connectors/hooks/useBuildAutomationsContext.js";
-import { AutomationsContextProvider } from "../../contexts/AutomationsContext.js";
+import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
+import { useScheduledEmailDialogContext } from "../../contexts/ScheduledEmailDialogContext.js";
 import { ApplyCurrentFiltersConfirmDialog } from "../../shared/automationFilters/components/ApplyLatestFiltersConfirmDialog.js";
 import { AutomationFiltersSelect } from "../../shared/automationFilters/components/AutomationFiltersSelect.js";
 import { useValidateExistingAutomationFilters } from "../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
@@ -83,8 +60,6 @@ import { SCHEDULED_EMAIL_DIALOG_ID } from "./constants.js";
 import { DefaultLoadingScheduledEmailDialog } from "./DefaultLoadingScheduledEmailDialog.js";
 import { useEditScheduledEmail } from "./hooks/useEditScheduledEmail.js";
 import { useSaveScheduledEmailToBackend } from "./hooks/useSaveScheduledEmailToBackend.js";
-
-const DEFAULT_MIN_RECURRENCE_MINUTES = "60";
 
 const OVERLAY_POSITION_TYPE = "sameAsTarget";
 const CLOSE_ON_PARENT_SCROLL = true;
@@ -162,13 +137,13 @@ export function ScheduledMailDialogRenderer({
     const [selectedTabId, setSelectedTabId] = useState<"general" | "filters">("general");
     const [tabContentHeight, setTabContentHeight] = useState<number | undefined>(undefined);
 
-    const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
-    const externalRecipientOverride = useDashboardSelector(selectExternalRecipient);
-    const isSecondaryTitleVisible = useDashboardSelector(selectIsAutomationDialogSecondaryTitleVisible);
-    const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
-    const dashboardTabs = useDashboardSelector(selectTabs);
-    const hasMultipleTabs = (dashboardTabs?.length ?? 0) > 1;
-    const exportTemplates = useExportTemplates();
+    const {
+        isWhiteLabeled,
+        externalRecipient: externalRecipientOverride,
+        isSecondaryTitleVisible,
+        features: { enableAutomationManagement },
+    } = useAutomationsContext();
+    const { exportTemplates, widgetTitle, hasMultipleTabs } = useScheduledEmailDialogContext();
 
     const handleScheduleDeleteSuccess = () => {
         onDeleteSuccess?.();
@@ -247,6 +222,7 @@ export function ScheduledMailDialogRenderer({
         notificationChannels,
         insight,
         widget,
+        users,
         scheduledExportToEdit,
         storeFilters,
         editedAutomationFilters,
@@ -349,7 +325,7 @@ export function ScheduledMailDialogRenderer({
     const { secondaryTitle, secondaryTitleIcon } = useMemo(() => {
         if (widget) {
             return {
-                secondaryTitle: getWidgetTitle(widget),
+                secondaryTitle: widgetTitle,
                 secondaryTitleIcon: (
                     <UiIcon
                         type="visualization"
@@ -379,7 +355,7 @@ export function ScheduledMailDialogRenderer({
                 />
             ),
         };
-    }, [widget, dashboardTitle, intl]);
+    }, [widget, widgetTitle, dashboardTitle, intl]);
 
     const tabs: IUiTab[] = useMemo(
         () => [
@@ -753,36 +729,28 @@ export function DefaultScheduledEmailDialog(props: IScheduledEmailDialogProps) {
 }
 
 function DefaultScheduledEmailDialogBody(props: IScheduledEmailDialogProps) {
-    const locale = useDashboardSelector(selectLocale);
-    const automationsContext = useBuildAutomationsContext();
+    const { locale } = useAutomationsContext();
 
     return (
-        <AutomationsContextProvider value={automationsContext}>
-            <IntlWrapper locale={locale}>
-                <ScheduledMailDialogRenderer {...props} />
-            </IntlWrapper>
-        </AutomationsContextProvider>
+        <IntlWrapper locale={locale}>
+            <ScheduledMailDialogRenderer {...props} />
+        </IntlWrapper>
     );
 }
 
 function useDefaultScheduledEmailDialogData() {
-    const locale = useDashboardSelector(selectLocale);
-    const dashboardTitle = useDashboardSelector(selectDashboardTitle);
-    const dateFormat = useDashboardSelector(selectDateFormat);
-    const settings = useDashboardSelector(selectSettings);
+    const {
+        locale,
+        settings,
+        weekStart,
+        maxAutomationsRecipients,
+        allowHourlyRecurrence,
+        isExecutionTimestampMode,
+        enableNewScheduledExport,
+        features: { enableCustomizableCsvDelimiter },
+    } = useAutomationsContext();
+    const { dashboardTitle, dateFormat, isCrossFiltering } = useScheduledEmailDialogContext();
     const formatLocale = settings?.formatLocale;
-    const weekStart = useDashboardSelector(selectWeekStart);
-    const maxAutomationsRecipients = useDashboardSelector(selectMaxAutomationRecipients);
-    const minimumRecurrenceMinutesEntitlement = useDashboardSelector(
-        selectEntitlementMinimumRecurrenceMinutes,
-    );
-    const allowHourlyRecurrence =
-        parseInt(minimumRecurrenceMinutesEntitlement?.value ?? DEFAULT_MIN_RECURRENCE_MINUTES, 10) === 60;
-
-    const isCrossFiltering = useDashboardSelector(selectIsCrossFiltering);
-    const isExecutionTimestampMode = !!useDashboardSelector(selectExecutionTimestamp);
-    const enableNewScheduledExport = useDashboardSelector(selectEnableNewScheduledExport);
-    const enableCustomizableCsvDelimiter = useDashboardSelector(selectEnableCustomizableCsvDelimiter);
 
     const defaultPdfPageSize = getDefaultPdfPageSize(formatLocale);
 

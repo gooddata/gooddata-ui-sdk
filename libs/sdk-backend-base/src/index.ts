@@ -32,6 +32,7 @@ export type {
     WorkspaceSettingsDecoratorFactory,
     AutomationsDecoratorFactory,
     AttributesDecoratorFactory,
+    InsightsDecoratorFactory,
     DashboardsDecoratorFactory,
     GeoDecoratorFactory,
     OrganizationExportTemplatesDecoratorFactory,
@@ -45,6 +46,8 @@ export {
 } from "./decoratedBackend/execution.js";
 
 export { DecoratedWorkspaceDashboardsService } from "./decoratedBackend/dashboards.js";
+
+export { DecoratedWorkspaceInsightsService } from "./decoratedBackend/insights.js";
 
 export {
     type WorkspaceCatalogWrapper,

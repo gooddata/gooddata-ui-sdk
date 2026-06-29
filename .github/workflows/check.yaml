@@ -41,7 +41,7 @@ jobs:
             - build-validate-stage
         steps:
             - name: Check if needed jobs succeeded
-              uses: re-actors/alls-green@release/v1
+              uses: re-actors/alls-green@v1.2.2
               with:
                   jobs: ${{ toJSON(needs) }}
 

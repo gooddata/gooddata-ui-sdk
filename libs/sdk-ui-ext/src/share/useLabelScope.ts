@@ -9,6 +9,7 @@ import { isPermissionsNotAvailable } from "./accessErrors.js";
 import {
     type LabelScopePrincipal,
     buildLabelMutations,
+    buildLabelMutationsForPrincipals,
     isGranteeGrantedIn,
 } from "./objectShareController.helpers.js";
 import type { IObjectShareLabel } from "./types.js";
@@ -50,6 +51,17 @@ export interface ILabelScope {
         desiredLabelIds: ReadonlySet<string>,
         currentLabelIds: ReadonlySet<string>,
     ) => Promise<boolean>;
+    /**
+     * Multi-principal {@link reconcileLabelScope}: one `manageObjectPermissions`
+     * per label carrying all principals that change on it (used by Add). Reports
+     * `failedLabelIds` so the caller can keep the labels that landed rather than
+     * discard the whole scope on a partial failure.
+     */
+    reconcileLabelScopeMany: (
+        principals: LabelScopePrincipal[],
+        desiredLabelIds: ReadonlySet<string>,
+        currentLabelIds: ReadonlySet<string>,
+    ) => Promise<{ ok: boolean; failedLabelIds: string[] }>;
 }
 
 /**
@@ -235,11 +247,39 @@ export function useLabelScope(
         [effectiveLabels, backend, workspace],
     );
 
+    const reconcileLabelScopeMany = useCallback(
+        async (
+            principals: LabelScopePrincipal[],
+            desiredLabelIds: ReadonlySet<string>,
+            currentLabelIds: ReadonlySet<string>,
+        ): Promise<{ ok: boolean; failedLabelIds: string[] }> => {
+            const writes = buildLabelMutationsForPrincipals(
+                principals,
+                desiredLabelIds,
+                currentLabelIds,
+                effectiveLabels,
+            );
+            if (writes.length === 0) {
+                return { ok: true, failedLabelIds: [] };
+            }
+            const svc = backend.workspace(workspace).objectPermissions();
+            const results = await Promise.allSettled(
+                writes.map((w) => svc.manageObjectPermissions({ kind: "label", ref: w.ref }, w.grantees)),
+            );
+            const failedLabelIds = writes
+                .filter((_, i) => results[i]!.status === "rejected")
+                .map((w) => w.id);
+            return { ok: failedLabelIds.length === 0, failedLabelIds };
+        },
+        [effectiveLabels, backend, workspace],
+    );
+
     return {
         effectiveLabels,
         labelsResolved,
         selectedLabelIdsByGrantee,
         setSelectedLabelIdsByGrantee,
         reconcileLabelScope,
+        reconcileLabelScopeMany,
     };
 }

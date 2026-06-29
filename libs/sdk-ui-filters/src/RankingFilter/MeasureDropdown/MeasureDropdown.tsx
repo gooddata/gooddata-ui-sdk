@@ -7,7 +7,7 @@ import cx from "classnames";
 import { type ObjRefInScope, areObjRefsEqual } from "@gooddata/sdk-model";
 import { Button } from "@gooddata/sdk-ui-kit";
 
-import { type IMeasureDropdownItem } from "../types.js";
+import { type IMeasureDropdownItem, type RenderMeasureDropdownBody } from "../types.js";
 
 import { MeasureDropdownBody } from "./MeasureDropdownBody.js";
 
@@ -17,6 +17,11 @@ interface IMeasureDropdownProps {
     onSelect: (ref: ObjRefInScope) => void;
     onDropDownItemMouseOver?: (ref: ObjRefInScope) => void;
     onDropDownItemMouseOut?: () => void;
+    /**
+     * Optional custom renderer for the dropdown body. When provided, it replaces the built-in flat
+     * measure list (the anchor button is kept).
+     */
+    renderMeasureDropdownBody?: RenderMeasureDropdownBody;
 }
 
 export function MeasureDropdown({
@@ -25,6 +30,7 @@ export function MeasureDropdown({
     onSelect,
     onDropDownItemMouseOver,
     onDropDownItemMouseOut,
+    renderMeasureDropdownBody,
 }: IMeasureDropdownProps) {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -62,16 +68,22 @@ export function MeasureDropdown({
                 onClick={onButtonClick}
                 iconLeft={"gd-icon-metric"}
             />
-            {isOpen ? (
-                <MeasureDropdownBody
-                    items={items}
-                    selectedItemRef={selectedItemRef}
-                    onSelect={onItemSelect}
-                    onClose={() => setIsOpen(false)}
-                    onDropDownItemMouseOver={onDropDownItemMouseOver}
-                    onDropDownItemMouseOut={onDropDownItemMouseOut}
-                />
-            ) : null}
+            {isOpen
+                ? (renderMeasureDropdownBody?.({
+                      selectedItemRef,
+                      onSelect: onItemSelect,
+                      onClose: () => setIsOpen(false),
+                  }) ?? (
+                      <MeasureDropdownBody
+                          items={items}
+                          selectedItemRef={selectedItemRef}
+                          onSelect={onItemSelect}
+                          onClose={() => setIsOpen(false)}
+                          onDropDownItemMouseOver={onDropDownItemMouseOver}
+                          onDropDownItemMouseOut={onDropDownItemMouseOut}
+                      />
+                  ))
+                : null}
         </>
     );
 }

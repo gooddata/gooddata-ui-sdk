@@ -13,6 +13,7 @@ import { useFullTextSearchState } from "../search/FullTextSearchContext.js";
 import { convertEntityToCatalogItem } from "./converter.js";
 import type { ICatalogItem, ICatalogItemFeedOptions, ICatalogItemRef } from "./types.js";
 import { type FeedEndpoint, useCatalogEndpoints, useCatalogQueryOptions } from "./useCatalogEndpoints.js";
+import { useCatalogItemSemanticSearch } from "./useCatalogItemSemanticSearch.js";
 import { useEndpointPaginator } from "./useEndpointPaginator.js";
 
 export function useCatalogItemFeed(feedOptions: ICatalogItemFeedOptions) {
@@ -46,10 +47,21 @@ export function useCatalogItemFeed(feedOptions: ICatalogItemFeedOptions) {
         removeWhere,
     } = paginator;
 
-    const totalCountByType = useMemo(
-        () => getTotalCountByType(endpoints, totalCounts),
-        [endpoints, totalCounts],
-    );
+    const { relatedItems, relatedItemsStatus, relatedHasNext } = useCatalogItemSemanticSearch({
+        queryOptions,
+        items,
+        status,
+        types,
+        search,
+    });
+
+    const totalCountByType = useMemo(() => {
+        const counts = getTotalCountByType(endpoints, totalCounts);
+        for (const item of relatedItems) {
+            counts[item.type] += 1;
+        }
+        return counts;
+    }, [endpoints, totalCounts, relatedItems]);
 
     const refetchObjectType = useCallback(
         (type: ObjectType) => {
@@ -70,11 +82,13 @@ export function useCatalogItemFeed(feedOptions: ICatalogItemFeedOptions) {
 
     return {
         items,
-        error,
+        relatedItems,
         status,
-        totalCount,
+        relatedItemsStatus,
+        error,
+        totalCount: totalCount + relatedItems.length,
         totalCountByType,
-        hasNext,
+        hasNext: hasNext || relatedHasNext,
         next,
         updateItem,
         removeItem,

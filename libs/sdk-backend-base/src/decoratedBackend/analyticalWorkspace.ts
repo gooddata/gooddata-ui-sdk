@@ -104,6 +104,12 @@ export class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
     }
 
     public insights(): IWorkspaceInsightsService {
+        const { insights } = this.factories;
+
+        if (insights) {
+            return insights(this.decorated.insights(), this.workspace);
+        }
+
         return this.decorated.insights();
     }
 

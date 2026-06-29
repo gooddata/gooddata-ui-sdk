@@ -1,64 +1,34 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactNode } from "react";
+
 import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import {
     type IDashboardExportParameter,
     type IInsight,
+    type IWidget,
     idRef,
     isExportDefinitionVisualizationObjectRequestPayload,
 } from "@gooddata/sdk-model";
 
-import { selectDashboardHiddenFilters } from "../../../../../../model/store/filtering/dashboardFilterSelectors.js";
-import { selectWidgetLocalIdToTabIdMap } from "../../../../../../model/store/tabs/layout/layoutSelectors.js";
-import { selectCurrentUser } from "../../../../../../model/store/user/userSelectors.js";
-import { type ExtendedDashboardWidget } from "../../../../../../model/types/layoutTypes.js";
 import { IntlWrapper } from "../../../../../localization/IntlWrapper.js";
+import {
+    AutomationsContextProvider,
+    type IAutomationsContextValue,
+} from "../../../../contexts/AutomationsContext.js";
+import {
+    type IScheduledEmailDialogContextValue,
+    ScheduledEmailDialogContextProvider,
+} from "../../../../contexts/ScheduledEmailDialogContext.js";
 import { useEditScheduledEmail } from "../useEditScheduledEmail.js";
-
-// Sentinel for the partially-mocked parametersSelectors module (vitest hoists vi.mock above imports).
-function exportEffectiveParametersSelector(): never {
-    throw new Error("Sentinel selector must be resolved by the useDashboardSelector mock.");
-}
-
-// The reporter's case: no effective override, so the new automation seeds no params.
-const noEffectiveParameters: Record<string, IDashboardExportParameter[]> = {};
-
-// The hook reads ~12 selectors but only dereferences these four; the rest are optional-chained or
-// `?? []`-coalesced inside the hook, so an undefined default is safe.
-function resolveSelectorValue(selector: unknown): unknown {
-    switch (selector) {
-        case selectCurrentUser:
-            return { login: "u1", email: "u1@example.com", ref: idRef("u1") };
-        case selectWidgetLocalIdToTabIdMap:
-            return { w1: "tab1" };
-        case selectDashboardHiddenFilters:
-            return [];
-        case exportEffectiveParametersSelector:
-            return noEffectiveParameters;
-        default:
-            return undefined;
-    }
-}
-
-vi.mock("../../../../../../model/react/DashboardStoreProvider.js", () => ({
-    useDashboardSelector: (selector: unknown) => resolveSelectorValue(selector),
-}));
-
-vi.mock(
-    import("../../../../../../model/store/tabs/parameters/parametersSelectors.js"),
-    async (importOriginal) => ({
-        ...(await importOriginal()),
-        selectExportEffectiveParameters: () => exportEffectiveParametersSelector,
-    }),
-);
 
 vi.mock("../useScheduleValidation.js", () => ({
     useScheduleValidation: () => ({ isValid: true }),
 }));
 
-const widget: ExtendedDashboardWidget = {
+const widget: IWidget = {
     type: "insight",
     insight: idRef("insight-1", "insight"),
     ignoreDashboardFilters: [],
@@ -89,6 +59,40 @@ const addedParameters: Record<string, IDashboardExportParameter[]> = {
     tab1: [{ id: "topN", value: "5", title: "Top N" }],
 };
 
+// The hook reads only a handful of context fields; the rest are optional-chained or `?? []`-coalesced
+// inside the hook, so partial stubs cast through `unknown` are safe for these tests.
+const automationsContextValue = {
+    settings: undefined,
+    timezone: undefined,
+    currentUser: { login: "u1", email: "u1@example.com", ref: idRef("u1") },
+    features: {
+        enableExternalRecipients: false,
+        enableAutomationEvaluationMode: false,
+    },
+} as unknown as IAutomationsContextValue;
+
+const scheduledEmailDialogContextValue = {
+    dashboardId: "dashboard-1",
+    dashboardTitle: "Dashboard",
+    hiddenFilters: [],
+    commonDateFilterId: undefined,
+    widgetLocalIdToTabIdMap: { w1: "tab1" },
+    // The reporter's case: no effective override, so the new automation seeds no params.
+    exportParametersByTab: {},
+} as unknown as IScheduledEmailDialogContextValue;
+
+function wrapper({ children }: { children: ReactNode }) {
+    return (
+        <IntlWrapper>
+            <AutomationsContextProvider value={automationsContextValue}>
+                <ScheduledEmailDialogContextProvider value={scheduledEmailDialogContextValue}>
+                    {children}
+                </ScheduledEmailDialogContextProvider>
+            </AutomationsContextProvider>
+        </IntlWrapper>
+    );
+}
+
 // Drive the hook directly; the parameters hook (the only other caller of setParametersWire) is
 // covered separately.
 function renderEditHook() {
@@ -98,13 +102,14 @@ function renderEditHook() {
                 notificationChannels: [{ id: "channel-1" } as any],
                 insight,
                 widget,
+                users: [],
                 maxAutomationsRecipients: 10,
                 setEditedAutomationFilters: () => {},
                 setStoreFilters: () => {},
                 filtersForNewAutomation: [],
                 enableNewScheduledExport: true,
             }),
-        { wrapper: IntlWrapper },
+        { wrapper },
     );
 }
 

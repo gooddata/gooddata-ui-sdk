@@ -40,7 +40,7 @@ export function useCatalogItemLoad({ objectDefinition, objectId, objectType }: I
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
 
-    const { status, error, result } = useCancelablePromise<ICatalogItem | undefined>(
+    const { status, error, result } = useCancelablePromise<ICatalogItem | undefined, Error>(
         {
             promise: () => {
                 // Object id and type are required
