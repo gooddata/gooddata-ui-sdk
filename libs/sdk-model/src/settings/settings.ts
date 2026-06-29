@@ -562,6 +562,15 @@ export interface IFeatureFlags {
     enableRankingStrictLimit?: boolean;
 
     /**
+     * Enable picking the ranked metric for a ranking filter from the catalog (referenced by ObjRef),
+     * in addition to metrics present in the insight buckets.
+     *
+     * @remarks
+     * Defaults to false when not provided by the backend.
+     */
+    enableImprovedRankingFilter?: boolean;
+
+    /**
      * Enables rich text widgets on dashboards.
      */
     enableKDRichText?: boolean;

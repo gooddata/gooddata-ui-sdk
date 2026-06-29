@@ -16,8 +16,10 @@ import {
     selectEnableAlertAttributes,
     selectEnableAlertOncePerInterval,
     selectEnableAnomalyDetectionAlert,
+    selectEnableAutomationEvaluationMode,
     selectEnableAutomationManagement,
     selectEnableComparisonInAlerting,
+    selectEnableCustomizableCsvDelimiter,
     selectEnableExternalRecipients,
     selectEnableNewScheduledExport,
     selectExternalRecipient,
@@ -136,6 +138,8 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
     const enableComparisonInAlerting = useDashboardSelector(selectEnableComparisonInAlerting);
     const enableExternalRecipients = useDashboardSelector(selectEnableExternalRecipients);
     const enableAlertAttributes = useDashboardSelector(selectEnableAlertAttributes);
+    const enableCustomizableCsvDelimiter = useDashboardSelector(selectEnableCustomizableCsvDelimiter);
+    const enableAutomationEvaluationMode = useDashboardSelector(selectEnableAutomationEvaluationMode);
     const maxAutomationsRecipients = useDashboardSelector(selectMaxAutomationRecipients);
     const minimumRecurrenceMinutesEntitlement = useDashboardSelector(
         selectEntitlementMinimumRecurrenceMinutes,
@@ -176,6 +180,8 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
             enableExternalRecipients,
             enableAlertAttributes,
             canManageWorkspace,
+            enableCustomizableCsvDelimiter,
+            enableAutomationEvaluationMode,
         }),
         [
             canCreateAutomation,
@@ -187,6 +193,8 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
             enableExternalRecipients,
             enableAlertAttributes,
             canManageWorkspace,
+            enableCustomizableCsvDelimiter,
+            enableAutomationEvaluationMode,
         ],
     );
 

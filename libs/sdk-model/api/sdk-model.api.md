@@ -2671,6 +2671,7 @@ export interface IFeatureFlags {
     enableHLL?: boolean;
     enableIgnoreCrossFiltering?: boolean;
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
+    enableImprovedRankingFilter?: boolean;
     enableInPlatformNotifications?: boolean;
     enableKDAttributeFilterDatesValidation?: boolean;
     enableKDCrossFiltering?: boolean;

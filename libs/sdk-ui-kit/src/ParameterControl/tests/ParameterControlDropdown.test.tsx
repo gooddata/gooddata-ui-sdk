@@ -29,6 +29,9 @@ const queryInput = (container: HTMLElement) =>
 const queryApply = (container: HTMLElement) =>
     container.querySelector<HTMLButtonElement>('[data-testid="parameter-control-dropdown-apply"]')!;
 
+const queryError = (container: HTMLElement) =>
+    container.querySelector('[data-testid="parameter-control-dropdown-error"]');
+
 describe("ParameterControlDropdown", () => {
     it("renders the input with the current value", () => {
         const { container } = renderDropdown({ value: 25 });
@@ -72,20 +75,44 @@ describe("ParameterControlDropdown", () => {
         expect(onApply).not.toHaveBeenCalled();
     });
 
-    it("clamps values above max on Apply", () => {
+    it("blocks Apply and shows an error for an out-of-range value", () => {
         const onApply = vi.fn();
         const { container } = renderDropdown({ onApply });
         fireEvent.change(queryInput(container), { target: { value: "999" } });
-        fireEvent.click(queryApply(container));
+        const apply = queryApply(container);
+        expect(apply.disabled).toBe(true);
+        expect(queryError(container)).not.toBeNull();
+        fireEvent.click(apply);
+        expect(onApply).not.toHaveBeenCalled();
+    });
+
+    it("blocks Apply and shows an error for a non-numeric value", () => {
+        const onApply = vi.fn();
+        const { container } = renderDropdown({ onApply });
+        fireEvent.change(queryInput(container), { target: { value: "abc" } });
+        const apply = queryApply(container);
+        expect(apply.disabled).toBe(true);
+        expect(queryError(container)).not.toBeNull();
+        fireEvent.click(apply);
+        expect(onApply).not.toHaveBeenCalled();
+    });
+
+    it("allows Apply on the inclusive boundary and commits the raw value", () => {
+        const onApply = vi.fn();
+        const { container } = renderDropdown({ value: 100, onApply });
+        const apply = queryApply(container);
+        expect(apply.disabled).toBe(false);
+        expect(queryError(container)).toBeNull();
+        fireEvent.click(apply);
         expect(onApply).toHaveBeenCalledWith(100);
     });
 
-    it("clamps values below min on Apply", () => {
-        const onApply = vi.fn();
-        const { container } = renderDropdown({ onApply });
-        fireEvent.change(queryInput(container), { target: { value: "-5" } });
-        fireEvent.click(queryApply(container));
-        expect(onApply).toHaveBeenCalledWith(0);
+    it("mirrors the current value in the preview while the draft is out of range", () => {
+        const { container } = renderDropdown({ value: 25 });
+        fireEvent.change(queryInput(container), { target: { value: "999" } });
+        const preview = container.querySelector('[data-testid="parameter-control-dropdown-preview"]')!;
+        expect(preview.textContent).toContain("25");
+        expect(preview.textContent).not.toContain("999");
     });
 
     it("renders the preview line with name and current value", () => {

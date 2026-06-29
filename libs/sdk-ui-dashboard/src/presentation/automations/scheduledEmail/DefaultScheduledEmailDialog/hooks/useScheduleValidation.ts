@@ -7,10 +7,11 @@ import {
     isExportDefinitionVisualizationObjectRequestPayload,
 } from "@gooddata/sdk-model";
 
-import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
-import { selectWidgetByRef } from "../../../../../model/store/tabs/layout/layoutSelectors.js";
+import { useScheduledEmailDialogContext } from "../../../contexts/ScheduledEmailDialogContext.js";
 
 export const useScheduleValidation = (schedule: IAutomationMetadataObjectDefinition) => {
+    const { widgetExistsByRef } = useScheduledEmailDialogContext();
+
     const isDashboardSchedule = schedule.exportDefinitions?.some((exportDefinition) =>
         isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload),
     );
@@ -20,11 +21,10 @@ export const useScheduleValidation = (schedule: IAutomationMetadataObjectDefinit
         )?.requestPayload.content as IExportDefinitionVisualizationObjectContent
     )?.widget;
     const widgetRef = widgetLocalId ? { identifier: widgetLocalId } : undefined;
-    const widget = useDashboardSelector(selectWidgetByRef(widgetRef));
 
     // Schedules created via API may not reference any widget — that's acceptable.
     // We only flag an error when a widget was explicitly referenced but no longer exists on the dashboard.
-    const hasUnresolvableWidgetRef = !!widgetRef && !widget;
+    const hasUnresolvableWidgetRef = !!widgetRef && !widgetExistsByRef(widgetRef);
 
     const isValid = isDashboardSchedule || !hasUnresolvableWidgetRef;
 

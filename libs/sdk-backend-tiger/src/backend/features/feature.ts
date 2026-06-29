@@ -180,6 +180,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableImprovedRankingFilter,
+            "enableImprovedRankingFilter",
+            "BOOLEAN",
+            FeatureFlagsValues.enableImprovedRankingFilter,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableKDRichText,
             "enableKDRichText",
             "BOOLEAN",

@@ -42,6 +42,12 @@
         }
     }
 
+    &__dropdown-error {
+        padding-top: 5px;
+        color: var(--gd-palette-error-base);
+        font-size: 12px;
+    }
+
     &__dropdown-divider {
         height: 1px;
         margin: 10px 0;

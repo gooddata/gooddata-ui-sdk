@@ -15,7 +15,7 @@ jobs:
         with:
           base-url: https://www.gooddata.ai/docs/gooddata-ui
       - name: Publish
-        uses: netlify/actions/cli@master
+        uses: netlify/actions/cli@3185065f4ab2f6df6f2ef41ee013626e1c02a426
         with:
           args: deploy -d docs/public --prod
         env:

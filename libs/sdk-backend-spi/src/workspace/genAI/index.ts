@@ -55,11 +55,6 @@ export interface IGenAIService {
     getSemanticSearchQuery(): ISemanticSearchQuery;
 
     /**
-     * Trigger a reindex of the semantic search index for the workspace.
-     */
-    semanticSearchIndex(): Promise<void>;
-
-    /**
      * Get a chatbot thread builder.
      */
     getChatThread(): IChatThread;

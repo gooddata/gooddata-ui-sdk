@@ -11,6 +11,7 @@ import {
     type IAttributeDropdownItem,
     type ICustomGranularitySelection,
     type IMeasureDropdownItem,
+    type RenderMeasureDropdownBody,
 } from "./types.js";
 
 const alignPoints = ["bl tl", "tl bl", "br tr", "tr br"];
@@ -51,6 +52,11 @@ export interface IRankingFilterDropdownProps {
     locale?: string;
     enableRankingWithMvf?: boolean;
     enableRankingStrictLimit?: boolean;
+    /**
+     * Optional custom renderer for the measure dropdown body, replacing the built-in flat measure list
+     * with a custom body (e.g. a grouped, searchable catalog picker).
+     */
+    renderMeasureDropdownBody?: RenderMeasureDropdownBody;
 }
 
 function RankingFilterDropdownComponent({
@@ -65,6 +71,7 @@ function RankingFilterDropdownComponent({
     customGranularitySelection,
     enableRankingWithMvf,
     enableRankingStrictLimit,
+    renderMeasureDropdownBody,
 }: IRankingFilterDropdownProps) {
     const [rankingFilter, setRankingFilter] = useState(prepareRankingFilterState(filter));
 
@@ -94,6 +101,7 @@ function RankingFilterDropdownComponent({
                 customGranularitySelection={customGranularitySelection}
                 enableRankingWithMvf={enableRankingWithMvf}
                 enableRankingStrictLimit={enableRankingStrictLimit}
+                renderMeasureDropdownBody={renderMeasureDropdownBody}
             />
         </Overlay>
     );

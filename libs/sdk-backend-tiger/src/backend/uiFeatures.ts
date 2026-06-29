@@ -34,6 +34,7 @@ export enum TigerFeaturesNames {
     EnableMultipleMvfConditions = "enableMultipleMvfConditions",
     EnableRankingWithMvf = "enableRankingWithMvf",
     EnableRankingStrictLimit = "enableRankingStrictLimit",
+    EnableImprovedRankingFilter = "enableImprovedRankingFilter",
     EnableKDRichText = "enableKDRichText",
     EnableMySqlDataSource = "enableMySqlDataSource",
     EnableMariaDbDataSource = "enableMariaDbDataSource",
@@ -206,6 +207,7 @@ export type ITigerFeatureFlags = {
     enableMultipleMvfConditions: (typeof FeatureFlagsValues)["enableMultipleMvfConditions"][number];
     enableRankingWithMvf: (typeof FeatureFlagsValues)["enableRankingWithMvf"][number];
     enableRankingStrictLimit: (typeof FeatureFlagsValues)["enableRankingStrictLimit"][number];
+    enableImprovedRankingFilter: (typeof FeatureFlagsValues)["enableImprovedRankingFilter"][number];
     enableKDRichText: (typeof FeatureFlagsValues)["enableKDRichText"][number];
     enableMySqlDataSource: (typeof FeatureFlagsValues)["enableMySqlDataSource"][number];
     enableMariaDbDataSource: (typeof FeatureFlagsValues)["enableMariaDbDataSource"][number];
@@ -379,6 +381,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableMultipleMvfConditions: true,
     enableRankingWithMvf: false,
     enableRankingStrictLimit: false,
+    enableImprovedRankingFilter: false,
     enableKDRichText: true,
     enableMySqlDataSource: false,
     enableMariaDbDataSource: false,
@@ -552,6 +555,7 @@ export const FeatureFlagsValues = {
     enableMultipleMvfConditions: [true, false] as const,
     enableRankingWithMvf: [true, false] as const,
     enableRankingStrictLimit: [true, false] as const,
+    enableImprovedRankingFilter: [true, false] as const,
     enableKDRichText: [true, false] as const,
     enableMySqlDataSource: [true, false] as const,
     enableMotherDuckDataSource: [true, false] as const,

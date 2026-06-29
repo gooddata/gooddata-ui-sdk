@@ -18,6 +18,16 @@ export function granteeId(kind: "user" | "group", ref: ObjRef): string {
     return `${kind}:${objRefToString(ref)}`;
 }
 
+/**
+ * Whether a grantee row carries no human name — its name is just the serialized
+ * ref the backend grant fell back to when the permissions endpoint returned no
+ * name. The signal both for backfilling a row from the picker/assignee cache and
+ * for deciding whether to resolve names eagerly at all.
+ */
+export function granteeNameUnresolved(grantee: IObjectShareGrantee): boolean {
+    return grantee.name === objRefToString(grantee.granteeRef);
+}
+
 /** Case-insensitive match of an assignee against the picker query (name, or email for users). */
 export function assigneeMatchesQuery(assignee: IAvailableAccessGrantee, query: string): boolean {
     if (!query) {
@@ -149,6 +159,33 @@ export function buildLabelMutations(
         writes.push({ ref: label.ref, grantee: granularGranteeFor(principal, wanted ? "VIEW" : "none") });
     }
     return writes;
+}
+
+/**
+ * Multi-principal variant of {@link buildLabelMutations}: groups the per-label
+ * writes so each label is one write carrying every principal that changes on it.
+ * Keys on `label.id`, not the raw `ObjRef` — a Map keyed on ObjRef would key on
+ * object identity and fail to merge equal-but-distinct refs.
+ */
+export function buildLabelMutationsForPrincipals(
+    principals: LabelScopePrincipal[],
+    desiredLabelIds: ReadonlySet<string>,
+    currentLabelIds: ReadonlySet<string>,
+    labels: IObjectShareLabel[],
+): Array<{ id: string; ref: ObjRef; grantees: IGranularAccessGrantee[] }> {
+    const byLabel = new Map<string, { id: string; ref: ObjRef; grantees: IGranularAccessGrantee[] }>();
+    for (const label of labels) {
+        for (const principal of principals) {
+            const writes = buildLabelMutations(principal, desiredLabelIds, currentLabelIds, [label]);
+            if (writes.length === 0) {
+                continue;
+            }
+            const entry = byLabel.get(label.id) ?? { id: label.id, ref: label.ref, grantees: [] };
+            entry.grantees.push(writes[0]!.grantee);
+            byLabel.set(label.id, entry);
+        }
+    }
+    return Array.from(byLabel.values());
 }
 
 /** Stable empty-labels default so the hook's default arg doesn't churn identities. */

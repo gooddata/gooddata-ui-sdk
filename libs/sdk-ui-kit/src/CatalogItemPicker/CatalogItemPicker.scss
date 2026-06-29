@@ -16,6 +16,15 @@
                 max-height: 200px;
             }
         }
+
+        &-addFilter {
+            // Drop the listbox top padding so the gap between the search field and the first group is
+            // only the section header's own 10px (the content gap is also removed below), matching the
+            // compact dropdown design.
+            .gd-ui-kit-listbox {
+                padding-top: 0;
+            }
+        }
     }
 
     &__content {
@@ -25,7 +34,7 @@
         &--variant {
             &-addFilter {
                 padding: 10px 0;
-                gap: 10px;
+                gap: 0;
             }
 
             &-mvf {

@@ -27,7 +27,7 @@ jobs:
           email: git-action@gooddata.com
 
       - name: Add rel chages to master
-        uses: nick-fields/retry@v4
+        uses: nick-fields/retry@v4.0.0
         env:
           TARGET_BRANCH: master
           SOURCE_BRANCH: ${{ inputs.source-branch }}

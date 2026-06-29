@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-ext: Batch per-label permission writes when adding multiple grantees in the object share dialog",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "matyas.kandl@gooddata.com"
+}

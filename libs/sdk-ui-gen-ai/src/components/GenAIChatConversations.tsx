@@ -127,7 +127,12 @@ function GenAIChatConversationsComponent({
                                     setOpenedId(openedId ? undefined : conversation.localId);
                                 }}
                                 isOpen={openedId === conversation.localId}
-                                alignPoints={[{ align: "bl tl" }]}
+                                alignPoints={[
+                                    { align: "bl tl" },
+                                    { align: "br tr" },
+                                    { align: "tl bl" },
+                                    { align: "tr br" },
+                                ]}
                                 renderButton={({
                                     toggleDropdown,
                                     buttonRef,

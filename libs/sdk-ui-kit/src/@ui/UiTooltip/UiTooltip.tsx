@@ -8,7 +8,6 @@ import {
     type Middleware,
     safePolygon,
     useClick,
-    useDismiss,
     useFocus,
     useHover,
     useInteractions,
@@ -17,9 +16,10 @@ import {
 import { ConditionalScopedThemeProvider, useIsScopeThemed, useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { bem } from "../@utils/bem.js";
+import { useCloseOnEscape } from "../hooks/useCloseOnEscape.js";
 import {
     FLOATING_ELEMENT_DATA_ATTR,
-    isClickInsideOwnSubtree,
+    useCloseOnOutsideClick,
     useRegisterFloatingAnchor,
 } from "../hooks/useCloseOnOutsideClick.js";
 import { useFloatingPosition } from "../UiFloatingElement/useFloatingPosition.js";
@@ -171,13 +171,22 @@ export function UiTooltip({
         refs.reference.current instanceof Element ? refs.reference.current : null,
     );
 
-    // Dismiss stays enabled even when controlled so outside-click / Escape can
-    // request a close; the request is surfaced through handleOpenChange → onOpenChange.
-    const dismiss = useDismiss(context, {
-        outsidePress: (event) =>
-            !isClickInsideOwnSubtree(event.target as Element | null, refs.floating.current),
+    // Outside-click / Escape close via DOM-based hooks rather than floating-ui's
+    // useDismiss. useDismiss bails out whenever the press lands inside the parent
+    // floating element's React tree (its `insideReactTree` guard) — so a popover
+    // portalled inside a modal (e.g. the OLP share dialog) never closed on any
+    // click within that modal (F1-2608). useCloseOnOutsideClick keys off real DOM
+    // containment plus the floating-anchor registry, so it correctly ignores our
+    // own subtree and nested child popups while still closing on sibling/outside
+    // clicks. It stays enabled when controlled so the close request still flows
+    // through handleClose → onOpenChange.
+    useCloseOnOutsideClick(isOpen, handleClose, {
+        floatingRef: refs.floating,
+        anchorRef: refs.reference,
     });
-    const { getReferenceProps, getFloatingProps } = useInteractions([dismiss, hover, focus, click]);
+    useCloseOnEscape(isOpen, handleClose);
+
+    const { getReferenceProps, getFloatingProps } = useInteractions([hover, focus, click]);
 
     return (
         <>

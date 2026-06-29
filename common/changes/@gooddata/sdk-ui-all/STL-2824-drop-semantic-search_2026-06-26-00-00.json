@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-backend-spi, sdk-backend-tiger, sdk-backend-base, sdk-backend-mockingbird: Remove the experimental IGenAIService.semanticSearchIndex() method that triggered a workspace metadata reindex. This is a breaking change for callers of that method; semantic search querying is unaffected.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

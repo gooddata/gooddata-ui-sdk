@@ -69,6 +69,11 @@ export function isMeasureValueFilter(filter: IBucketFilter | undefined): filter 
     if (filter === undefined || filter === null) {
         return false;
     }
+    // A ranking filter also references a measure (by local id or by ref), so guard against it explicitly.
+    // This keeps isMeasureValueFilter and isRankingFilter mutually exclusive regardless of call order.
+    if (isRankingFilter(filter)) {
+        return false;
+    }
     const measureValueFilter = filter as IMeasureValueFilter;
     return !!measureValueFilter.measureLocalIdentifier || !!measureValueFilter.measureRef;
 }
@@ -82,9 +87,11 @@ export function isActiveMeasureValueFilter(filter: IBucketFilter): boolean {
 
 export function isRankingFilter(filter: IBucketFilter | undefined): filter is IRankingFilter {
     const filterAsRankingFilter = filter as IRankingFilter;
+    // A ranking filter is uniquely identified by a top-level operator + value (which measure value
+    // filters never have). The ranked measure may be referenced by local id (string) or by ObjRef
+    // (catalog metric), so the measure shape must not be part of the check.
     return (
         !!filter &&
-        typeof filterAsRankingFilter.measure === "string" &&
         typeof filterAsRankingFilter.operator === "string" &&
         typeof filterAsRankingFilter.value === "number"
     );
@@ -242,6 +249,14 @@ function sanitizeMeasureValueFilter(
     );
 }
 
+/**
+ * A ranking filter references a catalog measure (not in the buckets) via measureRef. Such filters are
+ * kept as-is, mirroring measure value filters.
+ */
+function isCatalogRankingFilter(filter: IRankingFilter): boolean {
+    return filter.measureRef !== undefined;
+}
+
 export function sanitizeFilters(
     newReferencePoint: IExtendedReferencePoint,
     oldReferencePoint: Pick<IExtendedReferencePoint, "buckets">,
@@ -309,9 +324,15 @@ export function sanitizeFilters(
             return attributeBucketItems.some(
                 (attributeBucketItem: IBucketItem) => attributeBucketItem.attribute === filter.attribute,
             );
-        } else if (isMeasureValueFilter(filter)) {
-            return sanitizeMeasureValueFilter(filter, attributeBucketItems, measureBucketItems);
         } else if (isRankingFilter(filter)) {
+            // A ranking filter referencing a catalog measure by ObjRef need not have that measure in the
+            // buckets, and may have no attributes (granularity is added later) - mirrors measure value
+            // filters. Keep it as-is.
+            if (isCatalogRankingFilter(filter)) {
+                return true;
+            }
+            // Legacy ranking filter referencing a bucket measure by local identifier - it requires a
+            // slicing attribute and the ranked measure to be present in the buckets.
             if (attributeBucketItems.length === 0) {
                 return false;
             }
@@ -326,6 +347,8 @@ export function sanitizeFilters(
                     ),
                 );
             return hasValidMeasure && hasValidAttributes;
+        } else if (isMeasureValueFilter(filter)) {
+            return sanitizeMeasureValueFilter(filter, attributeBucketItems, measureBucketItems);
         }
 
         return false;

@@ -40,5 +40,6 @@ describe("automationFilters dep-cruiser boundary (GDP-3167 Phase-3 debt freeze)"
                 `automationFilters allowlist in .dependency-cruiser.js (with a GDP-3167 Phase-3 note) ` +
                 `only if it is legitimate debt:\n${result.stdout ?? ""}${result.stderr ?? ""}`,
         ).toBe(0);
-    });
+        // This test is heavy.
+    }, 15_000);
 });

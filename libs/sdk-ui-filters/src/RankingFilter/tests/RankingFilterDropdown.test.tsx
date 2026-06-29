@@ -448,13 +448,17 @@ describe("RankingFilterDropdown", () => {
 
     describe("Preview", () => {
         it.each([
-            ["top of measure", newRankingFilter(mockMeasure1Ref, "TOP", 42), "Top 42 of Measure 1"],
+            ["top of measure", newRankingFilter(mockMeasure1Ref, "TOP", 42), "Top 42 records by Measure 1"],
             [
                 "top out of attribute based on measure",
                 newRankingFilter(mockMeasure2Ref, [mockAttribute1Ref], "TOP", 5),
                 "Top 5 out of Attribute 1 based on Measure 2",
             ],
-            ["bottom of measure", newRankingFilter(mockMeasure1Ref, "BOTTOM", 3), "Bottom 3 of Measure 1"],
+            [
+                "bottom of measure",
+                newRankingFilter(mockMeasure1Ref, "BOTTOM", 3),
+                "Bottom 3 records by Measure 1",
+            ],
             [
                 "bottom out of attribute based on measure",
                 newRankingFilter(mockMeasure2Ref, [mockDate1Ref], "BOTTOM", 10),
@@ -474,7 +478,7 @@ describe("RankingFilterDropdown", () => {
             });
             component.openOperatorDropdown().setOperator("Top (strict)");
 
-            expect(component.getPreview()).toEqual("Top 10 (strict) of Measure 1");
+            expect(component.getPreview()).toEqual("Top 10 (strict) records by Measure 1");
         });
 
         it("should not annotate the preview for the non-strict condition", () => {
@@ -490,7 +494,7 @@ describe("RankingFilterDropdown", () => {
                 enableRankingStrictLimit: true,
             });
 
-            expect(component.getPreview()).toEqual("Top 10 of Measure 1");
+            expect(component.getPreview()).toEqual("Top 10 records by Measure 1");
         });
     });
 });

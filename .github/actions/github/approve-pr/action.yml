@@ -27,7 +27,7 @@ runs:
   using: 'composite'
   steps:
     - name: Approve Pull Request
-      uses: nick-fields/retry@v4
+      uses: nick-fields/retry@v4.0.0
       env:
         GH_TOKEN: ${{ inputs.github-token }}
       with:

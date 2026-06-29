@@ -108,7 +108,7 @@ jobs:
               env:
                 VERSION: ${{ steps.version.outputs.version }}
             - name: git push
-              uses: nick-fields/retry@v4
+              uses: nick-fields/retry@v4.0.0
               with:
                 timeout_minutes: 5
                 max_attempts: 5

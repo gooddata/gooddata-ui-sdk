@@ -17,10 +17,8 @@ import {
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
+import { useScheduledEmailDialogContext } from "../../../contexts/ScheduledEmailDialogContext.js";
 import { type IScheduledEmailDialogProps } from "../../types.js";
-
-import { useCreateScheduledEmail } from "./useCreateScheduledEmail.js";
-import { useUpdateScheduledEmail } from "./useUpdateScheduledEmail.js";
 
 export function useSaveScheduledEmailToBackend(
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,
@@ -38,74 +36,72 @@ export function useSaveScheduledEmailToBackend(
 ) {
     const intl = useIntl();
     const [savingErrorMessage, setSavingErrorMessage] = useState<string | undefined>(undefined);
-    const scheduledEmailCreator = useCreateScheduledEmail({
-        onSuccess: (scheduledEmail: IAutomationMetadataObject) => {
-            onSuccess?.(scheduledEmail);
-        },
-        onError: (error: GoodDataSdkError) => {
-            /**
-             * Handle 400 error separately as it contains a detailed error message
-             * to be shown in the dialog without closing it
-             */
-            if (error?.cause?.response?.status === 400) {
-                setSavingErrorMessage(error.cause.response.data?.detail);
-            } else {
-                onError?.(error);
-            }
-        },
-        onBeforeRun: (scheduledEmailToCreate: IAutomationMetadataObjectDefinition) => {
-            setSavingErrorMessage(undefined);
-            onSubmit?.(scheduledEmailToCreate);
-        },
-    });
-    const handleCreateScheduledEmail = useCallback(
-        (scheduledEmail: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => {
-            const sanitizedAutomation = sanitizeAutomation(scheduledEmail, intl);
-            scheduledEmailCreator.create(sanitizedAutomation as IAutomationMetadataObjectDefinition);
-        },
-        [scheduledEmailCreator, intl],
-    );
+    const [isSavingScheduledEmail, setIsSavingScheduledEmail] = useState(false);
 
-    const scheduledEmailUpdater = useUpdateScheduledEmail({
-        onSuccess: onSaveSuccess,
-        onError: (error: GoodDataSdkError) => {
-            /**
-             * Handle 400 error separately as it contains a detailed error message
-             * to be shown in the dialog without closing it
-             */
-            if (error?.cause?.response?.status === 400) {
-                setSavingErrorMessage(error.cause.response.data?.detail);
-            } else {
-                onSaveError?.(error);
+    const { createScheduledEmail, saveScheduledEmail } = useScheduledEmailDialogContext();
+
+    const handleCreateScheduledEmail = useCallback(
+        async (scheduledEmail: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => {
+            const sanitizedAutomation = sanitizeAutomation(
+                scheduledEmail,
+                intl,
+            ) as IAutomationMetadataObjectDefinition;
+            setSavingErrorMessage(undefined);
+            onSubmit?.(sanitizedAutomation);
+            setIsSavingScheduledEmail(true);
+            try {
+                const created = await createScheduledEmail(sanitizedAutomation);
+                onSuccess?.(created);
+            } catch (error: any) {
+                /**
+                 * Handle 400 error separately as it contains a detailed error message
+                 * to be shown in the dialog without closing it
+                 */
+                if (error?.cause?.response?.status === 400) {
+                    setSavingErrorMessage(error.cause.response.data?.detail);
+                } else {
+                    onError?.(error as GoodDataSdkError);
+                }
+            } finally {
+                setIsSavingScheduledEmail(false);
             }
         },
-        onBeforeRun: (scheduledEmailToSave: IAutomationMetadataObject) => {
-            setSavingErrorMessage(undefined);
-            onSave?.(scheduledEmailToSave);
-        },
-    });
+        [createScheduledEmail, intl, onSubmit, onSuccess, onError],
+    );
 
     const handleUpdateScheduledEmail = useCallback(
-        (scheduledEmail: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => {
-            const sanitizedAutomation = sanitizeAutomation(scheduledEmail, intl);
-            scheduledEmailUpdater.save(sanitizedAutomation as IAutomationMetadataObject);
+        async (scheduledEmail: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => {
+            const sanitizedAutomation = sanitizeAutomation(scheduledEmail, intl) as IAutomationMetadataObject;
+            setSavingErrorMessage(undefined);
+            onSave?.(sanitizedAutomation);
+            setIsSavingScheduledEmail(true);
+            try {
+                await saveScheduledEmail(sanitizedAutomation);
+                onSaveSuccess?.();
+            } catch (error: any) {
+                /**
+                 * Handle 400 error separately as it contains a detailed error message
+                 * to be shown in the dialog without closing it
+                 */
+                if (error?.cause?.response?.status === 400) {
+                    setSavingErrorMessage(error.cause.response.data?.detail);
+                } else {
+                    onSaveError?.(error as GoodDataSdkError);
+                }
+            } finally {
+                setIsSavingScheduledEmail(false);
+            }
         },
-        [scheduledEmailUpdater, intl],
+        [saveScheduledEmail, intl, onSave, onSaveSuccess, onSaveError],
     );
 
-    const handleSaveScheduledEmail = (): void => {
-        const sanitizedAutomation = sanitizeAutomation(automation, intl);
-
-        if (sanitizedAutomation.id) {
-            handleUpdateScheduledEmail(sanitizedAutomation);
+    const handleSaveScheduledEmail = useCallback((): void => {
+        if (automation.id) {
+            void handleUpdateScheduledEmail(automation);
         } else {
-            handleCreateScheduledEmail(sanitizedAutomation);
+            void handleCreateScheduledEmail(automation);
         }
-    };
-
-    const isSavingScheduledEmail =
-        scheduledEmailCreator.creationStatus === "running" ||
-        scheduledEmailUpdater.savingStatus === "running";
+    }, [automation, handleUpdateScheduledEmail, handleCreateScheduledEmail]);
 
     return { handleSaveScheduledEmail, isSavingScheduledEmail, savingErrorMessage };
 }

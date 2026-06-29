@@ -10,11 +10,10 @@ import {
     type IInsight,
     type INotificationChannelIdentifier,
     type INotificationChannelMetadataObject,
+    type IWidget,
     type IWorkspaceUser,
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
-
-import { type ExtendedDashboardWidget } from "../../../model/types/layoutTypes.js";
 
 ///
 /// Component props
@@ -48,8 +47,11 @@ export interface IScheduledEmailDialogProps {
      * Widget to be used for scheduled email.
      *
      * Note: this is available only when scheduling export for widget, not dashboard.
+     * Typed as IWidget (not ExtendedDashboardWidget) because the dialog only
+     * supports insight widgets; custom widgets and nested layouts are not valid
+     * export targets and were silently discarded at the connector boundary anyway.
      */
-    widget?: ExtendedDashboardWidget;
+    widget?: IWidget;
 
     /**
      * Insight to be used for scheduled email.

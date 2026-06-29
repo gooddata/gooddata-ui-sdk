@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 
-import { FormattedMessage, defineMessages, useIntl } from "react-intl";
+import cx from "classnames";
+import { FormattedMessage, type MessageDescriptor, defineMessages, useIntl } from "react-intl";
 
-import { type INumberParameterConstraints } from "@gooddata/sdk-model";
+import { type INumberParameterConstraints, isValidNumberParameterValue } from "@gooddata/sdk-model";
 
 import { bem } from "../@ui/@utils/bem.js";
 import { UiButton } from "../@ui/UiButton/UiButton.js";
@@ -17,6 +18,10 @@ const messages = defineMessages({
     previewLabel: { id: "parameter_filter.dropdown.preview_label" },
     apply: { id: "parameter_filter.dropdown.apply" },
     cancel: { id: "cancel" },
+    errorNotANumber: { id: "parameter_filter.dropdown.error.notANumber" },
+    errorOutOfRange: { id: "parameter_filter.dropdown.error.outOfRange" },
+    errorOutOfRangeMin: { id: "parameter_filter.dropdown.error.outOfRange.min" },
+    errorOutOfRangeMax: { id: "parameter_filter.dropdown.error.outOfRange.max" },
 });
 
 /**
@@ -37,7 +42,7 @@ export interface IParameterControlDropdownProps {
 }
 
 /**
- * Dropdown panel for editing a numeric parameter value. Owns clamp, draft, validation,
+ * Dropdown panel for editing a numeric parameter value. Owns the draft, inline validation,
  * preview, and (mode-aware) Reset via `resetValue`.
  *
  * Reset is visible only when `resetValue` is set and differs from `value`; clicking it
@@ -56,15 +61,14 @@ export function ParameterControlDropdown({
     const intl = useIntl();
     const [draft, setDraft] = useState<string>(String(value));
 
-    const parsedDraft = parseDraft(draft);
-    const isDraftValid = Number.isFinite(parsedDraft);
-    const effectiveValue = isDraftValid ? clamp(parsedDraft, constraints) : value;
+    const error = getDraftValidationError(draft, constraints);
+    const effectiveValue = error ? value : parseDraft(draft);
 
     const handleApply = () => {
-        if (!isDraftValid) {
+        if (error) {
             return;
         }
-        onApply(clamp(parsedDraft, constraints));
+        onApply(parseDraft(draft));
     };
 
     const showReset = resetValue !== undefined && effectiveValue !== resetValue;
@@ -74,7 +78,7 @@ export function ParameterControlDropdown({
             className={`${b({ dropdown: true })} overlay gd-dialog gd-dropdown`}
             data-testid="parameter-control-dropdown"
         >
-            <div className={e("dropdown-field")}>
+            <div className={cx(e("dropdown-field"), { "has-error": !!error })}>
                 <div className={e("dropdown-field-header")}>
                     <label className={e("dropdown-label")}>{intl.formatMessage(messages.valueLabel)}</label>
                     {showReset ? (
@@ -97,6 +101,14 @@ export function ParameterControlDropdown({
                     max={constraints?.max}
                     onChange={(event) => setDraft(event.target.value)}
                 />
+                {error ? (
+                    <div className={e("dropdown-error")} data-testid="parameter-control-dropdown-error">
+                        <FormattedMessage
+                            {...error}
+                            values={{ min: constraints?.min, max: constraints?.max }}
+                        />
+                    </div>
+                ) : null}
             </div>
             <div className={e("dropdown-divider")} />
             <div className={e("dropdown-preview")} data-testid="parameter-control-dropdown-preview">
@@ -128,17 +140,41 @@ export function ParameterControlDropdown({
                     label={intl.formatMessage(messages.apply)}
                     dataTestId="parameter-control-dropdown-apply"
                     onClick={handleApply}
-                    isDisabled={!isDraftValid}
+                    isDisabled={!!error}
                 />
             </div>
         </div>
     );
 }
 
-function parseDraft(draft: string): number {
-    return draft.trim() === "" ? Number.NaN : Number(draft);
+/**
+ * Returns the message to show for an invalid draft, or `undefined` when the draft is a valid
+ * in-range number. The single source of truth the dropdown derives its error row, input style,
+ * and Apply-disabled state from.
+ *
+ * @internal
+ */
+export function getDraftValidationError(
+    draft: string,
+    constraints?: INumberParameterConstraints,
+): MessageDescriptor | undefined {
+    const value = parseDraft(draft);
+    if (!Number.isFinite(value)) {
+        return messages.errorNotANumber;
+    }
+    if (isValidNumberParameterValue(value, constraints)) {
+        return undefined;
+    }
+    const { min, max } = constraints ?? {};
+    if (min !== undefined && max === undefined) {
+        return messages.errorOutOfRangeMin;
+    }
+    if (max !== undefined && min === undefined) {
+        return messages.errorOutOfRangeMax;
+    }
+    return messages.errorOutOfRange;
 }
 
-function clamp(value: number, { min, max }: INumberParameterConstraints = {}): number {
-    return Math.min(max ?? value, Math.max(min ?? value, value));
+function parseDraft(draft: string): number {
+    return draft.trim() === "" ? Number.NaN : Number(draft);
 }

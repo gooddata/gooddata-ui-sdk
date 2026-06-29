@@ -2,6 +2,10 @@
 
 import { type ReactElement } from "react";
 
+import {
+    ScheduledEmailAutomationsProvider,
+    ScheduledEmailConnector,
+} from "../../automations/connectors/ScheduledEmailConnector.js";
 import { CancelEditDialog } from "../../cancelEditDialog/CancelEditDialog.js";
 import { useCancelEditDialog } from "../../cancelEditDialog/DefaultCancelEditDialog.js";
 import { useDeleteDialogProps } from "../../deleteDialog/DefaultDeleteDialog.js";
@@ -25,7 +29,6 @@ import { ToastMessages } from "../components/ToastMessages.js";
 import { AlertingDialogProvider } from "./AlertingDialogProvider.js";
 import { DashboardTabs, useDashboardTabsProps } from "./DashboardTabs.js";
 import { DensityDialogProvider } from "./DensityDialogProvider.js";
-import { ScheduledEmailDialogProvider } from "./ScheduledEmailDialogProvider.js";
 import { SettingsDialogProvider } from "./SettingsDialogProvider.js";
 import { ShareDialogDashboardHeader } from "./ShareDialogDashboardHeader.js";
 
@@ -81,7 +84,9 @@ export function DashboardHeader(): ReactElement {
             <ExportCsvDialogProvider />
             <ExportTabularPdfDialogProvider />
             <ExportTemplateDialogProvider />
-            <ScheduledEmailDialogProvider />
+            <ScheduledEmailAutomationsProvider>
+                <ScheduledEmailConnector />
+            </ScheduledEmailAutomationsProvider>
             <AlertingDialogProvider />
             <ShareDialogDashboardHeader />
             <SettingsDialogProvider />
