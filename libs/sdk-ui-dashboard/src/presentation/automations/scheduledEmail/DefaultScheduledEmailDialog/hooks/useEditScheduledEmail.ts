@@ -127,7 +127,7 @@ export function useEditScheduledEmail({
         settings,
         timezone,
         currentUser,
-        features: { enableExternalRecipients: enabledExternalRecipients, enableAutomationEvaluationMode },
+        features: { enableAutomationEvaluationMode },
     } = useAutomationsContext();
     const {
         dashboardId,
@@ -908,8 +908,7 @@ export function useEditScheduledEmail({
     const selectedNotificationChannel = notificationChannels.find(
         (channel) => channel.id === editedAutomation.notificationChannel,
     );
-    const allowExternalRecipients =
-        selectedNotificationChannel?.allowedRecipients === "external" && enabledExternalRecipients;
+    const allowExternalRecipients = selectedNotificationChannel?.allowedRecipients === "external";
     const allowOnlyLoggedUserRecipients = selectedNotificationChannel?.allowedRecipients === "creator";
 
     const { isValid: isParentValid } = useScheduleValidation(originalAutomation);

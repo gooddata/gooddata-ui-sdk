@@ -38,11 +38,7 @@ import {
     selectBackendCapabilities,
     selectSupportsRichTextWidgets,
 } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
-import {
-    selectEnableKDRichText,
-    selectEnableVisualizationSwitcher,
-    selectSettings,
-} from "../../../model/store/config/configSelectors.js";
+import { selectEnableKDRichText, selectSettings } from "../../../model/store/config/configSelectors.js";
 import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
 import { selectFilterContextFilters } from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import { selectLayout } from "../../../model/store/tabs/layout/layoutSelectors.js";
@@ -190,7 +186,6 @@ export function FloatingToolbar() {
     const primaryColor = theme?.palette?.primary?.base ?? GD_COLOR_HIGHLIGHT;
     const supportsRichText = useDashboardSelector(selectSupportsRichTextWidgets);
     const enableRichText = useDashboardSelector(selectEnableKDRichText);
-    const enableVisualizationSwitcher = useDashboardSelector(selectEnableVisualizationSwitcher);
     const layout = useDashboardSelector(selectLayout);
     const settings = useDashboardSelector(selectSettings);
     const filterContextFilters = useDashboardSelector(selectFilterContextFilters);
@@ -362,22 +357,16 @@ export function FloatingToolbar() {
                     onMouseDown={closeInsightPicker}
                     onActivate={handleDashboardLayoutActivate}
                 />
-                {enableVisualizationSwitcher ? (
-                    <DraggableToolbarButton
-                        icon={
-                            <IconVisualizationSwitcher
-                                color={iconColor}
-                                width={ICON_SIZE}
-                                height={ICON_SIZE}
-                            />
-                        }
-                        label={intl.formatMessage({ id: "addPanel.visualizationSwitcher" })}
-                        dragItem={VIS_SWITCHER_DRAG_ITEM}
-                        testSelector="s-floating-toolbar-visualization-switcher"
-                        onMouseDown={closeInsightPicker}
-                        onActivate={handleVisSwitcherActivate}
-                    />
-                ) : null}
+                <DraggableToolbarButton
+                    icon={
+                        <IconVisualizationSwitcher color={iconColor} width={ICON_SIZE} height={ICON_SIZE} />
+                    }
+                    label={intl.formatMessage({ id: "addPanel.visualizationSwitcher" })}
+                    dragItem={VIS_SWITCHER_DRAG_ITEM}
+                    testSelector="s-floating-toolbar-visualization-switcher"
+                    onMouseDown={closeInsightPicker}
+                    onActivate={handleVisSwitcherActivate}
+                />
                 {supportsRichText && enableRichText ? (
                     <DraggableToolbarButton
                         icon={<IconRichText color={iconColor} width={ICON_SIZE} height={ICON_SIZE} />}

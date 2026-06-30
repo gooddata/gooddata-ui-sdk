@@ -5,11 +5,4 @@
  *
  * @public
  */
-export type PivotTableNextExperimentalConfig = {
-    /**
-     * Enable pagination for the pivot table.
-     *
-     * Default: true
-     */
-    enablePivotTablePagination?: boolean;
-};
+export type PivotTableNextExperimentalConfig = Record<never, never>;

@@ -28,7 +28,6 @@ import {
 import { useDashboardSelector } from "../../../../../../model/react/DashboardStoreProvider.js";
 import {
     selectEnableAnomalyDetectionAlert,
-    selectEnableExternalRecipients,
     selectTimezone,
     selectWeekStart,
 } from "../../../../../../model/store/config/configSelectors.js";
@@ -97,7 +96,6 @@ export const useEditAlert = ({
     const [warningMessage, setWarningMessage] = useState<string | undefined>(undefined);
     const currentUser = useDashboardSelector(selectCurrentUser);
     const users = useDashboardSelector(selectUsers);
-    const enabledExternalRecipients = useDashboardSelector(selectEnableExternalRecipients);
     const enableAnomalyDetectionAlert = useDashboardSelector(selectEnableAnomalyDetectionAlert);
     const enableAiAssistant = useDashboardSelector(selectCanUseAiAssistant);
     const weekStart = useDashboardSelector(selectWeekStart);
@@ -114,8 +112,7 @@ export const useEditAlert = ({
         (destination) => destination.id === updatedAlert.notificationChannel,
     );
     const defaultUser = convertCurrentUserToWorkspaceUser(users ?? [], currentUser);
-    const allowExternalRecipients =
-        selectedDestination?.allowedRecipients === "external" && enabledExternalRecipients;
+    const allowExternalRecipients = selectedDestination?.allowedRecipients === "external";
     const allowOnlyLoggedUserRecipients = selectedDestination?.allowedRecipients === "creator";
 
     const changeMeasure = useCallback(

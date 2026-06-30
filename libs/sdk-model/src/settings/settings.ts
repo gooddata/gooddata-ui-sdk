@@ -488,11 +488,6 @@ export interface IFeatureFlags {
     enableAccessibleChartTooltip?: boolean;
 
     /**
-     * Indicates whether the Waterfall Chart is available in AD.
-     */
-    enableWaterfallChart?: boolean;
-
-    /**
      * Indicates whether the Radar Chart is available in AD.
      */
     enableRadarChart?: boolean;
@@ -513,16 +508,6 @@ export interface IFeatureFlags {
     enableDescriptions?: boolean;
 
     /**
-     * Enable new max bucket size items limit for Pivot Table
-     */
-    enablePivotTableIncreaseBucketSize?: boolean;
-
-    /**
-     * Enable user management page in Home UI.
-     */
-    enableUserManagement?: boolean;
-
-    /**
      * Enable cross filtering in KD
      */
     enableKDCrossFiltering?: boolean;
@@ -531,11 +516,6 @@ export interface IFeatureFlags {
      * Enable change analysis
      */
     enableChangeAnalysis?: boolean;
-
-    /**
-     * Enable multiple date filters.
-     */
-    enableMultipleDateFilters?: boolean;
 
     /**
      * Enable multiple conditions in measure value filters (MVF).
@@ -576,29 +556,9 @@ export interface IFeatureFlags {
     enableKDRichText?: boolean;
 
     /**
-     * Enables visualization switcher widgets on dashboards.
-     */
-    enableKDVisualizationSwitcher?: boolean;
-
-    /**
-     * Enable attribute filter values validation by date filters.
-     */
-    enableKDAttributeFilterDatesValidation?: boolean;
-
-    /**
      * Enable multiple data sources to be used in a single workspace.
      */
     enableMultipleDataSourcesInWorkspace?: boolean;
-
-    /**
-     * Enables segmentation in scatter plot.
-     */
-    enableScatterPlotSegmentation?: boolean;
-
-    /**
-     * Enable clustering in scatter plot.
-     */
-    enableScatterPlotClustering?: boolean;
 
     /**
      * Enables rich text in descriptions.
@@ -629,16 +589,6 @@ export interface IFeatureFlags {
      * Enables alerting rollout of the dashboard widgets.
      */
     enableAlertingRollout?: boolean;
-
-    /**
-     * Enables smtp settings.
-     */
-    enableSmtp?: boolean;
-
-    /**
-     * Enables storing widget identifiers.
-     */
-    enableWidgetIdentifiersRollout?: boolean;
 
     enableDataSection?: boolean;
     enableMySqlDataSource?: boolean;
@@ -699,30 +649,9 @@ export interface IFeatureFlags {
     enableCustomizedDashboardsWithoutPluginOverlay?: boolean;
 
     /**
-     * Enables ignore cross-filtering in widgets on dashboard.
-     */
-    enableIgnoreCrossFiltering?: boolean;
-
-    /**
-     * Enables manual headline exports on dashboard.
-     */
-    enableHeadlineExport?: boolean;
-
-    /**
-     * Enable the use of alias filter titles in cross filtering.
-     * @internal
-     */
-    enableCrossFilteringAliasTitles?: boolean;
-
-    /**
      * Enable the use of default SMTP in destinations.
      */
     enableDefaultSmtp?: boolean;
-
-    /**
-     * Enable the possibility to test destinations (emails, webhooks) in the UI.
-     */
-    enableDestinationTesting?: boolean;
 
     /**
      * Enable in-platform notifications.
@@ -733,16 +662,6 @@ export interface IFeatureFlags {
      * Enable fine-tuning options for visualization in AD configuration panel.
      */
     enableVisualizationFineTuning?: boolean;
-
-    /**
-     * Enable external recipients options
-     */
-    enableExternalRecipients?: boolean;
-
-    /**
-     * Enable drilled tooltip in drill dialog
-     */
-    enableDrilledTooltip?: boolean;
 
     /**
      * Enable dashboard tabular export
@@ -1076,11 +995,6 @@ export interface IFeatureFlags {
      * Enable fiscal calendars configuration.
      */
     enableFiscalCalendars?: boolean;
-
-    /**
-     * Enable pagination for the pivot table.
-     */
-    enablePivotTablePagination?: boolean;
 
     /**
      * Enable dashboard filter groups.

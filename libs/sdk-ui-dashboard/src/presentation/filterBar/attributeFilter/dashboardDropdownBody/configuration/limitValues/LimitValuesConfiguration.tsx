@@ -20,7 +20,6 @@ import { type IMetricsAndFacts } from "../../../../../../model/queries/metricsAn
 import { useDashboardSelector } from "../../../../../../model/react/DashboardStoreProvider.js";
 import { useDashboardUserInteraction } from "../../../../../../model/react/useDashboardUserInteraction.js";
 import { selectBackendCapabilities } from "../../../../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
-import { selectEnableKDAttributeFilterDatesValidation } from "../../../../../../model/store/config/configSelectors.js";
 import { type IDashboardAttributeFilterParentItem } from "../../../../../../model/types/attributeFilterTypes.js";
 import {
     type IDashboardDependentDateFilter,
@@ -68,9 +67,6 @@ function LimitValuesConfiguration({
     onDependentDateFilterUpdate,
 }: ILimitValuesConfigurationProps) {
     const intl = useIntl();
-    const isEnabledKDAttributeFilterDatesValidation = useDashboardSelector(
-        selectEnableKDAttributeFilterDatesValidation,
-    );
     const { attributeFilterInteraction } = useDashboardUserInteraction();
     const [isDropdownOpened, setIsDropdownOpened] = useState(false);
     const itemsWithTitles = useLimitingItems(
@@ -80,7 +76,7 @@ function LimitValuesConfiguration({
         metricsAndFacts,
         dependentDateFilters,
         availableDatasets,
-        isEnabledKDAttributeFilterDatesValidation,
+        true,
         true,
         intl,
     );

@@ -21,17 +21,9 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../../locales.js";
-import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
-import { DEFAULT_MAX_AUTOMATIONS } from "../../../../model/react/useDashboardAutomations/constants.js";
-import { selectIsWhiteLabeled } from "../../../../model/store/config/configSelectors.js";
-import {
-    selectEntitlementMaxAutomations,
-    selectEntitlementUnlimitedAutomations,
-} from "../../../../model/store/entitlements/entitlementsSelectors.js";
-import { selectCanCreateAutomation } from "../../../../model/store/permissions/permissionsSelectors.js";
-import { selectExecutionTimestamp } from "../../../../model/store/ui/uiSelectors.js";
-import { selectCurrentUser } from "../../../../model/store/user/userSelectors.js";
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../../constants/zIndex.js";
+import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
+import { useScheduledEmailManagementDialogContext } from "../../contexts/ScheduledEmailManagementDialogContext.js";
 import { useScheduleEmailDialogAccessibility } from "../hooks/useScheduleEmailDialogAccessibility.js";
 import { isMobileView } from "../utils/responsive.js";
 
@@ -61,17 +53,17 @@ export function DefaultScheduledEmailManagementDialogContentBasic({
     const intl = useIntl();
     const isMobile = isMobileView();
 
-    const currentUser = useDashboardSelector(selectCurrentUser);
-    const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);
-    const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
-    const isExecutionTimestampMode = !!useDashboardSelector(selectExecutionTimestamp);
-    const maxAutomationsEntitlement = useDashboardSelector(selectEntitlementMaxAutomations);
-    const unlimitedAutomationsEntitlement = useDashboardSelector(selectEntitlementUnlimitedAutomations);
+    const {
+        currentUser,
+        isWhiteLabeled,
+        isExecutionTimestampMode,
+        features: { canCreateAutomation },
+    } = useAutomationsContext();
+    const { maxAutomations, unlimitedAutomations } = useScheduledEmailManagementDialogContext();
 
     const { returnFocusTo } = useScheduleEmailDialogAccessibility();
 
-    const maxAutomations = parseInt(maxAutomationsEntitlement?.value ?? DEFAULT_MAX_AUTOMATIONS, 10);
-    const maxAutomationsReached = automations.length >= maxAutomations && !unlimitedAutomationsEntitlement;
+    const maxAutomationsReached = automations.length >= maxAutomations && !unlimitedAutomations;
 
     const isAddButtonDisabled = useMemo(
         () => isLoadingScheduleData || maxAutomationsReached || isExecutionTimestampMode,

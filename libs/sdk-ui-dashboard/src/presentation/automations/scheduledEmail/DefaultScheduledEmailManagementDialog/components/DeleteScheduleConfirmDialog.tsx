@@ -11,9 +11,7 @@ import {
 import { type GoodDataSdkError, convertError, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { ConfirmDialog } from "@gooddata/sdk-ui-kit";
 
-import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
-import { selectCanManageWorkspace } from "../../../../../model/store/permissions/permissionsSelectors.js";
-import { selectCurrentUser } from "../../../../../model/store/user/userSelectors.js";
+import { useAutomationsContext } from "../../../contexts/AutomationsContext.js";
 
 interface IDeleteScheduleConfirmDialogProps {
     scheduledEmail: IAutomationMetadataObject | IAutomationMetadataObjectDefinition;
@@ -33,8 +31,8 @@ export function DeleteScheduleConfirmDialog({
     const effectiveBackend = useBackendStrict();
     const effectiveWorkspace = useWorkspaceStrict();
     const intl = useIntl();
-    const currentUser = useDashboardSelector(selectCurrentUser);
-    const canManageAutomations = useDashboardSelector(selectCanManageWorkspace);
+    const { currentUser, features } = useAutomationsContext();
+    const canManageAutomations = features.canManageWorkspace;
 
     const handleDeleteScheduledMail = async () => {
         const alertCreatorId = scheduledEmail.createdBy?.login;

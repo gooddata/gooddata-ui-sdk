@@ -3,9 +3,6 @@
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
-import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
-import { selectEnableMultipleDateFilters } from "../../../../model/store/config/configSelectors.js";
-
 /**
  * @internal
  */
@@ -17,8 +14,6 @@ export interface IAddAttributeFilterPlaceholderProps {
  * @internal
  */
 export function AddAttributeFilterPlaceholder({ disabled }: IAddAttributeFilterPlaceholderProps) {
-    const enableMultipleDateFilters = useDashboardSelector(selectEnableMultipleDateFilters);
-
     const className = cx(
         "add-item-placeholder",
         "add-attribute-filter-placeholder",
@@ -30,9 +25,7 @@ export function AddAttributeFilterPlaceholder({ disabled }: IAddAttributeFilterP
 
     return (
         <div className={className}>
-            <FormattedMessage
-                id={enableMultipleDateFilters ? "addPanel.filter" : "addPanel.attributeFilter"}
-            />
+            <FormattedMessage id="addPanel.filter" />
         </div>
     );
 }

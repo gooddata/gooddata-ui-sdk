@@ -2422,6 +2422,8 @@ export interface IDropdownListProps<T> {
     // (undocumented)
     accessibilityConfig?: Pick<IAccessibilityConfigBase, "ariaLabel" | "ariaLabelledBy" | "role">;
     // (undocumented)
+    body?: ReactNode | ((closeDropdown: () => void) => ReactNode);
+    // (undocumented)
     className?: string;
     // (undocumented)
     closeDropdown?: () => void;
@@ -7927,6 +7929,28 @@ export interface IUiTooltipProps {
 }
 
 // @internal (undocumented)
+export interface IUiTransferOwnershipDialogCardProps {
+    alsoRemoveMyAccess: boolean;
+    dataTestId?: string;
+    isSaving?: boolean;
+    loadOptions: (search: string) => Promise<IUiGranteeAsyncOptions>;
+    objectTitle: string;
+    // (undocumented)
+    onAlsoRemoveMyAccessChange: (next: boolean) => void;
+    onBack: () => void;
+    onCancel: () => void;
+    onClose: () => void;
+    onSelectedOwnerChange: (owner: IUiGranteeAsyncOption) => void;
+    onTransfer: () => void;
+    selectedOwner: IUiGranteeAsyncOption | undefined;
+}
+
+// @internal (undocumented)
+export interface IUiTransferOwnershipDialogProps extends IUiTransferOwnershipDialogCardProps {
+    isOpen: boolean;
+}
+
+// @internal (undocumented)
 export interface IUiTreeviewContext<Levels extends any[], Level> {
     // (undocumented)
     isItemFocusable: (item?: UiStaticTreeView<Level> | UiStaticTreeView<LevelTypesUnion<Levels>>) => boolean;
@@ -9318,6 +9342,12 @@ export function UiToastsContainer(input: IUiToastsContainerProps): ReactNode;
 
 // @internal (undocumented)
 export function UiTooltip(input: IUiTooltipProps): JSX.Element;
+
+// @internal
+export function UiTransferOwnershipDialog(input: IUiTransferOwnershipDialogProps): JSX.Element;
+
+// @internal
+export function UiTransferOwnershipDialogCard(input: IUiTransferOwnershipDialogCardProps): JSX.Element;
 
 // @internal (undocumented)
 export type UiTreeViewAddLevel<N extends number> = [...Array<N>, unknown]["length"];

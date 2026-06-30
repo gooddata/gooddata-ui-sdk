@@ -8,11 +8,7 @@ import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { messages } from "../../../../locales.js";
 import { changeInsightWidgetIgnoreCrossFiltering } from "../../../../model/commands/insight.js";
-import {
-    useDashboardDispatch,
-    useDashboardSelector,
-} from "../../../../model/react/DashboardStoreProvider.js";
-import { selectEnableIgnoreCrossFiltering } from "../../../../model/store/config/configSelectors.js";
+import { useDashboardDispatch } from "../../../../model/react/DashboardStoreProvider.js";
 import { gdColorStateBlank } from "../../../constants/colors.js";
 
 const TOOLTIP_ALIGN_POINTS = [
@@ -27,11 +23,6 @@ interface IInsightCrossFiltering {
 export function InsightCrossFiltering({ widget }: IInsightCrossFiltering) {
     const dispatch = useDashboardDispatch();
     const theme = useTheme();
-    const isIgnoreCrossFilteringEnabled = useDashboardSelector(selectEnableIgnoreCrossFiltering);
-
-    if (!isIgnoreCrossFilteringEnabled) {
-        return null;
-    }
 
     return (
         <div className="gd-cross-filtering-configuration">

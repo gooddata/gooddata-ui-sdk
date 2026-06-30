@@ -2616,8 +2616,6 @@ export interface IFeatureFlags {
     enableConditionalFormatting?: boolean;
     // (undocumented)
     enableCrateDbDataSource?: boolean;
-    // @internal
-    enableCrossFilteringAliasTitles?: boolean;
     enableCustomGeoCollection?: boolean;
     enableCustomizableCsvDelimiter?: boolean;
     enableCustomizedDashboardsWithoutPluginOverlay?: boolean;
@@ -2638,8 +2636,6 @@ export interface IFeatureFlags {
     enableDateFilterIdentifiersRollout?: boolean;
     enableDefaultSmtp?: boolean;
     enableDescriptions?: boolean;
-    enableDestinationTesting?: boolean;
-    enableDrilledTooltip?: boolean;
     enableDrillToUrlByDefault?: boolean;
     enableEmbedButtonInAD?: boolean;
     enableEmbedButtonInKD?: boolean;
@@ -2649,7 +2645,6 @@ export interface IFeatureFlags {
     enableExportTemplateSelection?: boolean;
     enableExportTimeoutFix?: boolean;
     enableExportToDocumentStorage?: boolean;
-    enableExternalRecipients?: boolean;
     enableFilterControlInDrillingConfiguration?: boolean;
     enableFiscalCalendars?: boolean;
     enableGenAiAgenticDataShareOptOut?: boolean;
@@ -2666,19 +2661,15 @@ export interface IFeatureFlags {
     enableGeoPushpinIcon?: boolean;
     enableGeoSatelliteBasemapOption?: boolean;
     enableGeoSegmentConflictRecommendation?: boolean;
-    enableHeadlineExport?: boolean;
     enableHighchartsAccessibility?: boolean;
     enableHLL?: boolean;
-    enableIgnoreCrossFiltering?: boolean;
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
     enableImprovedRankingFilter?: boolean;
     enableInPlatformNotifications?: boolean;
-    enableKDAttributeFilterDatesValidation?: boolean;
     enableKDCrossFiltering?: boolean;
     enableKDEmptyDateValuesFilter?: boolean;
     enableKDRespectLegendPosition?: boolean;
     enableKDRichText?: boolean;
-    enableKDVisualizationSwitcher?: boolean;
     enableLineChartTrendThreshold?: boolean;
     // (undocumented)
     enableMariaDbDataSource?: boolean;
@@ -2691,7 +2682,6 @@ export interface IFeatureFlags {
     // (undocumented)
     enableMotherDuckDataSource?: boolean;
     enableMultipleDataSourcesInWorkspace?: boolean;
-    enableMultipleDateFilters?: boolean;
     enableMultipleMvfConditions?: boolean;
     // (undocumented)
     enableMySqlDataSource?: boolean;
@@ -2707,8 +2697,6 @@ export interface IFeatureFlags {
     enableOrgLevelAIMemory?: boolean;
     enableParameters?: boolean;
     enablePartialDataResults?: boolean;
-    enablePivotTableIncreaseBucketSize?: boolean;
-    enablePivotTablePagination?: boolean;
     enablePreAggregationDatasets?: boolean;
     enableRadarChart?: boolean;
     enableRankingStrictLimit?: boolean;
@@ -2718,8 +2706,6 @@ export interface IFeatureFlags {
     enableRichTextDynamicReferences?: boolean;
     // @alpha
     enableRichTextWidgetFilterConfiguration?: boolean;
-    enableScatterPlotClustering?: boolean;
-    enableScatterPlotSegmentation?: boolean;
     enableScheduling?: boolean;
     enableSeamlessIdpSwitch?: boolean;
     enableSemanticSearch?: boolean;
@@ -2733,7 +2719,6 @@ export interface IFeatureFlags {
     enableSingleStoreDataSource?: boolean;
     enableSlidesExport?: boolean;
     enableSlideshowExports?: boolean;
-    enableSmtp?: boolean;
     enableSnapshotExport?: boolean;
     enableSnapshotExportAccessibility?: boolean;
     // (undocumented)
@@ -2743,13 +2728,10 @@ export interface IFeatureFlags {
     enableSystemAccountFiltering?: boolean;
     enableToDateFilters?: boolean;
     enableUserDataFiltersUi?: boolean;
-    enableUserManagement?: boolean;
     enableVisualizationFilteringByTags?: boolean;
     enableVisualizationFineTuning?: boolean;
-    enableWaterfallChart?: boolean;
     enableWidgetExportPdf?: boolean;
     enableWidgetExportPngImage?: boolean;
-    enableWidgetIdentifiersRollout?: boolean;
     enableWorkspaceSettingsAppHeaderMenuItem?: boolean;
     // @alpha
     productionFeatures?: IProductionFeaturesConfig;

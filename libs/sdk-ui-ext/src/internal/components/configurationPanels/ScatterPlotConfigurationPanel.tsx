@@ -39,13 +39,12 @@ export class ScatterPlotConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel(): ReactNode {
         const { xAxisVisible, gridEnabled, yAxisVisible, clusteringEnabled } = this.getControlProperties();
 
-        const { featureFlags, propertiesMeta, properties, pushData, insight, type } = this.props;
+        const { propertiesMeta, properties, pushData, insight, type } = this.props;
         const controls = properties?.controls;
         const controlsDisabled = this.isControlDisabled();
         const { xaxis: itemsOnXAxis, yaxis: itemsOnYAxis } = countItemsOnAxes(type, controls, insight);
         const xAxisNameSectionDisabled = controlsDisabled || itemsOnXAxis !== 1;
         const yAxisNameSectionDisabled = controlsDisabled || itemsOnYAxis !== 1;
-        const showClusteringSection: boolean = !!featureFlags?.enableScatterPlotClustering;
         const isScatterPlotClusteringDisabled = this.isClusteringDisabled();
         const showingPartialClusters = propertiesMeta?.showingPartialClusters;
 
@@ -136,42 +135,40 @@ export class ScatterPlotConfigurationPanel extends ConfigurationPanelContent {
                             pushData={pushData}
                         />
                     </ConfigSection>
-                    {showClusteringSection ? (
-                        <ConfigSection
-                            id="clustering_section"
-                            title={messages["clusteringTitle"].id}
-                            propertiesMeta={propertiesMeta}
+                    <ConfigSection
+                        id="clustering_section"
+                        title={messages["clusteringTitle"].id}
+                        propertiesMeta={propertiesMeta}
+                        properties={properties}
+                        pushData={pushData}
+                        valuePath="clustering.enabled"
+                        canBeToggled
+                        toggledOn={clusteringEnabled}
+                        toggleDisabled={controlsDisabled || isScatterPlotClusteringDisabled}
+                        showDisabledMessage={isScatterPlotClusteringDisabled}
+                        toggleMessageId={defineMessage({ id: "properties.clustering.disabled" }).id}
+                    >
+                        <NumberOfClustersControl
+                            valuePath="clustering.numberOfClusters"
+                            disabled={controlsDisabled || isScatterPlotClusteringDisabled}
                             properties={properties}
                             pushData={pushData}
-                            valuePath="clustering.enabled"
-                            canBeToggled
-                            toggledOn={clusteringEnabled}
-                            toggleDisabled={controlsDisabled || isScatterPlotClusteringDisabled}
-                            showDisabledMessage={isScatterPlotClusteringDisabled}
-                            toggleMessageId={defineMessage({ id: "properties.clustering.disabled" }).id}
-                        >
-                            <NumberOfClustersControl
-                                valuePath="clustering.numberOfClusters"
-                                disabled={controlsDisabled || isScatterPlotClusteringDisabled}
-                                properties={properties}
-                                pushData={pushData}
-                            />
-                            <ClusteringThresholdControl
-                                valuePath="clustering.threshold"
-                                disabled={controlsDisabled || isScatterPlotClusteringDisabled}
-                                properties={properties}
-                                pushData={pushData}
-                            />
-                            {showingPartialClusters ? (
-                                <Message type="progress" className="adi-input-progress">
-                                    <h4>
-                                        <FormattedMessage id="properties.clustering.amount.partial.title" />
-                                    </h4>
-                                    <FormattedMessage id="properties.clustering.amount.partial.description" />
-                                </Message>
-                            ) : null}
-                        </ConfigSection>
-                    ) : null}
+                        />
+                        <ClusteringThresholdControl
+                            valuePath="clustering.threshold"
+                            disabled={controlsDisabled || isScatterPlotClusteringDisabled}
+                            properties={properties}
+                            pushData={pushData}
+                        />
+                        {showingPartialClusters ? (
+                            <Message type="progress" className="adi-input-progress">
+                                <h4>
+                                    <FormattedMessage id="properties.clustering.amount.partial.title" />
+                                </h4>
+                                <FormattedMessage id="properties.clustering.amount.partial.description" />
+                            </Message>
+                        ) : null}
+                    </ConfigSection>
                     {this.renderCustomTooltipSection()}
                     {this.renderAdvancedSection()}
                 </div>

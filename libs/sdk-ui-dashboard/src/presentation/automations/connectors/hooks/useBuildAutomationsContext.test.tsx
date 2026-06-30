@@ -61,7 +61,6 @@ vi.mock("../../../../model/store/config/configSelectors.js", () => ({
     selectEnableAutomationManagement: () => false,
     selectEnableComparisonInAlerting: () => false,
     selectEnableCustomizableCsvDelimiter: () => false,
-    selectEnableExternalRecipients: () => false,
     selectEnableNewScheduledExport: () => false,
     selectExternalRecipient: () => undefined,
     selectIsWhiteLabeled: () => false,
@@ -142,6 +141,7 @@ vi.mock("../../../../model/store/entitlements/entitlementsSelectors.js", () => (
 
 vi.mock("../../../../model/store/ui/uiSelectors.js", () => ({
     selectExecutionTimestamp: () => undefined,
+    selectScheduleEmailDialogReturnFocusTo: () => undefined,
 }));
 
 vi.mock(

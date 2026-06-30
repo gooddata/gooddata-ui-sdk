@@ -42,7 +42,6 @@ import {
 } from "../../../types/layoutTypes.js";
 import { createMemoizedSelector } from "../../_infra/selectors.js";
 import { type IUndoableCommand, createUndoableCommandsMapping } from "../../_infra/undoEnhancer.js";
-import { selectEnableIgnoreCrossFiltering } from "../../config/configSelectors.js";
 import {
     selectCrossFilteringFiltersLocalIdentifiers,
     selectCrossFilteringFiltersLocalIdentifiersByWidgetRef,
@@ -387,14 +386,12 @@ export const selectAllFiltersForWidgetByRef: (
         selectWidgetByRef(ref),
         selectFilterContextFilters,
         selectCrossFilteringFiltersLocalIdentifiersByWidgetRef(ref),
-        selectEnableIgnoreCrossFiltering,
         selectWidgetIgnoreCrossFiltering(ref),
         selectCrossFilteringFiltersLocalIdentifiers,
         (
             widget,
             dashboardFilters,
             crossFilteringFiltersLocalIdentifiers,
-            isIgnoreCrossFilteringEnabled,
             shouldIgnoreCrossFiltering,
             allCrossFilteringLocalIdentifiers,
         ) => {
@@ -415,17 +412,16 @@ export const selectAllFiltersForWidgetByRef: (
             });
 
             // Widget ignores cross-filtering, so we should remove all cross-filtering filters
-            const filtersWithoutAllCrossFiltering =
-                isIgnoreCrossFilteringEnabled && shouldIgnoreCrossFiltering
-                    ? filtersWithoutCrossFilteringFilters.filter((f) => {
-                          if (isDashboardAttributeFilterItem(f)) {
-                              const localId = dashboardAttributeFilterItemLocalIdentifier(f);
-                              return !allCrossFilteringLocalIdentifiers.includes(localId!);
-                          }
+            const filtersWithoutAllCrossFiltering = shouldIgnoreCrossFiltering
+                ? filtersWithoutCrossFilteringFilters.filter((f) => {
+                      if (isDashboardAttributeFilterItem(f)) {
+                          const localId = dashboardAttributeFilterItemLocalIdentifier(f);
+                          return !allCrossFilteringLocalIdentifiers.includes(localId!);
+                      }
 
-                          return true;
-                      })
-                    : [...filtersWithoutCrossFilteringFilters];
+                      return true;
+                  })
+                : [...filtersWithoutCrossFilteringFilters];
 
             const [commonDateFilters, otherFilters] = partition(
                 filtersWithoutAllCrossFiltering,

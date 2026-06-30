@@ -235,12 +235,7 @@ describe("PluggablePivotTable", () => {
             });
 
             it("should return reference point with new bucket max size", async () => {
-                const pivotTable = createComponent({
-                    ...defaultProps,
-                    featureFlags: {
-                        enablePivotTableIncreaseBucketSize: true,
-                    },
-                });
+                const pivotTable = createComponent();
 
                 const extendedReferencePoint = await pivotTable.getExtendedReferencePoint(
                     tableWithMultipleMeasuresRowsAndColumns,
@@ -250,12 +245,7 @@ describe("PluggablePivotTable", () => {
             });
 
             it("should return reference point with new bucket max size, when derived measures present", async () => {
-                const pivotTable = createComponent({
-                    ...defaultProps,
-                    featureFlags: {
-                        enablePivotTableIncreaseBucketSize: true,
-                    },
-                });
+                const pivotTable = createComponent();
 
                 const extendedReferencePoint = await pivotTable.getExtendedReferencePoint(
                     tableWith20MeasuresAndDerivedMeasuresNoRowsAnd1Column,
@@ -265,12 +255,7 @@ describe("PluggablePivotTable", () => {
             });
 
             it("should return reference point with new bucket max size, when measures/attributes limit is reached with no columns", async () => {
-                const pivotTable = createComponent({
-                    ...defaultProps,
-                    featureFlags: {
-                        enablePivotTableIncreaseBucketSize: true,
-                    },
-                });
+                const pivotTable = createComponent();
 
                 const extendedReferencePoint = await pivotTable.getExtendedReferencePoint(
                     tableWith20MeasuresAndAttributesAndNoColumn,
@@ -280,12 +265,7 @@ describe("PluggablePivotTable", () => {
             });
 
             it("should return reference point with new bucket max size, when measures/attributes limit is reached with columns", async () => {
-                const pivotTable = createComponent({
-                    ...defaultProps,
-                    featureFlags: {
-                        enablePivotTableIncreaseBucketSize: true,
-                    },
-                });
+                const pivotTable = createComponent();
 
                 const extendedReferencePoint = await pivotTable.getExtendedReferencePoint(
                     tableWith20MeasuresAndAttributesAnd1Column,
@@ -902,14 +882,6 @@ describe("createPivotTableConfig", () => {
             "none",
             {},
             columnWidths,
-        ],
-        ["config with total rows if feature flag on", {}, "none", { enableTableTotalRows: true }, undefined],
-        [
-            "config with total rows if feature flag off",
-            {},
-            "none",
-            { enableTableTotalRows: false },
-            undefined,
         ],
     ];
 

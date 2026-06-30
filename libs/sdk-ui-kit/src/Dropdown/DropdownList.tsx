@@ -108,6 +108,8 @@ export interface IDropdownListProps<T> {
 
     accessibilityConfig?: Pick<IAccessibilityConfigBase, "ariaLabel" | "ariaLabelledBy" | "role">;
 
+    body?: ReactNode | ((closeDropdown: () => void) => ReactNode);
+
     onScroll?: () => void;
 
     /**
@@ -200,6 +202,7 @@ export function DropdownList<T>({
     closeDropdown,
     accessibilityConfig,
     renderItem,
+    body,
     itemHeightGetter,
     itemTitleGetter,
     loadNextPage,
@@ -231,6 +234,18 @@ export function DropdownList<T>({
         }
 
         return footer;
+    };
+
+    const renderBody = () => {
+        if (!body) {
+            return null;
+        }
+
+        if (typeof body === "function") {
+            return body(closeDropdown!);
+        }
+
+        return body;
     };
 
     const onChange = useCallback(
@@ -304,6 +319,7 @@ export function DropdownList<T>({
                     className={tabsClassName}
                 />
             ) : null}
+            {renderBody()}
             {hasNoData ? (
                 <div style={{ width: isMobile ? "auto" : width }}>{renderNoData({ hasNoMatchingData })}</div>
             ) : null}

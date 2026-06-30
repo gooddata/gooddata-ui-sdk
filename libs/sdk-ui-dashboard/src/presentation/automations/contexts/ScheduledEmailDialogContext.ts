@@ -12,7 +12,6 @@ import type {
     IExportTemplate,
     IInsight,
     IWidget,
-    ObjRef,
 } from "@gooddata/sdk-model";
 
 /**
@@ -50,11 +49,6 @@ export interface IScheduledEmailDialogContextValue {
     isCrossFiltering: boolean;
     /** Whether the dashboard has more than one tab; derived from selectTabs. */
     hasMultipleTabs: boolean;
-    /**
-     * Returns true when a widget with the given ref still exists on the dashboard layout.
-     * Bridges identifier↔URI mismatches the same way as selectWidgetByRef.
-     */
-    widgetExistsByRef: (ref: ObjRef | undefined) => boolean;
     /** Effective mode for the common (dashboard-level) date filter. */
     commonDateFilterMode: DashboardDateFilterConfigMode;
     /** Effective mode map for per-dataset date filters (localIdentifier → mode). */

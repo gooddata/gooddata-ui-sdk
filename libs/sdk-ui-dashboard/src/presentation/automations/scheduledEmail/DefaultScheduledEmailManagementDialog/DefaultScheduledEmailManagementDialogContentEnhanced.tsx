@@ -22,30 +22,10 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../../locales.js";
-import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
-import { DEFAULT_MAX_AUTOMATIONS } from "../../../../model/react/useDashboardAutomations/constants.js";
-import {
-    selectEnableAccessibilityMode,
-    selectExternalRecipient,
-    selectIsEmbedded,
-    selectIsWhiteLabeled,
-    selectLocale,
-    selectSettings,
-    selectTimezone,
-} from "../../../../model/store/config/configSelectors.js";
-import {
-    selectEntitlementMaxAutomations,
-    selectEntitlementUnlimitedAutomations,
-} from "../../../../model/store/entitlements/entitlementsSelectors.js";
-import { selectDashboardId, selectDashboardTitle } from "../../../../model/store/meta/metaSelectors.js";
-import { selectCanCreateAutomation } from "../../../../model/store/permissions/permissionsSelectors.js";
-import {
-    selectAutomationsInvalidationId,
-    selectExecutionTimestamp,
-    selectIsScheduleEmailDialogOpen,
-} from "../../../../model/store/ui/uiSelectors.js";
 import { AUTOMATIONS_COLUMN_CONFIG, AUTOMATIONS_MAX_HEIGHT } from "../../../constants/automations.js";
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../../constants/zIndex.js";
+import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
+import { useScheduledEmailManagementDialogContext } from "../../contexts/ScheduledEmailManagementDialogContext.js";
 import { SCHEDULED_EMAIL_DIALOG_ID } from "../DefaultScheduledEmailDialog/constants.js";
 import { useScheduleEmailDialogAccessibility } from "../hooks/useScheduleEmailDialogAccessibility.js";
 import { isMobileView } from "../utils/responsive.js";
@@ -72,28 +52,32 @@ export function DefaultScheduledEmailManagementDialogContentEnhanced({
     const workspace = useWorkspace();
     const backend = useBackend();
 
-    const timezone = useDashboardSelector(selectTimezone);
-    const locale = useDashboardSelector(selectLocale);
-    const dashboardId = useDashboardSelector(selectDashboardId);
-    const dashboardTitle = useDashboardSelector(selectDashboardTitle);
-    const externalRecipientOverride = useDashboardSelector(selectExternalRecipient);
-    const enableBulkActions = !useDashboardSelector(selectEnableAccessibilityMode);
-    const isEditDialogOpen = useDashboardSelector(selectIsScheduleEmailDialogOpen);
-    const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);
-    const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
-    const isExecutionTimestampMode = !!useDashboardSelector(selectExecutionTimestamp);
-    const maxAutomationsEntitlement = useDashboardSelector(selectEntitlementMaxAutomations);
-    const unlimitedAutomationsEntitlement = useDashboardSelector(selectEntitlementUnlimitedAutomations);
+    const {
+        timezone,
+        locale,
+        settings,
+        isWhiteLabeled,
+        isExecutionTimestampMode,
+        externalRecipient: externalRecipientOverride,
+        features: { canCreateAutomation },
+    } = useAutomationsContext();
+    const {
+        dashboardId,
+        dashboardTitle,
+        enableAccessibilityMode,
+        isScheduleEmailDialogOpen: isEditDialogOpen,
+        automationsInvalidationId,
+        isEmbedded,
+        maxAutomations,
+        unlimitedAutomations,
+    } = useScheduledEmailManagementDialogContext();
 
-    const automationsInvalidationId = useDashboardSelector(selectAutomationsInvalidationId);
-    const isEmbedded = useDashboardSelector(selectIsEmbedded);
-    const settings = useDashboardSelector(selectSettings);
+    const enableBulkActions = !enableAccessibilityMode;
     const useHostRoute =
-        Boolean(settings.enableShellApplication) && Boolean(settings.enableShellApplication_dashboards);
+        Boolean(settings?.enableShellApplication) && Boolean(settings?.enableShellApplication_dashboards);
     const { returnFocusTo } = useScheduleEmailDialogAccessibility();
 
-    const maxAutomations = parseInt(maxAutomationsEntitlement?.value ?? DEFAULT_MAX_AUTOMATIONS, 10);
-    const maxAutomationsReached = automations.length >= maxAutomations && !unlimitedAutomationsEntitlement;
+    const maxAutomationsReached = automations.length >= maxAutomations && !unlimitedAutomations;
 
     const isAddButtonDisabled = useMemo(
         () => isLoadingScheduleData || maxAutomationsReached || isExecutionTimestampMode,

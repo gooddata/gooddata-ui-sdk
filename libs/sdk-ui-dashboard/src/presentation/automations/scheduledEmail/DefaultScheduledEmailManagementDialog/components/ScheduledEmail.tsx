@@ -21,10 +21,8 @@ import {
 } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
-import { selectCanManageWorkspace } from "../../../../../model/store/permissions/permissionsSelectors.js";
-import { selectCurrentUser } from "../../../../../model/store/user/userSelectors.js";
 import { gdColorNegative, gdColorStateBlank } from "../../../../constants/colors.js";
+import { useAutomationsContext } from "../../../contexts/AutomationsContext.js";
 import { isVisualisationAutomation } from "../../../shared/utils/automationUtils.js";
 import { useScheduleValidation } from "../../DefaultScheduledEmailDialog/hooks/useScheduleValidation.js";
 
@@ -57,10 +55,9 @@ export function ScheduledEmail({
 }: IScheduledEmailProps) {
     const theme = useTheme();
 
-    const currentUser = useDashboardSelector(selectCurrentUser);
-    const canManageWorkspace = useDashboardSelector(selectCanManageWorkspace);
+    const { currentUser, features } = useAutomationsContext();
     const canEdit =
-        canManageWorkspace || (currentUser && currentUser.login === scheduledEmail.createdBy?.login);
+        features.canManageWorkspace || (currentUser && currentUser.login === scheduledEmail.createdBy?.login);
 
     const { isValid } = useScheduleValidation(scheduledEmail);
     const intl = useIntl();

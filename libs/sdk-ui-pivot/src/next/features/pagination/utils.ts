@@ -29,7 +29,7 @@ export function isAutoPageSize(pageSize: number): boolean {
 
 /**
  * Checks if pagination is enabled based on the config.
- * Pagination requires `config.pagination.enabled` to be true and `config.enablePivotTablePagination` to not be false,
+ * Pagination requires `config.pagination.enabled` to be true,
  * OR accessibility mode to be enabled (which enforces pagination).
  *
  * @param config - The pivot table configuration
@@ -44,7 +44,5 @@ export function isPaginationEnabled(config: PivotTableNextConfig): boolean {
         return true;
     }
 
-    const paginationConfigEnabled = config.pagination?.enabled ?? false;
-    const paginationFeatureEnabled = config.enablePivotTablePagination ?? true;
-    return paginationConfigEnabled && paginationFeatureEnabled;
+    return config.pagination?.enabled ?? false;
 }

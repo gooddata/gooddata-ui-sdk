@@ -3,16 +3,8 @@
 import { useCallback, useState } from "react";
 
 import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
-import { buildAutomationUrl, navigate, useWorkspace } from "@gooddata/sdk-ui";
 
-import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
-import {
-    selectEnableAutomationManagement,
-    selectExternalRecipient,
-    selectIsEmbedded,
-    selectSettings,
-} from "../../../../model/store/config/configSelectors.js";
-import { selectDashboardId } from "../../../../model/store/meta/metaSelectors.js";
+import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
 import { type IScheduledEmailManagementDialogProps } from "../types.js";
 
 import { DeleteScheduleConfirmDialog } from "./components/DeleteScheduleConfirmDialog.js";
@@ -36,48 +28,20 @@ export function ScheduledEmailManagementDialog({
         null,
     );
 
-    const workspace = useWorkspace();
-    const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
-    const dashboardId = useDashboardSelector(selectDashboardId);
-    const isEmbedded = useDashboardSelector(selectIsEmbedded);
-    const externalRecipientOverride = useDashboardSelector(selectExternalRecipient);
-    const settings = useDashboardSelector(selectSettings);
-    const useHostRoute =
-        Boolean(settings.enableShellApplication) && Boolean(settings.enableShellApplication_dashboards);
+    const {
+        features: { enableAutomationManagement },
+    } = useAutomationsContext();
+
+    const handleScheduleEdit = useCallback(
+        (scheduledEmail: IAutomationMetadataObject) => {
+            onEdit?.(scheduledEmail);
+        },
+        [onEdit],
+    );
 
     const handleScheduleDelete = useCallback((scheduledEmail: IAutomationMetadataObject) => {
         setScheduledEmailToDelete(scheduledEmail);
     }, []);
-
-    const handleScheduleEdit = useCallback(
-        (scheduledEmail: IAutomationMetadataObject) => {
-            if (enableAutomationManagement && scheduledEmail.dashboard?.id !== dashboardId) {
-                navigate(
-                    buildAutomationUrl({
-                        workspaceId: workspace,
-                        dashboardId: scheduledEmail.dashboard?.id,
-                        automationId: scheduledEmail.id,
-                        isEmbedded,
-                        useHostRoute,
-                        queryParams: externalRecipientOverride
-                            ? { recipient: externalRecipientOverride }
-                            : undefined,
-                    }),
-                );
-                return;
-            }
-            onEdit?.(scheduledEmail);
-        },
-        [
-            onEdit,
-            enableAutomationManagement,
-            dashboardId,
-            workspace,
-            isEmbedded,
-            useHostRoute,
-            externalRecipientOverride,
-        ],
-    );
 
     const handleScheduleDeleteSuccess = useCallback(() => {
         onDelete?.();

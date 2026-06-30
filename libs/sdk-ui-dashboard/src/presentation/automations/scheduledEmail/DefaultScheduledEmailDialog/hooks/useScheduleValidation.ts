@@ -7,10 +7,10 @@ import {
     isExportDefinitionVisualizationObjectRequestPayload,
 } from "@gooddata/sdk-model";
 
-import { useScheduledEmailDialogContext } from "../../../contexts/ScheduledEmailDialogContext.js";
+import { useAutomationsContext } from "../../../contexts/AutomationsContext.js";
 
 export const useScheduleValidation = (schedule: IAutomationMetadataObjectDefinition) => {
-    const { widgetExistsByRef } = useScheduledEmailDialogContext();
+    const { widgetExistsByRef } = useAutomationsContext();
 
     const isDashboardSchedule = schedule.exportDefinitions?.some((exportDefinition) =>
         isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload),

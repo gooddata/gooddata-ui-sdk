@@ -86,7 +86,6 @@ export interface IAutomationsContextValue {
         enableAutomationManagement: boolean;
         canUseAiAssistant: boolean;
         enableComparisonInAlerting: boolean;
-        enableExternalRecipients: boolean;
         enableAlertAttributes: boolean;
         canManageWorkspace: boolean;
         enableCustomizableCsvDelimiter: boolean;
@@ -94,6 +93,18 @@ export interface IAutomationsContextValue {
     };
     getCatalogAttributeByRef: (ref: ObjRef) => ICatalogAttribute | ICatalogDateAttribute | undefined;
     getAttributeFilterDisplayForm: (displayForm: ObjRef) => IAttributeDisplayFormMetadataObject | undefined;
+    /**
+     * Element ID to return focus to when the scheduled-email dialog closes.
+     * Shared by both the create/edit dialog and the management dialog tree via
+     * useScheduleEmailDialogAccessibility.
+     */
+    scheduleEmailDialogReturnFocusTo?: string;
+    /**
+     * Returns true when a widget with the given ref still exists on the dashboard layout.
+     * Bridges identifier↔URI mismatches the same way as selectWidgetByRef.
+     * NOTE: do NOT narrow to isWidget() here — this is a pure existence check on the ObjRefMap.
+     */
+    widgetExistsByRef: (ref: ObjRef | undefined) => boolean;
 }
 
 const AutomationsContext = createContext<IAutomationsContextValue | undefined>(undefined);

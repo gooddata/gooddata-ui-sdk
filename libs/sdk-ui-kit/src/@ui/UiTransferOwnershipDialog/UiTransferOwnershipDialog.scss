@@ -1,0 +1,29 @@
+// (C) 2026 GoodData Corporation
+
+.gd-ui-kit-transfer-ownership-dialog {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gd-spacing-15px);
+    padding-bottom: var(--gd-spacing-5px);
+
+    &__field {
+        display: flex;
+        flex-direction: column;
+        gap: var(--gd-spacing-5px);
+    }
+
+    &__field-label {
+        font-size: 14px;
+        line-height: 21px;
+        color: var(--gd-palette-complementary-7);
+    }
+
+    &__note {
+        padding: 4px 10px;
+        border-radius: 3px;
+        font-size: 14px;
+        line-height: 20px;
+        color: var(--gd-message-information-textColor);
+        background: var(--gd-message-information-backgroundColor);
+    }
+}
