@@ -601,7 +601,6 @@
     "measureNumberCustomFormatDialog.definition": "정의",
     "measureNumberCustomFormatDialog.preview": "미리보기",
     "properties.legend.title": "범례",
-    "properties.legend.series.item.description": "가시성 전환에 사용",
     "properties.legend.more.button": "대화 상자에 모든 범례 항목 표시",
     "properties.legend.series.named": "범례: {name}",
     "properties.legend.series.unnamed": "시각화 범례",

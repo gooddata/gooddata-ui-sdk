@@ -601,7 +601,6 @@
     "measureNumberCustomFormatDialog.definition": "Määritelmä",
     "measureNumberCustomFormatDialog.preview": "Esikatselu",
     "properties.legend.title": "Selite",
-    "properties.legend.series.item.description": "Käytä vaihtaaksesi näkyvyyttä",
     "properties.legend.more.button": "Näytä kaikki legendaariset kohteet valintaikkunassa",
     "properties.legend.series.named": "Selite: {name}",
     "properties.legend.series.unnamed": "Visualisointilegenda",

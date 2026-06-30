@@ -2683,6 +2683,10 @@
         "text": "<b>Warning:</b> Parameter \"{name}\" is no longer compatible and has been ignored.",
         "crowdinContext": "Warning toast shown on dashboard load when a referenced parameter changed to a non-numeric type and can no longer be applied. {name} is the parameter title; <b> renders the leading 'Warning:' label in bold."
     },
+    "parameter_filter.button.resetWarning.tooltip": {
+        "text": "The original value is out of range, so the default is applied until you set a valid value.",
+        "crowdinContext": "Tooltip on a dashboard parameter button whose saved value is outside the parameter's allowed range; the workspace default is executed until the user sets a valid value."
+    },
     "filters.filterViews.list.ariaLabel.withActions": {
         "text": "List of saved views. Use the right arrow key to move to the ‘Set as default’ action, then to the ‘delete’ action.",
         "crowdinContext": "Screen reader description for the list of saved views. Includes the possible keyboard actions."
@@ -2726,6 +2730,10 @@
     "filters.filterViews.add.cancelButton": {
         "text": "Cancel",
         "crowdinContext": "Label of the button that cancels the form changes."
+    },
+    "filters.filterViews.add.backAriaLabel": {
+        "text": "Back to list of saved views",
+        "crowdinContext": "Aria label of the back button in the Create saved view form, navigating back to the list of saved views."
     },
     "filters.filterViews.delete.title": {
         "text": "Delete view?",
@@ -3422,10 +3430,6 @@
     "kdaDialog.dialog.keyDrives.error.details.title.tooltip": {
         "text": "The raw error response shows back-end information about the error that has occurred. It is visible only to the administrators.",
         "crowdinContext": "Key driver analysis error details title tooltip for showing raw error response json"
-    },
-    "menu.back": {
-        "text": "Back to the parent menu",
-        "crowdinContext": "Button label for navigating back to the parent menu in a nested menu structure. Used in hierarchical navigation."
     },
     "drill.kda.from": {
         "text": "from",

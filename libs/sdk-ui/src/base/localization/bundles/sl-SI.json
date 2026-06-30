@@ -601,7 +601,6 @@
     "measureNumberCustomFormatDialog.definition": "Definicija",
     "measureNumberCustomFormatDialog.preview": "Predogled",
     "properties.legend.title": "Legenda",
-    "properties.legend.series.item.description": "Uporabite za preklop vidljivosti",
     "properties.legend.more.button": "Pokaži vse elemente legende v dialogu",
     "properties.legend.series.named": "Legenda: {name}",
     "properties.legend.series.unnamed": "Vizualizacijska legenda",

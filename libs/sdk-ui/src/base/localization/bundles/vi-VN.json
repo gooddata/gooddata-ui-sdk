@@ -601,7 +601,6 @@
     "measureNumberCustomFormatDialog.definition": "Định nghĩa",
     "measureNumberCustomFormatDialog.preview": "Xem trước",
     "properties.legend.title": "Chú giải",
-    "properties.legend.series.item.description": "Sử dụng để bật/tắt hiển thị",
     "properties.legend.more.button": "Hiển thị tất cả các mục chú giải trong một hộp thoại",
     "properties.legend.series.named": "Chú giải: {name}",
     "properties.legend.series.unnamed": "Chú giải trực quan hóa",

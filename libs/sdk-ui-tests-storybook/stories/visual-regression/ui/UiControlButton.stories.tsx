@@ -41,6 +41,7 @@ function UiControlButtonTest({
     const allOpen = propCombination("isOpen", [false, true]);
     const allDraggable = propCombination("isDraggable", [false, true]);
     const allError = propCombination("isError", [false, true]);
+    const allWarning = propCombination("isWarning", [false, true]);
     const allDisabled = propCombination("disabled", [false, true]);
     const withIcon = propCombination("icon", [undefined, parameterIcon]);
     const withSubtitle = propCombination("subtitle", ["= 25", undefined]);
@@ -58,6 +59,7 @@ function UiControlButtonTest({
                 rowsBy={[
                     allDraggable,
                     allError,
+                    allWarning,
                     allDisabled,
                     withIcon,
                     withSubtitle,

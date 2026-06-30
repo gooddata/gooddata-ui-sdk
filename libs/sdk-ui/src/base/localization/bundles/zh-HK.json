@@ -601,7 +601,6 @@
     "measureNumberCustomFormatDialog.definition": "定義",
     "measureNumberCustomFormatDialog.preview": "預覽",
     "properties.legend.title": "圖例",
-    "properties.legend.series.item.description": "用嚟切換能見度",
     "properties.legend.more.button": "在對話框中顯示所有圖例項",
     "properties.legend.series.named": "傳說： {name}",
     "properties.legend.series.unnamed": "可視化圖例",

@@ -73,7 +73,8 @@ $color-picker-spacing: 5px;
     width: $color-picker-item-size;
     height: $color-picker-item-size;
     margin: $color-picker-spacing;
-    border: 1px solid transparent;
+    border: 1px solid white;
+    box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.2);
     cursor: pointer;
     transition: all 0.2s;
 
@@ -83,12 +84,10 @@ $color-picker-spacing: 5px;
     &.gd-color-list-item-active {
         border-color: kit-variables.$gd-color-white;
         box-shadow: 0 0 1px 1px color.adjust(kit-variables.$default-gd-color-dark, $alpha: -0.85);
-        transform: scale(1.1);
     }
 }
 
 .gd-color-list-item-none {
-    border-color: var(--gd-palette-complementary-4);
     background-image: linear-gradient(
         to top right,
         transparent calc(50% - 1px),

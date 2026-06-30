@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type CSSProperties,
@@ -11,7 +11,7 @@ import {
 } from "react";
 
 import cx from "classnames";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
 import { makeLinearKeyboardNavigation, useIdPrefixed } from "@gooddata/sdk-ui-kit";
@@ -58,7 +58,7 @@ export const LegendSeries = forwardRef<HTMLElement, ILegendSeriesProps>(function
         id,
         focusedIndex,
     });
-    const { makeItemId, descriptionId } = legendContextValue;
+    const { makeItemId } = legendContextValue;
 
     // Initialize visibility detection for legend items
     const { viewportRefCallback, contextValue: visibilityContextValue } = useVisibilityDetection();
@@ -127,10 +127,6 @@ export const LegendSeries = forwardRef<HTMLElement, ILegendSeriesProps>(function
                     >
                         {children}
                     </div>
-
-                    <p id={descriptionId} className={"sr-only"}>
-                        <FormattedMessage id={"properties.legend.series.item.description"} />
-                    </p>
                 </div>
             </VisibilityContext.Provider>
         </LegendSeriesContextStore>

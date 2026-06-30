@@ -40,6 +40,10 @@ export interface IUiControlButtonProps {
     isDraggable?: boolean;
     isDragging?: boolean;
     isError?: boolean;
+    /** Warning styling only; pair with `warningTooltip` to explain it. */
+    isWarning?: boolean;
+    /** Already-localized warning explanation. */
+    warningTooltip?: string;
     disabled?: boolean;
     /**
      * Already-localized string. When set together with `disabled`, a tooltip is wired up and
@@ -82,6 +86,8 @@ export function UiControlButton({
     isDraggable,
     isDragging,
     isError,
+    isWarning,
+    warningTooltip,
     disabled,
     disabledTooltip,
     onClick,
@@ -94,6 +100,8 @@ export function UiControlButton({
 }: IUiControlButtonProps) {
     const tooltipId = useIdPrefixed("gd-ui-kit-control-button-tooltip");
     const showDisabledTooltip = !!disabled && !!disabledTooltip;
+    const showWarningTooltip = !!isWarning && !!warningTooltip && !isOpen && !showDisabledTooltip;
+    const showTooltip = showDisabledTooltip || showWarningTooltip;
     const hasSubtitle = subtitle !== undefined || subtitleExtension !== undefined;
     // Trailing colon on the label, only when a subtitle follows it.
     const showLabelColon = layout === "row" && hasSubtitle;
@@ -122,6 +130,7 @@ export function UiControlButton({
                     isDraggable: !!isDraggable,
                     isDragging: !!isDragging,
                     isError: !!isError,
+                    isWarning: !!isWarning,
                     disabled: !!disabled,
                 }),
                 className,
@@ -132,7 +141,7 @@ export function UiControlButton({
             aria-expanded={isOpen}
             aria-disabled={disabled}
             aria-controls={isOpen ? dropdownId : undefined}
-            aria-describedby={showDisabledTooltip ? tooltipId : undefined}
+            aria-describedby={showTooltip ? tooltipId : undefined}
             aria-label={ariaLabel}
             data-testid={dataTestId}
             onClick={disabled ? undefined : onClick}
@@ -172,13 +181,13 @@ export function UiControlButton({
         </div>
     );
 
-    if (showDisabledTooltip) {
+    if (showTooltip) {
         return (
             <UiTooltip
                 id={tooltipId}
                 anchor={button}
-                content={disabledTooltip}
-                triggerBy={["focus"]}
+                content={showWarningTooltip ? warningTooltip : disabledTooltip}
+                triggerBy={showWarningTooltip ? ["hover", "focus"] : ["focus"]}
                 arrowPlacement="top"
                 showArrow
             />

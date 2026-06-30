@@ -67,9 +67,10 @@ export function* onVisualizationSave({
                 return;
             }
             const sourceVisualization = visualizationContent.visualization;
+            const insightsService = backend.workspace(workspace).insights();
 
             const savedVisualization: IInsight = yield call(
-                backend.workspace(workspace).insights().createInsight,
+                insightsService.createInsight.bind(insightsService),
                 {
                     ...sourceVisualization,
                     insight: {
@@ -120,9 +121,10 @@ export function* onVisualizationSave({
             }
 
             const visDefinition = buildInsightDefinition(visualizationContent, payload.visualizationTitle);
+            const insightsService = backend.workspace(workspace).insights();
 
             const savedVisualization: IInsight = yield call(
-                backend.workspace(workspace).insights().createInsight,
+                insightsService.createInsight.bind(insightsService),
                 visDefinition,
             );
 

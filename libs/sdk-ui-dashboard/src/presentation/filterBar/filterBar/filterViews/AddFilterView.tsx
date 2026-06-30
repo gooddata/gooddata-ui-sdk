@@ -37,7 +37,7 @@ export function AddFilterView({ onClose, onSave, titleId }: IAddFilterViewProps)
                 <UiSubmenuHeader
                     title={intl.formatMessage({ id: "filters.filterViews.add.title" })}
                     onBack={onClose}
-                    backAriaLabel={intl.formatMessage({ id: "menu.back" })}
+                    backAriaLabel={intl.formatMessage({ id: "filters.filterViews.add.backAriaLabel" })}
                     useShortenedTitle={false}
                     height="medium"
                     titleId={titleId}

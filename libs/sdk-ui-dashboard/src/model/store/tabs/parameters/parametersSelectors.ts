@@ -321,7 +321,8 @@ export const selectParameterReconciliations: DashboardSelector<IParameterReconci
     );
 
 /**
- * Per-ref reconciliation status for the active tab's parameter chip (per {@link classifyParameterReconciliation}).
+ * Reconciliation status of a parameter's effective value, not its persisted value (which
+ * {@link selectParameterReconciliations} uses).
  *
  * @internal
  */
@@ -337,7 +338,7 @@ export const selectParameterReconciliationByRef: (
             if (!isEnabled || !isCatalogLoaded || !entry) {
                 return undefined;
             }
-            return classifyParameterReconciliation(entry.parameter, workspaceParameter);
+            return classifyParameterReconciliation(applyRuntimeOverride(entry), workspaceParameter);
         },
     ),
 );

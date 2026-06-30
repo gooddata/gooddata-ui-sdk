@@ -4679,6 +4679,8 @@ export interface IParameterControlButtonProps {
     onClick?: () => void;
     // (undocumented)
     value: number;
+    // (undocumented)
+    warningTooltip?: string;
 }
 
 // @internal (undocumented)
@@ -6421,6 +6423,7 @@ export interface IUiControlButtonProps {
     isError?: boolean;
     // (undocumented)
     isOpen?: boolean;
+    isWarning?: boolean;
     layout?: "stacked" | "row";
     // (undocumented)
     onClick?: () => void;
@@ -6436,6 +6439,7 @@ export interface IUiControlButtonProps {
     titleClassName?: string;
     // (undocumented)
     titleExtension?: ReactNode;
+    warningTooltip?: string;
 }
 
 // @internal (undocumented)

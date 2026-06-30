@@ -2,6 +2,8 @@
 
 import { type ReactElement } from "react";
 
+import { defineMessages, useIntl } from "react-intl";
+
 import {
     DashboardParameterModeValues,
     type IDashboardParameter,
@@ -15,10 +17,15 @@ import { selectCatalogParameterByRef } from "../../../model/store/catalog/catalo
 import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
 import { tabsActions } from "../../../model/store/tabs/index.js";
 import {
+    selectParameterReconciliationByRef,
     selectParameterResetValueByRef,
     selectParameterRuntimeOverrideByRef,
 } from "../../../model/store/tabs/parameters/parametersSelectors.js";
 import { DraggableChipSource } from "../../dragAndDrop/DraggableChipSource.js";
+
+const messages = defineMessages({
+    resetWarning: { id: "parameter_filter.button.resetWarning.tooltip" },
+});
 
 /**
  * @internal
@@ -33,10 +40,12 @@ export interface IDashboardParameterFilterProps {
  * @internal
  */
 export function DashboardParameterFilter({ parameter }: IDashboardParameterFilterProps): ReactElement | null {
+    const intl = useIntl();
     const dispatch = useDashboardDispatch();
     const workspaceParameter = useDashboardSelector(selectCatalogParameterByRef(parameter.ref));
     const runtimeOverride = useDashboardSelector(selectParameterRuntimeOverrideByRef(parameter.ref));
     const resetValue = useDashboardSelector(selectParameterResetValueByRef(parameter.ref));
+    const reconciliation = useDashboardSelector(selectParameterReconciliationByRef(parameter.ref));
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
 
     if (parameter.mode === DashboardParameterModeValues.HIDDEN || runtimeOverride === undefined) {
@@ -50,6 +59,7 @@ export function DashboardParameterFilter({ parameter }: IDashboardParameterFilte
     const name = parameter.label ?? workspaceParameter.title;
     const { constraints } = workspaceParameter.definition;
     const dragItem = { type: "parameter", ref: parameter.ref } as const;
+    const warningTooltip = reconciliation === "reset" ? intl.formatMessage(messages.resetWarning) : undefined;
 
     if (parameter.mode === DashboardParameterModeValues.READONLY) {
         return (
@@ -59,6 +69,7 @@ export function DashboardParameterFilter({ parameter }: IDashboardParameterFilte
                     value={runtimeOverride}
                     isActive={false}
                     isDraggable={isInEditMode}
+                    warningTooltip={warningTooltip}
                     data-testid={`dashboard-parameter-${objRefToString(parameter.ref)}`}
                 />
             </DraggableChipSource>
@@ -75,6 +86,7 @@ export function DashboardParameterFilter({ parameter }: IDashboardParameterFilte
                         isActive={isOpen}
                         isDraggable={isInEditMode}
                         onClick={() => toggleDropdown()}
+                        warningTooltip={warningTooltip}
                         data-testid={`dashboard-parameter-${objRefToString(parameter.ref)}`}
                     />
                 )}

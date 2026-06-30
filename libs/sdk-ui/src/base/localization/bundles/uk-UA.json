@@ -601,7 +601,6 @@
     "measureNumberCustomFormatDialog.definition": "Визначення",
     "measureNumberCustomFormatDialog.preview": "Попередній перегляд",
     "properties.legend.title": "Легенда",
-    "properties.legend.series.item.description": "Використовуйте для перемикання видимості",
     "properties.legend.more.button": "Показати всі елементи легенди в діалоговому вікні",
     "properties.legend.series.named": "Легенда: {name}",
     "properties.legend.series.unnamed": "Легенда візуалізації",

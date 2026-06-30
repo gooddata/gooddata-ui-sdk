@@ -601,7 +601,6 @@
     "measureNumberCustomFormatDialog.definition": "Définition",
     "measureNumberCustomFormatDialog.preview": "Aperçu",
     "properties.legend.title": "Légende",
-    "properties.legend.series.item.description": "Utiliser pour basculer la visibilité",
     "properties.legend.more.button": "Afficher tous les éléments de la légende dans une boîte de dialogue",
     "properties.legend.series.named": "Légende : {name}",
     "properties.legend.series.unnamed": "Légende de la visualisation",

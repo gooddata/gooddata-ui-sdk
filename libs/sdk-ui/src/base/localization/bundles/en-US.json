@@ -2407,10 +2407,6 @@
         "text": "Legend",
         "crowdinContext": "Title for the legend section in visualization properties. The legend provides a key to the colors and patterns used in the chart."
     },
-    "properties.legend.series.item.description": {
-        "text": "Use to toggle visibility",
-        "crowdinContext": "Tooltip for legend items. Space and Enter stands for keyboard keys."
-    },
     "properties.legend.more.button": {
         "text": "Show all legend items in a dialog",
         "crowdinContext": "Button text for opening a dialog to show all legend items"

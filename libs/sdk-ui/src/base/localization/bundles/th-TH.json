@@ -601,7 +601,6 @@
     "measureNumberCustomFormatDialog.definition": "คำจำกัดความ",
     "measureNumberCustomFormatDialog.preview": "ตัวอย่าง",
     "properties.legend.title": "คำอธิบายแผนภูมิ",
-    "properties.legend.series.item.description": "ใช้เพื่อสลับการมองเห็น",
     "properties.legend.more.button": "แสดงรายการคำอธิบายแผนภูมิทั้งหมดในกล่องโต้ตอบ",
     "properties.legend.series.named": "คำอธิบายแผนภูมิ: {name}",
     "properties.legend.series.unnamed": "คำอธิบายแผนภูมิของการแสดงภาพข้อมูล",

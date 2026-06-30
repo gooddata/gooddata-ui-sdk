@@ -372,15 +372,26 @@ export function FilterViewsList({
                         tabIndex={-1}
                         id={scopedIdStoreValue.containerId}
                         aria-label={
-                            canCreateFilterView
-                                ? intl.formatMessage({ id: "filters.filterViews.list.ariaLabel.withActions" })
-                                : intl.formatMessage({ id: "filters.filterViews.list.ariaLabel.noActions" })
+                            filterViews.length > 0
+                                ? canCreateFilterView
+                                    ? intl.formatMessage({
+                                          id: "filters.filterViews.list.ariaLabel.withActions",
+                                      })
+                                    : intl.formatMessage({
+                                          id: "filters.filterViews.list.ariaLabel.noActions",
+                                      })
+                                : undefined
                         }
+                        aria-labelledby={filterViews.length === 0 ? titleId : undefined}
                         aria-rowcount={filterViews.length}
                     >
                         {isLoading ? (
-                            <div className="gd-filter-view__list__empty">
-                                <LoadingComponent />
+                            <div role="row">
+                                <div role="gridcell">
+                                    <div className="gd-filter-view__list__empty">
+                                        <LoadingComponent />
+                                    </div>
+                                </div>
                             </div>
                         ) : filterViews.length > 0 ? (
                             filterViews.map((filterView, index) => (
@@ -395,8 +406,12 @@ export function FilterViewsList({
                                 />
                             ))
                         ) : (
-                            <div className="gd-filter-view__list__empty">
-                                <FormattedMessage id="filters.filterViews.dropdown.emptyList" />
+                            <div role="row">
+                                <div role="gridcell">
+                                    <div className="gd-filter-view__list__empty">
+                                        <FormattedMessage id="filters.filterViews.dropdown.emptyList" />
+                                    </div>
+                                </div>
                             </div>
                         )}
                     </div>

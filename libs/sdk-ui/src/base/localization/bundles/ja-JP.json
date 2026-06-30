@@ -601,7 +601,6 @@
     "measureNumberCustomFormatDialog.definition": "定義",
     "measureNumberCustomFormatDialog.preview": "プレビュー",
     "properties.legend.title": "凡例",
-    "properties.legend.series.item.description": "可視性を切り替える",
     "properties.legend.more.button": "すべての凡例項目をダイアログに表示する",
     "properties.legend.series.named": "凡例だ：{name}",
     "properties.legend.series.unnamed": "視覚化の凡例",

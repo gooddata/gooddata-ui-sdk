@@ -601,7 +601,6 @@
     "measureNumberCustomFormatDialog.definition": "Definizione",
     "measureNumberCustomFormatDialog.preview": "Anteprima",
     "properties.legend.title": "Leggenda",
-    "properties.legend.series.item.description": "Utilizzare per alternare la visibilità",
     "properties.legend.more.button": "Mostra tutti gli elementi della legenda in una finestra di dialogo",
     "properties.legend.series.named": "Leggenda: {name}",
     "properties.legend.series.unnamed": "Legenda di visualizzazione",
