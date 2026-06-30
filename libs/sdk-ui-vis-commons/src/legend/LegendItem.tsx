@@ -26,7 +26,6 @@ interface ILegendItemProps {
     onItemClick: (item: ISeriesItemMetric) => void;
     theme?: ITheme;
     chartFill?: ChartFillType;
-    describedBy?: string;
 }
 
 function getPointShapeStyles(
@@ -167,7 +166,6 @@ export const LegendItem = withTheme(function LegendItem({
     onItemClick,
     theme,
     chartFill,
-    describedBy,
 }: ILegendItemProps) {
     const { isFocused, id } = LegendSeriesContextStore.useContextStore((ctx) => ({
         isFocused: ctx.focusedItem === item,
@@ -243,7 +241,6 @@ export const LegendItem = withTheme(function LegendItem({
             ref={refCallback}
             data-testid={"legend-item"}
             role={"switch"}
-            aria-describedby={describedBy}
             aria-checked={item.isVisible}
             id={id}
             style={style}

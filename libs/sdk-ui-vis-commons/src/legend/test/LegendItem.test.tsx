@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import { type MockInstance, beforeEach, describe, expect, it, vi } from "vitest";
@@ -20,7 +20,6 @@ describe("LegendItem", () => {
         focusedItem: undefined as unknown as ISeriesItem,
         makeItemId: (item?: ISeriesItem) =>
             item && isSeriesItemMetric(item) ? `test-id-${item.name}` : "test-id",
-        descriptionId: "test-description-id",
     };
 
     let onItemClick: MockInstance;
@@ -95,13 +94,11 @@ describe("LegendItem", () => {
     it("should render item with correct accessibility attributes", () => {
         const props = {
             item,
-            describedBy: "test-description-id",
         };
         createComponent(props);
 
         const legendItem = screen.getByTestId("legend-item");
         expect(legendItem).toHaveAttribute("role", "switch");
-        expect(legendItem).toHaveAttribute("aria-describedby", "test-description-id");
         expect(legendItem).toHaveAttribute("aria-checked", "true");
         expect(legendItem).toHaveAttribute("id", "test-id-Foo");
     });

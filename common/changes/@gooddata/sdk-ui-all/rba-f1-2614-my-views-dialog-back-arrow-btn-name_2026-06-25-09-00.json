@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-dashboard: Fix accessible name of the back button in the My views dialog — change aria-label from generic 'Back to the parent menu' to 'Back to list of saved views'",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "rodrigo.balsells@gooddata.com"
+}

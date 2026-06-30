@@ -601,7 +601,6 @@
     "measureNumberCustomFormatDialog.definition": "Definitie",
     "measureNumberCustomFormatDialog.preview": "Voorbeschouwing",
     "properties.legend.title": "Legenda",
-    "properties.legend.series.item.description": "Gebruik om de zichtbaarheid aan te passen",
     "properties.legend.more.button": "Toon alle legenda-items in een dialoogvenster",
     "properties.legend.series.named": "Legende: {name}",
     "properties.legend.series.unnamed": "Legende visualisatie",

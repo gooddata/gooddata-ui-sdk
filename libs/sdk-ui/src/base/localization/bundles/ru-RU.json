@@ -601,7 +601,6 @@
     "measureNumberCustomFormatDialog.definition": "Определение",
     "measureNumberCustomFormatDialog.preview": "Предпросмотр",
     "properties.legend.title": "Услов. обозн.",
-    "properties.legend.series.item.description": "Используйте для переключения видимости",
     "properties.legend.more.button": "Показать все элементы легенды в диалоговом окне",
     "properties.legend.series.named": "Легенда: {name}",
     "properties.legend.series.unnamed": "Легенда визуализации",

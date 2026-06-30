@@ -101,6 +101,12 @@ $drag-handle-icon: "data:image/svg+xml,%3Csvg width='7' height='26' viewBox='0 0
         background: var(--gd-palette-error-base-t85, rgba(229, 77, 66, 0.15));
     }
 
+    &--isWarning {
+        font-size: 12px;
+        color: var(--gd-palette-warning-base, #f18600);
+        background: var(--gd-palette-warning-base-t85, rgba(241, 134, 0, 0.15));
+    }
+
     &--disabled {
         cursor: default;
 

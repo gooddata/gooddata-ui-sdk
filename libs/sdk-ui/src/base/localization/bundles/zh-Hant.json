@@ -601,7 +601,6 @@
     "measureNumberCustomFormatDialog.definition": "定義",
     "measureNumberCustomFormatDialog.preview": "預覽",
     "properties.legend.title": "傳奇",
-    "properties.legend.series.item.description": "用於切換可見性",
     "properties.legend.more.button": "在對話方塊中顯示所有圖例項",
     "properties.legend.series.named": "傳奇：{name}",
     "properties.legend.series.unnamed": "可視化圖例",

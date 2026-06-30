@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -28,7 +28,6 @@ describe("LegendList", () => {
             focusedItem: undefined as unknown as ISeriesItem,
             makeItemId: (item?: ISeriesItem) =>
                 item && isSeriesItemMetric(item) ? `test-id-${item?.name}` : "test-id",
-            descriptionId: "test-description-id",
         };
 
         // Mock visibility context value for testing

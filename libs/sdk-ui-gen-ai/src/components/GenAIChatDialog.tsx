@@ -21,6 +21,7 @@ import { GenAiStore, type GenAiStoreProps } from "./GenAiStore.js";
 
 export type GenAIChatDialogProps = Omit<GenAiStoreProps, "children"> & {
     isOpen: boolean;
+    disabled?: boolean;
     className?: string;
     dialogPosition?: "left" | "right";
     locale?: string;
@@ -43,6 +44,7 @@ export function GenAIChatDialog({
     backend,
     workspace,
     locale,
+    disabled,
     isOpen,
     onOpen,
     onClose,
@@ -90,6 +92,7 @@ export function GenAIChatDialog({
                         workspace={effectiveWorkspace}
                         className={className}
                         dialogPosition={dialogPosition}
+                        disabled={disabled}
                         isOpen={isOpen}
                         onOpen={onOpen}
                         onClose={onClose}
@@ -114,6 +117,7 @@ type GenAIChatDialogContentProps = {
     workspace: string;
     className?: string;
     dialogPosition?: "left" | "right";
+    disabled?: boolean;
     isOpen: boolean;
     onOpen: () => void;
     onClose: () => void;
@@ -133,6 +137,7 @@ function GenAIChatDialogContent({
     workspace,
     className,
     dialogPosition,
+    disabled,
     isOpen,
     onOpen,
     onClose,
@@ -149,9 +154,12 @@ function GenAIChatDialogContent({
     open.current = onOpen;
     const close = useRef(onClose);
     close.current = onClose;
-    const isOpenRef = useRef(isOpen);
+    const isOpenRef = useRef(isOpen && !disabled);
 
     useEffect(() => {
+        if (disabled) {
+            return;
+        }
         if (isOpenRef.current === isOpen) {
             return;
         }
@@ -166,15 +174,15 @@ function GenAIChatDialogContent({
                 close.current();
             }
         }
-    }, [genAIStore, isOpen]);
+    }, [genAIStore, isOpen, disabled]);
 
     useEffect(() => {
         const isOpen = getIsOpened();
-        if (isOpen) {
+        if (isOpen && !disabled) {
             genAIStore.dispatch(setOpenAction({ isOpen }));
             open.current();
         }
-    }, [genAIStore]);
+    }, [genAIStore, disabled]);
 
     const onCloseHandler = useCallback(() => {
         genAIStore.dispatch(setOpenAction({ isOpen: false }));
@@ -188,7 +196,7 @@ function GenAIChatDialogContent({
         [parentOverlayController],
     );
 
-    if (!isOpen) return null;
+    if (!isOpen || disabled) return null;
 
     return (
         <BackendProvider backend={backend}>

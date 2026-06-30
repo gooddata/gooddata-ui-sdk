@@ -601,7 +601,6 @@
     "measureNumberCustomFormatDialog.definition": "Definition",
     "measureNumberCustomFormatDialog.preview": "Vorschau",
     "properties.legend.title": "Legende",
-    "properties.legend.series.item.description": "Zum Umschalten der Sichtbarkeit verwenden",
     "properties.legend.more.button": "Alle Legendenelemente in einem Dialog anzeigen",
     "properties.legend.series.named": "Legende: {name}",
     "properties.legend.series.unnamed": "Visualisierungslegende",

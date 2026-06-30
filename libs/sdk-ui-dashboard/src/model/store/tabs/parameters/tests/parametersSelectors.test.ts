@@ -1900,9 +1900,7 @@ describe("parameter reconciliation selectors", () => {
                 workspaceParameters: [boundedTopNWorkspace],
                 persistedDashboardParameters: [persisted],
             });
-            // The warning still shows (keyed off the persisted value) until the dashboard is saved...
-            expect(selectParameterReconciliationByRef(topNRef)(state)).toBe("reset");
-            // ...but the dashboard is now dirty and a save would persist the valid value.
+            // The dashboard is now dirty and a save would persist the valid value.
             expect(selectIsParametersChanged(state)).toBe(true);
             expect(selectSmartPersistedTabsParameters(state)).toEqual({
                 [TAB_ID]: [{ ref: topNRef, parameterType: "NUMBER", mode: "active", value: 50 }],
@@ -1911,17 +1909,25 @@ describe("parameter reconciliation selectors", () => {
     });
 
     describe("selectParameterReconciliationByRef", () => {
-        it("returns the reconciliation kind for the active tab's parameter", () => {
+        it("classifies the effective (runtime-folded) value as reset when it is out of range", () => {
             const state = makeFullState({
-                entries: [{ parameter: { ...topNParameter, value: 999 }, runtimeOverride: 10 }],
+                entries: [{ parameter: { ...topNParameter, value: 999 }, runtimeOverride: 999 }],
                 workspaceParameters: [boundedTopNWorkspace],
             });
             expect(selectParameterReconciliationByRef(topNRef)(state)).toBe("reset");
         });
 
-        it("returns undefined when enableParameters is off", () => {
+        it("returns undefined once the runtime value is valid, even if the persisted value is not", () => {
             const state = makeFullState({
                 entries: [{ parameter: { ...topNParameter, value: 999 }, runtimeOverride: 10 }],
+                workspaceParameters: [boundedTopNWorkspace],
+            });
+            expect(selectParameterReconciliationByRef(topNRef)(state)).toBeUndefined();
+        });
+
+        it("returns undefined when enableParameters is off", () => {
+            const state = makeFullState({
+                entries: [{ parameter: { ...topNParameter, value: 999 }, runtimeOverride: 999 }],
                 workspaceParameters: [boundedTopNWorkspace],
                 enableParameters: false,
             });
@@ -1930,7 +1936,7 @@ describe("parameter reconciliation selectors", () => {
 
         it("returns undefined while the catalog is not loaded", () => {
             const state = makeFullState({
-                entries: [{ parameter: { ...topNParameter, value: 999 }, runtimeOverride: 10 }],
+                entries: [{ parameter: { ...topNParameter, value: 999 }, runtimeOverride: 999 }],
                 workspaceParameters: [boundedTopNWorkspace],
                 catalogStatus: "loading",
             });

@@ -118,6 +118,43 @@ describe("UiControlButton", () => {
         expect(screen.getByRole("button")).not.toHaveAttribute("aria-describedby");
     });
 
+    it("applies the isWarning BEM modifier", () => {
+        const { rerender } = render(<UiControlButton title="T" />);
+        const button = screen.getByRole("button");
+        expect(button.className).not.toMatch(/--isWarning/);
+
+        rerender(<UiControlButton title="T" isWarning />);
+        expect(button.className).toMatch(/gd-ui-kit-control-button--isWarning/);
+    });
+
+    it("wires warningTooltip via aria-describedby when isWarning", () => {
+        render(<UiControlButton title="T" isWarning warningTooltip="Out of range" />);
+        expect(screen.getByRole("button")).toHaveAttribute("aria-describedby");
+    });
+
+    it("does not wire warningTooltip without isWarning", () => {
+        render(<UiControlButton title="T" warningTooltip="Out of range" />);
+        expect(screen.getByRole("button")).not.toHaveAttribute("aria-describedby");
+    });
+
+    it("suppresses the warning tooltip while the button is open", () => {
+        render(<UiControlButton title="T" isWarning warningTooltip="Out of range" isOpen />);
+        expect(screen.getByRole("button")).not.toHaveAttribute("aria-describedby");
+    });
+
+    it("still wires a tooltip when warning and disabled co-occur", () => {
+        render(
+            <UiControlButton
+                title="T"
+                isWarning
+                warningTooltip="Out of range"
+                disabled
+                disabledTooltip="No can do"
+            />,
+        );
+        expect(screen.getByRole("button")).toHaveAttribute("aria-describedby");
+    });
+
     it("forwards buttonRef to the underlying element", () => {
         const ref = createRef<HTMLDivElement>();
         render(<UiControlButton title="T" buttonRef={ref} />);

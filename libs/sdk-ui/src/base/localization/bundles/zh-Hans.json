@@ -601,7 +601,6 @@
     "measureNumberCustomFormatDialog.definition": "定义",
     "measureNumberCustomFormatDialog.preview": "预览",
     "properties.legend.title": "图例",
-    "properties.legend.series.item.description": "用于切换可见性",
     "properties.legend.more.button": "在对话框中显示所有图例项",
     "properties.legend.series.named": "传奇：{name}",
     "properties.legend.series.unnamed": "可视化图例",

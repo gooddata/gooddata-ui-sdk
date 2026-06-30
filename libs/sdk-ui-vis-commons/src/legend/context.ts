@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { createContext, useCallback, useContext, useMemo } from "react";
 
@@ -15,8 +15,6 @@ export const useLegendSeriesContextValue = ({
     focusedIndex: number;
     id: string;
 }) => {
-    const descriptionId = `${id}-description`;
-
     const makeItemId = useCallback(
         (item?: ISeriesItem) => item && `${id}-${series.indexOf(item)}`,
         [id, series],
@@ -26,9 +24,8 @@ export const useLegendSeriesContextValue = ({
         () => ({
             focusedItem: series[focusedIndex],
             makeItemId,
-            descriptionId,
         }),
-        [descriptionId, focusedIndex, makeItemId, series],
+        [focusedIndex, makeItemId, series],
     );
 };
 

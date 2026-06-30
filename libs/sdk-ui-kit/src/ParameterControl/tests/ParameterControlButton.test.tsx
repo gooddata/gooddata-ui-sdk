@@ -49,4 +49,18 @@ describe("ParameterControlButton", () => {
         fireEvent.click(screen.getByRole("button"));
         expect(onClick).toHaveBeenCalledTimes(1);
     });
+
+    it("enters the warning state and wires the tooltip when warningTooltip is set", () => {
+        renderButton({ warningTooltip: "Out of range" });
+        const button = screen.getByRole("button");
+        expect(button.className).toMatch(/gd-ui-kit-control-button--isWarning/);
+        expect(button).toHaveAttribute("aria-describedby");
+    });
+
+    it("renders no warning state when warningTooltip is omitted", () => {
+        renderButton();
+        const button = screen.getByRole("button");
+        expect(button.className).not.toMatch(/gd-ui-kit-control-button--isWarning/);
+        expect(button).not.toHaveAttribute("aria-describedby");
+    });
 });

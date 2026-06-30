@@ -601,7 +601,6 @@
     "measureNumberCustomFormatDialog.definition": "Definición",
     "measureNumberCustomFormatDialog.preview": "Vista previa",
     "properties.legend.title": "Leyenda",
-    "properties.legend.series.item.description": "Permite cambiar la visibilidad",
     "properties.legend.more.button": "Mostrar todos los elementos de la leyenda en un cuadro de diálogo",
     "properties.legend.series.named": "Leyenda: {name}",
     "properties.legend.series.unnamed": "Leyenda de visualización",

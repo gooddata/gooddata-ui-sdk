@@ -601,7 +601,6 @@
     "measureNumberCustomFormatDialog.definition": "Definisi",
     "measureNumberCustomFormatDialog.preview": "Pratinjau",
     "properties.legend.title": "Legenda",
-    "properties.legend.series.item.description": "Gunakan untuk mengalihkan visibilitas",
     "properties.legend.more.button": "Tampilkan semua item legenda dalam dialog",
     "properties.legend.series.named": "Legenda: {name}",
     "properties.legend.series.unnamed": "Legenda visualisasi",

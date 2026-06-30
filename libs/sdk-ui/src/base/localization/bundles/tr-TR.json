@@ -601,7 +601,6 @@
     "measureNumberCustomFormatDialog.definition": "Tanım",
     "measureNumberCustomFormatDialog.preview": "Önizleme",
     "properties.legend.title": "Gösterge",
-    "properties.legend.series.item.description": "Görünürlüğü değiştirmek için kullan",
     "properties.legend.more.button": "Tüm gösterge öğelerini bir diyalogda göster",
     "properties.legend.series.named": "Gösterge: {name}",
     "properties.legend.series.unnamed": "Görselleştirme açıklaması",
