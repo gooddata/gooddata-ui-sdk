@@ -1,7 +1,12 @@
 // (C) 2026 GoodData Corporation
 
 import type { AccessGranularPermission, ObjRef } from "@gooddata/sdk-model";
-import type { GeneralAccessValue, IUiGranteeAsyncOptions, IUiPickedGrantee } from "@gooddata/sdk-ui-kit";
+import type {
+    GeneralAccessValue,
+    IUiGranteeAsyncOption,
+    IUiGranteeAsyncOptions,
+    IUiPickedGrantee,
+} from "@gooddata/sdk-ui-kit";
 
 import type { IObjectAccessSummary, IObjectShareLabel } from "./types.js";
 
@@ -54,7 +59,7 @@ export interface IObjectShareGrantee {
  * @internal
  */
 export interface IObjectShareControllerState {
-    subview: "main" | "addGrantee";
+    subview: "main" | "addGrantee" | "transferOwnership";
     status: "idle" | "loading" | "success" | "error" | "saving";
     error?: Error;
     /**
@@ -106,6 +111,27 @@ export interface IObjectShareControllerState {
     pendingGeneralAccess?: GeneralAccessValue;
     /** Grantees staged in the add-grantee dialog before confirmation. */
     pendingGrantees: IUiPickedGrantee[];
+
+    /**
+     * The user picked as the new owner in the transfer-ownership subview, or
+     * undefined before one is chosen. Only users can own an object, so this is
+     * never a group.
+     */
+    transferTarget: IUiGranteeAsyncOption | undefined;
+    /**
+     * Whether "Also remove my access" is checked in the transfer dialog. When
+     * true the current user's grant is removed after the transfer; otherwise it
+     * is downgraded to VIEW.
+     */
+    transferAlsoRemoveSelf: boolean;
+    /**
+     * Whether `transferTarget` already owns the object (already holds EDIT). When
+     * true there is nothing to transfer — consumers show the "already an owner"
+     * variant offering to remove the current user's own access instead.
+     */
+    transferTargetIsOwner: boolean;
+    /** Whether the transfer write (or self-removal) is in flight. */
+    transferSaving: boolean;
 }
 
 /**
@@ -119,11 +145,13 @@ export interface IObjectShareControllerActions {
     closeAddGrantee: () => void;
     setPendingGrantees: (next: IUiPickedGrantee[]) => void;
     /**
-     * Loader for the add-grantee picker. Wraps `getAvailableAssignees` with
+     * Loader for the grantee pickers. Wraps `getAvailableAssignees` with
      * client-side search + already-picked filtering, returning the picker's
-     * `{ groups, users }` shape.
+     * `{ groups, users }` shape. By default excludes already-granted grantees
+     * (add-grantee picker); pass `includeGranted` to keep them (transfer-ownership
+     * picker, which may promote an existing viewer to owner).
      */
-    loadOptions: (search: string) => Promise<IUiGranteeAsyncOptions>;
+    loadOptions: (search: string, includeGranted?: boolean) => Promise<IUiGranteeAsyncOptions>;
     /** Commit all pending grantees to the backend. */
     confirmAddGrantees: () => Promise<void>;
 
@@ -149,6 +177,25 @@ export interface IObjectShareControllerActions {
      * already-granted rule.
      */
     changeWorkspaceLevel: (level: "VIEW" | "SHARE") => Promise<void>;
+
+    /** Open the transfer-ownership subview with an empty picker. */
+    openTransferOwnership: () => void;
+    /** Close the transfer-ownership subview and clear its buffers; returns to main. */
+    closeTransferOwnership: () => void;
+    /**
+     * Pick (or replace) the candidate new owner. Recomputes whether that user
+     * already owns the object (`transferTargetIsOwner`).
+     */
+    setTransferTarget: (owner: IUiGranteeAsyncOption) => void;
+    /** Toggle "Also remove my access" in the transfer dialog. */
+    setTransferAlsoRemoveSelf: (next: boolean) => void;
+    /**
+     * Commit the ownership transfer: grant the picked user EDIT and downgrade the
+     * current user to VIEW (or remove them if "Also remove my access" is set), in
+     * one write. When the picked user already owns the object this transfers
+     * nothing and only applies the self-access choice. Auto-saves.
+     */
+    confirmTransferOwnership: () => Promise<void>;
 }
 
 /**

@@ -17,6 +17,8 @@ import {
     type AccessGranteeDetail,
     type IAvailableAccessGrantee,
     type IGranularAccessGrantee,
+    type ObjRef,
+    areObjRefsEqual,
     idRef,
 } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
@@ -62,15 +64,22 @@ interface IMockService {
     getAvailableAssignees: Mock;
 }
 
+// The current user resolved by the transfer flow. Its ref is what the self
+// (downgrade/remove) grant is written for.
+const CURRENT_USER_REF = idRef("self");
+
 function makeBackend(svc: IMockService): IAnalyticalBackend {
     const base = dummyBackendEmptyData();
     return {
         ...base,
+        // The transfer flow resolves the current user to write the self grant; the
+        // dummy backend doesn't implement currentUser, so stub getUser here.
+        currentUser: () => ({ getUser: async () => ({ ref: CURRENT_USER_REF }) }),
         workspace: (id: string) => ({
             ...base.workspace(id),
             objectPermissions: () => svc as unknown as IWorkspaceObjectPermissionsService,
         }),
-    } as IAnalyticalBackend;
+    } as unknown as IAnalyticalBackend;
 }
 
 function makeService(grants: AccessGranteeDetail[] = [USER_GRANT]): IMockService {
@@ -1883,5 +1892,351 @@ describe("useObjectShareController", () => {
             ((t as IObjectPermissionsObject).ref as { identifier: string }).identifier.startsWith("lbl."),
         );
         expect(labelFetches).toHaveLength(0);
+    });
+
+    describe("transfer ownership", () => {
+        const NEW_OWNER = { id: "user:u2", kind: "user" as const, name: "Marek", email: "marek@x.com" };
+
+        // u1 holds EDIT — i.e. already an owner.
+        const OWNER_GRANT: AccessGranteeDetail = {
+            type: "granularUser",
+            user: { ref: idRef("u1"), uri: "/u1", login: "jane", email: "jane@x.com", fullName: "Jane Good" },
+            permissions: ["EDIT", "VIEW"],
+            inheritedPermissions: [],
+        } as AccessGranteeDetail;
+
+        it("opens the transfer subview with an empty picker", async () => {
+            const svc = makeService();
+            const { result } = renderController(svc, TARGET);
+            await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+            act(() => result.current.actions.openTransferOwnership());
+            expect(result.current.state.subview).toBe("transferOwnership");
+            expect(result.current.state.transferTarget).toBeUndefined();
+            expect(result.current.state.transferAlsoRemoveSelf).toBe(false);
+        });
+
+        it("grants the new owner EDIT and downgrades the current user to VIEW", async () => {
+            const svc = makeService();
+            const { result } = renderController(svc, TARGET);
+            await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+            act(() => result.current.actions.openTransferOwnership());
+            act(() => result.current.actions.setTransferTarget(NEW_OWNER));
+            await act(async () => {
+                await result.current.actions.confirmTransferOwnership();
+            });
+
+            expect(svc.manageObjectPermissions).toHaveBeenCalledTimes(1);
+            const [, grantees] = svc.manageObjectPermissions.mock.calls[0] as [
+                unknown,
+                IGranularAccessGrantee[],
+            ];
+            expect(grantees).toEqual([
+                expect.objectContaining({
+                    type: "granularUser",
+                    granteeRef: idRef("u2"),
+                    permissions: ["EDIT", "VIEW"],
+                }),
+                expect.objectContaining({
+                    type: "granularUser",
+                    granteeRef: CURRENT_USER_REF,
+                    permissions: ["VIEW"],
+                }),
+            ]);
+            expect(addSuccess).toHaveBeenCalledTimes(1);
+            // Returns to main and clears the buffers on success.
+            expect(result.current.state.subview).toBe("main");
+            expect(result.current.state.transferTarget).toBeUndefined();
+        });
+
+        it("seeds a row for a brand-new owner who wasn't previously a grantee", async () => {
+            const svc = makeService();
+            const { result } = renderController(svc, TARGET);
+            await waitFor(() => expect(result.current.state.status).toBe("success"));
+            // u2 isn't in the access list, only u1 is.
+            expect(result.current.state.grantees.some((g) => g.id === "user:u2")).toBe(false);
+
+            act(() => result.current.actions.openTransferOwnership());
+            act(() => result.current.actions.setTransferTarget(NEW_OWNER));
+            await act(async () => {
+                await result.current.actions.confirmTransferOwnership();
+            });
+
+            // The new owner now shows as a read-only EDIT row without a refetch.
+            expect(result.current.state.grantees).toContainEqual(
+                expect.objectContaining({ id: "user:u2", name: "Marek", level: "EDIT" }),
+            );
+        });
+
+        it("grants the new owner every label and revokes self labels on remove (attribute with labels)", async () => {
+            const svc = makeLabelAwareService();
+            const { result } = renderController(svc, TARGET, LABELS);
+            await waitFor(() => expect(result.current.state.status).toBe("success"));
+            await waitFor(() => expect(result.current.state.labelsResolved).toBe(true));
+            svc.manageObjectPermissions.mockClear();
+
+            act(() => result.current.actions.openTransferOwnership());
+            act(() => result.current.actions.setTransferTarget(NEW_OWNER));
+            act(() => result.current.actions.setTransferAlsoRemoveSelf(true));
+            await act(async () => {
+                await result.current.actions.confirmTransferOwnership();
+            });
+
+            // Object write + per-label writes for the new owner (grant) and self (revoke).
+            const calls = svc.manageObjectPermissions.mock.calls;
+            const targets = calls.map(([t]) => (t as IObjectPermissionsObject).ref);
+            // Non-primary labels are written for the new owner (grant) and self (revoke);
+            // the primary label is always kept, so it's never written.
+            expect(targets).toContainEqual(idRef("lbl.name"));
+            expect(targets).toContainEqual(idRef("lbl.email"));
+            expect(targets).not.toContainEqual(idRef("lbl.primary"));
+            // The new owner is granted EDIT on those labels, self is revoked. The
+            // mutations are granular user/group grants, all of which carry granteeRef.
+            // Compare refs by value: idRef() returns a fresh object each call, so `===`
+            // would never match.
+            const refOf = (g: IGranularAccessGrantee) => (g as { granteeRef?: ObjRef }).granteeRef;
+            const ownerLabelWrite = calls.find(
+                ([t, gs]) =>
+                    areObjRefsEqual((t as IObjectPermissionsObject).ref, idRef("lbl.name")) &&
+                    (gs as IGranularAccessGrantee[]).some(
+                        (g) => areObjRefsEqual(refOf(g), idRef("u2")) && g.permissions.length > 0,
+                    ),
+            );
+            const selfRevoke = calls.find(([, gs]) =>
+                (gs as IGranularAccessGrantee[]).some(
+                    (g) => areObjRefsEqual(refOf(g), CURRENT_USER_REF) && g.permissions.length === 0,
+                ),
+            );
+            expect(ownerLabelWrite).toBeDefined();
+            expect(selfRevoke).toBeDefined();
+        });
+
+        it("does not write conflicting grants when the picked owner is the current user", async () => {
+            const svc = makeService();
+            const { result } = renderController(svc, TARGET);
+            await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+            // A target whose ref resolves to the current user (CURRENT_USER_REF = "self").
+            act(() => result.current.actions.openTransferOwnership());
+            act(() =>
+                result.current.actions.setTransferTarget({ id: "user:self", kind: "user", name: "Me" }),
+            );
+            await act(async () => {
+                await result.current.actions.confirmTransferOwnership();
+            });
+
+            // Transferring to yourself is a no-op: no self-conflicting EDIT+VIEW batch.
+            expect(svc.manageObjectPermissions).not.toHaveBeenCalled();
+            expect(result.current.state.subview).toBe("main");
+        });
+
+        it("removes the current user entirely when 'Also remove my access' is set", async () => {
+            const svc = makeService();
+            const { result } = renderController(svc, TARGET);
+            await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+            act(() => result.current.actions.openTransferOwnership());
+            act(() => result.current.actions.setTransferTarget(NEW_OWNER));
+            act(() => result.current.actions.setTransferAlsoRemoveSelf(true));
+            await act(async () => {
+                await result.current.actions.confirmTransferOwnership();
+            });
+
+            const [, grantees] = svc.manageObjectPermissions.mock.calls[0] as [
+                unknown,
+                IGranularAccessGrantee[],
+            ];
+            expect(grantees).toEqual([
+                expect.objectContaining({ granteeRef: idRef("u2"), permissions: ["EDIT", "VIEW"] }),
+                expect.objectContaining({ granteeRef: CURRENT_USER_REF, permissions: [] }),
+            ]);
+        });
+
+        it("flags transferTargetIsOwner when the picked user already holds EDIT", async () => {
+            const svc = makeService([OWNER_GRANT]);
+            const { result } = renderController(svc, TARGET);
+            await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+            act(() => result.current.actions.openTransferOwnership());
+            act(() =>
+                result.current.actions.setTransferTarget({
+                    id: "user:u1",
+                    kind: "user",
+                    name: "Jane Good",
+                }),
+            );
+            expect(result.current.state.transferTargetIsOwner).toBe(true);
+        });
+
+        it("writes nothing when confirming an already-owner with 'keep my access'", async () => {
+            const svc = makeService([OWNER_GRANT]);
+            const { result } = renderController(svc, TARGET);
+            await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+            act(() => result.current.actions.openTransferOwnership());
+            act(() =>
+                result.current.actions.setTransferTarget({ id: "user:u1", kind: "user", name: "Jane Good" }),
+            );
+            await act(async () => {
+                await result.current.actions.confirmTransferOwnership();
+            });
+
+            // Nothing to transfer + keep view = no write, just close.
+            expect(svc.manageObjectPermissions).not.toHaveBeenCalled();
+            expect(result.current.state.subview).toBe("main");
+        });
+
+        it("removes only the current user when confirming an already-owner with 'remove my access'", async () => {
+            const svc = makeService([OWNER_GRANT]);
+            const { result } = renderController(svc, TARGET);
+            await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+            act(() => result.current.actions.openTransferOwnership());
+            act(() =>
+                result.current.actions.setTransferTarget({ id: "user:u1", kind: "user", name: "Jane Good" }),
+            );
+            act(() => result.current.actions.setTransferAlsoRemoveSelf(true));
+            await act(async () => {
+                await result.current.actions.confirmTransferOwnership();
+            });
+
+            expect(svc.manageObjectPermissions).toHaveBeenCalledTimes(1);
+            const [, grantees] = svc.manageObjectPermissions.mock.calls[0] as [
+                unknown,
+                IGranularAccessGrantee[],
+            ];
+            // Only the self-removal — no EDIT grant for an existing owner.
+            expect(grantees).toEqual([
+                expect.objectContaining({ granteeRef: CURRENT_USER_REF, permissions: [] }),
+            ]);
+        });
+
+        // Access list where the current user (CURRENT_USER_REF = "self") also has
+        // their own grant — getAccessList keeps every grant, including self.
+        const SELF_GRANT: AccessGranteeDetail = {
+            type: "granularUser",
+            user: { ref: idRef("self"), uri: "/self", login: "me", email: "me@x.com", fullName: "Me" },
+            permissions: ["EDIT", "VIEW"],
+            inheritedPermissions: [],
+        } as AccessGranteeDetail;
+
+        it("downgrades the current user's own row to VIEW after a transfer", async () => {
+            const svc = makeService([USER_GRANT, SELF_GRANT]);
+            const { result } = renderController(svc, TARGET);
+            await waitFor(() => expect(result.current.state.status).toBe("success"));
+            expect(result.current.state.grantees.find((g) => g.id === "user:self")?.level).toBe("EDIT");
+
+            act(() => result.current.actions.openTransferOwnership());
+            act(() => result.current.actions.setTransferTarget(NEW_OWNER));
+            await act(async () => {
+                await result.current.actions.confirmTransferOwnership();
+            });
+
+            // Self row reflects the downgrade locally (no refetch), not stale EDIT.
+            expect(result.current.state.grantees.find((g) => g.id === "user:self")?.level).toBe("VIEW");
+        });
+
+        it("drops the current user's own row when 'Also remove my access' is set", async () => {
+            const svc = makeService([USER_GRANT, SELF_GRANT]);
+            const { result } = renderController(svc, TARGET);
+            await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+            act(() => result.current.actions.openTransferOwnership());
+            act(() => result.current.actions.setTransferTarget(NEW_OWNER));
+            act(() => result.current.actions.setTransferAlsoRemoveSelf(true));
+            await act(async () => {
+                await result.current.actions.confirmTransferOwnership();
+            });
+
+            expect(result.current.state.grantees.some((g) => g.id === "user:self")).toBe(false);
+        });
+
+        it("uses an 'access updated' toast, not 'ownership transferred', for already-owner self-removal", async () => {
+            const svc = makeService([OWNER_GRANT]);
+            const { result } = renderController(svc, TARGET);
+            await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+            act(() => result.current.actions.openTransferOwnership());
+            act(() =>
+                result.current.actions.setTransferTarget({ id: "user:u1", kind: "user", name: "Jane Good" }),
+            );
+            act(() => result.current.actions.setTransferAlsoRemoveSelf(true));
+            await act(async () => {
+                await result.current.actions.confirmTransferOwnership();
+            });
+
+            // The success toast id is the generic access-updated one, not the transfer one.
+            expect(addSuccess).toHaveBeenCalledWith(
+                expect.objectContaining({ id: "objectShare.toast.accessUpdated" }),
+            );
+        });
+
+        it("keeps the transfer subview open and surfaces an error when the write fails", async () => {
+            const svc = makeService();
+            svc.manageObjectPermissions.mockRejectedValueOnce(new Error("boom"));
+            const { result } = renderController(svc, TARGET);
+            await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+            act(() => result.current.actions.openTransferOwnership());
+            act(() => result.current.actions.setTransferTarget(NEW_OWNER));
+            await act(async () => {
+                await result.current.actions.confirmTransferOwnership();
+            });
+
+            expect(addError).toHaveBeenCalled();
+            // Stays open so the user can retry; the new owner's row isn't promoted.
+            expect(result.current.state.subview).toBe("transferOwnership");
+            expect(result.current.state.transferSaving).toBe(false);
+        });
+
+        it("closeTransferOwnership returns to main and clears the buffers", async () => {
+            const svc = makeService();
+            const { result } = renderController(svc, TARGET);
+            await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+            act(() => result.current.actions.openTransferOwnership());
+            act(() => result.current.actions.setTransferTarget(NEW_OWNER));
+            act(() => result.current.actions.setTransferAlsoRemoveSelf(true));
+            act(() => result.current.actions.closeTransferOwnership());
+
+            expect(result.current.state.subview).toBe("main");
+            expect(result.current.state.transferTarget).toBeUndefined();
+            expect(result.current.state.transferAlsoRemoveSelf).toBe(false);
+        });
+
+        it("keeps the transfer lock until the write settles, even if the dialog closes mid-transfer", async () => {
+            let releaseCommit: () => void = () => {};
+            const commitGate = new Promise<void>((resolve) => {
+                releaseCommit = resolve;
+            });
+            const svc = makeService();
+            svc.manageObjectPermissions.mockImplementation(async () => {
+                await commitGate;
+            });
+            const { result } = renderController(svc, TARGET);
+            await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+            act(() => result.current.actions.openTransferOwnership());
+            act(() => result.current.actions.setTransferTarget(NEW_OWNER));
+            let pending: Promise<void> = Promise.resolve();
+            act(() => {
+                pending = result.current.actions.confirmTransferOwnership();
+            });
+            await waitFor(() => expect(result.current.state.transferSaving).toBe(true));
+
+            // Closing the dialog mid-transfer must NOT release the lock — otherwise a
+            // reopened dialog could mutate other grantees concurrently with the
+            // unfinished ownership write the transfer was meant to serialize.
+            act(() => result.current.actions.reset());
+            expect(result.current.state.transferSaving).toBe(true);
+
+            // The lock clears only once the write itself settles.
+            await act(async () => {
+                releaseCommit();
+                await pending;
+            });
+            expect(result.current.state.transferSaving).toBe(false);
+        });
     });
 });

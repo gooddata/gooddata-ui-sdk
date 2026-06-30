@@ -1257,6 +1257,14 @@ export {
     type IUiAddGranteeDialogCardProps,
 } from "./@ui/UiAddGranteeDialog/UiAddGranteeDialogCard.js";
 export {
+    UiTransferOwnershipDialog,
+    type IUiTransferOwnershipDialogProps,
+} from "./@ui/UiTransferOwnershipDialog/UiTransferOwnershipDialog.js";
+export {
+    UiTransferOwnershipDialogCard,
+    type IUiTransferOwnershipDialogCardProps,
+} from "./@ui/UiTransferOwnershipDialog/UiTransferOwnershipDialogCard.js";
+export {
     UiGeneralAccessRadio,
     type IUiGeneralAccessRadioProps,
     type GeneralAccessValue,

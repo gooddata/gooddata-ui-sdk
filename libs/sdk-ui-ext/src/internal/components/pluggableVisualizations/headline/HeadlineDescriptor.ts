@@ -108,11 +108,11 @@ export class HeadlineDescriptor implements IVisualizationDescriptor {
         }),
     });
 
-    public getMeta(settings?: ISettings): IVisualizationMeta {
+    public getMeta(): IVisualizationMeta {
         return {
             documentationUrl:
                 "https://www.gooddata.com/docs/gooddata-ui/latest/references/visual_components/headline",
-            supportsExport: settings?.enableHeadlineExport ?? true,
+            supportsExport: true,
             supportsZooming: false,
         };
     }

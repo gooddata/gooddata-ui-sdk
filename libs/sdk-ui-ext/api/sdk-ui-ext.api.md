@@ -41,6 +41,7 @@ import { IPivotTableConfig } from '@gooddata/sdk-ui-pivot';
 import { ISettings } from '@gooddata/sdk-model';
 import { ITab } from '@gooddata/sdk-ui-kit';
 import { ITheme } from '@gooddata/sdk-model';
+import type { IUiGranteeAsyncOption } from '@gooddata/sdk-ui-kit';
 import type { IUiGranteeAsyncOptions } from '@gooddata/sdk-ui-kit';
 import type { IUiPickedGrantee } from '@gooddata/sdk-ui-kit';
 import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
@@ -911,16 +912,21 @@ export interface IObjectShareControllerActions {
     changeWorkspaceLevel: (level: "VIEW" | "SHARE") => Promise<void>;
     // (undocumented)
     closeAddGrantee: () => void;
+    closeTransferOwnership: () => void;
     confirmAddGrantees: () => Promise<void>;
     confirmGeneralAccessChange: () => Promise<void>;
-    loadOptions: (search: string) => Promise<IUiGranteeAsyncOptions>;
+    confirmTransferOwnership: () => Promise<void>;
+    loadOptions: (search: string, includeGranted?: boolean) => Promise<IUiGranteeAsyncOptions>;
     // (undocumented)
     openAddGrantee: () => void;
+    openTransferOwnership: () => void;
     removeGrantee: (granteeId: string) => Promise<void>;
     requestGeneralAccessChange: (next: GeneralAccessValue) => void;
     reset: () => void;
     // (undocumented)
     setPendingGrantees: (next: IUiPickedGrantee[]) => void;
+    setTransferAlsoRemoveSelf: (next: boolean) => void;
+    setTransferTarget: (owner: IUiGranteeAsyncOption) => void;
 }
 
 // @internal (undocumented)
@@ -940,9 +946,13 @@ export interface IObjectShareControllerState {
     // (undocumented)
     status: "idle" | "loading" | "success" | "error" | "saving";
     // (undocumented)
-    subview: "main" | "addGrantee";
+    subview: "main" | "addGrantee" | "transferOwnership";
     // (undocumented)
     summary: IObjectAccessSummary | undefined;
+    transferAlsoRemoveSelf: boolean;
+    transferSaving: boolean;
+    transferTarget: IUiGranteeAsyncOption | undefined;
+    transferTargetIsOwner: boolean;
     workspaceLevel: "VIEW" | "SHARE";
     workspaceLevelSaving: boolean;
 }

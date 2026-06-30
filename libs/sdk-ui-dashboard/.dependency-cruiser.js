@@ -215,7 +215,7 @@ export default {
         ]),
         moduleWithDependencies("scheduledEmail", "src/presentation/automations/scheduledEmail", [
             "src/_staging/*",
-            "src/model/*",
+            "src/model/store/filtering/types.ts",
             "src/presentation/dashboardContexts/*",
             "src/presentation/localization/*",
             "src/presentation/constants/*",
@@ -251,14 +251,13 @@ export default {
         {
             name: "no-model-imports-in-clean-scheduled-email",
             comment:
-                "The clean scheduled-email tree must not import from src/model/ or from the heavy " +
+                "The whole scheduledEmail tree must not import from src/model/ or from the heavy " +
                 "presentation subtrees (dashboard, dashboardContexts, filterBar, topBar, widget). " +
                 "Only the connectors layer may cross those boundaries. DashboardComponentsContext is " +
                 "allowed (slot resolution). model/store/filtering/types.ts is allowed (IAutomationFiltersTab " +
-                "pure-data type). GDP-3167: armed for DefaultScheduledEmailDialog first; widened to the " +
-                "whole scheduledEmail/ tree once the management dialog is migrated.",
+                "pure-data type). GDP-3167: covers the entire scheduledEmail/ tree (create/edit and management).",
             severity: "error",
-            from: { path: "^src/presentation/automations/scheduledEmail/DefaultScheduledEmailDialog/" },
+            from: { path: "^src/presentation/automations/scheduledEmail/" },
             to: {
                 path: "^src/(model/|presentation/(dashboard/|dashboardContexts/|filterBar/|topBar/|widget/))",
                 pathNot: ["dashboardContexts/DashboardComponentsContext", "model/store/filtering/types\\.ts"],

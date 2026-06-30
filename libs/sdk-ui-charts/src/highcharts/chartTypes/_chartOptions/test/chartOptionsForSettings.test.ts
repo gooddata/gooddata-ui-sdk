@@ -13,6 +13,7 @@ describe("updateConfigWithSettings", () => {
             const config: IChartConfig = {};
             const settings: ISettings = {};
             const expectedConfig = {
+                enableAliasAttributeLabel: true,
                 enableChartSorting: true,
                 enableCompactSize: true,
                 enableJoinedAttributeAxisName: true,
@@ -39,6 +40,7 @@ describe("updateConfigWithSettings", () => {
                 enableKDCrossFiltering: true,
             };
             const expectedConfig = {
+                enableAliasAttributeLabel: true,
                 enableChartSorting: true,
                 enableCompactSize: true,
                 enableJoinedAttributeAxisName: true,

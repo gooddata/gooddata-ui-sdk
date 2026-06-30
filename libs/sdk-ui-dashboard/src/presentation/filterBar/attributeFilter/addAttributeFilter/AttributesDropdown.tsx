@@ -25,10 +25,7 @@ import {
 
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { selectSupportsMultipleDateFilters } from "../../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
-import {
-    selectEnableMeasureValueFilterKD,
-    selectEnableMultipleDateFilters,
-} from "../../../../model/store/config/configSelectors.js";
+import { selectEnableMeasureValueFilterKD } from "../../../../model/store/config/configSelectors.js";
 import { selectInsightsMap } from "../../../../model/store/insights/insightsSelectors.js";
 import { selectAllInsightWidgets } from "../../../../model/store/tabs/layout/layoutSelectors.js";
 import { type IDashboardAttributeFilterPlaceholderProps } from "../types.js";
@@ -192,7 +189,6 @@ export function AttributesDropdown({
         };
     }, []);
 
-    const enableMultipleDateFilters = useDashboardSelector(selectEnableMultipleDateFilters);
     const supportsMultipleDateFilters = useDashboardSelector(selectSupportsMultipleDateFilters);
     const enableMeasureValueFilterKD = useDashboardSelector(selectEnableMeasureValueFilterKD);
 
@@ -236,8 +232,6 @@ export function AttributesDropdown({
             : attributes;
     }, [attributes, searchQuery]);
 
-    const offerDateFilters = enableMultipleDateFilters && supportsMultipleDateFilters;
-
     const filteredDateDatasets = useMemo(() => {
         return searchQuery
             ? dateDatasets.filter((ds) => ds.dataSet.title.toLowerCase().includes(searchQuery.toLowerCase()))
@@ -262,8 +256,8 @@ export function AttributesDropdown({
 
     const hasAttributes = useMemo(() => attributes.length > 0, [attributes]);
     const hasDateFilters = useMemo(
-        () => offerDateFilters && dateDatasets.length > 0,
-        [dateDatasets, offerDateFilters],
+        () => supportsMultipleDateFilters && dateDatasets.length > 0,
+        [dateDatasets, supportsMultipleDateFilters],
     );
     const hasMeasures = useMemo(() => metricMeasures.length > 0, [metricMeasures]);
     const hasParameters = useMemo(() => parameters.length > 0, [parameters]);
@@ -293,7 +287,7 @@ export function AttributesDropdown({
         if (enableMeasureValueFilterKD && metricMeasures.length) {
             newTabs.push({ id: "metrics", iconOnly: true, icon: "gd-icon-metric" });
         }
-        if (offerDateFilters && dateDatasets.length) {
+        if (supportsMultipleDateFilters && dateDatasets.length) {
             newTabs.push({ id: "dateDatasets", iconOnly: true, icon: "gd-icon-date" });
         }
         if (parameters.length) {
@@ -305,7 +299,14 @@ export function AttributesDropdown({
         }
 
         return newTabs;
-    }, [attributes, dateDatasets, enableMeasureValueFilterKD, metricMeasures, offerDateFilters, parameters]);
+    }, [
+        attributes,
+        dateDatasets,
+        enableMeasureValueFilterKD,
+        metricMeasures,
+        supportsMultipleDateFilters,
+        parameters,
+    ]);
 
     const buttonTitle = intl.formatMessage({ id: "addPanel.filter" });
 

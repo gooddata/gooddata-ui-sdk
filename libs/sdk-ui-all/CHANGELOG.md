@@ -1,6 +1,47 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 25 Jun 2026 06:50:37 GMT and should not be manually modified.
+This log was last generated on Tue, 30 Jun 2026 12:21:02 GMT and should not be manually modified.
+
+## 11.44.0
+
+Tue, 30 Jun 2026 12:21:02 GMT
+
+### Patches
+
+- sdk-ui-ext: Add a visible border to color palette swatches so light/white swatches stay distinguishable against the dropdown background.
+
+### Updates
+
+- sdk-ui-dashboard: Recover out-of-range parameter values at execution
+- sdk-ui-dashboard: Toast for reset/removed parameters on load
+- sdk-ui-dashboard: Warn on out-of-range dashboard parameter value
+- sdk-ui-kit: Add warning state (`isWarning`/`warningTooltip`) to `UiControlButton`
+- sdk-ui-kit: Inline validation in `ParameterControlDropdown`
+- sdk-ui-dashboard: Keep the computed result (and its resultId) for widgets that finish with no data, so consumers such as the AI summary recognize them as computed-but-empty instead of not yet computed.
+- sdk-ui-dashboard: Summarize button on widgets is gated in embed mode
+- sdk-ui-catalog: Integrate semantic search in catalog
+- sdk-backend-spi, sdk-backend-tiger, sdk-backend-base, sdk-backend-mockingbird: Remove the experimental IGenAIService.semanticSearchIndex() method that triggered a workspace metadata reindex. This is a breaking change for callers of that method; semantic search querying is unaffected.
+- sdk-ui-gen-ai: Add fallback align points to conversation dropdown
+- sdk-backend-base: cache + de-dupe getInsight
+- sdk-ui-kit: Re-align the header Smart Search overlay after async locale load by enabling its ResizeObserver (resizeObserverThreshold=0.2), fixing mispositioning when content grows from 0x0 to its final size
+- sdk-ui-all: Support ranking filter using catalog metric.
+- Freeze automationFilters dep-cruiser allowance to exact-file Phase-3 debt list; add boundary injection test
+- Separate scheduled-email create/edit dialog from the dashboard store behind automation contexts and a connector (GDP-3167)
+- Separate scheduled-email management dialog from the dashboard store behind automation contexts and the connector (GDP-3167)
+- sdk-ui-ext: Show object-permission grantees by name (not id) after a page reload
+- Fix UiPopover not closing on outside-click when rendered inside a modal
+- Hide catalog item sharing UI from users who can't manage the object's permissions
+- sdk-ui-ext: Batch per-label permission writes when adding multiple grantees in the object share dialog
+- sdk-ui-pivot: Explain column header keyboard shortcuts via a focus hint on the first column
+- sdk-ui-kit: Add UiTooltip accessibilityHidden prop for visual-only tooltips
+- sdk-ui-vis-commons: remove unused 'Use to toggle visibility' sr-only text from the legend that was not wired up to any element
+- sdk-ui-dashboard: Improve KDA dialog accessibility (labels, aria attributes, return focus)
+- sdk-ui-kit: Remove redundant aria-label from UiAsyncTable to fix duplicate VoiceOver announcements
+- sdk-ui-ext, sdk-ui-kit: Fix accessibility errors on DropdownControl — add aria-expanded, aria-controls always referencing a valid DOM element, and fix arrow key navigation in the placement dropdown
+- sdk-ui-dashboard, sdk-ui-kit: Fix focus order in the My views dialog — move initial focus to the first interactive element on open, and add tabIndex support to Typography
+- sdk-ui-dashboard: Fix misleading aria-label on the My views grid when the list is empty — remove navigation instructions when there are no rows to navigate
+- sdk-ui-dashboard: Return keyboard focus to delete button after dismissing the delete saved view confirmation dialog
+- sdk-ui-dashboard: Fix accessible name of the back button in the My views dialog — change aria-label from generic 'Back to the parent menu' to 'Back to list of saved views'
 
 ## 11.43.0
 

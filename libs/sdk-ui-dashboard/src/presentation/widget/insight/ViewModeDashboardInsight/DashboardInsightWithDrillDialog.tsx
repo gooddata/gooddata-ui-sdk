@@ -9,7 +9,6 @@ import { KdaDialogController } from "../../../../kdaDialog/dialog/KdaDialogContr
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { selectCatalogAttributeDisplayFormsById } from "../../../../model/store/catalog/catalogSelectors.js";
 import {
-    selectEnableDrilledTooltip,
     selectLocale,
     selectObjectAvailabilityConfig,
     selectSeparators,
@@ -43,7 +42,6 @@ export function DashboardInsightWithDrillDialog(props: IDashboardInsightProps): 
     const widget = props.widget;
     const separators = useDashboardSelector(selectSeparators);
     const attributeDisplayForms = useDashboardSelector(selectCatalogAttributeDisplayFormsById);
-    const enableDrillDescription = useDashboardSelector(selectEnableDrilledTooltip);
 
     const breadcrumbs = useMemo(
         () =>
@@ -172,7 +170,7 @@ export function DashboardInsightWithDrillDialog(props: IDashboardInsightProps): 
                     onDrillDown={onDrillDown}
                     onBackButtonClick={goBack}
                     onClose={onClose}
-                    enableDrillDescription={enableDrillDescription}
+                    enableDrillDescription
                     drillStep={activeDrillStep}
                     returnFocusToInsight={returnFocusToInsight}
                     onDrillStart={onDrillStart}

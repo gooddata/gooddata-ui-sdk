@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import type { IObjectPermissionsObject } from "@gooddata/sdk-backend-spi";
 import {
@@ -56,8 +56,20 @@ export interface IAccessList {
 
     /** Write a grant change to the backend and toast. False on failure; no refetch. */
     commit: (mutate: IGranularAccessGrantee[], successMessage: { id: string }) => Promise<boolean>;
-    /** Picker loader — available assignees minus already-granted, filtered by query. */
-    loadOptions: (search: string) => Promise<IUiGranteeAsyncOptions>;
+    /**
+     * Picker loader — available assignees filtered by query. By default excludes
+     * already-granted grantees (add-grantee picker); pass `includeGranted` to keep
+     * them (transfer-ownership picker, which may promote an existing viewer).
+     */
+    loadOptions: (search: string, includeGranted?: boolean) => Promise<IUiGranteeAsyncOptions>;
+    /**
+     * The current user's ref, resolved on demand (and cached). Used by the
+     * transfer-ownership flow to write the current user's own grant change. The
+     * add-grantee *picker* excludes the current user, but `getAccessList` does
+     * not, so a self grant can still appear as a row. Rejects if the profile
+     * can't be read.
+     */
+    getCurrentUserRef: () => Promise<ObjRef>;
     /** Resolve a grantee id back to the picker's original ObjRef (preserves Uri vs Id ref). */
     refForId: (id: string) => ObjRef;
 
@@ -112,6 +124,9 @@ export function useAccessList(
     // Original ObjRef per grantee id, learned from the picker (the access-list id
     // is a serialized `kind:identifier`, which loses Uri-vs-Id). Reused for writes.
     const [knownRefs, setKnownRefs] = useState<Record<string, ObjRef>>({});
+    // Memoized current-user-ref fetch — the profile doesn't change while mounted,
+    // so resolve it at most once and share the promise across callers.
+    const currentUserRefCache = useRef<Promise<ObjRef> | undefined>(undefined);
 
     const targetKey = target ? objRefToString(target.ref) : undefined;
 
@@ -292,11 +307,15 @@ export function useAccessList(
     );
 
     // Picker loader — fetches available assignees on demand, filters by the typed
-    // query, excludes anything already granted. Depends only on the granted set
-    // (grantees), so its identity changes only when that set actually changes. It
-    // must NOT write state that feeds its own deps.
+    // query, and by default excludes anything already granted. Depends only on the
+    // granted set (grantees), so its identity changes only when that set actually
+    // changes. It must NOT write state that feeds its own deps.
+    //
+    // `includeGranted` keeps already-granted grantees in the result. The
+    // transfer-ownership picker needs this: promoting an existing viewer to owner
+    // is a primary case, and the add-grantee exclusion would otherwise hide them.
     const loadOptions = useCallback(
-        async (search: string): Promise<IUiGranteeAsyncOptions> => {
+        async (search: string, includeGranted = false): Promise<IUiGranteeAsyncOptions> => {
             if (!target) {
                 return { groups: [], users: [] };
             }
@@ -313,7 +332,7 @@ export function useAccessList(
             // even when the access-list grant later returns only a raw id. Safe here:
             // the caches aren't dependencies of loadOptions, so this won't re-trigger it.
             cacheAssignees(assignees);
-            const excluded = new Set(excludedIdsKey ? excludedIdsKey.split(",") : []);
+            const excluded = new Set(includeGranted || !excludedIdsKey ? [] : excludedIdsKey.split(","));
             const selectable = withIds
                 .filter(({ id }) => !excluded.has(id)) // hide anyone already granted
                 .filter(({ assignee }) => assigneeMatchesQuery(assignee, query));
@@ -342,6 +361,22 @@ export function useAccessList(
         [knownRefs],
     );
 
+    const getCurrentUserRef = useCallback(async (): Promise<ObjRef> => {
+        if (!currentUserRefCache.current) {
+            currentUserRefCache.current = backend
+                .currentUser()
+                .getUser()
+                .then((user) => user.ref)
+                .catch((error) => {
+                    // Don't cache a rejected promise, or a transient profile-read
+                    // failure would make every later transfer fail immediately.
+                    currentUserRefCache.current = undefined;
+                    throw error;
+                });
+        }
+        return currentUserRefCache.current;
+    }, [backend]);
+
     return {
         targetKey,
         hasList,
@@ -355,6 +390,7 @@ export function useAccessList(
         commit,
         loadOptions,
         refForId,
+        getCurrentUserRef,
         setGrantees,
         setGeneralAccess,
         setWorkspaceLevel,

@@ -8,7 +8,7 @@ function getSettingsBasedConfig(settings: ISettings): Partial<IChartConfig> {
     return {
         ...(settings.disableKpiDashboardHeadlineUnderline ? { disableDrillUnderline: true } : {}),
         ...(settings.enableKDCrossFiltering ? { useGenericInteractionTooltip: true } : {}),
-        ...(settings.enableCrossFilteringAliasTitles ? { enableAliasAttributeLabel: true } : {}),
+        enableAliasAttributeLabel: true,
         ...(settings["separators"] ? { separators: settings["separators"] as ISeparators } : {}),
         ...(settings.enableVisualizationFineTuning ? { enableVisualizationFineTuning: true } : {}),
         ...(settings.enableExecutionCancelling ? { enableExecutionCancelling: true } : {}),

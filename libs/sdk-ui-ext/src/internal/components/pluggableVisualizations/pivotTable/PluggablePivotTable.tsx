@@ -637,8 +637,6 @@ export function createPivotTableConfig(
         enableExecutionCancelling: settings.enableExecutionCancelling ?? false,
     };
 
-    const enableTableTotalRows = settings["enableTableTotalRows"];
-
     if (environment !== DASHBOARDS_ENVIRONMENT) {
         tableConfig = {
             ...tableConfig,
@@ -649,15 +647,13 @@ export function createPivotTableConfig(
         };
     }
 
-    if (enableTableTotalRows) {
-        tableConfig = {
-            ...tableConfig,
-            menu: {
-                ...tableConfig.menu,
-                aggregationsSubMenuForRows: true,
-            },
-        };
-    }
+    tableConfig = {
+        ...tableConfig,
+        menu: {
+            ...tableConfig.menu,
+            aggregationsSubMenuForRows: true,
+        },
+    };
 
     // the growToFit can only be enabled in dashboards
     const growToFit = environment === DASHBOARDS_ENVIRONMENT;

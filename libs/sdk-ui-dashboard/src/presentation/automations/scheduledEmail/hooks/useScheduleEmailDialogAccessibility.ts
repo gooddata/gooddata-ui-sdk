@@ -3,15 +3,14 @@
 import { useMemo } from "react";
 
 import { DEFAULT_MENU_BUTTON_ID } from "../../../../_staging/accessibility/elementId.js";
-import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
-import { selectScheduleEmailDialogReturnFocusTo } from "../../../../model/store/ui/uiSelectors.js";
+import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
 
 export const useScheduleEmailDialogAccessibility = () => {
-    const emailDialogReturnFocusTo = useDashboardSelector(selectScheduleEmailDialogReturnFocusTo);
+    const { scheduleEmailDialogReturnFocusTo } = useAutomationsContext();
 
     const returnFocusTo = useMemo(
-        () => emailDialogReturnFocusTo || DEFAULT_MENU_BUTTON_ID,
-        [emailDialogReturnFocusTo],
+        () => scheduleEmailDialogReturnFocusTo || DEFAULT_MENU_BUTTON_ID,
+        [scheduleEmailDialogReturnFocusTo],
     );
 
     return {

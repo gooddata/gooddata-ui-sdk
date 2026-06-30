@@ -126,99 +126,93 @@ test.topLevelDescribe(
             await hasFilterListSize(page, 1);
         });
 
-        test.describe(
-            "with enableKDAttributeFilterDatesValidation FF ON",
-            { workspaceSettings: { enableKDAttributeFilterDatesValidation: true } },
-            () => {
-                test(
-                    "should extend attribute filter by date filter",
-                    { tag: ["@pre-merge-integrated"] },
-                    async ({ page }) => {
-                        const widgetParent = ".s-dash-item-0_0";
+        test(
+            "should extend attribute filter by date filter",
+            { tag: ["@pre-merge-integrated"] },
+            async ({ page }) => {
+                const widgetParent = ".s-dash-item-0_0";
 
-                        // Wait for attributes to load after navigation
-                        const attributesPromise = page.waitForResponse(
-                            (resp) => resp.url().includes("/attributes") && resp.request().method() === "GET",
-                            { timeout: 30_000 },
-                        );
-                        await visit(page, "dashboard/multiple-date-filters");
-                        await attributesPromise;
-
-                        await enterEditMode(page);
-
-                        // Set default date filter absolute form: from 4/3/2010
-                        await openDateFilter(page);
-                        await selectDateFilterOption(page, ".s-absolute-form-button");
-                        await typeIntoDateRangeFrom(page, "4/3/2010");
-
-                        // Set default date filter absolute form: to 4/3/2018
-                        await openDateFilter(page);
-                        await selectDateFilterOption(page, ".s-absolute-form-button");
-                        await typeIntoDateRangeTo(page, "4/3/2018");
-
-                        // Set Activity date filter absolute form: from 4/3/2010
-                        await openDateFilter(page, "Activity");
-                        await selectDateFilterOption(page, ".s-absolute-form-button");
-                        await typeIntoDateRangeFrom(page, "4/3/2010");
-
-                        // Set Activity date filter absolute form: to 4/3/2018
-                        await openDateFilter(page, "Activity");
-                        await selectDateFilterOption(page, ".s-absolute-form-button");
-                        await typeIntoDateRangeTo(page, "4/3/2018");
-
-                        // Verify chart data labels
-                        await waitChartLoaded(page, widgetParent);
-                        await expectChartDataLabels(page, widgetParent, [
-                            "$4,108,360.80",
-                            "$2,267,528.48",
-                            "$3,461,373.87",
-                        ]);
-
-                        // Open Sales Rep filter, verify 22 elements
-                        await openAttributeFilter(page, "Sales Rep");
-                        await waitFilterElementsLoaded(page);
-                        await hasFilterListSize(page, 22);
-
-                        // Configure date filter dependency "activity" with "Date range"
-                        await selectFilterConfiguration(page);
-                        await configureLimitingDateFilterDependency(page, "activity", "Date range");
-                        await waitFilterElementsLoaded(page);
-                        await hasFilterListSize(page, 20);
-
-                        // Verify specific date filter is disabled for "activity"
-                        await selectFilterConfiguration(page);
-                        await assertSpecificDateFilterVisible(page, "activity", false);
-                        await closeFilterConfiguration(page);
-
-                        // Delete "Date range as Activity" dependency
-                        await deleteFilterValuesBy(page, "Date range as Activity");
-
-                        // Configure date filter dependency "activity" with "Date specific"
-                        await selectFilterConfiguration(page);
-                        await configureLimitingDateFilterDependency(page, "activity", "Date specific");
-                        await waitFilterElementsLoaded(page);
-                        await hasFilterListSize(page, 20);
-
-                        // Verify common date filter is disabled for "activity"
-                        await selectFilterConfiguration(page);
-                        await assertCommonDateFilterVisible(page, "activity", false);
-                        await closeFilterConfiguration(page);
-
-                        // Select "Cory Owens" and apply
-                        await selectAttributeValues(page, ["Cory Owens"]);
-                        await applyAttributeFilter(page);
-
-                        // Verify chart re-renders with new data
-                        await expectChartDataLabels(page, widgetParent, ["$2,376,100.41"]);
-
-                        // Open Sales Rep, delete "Activity" dependency, verify 22 elements
-                        await openAttributeFilter(page, "Sales Rep");
-                        await clearFilterSearch(page);
-                        await waitFilterElementsLoaded(page);
-                        await deleteFilterValuesBy(page, "Activity");
-                        await hasFilterListSize(page, 22);
-                    },
+                // Wait for attributes to load after navigation
+                const attributesPromise = page.waitForResponse(
+                    (resp) => resp.url().includes("/attributes") && resp.request().method() === "GET",
+                    { timeout: 30_000 },
                 );
+                await visit(page, "dashboard/multiple-date-filters");
+                await attributesPromise;
+
+                await enterEditMode(page);
+
+                // Set default date filter absolute form: from 4/3/2010
+                await openDateFilter(page);
+                await selectDateFilterOption(page, ".s-absolute-form-button");
+                await typeIntoDateRangeFrom(page, "4/3/2010");
+
+                // Set default date filter absolute form: to 4/3/2018
+                await openDateFilter(page);
+                await selectDateFilterOption(page, ".s-absolute-form-button");
+                await typeIntoDateRangeTo(page, "4/3/2018");
+
+                // Set Activity date filter absolute form: from 4/3/2010
+                await openDateFilter(page, "Activity");
+                await selectDateFilterOption(page, ".s-absolute-form-button");
+                await typeIntoDateRangeFrom(page, "4/3/2010");
+
+                // Set Activity date filter absolute form: to 4/3/2018
+                await openDateFilter(page, "Activity");
+                await selectDateFilterOption(page, ".s-absolute-form-button");
+                await typeIntoDateRangeTo(page, "4/3/2018");
+
+                // Verify chart data labels
+                await waitChartLoaded(page, widgetParent);
+                await expectChartDataLabels(page, widgetParent, [
+                    "$4,108,360.80",
+                    "$2,267,528.48",
+                    "$3,461,373.87",
+                ]);
+
+                // Open Sales Rep filter, verify 22 elements
+                await openAttributeFilter(page, "Sales Rep");
+                await waitFilterElementsLoaded(page);
+                await hasFilterListSize(page, 22);
+
+                // Configure date filter dependency "activity" with "Date range"
+                await selectFilterConfiguration(page);
+                await configureLimitingDateFilterDependency(page, "activity", "Date range");
+                await waitFilterElementsLoaded(page);
+                await hasFilterListSize(page, 20);
+
+                // Verify specific date filter is disabled for "activity"
+                await selectFilterConfiguration(page);
+                await assertSpecificDateFilterVisible(page, "activity", false);
+                await closeFilterConfiguration(page);
+
+                // Delete "Date range as Activity" dependency
+                await deleteFilterValuesBy(page, "Date range as Activity");
+
+                // Configure date filter dependency "activity" with "Date specific"
+                await selectFilterConfiguration(page);
+                await configureLimitingDateFilterDependency(page, "activity", "Date specific");
+                await waitFilterElementsLoaded(page);
+                await hasFilterListSize(page, 20);
+
+                // Verify common date filter is disabled for "activity"
+                await selectFilterConfiguration(page);
+                await assertCommonDateFilterVisible(page, "activity", false);
+                await closeFilterConfiguration(page);
+
+                // Select "Cory Owens" and apply
+                await selectAttributeValues(page, ["Cory Owens"]);
+                await applyAttributeFilter(page);
+
+                // Verify chart re-renders with new data
+                await expectChartDataLabels(page, widgetParent, ["$2,376,100.41"]);
+
+                // Open Sales Rep, delete "Activity" dependency, verify 22 elements
+                await openAttributeFilter(page, "Sales Rep");
+                await clearFilterSearch(page);
+                await waitFilterElementsLoaded(page);
+                await deleteFilterValuesBy(page, "Activity");
+                await hasFilterListSize(page, 22);
             },
         );
     },

@@ -11,7 +11,6 @@ import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { messages } from "../../../locales.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectSupportsMultipleDateFilters } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
-import { selectEnableMultipleDateFilters } from "../../../model/store/config/configSelectors.js";
 import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
 import { getDropZoneDebugStyle } from "../debug.js";
 import { useDashboardDrop } from "../useDashboardDrop.js";
@@ -24,7 +23,6 @@ export type DraggableFilterDropZoneProps = {
 export function DraggableFilterDropZone({ targetIndex, onDrop }: DraggableFilterDropZoneProps) {
     const theme = useTheme();
     const isEditMode = useDashboardSelector(selectIsInEditMode);
-    const enableMultipleDateFilters = useDashboardSelector(selectEnableMultipleDateFilters);
     const supportsMultipleDateFilters = useDashboardSelector(selectSupportsMultipleDateFilters);
 
     const [{ canDrop, isOver, itemType }, dropRef] = useDashboardDrop(
@@ -54,10 +52,9 @@ export function DraggableFilterDropZone({ targetIndex, onDrop }: DraggableFilter
     );
 
     const debugStyle = getDropZoneDebugStyle({ isOver });
-    const tooltip =
-        enableMultipleDateFilters && supportsMultipleDateFilters
-            ? messages.filterDropzoneTooltipGeneric
-            : messages.filterDropzoneTooltip;
+    const tooltip = supportsMultipleDateFilters
+        ? messages.filterDropzoneTooltipGeneric
+        : messages.filterDropzoneTooltip;
 
     return (
         <div

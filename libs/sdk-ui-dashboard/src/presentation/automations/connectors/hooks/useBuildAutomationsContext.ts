@@ -20,7 +20,6 @@ import {
     selectEnableAutomationManagement,
     selectEnableComparisonInAlerting,
     selectEnableCustomizableCsvDelimiter,
-    selectEnableExternalRecipients,
     selectEnableNewScheduledExport,
     selectExternalRecipient,
     selectIsWhiteLabeled,
@@ -67,12 +66,16 @@ import {
     selectDateFilterConfigsOverridesByTab,
 } from "../../../../model/store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
 import { selectAttributeFilterDisplayFormsMap } from "../../../../model/store/tabs/filterContext/filterContextSelectors.js";
+import { selectWidgetsMap } from "../../../../model/store/tabs/layout/layoutSelectors.js";
 import {
     selectMeasureValueFilterConfigsOverrides,
     selectMeasureValueFilterConfigsOverridesByTab,
 } from "../../../../model/store/tabs/measureValueFilterConfigs/measureValueFilterConfigsSelectors.js";
 import { selectIsAutomationDialogSecondaryTitleVisible } from "../../../../model/store/topBar/topBarSelectors.js";
-import { selectExecutionTimestamp } from "../../../../model/store/ui/uiSelectors.js";
+import {
+    selectExecutionTimestamp,
+    selectScheduleEmailDialogReturnFocusTo,
+} from "../../../../model/store/ui/uiSelectors.js";
 import { selectCurrentUser } from "../../../../model/store/user/userSelectors.js";
 import type {
     IAutomationsContextValue,
@@ -136,7 +139,6 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
     const canUseAiAssistant = useDashboardSelector(selectCanUseAiAssistant);
     const canManageWorkspace = useDashboardSelector(selectCanManageWorkspace);
     const enableComparisonInAlerting = useDashboardSelector(selectEnableComparisonInAlerting);
-    const enableExternalRecipients = useDashboardSelector(selectEnableExternalRecipients);
     const enableAlertAttributes = useDashboardSelector(selectEnableAlertAttributes);
     const enableCustomizableCsvDelimiter = useDashboardSelector(selectEnableCustomizableCsvDelimiter);
     const enableAutomationEvaluationMode = useDashboardSelector(selectEnableAutomationEvaluationMode);
@@ -148,6 +150,9 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
         parseInt(minimumRecurrenceMinutesEntitlement?.value ?? DEFAULT_MIN_RECURRENCE_MINUTES, 10) === 60;
     const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
     const isExecutionTimestampMode = !!executionTimestamp;
+    const scheduleEmailDialogReturnFocusTo = useDashboardSelector(selectScheduleEmailDialogReturnFocusTo);
+
+    const widgetsMap = useDashboardSelector(selectWidgetsMap);
 
     const getCatalogAttributeByRef = useCallback(
         (ref: ObjRef) => allCatalogAttributesMap.get(ref),
@@ -157,6 +162,10 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
         (displayForm: ObjRef) =>
             attrFilterDisplayFormsMap.get(displayForm) ?? catalogDisplayFormsMap.get(displayForm),
         [attrFilterDisplayFormsMap, catalogDisplayFormsMap],
+    );
+    const widgetExistsByRef = useCallback(
+        (ref: ObjRef | undefined): boolean => !!ref && widgetsMap.get(ref) !== undefined,
+        [widgetsMap],
     );
 
     const dateFilterConfig: IAutomationsDateFilterConfig = useMemo(
@@ -177,7 +186,6 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
             enableAutomationManagement,
             canUseAiAssistant,
             enableComparisonInAlerting,
-            enableExternalRecipients,
             enableAlertAttributes,
             canManageWorkspace,
             enableCustomizableCsvDelimiter,
@@ -190,7 +198,6 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
             enableAutomationManagement,
             canUseAiAssistant,
             enableComparisonInAlerting,
-            enableExternalRecipients,
             enableAlertAttributes,
             canManageWorkspace,
             enableCustomizableCsvDelimiter,
@@ -237,6 +244,8 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
             features,
             getCatalogAttributeByRef,
             getAttributeFilterDisplayForm,
+            widgetExistsByRef,
+            scheduleEmailDialogReturnFocusTo,
         }),
         [
             locale,
@@ -276,6 +285,8 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
             features,
             getCatalogAttributeByRef,
             getAttributeFilterDisplayForm,
+            widgetExistsByRef,
+            scheduleEmailDialogReturnFocusTo,
         ],
     );
 }

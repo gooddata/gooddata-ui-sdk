@@ -10792,9 +10792,6 @@ export const selectEnableAutomations: DashboardSelector<boolean>;
 export const selectEnableComparisonInAlerting: DashboardSelector<boolean>;
 
 // @internal
-export const selectEnableCrossFilteringAliasTitles: DashboardSelector<boolean>;
-
-// @internal
 export const selectEnableCustomizedDashboardsWithoutPluginOverlay: DashboardSelector<boolean>;
 
 // @internal
@@ -10821,9 +10818,6 @@ export const selectEnableDashboardTabularExport: DashboardSelector<boolean>;
 // @internal
 export const selectEnableDateFilterIdentifiers: DashboardSelector<boolean>;
 
-// @internal
-export const selectEnableDrilledTooltip: DashboardSelector<boolean>;
-
 // @internal (undocumented)
 export const selectEnableExecutionCancelling: DashboardSelector<boolean>;
 
@@ -10837,9 +10831,6 @@ export const selectEnableExportToDocumentStorage: DashboardSelector<boolean>;
 export const selectEnableExportToPdfTabular: DashboardSelector<boolean>;
 
 // @internal
-export const selectEnableExternalRecipients: DashboardSelector<boolean>;
-
-// @internal
 export const selectEnableFilterControlInDrillingConfiguration: DashboardSelector<boolean>;
 
 // @public
@@ -10849,16 +10840,10 @@ export const selectEnableFilterValuesResolutionInDrillEvents: DashboardSelector<
 export const selectEnableFiscalCalendars: DashboardSelector<boolean>;
 
 // @internal
-export const selectEnableIgnoreCrossFiltering: DashboardSelector<boolean>;
-
-// @internal
 export const selectEnableImmediateAttributeFilterDisplayAsLabelMigration: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableInPlatformNotifications: DashboardSelector<boolean>;
-
-// @internal
-export const selectEnableKDAttributeFilterDatesValidation: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableKDCrossFiltering: DashboardSelector<boolean>;
@@ -10878,8 +10863,6 @@ export const selectEnableKPIDashboardExportPDF: DashboardSelector<string | numbe
 // @alpha
 export const selectEnableMeasureValueFilterKD: DashboardSelector<boolean>;
 
-// @internal
-export const selectEnableMultipleDateFilters: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableNewScheduledExport: DashboardSelector<boolean>;
@@ -10914,8 +10897,6 @@ export const selectEnableSnapshotExportAccessibility: DashboardSelector<boolean>
 // @internal
 export const selectEnableUnavailableItemsVisibility: DashboardSelector<boolean>;
 
-// @internal
-export const selectEnableVisualizationSwitcher: DashboardSelector<boolean>;
 
 // @alpha (undocumented)
 export const selectEntitlementMaxAutomationRecipients: DashboardSelector<IEntitlementDescriptor | undefined>;

@@ -67,7 +67,7 @@ export function UiAsyncTableHeader<T>({
                         id={getColumnHeaderId(String(column.key ?? index))}
                         aria-sort={sorted ? (desc ? "descending" : "ascending") : "none"}
                         aria-label={
-                            renderMenu ? intl.formatMessage(messages["menuHeaderAriaLabel"]) : column.label
+                            renderMenu ? intl.formatMessage(messages["menuHeaderAriaLabel"]) : undefined
                         }
                     >
                         <span className={e("text")}>{column.label}</span>

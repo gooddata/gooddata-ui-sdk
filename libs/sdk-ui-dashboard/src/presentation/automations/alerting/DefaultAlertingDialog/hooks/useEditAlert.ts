@@ -122,7 +122,6 @@ export function useEditAlert({
         allowHourlyRecurrence,
         features: {
             enableComparisonInAlerting: canManageComparison,
-            enableExternalRecipients: enabledExternalRecipients,
             enableAlertAttributes: canManageAttributes,
             enableAlertOncePerInterval,
         },
@@ -291,8 +290,7 @@ export function useEditAlert({
         (channel) => channel.id === editedAutomation?.notificationChannel,
     );
 
-    const allowExternalRecipients =
-        selectedNotificationChannel?.allowedRecipients === "external" && enabledExternalRecipients;
+    const allowExternalRecipients = selectedNotificationChannel?.allowedRecipients === "external";
 
     const allowOnlyLoggedUserRecipients = selectedNotificationChannel?.allowedRecipients === "creator";
 

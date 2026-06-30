@@ -49,7 +49,6 @@ import {
     selectCatalogDateAttributes,
     selectCatalogParameters,
 } from "../../store/catalog/catalogSelectors.js";
-import { selectEnableMultipleDateFilters } from "../../store/config/configSelectors.js";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
 import {
     selectAttributeFilterConfigsDisplayAsLabelMap,
@@ -112,8 +111,7 @@ export function* drillToDashboardHandler(
     const isDrillingToSelf = areObjRefsEqual(ctx.dashboardRef, cmd.payload.drillDefinition.target);
 
     const supportsMultipleDateFilters = yield select(selectSupportsMultipleDateFilters);
-    const enableMultipleDateFilters = yield select(selectEnableMultipleDateFilters);
-    const includeOtherDateFilters = supportsMultipleDateFilters && enableMultipleDateFilters;
+    const includeOtherDateFilters = supportsMultipleDateFilters;
 
     const allDraggableFilters: ReturnType<typeof selectAllDraggableFilters> =
         yield select(selectAllDraggableFilters);

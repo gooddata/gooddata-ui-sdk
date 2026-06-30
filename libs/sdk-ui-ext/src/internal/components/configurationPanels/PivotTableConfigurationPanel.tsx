@@ -50,14 +50,13 @@ export class PivotTableConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel(): ReactNode {
         const { featureFlags } = this.props;
         const enableNewPivotTable = featureFlags?.enableNewPivotTable ?? true;
-        const enablePivotTablePagination = featureFlags?.enablePivotTablePagination ?? true;
         const enableConditionalFormatting = featureFlags?.enableConditionalFormatting ?? false;
 
         return (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
                 <div>
                     {this.renderInteractionsSection()}
-                    {enableNewPivotTable && enablePivotTablePagination ? this.renderPagingSection() : null}
+                    {enableNewPivotTable ? this.renderPagingSection() : null}
                     {this.renderCanvasSection()}
                     {enableNewPivotTable && enableConditionalFormatting
                         ? this.renderConditionalFormattingSection()

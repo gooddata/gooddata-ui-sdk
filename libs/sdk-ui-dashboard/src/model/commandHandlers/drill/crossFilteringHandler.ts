@@ -24,10 +24,7 @@ import {
 import { crossFilteringRequested, crossFilteringResolved } from "../../events/drill.js";
 import { generateFilterLocalIdentifier } from "../../store/_infra/generators.js";
 import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelectors.js";
-import {
-    selectEnableCrossFilteringAliasTitles,
-    selectIsApplyFiltersAllAtOnceEnabledAndSet,
-} from "../../store/config/configSelectors.js";
+import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../store/config/configSelectors.js";
 import {
     selectCrossFilteringFiltersLocalIdentifiers,
     selectCrossFilteringItemByWidgetRef,
@@ -137,9 +134,6 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: ICrossFilteri
         crossFilteringRequested(ctx, cmd.payload.drillDefinition, cmd.payload.drillEvent, cmd.correlationId),
     );
 
-    const enableCrossFilteringAliasTitles: ReturnType<typeof selectEnableCrossFilteringAliasTitles> =
-        yield select(selectEnableCrossFilteringAliasTitles);
-
     const widgetRef = cmd.payload.drillEvent.widgetRef!;
     const currentFilters: ReturnType<typeof selectFilterContextDraggableFilterItems> = yield select(
         selectFilterContextDraggableFilterItems,
@@ -164,7 +158,7 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: ICrossFilteri
     const drillIntersectionFilters = convertIntersectionToAttributeFilters(
         cmd.payload.drillEvent.drillContext.intersection ?? [],
         dateDataSetsAttributesRefs,
-        enableCrossFilteringAliasTitles,
+        true,
         filtersCount,
     );
 

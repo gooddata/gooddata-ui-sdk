@@ -10,7 +10,7 @@ import { type AgGridProps } from "../types/agGrid.js";
  * Returns ag-grid props for pagination configuration.
  *
  * @remarks
- * Pagination is only enabled if config.pagination.enabled is true and config.enablePivotTablePagination is not false.
+ * Pagination is only enabled if config.pagination.enabled is true.
  *
  * @internal
  */

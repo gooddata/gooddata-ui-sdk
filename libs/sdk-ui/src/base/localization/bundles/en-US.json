@@ -2927,6 +2927,38 @@
         "text": "Add",
         "crowdinContext": "Primary button at the bottom of the OLP add-grantee screen. Confirms granting access to the selected user or group and returns to the main share dialog."
     },
+    "shareDialog.olp.transferOwnershipDialog.title": {
+        "text": "Transfer ownership of \"{title}\"",
+        "crowdinContext": "Title of the transfer-ownership screen in the OLP share dialog. {title} is the shared object's name. Hands ownership of the object to another user."
+    },
+    "shareDialog.olp.transferOwnershipDialog.back": {
+        "text": "Back",
+        "crowdinContext": "Accessibility label for the back-arrow button in the header of the OLP transfer-ownership screen. Returns to the main share dialog."
+    },
+    "shareDialog.olp.transferOwnershipDialog.userLabel": {
+        "text": "User",
+        "crowdinContext": "Field label above the user search input on the OLP transfer-ownership screen. Only individual users can become an owner — groups are not offered."
+    },
+    "shareDialog.olp.transferOwnershipDialog.searchPlaceholder": {
+        "text": "Search",
+        "crowdinContext": "Placeholder text inside the user search input on the OLP transfer-ownership screen."
+    },
+    "shareDialog.olp.transferOwnershipDialog.alsoRemoveMyAccess": {
+        "text": "Also remove my access",
+        "crowdinContext": "Checkbox on the OLP transfer-ownership screen. When checked, the current user's access is removed entirely after the transfer instead of being kept as view access."
+    },
+    "shareDialog.olp.transferOwnershipDialog.note.keepAccess": {
+        "text": "Note: The owner can edit, share, and delete this object. You will retain view access unless you choose to remove it.",
+        "crowdinContext": "Informational note on the OLP transfer-ownership screen, shown when the 'Also remove my access' checkbox is unchecked. Explains what the new owner can do and that the current user keeps view access."
+    },
+    "shareDialog.olp.transferOwnershipDialog.note.loseAccess": {
+        "text": "Note: The owner can edit, share, and delete this object. You will lose all access to this object.",
+        "crowdinContext": "Informational note on the OLP transfer-ownership screen, shown when the 'Also remove my access' checkbox is checked. Explains what the new owner can do and that the current user loses all access."
+    },
+    "shareDialog.olp.transferOwnershipDialog.transfer": {
+        "text": "Transfer",
+        "crowdinContext": "Primary button at the bottom of the OLP transfer-ownership screen. Confirms handing ownership to the picked user."
+    },
     "shareDialog.olp.permission.edit": {
         "text": "Can edit",
         "crowdinContext": "Read-only permission label shown for a grantee who has edit rights on the shared object. Edit access is granted outside this dialog, so the label is not selectable — it only reflects the grantee's existing level."

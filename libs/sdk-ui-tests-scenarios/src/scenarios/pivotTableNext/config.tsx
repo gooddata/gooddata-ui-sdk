@@ -78,7 +78,6 @@ const pagination = scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTab
         ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
         config: {
             ...getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department.Default]),
-            enablePivotTablePagination: true,
             pagination: {
                 enabled: true,
             },
@@ -93,7 +92,6 @@ const pagination = scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTab
         ],
         config: {
             ...getCommonPivotTableSizingConfig([ReferenceMd.Product.Name, ReferenceMd.Department.Default]),
-            enablePivotTablePagination: true,
             pagination: {
                 enabled: true,
             },

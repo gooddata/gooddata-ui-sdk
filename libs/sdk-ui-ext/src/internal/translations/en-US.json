@@ -2395,6 +2395,30 @@
         "text": "Confirm",
         "crowdinContext": "Primary action label in the general-access confirm dialog."
     },
+    "objectShare.transfer.alreadyOwner.title": {
+        "text": "{name} is already an owner",
+        "crowdinContext": "Title of the confirm dialog shown when the user picked to receive ownership already owns the object. {name} is that user's name."
+    },
+    "objectShare.transfer.alreadyOwner.description": {
+        "text": "There's nothing to transfer. If you want to remove your ownership, choose what happens to your access:",
+        "crowdinContext": "Description in the confirm dialog shown when the picked user already owns the object. Offers to remove the current user's own access instead of transferring."
+    },
+    "objectShare.transfer.alreadyOwner.keepAccess": {
+        "text": "Keep view access",
+        "crowdinContext": "Radio option in the 'already an owner' dialog: the current user keeps view access to the object."
+    },
+    "objectShare.transfer.alreadyOwner.removeAccess": {
+        "text": "Remove my access",
+        "crowdinContext": "Radio option in the 'already an owner' dialog: the current user's access to the object is removed entirely."
+    },
+    "objectShare.transfer.confirmButton": {
+        "text": "Confirm",
+        "crowdinContext": "Primary button in the 'already an owner' dialog. Applies the chosen change to the current user's own access."
+    },
+    "objectShare.toast.ownershipTransferred": {
+        "text": "The ownership has been transferred.",
+        "crowdinContext": "Toast shown after ownership of the shared object was successfully transferred to another user."
+    },
     "objectShare.toast.granteeAdded": {
         "text": "Access added.",
         "crowdinContext": "Toast shown after a new user or group is granted access via the share dialog."

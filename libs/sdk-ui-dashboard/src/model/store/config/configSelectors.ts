@@ -487,18 +487,6 @@ export const selectEnableUnavailableItemsVisibility: DashboardSelector<boolean> 
 );
 
 /**
- * Returns whether multiple date filters are enabled.
- *
- * @internal
- */
-export const selectEnableMultipleDateFilters: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableMultipleDateFilters ?? true;
-    },
-);
-
-/**
  * Returns whether rich text widgets are enabled.
  *
  * @internal
@@ -527,18 +515,6 @@ export const selectEnableKDCrossFiltering: DashboardSelector<boolean> = createSe
 export const selectEnableKda: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
     return state.settings?.enableChangeAnalysis ?? false;
 });
-
-/**
- * Returns whether KD attribute filter by dates validation/filtering is enabled.
- *
- * @internal
- */
-export const selectEnableKDAttributeFilterDatesValidation: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableKDAttributeFilterDatesValidation ?? true;
-    },
-);
 
 /**
  * Returns whether attribute filter displays duplicated values when filter uses secondary label value.
@@ -645,42 +621,6 @@ export const selectEnableAlertsEvaluationFrequencySetup: DashboardSelector<boole
 );
 
 /**
- * Returns whether rich text widgets are enabled.
- *
- * @internal
- */
-export const selectEnableVisualizationSwitcher: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableKDVisualizationSwitcher ?? true;
-    },
-);
-
-/**
- * Returns whether ignore cross-filtering enabled.
- *
- * @internal
- */
-export const selectEnableIgnoreCrossFiltering: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableIgnoreCrossFiltering ?? true;
-    },
-);
-
-/**
- * Returns whether cross filtering should use alias titles.
- *
- * @internal
- */
-export const selectEnableCrossFilteringAliasTitles: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableCrossFilteringAliasTitles ?? false;
-    },
-);
-
-/**
  * Returns whether in-platform notifications are enabled.
  *
  * @internal
@@ -717,18 +657,6 @@ export const selectOpenAutomationOnLoad: DashboardSelector<boolean> = createSele
 );
 
 /**
- * Returns whether external recipients are enabled.
- *
- * @internal
- */
-export const selectEnableExternalRecipients: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableExternalRecipients ?? true;
-    },
-);
-
-/**
  * Returns whether anomaly detection alert is enabled.
  *
  * @internal
@@ -761,18 +689,6 @@ export const selectEnableOrchestratedTabularExports: DashboardSelector<boolean> 
     selectConfig,
     (state) => {
         return state.settings?.enableOrchestratedTabularExports ?? false;
-    },
-);
-
-/**
- * Returns whether drill dialog tooltip is enabled.
- *
- * @internal
- */
-export const selectEnableDrilledTooltip: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableDrilledTooltip ?? true;
     },
 );
 

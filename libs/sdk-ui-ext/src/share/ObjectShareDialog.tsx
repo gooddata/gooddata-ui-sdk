@@ -10,6 +10,8 @@ import {
     UiConfirmDialog,
     UiGranteeRowControls,
     UiObjectShareDialog,
+    UiRadioRow,
+    UiTransferOwnershipDialog,
 } from "@gooddata/sdk-ui-kit";
 
 import { objectShareMessages } from "./messages.js";
@@ -114,8 +116,31 @@ export function ObjectShareDialog({
         onClose();
     }, [actions, onClose]);
 
+    // Owner is always an individual user, so the transfer picker drops any groups
+    // the shared loader returns. `includeGranted` keeps already-granted users in
+    // the list — promoting an existing viewer to owner is a primary case.
+    //
+    // Depend on the stable `loadOptions` alone, not the whole `actions` object:
+    // `actions` changes identity as transfer state ticks (and as the picker's own
+    // name-cache writes re-derive grantees), and the autocomplete refetches page 0
+    // whenever its loader's identity changes — depending on `actions` here would
+    // self-feed into an infinite assignee-fetch loop.
+    const { loadOptions } = actions;
+    const loadOwnerOptions = useCallback(
+        async (search: string) => {
+            const { users } = await loadOptions(search, true);
+            return { groups: [], users };
+        },
+        [loadOptions],
+    );
+
     const isAddGranteeOpen = isOpen && state.subview === "addGrantee";
-    const isShareOpen = isOpen && state.subview !== "addGrantee";
+    // The transfer subview splits into two co-mounted dialogs: the transfer card
+    // while picking a non-owner, and the "already an owner" confirm once the picked
+    // user already owns the object.
+    const isTransferOpen = isOpen && state.subview === "transferOwnership" && !state.transferTargetIsOwner;
+    const isAlreadyOwnerOpen = isOpen && state.subview === "transferOwnership" && state.transferTargetIsOwner;
+    const isShareOpen = isOpen && state.subview === "main";
     const isConfirmOpen = isOpen && !!state.pendingGeneralAccess;
 
     // Don't allow mutations until the access list has loaded: before then the
@@ -127,8 +152,13 @@ export function ObjectShareDialog({
     // wrong labels). `labelsResolved` is false while labels are still loading and
     // when their fetch failed, so a pending/failed label set blocks every
     // access-changing control here — Add, row controls and general access alike.
+    // Also locked while a transfer-ownership write is committing: the transfer
+    // dialog can be dismissed (Back/Cancel/close) mid-save, so without this the
+    // user could return here and mutate other grantees concurrently with the
+    // in-flight ownership write — racing the same object's permissions with no
+    // refetch to reconcile. `transferSaving` clears when the transfer settles.
     const isLoaded = state.status === "success";
-    const isMutable = isLoaded && state.labelsResolved;
+    const isMutable = isLoaded && state.labelsResolved && !state.transferSaving;
     const isAddDisabled = !isMutable;
 
     // Map the controller's labels to the picker's item shape; the primary label
@@ -165,7 +195,9 @@ export function ObjectShareDialog({
                             // probe in flight) — removing or re-scoping before then
                             // would diff against the "assume all"/empty placeholder
                             // and silently orphan real per-label grants.
-                            isDisabled={g.pending !== undefined || !state.labelsResolved}
+                            isDisabled={
+                                g.pending !== undefined || !state.labelsResolved || state.transferSaving
+                            }
                             onLabelsChange={(selectedIds) => {
                                 void actions.changeGranteeLabels(g.id, selectedIds);
                             }}
@@ -175,6 +207,7 @@ export function ObjectShareDialog({
                             onRemoveAccess={() => {
                                 void actions.removeGrantee(g.id);
                             }}
+                            onTransferOwnership={actions.openTransferOwnership}
                         />
                     ),
                 }))}
@@ -232,6 +265,54 @@ export function ObjectShareDialog({
                 onCancel={actions.closeAddGrantee}
                 onShare={() => {
                     void actions.confirmAddGrantees();
+                }}
+            />
+
+            <UiTransferOwnershipDialog
+                isOpen={isTransferOpen}
+                objectTitle={objectTitle}
+                loadOptions={loadOwnerOptions}
+                selectedOwner={state.transferTarget}
+                onSelectedOwnerChange={actions.setTransferTarget}
+                alsoRemoveMyAccess={state.transferAlsoRemoveSelf}
+                onAlsoRemoveMyAccessChange={actions.setTransferAlsoRemoveSelf}
+                onBack={actions.closeTransferOwnership}
+                onClose={handleClose}
+                onCancel={actions.closeTransferOwnership}
+                onTransfer={() => {
+                    void actions.confirmTransferOwnership();
+                }}
+                isSaving={state.transferSaving}
+            />
+
+            <UiConfirmDialog
+                isOpen={isAlreadyOwnerOpen}
+                title={intl.formatMessage(objectShareMessages.transferAlreadyOwnerTitle, {
+                    name: state.transferTarget?.name ?? "",
+                })}
+                description={
+                    <>
+                        <p>{intl.formatMessage(objectShareMessages.transferAlreadyOwnerDescription)}</p>
+                        <UiRadioRow
+                            name="transfer-already-owner"
+                            checked={!state.transferAlsoRemoveSelf}
+                            onChange={() => actions.setTransferAlsoRemoveSelf(false)}
+                            title={intl.formatMessage(objectShareMessages.transferAlreadyOwnerKeepAccess)}
+                        />
+                        <UiRadioRow
+                            name="transfer-already-owner"
+                            checked={state.transferAlsoRemoveSelf}
+                            onChange={() => actions.setTransferAlsoRemoveSelf(true)}
+                            title={intl.formatMessage(objectShareMessages.transferAlreadyOwnerRemoveAccess)}
+                        />
+                    </>
+                }
+                confirmLabel={intl.formatMessage(objectShareMessages.transferConfirmButton)}
+                confirmVariant="primary"
+                onCancel={actions.closeTransferOwnership}
+                onClose={actions.closeTransferOwnership}
+                onConfirm={() => {
+                    void actions.confirmTransferOwnership();
                 }}
             />
 

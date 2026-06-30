@@ -88,10 +88,9 @@ function setPivotTableNextBucketWarningMessages(referencePoint: IExtendedReferen
     return updatedUiConfig;
 }
 
-export function getPivotTableNextMeasuresLimit(settings: ISettings, buckets: IBucketOfFun[]) {
-    const isLimitIncreased = settings?.enablePivotTableIncreaseBucketSize;
+export function getPivotTableNextMeasuresLimit(_settings: ISettings, buckets: IBucketOfFun[]) {
     if (hasNoColumns(buckets)) {
-        return isLimitIncreased ? INCREASE_MAX_TABLE_MEASURE_ITEMS_LIMIT : MAX_METRICS_COUNT;
+        return INCREASE_MAX_TABLE_MEASURE_ITEMS_LIMIT;
     }
 
     return MAX_METRICS_COUNT;
@@ -101,7 +100,7 @@ export function setPivotTableNextUiConfig(
     referencePoint: IExtendedReferencePoint,
     intl: IntlShape,
     visualizationType: string,
-    settings: ISettings,
+    _settings: ISettings,
 ): void {
     const buckets = referencePoint?.buckets ?? [];
 
@@ -114,34 +113,28 @@ export function setPivotTableNextUiConfig(
     const subtitle = getTranslation(messageId, intl);
     set(referencePoint, [UICONFIG, BUCKETS, BucketNames.MEASURES, "subtitle"], subtitle);
 
-    if (settings?.enablePivotTableIncreaseBucketSize) {
-        const canMeasuresAddItems = canIncreasedTableMeasuresAddMoreItems(buckets);
-        const canAttributesAddItems = canIncreasedTableAttributesAddMoreItems(buckets);
-        const columnsCanAddItems = hasMeasuresOrRowsUnderLowerLimit(buckets);
+    const canMeasuresAddItems = canIncreasedTableMeasuresAddMoreItems(buckets);
+    const canAttributesAddItems = canIncreasedTableAttributesAddMoreItems(buckets);
+    const columnsCanAddItems = hasMeasuresOrRowsUnderLowerLimit(buckets);
 
-        const columnsEmpty = hasNoColumns(buckets);
+    const columnsEmpty = hasNoColumns(buckets);
 
-        set(referencePoint, [UICONFIG, BUCKETS, BucketNames.MEASURES, "canAddItems"], canMeasuresAddItems);
-        set(referencePoint, [UICONFIG, BUCKETS, BucketNames.ATTRIBUTE, "canAddItems"], canAttributesAddItems);
-        set(referencePoint, [UICONFIG, BUCKETS, BucketNames.COLUMNS, "canAddItems"], columnsCanAddItems);
+    set(referencePoint, [UICONFIG, BUCKETS, BucketNames.MEASURES, "canAddItems"], canMeasuresAddItems);
+    set(referencePoint, [UICONFIG, BUCKETS, BucketNames.ATTRIBUTE, "canAddItems"], canAttributesAddItems);
+    set(referencePoint, [UICONFIG, BUCKETS, BucketNames.COLUMNS, "canAddItems"], columnsCanAddItems);
 
-        set(
-            referencePoint,
-            [UICONFIG, BUCKETS, BucketNames.MEASURES, "itemsLimit"],
-            columnsEmpty ? INCREASE_MAX_TABLE_MEASURE_ITEMS_LIMIT : MAX_METRICS_COUNT,
-        );
-        set(
-            referencePoint,
-            [UICONFIG, BUCKETS, BucketNames.ATTRIBUTE, "itemsLimit"],
-            columnsEmpty ? INCREASE_MAX_TABLE_ATTRIBUTES_ITEMS_LIMIT : MAX_TABLE_CATEGORIES_COUNT,
-        );
+    set(
+        referencePoint,
+        [UICONFIG, BUCKETS, BucketNames.MEASURES, "itemsLimit"],
+        columnsEmpty ? INCREASE_MAX_TABLE_MEASURE_ITEMS_LIMIT : MAX_METRICS_COUNT,
+    );
+    set(
+        referencePoint,
+        [UICONFIG, BUCKETS, BucketNames.ATTRIBUTE, "itemsLimit"],
+        columnsEmpty ? INCREASE_MAX_TABLE_ATTRIBUTES_ITEMS_LIMIT : MAX_TABLE_CATEGORIES_COUNT,
+    );
 
-        set(referencePoint, UICONFIG, setPivotTableNextBucketWarningMessages(referencePoint, intl));
-    } else {
-        set(referencePoint, [UICONFIG, BUCKETS, BucketNames.MEASURES, "canAddItems"], true);
-        set(referencePoint, [UICONFIG, BUCKETS, BucketNames.ATTRIBUTE, "canAddItems"], true);
-        set(referencePoint, [UICONFIG, BUCKETS, BucketNames.COLUMNS, "canAddItems"], true);
-    }
+    set(referencePoint, UICONFIG, setPivotTableNextBucketWarningMessages(referencePoint, intl));
 
     set(referencePoint, [UICONFIG, BUCKETS, BucketNames.MEASURES, "icon"], tableMeasuresIcon);
     set(referencePoint, [UICONFIG, BUCKETS, BucketNames.ATTRIBUTE, "icon"], tableRowsIcon);

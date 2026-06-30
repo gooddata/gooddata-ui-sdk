@@ -81,7 +81,6 @@ function createAutomationsContextValue(
             enableAutomationManagement: false,
             canUseAiAssistant: false,
             enableComparisonInAlerting: false,
-            enableExternalRecipients: false,
             enableAlertAttributes: false,
             canManageWorkspace: false,
             enableCustomizableCsvDelimiter: false,
@@ -89,6 +88,8 @@ function createAutomationsContextValue(
         },
         getCatalogAttributeByRef: () => undefined,
         getAttributeFilterDisplayForm: () => undefined,
+        widgetExistsByRef: () => false,
+        scheduleEmailDialogReturnFocusTo: undefined,
     };
 }
 

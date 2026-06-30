@@ -81,6 +81,17 @@ export const olpAddGranteeDialogMessages = defineMessages({
     add: { id: "shareDialog.olp.addGranteeDialog.add" },
 });
 
+export const olpTransferOwnershipDialogMessages = defineMessages({
+    title: { id: "shareDialog.olp.transferOwnershipDialog.title" },
+    back: { id: "shareDialog.olp.transferOwnershipDialog.back" },
+    userLabel: { id: "shareDialog.olp.transferOwnershipDialog.userLabel" },
+    searchPlaceholder: { id: "shareDialog.olp.transferOwnershipDialog.searchPlaceholder" },
+    alsoRemoveMyAccess: { id: "shareDialog.olp.transferOwnershipDialog.alsoRemoveMyAccess" },
+    noteKeepAccess: { id: "shareDialog.olp.transferOwnershipDialog.note.keepAccess" },
+    noteLoseAccess: { id: "shareDialog.olp.transferOwnershipDialog.note.loseAccess" },
+    transfer: { id: "shareDialog.olp.transferOwnershipDialog.transfer" },
+});
+
 export const olpGeneralAccessMessages = defineMessages({
     groupLabel: { id: "shareDialog.olp.generalAccess.groupLabel" },
     restrictedTitle: { id: "shareDialog.olp.generalAccess.restricted.title" },

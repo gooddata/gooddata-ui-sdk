@@ -10,11 +10,7 @@ import { Typography } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectSupportsRichTextWidgets } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
-import {
-    selectEnableKDRichText,
-    selectEnableVisualizationSwitcher,
-    selectSettings,
-} from "../../../model/store/config/configSelectors.js";
+import { selectEnableKDRichText, selectSettings } from "../../../model/store/config/configSelectors.js";
 import { selectIsNewDashboard } from "../../../model/store/meta/metaSelectors.js";
 import {
     type AttributeFilterComponentSet,
@@ -45,7 +41,6 @@ export function CreationPanel(props: ICreationPanelProps) {
     const { className, WrapCreatePanelItemWithDragComponent, WrapInsightListItemWithDragComponent } = props;
     const supportsRichText = useDashboardSelector(selectSupportsRichTextWidgets);
     const enableRichText = useDashboardSelector(selectEnableKDRichText);
-    const enableVisualizationSwitcher = useDashboardSelector(selectEnableVisualizationSwitcher);
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
     const settings = useDashboardSelector(selectSettings);
     const AttributeFilterComponentSet = props.AttributeFilterComponentSet!;
@@ -59,7 +54,7 @@ export function CreationPanel(props: ICreationPanelProps) {
             InsightWidgetComponentSet.creating,
             AttributeFilterComponentSet.creating,
             DashboardLayoutWidgetComponentSet.creating,
-            enableVisualizationSwitcher && VisualizationSwitcherWidgetComponentSet.creating,
+            VisualizationSwitcherWidgetComponentSet.creating,
             supportsRichText && enableRichText && RichTextWidgetComponentSet.creating,
         ]);
 
@@ -79,7 +74,6 @@ export function CreationPanel(props: ICreationPanelProps) {
         DashboardLayoutWidgetComponentSet,
         supportsRichText,
         enableRichText,
-        enableVisualizationSwitcher,
         WrapCreatePanelItemWithDragComponent,
     ]);
 

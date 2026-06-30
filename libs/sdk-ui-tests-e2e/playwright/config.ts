@@ -49,15 +49,6 @@ const FEATURE_HUB_RESPONSE = [
                 strategies: [],
             },
             {
-                id: "d154cf37-9ffe-4cae-b892-123678340327",
-                key: "enableWidgetIdentifiersRollout",
-                l: false,
-                version: 42,
-                type: "BOOLEAN",
-                value: true,
-                strategies: [],
-            },
-            {
                 id: "3d6febf7-430f-44df-a537-2436e2e07520",
                 key: "enableDateFilterIdentifiersRollout",
                 l: false,
