@@ -15,9 +15,7 @@ import { DropdownList, NoData } from "@gooddata/sdk-ui-kit";
 import { simplifyText } from "@gooddata/util";
 
 import { messages } from "../../../../../../../locales.js";
-import { useDashboardSelector } from "../../../../../../../model/react/DashboardStoreProvider.js";
 import { useDashboardUserInteraction } from "../../../../../../../model/react/useDashboardUserInteraction.js";
-import { selectEnableKDAttributeFilterDatesValidation } from "../../../../../../../model/store/config/configSelectors.js";
 import { type IDashboardAttributeFilterParentItem } from "../../../../../../../model/types/attributeFilterTypes.js";
 import {
     type IDashboardDependentDateFilter,
@@ -159,9 +157,6 @@ export function ParentFiltersPage({
     onCommonDateSelect,
 }: IParentFiltersPageProps) {
     const intl = useIntl();
-    const isEnabledKDAttributeFilterDatesValidation = useDashboardSelector(
-        selectEnableKDAttributeFilterDatesValidation,
-    );
 
     const items = useFilterItems(
         parentFilters,
@@ -169,7 +164,7 @@ export function ParentFiltersPage({
         dependentDateFilters,
         availableDatasets,
         dependentCommonDateFilter,
-        isEnabledKDAttributeFilterDatesValidation,
+        true,
         false,
         intl,
     );

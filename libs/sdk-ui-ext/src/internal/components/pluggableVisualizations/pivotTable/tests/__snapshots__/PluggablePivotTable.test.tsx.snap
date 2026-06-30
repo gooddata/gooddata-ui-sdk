@@ -15,7 +15,7 @@ exports[`PluggablePivotTable > getExtendedReferencePoint > given an empty refere
       "enabled": true,
       "icon": "local:table/bucket-title-rows.svg",
       "isShowInPercentEnabled": false,
-      "itemsLimit": 20,
+      "itemsLimit": 50,
       "itemsLimitByType": {
         "date": 20,
       },
@@ -67,7 +67,7 @@ exports[`PluggablePivotTable > getExtendedReferencePoint > given an empty refere
       "icon": "local:table/bucket-title-measures.svg",
       "isShowInPercentEnabled": false,
       "isShowInPercentVisible": true,
-      "itemsLimit": 40,
+      "itemsLimit": 100,
       "subtitle": "in columns",
       "title": "Metrics",
     },
@@ -103,7 +103,7 @@ exports[`PluggablePivotTable > getExtendedReferencePoint > given multipleMetrics
       "enabled": true,
       "icon": "local:table/bucket-title-rows.svg",
       "isShowInPercentEnabled": false,
-      "itemsLimit": 20,
+      "itemsLimit": 50,
       "itemsLimitByType": {
         "date": 20,
       },
@@ -155,7 +155,7 @@ exports[`PluggablePivotTable > getExtendedReferencePoint > given multipleMetrics
       "icon": "local:table/bucket-title-measures.svg",
       "isShowInPercentEnabled": false,
       "isShowInPercentVisible": true,
-      "itemsLimit": 40,
+      "itemsLimit": 100,
       "subtitle": "in columns",
       "title": "Metrics",
     },
@@ -2033,6 +2033,7 @@ exports[`createPivotTableConfig > should create valid config with auto-resize if
   "menu": {
     "aggregations": true,
     "aggregationsSubMenu": true,
+    "aggregationsSubMenuForRows": true,
   },
   "separators": undefined,
 }
@@ -2047,6 +2048,7 @@ exports[`createPivotTableConfig > should create valid config with growToFit if f
   "menu": {
     "aggregations": true,
     "aggregationsSubMenu": true,
+    "aggregationsSubMenuForRows": true,
   },
   "separators": undefined,
 }
@@ -2062,6 +2064,7 @@ exports[`createPivotTableConfig > should create valid config with growToFit if f
   "menu": {
     "aggregations": true,
     "aggregationsSubMenu": true,
+    "aggregationsSubMenuForRows": true,
   },
   "separators": undefined,
 }
@@ -2074,6 +2077,9 @@ exports[`createPivotTableConfig > should create valid config with growToFit if f
     "growToFit": true,
   },
   "enableExecutionCancelling": false,
+  "menu": {
+    "aggregationsSubMenuForRows": true,
+  },
   "separators": undefined,
 }
 `;
@@ -2097,6 +2103,7 @@ exports[`createPivotTableConfig > should create valid config with manualResizing
   "menu": {
     "aggregations": true,
     "aggregationsSubMenu": true,
+    "aggregationsSubMenuForRows": true,
   },
   "separators": undefined,
 }
@@ -2111,6 +2118,7 @@ exports[`createPivotTableConfig > should create valid config with manualResizing
   "menu": {
     "aggregations": true,
     "aggregationsSubMenu": true,
+    "aggregationsSubMenuForRows": true,
   },
   "separators": undefined,
 }
@@ -2125,6 +2133,7 @@ exports[`createPivotTableConfig > should create valid config with manualResizing
   "menu": {
     "aggregations": true,
     "aggregationsSubMenu": true,
+    "aggregationsSubMenuForRows": true,
   },
   "separators": undefined,
 }
@@ -2149,6 +2158,7 @@ exports[`createPivotTableConfig > should create valid config with manualResizing
   "menu": {
     "aggregations": true,
     "aggregationsSubMenu": true,
+    "aggregationsSubMenuForRows": true,
   },
   "separators": undefined,
 }
@@ -2163,6 +2173,7 @@ exports[`createPivotTableConfig > should create valid config with menus for non-
   "menu": {
     "aggregations": true,
     "aggregationsSubMenu": true,
+    "aggregationsSubMenuForRows": true,
   },
   "separators": undefined,
 }
@@ -2177,6 +2188,7 @@ exports[`createPivotTableConfig > should create valid config with menus for unde
   "menu": {
     "aggregations": true,
     "aggregationsSubMenu": true,
+    "aggregationsSubMenuForRows": true,
   },
   "separators": undefined,
 }
@@ -2191,40 +2203,12 @@ exports[`createPivotTableConfig > should create valid config with separators 1`]
   "menu": {
     "aggregations": true,
     "aggregationsSubMenu": true,
+    "aggregationsSubMenuForRows": true,
   },
   "separators": {
     "decimal": ".",
     "thousand": "-",
   },
-}
-`;
-
-exports[`createPivotTableConfig > should create valid config with total rows if feature flag off 1`] = `
-{
-  "columnSizing": {
-    "defaultWidth": "autoresizeAll",
-  },
-  "enableExecutionCancelling": false,
-  "menu": {
-    "aggregations": true,
-    "aggregationsSubMenu": true,
-  },
-  "separators": undefined,
-}
-`;
-
-exports[`createPivotTableConfig > should create valid config with total rows if feature flag on 1`] = `
-{
-  "columnSizing": {
-    "defaultWidth": "autoresizeAll",
-  },
-  "enableExecutionCancelling": false,
-  "menu": {
-    "aggregations": true,
-    "aggregationsSubMenu": true,
-    "aggregationsSubMenuForRows": true,
-  },
-  "separators": undefined,
 }
 `;
 
@@ -2235,6 +2219,9 @@ exports[`createPivotTableConfig > should create valid config without menus for d
     "growToFit": true,
   },
   "enableExecutionCancelling": false,
+  "menu": {
+    "aggregationsSubMenuForRows": true,
+  },
   "separators": undefined,
 }
 `;

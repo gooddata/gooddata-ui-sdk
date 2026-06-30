@@ -2422,6 +2422,8 @@ export interface IDropdownListProps<T> {
     // (undocumented)
     accessibilityConfig?: Pick<IAccessibilityConfigBase, "ariaLabel" | "ariaLabelledBy" | "role">;
     // (undocumented)
+    body?: ReactNode | ((closeDropdown: () => void) => ReactNode);
+    // (undocumented)
     className?: string;
     // (undocumented)
     closeDropdown?: () => void;

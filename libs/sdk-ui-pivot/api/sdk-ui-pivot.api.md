@@ -617,9 +617,7 @@ export type PivotTableNextExecutionCancellingConfig = {
 };
 
 // @public
-export type PivotTableNextExperimentalConfig = {
-    enablePivotTablePagination?: boolean;
-};
+export type PivotTableNextExperimentalConfig = Record<never, never>;
 
 // @public
 export type PivotTableNextFormattingConfig = {

@@ -175,6 +175,7 @@ describe("headlineUiConfigHelper", () => {
                 ...config,
                 ...properties.controls,
                 colorPalette: DEFAULT_COMPARISON_PALETTE,
+                enableAliasAttributeLabel: true,
                 enableChartSorting: true,
                 enableCompactSize: true,
                 enableJoinedAttributeAxisName: true,

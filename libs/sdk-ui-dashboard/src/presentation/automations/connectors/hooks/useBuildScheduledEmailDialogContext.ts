@@ -1,12 +1,11 @@
 // (C) 2026 GoodData Corporation
 
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 
 import {
     type IAutomationMetadataObject,
     type IInsight,
     type IWidget,
-    type ObjRef,
     objRefToString,
 } from "@gooddata/sdk-model";
 
@@ -28,10 +27,7 @@ import { selectDashboardId, selectDashboardTitle } from "../../../../model/store
 import { selectEffectiveAttributeFiltersModeMap } from "../../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectEffectiveDateFilterMode } from "../../../../model/store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
 import { selectEffectiveDateFiltersModeMap } from "../../../../model/store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
-import {
-    selectWidgetLocalIdToTabIdMap,
-    selectWidgetsMap,
-} from "../../../../model/store/tabs/layout/layoutSelectors.js";
+import { selectWidgetLocalIdToTabIdMap } from "../../../../model/store/tabs/layout/layoutSelectors.js";
 import { selectExportEffectiveParameters } from "../../../../model/store/tabs/parameters/parametersSelectors.js";
 import { selectTabs } from "../../../../model/store/tabs/tabsSelectors.js";
 import { getWidgetTitle } from "../../../../model/utils/dashboardItemUtils.js";
@@ -64,7 +60,6 @@ export function useBuildScheduledEmailDialogContext(
     const isCrossFiltering = useDashboardSelector(selectIsCrossFiltering);
     const tabs = useDashboardSelector(selectTabs);
     const hasMultipleTabs = (tabs?.length ?? 0) > 1;
-    const widgetsMap = useDashboardSelector(selectWidgetsMap);
     const commonDateFilterMode = useDashboardSelector(selectEffectiveDateFilterMode);
     const dateFiltersModeMap = useDashboardSelector(selectEffectiveDateFiltersModeMap);
     const attributeFiltersModeMap = useDashboardSelector(selectEffectiveAttributeFiltersModeMap);
@@ -75,13 +70,6 @@ export function useBuildScheduledEmailDialogContext(
         }
         return undefined;
     }, [widget]);
-
-    const widgetExistsByRef = useCallback(
-        (ref: ObjRef | undefined): boolean => {
-            return !!ref && widgetsMap.get(ref) !== undefined;
-        },
-        [widgetsMap],
-    );
 
     const createScheduledEmail = useCommandAsPromise({
         commandCreator: createScheduledEmailCmd,
@@ -113,7 +101,6 @@ export function useBuildScheduledEmailDialogContext(
             dateFormat,
             isCrossFiltering,
             hasMultipleTabs,
-            widgetExistsByRef,
             commonDateFilterMode,
             dateFiltersModeMap,
             attributeFiltersModeMap,
@@ -136,7 +123,6 @@ export function useBuildScheduledEmailDialogContext(
             dateFormat,
             isCrossFiltering,
             hasMultipleTabs,
-            widgetExistsByRef,
             commonDateFilterMode,
             dateFiltersModeMap,
             attributeFiltersModeMap,

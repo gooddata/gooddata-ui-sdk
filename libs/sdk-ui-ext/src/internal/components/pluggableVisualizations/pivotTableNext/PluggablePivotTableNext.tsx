@@ -109,7 +109,6 @@ export function createPivotTableNextConfig(
         separators: config.separators,
         enableExecutionCancelling: settings.enableExecutionCancelling ?? false,
         agGridToken: config.agGridToken,
-        enablePivotTablePagination: settings.enablePivotTablePagination ?? true,
         enableAccessibility: settings.enableAccessibilityMode ?? false,
     };
 

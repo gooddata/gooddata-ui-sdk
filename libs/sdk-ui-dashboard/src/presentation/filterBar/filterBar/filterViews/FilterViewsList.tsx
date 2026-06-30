@@ -224,6 +224,10 @@ export function FilterViewsList({
     const filterViewTooltipId = `filter-view-tooltip-${id}`;
     const titleId = titleIdProp ?? `filter-views-title-${id}`;
 
+    const scopedIdStoreValue = useScopedIdStoreValue((item) =>
+        item ? objRefToString((item as IDashboardFilterView).ref) : "",
+    );
+
     const getItemAdditionalActions = useCallback((): IAction[] => {
         if (!canCreateFilterView) {
             return [];
@@ -302,10 +306,6 @@ export function FilterViewsList({
         </div>
     );
 
-    const scopedIdStoreValue = useScopedIdStoreValue((item) =>
-        item ? objRefToString((item as IDashboardFilterView).ref) : "",
-    );
-
     const { containerRef } = useFocusWithinContainer(
         scopedIdStoreValue.makeId({ item: focusedItem, specifier: focusedAction }) ?? "",
     );
@@ -317,9 +317,13 @@ export function FilterViewsList({
                 return;
             }
 
+            if (filterViewToDelete) {
+                return;
+            }
+
             setFocusedAction(SELECT_ITEM_ACTION);
         },
-        [containerRef, setFocusedAction],
+        [containerRef, filterViewToDelete, setFocusedAction],
     );
 
     return (
@@ -331,7 +335,10 @@ export function FilterViewsList({
                         dispatch(deleteFilterView(filterViewToDelete.ref));
                         setFilterViewToDelete(undefined);
                     }}
-                    onCancel={() => setFilterViewToDelete(undefined)}
+                    onCancel={() => {
+                        setFocusedAction("delete");
+                        setFilterViewToDelete(undefined);
+                    }}
                 />
             ) : null}
             <div className="configuration-panel configuration-panel__filter-view__list">

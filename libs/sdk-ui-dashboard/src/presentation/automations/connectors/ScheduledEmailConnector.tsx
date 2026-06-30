@@ -1,8 +1,9 @@
 // (C) 2026 GoodData Corporation
 
-import { type ReactElement, type ReactNode } from "react";
+import { type ReactElement, type ReactNode, useCallback } from "react";
 
-import { isWidget } from "@gooddata/sdk-model";
+import { type IAutomationMetadataObject, isWidget } from "@gooddata/sdk-model";
+import { buildAutomationUrl, navigate, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import {
     getAutomationDashboardFilters,
@@ -12,11 +13,19 @@ import { useDashboardSelector } from "../../../model/react/DashboardStoreProvide
 import { useDashboardScheduledEmails } from "../../../model/react/useDasboardScheduledEmails/useDashboardScheduledEmails.js";
 import { useWorkspaceUsers } from "../../../model/react/useWorkspaceUsers.js";
 import {
+    selectEnableAutomationManagement,
+    selectExternalRecipient,
+    selectIsEmbedded,
+    selectSettings,
+} from "../../../model/store/config/configSelectors.js";
+import {
     selectAutomationDefaultSelectedFilters,
     selectDashboardHiddenFilters,
 } from "../../../model/store/filtering/dashboardFilterSelectors.js";
+import { selectDashboardId } from "../../../model/store/meta/metaSelectors.js";
 import { AutomationsContextProvider } from "../contexts/AutomationsContext.js";
 import { ScheduledEmailDialogContextProvider } from "../contexts/ScheduledEmailDialogContext.js";
+import { ScheduledEmailManagementDialogContextProvider } from "../contexts/ScheduledEmailManagementDialogContext.js";
 import { ScheduledEmailDialog } from "../scheduledEmail/ScheduledEmailDialog.js";
 import { ScheduledEmailManagementDialog } from "../scheduledEmail/ScheduledEmailManagementDialog.js";
 import { type IScheduledEmailDialogProps } from "../scheduledEmail/types.js";
@@ -24,6 +33,7 @@ import { getAppliedDashboardFilters } from "../scheduledEmail/utils/filters.js";
 
 import { useBuildAutomationsContext } from "./hooks/useBuildAutomationsContext.js";
 import { useBuildScheduledEmailDialogContext } from "./hooks/useBuildScheduledEmailDialogContext.js";
+import { useBuildScheduledEmailManagementDialogContext } from "./hooks/useBuildScheduledEmailManagementDialogContext.js";
 import { useWidgetAutomationFilters } from "./hooks/useWidgetAutomationFilters.js";
 
 type ScheduledEmailsProps = ReturnType<typeof useDashboardScheduledEmails>;
@@ -101,6 +111,49 @@ function ScheduledEmailConnectorWithData({ se }: { se: ScheduledEmailsProps }): 
         insight,
     } = se;
 
+    const workspace = useWorkspaceStrict();
+    const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
+    const dashboardId = useDashboardSelector(selectDashboardId);
+    const isEmbedded = useDashboardSelector(selectIsEmbedded);
+    const externalRecipientOverride = useDashboardSelector(selectExternalRecipient);
+    const settings = useDashboardSelector(selectSettings);
+    const useHostRoute =
+        Boolean(settings?.enableShellApplication) && Boolean(settings?.enableShellApplication_dashboards);
+
+    // Cross-dashboard edit routing lives in the connector (which may read router + store).
+    // The management dialog only invokes this injected callback.
+    const handleManagementEdit = useCallback(
+        (scheduledEmail: IAutomationMetadataObject) => {
+            const targetDashboardId = scheduledEmail.dashboard?.id;
+
+            if (enableAutomationManagement && targetDashboardId && targetDashboardId !== dashboardId) {
+                navigate(
+                    buildAutomationUrl({
+                        workspaceId: workspace,
+                        dashboardId: targetDashboardId,
+                        automationId: scheduledEmail.id,
+                        isEmbedded,
+                        useHostRoute,
+                        queryParams: externalRecipientOverride
+                            ? { recipient: externalRecipientOverride }
+                            : undefined,
+                    }),
+                );
+                return;
+            }
+            onScheduleEmailingManagementEdit(scheduledEmail);
+        },
+        [
+            onScheduleEmailingManagementEdit,
+            enableAutomationManagement,
+            dashboardId,
+            workspace,
+            isEmbedded,
+            useHostRoute,
+            externalRecipientOverride,
+        ],
+    );
+
     // Filter computation — moved verbatim from ScheduledEmailDialogProvider
     const automationDefaultSelectedFilters = useDashboardSelector(selectAutomationDefaultSelectedFilters);
     const dashboardHiddenFilters = useDashboardSelector(selectDashboardHiddenFilters);
@@ -131,25 +184,29 @@ function ScheduledEmailConnectorWithData({ se }: { se: ScheduledEmailsProps }): 
         insight,
     });
 
+    const managementCtx = useBuildScheduledEmailManagementDialogContext();
+
     return (
         <ScheduledEmailDialogContextProvider value={seCtx}>
-            {isScheduleEmailingManagementDialogOpen ? (
-                // TODO(GDP-3167 phase3): automations, notificationChannels, and scheduleDataError
-                // are still prop-threaded here because DefaultScheduledEmailManagementDialog reads
-                // them from props, not from AutomationsContext. Once all dialog fields are migrated
-                // to read from context, remove these props and the corresponding prop types.
-                <ScheduledEmailManagementDialog
-                    automations={automations}
-                    notificationChannels={notificationChannels}
-                    scheduleDataError={loadingError}
-                    isLoadingScheduleData={isLoading}
-                    onAdd={onScheduleEmailingManagementAdd}
-                    onEdit={onScheduleEmailingManagementEdit}
-                    onClose={onScheduleEmailingManagementClose}
-                    onDeleteSuccess={onScheduleEmailingManagementDeleteSuccess}
-                    onDeleteError={onScheduleEmailingManagementDeleteError}
-                />
-            ) : null}
+            <ScheduledEmailManagementDialogContextProvider value={managementCtx}>
+                {isScheduleEmailingManagementDialogOpen ? (
+                    // TODO(GDP-3167 phase3): automations, notificationChannels, and scheduleDataError
+                    // are still prop-threaded here because DefaultScheduledEmailManagementDialog reads
+                    // them from props, not from AutomationsContext. Once all dialog fields are migrated
+                    // to read from context, remove these props and the corresponding prop types.
+                    <ScheduledEmailManagementDialog
+                        automations={automations}
+                        notificationChannels={notificationChannels}
+                        scheduleDataError={loadingError}
+                        isLoadingScheduleData={isLoading}
+                        onAdd={onScheduleEmailingManagementAdd}
+                        onEdit={handleManagementEdit}
+                        onClose={onScheduleEmailingManagementClose}
+                        onDeleteSuccess={onScheduleEmailingManagementDeleteSuccess}
+                        onDeleteError={onScheduleEmailingManagementDeleteError}
+                    />
+                ) : null}
+            </ScheduledEmailManagementDialogContextProvider>
             {isScheduleEmailingDialogOpen ? (
                 // TODO(GDP-3167 phase3): notificationChannels, users, usersError, widgetFilters,
                 // dashboardFilters, and isLoading are still prop-threaded here because

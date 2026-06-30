@@ -75,7 +75,6 @@ vi.mock("../../../../model/store/drill/drillSelectors.js", () => ({
 
 vi.mock("../../../../model/store/tabs/layout/layoutSelectors.js", () => ({
     selectWidgetLocalIdToTabIdMap: () => ({ widgetId: "tab-1" }),
-    selectWidgetsMap: () => ({ get: () => undefined }),
 }));
 
 vi.mock("../../../../model/store/tabs/dateFilterConfig/dateFilterConfigSelectors.js", () => ({

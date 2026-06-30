@@ -408,7 +408,6 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             (await this.processFilterContextForCreation(dashboard.filterContext));
 
         const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
-        const isWidgetIdentifiersEnabled = userSettings.enableWidgetIdentifiersRollout ?? true;
         const enableDashboardSectionHeadersDateDataSet =
             userSettings.enableDashboardSectionHeadersDateDataSet ?? false;
         const enableAnalyticalDashboardVersion3 = userSettings.enableAnalyticalDashboardVersion3 ?? false;
@@ -416,7 +415,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const dashboardContent = convertAnalyticalDashboard(
             dashboardWithTabFilterContexts,
             filterContext?.ref,
-            isWidgetIdentifiersEnabled,
+            true,
             enableDashboardSectionHeadersDateDataSet,
             enableAnalyticalDashboardVersion3,
         );
@@ -497,14 +496,13 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
         const objectId = objRefToIdentifier(originalDashboard.ref, this.authCall);
         const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
-        const isWidgetIdentifiersEnabled = userSettings.enableWidgetIdentifiersRollout ?? true;
         const enableDashboardSectionHeadersDateDataSet =
             userSettings.enableDashboardSectionHeadersDateDataSet ?? false;
         const enableAnalyticalDashboardVersion3 = userSettings.enableAnalyticalDashboardVersion3 ?? false;
         const dashboardContent = convertAnalyticalDashboard(
             updatedDashboardWithTabFilterContexts,
             filterContext?.ref,
-            isWidgetIdentifiersEnabled,
+            true,
             enableDashboardSectionHeadersDateDataSet,
             enableAnalyticalDashboardVersion3,
         );

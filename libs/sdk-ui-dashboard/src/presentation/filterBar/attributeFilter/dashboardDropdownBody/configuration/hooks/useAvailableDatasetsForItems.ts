@@ -11,18 +11,13 @@ import {
 import { useDashboardSelector } from "../../../../../../model/react/DashboardStoreProvider.js";
 import { useDashboardQueryProcessing } from "../../../../../../model/react/useDashboardQueryProcessing.js";
 import { selectBackendCapabilities } from "../../../../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
-import { selectEnableKDAttributeFilterDatesValidation } from "../../../../../../model/store/config/configSelectors.js";
 
 /**
  * @internal
  */
 export function useAvailableDatasetsForItems(items: IAttributeOrMeasure[]) {
-    const enableKDAttributeFilterDatesValidation = useDashboardSelector(
-        selectEnableKDAttributeFilterDatesValidation,
-    );
     const capabilities = useDashboardSelector(selectBackendCapabilities);
     const shouldLoadAvailableDatasetsForItems =
-        enableKDAttributeFilterDatesValidation &&
         capabilities.supportsAttributeFilterElementsLimitingByDependentDateFilters;
 
     const {

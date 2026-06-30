@@ -11,8 +11,8 @@ import { type IAutomationMetadataObjectDefinition, idRef } from "@gooddata/sdk-m
 
 const widgetExistsByRefMock = vi.fn<(ref: unknown) => boolean>();
 
-vi.mock("../../../../contexts/ScheduledEmailDialogContext.js", () => ({
-    useScheduledEmailDialogContext: () => ({
+vi.mock("../../../../contexts/AutomationsContext.js", () => ({
+    useAutomationsContext: () => ({
         widgetExistsByRef: widgetExistsByRefMock,
     }),
 }));
