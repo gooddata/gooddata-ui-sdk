@@ -1,10 +1,10 @@
 // (C) 2026 GoodData Corporation
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { type RefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { FormattedMessage, type MessageDescriptor, defineMessage, useIntl } from "react-intl";
 
-import { type PluggableApplicationRegistryItem } from "@gooddata/sdk-model";
+import { type IGenAIUserContext, type PluggableApplicationRegistryItem } from "@gooddata/sdk-model";
 import {
     type IAppHeaderOptions,
     type IPlatformContext,
@@ -21,7 +21,6 @@ import { LoadingComponent, useAutoupdateRef } from "@gooddata/sdk-ui";
 import { bemFactory } from "@gooddata/sdk-ui-kit";
 
 import { now } from "../debug.js";
-import { dispatchHostNotification } from "../lib/hostNotifications.js";
 import {
     type AppSecurityFailure,
     getSecuredRemoteAppValidUntil,
@@ -55,6 +54,24 @@ export interface IPluggableApplicationRendererProps {
     pathname: string;
     /** Host-owned AI assistant chat open-state, forwarded to the mounted app's handle. */
     aiAssistantOpen?: boolean;
+    /** Open/ask the host-owned chat, requested by the active app via an open-assistant event. */
+    onOpenAiAssistant?: (question?: string, userContext?: IGenAIUserContext) => void;
+    /** Close the host-owned chat, requested by the active app. */
+    onCloseAiAssistant?: () => void;
+    /** Report the active app's AI-assistant tag scope and presentation to the host-owned chat. */
+    onAiAssistantContext?: (context: {
+        includeTags?: string[];
+        excludeTags?: string[];
+        dialogPosition?: "left" | "right";
+        embedded?: boolean;
+    }) => void;
+    /**
+     * Ref the renderer populates with a handler that delegates a host-chat link click to the active
+     * app's mount handle (`onAiAssistantLinkClicked`), so an embedded app can handle it in-app.
+     */
+    aiLinkClickHandlerRef?: RefObject<
+        ((link: { type?: string; id?: string; itemUrl?: string; newTab?: boolean }) => boolean) | undefined
+    >;
     onHeaderChange?: (appId: string, header: IAppHeaderOptions) => void;
     onDocumentTitleChange?: (appId: string, pageTitle: string | undefined) => void;
 }
@@ -64,6 +81,10 @@ export function PluggableApplicationRenderer({
     ctx,
     pathname,
     aiAssistantOpen,
+    onOpenAiAssistant,
+    onCloseAiAssistant,
+    onAiAssistantContext,
+    aiLinkClickHandlerRef,
     onHeaderChange,
     onDocumentTitleChange,
 }: IPluggableApplicationRendererProps) {
@@ -72,6 +93,9 @@ export function PluggableApplicationRenderer({
     const ctxRef = useAutoupdateRef(ctx);
     const onHeaderChangeRef = useAutoupdateRef(onHeaderChange);
     const onDocumentTitleChangeRef = useAutoupdateRef(onDocumentTitleChange);
+    const onOpenAiAssistantRef = useAutoupdateRef(onOpenAiAssistant);
+    const onCloseAiAssistantRef = useAutoupdateRef(onCloseAiAssistant);
+    const onAiAssistantContextRef = useAutoupdateRef(onAiAssistantContext);
     const containerRef = useRef<HTMLDivElement>(null);
     const mountHandleRef = useRef<IPluggableApplicationMountHandle | undefined>(undefined);
     // The app/module pair currently mounted. Held so the context-change effect can
@@ -100,25 +124,22 @@ export function PluggableApplicationRenderer({
                 return;
             }
             // The active pluggable application owns no chat dialog on hosted routes; it requests
-            // the host's single assistant through these events (open/ask and tag-scope changes),
-            // which the host chrome consumes via the notification channel.
+            // the host's single (host-owned) assistant through these events (open/ask, close and
+            // tag-scope changes), which the host runtime drives directly via these callbacks.
             if (isOpenAiAssistantRequestedEvent(event)) {
-                dispatchHostNotification({
-                    type: "openAiAssistant",
-                    question: event.payload.question,
-                    userContext: event.payload.userContext,
-                });
+                onOpenAiAssistantRef.current?.(event.payload.question, event.payload.userContext);
                 return;
             }
             if (isCloseAiAssistantRequestedEvent(event)) {
-                dispatchHostNotification({ type: "closeAiAssistant" });
+                onCloseAiAssistantRef.current?.();
                 return;
             }
             if (isAiAssistantContextChangedEvent(event)) {
-                dispatchHostNotification({
-                    type: "aiAssistantContext",
+                onAiAssistantContextRef.current?.({
                     includeTags: event.payload.includeTags,
                     excludeTags: event.payload.excludeTags,
+                    dialogPosition: event.payload.dialogPosition,
+                    embedded: event.payload.embedded,
                 });
                 return;
             }
@@ -126,7 +147,13 @@ export function PluggableApplicationRenderer({
                 onDocumentTitleChangeRef.current?.(app.id, event.payload.pageTitle);
             }
         },
-        [app.id, onDocumentTitleChangeRef],
+        [
+            app.id,
+            onDocumentTitleChangeRef,
+            onOpenAiAssistantRef,
+            onCloseAiAssistantRef,
+            onAiAssistantContextRef,
+        ],
     );
 
     useEffect(() => {
@@ -263,6 +290,20 @@ export function PluggableApplicationRenderer({
         }
         mountHandleRef.current?.setAiAssistantOpen?.(aiAssistantOpen);
     }, [aiAssistantOpen, viewState.state]);
+
+    // Expose a host-chat link-click delegate that defers to the active app's mount handle, so an
+    // embedded app can handle clicks in-app (e.g. open a visualization overlay) rather than navigating.
+    // Read through the ref at call time so it always targets the currently mounted app.
+    useEffect(() => {
+        const ref = aiLinkClickHandlerRef;
+        if (!ref) {
+            return;
+        }
+        ref.current = (link) => mountHandleRef.current?.onAiAssistantLinkClicked?.(link) ?? false;
+        return () => {
+            ref.current = undefined;
+        };
+    }, [aiLinkClickHandlerRef]);
 
     return (
         <section className={b()}>

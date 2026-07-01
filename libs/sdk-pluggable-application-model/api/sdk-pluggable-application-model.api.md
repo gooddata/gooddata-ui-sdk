@@ -22,6 +22,8 @@ import { PluggableApplicationRegistryItem } from '@gooddata/sdk-model';
 export function aiAssistantContextChanged(payload?: {
     includeTags?: string[];
     excludeTags?: string[];
+    dialogPosition?: "left" | "right";
+    embedded?: boolean;
 }): IAiAssistantContextChangedEvent;
 
 // @alpha
@@ -52,17 +54,11 @@ export interface IAiAssistantContextChangedEvent extends IPluggableAppEvent {
     readonly payload: {
         readonly includeTags?: string[];
         readonly excludeTags?: string[];
+        readonly dialogPosition?: "left" | "right";
+        readonly embedded?: boolean;
     };
     // (undocumented)
     readonly type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CONTEXT_CHANGED";
-}
-
-// @alpha
-export interface IAiAssistantContextHostUiNotification {
-    excludeTags?: string[];
-    includeTags?: string[];
-    // (undocumented)
-    type: "aiAssistantContext";
 }
 
 // @alpha
@@ -93,12 +89,6 @@ export interface IAppInstance extends IPluggableApplicationMountHandle {
 
 // @alpha
 export type IAuthCredentials = IContextDeferredAuthCredentials | IApiTokenAuthCredentials | IJwtAuthCredentials;
-
-// @alpha
-export interface ICloseAiAssistantHostUiNotification {
-    // (undocumented)
-    type: "closeAiAssistant";
-}
 
 // @alpha
 export interface ICloseAiAssistantRequestedEvent extends IPluggableAppEvent {
@@ -138,6 +128,10 @@ export interface IHostUiMountHandle {
     notify?(notification: IHostUiNotification): void;
     unmount(): void;
     updateApplications?(apps: PluggableApplicationRegistryItem[]): void;
+    updateChatState?(state: {
+        showChatItem: boolean;
+        isOpen: boolean;
+    }): void;
     updateContext?(ctx: IPlatformContext): void;
     updateDocumentTitle?(pageTitle: string | undefined): void;
     updateHeader?(header: IAppHeaderOptions | undefined): void;
@@ -149,14 +143,15 @@ export interface IHostUiMountOptions {
     container: HTMLElement;
     ctx: IPlatformContext;
     navigate: (url: string) => void;
-    onAiAssistantOpenChange?: (open: boolean) => void;
+    onAskAiAssistant?: (question: string, userContext?: IGenAIUserContext) => void;
+    onChatToggleRequested?: () => void;
     pathname: string;
     replace: (url: string) => void;
     resolvedApplications: PluggableApplicationRegistryItem[];
 }
 
 // @alpha
-export type IHostUiNotification = INewDeploymentAvailableHostUiNotification | IOpenAiAssistantHostUiNotification | ICloseAiAssistantHostUiNotification | IAiAssistantContextHostUiNotification;
+export type IHostUiNotification = INewDeploymentAvailableHostUiNotification;
 
 // @alpha
 export interface IJwtAuthCredentials {
@@ -174,14 +169,6 @@ export { ILocale }
 export interface INewDeploymentAvailableHostUiNotification {
     commitHash: string;
     type: "newDeploymentAvailable";
-}
-
-// @alpha
-export interface IOpenAiAssistantHostUiNotification {
-    question?: string;
-    // (undocumented)
-    type: "openAiAssistant";
-    userContext?: IGenAIUserContext;
 }
 
 // @alpha
@@ -278,6 +265,12 @@ export interface IPluggableAppEvent {
 
 // @alpha
 export interface IPluggableApplicationMountHandle {
+    onAiAssistantLinkClicked?: (link: {
+        type?: string;
+        id?: string;
+        itemUrl?: string;
+        newTab?: boolean;
+    }) => boolean;
     setAiAssistantOpen?: (open: boolean) => void;
     unmount(): void;
     updateContext?: (ctx: IPlatformContext) => void;

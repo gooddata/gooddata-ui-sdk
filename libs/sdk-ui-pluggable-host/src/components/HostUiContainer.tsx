@@ -5,7 +5,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { type Root as ReactRoot, createRoot } from "react-dom/client";
 import { type NavigateFunction } from "react-router";
 
-import { type PluggableApplicationRegistryItem } from "@gooddata/sdk-model";
+import { type IGenAIUserContext, type PluggableApplicationRegistryItem } from "@gooddata/sdk-model";
 import {
     type IAppHeaderOptions,
     type IPlatformContext,
@@ -17,6 +17,12 @@ import { now } from "../debug.js";
 import { setActiveHostHandle } from "../lib/hostNotifications.js";
 import { getAppLifecycleCallbacks } from "../loader/pluggableApplicationsLoader.js";
 import { getActiveInternalApplication } from "../loader/routing.js";
+import {
+    HostChat,
+    type IHostChatContext,
+    type IHostChatLink,
+    type IHostChatVisibility,
+} from "../ui/HostChat.js";
 import { HostIntlProvider } from "../ui/HostIntlProvider.js";
 import { PluggableApplicationRenderer } from "../ui/PluggableApplicationRenderer.js";
 import { resolveHostUiModule } from "../ui/resolveHostUiModule.js";
@@ -49,9 +55,40 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate }: IHostUi
 
     const [headerOptions, setHeaderOptions] = useState<IAppHeaderOptions | undefined>(undefined);
     const [pageTitle, setPageTitle] = useState<string | undefined>(undefined);
-    // Host-owned chat open-state, reported by the host UI and forwarded to the active pluggable app.
+    // Host-owned chat open-state, sourced from HostChat and forwarded to the active pluggable app.
     const [aiAssistantOpen, setAiAssistantOpen] = useState(false);
-    const onAiAssistantOpenChange = useCallback((open: boolean) => setAiAssistantOpen(open), []);
+    // Header chat-button state (visibility + open) pushed down to the host UI module so it can render
+    // the header button to match the host-owned chat.
+    const [chatButtonState, setChatButtonState] = useState({ showChatItem: false, isOpen: false });
+    const onChatStateChange = useCallback((state: { showChatItem: boolean; isOpen: boolean }) => {
+        setChatButtonState((prev) =>
+            prev.showChatItem === state.showChatItem && prev.isOpen === state.isOpen ? prev : state,
+        );
+    }, []);
+    // Open/close/toggle requests and tag scope driving the host's single chat (HostChat). Sources:
+    // app events (via PluggableApplicationRenderer), the header chat button, and the header search.
+    const [aiVisibility, setAiVisibility] = useState<IHostChatVisibility | null>(null);
+    const [aiContext, setAiContext] = useState<IHostChatContext | null>(null);
+    const aiVisibilitySeqRef = useRef(0);
+    const requestOpenAi = useCallback((question?: string, userContext?: IGenAIUserContext) => {
+        setAiVisibility({ kind: "open", question, userContext, seq: ++aiVisibilitySeqRef.current });
+    }, []);
+    const requestCloseAi = useCallback(() => {
+        setAiVisibility({ kind: "close", seq: ++aiVisibilitySeqRef.current });
+    }, []);
+    const requestToggleAi = useCallback(() => {
+        setAiVisibility({ kind: "toggle", seq: ++aiVisibilitySeqRef.current });
+    }, []);
+    const setAiAssistantContext = useCallback((context: IHostChatContext) => {
+        setAiContext(context);
+    }, []);
+    // The active app's chat-link handler, populated by PluggableApplicationRenderer (which holds the
+    // app mount handle) and read by HostChat's chat so embedded apps can handle link clicks in-app.
+    const appAiLinkClickRef = useRef<((link: IHostChatLink) => boolean) | undefined>(undefined);
+    const onAppLinkClick = useCallback(
+        (link: IHostChatLink) => appAiLinkClickRef.current?.(link) ?? false,
+        [],
+    );
     const activeAppRef = useAutoupdateRef(activeInternalApplication);
     const onHeaderChange = useCallback(
         (appId: string, header: IAppHeaderOptions) => {
@@ -84,7 +121,12 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate }: IHostUi
         },
         [navigateRef],
     );
-    const navigationMountRef = useAutoupdateRef({ navigate, replace, onAiAssistantOpenChange });
+    const navigationMountRef = useAutoupdateRef({
+        navigate,
+        replace,
+        onChatToggleRequested: requestToggleAi,
+        onAskAiAssistant: requestOpenAi,
+    });
 
     // Mount the host UI once; obtain the app container for rendering active apps
     useEffect(() => {
@@ -109,7 +151,8 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate }: IHostUi
                 pathname: latestState.pathname,
                 navigate: navigationMountRef.current.navigate,
                 replace: navigationMountRef.current.replace,
-                onAiAssistantOpenChange: navigationMountRef.current.onAiAssistantOpenChange,
+                onChatToggleRequested: navigationMountRef.current.onChatToggleRequested,
+                onAskAiAssistant: navigationMountRef.current.onAskAiAssistant,
             });
 
             handleRef.current = handle;
@@ -179,6 +222,14 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate }: IHostUi
         handleRef.current?.updateDocumentTitle?.(pageTitle);
     }, [hostReady, pageTitle]);
 
+    // Push the host-owned chat button state (visibility + open) to the host UI whenever it changes
+    useEffect(() => {
+        if (!hostReady) {
+            return;
+        }
+        handleRef.current?.updateChatState?.(chatButtonState);
+    }, [hostReady, chatButtonState]);
+
     // Track app navigation and page views when the active application changes.
     // Also clear header options on app switch so stale customizations don't leak.
     const prevAppIdRef = useRef<string | undefined>(undefined);
@@ -193,6 +244,9 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate }: IHostUi
             prevAppIdRef.current = activeId;
             setHeaderOptions(undefined);
             setPageTitle(undefined);
+            // Clear the previous app's AI context (tag scope + embedded presentation/placement) so it
+            // does not leak into the next app, which may never emit its own aiAssistantContextChanged.
+            setAiContext(null);
         }
     }, [activeInternalApplication, pathname]);
 
@@ -211,6 +265,10 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate }: IHostUi
                         ctx={ctx}
                         pathname={pathname}
                         aiAssistantOpen={aiAssistantOpen}
+                        onOpenAiAssistant={requestOpenAi}
+                        onCloseAiAssistant={requestCloseAi}
+                        onAiAssistantContext={setAiAssistantContext}
+                        aiLinkClickHandlerRef={appAiLinkClickRef}
                         onHeaderChange={onHeaderChange}
                         onDocumentTitleChange={onDocumentTitleChange}
                     />
@@ -227,7 +285,30 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate }: IHostUi
         onDocumentTitleChange,
         pathname,
         aiAssistantOpen,
+        requestOpenAi,
+        requestCloseAi,
+        setAiAssistantContext,
     ]);
 
-    return <div ref={containerRef} className="gd-host-ui-container" />;
+    return (
+        <>
+            <div ref={containerRef} className="gd-host-ui-container" />
+            {/* Export rendering must not include the interactive chat — even though the chat is hidden
+                from the chrome, GenAIChatDialog reopens from its persisted open-state on mount, so it
+                would otherwise surface in the export. */}
+            {hostReady && !ctx.isExportMode ? (
+                <HostChat
+                    ctx={ctx}
+                    resolvedApplications={apps}
+                    pathname={pathname}
+                    activeAppId={activeInternalApplication?.id}
+                    visibility={aiVisibility}
+                    context={aiContext}
+                    onOpenChange={setAiAssistantOpen}
+                    onChatStateChange={onChatStateChange}
+                    onAppLinkClick={onAppLinkClick}
+                />
+            ) : null}
+        </>
+    );
 }

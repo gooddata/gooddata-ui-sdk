@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-pluggable-host: Embedded dashboards now defer to the host-owned GenAI chat instead of mounting their own. The AI-assistant context event carries the chat placement (showassistant left/right) and an embedded flag, and the pluggable mount handle gains onAiAssistantLinkClicked so an embedded app can handle chat link clicks in-app (e.g. open a visualization as an in-place overlay).",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "petr.dolejsi@gooddata.com"
+}

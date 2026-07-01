@@ -56,6 +56,16 @@ export interface IHostChromePricing {
 }
 
 // @alpha (undocumented)
+export interface ILegacyLocation {
+    // (undocumented)
+    hash: string;
+    // (undocumented)
+    pathname: string;
+    // (undocumented)
+    search: string;
+}
+
+// @alpha (undocumented)
 export interface ILoadPlatformContextCallbacks {
     // (undocumented)
     onBootstrapError?: (error: string, context: string) => void;
@@ -95,6 +105,9 @@ export type LocalPluggableApplicationLoader = () => Promise<{
     default?: IPluggableApp | unknown;
     pluggableApp?: IPluggableApp;
 }>;
+
+// @alpha
+export function mapLegacyUrlToHost(location: ILegacyLocation): string | null;
 
 // @alpha
 export function registerAppLifecycleCallbacks(callbacks: IAppLifecycleCallbacks): void;

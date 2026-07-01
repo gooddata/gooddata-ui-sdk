@@ -1,11 +1,11 @@
 // (C) 2026 GoodData Corporation
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback } from "react";
 
 import { defineMessage, useIntl } from "react-intl";
 
 import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import type { GenAIObjectType, IGenAIUserContext } from "@gooddata/sdk-model";
+import type { IGenAIUserContext } from "@gooddata/sdk-model";
 import { useBackendStrict } from "@gooddata/sdk-ui";
 import {
     type ChatAssistantMessageEvent,
@@ -13,30 +13,17 @@ import {
     type ChatFeedbackEvent,
     type ChatOpenedEvent,
     type ChatResetEvent,
-    type ChatSaveVisualizationErrorEvent,
     type ChatUserMessageEvent,
     type LinkHandlerEvent,
-    isChatAssistantMessageEvent,
-    isChatClosedEvent,
-    isChatCopyToClipboardEvent,
-    isChatFeedbackEvent,
-    isChatOpenedEvent,
-    isChatResetEvent,
-    isChatSaveVisualizationErrorEvent,
-    isChatSaveVisualizationSuccessEvent,
-    isChatUserMessageEvent,
-    makeUserItem,
 } from "@gooddata/sdk-ui-gen-ai";
-import {
-    GenAIChatDialog,
-    type GenAIChatDialogProps,
-    clearThreadAction,
-    makeTextContents,
-    makeUserMessage,
-    newMessageAction,
-    setUserContextAction,
-} from "@gooddata/sdk-ui-gen-ai/internal";
+import { GenAIChatDialogConnected, type GenAIChatConnectedEvent } from "@gooddata/sdk-ui-gen-ai/internal";
 import { HEADER_CHAT_BUTTON_ID, useToastMessage } from "@gooddata/sdk-ui-kit";
+
+// DOM id of the embedded dashboard's AI trigger button (defined in gdc-dashboards-runtime as
+// EMBED_AI_TRIGGER_ID). Used as the chat's focus-return target when running embedded, where the host
+// header chat button does not exist. Kept as a literal to avoid a host→app package dependency.
+const EMBEDDED_AI_TRIGGER_ID = "embed-ai-trigger";
+const EMBEDDED_CHAT_CLASS = "gd-gen-ai-chat-embedded";
 
 /**
  * Discriminated union of GenAI chat events that are forwarded to the host
@@ -54,8 +41,6 @@ export type GenAIChatEvent =
     | { name: "chat.feedback"; payload: ChatFeedbackEvent }
     | { name: "chat.user-message"; payload: ChatUserMessageEvent }
     | { name: "chat.assistant-message"; payload: ChatAssistantMessageEvent };
-
-type Dispatch = Parameters<Required<GenAIChatDialogProps>["onDispatcher"]>[0];
 
 export interface IGenAIChatProps {
     workspaceId: string;
@@ -86,9 +71,21 @@ export interface IGenAIChatProps {
     canAnalyzeProject?: boolean;
     canFullControl?: boolean;
     settings?: IUserWorkspaceSettings;
+    /** Where to place the chat (e.g. an embedded dashboard's left/right `showassistant` param). */
+    dialogPosition?: "left" | "right";
+    /** Whether the active app is embedded; switches the chat to the embedded presentation. */
+    embedded?: boolean;
+    /** Delegates a chat link click to the active app; returns true if the app handled it. */
+    onAppLinkClick?: (link: { type?: string; id?: string; itemUrl?: string; newTab?: boolean }) => boolean;
     onEvent?: (event: GenAIChatEvent) => void;
 }
 
+/**
+ * Host chrome's chat adapter. The generic chat wiring (object types, the seeded-question dispatch flow,
+ * default link handling, event normalization) lives in `GenAIChatDialogConnected`
+ * (`@gooddata/sdk-ui-gen-ai/internal`); this adapter only supplies the host's data sources, renders the
+ * host's own save-visualization / copy toasts, and forwards telemetry events through `onEvent`.
+ */
 export function GenAIChat({
     workspaceId,
     open,
@@ -103,137 +100,105 @@ export function GenAIChat({
     canAnalyzeProject,
     canFullControl,
     settings,
+    dialogPosition,
+    embedded,
+    onAppLinkClick,
     onEvent,
 }: IGenAIChatProps) {
     const { addSuccess, addError } = useToastMessage();
     const intl = useIntl();
     const backend = useBackendStrict();
 
+    // Embedded link handling (this handler is only wired when `embedded`). Delegate to the active app —
+    // it opens visualization links as an in-place overlay — and never let a link navigate the embedded
+    // iframe away, matching the previous embedded dashboard chat which prevented default for every link
+    // type (only visualizations did anything). Non-embedded mode uses the connected wrapper's default
+    // open/navigate handler instead.
     const onLinkClick = useCallback(
-        ({ itemUrl, newTab, preventDefault }: LinkHandlerEvent): string | undefined => {
-            if (itemUrl) {
-                preventDefault();
-                if (newTab) {
-                    window.open(itemUrl, "_blank");
-                } else {
-                    window.location.assign(itemUrl);
-                }
-            }
-            return itemUrl;
+        (link: LinkHandlerEvent): string | undefined => {
+            onAppLinkClick?.({
+                type: link.type,
+                id: link.id,
+                itemUrl: link.itemUrl,
+                newTab: link.newTab,
+            });
+            link.preventDefault();
+            return undefined;
         },
-        [],
+        [onAppLinkClick],
     );
 
-    const events = useMemo(() => {
-        return [
-            {
-                eval: isChatOpenedEvent,
-                handler: (data: ChatOpenedEvent) => onEvent?.({ name: "chat.opened", payload: data }),
-            },
-            {
-                eval: isChatClosedEvent,
-                handler: (data: ChatClosedEvent) => onEvent?.({ name: "chat.closed", payload: data }),
-            },
-            {
-                eval: isChatResetEvent,
-                handler: (data: ChatResetEvent) => onEvent?.({ name: "chat.reset", payload: data }),
-            },
-            {
-                eval: isChatFeedbackEvent,
-                handler: (data: ChatFeedbackEvent) => onEvent?.({ name: "chat.feedback", payload: data }),
-            },
-            {
-                eval: isChatUserMessageEvent,
-                handler: (data: ChatUserMessageEvent) =>
-                    onEvent?.({ name: "chat.user-message", payload: data }),
-            },
-            {
-                eval: isChatAssistantMessageEvent,
-                handler: (data: ChatAssistantMessageEvent) =>
-                    onEvent?.({ name: "chat.assistant-message", payload: data }),
-            },
-            {
-                eval: isChatSaveVisualizationSuccessEvent,
-                handler: () => {
+    const handleEvent = useCallback(
+        (event: GenAIChatConnectedEvent) => {
+            switch (event.name) {
+                case "opened":
+                    onEvent?.({ name: "chat.opened", payload: event.payload });
+                    break;
+                case "closed":
+                    onEvent?.({ name: "chat.closed", payload: event.payload });
+                    break;
+                case "reset":
+                    onEvent?.({ name: "chat.reset", payload: event.payload });
+                    break;
+                case "feedback":
+                    onEvent?.({ name: "chat.feedback", payload: event.payload });
+                    break;
+                case "user-message":
+                    onEvent?.({ name: "chat.user-message", payload: event.payload });
+                    break;
+                case "assistant-message":
+                    onEvent?.({ name: "chat.assistant-message", payload: event.payload });
+                    break;
+                case "save-visualization-success":
                     addSuccess(defineMessage({ id: "messages.genAi.visualisation.saved.success" }));
-                },
-            },
-            {
-                eval: isChatSaveVisualizationErrorEvent,
-                handler: ({ errorType, errorMessage }: ChatSaveVisualizationErrorEvent) => {
+                    break;
+                case "save-visualization-error":
                     addError(defineMessage({ id: "messages.genAi.visualisation.saved.error" }), {
                         showMore: intl.formatMessage({ id: "messages.showMore" }),
                         showLess: intl.formatMessage({ id: "messages.showLess" }),
                         errorDetail: intl.formatMessage(
                             { id: "messages.genAi.visualisation.saved.error.detail" },
                             {
-                                errorType,
-                                errorMessage,
+                                errorType: event.payload.errorType,
+                                errorMessage: event.payload.errorMessage,
                             },
                         ),
                         duration: 0,
                     });
-                },
-            },
-            {
-                eval: isChatCopyToClipboardEvent,
-                handler: () => {
+                    break;
+                case "copy-to-clipboard":
                     addSuccess(defineMessage({ id: "messages.genAi.visualisation.link.copied" }));
-                },
-            },
-        ];
-    }, [addError, addSuccess, intl, onEvent]);
-
-    const objectTypes = useMemo<GenAIObjectType[]>(() => {
-        const types: GenAIObjectType[] = ["dashboard", "visualization"];
-        if (canManageProject) {
-            types.push("metric");
-        }
-        return types;
-    }, [canManageProject]);
-
-    const [chatDispatcher, setDispatcher] = useState<Dispatch | null>(null);
-    const onDispatcher = useCallback((dispatcher: Dispatch) => {
-        setDispatcher(() => dispatcher);
-    }, []);
-
-    useEffect(() => {
-        if (!chatDispatcher || !askedQuestion || !settings) {
-            return;
-        }
-
-        chatDispatcher(clearThreadAction());
-        // Always set (and thereby clear when undefined) so a follow-up ask without context does not
-        // inherit the previous ask's user context (LX-2544).
-        chatDispatcher(setUserContextAction({ userContext }));
-        if (settings.enableAiAgenticConversations) {
-            chatDispatcher(newMessageAction(makeUserItem({ type: "text", text: askedQuestion })));
-        } else {
-            chatDispatcher(newMessageAction(makeUserMessage([makeTextContents(askedQuestion, [])])));
-        }
-        // `askSeq` is included so a repeated identical question (same `askedQuestion`) still re-seeds.
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [chatDispatcher, askedQuestion, askSeq, userContext, settings]);
+                    break;
+                default:
+                    break;
+            }
+        },
+        [addError, addSuccess, intl, onEvent],
+    );
 
     return (
-        <GenAIChatDialog
-            isOpen={open}
+        <GenAIChatDialogConnected
+            backend={backend}
+            workspace={workspaceId}
             locale={intl.locale}
+            isOpen={open}
+            onOpen={onOpen}
+            onClose={onClose}
+            askedQuestion={askedQuestion}
+            askSeq={askSeq}
+            userContext={userContext}
+            includeTags={includeTags}
+            excludeTags={excludeTags}
             canManage={canManageProject}
             canAnalyze={canAnalyzeProject}
             canFullControl={canFullControl}
-            objectTypes={objectTypes}
-            includeTags={includeTags}
-            excludeTags={excludeTags}
-            onLinkClick={onLinkClick}
-            onClose={onClose}
-            onOpen={onOpen}
-            workspace={workspaceId}
-            backend={backend}
             settings={settings}
-            eventHandlers={events}
-            onDispatcher={onDispatcher}
-            returnFocusTo={HEADER_CHAT_BUTTON_ID}
+            dialogPosition={dialogPosition}
+            allowNativeLinks={embedded ? false : undefined}
+            className={embedded ? EMBEDDED_CHAT_CLASS : undefined}
+            onLinkClick={embedded ? onLinkClick : undefined}
+            onEvent={handleEvent}
+            returnFocusTo={embedded ? EMBEDDED_AI_TRIGGER_ID : HEADER_CHAT_BUTTON_ID}
         />
     );
 }

@@ -176,6 +176,19 @@ function toPluggableApplicationOrganizationPermissions(
     };
 }
 
+// Embedded mode forces the shell flags on so each remote becomes eligible and its legacy-external
+// twin (which requires the flag false) drops out — exactly one survives. Non-embedded is untouched.
+function settingsForRequirements(ctx: IPlatformContext): IPlatformContext["settings"] {
+    if (ctx.embeddingMode !== "iframe") {
+        return ctx.settings;
+    }
+    return {
+        ...ctx.settings,
+        enableShellApplication_dashboards: true,
+        enableShellApplication_analyticalDesigner: true,
+    };
+}
+
 function appMeetsRequirements(
     {
         requiredSettings,
@@ -185,7 +198,10 @@ function appMeetsRequirements(
     }: PluggableApplicationRegistryItem,
     ctx: IPlatformContext,
 ): boolean {
-    if (requiredSettings !== undefined && !evaluateCondition(requiredSettings, ctx.settings)) {
+    if (
+        requiredSettings !== undefined &&
+        !evaluateCondition(requiredSettings, settingsForRequirements(ctx))
+    ) {
         return false;
     }
     if (requiredWorkspacePermissions !== undefined) {

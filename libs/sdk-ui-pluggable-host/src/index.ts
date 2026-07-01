@@ -12,6 +12,8 @@ export {
 export { registerLocalApplications } from "./registry/pluggableApplicationsRegistry.js";
 export { registerAppLifecycleCallbacks } from "./loader/pluggableApplicationsLoader.js";
 
+export { mapLegacyUrlToHost, type ILegacyLocation } from "./loader/legacyRedirect.js";
+
 export { Root, type IRootCallbacks } from "./components/Root.js";
 export { type IAppLifecycleCallbacks } from "./types/lifecycle.js";
 
