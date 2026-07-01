@@ -55,14 +55,24 @@ export interface IHostUiMountOptions {
     replace: (url: string) => void;
 
     /**
-     * Reports the host-owned AI assistant chat open-state whenever it changes.
+     * Requests the host to toggle its AI assistant chat open/closed.
      *
      * @remarks
-     * The host UI owns the single chat instance on hosted routes; the host runtime forwards this
-     * open-state to the active pluggable application (via its mount handle) so app-side assistant
-     * controls stay aligned with what the user sees.
+     * The single chat instance is owned by the host runtime (outside the host UI module), so it
+     * survives a custom UI module and stays mounted when the chrome is hidden (embedded/export).
+     * The host UI's header chat button calls this to toggle that chat. The current open-state and
+     * button visibility are pushed back via {@link IHostUiMountHandle.updateChatState}.
      */
-    onAiAssistantOpenChange?: (open: boolean) => void;
+    onChatToggleRequested?: () => void;
+
+    /**
+     * Requests the host to open its AI assistant chat seeded with a question.
+     *
+     * @remarks
+     * Used by host UI affordances that hand a question to the assistant (e.g. the header semantic
+     * search "ask AI" action). `userContext` carries the user's current location when available.
+     */
+    onAskAiAssistant?: (question: string, userContext?: IGenAIUserContext) => void;
 }
 
 /**
@@ -90,64 +100,6 @@ export interface INewDeploymentAvailableHostUiNotification {
 }
 
 /**
- * Notification requesting the host UI to open its AI assistant chat.
- *
- * @remarks
- * Emitted when the active pluggable application requests the assistant (see
- * `IOpenAiAssistantRequestedEvent`). The host UI owns the single chat instance on
- * hosted-application routes and opens it, optionally seeded with a question and user context.
- *
- * @alpha
- */
-export interface IOpenAiAssistantHostUiNotification {
-    type: "openAiAssistant";
-    /**
-     * Question to seed the chat with. When omitted, the chat just opens.
-     */
-    question?: string;
-    /**
-     * Context of the user's current location (e.g. the active dashboard), passed to the
-     * assistant alongside the seeded question.
-     */
-    userContext?: IGenAIUserContext;
-}
-
-/**
- * Notification requesting the host UI to close its AI assistant chat.
- *
- * @remarks
- * Emitted when the active pluggable application closes the assistant from one of its own controls
- * (see `ICloseAiAssistantRequestedEvent`). The host UI closes its single chat instance.
- *
- * @alpha
- */
-export interface ICloseAiAssistantHostUiNotification {
-    type: "closeAiAssistant";
-}
-
-/**
- * Notification informing the host UI of the active application's current AI-assistant tag scope.
- *
- * @remarks
- * Emitted when the active pluggable application's tag scope changes (see
- * `IAiAssistantContextChangedEvent`). The host UI keeps the latest scope and applies it to its
- * chat so the assistant's object search stays within the same scope the application enforces.
- *
- * @alpha
- */
-export interface IAiAssistantContextHostUiNotification {
-    type: "aiAssistantContext";
-    /**
-     * Tag identifiers the assistant's object search should be restricted to.
-     */
-    includeTags?: string[];
-    /**
-     * Tag identifiers the assistant's object search should exclude.
-     */
-    excludeTags?: string[];
-}
-
-/**
  * Discriminated union of out-of-band notifications the host runtime can push into the
  * host UI module after mount. Lets the runtime signal events that should affect the UI
  * without coupling it to a specific rendering.
@@ -157,13 +109,13 @@ export interface IAiAssistantContextHostUiNotification {
  * {@link IHostUiMountHandle.notify} may safely no-op for notification types they do not
  * handle, so adding a new variant is a backward-compatible change.
  *
+ * AI-assistant open/close/context signals are intentionally NOT host UI notifications: the chat
+ * is owned by the host runtime (outside the UI module), so the runtime drives it directly rather
+ * than routing through the UI module.
+ *
  * @alpha
  */
-export type IHostUiNotification =
-    | INewDeploymentAvailableHostUiNotification
-    | IOpenAiAssistantHostUiNotification
-    | ICloseAiAssistantHostUiNotification
-    | IAiAssistantContextHostUiNotification;
+export type IHostUiNotification = INewDeploymentAvailableHostUiNotification;
 
 /**
  * Handle returned from a host UI mount for lifecycle management.
@@ -222,6 +174,17 @@ export interface IHostUiMountHandle {
      * active application's manifest title.
      */
     updateDocumentTitle?(pageTitle: string | undefined): void;
+
+    /**
+     * Pushes the host-owned AI assistant chat state into the host UI.
+     *
+     * @remarks
+     * The chat itself is owned by the host runtime; this lets the UI module reflect it — show/hide
+     * the header chat button (`showChatItem`, gated by feature flag, permissions and a runtime LLM
+     * availability probe) and reflect its open-state for active styling. Called after mount and on
+     * every change.
+     */
+    updateChatState?(state: { showChatItem: boolean; isOpen: boolean }): void;
 
     /**
      * Returns the DOM element where the active pluggable application should be rendered.

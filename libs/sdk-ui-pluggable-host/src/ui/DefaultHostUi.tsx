@@ -1,11 +1,11 @@
 // (C) 2026 GoodData Corporation
 
-import { useCallback, useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 
 import { flushSync } from "react-dom";
 import { type Root, createRoot } from "react-dom/client";
 
-import { type PluggableApplicationRegistryItem } from "@gooddata/sdk-model";
+import { type IGenAIUserContext, type PluggableApplicationRegistryItem } from "@gooddata/sdk-model";
 import {
     type IAppHeaderOptions,
     type IHostUiModule,
@@ -15,9 +15,15 @@ import {
     type IPlatformContext,
 } from "@gooddata/sdk-pluggable-application-model";
 
-import { type IHostChromeAiContext, type IHostChromeAiVisibility, HostChrome } from "./HostChrome.js";
+import { HostChrome } from "./HostChrome.js";
 import { e } from "./hostChromeBem.js";
 import "./DefaultHostUi.scss";
+
+/** Host-owned chat button state pushed down from the runtime so the header button can match it. */
+interface IChatButtonState {
+    showChatItem: boolean;
+    isOpen: boolean;
+}
 
 // ---------------------------------------------------------------------------
 // Bridge component that exposes React state setters to the imperative handle
@@ -29,7 +35,8 @@ interface IHostUiBridgeProps {
     initialPathname: string;
     navigate: (url: string) => void;
     replace: (url: string) => void;
-    onAiAssistantOpenChange?: (open: boolean) => void;
+    onChatToggleRequested?: () => void;
+    onAskAiAssistant?: (question: string, userContext?: IGenAIUserContext) => void;
     onAppContainerReady: (el: HTMLElement) => void;
     onReady: (
         setCtx: (ctx: IPlatformContext) => void,
@@ -38,6 +45,7 @@ interface IHostUiBridgeProps {
         setHeaderOptions: (header: IAppHeaderOptions | undefined) => void,
         setNotification: (notification: IHostUiNotification | null) => void,
         setPageTitle: (pageTitle: string | undefined) => void,
+        setChatState: (state: IChatButtonState) => void,
     ) => void;
 }
 
@@ -47,7 +55,8 @@ function HostUiBridge({
     initialPathname,
     navigate,
     replace,
-    onAiAssistantOpenChange,
+    onChatToggleRequested,
+    onAskAiAssistant,
     onAppContainerReady,
     onReady,
 }: IHostUiBridgeProps) {
@@ -57,48 +66,14 @@ function HostUiBridge({
     const [headerOptions, setHeaderOptions] = useState<IAppHeaderOptions | undefined>(undefined);
     const [notification, setNotification] = useState<IHostUiNotification | null>(null);
     const [pageTitle, setPageTitle] = useState<string | undefined>(undefined);
-    // AI-assistant signals are kept in their own state slots, separate from the single generic
-    // `notification` slot. Open/close and context-change notifications can arrive in the same
-    // synchronous tick; routing them to independent state ensures one does not overwrite the
-    // other (a single shared slot would drop the earlier one — LX-2544).
-    const [aiVisibility, setAiVisibility] = useState<IHostChromeAiVisibility | null>(null);
-    const [aiContext, setAiContext] = useState<IHostChromeAiContext | null>(null);
-    const aiVisibilitySeqRef = useRef(0);
+    // The host runtime owns the single chat instance (outside this UI module); it pushes the chat
+    // button state here so the header button reflects the chat's availability and open-state.
+    const [chatState, setChatState] = useState<IChatButtonState>({ showChatItem: false, isOpen: false });
     const appContainerRef = useRef<HTMLDivElement>(null);
-
-    const handleNotify = useCallback((notification: IHostUiNotification | null) => {
-        if (notification === null) {
-            setNotification(null);
-            return;
-        }
-        switch (notification.type) {
-            case "openAiAssistant":
-                setAiVisibility({
-                    kind: "open",
-                    question: notification.question,
-                    userContext: notification.userContext,
-                    // A fresh seq on every request re-triggers the host effect even when the
-                    // question is identical to the previous one (e.g. "Summarize" clicked again).
-                    seq: ++aiVisibilitySeqRef.current,
-                });
-                break;
-            case "closeAiAssistant":
-                setAiVisibility({ kind: "close", seq: ++aiVisibilitySeqRef.current });
-                break;
-            case "aiAssistantContext":
-                setAiContext({
-                    includeTags: notification.includeTags,
-                    excludeTags: notification.excludeTags,
-                });
-                break;
-            default:
-                setNotification(notification);
-        }
-    }, []);
 
     // Layout effect runs in the same synchronous commit as flushSync.
     useLayoutEffect(() => {
-        onReady(setCtx, setApps, setPathname, setHeaderOptions, handleNotify, setPageTitle);
+        onReady(setCtx, setApps, setPathname, setHeaderOptions, setNotification, setPageTitle, setChatState);
         if (appContainerRef.current) {
             onAppContainerReady(appContainerRef.current);
         }
@@ -115,9 +90,10 @@ function HostUiBridge({
             onReplace={replace}
             headerOptions={headerOptions}
             notification={notification}
-            aiVisibility={aiVisibility}
-            aiContext={aiContext}
-            onAiAssistantOpenChange={onAiAssistantOpenChange}
+            showChatItem={chatState.showChatItem}
+            chatIsOpen={chatState.isOpen}
+            onChatToggle={onChatToggleRequested}
+            onAskAiAssistant={onAskAiAssistant}
             appPageTitle={pageTitle}
         >
             <div ref={appContainerRef} className={e("app-container")} />
@@ -130,8 +106,16 @@ function HostUiBridge({
 // ---------------------------------------------------------------------------
 
 function mountDefaultHostUi(options: IHostUiMountOptions): IHostUiMountHandle {
-    const { container, ctx, resolvedApplications, pathname, navigate, replace, onAiAssistantOpenChange } =
-        options;
+    const {
+        container,
+        ctx,
+        resolvedApplications,
+        pathname,
+        navigate,
+        replace,
+        onChatToggleRequested,
+        onAskAiAssistant,
+    } = options;
 
     let reactRoot: Root | null = createRoot(container);
     let appContainer: HTMLElement | null = null;
@@ -142,6 +126,7 @@ function mountDefaultHostUi(options: IHostUiMountOptions): IHostUiMountHandle {
     let updateHeaderFn: ((header: IAppHeaderOptions | undefined) => void) | null = null;
     let updateNotificationFn: ((notification: IHostUiNotification | null) => void) | null = null;
     let updateDocumentTitleFn: ((pageTitle: string | undefined) => void) | null = null;
+    let updateChatStateFn: ((state: IChatButtonState) => void) | null = null;
 
     // Use flushSync so that the DOM is ready synchronously after mount() returns,
     // making getAppContainer() safe to call immediately.
@@ -153,17 +138,27 @@ function mountDefaultHostUi(options: IHostUiMountOptions): IHostUiMountHandle {
                 initialPathname={pathname}
                 navigate={navigate}
                 replace={replace}
-                onAiAssistantOpenChange={onAiAssistantOpenChange}
+                onChatToggleRequested={onChatToggleRequested}
+                onAskAiAssistant={onAskAiAssistant}
                 onAppContainerReady={(el) => {
                     appContainer = el;
                 }}
-                onReady={(setCtx, setApps, setPathname, setHeaderOptions, setNotification, setPageTitle) => {
+                onReady={(
+                    setCtx,
+                    setApps,
+                    setPathname,
+                    setHeaderOptions,
+                    setNotification,
+                    setPageTitle,
+                    setChatState,
+                ) => {
                     updateCtxFn = setCtx;
                     updateAppsFn = setApps;
                     updatePathnameFn = setPathname;
                     updateHeaderFn = setHeaderOptions;
                     updateNotificationFn = setNotification;
                     updateDocumentTitleFn = setPageTitle;
+                    updateChatStateFn = setChatState;
                 }}
             />,
         );
@@ -181,6 +176,7 @@ function mountDefaultHostUi(options: IHostUiMountOptions): IHostUiMountHandle {
                 updateHeaderFn = null;
                 updateNotificationFn = null;
                 updateDocumentTitleFn = null;
+                updateChatStateFn = null;
                 root.unmount();
             }
         },
@@ -203,6 +199,10 @@ function mountDefaultHostUi(options: IHostUiMountOptions): IHostUiMountHandle {
 
         updateDocumentTitle(pageTitle: string | undefined) {
             updateDocumentTitleFn?.(pageTitle);
+        },
+
+        updateChatState(state) {
+            updateChatStateFn?.(state);
         },
 
         getAppContainer(): HTMLElement {

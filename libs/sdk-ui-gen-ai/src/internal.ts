@@ -8,4 +8,9 @@ import { clearThreadAction, newMessageAction } from "./store/messages/messagesSl
 
 export { ChatSkeleton } from "./components/ChatSkeleton.js";
 export { GenAIChatDialog, type GenAIChatDialogProps } from "./components/GenAIChatDialog.js";
+export {
+    GenAIChatDialogConnected,
+    type IGenAIChatDialogConnectedProps,
+    type GenAIChatConnectedEvent,
+} from "./components/GenAIChatDialogConnected.js";
 export { clearThreadAction, newMessageAction, makeUserMessage, makeTextContents, setUserContextAction };

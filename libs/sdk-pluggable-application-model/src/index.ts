@@ -75,8 +75,5 @@ export {
     type IHostUiMountOptions,
     type IHostUiNotification,
     type INewDeploymentAvailableHostUiNotification,
-    type IOpenAiAssistantHostUiNotification,
-    type ICloseAiAssistantHostUiNotification,
-    type IAiAssistantContextHostUiNotification,
     type HostUiMount,
 } from "./hostUi.js";

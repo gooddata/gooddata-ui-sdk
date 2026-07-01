@@ -270,6 +270,16 @@ export interface IAiAssistantContextChangedEvent extends IPluggableAppEvent {
          * exclude filter.
          */
         readonly excludeTags?: string[];
+        /**
+         * Where the application wants the host chat positioned (e.g. an embedded dashboard places it
+         * left/right via the `showassistant` URL param). Omitted leaves the default placement.
+         */
+        readonly dialogPosition?: "left" | "right";
+        /**
+         * Whether the application is running embedded (no host chrome). The host uses this to apply
+         * the embedded chat presentation and to delegate link clicks back to the application.
+         */
+        readonly embedded?: boolean;
     };
 }
 
@@ -281,6 +291,8 @@ export interface IAiAssistantContextChangedEvent extends IPluggableAppEvent {
 export function aiAssistantContextChanged(payload?: {
     includeTags?: string[];
     excludeTags?: string[];
+    dialogPosition?: "left" | "right";
+    embedded?: boolean;
 }): IAiAssistantContextChangedEvent {
     return { type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CONTEXT_CHANGED", payload: payload ?? {} };
 }
@@ -302,10 +314,20 @@ export function isAiAssistantContextChangedEvent(obj: unknown): obj is IAiAssist
     if (typeof payload !== "object" || payload === null || Array.isArray(payload)) {
         return false;
     }
-    const { includeTags, excludeTags } = payload as { includeTags?: unknown; excludeTags?: unknown };
+    const { includeTags, excludeTags, dialogPosition, embedded } = payload as {
+        includeTags?: unknown;
+        excludeTags?: unknown;
+        dialogPosition?: unknown;
+        embedded?: unknown;
+    };
     const isStringArrayOrUndefined = (value: unknown): boolean =>
         value === undefined || (Array.isArray(value) && value.every((item) => typeof item === "string"));
-    return isStringArrayOrUndefined(includeTags) && isStringArrayOrUndefined(excludeTags);
+    return (
+        isStringArrayOrUndefined(includeTags) &&
+        isStringArrayOrUndefined(excludeTags) &&
+        (dialogPosition === undefined || dialogPosition === "left" || dialogPosition === "right") &&
+        (embedded === undefined || typeof embedded === "boolean")
+    );
 }
 
 /**
@@ -563,6 +585,23 @@ export interface IPluggableApplicationMountHandle {
      * whenever its chat opens or closes. Applications without such controls may omit it.
      */
     setAiAssistantOpen?: (open: boolean) => void;
+
+    /**
+     * Delegates an AI-assistant link click to the application so it can handle navigation in-app.
+     *
+     * @remarks
+     * On hosted routes the host owns the chat, so links clicked inside it are handled by the host by
+     * default (open in a tab / navigate). An embedded application can intercept them instead — e.g. an
+     * embedded dashboard opening a visualization as an in-place overlay rather than navigating away.
+     * Return `true` if the application handled it (the host suppresses its own navigation); return
+     * `false` to let the host perform default link handling.
+     */
+    onAiAssistantLinkClicked?: (link: {
+        type?: string;
+        id?: string;
+        itemUrl?: string;
+        newTab?: boolean;
+    }) => boolean;
 }
 
 /**

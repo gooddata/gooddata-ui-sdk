@@ -46,6 +46,12 @@ export interface IUseHostChromeChatArgs {
     features: IHostChromeWorkspaceFeatures;
     ctx: IPlatformContext;
     telemetry: IPluggableAppTelemetryCallbacks | undefined;
+    /** Where to place the chat (e.g. an embedded dashboard's left/right `showassistant` param). */
+    dialogPosition?: "left" | "right";
+    /** Whether the active app is embedded; switches the chat to the embedded presentation. */
+    embedded?: boolean;
+    /** Delegates a chat link click to the active app; returns true if the app handled it. */
+    onAppLinkClick?: (link: { type?: string; id?: string; itemUrl?: string; newTab?: boolean }) => boolean;
 }
 
 /**
@@ -55,7 +61,14 @@ export interface IUseHostChromeChatArgs {
  * points, the runtime availability probe (`useGenAiChatAvailability`) and forwarding chat
  * events to the host telemetry callbacks.
  */
-export function useHostChromeChat({ features, ctx, telemetry }: IUseHostChromeChatArgs): IHostChromeChat {
+export function useHostChromeChat({
+    features,
+    ctx,
+    telemetry,
+    dialogPosition,
+    embedded,
+    onAppLinkClick,
+}: IUseHostChromeChatArgs): IHostChromeChat {
     const [isChatOpen, setIsChatOpen] = useState(false);
     const [askedQuestion, setAskedQuestion] = useState<string | null>(null);
     // Bumped on every ask so the chat re-seeds (clears the thread + sends the message) even when the
@@ -123,6 +136,9 @@ export function useHostChromeChat({ features, ctx, telemetry }: IUseHostChromeCh
                 canAnalyzeProject={features.canAccessWorkbench}
                 canFullControl={features.canFullControl}
                 settings={ctx.workspaceSettings}
+                dialogPosition={dialogPosition}
+                embedded={embedded}
+                onAppLinkClick={onAppLinkClick}
                 onEvent={handleChatEvent}
             />
         ) : null;
