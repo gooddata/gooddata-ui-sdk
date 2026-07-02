@@ -12,11 +12,12 @@ import {
 
 import { AUTOMATION_ATTACHMENTS_GROUP_LABEL_ID } from "../../../../../constants/automations.js";
 
+import { partitionAttachments } from "./attachmentFormats.js";
 import { AttachmentsList } from "./AttachmentsList.js";
 import { AttachmentsSelect } from "./AttachmentsSelect.js";
 import { AttachmentsWrapper } from "./AttachmentsWrapper.js";
 
-const SUPPORTED_WIDGET_ATTACHMENTS: WidgetAttachmentType[] = [
+const ALL_WIDGET_ATTACHMENTS: WidgetAttachmentType[] = [
     "PNG",
     "PPTX",
     "PDF",
@@ -25,6 +26,7 @@ const SUPPORTED_WIDGET_ATTACHMENTS: WidgetAttachmentType[] = [
     "CSV",
     "CSV_RAW",
 ];
+const SLIDE_WIDGET_ATTACHMENTS: WidgetAttachmentType[] = ["PDF", "PPTX"];
 
 export interface IWidgetAttachmentsProps {
     selectedAttachments: WidgetAttachmentType[];
@@ -38,6 +40,7 @@ export interface IWidgetAttachmentsProps {
     csvRawSettings: IExportDefinitionVisualizationObjectSettings;
     onCsvRawSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
     isCsvSettingsEnabled: boolean;
+    isSlidesExportEnabled: boolean;
     defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
     exportTemplates?: IExportTemplate[];
     slidesTemplateIds?: { PPTX?: string; PDF_SLIDES?: string; PDF?: string };
@@ -59,12 +62,24 @@ export function WidgetAttachments({
     csvRawSettings,
     onCsvRawSettingsChange,
     isCsvSettingsEnabled,
+    isSlidesExportEnabled,
     defaultPdfPageSize,
     exportTemplates,
     slidesTemplateIds,
     onSlidesTemplateIdChange,
 }: IWidgetAttachmentsProps) {
     const intl = useIntl();
+
+    const {
+        available: availableAttachments,
+        visibleSelected: visibleSelectedAttachments,
+        hiddenSelected: hiddenSelectedFormats,
+    } = partitionAttachments(
+        ALL_WIDGET_ATTACHMENTS,
+        SLIDE_WIDGET_ATTACHMENTS,
+        selectedAttachments,
+        isSlidesExportEnabled,
+    );
     const attachmentListRef = useRef<HTMLDivElement>(null);
     const addButtonRef = useRef<HTMLButtonElement | null>(null);
     const [announcement, setAnnouncement] = useState("");
@@ -117,10 +132,10 @@ export function WidgetAttachments({
         const formats = attachments
             .filter(
                 (attachment): attachment is { type: WidgetAttachmentType; selected: true } =>
-                    attachment.selected && SUPPORTED_WIDGET_ATTACHMENTS.includes(attachment.type),
+                    attachment.selected && availableAttachments.includes(attachment.type),
             )
             .map((attachment) => attachment.type);
-        handleWidgetAttachmentSelectionSave(formats);
+        handleWidgetAttachmentSelectionSave([...formats, ...hiddenSelectedFormats]);
         // Focus add button after state update causes remount (returnFocusTo ref becomes stale)
         requestAnimationFrame(() => {
             addButtonRef.current?.focus();
@@ -144,7 +159,7 @@ export function WidgetAttachments({
                     onBlur={makeAttachmentGroupUnfocusable}
                 >
                     <AttachmentsList
-                        attachments={selectedAttachments}
+                        attachments={visibleSelectedAttachments}
                         onDelete={handleDelete}
                         xlsxSettings={xlsxSettings}
                         onXlsxSettingsChange={onXlsxSettingsChange}
@@ -162,7 +177,7 @@ export function WidgetAttachments({
                         onSlidesTemplateIdChange={onSlidesTemplateIdChange}
                     />
                     <AttachmentsSelect<WidgetAttachmentType>
-                        attachments={SUPPORTED_WIDGET_ATTACHMENTS.map((format) => ({
+                        attachments={availableAttachments.map((format) => ({
                             type: format,
                             selected: selectedAttachments.includes(format),
                         }))}

@@ -36,6 +36,7 @@ export function KeyDriversPanel({ loading, detailsId }: IKeyDriversPanelProps) {
     const intl = useIntl();
     const listTitleId = useId();
     const listId = useId();
+    const tooltipId = useId();
     const trendOpener = useRef<HTMLButtonElement>(null);
 
     const label = intl.formatMessage({ id: "kdaDialog.dialog.keyDrives.title" });
@@ -62,6 +63,7 @@ export function KeyDriversPanel({ loading, detailsId }: IKeyDriversPanelProps) {
                     <>
                         {label}
                         <UiTooltip
+                            id={tooltipId}
                             arrowPlacement="left"
                             triggerBy={["hover", "focus"]}
                             optimalPlacement
@@ -73,6 +75,7 @@ export function KeyDriversPanel({ loading, detailsId }: IKeyDriversPanelProps) {
                                     size="xsmall"
                                     accessibilityConfig={{
                                         ariaLabel: label,
+                                        ariaDescribedBy: tooltipId,
                                     }}
                                 />
                             }

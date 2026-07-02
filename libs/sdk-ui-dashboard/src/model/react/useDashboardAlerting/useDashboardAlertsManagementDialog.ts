@@ -7,7 +7,6 @@ import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../locales.js";
-import { selectEnableAutomationManagement } from "../../store/config/configSelectors.js";
 import { selectDashboardRef } from "../../store/meta/metaSelectors.js";
 import { selectIsAlertingManagementDialogContext } from "../../store/ui/uiSelectors.js";
 import { useDashboardSelector } from "../DashboardStoreProvider.js";
@@ -29,21 +28,16 @@ export const useDashboardAlertsManagementDialog = () => {
     const { addSuccess, addError } = useToastMessage();
 
     const dashboardRef = useDashboardSelector(selectDashboardRef);
-    const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
     const managementDialogContext = useDashboardSelector(selectIsAlertingManagementDialogContext);
 
     const { closeAlertDialog, closeAlertsManagementDialog, openAlertDialog, openAlertsManagementDialog } =
         useDashboardAlertsCommands();
 
-    const { refreshAutomations, refreshAutomationManagementItems } = useDashboardAutomations();
+    const { refreshAutomationManagementItems } = useDashboardAutomations();
 
     const handleRefreshAutomations = useCallback(() => {
-        if (enableAutomationManagement) {
-            refreshAutomationManagementItems();
-        } else {
-            refreshAutomations();
-        }
-    }, [enableAutomationManagement, refreshAutomations, refreshAutomationManagementItems]);
+        refreshAutomationManagementItems();
+    }, [refreshAutomationManagementItems]);
 
     /*
      * exports and scheduling are not available when rendering a dashboard that is not persisted.

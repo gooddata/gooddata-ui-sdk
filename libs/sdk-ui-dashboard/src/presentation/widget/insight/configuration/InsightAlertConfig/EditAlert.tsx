@@ -82,8 +82,6 @@ const invalidMessagesObj: Record<AlertInvalidityReason, MessageDescriptor> = {
 };
 
 interface IEditAlertProps {
-    canManageAttributes: boolean;
-    canManageComparison: boolean;
     execResult: IExecutionResultEnvelope | undefined;
     alert: IAutomationMetadataObject;
     isNewAlert?: boolean;
@@ -125,8 +123,6 @@ export function EditAlert({
     measureFormatMap,
     catalogAttributes,
     catalogDateDatasets,
-    canManageAttributes,
-    canManageComparison,
     separators,
     isExecutionTimestampMode,
 }: IEditAlertProps) {
@@ -196,7 +192,6 @@ export function EditAlert({
         alertInsight,
         catalogDateDatasets,
         isNewAlert,
-        canManageComparison,
     );
     const showFilterInfo = filters.length > 0 || Boolean(selectedComparator?.granularity);
 
@@ -238,23 +233,19 @@ export function EditAlert({
                             id="alert.measure"
                         />
 
-                        {Boolean(canManageAttributes) && (
-                            <>
-                                <AlertAttributeSelect
-                                    id="alert.attribute"
-                                    selectedAttribute={selectedAttribute}
-                                    selectedValue={selectedValue}
-                                    onAttributeChange={changeAttribute}
-                                    attributes={attributes}
-                                    catalogAttributes={catalogAttributes}
-                                    catalogDateDatasets={catalogDateDatasets}
-                                    getAttributeValues={getAttributeValues}
-                                    isResultLoading={isResultLoading}
-                                    showLabel
-                                    closeOnParentScroll
-                                />
-                            </>
-                        )}
+                        <AlertAttributeSelect
+                            id="alert.attribute"
+                            selectedAttribute={selectedAttribute}
+                            selectedValue={selectedValue}
+                            onAttributeChange={changeAttribute}
+                            attributes={attributes}
+                            catalogAttributes={catalogAttributes}
+                            catalogDateDatasets={catalogDateDatasets}
+                            getAttributeValues={getAttributeValues}
+                            isResultLoading={isResultLoading}
+                            showLabel
+                            closeOnParentScroll
+                        />
                         {showFilterInfo ? (
                             <div className="gd-edit-alert__measure-info">
                                 {Boolean(selectedComparator?.granularity) && (
@@ -368,7 +359,6 @@ export function EditAlert({
                                         );
                                     }}
                                     overlayPositionType={overlayPositionType}
-                                    canManageComparison={canManageComparison}
                                 />
                             </div>
                         )}

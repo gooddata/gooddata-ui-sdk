@@ -23,3 +23,18 @@ export function removeMarkdown(text: string): string {
         .replace(/ {2,}/g, " ") // remove double spaces
         .trim();
 }
+
+export function extractHeading(text: string) {
+    const headingMatch = text.match(/^(#+)\s+(.*)$/m);
+    if (headingMatch) {
+        return removeMarkdown(headingMatch[2]);
+    }
+
+    const lines = text.split("\n");
+    const firstLine = lines.find((line) => line.trim().length > 0);
+    if (firstLine) {
+        return removeMarkdown(firstLine);
+    }
+
+    return null;
+}

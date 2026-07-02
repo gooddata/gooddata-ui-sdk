@@ -3,7 +3,7 @@
 import { action } from "storybook/actions";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
-import { attributeLocalId, localIdRef, measureLocalId, newRankingFilter } from "@gooddata/sdk-model";
+import { attributeLocalId, idRef, localIdRef, measureLocalId, newRankingFilter } from "@gooddata/sdk-model";
 import {
     type IAttributeDropdownItem,
     type IMeasureDropdownItem,
@@ -79,6 +79,40 @@ const attributeDropdownItems: IAttributeDropdownItem[] = [
         type: "DATE",
     },
 ];
+
+// Mock "out of" dimensionality items for the multi-attribute (improved) ranking filter section.
+const outOfInsightAttributes = [
+    {
+        identifier: localIdRef(attributeLocalId(ReferenceMd.Account.Name)),
+        title: "Account",
+        type: "attribute" as const,
+    },
+];
+const outOfCatalogAttributes = [
+    {
+        identifier: idRef("department.df", "displayForm"),
+        ref: idRef("department.df", "displayForm"),
+        title: "Department (catalog)",
+        type: "attribute" as const,
+    },
+    {
+        identifier: idRef("region.df", "displayForm"),
+        ref: idRef("region.df", "displayForm"),
+        title: "Region (catalog)",
+        type: "attribute" as const,
+    },
+];
+// Current selection: the insight default plus a catalog attribute, so the chips and the reset control show.
+const outOfSelectedAttributes = [...outOfInsightAttributes, outOfCatalogAttributes[0]];
+
+const outOfAttributesSectionScenarios: INeobackstopConfig = {
+    default: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
+    attributePickerOpened: {
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        clickSelector: '[data-testid="rf-attributes-plus"]',
+        delay: { postOperation: 200 }, // element has .2s transition
+    },
+};
 
 export default {
     title: "10 Filters/RankingFilter",
@@ -193,6 +227,30 @@ export function DropdownWithStrictLimitEnabled() {
 DropdownWithStrictLimitEnabled.parameters = {
     kind: "dropdown with strict limit enabled",
     screenshots: strictLimitDropdownScenarios,
+} satisfies IStoryParameters;
+
+export function DropdownWithOutOfAttributesSection() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <span className="dropdown-anchor-test" />
+            <RankingFilterDropdown
+                measureItems={measureDropdownItems}
+                attributeItems={attributeDropdownItems}
+                filter={rankingFilter}
+                onApply={action("apply")}
+                onCancel={action("cancel")}
+                anchorEl=".dropdown-anchor-test"
+                isAttributesSectionEnabled
+                attributes={outOfSelectedAttributes}
+                insightAttributes={outOfInsightAttributes}
+                catalogAttributes={outOfCatalogAttributes}
+            />
+        </div>
+    );
+}
+DropdownWithOutOfAttributesSection.parameters = {
+    kind: "dropdown with out of attributes section",
+    screenshots: outOfAttributesSectionScenarios,
 } satisfies IStoryParameters;
 
 export function DefaultButtonWithDropdown() {

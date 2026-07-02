@@ -60,12 +60,9 @@ import {
 import { automationsActions } from "../../store/automations/index.js";
 import {
     selectEnableArbitraryFilterKD,
-    selectEnableAutomations,
-    selectEnableInPlatformNotifications,
     selectEnableMatchFilterKD,
     selectEnableNotificationChannelIdentifiers,
     selectEnableParameters,
-    type selectEnableScheduling,
     selectExternalRecipient,
     selectFocusObject,
     selectIsExport,
@@ -108,10 +105,6 @@ export function* initializeAutomationsHandler(
     const user: ReturnType<typeof selectCurrentUser> = yield select(selectCurrentUser);
     const canManageAutomations: ReturnType<typeof selectCanManageWorkspace> =
         yield select(selectCanManageWorkspace);
-    const enableAutomations: ReturnType<typeof selectEnableScheduling> =
-        yield select(selectEnableAutomations);
-    const enableInPlatformNotifications: ReturnType<typeof selectEnableInPlatformNotifications> =
-        yield select(selectEnableInPlatformNotifications);
     const enableArbitraryFilterKD: ReturnType<typeof selectEnableArbitraryFilterKD> = yield select(
         selectEnableArbitraryFilterKD,
     );
@@ -137,7 +130,6 @@ export function* initializeAutomationsHandler(
     if (
         !dashboardId ||
         !user ||
-        !enableAutomations ||
         automationsInitialized ||
         automationsIsLoading ||
         isReadOnly ||
@@ -164,12 +156,7 @@ export function* initializeAutomationsHandler(
                 externalRecipient,
             ),
             call(loadWorkspaceAutomationsCount, ctx),
-            call(
-                loadNotificationChannels,
-                ctx,
-                enableInPlatformNotifications,
-                enableNotificationChannelIdentifiers,
-            ),
+            call(loadNotificationChannels, ctx, enableNotificationChannelIdentifiers),
         ]);
 
         // Set filters according to provided automationId

@@ -49,14 +49,6 @@ const FEATURE_HUB_RESPONSE = [
                 strategies: [],
             },
             {
-                id: "3d6febf7-430f-44df-a537-2436e2e07520",
-                key: "enableDateFilterIdentifiersRollout",
-                l: false,
-                type: "BOOLEAN",
-                value: true,
-                version: 2,
-            },
-            {
                 id: "64b7b92c-6721-461d-a8fb-52664f6ef219",
                 key: "enableNewExecutorFlow",
                 l: false,

@@ -302,24 +302,17 @@ export function HostChrome({
                                     search={search.element}
                                     showChatItem={showChatItem}
                                     onChatItemClick={onChatToggle}
-                                    notificationsPanel={
-                                        ctx.userSettings.enableInPlatformNotifications
-                                            ? ({ isMobile, closeNotificationsOverlay }) => (
-                                                  <AppHeaderNotifications
-                                                      locale={locale}
-                                                      isMobile={isMobile}
-                                                      closeNotificationsOverlay={closeNotificationsOverlay}
-                                                      useAsOfDateParam={
-                                                          ctx.userSettings.enableExecutionTimestamp ?? false
-                                                      }
-                                                      enableExportToDocumentStorage={
-                                                          ctx.userSettings.enableExportToDocumentStorage ??
-                                                          false
-                                                      }
-                                                  />
-                                              )
-                                            : undefined
-                                    }
+                                    notificationsPanel={({ isMobile, closeNotificationsOverlay }) => (
+                                        <AppHeaderNotifications
+                                            locale={locale}
+                                            isMobile={isMobile}
+                                            closeNotificationsOverlay={closeNotificationsOverlay}
+                                            useAsOfDateParam
+                                            enableExportToDocumentStorage={
+                                                ctx.userSettings.enableExportToDocumentStorage ?? false
+                                            }
+                                        />
+                                    )}
                                 />
                             </div>
                         )}

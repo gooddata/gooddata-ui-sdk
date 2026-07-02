@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { defineMessages } from "react-intl";
 
@@ -57,6 +57,8 @@ export const workspaceGranularPermissionMessages = defineMessages({
     hierarchyTooltip: { id: "userManagement.workspace.granularPermission.hierarchy.tooltip" },
     remove: { id: "userManagement.workspace.permission.remove" },
     and: { id: "userManagement.workspace.permission.and" },
+    inheritedFromGroup: { id: "userManagement.workspace.inherited.group" },
+    inheritedFromHierarchy: { id: "userManagement.workspace.inherited.hierarchy" },
 });
 
 export const granularTooltipMessages = defineMessages({

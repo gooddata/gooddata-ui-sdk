@@ -295,23 +295,6 @@ export const selectPlatformEdition: DashboardSelector<PlatformEdition> = createS
 );
 
 /**
- * Returns whether the export to pdf is enabled.
- *
- * @public
- */
-export const selectEnableKPIDashboardExportPDF: DashboardSelector<string | number | boolean | object> =
-    createSelector(selectConfig, (state) => {
-        return state.settings?.["enableKPIDashboardExportPDF"] ?? true;
-    });
-
-/**
- * @alpha
- */
-export const selectEnableScheduling: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
-    return state.settings?.enableScheduling ?? true;
-});
-
-/**
  * Returns whether dashboard-level parameter controls are enabled.
  *
  * @alpha
@@ -319,44 +302,6 @@ export const selectEnableScheduling: DashboardSelector<boolean> = createSelector
 export const selectEnableParameters: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
     return state.settings?.enableParameters ?? false;
 });
-
-/**
- * @alpha
- */
-export const selectEnableAlerting: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
-    return state.settings?.enableAlerting ?? true;
-});
-
-/**
- * @alpha
- */
-export const selectEnableAlertAttributes: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableAlertAttributes ?? true;
-    },
-);
-
-/**
- * @alpha
- */
-export const selectEnableComparisonInAlerting: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableComparisonInAlerting ?? true;
-    },
-);
-
-/**
- * @alpha
- */
-export const selectEnableAutomations: DashboardSelector<boolean> = createSelector(
-    selectEnableScheduling,
-    selectEnableAlerting,
-    (enableScheduling, enableAlerting) => {
-        return enableScheduling || enableAlerting;
-    },
-);
 
 /**
  * Returns whether we should disable the underline in KPIs when they are drillable.
@@ -496,18 +441,6 @@ export const selectEnableKDRichText: DashboardSelector<boolean> = createSelector
 });
 
 /**
- * Returns whether KD cross filtering is enabled.
- *
- * @internal
- */
-export const selectEnableKDCrossFiltering: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableKDCrossFiltering ?? false;
-    },
-);
-
-/**
  * Returns whether kda is enabled
  *
  * @internal
@@ -598,6 +531,18 @@ export const selectEnableRichTextDescriptions: DashboardSelector<boolean> = crea
 );
 
 /**
+ * Returns whether semantic search is enabled.
+ *
+ * @internal
+ */
+export const selectEnableSemanticSearch: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableSemanticSearch ?? false;
+    },
+);
+
+/**
  * Returns whether customized dashboards without plugin overlay are enabled.
  * When enabled, the plugin overlay will not be displayed on dashboard items.
  *
@@ -617,18 +562,6 @@ export const selectEnableAlertsEvaluationFrequencySetup: DashboardSelector<boole
     selectConfig,
     (state) => {
         return state.settings?.enableAlertsEvaluationFrequencySetup ?? true;
-    },
-);
-
-/**
- * Returns whether in-platform notifications are enabled.
- *
- * @internal
- */
-export const selectEnableInPlatformNotifications: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableInPlatformNotifications ?? true;
     },
 );
 
@@ -725,16 +658,6 @@ export const selectEnableExportTemplateSelection: DashboardSelector<boolean> = c
 );
 
 /**
- * @internal
- */
-export const selectEnableRichTextDynamicReferences: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableRichTextDynamicReferences ?? true;
-    },
-);
-
-/**
  * Returns whether rich text widget filter configuration is enabled.
  *
  * @alpha
@@ -802,18 +725,6 @@ export const selectEnableDashboardShareLink: DashboardSelector<boolean> = create
     selectConfig,
     (state) => {
         return Boolean(state.settings?.enableDashboardShareLink);
-    },
-);
-
-/**
- * Selector for the date filter local identifiers feature flag
- *
- * @internal
- */
-export const selectEnableDateFilterIdentifiers: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return Boolean(state.settings?.enableDateFilterIdentifiersRollout);
     },
 );
 
@@ -934,18 +845,6 @@ export const selectEnableCustomizableCsvDelimiter: DashboardSelector<boolean> = 
     selectConfig,
     (state) => {
         return Boolean(state.settings?.enableCustomizableCsvDelimiter);
-    },
-);
-
-/**
- * Selector for the centralized automation management feature flag
- *
- * @internal
- */
-export const selectEnableAutomationManagement: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return Boolean(state.settings?.enableAutomationManagement);
     },
 );
 

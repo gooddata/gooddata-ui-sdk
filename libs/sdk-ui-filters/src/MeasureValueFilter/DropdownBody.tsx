@@ -20,7 +20,7 @@ import { UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { ConditionInputSection } from "./ConditionInputSection.js";
 import { MEASURE_VALUE_FILTER_DROPDOWN_BODY_CLASS } from "./constants.js";
-import { DimensionalitySection, areDimensionalitySetsEqual } from "./DimensionalitySection.js";
+import { DimensionalitySection } from "./DimensionalitySection.js";
 import { intervalIncludesZero } from "./helpers/intervalIncludesZero.js";
 import { MeasureValueFilterDropdownActions } from "./MeasureValueFilterDropdownActions.js";
 import { MeasureValueFilterDropdownHeader } from "./MeasureValueFilterDropdownHeader.js";
@@ -34,6 +34,7 @@ import {
     type IMeasureValueFilterDropdownCallback,
     type WarningMessage,
 } from "./typings.js";
+import { areDimensionalitySetsEqual, isEmptyDimensionalityInvalid } from "./useDimensionalityEditor.js";
 import { WarningMessageComponent } from "./WarningMessage.js";
 
 interface IDropdownBodyProps extends IMeasureValueFilterCustomComponentProps {
@@ -452,8 +453,7 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
 
         if (
             isDimensionalityEnabled &&
-            state.dimensionality.length === 0 &&
-            (insightDimensionality?.length ?? 0) > 0
+            isEmptyDimensionalityInvalid(state.dimensionality, insightDimensionality)
         ) {
             return true;
         }
@@ -488,8 +488,7 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
         // Check for empty dimensionality first
         if (
             isDimensionalityEnabled &&
-            state.dimensionality.length === 0 &&
-            (insightDimensionality?.length ?? 0) > 0
+            isEmptyDimensionalityInvalid(state.dimensionality, insightDimensionality)
         ) {
             return intl.formatMessage({ id: "mvf.applyButton.tooltip.emptyDimensionality" });
         }

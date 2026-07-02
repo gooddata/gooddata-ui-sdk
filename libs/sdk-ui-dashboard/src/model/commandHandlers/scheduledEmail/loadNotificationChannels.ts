@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import {
     type INotificationChannelIdentifier,
     type INotificationChannelMetadataObject,
@@ -9,16 +10,11 @@ import { type DashboardContext } from "../../types/commonTypes.js";
 
 export function loadNotificationChannels(
     ctx: DashboardContext,
-    enableInPlatformNotifications: boolean,
     enableNotificationChannelIdentifiers: boolean,
 ): Promise<INotificationChannelIdentifier[] | INotificationChannelMetadataObject[]> {
     const { backend } = ctx;
 
-    const typesToLoad: NotificationChannelDestinationType[] = ["smtp", "webhook"];
-
-    if (enableInPlatformNotifications) {
-        typesToLoad.push("inPlatform");
-    }
+    const typesToLoad: NotificationChannelDestinationType[] = ["smtp", "webhook", "inPlatform"];
 
     if (enableNotificationChannelIdentifiers) {
         return backend

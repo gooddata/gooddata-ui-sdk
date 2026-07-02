@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { escapeMarkdown, removeMarkdown } from "../markdownUtils.js";
+import { escapeMarkdown, extractHeading, removeMarkdown } from "../markdownUtils.js";
 
 describe("escapeMarkdown", () => {
     it.each([
@@ -89,5 +89,32 @@ This is a **bold** statement with a [link](url).
         const expected =
             "Title This is a bold statement with a link. List item 1 List item 2 Quote here code block";
         expect(removeMarkdown(input)).toBe(expected);
+    });
+});
+
+describe("extractHeading", () => {
+    it("should extract markdown heading", () => {
+        expect(extractHeading("# Heading 1")).toBe("Heading 1");
+        expect(extractHeading("## Heading 2")).toBe("Heading 2");
+    });
+
+    it("should extract first line if no markdown heading is found", () => {
+        expect(extractHeading("First line\nSecond line")).toBe("First line");
+    });
+
+    it("should return null for empty string", () => {
+        expect(extractHeading("")).toBeNull();
+    });
+
+    it("should handle text with leading/trailing whitespaces", () => {
+        expect(extractHeading("  \nFirst line  ")).toBe("First line");
+    });
+
+    it("should extract heading even if it's not the first line", () => {
+        expect(extractHeading("Intro\n# Real Heading")).toBe("Real Heading");
+    });
+
+    it("should remove markdown from first line when no heading is found", () => {
+        expect(extractHeading("**Bold** first line")).toBe("Bold first line");
     });
 });

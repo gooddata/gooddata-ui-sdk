@@ -17,11 +17,7 @@ import { type AlertMetric } from "../types.js";
  * @internal
  */
 export const useGetSupportedMeasures = (insight: IInsight | undefined): AlertMetric[] => {
-    const {
-        catalogDateDatasets,
-        locale,
-        features: { enableComparisonInAlerting: canManageComparison },
-    } = useAutomationsContext();
+    const { catalogDateDatasets, locale } = useAutomationsContext();
     const [effectiveInsight, setEffectiveInsight] = useState<IInsight | undefined>(undefined);
     useEffect(() => {
         if (insight) {
@@ -29,8 +25,7 @@ export const useGetSupportedMeasures = (insight: IInsight | undefined): AlertMet
         }
     }, [insight, locale]);
     return useMemo(
-        () =>
-            getSupportedInsightMeasuresByInsight(effectiveInsight, catalogDateDatasets, canManageComparison),
-        [effectiveInsight, catalogDateDatasets, canManageComparison],
+        () => getSupportedInsightMeasuresByInsight(effectiveInsight, catalogDateDatasets),
+        [effectiveInsight, catalogDateDatasets],
     );
 };

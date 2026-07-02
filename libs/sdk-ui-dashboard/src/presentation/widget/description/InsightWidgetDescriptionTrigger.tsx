@@ -7,7 +7,6 @@ import { useRichTextWidgetFilters } from "../../../_staging/sharedHooks/useRichT
 import { type DescriptionTooltipOpenedData } from "../../../model/events/userInteraction.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { useDashboardUserInteraction } from "../../../model/react/useDashboardUserInteraction.js";
-import { selectEnableRichTextDynamicReferences } from "../../../model/store/config/configSelectors.js";
 import { selectExecutionTimestamp } from "../../../model/store/ui/uiSelectors.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 
@@ -22,7 +21,6 @@ export function InsightWidgetDescriptionTrigger(props: IInsightWidgetDescription
 
     const userInteraction = useDashboardUserInteraction();
 
-    const useReferences = useDashboardSelector(selectEnableRichTextDynamicReferences);
     const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
     const { filters } = useRichTextWidgetFilters(widget);
     const { LoadingComponent } = useDashboardComponentsContext();
@@ -40,7 +38,7 @@ export function InsightWidgetDescriptionTrigger(props: IInsightWidgetDescription
                 description={description}
                 onOpen={() => userInteraction.descriptionTooltipOpened(eventPayload)}
                 useRichText={useRichText}
-                useReferences={useReferences}
+                useReferences
                 filters={filters}
                 LoadingComponent={LoadingComponent}
                 execConfig={{

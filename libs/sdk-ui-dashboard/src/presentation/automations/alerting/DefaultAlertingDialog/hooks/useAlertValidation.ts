@@ -13,14 +13,8 @@ export function useAlertValidation(
     insight: IInsight | undefined,
     catalogDateDatasets: ICatalogDateDataset[],
     isNewAlert?: boolean,
-    canManageComparison: boolean = false,
 ): { isValid: boolean; invalidityReason: AlertInvalidityReason | undefined } {
-    const supportedMeasures = getSupportedInsightMeasuresByInsight(
-        insight,
-        catalogDateDatasets,
-        canManageComparison,
-        alert,
-    );
+    const supportedMeasures = getSupportedInsightMeasuresByInsight(insight, catalogDateDatasets, alert);
     const selectedMeasureExists = alert ? getAlertMeasure(supportedMeasures, alert.alert) : undefined;
 
     const isValid = isNewAlert || Boolean(!!widget && selectedMeasureExists);

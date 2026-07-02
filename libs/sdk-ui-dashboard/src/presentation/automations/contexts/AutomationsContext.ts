@@ -83,12 +83,10 @@ export interface IAutomationsContextValue {
         canCreateAutomation: boolean;
         enableAlertOncePerInterval: boolean;
         enableAnomalyDetectionAlert: boolean;
-        enableAutomationManagement: boolean;
         canUseAiAssistant: boolean;
-        enableComparisonInAlerting: boolean;
-        enableAlertAttributes: boolean;
         canManageWorkspace: boolean;
         enableCustomizableCsvDelimiter: boolean;
+        enableSlideshowExports: boolean;
         enableAutomationEvaluationMode: boolean;
     };
     getCatalogAttributeByRef: (ref: ObjRef) => ICatalogAttribute | ICatalogDateAttribute | undefined;

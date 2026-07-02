@@ -451,6 +451,15 @@ export type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
 // @public
 export type DatasetLoadStatus = "RUNNING" | "OK" | "ERROR" | "CANCELLED" | "ERROR_METADATA" | "REFRESHING";
 
+// @alpha
+export type DataSourceAccessSource = (typeof DataSourceAccessSourceValue)[keyof typeof DataSourceAccessSourceValue];
+
+// @alpha
+export const DataSourceAccessSourceValue: {
+    readonly DIRECT: "DIRECT";
+    readonly GROUP: "GROUP";
+};
+
 // @alpha (undocumented)
 export type DataSourceType = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "CRATEDB" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "DENODO" | "STARROCKS" | "ATHENA" | "SINGLESTORE" | "MOTHERDUCK" | "MONGODB" | "FLEXCONNECT" | "AILAKEHOUSE";
 
@@ -2173,6 +2182,7 @@ export interface IDataSourceIdentifierDescriptor {
 
 // @alpha
 export interface IDataSourcePermissionAssignment {
+    accessSource?: DataSourceAccessSource;
     // (undocumented)
     assigneeIdentifier: IOrganizationAssignee;
     // (undocumented)
@@ -2590,9 +2600,6 @@ export interface IFeatureFlags {
     enableAIKnowledge?: boolean;
     enableAiLlmAnthropicProvider?: boolean;
     enableAiOnData?: boolean;
-    enableAlertAttributes?: boolean;
-    enableAlerting?: boolean;
-    enableAlertingRollout?: boolean;
     enableAlertOncePerInterval?: boolean;
     enableAlertsEvaluationFrequencySetup?: boolean;
     enableAmplitudeTracker?: boolean;
@@ -2605,14 +2612,12 @@ export interface IFeatureFlags {
     enableArbitraryFilterKD?: boolean;
     // (undocumented)
     enableAthenaDataSource?: boolean;
-    enableAutomationManagement?: boolean;
     enableAutomationTrigger?: boolean;
     enableCatalogSmartSearchResults?: boolean;
     enableCatalogTrendingObjects?: boolean;
     enableCertification?: boolean;
     enableChangeAnalysis?: boolean;
     enableColumnLevelPermissions?: boolean;
-    enableComparisonInAlerting?: boolean;
     enableConditionalFormatting?: boolean;
     // (undocumented)
     enableCrateDbDataSource?: boolean;
@@ -2633,15 +2638,12 @@ export interface IFeatureFlags {
     enableDashboardTabularExport?: boolean;
     // (undocumented)
     enableDataSection?: boolean;
-    enableDateFilterIdentifiersRollout?: boolean;
     enableDefaultSmtp?: boolean;
-    enableDescriptions?: boolean;
     enableDrillToUrlByDefault?: boolean;
     enableEmbedButtonInAD?: boolean;
     enableEmbedButtonInKD?: boolean;
     enableEnhancedInsightPicker?: boolean;
     enableExecutionCancelling?: boolean;
-    enableExecutionTimestamp?: boolean;
     enableExportTemplateSelection?: boolean;
     enableExportTimeoutFix?: boolean;
     enableExportToDocumentStorage?: boolean;
@@ -2665,12 +2667,9 @@ export interface IFeatureFlags {
     enableHLL?: boolean;
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
     enableImprovedRankingFilter?: boolean;
-    enableInPlatformNotifications?: boolean;
-    enableKDCrossFiltering?: boolean;
     enableKDEmptyDateValuesFilter?: boolean;
     enableKDRespectLegendPosition?: boolean;
     enableKDRichText?: boolean;
-    enableLineChartTrendThreshold?: boolean;
     // (undocumented)
     enableMariaDbDataSource?: boolean;
     enableMatchFilterAD?: boolean;
@@ -2703,10 +2702,8 @@ export interface IFeatureFlags {
     enableRankingWithMvf?: boolean;
     enableRawExports?: boolean;
     enableRichTextDescriptions?: boolean;
-    enableRichTextDynamicReferences?: boolean;
     // @alpha
     enableRichTextWidgetFilterConfiguration?: boolean;
-    enableScheduling?: boolean;
     enableSeamlessIdpSwitch?: boolean;
     enableSemanticSearch?: boolean;
     enableShellApplication?: boolean;
@@ -6069,6 +6066,7 @@ export interface IWorkspaceDataFilterSetting {
 
 // @alpha
 export interface IWorkspacePermissionAssignment {
+    accessSource?: WorkspaceAccessSource;
     // (undocumented)
     assigneeIdentifier: IOrganizationAssignee;
     // (undocumented)
@@ -6841,6 +6839,16 @@ export function widgetUri(widget: IWidget): string;
 
 // @public
 export type WorkspaceAccessPermission = "VIEW" | "VIEW_AND_EXPORT" | "ANALYZE" | "ANALYZE_AND_EXPORT" | "MANAGE";
+
+// @alpha
+export type WorkspaceAccessSource = (typeof WorkspaceAccessSourceValue)[keyof typeof WorkspaceAccessSourceValue];
+
+// @alpha
+export const WorkspaceAccessSourceValue: {
+    readonly DIRECT: "DIRECT";
+    readonly GROUP: "GROUP";
+    readonly HIERARCHY: "HIERARCHY";
+};
 
 // @public
 export type WorkspacePermission =

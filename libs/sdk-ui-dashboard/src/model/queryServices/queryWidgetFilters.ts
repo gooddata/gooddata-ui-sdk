@@ -35,7 +35,6 @@ import { invalidQueryArguments } from "../events/general.js";
 import { type IQueryWidgetFilters } from "../queries/widgets.js";
 import { createQueryService } from "../store/_infra/queryService.js";
 import { selectSupportsMultipleDateFilters } from "../store/backendCapabilities/backendCapabilitiesSelectors.js";
-import { selectEnableDateFilterIdentifiers } from "../store/config/configSelectors.js";
 import { selectInsightByRef } from "../store/insights/insightsSelectors.js";
 import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
@@ -249,19 +248,12 @@ export function* queryWithInsight(
     > = yield select(widgetAwareDashboardFiltersSelector);
 
     const supportsMultipleDateFilters = yield select(selectSupportsMultipleDateFilters);
-    const enableDateFilterIdentifiers = yield select(selectEnableDateFilterIdentifiers);
-
     // add all time filter explicitly in case the date widgetAwareDashboardFilters are empty
     // this will cause the all time filter to be used instead of the insight date filter
     // if the dashboard date filter is not ignored by the widget
     if (!widgetAwareDashboardCommonDateFilters.length && widget.dateDataSet) {
         widgetAwareDashboardCommonDateFilters.push(
-            newAllTimeFilter(
-                widget.dateDataSet,
-                enableDateFilterIdentifiers
-                    ? generateDateFilterLocalIdentifier(0, widget.dateDataSet)
-                    : undefined,
-            ),
+            newAllTimeFilter(widget.dateDataSet, generateDateFilterLocalIdentifier(0, widget.dateDataSet)),
         );
     }
 

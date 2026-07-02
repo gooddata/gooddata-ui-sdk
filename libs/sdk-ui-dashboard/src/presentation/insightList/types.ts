@@ -1,4 +1,5 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { type ReactElement } from "react";
 
 import { type IInsight, type ObjRef } from "@gooddata/sdk-model";
@@ -14,8 +15,7 @@ export interface IInsightListProps {
     height?: number;
     width?: number;
     searchAutofocus?: boolean;
-    renderItem?: (props: IRenderListItemProps<IInsight>) => ReactElement;
+    renderItem?: (props: IRenderListItemProps<IInsight | { divider: true }>) => ReactElement;
     selectedRef?: ObjRef;
     onSelect?: (insight: IInsight) => void;
-    enableDescriptions?: boolean;
 }

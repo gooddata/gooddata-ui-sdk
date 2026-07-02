@@ -5,12 +5,16 @@ import { type ReactElement, useCallback, useRef, useState } from "react";
 import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 
 import type { IParameterMetadataObjectDefinition } from "@gooddata/sdk-model";
-import { ConfirmDialog, UiButton, UiIcon, UiTooltip } from "@gooddata/sdk-ui-kit";
+import { ConfirmDialog, UiButton, UiIcon, UiLink, UiTooltip } from "@gooddata/sdk-ui-kit";
+
+import { useIsWhiteLabeled } from "../permission/PermissionsContext.js";
 
 import type { ParameterSchemaInput } from "./parameterSchema.js";
 import { serializeParameterToYaml } from "./parameterSerialization.js";
 import { validateParameterYaml } from "./parameterValidation.js";
 import { ParameterYamlEditor } from "./ParameterYamlEditor.js";
+
+const PARAMETER_DOCS_URL = "https://www.gooddata.ai/docs/cloud/experimental-features/numeric-parameters/";
 
 const messages = defineMessages({
     empty: { id: "analyticsCatalog.parameter.validation.empty" },
@@ -46,6 +50,7 @@ export function ParameterDialog(props: Props) {
     const { mode, initialParameter, onClose, onSubmit, onDuplicate } = props;
     const intl = useIntl();
     const isEdit = mode === "edit";
+    const isWhiteLabeled = useIsWhiteLabeled();
     const initialYaml = initialParameter ? serializeParameterToYaml(initialParameter) : "";
     const yamlValue = useRef(initialYaml);
     const [validationError, setValidationError] = useState<string | null>(null);
@@ -121,15 +126,17 @@ export function ParameterDialog(props: Props) {
     const footerLeftRenderer = useCallback(
         (): ReactElement => (
             <div className="gd-parameter-dialog-footer-left">
-                <a
-                    className="gd-parameter-dialog-help-link"
-                    href="#"
-                    onClick={(e) => e.preventDefault()}
-                    rel="noopener noreferrer"
-                >
-                    <UiIcon type="question" size={14} color="complementary-6" />
-                    <FormattedMessage id="analyticsCatalog.parameter.dialog.help" />
-                </a>
+                {isWhiteLabeled ? null : (
+                    <UiLink
+                        variant="secondary"
+                        href={PARAMETER_DOCS_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <UiIcon type="question" size={14} color="complementary-6" />
+                        <FormattedMessage id="analyticsCatalog.parameter.dialog.help" />
+                    </UiLink>
+                )}
                 {isEdit && onDuplicate ? (
                     <UiButton
                         label={intl.formatMessage(messages.dialogDuplicate)}
@@ -140,7 +147,7 @@ export function ParameterDialog(props: Props) {
                 ) : null}
             </div>
         ),
-        [handleDuplicate, intl, isEdit, isSubmitting, onDuplicate],
+        [handleDuplicate, intl, isEdit, isSubmitting, isWhiteLabeled, onDuplicate],
     );
 
     return (

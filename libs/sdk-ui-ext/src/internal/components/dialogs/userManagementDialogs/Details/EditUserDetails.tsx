@@ -23,7 +23,7 @@ export interface IEditUserDetailsProps {
     onSubmit: (user: IUser, isAdmin: boolean) => void;
     onCancel: () => void;
     onClose: () => void;
-    removeAdminGroup: () => void;
+    removeAdminGroup: () => Promise<void>;
 }
 
 export function EditUserDetails({

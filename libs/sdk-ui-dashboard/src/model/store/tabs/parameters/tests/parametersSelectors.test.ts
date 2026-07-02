@@ -26,6 +26,7 @@ import {
 } from "../parametersHelpers.js";
 import {
     selectActiveParameterRefKeys,
+    selectActiveTabDrillParameters,
     selectActiveTabExportParameters,
     selectDashboardParameterEntries,
     selectDashboardParameters,
@@ -271,6 +272,38 @@ describe("parameter selectors (per tab)", () => {
     it("selectParameterRuntimeOverrideByRef returns undefined when ref absent", () => {
         const select = selectParameterRuntimeOverrideByRef(otherRef);
         expect(select(makeState([entry]))).toBeUndefined();
+    });
+
+    describe("selectActiveTabDrillParameters", () => {
+        it("includes a runtime value left at the workspace default (F1-2604: drill must propagate it)", () => {
+            const state = makeFullState({
+                entries: [{ parameter: topNParameter, runtimeOverride: 10 }],
+                workspaceParameters: [topNWorkspace],
+            });
+            expect(selectActiveTabDrillParameters(state)).toEqual([{ ref: topNRef, value: 10 }]);
+        });
+
+        it("collects every entry with a runtime value and skips those without one", () => {
+            const sampleSize: IDashboardParameter = {
+                ref: otherRef,
+                parameterType: "NUMBER",
+                mode: "active",
+            };
+            const state = makeFullState({
+                entries: [
+                    { parameter: topNParameter, runtimeOverride: 25 },
+                    { parameter: sampleSize, runtimeOverride: undefined },
+                ],
+            });
+            expect(selectActiveTabDrillParameters(state)).toEqual([{ ref: topNRef, value: 25 }]);
+        });
+
+        it("returns empty when no entry has a runtime value", () => {
+            const state = makeFullState({
+                entries: [{ parameter: topNParameter, runtimeOverride: undefined }],
+            });
+            expect(selectActiveTabDrillParameters(state)).toEqual([]);
+        });
     });
 
     describe("selectParameterResetValueByRef", () => {

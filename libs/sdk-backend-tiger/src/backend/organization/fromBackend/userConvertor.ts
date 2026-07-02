@@ -162,6 +162,7 @@ export function convertWorkspacePermissionsAssignment(
         },
         permissions,
         hierarchyPermissions,
+        accessSource: assignment.accessSource,
     };
 }
 
@@ -179,6 +180,7 @@ export function convertDataSourcePermissionsAssignment(
             id: assignment.id,
             name: assignment.name,
         },
-        ...assignment,
+        permissions: assignment.permissions ?? [],
+        accessSource: assignment.accessSource,
     };
 }

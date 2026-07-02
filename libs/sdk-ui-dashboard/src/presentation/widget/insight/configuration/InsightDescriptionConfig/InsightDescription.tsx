@@ -9,10 +9,7 @@ import { type IFilter, type ISeparators } from "@gooddata/sdk-model";
 import { type IAlignPoint, RichTextWithTooltip, TextAreaWithSubmit } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
-import {
-    selectEnableRichTextDescriptions,
-    selectEnableRichTextDynamicReferences,
-} from "../../../../../model/store/config/configSelectors.js";
+import { selectEnableRichTextDescriptions } from "../../../../../model/store/config/configSelectors.js";
 import { selectExecutionTimestamp } from "../../../../../model/store/ui/uiSelectors.js";
 
 const richTextTooltipAlignPoints: IAlignPoint[] = [
@@ -37,8 +34,6 @@ export function InsightDescription({
     insightFilters,
     separators,
 }: IInsightDescriptionProps) {
-    const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
-
     const intl = useIntl();
     const placeholder = intl.formatMessage({
         id: "configurationPanel.visualprops.descriptionPlaceholder",
@@ -96,7 +91,7 @@ export function InsightDescription({
                         }
                         showTooltip={isRichTextEditing}
                         tooltipAlignPoints={richTextTooltipAlignPoints}
-                        referencesEnabled={isRichTextReferencesEnabled}
+                        referencesEnabled
                         LoadingComponent={LoadingComponent}
                         filters={insightFilters}
                         separators={separators}

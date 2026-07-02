@@ -237,6 +237,10 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
 
     const [focusedIndex, setFocusedIndex] = useState<number>(0);
     const [hasInitializedFocus, setHasInitializedFocus] = useState<boolean>(false);
+    // Whether the keyboard focus currently lives inside the list. While it does, the grid
+    // container must not be a tab stop itself, otherwise Shift+Tab from an item would land on the
+    // container (its ancestor tab stop) and get trapped there instead of leaving the list.
+    const [isFocusWithin, setIsFocusWithin] = useState<boolean>(false);
 
     const firstSelectedItem = items.find((item) => getIsItemSelected(item));
 
@@ -249,6 +253,16 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
             setFocusedIndex(firstSelectedItem ? items.indexOf(firstSelectedItem) : 0);
         }
     }, [items, hasInitializedFocus, getIsItemSelected, setFocusedIndex, firstSelectedItem]);
+
+    // onBlur is unreliable when the focused row unmounts (the list empties, or switches to a
+    // loading/error state), so isFocusWithin could stay true and leave the grid container stuck at
+    // tabIndex={-1}, blocking keyboard re-entry. Reset it whenever the list of values is not rendered.
+    const isListRendered = !isLoading && !error && items.length > 0;
+    useEffect(() => {
+        if (!isListRendered) {
+            setIsFocusWithin(false);
+        }
+    }, [isListRendered]);
 
     const handleSelectItemKeyboard = useCallback(
         (item: T, e?: KeyboardEvent) => () => {
@@ -385,6 +399,10 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
         (e) => {
             const isNavigatingByKeyboard = document.querySelector(":focus-visible") !== null;
 
+            // Focus is now inside the list (this handler fires for descendants too, as focus
+            // bubbles). Drop the container out of the tab order so Shift+Tab can leave the list.
+            setIsFocusWithin(true);
+
             if (e.target.id !== scopedIdStoreValue.containerId) {
                 return;
             }
@@ -413,6 +431,7 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
                 return;
             }
 
+            setIsFocusWithin(false);
             setFocusedAction(SELECT_ITEM_ACTION);
         },
         [containerRef, setFocusedAction],
@@ -422,7 +441,10 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
         representAs === "grid"
             ? {
                   role: "grid",
-                  tabIndex: 0,
+                  // Only a tab stop when focus is outside the list, so it can catch Tab and
+                  // redirect to the active row (needed when that row is virtualized out of view).
+                  // While focus is within, it steps aside so Tab/Shift+Tab can leave the list.
+                  tabIndex: isFocusWithin ? -1 : 0,
                   "aria-rowcount": items.length,
                   "aria-multiselectable": !isSingleSelect,
                   "aria-label": formatMessage({ id: "attributesDropdown.filterValues" }),

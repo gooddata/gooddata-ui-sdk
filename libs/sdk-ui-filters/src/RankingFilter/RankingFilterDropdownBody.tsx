@@ -1,6 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { type ChangeEvent, useCallback, useState } from "react";
+import { type ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 
 import cx from "classnames";
 import { isEmpty, isEqual, xorWith } from "lodash-es";
@@ -14,10 +14,17 @@ import {
 } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, Button } from "@gooddata/sdk-ui-kit";
 
+import { type IDimensionalityItem } from "../MeasureValueFilter/typings.js";
+import {
+    areDimensionalitySetsEqual,
+    isEmptyDimensionalityInvalid,
+} from "../MeasureValueFilter/useDimensionalityEditor.js";
+
 import { AttributeDropdown } from "./AttributeDropdown/AttributeDropdown.js";
 import { MeasureDropdown } from "./MeasureDropdown/MeasureDropdown.js";
 import { OperatorDropdown } from "./OperatorDropdown/OperatorDropdown.js";
 import { Preview } from "./Preview.js";
+import { RankingAttributesSection } from "./RankingAttributesSection.js";
 import {
     type IAttributeDropdownItem,
     type ICustomGranularitySelection,
@@ -75,6 +82,22 @@ interface IRankingFilterDropdownBodyComponentProps {
     enableRankingWithMvf?: boolean;
     enableRankingStrictLimit?: boolean;
     renderMeasureDropdownBody?: RenderMeasureDropdownBody;
+    // The following mirror the measure value filter dimensionality props (apart from naming). When
+    // isAttributesSectionEnabled is true, the multi-attribute "out of" section replaces the legacy
+    // single-attribute dropdown.
+    isAttributesSectionEnabled?: boolean;
+    /**
+     * Current "out of" attributes (titled), seeded by the host: the filter's own attributes, or the insight
+     * defaults when the filter has none ("reuses insight attributes"). Used as the initial selection and the
+     * Apply baseline; carrying titles lets the preview render them (including catalog attributes).
+     */
+    attributes?: IDimensionalityItem[];
+    /** Insight default "out of" attributes (bucket attributes/dates), used for the reset action. */
+    insightAttributes?: IDimensionalityItem[];
+    /** Catalog "out of" attributes (used when not lazily loaded via loadCatalogAttributes). */
+    catalogAttributes?: IDimensionalityItem[];
+    /** Lazily loads catalog "out of" attributes valid for the current selection (on picker open). */
+    loadCatalogAttributes?: (attributes: ObjRefInScope[]) => Promise<IDimensionalityItem[]>;
 }
 
 export function RankingFilterDropdownBody({
@@ -89,6 +112,11 @@ export function RankingFilterDropdownBody({
     enableRankingWithMvf = false,
     enableRankingStrictLimit = false,
     renderMeasureDropdownBody,
+    isAttributesSectionEnabled = false,
+    attributes,
+    insightAttributes,
+    catalogAttributes,
+    loadCatalogAttributes,
 }: IRankingFilterDropdownBodyComponentProps) {
     const intl = useIntl();
 
@@ -96,7 +124,36 @@ export function RankingFilterDropdownBody({
     const [value, setValue] = useState(rankingFilter.value);
     const [operator, setOperator] = useState(rankingFilter.operator);
     const [measure, setMeasureIdentifier] = useState(rankingFilter.measure);
-    const [attribute, setAttributeIdentifier] = useState(rankingFilter.attributes?.[0]);
+    // Legacy mode edits a single attribute (by ref); the custom section edits many titled attributes.
+    // In multi-attribute mode the host seeds the selection (filter's own attributes or, when it has none,
+    // the insight defaults — "reuses the insight attributes"). The titles travel with the items so the
+    // preview can render them; nothing is persisted until the user changes the seeded selection.
+    const [attribute, setAttribute] = useState<ObjRefInScope | undefined>(rankingFilter.attributes?.[0]);
+    const [attributeItemsState, setAttributeItemsState] = useState<IDimensionalityItem[]>(attributes ?? []);
+    // The host seeds the "out of" selection from the filter / insight defaults, which can resolve after this
+    // dropdown has mounted. Re-seed when that prop changes, but only while the user has not diverged from the
+    // previously seeded set, so a late-arriving seed is reflected without clobbering in-progress edits.
+    const seededAttributesRef = useRef(attributes);
+    useEffect(() => {
+        if (seededAttributesRef.current === attributes) {
+            return;
+        }
+        const previousSeed = seededAttributesRef.current ?? [];
+        seededAttributesRef.current = attributes;
+        setAttributeItemsState((current) =>
+            areDimensionalitySetsEqual(current, previousSeed) ? (attributes ?? []) : current,
+        );
+    }, [attributes]);
+    // Mirrors the measure value filter: when the filter has no "out of" attributes of its own but the insight
+    // has some, the ranking currently follows the visualization's attributes and an informational note is
+    // shown. The note is dismissed once the user changes the selection (the filter then carries its own set).
+    const [isMigratedFilter, setIsMigratedFilter] = useState<boolean>(
+        (rankingFilter.attributes?.length ?? 0) > 0 || (insightAttributes?.length ?? 0) === 0,
+    );
+    const handleAttributesChange = useCallback((items: IDimensionalityItem[]) => {
+        setAttributeItemsState(items);
+        setIsMigratedFilter(true);
+    }, []);
     const [applyOnResult, setApplyOnResult] = useState(rankingFilter.applyOnResult ?? true);
     // A new filter prioritizes the strict ("+ flag") condition; an existing filter keeps its stored value.
     const [strictLimitOfRows, setStrictLimitOfRows] = useState(rankingFilter.strictLimitOfRows ?? false);
@@ -109,12 +166,38 @@ export function RankingFilterDropdownBody({
         [],
     );
 
+    // Apply baseline for the "out of" attributes: the seeded selection in multi mode, the stored filter
+    // otherwise. Keeping the seeded set as the baseline means reusing the insight defaults (unchanged)
+    // leaves Apply disabled and persists nothing.
+    const baselineAttributes = isAttributesSectionEnabled
+        ? (attributes ?? []).map((item) => item.identifier)
+        : (rankingFilter.attributes ?? []);
+
+    const isAttributesSelectionInvalid =
+        isAttributesSectionEnabled && isEmptyDimensionalityInvalid(attributeItemsState, insightAttributes);
+
     const selectedMeasure = measureItems.find((item) => areObjRefsEqual(item.ref, measure));
     const selectedAttribute = attributeItems.find((item) => areObjRefsEqual(item.ref, attribute));
 
+    // The preview reflects the live "out of" attributes. Multi-attribute titles are carried by the items
+    // (catalog-aware), joined into a single preview label.
+    const previewAttribute: IAttributeDropdownItem | undefined = isAttributesSectionEnabled
+        ? attributeItemsState.length > 0
+            ? {
+                  title: attributeItemsState.map((item) => item.title).join(", "),
+                  ref: attributeItemsState[0].identifier,
+              }
+            : undefined
+        : selectedAttribute;
+
     const getFilterState = useCallback((): IRankingFilter => {
-        const baseFilter = attribute
-            ? newRankingFilter(measure, [attribute], operator, value)
+        const attributeRefs = isAttributesSectionEnabled
+            ? attributeItemsState.map((item) => item.identifier)
+            : attribute
+              ? [attribute]
+              : [];
+        const baseFilter = attributeRefs.length
+            ? newRankingFilter(measure, attributeRefs, operator, value)
             : newRankingFilter(measure, operator, value);
 
         // Add applyOnResult / strictLimitOfRows only when their flags are enabled
@@ -127,6 +210,8 @@ export function RankingFilterDropdownBody({
         };
     }, [
         measure,
+        isAttributesSectionEnabled,
+        attributeItemsState,
         attribute,
         operator,
         value,
@@ -150,9 +235,11 @@ export function RankingFilterDropdownBody({
 
     return (
         <div className="gd-dialog gd-dropdown overlay gd-rf-dropdown-body s-rf-dropdown-body">
-            <div className="gd-rf-dropdown-header">
-                <FormattedMessage id="rankingFilter.topBottom" />
-            </div>
+            {isAttributesSectionEnabled ? null : (
+                <div className="gd-rf-dropdown-header">
+                    <FormattedMessage id="rankingFilter.topBottom" />
+                </div>
+            )}
             <div className="gd-rf-dropdown-section">
                 {enableRankingStrictLimit ? (
                     <div className="gd-rf-dropdown-section-title gd-rf-dropdown-section-title-first">
@@ -184,17 +271,31 @@ export function RankingFilterDropdownBody({
                         </BubbleHoverTrigger>
                     )}
                 </div>
-                <div className="gd-rf-dropdown-section-title">
-                    <FormattedMessage id="rankingFilter.outOf" />
-                </div>
-                <AttributeDropdown
-                    items={attributeItems}
-                    selectedItemRef={attribute}
-                    onSelect={setAttributeIdentifier}
-                    onDropDownItemMouseOver={onDropDownItemMouseOver}
-                    onDropDownItemMouseOut={onDropDownItemMouseOut}
-                    customGranularitySelection={customGranularitySelection}
-                />
+                {isAttributesSectionEnabled ? (
+                    // The section renders its own "Out of" header, chips, catalog picker and reset.
+                    <RankingAttributesSection
+                        attributes={attributeItemsState}
+                        insightAttributes={insightAttributes}
+                        catalogAttributes={catalogAttributes}
+                        loadCatalogAttributes={loadCatalogAttributes}
+                        onAttributesChange={handleAttributesChange}
+                        isMigratedFilter={isMigratedFilter}
+                    />
+                ) : (
+                    <>
+                        <div className="gd-rf-dropdown-section-title">
+                            <FormattedMessage id="rankingFilter.outOf" />
+                        </div>
+                        <AttributeDropdown
+                            items={attributeItems}
+                            selectedItemRef={attribute}
+                            onSelect={setAttribute}
+                            onDropDownItemMouseOver={onDropDownItemMouseOver}
+                            onDropDownItemMouseOut={onDropDownItemMouseOut}
+                            customGranularitySelection={customGranularitySelection}
+                        />
+                    </>
+                )}
                 <div className="gd-rf-dropdown-section-title">
                     <FormattedMessage id="rankingFilter.basedOn" />
                 </div>
@@ -232,7 +333,7 @@ export function RankingFilterDropdownBody({
                 </div>
                 <Preview
                     measure={selectedMeasure}
-                    attribute={selectedAttribute}
+                    attribute={previewAttribute}
                     operator={operator}
                     value={value}
                     enableRankingStrictLimit={enableRankingStrictLimit}
@@ -249,14 +350,24 @@ export function RankingFilterDropdownBody({
                     className="gd-button-action gd-button-small s-rf-dropdown-apply"
                     onClick={applyHandler}
                     value={intl.formatMessage({ id: "apply" })}
-                    disabled={isApplyButtonDisabled(
-                        filter,
-                        getFilterState(),
-                        enableRankingWithMvf,
-                        applyOnResult,
-                        enableRankingStrictLimit,
-                        strictLimitOfRows,
-                    )}
+                    disabled={
+                        isAttributesSelectionInvalid ||
+                        isApplyButtonDisabled(
+                            // Compare against the seeded baseline so reusing the insight defaults (unchanged)
+                            // keeps Apply disabled and does not persist the defaults.
+                            {
+                                rankingFilter: {
+                                    ...rankingFilter,
+                                    attributes: baselineAttributes.length ? baselineAttributes : undefined,
+                                },
+                            },
+                            getFilterState(),
+                            enableRankingWithMvf,
+                            applyOnResult,
+                            enableRankingStrictLimit,
+                            strictLimitOfRows,
+                        )
+                    }
                 />
             </div>
         </div>

@@ -1,0 +1,84 @@
+@keyframes ai-flip-y {
+    0% {
+        transform: rotateY(0deg);
+        animation-timing-function: cubic-bezier(0.55, 0, 0.2, 1);
+    }
+    14% {
+        transform: rotateY(180deg);
+    }
+    100% {
+        transform: rotateY(180deg);
+    }
+}
+
+@keyframes gd-gen-ai-heading-old {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+}
+
+@keyframes gd-gen-ai-heading-new {
+    0% {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.gd-gen-ai-chat__animations--loader {
+    position: relative;
+
+    &--inner {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    &--flip {
+        transform-origin: center center;
+        animation: ai-flip-y 4s linear infinite;
+    }
+
+    &--svg {
+        display: block;
+    }
+
+    &--sparkle {
+        position: absolute;
+        transform-origin: center center;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.gd-gen-ai-chat__animations--headings {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    height: 22px;
+    overflow: hidden;
+
+    &--heading {
+        grid-column: 1;
+        grid-row: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        &--old {
+            animation: gd-gen-ai-heading-old 0.5s ease-in-out forwards;
+        }
+
+        &--new {
+            animation: gd-gen-ai-heading-new 0.5s ease-in-out forwards;
+        }
+    }
+}

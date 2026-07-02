@@ -9,7 +9,6 @@ import { type IInsight, type IInsightWidget } from "@gooddata/sdk-model";
 import { isDataError } from "../../../../_staging/errors/errorPredicates.js";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { selectDashboardUserAutomationAlertsInContext } from "../../../../model/store/automations/automationsSelectors.js";
-import { selectEnableAutomationManagement } from "../../../../model/store/config/configSelectors.js";
 import { selectExecutionResultByRef } from "../../../../model/store/executionResults/executionResultsSelectors.js";
 import { selectCanCreateAutomation } from "../../../../model/store/permissions/permissionsSelectors.js";
 import { useDashboardCustomizationsContext } from "../../../dashboardContexts/DashboardCustomizationsContext.js";
@@ -117,7 +116,6 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
     const intl = useIntl();
     const execution = useDashboardSelector(selectExecutionResultByRef(widget.ref));
     const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);
-    const isAutomationManagementEnabled = useDashboardSelector(selectEnableAutomationManagement);
     const automations = useDashboardSelector(
         selectDashboardUserAutomationAlertsInContext(widget.localIdentifier),
     );
@@ -138,7 +136,6 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
                 isExportVisible,
                 isExportPngImageVisible,
                 isExportPdfTabularVisible,
-                isAutomationManagementEnabled,
                 onExportCSV: () => {
                     setIsMenuOpen(false);
                     onExportCSV();

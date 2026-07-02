@@ -168,12 +168,11 @@ function getDualAxesYAxes(
 }
 
 // Control (threshold) measures style the regular measures (e.g. dashed line segments) instead of being
-// drawn on their own, so they must not count as plotted measures. Only relevant for line/combo with the
-// feature flag on - mirrors the gating in `isThresholdSetupValid` (chartThresholds.ts).
+// drawn on their own, so they must not count as plotted measures. Only relevant for line/combo charts.
+// Mirrors the gating in `isThresholdSetupValid` (chartThresholds.ts).
 function getThresholdMeasureLocalIds(config: IChartConfig): Set<string> {
     const isThresholdCapableChart = isLineChart(config.type) || isComboChart(config.type);
-    const applies = config.enableLineChartTrendThreshold && isThresholdCapableChart;
-    return new Set(applies ? (config.thresholdMeasures ?? []) : []);
+    return new Set(isThresholdCapableChart ? (config.thresholdMeasures ?? []) : []);
 }
 
 // The title is shown only when a single regular (non-control) measure is plotted; otherwise the axis

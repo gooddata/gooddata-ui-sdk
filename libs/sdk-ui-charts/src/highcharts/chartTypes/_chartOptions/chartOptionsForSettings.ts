@@ -7,13 +7,12 @@ import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 function getSettingsBasedConfig(settings: ISettings): Partial<IChartConfig> {
     return {
         ...(settings.disableKpiDashboardHeadlineUnderline ? { disableDrillUnderline: true } : {}),
-        ...(settings.enableKDCrossFiltering ? { useGenericInteractionTooltip: true } : {}),
+        useGenericInteractionTooltip: true,
         enableAliasAttributeLabel: true,
         ...(settings["separators"] ? { separators: settings["separators"] as ISeparators } : {}),
         ...(settings.enableVisualizationFineTuning ? { enableVisualizationFineTuning: true } : {}),
         ...(settings.enableExecutionCancelling ? { enableExecutionCancelling: true } : {}),
         ...(settings.enableHighchartsAccessibility ? { enableHighchartsAccessibility: true } : {}),
-        ...(settings.enableLineChartTrendThreshold ? { enableLineChartTrendThreshold: true } : {}),
         ...(settings.enableKDRespectLegendPosition ? { respectLegendPosition: true } : {}),
         ...(settings.enableAccessibleChartTooltip || settings.enableAccessibilityMode
             ? { enableAccessibleTooltip: true }

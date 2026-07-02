@@ -503,16 +503,6 @@ export interface IFeatureFlags {
     enableEmbedButtonInAD?: boolean;
 
     /**
-     * Enable usage of insights, widgets, kpis descriptions.
-     */
-    enableDescriptions?: boolean;
-
-    /**
-     * Enable cross filtering in KD
-     */
-    enableKDCrossFiltering?: boolean;
-
-    /**
      * Enable change analysis
      */
     enableChangeAnalysis?: boolean;
@@ -564,31 +554,6 @@ export interface IFeatureFlags {
      * Enables rich text in descriptions.
      */
     enableRichTextDescriptions?: boolean;
-
-    /**
-     * Enables scheduling of the dashboard pdf export.
-     */
-    enableScheduling?: boolean;
-
-    /**
-     * Enables alerting of the dashboard widgets.
-     */
-    enableAlerting?: boolean;
-
-    /**
-     * Enables attributes in alerts.
-     */
-    enableAlertAttributes?: boolean;
-
-    /**
-     * Enables comparison in alerting.
-     */
-    enableComparisonInAlerting?: boolean;
-
-    /**
-     * Enables alerting rollout of the dashboard widgets.
-     */
-    enableAlertingRollout?: boolean;
 
     enableDataSection?: boolean;
     enableMySqlDataSource?: boolean;
@@ -654,11 +619,6 @@ export interface IFeatureFlags {
     enableDefaultSmtp?: boolean;
 
     /**
-     * Enable in-platform notifications.
-     */
-    enableInPlatformNotifications?: boolean;
-
-    /**
      * Enable fine-tuning options for visualization in AD configuration panel.
      */
     enableVisualizationFineTuning?: boolean;
@@ -692,11 +652,6 @@ export interface IFeatureFlags {
      * Enable slideshow exports settings from server
      */
     enableSlidesExport?: boolean;
-
-    /**
-     * Enable rich text dynamic references.
-     */
-    enableRichTextDynamicReferences?: boolean;
 
     /**
      * Enable insights export of raw data when limit is reached.
@@ -759,24 +714,9 @@ export interface IFeatureFlags {
     enableDashboardShareLink?: boolean;
 
     /**
-     * Enable using execution timestamp.
-     */
-    enableExecutionTimestamp?: boolean;
-
-    /**
-     * Enables storing date filter identifiers.
-     */
-    enableDateFilterIdentifiersRollout?: boolean;
-
-    /**
      * Enable to setup alerts evaluation frequency in dashboard settings.
      */
     enableAlertsEvaluationFrequencySetup?: boolean;
-
-    /**
-     * Enable a configurable trend threshold in line chart visualization.
-     */
-    enableLineChartTrendThreshold?: boolean;
 
     /**
      * Enable to respect chart legend position in KD.
@@ -912,11 +852,6 @@ export interface IFeatureFlags {
      * Enable geo pushpin icon sprite sheet configuration UI.
      */
     enableGeoPushpinIcon?: boolean;
-
-    /**
-     * Enable automation management in dashboards
-     */
-    enableAutomationManagement?: boolean;
 
     /**
      * Enable GenAI memory feature

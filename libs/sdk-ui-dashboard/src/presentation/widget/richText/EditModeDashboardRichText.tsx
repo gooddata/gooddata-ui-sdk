@@ -7,7 +7,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { widgetRef } from "@gooddata/sdk-model";
 import { usePrevious } from "@gooddata/sdk-ui";
 import {
-    Button,
     ConfirmDialog,
     IconRichText,
     OverlayController,
@@ -22,12 +21,7 @@ import { eagerRemoveSectionItemByWidgetRef } from "../../../model/commands/layou
 import { changeRichTextWidgetContent } from "../../../model/commands/richText.js";
 import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { useWidgetSelection } from "../../../model/react/useWidgetSelection.js";
-import {
-    selectEnableRichTextDynamicReferences,
-    selectIsWhiteLabeled,
-    selectSeparators,
-} from "../../../model/store/config/configSelectors.js";
-import { uiActions } from "../../../model/store/ui/index.js";
+import { selectIsWhiteLabeled, selectSeparators } from "../../../model/store/config/configSelectors.js";
 import { selectExecutionTimestamp } from "../../../model/store/ui/uiSelectors.js";
 import { DASHBOARD_OVERLAYS_FILTER_Z_INDEX } from "../../../presentation/constants/zIndex.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
@@ -50,7 +44,6 @@ export function EditModeDashboardRichText({ widget, clientWidth, clientHeight }:
 
     const { menuItems } = useEditableRichTextMenu({ closeMenu: closeConfigPanel, widget });
 
-    const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
     const { filters } = useRichTextWidgetFilters(widget);
     const separators = useDashboardSelector(selectSeparators);
 
@@ -99,7 +92,7 @@ export function EditModeDashboardRichText({ widget, clientWidth, clientHeight }:
 
     return (
         <>
-            {hasConfigPanelOpen && isRichTextReferencesEnabled ? (
+            {hasConfigPanelOpen ? (
                 <RichTextMenuComponent
                     widget={widget}
                     isOpen={hasConfigPanelOpen}
@@ -108,7 +101,7 @@ export function EditModeDashboardRichText({ widget, clientWidth, clientHeight }:
                 />
             ) : null}
             <RichText
-                referencesEnabled={isRichTextReferencesEnabled}
+                referencesEnabled
                 filters={filters}
                 separators={separators}
                 className="gd-rich-text-widget"
@@ -121,7 +114,7 @@ export function EditModeDashboardRichText({ widget, clientWidth, clientHeight }:
                     timestamp: executionTimestamp,
                 }}
             />
-            {isRichTextEditing && (showLink || !isRichTextReferencesEnabled) ? (
+            {isRichTextEditing && showLink ? (
                 <div className="gd-rich-text-widget-footer">
                     <div className="gd-rich-text-footer-options">
                         {showLink ? (
@@ -135,23 +128,6 @@ export function EditModeDashboardRichText({ widget, clientWidth, clientHeight }:
                             </a>
                         ) : null}
                     </div>
-                    {!isRichTextReferencesEnabled && (
-                        <div className="gd-rich-text-footer-actions">
-                            <Button
-                                className="gd-button-link gd-button-icon-only gd-icon-trash s-rich-text-remove-button"
-                                onClick={() => setIsConfirmDeleteDialogVisible(true)}
-                            />
-                            <span className="gd-divider" />
-                            <Button
-                                className="gd-button-link gd-button-icon-only gd-icon-checkmark s-rich-text-confirm-button"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    dispatch(uiActions.clearWidgetSelection());
-                                    dispatch(changeRichTextWidgetContent(widget.ref, richText));
-                                }}
-                            />
-                        </div>
-                    )}
                 </div>
             ) : null}
             {isConfirmDeleteDialogVisible ? (

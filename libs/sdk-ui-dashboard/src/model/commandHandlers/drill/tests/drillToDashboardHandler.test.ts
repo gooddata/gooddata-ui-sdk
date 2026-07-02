@@ -55,6 +55,17 @@ describe("drillToDashboardHandler parameter inheritance", () => {
         expect(event.payload.parameters).toEqual([{ ref: topNRef, value: 3 }]);
     });
 
+    it("carries a parameter left at its workspace default (F1-2604)", async () => {
+        Tester.dispatch(tabsActions.setParameterRuntimeValue({ ref: topNRef, value: 5 }));
+
+        const event = await Tester.dispatchAndWaitFor(
+            drillToDashboard(selfDrillDefinition, drillEvent),
+            "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.RESOLVED",
+        );
+
+        expect(event.payload.parameters).toEqual([{ ref: topNRef, value: 5 }]);
+    });
+
     it("reads overrides from the source tab, not the target tab, when the drill switches tabs", async () => {
         const sourceTabId = Tester.select(selectActiveTabLocalIdentifier)!;
 

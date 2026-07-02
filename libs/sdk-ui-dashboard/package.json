@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-dashboard",
-    "version": "11.45.0-alpha.1",
+    "version": "11.45.0-alpha.2",
     "description": "GoodData SDK - Dashboard Component",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",
@@ -75,6 +75,7 @@
         "@gooddata/sdk-ui-geo": "workspace:*",
         "@gooddata/sdk-ui-kit": "workspace:*",
         "@gooddata/sdk-ui-pivot": "workspace:*",
+        "@gooddata/sdk-ui-semantic-search": "workspace:*",
         "@gooddata/sdk-ui-theme-provider": "workspace:*",
         "@gooddata/sdk-ui-vis-commons": "workspace:*",
         "@gooddata/util": "workspace:*",

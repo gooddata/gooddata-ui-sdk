@@ -10,7 +10,7 @@ import { Typography } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectSupportsRichTextWidgets } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
-import { selectEnableKDRichText, selectSettings } from "../../../model/store/config/configSelectors.js";
+import { selectEnableKDRichText } from "../../../model/store/config/configSelectors.js";
 import { selectIsNewDashboard } from "../../../model/store/meta/metaSelectors.js";
 import {
     type AttributeFilterComponentSet,
@@ -42,7 +42,6 @@ export function CreationPanel(props: ICreationPanelProps) {
     const supportsRichText = useDashboardSelector(selectSupportsRichTextWidgets);
     const enableRichText = useDashboardSelector(selectEnableKDRichText);
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
-    const settings = useDashboardSelector(selectSettings);
     const AttributeFilterComponentSet = props.AttributeFilterComponentSet!;
     const InsightWidgetComponentSet = props.InsightWidgetComponentSet!;
     const RichTextWidgetComponentSet = props.RichTextWidgetComponentSet!;
@@ -97,7 +96,6 @@ export function CreationPanel(props: ICreationPanelProps) {
                         WrapInsightListItemWithDragComponent={WrapInsightListItemWithDragComponent}
                         recalculateSizeReference={className}
                         searchAutofocus={!isNewDashboard}
-                        enableDescriptions={settings?.enableDescriptions}
                     />
                 </div>
             </div>

@@ -13,14 +13,12 @@ import {
     selectCatalogMeasures,
 } from "../../../../model/store/catalog/catalogSelectors.js";
 import {
-    selectEnableAlertAttributes,
     selectEnableAlertOncePerInterval,
     selectEnableAnomalyDetectionAlert,
     selectEnableAutomationEvaluationMode,
-    selectEnableAutomationManagement,
-    selectEnableComparisonInAlerting,
     selectEnableCustomizableCsvDelimiter,
     selectEnableNewScheduledExport,
+    selectEnableSlideshowExports,
     selectExternalRecipient,
     selectIsWhiteLabeled,
     selectLocale,
@@ -71,7 +69,6 @@ import {
     selectMeasureValueFilterConfigsOverrides,
     selectMeasureValueFilterConfigsOverridesByTab,
 } from "../../../../model/store/tabs/measureValueFilterConfigs/measureValueFilterConfigsSelectors.js";
-import { selectIsAutomationDialogSecondaryTitleVisible } from "../../../../model/store/topBar/topBarSelectors.js";
 import {
     selectExecutionTimestamp,
     selectScheduleEmailDialogReturnFocusTo,
@@ -130,17 +127,14 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
     const weekStart = useDashboardSelector(selectWeekStart);
     const timezone = useDashboardSelector(selectTimezone);
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
-    const isSecondaryTitleVisible = useDashboardSelector(selectIsAutomationDialogSecondaryTitleVisible);
     const externalRecipient = useDashboardSelector(selectExternalRecipient);
     const enableAlertOncePerInterval = useDashboardSelector(selectEnableAlertOncePerInterval);
     const enableAnomalyDetectionAlert = useDashboardSelector(selectEnableAnomalyDetectionAlert);
-    const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
     const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);
     const canUseAiAssistant = useDashboardSelector(selectCanUseAiAssistant);
     const canManageWorkspace = useDashboardSelector(selectCanManageWorkspace);
-    const enableComparisonInAlerting = useDashboardSelector(selectEnableComparisonInAlerting);
-    const enableAlertAttributes = useDashboardSelector(selectEnableAlertAttributes);
     const enableCustomizableCsvDelimiter = useDashboardSelector(selectEnableCustomizableCsvDelimiter);
+    const enableSlideshowExports = useDashboardSelector(selectEnableSlideshowExports);
     const enableAutomationEvaluationMode = useDashboardSelector(selectEnableAutomationEvaluationMode);
     const maxAutomationsRecipients = useDashboardSelector(selectMaxAutomationRecipients);
     const minimumRecurrenceMinutesEntitlement = useDashboardSelector(
@@ -183,24 +177,20 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
             canCreateAutomation,
             enableAlertOncePerInterval,
             enableAnomalyDetectionAlert,
-            enableAutomationManagement,
             canUseAiAssistant,
-            enableComparisonInAlerting,
-            enableAlertAttributes,
             canManageWorkspace,
             enableCustomizableCsvDelimiter,
+            enableSlideshowExports,
             enableAutomationEvaluationMode,
         }),
         [
             canCreateAutomation,
             enableAlertOncePerInterval,
             enableAnomalyDetectionAlert,
-            enableAutomationManagement,
             canUseAiAssistant,
-            enableComparisonInAlerting,
-            enableAlertAttributes,
             canManageWorkspace,
             enableCustomizableCsvDelimiter,
+            enableSlideshowExports,
             enableAutomationEvaluationMode,
         ],
     );
@@ -239,7 +229,7 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
             weekStart,
             timezone,
             isWhiteLabeled,
-            isSecondaryTitleVisible,
+            isSecondaryTitleVisible: true,
             externalRecipient,
             features,
             getCatalogAttributeByRef,
@@ -280,7 +270,6 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
             weekStart,
             timezone,
             isWhiteLabeled,
-            isSecondaryTitleVisible,
             externalRecipient,
             features,
             getCatalogAttributeByRef,

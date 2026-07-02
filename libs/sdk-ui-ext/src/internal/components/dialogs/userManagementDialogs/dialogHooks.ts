@@ -173,13 +173,25 @@ export const useDeleteDialog = () => {
     };
 };
 
-export const useUserGroups = (
-    userId: string,
-    organizationId: string,
-    bootstrapUserGroupId: string,
-    onSuccess: () => void,
-    setIsAdmin: (isAdmin: boolean) => void,
-) => {
+export interface IUseUserGroupsParams {
+    userId: string;
+    organizationId: string;
+    bootstrapUserGroupId: string;
+    onSuccess: () => void;
+    setIsAdmin: (isAdmin: boolean) => void;
+    // Group membership feeds the subject's inherited workspace and data source permissions, so a
+    // membership change must refresh those alongside the group list.
+    onMembershipChanged: () => void;
+}
+
+export const useUserGroups = ({
+    userId,
+    organizationId,
+    bootstrapUserGroupId,
+    onSuccess,
+    setIsAdmin,
+    onMembershipChanged,
+}: IUseUserGroupsParams) => {
     const { addSuccess, addError } = useToastMessage();
     const backend = useBackendStrict();
     const [grantedUserGroups, setGrantedUserGroups] = useState<IGrantedUserGroup[] | undefined>(undefined);
@@ -209,6 +221,7 @@ export const useUserGroups = (
                 addSuccess(messages.userGroupRemovedSuccess);
                 setGrantedUserGroups(grantedUserGroups?.filter((item) => item.id !== grantedUserGroup.id));
                 onSuccess();
+                onMembershipChanged();
             })
             .catch((error) => {
                 console.error("Removal of user group failed", error);
@@ -219,21 +232,20 @@ export const useUserGroups = (
     const hasBootstrapUserGroup = (userGroups: IGrantedUserGroup[] | undefined) =>
         userGroups?.some((group) => group.id === bootstrapUserGroupId);
 
-    // removes admin group from the user if he is its member, update internal array of groups
+    // removes admin group from the user if he is its member, update internal array of groups.
+    // Returns the mutation promise so callers can await it and surface a failure instead of swallowing it.
     const removeAdminGroup = () => {
-        if (hasBootstrapUserGroup(grantedUserGroups)) {
-            void backend
-                .organization(organizationId)
-                .users()
-                .removeUsersFromUserGroups([userId], [bootstrapUserGroupId])
-                .then(() =>
-                    setGrantedUserGroups(
-                        grantedUserGroups?.filter((item) => item.id !== bootstrapUserGroupId),
-                    ),
-                );
-        } else {
-            void Promise.resolve();
+        if (!hasBootstrapUserGroup(grantedUserGroups)) {
+            return Promise.resolve();
         }
+        return backend
+            .organization(organizationId)
+            .users()
+            .removeUsersFromUserGroups([userId], [bootstrapUserGroupId])
+            .then(() => {
+                setGrantedUserGroups(grantedUserGroups?.filter((item) => item.id !== bootstrapUserGroupId));
+                onMembershipChanged();
+            });
     };
 
     // update internal array with user groups after applied changed in groups edit mode
@@ -247,6 +259,7 @@ export const useUserGroups = (
             setIsAdmin(true);
         }
         onSuccess();
+        onMembershipChanged();
     };
 
     return {

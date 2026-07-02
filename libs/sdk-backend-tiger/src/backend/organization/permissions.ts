@@ -44,7 +44,10 @@ export class OrganizationPermissionService implements IOrganizationPermissionSer
         dataSourcePermissions: IDataSourcePermissionAssignment[];
     }> => {
         return this.authCall(async (client) => {
-            return UserManagementApi_ListPermissionsForUser(client.axios, client.basePath, { userId })
+            return UserManagementApi_ListPermissionsForUser(client.axios, client.basePath, {
+                userId,
+                includeInherited: true,
+            })
                 .then((response) => response.data)
                 .then((response) => ({
                     workspacePermissions: response.workspaces.map((assignment) =>
@@ -66,6 +69,7 @@ export class OrganizationPermissionService implements IOrganizationPermissionSer
         return this.authCall(async (client) => {
             return UserManagementApi_ListPermissionsForUserGroup(client.axios, client.basePath, {
                 userGroupId,
+                includeInherited: true,
             })
                 .then((response) => response.data)
                 .then((response) => ({

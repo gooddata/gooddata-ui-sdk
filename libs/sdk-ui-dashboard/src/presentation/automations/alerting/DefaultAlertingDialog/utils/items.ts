@@ -102,13 +102,11 @@ const ValidGranularities: DateAttributeGranularity[] = [
  * Get supported insight measures by insight
  * @param insight - insight to get supported measures for
  * @param dateDatasets - date datasets to filter out date attributes
- * @param canManageComparison - flag if user can manage comparison
  * @param alert - alert to get supported measures for
  */
 export function getSupportedInsightMeasuresByInsight(
     insight: IInsight | null | undefined,
     dateDatasets: ICatalogDateDataset[] = [],
-    canManageComparison: boolean = false,
     alert?: IAutomationMetadataObject,
 ): AlertMetric[] {
     const insightType = insight ? (insightVisualizationType(insight) as InsightType) : null;
@@ -120,7 +118,7 @@ export function getSupportedInsightMeasuresByInsight(
         ...(others.map<AlertMetric | undefined>(mapMeasure(false)).filter(Boolean) as AlertMetric[]),
     ];
 
-    const validComparisonBuckets = canManageComparison ? getSupportedBucketsForComparison(insightType) : null;
+    const validComparisonBuckets = getSupportedBucketsForComparison(insightType);
     const validComparisonType = insightType === "headline" || validComparisonBuckets || !insight;
 
     // If insight is supported for comparison, we need to add comparators

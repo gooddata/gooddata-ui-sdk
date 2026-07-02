@@ -10,7 +10,6 @@ import {
 } from "@gooddata/sdk-model";
 
 import { switchDashboardTab } from "../../commands/tabs.js";
-import { selectEnableScheduling } from "../../store/config/configSelectors.js";
 import { selectInsights } from "../../store/insights/insightsSelectors.js";
 import { selectWidgets } from "../../store/tabs/layout/layoutSelectors.js";
 import { selectActiveTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
@@ -37,60 +36,54 @@ export const useDashboardScheduledEmailsCommands = () => {
     const insights = useDashboardSelector(selectInsights);
     const activeTabId = useDashboardSelector(selectActiveTabLocalIdentifier);
 
-    // Feature Flags
-    const isScheduledEmailingEnabled = useDashboardSelector(selectEnableScheduling);
-
     // Single Schedule Dialog
     const openScheduleEmailingDialog = useCallback(
         (options: IOpenScheduleEmailingDialogOptions = {}) => {
             const { widget, openedFrom, schedule } = options;
 
-            if (isScheduledEmailingEnabled) {
-                const targetTabIdentifier = schedule?.metadata?.targetTabIdentifier;
-                if (targetTabIdentifier && targetTabIdentifier !== activeTabId) {
-                    dispatch(switchDashboardTab(targetTabIdentifier));
-                }
-
-                dispatch(
-                    uiActions.openScheduleEmailDialog({
-                        ...(widget?.ref ? { widgetRef: widget.ref, openedFrom } : { openedFrom }),
-                        ...(schedule ? { schedule } : {}),
-                    }),
-                );
-
-                const selectedWidget = widgets.find((w) => w.localIdentifier === widget?.localIdentifier);
-                const insightRef = isInsightWidget(selectedWidget) ? selectedWidget.insight : undefined;
-                const insight = insights.find((i) => areObjRefsEqual(i.insight.ref, insightRef));
-                automationInteraction({
-                    type: "scheduledExportInitialized",
-                    automation_source: widget ? "widget" : "dashboard",
-                    automation_visualization_type: insight?.insight.visualizationUrl,
-                });
+            const targetTabIdentifier = schedule?.metadata?.targetTabIdentifier;
+            if (targetTabIdentifier && targetTabIdentifier !== activeTabId) {
+                dispatch(switchDashboardTab(targetTabIdentifier));
             }
+
+            dispatch(
+                uiActions.openScheduleEmailDialog({
+                    ...(widget?.ref ? { widgetRef: widget.ref, openedFrom } : { openedFrom }),
+                    ...(schedule ? { schedule } : {}),
+                }),
+            );
+
+            const selectedWidget = widgets.find((w) => w.localIdentifier === widget?.localIdentifier);
+            const insightRef = isInsightWidget(selectedWidget) ? selectedWidget.insight : undefined;
+            const insight = insights.find((i) => areObjRefsEqual(i.insight.ref, insightRef));
+            automationInteraction({
+                type: "scheduledExportInitialized",
+                automation_source: widget ? "widget" : "dashboard",
+                automation_visualization_type: insight?.insight.visualizationUrl,
+            });
         },
-        [activeTabId, automationInteraction, dispatch, insights, isScheduledEmailingEnabled, widgets],
+        [activeTabId, automationInteraction, dispatch, insights, widgets],
     );
 
     const closeScheduleEmailingDialog = useCallback(
-        () => isScheduledEmailingEnabled && dispatch(uiActions.closeScheduleEmailDialog()),
-        [dispatch, isScheduledEmailingEnabled],
+        () => dispatch(uiActions.closeScheduleEmailDialog()),
+        [dispatch],
     );
 
     // List / Management Dialog
     const openScheduleEmailingManagementDialog = useCallback(
         (widget?: IWidget, openedFrom?: string) =>
-            isScheduledEmailingEnabled &&
             dispatch(
                 uiActions.openScheduleEmailManagementDialog({
                     ...(widget?.ref ? { widgetRef: widget.ref, openedFrom } : { openedFrom }),
                 }),
             ),
-        [dispatch, isScheduledEmailingEnabled],
+        [dispatch],
     );
 
     const closeScheduleEmailingManagementDialog = useCallback(
-        () => isScheduledEmailingEnabled && dispatch(uiActions.closeScheduleEmailManagementDialog()),
-        [dispatch, isScheduledEmailingEnabled],
+        () => dispatch(uiActions.closeScheduleEmailManagementDialog()),
+        [dispatch],
     );
 
     return {

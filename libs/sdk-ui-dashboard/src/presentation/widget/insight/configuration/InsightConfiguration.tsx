@@ -14,11 +14,7 @@ import {
     changeInsightWidgetDescription,
     changeInsightWidgetVisConfiguration,
 } from "../../../../model/commands/insight.js";
-import {
-    useDashboardDispatch,
-    useDashboardSelector,
-} from "../../../../model/react/DashboardStoreProvider.js";
-import { selectSettings } from "../../../../model/store/config/configSelectors.js";
+import { useDashboardDispatch } from "../../../../model/react/DashboardStoreProvider.js";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/zIndex.js";
 import { type IInsightMenuSubmenuComponentProps } from "../../insightMenu/types.js";
 
@@ -34,7 +30,6 @@ export function InsightConfiguration({
 }: IInsightMenuSubmenuComponentProps) {
     const widgetRefSuffix = isInsightWidget(widget) ? simplifyText(objRefToString(widget.ref)) : "";
 
-    const settings = useDashboardSelector(selectSettings);
     const dispatch = useDashboardDispatch();
 
     const classes = cx(
@@ -61,14 +56,14 @@ export function InsightConfiguration({
                         dispatch(
                             changeInsightWidgetVisConfiguration(widget.ref, {
                                 ...widget.configuration,
-                                ...{ hideTitle },
+                                hideTitle,
                             }),
                         );
                     }}
                 />
                 <InsightDescriptionConfig
                     widget={widget}
-                    isWidgetDescriptionEnabled={settings.enableDescriptions ?? false}
+                    isWidgetDescriptionEnabled
                     descriptionConfig={widget.configuration?.description ?? defaultDescriptionConfig}
                     setDescriptionConfiguration={(widget, config) => {
                         dispatch(

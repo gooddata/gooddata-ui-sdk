@@ -84,8 +84,13 @@ export function AddDataSourceSelect({
         }
     }, []);
 
+    // Inherited data sources stay selectable so a direct grant can be added on top of inherited access;
+    // only data sources already granted directly are excluded from the picker.
     const usedDataSources = useMemo(
-        () => (grantedDataSources ? [...addedDataSources, ...grantedDataSources] : []),
+        () => [
+            ...addedDataSources,
+            ...(grantedDataSources?.filter((dataSource) => !dataSource.isInherited) ?? []),
+        ],
         [addedDataSources, grantedDataSources],
     );
 

@@ -141,7 +141,6 @@ export function ScheduledMailDialogRenderer({
         isWhiteLabeled,
         externalRecipient: externalRecipientOverride,
         isSecondaryTitleVisible,
-        features: { enableAutomationManagement },
     } = useAutomationsContext();
     const { exportTemplates, widgetTitle, hasMultipleTabs } = useScheduledEmailDialogContext();
 
@@ -179,6 +178,7 @@ export function ScheduledMailDialogRenderer({
         isExecutionTimestampMode,
         enableNewScheduledExport,
         enableCustomizableCsvDelimiter,
+        isSlidesExportEnabled,
         defaultPdfPageSize,
     } = useDefaultScheduledEmailDialogData();
 
@@ -417,13 +417,7 @@ export function ScheduledMailDialogRenderer({
                 <OverlayControllerProvider overlayController={overlayController}>
                     <ValidationContextStore value={validationContextValue}>
                         <ConfirmDialogBase
-                            className={cx(
-                                "gd-notifications-channels-dialog s-gd-notifications-channels-dialog",
-                                {
-                                    "gd-dialog--wide gd-notifications-channels-dialog--wide":
-                                        enableAutomationManagement,
-                                },
-                            )}
+                            className="gd-notifications-channels-dialog s-gd-notifications-channels-dialog gd-dialog--wide gd-notifications-channels-dialog--wide"
                             isPositive
                             cancelButtonText={intl.formatMessage({ id: "cancel" })}
                             submitButtonText={
@@ -442,7 +436,7 @@ export function ScheduledMailDialogRenderer({
                             }}
                             showProgressIndicator={isSavingScheduledEmail}
                             returnFocusTo={returnFocusTo}
-                            returnFocusAfterClose={!enableAutomationManagement}
+                            returnFocusAfterClose={false}
                             footerLeftRenderer={() => (
                                 <ScheduledEmailDialogFooter
                                     isWhiteLabeled={isWhiteLabeled}
@@ -640,6 +634,7 @@ export function ScheduledMailDialogRenderer({
                                                 csvRawSettings={csvRawSettings}
                                                 onCsvRawSettingsChange={onCsvRawSettingsChange}
                                                 isCsvSettingsEnabled={enableCustomizableCsvDelimiter}
+                                                isSlidesExportEnabled={isSlidesExportEnabled}
                                                 defaultPdfPageSize={defaultPdfPageSize}
                                                 exportTemplates={exportTemplates}
                                                 slidesTemplateIds={slidesTemplateIds}
@@ -655,6 +650,7 @@ export function ScheduledMailDialogRenderer({
                                                 onDashboardAttachmentsChange={onDashboardAttachmentsChange}
                                                 xlsxSettings={xlsxSettings}
                                                 onXlsxSettingsChange={onXlsxSettingsChange}
+                                                isSlidesExportEnabled={isSlidesExportEnabled}
                                                 defaultPdfPageSize={defaultPdfPageSize}
                                                 exportTemplates={exportTemplates}
                                                 slidesTemplateIds={slidesTemplateIds}
@@ -747,7 +743,7 @@ function useDefaultScheduledEmailDialogData() {
         allowHourlyRecurrence,
         isExecutionTimestampMode,
         enableNewScheduledExport,
-        features: { enableCustomizableCsvDelimiter },
+        features: { enableCustomizableCsvDelimiter, enableSlideshowExports },
     } = useAutomationsContext();
     const { dashboardTitle, dateFormat, isCrossFiltering } = useScheduledEmailDialogContext();
     const formatLocale = settings?.formatLocale;
@@ -765,6 +761,7 @@ function useDefaultScheduledEmailDialogData() {
         isExecutionTimestampMode,
         enableNewScheduledExport,
         enableCustomizableCsvDelimiter,
+        isSlidesExportEnabled: enableSlideshowExports,
         defaultPdfPageSize,
     };
 }

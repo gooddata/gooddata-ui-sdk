@@ -1,20 +1,11 @@
 // (C) 2026 GoodData Corporation
 
-import { type ReactElement, type ReactNode, useCallback } from "react";
+import { type ReactElement, type ReactNode } from "react";
 
-import { type IAutomationMetadataObject, isWidget } from "@gooddata/sdk-model";
-import { buildAutomationUrl, navigate, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { isWidget } from "@gooddata/sdk-model";
 
-import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { useDashboardAlerts } from "../../../model/react/useDashboardAlerting/useDashboardAlerts.js";
 import { useWorkspaceUsers } from "../../../model/react/useWorkspaceUsers.js";
-import {
-    selectEnableAutomationManagement,
-    selectExternalRecipient,
-    selectIsEmbedded,
-    selectSettings,
-} from "../../../model/store/config/configSelectors.js";
-import { selectDashboardId } from "../../../model/store/meta/metaSelectors.js";
 import { AlertingDialog } from "../alerting/AlertingDialog.js";
 import { AlertingManagementDialog } from "../alerting/AlertingManagementDialog.js";
 import { type IAlertingDialogProps } from "../alerting/types.js";
@@ -22,6 +13,7 @@ import { AlertingDialogContextProvider } from "../contexts/AlertingDialogContext
 import { AlertingManagementDialogContextProvider } from "../contexts/AlertingManagementDialogContext.js";
 import { AutomationsContextProvider } from "../contexts/AutomationsContext.js";
 
+import { useAutomationManagementEditRouting } from "./hooks/useAutomationManagementEditRouting.js";
 import { useBuildAlertingDialogContext } from "./hooks/useBuildAlertingDialogContext.js";
 import { useBuildAlertingManagementDialogContext } from "./hooks/useBuildAlertingManagementDialogContext.js";
 import { useBuildAutomationsContext } from "./hooks/useBuildAutomationsContext.js";
@@ -104,48 +96,7 @@ function AlertingConnectorWithData({ alerts }: { alerts: AlertsProps }): ReactEl
         insight,
     } = alerts;
 
-    const workspace = useWorkspaceStrict();
-    const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
-    const dashboardId = useDashboardSelector(selectDashboardId);
-    const isEmbedded = useDashboardSelector(selectIsEmbedded);
-    const externalRecipientOverride = useDashboardSelector(selectExternalRecipient);
-    const settings = useDashboardSelector(selectSettings);
-    const useHostRoute =
-        Boolean(settings?.enableShellApplication) && Boolean(settings?.enableShellApplication_dashboards);
-
-    // Cross-dashboard edit routing lives in the connector (which may read router + store).
-    // The management dialog only invokes this injected callback.
-    const handleManagementEdit = useCallback(
-        (alert: IAutomationMetadataObject) => {
-            const targetDashboardId = alert.dashboard?.id;
-
-            if (enableAutomationManagement && targetDashboardId && targetDashboardId !== dashboardId) {
-                navigate(
-                    buildAutomationUrl({
-                        workspaceId: workspace,
-                        dashboardId: targetDashboardId,
-                        automationId: alert.id,
-                        isEmbedded,
-                        useHostRoute,
-                        queryParams: externalRecipientOverride
-                            ? { recipient: externalRecipientOverride }
-                            : undefined,
-                    }),
-                );
-                return;
-            }
-            onAlertingManagementEdit(alert);
-        },
-        [
-            onAlertingManagementEdit,
-            enableAutomationManagement,
-            dashboardId,
-            workspace,
-            isEmbedded,
-            useHostRoute,
-            externalRecipientOverride,
-        ],
-    );
+    const handleManagementEdit = useAutomationManagementEditRouting(onAlertingManagementEdit);
 
     const insightWidget = isWidget(widget) ? widget : undefined;
 

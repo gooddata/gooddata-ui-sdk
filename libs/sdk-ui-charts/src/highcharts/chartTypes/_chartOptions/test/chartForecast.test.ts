@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
@@ -161,33 +161,19 @@ describe("assignForecastAxes", () => {
 
 describe("updateForecastWithSettings", () => {
     it("disabled forecast by state", () => {
-        const data = updateForecastWithSettings({}, {}, { enabled: false });
+        const data = updateForecastWithSettings({}, { enabled: false });
 
         expect(data).toEqual(undefined);
     });
 
     it("disabled forecast by config", () => {
-        const data = updateForecastWithSettings({}, {}, { enabled: true });
-
-        expect(data).toEqual(undefined);
-    });
-
-    it("disabled forecast by FF", () => {
-        const data = updateForecastWithSettings(
-            { forecast: { enabled: true } } as any,
-            {},
-            { enabled: true },
-        );
+        const data = updateForecastWithSettings({}, { enabled: true });
 
         expect(data).toEqual(undefined);
     });
 
     it("enabled and empty", () => {
-        const data = updateForecastWithSettings(
-            { forecast: { enabled: true } } as any,
-            { enableSmartFunctions: true },
-            { enabled: true },
-        );
+        const data = updateForecastWithSettings({ forecast: { enabled: true } } as any, { enabled: true });
 
         expect(data).toEqual({
             confidenceLevel: 0.95,
@@ -199,7 +185,6 @@ describe("updateForecastWithSettings", () => {
     it("enabled and filled", () => {
         const data = updateForecastWithSettings(
             { forecast: { enabled: true, period: 5, confidence: 0.75, seasonal: true } },
-            { enableSmartFunctions: true },
             { enabled: true },
         );
 

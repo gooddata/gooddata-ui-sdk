@@ -2471,6 +2471,10 @@
         "text": "Out of",
         "crowdinContext": "Section title to specify ranking attribute."
     },
+    "rankingFilter.outOf.backwardCompatibilityNote": {
+        "text": "“Out of” currently follows the visualization’s attributes. Editing the filter will stop this and let you choose which attributes it uses.",
+        "crowdinContext": "Note about backward compatibility of the ranking filter 'Out of' attributes. Explains that editing the filter will change its behavior and allow attribute selection."
+    },
     "rankingFilter.basedOn": {
         "text": "Based on",
         "crowdinContext": "Section title to specify ranking by measure."
@@ -3639,6 +3643,10 @@
         "text": "Change of the workspace permission(s) failed.",
         "crowdinContext": "Error message shown to the user when change of one or more workspace permissions failed."
     },
+    "userManagement.permissions.loadError": {
+        "text": "Failed to refresh permissions. The list may be out of date.",
+        "crowdinContext": "Error message shown when reloading the user's or user group's workspace and data source permissions failed; the previously loaded list stays on screen and may be stale."
+    },
     "userManagement.workspace.hierarchicalPermission.yes": {
         "text": "Include sub-hierarchy",
         "crowdinContext": "Label of option that states that selected permission will be added to the selected workspace and to all workspaces in tree hierarchy of workspaces under it."
@@ -3850,6 +3858,18 @@
     "userManagement.workspace.permission.and": {
         "text": "and",
         "crowdinContext": "Connection word when concatenating permissions"
+    },
+    "userManagement.workspace.inherited.group": {
+        "text": "Inherited from a user group. Manage it on the user group.",
+        "crowdinContext": "Tooltip on the lock icon of a workspace the subject can access only through user group membership. Read-only here and managed on the group."
+    },
+    "userManagement.workspace.inherited.hierarchy": {
+        "text": "Inherited from a parent workspace. Manage it on the parent workspace.",
+        "crowdinContext": "Tooltip on the lock icon of a workspace the subject can access only because a parent workspace's permission cascades down the hierarchy. Read-only here and managed on the parent workspace."
+    },
+    "userManagement.dataSource.inherited": {
+        "text": "Inherited from a user group. Manage it on the user group.",
+        "crowdinContext": "Tooltip on the lock icon of a data source the subject can access only through user group membership. Read-only here and managed on the group."
     },
     "userManagement.groupDetail.id.label": {
         "text": "ID",

@@ -126,6 +126,7 @@ export function CatalogDetailTabCertification({ item, canEdit, onCertificationCh
                                         isEditableLabelWidthBasedOnText
                                         onSubmit={handleMessageSubmit}
                                         value={message}
+                                        maxRows={15}
                                     >
                                         {message ||
                                             intl.formatMessage({

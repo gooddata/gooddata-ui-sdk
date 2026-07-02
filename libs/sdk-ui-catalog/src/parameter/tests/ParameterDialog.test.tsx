@@ -4,10 +4,15 @@ import { act, fireEvent, render, screen } from "@testing-library/react";
 import type { PropsWithChildren } from "react";
 import { describe, expect, it, vi } from "vitest";
 
+import type { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import type { IParameterMetadataObjectDefinition } from "@gooddata/sdk-model";
 import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 
 import { TestIntlProvider } from "../../localization/TestIntlProvider.js";
+import {
+    TestPermissionsProvider,
+    defaultPermissionsResult,
+} from "../../permission/TestPermissionsProvider.js";
 import type { ParameterDialogInitialParameter } from "../ParameterDialog.js";
 
 // Mock SyntaxHighlightingInput since CodeMirror doesn't work in happy-dom
@@ -249,7 +254,46 @@ describe("ParameterDialog", () => {
             },
         );
 
-        expect(screen.getByText("How to create a parameter?")).toBeInTheDocument();
+        const link = screen.getByText("How to create a parameter?").closest("a");
+        expect(link).toHaveAttribute(
+            "href",
+            "https://www.gooddata.ai/docs/cloud/experimental-features/numeric-parameters/",
+        );
+        expect(link).toHaveAttribute("target", "_blank");
+        expect(link).toHaveAttribute("rel", "noopener noreferrer");
+    });
+
+    it("hides the help link on white-labeled deployments", () => {
+        function whiteLabeledWrapper({ children }: PropsWithChildren) {
+            return (
+                <TestIntlProvider>
+                    <ToastsCenterContextProvider>
+                        <TestPermissionsProvider
+                            result={{
+                                ...defaultPermissionsResult,
+                                settings: {
+                                    whiteLabeling: { enabled: true },
+                                } as IUserWorkspaceSettings,
+                            }}
+                        >
+                            {children}
+                        </TestPermissionsProvider>
+                    </ToastsCenterContextProvider>
+                </TestIntlProvider>
+            );
+        }
+
+        render(
+            <ParameterDialog
+                mode="create"
+                initialParameter={createParameter}
+                onClose={vi.fn()}
+                onSubmit={vi.fn()}
+            />,
+            { wrapper: whiteLabeledWrapper },
+        );
+
+        expect(screen.queryByText("How to create a parameter?")).not.toBeInTheDocument();
     });
 
     it("shows error on submit when content is empty", () => {

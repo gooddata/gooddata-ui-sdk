@@ -82,7 +82,7 @@ describe("convertFilterViewContextToBackend", () => {
     it("emits parameters into filter view content when supplied", () => {
         const tigerRef = { identifier: { id: "topN", type: "parameter" } };
 
-        const result = convertFilterViewContextToBackend(emptyFilterContext, true, "tab-A", [
+        const result = convertFilterViewContextToBackend(emptyFilterContext, "tab-A", [
             {
                 ref: idRef("topN", "parameter"),
                 parameterType: "NUMBER",
@@ -103,7 +103,7 @@ describe("convertFilterViewContextToBackend", () => {
     });
 
     it("omits parameters when not supplied (backwards-compat)", () => {
-        const result = convertFilterViewContextToBackend(emptyFilterContext, true, "tab-A");
+        const result = convertFilterViewContextToBackend(emptyFilterContext, "tab-A");
         expect(result.parameters).toBeUndefined();
     });
 
@@ -118,7 +118,7 @@ describe("convertFilterViewContextToBackend", () => {
             },
         ];
 
-        const tigerContent = convertFilterViewContextToBackend(emptyFilterContext, true, "tab-A", parameters);
+        const tigerContent = convertFilterViewContextToBackend(emptyFilterContext, "tab-A", parameters);
         const filterView = convertFilterView({
             id: "filter-view-1",
             type: "filterView",
