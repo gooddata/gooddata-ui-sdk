@@ -1,6 +1,32 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Tue, 30 Jun 2026 12:21:02 GMT and should not be manually modified.
+This log was last generated on Thu, 02 Jul 2026 06:53:13 GMT and should not be manually modified.
+
+## 11.45.0
+
+Thu, 02 Jul 2026 06:53:13 GMT
+
+### Patches
+
+- Shift+Tab now moves focus backwards out of the attribute filter list of values instead of being trapped in it
+
+### Updates
+
+- sdk-ui-dashboard: Respect slide export setting in the scheduled export attachment picker.
+- sdk-ui-dashboard: Drill to dashboard now propagates a parameter left at its default value to the target
+- sdk-ui-catalog: Wire parameter dialog help link to the numeric parameters docs
+- sdk-ui-gen-ai: Add bullet point rendering for reasoning groups in AI chat
+- sdk-ui-gen-ai: Enable semantic search for visualizations dropdown
+- sdk-ui-gen-ai: Add support for CTA rendering in alert proposal content
+- sdk-ui-all: User management now shows inherited workspaces and data sources.
+- sdk-ui-all: Allow catalog attributes in ranking filter's dimensionality.
+- Extract alerting dialog submit logic into useAlertSubmit hook (GDP-3167)
+- Extract alerting supported-metrics derivation into useAlertSupportedMetrics hook (GDP-3167)
+- sdk-ui-kit, sdk-ui-ext: Add a Transfer ownership flow to the object-level-permissions share dialog, letting an editor hand ownership of a catalog object to another user.
+- sdk-ui-gen-ai: Add GenAIChatDialogConnected (internal) — a shared connected chat wrapper centralizing object-type derivation, the seeded-question dispatch flow, default link handling and chat-event normalization. The host chat (sdk-ui-pluggable-host) now consumes it instead of duplicating that wiring.
+- sdk-ui-pluggable-host: Host-owned GenAI chat is hoisted out of the chrome into the host runtime (HostChat), so the single chat survives a custom remote UI module and stays mounted when the chrome is hidden (embedded/export). Host UI contract: replaces onAiAssistantOpenChange with onChatToggleRequested + onAskAiAssistant, adds updateChatState, and removes the AI-assistant host UI notification variants (the runtime drives the chat directly).
+- sdk-ui-pluggable-host: Embedded dashboards now defer to the host-owned GenAI chat instead of mounting their own. The AI-assistant context event carries the chat placement (showassistant left/right) and an embedded flag, and the pluggable mount handle gains onAiAssistantLinkClicked so an embedded app can handle chat link clicks in-app (e.g. open a visualization as an in-place overlay).
+- Use server-side sort for export definitions and remove unused insight list comparator (LX-1132)
 
 ## 11.44.0
 

@@ -47,16 +47,6 @@ import {
 } from "../../../shared/utils/automationUtils.js";
 import { type AlertAttribute, type AlertMetric, type AlertMetricComparatorType } from "../../types.js";
 import { createDefaultAlert } from "../utils/convertors.js";
-import {
-    getAlertAiOperator,
-    getAlertAttribute,
-    getAlertCompareOperator,
-    getAlertComparison,
-    getAlertGranularity,
-    getAlertMeasure,
-    getAlertRelativeOperator,
-    getAlertSensitivity,
-} from "../utils/getters.js";
 import { isAlertValueDefined } from "../utils/guards.js";
 import {
     transformAlertByAnomalyDetection,
@@ -70,6 +60,7 @@ import {
     transformAlertByValue,
 } from "../utils/transformation.js";
 
+import { useAlertSelectedValues } from "./useAlertSelectedValues.js";
 import { useAlertSupportedMetrics } from "./useAlertSupportedMetrics.js";
 import { useAlertValidation } from "./useAlertValidation.js";
 import { useThresholdValue } from "./useThresholdValue.js";
@@ -232,25 +223,25 @@ export function useEditAlert({
     //
     // Selected values
     //
-    const selectedMeasure = getAlertMeasure(supportedMeasures, editedAutomation?.alert);
-    const selectedComparisonOperator = getAlertCompareOperator(editedAutomation?.alert);
-    const selectedRelativeOperator = getAlertRelativeOperator(editedAutomation?.alert);
-    const selectedAiOperator = getAlertAiOperator(editedAutomation?.alert);
-    const selectedComparator = getAlertComparison(selectedMeasure, editedAutomation?.alert);
-    const selectedSensitivity = getAlertSensitivity(editedAutomation?.alert);
-    const selectedGranularity = getAlertGranularity(editedAutomation?.alert);
-    const [selectedAttribute, selectedValue] = getAlertAttribute(
+    const {
+        selectedMeasure,
+        selectedComparisonOperator,
+        selectedRelativeOperator,
+        selectedAiOperator,
+        selectedComparator,
+        selectedSensitivity,
+        selectedGranularity,
+        selectedAttribute,
+        selectedValue,
+        selectedNotificationChannel,
+        allowExternalRecipients,
+        allowOnlyLoggedUserRecipients,
+    } = useAlertSelectedValues({
+        editedAutomation,
+        supportedMeasures,
         supportedAttributes,
-        editedAutomation as IAutomationMetadataObject,
-    );
-
-    const selectedNotificationChannel = notificationChannels.find(
-        (channel) => channel.id === editedAutomation?.notificationChannel,
-    );
-
-    const allowExternalRecipients = selectedNotificationChannel?.allowedRecipients === "external";
-
-    const allowOnlyLoggedUserRecipients = selectedNotificationChannel?.allowedRecipients === "creator";
+        notificationChannels,
+    });
 
     const { isValid: isOriginalAutomationValid, invalidityReason } = useAlertValidation(
         originalAutomation as IAutomationMetadataObject,
