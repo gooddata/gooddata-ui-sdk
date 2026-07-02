@@ -1,6 +1,6 @@
 {
     "name": "gdc-app-template-name-module",
-    "version": "11.45.0-alpha.2",
+    "version": "11.45.0",
     "private": true,
     "description": "{applicationTemplateTitle} pluggable application module",
     "license": "UNLICENSED",
