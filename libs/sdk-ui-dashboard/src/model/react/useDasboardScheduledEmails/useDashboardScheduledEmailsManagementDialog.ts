@@ -6,7 +6,6 @@ import { type IAutomationMetadataObject, type IWidget } from "@gooddata/sdk-mode
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../locales.js";
-import { selectEnableAutomationManagement } from "../../store/config/configSelectors.js";
 import { selectDashboardRef } from "../../store/meta/metaSelectors.js";
 import { selectIsScheduleEmailManagementDialogContext } from "../../store/ui/uiSelectors.js";
 import { useDashboardSelector } from "../DashboardStoreProvider.js";
@@ -17,20 +16,10 @@ import { useDashboardScheduledEmailsCommands } from "./useDashboardScheduledEmai
 /**
  * @internal
  */
-export interface IUseDashboardScheduledEmailsManagementDialogProps {
-    setShouldReturnToManagementDialog: (value: boolean) => void;
-}
-
-/**
- * @internal
- */
-export const useDashboardScheduledEmailsManagementDialog = ({
-    setShouldReturnToManagementDialog,
-}: IUseDashboardScheduledEmailsManagementDialogProps) => {
+export const useDashboardScheduledEmailsManagementDialog = () => {
     const { addSuccess, addError } = useToastMessage();
 
     const dashboardRef = useDashboardSelector(selectDashboardRef);
-    const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
     const managementDialogContext = useDashboardSelector(selectIsScheduleEmailManagementDialogContext);
 
     const {
@@ -40,15 +29,11 @@ export const useDashboardScheduledEmailsManagementDialog = ({
         openScheduleEmailingManagementDialog,
     } = useDashboardScheduledEmailsCommands();
 
-    const { refreshAutomations, refreshAutomationManagementItems } = useDashboardAutomations();
+    const { refreshAutomationManagementItems } = useDashboardAutomations();
 
     const handleRefreshAutomations = useCallback(() => {
-        if (enableAutomationManagement) {
-            refreshAutomationManagementItems();
-        } else {
-            refreshAutomations();
-        }
-    }, [enableAutomationManagement, refreshAutomations, refreshAutomationManagementItems]);
+        refreshAutomationManagementItems();
+    }, [refreshAutomationManagementItems]);
 
     /*
      * exports and scheduling are not available when rendering a dashboard that is not persisted.
@@ -77,8 +62,7 @@ export const useDashboardScheduledEmailsManagementDialog = ({
 
     const onScheduleEmailingManagementClose = useCallback(() => {
         closeScheduleEmailingManagementDialog();
-        setShouldReturnToManagementDialog(false);
-    }, [closeScheduleEmailingManagementDialog, setShouldReturnToManagementDialog]);
+    }, [closeScheduleEmailingManagementDialog]);
 
     // Loading
     const onScheduleEmailingManagementLoadingError = useCallback(() => {
@@ -94,40 +78,17 @@ export const useDashboardScheduledEmailsManagementDialog = ({
                 : undefined;
             const widget = contextWidget ?? targetWidget;
 
-            if (enableAutomationManagement) {
-                openScheduleEmailingDialog({ widget });
-            } else {
-                setShouldReturnToManagementDialog(true);
-                closeScheduleEmailingManagementDialog();
-                openScheduleEmailingDialog({ widget });
-            }
+            openScheduleEmailingDialog({ widget });
         },
-        [
-            enableAutomationManagement,
-            managementDialogContext,
-            setShouldReturnToManagementDialog,
-            closeScheduleEmailingManagementDialog,
-            openScheduleEmailingDialog,
-        ],
+        [managementDialogContext, openScheduleEmailingDialog],
     );
 
     // Edit
     const onScheduleEmailingManagementEdit = useCallback(
         (schedule: IAutomationMetadataObject, widget?: IWidget) => {
-            if (enableAutomationManagement) {
-                openScheduleEmailingDialog({ widget, schedule });
-            } else {
-                setShouldReturnToManagementDialog(true);
-                closeScheduleEmailingManagementDialog();
-                openScheduleEmailingDialog({ widget, schedule });
-            }
+            openScheduleEmailingDialog({ widget, schedule });
         },
-        [
-            enableAutomationManagement,
-            closeScheduleEmailingManagementDialog,
-            openScheduleEmailingDialog,
-            setShouldReturnToManagementDialog,
-        ],
+        [openScheduleEmailingDialog],
     );
 
     // Delete

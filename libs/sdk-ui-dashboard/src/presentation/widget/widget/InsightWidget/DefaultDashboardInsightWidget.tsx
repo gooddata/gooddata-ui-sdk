@@ -194,11 +194,13 @@ function DefaultDashboardInsightWidgetCore({
     const { elementRef, highlighted } = useWidgetHighlighting(widget);
     const { InsightWidgetDescriptionComponent } = useInsightWidgetDescriptionComponent();
 
-    const accessibilityWidgetDescription = settings.enableDescriptions
-        ? widget.configuration?.description?.source === "widget" || !insight
-            ? widget.description
-            : insight.insight.summary
-        : "";
+    const descriptionConfig = widget.configuration?.description;
+    const accessibilityWidgetDescription =
+        descriptionConfig?.visible === false
+            ? ""
+            : descriptionConfig?.source === "widget" || !insight
+              ? widget.description
+              : insight.insight.summary;
 
     const titleId = useId();
 
@@ -261,14 +263,12 @@ function DefaultDashboardInsightWidgetCore({
                     }
                     renderBeforeVisualization={() => (
                         <div className="gd-absolute-row">
-                            {settings?.enableDescriptions ? (
-                                <InsightWidgetDescriptionComponent
-                                    insight={insight}
-                                    widget={widget}
-                                    screen={screen}
-                                    exportData={exportData?.description}
-                                />
-                            ) : null}
+                            <InsightWidgetDescriptionComponent
+                                insight={insight}
+                                widget={widget}
+                                screen={screen}
+                                exportData={exportData?.description}
+                            />
                             {(() => {
                                 const visType = insight ? insightVisualizationType(insight) : undefined;
                                 if (supportsShowAsTable(visType)) {

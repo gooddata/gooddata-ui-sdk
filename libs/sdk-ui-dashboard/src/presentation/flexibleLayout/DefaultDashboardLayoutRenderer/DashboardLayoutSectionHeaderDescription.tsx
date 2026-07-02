@@ -11,7 +11,6 @@ import { useSectionDescriptionFilters } from "../../../_staging/sharedHooks/useR
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import {
     selectEnableRichTextDescriptions,
-    selectEnableRichTextDynamicReferences,
     selectSeparators,
 } from "../../../model/store/config/configSelectors.js";
 import { selectExecutionTimestamp } from "../../../model/store/ui/uiSelectors.js";
@@ -36,7 +35,6 @@ export function DashboardLayoutSectionHeaderDescription({
     onError,
 }: IDashboardLayoutSectionHeaderDescriptionProps) {
     const useRichText = useDashboardSelector(selectEnableRichTextDescriptions);
-    const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
     const { loading, filters } = useSectionDescriptionFilters();
     const separators = useDashboardSelector(selectSeparators);
     const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
@@ -56,7 +54,7 @@ export function DashboardLayoutSectionHeaderDescription({
                     execConfig={{
                         timestamp: executionTimestamp,
                     }}
-                    referencesEnabled={isRichTextReferencesEnabled}
+                    referencesEnabled
                     filters={filters}
                     isFiltersLoading={loading}
                     separators={separators}

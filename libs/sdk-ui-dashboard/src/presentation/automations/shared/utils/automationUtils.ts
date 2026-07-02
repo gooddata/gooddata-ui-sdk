@@ -12,6 +12,7 @@ import {
     type IExportDefinitionMetadataObjectDefinition,
     type IExportDefinitionVisualizationObjectRequestPayload,
     type IFilter,
+    type ISettings,
     type IUser,
     type IWorkspaceUser,
     isExportDefinitionDashboardRequestPayload,
@@ -234,3 +235,6 @@ export const convertExternalRecipientToAutomationRecipient = (
         type: "externalUser",
     };
 };
+
+export const computeUseHostRoute = (settings: ISettings | undefined): boolean =>
+    Boolean(settings?.enableShellApplication) && Boolean(settings?.enableShellApplication_dashboards);

@@ -114,7 +114,6 @@ export function InsightPickerPanel({
                 includeTags={includeTags}
                 excludeTags={excludeTags}
                 metadataTimeZone={settings?.metadataTimeZone}
-                enableDescriptions={settings?.enableDescriptions}
                 enableSemanticSearch={false}
                 maxHeight={350}
                 width={718}

@@ -19,6 +19,7 @@ describe("updateConfigWithSettings", () => {
                 enableJoinedAttributeAxisName: true,
                 enableReversedStacking: true,
                 enableSeparateTotalLabels: true,
+                useGenericInteractionTooltip: true,
             };
             expect(updateConfigWithSettings(config, settings)).toEqual(expectedConfig);
         });
@@ -31,24 +32,5 @@ describe("updateConfigWithSettings", () => {
             enableCompactSize: true,
         };
         expect(updateConfigWithSettings(config, featureFlags)).toEqual(expectedConfig);
-    });
-
-    describe("enableKDCrossFiltering", () => {
-        it("should return correct config from feature flags", () => {
-            const config: IChartConfig = {};
-            const settings: ISettings = {
-                enableKDCrossFiltering: true,
-            };
-            const expectedConfig = {
-                enableAliasAttributeLabel: true,
-                enableChartSorting: true,
-                enableCompactSize: true,
-                enableJoinedAttributeAxisName: true,
-                enableReversedStacking: true,
-                enableSeparateTotalLabels: true,
-                useGenericInteractionTooltip: true,
-            };
-            expect(updateConfigWithSettings(config, settings)).toEqual(expectedConfig);
-        });
     });
 });

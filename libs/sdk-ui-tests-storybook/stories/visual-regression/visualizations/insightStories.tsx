@@ -44,7 +44,6 @@ import "./insightStories.css";
 
 const DefaultSettings: ISettings = {
     enableSeparateTotalLabels: true,
-    enableLineChartTrendThreshold: true,
 };
 
 //

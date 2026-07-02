@@ -2,7 +2,6 @@
 
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 
-import cx from "classnames";
 import { FormattedMessage, defineMessage, useIntl } from "react-intl";
 
 import {
@@ -11,7 +10,6 @@ import {
 } from "@gooddata/sdk-model";
 import {
     ValidationContextStore,
-    convertError,
     createInvalidDatapoint,
     createInvalidNode,
     useValidationContextValue,
@@ -59,8 +57,9 @@ import { AlertTriggerIntervalSelect } from "./components/AlertTriggerIntervalSel
 import { AlertTriggerModeSelect } from "./components/AlertTriggerModeSelect.js";
 import { ALERTING_DIALOG_ID } from "./constants.js";
 import { DefaultLoadingAlertingDialog } from "./DefaultLoadingAlertingDialog.js";
+import { useAlertSubmit } from "./hooks/useAlertSubmit.js";
 import { useEditAlert } from "./hooks/useEditAlert.js";
-import { getDescription, getValueSuffix } from "./utils/getters.js";
+import { getValueSuffix } from "./utils/getters.js";
 import { isAnomalyDetection, isChangeOrDifferenceOperator } from "./utils/guards.js";
 import { isMobileView } from "./utils/responsive.js";
 
@@ -95,11 +94,10 @@ export function AlertingDialogRenderer({
         features: {
             enableAlertOncePerInterval,
             enableAnomalyDetectionAlert,
-            enableAutomationManagement,
             canUseAiAssistant: enableAiAssistant,
         },
     } = useAutomationsContext();
-    const { widgetTitle, createAlert, saveAlert } = useAlertingDialogContext();
+    const { widgetTitle } = useAlertingDialogContext();
 
     const [alertToDelete, setAlertToDelete] = useState<IAutomationMetadataObject | null>(null);
 
@@ -147,7 +145,6 @@ export function AlertingDialogRenderer({
         selectedMeasure,
         canChangeMeasure,
         supportedMeasures,
-        canManageAttributes,
         selectedAttribute,
         selectedValue,
         supportedAttributes,
@@ -163,7 +160,6 @@ export function AlertingDialogRenderer({
         onSensitivityChange,
         selectedGranularity,
         onGranularityChange,
-        canManageComparison,
         separators,
         defaultUser,
         originalAutomation,
@@ -198,44 +194,16 @@ export function AlertingDialogRenderer({
     });
     const [isApplyCurrentFiltersDialogOpen, setIsApplyCurrentFiltersDialogOpen] = useState(!isValid);
 
-    const [isSavingAlert, setIsSavingAlert] = useState(false);
-
-    const handleSaveAlert = async () => {
-        if (!editedAutomation || isSavingAlert) {
-            return;
-        }
-
-        const title = getDescription(
-            intl,
-            supportedMeasures,
-            editedAutomation as IAutomationMetadataObject,
-            separators,
-        );
-        const sanitizedAutomation = editedAutomation.title
-            ? editedAutomation
-            : {
-                  ...editedAutomation,
-                  title,
-              };
-        setIsSavingAlert(true);
-        try {
-            if (alertToEdit) {
-                const saved = await saveAlert(sanitizedAutomation as IAutomationMetadataObject);
-                onSaveSuccess?.(saved);
-            } else {
-                const created = await createAlert(sanitizedAutomation);
-                onSuccess?.(created);
-            }
-        } catch (err) {
-            if (alertToEdit) {
-                onSaveError?.(convertError(err));
-            } else {
-                onError?.(convertError(err));
-            }
-        } finally {
-            setIsSavingAlert(false);
-        }
-    };
+    const { isSaving, submit } = useAlertSubmit({
+        editedAutomation,
+        supportedMeasures,
+        separators,
+        alertToEdit,
+        onSuccess,
+        onError,
+        onSaveSuccess,
+        onSaveError,
+    });
 
     const validationContextValue = useValidationContextValue(createInvalidNode({ id: "AlertingDialog" }));
     const { setInvalidDatapoints, getInvalidDatapoints } = validationContextValue;
@@ -304,13 +272,7 @@ export function AlertingDialogRenderer({
                 <OverlayControllerProvider overlayController={overlayController}>
                     <ValidationContextStore value={validationContextValue}>
                         <ConfirmDialogBase
-                            className={cx(
-                                "gd-notifications-channels-dialog s-gd-notifications-channels-dialog",
-                                {
-                                    "gd-dialog--wide gd-notifications-channels-dialog--wide":
-                                        enableAutomationManagement,
-                                },
-                            )}
+                            className="gd-notifications-channels-dialog s-gd-notifications-channels-dialog gd-dialog--wide gd-notifications-channels-dialog--wide"
                             isPositive
                             cancelButtonText={intl.formatMessage({ id: "cancel" })}
                             submitButtonText={
@@ -325,20 +287,20 @@ export function AlertingDialogRenderer({
                                 titleElementId,
                                 dialogId: ALERTING_DIALOG_ID,
                             }}
-                            showProgressIndicator={isSavingAlert}
-                            returnFocusAfterClose={!enableAutomationManagement}
+                            showProgressIndicator={isSaving}
+                            returnFocusAfterClose={false}
                             footerLeftRenderer={() => (
                                 <AlertingDialogFooter
                                     isWhiteLabeled={isWhiteLabeled}
                                     helpTextId={helpTextId}
                                     alertToEdit={alertToEdit}
-                                    isSavingAlert={isSavingAlert}
+                                    isSavingAlert={isSaving}
                                     onDeleteClick={() =>
                                         setAlertToDelete(alertToEdit as IAutomationMetadataObject)
                                     }
                                 />
                             )}
-                            isSubmitDisabled={isSubmitDisabled || isSavingAlert || isExecutionTimestampMode}
+                            isSubmitDisabled={isSubmitDisabled || isSaving || isExecutionTimestampMode}
                             submitButtonTooltipText={
                                 isExecutionTimestampMode
                                     ? intl.formatMessage({
@@ -349,9 +311,7 @@ export function AlertingDialogRenderer({
                             initialFocus={dialogTitleRef}
                             submitOnEnterKey={false}
                             onCancel={onCancel}
-                            onSubmit={() => {
-                                void handleSaveAlert();
-                            }}
+                            onSubmit={() => void submit()}
                             headline={undefined}
                             headerLeftButtonRenderer={() => (
                                 <AlertingDialogHeader
@@ -408,29 +368,27 @@ export function AlertingDialogRenderer({
                                             closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
                                         />
                                     </FormField>
-                                    {Boolean(canManageAttributes) &&
-                                        supportedAttributes.filter((a) => a.type === "attribute").length >
-                                            0 && (
-                                            <FormField
-                                                label={<FormattedMessage id="insightAlert.config.for" />}
-                                                htmlFor="alert.attribute"
-                                            >
-                                                <AlertAttributeSelect
-                                                    id="alert.attribute"
-                                                    disabled={!canChangeMeasure}
-                                                    selectedAttribute={selectedAttribute}
-                                                    selectedValue={selectedValue}
-                                                    onAttributeChange={onAttributeChange}
-                                                    attributes={supportedAttributes}
-                                                    catalogAttributes={catalogAttributes}
-                                                    catalogDateDatasets={catalogDateDatasets}
-                                                    getAttributeValues={getAttributeValues}
-                                                    isResultLoading={isResultLoading}
-                                                    showLabel={false}
-                                                    closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
-                                                />
-                                            </FormField>
-                                        )}
+                                    {supportedAttributes.filter((a) => a.type === "attribute").length > 0 && (
+                                        <FormField
+                                            label={<FormattedMessage id="insightAlert.config.for" />}
+                                            htmlFor="alert.attribute"
+                                        >
+                                            <AlertAttributeSelect
+                                                id="alert.attribute"
+                                                disabled={!canChangeMeasure}
+                                                selectedAttribute={selectedAttribute}
+                                                selectedValue={selectedValue}
+                                                onAttributeChange={onAttributeChange}
+                                                attributes={supportedAttributes}
+                                                catalogAttributes={catalogAttributes}
+                                                catalogDateDatasets={catalogDateDatasets}
+                                                getAttributeValues={getAttributeValues}
+                                                isResultLoading={isResultLoading}
+                                                showLabel={false}
+                                                closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
+                                            />
+                                        </FormField>
+                                    )}
                                     <FormField
                                         label={<FormattedMessage id="insightAlert.config.condition" />}
                                         htmlFor="alert.condition"
@@ -486,7 +444,6 @@ export function AlertingDialogRenderer({
                                                     );
                                                 }}
                                                 overlayPositionType={OVERLAY_POSITION_TYPE}
-                                                canManageComparison={canManageComparison}
                                                 closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
                                             />
                                         </FormField>

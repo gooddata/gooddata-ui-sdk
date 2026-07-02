@@ -65,7 +65,6 @@ vi.mock("../../../model/react/useWorkspaceUsers.js", () => ({
 }));
 
 vi.mock("../../../model/store/config/configSelectors.js", () => ({
-    selectEnableAutomationManagement: () => true,
     selectExternalRecipient: () => "recipient@example.com",
     selectIsEmbedded: () => false,
     selectSettings: () => ({

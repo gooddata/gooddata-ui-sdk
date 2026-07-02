@@ -144,36 +144,8 @@ export function resolveEffectiveParameterValuesForInsight(
 }
 
 /**
- * Returns the entries whose `runtimeOverride` deviates from the hydrated baseline
- * ({@link computeHydratedRuntimeOverride}). Entries still at their default are dropped, so callers never
- * propagate a value the user did not explicitly set.
- *
- * @internal
- */
-export function collectChangedParameterValues(
-    entries: IDashboardParameterEntry[],
-    workspaceParameters: IParameterMetadataObject[],
-): IInsightParameterValue[] {
-    const workspaceParameterByRef = buildWorkspaceParametersByRef(workspaceParameters);
-    const result: IInsightParameterValue[] = [];
-    for (const entry of entries) {
-        const { runtimeOverride } = entry;
-        if (runtimeOverride === undefined) {
-            continue;
-        }
-        const workspaceParameter = workspaceParameterByRef.get(objRefToString(entry.parameter.ref));
-        if (runtimeOverride === computeHydratedRuntimeOverride(entry.parameter, workspaceParameter)) {
-            continue;
-        }
-        result.push({ ref: entry.parameter.ref, value: runtimeOverride });
-    }
-    return result;
-}
-
-/**
  * The value hydration seeds into `runtimeOverride`: the dashboard parameter's `value`, else the
- * workspace number default, else `undefined`. Single source of truth for the hydrated baseline so
- * override detection here and in `hydrateParameterEntries` cannot drift apart.
+ * workspace number default, else `undefined`.
  *
  * @internal
  */

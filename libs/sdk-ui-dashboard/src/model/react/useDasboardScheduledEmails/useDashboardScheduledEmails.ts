@@ -47,7 +47,6 @@ export const useDashboardScheduledEmails = () => {
         onScheduleEmailingOpen,
         onScheduleEmailingSaveError,
         onScheduleEmailingSaveSuccess,
-        setShouldReturnToManagementDialog,
     } = useDashboardScheduledEmailsDialog();
 
     const {
@@ -59,9 +58,7 @@ export const useDashboardScheduledEmails = () => {
         onScheduleEmailingManagementEdit,
         onScheduleEmailingManagementLoadingError,
         onScheduleEmailingManagementOpen,
-    } = useDashboardScheduledEmailsManagementDialog({
-        setShouldReturnToManagementDialog,
-    });
+    } = useDashboardScheduledEmailsManagementDialog();
 
     return {
         // Local state

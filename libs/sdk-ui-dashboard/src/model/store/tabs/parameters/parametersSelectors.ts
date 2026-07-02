@@ -124,6 +124,26 @@ export const selectFilterViewParameters: DashboardSelector<IDashboardParameter[]
     });
 
 /**
+ * Runtime parameter values from the active tab, to hand off on a drill. Values equal to the source's
+ * own default are kept (a drill target's default may differ), so the current value always propagates.
+ *
+ * @internal
+ */
+export const selectActiveTabDrillParameters: DashboardSelector<IInsightParameterValue[]> = createSelector(
+    selectDashboardParameterEntries,
+    (entries) => {
+        const result: IInsightParameterValue[] = [];
+        for (const entry of entries) {
+            if (entry.runtimeOverride === undefined) {
+                continue;
+            }
+            result.push({ ref: entry.parameter.ref, value: entry.runtimeOverride });
+        }
+        return result.length === 0 ? EMPTY_PARAMETER_VALUES : result;
+    },
+);
+
+/**
  * Returns a selector that yields the entry held by the active tab for a given parameter ref,
  * or `undefined` if no such entry exists.
  *

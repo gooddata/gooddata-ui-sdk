@@ -203,14 +203,6 @@
         "text": "Schedule export",
         "crowdinContext": "Menu option to set up recurring automated exports of the dashboard"
     },
-    "options.menu.schedule.email.tooltip": {
-        "text": "No destination available. To schedule an export, <a>create destination</a>.",
-        "crowdinContext": "Tooltip shown when no export destinations are available for scheduled exports"
-    },
-    "options.menu.schedule.email.edit": {
-        "text": "Show schedules",
-        "crowdinContext": "Menu option to view or edit existing scheduled dashboard exports"
-    },
     "options.menu.schedule.email.edit.noCreatePermissions": {
         "text": "Scheduled exports",
         "crowdinContext": "Menu option to view existing scheduled exports when user doesn't have permission to create new ones"
@@ -218,10 +210,6 @@
     "options.menu.alert": {
         "text": "Alert",
         "crowdinContext": "Menu option to display alert management"
-    },
-    "options.menu.alerts.edit": {
-        "text": "Show alerts",
-        "crowdinContext": "Menu option to view or edit existing metric alerts for the dashboard or widget"
     },
     "options.menu.alerts.edit.noCreatePermissions": {
         "text": "Alerts",
@@ -1642,6 +1630,10 @@
     "search_insights": {
         "text": "Search all visualizations…",
         "crowdinContext": "Placeholder text in visualization search input field"
+    },
+    "search_insights.similar": {
+        "text": "Similar",
+        "crowdinContext": "Label for the search results section in the visualization search page"
     },
     "save.as.new": {
         "text": "Save as new",

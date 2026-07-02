@@ -35190,10 +35190,10 @@ export function UserManagementApiAxiosParamCreator_AssignPermissions(permissions
 export function UserManagementApiAxiosParamCreator_GetGroupMembers(userGroupId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public (undocumented)
-export function UserManagementApiAxiosParamCreator_ListPermissionsForUser(userId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function UserManagementApiAxiosParamCreator_ListPermissionsForUser(userId: string, includeInherited?: boolean, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public (undocumented)
-export function UserManagementApiAxiosParamCreator_ListPermissionsForUserGroup(userGroupId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function UserManagementApiAxiosParamCreator_ListPermissionsForUserGroup(userGroupId: string, includeInherited?: boolean, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public (undocumented)
 export function UserManagementApiAxiosParamCreator_ListUserGroups(page?: number, size?: number, name?: string, workspace?: string, dataSource?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -35261,11 +35261,13 @@ export interface UserManagementApiInterface {
 
 // @public
 export interface UserManagementApiListPermissionsForUserGroupRequest {
+    readonly includeInherited?: boolean;
     readonly userGroupId: string;
 }
 
 // @public
 export interface UserManagementApiListPermissionsForUserRequest {
+    readonly includeInherited?: boolean;
     readonly userId: string;
 }
 
@@ -35334,11 +35336,15 @@ export interface UserManagementApiRevokePermissionsRequest {
 
 // @public
 export interface UserManagementDataSourcePermissionAssignment {
+    'accessSource'?: UserManagementDataSourcePermissionAssignmentAccessSourceEnum;
     'id': string;
     'name'?: string;
     // (undocumented)
     'permissions': Array<UserManagementDataSourcePermissionAssignmentPermissionsEnum>;
 }
+
+// @public (undocumented)
+export type UserManagementDataSourcePermissionAssignmentAccessSourceEnum = 'DIRECT' | 'GROUP';
 
 // @public (undocumented)
 export type UserManagementDataSourcePermissionAssignmentPermissionsEnum = 'MANAGE' | 'USE';
@@ -35410,6 +35416,7 @@ export interface UserManagementUsersItem {
 
 // @public
 export interface UserManagementWorkspacePermissionAssignment {
+    'accessSource'?: UserManagementWorkspacePermissionAssignmentAccessSourceEnum;
     // (undocumented)
     'hierarchyPermissions': Array<UserManagementWorkspacePermissionAssignmentHierarchyPermissionsEnum>;
     // (undocumented)
@@ -35419,6 +35426,9 @@ export interface UserManagementWorkspacePermissionAssignment {
     // (undocumented)
     'permissions': Array<UserManagementWorkspacePermissionAssignmentPermissionsEnum>;
 }
+
+// @public (undocumented)
+export type UserManagementWorkspacePermissionAssignmentAccessSourceEnum = 'DIRECT' | 'GROUP' | 'HIERARCHY';
 
 // @public (undocumented)
 export type UserManagementWorkspacePermissionAssignmentHierarchyPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'VIEW';

@@ -265,30 +265,26 @@ export function convertAnalyticalDashboard(
  * Converts platform-agnostic filter context to Tiger-specific filter context.
  *
  * @param filterContext - Platform-agnostic filter context definition (uses FilterContextItem[])
- * @param useDateFilterLocalIdentifiers - Whether to add local identifiers to date filters
  * @returns Tiger filter context (uses ITigerFilterContextItem[])
  */
 export function convertFilterContextToBackend(
     filterContext: IFilterContextDefinition,
-    useDateFilterLocalIdentifiers?: boolean,
 ): AnalyticalDashboardModelV2.IFilterContext {
-    const updatedFilters = useDateFilterLocalIdentifiers
-        ? filterContext.filters.map((filter, index) => addFilterLocalIdentifier(filter, index))
-        : filterContext.filters;
-
     return {
-        filters: convertSdkFiltersToTiger(updatedFilters) ?? [],
+        filters:
+            convertSdkFiltersToTiger(
+                filterContext.filters.map((filter, index) => addFilterLocalIdentifier(filter, index)),
+            ) ?? [],
         version: "2",
     };
 }
 
 export function convertFilterViewContextToBackend(
     filterContext: IFilterContextDefinition,
-    useDateFilterLocalIdentifiers?: boolean,
     tabLocalIdentifier?: string,
     parameters?: IDashboardParameter[],
 ): AnalyticalDashboardModelV2.IFilterContextWithTab {
-    const updatedFilterContext = convertFilterContextToBackend(filterContext, useDateFilterLocalIdentifiers);
+    const updatedFilterContext = convertFilterContextToBackend(filterContext);
 
     return {
         ...updatedFilterContext,

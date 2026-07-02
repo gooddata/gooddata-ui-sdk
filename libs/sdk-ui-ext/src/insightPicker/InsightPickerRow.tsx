@@ -13,7 +13,6 @@ interface IInsightPickerRowProps {
     width: number;
     isSelected: boolean;
     hasMenu: boolean;
-    enableDescriptions?: boolean;
     metadataTimeZone?: string;
     menuActions?: IInsightPickerProps["menuActions"];
     renderMenu?: IInsightPickerProps["renderMenu"];
@@ -27,7 +26,6 @@ export function InsightPickerRow({
     width,
     isSelected,
     hasMenu,
-    enableDescriptions,
     metadataTimeZone,
     menuActions,
     renderMenu,
@@ -57,7 +55,7 @@ export function InsightPickerRow({
             <InsightListItem
                 title={entry.title}
                 description={entry.description?.trim()}
-                showDescriptionPanel={enableDescriptions}
+                showDescriptionPanel
                 type={type}
                 width={hasMenu ? width - 36 : width}
                 updated={entry.updated ?? entry.created}

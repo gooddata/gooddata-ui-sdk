@@ -16,7 +16,6 @@ import { type VisType } from "@gooddata/sdk-ui";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { useDashboardScheduledEmails } from "../../../model/react/useDasboardScheduledEmails/useDashboardScheduledEmails.js";
 import { useDashboardAlerts } from "../../../model/react/useDashboardAlerting/useDashboardAlerts.js";
-import { selectSettings } from "../../../model/store/config/configSelectors.js";
 import { selectInsightsMap } from "../../../model/store/insights/insightsSelectors.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 import { DashboardItem } from "../../presentationComponents/DashboardItems/DashboardItem.js";
@@ -98,7 +97,6 @@ export function ViewModeDashboardVisualizationSwitcherContent({
 }: IViewModeDashboardVisualizationSwitcherContentProps) {
     const intl = useIntl();
     const visType = insightVisualizationType(insight) as VisType;
-    const settings = useDashboardSelector(selectSettings);
 
     const { showOthers } = useExecutionProgress();
 
@@ -221,11 +219,13 @@ export function ViewModeDashboardVisualizationSwitcherContent({
         [InsightMenuComponentProvider, insight, activeVisualization],
     );
 
-    const accessibilityWidgetDescription = settings.enableDescriptions
-        ? activeVisualization.configuration?.description?.source === "widget" || !insight
-            ? activeVisualization.description
-            : insight.insight.summary
-        : "";
+    const descriptionConfig = activeVisualization.configuration?.description;
+    const accessibilityWidgetDescription =
+        descriptionConfig?.visible === false
+            ? ""
+            : descriptionConfig?.source === "widget" || !insight
+              ? activeVisualization.description
+              : insight.insight.summary;
 
     const { isWidgetAsTable, toggleWidgetAsTable } = useShowAsTable(activeVisualization);
     const widgetContainerRef = useRef<HTMLDivElement>(null);
@@ -258,13 +258,11 @@ export function ViewModeDashboardVisualizationSwitcherContent({
                 )}
                 renderBeforeVisualization={() => (
                     <div className="gd-absolute-row">
-                        {settings?.enableDescriptions ? (
-                            <InsightWidgetDescriptionTrigger
-                                insight={insight}
-                                widget={activeVisualization}
-                                screen={screen}
-                            />
-                        ) : null}
+                        <InsightWidgetDescriptionTrigger
+                            insight={insight}
+                            widget={activeVisualization}
+                            screen={screen}
+                        />
                         {/* AsTable button: show for all except table, repeater, headline */}
                         {(() => {
                             const visType = insightVisualizationType(insight);

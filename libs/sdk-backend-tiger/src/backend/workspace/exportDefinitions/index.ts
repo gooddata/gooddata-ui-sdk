@@ -36,7 +36,6 @@ import {
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { objRefToIdentifier } from "../../../utils/api.js";
 
-import { exportDefinitionsListComparator } from "./comparator.js";
 import { ExportDefinitionsQuery } from "./exportDefinitionsQuery.js";
 
 export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefinitionsService {
@@ -75,21 +74,11 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
                 });
         });
 
-        // Remove when API starts to support sort=modifiedBy,createdBy,insight.title
-        // (first verify that modifiedBy,createdBy behave as the code below, i.e., use createdBy if modifiedBy is
-        // not defined as it is missing for the insights that were just created and never updated, also title
-        // should be compared in case-insensitive manner)
-
-        const sanitizedOrder =
-            requestParameters.sort === undefined && allExportDefinitions.length > 0
-                ? [...allExportDefinitions].sort(exportDefinitionsListComparator)
-                : allExportDefinitions;
-
         /*
          * The InMemory paging here is used similarly here as in the insights service getInsights method and is only a temporary solution.
          * TODO: replace InMemoryPaging with ServerPaging (https://gooddata.atlassian.net/browse/STL-397) once https://gooddata.atlassian.net/browse/STL-369 has been implemented for insights service.
          */
-        return new InMemoryPaging(sanitizedOrder, options?.limit ?? 50, options?.offset ?? 0);
+        return new InMemoryPaging(allExportDefinitions, options?.limit ?? 50, options?.offset ?? 0);
     };
 
     public getExportDefinitionsQuery = (): IExportDefinitionsQuery => {
@@ -101,7 +90,9 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
     ): EntitiesApiGetAllEntitiesExportDefinitionsRequest => {
         const orderBy = options?.orderBy;
         const usesOrderingByUpdated = !orderBy || orderBy === "updated";
-        const sortConfiguration = usesOrderingByUpdated ? {} : { sort: [orderBy] }; // sort: ["modifiedAt", "createdAt"]
+        const sortConfiguration = usesOrderingByUpdated
+            ? { sort: ["modifiedAt,createdAt,title,desc"] }
+            : { sort: [orderBy] };
         const includeUser =
             options?.loadUserData || options?.author
                 ? { include: ["createdBy" as const, "modifiedBy" as const] }

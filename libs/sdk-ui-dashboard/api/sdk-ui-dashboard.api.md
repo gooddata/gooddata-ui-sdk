@@ -6137,13 +6137,13 @@ export type IInsightDraggingComponentProps = {
 // @internal (undocumented)
 export interface IInsightListProps {
     // (undocumented)
-    enableDescriptions?: boolean;
-    // (undocumented)
     height?: number;
     // (undocumented)
     onSelect?: (insight: IInsight) => void;
     // (undocumented)
-    renderItem?: (props: IRenderListItemProps<IInsight>) => ReactElement;
+    renderItem?: (props: IRenderListItemProps<IInsight | {
+        divider: true;
+    }>) => ReactElement;
     // (undocumented)
     searchAutofocus?: boolean;
     // (undocumented)
@@ -9110,8 +9110,6 @@ export interface IUseInsightMenuConfig {
     // (undocumented)
     isAlertManagementVisible: boolean;
     // (undocumented)
-    isAutomationManagementEnabled: boolean;
-    // (undocumented)
     isDataError: boolean;
     // (undocumented)
     isExporting: boolean;
@@ -10767,12 +10765,6 @@ export const selectEffectiveParameterValuesForWidget: (ref: ObjRef | undefined) 
 // @internal
 export const selectEnableAccessibilityMode: DashboardSelector<boolean>;
 
-// @alpha (undocumented)
-export const selectEnableAlertAttributes: DashboardSelector<boolean>;
-
-// @alpha (undocumented)
-export const selectEnableAlerting: DashboardSelector<boolean>;
-
 // @internal
 export const selectEnableAlertsEvaluationFrequencySetup: DashboardSelector<boolean>;
 
@@ -10781,15 +10773,6 @@ export const selectEnableAnomalyDetectionAlert: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableAutomationEvaluationMode: DashboardSelector<boolean>;
-
-// @internal
-export const selectEnableAutomationManagement: DashboardSelector<boolean>;
-
-// @alpha (undocumented)
-export const selectEnableAutomations: DashboardSelector<boolean>;
-
-// @alpha (undocumented)
-export const selectEnableComparisonInAlerting: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableCustomizedDashboardsWithoutPluginOverlay: DashboardSelector<boolean>;
@@ -10814,9 +10797,6 @@ export const selectEnableDashboardShareLink: DashboardSelector<boolean>;
 
 // @internal (undocumented)
 export const selectEnableDashboardTabularExport: DashboardSelector<boolean>;
-
-// @internal
-export const selectEnableDateFilterIdentifiers: DashboardSelector<boolean>;
 
 // @internal (undocumented)
 export const selectEnableExecutionCancelling: DashboardSelector<boolean>;
@@ -10843,12 +10823,6 @@ export const selectEnableFiscalCalendars: DashboardSelector<boolean>;
 export const selectEnableImmediateAttributeFilterDisplayAsLabelMigration: DashboardSelector<boolean>;
 
 // @internal
-export const selectEnableInPlatformNotifications: DashboardSelector<boolean>;
-
-// @internal
-export const selectEnableKDCrossFiltering: DashboardSelector<boolean>;
-
-// @internal
 export const selectEnableKDDependentFilters: DashboardSelector<boolean>;
 
 // @alpha
@@ -10857,12 +10831,8 @@ export const selectEnableKDEmptyDateValuesFilter: DashboardSelector<boolean>;
 // @internal
 export const selectEnableKDRichText: DashboardSelector<boolean>;
 
-// @public
-export const selectEnableKPIDashboardExportPDF: DashboardSelector<string | number | boolean | object>;
-
 // @alpha
 export const selectEnableMeasureValueFilterKD: DashboardSelector<boolean>;
-
 
 // @internal
 export const selectEnableNewScheduledExport: DashboardSelector<boolean>;
@@ -10876,14 +10846,8 @@ export const selectEnableParameters: DashboardSelector<boolean>;
 // @internal
 export const selectEnableRichTextDescriptions: DashboardSelector<boolean>;
 
-// @internal (undocumented)
-export const selectEnableRichTextDynamicReferences: DashboardSelector<boolean>;
-
 // @alpha
 export const selectEnableRichTextWidgetFilterConfiguration: DashboardSelector<boolean>;
-
-// @alpha (undocumented)
-export const selectEnableScheduling: DashboardSelector<boolean>;
 
 // @internal (undocumented)
 export const selectEnableSlideshowExports: DashboardSelector<boolean>;
@@ -10896,7 +10860,6 @@ export const selectEnableSnapshotExportAccessibility: DashboardSelector<boolean>
 
 // @internal
 export const selectEnableUnavailableItemsVisibility: DashboardSelector<boolean>;
-
 
 // @alpha (undocumented)
 export const selectEntitlementMaxAutomationRecipients: DashboardSelector<IEntitlementDescriptor | undefined>;
@@ -11263,9 +11226,6 @@ export const selectIsAttributeFilterDependentByLocalIdentifier: (attributeFilter
 
 // @internal
 export const selectIsAttributeFilterDependentByLocalIdentifierForTab: (attributeFilterLocalIdentifier: string, tabLocalIdentifier: string) => DashboardSelector<boolean>;
-
-// @internal (undocumented)
-export function selectIsAutomationDialogSecondaryTitleVisible(state: DashboardState): boolean;
 
 // @internal (undocumented)
 export const selectIsCancelEditModeDialogOpen: DashboardSelector<boolean>;
@@ -13324,12 +13284,12 @@ export const useDashboardScheduledEmails: () => {
     isScheduleEmailingDialogOpen: boolean;
     defaultOnScheduleEmailing: (widget?: IWidget | undefined) => void;
     onScheduleEmailingOpen: (widget?: IWidget | undefined) => void;
-    onScheduleEmailingCancel: (widget?: IWidget | undefined) => void;
-    onScheduleEmailingBack: (widget?: IWidget | undefined) => void;
+    onScheduleEmailingCancel: (_widget?: IWidget | undefined) => void;
+    onScheduleEmailingBack: (_widget?: IWidget | undefined) => void;
     onScheduleEmailingCreateError: () => void;
     onScheduleEmailingCreateSuccess: (scheduledEmail: IAutomationMetadataObject) => void;
     onScheduleEmailingSaveError: () => void;
-    onScheduleEmailingSaveSuccess: (widget?: IWidget | undefined) => void;
+    onScheduleEmailingSaveSuccess: (_widget?: IWidget | undefined) => void;
     isScheduledManagementEmailingVisible: boolean;
     isScheduleEmailingManagementDialogOpen: boolean;
     defaultOnScheduleEmailingManagement: (widget?: IWidget | undefined) => void;

@@ -1,8 +1,8 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import { useBackendStrict } from "@gooddata/sdk-ui";
+import { useAutoupdateRef, useBackendStrict } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../locales.js";
@@ -13,22 +13,35 @@ import {
 } from "../types.js";
 import {
     dataSourcePermissionsAssignmentToGrantedDataSource,
+    dedupeGrantedDataSources,
+    dedupeGrantedWorkspaces,
     grantedDataSourceAsPermissionAssignment,
     grantedWorkspaceAsPermissionAssignment,
-    sortByName,
     workspacePermissionsAssignmentToGrantedWorkspace,
 } from "../utils.js";
 
-export const usePermissions = (
-    id: string,
-    subjectType: WorkspacePermissionSubject,
-    organizationId: string,
-    onSuccess: () => void,
-) => {
+export interface IUsePermissionsParams {
+    id: string;
+    subjectType: WorkspacePermissionSubject;
+    organizationId: string;
+    onSuccess: () => void;
+}
+
+export const usePermissions = ({ id, subjectType, organizationId, onSuccess }: IUsePermissionsParams) => {
     const { addSuccess, addError } = useToastMessage();
+    // useToastMessage returns a freshly-created addError on every render. Hold the latest in a ref so
+    // reloadPermissions can stay referentially stable (it feeds the mount effect below) without
+    // re-running that effect - and thus refetching - on every render.
+    const addErrorRef = useAutoupdateRef(addError);
     const backend = useBackendStrict();
+    // Effective permissions (direct + inherited via groups / workspace hierarchy), each tagged with
+    // its access source. Inherited entries are rendered read-only.
     const [grantedWorkspaces, setGrantedWorkspaces] = useState<IGrantedWorkspace[] | undefined>(undefined);
     const [grantedDataSources, setGrantedDataSources] = useState<IGrantedDataSource[] | undefined>(undefined);
+    // Reloads fire from mount and from each mutation, so several can be in flight at once. Stamp every
+    // reload and only commit the one that is still the latest, so a slow earlier fetch cannot overwrite
+    // a newer result with stale data.
+    const latestReloadId = useRef(0);
     // setup API factories based on the subject we are working with
     const { getPermissions } = useMemo(() => {
         if (subjectType === "user") {
@@ -41,19 +54,46 @@ export const usePermissions = (
         };
     }, [backend, organizationId, subjectType]);
 
-    // load initial permissions
+    // Loads the subject's effective permissions. Re-run after every mutation so the displayed state
+    // reflects the server instead of optimistically-patched local arrays.
+    const reloadPermissions = useCallback(async () => {
+        const reloadId = ++latestReloadId.current;
+        const isStale = () => reloadId !== latestReloadId.current;
+        try {
+            const assignments = await getPermissions(id);
+            if (isStale()) {
+                return;
+            }
+            setGrantedWorkspaces(
+                dedupeGrantedWorkspaces(
+                    assignments.workspacePermissions.map(workspacePermissionsAssignmentToGrantedWorkspace),
+                ),
+            );
+            setGrantedDataSources(
+                dedupeGrantedDataSources(
+                    assignments.dataSourcePermissions.map(dataSourcePermissionsAssignmentToGrantedDataSource),
+                ),
+            );
+        } catch (error) {
+            // A superseded reload's failure is irrelevant - a newer one governs the displayed state.
+            if (isStale()) {
+                return;
+            }
+            // Surface the error on its own rather than letting it reach a mutation's catch, which would
+            // mislabel it as a failed mutation.
+            console.error("Loading of permissions failed", error);
+            addErrorRef.current(messages.permissionsLoadFailure);
+            // Settle the lists so a first-load failure leaves the dialog with a terminal (empty) state to
+            // render instead of an endless loading spinner; a failure after a successful load keeps the
+            // last-known list on screen.
+            setGrantedWorkspaces((current) => current ?? []);
+            setGrantedDataSources((current) => current ?? []);
+        }
+    }, [getPermissions, id, addErrorRef]);
+
     useEffect(() => {
-        void getPermissions(id).then((assignments) => {
-            const workspaces = assignments.workspacePermissions.map((w) =>
-                workspacePermissionsAssignmentToGrantedWorkspace(w),
-            );
-            const dataSources = assignments.dataSourcePermissions.map(
-                dataSourcePermissionsAssignmentToGrantedDataSource,
-            );
-            setGrantedWorkspaces(workspaces);
-            setGrantedDataSources(dataSources);
-        });
-    }, [getPermissions, id, organizationId]);
+        void reloadPermissions();
+    }, [reloadPermissions]);
 
     const removeGrantedWorkspace = (removedWorkspace: IGrantedWorkspace) => {
         backend
@@ -65,8 +105,8 @@ export const usePermissions = (
             })
             .then(() => {
                 addSuccess(messages.workspaceRemovedSuccess);
-                setGrantedWorkspaces(grantedWorkspaces?.filter((item) => item.id !== removedWorkspace.id));
                 onSuccess();
+                void reloadPermissions();
             })
             .catch((error) => {
                 console.error("Removal of workspace permission failed", error);
@@ -84,8 +124,8 @@ export const usePermissions = (
             })
             .then(() => {
                 addSuccess(messages.dataSourceRemovedSuccess);
-                setGrantedDataSources(grantedDataSources?.filter((item) => item.id !== removedDataSource.id));
                 onSuccess();
+                void reloadPermissions();
             })
             .catch((error) => {
                 console.error("Removal of data source permission failed", error);
@@ -94,12 +134,7 @@ export const usePermissions = (
     };
 
     const updateGrantedWorkspace = (workspace: IGrantedWorkspace) => {
-        const updatedWorkspace = grantedWorkspaces?.find((item) => item.id === workspace.id);
-        const updatedWorkspaces = [
-            ...(grantedWorkspaces ?? []).filter((item) => item !== updatedWorkspace),
-            workspace,
-        ].sort(sortByName);
-
+        const previousWorkspace = grantedWorkspaces?.find((item) => item.id === workspace.id);
         backend
             .organization(organizationId)
             .permissions()
@@ -109,10 +144,12 @@ export const usePermissions = (
             })
             .then(() => {
                 addSuccess(messages.workspaceChangeSuccess);
-                setGrantedWorkspaces(updatedWorkspaces);
-                if (updatedWorkspace?.isHierarchical !== workspace.isHierarchical) {
+                // Toggling hierarchy changes which child workspaces are reachable, so the effective
+                // (overview) data needs refreshing; a plain level change does not.
+                if (previousWorkspace?.isHierarchical !== workspace.isHierarchical) {
                     onSuccess();
                 }
+                void reloadPermissions();
             })
             .catch((error) => {
                 console.error("Change of workspace permission failed", error);
@@ -121,11 +158,6 @@ export const usePermissions = (
     };
 
     const updateGrantedDataSource = (dataSource: IGrantedDataSource) => {
-        const updatedDataSources = [
-            ...(grantedDataSources ?? []).filter((item) => item.id !== dataSource.id),
-            dataSource,
-        ].sort(sortByName);
-
         backend
             .organization(organizationId)
             .permissions()
@@ -135,8 +167,8 @@ export const usePermissions = (
             })
             .then(() => {
                 addSuccess(messages.dataSourceChangeSuccess);
-                setGrantedDataSources(updatedDataSources);
                 onSuccess();
+                void reloadPermissions();
             })
             .catch((error) => {
                 console.error("Change of data source permission failed", error);
@@ -144,27 +176,21 @@ export const usePermissions = (
             });
     };
 
-    // update internal array with workspaces after applied changed in workspaces edit mode
-    const onWorkspacesChanged = (workspaces: IGrantedWorkspace[]) => {
-        const unchangedWorkspaces = grantedWorkspaces?.filter(
-            (item) => !workspaces.some((w) => w.id === item.id),
-        );
-        setGrantedWorkspaces([...(unchangedWorkspaces ?? []), ...workspaces].sort(sortByName));
+    // Called after the add/edit flows have applied their changes; just re-sync from the server.
+    const onWorkspacesChanged = () => {
         onSuccess();
+        void reloadPermissions();
     };
 
-    // update internal array with data sources after applied changed in data sources edit mode
-    const onDataSourcesChanged = (dataSources: IGrantedDataSource[]) => {
-        const unchangedDataSources = grantedDataSources?.filter(
-            (item) => !dataSources.some((w) => w.id === item.id),
-        );
-        setGrantedDataSources([...(unchangedDataSources ?? []), ...dataSources].sort(sortByName));
+    const onDataSourcesChanged = () => {
         onSuccess();
+        void reloadPermissions();
     };
 
     return {
         grantedWorkspaces,
         grantedDataSources,
+        reloadPermissions,
         onWorkspacesChanged,
         onDataSourcesChanged,
         removeGrantedWorkspace,

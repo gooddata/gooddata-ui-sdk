@@ -35,8 +35,6 @@ import { useDashboardEventDispatch } from "../../../../model/react/useDashboardE
 import { useDashboardUserInteraction } from "../../../../model/react/useDashboardUserInteraction.js";
 import { selectSupportsCrossFiltering } from "../../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
 import {
-    selectEnableDateFilterIdentifiers,
-    selectEnableKDCrossFiltering,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
     selectIsDisableUserFilterReset,
     selectIsDisabledCrossFiltering,
@@ -99,17 +97,11 @@ const normalizeFiltersForComparison = (filters: FilterContextItem[]): FilterCont
     });
 };
 
-const shouldIgnoreDateFilterLocalIdentifiers = (
-    enableDateFilterIdentifiers: boolean,
-    originalFilters: FilterContextItem[],
-): boolean => {
-    // When date filter identifiers are enabled and original filters do not have identifiers yet,
+const shouldIgnoreDateFilterLocalIdentifiers = (originalFilters: FilterContextItem[]): boolean => {
+    // When original filters do not have identifiers yet,
     // we omit them in current filters to avoid false positive results when comparing the objects
-    return (
-        enableDateFilterIdentifiers &&
-        originalFilters.some(
-            (filter) => isDashboardDateFilter(filter) && dashboardFilterLocalIdentifier(filter) === undefined,
-        )
+    return originalFilters.some(
+        (filter) => isDashboardDateFilter(filter) && dashboardFilterLocalIdentifier(filter) === undefined,
     );
 };
 
@@ -130,12 +122,8 @@ const removeDateFilterLocalIdentifier = (filter: FilterContextItem): FilterConte
 const sanitizeFilters = (
     currentFilters: FilterContextItem[],
     originalFilters: FilterContextItem[],
-    enableDateFilterIdentifiers: boolean,
 ): FilterContextItem[] => {
-    const shouldRemoveIdentifiers = shouldIgnoreDateFilterLocalIdentifiers(
-        enableDateFilterIdentifiers,
-        originalFilters,
-    );
+    const shouldRemoveIdentifiers = shouldIgnoreDateFilterLocalIdentifiers(originalFilters);
 
     return shouldRemoveIdentifiers ? currentFilters.map(removeDateFilterLocalIdentifier) : currentFilters;
 };
@@ -184,17 +172,11 @@ const computeResetEligibility = (
 };
 
 const isCrossFilteringEnabled = (
-    enableKDCrossFiltering: boolean,
     supportsCrossFiltering: boolean,
     disableCrossFiltering: boolean,
     disableCrossFilteringByConfig: boolean,
 ): boolean => {
-    return (
-        enableKDCrossFiltering &&
-        supportsCrossFiltering &&
-        !disableCrossFiltering &&
-        !disableCrossFilteringByConfig
-    );
+    return supportsCrossFiltering && !disableCrossFiltering && !disableCrossFilteringByConfig;
 };
 
 /**
@@ -212,7 +194,6 @@ export const useResetFiltersButton = (): {
     const isEditMode = useDashboardSelector(selectIsInEditMode);
     const originalFilters = useDashboardSelector(selectOriginalFilterContextFilters);
     const currentFilters = useDashboardSelector(selectFilterContextFilters);
-    const enableKDCrossFiltering = useDashboardSelector(selectEnableKDCrossFiltering);
     const supportsCrossFiltering = useDashboardSelector(selectSupportsCrossFiltering);
     const disableCrossFilteringByConfig = useDashboardSelector(selectIsDisabledCrossFiltering);
     const disableCrossFiltering = useDashboardSelector(selectDisableDashboardCrossFiltering);
@@ -220,7 +201,6 @@ export const useResetFiltersButton = (): {
     const disableUserFilterReset = useDashboardSelector(selectDisableDashboardUserFilterReset);
     const isWorkingFilterContextChanged = useDashboardSelector(selectIsWorkingFilterContextChanged);
     const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
-    const enableDateFilterIdentifiers = useDashboardSelector(selectEnableDateFilterIdentifiers);
     const activeTabId = useDashboardSelector(selectActiveTabLocalIdentifier);
     const parameterResetTargets = useDashboardSelector(selectActiveTabParameterResetTargets);
     const hasResettableParameter = parameterResetTargets.length > 0;
@@ -237,8 +217,8 @@ export const useResetFiltersButton = (): {
     );
 
     const sanitizedCurrentFilters = useMemo(
-        () => sanitizeFilters(currentFilters, originalFilters, enableDateFilterIdentifiers),
-        [enableDateFilterIdentifiers, originalFilters, currentFilters],
+        () => sanitizeFilters(currentFilters, originalFilters),
+        [originalFilters, currentFilters],
     );
 
     // Normalize filters for comparison to handle "all time" common date filters consistently
@@ -278,7 +258,6 @@ export const useResetFiltersButton = (): {
     const canReset = canResetFilters || canResetWorkingContext || canResetParameters;
 
     const crossFilteringEnabled = isCrossFilteringEnabled(
-        enableKDCrossFiltering,
         supportsCrossFiltering,
         disableCrossFiltering,
         disableCrossFilteringByConfig,
@@ -309,9 +288,7 @@ export const useResetFiltersButton = (): {
                     commonDateFilter ??
                         newAllTimeDashboardDateFilter(
                             undefined,
-                            enableDateFilterIdentifiers
-                                ? generateDateFilterLocalIdentifier(0, undefined)
-                                : undefined,
+                            generateDateFilterLocalIdentifier(0, undefined),
                         ),
                     ...otherFilters,
                 ]),
@@ -352,7 +329,6 @@ export const useResetFiltersButton = (): {
         parametersStateReset,
         newlyAddedFiltersLocalIds,
         userFilterResetAllowed,
-        enableDateFilterIdentifiers,
         isApplyAllAtOnceEnabledAndSet,
         addSuccess,
     ]);

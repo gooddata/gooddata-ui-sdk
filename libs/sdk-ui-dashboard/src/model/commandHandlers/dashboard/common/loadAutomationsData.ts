@@ -16,7 +16,7 @@ export async function loadAutomationsData(
 }> {
     const [notificationChannelsCount, workspaceAutomationsCount] = await Promise.all([
         loadNotificationChannelsCount(ctx, settings),
-        loadWorkspaceAutomationsCount(ctx, settings),
+        loadWorkspaceAutomationsCount(ctx),
     ]);
 
     return {

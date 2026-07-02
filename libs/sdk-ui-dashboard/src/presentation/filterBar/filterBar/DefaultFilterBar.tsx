@@ -44,7 +44,6 @@ import { useDashboardDispatch, useDashboardSelector } from "../../../model/react
 import { selectSupportsElementUris } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
 import {
     selectEnableDashboardFilterGroups,
-    selectEnableDateFilterIdentifiers,
     selectEnableMeasureValueFilterKD,
     selectEnableParameters,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
@@ -104,8 +103,6 @@ export const useFilterBarProps = (): IFilterBarProps => {
         : allWorkingFilters.filter((f) => !isDashboardMeasureValueFilter(f));
 
     const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
-    const enableDateFilterIdentifiers = useDashboardSelector(selectEnableDateFilterIdentifiers);
-
     const dispatch = useDashboardDispatch();
     const onAttributeFilterChanged = useCallback(
         (
@@ -250,10 +247,7 @@ export const useFilterBarProps = (): IFilterBarProps => {
                     ),
                 );
             } else if (isAllTimeDashboardDateFilter(filter)) {
-                const localIdentifier =
-                    (filter?.dateFilter.localIdentifier ?? enableDateFilterIdentifiers)
-                        ? generateDateFilterLocalIdentifier(0, filter?.dateFilter.dataSet)
-                        : undefined;
+                const localIdentifier = generateDateFilterLocalIdentifier(0, filter?.dateFilter.dataSet);
                 // all time filter
                 dispatch(
                     clearDateFilterSelection(
@@ -279,9 +273,7 @@ export const useFilterBarProps = (): IFilterBarProps => {
                     .filter(isDashboardDateFilter)
                     .findIndex((filter) => areObjRefsEqual(filter.dateFilter.dataSet, dataSet));
                 const sanitizedFilterIndex = filterIndex < 0 ? 0 : filterIndex;
-                const newLocalIdentifier = enableDateFilterIdentifiers
-                    ? generateDateFilterLocalIdentifier(sanitizedFilterIndex, dataSet)
-                    : undefined;
+                const newLocalIdentifier = generateDateFilterLocalIdentifier(sanitizedFilterIndex, dataSet);
                 dispatch(
                     changeDateFilterSelection(
                         type,
@@ -299,7 +291,7 @@ export const useFilterBarProps = (): IFilterBarProps => {
                 );
             }
         },
-        [dispatch, isApplyAllAtOnceEnabledAndSet, filters, enableDateFilterIdentifiers],
+        [dispatch, isApplyAllAtOnceEnabledAndSet, filters],
     );
 
     const onMeasureValueFilterChanged = useCallback(

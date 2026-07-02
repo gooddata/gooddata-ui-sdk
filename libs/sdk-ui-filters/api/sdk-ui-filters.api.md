@@ -1381,6 +1381,8 @@ export interface IRankingFilterDropdownProps {
     anchorEl?: HTMLElement | string;
     // (undocumented)
     attributeItems: IAttributeDropdownItem[];
+    attributes?: IDimensionalityItem[];
+    catalogAttributes?: IDimensionalityItem[];
     // (undocumented)
     customGranularitySelection?: ICustomGranularitySelection;
     // (undocumented)
@@ -1389,6 +1391,10 @@ export interface IRankingFilterDropdownProps {
     enableRankingWithMvf?: boolean;
     // (undocumented)
     filter: IRankingFilter;
+    insightAttributes?: IDimensionalityItem[];
+    // (undocumented)
+    isAttributesSectionEnabled?: boolean;
+    loadCatalogAttributes?: (attributes: ObjRefInScope[]) => Promise<IDimensionalityItem[]>;
     // (undocumented)
     locale?: string;
     // (undocumented)

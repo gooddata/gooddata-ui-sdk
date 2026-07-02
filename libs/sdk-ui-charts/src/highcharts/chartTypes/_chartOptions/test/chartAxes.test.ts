@@ -56,7 +56,7 @@ describe("getYAxes default (single-axis) Y axis title", () => {
     });
 
     describe("with a control (threshold) measure", () => {
-        const enabled = { enableLineChartTrendThreshold: true, thresholdMeasures: [TARGET.localIdentifier] };
+        const enabled = { thresholdMeasures: [TARGET.localIdentifier] };
 
         it("shows the single regular measure's title, ignoring the control measure", () => {
             expect(getLineChartYAxisLabel([REVENUE, TARGET], enabled)).toBe("Revenue");
@@ -69,7 +69,6 @@ describe("getYAxes default (single-axis) Y axis title", () => {
         it("shows the title when only one regular measure remains among several control measures", () => {
             expect(
                 getLineChartYAxisLabel([REVENUE, TARGET, COSTS], {
-                    enableLineChartTrendThreshold: true,
                     thresholdMeasures: [TARGET.localIdentifier, COSTS.localIdentifier],
                 }),
             ).toBe("Revenue");
@@ -90,16 +89,9 @@ describe("getYAxes default (single-axis) Y axis title", () => {
             // counting - with two regular measures plotted the title stays hidden.
             expect(
                 getLineChartYAxisLabel([REVENUE, COSTS, TARGET], {
-                    enableLineChartTrendThreshold: true,
                     thresholdMeasures: [TARGET.localIdentifier],
                     thresholdExcludedMeasures: [COSTS.localIdentifier],
                 }),
-            ).toBe("");
-        });
-
-        it("does not exclude the control measure when the feature flag is off", () => {
-            expect(
-                getLineChartYAxisLabel([REVENUE, TARGET], { thresholdMeasures: [TARGET.localIdentifier] }),
             ).toBe("");
         });
 

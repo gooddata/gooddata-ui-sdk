@@ -1,9 +1,9 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 
 import cx from "classnames";
-import { FormattedMessage, defineMessage, useIntl } from "react-intl";
+import { defineMessage, useIntl } from "react-intl";
 
 import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { type IDashboardUrlBuilder, buildDashboardUrl, useBackend, useWorkspace } from "@gooddata/sdk-ui";
@@ -24,73 +24,73 @@ import {
 import { messages } from "../../../../locales.js";
 import { AUTOMATIONS_COLUMN_CONFIG, AUTOMATIONS_MAX_HEIGHT } from "../../../constants/automations.js";
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../../constants/zIndex.js";
-import { useAlertingManagementDialogContext } from "../../contexts/AlertingManagementDialogContext.js";
 import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
-import { ALERTING_DIALOG_ID } from "../DefaultAlertingDialog/constants.js";
-import { isMobileView } from "../DefaultAlertingDialog/utils/responsive.js";
-import { useAlertingDialogAccessibility } from "../hooks/useAlertingDialogAccessibility.js";
-import { useGetSupportedMeasures } from "../hooks/useGetSupportedMeasures.js";
+import { useScheduledEmailManagementDialogContext } from "../../contexts/ScheduledEmailManagementDialogContext.js";
+import { computeUseHostRoute } from "../../shared/utils/automationUtils.js";
+import { SCHEDULED_EMAIL_DIALOG_ID } from "../DefaultScheduledEmailDialog/constants.js";
+import { useScheduleEmailDialogAccessibility } from "../hooks/useScheduleEmailDialogAccessibility.js";
+import { isMobileView } from "../utils/responsive.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 
-interface IDefaultAlertingManagementDialogContentEnhancedProps {
+interface IDefaultScheduledEmailManagementDialogContentProps {
     onAdd?: () => void;
     onClose?: () => void;
-    onEdit: (alert: IAutomationMetadataObject) => void;
+    onEdit: (scheduledEmail: IAutomationMetadataObject) => void;
+    isLoadingScheduleData: boolean;
+    automations: IAutomationMetadataObject[];
 }
 
-/**
- * @internal
- */
-export function DefaultAlertingManagementDialogContentEnhanced({
+export function DefaultScheduledEmailManagementDialogContent({
     onAdd,
     onClose,
     onEdit,
-}: IDefaultAlertingManagementDialogContentEnhancedProps) {
+    isLoadingScheduleData,
+    automations,
+}: IDefaultScheduledEmailManagementDialogContentProps) {
     const intl = useIntl();
+    const isMobile = isMobileView();
     const workspace = useWorkspace();
     const backend = useBackend();
+
     const {
+        timezone,
+        locale,
+        settings,
         isWhiteLabeled,
+        isExecutionTimestampMode,
         externalRecipient: externalRecipientOverride,
         features: { canCreateAutomation },
     } = useAutomationsContext();
     const {
-        isAlertDialogOpen,
-        managementDialogContext,
-        enableAccessibilityMode,
         dashboardId,
         dashboardTitle,
+        enableAccessibilityMode,
+        isScheduleEmailDialogOpen: isEditDialogOpen,
         automationsInvalidationId,
         isEmbedded,
-        getWidgetByRef,
-        getInsightByWidgetRef,
-    } = useAlertingManagementDialogContext();
+        maxAutomations,
+        unlimitedAutomations,
+    } = useScheduledEmailManagementDialogContext();
 
-    const timezone = useAutomationsContext().timezone;
     const enableBulkActions = !enableAccessibilityMode;
-    const { returnFocusTo } = useAlertingDialogAccessibility();
+    const useHostRoute = computeUseHostRoute(settings);
+    const { returnFocusTo } = useScheduleEmailDialogAccessibility();
 
-    const settings = useAutomationsContext().settings;
-    const useHostRoute =
-        Boolean(settings?.enableShellApplication) && Boolean(settings?.enableShellApplication_dashboards);
-    const isMobile = isMobileView();
+    const maxAutomationsReached = automations.length >= maxAutomations && !unlimitedAutomations;
 
-    // Check if widget has metrics for alert creation
-    const widget = getWidgetByRef(managementDialogContext.widgetRef);
-    const insight = getInsightByWidgetRef(widget?.ref);
-    const supportedMeasures = useGetSupportedMeasures(
-        managementDialogContext.widgetRef ? insight : undefined,
+    const isAddButtonDisabled = useMemo(
+        () => isLoadingScheduleData || maxAutomationsReached || isExecutionTimestampMode,
+        [isLoadingScheduleData, maxAutomationsReached, isExecutionTimestampMode],
     );
-    const hasMetrics = supportedMeasures.length > 0;
 
     const availableFilters = externalRecipientOverride
         ? (["dashboard", "status"] as AutomationsAvailableFilters)
         : undefined;
 
     const helpTextId = isMobile
-        ? defineMessage({ id: "dialogs.alerting.footer.title.short" }).id
-        : defineMessage({ id: "dialogs.alerting.footer.title" }).id;
+        ? defineMessage({ id: "dialogs.schedule.email.footer.title.short" }).id
+        : defineMessage({ id: "dialogs.schedule.email.footer.title" }).id;
 
     const dashboardUrlBuilder: IDashboardUrlBuilder = useCallback(
         ({ workspaceId, dashboardId, tabId }) =>
@@ -110,23 +110,22 @@ export function DefaultAlertingManagementDialogContentEnhanced({
     return (
         <Dialog
             displayCloseButton
-            onCancel={onClose}
-            shouldCloseOnClick={() => false}
             autofocusOnOpen
+            onCancel={onClose}
             className={cx(
-                "gd-notifications-channels-management-dialog s-alerting-management-dialog",
+                "gd-notifications-channels-management-dialog s-scheduled-email-management-dialog",
                 "gd-dialog--wide gd-notifications-channels-management-dialog--wide",
                 "gd-dialog--no-padding",
             )}
             accessibilityConfig={{ titleElementId, isModal: true }}
-            returnFocusTo={returnFocusTo}
             returnFocusAfterClose
-            refocusKey={isAlertDialogOpen}
+            returnFocusTo={returnFocusTo}
+            refocusKey={isEditDialogOpen}
         >
             <OverlayControllerProvider overlayController={overlayController}>
                 <div className="gd-notifications-channels-management-dialog-title">
                     <Typography tagName="h3" className="gd-dialog-header" id={titleElementId}>
-                        <FormattedMessage id="dialogs.alerting.management.title" />
+                        {intl.formatMessage({ id: "dialogs.schedule.management.title" })}
                     </Typography>
                 </div>
                 <ContentDivider className="gd-content-divider--no-spacing" />
@@ -134,9 +133,9 @@ export function DefaultAlertingManagementDialogContentEnhanced({
                     <Automations
                         workspace={workspace}
                         timezone={timezone}
+                        type="schedule"
                         backend={backend}
                         scope="workspace"
-                        type="alert"
                         maxHeight={AUTOMATIONS_MAX_HEIGHT}
                         isMobileView={isMobile}
                         tableVariant="small"
@@ -151,28 +150,37 @@ export function DefaultAlertingManagementDialogContentEnhanced({
                         }}
                         enableBulkActions={enableBulkActions}
                         availableFilters={availableFilters}
-                        locale={intl.locale}
+                        locale={locale}
                         externalInvalidationId={automationsInvalidationId}
-                        dashboardUrlBuilder={dashboardUrlBuilder}
                         renderToolbarCustomElement={() =>
-                            managementDialogContext.widgetRef && canCreateAutomation ? (
+                            canCreateAutomation ? (
                                 <CreateButton
                                     onClick={onAdd}
-                                    hasMetrics={hasMetrics}
+                                    isDisabled={isAddButtonDisabled}
                                     label={intl.formatMessage({
-                                        id: messages.alertingManagementCreateNew.id,
+                                        id: messages.scheduleManagementCreateNew.id,
                                     })}
-                                    tooltipContent={intl.formatMessage({
-                                        id: messages.alertingCreateNoMeasureTooltip.id,
-                                    })}
+                                    tooltipContent={
+                                        maxAutomationsReached
+                                            ? intl.formatMessage({
+                                                  id: messages.scheduleManagementCreateTooMany.id,
+                                              })
+                                            : isExecutionTimestampMode
+                                              ? intl.formatMessage({
+                                                    id: messages.scheduleManagementExecutionTimestampMode.id,
+                                                })
+                                              : undefined
+                                    }
+                                    isTooltipDisabled={!maxAutomationsReached && !isExecutionTimestampMode}
                                     accessibilityConfig={{
                                         ariaHaspopup: "dialog",
-                                        ariaControls: ALERTING_DIALOG_ID,
+                                        ariaControls: SCHEDULED_EMAIL_DIALOG_ID,
                                     }}
                                 />
                             ) : null
                         }
                         selectedColumnDefinitions={AUTOMATIONS_COLUMN_CONFIG}
+                        dashboardUrlBuilder={dashboardUrlBuilder}
                     />
                 </div>
                 <ContentDivider className="gd-content-divider--no-spacing" />
@@ -180,7 +188,7 @@ export function DefaultAlertingManagementDialogContentEnhanced({
                     {isWhiteLabeled ? null : (
                         <Hyperlink
                             text={intl.formatMessage({ id: helpTextId })}
-                            href="https://www.gooddata.com/docs/cloud/create-dashboards/automation/alerts/"
+                            href="https://www.gooddata.com/docs/cloud/create-dashboards/automation/scheduled-exports/#ScheduleExportsinDashboards-ScheduleExport"
                             iconClass="gd-icon-circle-question"
                         />
                     )}
@@ -199,26 +207,35 @@ export function DefaultAlertingManagementDialogContentEnhanced({
 
 interface ICreateButtonProps {
     onClick?: () => void;
-    hasMetrics: boolean;
+    isDisabled: boolean;
     label: string;
-    tooltipContent: string;
+    tooltipContent: string | undefined;
+    isTooltipDisabled: boolean;
     accessibilityConfig?: IButtonAccessibilityConfig;
 }
 
-function CreateButton({ onClick, hasMetrics, label, tooltipContent }: ICreateButtonProps) {
+function CreateButton({
+    onClick,
+    isDisabled,
+    label,
+    tooltipContent,
+    isTooltipDisabled,
+    accessibilityConfig,
+}: ICreateButtonProps) {
     return (
         <UiTooltip
             optimalPlacement
             anchor={
                 <Button
                     onClick={onClick}
-                    size="small"
-                    className="gd-button-action s-add-alert-button"
+                    disabled={isDisabled}
                     value={label}
-                    disabled={!hasMetrics}
+                    size="small"
+                    className="gd-button-action"
+                    accessibilityConfig={accessibilityConfig}
                 />
             }
-            disabled={hasMetrics}
+            disabled={isTooltipDisabled}
             triggerBy={["hover"]}
             content={tooltipContent}
         />

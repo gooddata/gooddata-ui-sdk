@@ -14,11 +14,13 @@ import { Message } from "@gooddata/sdk-ui-kit";
 
 import { AUTOMATION_ATTACHMENTS_GROUP_LABEL_ID } from "../../../../../constants/automations.js";
 
+import { partitionAttachments } from "./attachmentFormats.js";
 import { AttachmentsList } from "./AttachmentsList.js";
 import { AttachmentsSelect } from "./AttachmentsSelect.js";
 import { AttachmentsWrapper } from "./AttachmentsWrapper.js";
 
-const SUPPORTED_DASHBOARD_ATTACHMENTS: DashboardAttachmentType[] = ["PDF", "PDF_SLIDES", "PPTX", "XLSX"];
+const ALL_DASHBOARD_ATTACHMENTS: DashboardAttachmentType[] = ["PDF", "PDF_SLIDES", "PPTX", "XLSX"];
+const SLIDE_DASHBOARD_ATTACHMENTS: DashboardAttachmentType[] = ["PDF_SLIDES", "PPTX"];
 
 export interface IDashboardAttachmentsProps {
     selectedAttachments: DashboardAttachmentType[];
@@ -27,6 +29,7 @@ export interface IDashboardAttachmentsProps {
     onDashboardAttachmentsChange: (formats: DashboardAttachmentType[], filters?: FilterContextItem[]) => void;
     xlsxSettings: IExportDefinitionVisualizationObjectSettings;
     onXlsxSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
+    isSlidesExportEnabled: boolean;
     defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
     exportTemplates?: IExportTemplate[];
     slidesTemplateIds?: { PPTX?: string; PDF_SLIDES?: string; PDF?: string };
@@ -43,12 +46,24 @@ export function DashboardAttachments({
     selectedAttachments,
     xlsxSettings,
     onXlsxSettingsChange,
+    isSlidesExportEnabled,
     defaultPdfPageSize,
     exportTemplates,
     slidesTemplateIds,
     onSlidesTemplateIdChange,
 }: IDashboardAttachmentsProps) {
     const intl = useIntl();
+
+    const {
+        available: availableAttachments,
+        visibleSelected: visibleSelectedAttachments,
+        hiddenSelected: hiddenSelectedFormats,
+    } = partitionAttachments(
+        ALL_DASHBOARD_ATTACHMENTS,
+        SLIDE_DASHBOARD_ATTACHMENTS,
+        selectedAttachments,
+        isSlidesExportEnabled,
+    );
     const attachmentListRef = useRef<HTMLDivElement>(null);
     const addButtonRef = useRef<HTMLButtonElement | null>(null);
     const [announcement, setAnnouncement] = useState("");
@@ -99,12 +114,9 @@ export function DashboardAttachments({
 
     const handleChange = (attachments: { type: DashboardAttachmentType; selected: boolean }[]) => {
         const formats = attachments
-            .filter(
-                (attachment) =>
-                    attachment.selected && SUPPORTED_DASHBOARD_ATTACHMENTS.includes(attachment.type),
-            )
+            .filter((attachment) => attachment.selected && availableAttachments.includes(attachment.type))
             .map((attachment) => attachment.type);
-        handleDashboardAttachmentSelectionSave(formats);
+        handleDashboardAttachmentSelectionSave([...formats, ...hiddenSelectedFormats]);
         // Focus add button after state update causes remount (returnFocusTo ref becomes stale)
         requestAnimationFrame(() => {
             addButtonRef.current?.focus();
@@ -127,7 +139,7 @@ export function DashboardAttachments({
                     onBlur={makeAttachmentGroupUnfocusable}
                 >
                     <AttachmentsList
-                        attachments={selectedAttachments}
+                        attachments={visibleSelectedAttachments}
                         onDelete={handleDelete}
                         xlsxSettings={xlsxSettings}
                         onXlsxSettingsChange={onXlsxSettingsChange}
@@ -138,7 +150,7 @@ export function DashboardAttachments({
                         onSlidesTemplateIdChange={onSlidesTemplateIdChange}
                     />
                     <AttachmentsSelect<DashboardAttachmentType>
-                        attachments={SUPPORTED_DASHBOARD_ATTACHMENTS.map((format) => ({
+                        attachments={availableAttachments.map((format) => ({
                             type: format,
                             selected: selectedAttachments.includes(format),
                         }))}

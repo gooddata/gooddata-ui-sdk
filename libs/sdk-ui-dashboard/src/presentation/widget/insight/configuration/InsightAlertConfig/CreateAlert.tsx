@@ -18,8 +18,6 @@ import { type AlertAttribute, type AlertMetric } from "../../../../automations/a
 import { EditAlert } from "./EditAlert.js";
 
 interface ICreateAlertProps {
-    canManageAttributes: boolean;
-    canManageComparison: boolean;
     execResult: IExecutionResultEnvelope | undefined;
     alert: IAutomationMetadataObjectDefinition | null;
     onClose: () => void;
@@ -40,8 +38,6 @@ interface ICreateAlertProps {
 }
 
 export function CreateAlert({
-    canManageAttributes,
-    canManageComparison,
     execResult,
     alert,
     onClose,
@@ -62,8 +58,6 @@ export function CreateAlert({
 }: ICreateAlertProps) {
     return (
         <EditAlert
-            canManageAttributes={canManageAttributes}
-            canManageComparison={canManageComparison}
             execResult={execResult}
             alert={alert as IAutomationMetadataObject}
             onClose={onClose}

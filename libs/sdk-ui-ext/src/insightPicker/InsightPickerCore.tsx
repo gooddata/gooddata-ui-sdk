@@ -31,7 +31,6 @@ export function InsightPickerCore({
     author,
     enabledVisualizationClassesUrls = [],
     selectedInsightId,
-    enableDescriptions,
     metadataTimeZone,
     searchQuery,
     onSearchChange,
@@ -256,7 +255,6 @@ export function InsightPickerCore({
                             width={itemWidth}
                             isSelected={isSelected}
                             hasMenu={hasMenu}
-                            enableDescriptions={enableDescriptions}
                             metadataTimeZone={metadataTimeZone}
                             menuActions={menuActions}
                             renderMenu={renderMenu}

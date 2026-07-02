@@ -94,6 +94,26 @@ export interface IOrganizationAssignee {
 }
 
 /**
+ * How a subject gains access to a workspace.
+ *
+ * @alpha
+ */
+export const WorkspaceAccessSourceValue = {
+    DIRECT: "DIRECT",
+    GROUP: "GROUP",
+    HIERARCHY: "HIERARCHY",
+} as const;
+
+/**
+ * Workspace access source values: directly assigned, inherited from a user group, or inherited from a
+ * parent workspace's hierarchy permission.
+ *
+ * @alpha
+ */
+export type WorkspaceAccessSource =
+    (typeof WorkspaceAccessSourceValue)[keyof typeof WorkspaceAccessSourceValue];
+
+/**
  * Descriptor contains details about workspace permission of organization user or user group.
  *
  * @alpha
@@ -103,6 +123,11 @@ export interface IWorkspacePermissionAssignment {
     workspace: IAssignedWorkspace;
     permissions: AssignedWorkspacePermission[];
     hierarchyPermissions: AssignedWorkspacePermission[];
+    /**
+     * How the subject gains access to the workspace. Present only when effective (inherited-aware)
+     * permissions were requested; absent for direct-only listings.
+     */
+    accessSource?: WorkspaceAccessSource;
 }
 
 /**
@@ -134,6 +159,24 @@ export type AssignedDataSourcePermission =
     (typeof AssignedDataSourcePermissionValue)[keyof typeof AssignedDataSourcePermissionValue];
 
 /**
+ * How a subject gains access to a data source.
+ *
+ * @alpha
+ */
+export const DataSourceAccessSourceValue = {
+    DIRECT: "DIRECT",
+    GROUP: "GROUP",
+} as const;
+
+/**
+ * Data source access source values: directly assigned or inherited from a user group.
+ *
+ * @alpha
+ */
+export type DataSourceAccessSource =
+    (typeof DataSourceAccessSourceValue)[keyof typeof DataSourceAccessSourceValue];
+
+/**
  * Descriptor contains details about data source permission of organization user or user group.
  *
  * @alpha
@@ -142,6 +185,11 @@ export interface IDataSourcePermissionAssignment {
     assigneeIdentifier: IOrganizationAssignee;
     dataSource: IAssignedDataSource;
     permissions: AssignedDataSourcePermission[];
+    /**
+     * How the subject gains access to the data source. Present only when effective (inherited-aware)
+     * permissions were requested; absent for direct-only listings.
+     */
+    accessSource?: DataSourceAccessSource;
 }
 
 /**

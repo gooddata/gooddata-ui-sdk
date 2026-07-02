@@ -28,7 +28,6 @@ const baseConfig: IUseInsightMenuConfig = {
     exportPowerPointPresentationDisabled: false,
     exportPngImageDisabled: false,
     exportPdfTabularDisabled: false,
-    isAutomationManagementEnabled: false,
     onExportXLSX: noop,
     onExportCSV: noop,
     onExportRawCSV: noop,

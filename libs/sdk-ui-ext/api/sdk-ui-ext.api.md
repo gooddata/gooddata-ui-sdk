@@ -9,6 +9,7 @@ import { AutomationType } from '@gooddata/sdk-backend-spi';
 import { ChartInlineVisualizationType } from '@gooddata/sdk-ui-charts';
 import { ComponentType } from 'react';
 import { CopyCodeOriginType } from '@gooddata/sdk-ui-kit';
+import { DataSourceAccessSource } from '@gooddata/sdk-model';
 import { Dispatch } from 'react';
 import { EmbedType } from '@gooddata/sdk-ui-kit';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
@@ -543,8 +544,10 @@ export interface IFluidLayoutDescriptor extends ILayoutDescriptor {
 
 // @internal (undocumented)
 export interface IGrantedDataSource {
+    accessSource?: DataSourceAccessSource;
     // (undocumented)
     id: string;
+    isInherited?: boolean;
     // (undocumented)
     permission: DataSourcePermission;
     // (undocumented)
@@ -613,8 +616,6 @@ export interface IInsightPickerProps {
     authorFilter: string[];
     // (undocumented)
     backend?: IAnalyticalBackend;
-    // (undocumented)
-    enableDescriptions?: boolean;
     // (undocumented)
     enabledVisualizationClassesUrls?: string[];
     // (undocumented)

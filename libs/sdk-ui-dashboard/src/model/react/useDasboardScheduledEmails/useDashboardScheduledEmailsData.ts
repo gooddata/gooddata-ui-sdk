@@ -13,11 +13,7 @@ import {
     selectAutomationsIsLoading,
     selectDashboardUserAutomationSchedulesInContext,
 } from "../../store/automations/automationsSelectors.js";
-import {
-    selectEnableExportToDocumentStorage,
-    selectEnableScheduling,
-    selectIsReadOnly,
-} from "../../store/config/configSelectors.js";
+import { selectEnableExportToDocumentStorage, selectIsReadOnly } from "../../store/config/configSelectors.js";
 import {
     selectEntitlementMaxAutomations,
     selectEntitlementUnlimitedAutomations,
@@ -67,9 +63,6 @@ export const useDashboardScheduledEmailsData = ({
     // Visibility configuration
     const menuButtonItemsVisibility = useDashboardSelector(selectMenuButtonItemsVisibility);
 
-    // Feature flags
-    const isScheduledEmailingEnabled = useDashboardSelector(selectEnableScheduling);
-
     // Permissions
     const isWorkspaceManager = useDashboardSelector(selectCanManageWorkspace);
     const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);
@@ -108,7 +101,6 @@ export const useDashboardScheduledEmailsData = ({
     const isSchedulingAvailable =
         isInViewMode &&
         !isReadOnly &&
-        isScheduledEmailingEnabled &&
         showDueToNumberOfAvailableDestinations &&
         (menuButtonItemsVisibility.scheduleEmailButton ?? true);
 

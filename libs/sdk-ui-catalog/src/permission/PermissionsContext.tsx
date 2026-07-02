@@ -37,3 +37,10 @@ export function useWorkspacePermission(permission: WorkspacePermission): boolean
     const { result } = usePermissionsState();
     return Boolean(result?.permissions?.[permission]);
 }
+
+export function useIsWhiteLabeled(): boolean {
+    // Unlike the hooks above, this reads the context optionally: callers may render
+    // outside the provider, where a missing provider means "not white-labeled".
+    const settings = useContext(PermissionsContext)?.result?.settings;
+    return Boolean(settings?.whiteLabeling?.enabled);
+}

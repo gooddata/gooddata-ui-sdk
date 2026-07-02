@@ -66,7 +66,6 @@ const automationsContextValue = {
     timezone: undefined,
     currentUser: { login: "u1", email: "u1@example.com", ref: idRef("u1") },
     features: {
-        enableExternalRecipients: false,
         enableAutomationEvaluationMode: false,
     },
 } as unknown as IAutomationsContextValue;

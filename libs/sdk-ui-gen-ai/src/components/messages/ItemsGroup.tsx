@@ -5,10 +5,11 @@ import { type ReactNode, useMemo, useState } from "react";
 import cx from "classnames";
 import { type IntlShape, defineMessages, useIntl } from "react-intl";
 
-import { LoadingSpinner, UiButton } from "@gooddata/sdk-ui-kit";
+import { UiButton } from "@gooddata/sdk-ui-kit";
 
+import { AIThinkingLoader, AIThinkingSummary } from "../utils/animation.js";
 import { type IChatMessagesGroup } from "../utils/groupUtility.js";
-import { removeMarkdown } from "../utils/markdownUtils.js";
+import { extractHeading } from "../utils/markdownUtils.js";
 
 interface IItemsGroupProps {
     previousGroup?: IChatMessagesGroup;
@@ -47,10 +48,15 @@ interface IReasoningItemsGroupProps extends IItemsGroupProps {
 }
 
 function ReasoningItemsGroup({ classNames, group, previousGroup, children }: IReasoningItemsGroupProps) {
-    const { lastMessage, isExpanded, setIsExpanded, isCompleted, isEmpty, duration } = useReasoningGroup(
+    const intl = useIntl();
+    const { headings, isExpanded, setIsExpanded, isCompleted, isEmpty, duration } = useReasoningGroup(
         previousGroup,
         group,
     );
+
+    if (isCompleted && isEmpty) {
+        return null;
+    }
 
     return (
         <div
@@ -65,21 +71,11 @@ function ReasoningItemsGroup({ classNames, group, previousGroup, children }: IRe
                 })}
             >
                 <span className="gd-gen-ai-chat__visually__hidden" aria-live="polite" aria-atomic="true">
-                    {lastMessage}
+                    {headings[headings.length - 1]}
                 </span>
-                {isCompleted && isEmpty ? (
+                {isCompleted ? (
                     <UiButton
-                        isDisabled
-                        label={lastMessage}
-                        dataTestId="reasoning"
-                        accessibilityConfig={{ ariaExpanded: false }}
-                        iconBefore="brain"
-                        iconBeforeSize={12}
-                        variant="tertiary"
-                    />
-                ) : (
-                    <UiButton
-                        label={lastMessage}
+                        label={intl.formatMessage({ id: "gd.gen-ai.routing.thinking-process" })}
                         dataTestId="reasoning"
                         onClick={() => setIsExpanded(!isExpanded)}
                         accessibilityConfig={{ ariaExpanded: isExpanded }}
@@ -87,6 +83,14 @@ function ReasoningItemsGroup({ classNames, group, previousGroup, children }: IRe
                         iconBeforeSize={12}
                         variant="tertiary"
                     />
+                ) : (
+                    <div
+                        className="gd-gen-ai-chat__messages__conversation-group--header--thinking"
+                        data-testid="reasoning"
+                    >
+                        <AIThinkingLoader size={30} />
+                        <AIThinkingSummary headings={headings} />
+                    </div>
                 )}
                 {isCompleted && duration ? (
                     <div className="gd-gen-ai-chat__messages__conversation-group--header--duration">
@@ -100,11 +104,6 @@ function ReasoningItemsGroup({ classNames, group, previousGroup, children }: IRe
                     data-testid="gen-ai-reasoning-group-content"
                 >
                     {children}
-                    {isCompleted ? null : (
-                        <div className="gd-gen-ai-chat__messages__conversation-group--content--loading">
-                            <LoadingSpinner className="gd-gen-ai-chat__messages__conversation-group--content--loading--spinner" />
-                        </div>
-                    )}
                 </div>
             ) : null}
         </div>
@@ -134,32 +133,25 @@ function useReasoningGroup(previousGroup: IChatMessagesGroup | undefined, group:
         );
     }, [group.messages]);
 
-    const messages = useMemo(() => {
-        let last = "";
-        return group.messages.map((m) => {
+    const headings = useMemo(() => {
+        const headings: string[] = [intl.formatMessage({ id: "gd.gen-ai.state.thinking" })];
+        group.messages.forEach((m) => {
             switch (m.content.type) {
-                case "reasoning":
-                    last = m.content.summary
-                        ? removeMarkdown(m.content.summary.slice(0, 40))
-                        : intl.formatMessage({ id: "gd.gen-ai.state.thinking" });
+                case "reasoning": {
+                    const last = m.content.summary ? extractHeading(m.content.summary) : undefined;
+                    if (last && headings[headings.length - 1] !== last) {
+                        headings.push(last);
+                    }
                     break;
+                }
                 case "toolCall":
                 case "toolResult":
                 default:
                     break;
             }
-            return last;
         });
+        return headings;
     }, [group.messages, intl]);
-
-    const lastMessage = useMemo(() => {
-        if (isCompleted) {
-            return intl.formatMessage({ id: "gd.gen-ai.routing.thinking-process" });
-        }
-
-        const lastMessageContent = messages[messages.length - 1];
-        return `${lastMessageContent || intl.formatMessage({ id: "gd.gen-ai.state.thinking" })}...`;
-    }, [intl, isCompleted, messages]);
 
     const duration = useMemo(() => {
         if (!previousGroup) {
@@ -176,8 +168,8 @@ function useReasoningGroup(previousGroup: IChatMessagesGroup | undefined, group:
     }, [group.messages, intl, previousGroup]);
 
     return {
+        headings,
         duration,
-        lastMessage,
         isEmpty,
         isCompleted,
         isExpanded,
@@ -187,7 +179,7 @@ function useReasoningGroup(previousGroup: IChatMessagesGroup | undefined, group:
 
 //duration
 
-function formatDuration(intl: IntlShape, ms: number): string {
+export function formatDuration(intl: IntlShape, ms: number): string {
     const messages = defineMessages({
         seconds: { id: "gd.gen-ai.state.seconds" },
         minutes: { id: "gd.gen-ai.state.minutes" },
@@ -195,13 +187,18 @@ function formatDuration(intl: IntlShape, ms: number): string {
 
     const seconds = Math.round((ms / 1000) * 100) / 100;
 
-    if (seconds < 60) {
-        return `${seconds}${intl.formatMessage(messages.seconds)}`;
-    }
-
     const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = Math.round((seconds % 60) * 100) / 100;
+    const remainingSeconds = Math.round(seconds % 60);
 
+    if (remainingSeconds === 60) {
+        return `${minutes + 1}${intl.formatMessage(messages.minutes)}`;
+    }
+    if (minutes === 0) {
+        return `${Math.max(remainingSeconds, 1)}${intl.formatMessage(messages.seconds)}`;
+    }
+    if (remainingSeconds === 0) {
+        return `${minutes}${intl.formatMessage(messages.minutes)}`;
+    }
     return `${minutes}${intl.formatMessage(messages.minutes)} ${remainingSeconds}${intl.formatMessage(messages.seconds)}`;
 }
 

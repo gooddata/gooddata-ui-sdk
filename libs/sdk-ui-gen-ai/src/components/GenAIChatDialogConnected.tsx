@@ -248,7 +248,6 @@ export function GenAIChatDialogConnected({
         } else {
             chatDispatcher(newMessageAction(makeUserMessage([makeTextContents(askedQuestion, [])])));
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isOpen, chatDispatcher, askedQuestion, askSeq, userContext, appendToChat, settings]);
 
     return (

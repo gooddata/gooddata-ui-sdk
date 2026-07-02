@@ -19,34 +19,25 @@ function createCtx(config: DashboardContext["config"] = {}): DashboardContext {
     };
 }
 
-const enabledSettings: ISettings = {
-    enableScheduling: true,
-    enableAlerting: true,
-};
+const settings: ISettings = {};
 
 describe("export mode skips non-essential calls", () => {
     describe("loadWorkspaceAutomationsCount", () => {
         it("should return 0 when isExport is true", async () => {
             const ctx = createCtx({ isExport: true });
-            const result = await loadWorkspaceAutomationsCount(ctx, enabledSettings);
+            const result = await loadWorkspaceAutomationsCount(ctx);
             expect(result).toBe(0);
         });
 
         it("should return 0 when initialRenderMode is export", async () => {
             const ctx = createCtx({ initialRenderMode: "export" });
-            const result = await loadWorkspaceAutomationsCount(ctx, enabledSettings);
+            const result = await loadWorkspaceAutomationsCount(ctx);
             expect(result).toBe(0);
         });
 
         it("should return 0 when isReadOnly is true", async () => {
             const ctx = createCtx({ isReadOnly: true });
-            const result = await loadWorkspaceAutomationsCount(ctx, enabledSettings);
-            expect(result).toBe(0);
-        });
-
-        it("should return 0 when scheduling and alerting are disabled", async () => {
-            const ctx = createCtx({});
-            const result = await loadWorkspaceAutomationsCount(ctx, {});
+            const result = await loadWorkspaceAutomationsCount(ctx);
             expect(result).toBe(0);
         });
     });
@@ -54,25 +45,19 @@ describe("export mode skips non-essential calls", () => {
     describe("loadNotificationChannelsCount", () => {
         it("should return 0 when isExport is true", async () => {
             const ctx = createCtx({ isExport: true });
-            const result = await loadNotificationChannelsCount(ctx, enabledSettings);
+            const result = await loadNotificationChannelsCount(ctx, settings);
             expect(result).toBe(0);
         });
 
         it("should return 0 when initialRenderMode is export", async () => {
             const ctx = createCtx({ initialRenderMode: "export" });
-            const result = await loadNotificationChannelsCount(ctx, enabledSettings);
+            const result = await loadNotificationChannelsCount(ctx, settings);
             expect(result).toBe(0);
         });
 
         it("should return 0 when isReadOnly is true", async () => {
             const ctx = createCtx({ isReadOnly: true });
-            const result = await loadNotificationChannelsCount(ctx, enabledSettings);
-            expect(result).toBe(0);
-        });
-
-        it("should return 0 when scheduling and alerting are disabled", async () => {
-            const ctx = createCtx({});
-            const result = await loadNotificationChannelsCount(ctx, {});
+            const result = await loadNotificationChannelsCount(ctx, settings);
             expect(result).toBe(0);
         });
     });

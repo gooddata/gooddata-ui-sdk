@@ -332,8 +332,13 @@ export function sanitizeFilters(
                 return true;
             }
             // Legacy ranking filter referencing a bucket measure by local identifier - it requires a
-            // slicing attribute and the ranked measure to be present in the buckets.
-            if (attributeBucketItems.length === 0) {
+            // slicing attribute and the ranked measure to be present in the buckets. A catalog "out of"
+            // attribute (ObjRef) is independent of the buckets, so a filter that ranks out of one survives
+            // even without any attribute bucket items.
+            const hasCatalogAttributes = filter.attributes?.some(
+                (attribute) => typeof attribute !== "string",
+            );
+            if (attributeBucketItems.length === 0 && !hasCatalogAttributes) {
                 return false;
             }
             const hasValidMeasure = measureBucketItems.some(
@@ -341,10 +346,14 @@ export function sanitizeFilters(
             );
             const hasValidAttributes =
                 !filter.attributes ||
-                filter.attributes.every((localIdentifier) =>
-                    attributeBucketItems.some(
-                        (attributeBucketItem) => attributeBucketItem.localIdentifier === localIdentifier,
-                    ),
+                filter.attributes.every(
+                    (attribute) =>
+                        // Catalog attributes are referenced by ObjRef and are independent of the buckets;
+                        // only bucket attributes (local identifier strings) must be present in the buckets.
+                        typeof attribute !== "string" ||
+                        attributeBucketItems.some(
+                            (attributeBucketItem) => attributeBucketItem.localIdentifier === attribute,
+                        ),
                 );
             return hasValidMeasure && hasValidAttributes;
         } else if (isMeasureValueFilter(filter)) {

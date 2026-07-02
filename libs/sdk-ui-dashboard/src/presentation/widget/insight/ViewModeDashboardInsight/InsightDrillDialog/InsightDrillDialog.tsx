@@ -32,10 +32,7 @@ import {
 import { DOWNLOADER_ID } from "../../../../../_staging/fileUtils/downloadFile.js";
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import { useWidgetExecutionsHandler } from "../../../../../model/react/useWidgetExecutionsHandler.js";
-import {
-    selectEnableRichTextDynamicReferences,
-    selectSeparators,
-} from "../../../../../model/store/config/configSelectors.js";
+import { selectSeparators } from "../../../../../model/store/config/configSelectors.js";
 import { DRILL_MODAL_EXECUTION_PSEUDO_REF } from "../../../../../model/store/executionResults/constants.js";
 import { selectExecutionTimestamp } from "../../../../../model/store/ui/uiSelectors.js";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../../constants/zIndex.js";
@@ -374,7 +371,6 @@ function InsightDrillDialogDescriptionContent({
     widgetFilters,
     LoadingComponent,
 }: IInsightDrillDialogDescriptionContentProps) {
-    const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
     const separators = useDashboardSelector(selectSeparators);
     const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
 
@@ -393,7 +389,7 @@ function InsightDrillDialogDescriptionContent({
                         timestamp: executionTimestamp,
                     }}
                     renderMode="view"
-                    referencesEnabled={isRichTextReferencesEnabled}
+                    referencesEnabled
                     filters={widgetFilters}
                     separators={separators}
                     LoadingComponent={LoadingComponent}

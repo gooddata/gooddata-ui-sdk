@@ -14,7 +14,6 @@ import {
     selectDashboardUserAutomationAlertsInContext,
     selectDashboardUserAutomationSchedulesInContext,
 } from "../../model/store/automations/automationsSelectors.js";
-import { selectEnableAlerting, selectEnableScheduling } from "../../model/store/config/configSelectors.js";
 import { selectAnalyticalWidgetByRef } from "../../model/store/tabs/layout/layoutSelectors.js";
 import { uiActions } from "../../model/store/ui/index.js";
 import {
@@ -63,8 +62,6 @@ export function useWidgetDeleteDialogProps(): IWidgetDeleteDialogProps {
     }, [dispatch, widget]);
 
     const isVisible = useDashboardSelector(selectIsWidgetDeleteDialogOpen);
-    const isSchedulingEnabled = useDashboardSelector(selectEnableScheduling);
-    const isAlertingEnabled = useDashboardSelector(selectEnableAlerting);
     const alerts = useDashboardSelector(
         selectDashboardUserAutomationAlertsInContext(widget?.localIdentifier),
     );
@@ -74,8 +71,8 @@ export function useWidgetDeleteDialogProps(): IWidgetDeleteDialogProps {
 
     return {
         isVisible,
-        showAlertsMessage: isAlertingEnabled && alerts.length > 0,
-        showSchedulesMessage: isSchedulingEnabled && schedules.length > 0,
+        showAlertsMessage: alerts.length > 0,
+        showSchedulesMessage: schedules.length > 0,
         onCancel,
         onDelete,
         widget,

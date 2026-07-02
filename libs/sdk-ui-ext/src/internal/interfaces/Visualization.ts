@@ -270,7 +270,7 @@ export interface IRankingFilter {
      * for ranking). Mirrors {@link IMeasureValueFilter.measureRef}.
      */
     measureRef?: ObjRef;
-    attributes?: string[];
+    attributes?: Array<string | ObjRef>;
     operator: RankingFilterOperator;
     value: number;
 }

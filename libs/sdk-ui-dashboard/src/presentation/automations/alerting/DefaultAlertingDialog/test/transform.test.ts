@@ -2175,7 +2175,7 @@ describe("alert transforms", () => {
                         },
                     ]),
             );
-            const measures = getSupportedInsightMeasuresByInsight(insight as IInsight, dateDatasets, true);
+            const measures = getSupportedInsightMeasuresByInsight(insight as IInsight, dateDatasets);
             expect(measures).toHaveLength(1);
             expect(measures[0].measure.measure.localIdentifier).toBe(
                 previousPeriodMetric1.measure.measure.localIdentifier,
@@ -2188,16 +2188,7 @@ describe("alert transforms", () => {
             expect(measures[0].comparators[1].granularity).toBe("GDC.time.year");
         });
 
-        it("should return measures for bar insight without comparison when canManageComparison is false", () => {
-            const insight = newInsightDefinition("local:bar", (b) =>
-                b.title("Bar").buckets([{ localIdentifier: "measures", items: [simpleMetric1.measure] }]),
-            );
-            const measures = getSupportedInsightMeasuresByInsight(insight as IInsight, dateDatasets, false);
-            expect(measures).toHaveLength(1);
-            expect(measures[0].comparators).toHaveLength(0);
-        });
-
-        it("should return measures with comparators for bar insight when comparison is enabled and valid buckets exist", () => {
+        it("should return measures with comparators for bar insight when valid buckets exist", () => {
             const insight = newInsightDefinition("local:bar", (b) =>
                 b
                     .title("Bar")
@@ -2225,7 +2216,7 @@ describe("alert transforms", () => {
                     ]),
             );
             // Bar chart has VIEW bucket as supported for comparison
-            const measures = getSupportedInsightMeasuresByInsight(insight as IInsight, dateDatasets, true);
+            const measures = getSupportedInsightMeasuresByInsight(insight as IInsight, dateDatasets);
             expect(measures).toHaveLength(1);
             expect(measures[0].comparators).toHaveLength(2);
             expect(measures[0].comparators[0].dataset?.id).toBe(undefined);
@@ -2238,12 +2229,12 @@ describe("alert transforms", () => {
             const insight = newInsightDefinition("local:unknown" as any, (b) =>
                 b.title("Unknown").buckets([{ localIdentifier: "measures", items: [simpleMetric1.measure] }]),
             );
-            const measures = getSupportedInsightMeasuresByInsight(insight as IInsight, dateDatasets, true);
+            const measures = getSupportedInsightMeasuresByInsight(insight as IInsight, dateDatasets);
             expect(measures).toHaveLength(0);
         });
 
         it("should handle null insight", () => {
-            const measures = getSupportedInsightMeasuresByInsight(null, dateDatasets, true);
+            const measures = getSupportedInsightMeasuresByInsight(null, dateDatasets);
             expect(measures).toEqual([]);
         });
 
@@ -2273,7 +2264,7 @@ describe("alert transforms", () => {
                 },
             } as IAutomationMetadataObject;
 
-            const measures = getSupportedInsightMeasuresByInsight(null, dateDatasets, true, alert);
+            const measures = getSupportedInsightMeasuresByInsight(null, dateDatasets, alert);
             expect(measures).toHaveLength(2);
             expect(measures.map((m) => m.measure.measure.localIdentifier)).toEqual([
                 "leftMetric",

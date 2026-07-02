@@ -38,41 +38,48 @@ export function ConversationAlertProposalContent(props: ConversationAlertProposa
         "gd-gen-ai-chat__conversation__item__content--alertProposal",
         className,
     );
+    const classNamesCta = cx("gd-gen-ai-chat__conversation__item__content", className);
 
     if (!alertProposal) {
         return null;
     }
 
     return (
-        <div className={classNames}>
-            <div className="gd-gen-ai-chat__conversation__item__content-alertProposal-header">
-                <UiIcon
-                    type="alert"
-                    size={14}
-                    color="complementary-6"
-                    backgroundSize={26}
-                    backgroundColor="complementary-2"
-                />
-                <FormattedMessage id="gd.gen-ai.alert-proposal.title" />
-            </div>
-            <div className="gd-gen-ai-chat__conversation__item__content-alertProposal-frame">
-                <ul>
-                    <AlertItem
-                        markdown
-                        title={intl.formatMessage({ id: "gd.gen-ai.alert-proposal.summary.title" })}
-                        description={alertProposal.title}
+        <>
+            <div className={classNames}>
+                <div className="gd-gen-ai-chat__conversation__item__content-alertProposal-header">
+                    <UiIcon
+                        type="alert"
+                        size={14}
+                        color="complementary-6"
+                        backgroundSize={26}
+                        backgroundColor="complementary-2"
+                    />
+                    <FormattedMessage id="gd.gen-ai.alert-proposal.title" />
+                </div>
+                <div className="gd-gen-ai-chat__conversation__item__content-alertProposal-frame">
+                    <ul>
+                        <AlertItem
+                            markdown
+                            title={intl.formatMessage({ id: "gd.gen-ai.alert-proposal.summary.title" })}
+                            description={alertProposal.title}
+                            objects={objects}
+                        />
+                        <FiltersPreview {...props} />
+                        <NotificationChannelPreview {...props} />
+                        <DashboardPreview {...props} />
+                    </ul>
+                    <AlertAttributes
+                        attributes={alertProposal.alert?.execution.attributes}
                         objects={objects}
                     />
-                    <FiltersPreview {...props} />
-                    <NotificationChannelPreview {...props} />
-                    <DashboardPreview {...props} />
-                </ul>
-                <AlertAttributes attributes={alertProposal.alert?.execution.attributes} objects={objects} />
-                <ConditionsPreview {...props} />
-                <TriggerPreview {...props} />
-                <RecipientsPreview {...props} />
+                    <ConditionsPreview {...props} />
+                    <TriggerPreview {...props} />
+                    <RecipientsPreview {...props} />
+                </div>
             </div>
-        </div>
+            {alertProposal.cta ? <div className={classNamesCta}>{alertProposal.cta}</div> : null}
+        </>
     );
 }
 

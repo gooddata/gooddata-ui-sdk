@@ -77,14 +77,16 @@ export function AddSingleWorkspaceSelect({
         }
     }, []);
 
-    const usedWorkspace = useMemo(
-        () => (addedWorkspace ? [addedWorkspace, ...(grantedWorkspaces ?? [])] : grantedWorkspaces),
-        [addedWorkspace, grantedWorkspaces],
-    );
+    // Inherited workspaces stay selectable so a direct grant can be added on top of inherited access;
+    // only workspaces already granted directly are excluded from the picker.
+    const usedWorkspace = useMemo(() => {
+        const directlyGranted = grantedWorkspaces?.filter((workspace) => !workspace.isInherited) ?? [];
+        return addedWorkspace ? [addedWorkspace, ...directlyGranted] : directlyGranted;
+    }, [addedWorkspace, grantedWorkspaces]);
 
     const filterOption = (option: any) => {
         const workspace = option.value;
-        return !usedWorkspace?.some((usedWorkspace) => {
+        return !usedWorkspace.some((usedWorkspace) => {
             return usedWorkspace.id === workspace.id;
         });
     };

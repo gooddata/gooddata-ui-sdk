@@ -11,7 +11,6 @@ import {
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../locales.js";
-import { selectEnableAutomationManagement } from "../../store/config/configSelectors.js";
 import { selectInsights } from "../../store/insights/insightsSelectors.js";
 import { selectDashboardRef } from "../../store/meta/metaSelectors.js";
 import { selectNotificationChannels } from "../../store/notificationChannels/notificationChannelsSelectors.js";
@@ -33,19 +32,13 @@ export const useDashboardAlertsDialog = () => {
     const destinations = useDashboardSelector(selectNotificationChannels);
     const allWidgets = useDashboardSelector(selectWidgets);
     const allInsights = useDashboardSelector(selectInsights);
-    const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
-
     const { closeAlertDialog, openAlertDialog } = useDashboardAlertsCommands();
 
-    const { refreshAutomations, refreshAutomationManagementItems } = useDashboardAutomations();
+    const { refreshAutomationManagementItems } = useDashboardAutomations();
 
     const handleRefreshAutomations = useCallback(() => {
-        if (enableAutomationManagement) {
-            refreshAutomationManagementItems();
-        } else {
-            refreshAutomations();
-        }
-    }, [enableAutomationManagement, refreshAutomations, refreshAutomationManagementItems]);
+        refreshAutomationManagementItems();
+    }, [refreshAutomationManagementItems]);
 
     /*
      * exports and scheduling are not available when rendering a dashboard that is not persisted.

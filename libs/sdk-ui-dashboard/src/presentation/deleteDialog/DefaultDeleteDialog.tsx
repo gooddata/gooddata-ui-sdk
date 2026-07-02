@@ -14,7 +14,6 @@ import {
     selectDashboardUserAutomationAlerts,
     selectDashboardUserAutomationSchedules,
 } from "../../model/store/automations/automationsSelectors.js";
-import { selectEnableAlerting, selectEnableScheduling } from "../../model/store/config/configSelectors.js";
 import { selectDashboardTitle } from "../../model/store/meta/metaSelectors.js";
 import { uiActions } from "../../model/store/ui/index.js";
 import { selectIsDeleteDialogOpen } from "../../model/store/ui/uiSelectors.js";
@@ -56,16 +55,12 @@ export function useDeleteDialogProps(): IDeleteDialogProps {
     );
 
     const isVisible = useDashboardSelector(selectIsDeleteDialogOpen);
-    const isSchedulingEnabled = useDashboardSelector(selectEnableScheduling);
-    const isAlertingEnabled = useDashboardSelector(selectEnableAlerting);
 
     const alerts = useDashboardSelector(selectDashboardUserAutomationAlerts); // Should be in dashboard context
     const schedules = useDashboardSelector(selectDashboardUserAutomationSchedules); // Should be in dashboard context
 
     return {
         isVisible,
-        isSchedulingEnabled,
-        isAlertingEnabled,
 
         showAlertsMessage: alerts.length > 0,
         showSchedulesMessage: schedules.length > 0,
@@ -82,8 +77,6 @@ export function useDeleteDialogProps(): IDeleteDialogProps {
  */
 export function DefaultDeleteDialog({
     isVisible,
-    isSchedulingEnabled,
-    isAlertingEnabled,
     onDelete,
     onCancel,
     dashboardTitle,
@@ -97,8 +90,8 @@ export function DefaultDeleteDialog({
     }
 
     const messages = compact([
-        isAlertingEnabled && showAlertsMessage && deleteMessages.alerts,
-        isSchedulingEnabled && showSchedulesMessage && deleteMessages.schedules,
+        showAlertsMessage && deleteMessages.alerts,
+        showSchedulesMessage && deleteMessages.schedules,
         deleteMessages.drills,
     ]);
 

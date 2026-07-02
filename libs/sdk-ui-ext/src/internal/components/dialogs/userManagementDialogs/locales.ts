@@ -49,6 +49,7 @@ export const messages = defineMessages({
     workspaceRemovedFailure: { id: "userManagement.workspace.removeError" },
     workspaceChangeSuccess: { id: "userManagement.workspace.changeSuccess" },
     workspaceChangeFailure: { id: "userManagement.workspace.changeError" },
+    permissionsLoadFailure: { id: "userManagement.permissions.loadError" },
     userGroupAddedSuccess: { id: "userManagement.userGroup.addSuccess" },
     userGroupAddedFailure: { id: "userManagement.userGroup.addError" },
     userGroupsAddedSuccess: { id: "userManagement.multipleUserGroup.addSuccess" },

@@ -165,18 +165,16 @@ export abstract class ConfigurationPanelContent<
             insight,
         } = this.props;
 
-        const isAlertingEnabled = featureFlags?.enableAlerting;
-        const isScheduledExportsEnabled = featureFlags?.enableScheduling;
         const showImplicitDrillToUrl = isInsightSupportedForImplicitDrillToUrl(insight);
         const supportsKeyDriveAnalysis = featureFlags?.enableChangeAnalysis;
         const insightSupportsScheduledExports = isInsightSupportedForScheduledExports(insight);
         const insightSupportsAlerts = isInsightSupportedForAlerts(insight);
-        const supportsAlertsConfiguration = insightSupportsAlerts && isAlertingEnabled;
-        const supportsScheduledExportsConfiguration =
-            insightSupportsScheduledExports && isScheduledExportsEnabled;
+        const supportsAlertsConfiguration = insightSupportsAlerts;
+        const supportsScheduledExportsConfiguration = insightSupportsScheduledExports;
         const metrics = insight ? insightMeasures(insight) : [];
 
         return supportsAlertsConfiguration ||
+            supportsScheduledExportsConfiguration ||
             panelConfig?.supportsAttributeHierarchies ||
             showImplicitDrillToUrl ? (
             <InteractionsSection
@@ -199,12 +197,7 @@ export abstract class ConfigurationPanelContent<
     }
 
     protected renderForecastSection(): ReactNode {
-        const { pushData, properties, propertiesMeta, type, featureFlags, referencePoint, insight } =
-            this.props;
-
-        if (!featureFlags?.["enableSmartFunctions"]) {
-            return null;
-        }
+        const { pushData, properties, propertiesMeta, type, referencePoint, insight } = this.props;
 
         const { enabled, visible } = isForecastEnabled(referencePoint, insight, type);
         if (!visible) {

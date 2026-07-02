@@ -32,7 +32,6 @@ export interface IAlertComparisonPeriodSelectProps {
         comparison: AlertMetricComparatorType,
         granularity?: DateAttributeGranularity,
     ) => void;
-    canManageComparison: boolean;
     id: string;
     closeOnParentScroll?: boolean;
 }
@@ -43,7 +42,6 @@ export function AlertComparisonPeriodSelect({
     overlayPositionType,
     selectedComparison,
     selectedGranularity,
-    canManageComparison,
     onComparisonChange,
     id,
     closeOnParentScroll,
@@ -137,8 +135,7 @@ export function AlertComparisonPeriodSelect({
 
     // If the measure has only one comparator, return the label with possibility to
     // select the comparison period
-    // If feature flag is not enabled, return the label with the selected comparison period
-    if (measure?.comparators.length === 1 || !canManageComparison) {
+    if (measure?.comparators.length === 1) {
         return <div className="gd-edit-alert__measure-info">{getButtonValue(selectedOperator, intl)}</div>;
     }
 

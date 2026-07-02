@@ -29,10 +29,7 @@ import {
     selectDashboardUserAutomationAlertsInContext,
 } from "../../../../model/store/automations/automationsSelectors.js";
 import { selectCatalogDateDatasets } from "../../../../model/store/catalog/catalogSelectors.js";
-import {
-    selectEnableComparisonInAlerting,
-    selectLocale,
-} from "../../../../model/store/config/configSelectors.js";
+import { selectLocale } from "../../../../model/store/config/configSelectors.js";
 import {
     selectEntitlementMaxAutomations,
     selectEntitlementUnlimitedAutomations,
@@ -64,7 +61,6 @@ export function InsightAlertsNew({ widget, onClose, onGoBack }: IInsightMenuSubm
     const canManageAutomations = useDashboardSelector(selectCanManageWorkspace);
     const locale = useDashboardSelector(selectLocale);
     const catalogDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
-    const canManageComparison = useDashboardSelector(selectEnableComparisonInAlerting);
     const automationsLoading = useDashboardSelector(selectAutomationsIsLoading);
     const automationsCount = useDashboardSelector(selectAllAutomationsCount);
     const maxAutomationsEntitlement = useDashboardSelector(selectEntitlementMaxAutomations);
@@ -184,9 +180,8 @@ export function InsightAlertsNew({ widget, onClose, onGoBack }: IInsightMenuSubm
         }
     }, [insight, locale]);
     const supportedMeasures = useMemo(
-        () =>
-            getSupportedInsightMeasuresByInsight(effectiveInsight, catalogDateDatasets, canManageComparison),
-        [effectiveInsight, catalogDateDatasets, canManageComparison],
+        () => getSupportedInsightMeasuresByInsight(effectiveInsight, catalogDateDatasets),
+        [effectiveInsight, catalogDateDatasets],
     );
 
     return (

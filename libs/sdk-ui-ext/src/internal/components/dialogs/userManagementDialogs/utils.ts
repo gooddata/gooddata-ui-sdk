@@ -1,8 +1,11 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
+
 import { type IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi";
 import {
     type AssignedDataSourcePermission,
     type AssignedWorkspacePermission,
+    type DataSourceAccessSource,
+    DataSourceAccessSourceValue,
     type IDataSourceIdentifierDescriptor,
     type IDataSourcePermissionAssignment,
     type IOrganizationUser,
@@ -10,6 +13,8 @@ import {
     type IUser,
     type IUserGroup,
     type IWorkspacePermissionAssignment,
+    type WorkspaceAccessSource,
+    WorkspaceAccessSourceValue,
     isAssignedWorkspacePermission,
     isIOrganizationUser,
 } from "@gooddata/sdk-model";
@@ -238,6 +243,10 @@ export const workspacePermissionsAssignmentToGrantedWorkspace = (
         title: workspace.name ?? "",
         permissions: assignedPermissions,
         isHierarchical: assignment.hierarchyPermissions.length > 0,
+        accessSource: assignment.accessSource,
+        // Anything not assigned directly (group- or hierarchy-inherited) is read-only here.
+        isInherited:
+            !!assignment.accessSource && assignment.accessSource !== WorkspaceAccessSourceValue.DIRECT,
     };
 };
 
@@ -250,5 +259,56 @@ export const dataSourcePermissionsAssignmentToGrantedDataSource = (
         id: dataSource.id,
         title: dataSource.name ?? "",
         permission,
+        accessSource: assignment.accessSource,
+        // Anything not assigned directly (group-inherited) is read-only here.
+        isInherited:
+            !!assignment.accessSource && assignment.accessSource !== DataSourceAccessSourceValue.DIRECT,
     };
 };
+
+// Ordering of access sources from most to least editable at the subject level: a direct assignment can
+// be changed here, a group-inherited one is managed on the group, a hierarchy-inherited one on the
+// parent workspace. Lower number wins when the same subject reaches one object through several paths.
+const WORKSPACE_ACCESS_SOURCE_PRIORITY: Record<WorkspaceAccessSource, number> = {
+    [WorkspaceAccessSourceValue.DIRECT]: 0,
+    [WorkspaceAccessSourceValue.GROUP]: 1,
+    [WorkspaceAccessSourceValue.HIERARCHY]: 2,
+};
+
+const DATA_SOURCE_ACCESS_SOURCE_PRIORITY: Record<DataSourceAccessSource, number> = {
+    [DataSourceAccessSourceValue.DIRECT]: 0,
+    [DataSourceAccessSourceValue.GROUP]: 1,
+};
+
+// A subject can reach the same object through several access paths (direct + group + hierarchy).
+// Collapse to one entry per id, keeping the one its priority ranks most editable, so a row never
+// appears twice (which would also collide on its React key). The backend already resolves this per
+// object; this guards the invariant on the client so a future backend change cannot produce duplicates.
+const dedupeByPriority = <TItem extends { id: string }>(
+    items: TItem[],
+    priorityOf: (item: TItem) => number,
+): TItem[] => {
+    const byId = new Map<string, TItem>();
+    for (const item of items) {
+        const existing = byId.get(item.id);
+        // Strictly-lower wins, so on a tie the first-seen row is kept.
+        if (!existing || priorityOf(item) < priorityOf(existing)) {
+            byId.set(item.id, item);
+        }
+    }
+    return [...byId.values()];
+};
+
+// A missing access source maps to the most-editable priority: the only listing without sources is the
+// direct-only one, whose rows are all directly assigned.
+const MISSING_SOURCE_PRIORITY = 0;
+
+export const dedupeGrantedWorkspaces = (workspaces: IGrantedWorkspace[]): IGrantedWorkspace[] =>
+    dedupeByPriority(workspaces, ({ accessSource }) =>
+        accessSource ? WORKSPACE_ACCESS_SOURCE_PRIORITY[accessSource] : MISSING_SOURCE_PRIORITY,
+    );
+
+export const dedupeGrantedDataSources = (dataSources: IGrantedDataSource[]): IGrantedDataSource[] =>
+    dedupeByPriority(dataSources, ({ accessSource }) =>
+        accessSource ? DATA_SOURCE_ACCESS_SOURCE_PRIORITY[accessSource] : MISSING_SOURCE_PRIORITY,
+    );

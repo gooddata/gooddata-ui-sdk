@@ -1175,9 +1175,13 @@ export {
     type AssignedDataSourcePermission,
     type IAssignedDataSource,
     type IDataSourcePermissionAssignment,
+    type WorkspaceAccessSource,
+    type DataSourceAccessSource,
     AssignedWorkspacePermissionValue,
     OrganizationPermissionAssignmentValue,
     AssignedDataSourcePermissionValue,
+    WorkspaceAccessSourceValue,
+    DataSourceAccessSourceValue,
     isAssignedWorkspacePermission,
 } from "./organization/index.js";
 export type { IEntitlementsName, IEntitlementDescriptor } from "./entitlements/index.js";

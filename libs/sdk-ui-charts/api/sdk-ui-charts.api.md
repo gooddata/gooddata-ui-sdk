@@ -363,8 +363,6 @@ export interface IChartConfig {
     // @internal
     enableHighchartsAccessibility?: boolean;
     enableJoinedAttributeAxisName?: boolean;
-    // @internal
-    enableLineChartTrendThreshold?: boolean;
     enableReversedStacking?: boolean;
     // (undocumented)
     enableSeparateTotalLabels?: boolean;
@@ -1083,7 +1081,7 @@ export function Treemap(props: ITreemapProps): JSX.Element;
 export function updateConfigWithSettings(config: IChartConfig | undefined, settings: ISettings | undefined): IChartConfig;
 
 // @internal (undocumented)
-export function updateForecastWithSettings(config: IChartConfig, settings: ISettings, input: {
+export function updateForecastWithSettings(config: IChartConfig, input: {
     enabled: boolean;
 }): IForecastConfig | undefined;
 

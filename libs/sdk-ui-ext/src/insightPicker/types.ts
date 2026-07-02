@@ -94,7 +94,6 @@ export interface IInsightPickerProps {
 
     enabledVisualizationClassesUrls?: string[];
     selectedInsightId?: string;
-    enableDescriptions?: boolean;
     metadataTimeZone?: string;
     enableSemanticSearch?: boolean;
     maxHeight?: number;
