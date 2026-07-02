@@ -9,6 +9,7 @@ import { type INumberParameterConstraints, isValidNumberParameterValue } from "@
 
 import { bem } from "../@ui/@utils/bem.js";
 import { UiButton } from "../@ui/UiButton/UiButton.js";
+import { useId } from "../utils/useId.js";
 
 const { b, e } = bem("gd-ui-kit-parameter-control");
 
@@ -59,6 +60,7 @@ export function ParameterControlDropdown({
     onCancel,
 }: IParameterControlDropdownProps) {
     const intl = useIntl();
+    const inputId = useId();
     const [draft, setDraft] = useState<string>(String(value));
 
     const error = getDraftValidationError(draft, constraints);
@@ -80,7 +82,9 @@ export function ParameterControlDropdown({
         >
             <div className={cx(e("dropdown-field"), { "has-error": !!error })}>
                 <div className={e("dropdown-field-header")}>
-                    <label className={e("dropdown-label")}>{intl.formatMessage(messages.valueLabel)}</label>
+                    <label htmlFor={inputId} className={e("dropdown-label")}>
+                        {intl.formatMessage(messages.valueLabel)}
+                    </label>
                     {showReset ? (
                         <button
                             type="button"
@@ -93,6 +97,7 @@ export function ParameterControlDropdown({
                     ) : null}
                 </div>
                 <input
+                    id={inputId}
                     type="number"
                     className={`${e("dropdown-input")} gd-input-field`}
                     data-testid="parameter-control-dropdown-input"

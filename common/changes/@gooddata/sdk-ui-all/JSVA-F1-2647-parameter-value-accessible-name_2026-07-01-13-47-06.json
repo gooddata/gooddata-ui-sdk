@@ -1,7 +1,7 @@
 {
     "changes": [
         {
-            "comment": "sdk-ui-dashboard: Drill to dashboard now propagates a parameter left at its default value to the target",
+            "comment": "sdk-ui-kit: Associate parameter value input with its label for accessibility",
             "type": "none",
             "packageName": "@gooddata/sdk-ui-all"
         }

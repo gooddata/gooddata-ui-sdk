@@ -38,6 +38,11 @@ describe("ParameterControlDropdown", () => {
         expect(queryInput(container).value).toBe("25");
     });
 
+    it("gives the value input an accessible name via the associated label", () => {
+        const { container, getByRole } = renderDropdown();
+        expect(getByRole("spinbutton", { name: "Value" })).toBe(queryInput(container));
+    });
+
     it("exposes min and max constraints on the input", () => {
         const { container } = renderDropdown();
         const input = queryInput(container);
