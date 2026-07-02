@@ -70,7 +70,6 @@ import {
 import {
     selectDisableDefaultDrills,
     selectEnableDrillToUrlByDefault,
-    selectEnableKDCrossFiltering,
     selectEnableKda,
     selectIsDisabledCrossFiltering,
     selectIsDisabledKda,
@@ -459,14 +458,12 @@ const selectCrossFilteringByWidgetRef: (
     ref: ObjRef,
 ) => DashboardSelector<IImplicitDrillWithPredicates | undefined> = createMemoizedSelector((ref: ObjRef) =>
     createSelector(
-        selectEnableKDCrossFiltering,
         selectSupportsCrossFiltering,
         selectDrillTargetsByWidgetRef(ref),
         selectDisableDashboardCrossFiltering,
         selectIsDisabledCrossFiltering,
         selectDrillableItems,
         (
-            isCrossFilteringEnabled,
             isCrossFilteringSupported,
             availableDrillTargets,
             disableCrossFiltering,
@@ -474,7 +471,6 @@ const selectCrossFilteringByWidgetRef: (
             drillableItems,
         ) => {
             if (
-                !isCrossFilteringEnabled ||
                 !isCrossFilteringSupported ||
                 disableCrossFiltering ||
                 disableCrossFilteringByConfig ||
@@ -745,7 +741,6 @@ export const selectConfiguredDrillsByWidgetRef: (
     createSelector(
         selectWidgetDrills(ref),
         selectDisableDefaultDrills,
-        selectEnableKDCrossFiltering,
         selectIsEmbedded,
         selectDisableDashboardCrossFiltering,
         selectIsDisabledCrossFiltering,
@@ -755,7 +750,6 @@ export const selectConfiguredDrillsByWidgetRef: (
         (
             drills = [],
             disableDefaultDrills,
-            enableKDCrossFiltering,
             isEmbedded,
             disableCrossFiltering,
             disableCrossFilteringByConfig,
@@ -779,7 +773,7 @@ export const selectConfiguredDrillsByWidgetRef: (
                 } else if (drillType === "drillToLegacyDashboard") {
                     return !isEmbedded;
                 } else if (drillType === "crossFiltering") {
-                    return enableKDCrossFiltering && !disableCrossFiltering && !disableCrossFilteringByConfig;
+                    return !disableCrossFiltering && !disableCrossFilteringByConfig;
                 } else if (drillType === "keyDriveAnalysis") {
                     return enableKda && !disableKda && !disableKdaByConfig;
                 } else {

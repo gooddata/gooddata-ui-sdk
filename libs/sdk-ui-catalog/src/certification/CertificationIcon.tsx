@@ -36,7 +36,7 @@ export const CertificationIconMemo = memo(function CertificationIcon(props: Cert
                 anchor={
                     <UiIcon
                         type="certification"
-                        size={14}
+                        size={16}
                         backgroundSize={26}
                         color="success"
                         layout="block"

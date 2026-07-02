@@ -23656,6 +23656,18 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "includeInherited",
+                        "in": "query",
+                        "description": "When true, include permissions inherited from user groups (workspaces also cascade down the workspace hierarchy). Each workspace and data source is tagged with how the user gains access. Defaults to false (direct assignments only).",
+                        "required": false,
+                        "style": "form",
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "example": "includeInherited=true"
                     }
                 ],
                 "responses": {
@@ -23750,6 +23762,18 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "includeInherited",
+                        "in": "query",
+                        "description": "When true, include permissions inherited from parent user groups (workspaces also cascade down the workspace hierarchy). Each workspace and data source is tagged with how the group gains access. Defaults to false (direct assignments only).",
+                        "required": false,
+                        "style": "form",
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "example": "includeInherited=true"
                     }
                 ],
                 "responses": {
@@ -52756,6 +52780,15 @@
                                 "USE"
                             ]
                         }
+                    },
+                    "accessSource": {
+                        "type": "string",
+                        "description": "How the subject gains access to the data source (DIRECT or GROUP). Absent for direct-only listings.",
+                        "readOnly": true,
+                        "enum": [
+                            "DIRECT",
+                            "GROUP"
+                        ]
                     }
                 },
                 "description": "Datasource permission assignments for users and userGroups"
@@ -52833,6 +52866,16 @@
                                 "VIEW"
                             ]
                         }
+                    },
+                    "accessSource": {
+                        "type": "string",
+                        "description": "How the subject gains access to the workspace (DIRECT, GROUP, HIERARCHY). Absent for direct-only listings.",
+                        "readOnly": true,
+                        "enum": [
+                            "DIRECT",
+                            "GROUP",
+                            "HIERARCHY"
+                        ]
                     }
                 },
                 "description": "Workspace permission assignments for users and userGroups"

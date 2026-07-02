@@ -1,7 +1,7 @@
 // (C) 2022-2026 GoodData Corporation
 
 import { type IForecastConfig } from "@gooddata/sdk-backend-spi";
-import { type ForecastDataValue, type ISettings } from "@gooddata/sdk-model";
+import { type ForecastDataValue } from "@gooddata/sdk-model";
 import { type VisType } from "@gooddata/sdk-ui";
 import { getLighterColor } from "@gooddata/sdk-ui-vis-commons";
 
@@ -121,11 +121,10 @@ export function assignForecastAxes(
  */
 export function updateForecastWithSettings(
     config: IChartConfig,
-    settings: ISettings,
     { enabled }: { enabled: boolean },
 ): IForecastConfig | undefined {
     //no forecast setting
-    if (!config.forecast?.enabled || !enabled || !settings["enableSmartFunctions"]) {
+    if (!config.forecast?.enabled || !enabled) {
         return undefined;
     }
 

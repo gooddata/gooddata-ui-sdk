@@ -89,11 +89,9 @@ export interface ISeriesWithPlotLines {
 const isThresholdSetupValid = (
     type: VisType | undefined,
     series: ISeriesItem[],
-    config: IChartConfig,
     thresholdMeasures: string[],
 ) =>
     (isLineChart(type) || isComboChart(type)) &&
-    config.enableLineChartTrendThreshold &&
     thresholdMeasures.length > 0 &&
     series.length > 0 &&
     (series[0].data?.length ?? 0) > 0;
@@ -129,7 +127,7 @@ export function setupThresholdZones(
     const thresholdMeasures = config.thresholdMeasures || [];
     const thresholdExcludedMeasures = config.thresholdExcludedMeasures || [];
 
-    if (!isThresholdSetupValid(type, series, config, thresholdMeasures)) {
+    if (!isThresholdSetupValid(type, series, thresholdMeasures)) {
         return { series };
     }
 
@@ -253,7 +251,7 @@ export const filterThresholdZonesCategories = (
 ): any[] => {
     const thresholdMeasures = config.thresholdMeasures || [];
 
-    if (!isThresholdSetupValid(type, series, config, thresholdMeasures)) {
+    if (!isThresholdSetupValid(type, series, thresholdMeasures)) {
         return categories;
     }
 
@@ -275,7 +273,7 @@ export const setupComboThresholdZones = (
     const thresholdMeasures = config.thresholdMeasures || [];
     const thresholdExcludedMeasures = config.thresholdExcludedMeasures || [];
 
-    if (!isThresholdSetupValid(type, series, config, thresholdMeasures)) {
+    if (!isThresholdSetupValid(type, series, thresholdMeasures)) {
         return { series };
     }
 

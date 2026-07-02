@@ -1127,8 +1127,19 @@
 
         &--duration {
             font-size: 0.8rem;
+            line-height: 22px;
             color: kit-variables.$gd-color-state-blank;
             margin-left: 10px;
+        }
+
+        &--thinking {
+            display: flex;
+            align-items: center;
+            color: kit-variables.$gd-color-link;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 22px;
         }
     }
 
@@ -1185,29 +1196,6 @@
 
         &--isLast .gd-gen-ai-chat__icon .gd-gen-ai-chat__icon__special {
             animation: pulsate-opacity 1s infinite ease-in-out;
-        }
-    }
-
-    &--content--loading {
-        position: relative;
-        padding-left: 15px;
-
-        &::before {
-            content: "";
-            position: absolute;
-            left: 5px;
-            top: 0;
-            bottom: 16px;
-            width: 1px;
-            background-color: kit-variables.$gd-color-state-blank;
-            opacity: 0.3;
-        }
-
-        &--spinner {
-            svg {
-                width: 16px;
-                height: 16px;
-            }
         }
     }
 }

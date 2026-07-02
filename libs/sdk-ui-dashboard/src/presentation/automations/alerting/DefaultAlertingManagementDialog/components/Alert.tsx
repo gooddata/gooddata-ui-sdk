@@ -77,11 +77,7 @@ export function Alert({
     const editWidgetId = alert.metadata?.widget;
     const editWidgetRef = editWidgetId ? { identifier: editWidgetId } : undefined;
 
-    const {
-        separators,
-        catalogDateDatasets,
-        features: { enableComparisonInAlerting: canManageComparison },
-    } = useAutomationsContext();
+    const { separators, catalogDateDatasets } = useAutomationsContext();
     const { canManageWorkspace, currentUser, getWidgetByRef, getInsightByWidgetRef } =
         useAlertingManagementDialogContext();
 
@@ -90,14 +86,7 @@ export function Alert({
     const insightWidget = isInsightWidget(widget) ? widget : undefined;
     const widgetName = insightWidget?.title ?? "";
 
-    const { isValid } = useAlertValidation(
-        alert,
-        widget,
-        insight,
-        catalogDateDatasets,
-        undefined,
-        canManageComparison,
-    );
+    const { isValid } = useAlertValidation(alert, widget, insight, catalogDateDatasets, undefined);
     const iconColor = theme?.palette?.complementary?.c6 ?? gdColorStateBlank;
     const iconColorError = theme?.palette?.error?.base ?? gdColorNegative;
 

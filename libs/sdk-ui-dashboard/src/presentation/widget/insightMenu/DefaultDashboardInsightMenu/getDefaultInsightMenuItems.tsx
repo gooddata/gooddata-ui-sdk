@@ -234,16 +234,13 @@ export function getDefaultInsightMenuItems(
         scheduleExportDisabled,
         scheduleExportDisabledReason,
         scheduleExportManagementDisabled,
-        isAutomationManagementEnabled,
         onExportCSV,
         onExportXLSX,
         onScheduleExport,
         onScheduleManagementExport,
         onAlertingManagementOpen,
-        isScheduleExportVisible,
         isScheduleExportManagementVisible,
         isDataError,
-        isAlertingVisible,
         isAlertManagementVisible,
         alertingDisabled,
         alertingDisabledReason,
@@ -323,10 +320,6 @@ export function getDefaultInsightMenuItems(
         : undefined;
 
     const exportMenuItems = getExportMenuItems(intl, config, exportReasonTooltip, limitBreakTooltip);
-
-    const isSomeScheduleVisible =
-        (isScheduleExportVisible && !scheduleExportDisabled) ||
-        (isScheduleExportManagementVisible && !scheduleExportManagementDisabled);
 
     const availableMenuItems = {
         exportsSubmenu: {
@@ -436,24 +429,13 @@ export function getDefaultInsightMenuItems(
         },
     };
 
-    const menuItems: (false | IInsightMenuItem)[] = isAutomationManagementEnabled
-        ? [
-              (isExportRawVisible || isExportVisible) && availableMenuItems.exportsSubmenu,
-              !isExportRawVisible && availableMenuItems.exportXLSXBubble,
-              !isExportRawVisible && availableMenuItems.exportCSVBubble,
-              isScheduleExportManagementVisible && availableMenuItems.scheduleExportManagement,
-              isAlertManagementVisible && availableMenuItems.alertsManagement,
-          ]
-        : [
-              (isExportRawVisible || isExportVisible) && availableMenuItems.exportsSubmenu,
-              !isExportRawVisible && availableMenuItems.exportXLSXBubble,
-              !isExportRawVisible && availableMenuItems.exportCSVBubble,
-              isAlertingVisible && availableMenuItems.alertingSeparator,
-              isAlertingVisible && availableMenuItems.alertsSubmenu,
-              isSomeScheduleVisible && availableMenuItems.schedulingSeparator,
-              isScheduleExportVisible && availableMenuItems.scheduleExport,
-              isScheduleExportManagementVisible && availableMenuItems.scheduleExportEdit,
-          ];
+    const menuItems: (false | IInsightMenuItem)[] = [
+        (isExportRawVisible || isExportVisible) && availableMenuItems.exportsSubmenu,
+        isExportVisible && !isExportRawVisible && availableMenuItems.exportXLSXBubble,
+        isExportVisible && !isExportRawVisible && availableMenuItems.exportCSVBubble,
+        isScheduleExportManagementVisible && availableMenuItems.scheduleExportManagement,
+        isAlertManagementVisible && availableMenuItems.alertsManagement,
+    ];
 
     return compact(menuItems);
 }

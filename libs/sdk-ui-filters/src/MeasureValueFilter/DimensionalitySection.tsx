@@ -1,101 +1,15 @@
 // (C) 2025-2026 GoodData Corporation
 
-import {
-    type MouseEvent,
-    type ReactNode,
-    type RefObject,
-    memo,
-    useCallback,
-    useMemo,
-    useRef,
-    useState,
-} from "react";
+import { memo } from "react";
 
 import { useIntl } from "react-intl";
 
-import { type ObjRefInScope, areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
+import { type ObjRefInScope, objRefToString } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, UiButton, UiIconButton, UiTag } from "@gooddata/sdk-ui-kit";
 
 import { AttributePicker } from "./AttributePicker.js";
 import type { IDimensionalityItem } from "./typings.js";
-import { useLazyCatalogDimensionality } from "./useLazyCatalogDimensionality.js";
-
-interface IWithAddButtonProps {
-    children: ReactNode;
-    appendAddButton: boolean;
-    isDisabled: boolean;
-    tooltip: string;
-    buttonRef: RefObject<HTMLButtonElement | null>;
-    onClick: (event: MouseEvent<HTMLButtonElement>) => void;
-}
-
-function WithAddButton({
-    children,
-    appendAddButton,
-    isDisabled,
-    tooltip,
-    buttonRef,
-    onClick,
-}: IWithAddButtonProps): ReactNode {
-    if (!appendAddButton) {
-        return children;
-    }
-
-    return (
-        <div className="gd-mvf-dimensionality-add-wrapper">
-            {children}
-            <BubbleHoverTrigger>
-                <UiIconButton
-                    ref={buttonRef}
-                    icon="plus"
-                    size="small"
-                    variant="tertiary"
-                    isDisabled={isDisabled}
-                    onClick={onClick}
-                    dataTestId="mvf-dimensionality-plus"
-                />
-                <Bubble alignPoints={[{ align: "bc tc" }]}>{tooltip}</Bubble>
-            </BubbleHoverTrigger>
-        </div>
-    );
-}
-
-/**
- * Compare two-dimensionality arrays for equality (order-insensitive).
- * Returns true if they contain the same identifiers regardless of order.
- */
-export const areDimensionalitySetsEqual = (
-    a: IDimensionalityItem[] | undefined,
-    b: IDimensionalityItem[] | undefined,
-): boolean => {
-    const aItems = a ?? [];
-    const bItems = b ?? [];
-
-    if (aItems.length !== bItems.length) {
-        return false;
-    }
-
-    // Check that every item in 'a' exists in 'b'
-    return aItems.every((aItem) =>
-        bItems.some((bItem) => areObjRefsEqual(aItem.identifier, bItem.identifier)),
-    );
-};
-
-const areDimensionalityItemsDeepEqual = (
-    availableItem: IDimensionalityItem,
-    filterItem: IDimensionalityItem,
-): boolean => {
-    if (availableItem.ref && filterItem.ref) {
-        return areObjRefsEqual(availableItem.ref, filterItem.ref);
-    }
-    if (availableItem.ref) {
-        return areObjRefsEqual(availableItem.ref, filterItem.identifier);
-    }
-    if (filterItem.ref) {
-        return areObjRefsEqual(availableItem.identifier, filterItem.ref);
-    }
-    return areObjRefsEqual(availableItem.identifier, filterItem.identifier);
-};
+import { WithAddButton, useDimensionalityEditor } from "./useDimensionalityEditor.js";
 
 interface IDimensionalitySectionProps {
     /**
@@ -145,132 +59,33 @@ export const DimensionalitySection = memo(function DimensionalitySection({
 }: IDimensionalitySectionProps) {
     const intl = useIntl();
 
-    // Ref for the inline add button (plus icon next to last tag)
-    const inlineAddButtonRef = useRef<HTMLButtonElement | null>(null);
-
-    // AttributePicker state - stores whether it's open and which button triggered it
-    const [isAttributePickerOpen, setIsAttributePickerOpen] = useState(false);
-    const [anchorType, setAnchorType] = useState<"inline" | "standalone">("standalone");
-
-    // Store standalone button anchor separately since it's not a ref
-    const [standaloneAnchor, setStandaloneAnchor] = useState<HTMLElement | null>(null);
-
-    const { lazyCatalogDimensionality, isLoadingLazyCatalogDimensionality } = useLazyCatalogDimensionality({
-        isOpen: isAttributePickerOpen,
-        dimensionality,
-        loadCatalogDimensionality,
-    });
-
-    /**
-     * Check if the current dimensionality differs from the insight defaults (order-insensitive).
-     * Reset button should be visible when they differ.
-     */
-    const shouldShowResetButton = useMemo(() => {
-        return !areDimensionalitySetsEqual(dimensionality, insightDimensionality);
-    }, [dimensionality, insightDimensionality]);
-
-    /**
-     * Compute available items for the AttributePicker.
-     * Keep insight items and catalog items separate so the picker does not need to guess origin.
-     */
-    const availableInsightItems = useMemo(() => {
-        return (insightDimensionality ?? []).filter(
-            (availableItem) =>
-                !dimensionality.some((filterItem) =>
-                    areDimensionalityItemsDeepEqual(availableItem, filterItem),
-                ),
-        );
-    }, [insightDimensionality, dimensionality]);
-
-    const availableCatalogItems = useMemo(() => {
-        const effectiveCatalog = loadCatalogDimensionality
-            ? (lazyCatalogDimensionality ?? [])
-            : (catalogDimensionality ?? []);
-
-        const selectedFilteredOut = effectiveCatalog.filter(
-            (availableItem) =>
-                !dimensionality.some((filterItem) =>
-                    areDimensionalityItemsDeepEqual(availableItem, filterItem),
-                ),
-        );
-
-        // Prevent duplicates between "From visualization" and catalog lists.
-        // Insight items may be represented as LocalIdRefs; when available, use `ref` (display-form ObjRef)
-        // for stable deduplication against catalog candidates (which use ObjRefs).
-        const insightRefKeys = new Set(
-            availableInsightItems
-                .map((i) => (i.ref ? objRefToString(i.ref) : undefined))
-                .filter((x): x is string => !!x),
-        );
-        const insightTitlesWithoutRef = new Set(
-            availableInsightItems.filter((i) => !i.ref).map((i) => i.title),
-        );
-
-        return selectedFilteredOut.filter((item) => {
-            const itemKey = objRefToString(item.identifier);
-            if (insightRefKeys.has(itemKey)) {
-                return false;
-            }
-            // Fallback for environments where insight items do not provide refs.
-            return !insightTitlesWithoutRef.has(item.title);
-        });
-    }, [
-        catalogDimensionality,
-        dimensionality,
+    const {
+        inlineAddButtonRef,
+        isAttributePickerOpen,
+        actualAnchor,
+        shouldShowResetButton,
         availableInsightItems,
-        lazyCatalogDimensionality,
-        loadCatalogDimensionality,
-    ]);
-
-    const handleRemoveDimensionality = useCallback(
-        (index: number) => {
-            const newDimensionality = dimensionality.filter((_, i) => i !== index);
-            onDimensionalityChange(newDimensionality);
-        },
-        [dimensionality, onDimensionalityChange],
-    );
-
-    /**
-     * Reset dimensionality to insight defaults (bucket attributes).
-     */
-    const handleResetDimensionality = useCallback(() => {
-        const newDimensionality = insightDimensionality ?? [];
-        onDimensionalityChange(newDimensionality);
-    }, [insightDimensionality, onDimensionalityChange]);
-
-    const handleOpenInlineAttributePicker = useCallback(() => {
-        setAnchorType("inline");
-        setIsAttributePickerOpen(true);
-    }, []);
-
-    const handleOpenStandaloneAttributePicker = useCallback((event: MouseEvent<HTMLButtonElement>) => {
-        setAnchorType("standalone");
-        setStandaloneAnchor(event.currentTarget);
-        setIsAttributePickerOpen(true);
-    }, []);
-
-    const handleCloseAttributePicker = useCallback(() => {
-        setIsAttributePickerOpen(false);
-        setStandaloneAnchor(null);
-    }, []);
-
-    const handleAddDimensionalityItems = useCallback(
-        (items: IDimensionalityItem[]) => {
-            const newDimensionality = [...dimensionality, ...items];
-            onDimensionalityChange(newDimensionality);
-            setIsAttributePickerOpen(false);
-            setStandaloneAnchor(null);
-        },
-        [dimensionality, onDimensionalityChange],
-    );
+        availableCatalogItems,
+        isLoadingCatalogForPicker,
+        handleRemove: handleRemoveDimensionality,
+        handleReset: handleResetDimensionality,
+        handleOpenInlinePicker: handleOpenInlineAttributePicker,
+        handleOpenStandalonePicker: handleOpenStandaloneAttributePicker,
+        handleClosePicker: handleCloseAttributePicker,
+        handleAddItems: handleAddDimensionalityItems,
+    } = useDimensionalityEditor({
+        items: dimensionality,
+        insightItems: insightDimensionality,
+        catalogItems: catalogDimensionality,
+        loadCatalog: loadCatalogDimensionality,
+        isLoadingCatalog: isLoadingCatalogDimensionality,
+        onChange: onDimensionalityChange,
+    });
 
     const addButtonTooltip = intl.formatMessage({ id: "mvf.dimensionality.addButton.tooltip" });
     const resetButtonTooltip = intl.formatMessage({
         id: "mvf.dimensionality.reset.tooltip",
     });
-
-    // Determine the actual anchor element to use
-    const actualAnchor = anchorType === "inline" ? inlineAddButtonRef.current : standaloneAnchor;
 
     return (
         <div
@@ -296,6 +111,7 @@ export const DimensionalitySection = memo(function DimensionalitySection({
                                 tooltip={addButtonTooltip}
                                 buttonRef={inlineAddButtonRef}
                                 onClick={handleOpenInlineAttributePicker}
+                                dataTestId="mvf-dimensionality-plus"
                             >
                                 <div className="gd-mvf-dimensionality-tag-wrapper">
                                     <UiTag
@@ -371,11 +187,7 @@ export const DimensionalitySection = memo(function DimensionalitySection({
                     onCancel={handleCloseAttributePicker}
                     availableInsightItems={availableInsightItems}
                     availableCatalogItems={availableCatalogItems}
-                    isLoadingCatalogDimensionality={
-                        loadCatalogDimensionality
-                            ? isLoadingLazyCatalogDimensionality
-                            : isLoadingCatalogDimensionality
-                    }
+                    isLoadingCatalogDimensionality={isLoadingCatalogForPicker}
                 />
             ) : null}
         </div>

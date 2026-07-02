@@ -6,10 +6,7 @@ import { RichText } from "@gooddata/sdk-ui-kit";
 
 import { useRichTextWidgetFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
-import {
-    selectEnableRichTextDynamicReferences,
-    selectSeparators,
-} from "../../../model/store/config/configSelectors.js";
+import { selectSeparators } from "../../../model/store/config/configSelectors.js";
 import { DASHBOARD_SUMMARY_MACRO } from "../../../model/store/dashboardSummaryWorkflow/constants.js";
 import { selectCurrentDashboardSummaryWorkflowStatus } from "../../../model/store/dashboardSummaryWorkflow/dashboardSummaryWorkflowSelectors.js";
 import { selectCurrentDashboardSummary } from "../../../model/store/listedDashboards/listedDashboardsSummarySelectors.js";
@@ -28,7 +25,6 @@ export function ViewModeDashboardRichText({
     onError,
 }: IDashboardRichTextProps) {
     const intl = useIntl();
-    const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
     const { filters } = useRichTextWidgetFilters(widget);
     const separators = useDashboardSelector(selectSeparators);
     const { LoadingComponent } = useDashboardComponentsContext();
@@ -65,7 +61,7 @@ export function ViewModeDashboardRichText({
 
     return (
         <RichText
-            referencesEnabled={isRichTextReferencesEnabled}
+            referencesEnabled
             className="gd-rich-text-widget"
             value={value}
             filters={filters}

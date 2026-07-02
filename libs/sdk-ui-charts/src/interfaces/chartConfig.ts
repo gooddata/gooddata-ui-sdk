@@ -412,16 +412,8 @@ export interface IChartConfig {
     enableHighchartsAccessibility?: boolean;
 
     /**
-     * Determine if support for a configurable trend threshold measure should be enabled for a line
-     * chart visualization. The flag enables the usage of thresholdMeasures visualization property.
-     * @internal
-     */
-    enableLineChartTrendThreshold?: boolean;
-
-    /**
      * Local identifier of measures that are used to render thresholds in the line and combo chart.
      * Currently only the one threshold measure is supported.
-     * Requires enableLineChartTrendThreshold to be true to be applied.
      */
     thresholdMeasures?: string[];
 

@@ -193,6 +193,18 @@
     }
 }
 
+.gd-visualizations-related-header {
+    display: flex;
+    gap: 5px;
+    justify-content: flex-start;
+    align-items: flex-end;
+    height: 100%;
+    padding: 5px 0 5px 10px;
+    font-size: 12px;
+    line-height: 12px;
+    color: kit-variables.$gd-color-state-blank;
+}
+
 .gd-container-tooltip {
     display: flex;
     flex-direction: column;

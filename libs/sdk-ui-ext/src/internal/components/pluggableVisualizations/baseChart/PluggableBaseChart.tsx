@@ -288,7 +288,6 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
                 )}
                 forecastConfig={updateForecastWithSettings(
                     fullConfig,
-                    this.featureFlags,
                     isForecastEnabled(this.referencePoint, insight, this.type),
                 )}
                 config={updateConfigWithSettings(fullConfig, this.featureFlags)}

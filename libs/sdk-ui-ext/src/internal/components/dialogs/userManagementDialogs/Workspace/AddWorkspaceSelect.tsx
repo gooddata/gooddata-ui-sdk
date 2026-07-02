@@ -82,8 +82,13 @@ export function AddWorkspaceSelect({
         }
     }, []);
 
+    // Inherited workspaces stay selectable so a direct grant can be added on top of inherited access;
+    // only workspaces already granted directly are excluded from the picker.
     const usedWorkspace = useMemo(
-        () => (grantedWorkspaces ? [...addedWorkspaces, ...grantedWorkspaces] : []),
+        () =>
+            grantedWorkspaces
+                ? [...addedWorkspaces, ...grantedWorkspaces.filter((workspace) => !workspace.isInherited)]
+                : [],
         [addedWorkspaces, grantedWorkspaces],
     );
 

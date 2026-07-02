@@ -4,10 +4,7 @@ import { DescriptionPanelContent } from "@gooddata/sdk-ui-kit";
 
 import { useRichTextWidgetFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
-import {
-    selectEnableRichTextDynamicReferences,
-    selectSeparators,
-} from "../../../model/store/config/configSelectors.js";
+import { selectSeparators } from "../../../model/store/config/configSelectors.js";
 import { selectExecutionTimestamp } from "../../../model/store/ui/uiSelectors.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 
@@ -22,7 +19,6 @@ import { useInsightWidgetDescription } from "./useInsightWidgetDescription.js";
 export function ExportModeInsightWidgetDescription(props: IInsightWidgetDescriptionTriggerProps) {
     const { exportData, widget } = props;
     const { isVisible, description, useRichText } = useInsightWidgetDescription(props);
-    const useReferences = useDashboardSelector(selectEnableRichTextDynamicReferences);
     const { filters } = useRichTextWidgetFilters(widget);
     const separators = useDashboardSelector(selectSeparators);
     const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
@@ -37,7 +33,7 @@ export function ExportModeInsightWidgetDescription(props: IInsightWidgetDescript
             <DescriptionPanelContent
                 description={description}
                 useRichText={useRichText}
-                useReferences={useReferences}
+                useReferences
                 filters={filters}
                 separators={separators}
                 LoadingComponent={LoadingComponent}

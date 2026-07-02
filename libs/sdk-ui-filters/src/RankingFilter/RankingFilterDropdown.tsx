@@ -6,6 +6,8 @@ import { type IRankingFilter, type ObjRefInScope } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { Overlay } from "@gooddata/sdk-ui-kit";
 
+import { type IDimensionalityItem } from "../MeasureValueFilter/typings.js";
+
 import { RankingFilterDropdownBody } from "./RankingFilterDropdownBody.js";
 import {
     type IAttributeDropdownItem,
@@ -17,10 +19,14 @@ import {
 const alignPoints = ["bl tl", "tl bl", "br tr", "tr br"];
 const DROPDOWN_ALIGNMENTS = alignPoints.map((align) => ({ align, offset: { x: 1, y: 0 } }));
 
-export const prepareRankingFilterState = (filter: IRankingFilter): IRankingFilter => {
+export const prepareRankingFilterState = (
+    filter: IRankingFilter,
+    keepAllAttributes = false,
+): IRankingFilter => {
     const { measure, attributes, operator, value, applyOnResult, strictLimitOfRows } = filter.rankingFilter;
-    const firstAttribute = attributes?.[0];
-    const attributesProp = firstAttribute ? { attributes: [firstAttribute] } : {};
+    // The legacy single-attribute UI keeps only the first attribute; the multi-attribute mode keeps them all.
+    const keptAttributes = keepAllAttributes ? attributes : attributes?.slice(0, 1);
+    const attributesProp = keptAttributes?.length ? { attributes: keptAttributes } : {};
     const applyOnResultProp = applyOnResult === undefined ? {} : { applyOnResult };
     const strictLimitOfRowsProp = strictLimitOfRows === undefined ? {} : { strictLimitOfRows };
 
@@ -57,6 +63,18 @@ export interface IRankingFilterDropdownProps {
      * with a custom body (e.g. a grouped, searchable catalog picker).
      */
     renderMeasureDropdownBody?: RenderMeasureDropdownBody;
+    // Multi-attribute "out of" section, mirroring the measure value filter dimensionality props (apart
+    // from naming). When isAttributesSectionEnabled is true, the section replaces the legacy single-attribute
+    // dropdown and the ranking filter supports multiple, catalog-backed "out of" attributes.
+    isAttributesSectionEnabled?: boolean;
+    /** Current "out of" attributes (titled), seeded by the host (filter's own, or insight defaults). */
+    attributes?: IDimensionalityItem[];
+    /** Insight default "out of" attributes (for the reset action). */
+    insightAttributes?: IDimensionalityItem[];
+    /** Catalog "out of" attributes (used when not lazily loaded via loadCatalogAttributes). */
+    catalogAttributes?: IDimensionalityItem[];
+    /** Lazily loads catalog "out of" attributes valid for the current selection (on picker open). */
+    loadCatalogAttributes?: (attributes: ObjRefInScope[]) => Promise<IDimensionalityItem[]>;
 }
 
 function RankingFilterDropdownComponent({
@@ -72,8 +90,15 @@ function RankingFilterDropdownComponent({
     enableRankingWithMvf,
     enableRankingStrictLimit,
     renderMeasureDropdownBody,
+    isAttributesSectionEnabled,
+    attributes,
+    insightAttributes,
+    catalogAttributes,
+    loadCatalogAttributes,
 }: IRankingFilterDropdownProps) {
-    const [rankingFilter, setRankingFilter] = useState(prepareRankingFilterState(filter));
+    const [rankingFilter, setRankingFilter] = useState(
+        prepareRankingFilterState(filter, !!isAttributesSectionEnabled),
+    );
 
     const handleApply = (rankingFilter: IRankingFilter) => {
         setRankingFilter(rankingFilter);
@@ -102,6 +127,11 @@ function RankingFilterDropdownComponent({
                 enableRankingWithMvf={enableRankingWithMvf}
                 enableRankingStrictLimit={enableRankingStrictLimit}
                 renderMeasureDropdownBody={renderMeasureDropdownBody}
+                isAttributesSectionEnabled={isAttributesSectionEnabled}
+                attributes={attributes}
+                insightAttributes={insightAttributes}
+                catalogAttributes={catalogAttributes}
+                loadCatalogAttributes={loadCatalogAttributes}
             />
         </Overlay>
     );

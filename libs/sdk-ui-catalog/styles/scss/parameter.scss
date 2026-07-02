@@ -111,17 +111,3 @@
     flex: auto;
     margin-right: 10px;
 }
-
-.gd-parameter-dialog-help-link {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    color: kit-variables.$gd-color-highlight;
-    font-size: 14px;
-    text-decoration: none;
-    cursor: pointer;
-
-    &:hover {
-        text-decoration: underline;
-    }
-}

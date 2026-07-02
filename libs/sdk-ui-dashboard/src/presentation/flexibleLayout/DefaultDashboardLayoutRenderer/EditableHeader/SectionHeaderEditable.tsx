@@ -17,7 +17,6 @@ import {
 } from "../../../../model/react/DashboardStoreProvider.js";
 import {
     selectEnableRichTextDescriptions,
-    selectEnableRichTextDynamicReferences,
     selectSeparators,
 } from "../../../../model/store/config/configSelectors.js";
 import { uiActions } from "../../../../model/store/ui/index.js";
@@ -48,8 +47,6 @@ export function SectionHeaderEditable({
     section,
 }: ISectionHeaderEditableProps): ReactElement {
     const useRichText = useDashboardSelector(selectEnableRichTextDescriptions);
-    const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
-
     const { LoadingComponent } = useDashboardComponentsContext();
     const { filters, loading } = useSectionDescriptionFilters();
     const separators = useDashboardSelector(selectSeparators);
@@ -170,7 +167,7 @@ export function SectionHeaderEditable({
                             showTooltip={isRichTextEditing}
                             tooltipAlignPoints={richTextTooltipAlignPoints}
                             autoResize
-                            referencesEnabled={isRichTextReferencesEnabled}
+                            referencesEnabled
                             filters={filters}
                             isFiltersLoading={loading}
                             separators={separators}

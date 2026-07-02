@@ -181,6 +181,7 @@ describe("headlineUiConfigHelper", () => {
                 enableJoinedAttributeAxisName: true,
                 enableReversedStacking: true,
                 enableSeparateTotalLabels: true,
+                useGenericInteractionTooltip: true,
             });
         });
     });

@@ -1,11 +1,12 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { type MouseEvent, useCallback, useEffect, useRef } from "react";
+import { type MouseEvent, useCallback, useEffect, useMemo, useRef } from "react";
 
 import { useIntl } from "react-intl";
 
 import {
     type IInsight,
+    type ISemanticSearchResultItem,
     areObjRefsEqual,
     insightCreated,
     insightIsLocked,
@@ -17,6 +18,12 @@ import {
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { type ITabsIds, useInsightPagedList } from "@gooddata/sdk-ui-ext";
 import { DropdownList, type ITab, InsightListItem, UiSkeleton } from "@gooddata/sdk-ui-kit";
+import {
+    type HybridSearchItemBuilder,
+    type SearchItemGroup,
+    customMatcher,
+    useHybridSearch,
+} from "@gooddata/sdk-ui-semantic-search";
 
 import { messages } from "../../locales.js";
 import { createInsightRequested } from "../../model/events/lab.js";
@@ -26,7 +33,7 @@ import { selectBackendCapabilities } from "../../model/store/backendCapabilities
 import {
     selectAllowCreateInsightRequest,
     selectEnableRichTextDescriptions,
-    selectEnableRichTextDynamicReferences,
+    selectEnableSemanticSearch,
     selectEnableVisualizationFilteringByTags,
     selectObjectAvailabilityConfig,
     selectSettings,
@@ -40,6 +47,7 @@ import { selectCurrentUser } from "../../model/store/user/userSelectors.js";
 import { getAuthor } from "../../model/utils/author.js";
 import { useDashboardComponentsContext } from "../dashboardContexts/DashboardComponentsContext.js";
 
+import { DIVIDER, InsightListDivider } from "./InsightListDivider.js";
 import { InsightListNoData } from "./InsightListNoData.js";
 import { type IInsightListProps } from "./types.js";
 
@@ -70,6 +78,32 @@ const useAuthor = () => {
 
 const tabsIds: ITabsIds = { my: messages.tabsMy.id, all: messages.tabsAll.id };
 
+const SEMANTIC_SEARCH_OBJECT_TYPES: ["visualization"] = ["visualization"];
+
+const insightItemBuilder: HybridSearchItemBuilder<IInsight["insight"]> = (
+    item: ISemanticSearchResultItem,
+    { ref },
+): IInsight["insight"] => ({
+    ref,
+    ...ref,
+    identifier: item.id,
+    uri: item.id,
+    title: item.title,
+    summary: item.description,
+    tags: item.tags,
+    filters: [],
+    visualizationUrl: item.visualizationUrl ?? "",
+    buckets: [],
+    sorts: [],
+    properties: {},
+    created: item.createdAt,
+    updated: item.modifiedAt,
+});
+
+interface IInsightGroup extends SearchItemGroup<IInsight["insight"]> {
+    identifier?: string;
+}
+
 /**
  * @internal
  */
@@ -91,10 +125,10 @@ export function InsightList({
     const allowCreateInsightRequest = useDashboardSelector(selectAllowCreateInsightRequest);
     const settings = useDashboardSelector(selectSettings);
     const useRichText = useDashboardSelector(selectEnableRichTextDescriptions);
-    const useReferences = useDashboardSelector(selectEnableRichTextDynamicReferences);
     const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
     const objectAvailability = useDashboardSelector(selectObjectAvailabilityConfig);
     const isFilteringByTagsEnabled = useDashboardSelector(selectEnableVisualizationFilteringByTags);
+    const enableSemanticSearch = useDashboardSelector(selectEnableSemanticSearch);
     const { LoadingComponent } = useDashboardComponentsContext();
 
     // Extract tag identifiers from object availability config only when the feature flag is enabled
@@ -102,7 +136,7 @@ export function InsightList({
     const excludeTags = isFilteringByTagsEnabled ? objectAvailability?.excludeObjectsWithTags : undefined;
 
     const {
-        items: insights,
+        items: pagedInsights,
         totalItemsCount: totalInsightsCount,
         isLoading,
         isNextPageLoading,
@@ -125,6 +159,52 @@ export function InsightList({
         tags,
         excludeTags,
     });
+
+    const matcher = useMemo(
+        () => customMatcher<IInsight["insight"], IInsightGroup>(["title", "summary", "identifier"]),
+        [],
+    );
+
+    const { search: hybridSearch, onSearchQueryChange: setHybridSearchQuery } = useHybridSearch<
+        IInsight["insight"],
+        never
+    >({
+        objectTypes: SEMANTIC_SEARCH_OBJECT_TYPES,
+        allowSematicSearch: enableSemanticSearch,
+        itemBuilder: insightItemBuilder,
+        includeTags: tags,
+        excludeTags,
+        matcher,
+    });
+
+    useEffect(() => {
+        setHybridSearchQuery(search);
+    }, [search, setHybridSearchQuery]);
+
+    const { semanticSearchState, searchRelatedItems } = useMemo(
+        () => hybridSearch({ items: pagedInsights.map((insight) => insight.insight) }),
+        [hybridSearch, pagedInsights],
+    );
+
+    const isRelatedLoading = semanticSearchState.state === "loading";
+
+    const totalItems =
+        (totalInsightsCount ?? pagedInsights.length) +
+        (isRelatedLoading ? 4 : searchRelatedItems.length + (searchRelatedItems.length ? 1 : 0));
+    const loadingItemsCount = skeletonItemsCount + (isRelatedLoading ? 4 : 0);
+
+    const insights = useMemo(
+        () => [
+            ...pagedInsights,
+            ...(isRelatedLoading
+                ? [DIVIDER]
+                : [
+                      ...(searchRelatedItems.length ? [DIVIDER] : []),
+                      ...searchRelatedItems.map((insight) => ({ insight })),
+                  ]),
+        ],
+        [pagedInsights, searchRelatedItems, isRelatedLoading],
+    );
 
     const prevInsightListLastUpdateRequestedRef = useRef(insightListLastUpdateRequested);
 
@@ -167,7 +247,7 @@ export function InsightList({
     // need to subtract height of controls from the overall size which was measured
     const controlsHeight = search ? SEARCHFIELD_HEIGHT : TABS_AND_SEARCHFIELD_HEIGHT;
     const dropdownListHeight = height && height - controlsHeight;
-    const dropdownListLoading = isLoading && insights.length === 0;
+    const dropdownListLoading = isLoading && pagedInsights.length === 0;
     const showDropdownListTabs = initialLoadCompleted && !search;
     const showNoDataCreateButton = allowCreateInsightRequest && canCreateVisualization;
 
@@ -190,12 +270,29 @@ export function InsightList({
             itemHeight={ITEM_HEIGHT}
             itemHeightGetter={itemHeightGetter}
             items={insights}
-            itemsCount={totalInsightsCount}
+            itemsCount={totalItems}
+            body={() => {
+                if (!isLoading && pagedInsights.length === 0 && searchRelatedItems.length > 0) {
+                    return (
+                        <InsightListNoData
+                            isUserInsights={selectedTabId === messages.tabsMy.id}
+                            hasNoMatchingData
+                            showNoDataCreateButton={showNoDataCreateButton}
+                            onCreateButtonClick={createInsightRequestedEvent}
+                        />
+                    );
+                }
+                return null;
+            }}
             renderItem={
                 renderItem ??
                 (({ item: insight, width }) => {
                     if (!insight) {
                         return <InsightListItem isLoading />;
+                    }
+
+                    if ("divider" in insight) {
+                        return <InsightListDivider />;
                     }
 
                     const title = insightTitle(insight);
@@ -207,7 +304,7 @@ export function InsightList({
                         <InsightListItem
                             title={title}
                             description={description}
-                            showDescriptionPanel={settings?.enableDescriptions}
+                            showDescriptionPanel
                             type={insightListSourceItem.insightType}
                             width={width}
                             isSelected={isSelected}
@@ -219,7 +316,7 @@ export function InsightList({
                             onClick={() => onSelect?.(insight)}
                             metadataTimeZone={settings?.metadataTimeZone}
                             useRichText={useRichText}
-                            useReferences={useReferences}
+                            useReferences
                             richTextExecConfig={{
                                 timestamp: executionTimestamp,
                             }}
@@ -237,8 +334,8 @@ export function InsightList({
                 />
             )}
             loadNextPage={loadNextPage}
-            hasNextPage={hasNextPage}
-            skeletonItemsCount={skeletonItemsCount}
+            hasNextPage={hasNextPage || isRelatedLoading}
+            skeletonItemsCount={loadingItemsCount}
             shouldLoadNextPage={shouldLoadNextPage}
             isNextPageLoading={isNextPageLoading}
             SkeletonItem={() => (

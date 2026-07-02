@@ -1,6 +1,6 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { type ReactNode, useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -11,7 +11,6 @@ import { useDashboardDispatch, useDashboardSelector } from "../../../model/react
 import { useDashboardScheduledEmails } from "../../../model/react/useDasboardScheduledEmails/useDashboardScheduledEmails.js";
 import { useDashboardAlerts } from "../../../model/react/useDashboardAlerting/useDashboardAlerts.js";
 import {
-    selectEnableAutomationManagement,
     selectEnableDashboardDensitySetting,
     selectEnableDashboardTabularExport,
     selectEnableSnapshotExport,
@@ -85,13 +84,8 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
         ? intl.formatMessage({ id: "options.menu.export.partialResults.warning.dashboard" })
         : undefined;
 
-    const {
-        isScheduledEmailingVisible,
-        isScheduledManagementEmailingVisible,
-        numberOfAvailableDestinations,
-        defaultOnScheduleEmailing,
-        defaultOnScheduleEmailingManagement,
-    } = useDashboardScheduledEmails();
+    const { isScheduledManagementEmailingVisible, defaultOnScheduleEmailingManagement } =
+        useDashboardScheduledEmails();
 
     const {
         defaultOnAlertingManagement: defaultOnAlertsManagement,
@@ -210,7 +204,6 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
     const isReadOnly = useDashboardSelector(selectIsReadOnly);
 
     const isEnableDashboardTabularExport = useDashboardSelector(selectEnableDashboardTabularExport);
-    const isAutomationManagementEnabled = useDashboardSelector(selectEnableAutomationManagement);
     const enableSnapshotExport = useDashboardSelector(selectEnableSnapshotExport);
 
     const isExportVisible = useDashboardSelector(selectSlideShowExportVisible);
@@ -326,9 +319,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                     type: "button",
                     itemId: "alerts-edit-item", // careful, this is also used as a selector in tests, do not change
                     itemName: canCreateAutomation
-                        ? isAutomationManagementEnabled
-                            ? intl.formatMessage({ id: "options.menu.alert" })
-                            : intl.formatMessage({ id: "options.menu.alerts.edit" })
+                        ? intl.formatMessage({ id: "options.menu.alert" })
                         : intl.formatMessage({ id: "options.menu.alerts.edit.noCreatePermissions" }),
                     onClick: defaultOnAlertsManagement,
                     visible: isAlertsManagementVisible,
@@ -340,42 +331,13 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
             [
                 {
                     type: "button",
-                    itemId: "schedule-email-item", // careful, this is also used as a selector in tests, do not change
-                    itemName: intl.formatMessage({ id: "options.menu.schedule.email" }),
-                    onClick: defaultOnScheduleEmailing,
-                    visible: isScheduledEmailingVisible && !isAutomationManagementEnabled,
-                    tooltip:
-                        numberOfAvailableDestinations === 0
-                            ? intl.formatMessage(
-                                  { id: "options.menu.schedule.email.tooltip" },
-                                  {
-                                      a: (chunk: ReactNode) => (
-                                          <a href="/settings" rel="noopener noreferrer" target="_blank">
-                                              {chunk}
-                                          </a>
-                                      ),
-                                  },
-                              )
-                            : undefined,
-                    icon: "gd-icon-clock",
-                    opensDialog: true,
-                },
-                {
-                    type: "button",
                     itemId: "schedule-email-edit-item", // careful, this is also used as a selector in tests, do not change
                     itemName: canCreateAutomation
-                        ? isAutomationManagementEnabled
-                            ? intl.formatMessage({ id: "options.menu.schedule.email" })
-                            : intl.formatMessage({ id: "options.menu.schedule.email.edit" })
+                        ? intl.formatMessage({ id: "options.menu.schedule.email" })
                         : intl.formatMessage({ id: "options.menu.schedule.email.edit.noCreatePermissions" }),
                     onClick: defaultOnScheduleEmailingManagement,
                     visible: isScheduledManagementEmailingVisible,
-                    icon:
-                        canCreateAutomation && !isAutomationManagementEnabled ? (
-                            <MenuIcon type="list" />
-                        ) : (
-                            "gd-icon-clock"
-                        ),
+                    icon: "gd-icon-clock",
                     opensDialog: true,
                 },
             ],
@@ -484,7 +446,6 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
         openDensityDialog,
         defaultOnExportToPdf,
         defaultOnSaveAs,
-        defaultOnScheduleEmailing,
         defaultOnScheduleEmailingManagement,
         defaultOnAlertsManagement,
         defaultOnExportToExcel,
@@ -499,9 +460,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
         isReadOnly,
         isSaveAsDisabled,
         isSaveAsVisible,
-        isScheduledEmailingVisible,
         isScheduledManagementEmailingVisible,
-        numberOfAvailableDestinations,
         openDeleteDialog,
         openFilterViewsAddDialog,
         openFilterViewsListDialog,
@@ -517,7 +476,6 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
         isSlideshowPdfExportVisible,
         isSlideshowPptxExportVisible,
         isXlsxExportVisible,
-        isAutomationManagementEnabled,
         enableSnapshotExport,
         xlsxPartialResultsWarning,
     ]);

@@ -9,7 +9,7 @@ import {
     selectAutomationsIsLoading,
     selectDashboardUserAutomationAlertsInContext,
 } from "../../store/automations/automationsSelectors.js";
-import { selectEnableAlerting, selectIsReadOnly } from "../../store/config/configSelectors.js";
+import { selectIsReadOnly } from "../../store/config/configSelectors.js";
 import {
     selectEntitlementMaxAutomations,
     selectEntitlementUnlimitedAutomations,
@@ -55,9 +55,6 @@ export const useDashboardAlertsData = ({ alertToEdit }: IUseDashboardAlertsDataP
     // Visibility configuration
     const menuButtonItemsVisibility = useDashboardSelector(selectMenuButtonItemsVisibility);
 
-    // Feature flags
-    const isAlertingEnabled = useDashboardSelector(selectEnableAlerting);
-
     // Permissions
     const isWorkspaceManager = useDashboardSelector(selectCanManageWorkspace);
     const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);
@@ -79,7 +76,6 @@ export const useDashboardAlertsData = ({ alertToEdit }: IUseDashboardAlertsDataP
     const isAlertingAvailable =
         isInViewMode &&
         !isReadOnly &&
-        isAlertingEnabled &&
         showDueToNumberOfAvailableDestinations &&
         (menuButtonItemsVisibility.alertingButton ?? true);
 

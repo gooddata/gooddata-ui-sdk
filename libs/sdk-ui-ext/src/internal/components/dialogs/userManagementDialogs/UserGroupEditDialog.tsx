@@ -76,7 +76,12 @@ function UserGroupEditDialogComponent({
         onDataSourcesChanged,
         removeGrantedDataSource,
         updateGrantedDataSource,
-    } = usePermissions(userGroupId, "userGroup", organizationId, onSuccess);
+    } = usePermissions({
+        id: userGroupId,
+        subjectType: "userGroup",
+        organizationId,
+        onSuccess,
+    });
     const { grantedUsers, onUsersChanged, removeGrantedUsers } = useUsers(
         userGroupId,
         organizationId,
@@ -142,9 +147,9 @@ function UserGroupEditDialogComponent({
         setDialogMode("WORKSPACE");
     };
 
-    const handleWorkspaceChanged = (workspaces: IGrantedWorkspace[]) => {
+    const handleWorkspaceChanged = () => {
         setWorkspaceToEdit(undefined);
-        onWorkspacesChanged(workspaces);
+        onWorkspacesChanged();
     };
 
     const handleWorkspaceCancel = () => {

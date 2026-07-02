@@ -15,10 +15,6 @@ import {
     selectDashboardUserAutomationAlertsInContext,
     selectDashboardUserAutomationSchedulesInContext,
 } from "../../../../model/store/automations/automationsSelectors.js";
-import {
-    selectEnableAlerting,
-    selectEnableScheduling,
-} from "../../../../model/store/config/configSelectors.js";
 import { selectDrillTargetsByWidgetRef } from "../../../../model/store/drillTargets/drillTargetsSelectors.js";
 import { useDashboardCustomizationsContext } from "../../../dashboardContexts/DashboardCustomizationsContext.js";
 import { getDefaultInsightEditMenuItems } from "../../insightMenu/DefaultDashboardInsightMenu/getDefaultInsightEditMenuItems.js";
@@ -47,8 +43,6 @@ export const useEditableInsightMenu = (
     const includeInteractions = someAvailableDrillTargetsExist && Boolean(insight);
     const includeConfigurations = Boolean(insight);
 
-    const isSchedulingEnabled = useDashboardSelector(selectEnableScheduling);
-    const isAlertingEnabled = useDashboardSelector(selectEnableAlerting);
     const alerts = useDashboardSelector(selectDashboardUserAutomationAlertsInContext(widget.localIdentifier));
     const schedules = useDashboardSelector(
         selectDashboardUserAutomationSchedulesInContext(widget.localIdentifier),
@@ -57,9 +51,8 @@ export const useEditableInsightMenu = (
     const useWidgetDeleteDialog = useMemo(
         () =>
             // new widgets in edit mode do not have localIdentifier, so should be deleted without confirmation dialog
-            !!widget.localIdentifier &&
-            ((isAlertingEnabled && alerts.length > 0) || (isSchedulingEnabled && schedules.length > 0)),
-        [alerts.length, isAlertingEnabled, isSchedulingEnabled, schedules.length, widget.localIdentifier],
+            !!widget.localIdentifier && (alerts.length > 0 || schedules.length > 0),
+        [alerts.length, schedules.length, widget.localIdentifier],
     );
 
     const { insightMenuItemsProvider } = useDashboardCustomizationsContext();

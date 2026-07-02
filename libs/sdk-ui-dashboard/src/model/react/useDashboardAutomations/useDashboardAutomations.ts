@@ -6,9 +6,8 @@ import {
     initializeAutomations as initializeAutomationsCommand,
     refreshAutomations as refreshAutomationsCommand,
 } from "../../commands/scheduledEmail.js";
-import { selectEnableAutomations } from "../../store/config/configSelectors.js";
 import { uiActions } from "../../store/ui/index.js";
-import { useDashboardDispatch, useDashboardSelector } from "../DashboardStoreProvider.js";
+import { useDashboardDispatch } from "../DashboardStoreProvider.js";
 
 /**
  * @alpha
@@ -16,22 +15,15 @@ import { useDashboardDispatch, useDashboardSelector } from "../DashboardStorePro
 export const useDashboardAutomations = () => {
     const dispatch = useDashboardDispatch();
 
-    // Feature Flags
-    const enableAutomations = useDashboardSelector(selectEnableAutomations);
-
     // Data initialization
     const initializeAutomations = useCallback(() => {
-        if (enableAutomations) {
-            dispatch(initializeAutomationsCommand());
-        }
-    }, [dispatch, enableAutomations]);
+        dispatch(initializeAutomationsCommand());
+    }, [dispatch]);
 
     // Data Reload
     const refreshAutomations = useCallback(() => {
-        if (enableAutomations) {
-            dispatch(refreshAutomationsCommand());
-        }
-    }, [dispatch, enableAutomations]);
+        dispatch(refreshAutomationsCommand());
+    }, [dispatch]);
 
     const refreshAutomationManagementItems = useCallback(() => {
         dispatch(uiActions.invalidateAutomationItems());

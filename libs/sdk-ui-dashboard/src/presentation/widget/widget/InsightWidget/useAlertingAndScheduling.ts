@@ -9,7 +9,7 @@ import {
 } from "@gooddata/sdk-ui-ext";
 
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
-import { selectIsReadOnly, selectSettings } from "../../../../model/store/config/configSelectors.js";
+import { selectIsReadOnly } from "../../../../model/store/config/configSelectors.js";
 import { selectNotificationChannelsCount } from "../../../../model/store/notificationChannels/notificationChannelsSelectors.js";
 import { selectCanManageWorkspace } from "../../../../model/store/permissions/permissionsSelectors.js";
 import { isCustomWidget } from "../../../../model/types/layoutTypes.js";
@@ -34,7 +34,6 @@ export const useAlertingAndScheduling = ({
     scheduleExportManagementDisabled: boolean;
     scheduleExportDisabledReason?: SchedulingDisabledReason;
 } => {
-    const settings = useDashboardSelector(selectSettings);
     const isReadOnly = useDashboardSelector(selectIsReadOnly);
     const isWorkspaceManager = useDashboardSelector(selectCanManageWorkspace);
 
@@ -50,11 +49,9 @@ export const useAlertingAndScheduling = ({
     // and we should not allow to schedule export/alert because we need localIdentifier to identify the widget
     const widgetHasNoLocalIdentifier = !widget.localIdentifier;
 
-    const isAlertingEnabled = settings.enableAlerting === true;
     const isInsightTypeSupportedForAlerting = isInsightSupportedForAlerts(insight);
     const isInsightEnabledForAlerting = isInsightAlertingConfigurationEnabled(insight);
     const isAlertingVisible =
-        isAlertingEnabled &&
         isStandardWidget &&
         isInsightTypeSupportedForAlerting &&
         !isReadOnly &&

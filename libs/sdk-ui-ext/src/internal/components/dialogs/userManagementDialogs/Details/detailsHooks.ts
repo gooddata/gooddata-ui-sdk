@@ -17,7 +17,7 @@ export const useUserDetails = (
     isAdmin: boolean,
     onSubmit: (user: IUser, isAdmin: boolean) => void,
     onCancel: () => void,
-    removeAdminGroup: () => void,
+    removeAdminGroup: () => Promise<void>,
     isSystemAccountFilteringEnabled = false,
 ) => {
     const { addSuccess, addError } = useToastMessage();

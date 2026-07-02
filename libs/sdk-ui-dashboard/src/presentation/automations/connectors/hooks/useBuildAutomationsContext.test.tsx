@@ -54,14 +54,12 @@ vi.mock("../../../../model/store/catalog/catalogSelectors.js", () => ({
 
 vi.mock("../../../../model/store/config/configSelectors.js", () => ({
     selectDateFormat: () => "MM/dd/yyyy",
-    selectEnableAlertAttributes: () => false,
     selectEnableAlertOncePerInterval: () => false,
     selectEnableAnomalyDetectionAlert: () => false,
     selectEnableAutomationEvaluationMode: () => false,
-    selectEnableAutomationManagement: () => false,
-    selectEnableComparisonInAlerting: () => false,
     selectEnableCustomizableCsvDelimiter: () => false,
     selectEnableNewScheduledExport: () => false,
+    selectEnableSlideshowExports: () => false,
     selectExternalRecipient: () => undefined,
     selectIsWhiteLabeled: () => false,
     selectLocale: () => "en-US",
@@ -83,10 +81,6 @@ vi.mock("../../../../model/store/permissions/permissionsSelectors.js", () => ({
     selectCanCreateAutomation: () => true,
     selectCanManageWorkspace: () => false,
     selectCanUseAiAssistant: () => false,
-}));
-
-vi.mock("../../../../model/store/topBar/topBarSelectors.js", () => ({
-    selectIsAutomationDialogSecondaryTitleVisible: () => false,
 }));
 
 vi.mock("../../../../model/store/user/userSelectors.js", () => ({

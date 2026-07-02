@@ -1,6 +1,6 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 
 import {
     type IAutomationMetadataObject,
@@ -14,7 +14,6 @@ import {
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../locales.js";
-import { selectEnableAutomationManagement } from "../../store/config/configSelectors.js";
 import { selectInsights } from "../../store/insights/insightsSelectors.js";
 import { selectDashboardRef } from "../../store/meta/metaSelectors.js";
 import { selectNotificationChannels } from "../../store/notificationChannels/notificationChannelsSelectors.js";
@@ -36,22 +35,14 @@ export const useDashboardScheduledEmailsDialog = () => {
     const destinations = useDashboardSelector(selectNotificationChannels);
     const allWidgets = useDashboardSelector(selectWidgets);
     const allInsights = useDashboardSelector(selectInsights);
-    const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
 
-    const { closeScheduleEmailingDialog, openScheduleEmailingDialog, openScheduleEmailingManagementDialog } =
-        useDashboardScheduledEmailsCommands();
+    const { closeScheduleEmailingDialog, openScheduleEmailingDialog } = useDashboardScheduledEmailsCommands();
 
-    const { refreshAutomations, refreshAutomationManagementItems } = useDashboardAutomations();
-
-    const [shouldReturnToManagementDialog, setShouldReturnToManagementDialog] = useState<boolean>(false);
+    const { refreshAutomationManagementItems } = useDashboardAutomations();
 
     const handleRefreshAutomations = useCallback(() => {
-        if (enableAutomationManagement) {
-            refreshAutomationManagementItems();
-        } else {
-            refreshAutomations();
-        }
-    }, [enableAutomationManagement, refreshAutomations, refreshAutomationManagementItems]);
+        refreshAutomationManagementItems();
+    }, [refreshAutomationManagementItems]);
 
     /*
      * exports and scheduling are not available when rendering a dashboard that is not persisted.
@@ -66,52 +57,36 @@ export const useDashboardScheduledEmailsDialog = () => {
             }
 
             openScheduleEmailingDialog({ widget, openedFrom: "dashboard" });
-            setShouldReturnToManagementDialog(false);
         },
-        [dashboardRef, openScheduleEmailingDialog, setShouldReturnToManagementDialog],
+        [dashboardRef, openScheduleEmailingDialog],
     );
 
     // Open / Close
     const onScheduleEmailingOpen = useCallback(
         (widget?: IWidget) => {
             openScheduleEmailingDialog({ widget, openedFrom: "widget" });
-            setShouldReturnToManagementDialog(false);
         },
-        [openScheduleEmailingDialog, setShouldReturnToManagementDialog],
+        [openScheduleEmailingDialog],
     );
 
     const onScheduleEmailingCancel = useCallback(
-        (widget?: IWidget) => {
+        (_widget?: IWidget) => {
             closeScheduleEmailingDialog();
-            if (!enableAutomationManagement && shouldReturnToManagementDialog) {
-                openScheduleEmailingManagementDialog(widget);
-            }
         },
-        [
-            enableAutomationManagement,
-            shouldReturnToManagementDialog,
-            closeScheduleEmailingDialog,
-            openScheduleEmailingManagementDialog,
-        ],
+        [closeScheduleEmailingDialog],
     );
 
     const onScheduleEmailingBack = useCallback(
-        (widget?: IWidget) => {
+        (_widget?: IWidget) => {
             closeScheduleEmailingDialog();
-            if (!enableAutomationManagement) {
-                openScheduleEmailingManagementDialog(widget);
-            }
         },
-        [enableAutomationManagement, closeScheduleEmailingDialog, openScheduleEmailingManagementDialog],
+        [closeScheduleEmailingDialog],
     );
 
     // Create
     const onScheduleEmailingCreateSuccess = useCallback(
         (scheduledEmail: IAutomationMetadataObject) => {
             closeScheduleEmailingDialog();
-            if (!enableAutomationManagement) {
-                openScheduleEmailingManagementDialog();
-            }
             addSuccess(messages.scheduleEmailSubmitSuccess);
             handleRefreshAutomations();
 
@@ -143,9 +118,7 @@ export const useDashboardScheduledEmailsDialog = () => {
             });
         },
         [
-            enableAutomationManagement,
             closeScheduleEmailingDialog,
-            openScheduleEmailingManagementDialog,
             addSuccess,
             handleRefreshAutomations,
             allWidgets,
@@ -162,21 +135,12 @@ export const useDashboardScheduledEmailsDialog = () => {
 
     // Edit
     const onScheduleEmailingSaveSuccess = useCallback(
-        (widget?: IWidget) => {
+        (_widget?: IWidget) => {
             closeScheduleEmailingDialog();
-            if (!enableAutomationManagement) {
-                openScheduleEmailingManagementDialog(widget);
-            }
             addSuccess(messages.scheduleEmailSaveSuccess);
             handleRefreshAutomations();
         },
-        [
-            enableAutomationManagement,
-            closeScheduleEmailingDialog,
-            openScheduleEmailingManagementDialog,
-            addSuccess,
-            handleRefreshAutomations,
-        ],
+        [closeScheduleEmailingDialog, addSuccess, handleRefreshAutomations],
     );
 
     const onScheduleEmailingSaveError = useCallback(() => {
@@ -193,6 +157,5 @@ export const useDashboardScheduledEmailsDialog = () => {
         onScheduleEmailingCreateSuccess,
         onScheduleEmailingSaveError,
         onScheduleEmailingSaveSuccess,
-        setShouldReturnToManagementDialog,
     };
 };

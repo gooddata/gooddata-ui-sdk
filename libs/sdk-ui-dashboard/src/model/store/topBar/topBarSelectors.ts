@@ -4,10 +4,7 @@ import { createSelector } from "@reduxjs/toolkit";
 
 import { selectSupportsCrossFiltering } from "../backendCapabilities/backendCapabilitiesSelectors.js";
 import {
-    selectEnableAutomationManagement,
     selectEnableDashboardShareDialogLink,
-    selectEnableKDCrossFiltering,
-    selectEnableKPIDashboardExportPDF,
     selectEnableSlideshowExports,
     selectIsExport,
     selectIsReadOnly,
@@ -92,10 +89,9 @@ export const selectIsCurrentDashboardVisibleInList: DashboardSelector<boolean> =
  */
 export const selectCrossFilteringEnabledAndSupported: DashboardSelector<boolean> = createSelector(
     selectIsInEditMode,
-    selectEnableKDCrossFiltering,
     selectSupportsCrossFiltering,
-    (isEdit, enableCrossFiltering, supportsCrossFiltering) => {
-        return isEdit && enableCrossFiltering && supportsCrossFiltering;
+    (isEdit, supportsCrossFiltering) => {
+        return isEdit && supportsCrossFiltering;
     },
 );
 
@@ -157,13 +153,6 @@ export const selectIsShareButtonVisible: DashboardSelector<boolean> = createSele
         !isInEditMode &&
         !isShareButtonHidden,
 );
-
-/**
- * @internal
- */
-export function selectIsAutomationDialogSecondaryTitleVisible(state: DashboardState) {
-    return selectEnableAutomationManagement(state);
-}
 
 /**
  * @internal
@@ -245,14 +234,9 @@ export const selectSlideShowExportVisible: DashboardSelector<boolean> = createSe
  */
 export const selectPdfExportVisible: DashboardSelector<boolean> = createSelector(
     selectCommonExportAvailable,
-    selectEnableKPIDashboardExportPDF,
     selectMenuButtonItemsVisibility,
-    (canExport, isKPIDashboardExportPDFEnabled, menuButtonItemsVisibility) => {
-        return (
-            canExport &&
-            !!isKPIDashboardExportPDFEnabled &&
-            (menuButtonItemsVisibility.pdfExportButton ?? true)
-        );
+    (canExport, menuButtonItemsVisibility) => {
+        return canExport && (menuButtonItemsVisibility.pdfExportButton ?? true);
     },
 );
 

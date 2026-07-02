@@ -1,9 +1,14 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 
 import { type IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi";
-import { type AssignedWorkspacePermission, type IDataSourceIdentifierDescriptor } from "@gooddata/sdk-model";
+import {
+    type AssignedWorkspacePermission,
+    type DataSourceAccessSource,
+    type IDataSourceIdentifierDescriptor,
+    type WorkspaceAccessSource,
+} from "@gooddata/sdk-model";
 
 export interface IAddWorkspaceSelectProps {
     onSelectWorkspace: (workspace: IWorkspaceDescriptor) => void;
@@ -92,6 +97,16 @@ export interface IGrantedWorkspace {
     title: string;
     permissions: WorkspacePermission[];
     isHierarchical: boolean;
+    /**
+     * True when the workspace is accessible only indirectly - not assigned directly to the subject,
+     * but inherited through a user group or a parent workspace's hierarchy permission. Such entries
+     * are shown read-only because they cannot be revoked at the subject level.
+     */
+    isInherited?: boolean;
+    /**
+     * How the subject gains access to the workspace (DIRECT, GROUP, HIERARCHY), when known.
+     */
+    accessSource?: WorkspaceAccessSource;
 }
 
 /**
@@ -101,6 +116,15 @@ export interface IGrantedDataSource {
     id: string;
     title: string;
     permission: DataSourcePermission;
+    /**
+     * True when the data source is accessible only indirectly - inherited through a user group rather
+     * than assigned directly. Such entries are shown read-only.
+     */
+    isInherited?: boolean;
+    /**
+     * How the subject gains access to the data source (DIRECT, GROUP), when known.
+     */
+    accessSource?: DataSourceAccessSource;
 }
 
 export interface IPermissionsItem {

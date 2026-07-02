@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 
 import { isEqual } from "lodash-es";
 import { useIntl } from "react-intl";
@@ -29,7 +29,6 @@ import {
     isAutomationUnknownUserRecipient,
     isAutomationUserRecipient,
 } from "@gooddata/sdk-model";
-import { fillMissingTitles } from "@gooddata/sdk-ui";
 
 import { useAlertingDialogContext } from "../../../contexts/AlertingDialogContext.js";
 import { useAutomationsContext } from "../../../contexts/AutomationsContext.js";
@@ -57,13 +56,8 @@ import {
     getAlertMeasure,
     getAlertRelativeOperator,
     getAlertSensitivity,
-    getMeasureFormatsFromExecution,
 } from "../utils/getters.js";
 import { isAlertValueDefined } from "../utils/guards.js";
-import {
-    getSupportedInsightAttributesByInsight,
-    getSupportedInsightMeasuresByInsight,
-} from "../utils/items.js";
 import {
     transformAlertByAnomalyDetection,
     transformAlertByAttribute,
@@ -76,8 +70,8 @@ import {
     transformAlertByValue,
 } from "../utils/transformation.js";
 
+import { useAlertSupportedMetrics } from "./useAlertSupportedMetrics.js";
 import { useAlertValidation } from "./useAlertValidation.js";
-import { useAttributeValuesFromExecResults } from "./useAttributeValuesFromExecResults.js";
 import { useThresholdValue } from "./useThresholdValue.js";
 
 export interface IUseEditAlertProps {
@@ -111,7 +105,6 @@ export function useEditAlert({
     const intl = useIntl();
 
     const {
-        locale,
         catalogDateDatasets,
         catalogAttributes,
         currentUser,
@@ -120,17 +113,12 @@ export function useEditAlert({
         timezone,
         settings,
         allowHourlyRecurrence,
-        features: {
-            enableComparisonInAlerting: canManageComparison,
-            enableAlertAttributes: canManageAttributes,
-            enableAlertOncePerInterval,
-        },
+        features: { enableAlertOncePerInterval },
     } = useAutomationsContext();
 
     const isInvalidConnectionToInsight = alertToEdit?.metadata?.widget && !insight;
 
     const {
-        executionResultByRef,
         dashboardId,
         hiddenFilters: dashboardHiddenFilters,
         commonDateFilterId,
@@ -139,50 +127,20 @@ export function useEditAlert({
         parameterValues,
     } = useAlertingDialogContext();
 
-    const execResult = executionResultByRef(widget?.ref);
-
     // Determine target tab ID if widget is present
     const targetTabIdentifier = widget?.localIdentifier ? widgetTabMap[widget.localIdentifier] : undefined;
 
     // Computed values
     const isNewAlert = !alertToEdit;
 
-    const [effectiveInsight, setEffectiveInsight] = useState<IInsight | undefined>(insight);
-
-    useEffect(() => {
-        if (insight) {
-            void fillMissingTitles(insight, locale, 9999).then(setEffectiveInsight);
-        }
-    }, [insight, locale]);
-
-    const measureFormatMap = useMemo(() => {
-        return getMeasureFormatsFromExecution(execResult?.executionResult);
-    }, [execResult?.executionResult]);
-
-    const supportedMeasures = useMemo(
-        () =>
-            getSupportedInsightMeasuresByInsight(
-                effectiveInsight,
-                catalogDateDatasets,
-                canManageComparison,
-                alertToEdit,
-            ),
-        [effectiveInsight, catalogDateDatasets, canManageComparison, alertToEdit],
-    );
-
-    const supportedAttributes = useMemo(
-        () =>
-            getSupportedInsightAttributesByInsight(
-                insight,
-                catalogAttributes,
-                catalogDateDatasets,
-                alertToEdit,
-            ),
-        [insight, catalogDateDatasets, catalogAttributes, alertToEdit],
-    );
-
-    const { isResultLoading, getAttributeValues, getMetricValue } =
-        useAttributeValuesFromExecResults(execResult);
+    const {
+        measureFormatMap,
+        supportedMeasures,
+        supportedAttributes,
+        isResultLoading,
+        getAttributeValues,
+        getMetricValue,
+    } = useAlertSupportedMetrics({ insight, widget, alertToEdit });
 
     // Default values
     const defaultMeasure = supportedMeasures[0];
@@ -300,7 +258,6 @@ export function useEditAlert({
         insight,
         catalogDateDatasets,
         undefined,
-        canManageComparison,
     );
     const isParentValid = invalidityReason !== "missingWidget";
 
@@ -719,7 +676,6 @@ export function useEditAlert({
         selectedMeasure,
         canChangeMeasure: !!insight,
         supportedMeasures,
-        canManageAttributes,
         selectedAttribute,
         selectedValue,
         supportedAttributes,
@@ -734,7 +690,6 @@ export function useEditAlert({
         selectedRelativeOperator,
         value,
         selectedComparator,
-        canManageComparison,
         separators,
         warningMessage,
         defaultUser,

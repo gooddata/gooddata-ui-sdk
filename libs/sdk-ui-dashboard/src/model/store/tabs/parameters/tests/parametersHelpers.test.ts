@@ -13,7 +13,6 @@ import {
 
 import {
     classifyParameterReconciliation,
-    collectChangedParameterValues,
     collectParameterReconciliations,
     collectReferencedParameterRefs,
     computeHydratedRuntimeOverride,
@@ -313,64 +312,6 @@ describe("formatDashboardParameter", () => {
             runtimeOverride: 42,
         };
         expect(formatDashboardParameter(entry, topNWorkspace)?.id).toBe("topN");
-    });
-});
-
-describe("collectChangedParameterValues", () => {
-    it("collects an override that deviates from the workspace default", () => {
-        const entries: IDashboardParameterEntry[] = [
-            { parameter: { ref: topNRef, parameterType: "NUMBER", mode: "active" }, runtimeOverride: 3 },
-        ];
-        expect(collectChangedParameterValues(entries, [topNWorkspace])).toEqual([{ ref: topNRef, value: 3 }]);
-    });
-
-    it("drops an untouched entry whose runtimeOverride equals the workspace default", () => {
-        const entries: IDashboardParameterEntry[] = [
-            { parameter: { ref: topNRef, parameterType: "NUMBER", mode: "active" }, runtimeOverride: 10 },
-        ];
-        expect(collectChangedParameterValues(entries, [topNWorkspace])).toEqual([]);
-    });
-
-    it("collects an override that deviates from the persisted dashboard value", () => {
-        const entries: IDashboardParameterEntry[] = [
-            {
-                parameter: { ref: topNRef, parameterType: "NUMBER", mode: "active", value: 7 },
-                runtimeOverride: 3,
-            },
-        ];
-        expect(collectChangedParameterValues(entries, [topNWorkspace])).toEqual([{ ref: topNRef, value: 3 }]);
-    });
-
-    it("drops an untouched entry whose runtimeOverride equals the persisted dashboard value", () => {
-        const entries: IDashboardParameterEntry[] = [
-            {
-                parameter: { ref: topNRef, parameterType: "NUMBER", mode: "active", value: 7 },
-                runtimeOverride: 7,
-            },
-        ];
-        expect(collectChangedParameterValues(entries, [topNWorkspace])).toEqual([]);
-    });
-
-    it("skips entries without a runtimeOverride (execution falls back to the workspace default)", () => {
-        const entries: IDashboardParameterEntry[] = [
-            {
-                parameter: { ref: topNRef, parameterType: "NUMBER", mode: "active" },
-                runtimeOverride: undefined,
-            },
-        ];
-        expect(collectChangedParameterValues(entries, [topNWorkspace])).toEqual([]);
-    });
-
-    it("collects a set value for a ref absent from the workspace catalog (baseline undefined)", () => {
-        const entries: IDashboardParameterEntry[] = [
-            {
-                parameter: { ref: sampleSizeRef, parameterType: "NUMBER", mode: "active" },
-                runtimeOverride: 3,
-            },
-        ];
-        expect(collectChangedParameterValues(entries, [topNWorkspace])).toEqual([
-            { ref: sampleSizeRef, value: 3 },
-        ]);
     });
 });
 

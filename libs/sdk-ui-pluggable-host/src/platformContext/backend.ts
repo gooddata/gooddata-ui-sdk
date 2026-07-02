@@ -42,6 +42,26 @@ const decorateBackend = (backend: IAnalyticalBackend): IAnalyticalBackend => {
     return withCaching(backend, RecommendedCachingConfiguration);
 };
 
+const EMBEDDED_PATH_PREFIX = "/embedded/";
+const EXTERNAL_PROVIDER_ID_PARAM = "externalproviderid";
+
+function readExternalProviderIdFromUrl(): string | undefined {
+    if (typeof window === "undefined" || !window.location.pathname.startsWith(EMBEDDED_PATH_PREFIX)) {
+        return undefined;
+    }
+    const fromQuery = (query: string): string | undefined => {
+        for (const [key, value] of new URLSearchParams(query)) {
+            if (key.toLowerCase() === EXTERNAL_PROVIDER_ID_PARAM && value) {
+                return value;
+            }
+        }
+        return undefined;
+    };
+    const hash = window.location.hash;
+    const hashQuery = hash.includes("?") ? hash.slice(hash.indexOf("?") + 1) : "";
+    return fromQuery(window.location.search.replace(/^\?/, "")) ?? fromQuery(hashQuery);
+}
+
 function getDefaultAuthCredentials(): IAuthCredentials {
     const apiToken =
         typeof TIGER_API_TOKEN === "string" && TIGER_API_TOKEN.length ? TIGER_API_TOKEN : undefined;
@@ -50,7 +70,8 @@ function getDefaultAuthCredentials(): IAuthCredentials {
         return { type: "apiToken", token: apiToken };
     }
 
-    return { type: "contextDeferred" };
+    const externalProviderId = readExternalProviderIdFromUrl();
+    return externalProviderId ? { type: "contextDeferred", externalProviderId } : { type: "contextDeferred" };
 }
 
 export function createBackendFactory(options: ICreateBackendOptions = {}): IBackendFactory {

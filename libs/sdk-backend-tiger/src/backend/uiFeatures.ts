@@ -14,12 +14,9 @@ export enum TigerFeaturesNames {
     EnableMetricSqlAndDataExplain = "enableMetricSqlAndDataExplain",
     EnableMetricFormatOverrides = "enableMetricFormatOverrides",
     EnableColumnLevelPermissions = "enableColumnLevelPermissions",
-    EnableDescriptions = "enableDescriptions",
-    EnableKPIDashboardExportPDF = "enableKPIDashboardExportPDF",
     EnableSqlDatasets = "enableSqlDatasets",
     EnableHighchartsAccessibility = "enableHighchartsAccessibility",
     EnableAccessibleChartTooltip = "enableAccessibleChartTooltip",
-    EnableKDCrossFiltering = "enableKDCrossFiltering",
     EnableChangeAnalysis = "enableChangeAnalysis",
     EnableMultipleMvfConditions = "enableMultipleMvfConditions",
     EnableRankingWithMvf = "enableRankingWithMvf",
@@ -31,11 +28,6 @@ export enum TigerFeaturesNames {
     EnableOracleDataSource = "enableOracleDataSource",
     EnableAnalyticalCatalog = "enableAnalyticalCatalog",
     EnableParameters = "enableParameters",
-    EnableAlerting = "enableAlerting",
-    EnableAlertingAttributes = "enableAlertAttributes",
-    EnableComparisonInAlerting = "enableComparisonInAlerting",
-    EnableScheduling = "enableScheduling",
-    EnableSmartFunctions = "enableSmartFunctions",
     EnableCustomTooltip = "enableCustomTooltip",
     EnableMotherDuckDataSource = "enableMotherDuckDataSource",
     EnableMongoDbDataSource = "enableMongoDbDataSource",
@@ -49,7 +41,6 @@ export enum TigerFeaturesNames {
     EnableSnowflakeKeyPairAuthentication = "enableSnowflakeKeyPairAuthentication",
     EnableMultipleDataSourcesInWorkspace = "enableMultipleDataSourcesInWorkspace",
     EnableRichTextDescriptions = "enableRichTextDescriptions",
-    EnableSchedulingRollout = "enableSchedulingRollout",
     EnableSemanticSearch = "enableSemanticSearch",
     EnableCatalogSmartSearchResults = "enableCatalogSmartSearchResults",
     EnableGenAIChat = "enableGenAIChat",
@@ -60,11 +51,9 @@ export enum TigerFeaturesNames {
     EnableAIDataSetting = "enableAIDataSetting",
     EnableSystemAccountFiltering = "enableSystemAccountFiltering",
     EnableCustomizedDashboardsWithoutPluginOverlay = "enableCustomizedDashboardsWithoutPluginOverlay",
-    EnableAlertingRollout = "enableAlertingRollout",
     EnableNewInsightChangedPostMessageEvent = "enableNewInsightChangedPostMessageEvent",
     EarlyAccessFeatures = "earlyAccessFeatures",
     EnableDefaultSmtp = "enableDefaultSmtp",
-    EnableInPlatformNotifications = "enableInPlatformNotifications",
     EnableVisualizationFilteringByTags = "enableVisualizationFilteringByTags",
     EnableVisualizationFineTuning = "enableVisualizationFineTuning",
     EnableDashboardDescriptionDynamicHeight = "enableDashboardDescriptionDynamicHeight",
@@ -77,13 +66,9 @@ export enum TigerFeaturesNames {
     EnableDashboardTabularExport = "enableDashboardTabularExport",
     EnableOrchestratedTabularExports = "enableOrchestratedTabularExports",
     EnableImmediateAttributeFilterDisplayAsLabelMigration = "enableImmediateAttributeFilterDisplayAsLabelMigration",
-    EnableRichTextDynamicReferences = "enableRichTextDynamicReferences",
     EnableAnalyticalDesignerCatalogSideload = "enableAnalyticalDesignerCatalogSideload",
     EnableDashboardShareLink = "enableDashboardShareLink",
-    EnableExecutionTimestamp = "enableExecutionTimestamp",
-    EnableDateFilterIdentifiersRollout = "enableDateFilterIdentifiersRollout",
     EnableAlertsEvaluationFrequencySetup = "enableAlertsEvaluationFrequencySetup",
-    EnableLineChartTrendThreshold = "enableLineChartTrendThreshold",
     EnableKDRespectLegendPosition = "enableKDRespectLegendPosition",
     EnableWorkspaceSettingsAppHeaderMenuItem = "enableWorkspaceSettingsAppHeaderMenuItem",
     EnableSnapshotExportAccessibility = "enableSnapshotExportAccessibility",
@@ -109,7 +94,6 @@ export enum TigerFeaturesNames {
     EnableGeoBasemapConfig = "enableGeoBasemapConfig",
     EnableCustomGeoCollection = "enableCustomGeoCollection",
     EnableGeoSatelliteBasemapOption = "enableGeoSatelliteBasemapOption",
-    EnableAutomationManagement = "enableAutomationManagement",
     EnableNewPdfTabularExport = "enableNewPdfTabularExport",
     EnableGenAIMemory = "enableGenAIMemory",
     EnableOrgLevelAIMemory = "enableOrgLevelAIMemory",
@@ -164,11 +148,8 @@ export type ITigerFeatureFlags = {
     enableMetricSqlAndDataExplain: (typeof FeatureFlagsValues)["enableMetricSqlAndDataExplain"][number];
     enableMetricFormatOverrides: (typeof FeatureFlagsValues)["enableMetricFormatOverrides"][number];
     enableColumnLevelPermissions: (typeof FeatureFlagsValues)["enableColumnLevelPermissions"][number];
-    enableDescriptions: (typeof FeatureFlagsValues)["enableDescriptions"][number];
-    enableKPIDashboardExportPDF: (typeof FeatureFlagsValues)["enableKPIDashboardExportPDF"][number];
     enableSqlDatasets: (typeof FeatureFlagsValues)["enableSqlDatasets"][number];
     enableRadarChart: (typeof FeatureFlagsValues)["enableRadarChart"][number];
-    enableKDCrossFiltering: (typeof FeatureFlagsValues)["enableKDCrossFiltering"][number];
     enableChangeAnalysis: (typeof FeatureFlagsValues)["enableChangeAnalysis"][number];
     enableMultipleMvfConditions: (typeof FeatureFlagsValues)["enableMultipleMvfConditions"][number];
     enableRankingWithMvf: (typeof FeatureFlagsValues)["enableRankingWithMvf"][number];
@@ -180,12 +161,7 @@ export type ITigerFeatureFlags = {
     enableOracleDataSource: (typeof FeatureFlagsValues)["enableOracleDataSource"][number];
     enableAnalyticalCatalog: (typeof FeatureFlagsValues)["enableAnalyticalCatalog"][number];
     enableParameters: (typeof FeatureFlagsValues)["enableParameters"][number];
-    enableAlerting: (typeof FeatureFlagsValues)["enableAlerting"][number];
-    enableAlertAttributes: (typeof FeatureFlagsValues)["enableAlertAttributes"][number];
-    enableComparisonInAlerting: (typeof FeatureFlagsValues)["enableComparisonInAlerting"][number];
-    enableScheduling: (typeof FeatureFlagsValues)["enableScheduling"][number];
     enableLabsSmartFunctions: (typeof FeatureFlagsValues)["enableLabsSmartFunctions"][number];
-    enableSmartFunctions: (typeof FeatureFlagsValues)["enableSmartFunctions"][number];
     enableCustomTooltip: (typeof FeatureFlagsValues)["enableCustomTooltip"][number];
     enableMotherDuckDataSource: (typeof FeatureFlagsValues)["enableMotherDuckDataSource"][number];
     enableMongoDbDataSource: (typeof FeatureFlagsValues)["enableMongoDbDataSource"][number];
@@ -198,7 +174,6 @@ export type ITigerFeatureFlags = {
     enableSnowflakeKeyPairAuthentication: (typeof FeatureFlagsValues)["enableSnowflakeKeyPairAuthentication"][number];
     enableMultipleDataSourcesInWorkspace: (typeof FeatureFlagsValues)["enableMultipleDataSourcesInWorkspace"][number];
     enableRichTextDescriptions: (typeof FeatureFlagsValues)["enableRichTextDescriptions"][number];
-    enableSchedulingRollout: (typeof FeatureFlagsValues)["enableSchedulingRollout"][number];
     enableSemanticSearch: (typeof FeatureFlagsValues)["enableSemanticSearch"][number];
     enableCatalogSmartSearchResults: (typeof FeatureFlagsValues)["enableCatalogSmartSearchResults"][number];
     enableGenAIChat: (typeof FeatureFlagsValues)["enableGenAIChat"][number];
@@ -207,13 +182,11 @@ export type ITigerFeatureFlags = {
     enableCatalogLineage: (typeof FeatureFlagsValues)["enableCatalogLineage"][number];
     enableCertification: (typeof FeatureFlagsValues)["enableCertification"][number];
     enableAIDataSetting: (typeof FeatureFlagsValues)["enableAIDataSetting"][number];
-    enableAlertingRollout: (typeof FeatureFlagsValues)["enableAlertingRollout"][number];
     enableSystemAccountFiltering: (typeof FeatureFlagsValues)["enableSystemAccountFiltering"][number];
     enableCustomizedDashboardsWithoutPluginOverlay: (typeof FeatureFlagsValues)["enableCustomizedDashboardsWithoutPluginOverlay"][number];
     enableNewInsightChangedPostMessageEvent: (typeof FeatureFlagsValues)["enableNewInsightChangedPostMessageEvent"][number];
     earlyAccessFeatures: (typeof FeatureFlagsValues)["earlyAccessFeatures"][number];
     enableDefaultSmtp: (typeof FeatureFlagsValues)["enableDefaultSmtp"][number];
-    enableInPlatformNotifications: (typeof FeatureFlagsValues)["enableInPlatformNotifications"][number];
     enableVisualizationFilteringByTags: (typeof FeatureFlagsValues)["enableVisualizationFilteringByTags"][number];
     enableVisualizationFineTuning: (typeof FeatureFlagsValues)["enableVisualizationFineTuning"][number];
     enableDashboardTabularExport: (typeof FeatureFlagsValues)["enableDashboardTabularExport"][number];
@@ -226,15 +199,11 @@ export type ITigerFeatureFlags = {
     enableCustomizableCsvDelimiter: (typeof FeatureFlagsValues)["enableCustomizableCsvDelimiter"][number];
     enableExecutionCancelling: (typeof FeatureFlagsValues)["enableExecutionCancelling"][number];
     enableImmediateAttributeFilterDisplayAsLabelMigration: (typeof FeatureFlagsValues)["enableImmediateAttributeFilterDisplayAsLabelMigration"][number];
-    enableRichTextDynamicReferences: (typeof FeatureFlagsValues)["enableRichTextDynamicReferences"][number];
     enableAnalyticalDesignerCatalogSideload: (typeof FeatureFlagsValues)["enableAnalyticalDesignerCatalogSideload"][number];
     enableDashboardShareLink: (typeof FeatureFlagsValues)["enableDashboardShareLink"][number];
     enableHighchartsAccessibility: (typeof FeatureFlagsValues)["enableHighchartsAccessibility"][number];
     enableAccessibleChartTooltip: (typeof FeatureFlagsValues)["enableAccessibleChartTooltip"][number];
-    enableExecutionTimestamp: (typeof FeatureFlagsValues)["enableExecutionTimestamp"][number];
-    enableDateFilterIdentifiersRollout: (typeof FeatureFlagsValues)["enableDateFilterIdentifiersRollout"][number];
     enableAlertsEvaluationFrequencySetup: (typeof FeatureFlagsValues)["enableAlertsEvaluationFrequencySetup"][number];
-    enableLineChartTrendThreshold: (typeof FeatureFlagsValues)["enableLineChartTrendThreshold"][number];
     enableKDRespectLegendPosition: (typeof FeatureFlagsValues)["enableKDRespectLegendPosition"][number];
     enableWorkspaceSettingsAppHeaderMenuItem: (typeof FeatureFlagsValues)["enableWorkspaceSettingsAppHeaderMenuItem"][number];
     enableSnapshotExportAccessibility: (typeof FeatureFlagsValues)["enableSnapshotExportAccessibility"][number];
@@ -260,7 +229,6 @@ export type ITigerFeatureFlags = {
     enableGeoBasemapConfig: (typeof FeatureFlagsValues)["enableGeoBasemapConfig"][number];
     enableCustomGeoCollection: (typeof FeatureFlagsValues)["enableCustomGeoCollection"][number];
     enableGeoSatelliteBasemapOption: (typeof FeatureFlagsValues)["enableGeoSatelliteBasemapOption"][number];
-    enableAutomationManagement: (typeof FeatureFlagsValues)["enableAutomationManagement"][number];
     enableNewPdfTabularExport: (typeof FeatureFlagsValues)["enableNewPdfTabularExport"][number];
     enableGenAIMemory: (typeof FeatureFlagsValues)["enableGenAIMemory"][number];
     enableOrgLevelAIMemory: (typeof FeatureFlagsValues)["enableOrgLevelAIMemory"][number];
@@ -314,11 +282,8 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableMetricSqlAndDataExplain: false,
     enableMetricFormatOverrides: false,
     enableColumnLevelPermissions: false,
-    enableDescriptions: true,
-    enableKPIDashboardExportPDF: true,
     enableSqlDatasets: false,
     enableRadarChart: false,
-    enableKDCrossFiltering: true,
     enableChangeAnalysis: false,
     enableMultipleMvfConditions: true,
     enableRankingWithMvf: false,
@@ -333,12 +298,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableOracleDataSource: false,
     enableAnalyticalCatalog: false,
     enableParameters: false,
-    enableAlerting: true,
-    enableAlertAttributes: true,
-    enableComparisonInAlerting: true,
-    enableScheduling: true,
     enableLabsSmartFunctions: false,
-    enableSmartFunctions: true,
     enableCustomTooltip: true,
     enableDataProfiling: false,
     enableExperimentalFeaturesUI: false,
@@ -348,7 +308,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableSnowflakeKeyPairAuthentication: true,
     enableMultipleDataSourcesInWorkspace: true,
     enableRichTextDescriptions: true,
-    enableSchedulingRollout: false,
     enableSemanticSearch: false,
     enableCatalogSmartSearchResults: false,
     enableGenAIChat: false,
@@ -357,13 +316,11 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableCatalogLineage: false,
     enableCertification: false,
     enableAIDataSetting: false,
-    enableAlertingRollout: false,
     enableSystemAccountFiltering: true,
     enableCustomizedDashboardsWithoutPluginOverlay: true,
     enableNewInsightChangedPostMessageEvent: false,
     earlyAccessFeatures: undefined,
     enableDefaultSmtp: false,
-    enableInPlatformNotifications: true,
     enableVisualizationFilteringByTags: false,
     enableVisualizationFineTuning: false,
     enableDashboardTabularExport: false,
@@ -376,15 +333,11 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableCustomizableCsvDelimiter: true,
     enableExecutionCancelling: false,
     enableImmediateAttributeFilterDisplayAsLabelMigration: false,
-    enableRichTextDynamicReferences: true,
     enableAnalyticalDesignerCatalogSideload: false,
     enableDashboardShareLink: true,
     enableHighchartsAccessibility: true,
     enableAccessibleChartTooltip: false,
-    enableExecutionTimestamp: true,
-    enableDateFilterIdentifiersRollout: true,
     enableAlertsEvaluationFrequencySetup: true,
-    enableLineChartTrendThreshold: true,
     enableKDRespectLegendPosition: true,
     enableWorkspaceSettingsAppHeaderMenuItem: false,
     enableSnapshotExportAccessibility: false,
@@ -410,7 +363,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableGeoBasemapConfig: true,
     enableCustomGeoCollection: true,
     enableGeoSatelliteBasemapOption: false,
-    enableAutomationManagement: true,
     enableNewPdfTabularExport: true,
     enableGenAIMemory: false,
     enableOrgLevelAIMemory: false,
@@ -464,11 +416,8 @@ export const FeatureFlagsValues = {
     enableMetricSqlAndDataExplain: [true, false] as const,
     enableMetricFormatOverrides: [true, false] as const,
     enableColumnLevelPermissions: [true, false] as const,
-    enableDescriptions: [true, false] as const,
-    enableKPIDashboardExportPDF: [true, false] as const,
     enableSqlDatasets: [true, false] as const,
     enableRadarChart: [true, false] as const,
-    enableKDCrossFiltering: [true, false] as const,
     enableChangeAnalysis: [true, false] as const,
     enableMultipleMvfConditions: [true, false] as const,
     enableRankingWithMvf: [true, false] as const,
@@ -483,12 +432,7 @@ export const FeatureFlagsValues = {
     enableOracleDataSource: [true, false] as const,
     enableAnalyticalCatalog: [true, false] as const,
     enableParameters: [true, false] as const,
-    enableAlerting: [true, false] as const,
-    enableAlertAttributes: [true, false] as const,
-    enableComparisonInAlerting: [true, false] as const,
-    enableScheduling: [true, false] as const,
     enableLabsSmartFunctions: [true, false] as const,
-    enableSmartFunctions: [true, false] as const,
     enableCustomTooltip: [true, false] as const,
     enableDataProfiling: [true, false] as const,
     enableExperimentalFeaturesUI: [true, false] as const,
@@ -498,7 +442,6 @@ export const FeatureFlagsValues = {
     enableSnowflakeKeyPairAuthentication: [true, false] as const,
     enableMultipleDataSourcesInWorkspace: [true, false] as const,
     enableRichTextDescriptions: [true, false] as const,
-    enableSchedulingRollout: [true, false] as const,
     enableSemanticSearch: [true, false] as const,
     enableCatalogSmartSearchResults: [true, false] as const,
     enableGenAIChat: [true, false] as const,
@@ -507,13 +450,11 @@ export const FeatureFlagsValues = {
     enableCatalogLineage: [false, true] as const,
     enableCertification: [true, false] as const,
     enableAIDataSetting: [true, false] as const,
-    enableAlertingRollout: [true, false] as const,
     enableSystemAccountFiltering: [true, false] as const,
     enableCustomizedDashboardsWithoutPluginOverlay: [true, false] as const,
     enableNewInsightChangedPostMessageEvent: [true, false] as const,
     earlyAccessFeatures: [undefined, {} as IEarlyAccessFeaturesConfig] as const,
     enableDefaultSmtp: [true, false] as const,
-    enableInPlatformNotifications: [true, false] as const,
     enableVisualizationFilteringByTags: [true, false] as const,
     enableVisualizationFineTuning: [true, false] as const,
     enableDashboardTabularExport: [true, false] as const,
@@ -528,13 +469,9 @@ export const FeatureFlagsValues = {
     enableAccessibleChartTooltip: [true, false] as const,
     enableExecutionCancelling: [true, false] as const,
     enableImmediateAttributeFilterDisplayAsLabelMigration: [true, false] as const,
-    enableRichTextDynamicReferences: [true, false] as const,
     enableAnalyticalDesignerCatalogSideload: [true, false] as const,
     enableDashboardShareLink: [true, false] as const,
-    enableExecutionTimestamp: [true, false] as const,
-    enableDateFilterIdentifiersRollout: [true, false] as const,
     enableAlertsEvaluationFrequencySetup: [true, false] as const,
-    enableLineChartTrendThreshold: [true, false] as const,
     enableKDRespectLegendPosition: [true, false] as const,
     enableWorkspaceSettingsAppHeaderMenuItem: [true, false] as const,
     enableSnapshotExportAccessibility: [true, false] as const,
@@ -560,7 +497,6 @@ export const FeatureFlagsValues = {
     enableGeoBasemapConfig: [true, false] as const,
     enableCustomGeoCollection: [true, false] as const,
     enableGeoSatelliteBasemapOption: [true, false] as const,
-    enableAutomationManagement: [true, false] as const,
     enableNewPdfTabularExport: [true, false] as const,
     enableGenAIMemory: [false, true] as const,
     enableOrgLevelAIMemory: [false, true] as const,

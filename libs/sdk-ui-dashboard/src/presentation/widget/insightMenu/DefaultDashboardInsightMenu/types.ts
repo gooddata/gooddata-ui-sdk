@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 /**
  * @internal
@@ -30,7 +30,6 @@ export interface IUseInsightMenuConfig {
     exportPowerPointPresentationDisabled: boolean;
     exportPngImageDisabled: boolean;
     exportPdfTabularDisabled: boolean;
-    isAutomationManagementEnabled: boolean;
     onExportXLSX: () => void;
     onExportCSV: () => void;
     onExportRawCSV: () => void;

@@ -18,24 +18,22 @@ import { useDashboardSelector } from "../../../../model/react/DashboardStoreProv
 import { useDashboardUserInteraction } from "../../../../model/react/useDashboardUserInteraction.js";
 import {
     selectEnableRichTextDescriptions,
-    selectEnableRichTextDynamicReferences,
     selectSettings,
 } from "../../../../model/store/config/configSelectors.js";
 import { useDashboardComponentsContext } from "../../../dashboardContexts/DashboardComponentsContext.js";
 import { InsightList } from "../../../insightList/InsightList.js";
+import { InsightListDivider } from "../../../insightList/InsightListDivider.js";
 import { type IInsightListProps } from "../../../insightList/types.js";
 
 import { DraggableInsightListItemWrapper } from "./DraggableInsightListItemWrapper.js";
 
 export function DraggableInsightListCore({
-    enableDescriptions,
     WrapInsightListItemWithDragComponent,
     ...remainingProps
 }: IInsightListProps) {
     const userInteraction = useDashboardUserInteraction();
     const settings = useDashboardSelector(selectSettings);
     const useRichText = useDashboardSelector(selectEnableRichTextDescriptions);
-    const useReferences = useDashboardSelector(selectEnableRichTextDynamicReferences);
     const { LoadingComponent } = useDashboardComponentsContext();
 
     return (
@@ -44,6 +42,9 @@ export function DraggableInsightListCore({
             renderItem={({ item: insight, width, isFirst, isLast }) => {
                 if (!insight) {
                     return <InsightListItem isLoading />;
+                }
+                if ("divider" in insight) {
+                    return <InsightListDivider />;
                 }
 
                 const visualizationType = insightVisualizationType(insight) as VisType;
@@ -66,7 +67,7 @@ export function DraggableInsightListCore({
                         WrapInsightListItemWithDragComponent={WrapInsightListItemWithDragComponent}
                         title={insightTitle(insight)}
                         description={description}
-                        showDescriptionPanel={enableDescriptions}
+                        showDescriptionPanel
                         type={visualizationType}
                         width={width}
                         className={classNames}
@@ -78,7 +79,7 @@ export function DraggableInsightListCore({
                         }}
                         metadataTimeZone={settings?.metadataTimeZone}
                         useRichText={useRichText}
-                        useReferences={useReferences}
+                        useReferences
                         LoadingComponent={LoadingComponent}
                     />
                 );
