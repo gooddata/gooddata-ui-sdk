@@ -60,7 +60,6 @@ export interface IInsightListItemProps {
     onDescriptionPanelOpen?: () => void;
 
     showDescriptionPanel?: boolean;
-    useRichText?: boolean;
     useReferences?: boolean;
     metadataTimeZone?: string;
     richTextExecConfig?: IExecutionConfig;
@@ -84,7 +83,6 @@ export function InsightListItem({
     onClick,
     onDescriptionPanelOpen,
     showDescriptionPanel = false,
-    useRichText = false,
     useReferences = false,
     richTextExecConfig,
     width,
@@ -142,7 +140,6 @@ export function InsightListItem({
                         isLocked={isLocked}
                         arrowOffsets={shouldRenderActions ? modifiedArrowOffsets : undefined}
                         useReferences={useReferences}
-                        useRichText={useRichText}
                         filters={filters}
                         separators={separators}
                         LoadingComponent={LoadingComponent}

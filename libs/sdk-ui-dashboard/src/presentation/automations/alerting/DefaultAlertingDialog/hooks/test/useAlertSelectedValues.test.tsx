@@ -8,12 +8,7 @@ import {
     type INotificationChannelMetadataObject,
 } from "@gooddata/sdk-model";
 
-// ---------------------------------------------------------------------------
-// Mocks — vi.mock calls are hoisted, so factories must not reference top-level
-// let/const declared after them. We use vi.fn() inline and retrieve spies via
-// vi.mocked() after the import statements.
-// ---------------------------------------------------------------------------
-
+// Mocks out the getters module so each getter's inputs/outputs can be asserted in isolation.
 vi.mock("../../utils/getters.js", () => ({
     getAlertMeasure: vi.fn(),
     getAlertCompareOperator: vi.fn(),
@@ -25,17 +20,11 @@ vi.mock("../../utils/getters.js", () => ({
     getAlertAttribute: vi.fn(),
 }));
 
-// ---------------------------------------------------------------------------
-// Imports placed AFTER vi.mock() calls to pick up mocked versions
-// ---------------------------------------------------------------------------
-
 import { type AlertAttribute, type AlertMetric } from "../../../types.js";
 import * as gettersModule from "../../utils/getters.js";
 import { useAlertSelectedValues, type IUseAlertSelectedValuesProps } from "../useAlertSelectedValues.js";
 
-// ---------------------------------------------------------------------------
 // Typed spy references (resolved after import)
-// ---------------------------------------------------------------------------
 
 const getAlertMeasureSpy = vi.mocked(gettersModule.getAlertMeasure);
 const getAlertCompareOperatorSpy = vi.mocked(gettersModule.getAlertCompareOperator);
@@ -46,9 +35,7 @@ const getAlertSensitivitySpy = vi.mocked(gettersModule.getAlertSensitivity);
 const getAlertGranularitySpy = vi.mocked(gettersModule.getAlertGranularity);
 const getAlertAttributeSpy = vi.mocked(gettersModule.getAlertAttribute);
 
-// ---------------------------------------------------------------------------
 // Fixtures
-// ---------------------------------------------------------------------------
 
 const SENTINEL_MEASURE = { measure: { localIdentifier: "m1" } } as unknown as AlertMetric;
 const SENTINEL_ATTRIBUTE = { attribute: { localIdentifier: "a1" } } as unknown as AlertAttribute;
@@ -100,25 +87,21 @@ const supportedMeasures: AlertMetric[] = [SENTINEL_MEASURE];
 const supportedAttributes: AlertAttribute[] = [SENTINEL_ATTRIBUTE];
 const notificationChannels = [mockChannel1, mockChannel2, mockChannel3];
 
-// ---------------------------------------------------------------------------
 // Reset mocks between tests
-// ---------------------------------------------------------------------------
 
 beforeEach(() => {
     vi.clearAllMocks();
     getAlertMeasureSpy.mockReturnValue(SENTINEL_MEASURE);
-    getAlertCompareOperatorSpy.mockReturnValue("GREATER_THAN" as any);
+    getAlertCompareOperatorSpy.mockReturnValue("GREATER_THAN");
     getAlertRelativeOperatorSpy.mockReturnValue(undefined);
     getAlertAiOperatorSpy.mockReturnValue(undefined);
     getAlertComparisonSpy.mockReturnValue(undefined);
     getAlertSensitivitySpy.mockReturnValue(undefined);
     getAlertGranularitySpy.mockReturnValue(undefined);
-    getAlertAttributeSpy.mockReturnValue([SENTINEL_ATTRIBUTE, SENTINEL_VALUE] as any);
+    getAlertAttributeSpy.mockReturnValue([SENTINEL_ATTRIBUTE, SENTINEL_VALUE]);
 });
 
-// ---------------------------------------------------------------------------
 // Helper
-// ---------------------------------------------------------------------------
 
 function renderSelectedValuesHook(props: Partial<IUseAlertSelectedValuesProps> = {}) {
     const mergedProps: IUseAlertSelectedValuesProps = {
@@ -130,10 +113,6 @@ function renderSelectedValuesHook(props: Partial<IUseAlertSelectedValuesProps> =
     };
     return renderHook(() => useAlertSelectedValues(mergedProps));
 }
-
-// ---------------------------------------------------------------------------
-// Case 1: selection wiring — each getter is called with the expected args
-// ---------------------------------------------------------------------------
 
 describe("useAlertSelectedValues — selection wiring", () => {
     it("calls getAlertMeasure with (supportedMeasures, alert) and surfaces the result", () => {
@@ -161,18 +140,33 @@ describe("useAlertSelectedValues — selection wiring", () => {
     });
 
     it("calls getAlertAiOperator with the alert and surfaces the result", () => {
-        renderSelectedValuesHook();
+        const sentinel = "aiOperator-sentinel" as any;
+        getAlertAiOperatorSpy.mockReturnValue(sentinel);
+
+        const { result } = renderSelectedValuesHook();
+
         expect(getAlertAiOperatorSpy).toHaveBeenCalledWith(mockAutomation.alert);
+        expect(result.current.selectedAiOperator).toBe(sentinel);
     });
 
     it("calls getAlertSensitivity with the alert and surfaces the result", () => {
-        renderSelectedValuesHook();
+        const sentinel = "sensitivity-sentinel" as any;
+        getAlertSensitivitySpy.mockReturnValue(sentinel);
+
+        const { result } = renderSelectedValuesHook();
+
         expect(getAlertSensitivitySpy).toHaveBeenCalledWith(mockAutomation.alert);
+        expect(result.current.selectedSensitivity).toBe(sentinel);
     });
 
     it("calls getAlertGranularity with the alert and surfaces the result", () => {
-        renderSelectedValuesHook();
+        const sentinel = "granularity-sentinel" as any;
+        getAlertGranularitySpy.mockReturnValue(sentinel);
+
+        const { result } = renderSelectedValuesHook();
+
         expect(getAlertGranularitySpy).toHaveBeenCalledWith(mockAutomation.alert);
+        expect(result.current.selectedGranularity).toBe(sentinel);
     });
 
     it("calls getAlertAttribute with (supportedAttributes, editedAutomation) and surfaces the result", () => {
@@ -183,10 +177,6 @@ describe("useAlertSelectedValues — selection wiring", () => {
         expect(result.current.selectedValue).toBe(SENTINEL_VALUE);
     });
 });
-
-// ---------------------------------------------------------------------------
-// Case 2: selectedComparator uses the derived selectedMeasure (order dependency)
-// ---------------------------------------------------------------------------
 
 describe("useAlertSelectedValues — selectedComparator order dependency", () => {
     it("calls getAlertComparison with the value returned by getAlertMeasure (not the raw input)", () => {
@@ -204,10 +194,6 @@ describe("useAlertSelectedValues — selectedComparator order dependency", () =>
     });
 });
 
-// ---------------------------------------------------------------------------
-// Case 3: notification channel selection
-// ---------------------------------------------------------------------------
-
 describe("useAlertSelectedValues — notification channel selection", () => {
     it("returns the channel whose id matches editedAutomation.notificationChannel", () => {
         const { result } = renderSelectedValuesHook({
@@ -223,10 +209,6 @@ describe("useAlertSelectedValues — notification channel selection", () => {
         expect(result.current.selectedNotificationChannel).toBeUndefined();
     });
 });
-
-// ---------------------------------------------------------------------------
-// Case 4: recipient-policy booleans
-// ---------------------------------------------------------------------------
 
 describe("useAlertSelectedValues — recipient-policy booleans", () => {
     it("sets allowExternalRecipients=true when selectedChannel.allowedRecipients === 'external'", () => {
@@ -262,10 +244,6 @@ describe("useAlertSelectedValues — recipient-policy booleans", () => {
     });
 });
 
-// ---------------------------------------------------------------------------
-// Case 5: undefined draft — no throw, stable undefined/false returns
-// ---------------------------------------------------------------------------
-
 describe("useAlertSelectedValues — undefined editedAutomation", () => {
     it("does not throw and returns safe defaults when editedAutomation is undefined", () => {
         getAlertMeasureSpy.mockReturnValue(undefined);
@@ -275,7 +253,7 @@ describe("useAlertSelectedValues — undefined editedAutomation", () => {
         getAlertComparisonSpy.mockReturnValue(undefined);
         getAlertSensitivitySpy.mockReturnValue(undefined);
         getAlertGranularitySpy.mockReturnValue(undefined);
-        getAlertAttributeSpy.mockReturnValue([undefined, undefined] as any);
+        getAlertAttributeSpy.mockReturnValue([undefined, undefined]);
 
         const { result } = renderSelectedValuesHook({ editedAutomation: undefined });
 
@@ -290,11 +268,7 @@ describe("useAlertSelectedValues — undefined editedAutomation", () => {
     });
 });
 
-// ---------------------------------------------------------------------------
-// Case 6: rerender on draft change — no stale-capture / caching
-// ---------------------------------------------------------------------------
-
-describe("useAlertSelectedValues — rerender on draft change (§3 risk path)", () => {
+describe("useAlertSelectedValues — rerender on draft change", () => {
     it("updates returned selection when editedAutomation is replaced on rerender", () => {
         const automationV2: IAutomationMetadataObjectDefinition = {
             ...mockAutomation,

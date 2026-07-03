@@ -829,10 +829,16 @@ export {
     type IParameterDefinition,
     type IParameterMetadataObject,
     type IParameterMetadataObjectDefinition,
+    type IStringParameterConstraints,
+    type IStringParameterDefinition,
+    type ParameterValue,
+    getNumberParameterDefaultValue,
     isNumberParameterDefinition,
     isParameterMetadataObject,
     isParameterMetadataObjectDefinition,
+    isStringParameterDefinition,
     isValidNumberParameterValue,
+    isValidParameterValue,
 } from "./ldm/metadata/parameter/index.js";
 export {
     type IMemoryItemDefinition,

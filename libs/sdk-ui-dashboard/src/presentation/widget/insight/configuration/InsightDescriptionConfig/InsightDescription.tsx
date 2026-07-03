@@ -6,10 +6,9 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import { type IFilter, type ISeparators } from "@gooddata/sdk-model";
-import { type IAlignPoint, RichTextWithTooltip, TextAreaWithSubmit } from "@gooddata/sdk-ui-kit";
+import { type IAlignPoint, RichTextWithTooltip } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
-import { selectEnableRichTextDescriptions } from "../../../../../model/store/config/configSelectors.js";
 import { selectExecutionTimestamp } from "../../../../../model/store/ui/uiSelectors.js";
 
 const richTextTooltipAlignPoints: IAlignPoint[] = [
@@ -38,7 +37,6 @@ export function InsightDescription({
     const placeholder = intl.formatMessage({
         id: "configurationPanel.visualprops.descriptionPlaceholder",
     });
-    const useRichText = useDashboardSelector(selectEnableRichTextDescriptions);
     const [isRichTextEditing, setIsRichTextEditing] = useState(false);
     const [richTextValue, setRichTextValue] = useState(description);
 
@@ -72,45 +70,33 @@ export function InsightDescription({
 
     return (
         <label className="gd-input">
-            {useRichText ? (
-                <div
-                    className={cx("gd-input-field gd-rich-text-insight-description", { disabled: readOnly })}
-                    onClick={onDescriptionClick}
-                    onBlur={onDescriptionBlur}
-                >
-                    <RichTextWithTooltip
-                        value={richTextValue}
-                        renderMode={isRichTextEditing ? "edit" : "view"}
-                        onChange={onRichTextChange}
-                        editRows={4}
-                        editPlaceholder={placeholder}
-                        emptyElement={
-                            readOnly ? undefined : (
-                                <div className="gd-editable-label-richtext-empty">{placeholder}</div>
-                            )
-                        }
-                        showTooltip={isRichTextEditing}
-                        tooltipAlignPoints={richTextTooltipAlignPoints}
-                        referencesEnabled
-                        LoadingComponent={LoadingComponent}
-                        filters={insightFilters}
-                        separators={separators}
-                        execConfig={{
-                            timestamp: executionTimestamp,
-                        }}
-                    />
-                </div>
-            ) : (
-                <TextAreaWithSubmit
-                    className={cx("gd-input-field description gd-widget-description-input")}
-                    rows={4}
-                    defaultValue={(description || "").trim()}
-                    maxLength={2000}
-                    placeholder={readOnly ? undefined : placeholder}
-                    onSubmit={onChange}
-                    disabled={readOnly}
+            <div
+                className={cx("gd-input-field gd-rich-text-insight-description", { disabled: readOnly })}
+                onClick={onDescriptionClick}
+                onBlur={onDescriptionBlur}
+            >
+                <RichTextWithTooltip
+                    value={richTextValue}
+                    renderMode={isRichTextEditing ? "edit" : "view"}
+                    onChange={onRichTextChange}
+                    editRows={4}
+                    editPlaceholder={placeholder}
+                    emptyElement={
+                        readOnly ? undefined : (
+                            <div className="gd-editable-label-richtext-empty">{placeholder}</div>
+                        )
+                    }
+                    showTooltip={isRichTextEditing}
+                    tooltipAlignPoints={richTextTooltipAlignPoints}
+                    referencesEnabled
+                    LoadingComponent={LoadingComponent}
+                    filters={insightFilters}
+                    separators={separators}
+                    execConfig={{
+                        timestamp: executionTimestamp,
+                    }}
                 />
-            )}
+            </div>
         </label>
     );
 }

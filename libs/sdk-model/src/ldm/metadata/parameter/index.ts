@@ -1,6 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import { type IAuditable } from "../../../base/metadata.js";
+import { assertNever } from "../../../base/typeUtils.js";
 import { type IMetadataObject, type IMetadataObjectDefinition, isMetadataObject } from "../types.js";
 
 /**
@@ -30,7 +31,12 @@ export interface IParameterMetadataObjectDefinition extends IMetadataObjectDefin
  *
  * @public
  */
-export type IParameterDefinition = INumberParameterDefinition;
+export type IParameterDefinition = INumberParameterDefinition | IStringParameterDefinition;
+
+/**
+ * @alpha
+ */
+export type ParameterValue = IParameterDefinition["defaultValue"];
 
 /**
  * Number parameter definition.
@@ -51,6 +57,27 @@ export interface INumberParameterDefinition {
 export interface INumberParameterConstraints {
     min?: number;
     max?: number;
+}
+
+/**
+ * String parameter definition.
+ *
+ * @public
+ */
+export interface IStringParameterDefinition {
+    type: "STRING";
+    defaultValue: string;
+    constraints?: IStringParameterConstraints;
+}
+
+/**
+ * String parameter constraints.
+ *
+ * @public
+ */
+export interface IStringParameterConstraints {
+    minLength?: number;
+    maxLength?: number;
 }
 
 /**
@@ -84,6 +111,47 @@ export function isNumberParameterDefinition(def: IParameterDefinition): def is I
 }
 
 /**
+ * Tests whether the provided parameter definition is a {@link IStringParameterDefinition}.
+ *
+ * @param def - parameter definition to test
+ * @alpha
+ */
+export function isStringParameterDefinition(def: IParameterDefinition): def is IStringParameterDefinition {
+    return def.type === "STRING";
+}
+
+/**
+ * Returns the default value of a NUMBER parameter, or `undefined` for any other type.
+ *
+ * @remarks
+ * A NUMBER parameter always carries a default, so `undefined` unambiguously means "not a NUMBER parameter".
+ *
+ * @alpha
+ */
+export function getNumberParameterDefaultValue(
+    definition: IParameterDefinition | undefined,
+): number | undefined {
+    return definition && isNumberParameterDefinition(definition) ? definition.defaultValue : undefined;
+}
+
+/**
+ * Tests whether `value` is valid for the given parameter definition.
+ *
+ * @alpha
+ */
+export function isValidParameterValue(definition: IParameterDefinition, value: ParameterValue): boolean {
+    switch (definition.type) {
+        case "NUMBER":
+            return typeof value === "number" && isValidNumberParameterValue(value, definition.constraints);
+        case "STRING":
+            return typeof value === "string" && isValidStringParameterValue(value, definition.constraints);
+        default:
+            assertNever(definition);
+            return false;
+    }
+}
+
+/**
  * Tests whether `value` is a finite number within the optional `min`/`max` bounds (inclusive).
  *
  * @alpha
@@ -95,6 +163,14 @@ export function isValidNumberParameterValue(
     const { min, max } = constraints;
     return (
         Number.isFinite(value) && (min === undefined || value >= min) && (max === undefined || value <= max)
+    );
+}
+
+function isValidStringParameterValue(value: string, constraints: IStringParameterConstraints = {}): boolean {
+    const { minLength, maxLength } = constraints;
+    return (
+        (minLength === undefined || value.length >= minLength) &&
+        (maxLength === undefined || value.length <= maxLength)
     );
 }
 

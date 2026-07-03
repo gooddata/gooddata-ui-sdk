@@ -5,6 +5,10 @@ import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 
 import { type IAlertProposal } from "@gooddata/sdk-backend-spi";
 import {
+    type IAlertAnomalyDetectionGranularity,
+    type IAlertAnomalyDetectionSensitivity,
+    type IAlertTriggerInterval,
+    type IAlertTriggerMode,
     type IAttribute,
     type IAutomationAlertComparisonCondition,
     type IAutomationAlertRelativeCondition,
@@ -60,10 +64,11 @@ export function ConversationAlertProposalContent(props: ConversationAlertProposa
                 <div className="gd-gen-ai-chat__conversation__item__content-alertProposal-frame">
                     <ul>
                         <AlertItem
-                            markdown
+                            markdown={false}
                             title={intl.formatMessage({ id: "gd.gen-ai.alert-proposal.summary.title" })}
                             description={alertProposal.title}
                             objects={objects}
+                            bold
                         />
                         <FiltersPreview {...props} />
                         <NotificationChannelPreview {...props} />
@@ -138,6 +143,36 @@ function NotificationChannelPreview({ alertProposal, objects }: ConversationAler
     );
 }
 
+const triggerModeMessages = defineMessages<IAlertTriggerMode>({
+    ["ALWAYS"]: {
+        id: "sdk.ui.genAi.alertProposal.triggerMode.always",
+    },
+    ["ONCE"]: {
+        id: "sdk.ui.genAi.alertProposal.triggerMode.once",
+    },
+    ["ONCE_PER_INTERVAL"]: {
+        id: "sdk.ui.genAi.alertProposal.triggerMode.oncePerInterval",
+    },
+});
+
+const triggerIntervalMessages = defineMessages<IAlertTriggerInterval>({
+    ["DAY"]: {
+        id: "sdk.ui.genAi.alertProposal.triggerInterval.day",
+    },
+    ["WEEK"]: {
+        id: "sdk.ui.genAi.alertProposal.triggerInterval.week",
+    },
+    ["MONTH"]: {
+        id: "sdk.ui.genAi.alertProposal.triggerInterval.month",
+    },
+    ["QUARTER"]: {
+        id: "sdk.ui.genAi.alertProposal.triggerInterval.quarter",
+    },
+    ["YEAR"]: {
+        id: "sdk.ui.genAi.alertProposal.triggerInterval.year",
+    },
+});
+
 function TriggerPreview({ alertProposal, objects }: ConversationAlertProposalContentProps) {
     const intl = useIntl();
 
@@ -159,7 +194,9 @@ function TriggerPreview({ alertProposal, objects }: ConversationAlertProposalCon
                                 title={intl.formatMessage({
                                     id: "gd.gen-ai.alert-proposal.summary.trigger.mode",
                                 })}
-                                description={alertProposal.alert.trigger.mode}
+                                description={intl.formatMessage(
+                                    triggerModeMessages[alertProposal.alert.trigger.mode],
+                                )}
                                 objects={objects}
                             />
                         ) : null}
@@ -170,7 +207,9 @@ function TriggerPreview({ alertProposal, objects }: ConversationAlertProposalCon
                                 title={intl.formatMessage({
                                     id: "gd.gen-ai.alert-proposal.summary.trigger.interval",
                                 })}
-                                description={alertProposal.alert.trigger.interval}
+                                description={intl.formatMessage(
+                                    triggerIntervalMessages[alertProposal.alert.trigger.interval],
+                                )}
                                 objects={objects}
                             />
                         ) : null}
@@ -287,7 +326,7 @@ function ComparisonConditionPreview({
     );
 }
 
-const adMessages = defineMessages({
+const adMessages = defineMessages<IAlertAnomalyDetectionGranularity | IAlertAnomalyDetectionSensitivity>({
     ["HOUR"]: {
         id: "sdk.ui.genAi.alertProposal.granularity.hour",
     },

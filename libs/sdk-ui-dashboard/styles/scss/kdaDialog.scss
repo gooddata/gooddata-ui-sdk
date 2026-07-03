@@ -974,7 +974,13 @@
         }
     }
 
-    &:hover {
+    //selected states
+    &.gd-kda-trend-item-focused {
+        background-color: var(--gd-palette-complementary-2);
+    }
+
+    &:hover,
+    &.gd-kda-trend-item-focused:not(.gd-kda-trend-item-selected) {
         background-color: var(--gd-palette-complementary-2);
 
         .gd-kda-trend-item-text,

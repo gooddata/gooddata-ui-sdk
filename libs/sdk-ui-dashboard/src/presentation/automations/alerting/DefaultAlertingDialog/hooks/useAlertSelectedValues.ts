@@ -1,7 +1,6 @@
 // (C) 2026 GoodData Corporation
 
 import {
-    type IAutomationMetadataObject,
     type IAutomationMetadataObjectDefinition,
     type INotificationChannelIdentifier,
     type INotificationChannelMetadataObject,
@@ -45,22 +44,7 @@ export function useAlertSelectedValues({
     supportedMeasures,
     supportedAttributes,
     notificationChannels,
-}: IUseAlertSelectedValuesProps): {
-    selectedMeasure: ReturnType<typeof getAlertMeasure>;
-    selectedComparisonOperator: ReturnType<typeof getAlertCompareOperator>;
-    selectedRelativeOperator: ReturnType<typeof getAlertRelativeOperator>;
-    selectedAiOperator: ReturnType<typeof getAlertAiOperator>;
-    selectedComparator: ReturnType<typeof getAlertComparison>;
-    selectedSensitivity: ReturnType<typeof getAlertSensitivity>;
-    selectedGranularity: ReturnType<typeof getAlertGranularity>;
-    selectedAttribute: AlertAttribute | undefined;
-    selectedValue: string | null | undefined;
-    selectedNotificationChannel:
-        | (INotificationChannelIdentifier | INotificationChannelMetadataObject)
-        | undefined;
-    allowExternalRecipients: boolean;
-    allowOnlyLoggedUserRecipients: boolean;
-} {
+}: IUseAlertSelectedValuesProps) {
     const selectedMeasure = getAlertMeasure(supportedMeasures, editedAutomation?.alert);
     const selectedComparisonOperator = getAlertCompareOperator(editedAutomation?.alert);
     const selectedRelativeOperator = getAlertRelativeOperator(editedAutomation?.alert);
@@ -68,10 +52,7 @@ export function useAlertSelectedValues({
     const selectedComparator = getAlertComparison(selectedMeasure, editedAutomation?.alert);
     const selectedSensitivity = getAlertSensitivity(editedAutomation?.alert);
     const selectedGranularity = getAlertGranularity(editedAutomation?.alert);
-    const [selectedAttribute, selectedValue] = getAlertAttribute(
-        supportedAttributes,
-        editedAutomation as IAutomationMetadataObject,
-    );
+    const [selectedAttribute, selectedValue] = getAlertAttribute(supportedAttributes, editedAutomation);
 
     const selectedNotificationChannel = notificationChannels.find(
         (channel) => channel.id === editedAutomation?.notificationChannel,

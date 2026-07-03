@@ -5,7 +5,12 @@ import {
     type JsonApiParameterOutWithLinks,
     type JsonApiUserIdentifierOutWithLinks,
 } from "@gooddata/api-client-tiger";
-import { type IParameterDefinition, type IParameterMetadataObject, idRef } from "@gooddata/sdk-model";
+import {
+    type IParameterDefinition,
+    type IParameterMetadataObject,
+    assertNever,
+    idRef,
+} from "@gooddata/sdk-model";
 
 import { isInheritedObject } from "./ObjectInheritance.js";
 import { convertUserIdentifier } from "./UsersConverter.js";
@@ -39,13 +44,23 @@ export function convertParameter(
 function convertParameterDefinition(
     definition: JsonApiParameterOutWithLinks["attributes"]["definition"],
 ): IParameterDefinition {
-    if (definition.type === "NUMBER") {
-        return {
-            type: "NUMBER",
-            defaultValue: definition.defaultValue,
-            ...(definition.constraints ? { constraints: definition.constraints } : {}),
-        };
-    } else {
-        throw new Error(`Unsupported parameter definition type: ${definition.type}`);
+    switch (definition.type) {
+        case "NUMBER":
+            return {
+                type: "NUMBER",
+                defaultValue: definition.defaultValue,
+                ...(definition.constraints ? { constraints: definition.constraints } : {}),
+            };
+        case "STRING":
+            return {
+                type: "STRING",
+                defaultValue: definition.defaultValue,
+                ...(definition.constraints ? { constraints: definition.constraints } : {}),
+            };
+        default:
+            assertNever(definition);
+            throw new Error(
+                `Unsupported parameter definition type: ${(definition as { type: string }).type}`,
+            );
     }
 }

@@ -23,7 +23,6 @@ export interface IDescriptionClickTriggerProps {
     className: string;
     description?: string;
     onOpen?: () => void;
-    useRichText?: boolean;
     useReferences?: boolean;
     LoadingComponent?: ComponentType;
     filters?: IFilter[];

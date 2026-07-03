@@ -18,7 +18,7 @@ import { useInsightWidgetDescription } from "./useInsightWidgetDescription.js";
  */
 export function ExportModeInsightWidgetDescription(props: IInsightWidgetDescriptionTriggerProps) {
     const { exportData, widget } = props;
-    const { isVisible, description, useRichText } = useInsightWidgetDescription(props);
+    const { isVisible, description } = useInsightWidgetDescription(props);
     const { filters } = useRichTextWidgetFilters(widget);
     const separators = useDashboardSelector(selectSeparators);
     const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
@@ -32,7 +32,6 @@ export function ExportModeInsightWidgetDescription(props: IInsightWidgetDescript
         <div style={{ display: "none" }} {...exportData}>
             <DescriptionPanelContent
                 description={description}
-                useRichText={useRichText}
                 useReferences
                 filters={filters}
                 separators={separators}

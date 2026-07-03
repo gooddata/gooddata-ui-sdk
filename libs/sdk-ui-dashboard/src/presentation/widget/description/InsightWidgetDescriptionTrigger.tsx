@@ -16,7 +16,7 @@ import { useInsightWidgetDescription } from "./useInsightWidgetDescription.js";
 
 export function InsightWidgetDescriptionTrigger(props: IInsightWidgetDescriptionTriggerProps) {
     const { widget } = props;
-    const { isVisible, description, useRichText } = useInsightWidgetDescription(props);
+    const { isVisible, description } = useInsightWidgetDescription(props);
     const widgetRefAsString = objRefToString(widgetRef(widget));
 
     const userInteraction = useDashboardUserInteraction();
@@ -37,7 +37,6 @@ export function InsightWidgetDescriptionTrigger(props: IInsightWidgetDescription
                 className={`widget-description-${simplifyText(widgetRefAsString)}`}
                 description={description}
                 onOpen={() => userInteraction.descriptionTooltipOpened(eventPayload)}
-                useRichText={useRichText}
                 useReferences
                 filters={filters}
                 LoadingComponent={LoadingComponent}

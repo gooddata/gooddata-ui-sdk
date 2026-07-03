@@ -38,6 +38,10 @@ type ChatWindowSliceState = {
      */
     keyDriverAnalysis?: IKdaDefinition;
     /**
+     * Indicates whether key driver analysis panel is minimized.
+     */
+    keyDriverAnalysisMinimized?: boolean;
+    /**
      * Object types to use for the chat UI.
      */
     objectTypes?: GenAIObjectType[];
@@ -127,6 +131,15 @@ const chatWindowSlice = createSlice({
             { payload: { keyDriverAnalysis } }: PayloadAction<{ keyDriverAnalysis?: IKdaDefinition }>,
         ) => {
             state.keyDriverAnalysis = keyDriverAnalysis;
+            if (!keyDriverAnalysis) {
+                state.keyDriverAnalysisMinimized = false;
+            }
+        },
+        setKeyDriverAnalysisMinimizedAction: (
+            state,
+            { payload: { minimized } }: PayloadAction<{ minimized?: boolean }>,
+        ) => {
+            state.keyDriverAnalysisMinimized = minimized;
         },
         setObjectTypesAction: (
             state,
@@ -179,6 +192,7 @@ export const {
     setSettingsAction,
     copyToClipboardAction,
     setKeyDriverAnalysisAction,
+    setKeyDriverAnalysisMinimizedAction,
     setObjectTypesAction,
     setTagsAction,
     setCatalogItemsActions,

@@ -16,10 +16,7 @@ import { InsightListItem } from "@gooddata/sdk-ui-kit";
 import { type DescriptionTooltipOpenedData } from "../../../../model/events/userInteraction.js";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { useDashboardUserInteraction } from "../../../../model/react/useDashboardUserInteraction.js";
-import {
-    selectEnableRichTextDescriptions,
-    selectSettings,
-} from "../../../../model/store/config/configSelectors.js";
+import { selectSettings } from "../../../../model/store/config/configSelectors.js";
 import { useDashboardComponentsContext } from "../../../dashboardContexts/DashboardComponentsContext.js";
 import { InsightList } from "../../../insightList/InsightList.js";
 import { InsightListDivider } from "../../../insightList/InsightListDivider.js";
@@ -33,7 +30,6 @@ export function DraggableInsightListCore({
 }: IInsightListProps) {
     const userInteraction = useDashboardUserInteraction();
     const settings = useDashboardSelector(selectSettings);
-    const useRichText = useDashboardSelector(selectEnableRichTextDescriptions);
     const { LoadingComponent } = useDashboardComponentsContext();
 
     return (
@@ -78,7 +74,6 @@ export function DraggableInsightListCore({
                             userInteraction.descriptionTooltipOpened(eventPayload);
                         }}
                         metadataTimeZone={settings?.metadataTimeZone}
-                        useRichText={useRichText}
                         useReferences
                         LoadingComponent={LoadingComponent}
                     />

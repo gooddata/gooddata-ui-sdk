@@ -271,18 +271,6 @@
         "text": "Hidden from Smart Search and AI Assistant results for all users.",
         "crowdinContext": "Tooltip content displayed on the hidden icon that appears only when the catalog item's visibility is set to hidden (in table view)."
     },
-    "analyticsCatalog.certification.tooltip.title": {
-        "text": "Certified",
-        "crowdinContext": "Title shown in the certification tooltip for catalog items marked as certified."
-    },
-    "analyticsCatalog.certification.tooltip.certifiedAt": {
-        "text": "Certified at",
-        "crowdinContext": "Certification date shown in the certification tooltip for catalog items marked as certified."
-    },
-    "analyticsCatalog.certification.tooltip.certifiedBy": {
-        "text": "Certified by",
-        "crowdinContext": "Certification user shown in the certification tooltip for catalog items marked as certified."
-    },
     "analyticsCatalog.certification.field.status": {
         "text": "Status",
         "crowdinContext": "Label for the certification status dropdown in the catalog item certification tab."

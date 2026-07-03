@@ -260,7 +260,7 @@
         "crowdinContext": "Title shown above alert proposal."
     },
     "gd.gen-ai.alert-proposal.summary.title": {
-        "text": "Title",
+        "text": "Name",
         "crowdinContext": "Title for alert in alert proposal dialog."
     },
     "gd.gen-ai.alert-proposal.summary.attributes": {
@@ -374,6 +374,38 @@
     "sdk.ui.genAi.alertProposal.senstivity.high": {
         "text": "with <b>high</b> sensitivity",
         "crowdinContext": "High sensitivity for alert in alert proposal dialog."
+    },
+    "sdk.ui.genAi.alertProposal.triggerMode.always": {
+        "text": "Always",
+        "crowdinContext": "Always trigger mode for alert in alert proposal dialog."
+    },
+    "sdk.ui.genAi.alertProposal.triggerMode.once": {
+        "text": "Once",
+        "crowdinContext": "Once trigger mode for alert in alert proposal dialog."
+    },
+    "sdk.ui.genAi.alertProposal.triggerMode.oncePerInterval": {
+        "text": "Once per interval",
+        "crowdinContext": "Once per interval trigger mode for alert in alert proposal dialog."
+    },
+    "sdk.ui.genAi.alertProposal.triggerInterval.day": {
+        "text": "Daily",
+        "crowdinContext": "Day trigger interval for alert in alert proposal dialog."
+    },
+    "sdk.ui.genAi.alertProposal.triggerInterval.week": {
+        "text": "Weekly",
+        "crowdinContext": "Week trigger interval for alert in alert proposal dialog."
+    },
+    "sdk.ui.genAi.alertProposal.triggerInterval.month": {
+        "text": "Monthly",
+        "crowdinContext": "Month trigger interval for alert in alert proposal dialog."
+    },
+    "sdk.ui.genAi.alertProposal.triggerInterval.quarter": {
+        "text": "Quarterly",
+        "crowdinContext": "Quarter trigger interval for alert in alert proposal dialog."
+    },
+    "sdk.ui.genAi.alertProposal.triggerInterval.year": {
+        "text": "Yearly",
+        "crowdinContext": "Year trigger interval for alert in alert proposal dialog."
     },
     "gd.gen-ai.alert-proposal.summary.trigger": {
         "text": "Trigger",

@@ -60,6 +60,7 @@ export interface IKdaState {
     attributesDropdownOpen: boolean;
     addFilterDropdownOpen: boolean;
     trendDropdownOpen: boolean;
+    dateDropdownOpen: boolean;
     //settings
     separators?: ISeparators;
     //rest

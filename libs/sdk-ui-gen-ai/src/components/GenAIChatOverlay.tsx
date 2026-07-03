@@ -6,11 +6,17 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 import { connect } from "react-redux";
 
+import { type IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
 import { Dialog } from "@gooddata/sdk-ui-kit";
 
 import { type IChatConversationLocal } from "../model.js";
+import {
+    keyDriverAnalysisMinimizedSelector,
+    keyDriverAnalysisSelector,
+} from "../store/chatWindow/chatWindowSelectors.js";
 import { setHistoryAction } from "../store/chatWindow/chatWindowSlice.js";
 import { setCurrentConversationAction } from "../store/messages/messagesSlice.js";
+import { type RootState } from "../store/types.js";
 
 import { GenAIChatConversations } from "./GenAIChatConversations.js";
 import { GenAIChatHeader } from "./GenAIChatHeader.js";
@@ -22,6 +28,11 @@ export type GenAIChatOverlayDispatchProps = {
     loadConversation: typeof setCurrentConversationAction;
 };
 
+export type GenAIChatOverlayStateProps = {
+    keyDriverAnalysis?: IKdaDefinition;
+    keyDriverAnalysisMinimized?: boolean;
+};
+
 export type GenAIChatOverlayExternalProps = {
     returnFocusTo?: RefObject<HTMLElement | null> | string;
     className?: string;
@@ -29,7 +40,9 @@ export type GenAIChatOverlayExternalProps = {
     onClose: () => void;
 };
 
-export type GenAIChatOverlayProps = GenAIChatOverlayExternalProps & GenAIChatOverlayDispatchProps;
+export type GenAIChatOverlayProps = GenAIChatOverlayExternalProps &
+    GenAIChatOverlayDispatchProps &
+    GenAIChatOverlayStateProps;
 
 function GenAIChatOverlayComponent({
     onClose,
@@ -37,6 +50,8 @@ function GenAIChatOverlayComponent({
     setHistory,
     loadConversation,
     dialogPosition,
+    keyDriverAnalysis,
+    keyDriverAnalysisMinimized,
     className,
 }: GenAIChatOverlayProps) {
     const intl = useIntl();
@@ -70,14 +85,16 @@ function GenAIChatOverlayComponent({
         return "br br";
     }, [dialogPosition, isFullscreen]);
 
+    const closeOnEscape = !keyDriverAnalysis || keyDriverAnalysisMinimized;
+
     return (
         <Dialog
             isModal={isFullscreen}
             returnFocusTo={returnFocusTo}
             returnFocusAfterClose={!!returnFocusTo}
             alignPoints={[{ align: position }]}
+            closeOnEscape={closeOnEscape}
             submitOnEnterKey={false}
-            closeOnEscape
             closeOnParentScroll={false}
             closeOnMouseDrag={false}
             onClose={onClose}
@@ -99,7 +116,14 @@ const mapDispatchToProps: GenAIChatOverlayDispatchProps = {
     loadConversation: setCurrentConversationAction,
 };
 
+const mapStateToProps = (state: RootState): GenAIChatOverlayStateProps => {
+    return {
+        keyDriverAnalysis: keyDriverAnalysisSelector(state),
+        keyDriverAnalysisMinimized: keyDriverAnalysisMinimizedSelector(state),
+    };
+};
+
 export const GenAIChatOverlay: FC<GenAIChatOverlayExternalProps> = connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps,
 )(GenAIChatOverlayComponent);

@@ -1134,6 +1134,9 @@ export {
 
 export { UiDate, type IUiDateProps } from "./@ui/UiDate/UiDate.js";
 
+export { UiCertificationIcon } from "./@ui/UiCertificationIcon/UiCertificationIcon.js";
+export type { IUiCertification, IUiCertificationIconProps } from "./@ui/UiCertificationIcon/types.js";
+
 export { UiDrawer } from "./@ui/UiDrawer/UiDrawer.js";
 export type { IUiDrawerProps, UiDrawerTransitionProps } from "./@ui/UiDrawer/types.js";
 

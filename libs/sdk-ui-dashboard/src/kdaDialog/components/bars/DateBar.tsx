@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type RefObject, useMemo, useRef, useState } from "react";
+import { type RefObject, useMemo, useRef } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -8,6 +8,7 @@ import { useIntl } from "react-intl";
 import { UiChip, UiListbox, UiPopover, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { type IKdaDateOptions } from "../../internalTypes.js";
+import { useKdaState } from "../../providers/KdaState.js";
 import { type KdaPeriodType } from "../../types.js";
 import { formatKeyDriverAnalysisDateRange } from "../../utils.js";
 
@@ -20,7 +21,7 @@ interface IDateBarProps {
 export function DateBar(props: IDateBarProps) {
     const intl = useIntl();
     const ref = useRef<HTMLUListElement>(null);
-    const [isActive, setIsActive] = useState(false);
+    const { setState, state } = useKdaState();
     const listboxId = "kda-dialog-date-bar";
 
     const splitter = intl.formatMessage({ id: "kdaDialog.dialog.bars.date.splitter" });
@@ -66,9 +67,9 @@ export function DateBar(props: IDateBarProps) {
                                 iconBefore="date"
                                 isExpandable
                                 isDisabled={!props.isAvailable}
-                                isActive={isActive}
+                                isActive={state.dateDropdownOpen}
                                 accessibilityConfig={{
-                                    isExpanded: isActive,
+                                    isExpanded: state.dateDropdownOpen,
                                     ariaHaspopup: "listbox",
                                     popupId: listboxId,
                                 }}
@@ -92,8 +93,12 @@ export function DateBar(props: IDateBarProps) {
                                 />
                             </div>
                         )}
-                        onOpen={() => setIsActive(true)}
-                        onClose={() => setIsActive(false)}
+                        onOpen={() => {
+                            setState({ dateDropdownOpen: true });
+                        }}
+                        onClose={() => {
+                            setState({ dateDropdownOpen: false });
+                        }}
                     />
                 }
             />

@@ -15,7 +15,10 @@ import {
     settingsSelector,
     tagsSelector,
 } from "../store/chatWindow/chatWindowSelectors.js";
-import { setKeyDriverAnalysisAction } from "../store/chatWindow/chatWindowSlice.js";
+import {
+    setKeyDriverAnalysisAction,
+    setKeyDriverAnalysisMinimizedAction,
+} from "../store/chatWindow/chatWindowSlice.js";
 import { type RootState } from "../store/types.js";
 import { returnFocusToKdaTrigger } from "../utils/kdaReturnFocus.js";
 
@@ -26,10 +29,19 @@ interface IKeyDriverAnalysisProps {
     includeTags?: string[];
     excludeTags?: string[];
     setKeyDriverAnalysis?: typeof setKeyDriverAnalysisAction;
+    setKeyDriverAnalysisMinimized?: typeof setKeyDriverAnalysisMinimizedAction;
 }
 
 function KeyDriverAnalysisComponent(props: IKeyDriverAnalysisProps) {
-    const { keyDriverAnalysis, separators, locale, includeTags, excludeTags, setKeyDriverAnalysis } = props;
+    const {
+        keyDriverAnalysis,
+        separators,
+        locale,
+        includeTags,
+        excludeTags,
+        setKeyDriverAnalysis,
+        setKeyDriverAnalysisMinimized,
+    } = props;
     const intl = useIntl();
     const parentOverlayController = useOverlayController();
 
@@ -54,6 +66,13 @@ function KeyDriverAnalysisComponent(props: IKeyDriverAnalysisProps) {
         returnFocusToKdaTrigger();
     }, []);
 
+    const onToggleKeyDriverAnalysis = useCallback(
+        (minimized: boolean) => {
+            setKeyDriverAnalysisMinimized?.({ minimized });
+        },
+        [setKeyDriverAnalysisMinimized],
+    );
+
     if (!keyDriverAnalysis) {
         return null;
     }
@@ -71,6 +90,7 @@ function KeyDriverAnalysisComponent(props: IKeyDriverAnalysisProps) {
                     excludeTags={excludeTags}
                     onRequestedDefinitionChange={onRequestedDefinitionChange}
                     onClose={onCloseKeyDriverAnalysis}
+                    onToggle={onToggleKeyDriverAnalysis}
                 />
             </KdaStoreProvider>
         </IntlWrapper>
@@ -79,6 +99,7 @@ function KeyDriverAnalysisComponent(props: IKeyDriverAnalysisProps) {
 
 const mapDispatchToProps: IKeyDriverAnalysisProps = {
     setKeyDriverAnalysis: setKeyDriverAnalysisAction,
+    setKeyDriverAnalysisMinimized: setKeyDriverAnalysisMinimizedAction,
 };
 
 const mapStateToProps = (state: RootState): IKeyDriverAnalysisProps => {

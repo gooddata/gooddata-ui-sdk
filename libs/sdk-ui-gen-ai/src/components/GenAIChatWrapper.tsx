@@ -24,7 +24,6 @@ import { useEndpointCheck } from "./hooks/useEndpointCheck.js";
 import { useSettingsClick } from "./hooks/useSettingsClick.js";
 import { useThreadLoading } from "./hooks/useThreadLoading.js";
 import { Input } from "./Input.js";
-import { KeyDriverAnalysis } from "./KeyDriverAnalysis.js";
 import { Messages } from "./Messages.js";
 
 export type GenAIChatOwnProps = {
@@ -150,7 +149,6 @@ function GenAIChatWrapperComponent({
                     canAnalyze={canAnalyze}
                 />
                 {DisclaimerComponent ? <DisclaimerComponent /> : null}
-                <KeyDriverAnalysis />
             </div>
         </ErrorBoundary>
     );

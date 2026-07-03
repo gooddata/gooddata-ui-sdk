@@ -42,6 +42,11 @@ export interface IKdaDialogProps {
      * Custom close button handler
      */
     onClose?: () => void;
+
+    /**
+     * Custom toggle button handler
+     */
+    onToggle?: (minimized: boolean) => void;
 }
 
 /**

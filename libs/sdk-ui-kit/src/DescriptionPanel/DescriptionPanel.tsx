@@ -16,8 +16,6 @@ import { useMediaQuery } from "../responsive/useMediaQuery.js";
 import { RichText } from "../RichText/RichText.js";
 import { ZOOM_THRESHOLD, useIsZoomed } from "../ZoomContext/ZoomContext.js";
 
-import { EllipsisText } from "./EllipsisText.js";
-
 /**
  * @internal
  */
@@ -78,7 +76,6 @@ export interface IDescriptionPanelProps {
     isLocked?: boolean;
     onBubbleOpen?: () => void;
     arrowOffsets?: ArrowOffsets;
-    useRichText?: boolean;
     useReferences?: boolean;
     LoadingComponent?: ComponentType;
     filters?: IFilter[];
@@ -151,7 +148,6 @@ function DescriptionPanelContentCore({
     title,
     description,
     isLocked,
-    useRichText = false,
     useReferences = false,
     LoadingComponent,
     filters,
@@ -175,19 +171,15 @@ function DescriptionPanelContentCore({
             )}
             {!isEmpty(description) && (
                 <div className="gd-description-panel-content">
-                    {useRichText ? (
-                        <RichText
-                            value={description ?? ""}
-                            renderMode="view"
-                            referencesEnabled={useReferences}
-                            filters={filters}
-                            separators={separators}
-                            LoadingComponent={LoadingComponent}
-                            execConfig={execConfig}
-                        />
-                    ) : (
-                        <EllipsisText text={description ?? ""} />
-                    )}
+                    <RichText
+                        value={description ?? ""}
+                        renderMode="view"
+                        referencesEnabled={useReferences}
+                        filters={filters}
+                        separators={separators}
+                        LoadingComponent={LoadingComponent}
+                        execConfig={execConfig}
+                    />
                 </div>
             )}
         </div>

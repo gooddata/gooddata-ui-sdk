@@ -99,4 +99,36 @@ describe("convertParameter", () => {
         expect(result.createdBy?.firstName).toBe("Jane");
         expect(result.updatedBy?.lastName).toBe("Smith");
     });
+
+    it("should convert a STRING parameter definition without throwing", () => {
+        const parameter: JsonApiParameterOutWithLinks = {
+            id: "scenario",
+            type: "parameter",
+            attributes: {
+                title: "Scenario",
+                definition: {
+                    type: "STRING",
+                    defaultValue: "Actual",
+                    constraints: {
+                        minLength: 1,
+                        maxLength: 50,
+                    },
+                },
+            },
+            links: {
+                self: "/api/v1/entities/workspaces/demo/parameters/scenario",
+            },
+        };
+
+        const result = convertParameter(parameter);
+
+        expect(result.definition).toEqual({
+            type: "STRING",
+            defaultValue: "Actual",
+            constraints: {
+                minLength: 1,
+                maxLength: 50,
+            },
+        });
+    });
 });

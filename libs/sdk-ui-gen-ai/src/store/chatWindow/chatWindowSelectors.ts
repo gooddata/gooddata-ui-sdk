@@ -92,6 +92,11 @@ export const keyDriverAnalysisSelector: (state: RootState) => IKdaDefinition | u
     (state) => state.keyDriverAnalysis,
 );
 
+export const keyDriverAnalysisMinimizedSelector: (state: RootState) => boolean | undefined = createSelector(
+    chatWindowSliceSelector,
+    (state) => state.keyDriverAnalysisMinimized,
+);
+
 export const userContextSelector: (state: RootState) => IGenAIUserContext | undefined = createSelector(
     chatWindowSliceSelector,
     (state) => state.userContext,

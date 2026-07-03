@@ -540,21 +540,6 @@ export interface IFeatureFlags {
      */
     enableImprovedRankingFilter?: boolean;
 
-    /**
-     * Enables rich text widgets on dashboards.
-     */
-    enableKDRichText?: boolean;
-
-    /**
-     * Enable multiple data sources to be used in a single workspace.
-     */
-    enableMultipleDataSourcesInWorkspace?: boolean;
-
-    /**
-     * Enables rich text in descriptions.
-     */
-    enableRichTextDescriptions?: boolean;
-
     enableDataSection?: boolean;
     enableMySqlDataSource?: boolean;
     enableMariaDbDataSource?: boolean;

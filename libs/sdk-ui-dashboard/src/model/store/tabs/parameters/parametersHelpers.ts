@@ -11,6 +11,7 @@ import {
     type IParameterMetadataObject,
     type IdentifierRef,
     type ObjRef,
+    getNumberParameterDefaultValue,
     insightMeasures,
     insightParameters,
     isMeasureDefinition,
@@ -156,9 +157,7 @@ export function computeHydratedRuntimeOverride(
     if (parameter.value !== undefined) {
         return parameter.value;
     }
-    return workspaceParameter && isNumberParameterDefinition(workspaceParameter.definition)
-        ? workspaceParameter.definition.defaultValue
-        : undefined;
+    return getNumberParameterDefaultValue(workspaceParameter?.definition);
 }
 
 /**
@@ -343,9 +342,7 @@ export function smartPersistResolvedEntry(
     entry: IDashboardParameterEntry,
     workspaceParameter: IParameterMetadataObject,
 ): IDashboardParameter {
-    const workspaceDefault = isNumberParameterDefinition(workspaceParameter.definition)
-        ? workspaceParameter.definition.defaultValue
-        : undefined;
+    const workspaceDefault = getNumberParameterDefaultValue(workspaceParameter.definition);
     const result: IDashboardParameter = {
         ref: entry.parameter.ref,
         parameterType: entry.parameter.parameterType,
@@ -402,10 +399,10 @@ export function computeParameterResetValue(
     workspaceParameter: IParameterMetadataObject | undefined,
     isInEditMode: boolean,
 ): number | undefined {
-    if (!workspaceParameter || !isNumberParameterDefinition(workspaceParameter.definition)) {
+    const workspaceDefault = getNumberParameterDefaultValue(workspaceParameter?.definition);
+    if (workspaceDefault === undefined) {
         return undefined;
     }
-    const workspaceDefault = workspaceParameter.definition.defaultValue;
     const dashboardOverride = entry.parameter.value;
     if (isInEditMode) {
         if (dashboardOverride === undefined || dashboardOverride === workspaceDefault) {

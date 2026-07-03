@@ -9,10 +9,7 @@ import { RichText } from "@gooddata/sdk-ui-kit";
 
 import { useSectionDescriptionFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
-import {
-    selectEnableRichTextDescriptions,
-    selectSeparators,
-} from "../../../model/store/config/configSelectors.js";
+import { selectSeparators } from "../../../model/store/config/configSelectors.js";
 import { selectExecutionTimestamp } from "../../../model/store/ui/uiSelectors.js";
 import { type DescriptionExportData } from "../../export/types.js";
 
@@ -34,7 +31,6 @@ export function DashboardLayoutSectionHeaderDescription({
     onLoadingChanged,
     onError,
 }: IDashboardLayoutSectionHeaderDescriptionProps) {
-    const useRichText = useDashboardSelector(selectEnableRichTextDescriptions);
     const { loading, filters } = useSectionDescriptionFilters();
     const separators = useDashboardSelector(selectSeparators);
     const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
@@ -42,29 +38,25 @@ export function DashboardLayoutSectionHeaderDescription({
     const className = cx("gd-paragraph", "description", "s-fluid-layout-row-description");
     return (
         <div className={className} {...exportData?.description}>
-            {useRichText ? (
-                <RichText
-                    className="gd-layout-row-description-richtext"
-                    value={description}
-                    renderMode="view"
-                    rawContent={{
-                        show: !!exportData?.richText,
-                        dataAttributes: exportData?.richText?.markdown,
-                    }}
-                    execConfig={{
-                        timestamp: executionTimestamp,
-                    }}
-                    referencesEnabled
-                    filters={filters}
-                    isFiltersLoading={loading}
-                    separators={separators}
-                    LoadingComponent={LoadingComponent}
-                    onLoadingChanged={onLoadingChanged}
-                    onError={onError}
-                />
-            ) : (
-                description
-            )}
+            <RichText
+                className="gd-layout-row-description-richtext"
+                value={description}
+                renderMode="view"
+                rawContent={{
+                    show: !!exportData?.richText,
+                    dataAttributes: exportData?.richText?.markdown,
+                }}
+                execConfig={{
+                    timestamp: executionTimestamp,
+                }}
+                referencesEnabled
+                filters={filters}
+                isFiltersLoading={loading}
+                separators={separators}
+                LoadingComponent={LoadingComponent}
+                onLoadingChanged={onLoadingChanged}
+                onError={onError}
+            />
         </div>
     );
 }

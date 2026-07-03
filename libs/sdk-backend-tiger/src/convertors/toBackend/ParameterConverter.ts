@@ -5,19 +5,33 @@ import type {
     JsonApiParameterPatchAttributes,
     JsonApiParameterPostOptionalIdAttributes,
 } from "@gooddata/api-client-tiger";
-import type { IParameterDefinition, IParameterMetadataObjectDefinition } from "@gooddata/sdk-model";
+import {
+    type IParameterDefinition,
+    type IParameterMetadataObjectDefinition,
+    assertNever,
+} from "@gooddata/sdk-model";
 
 function convertParameterDefinitionToBackend(
     definition: IParameterDefinition,
 ): JsonApiParameterOutAttributesDefinition {
-    if (definition.type === "NUMBER") {
-        return {
-            type: "NUMBER",
-            defaultValue: definition.defaultValue,
-            ...(definition.constraints === undefined ? {} : { constraints: definition.constraints }),
-        };
-    } else {
-        throw new Error(`Unsupported parameter definition type: ${definition.type}`);
+    switch (definition.type) {
+        case "NUMBER":
+            return {
+                type: "NUMBER",
+                defaultValue: definition.defaultValue,
+                ...(definition.constraints === undefined ? {} : { constraints: definition.constraints }),
+            };
+        case "STRING":
+            return {
+                type: "STRING",
+                defaultValue: definition.defaultValue,
+                ...(definition.constraints === undefined ? {} : { constraints: definition.constraints }),
+            };
+        default:
+            assertNever(definition);
+            throw new Error(
+                `Unsupported parameter definition type: ${(definition as { type: string }).type}`,
+            );
     }
 }
 
