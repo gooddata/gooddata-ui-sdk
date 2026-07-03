@@ -432,15 +432,6 @@ export const selectEnableUnavailableItemsVisibility: DashboardSelector<boolean> 
 );
 
 /**
- * Returns whether rich text widgets are enabled.
- *
- * @internal
- */
-export const selectEnableKDRichText: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
-    return state.settings?.enableKDRichText ?? true;
-});
-
-/**
  * Returns whether kda is enabled
  *
  * @internal
@@ -519,18 +510,6 @@ export const selectAvailableAttributeFilterSelectionTypes: DashboardSelector<
 );
 
 /**
- * Returns whether rich text in descriptions is enabled.
- *
- * @internal
- */
-export const selectEnableRichTextDescriptions: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableRichTextDescriptions ?? false;
-    },
-);
-
-/**
  * Returns whether semantic search is enabled.
  *
  * @internal
@@ -539,6 +518,18 @@ export const selectEnableSemanticSearch: DashboardSelector<boolean> = createSele
     selectConfig,
     (state) => {
         return state.settings?.enableSemanticSearch ?? false;
+    },
+);
+
+/**
+ * Returns whether smart search in catalog is enabled.
+ *
+ * @internal
+ */
+export const selectEnableCatalogSmartSearchResults: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableCatalogSmartSearchResults ?? false;
     },
 );
 

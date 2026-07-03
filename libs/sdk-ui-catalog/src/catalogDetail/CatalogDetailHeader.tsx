@@ -10,7 +10,7 @@ import { EditableLabel, UiCard, UiCopyButton, UiSkeleton } from "@gooddata/sdk-u
 import { CatalogItemLockMemo } from "../catalogItem/CatalogItemLock.js";
 import { getVisualizationType, isCatalogItemAttribute, isCatalogItemFact } from "../catalogItem/guards.js";
 import { type ICatalogItem } from "../catalogItem/types.js";
-import { CertificationIconMemo } from "../certification/CertificationIcon.js";
+import { CatalogCertificationIconMemo } from "../certification/CatalogCertificationIcon.js";
 import { ObjectTypeIconMemo } from "../objectType/ObjectTypeIcon.js";
 import { ObjectTypeTooltip } from "../objectType/ObjectTypeTooltip.js";
 
@@ -141,9 +141,8 @@ export function CatalogDetailHeader({
                                     <>{item.title}</>
                                 )}
                             </div>
-                            <CertificationIconMemo
+                            <CatalogCertificationIconMemo
                                 className="gd-analytics-catalog-detail__card__header__title__certified"
-                                intl={intl}
                                 certification={item.certification}
                             />
                         </div>

@@ -2895,6 +2895,18 @@
         "text": "Load more",
         "crowdinContext": "Label of the interactive row at the bottom of the autocomplete dropdown that loads the next page of results. Sentence case."
     },
+    "uiKit.certification.tooltip.title": {
+        "text": "Certified",
+        "crowdinContext": "Title shown in the certification tooltip for objects marked as certified."
+    },
+    "uiKit.certification.tooltip.certifiedAt": {
+        "text": "Certified at",
+        "crowdinContext": "Certification date label shown in the certification tooltip when audit details are available."
+    },
+    "uiKit.certification.tooltip.certifiedBy": {
+        "text": "Certified by",
+        "crowdinContext": "Certification user label shown in the certification tooltip when audit details are available."
+    },
     "shareDialog.olp.objectShareDialog.title": {
         "text": "Share \"{title}\"",
         "crowdinContext": "Title of the OLP share dialog. {title} is the human-readable name of the shared object (e.g. an attribute or dataset). Sentence case."

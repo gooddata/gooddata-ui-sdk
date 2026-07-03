@@ -10,7 +10,6 @@ import { Typography } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectSupportsRichTextWidgets } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
-import { selectEnableKDRichText } from "../../../model/store/config/configSelectors.js";
 import { selectIsNewDashboard } from "../../../model/store/meta/metaSelectors.js";
 import {
     type AttributeFilterComponentSet,
@@ -40,7 +39,6 @@ interface ICreationPanelProps {
 export function CreationPanel(props: ICreationPanelProps) {
     const { className, WrapCreatePanelItemWithDragComponent, WrapInsightListItemWithDragComponent } = props;
     const supportsRichText = useDashboardSelector(selectSupportsRichTextWidgets);
-    const enableRichText = useDashboardSelector(selectEnableKDRichText);
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
     const AttributeFilterComponentSet = props.AttributeFilterComponentSet!;
     const InsightWidgetComponentSet = props.InsightWidgetComponentSet!;
@@ -54,7 +52,7 @@ export function CreationPanel(props: ICreationPanelProps) {
             AttributeFilterComponentSet.creating,
             DashboardLayoutWidgetComponentSet.creating,
             VisualizationSwitcherWidgetComponentSet.creating,
-            supportsRichText && enableRichText && RichTextWidgetComponentSet.creating,
+            supportsRichText && RichTextWidgetComponentSet.creating,
         ]);
 
         return sortBy(items, (item) => item.priority ?? 0).map(({ CreatePanelListItemComponent, type }) => {
@@ -72,7 +70,6 @@ export function CreationPanel(props: ICreationPanelProps) {
         VisualizationSwitcherWidgetComponentSet,
         DashboardLayoutWidgetComponentSet,
         supportsRichText,
-        enableRichText,
         WrapCreatePanelItemWithDragComponent,
     ]);
 

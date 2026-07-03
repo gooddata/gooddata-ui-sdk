@@ -7,6 +7,7 @@
 import { AccessGranularPermission } from '@gooddata/sdk-model';
 import { AriaAttributes } from 'react';
 import { AriaRole } from 'react';
+import { CertificationStatus } from '@gooddata/sdk-model';
 import { ChangeEvent } from 'react';
 import { ColorFormats } from 'tinycolor2';
 import { CompletionSource } from '@codemirror/autocomplete';
@@ -2094,8 +2095,6 @@ export interface IDescriptionPanelProps {
     title?: string;
     // (undocumented)
     useReferences?: boolean;
-    // (undocumented)
-    useRichText?: boolean;
 }
 
 // @internal (undocumented)
@@ -3403,8 +3402,6 @@ export interface IInsightListItemProps {
     updated?: string;
     // (undocumented)
     useReferences?: boolean;
-    // (undocumented)
-    useRichText?: boolean;
     // (undocumented)
     width?: number;
 }
@@ -6201,6 +6198,28 @@ export interface IUiCardProps {
     elevation?: "1" | "2";
     // (undocumented)
     tabIndex?: number;
+}
+
+// @internal
+export interface IUiCertification {
+    // (undocumented)
+    certifiedAt?: Date | null;
+    // (undocumented)
+    certifiedBy?: string;
+    // (undocumented)
+    message?: string;
+    // (undocumented)
+    status: CertificationStatus;
+}
+
+// @internal (undocumented)
+export interface IUiCertificationIconProps {
+    // (undocumented)
+    accessibilityConfig?: {
+        ariaLabel?: string;
+    };
+    // (undocumented)
+    certification: IUiCertification;
 }
 
 // @internal (undocumented)
@@ -9055,6 +9074,9 @@ export type UiButtonSegmentedControlProps = Omit<ComponentPropsWithRef<"div">, "
 
 // @internal (undocumented)
 export const UiCard: ForwardRefExoticComponent<IUiCardProps & RefAttributes<HTMLDivElement>>;
+
+// @internal (undocumented)
+export function UiCertificationIcon(input: IUiCertificationIconProps): JSX.Element;
 
 // @internal
 export function UiCheckbox(input: IUiCheckboxProps): JSX.Element;

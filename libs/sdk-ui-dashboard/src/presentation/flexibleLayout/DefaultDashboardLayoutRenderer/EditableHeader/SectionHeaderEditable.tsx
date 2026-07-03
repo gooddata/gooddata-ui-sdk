@@ -15,23 +15,13 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../model/react/DashboardStoreProvider.js";
-import {
-    selectEnableRichTextDescriptions,
-    selectSeparators,
-} from "../../../../model/store/config/configSelectors.js";
+import { selectSeparators } from "../../../../model/store/config/configSelectors.js";
 import { uiActions } from "../../../../model/store/ui/index.js";
 import { selectExecutionTimestamp } from "../../../../model/store/ui/uiSelectors.js";
 import { useDashboardComponentsContext } from "../../../dashboardContexts/DashboardComponentsContext.js";
 
 import { EditableLabelWithBubble } from "./EditableLabelWithBubble.js";
-import {
-    DESCRIPTION_LENGTH_WARNING_LIMIT,
-    MAX_DESCRIPTION_LENGTH,
-    MAX_TITLE_LENGTH,
-    TITLE_LENGTH_WARNING_LIMIT,
-    getDescription,
-    getTitle,
-} from "./sectionHeaderHelper.js";
+import { MAX_TITLE_LENGTH, TITLE_LENGTH_WARNING_LIMIT, getTitle } from "./sectionHeaderHelper.js";
 
 const richTextTooltipAlignPoints: IAlignPoint[] = [{ align: "tl bl", offset: { x: 6, y: -4 } }];
 
@@ -46,12 +36,10 @@ export function SectionHeaderEditable({
     description: rawDescription = "",
     section,
 }: ISectionHeaderEditableProps): ReactElement {
-    const useRichText = useDashboardSelector(selectEnableRichTextDescriptions);
     const { LoadingComponent } = useDashboardComponentsContext();
     const { filters, loading } = useSectionDescriptionFilters();
     const separators = useDashboardSelector(selectSeparators);
 
-    const description = useRichText ? rawDescription : getDescription(rawDescription);
     const title = getTitle(rawTitle);
     const intl = useIntl();
     const placeholder = intl.formatMessage({
@@ -85,14 +73,6 @@ export function SectionHeaderEditable({
         [changeTitle, onEditingEnd],
     );
 
-    const onDescriptionSubmit = useCallback(
-        (description: string) => {
-            changeDescription(description);
-            onEditingEnd();
-        },
-        [changeDescription, onEditingEnd],
-    );
-
     const [isRichTextEditing, setIsRichTextEditing] = useState(false);
     const [richTextValue, setRichTextValue] = useState<string>("");
 
@@ -114,8 +94,8 @@ export function SectionHeaderEditable({
     }, []);
 
     useEffect(() => {
-        setRichTextValue(description);
-    }, [description]);
+        setRichTextValue(rawDescription);
+    }, [rawDescription]);
 
     const serializedSectionIndex = serializeLayoutSectionPath(section.index());
     const isNestedLayout = section.layout().path() !== undefined;
@@ -147,50 +127,33 @@ export function SectionHeaderEditable({
                 />
             </div>
             <div className="gd-editable-label-container gd-row-header-description-wrapper">
-                {useRichText ? (
-                    <div
-                        className={cx("gd-editable-label-richtext s-fluid-layout-row-description-input", {
-                            "is-editing": isRichTextEditing,
-                        })}
-                        onClick={onDescriptionClick}
-                        onBlur={onDescriptionBlur}
-                    >
-                        <RichTextWithTooltip
-                            value={richTextValue}
-                            renderMode={isRichTextEditing ? "edit" : "view"}
-                            onChange={onRichTextChange}
-                            editRows={10}
-                            editPlaceholder={placeholder}
-                            emptyElement={
-                                <div className="gd-editable-label-richtext-empty">{placeholder}</div>
-                            }
-                            showTooltip={isRichTextEditing}
-                            tooltipAlignPoints={richTextTooltipAlignPoints}
-                            autoResize
-                            referencesEnabled
-                            filters={filters}
-                            isFiltersLoading={loading}
-                            separators={separators}
-                            LoadingComponent={LoadingComponent}
-                            execConfig={{
-                                timestamp: executionTimestamp,
-                            }}
-                        />
-                    </div>
-                ) : (
-                    <EditableLabelWithBubble
-                        className={`gd-description-for-${serializedSectionIndex} s-fluid-layout-row-description-input description`}
-                        alignTo={`.gd-description-for-${serializedSectionIndex}`}
-                        maxRows={15}
-                        value={description || ""}
-                        maxLength={MAX_DESCRIPTION_LENGTH}
-                        warningLimit={DESCRIPTION_LENGTH_WARNING_LIMIT}
-                        placeholderMessage={placeholder}
-                        onSubmit={onDescriptionSubmit}
-                        onEditingStart={onEditingStart}
-                        onCancel={onEditingEnd}
+                <div
+                    className={cx("gd-editable-label-richtext s-fluid-layout-row-description-input", {
+                        "is-editing": isRichTextEditing,
+                    })}
+                    onClick={onDescriptionClick}
+                    onBlur={onDescriptionBlur}
+                >
+                    <RichTextWithTooltip
+                        value={richTextValue}
+                        renderMode={isRichTextEditing ? "edit" : "view"}
+                        onChange={onRichTextChange}
+                        editRows={10}
+                        editPlaceholder={placeholder}
+                        emptyElement={<div className="gd-editable-label-richtext-empty">{placeholder}</div>}
+                        showTooltip={isRichTextEditing}
+                        tooltipAlignPoints={richTextTooltipAlignPoints}
+                        autoResize
+                        referencesEnabled
+                        filters={filters}
+                        isFiltersLoading={loading}
+                        separators={separators}
+                        LoadingComponent={LoadingComponent}
+                        execConfig={{
+                            timestamp: executionTimestamp,
+                        }}
                     />
-                )}
+                </div>
             </div>
         </div>
     );

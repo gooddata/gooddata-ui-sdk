@@ -83,12 +83,23 @@ export function KeyDriversPanel({ loading, detailsId }: IKeyDriversPanelProps) {
                     </>
                 )}
             </div>
-            <div className={cx("gd-kda-key-drivers-panel-trend")}>
+            <div
+                className={cx("gd-kda-key-drivers-panel-trend")}
+                onKeyDown={(e) => {
+                    if (e.key === "Escape" && state.trendDropdownOpen) {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        setState({
+                            trendDropdownOpen: false,
+                        });
+                    }
+                }}
+            >
                 {loading ? (
                     <UiSkeleton itemHeight={27} />
                 ) : (
                     <UiDropdown
-                        closeOnEscape
+                        isOpen={state.trendDropdownOpen}
                         autofocusOnOpen
                         closeOnOutsideClick
                         onOpen={() => {

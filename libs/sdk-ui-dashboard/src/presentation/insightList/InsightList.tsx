@@ -32,8 +32,7 @@ import { useDashboardEventDispatch } from "../../model/react/useDashboardEventDi
 import { selectBackendCapabilities } from "../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
 import {
     selectAllowCreateInsightRequest,
-    selectEnableRichTextDescriptions,
-    selectEnableSemanticSearch,
+    selectEnableCatalogSmartSearchResults,
     selectEnableVisualizationFilteringByTags,
     selectObjectAvailabilityConfig,
     selectSettings,
@@ -124,11 +123,10 @@ export function InsightList({
     const canCreateVisualization = useDashboardSelector(selectCanCreateVisualization);
     const allowCreateInsightRequest = useDashboardSelector(selectAllowCreateInsightRequest);
     const settings = useDashboardSelector(selectSettings);
-    const useRichText = useDashboardSelector(selectEnableRichTextDescriptions);
     const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
     const objectAvailability = useDashboardSelector(selectObjectAvailabilityConfig);
     const isFilteringByTagsEnabled = useDashboardSelector(selectEnableVisualizationFilteringByTags);
-    const enableSemanticSearch = useDashboardSelector(selectEnableSemanticSearch);
+    const enableCatalogSmartSearchResults = useDashboardSelector(selectEnableCatalogSmartSearchResults);
     const { LoadingComponent } = useDashboardComponentsContext();
 
     // Extract tag identifiers from object availability config only when the feature flag is enabled
@@ -170,7 +168,7 @@ export function InsightList({
         never
     >({
         objectTypes: SEMANTIC_SEARCH_OBJECT_TYPES,
-        allowSematicSearch: enableSemanticSearch,
+        allowSematicSearch: enableCatalogSmartSearchResults,
         itemBuilder: insightItemBuilder,
         includeTags: tags,
         excludeTags,
@@ -315,7 +313,6 @@ export function InsightList({
                             isLocked={insightIsLocked(insightListSourceItem.insight)}
                             onClick={() => onSelect?.(insight)}
                             metadataTimeZone={settings?.metadataTimeZone}
-                            useRichText={useRichText}
                             useReferences
                             richTextExecConfig={{
                                 timestamp: executionTimestamp,

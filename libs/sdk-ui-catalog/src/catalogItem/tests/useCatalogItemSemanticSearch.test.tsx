@@ -46,7 +46,7 @@ describe("useCatalogItemSemanticSearch", () => {
     });
 
     it("should return idle status and empty items when semantic search is disabled (no flag)", () => {
-        (useFeatureFlags as Mock).mockReturnValue({ enableSemanticSearch: false });
+        (useFeatureFlags as Mock).mockReturnValue({ enableCatalogSmartSearchResults: false });
         (useSemanticSearch as Mock).mockReturnValue({ searchStatus: "idle", searchResults: [] });
         (useCatalogEndpoints as Mock).mockReturnValue([]);
 
@@ -66,7 +66,7 @@ describe("useCatalogItemSemanticSearch", () => {
     });
 
     it("should return idle status and empty items when semantic search is disabled (no search term)", () => {
-        (useFeatureFlags as Mock).mockReturnValue({ enableSemanticSearch: true });
+        (useFeatureFlags as Mock).mockReturnValue({ enableCatalogSmartSearchResults: true });
         (useSemanticSearch as Mock).mockReturnValue({ searchStatus: "idle", searchResults: [] });
         (useCatalogEndpoints as Mock).mockReturnValue([]);
 
@@ -86,7 +86,7 @@ describe("useCatalogItemSemanticSearch", () => {
     });
 
     it("should not initiate semantic search when queryOptions.id is provided", () => {
-        (useFeatureFlags as Mock).mockReturnValue({ enableSemanticSearch: true });
+        (useFeatureFlags as Mock).mockReturnValue({ enableCatalogSmartSearchResults: true });
         (useSemanticSearch as Mock).mockReturnValue({ searchStatus: "idle", searchResults: [] });
         (useCatalogEndpoints as Mock).mockReturnValue([]);
 
@@ -108,7 +108,7 @@ describe("useCatalogItemSemanticSearch", () => {
     });
 
     it("should initiate semantic search when enabled and search term is provided", () => {
-        (useFeatureFlags as Mock).mockReturnValue({ enableSemanticSearch: true });
+        (useFeatureFlags as Mock).mockReturnValue({ enableCatalogSmartSearchResults: true });
         (useSemanticSearch as Mock).mockReturnValue({ searchStatus: "loading", searchResults: [] });
         (useCatalogEndpoints as Mock).mockReturnValue([]);
 
@@ -131,7 +131,7 @@ describe("useCatalogItemSemanticSearch", () => {
     });
 
     it("should query endpoints with IDs from semantic search results", async () => {
-        (useFeatureFlags as Mock).mockReturnValue({ enableSemanticSearch: true });
+        (useFeatureFlags as Mock).mockReturnValue({ enableCatalogSmartSearchResults: true });
         (useSemanticSearch as Mock).mockReturnValue({
             searchStatus: "success",
             searchResults: [{ id: "id1" }, { id: "id2" }],
@@ -165,7 +165,7 @@ describe("useCatalogItemSemanticSearch", () => {
     });
 
     it("should return found items excluding already existing items", async () => {
-        (useFeatureFlags as Mock).mockReturnValue({ enableSemanticSearch: true });
+        (useFeatureFlags as Mock).mockReturnValue({ enableCatalogSmartSearchResults: true });
         (useSemanticSearch as Mock).mockReturnValue({
             searchStatus: "success",
             searchResults: [{ id: "id1" }, { id: "id2" }],
@@ -195,7 +195,7 @@ describe("useCatalogItemSemanticSearch", () => {
     });
 
     it("should preserve semantic relevance order in found items", async () => {
-        (useFeatureFlags as Mock).mockReturnValue({ enableSemanticSearch: true });
+        (useFeatureFlags as Mock).mockReturnValue({ enableCatalogSmartSearchResults: true });
         // Order is id2, id1
         (useSemanticSearch as Mock).mockReturnValue({
             searchStatus: "success",
@@ -230,7 +230,7 @@ describe("useCatalogItemSemanticSearch", () => {
     });
 
     it("should handle loading status correctly", () => {
-        (useFeatureFlags as Mock).mockReturnValue({ enableSemanticSearch: true });
+        (useFeatureFlags as Mock).mockReturnValue({ enableCatalogSmartSearchResults: true });
         (useSemanticSearch as Mock).mockReturnValue({ searchStatus: "loading", searchResults: [] });
         (useCatalogEndpoints as Mock).mockReturnValue([]);
 
@@ -249,7 +249,7 @@ describe("useCatalogItemSemanticSearch", () => {
 
     it("should handle error status from endpoints", async () => {
         vi.spyOn(console, "error").mockImplementation(() => {});
-        (useFeatureFlags as Mock).mockReturnValue({ enableSemanticSearch: true });
+        (useFeatureFlags as Mock).mockReturnValue({ enableCatalogSmartSearchResults: true });
         (useSemanticSearch as Mock).mockReturnValue({
             searchStatus: "success",
             searchResults: [{ id: "id1" }],
@@ -274,7 +274,7 @@ describe("useCatalogItemSemanticSearch", () => {
     });
 
     it("should clear found items when unmounted during loading", async () => {
-        (useFeatureFlags as Mock).mockReturnValue({ enableSemanticSearch: true });
+        (useFeatureFlags as Mock).mockReturnValue({ enableCatalogSmartSearchResults: true });
         (useSemanticSearch as Mock).mockReturnValue({
             searchStatus: "success",
             searchResults: [{ id: "id1" }],

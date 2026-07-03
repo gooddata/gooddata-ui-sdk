@@ -22,7 +22,6 @@ export enum TigerFeaturesNames {
     EnableRankingWithMvf = "enableRankingWithMvf",
     EnableRankingStrictLimit = "enableRankingStrictLimit",
     EnableImprovedRankingFilter = "enableImprovedRankingFilter",
-    EnableKDRichText = "enableKDRichText",
     EnableMySqlDataSource = "enableMySqlDataSource",
     EnableMariaDbDataSource = "enableMariaDbDataSource",
     EnableOracleDataSource = "enableOracleDataSource",
@@ -39,8 +38,6 @@ export enum TigerFeaturesNames {
     EnableAthenaDataSource = "enableAthenaDataSource",
     EnableCrateDbDataSource = "enableCrateDbDataSource",
     EnableSnowflakeKeyPairAuthentication = "enableSnowflakeKeyPairAuthentication",
-    EnableMultipleDataSourcesInWorkspace = "enableMultipleDataSourcesInWorkspace",
-    EnableRichTextDescriptions = "enableRichTextDescriptions",
     EnableSemanticSearch = "enableSemanticSearch",
     EnableCatalogSmartSearchResults = "enableCatalogSmartSearchResults",
     EnableGenAIChat = "enableGenAIChat",
@@ -155,7 +152,6 @@ export type ITigerFeatureFlags = {
     enableRankingWithMvf: (typeof FeatureFlagsValues)["enableRankingWithMvf"][number];
     enableRankingStrictLimit: (typeof FeatureFlagsValues)["enableRankingStrictLimit"][number];
     enableImprovedRankingFilter: (typeof FeatureFlagsValues)["enableImprovedRankingFilter"][number];
-    enableKDRichText: (typeof FeatureFlagsValues)["enableKDRichText"][number];
     enableMySqlDataSource: (typeof FeatureFlagsValues)["enableMySqlDataSource"][number];
     enableMariaDbDataSource: (typeof FeatureFlagsValues)["enableMariaDbDataSource"][number];
     enableOracleDataSource: (typeof FeatureFlagsValues)["enableOracleDataSource"][number];
@@ -172,8 +168,6 @@ export type ITigerFeatureFlags = {
     enableAthenaDataSource: (typeof FeatureFlagsValues)["enableAthenaDataSource"][number];
     enableCrateDbDataSource: (typeof FeatureFlagsValues)["enableCrateDbDataSource"][number];
     enableSnowflakeKeyPairAuthentication: (typeof FeatureFlagsValues)["enableSnowflakeKeyPairAuthentication"][number];
-    enableMultipleDataSourcesInWorkspace: (typeof FeatureFlagsValues)["enableMultipleDataSourcesInWorkspace"][number];
-    enableRichTextDescriptions: (typeof FeatureFlagsValues)["enableRichTextDescriptions"][number];
     enableSemanticSearch: (typeof FeatureFlagsValues)["enableSemanticSearch"][number];
     enableCatalogSmartSearchResults: (typeof FeatureFlagsValues)["enableCatalogSmartSearchResults"][number];
     enableGenAIChat: (typeof FeatureFlagsValues)["enableGenAIChat"][number];
@@ -289,7 +283,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableRankingWithMvf: false,
     enableRankingStrictLimit: false,
     enableImprovedRankingFilter: false,
-    enableKDRichText: true, // Keep this flag until dashboards no longer need to disable rich text for SDK engines older than 9.7.0.
     enableMySqlDataSource: false,
     enableMariaDbDataSource: false,
     enableMotherDuckDataSource: false,
@@ -306,8 +299,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAthenaDataSource: true,
     enableCrateDbDataSource: true,
     enableSnowflakeKeyPairAuthentication: true,
-    enableMultipleDataSourcesInWorkspace: true,
-    enableRichTextDescriptions: true,
     enableSemanticSearch: false,
     enableCatalogSmartSearchResults: false,
     enableGenAIChat: false,
@@ -423,7 +414,6 @@ export const FeatureFlagsValues = {
     enableRankingWithMvf: [true, false] as const,
     enableRankingStrictLimit: [true, false] as const,
     enableImprovedRankingFilter: [true, false] as const,
-    enableKDRichText: [true, false] as const,
     enableMySqlDataSource: [true, false] as const,
     enableMotherDuckDataSource: [true, false] as const,
     enableMongoDbDataSource: [true, false] as const,
@@ -440,8 +430,6 @@ export const FeatureFlagsValues = {
     enableAthenaDataSource: [true, false] as const,
     enableCrateDbDataSource: [true, false] as const,
     enableSnowflakeKeyPairAuthentication: [true, false] as const,
-    enableMultipleDataSourcesInWorkspace: [true, false] as const,
-    enableRichTextDescriptions: [true, false] as const,
     enableSemanticSearch: [true, false] as const,
     enableCatalogSmartSearchResults: [true, false] as const,
     enableGenAIChat: [true, false] as const,

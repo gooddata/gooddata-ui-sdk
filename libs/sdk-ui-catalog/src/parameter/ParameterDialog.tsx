@@ -9,8 +9,7 @@ import { ConfirmDialog, UiButton, UiIcon, UiLink, UiTooltip } from "@gooddata/sd
 
 import { useIsWhiteLabeled } from "../permission/PermissionsContext.js";
 
-import type { ParameterSchemaInput } from "./parameterSchema.js";
-import { serializeParameterToYaml } from "./parameterSerialization.js";
+import { type ParameterDraft, serializeParameterToYaml } from "./parameterSerialization.js";
 import { validateParameterYaml } from "./parameterValidation.js";
 import { ParameterYamlEditor } from "./ParameterYamlEditor.js";
 
@@ -35,12 +34,11 @@ const messages = defineMessages({
     dialogDuplicate: { id: "analyticsCatalog.parameter.dialog.edit.duplicate" },
 });
 
-export type ParameterDialogInitialParameter = ParameterSchemaInput;
 export type ParameterDialogMode = "create" | "edit";
 
 type Props = {
     mode: ParameterDialogMode;
-    initialParameter?: ParameterDialogInitialParameter;
+    initialParameter?: ParameterDraft;
     onClose: () => void;
     onSubmit: (parameter: IParameterMetadataObjectDefinition) => Promise<void>;
     onDuplicate?: (parameter: IParameterMetadataObjectDefinition) => void;

@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { useId, useMemo } from "react";
+import { useEffect, useId, useMemo } from "react";
 
 import cx from "classnames";
 
@@ -20,6 +20,7 @@ import { useKdaState } from "../providers/KdaState.js";
 import { type IKdaDialogProps } from "../types.js";
 
 import { useChangeAnalysis } from "./hooks/useChangeAnalysis.js";
+import { useCloseOnEscape } from "./hooks/useCloseOnEscape.js";
 import { useKdaDialogAccessibility } from "./hooks/useKdaDialogAccessibility.js";
 import { useKdaDialogTooltipsOverride } from "./hooks/useKdaDialogTooltipsOverride.js";
 import { useValidAttributes } from "./hooks/useValidAttributes.js";
@@ -40,6 +41,7 @@ export function KdaDialog({
     showCloseButton = true,
     parentOverlayController,
     onClose,
+    onToggle,
     titleElementId,
 }: IKdaDialogProps) {
     const { state } = useKdaState();
@@ -65,9 +67,17 @@ export function KdaDialog({
 
     const status = getFloatingStatus(state.relevantStatus, state.itemsStatus, state.selectedStatus);
 
+    useEffect(() => {
+        if (onToggle) {
+            onToggle(isMinimized);
+        }
+    }, [isMinimized, onToggle]);
+
     useChangeAnalysis();
     useValidAttributes();
     useKdaDialogTooltipsOverride();
+
+    const closeOnEscape = useCloseOnEscape();
 
     return (
         <OverlayControllerProvider overlayController={effectiveOverlayController}>
@@ -102,11 +112,7 @@ export function KdaDialog({
             ) : (
                 <Dialog
                     className={cx(dialogBaseClassName, "gd-kda-dialog--expanded")}
-                    closeOnEscape={
-                        !state.attributesDropdownOpen &&
-                        !state.addFilterDropdownOpen &&
-                        !state.trendDropdownOpen
-                    }
+                    closeOnEscape={closeOnEscape}
                     isModal
                     accessibilityConfig={{
                         ...accessibilityConfig,

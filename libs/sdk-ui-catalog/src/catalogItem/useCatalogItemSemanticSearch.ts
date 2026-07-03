@@ -25,7 +25,7 @@ export function useCatalogItemSemanticSearch({
     const flags = useFeatureFlags();
 
     const objectTypes = useMemo(() => convertTypesToGenAiTypes(types), [types]);
-    const isSemanticSearchEnabled = Boolean(flags?.enableSemanticSearch);
+    const isSemanticSearchEnabled = Boolean(flags?.enableCatalogSmartSearchResults);
     const isSemanticSearchPossible =
         isSemanticSearchEnabled && objectTypes.length && search && !queryOptions.id;
     const { searchStatus, searchResults } = useSemanticSearch({

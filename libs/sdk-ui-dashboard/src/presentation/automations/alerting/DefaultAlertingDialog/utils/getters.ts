@@ -15,6 +15,7 @@ import {
     type IAttributeMetadataObject,
     type IAutomationAlert,
     type IAutomationMetadataObject,
+    type IAutomationMetadataObjectDefinition,
     type ICatalogAttribute,
     type ICatalogDateAttribute,
     type ICatalogDateDataset,
@@ -72,7 +73,7 @@ export function getMeasureFormat(measure: IMeasure | undefined, measureFormatMap
  */
 export function getAttributeRelatedFilterInfo(
     attributes: AlertAttribute[],
-    alert?: IAutomationMetadataObject,
+    alert?: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,
     attr?: IAttribute,
 ): {
     attribute: AlertAttribute | undefined;
@@ -197,7 +198,7 @@ export function getAlertComparison(
  */
 export function getAlertAttribute(
     attributes: AlertAttribute[],
-    alert?: IAutomationMetadataObject,
+    alert?: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,
 ): [AlertAttribute | undefined, string | null | undefined] {
     const attr = alert?.alert?.execution.attributes[0];
     if (attr?.attribute) {
@@ -366,7 +367,10 @@ export function getFiltersAttribute(
 
 //utils
 
-function getAttributeRelatedFilter(attr: AlertAttribute | undefined, alert?: IAutomationMetadataObject) {
+function getAttributeRelatedFilter(
+    attr: AlertAttribute | undefined,
+    alert?: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,
+) {
     const filter = alert?.alert?.execution.filters.filter((f) => {
         return (
             attr?.attribute.attribute.localIdentifier &&

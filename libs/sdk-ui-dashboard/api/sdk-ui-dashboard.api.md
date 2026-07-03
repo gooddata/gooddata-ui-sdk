@@ -6294,6 +6294,7 @@ export interface IKdaDialogProps {
     className?: string;
     locale?: string;
     onClose?: () => void;
+    onToggle?: (minimized: boolean) => void;
     parentOverlayController?: OverlayController;
     showCloseButton?: boolean;
     titleElementId?: string;
@@ -10828,9 +10829,6 @@ export const selectEnableKDDependentFilters: DashboardSelector<boolean>;
 // @alpha
 export const selectEnableKDEmptyDateValuesFilter: DashboardSelector<boolean>;
 
-// @internal
-export const selectEnableKDRichText: DashboardSelector<boolean>;
-
 // @alpha
 export const selectEnableMeasureValueFilterKD: DashboardSelector<boolean>;
 
@@ -10842,9 +10840,6 @@ export const selectEnableOrchestratedTabularExports: DashboardSelector<boolean>;
 
 // @alpha
 export const selectEnableParameters: DashboardSelector<boolean>;
-
-// @internal
-export const selectEnableRichTextDescriptions: DashboardSelector<boolean>;
 
 // @alpha
 export const selectEnableRichTextWidgetFilterConfiguration: DashboardSelector<boolean>;

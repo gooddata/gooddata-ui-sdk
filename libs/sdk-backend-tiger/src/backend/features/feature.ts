@@ -96,13 +96,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableKDRichText,
-            "enableKDRichText",
-            "BOOLEAN",
-            FeatureFlagsValues.enableKDRichText,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableMySqlDataSource,
             "enableMySqlDataSource",
             "BOOLEAN",
@@ -212,20 +205,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableSnowflakeKeyPairAuthentication",
             "BOOLEAN",
             FeatureFlagsValues.enableSnowflakeKeyPairAuthentication,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableMultipleDataSourcesInWorkspace,
-            "enableMultipleDataSourcesInWorkspace",
-            "BOOLEAN",
-            FeatureFlagsValues.enableMultipleDataSourcesInWorkspace,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableRichTextDescriptions,
-            "enableRichTextDescriptions",
-            "BOOLEAN",
-            FeatureFlagsValues.enableRichTextDescriptions,
         ),
         ...loadFeature(
             features,

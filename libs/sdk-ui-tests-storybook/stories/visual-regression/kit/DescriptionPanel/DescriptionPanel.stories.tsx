@@ -2,6 +2,9 @@
 
 import { type CSSProperties } from "react";
 
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
+import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { DescriptionPanel, DescriptionPanelContent, type IDescriptionPanelProps } from "@gooddata/sdk-ui-kit";
 
 import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
@@ -20,6 +23,8 @@ const PROPS_2: IDescriptionPanelProps = {
     description: LOREM,
 };
 
+const backend = recordedBackend(ReferenceRecordings.Recordings);
+
 function DescriptionPanelTest() {
     const style: CSSProperties = {
         display: "flex",
@@ -27,23 +32,27 @@ function DescriptionPanelTest() {
         maxWidth: "220px",
     };
     return (
-        <div className="library-component screenshot-target">
-            <h4>Description panel</h4>
-            <div style={style}>
-                <div style={{ marginRight: "32px", marginLeft: "auto" }}>
-                    <DescriptionPanel {...PROPS_1} />
-                </div>
-                <DescriptionPanelContent {...PROPS_1} />
-            </div>
+        <BackendProvider backend={backend}>
+            <WorkspaceProvider workspace="foo">
+                <div className="library-component screenshot-target">
+                    <h4>Description panel</h4>
+                    <div style={style}>
+                        <div style={{ marginRight: "32px", marginLeft: "auto" }}>
+                            <DescriptionPanel {...PROPS_1} />
+                        </div>
+                        <DescriptionPanelContent {...PROPS_1} />
+                    </div>
 
-            <h4>Description panel with text only</h4>
-            <div style={style}>
-                <div style={{ marginRight: "32px", marginLeft: "auto" }}>
-                    <DescriptionPanel {...PROPS_2} />
+                    <h4>Description panel with text only</h4>
+                    <div style={style}>
+                        <div style={{ marginRight: "32px", marginLeft: "auto" }}>
+                            <DescriptionPanel {...PROPS_2} />
+                        </div>
+                        <DescriptionPanelContent {...PROPS_2} />
+                    </div>
                 </div>
-                <DescriptionPanelContent {...PROPS_2} />
-            </div>
-        </div>
+            </WorkspaceProvider>
+        </BackendProvider>
     );
 }
 

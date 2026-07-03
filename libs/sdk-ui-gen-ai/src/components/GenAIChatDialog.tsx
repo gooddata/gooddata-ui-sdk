@@ -18,6 +18,7 @@ import { ConfigProvider, type LinkHandlerEvent } from "./ConfigContext.js";
 import { CustomizationProvider } from "./CustomizationProvider.js";
 import { GenAIChatOverlay } from "./GenAIChatOverlay.js";
 import { GenAiStore, type GenAiStoreProps } from "./GenAiStore.js";
+import { KeyDriverAnalysis } from "./KeyDriverAnalysis.js";
 
 export type GenAIChatDialogProps = Omit<GenAiStoreProps, "children"> & {
     isOpen: boolean;
@@ -39,6 +40,8 @@ export type GenAIChatDialogProps = Omit<GenAiStoreProps, "children"> & {
 // - High enough to be over other dialogs
 // - Below chart tooltips
 const DEFAULT_CHAT_Z_INDEX = 3000;
+// - Must be more than DEFAULT_CHAT_Z_INDEX
+const DEFAULT_KDA_Z_INDEX = 3050;
 
 export function GenAIChatDialog({
     backend,
@@ -195,32 +198,39 @@ function GenAIChatDialogContent({
         () => parentOverlayController ?? OverlayController.getInstance(DEFAULT_CHAT_Z_INDEX),
         [parentOverlayController],
     );
-
-    if (!isOpen || disabled) return null;
+    const kdaOverlayController = useMemo(
+        () => parentOverlayController ?? OverlayController.getInstance(DEFAULT_KDA_Z_INDEX),
+        [parentOverlayController],
+    );
 
     return (
         <BackendProvider backend={backend}>
             <WorkspaceProvider workspace={workspace}>
                 <OverlayControllerProvider overlayController={chatOverlayController}>
-                    <ConfigProvider
-                        allowNativeLinks={allowNativeLinks}
-                        linkHandler={onLinkClick}
-                        catalogItems={catalogItems}
-                        canManage={canManage}
-                        canAnalyze={canAnalyze}
-                        canFullControl={canFullControl}
-                    >
-                        <CustomizationProvider
-                            landingScreenComponentProvider={LandingScreenComponentProvider}
+                    {isOpen && !disabled ? (
+                        <ConfigProvider
+                            allowNativeLinks={allowNativeLinks}
+                            linkHandler={onLinkClick}
+                            catalogItems={catalogItems}
+                            canManage={canManage}
+                            canAnalyze={canAnalyze}
+                            canFullControl={canFullControl}
                         >
-                            <GenAIChatOverlay
-                                className={className}
-                                dialogPosition={dialogPosition}
-                                returnFocusTo={returnFocusTo}
-                                onClose={onCloseHandler}
-                            />
-                        </CustomizationProvider>
-                    </ConfigProvider>
+                            <CustomizationProvider
+                                landingScreenComponentProvider={LandingScreenComponentProvider}
+                            >
+                                <GenAIChatOverlay
+                                    className={className}
+                                    dialogPosition={dialogPosition}
+                                    returnFocusTo={returnFocusTo}
+                                    onClose={onCloseHandler}
+                                />
+                            </CustomizationProvider>
+                        </ConfigProvider>
+                    ) : null}
+                    <OverlayControllerProvider overlayController={kdaOverlayController}>
+                        <KeyDriverAnalysis />
+                    </OverlayControllerProvider>
                 </OverlayControllerProvider>
             </WorkspaceProvider>
         </BackendProvider>

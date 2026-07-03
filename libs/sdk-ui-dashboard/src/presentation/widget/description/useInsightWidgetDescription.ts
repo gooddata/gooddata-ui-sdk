@@ -2,15 +2,10 @@
 
 import { useMemo } from "react";
 
-import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
-import { selectEnableRichTextDescriptions } from "../../../model/store/config/configSelectors.js";
-
 import { type IInsightWidgetDescriptionTriggerProps } from "./types.js";
 
 export const useInsightWidgetDescription = (props: IInsightWidgetDescriptionTriggerProps) => {
     const { widget, insight } = props;
-
-    const useRichText = useDashboardSelector(selectEnableRichTextDescriptions);
 
     const description = useMemo(() => {
         return widget.configuration?.description?.source === "widget" || !insight
@@ -28,6 +23,5 @@ export const useInsightWidgetDescription = (props: IInsightWidgetDescriptionTrig
     return {
         isVisible,
         description,
-        useRichText,
     };
 };

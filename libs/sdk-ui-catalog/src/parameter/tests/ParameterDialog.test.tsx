@@ -13,7 +13,7 @@ import {
     TestPermissionsProvider,
     defaultPermissionsResult,
 } from "../../permission/TestPermissionsProvider.js";
-import type { ParameterDialogInitialParameter } from "../ParameterDialog.js";
+import type { ParameterDraft } from "../parameterSerialization.js";
 
 // Mock SyntaxHighlightingInput since CodeMirror doesn't work in happy-dom
 vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
@@ -53,7 +53,7 @@ const validParameter: IParameterMetadataObjectDefinition = {
     },
 };
 
-const createParameter: ParameterDialogInitialParameter = {
+const createParameter: ParameterDraft = {
     title: "My Parameter",
     description: "",
     definition: {
@@ -62,7 +62,7 @@ const createParameter: ParameterDialogInitialParameter = {
     },
 };
 
-const validInitialParameter: ParameterDialogInitialParameter = {
+const validInitialParameter: ParameterDraft = {
     id: "test",
     title: "Test parameter",
     description: "",

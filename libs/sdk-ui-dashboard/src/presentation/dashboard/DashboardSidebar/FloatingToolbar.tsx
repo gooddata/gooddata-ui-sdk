@@ -38,7 +38,7 @@ import {
     selectBackendCapabilities,
     selectSupportsRichTextWidgets,
 } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
-import { selectEnableKDRichText, selectSettings } from "../../../model/store/config/configSelectors.js";
+import { selectSettings } from "../../../model/store/config/configSelectors.js";
 import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
 import { selectFilterContextFilters } from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import { selectLayout } from "../../../model/store/tabs/layout/layoutSelectors.js";
@@ -185,7 +185,6 @@ export function FloatingToolbar() {
     const iconColor = theme?.palette?.complementary?.c6 ?? gdColorStateBlank;
     const primaryColor = theme?.palette?.primary?.base ?? GD_COLOR_HIGHLIGHT;
     const supportsRichText = useDashboardSelector(selectSupportsRichTextWidgets);
-    const enableRichText = useDashboardSelector(selectEnableKDRichText);
     const layout = useDashboardSelector(selectLayout);
     const settings = useDashboardSelector(selectSettings);
     const filterContextFilters = useDashboardSelector(selectFilterContextFilters);
@@ -367,7 +366,7 @@ export function FloatingToolbar() {
                     onMouseDown={closeInsightPicker}
                     onActivate={handleVisSwitcherActivate}
                 />
-                {supportsRichText && enableRichText ? (
+                {supportsRichText ? (
                     <DraggableToolbarButton
                         icon={<IconRichText color={iconColor} width={ICON_SIZE} height={ICON_SIZE} />}
                         label={intl.formatMessage({ id: "addPanel.richTextWidget" })}

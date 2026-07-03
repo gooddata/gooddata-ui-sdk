@@ -825,6 +825,9 @@ export const getHierarchyRef: (hierarchy: ICatalogAttributeHierarchy | ICatalogD
 export const getHierarchyTitle: (hierarchy: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy) => string;
 
 // @alpha
+export function getNumberParameterDefaultValue(definition: IParameterDefinition | undefined): number | undefined;
+
+// @alpha
 export function getSelectedElementsCount(filter: IDashboardAttributeFilter): number;
 
 // @public
@@ -2669,7 +2672,6 @@ export interface IFeatureFlags {
     enableImprovedRankingFilter?: boolean;
     enableKDEmptyDateValuesFilter?: boolean;
     enableKDRespectLegendPosition?: boolean;
-    enableKDRichText?: boolean;
     // (undocumented)
     enableMariaDbDataSource?: boolean;
     enableMatchFilterAD?: boolean;
@@ -2680,7 +2682,6 @@ export interface IFeatureFlags {
     enableMongoDbDataSource?: boolean;
     // (undocumented)
     enableMotherDuckDataSource?: boolean;
-    enableMultipleDataSourcesInWorkspace?: boolean;
     enableMultipleMvfConditions?: boolean;
     // (undocumented)
     enableMySqlDataSource?: boolean;
@@ -2701,7 +2702,6 @@ export interface IFeatureFlags {
     enableRankingStrictLimit?: boolean;
     enableRankingWithMvf?: boolean;
     enableRawExports?: boolean;
-    enableRichTextDescriptions?: boolean;
     // @alpha
     enableRichTextWidgetFilterConfiguration?: boolean;
     enableSeamlessIdpSwitch?: boolean;
@@ -4055,7 +4055,7 @@ export interface IOrganizationUserGroup {
 }
 
 // @public
-export type IParameterDefinition = INumberParameterDefinition;
+export type IParameterDefinition = INumberParameterDefinition | IStringParameterDefinition;
 
 // @public
 export interface IParameterMetadataObject extends IMetadataObject, IAuditable {
@@ -5239,6 +5239,9 @@ export function isSimpleMeasureFilter(obj: unknown): obj is IMeasureFilter;
 export function isSingleSelectionFilter(filter: IDashboardAttributeFilter): boolean;
 
 // @alpha
+export function isStringParameterDefinition(def: IParameterDefinition): def is IStringParameterDefinition;
+
+// @alpha
 export function isTempFilterContext(obj: unknown): obj is ITempFilterContext;
 
 // @public
@@ -5255,6 +5258,24 @@ export function isTotalDescriptor(obj: unknown): obj is ITotalDescriptor;
 
 // @public
 export function isTotalLocator(obj: unknown): obj is ITotalLocatorItem;
+
+// @public
+export interface IStringParameterConstraints {
+    // (undocumented)
+    maxLength?: number;
+    // (undocumented)
+    minLength?: number;
+}
+
+// @public
+export interface IStringParameterDefinition {
+    // (undocumented)
+    constraints?: IStringParameterConstraints;
+    // (undocumented)
+    defaultValue: string;
+    // (undocumented)
+    type: "STRING";
+}
 
 // @public
 export function isUpperBound(obj: unknown): obj is IUpperBoundedFilter;
@@ -5288,6 +5309,9 @@ export const isUserWorkspaceAccessGrantee: (obj: unknown) => obj is IUserWorkspa
 
 // @alpha
 export function isValidNumberParameterValue(value: number, constraints?: INumberParameterConstraints): boolean;
+
+// @alpha
+export function isValidParameterValue(definition: IParameterDefinition, value: ParameterValue): boolean;
 
 // @public
 export function isVariableMetadataObject(obj: unknown): obj is IVariableMetadataObject;
@@ -6512,6 +6536,9 @@ export const OrganizationPermissionAssignmentValue: {
     readonly SELF_CREATE_TOKEN: "SELF_CREATE_TOKEN";
     readonly BASE_UI_ACCESS: "BASE_UI_ACCESS";
 };
+
+// @alpha (undocumented)
+export type ParameterValue = IParameterDefinition["defaultValue"];
 
 // @alpha
 export type PermissionSource = "direct" | "indirect";

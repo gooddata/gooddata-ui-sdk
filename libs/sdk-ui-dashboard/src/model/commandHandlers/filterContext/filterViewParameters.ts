@@ -5,6 +5,7 @@ import {
     type IParameterMetadataObject,
     type ObjRef,
     areObjRefsEqual,
+    getNumberParameterDefaultValue,
 } from "@gooddata/sdk-model";
 
 interface IResolvedFilterViewParameter {
@@ -23,6 +24,9 @@ export function resolveFilterViewParameterValues(
         const workspaceParameter = workspaceParameters.find((item) =>
             areObjRefsEqual(item.ref, parameter.ref),
         );
-        return { ref: parameter.ref, value: workspaceParameter?.definition.defaultValue };
+        return {
+            ref: parameter.ref,
+            value: getNumberParameterDefaultValue(workspaceParameter?.definition),
+        };
     });
 }

@@ -10,8 +10,8 @@ import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import type { ICatalogItemParameter } from "../catalogItem/types.js";
 
 import { createCopiedParameter, isDuplicateIdError } from "./parameterCopy.js";
-import type { ParameterDialogInitialParameter } from "./ParameterDialog.js";
 import { useParameterMutation } from "./ParameterMutationContext.js";
+import type { ParameterDraft } from "./parameterSerialization.js";
 
 const ParameterDialog = lazy(() =>
     import("./ParameterDialog.js").then((m) => ({ default: m.ParameterDialog })),
@@ -21,7 +21,7 @@ const messages = defineMessages({
     parameterCreateSuccess: { id: "analyticsCatalog.parameter.create.success" },
 });
 
-const defaultInitialParameter: ParameterDialogInitialParameter = {
+const defaultInitialParameter: ParameterDraft = {
     title: "My Parameter",
     description: "",
     definition: {
@@ -40,7 +40,7 @@ export function ParameterCreateDialog({ sourceItem, onClose, onCreated }: Props)
     const { addSuccess } = useToastMessage();
     const mutation = useParameterMutation();
 
-    const initialParameter = useMemo<ParameterDialogInitialParameter>(() => {
+    const initialParameter = useMemo<ParameterDraft>(() => {
         if (!sourceItem) {
             return defaultInitialParameter;
         }
