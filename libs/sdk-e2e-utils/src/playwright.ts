@@ -14,6 +14,9 @@ import {
 
 import {
     GoodmockMode,
+    type IGoodmockMapping,
+    type ILeakPattern,
+    type ISecretMapping,
     type IWorkspaceIdMapping,
     goodmockMode as getGoodmockMode,
     loadMappings,
@@ -33,6 +36,12 @@ export interface IGoodmockOptions {
     getMappingPath: (specFile: string) => string;
     workspaceIdMappings?: IWorkspaceIdMapping | IWorkspaceIdMapping[];
     baseUrl?: string;
+    /** Secret values replaced by placeholders in saved recordings (see {@link ISecretMapping}). */
+    secretMappings?: ISecretMapping[];
+    /** Credential-shaped patterns that must never appear in saved recordings (see {@link ILeakPattern}). */
+    leakPatterns?: ILeakPattern[];
+    /** Consumer-supplied redaction hook for domain-specific secrets (see snapshotAndSaveRecording). */
+    sanitizeMappings?: (mappings: IGoodmockMapping[]) => IGoodmockMapping[];
 }
 
 /**
@@ -253,13 +262,14 @@ export function createTest<T extends Record<string, unknown> = {}, W extends Rec
 
                     testInstance.afterAll(async () => {
                         if (goodmockMode === GoodmockMode.Record) {
-                            await snapshotAndSaveRecording(
-                                gm.host,
-                                gm.getMappingPath(specName),
-                                gm.workspaceIdMappings,
-                                gm.backendHost,
-                                gm.baseUrl,
-                            );
+                            await snapshotAndSaveRecording(gm.host, gm.getMappingPath(specName), {
+                                workspaceIdMappings: gm.workspaceIdMappings,
+                                backendHost: gm.backendHost,
+                                baseUrl: gm.baseUrl,
+                                secretMappings: gm.secretMappings,
+                                leakPatterns: gm.leakPatterns,
+                                sanitizeMappings: gm.sanitizeMappings,
+                            });
                         }
                         await resetMappings(gm.host);
                     });

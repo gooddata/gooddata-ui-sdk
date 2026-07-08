@@ -5,7 +5,7 @@ import { type PropsWithChildren } from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { type Mock, describe, expect, it, vi } from "vitest";
 
-import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend, UnexpectedResponseError } from "@gooddata/sdk-backend-spi";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 
@@ -137,7 +137,11 @@ describe("CreateObjectButton", () => {
     });
 
     it("keeps dialog open and shows backend error when parameter creation fails", async () => {
-        const createParameter = vi.fn().mockRejectedValue(new Error("Identifier already exists"));
+        const createParameter = vi.fn().mockRejectedValue(
+            new UnexpectedResponseError("Request failed with status code 409", 409, {
+                detail: "Identifier already exists",
+            }),
+        );
 
         render(<CreateObjectButton onCreateObject={vi.fn()} showParameter />, {
             wrapper: ({ children }) => wrapper({ children, createParameter }),

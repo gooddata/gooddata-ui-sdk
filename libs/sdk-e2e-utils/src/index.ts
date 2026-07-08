@@ -4,6 +4,10 @@
 
 export { authHeader, authedRouteFetch, injectAuthHeader } from "./auth.js";
 export {
+    type IGoodmockMapping,
+    type ILeakPattern,
+    type ISecretMapping,
+    type ISnapshotAndSaveRecordingOptions,
     type IWorkspaceIdMapping,
     loadMappings,
     resetMappings,

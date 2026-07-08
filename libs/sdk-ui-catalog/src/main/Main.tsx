@@ -21,7 +21,6 @@ import { FilterQualityMemo } from "../filter/FilterQuality.js";
 import { FilterResetButtonMemo } from "../filter/FilterResetButton.js";
 import { FilterTagsMemo } from "../filter/FilterTags.js";
 import { FilterVisibilityMemo } from "../filter/FilterVisibility.js";
-import { ObjectTypes } from "../objectType/constants.js";
 import { useIsCatalogQualityEnabled } from "../quality/gate.js";
 import { Table } from "../table/Table.js";
 
@@ -99,7 +98,7 @@ export function Main({
                 }}
                 onCatalogItemCreate={(item) => {
                     setItemOpened(item);
-                    refetchObjectType(ObjectTypes.PARAMETER);
+                    refetchObjectType(item.type);
                 }}
                 onCatalogItemUpdate={(item) => {
                     setItemOpened(item);
@@ -107,7 +106,7 @@ export function Main({
                 }}
                 onCatalogItemDelete={(ref) => {
                     removeItem(ref);
-                    refetchObjectType(ObjectTypes.PARAMETER);
+                    refetchObjectType(ref.type);
                     onCloseDetail();
                 }}
                 onCatalogItemUpdateError={(err) => {

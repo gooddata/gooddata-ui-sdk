@@ -9,8 +9,9 @@ import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { UiButton } from "@gooddata/sdk-ui-kit";
 
 import { catalogDetailActionDelete, catalogDetailActionDuplicate } from "../automation/testIds.js";
-import { isCatalogItemParameter } from "../catalogItem/guards.js";
+import { isCatalogItemMeasure, isCatalogItemParameter } from "../catalogItem/guards.js";
 import type { ICatalogItem, ICatalogItemParameter, ICatalogItemRef } from "../catalogItem/types.js";
+import { MetricDetailActions } from "../metric/MetricDetailActions.js";
 import { ParameterCreateDialog } from "../parameter/ParameterCreateDialog.js";
 import { ParameterDeleteDialog } from "../parameter/ParameterDeleteDialog.js";
 import { ParameterEditDialog } from "../parameter/ParameterEditDialog.js";
@@ -38,6 +39,7 @@ type DialogState = {
 export interface ICatalogDetailActionsProps {
     item: ICatalogItem;
     canEdit: boolean;
+    isMetricEditorEnabled?: boolean;
     onOpen?: (event: MouseEvent, openEvent: OpenHandlerEvent) => void;
     onCatalogItemCreate?: (item: ICatalogItem) => void;
     onCatalogItemUpdate?: (item: ICatalogItem) => void;
@@ -50,6 +52,7 @@ export interface ICatalogDetailActionsProps {
 export function CatalogDetailActions({
     item,
     canEdit,
+    isMetricEditorEnabled,
     onOpen,
     onCatalogItemCreate,
     onCatalogItemUpdate,
@@ -175,6 +178,20 @@ export function CatalogDetailActions({
                     />
                 ) : null}
             </>
+        );
+    }
+
+    if (isCatalogItemMeasure(item) && isMetricEditorEnabled && canEdit) {
+        return (
+            <MetricDetailActions
+                item={item}
+                onOpen={onOpen}
+                canShare={share.active}
+                onShare={share.open}
+                onCatalogItemCreate={onCatalogItemCreate}
+                onCatalogItemUpdate={onCatalogItemUpdate}
+                onCatalogItemDelete={onCatalogItemDelete}
+            />
         );
     }
 

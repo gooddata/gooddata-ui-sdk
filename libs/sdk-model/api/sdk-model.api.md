@@ -2607,6 +2607,7 @@ export interface IFeatureFlags {
     enableAlertsEvaluationFrequencySetup?: boolean;
     enableAmplitudeTracker?: boolean;
     enableAnalyticalCatalog?: boolean;
+    enableAnalyticalCatalogMetricEditor?: boolean;
     // @alpha
     enableAnalyticalDashboardVersion3?: boolean;
     enableAnomalyDetectionAlert?: boolean;

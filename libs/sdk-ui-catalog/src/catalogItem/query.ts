@@ -4,7 +4,13 @@ import type {
     AnalyticsCatalogGenerateDescriptionObjectType,
     IAnalyticalBackend,
 } from "@gooddata/sdk-backend-spi";
-import { type IParameterMetadataObjectDefinition, type ObjRef, idRef } from "@gooddata/sdk-model";
+import {
+    type IMeasureMetadataObject,
+    type IMeasureMetadataObjectDefinition,
+    type IParameterMetadataObjectDefinition,
+    type ObjRef,
+    idRef,
+} from "@gooddata/sdk-model";
 
 import type { ObjectType } from "../objectType/types.js";
 
@@ -457,6 +463,38 @@ export function updateParameterCatalogItem(
 
 export function deleteParameterCatalogItem(backend: IAnalyticalBackend, workspace: string, ref: ObjRef) {
     return backend.workspace(workspace).parameters().deleteParameter(ref);
+}
+
+export function createMeasureCatalogItem(
+    backend: IAnalyticalBackend,
+    workspace: string,
+    measure: IMeasureMetadataObjectDefinition,
+) {
+    return backend.workspace(workspace).measures().createMeasure(measure);
+}
+
+export function updateMeasureCatalogItem(
+    backend: IAnalyticalBackend,
+    workspace: string,
+    measure: IMeasureMetadataObject,
+) {
+    return backend.workspace(workspace).measures().updateMeasure(measure);
+}
+
+export function deleteMeasureCatalogItem(backend: IAnalyticalBackend, workspace: string, ref: ObjRef) {
+    return backend.workspace(workspace).measures().deleteMeasure(ref);
+}
+
+export function getMeasureCatalogItem(backend: IAnalyticalBackend, workspace: string, ref: ObjRef) {
+    return backend.workspace(workspace).measures().getMeasure(ref);
+}
+
+export function getMeasureReferencingObjectsCatalogItem(
+    backend: IAnalyticalBackend,
+    workspace: string,
+    ref: ObjRef,
+) {
+    return backend.workspace(workspace).measures().getMeasureReferencingObjects(ref);
 }
 
 export function updateCatalogItemCertification(

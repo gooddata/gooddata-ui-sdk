@@ -131,6 +131,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableAnalyticalCatalogMetricEditor,
+            "enableAnalyticalCatalogMetricEditor",
+            "BOOLEAN",
+            FeatureFlagsValues.enableAnalyticalCatalogMetricEditor,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableLabsSmartFunctions,
             "enableLabsSmartFunctions",
             "BOOLEAN",
