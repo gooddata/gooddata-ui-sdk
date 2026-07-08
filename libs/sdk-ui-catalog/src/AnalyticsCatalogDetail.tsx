@@ -14,6 +14,7 @@ import {
 import type { OpenHandlerEvent } from "./catalogDetail/types.js";
 import { CatalogResourceProvider } from "./catalogResource/CatalogResourceProvider.js";
 import { IntlWrapper } from "./localization/IntlWrapper.js";
+import { MetricMutationProvider } from "./metric/MetricMutationContext.js";
 import { type ObjectType } from "./objectType/types.js";
 import { OverlayProvider } from "./overlay/OverlayProvider.js";
 import { ParameterMutationProvider } from "./parameter/ParameterMutationContext.js";
@@ -133,7 +134,7 @@ function Providers(props: ProvidersProps) {
                                 <QualityProvider backend={backend} workspace={workspace}>
                                     <CatalogResourceProvider backend={backend} workspace={workspace}>
                                         <ParameterMutationProvider>
-                                            {props.children}
+                                            <MetricMutationProvider>{props.children}</MetricMutationProvider>
                                         </ParameterMutationProvider>
                                     </CatalogResourceProvider>
                                 </QualityProvider>

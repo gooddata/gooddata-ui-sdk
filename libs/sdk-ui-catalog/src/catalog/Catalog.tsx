@@ -15,6 +15,8 @@ import { CreateObjectButton } from "../header/CreateObjectButton.js";
 import { Header } from "../header/Header.js";
 import { useCatalogItemOpen } from "../main/hooks/useCatalogItemOpen.js";
 import { Main } from "../main/Main.js";
+import { useCanManageMetric } from "../metric/gate.js";
+import { MetricMutationProvider } from "../metric/MetricMutationContext.js";
 import type { CatalogCreateObjectType } from "../objectType/types.js";
 import { useCanManageParameter } from "../parameter/gate.js";
 import { ParameterMutationProvider } from "../parameter/ParameterMutationContext.js";
@@ -50,6 +52,7 @@ export function Catalog({
 }: Props) {
     const intl = useIntl();
     const showParameter = useCanManageParameter();
+    const showMetricEditor = useCanManageMetric();
     const isTrendingEnabled = useIsCatalogTrendingObjectsEnabled();
     const isQualityEnabled = useIsCatalogQualityEnabled();
 
@@ -83,33 +86,36 @@ export function Catalog({
             >
                 <CatalogFeedProvider backend={backend} workspace={workspace}>
                     <ParameterMutationProvider>
-                        <Header
-                            searchNode={<FullTextSearchInput />}
-                            createNode={
-                                onCreateObject ? (
-                                    <CreateObjectButton
-                                        onCreateObject={onCreateObject}
-                                        showParameter={showParameter}
-                                    />
-                                ) : null
-                            }
-                        />
-                        {isTrendingEnabled ? (
-                            <CatalogTabs onItemClick={onOpenDetail} />
-                        ) : isQualityEnabled ? (
-                            <QualityScoreCard />
-                        ) : null}
-                        <Main
-                            workspace={workspace}
-                            backend={backend}
-                            open={open}
-                            openedItem={openedItem}
-                            setItemOpened={setItemOpened}
-                            onOpenDetail={onOpenDetail}
-                            onCloseDetail={onCloseDetail}
-                            onOpenClick={onOpenClick}
-                            onCatalogItemNavigation={onCatalogItemNavigation}
-                        />
+                        <MetricMutationProvider>
+                            <Header
+                                searchNode={<FullTextSearchInput />}
+                                createNode={
+                                    onCreateObject ? (
+                                        <CreateObjectButton
+                                            onCreateObject={onCreateObject}
+                                            showParameter={showParameter}
+                                            showMetricEditor={showMetricEditor}
+                                        />
+                                    ) : null
+                                }
+                            />
+                            {isTrendingEnabled ? (
+                                <CatalogTabs onItemClick={onOpenDetail} />
+                            ) : isQualityEnabled ? (
+                                <QualityScoreCard />
+                            ) : null}
+                            <Main
+                                workspace={workspace}
+                                backend={backend}
+                                open={open}
+                                openedItem={openedItem}
+                                setItemOpened={setItemOpened}
+                                onOpenDetail={onOpenDetail}
+                                onCloseDetail={onCloseDetail}
+                                onOpenClick={onOpenClick}
+                                onCatalogItemNavigation={onCatalogItemNavigation}
+                            />
+                        </MetricMutationProvider>
                     </ParameterMutationProvider>
                 </CatalogFeedProvider>
             </PermissionsGate>

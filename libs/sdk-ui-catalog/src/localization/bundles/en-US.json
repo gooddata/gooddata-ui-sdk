@@ -759,6 +759,118 @@
         "text": "Parameter could not be deleted.",
         "crowdinContext": "Error toast shown when parameter deletion fails."
     },
+    "analyticsCatalog.metric.dialog.create.title": {
+        "text": "Create metric",
+        "crowdinContext": "Title of the dialog for creating a new metric as code."
+    },
+    "analyticsCatalog.metric.dialog.edit.title": {
+        "text": "Edit metric",
+        "crowdinContext": "Title of the dialog for editing a metric as code."
+    },
+    "analyticsCatalog.metric.dialog.sectionHeader": {
+        "text": "Metric definition",
+        "crowdinContext": "Header above the as-code editor in the metric dialog."
+    },
+    "analyticsCatalog.metric.dialog.sectionHeader.tooltip": {
+        "text": "Define the metric in YAML, including its MAQL expression and format.",
+        "crowdinContext": "Tooltip explaining the as-code metric editor."
+    },
+    "analyticsCatalog.metric.dialog.create.submit": {
+        "text": "Create",
+        "crowdinContext": "Submit button of the create metric dialog."
+    },
+    "analyticsCatalog.metric.dialog.edit.submit": {
+        "text": "Save",
+        "crowdinContext": "Submit button of the edit metric dialog."
+    },
+    "analyticsCatalog.metric.actions.openInEditor": {
+        "text": "Open in metric editor",
+        "crowdinContext": "Detail-panel menu action that opens the metric in the standalone metric editor (as opposed to the inline as-code editor)."
+    },
+    "analyticsCatalog.metric.dialog.edit.duplicate": {
+        "text": "Duplicate",
+        "crowdinContext": "Button that duplicates the metric being edited into a new metric."
+    },
+    "analyticsCatalog.metric.dialog.edit.idImmutable": {
+        "text": "The metric id cannot be changed. Use Duplicate to create a metric with a different id.",
+        "crowdinContext": "Validation error shown when the user changes the id while editing a metric."
+    },
+    "analyticsCatalog.metric.dialog.cancel": {
+        "text": "Cancel",
+        "crowdinContext": "Cancel button of the metric dialogs."
+    },
+    "analyticsCatalog.metric.dialog.help": {
+        "text": "How to write a metric",
+        "crowdinContext": "Help link in the metric as-code dialog."
+    },
+    "analyticsCatalog.metric.dialog.submit.error": {
+        "text": "The metric could not be saved.",
+        "crowdinContext": "Generic error shown when saving a metric fails."
+    },
+    "analyticsCatalog.metric.validation.empty": {
+        "text": "The metric definition cannot be empty.",
+        "crowdinContext": "Validation error shown when the metric editor is empty."
+    },
+    "analyticsCatalog.metric.validation.syntax": {
+        "text": "The metric definition is not valid YAML.",
+        "crowdinContext": "Validation error shown when the metric YAML has a syntax error."
+    },
+    "analyticsCatalog.metric.validation.invalidStructure": {
+        "text": "The metric definition has an invalid structure.",
+        "crowdinContext": "Validation error shown when the metric YAML does not match the expected structure."
+    },
+    "analyticsCatalog.metric.validation.missingMaql": {
+        "text": "The metric must define a MAQL expression.",
+        "crowdinContext": "Validation error shown when the metric YAML is missing the maql field."
+    },
+    "analyticsCatalog.metric.validation.invalidTags": {
+        "text": "Tags must be a list of text values.",
+        "crowdinContext": "Validation error shown when the metric tags are not a list of strings."
+    },
+    "analyticsCatalog.dialog.error.label": {
+        "text": "Error:",
+        "crowdinContext": "Bold label prefixing the error message in the as-code editor dialogs (metrics, parameters)."
+    },
+    "analyticsCatalog.metric.create.defaultTitle": {
+        "text": "My metric",
+        "crowdinContext": "Default placeholder title seeded into the new-metric as-code editor before the user types their own."
+    },
+    "analyticsCatalog.metric.create.success": {
+        "text": "Metric created.",
+        "crowdinContext": "Toast shown after a metric is created successfully from the Analytics Catalog."
+    },
+    "analyticsCatalog.metric.update.success": {
+        "text": "Metric saved.",
+        "crowdinContext": "Toast shown after a metric is updated successfully from the Analytics Catalog."
+    },
+    "analyticsCatalog.metric.load.error": {
+        "text": "The metric could not be loaded.",
+        "crowdinContext": "Error toast shown when loading a metric for editing or duplication fails."
+    },
+    "analyticsCatalog.metric.dialog.delete.title": {
+        "text": "Delete metric",
+        "crowdinContext": "Title of the confirmation dialog for deleting a metric."
+    },
+    "analyticsCatalog.metric.dialog.delete.body": {
+        "text": "Are you sure you want to delete <b>{name}</b>?",
+        "crowdinContext": "Body of the confirmation dialog for deleting a metric. {name} is the metric title."
+    },
+    "analyticsCatalog.metric.dialog.delete.usageWarning": {
+        "text": "This metric is used by {count, plural, one {# object} other {# objects}}. Deleting it may break them.",
+        "crowdinContext": "Warning shown in the metric delete dialog when the metric is referenced by other objects."
+    },
+    "analyticsCatalog.metric.dialog.delete.submit": {
+        "text": "Delete",
+        "crowdinContext": "Submit button of the delete metric confirmation dialog."
+    },
+    "analyticsCatalog.metric.delete.success": {
+        "text": "Metric deleted.",
+        "crowdinContext": "Toast shown after a metric is deleted successfully from the Analytics Catalog."
+    },
+    "analyticsCatalog.metric.delete.error": {
+        "text": "Metric could not be deleted.",
+        "crowdinContext": "Error toast shown when metric deletion fails."
+    },
     "analyticsCatalog.share.button": {
         "text": "Share",
         "crowdinContext": "Button label opening the share dialog from the catalog detail page."

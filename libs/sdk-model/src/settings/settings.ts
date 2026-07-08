@@ -1043,6 +1043,12 @@ export interface IFeatureFlags {
     enableParameters?: boolean;
 
     /**
+     * Enable inline as-code metric editing in the analytics catalog.
+     * When off, creating or editing a metric from the catalog redirects to the standalone metric editor.
+     */
+    enableAnalyticalCatalogMetricEditor?: boolean;
+
+    /**
      * Enable enhanced insight picker.
      */
     enableEnhancedInsightPicker?: boolean;

@@ -8,6 +8,7 @@ import type { IParameterMetadataObjectDefinition } from "@gooddata/sdk-model";
 import { ConfirmDialog, UiButton, UiIcon, UiLink, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { useIsWhiteLabeled } from "../permission/PermissionsContext.js";
+import { extractBackendErrorDetail } from "../utils/backendError.js";
 
 import { type ParameterDraft, serializeParameterToYaml } from "./parameterSerialization.js";
 import { validateParameterYaml } from "./parameterValidation.js";
@@ -100,8 +101,9 @@ export function ParameterDialog(props: Props) {
         try {
             await onSubmit(result.parameter);
         } catch (error) {
-            const message = error instanceof Error && error.message ? error.message : undefined;
-            setSubmitError(message ?? intl.formatMessage(messages.dialogSubmitError));
+            setSubmitError(
+                extractBackendErrorDetail(error) ?? intl.formatMessage(messages.dialogSubmitError),
+            );
         } finally {
             setIsSubmitting(false);
         }
@@ -123,7 +125,7 @@ export function ParameterDialog(props: Props) {
 
     const footerLeftRenderer = useCallback(
         (): ReactElement => (
-            <div className="gd-parameter-dialog-footer-left">
+            <div className="gd-ascode-dialog-footer-left">
                 {isWhiteLabeled ? null : (
                     <UiLink
                         variant="secondary"
@@ -150,8 +152,8 @@ export function ParameterDialog(props: Props) {
 
     return (
         <ConfirmDialog
-            className="gd-parameter-dialog"
-            containerClassName="gd-parameter-dialog-overlay"
+            className="gd-ascode-dialog"
+            containerClassName="gd-ascode-dialog-overlay"
             headline={headlineMessage}
             cancelButtonText={cancelMessage}
             submitButtonText={submitMessage}
@@ -165,8 +167,8 @@ export function ParameterDialog(props: Props) {
             displayCloseButton={!isSubmitting}
             footerLeftRenderer={footerLeftRenderer}
         >
-            <div className="gd-parameter-dialog-content">
-                <div className="gd-parameter-dialog-section-header">
+            <div className="gd-ascode-dialog-content">
+                <div className="gd-ascode-dialog-section-header">
                     <FormattedMessage id="analyticsCatalog.parameter.dialog.sectionHeader" />
                     <UiTooltip
                         arrowPlacement="top"
@@ -178,7 +180,7 @@ export function ParameterDialog(props: Props) {
                         }
                     />
                 </div>
-                <div className="gd-parameter-dialog-editor">
+                <div className="gd-ascode-dialog-editor">
                     <ParameterYamlEditor
                         initialValue={initialYaml}
                         onChange={handleChange}
@@ -186,8 +188,10 @@ export function ParameterDialog(props: Props) {
                     />
                 </div>
                 {validationError || submitError ? (
-                    <div className="gd-parameter-dialog-error">
-                        <span className="gd-parameter-dialog-error-label">Error:</span>{" "}
+                    <div className="gd-ascode-dialog-error">
+                        <span className="gd-ascode-dialog-error-label">
+                            <FormattedMessage id="analyticsCatalog.dialog.error.label" />
+                        </span>{" "}
                         {validationError ?? submitError}
                     </div>
                 ) : null}

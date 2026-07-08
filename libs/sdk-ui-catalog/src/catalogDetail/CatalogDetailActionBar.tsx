@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type MouseEvent, useMemo } from "react";
+import { type KeyboardEvent, type MouseEvent, type ReactNode, useMemo } from "react";
 
 import { defineMessages, useIntl } from "react-intl";
 
@@ -23,17 +23,20 @@ export type ICatalogDetailActionBarProps = {
     item: ICatalogItem;
     workspaceId: string;
     actions: ICatalogDetailAction[];
+    /** Rendered before the Edit button (e.g. a Share button). */
+    leadingActions?: ReactNode;
     onEditClick?: (event: MouseEvent, editClickEvent: EditHandlerEvent) => void;
-    onActionsMenuSelect: (actionId: string) => void;
+    onActionsMenuSelect: (actionId: string, event: MouseEvent | KeyboardEvent) => void;
 };
 
 /**
- * Detail action bar: primary Edit button plus an optional item actions menu.
+ * Detail action bar: optional leading actions, a primary Edit button, and an item actions menu.
  */
 export function CatalogDetailActionBar({
     item,
     workspaceId,
     actions,
+    leadingActions,
     onEditClick,
     onActionsMenuSelect,
 }: ICatalogDetailActionBarProps) {
@@ -51,6 +54,7 @@ export function CatalogDetailActionBar({
 
     return (
         <div className="gd-analytics-catalog-detail__detail-actions">
+            {leadingActions}
             <UiButton
                 label={intl.formatMessage({ id: "analyticsCatalog.edit" })}
                 variant="primary"
@@ -92,9 +96,9 @@ export function CatalogDetailActionBar({
                         items={actionsMenuItems}
                         minWidth={140}
                         onClose={closeDropdown}
-                        onSelect={(menuItem) => {
+                        onSelect={(menuItem, event) => {
                             closeDropdown();
-                            onActionsMenuSelect(menuItem.data.id);
+                            onActionsMenuSelect(menuItem.data.id, event);
                         }}
                         ariaAttributes={ariaAttributes}
                         itemDataTestId={getItemDataTestId}

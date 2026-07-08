@@ -27,6 +27,7 @@ export enum TigerFeaturesNames {
     EnableOracleDataSource = "enableOracleDataSource",
     EnableAnalyticalCatalog = "enableAnalyticalCatalog",
     EnableParameters = "enableParameters",
+    EnableAnalyticalCatalogMetricEditor = "enableAnalyticalCatalogMetricEditor",
     EnableCustomTooltip = "enableCustomTooltip",
     EnableMotherDuckDataSource = "enableMotherDuckDataSource",
     EnableMongoDbDataSource = "enableMongoDbDataSource",
@@ -157,6 +158,7 @@ export type ITigerFeatureFlags = {
     enableOracleDataSource: (typeof FeatureFlagsValues)["enableOracleDataSource"][number];
     enableAnalyticalCatalog: (typeof FeatureFlagsValues)["enableAnalyticalCatalog"][number];
     enableParameters: (typeof FeatureFlagsValues)["enableParameters"][number];
+    enableAnalyticalCatalogMetricEditor: (typeof FeatureFlagsValues)["enableAnalyticalCatalogMetricEditor"][number];
     enableLabsSmartFunctions: (typeof FeatureFlagsValues)["enableLabsSmartFunctions"][number];
     enableCustomTooltip: (typeof FeatureFlagsValues)["enableCustomTooltip"][number];
     enableMotherDuckDataSource: (typeof FeatureFlagsValues)["enableMotherDuckDataSource"][number];
@@ -291,6 +293,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableOracleDataSource: false,
     enableAnalyticalCatalog: false,
     enableParameters: false,
+    enableAnalyticalCatalogMetricEditor: false,
     enableLabsSmartFunctions: false,
     enableCustomTooltip: true,
     enableDataProfiling: false,
@@ -422,6 +425,7 @@ export const FeatureFlagsValues = {
     enableOracleDataSource: [true, false] as const,
     enableAnalyticalCatalog: [true, false] as const,
     enableParameters: [true, false] as const,
+    enableAnalyticalCatalogMetricEditor: [true, false] as const,
     enableLabsSmartFunctions: [true, false] as const,
     enableCustomTooltip: [true, false] as const,
     enableDataProfiling: [true, false] as const,

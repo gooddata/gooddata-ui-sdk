@@ -16,6 +16,7 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import { useCatalogFeedActions } from "../catalogItem/CatalogFeedContext.js";
+import { MetricCreateDialog } from "../metric/MetricCreateDialog.js";
 import { ObjectTypes } from "../objectType/constants.js";
 import { getObjectTypeLabel } from "../objectType/labels.js";
 import type { CatalogCreateObjectType } from "../objectType/types.js";
@@ -36,65 +37,64 @@ const icons: Record<CatalogCreateObjectType, IconType> = {
 type Props = {
     onCreateObject: (objectType: CatalogCreateObjectType) => void;
     showParameter?: boolean;
+    showMetricEditor?: boolean;
 };
 
-export function CreateObjectButton({ onCreateObject, showParameter }: Props) {
+export function CreateObjectButton({ onCreateObject, showParameter, showMetricEditor }: Props) {
     const intl = useIntl();
     const { refetchObjectType } = useCatalogFeedActions();
     const [isParameterDialogOpen, setIsParameterDialogOpen] = useState(false);
+    const [isMetricDialogOpen, setIsMetricDialogOpen] = useState(false);
 
-    const items = useMemo(() => {
+    const items = useMemo<IUiMenuItem<CreateItemData>[]>(() => {
         const externalLinkIcon = <MenuItemIcon type="externalLink" />;
-        const items: IUiMenuItem<CreateItemData>[] = [
-            {
-                type: "interactive",
-                id: ObjectTypes.DASHBOARD,
-                stringTitle: getObjectTypeLabel(intl, ObjectTypes.DASHBOARD),
-                iconLeft: <MenuItemIcon type={icons[ObjectTypes.DASHBOARD]} />,
-                iconRight: externalLinkIcon,
-                data: ObjectTypes.DASHBOARD,
-            },
-            {
-                type: "interactive",
-                id: ObjectTypes.VISUALIZATION,
-                stringTitle: getObjectTypeLabel(intl, ObjectTypes.VISUALIZATION),
-                iconLeft: <MenuItemIcon type={icons[ObjectTypes.VISUALIZATION]} />,
-                iconRight: externalLinkIcon,
-                data: ObjectTypes.VISUALIZATION,
-            },
-            {
-                type: "interactive",
-                id: ObjectTypes.METRIC,
-                stringTitle: getObjectTypeLabel(intl, ObjectTypes.METRIC),
-                iconLeft: <MenuItemIcon type={icons[ObjectTypes.METRIC]} />,
-                iconRight: externalLinkIcon,
-                data: ObjectTypes.METRIC,
-            },
+        const interactiveItem = (
+            type: CatalogCreateObjectType,
+            redirects: boolean,
+        ): IUiMenuInteractiveItem<CreateItemData> => ({
+            type: "interactive",
+            id: type,
+            stringTitle: getObjectTypeLabel(intl, type),
+            iconLeft: <MenuItemIcon type={icons[type]} />,
+            // A redirect create leaves the catalog for the standalone editor; an in-catalog create
+            // opens a dialog and needs no external-link affordance.
+            iconRight: redirects ? externalLinkIcon : undefined,
+            data: type,
+        });
+
+        // A separator divides creates that redirect to a standalone editor from those handled inline
+        // in a catalog dialog. Metric switches sides: it redirects unless its in-catalog editor is on.
+        const redirectItems = [
+            interactiveItem(ObjectTypes.DASHBOARD, true),
+            interactiveItem(ObjectTypes.VISUALIZATION, true),
+            ...(showMetricEditor ? [] : [interactiveItem(ObjectTypes.METRIC, true)]),
         ];
-        if (showParameter) {
-            items.push(
-                { type: "static", data: <SeparatorLine pT={5} pR={10} pB={4} pL={10} /> },
-                {
-                    type: "interactive",
-                    id: ObjectTypes.PARAMETER,
-                    stringTitle: getObjectTypeLabel(intl, ObjectTypes.PARAMETER),
-                    iconLeft: <MenuItemIcon type={icons[ObjectTypes.PARAMETER]} />,
-                    data: ObjectTypes.PARAMETER,
-                },
-            );
+        const inCatalogItems = [
+            ...(showMetricEditor ? [interactiveItem(ObjectTypes.METRIC, false)] : []),
+            ...(showParameter ? [interactiveItem(ObjectTypes.PARAMETER, false)] : []),
+        ];
+
+        if (inCatalogItems.length === 0) {
+            return redirectItems;
         }
-        return items;
-    }, [intl, showParameter]);
+        return [
+            ...redirectItems,
+            { type: "static", data: <SeparatorLine pT={5} pR={10} pB={4} pL={10} /> },
+            ...inCatalogItems,
+        ];
+    }, [intl, showParameter, showMetricEditor]);
 
     const handleSelect = useCallback(
         (item: IUiMenuInteractiveItem<CreateItemData>, _event: MouseEvent | KeyboardEvent) => {
             if (item.data === ObjectTypes.PARAMETER) {
                 setIsParameterDialogOpen(true);
+            } else if (item.data === ObjectTypes.METRIC && showMetricEditor) {
+                setIsMetricDialogOpen(true);
             } else {
                 onCreateObject(item.data);
             }
         },
-        [onCreateObject],
+        [onCreateObject, showMetricEditor],
     );
 
     const handleParameterDialogClose = useCallback(() => {
@@ -103,6 +103,14 @@ export function CreateObjectButton({ onCreateObject, showParameter }: Props) {
 
     const handleParameterCreated = useCallback(() => {
         void refetchObjectType(ObjectTypes.PARAMETER);
+    }, [refetchObjectType]);
+
+    const handleMetricDialogClose = useCallback(() => {
+        setIsMetricDialogOpen(false);
+    }, []);
+
+    const handleMetricCreated = useCallback(() => {
+        void refetchObjectType(ObjectTypes.METRIC);
     }, [refetchObjectType]);
 
     return (
@@ -148,6 +156,9 @@ export function CreateObjectButton({ onCreateObject, showParameter }: Props) {
                     onClose={handleParameterDialogClose}
                     onCreated={handleParameterCreated}
                 />
+            ) : null}
+            {isMetricDialogOpen ? (
+                <MetricCreateDialog onClose={handleMetricDialogClose} onCreated={handleMetricCreated} />
             ) : null}
         </>
     );

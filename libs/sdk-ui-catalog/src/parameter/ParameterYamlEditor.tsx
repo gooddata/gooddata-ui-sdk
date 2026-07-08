@@ -34,7 +34,7 @@ export function ParameterYamlEditor({ initialValue, onChange, disabled = false }
 
     return (
         <SyntaxHighlightingInput
-            className="gd-parameter-dialog-editor-input"
+            className="gd-ascode-dialog-editor-input"
             value={value}
             onChange={handleChange}
             extensions={extensions}

@@ -8,7 +8,7 @@ import type { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import type { IUser, IWorkspacePermissions } from "@gooddata/sdk-model";
 
 import { AnalyticsCatalogDetail, AnalyticsCatalogDetailContent } from "../AnalyticsCatalogDetail.js";
-import type { ICatalogItemParameter } from "../catalogItem/types.js";
+import type { ICatalogItemMeasure, ICatalogItemParameter } from "../catalogItem/types.js";
 
 vi.mock("../permission/usePermissionsQuery.js", () => ({
     usePermissionsQuery: () => ({
@@ -16,7 +16,7 @@ vi.mock("../permission/usePermissionsQuery.js", () => ({
         result: {
             permissions: { canManageProject: true } as IWorkspacePermissions,
             user: { login: "test" } as IUser,
-            settings: {} as IUserWorkspaceSettings,
+            settings: { enableAnalyticalCatalogMetricEditor: true } as IUserWorkspaceSettings,
         },
     }),
 }));
@@ -52,6 +52,20 @@ const parameterItem: ICatalogItemParameter = {
     definition: { type: "NUMBER", defaultValue: 0 },
 };
 
+const measureItem: ICatalogItemMeasure = {
+    identifier: "measure.id",
+    type: "measure",
+    title: "My Metric",
+    description: "",
+    tags: [],
+    createdBy: "user",
+    updatedBy: "user",
+    createdAt: null,
+    updatedAt: null,
+    isLocked: false,
+    isEditable: true,
+};
+
 describe("AnalyticsCatalogDetailContent smoke", () => {
     it("provides required context so clicking Edit on a parameter opens the dialog without crashing", async () => {
         render(
@@ -68,6 +82,20 @@ describe("AnalyticsCatalogDetailContent smoke", () => {
         fireEvent.click(editBtn);
 
         expect(await screen.findByTestId("yaml-editor")).toBeInTheDocument();
+    });
+
+    it("provides the metric mutation context so a metric detail renders its action bar without crashing", async () => {
+        render(
+            <AnalyticsCatalogDetailContent
+                backend={backend}
+                workspace="test-ws"
+                objectId={measureItem.identifier}
+                objectType={measureItem.type}
+                objectDefinition={measureItem}
+            />,
+        );
+
+        expect(await screen.findByRole("button", { name: /^edit$/i })).toBeInTheDocument();
     });
 });
 

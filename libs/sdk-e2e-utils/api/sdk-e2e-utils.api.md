@@ -157,6 +157,22 @@ export interface IFeatureHubFeature {
 }
 
 // @internal (undocumented)
+export interface IGoodmockMapping {
+    // (undocumented)
+    request: {
+        url?: string;
+        urlPath?: string;
+        bodyPatterns?: unknown;
+    };
+    // (undocumented)
+    response: {
+        headers?: Record<string, string>;
+        jsonBody?: unknown;
+        body?: string;
+    };
+}
+
+// @internal (undocumented)
 export interface IGoodmockOptions {
     // (undocumented)
     backendHost: string;
@@ -166,12 +182,41 @@ export interface IGoodmockOptions {
     getMappingPath: (specFile: string) => string;
     // (undocumented)
     host: string;
+    leakPatterns?: ILeakPattern[];
+    sanitizeMappings?: (mappings: IGoodmockMapping[]) => IGoodmockMapping[];
+    secretMappings?: ISecretMapping[];
     // (undocumented)
     workspaceIdMappings?: IWorkspaceIdMapping | IWorkspaceIdMapping[];
 }
 
 // @internal
+export interface ILeakPattern {
+    // (undocumented)
+    label: string;
+    // (undocumented)
+    pattern: RegExp;
+}
+
+// @internal
 export function injectAuthHeader(page: Page, token: string): Promise<void>;
+
+// @internal
+export interface ISecretMapping {
+    // (undocumented)
+    placeholder: string;
+    // (undocumented)
+    secret: string;
+}
+
+// @internal (undocumented)
+export interface ISnapshotAndSaveRecordingOptions {
+    backendHost?: string;
+    baseUrl?: string;
+    leakPatterns?: ILeakPattern[];
+    sanitizeMappings?: (mappings: IGoodmockMapping[]) => IGoodmockMapping[];
+    secretMappings?: ISecretMapping[];
+    workspaceIdMappings?: IWorkspaceIdMapping | IWorkspaceIdMapping[];
+}
 
 // @internal (undocumented)
 export interface IWorkspaceIdMapping {
@@ -194,7 +239,7 @@ export function resetMappings(host: string): Promise<void>;
 export function resetScenarios(host: string): Promise<void>;
 
 // @internal
-export function snapshotAndSaveRecording(host: string, mappingFilePath: string, workspaceIdMappings?: IWorkspaceIdMapping | IWorkspaceIdMapping[], backendHost?: string, baseUrl?: string): Promise<void>;
+export function snapshotAndSaveRecording(host: string, mappingFilePath: string, options?: ISnapshotAndSaveRecordingOptions): Promise<void>;
 
 // @internal
 export function startRecording(host: string, backendHost: string): Promise<void>;
