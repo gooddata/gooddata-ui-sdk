@@ -334,12 +334,15 @@ export const convertFilter = (filter: FilterDefinition): IFilter => {
             filter.rankingFilter.strictLimitOfRows === undefined
                 ? {}
                 : { strictLimitOfRows: filter.rankingFilter.strictLimitOfRows };
+        const measure = filter.rankingFilter.measures[0];
+        const sdkAttributes = convertTigerDimensionalityToSdk(filter.rankingFilter.dimensionality);
         return {
             rankingFilter: {
-                measure: filter.rankingFilter.measures[0] as ObjRefInScope,
+                measure: isAfmObjectIdentifier(measure) ? toObjRef(measure) : (measure as ObjRefInScope),
                 localIdentifier: filter.rankingFilter.localIdentifier,
                 operator: filter.rankingFilter.operator,
                 value: filter.rankingFilter.value,
+                ...(sdkAttributes ? { attributes: sdkAttributes } : {}),
                 ...applyOnResultProp,
                 ...strictLimitOfRowsProp,
             },

@@ -545,18 +545,6 @@ export const selectEnableCustomizedDashboardsWithoutPluginOverlay: DashboardSele
     });
 
 /**
- * Returns whether filter views are enabled.
- *
- * @internal
- */
-export const selectEnableAlertsEvaluationFrequencySetup: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableAlertsEvaluationFrequencySetup ?? true;
-    },
-);
-
-/**
  * Returns dashboard focus object.
  *
  * @beta
@@ -634,7 +622,7 @@ export const selectEnableDashboardDescriptionDynamicHeight: DashboardSelector<bo
 export const selectEnableSlideshowExports: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return (state.settings?.enableSlidesExport && state.settings?.enableSlideshowExports) ?? false;
+        return state.settings?.enableSlidesExport ?? false;
     },
 );
 
@@ -708,18 +696,6 @@ export const selectEnableExecutionCancelling: DashboardSelector<boolean> = creat
 );
 
 /**
- * Selector for the dashboard share link feature flag
- *
- * @internal
- */
-export const selectEnableDashboardShareLink: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return Boolean(state.settings?.enableDashboardShareLink);
-    },
-);
-
-/**
  * Returns whether snapshot export accessibility is enabled.
  *
  * @internal
@@ -740,18 +716,6 @@ export const selectEnableExportTimeoutFix: DashboardSelector<boolean> = createSe
     selectConfig,
     (state) => {
         return Boolean(state.settings?.enableExportTimeoutFix);
-    },
-);
-
-/**
- * Selector for the widget export to PNG image feature flag
- *
- * @internal
- */
-export const selectEnableWidgetExportPngImage: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return Boolean(state.settings?.enableWidgetExportPngImage);
     },
 );
 

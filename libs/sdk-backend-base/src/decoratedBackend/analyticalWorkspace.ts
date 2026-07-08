@@ -18,6 +18,7 @@ import {
     type IWorkspaceDescriptor,
     type IWorkspaceDescriptorUpdate,
     type IWorkspaceExportDefinitionsService,
+    type IWorkspaceExportTemplatesService,
     type IWorkspaceFactsService,
     type IWorkspaceInsightsService,
     type IWorkspaceKeyDriverAnalysisService,
@@ -201,5 +202,9 @@ export class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
 
     public references(): IReferencesService {
         return this.decorated.references();
+    }
+
+    public exportTemplates(): IWorkspaceExportTemplatesService {
+        return this.decorated.exportTemplates();
     }
 }

@@ -10,8 +10,9 @@ import { ConfirmDialog, UiButton, UiIcon, UiLink, UiTooltip } from "@gooddata/sd
 import { useIsWhiteLabeled } from "../permission/PermissionsContext.js";
 import { extractBackendErrorDetail } from "../utils/backendError.js";
 
+import { useEnabledParameterTypes } from "./gate.js";
 import { type ParameterDraft, serializeParameterToYaml } from "./parameterSerialization.js";
-import { validateParameterYaml } from "./parameterValidation.js";
+import { type ParameterValidationResult, validateParameterYaml } from "./parameterValidation.js";
 import { ParameterYamlEditor } from "./ParameterYamlEditor.js";
 
 const PARAMETER_DOCS_URL = "https://www.gooddata.ai/docs/cloud/experimental-features/numeric-parameters/";
@@ -65,14 +66,25 @@ export function ParameterDialog(props: Props) {
     );
     const cancelMessage = intl.formatMessage(messages.dialogCancel);
     const fixedIdentifier = isEdit ? initialParameter?.id : undefined;
+    const enabledTypes = useEnabledParameterTypes();
 
     const validate = useCallback(
         (value: string, allowIdChange = false) => {
             return validateParameterYaml(value, {
+                enabledTypes,
                 fixedIdentifier: isEdit && !allowIdChange ? fixedIdentifier : undefined,
             });
         },
-        [fixedIdentifier, isEdit],
+        [enabledTypes, fixedIdentifier, isEdit],
+    );
+
+    const formatValidationError = useCallback(
+        (result: Extract<ParameterValidationResult, { isValid: false }>) =>
+            intl.formatMessage(messages[result.errorCode], {
+                type: result.type,
+                enabledTypes: intl.formatList(enabledTypes, { type: "conjunction" }),
+            }),
+        [enabledTypes, intl],
     );
 
     const handleClose = useCallback(() => {
@@ -91,7 +103,7 @@ export function ParameterDialog(props: Props) {
     const handleSubmit = useCallback(async () => {
         const result = validate(yamlValue.current);
         if (!result.isValid) {
-            setValidationError(intl.formatMessage(messages[result.errorCode]));
+            setValidationError(formatValidationError(result));
             return;
         }
 
@@ -107,7 +119,7 @@ export function ParameterDialog(props: Props) {
         } finally {
             setIsSubmitting(false);
         }
-    }, [intl, onSubmit, validate]);
+    }, [formatValidationError, intl, onSubmit, validate]);
 
     const handleDuplicate = useCallback(() => {
         if (!onDuplicate) {
@@ -116,12 +128,12 @@ export function ParameterDialog(props: Props) {
         setSubmitError(null);
         const result = validate(yamlValue.current, true);
         if (!result.isValid) {
-            setValidationError(intl.formatMessage(messages[result.errorCode]));
+            setValidationError(formatValidationError(result));
             return;
         }
 
         onDuplicate(result.parameter);
-    }, [intl, onDuplicate, validate]);
+    }, [formatValidationError, onDuplicate, validate]);
 
     const footerLeftRenderer = useCallback(
         (): ReactElement => (
@@ -183,6 +195,7 @@ export function ParameterDialog(props: Props) {
                 <div className="gd-ascode-dialog-editor">
                     <ParameterYamlEditor
                         initialValue={initialYaml}
+                        enabledTypes={enabledTypes}
                         onChange={handleChange}
                         disabled={isSubmitting}
                     />

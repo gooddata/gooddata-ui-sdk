@@ -8,13 +8,14 @@ import type {
 import {
     type IParameterDefinition,
     type IParameterMetadataObjectDefinition,
-    assertNever,
+    throwUnexpected,
 } from "@gooddata/sdk-model";
 
 function convertParameterDefinitionToBackend(
     definition: IParameterDefinition,
 ): JsonApiParameterOutAttributesDefinition {
-    switch (definition.type) {
+    const { type } = definition;
+    switch (type) {
         case "NUMBER":
             return {
                 type: "NUMBER",
@@ -28,10 +29,7 @@ function convertParameterDefinitionToBackend(
                 ...(definition.constraints === undefined ? {} : { constraints: definition.constraints }),
             };
         default:
-            assertNever(definition);
-            throw new Error(
-                `Unsupported parameter definition type: ${(definition as { type: string }).type}`,
-            );
+            return throwUnexpected(type);
     }
 }
 

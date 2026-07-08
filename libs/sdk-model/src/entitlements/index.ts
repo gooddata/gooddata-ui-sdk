@@ -38,7 +38,8 @@ export type IEntitlementsName =
     | "AiQueryLimit"
     | "AiKnowledgeStorageLimit"
     | "AiAgentLimit"
-    | "AiWorkspaceLimit";
+    | "AiWorkspaceLimit"
+    | "AiObservability";
 /**
  * Entitlement descriptor
  *

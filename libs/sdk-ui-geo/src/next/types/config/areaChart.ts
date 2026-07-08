@@ -111,4 +111,12 @@ export interface IGeoAreaChartConfig {
      * @alpha
      */
     customTooltip?: ICustomTooltipConfig;
+
+    /**
+     * Feature-flag gate for custom tooltips (defaults on); when `false`, a persisted custom
+     * tooltip is ignored at render.
+     *
+     * @internal
+     */
+    enableCustomTooltip?: boolean;
 }

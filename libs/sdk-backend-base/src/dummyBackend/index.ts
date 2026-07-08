@@ -120,6 +120,7 @@ import {
     type IWorkspaceDatasetsService,
     type IWorkspaceDescriptor,
     type IWorkspaceExportDefinitionsService,
+    type IWorkspaceExportTemplatesService,
     type IWorkspaceFactsService,
     type IWorkspaceInsightsService,
     type IWorkspaceKeyDriverAnalysisService,
@@ -178,6 +179,7 @@ import {
     type IDataSetMetadataObject,
     type IDataset,
     type IDateFilter,
+    type IDefaultExportTemplate,
     type IDimension,
     type IExecutionConfig,
     type IExecutionDefinition,
@@ -574,6 +576,16 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
                         edges: [],
                     });
                 },
+            };
+        },
+        exportTemplates(): IWorkspaceExportTemplatesService {
+            return {
+                getExportTemplates: () => Promise.resolve([]),
+                getExportTemplate: (ref) => Promise.resolve({ ref, name: "" }),
+                createExportTemplate: (template) =>
+                    Promise.resolve({ ref: idRef("dummyExportTemplate"), ...template }),
+                patchExportTemplate: (ref, template) => Promise.resolve({ ref, name: "", ...template }),
+                deleteExportTemplate: () => Promise.resolve(),
             };
         },
     };
@@ -1080,6 +1092,8 @@ class DummyOrganization implements IOrganization {
             setColorPalette: () => Promise.resolve(),
             setOpenAiConfig: () => Promise.resolve(),
             setDashboardFiltersApplyMode: () => Promise.resolve(),
+            setDefaultExportTemplate: () => Promise.resolve(),
+            deleteDefaultExportTemplate: () => Promise.resolve(),
             setEnableAiOnData: () => Promise.resolve(),
             setAiRateLimit: () => Promise.resolve(),
             deleteAiRateLimit: () => Promise.resolve(),
@@ -1253,6 +1267,11 @@ class DummyOrganization implements IOrganization {
     public exportTemplates(): IOrganizationExportTemplatesService {
         return {
             getExportTemplates: () => Promise.resolve([]),
+            getExportTemplate: (ref) => Promise.resolve({ ref, name: "" }),
+            createExportTemplate: (template) =>
+                Promise.resolve({ ref: idRef("dummyExportTemplate"), ...template }),
+            patchExportTemplate: (ref, template) => Promise.resolve({ ref, name: "", ...template }),
+            deleteExportTemplate: () => Promise.resolve(),
         };
     }
 
@@ -1350,6 +1369,14 @@ class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
     }
 
     deleteDashboardFiltersApplyMode(): Promise<void> {
+        return Promise.resolve();
+    }
+
+    setDefaultExportTemplate(_value: IDefaultExportTemplate): Promise<void> {
+        return Promise.resolve();
+    }
+
+    deleteDefaultExportTemplate(): Promise<void> {
         return Promise.resolve();
     }
 

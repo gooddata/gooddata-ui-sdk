@@ -9,12 +9,10 @@ import {
     type ActionsApiAiChatRequest,
     type ActionsApiAiChatStreamRequest,
     type ActionsApiAiSearchRequest,
-    type ActionsApiCreatedByRequest,
     type ActionsApiGetQualityIssuesRequest,
     type ActionsApiListLlmProviderModelsByIdRequest,
     type ActionsApiListLlmProviderModelsRequest,
     type ActionsApiMemoryCreatedByUsersRequest,
-    type ActionsApiTagsRequest,
     type ActionsApiTestLlmProviderByIdRequest,
     type ActionsApiTestLlmProviderRequest,
     type ActionsApiTriggerQualityIssuesCalculationRequest,
@@ -23,13 +21,11 @@ import {
     ActionsApi_AiChatHistory,
     ActionsApi_AiChatStream,
     ActionsApi_AiSearch,
-    ActionsApi_CreatedBy,
     ActionsApi_GetQualityIssues,
     ActionsApi_GetQualityIssuesCalculationStatus,
     ActionsApi_ListLlmProviderModels,
     ActionsApi_ListLlmProviderModelsById,
     ActionsApi_MemoryCreatedByUsers,
-    ActionsApi_Tags,
     ActionsApi_TestLlmProvider,
     ActionsApi_TestLlmProviderById,
     ActionsApi_TriggerQualityIssuesCalculation,
@@ -106,6 +102,13 @@ import {
     type VisualizationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest,
     VisualizationsAi_PatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch,
 } from "../../generated/ai-json-api/index.js";
+// Analytics-catalog createdBy/tags operations moved from the AFM API to the metadata API.
+import {
+    type ActionsApiCreatedByRequest,
+    type ActionsApiTagsRequest,
+    ActionsApi_CreatedBy,
+    ActionsApi_Tags,
+} from "../../generated/metadata-json-api/index.js";
 
 // GenAI API - Export GenAI-related ActionsApi functions with GenAiApi_ prefix
 export {

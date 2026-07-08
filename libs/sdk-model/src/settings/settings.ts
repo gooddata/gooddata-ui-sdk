@@ -18,6 +18,40 @@ export interface IMetricFormatOverrideSetting {
 }
 
 /**
+ * Scope of an export template referenced by the default export template setting.
+ *
+ * @remarks
+ * The discriminator makes the scope of the referenced template explicit: `"workspaceExportTemplate"`
+ * points to a workspace-level template, `"exportTemplate"` to an organization-level template.
+ *
+ * @beta
+ */
+export type ExportTemplateType = "workspaceExportTemplate" | "exportTemplate";
+
+/**
+ * Default export template setting.
+ *
+ * @remarks
+ * Selects the export template applied to slide exports when none is explicitly requested.
+ *
+ * @beta
+ */
+export interface IDefaultExportTemplate {
+    /**
+     * Identifier of the export template to use as the default.
+     *
+     * @remarks
+     * Matches the backend `DEFAULT_EXPORT_TEMPLATE` setting content field name (`id`).
+     */
+    id: string;
+
+    /**
+     * Scope of the referenced export template.
+     */
+    type: ExportTemplateType;
+}
+
+/**
  * Indicates current platform edition.
  *
  * @public
@@ -312,6 +346,12 @@ export interface IPermanentSettings {
     dashboardFiltersApplyMode?: DashboardFiltersApplyMode;
 
     /**
+     * Default export template applied to slide exports when none is explicitly requested.
+     * @beta
+     */
+    defaultExportTemplate?: IDefaultExportTemplate;
+
+    /**
      * Indicates current platform edition.
      */
     platformEdition?: PlatformEdition;
@@ -544,7 +584,6 @@ export interface IFeatureFlags {
     enableMySqlDataSource?: boolean;
     enableMariaDbDataSource?: boolean;
     enableOracleDataSource?: boolean;
-    enableSnowflakeKeyPairAuthentication?: boolean;
     enableMotherDuckDataSource?: boolean;
     enableMongoDbDataSource?: boolean;
     enableStarrocksDataSource?: boolean;
@@ -629,11 +668,6 @@ export interface IFeatureFlags {
     enableAmplitudeTracker?: boolean;
 
     /**
-     * Enable slideshow exports using the new export render mode in KD.
-     */
-    enableSlideshowExports?: boolean;
-
-    /**
      * Enable slideshow exports settings from server
      */
     enableSlidesExport?: boolean;
@@ -694,21 +728,6 @@ export interface IFeatureFlags {
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
 
     /**
-     * Enable the URL sharing functionality in the dashboard share dialog.
-     */
-    enableDashboardShareLink?: boolean;
-
-    /**
-     * Enable to setup alerts evaluation frequency in dashboard settings.
-     */
-    enableAlertsEvaluationFrequencySetup?: boolean;
-
-    /**
-     * Enable to respect chart legend position in KD.
-     */
-    enableKDRespectLegendPosition?: boolean;
-
-    /**
      * Enables workspace settings link in account menu of the user in every app header.
      */
     enableWorkspaceSettingsAppHeaderMenuItem?: boolean;
@@ -728,11 +747,6 @@ export interface IFeatureFlags {
      * Enable widget export to PDF.
      */
     enableWidgetExportPdf?: boolean;
-
-    /**
-     * Enable widget export to PNG image.
-     */
-    enableWidgetExportPngImage?: boolean;
 
     /**
      * Enable export to document storage.
@@ -770,11 +784,6 @@ export interface IFeatureFlags {
      * Enable pre-aggregation datasets support in LDM Modeler.
      */
     enablePreAggregationDatasets?: boolean;
-
-    /**
-     * Enable "to date" filters also known as "bounded" filters (e.g. YTD, QTD, MTD, WTD)
-     */
-    enableToDateFilters?: boolean;
 
     /**
      * Enable new pivot table
@@ -1047,6 +1056,11 @@ export interface IFeatureFlags {
      * When off, creating or editing a metric from the catalog redirects to the standalone metric editor.
      */
     enableAnalyticalCatalogMetricEditor?: boolean;
+
+    /**
+     * Enable authoring of string (textual) what-if parameters.
+     */
+    enableStringParameters?: boolean;
 
     /**
      * Enable enhanced insight picker.

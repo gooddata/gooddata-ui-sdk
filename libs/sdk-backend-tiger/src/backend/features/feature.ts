@@ -19,13 +19,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
     return {
         ...loadFeature(
             features,
-            TigerFeaturesNames.DashboardEditModeDevRollout,
-            "dashboardEditModeDevRollout",
-            "BOOLEAN",
-            FeatureFlagsValues.dashboardEditModeDevRollout,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableMetricSqlAndDataExplain,
             "enableMetricSqlAndDataExplain",
             "BOOLEAN",
@@ -138,6 +131,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableStringParameters,
+            "enableStringParameters",
+            "BOOLEAN",
+            FeatureFlagsValues.enableStringParameters,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableLabsSmartFunctions,
             "enableLabsSmartFunctions",
             "BOOLEAN",
@@ -205,13 +205,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableCrateDbDataSource",
             "BOOLEAN",
             FeatureFlagsValues.enableCrateDbDataSource,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableSnowflakeKeyPairAuthentication,
-            "enableSnowflakeKeyPairAuthentication",
-            "BOOLEAN",
-            FeatureFlagsValues.enableSnowflakeKeyPairAuthentication,
         ),
         ...loadFeature(
             features,
@@ -348,13 +341,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableSlideshowExports,
-            "enableSlideshowExports",
-            "BOOLEAN",
-            FeatureFlagsValues.enableSlideshowExports,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableExportTemplateSelection,
             "enableExportTemplateSelection",
             "BOOLEAN",
@@ -397,13 +383,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableDashboardShareLink,
-            "enableDashboardShareLink",
-            "BOOLEAN",
-            FeatureFlagsValues.enableDashboardShareLink,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableHighchartsAccessibility,
             "enableHighchartsAccessibility",
             "BOOLEAN",
@@ -418,20 +397,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableAlertsEvaluationFrequencySetup,
-            "enableAlertsEvaluationFrequencySetup",
-            "BOOLEAN",
-            FeatureFlagsValues.enableAlertsEvaluationFrequencySetup,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableKDRespectLegendPosition,
-            "enableKDRespectLegendPosition",
-            "BOOLEAN",
-            FeatureFlagsValues.enableKDRespectLegendPosition,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableWorkspaceSettingsAppHeaderMenuItem,
             "enableWorkspaceSettingsAppHeaderMenuItem",
             "BOOLEAN",
@@ -443,13 +408,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableSnapshotExportAccessibility",
             "BOOLEAN",
             FeatureFlagsValues.enableSnapshotExportAccessibility,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableWidgetExportPngImage,
-            "enableWidgetExportPngImage",
-            "BOOLEAN",
-            FeatureFlagsValues.enableWidgetExportPngImage,
         ),
         ...loadFeature(
             features,
@@ -499,13 +457,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enablePreAggregationDatasets",
             "BOOLEAN",
             FeatureFlagsValues.enablePreAggregationDatasets,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableToDateFilters,
-            "enableToDateFilters",
-            "BOOLEAN",
-            FeatureFlagsValues.enableToDateFilters,
         ),
         ...loadFeature(
             features,

@@ -2,11 +2,21 @@
 
 import { describe, expect, it } from "vitest";
 
+import type { ParameterType } from "@gooddata/sdk-model";
+
 import { validateParameterYaml } from "../parameterValidation.js";
+
+const NUMBER_ONLY: ParameterType[] = ["NUMBER"];
+const ALL_TYPES: ParameterType[] = ["NUMBER", "STRING"];
+
+function validate(yaml: string, options: { enabledTypes?: ParameterType[]; fixedIdentifier?: string } = {}) {
+    const { enabledTypes = NUMBER_ONLY, ...rest } = options;
+    return validateParameterYaml(yaml, { enabledTypes, ...rest });
+}
 
 describe("validateParameterYaml", () => {
     it("parses valid numeric parameter YAML", () => {
-        const result = validateParameterYaml(`id: threshold
+        const result = validate(`id: threshold
 title: "Threshold"
 description: "Alert threshold"
 tags:
@@ -41,7 +51,7 @@ definition:
     });
 
     it("parses minimal valid YAML with only definition", () => {
-        const result = validateParameterYaml(`definition:
+        const result = validate(`definition:
   type: NUMBER
   defaultValue: 5
 `);
@@ -59,7 +69,7 @@ definition:
     });
 
     it("parses YAML with inline tags array", () => {
-        const result = validateParameterYaml(`tags: [alerts, monitoring]
+        const result = validate(`tags: [alerts, monitoring]
 definition:
   type: NUMBER
   defaultValue: 0
@@ -79,7 +89,7 @@ definition:
     });
 
     it("parses YAML with negative and decimal default values", () => {
-        const result = validateParameterYaml(`definition:
+        const result = validate(`definition:
   type: NUMBER
   defaultValue: -3.14
 `);
@@ -97,21 +107,21 @@ definition:
     });
 
     it("rejects empty input", () => {
-        expect(validateParameterYaml("")).toEqual({
+        expect(validate("")).toEqual({
             isValid: false,
             errorCode: "empty",
         });
     });
 
     it("rejects whitespace-only input", () => {
-        expect(validateParameterYaml("   \n  \n  ")).toEqual({
+        expect(validate("   \n  \n  ")).toEqual({
             isValid: false,
             errorCode: "empty",
         });
     });
 
     it("rejects YAML syntax errors", () => {
-        const result = validateParameterYaml("id: [foo");
+        const result = validate("id: [foo");
 
         expect(result).toEqual({
             isValid: false,
@@ -120,7 +130,7 @@ definition:
     });
 
     it("rejects invalid top-level structure (plain scalar)", () => {
-        const result = validateParameterYaml("just a string");
+        const result = validate("just a string");
 
         expect(result).toEqual({
             isValid: false,
@@ -129,7 +139,7 @@ definition:
     });
 
     it("rejects invalid top-level structure (array)", () => {
-        const result = validateParameterYaml("- item1\n- item2");
+        const result = validate("- item1\n- item2");
 
         expect(result).toEqual({
             isValid: false,
@@ -138,7 +148,7 @@ definition:
     });
 
     it("rejects missing definition key", () => {
-        const result = validateParameterYaml(`id: test
+        const result = validate(`id: test
 title: "Test"
 `);
 
@@ -148,20 +158,8 @@ title: "Test"
         });
     });
 
-    it("rejects unsupported parameter types", () => {
-        const result = validateParameterYaml(`definition:
-  type: STRING
-  defaultValue: foo
-`);
-
-        expect(result).toEqual({
-            isValid: false,
-            errorCode: "unsupportedType",
-        });
-    });
-
     it("rejects non-numeric default values", () => {
-        const result = validateParameterYaml(`definition:
+        const result = validate(`definition:
   type: NUMBER
   defaultValue: foo
 `);
@@ -169,11 +167,12 @@ title: "Test"
         expect(result).toEqual({
             isValid: false,
             errorCode: "invalidDefaultValue",
+            type: "NUMBER",
         });
     });
 
     it("rejects boolean default values for NUMBER type", () => {
-        const result = validateParameterYaml(`definition:
+        const result = validate(`definition:
   type: NUMBER
   defaultValue: true
 `);
@@ -181,11 +180,12 @@ title: "Test"
         expect(result).toEqual({
             isValid: false,
             errorCode: "invalidDefaultValue",
+            type: "NUMBER",
         });
     });
 
     it("rejects non-numeric constraints", () => {
-        const result = validateParameterYaml(`definition:
+        const result = validate(`definition:
   type: NUMBER
   defaultValue: 10
   constraints:
@@ -195,11 +195,12 @@ title: "Test"
         expect(result).toEqual({
             isValid: false,
             errorCode: "invalidConstraints",
+            type: "NUMBER",
         });
     });
 
     it("rejects invalid constraint ranges (min > max)", () => {
-        const result = validateParameterYaml(`definition:
+        const result = validate(`definition:
   type: NUMBER
   defaultValue: 10
   constraints:
@@ -210,11 +211,12 @@ title: "Test"
         expect(result).toEqual({
             isValid: false,
             errorCode: "invalidConstraintRange",
+            type: "NUMBER",
         });
     });
 
     it("rejects non-string tags", () => {
-        const result = validateParameterYaml(`tags:
+        const result = validate(`tags:
   - 123
 definition:
   type: NUMBER
@@ -228,7 +230,7 @@ definition:
     });
 
     it("rejects additional/unknown top-level properties", () => {
-        const result = validateParameterYaml(`unknown: value
+        const result = validate(`unknown: value
 definition:
   type: NUMBER
   defaultValue: 10
@@ -241,7 +243,7 @@ definition:
     });
 
     it("rejects id changes when a fixed identifier is required", () => {
-        const result = validateParameterYaml(
+        const result = validate(
             `id: another
 definition:
   type: NUMBER
@@ -257,7 +259,7 @@ definition:
     });
 
     it("rejects unknown properties inside definition", () => {
-        const result = validateParameterYaml(`definition:
+        const result = validate(`definition:
   type: NUMBER
   defaultValue: 10
   extra: true
@@ -270,7 +272,7 @@ definition:
     });
 
     it("rejects unknown properties inside constraints", () => {
-        const result = validateParameterYaml(`definition:
+        const result = validate(`definition:
   type: NUMBER
   defaultValue: 10
   constraints:
@@ -281,6 +283,163 @@ definition:
         expect(result).toEqual({
             isValid: false,
             errorCode: "invalidConstraints",
+            type: "NUMBER",
+        });
+    });
+
+    describe("string parameters disabled (flag off)", () => {
+        it("rejects a STRING definition as unsupported regardless of a valid body", () => {
+            const result = validate(
+                `definition:
+  type: STRING
+  defaultValue: Actual
+`,
+                { enabledTypes: NUMBER_ONLY },
+            );
+
+            expect(result).toEqual({
+                isValid: false,
+                errorCode: "unsupportedType",
+            });
+        });
+
+        it("classifies a STRING definition with a bad body as unsupportedType, not invalidDefaultValue", () => {
+            const result = validate(
+                `definition:
+  type: STRING
+  defaultValue: 5
+`,
+                { enabledTypes: NUMBER_ONLY },
+            );
+
+            expect(result).toEqual({
+                isValid: false,
+                errorCode: "unsupportedType",
+            });
+        });
+    });
+
+    describe("string parameters enabled (flag on)", () => {
+        it("parses a valid STRING definition", () => {
+            const result = validate(
+                `id: scenario
+definition:
+  type: STRING
+  defaultValue: Actual
+`,
+                { enabledTypes: ALL_TYPES },
+            );
+
+            expect(result).toEqual({
+                isValid: true,
+                parameter: {
+                    type: "parameter",
+                    id: "scenario",
+                    definition: {
+                        type: "STRING",
+                        defaultValue: "Actual",
+                    },
+                },
+            });
+        });
+
+        it("rejects a non-string default value", () => {
+            const result = validate(
+                `definition:
+  type: STRING
+  defaultValue: 5
+`,
+                { enabledTypes: ALL_TYPES },
+            );
+
+            expect(result).toEqual({
+                isValid: false,
+                errorCode: "invalidDefaultValue",
+                type: "STRING",
+            });
+        });
+
+        it("parses a STRING definition with length constraints", () => {
+            const result = validate(
+                `definition:
+  type: STRING
+  defaultValue: Actual
+  constraints:
+    minLength: 1
+    maxLength: 10
+`,
+                { enabledTypes: ALL_TYPES },
+            );
+
+            expect(result).toEqual({
+                isValid: true,
+                parameter: {
+                    type: "parameter",
+                    definition: {
+                        type: "STRING",
+                        defaultValue: "Actual",
+                        constraints: {
+                            minLength: 1,
+                            maxLength: 10,
+                        },
+                    },
+                },
+            });
+        });
+
+        it("rejects invalid length constraint ranges (minLength > maxLength)", () => {
+            const result = validate(
+                `definition:
+  type: STRING
+  defaultValue: Actual
+  constraints:
+    minLength: 10
+    maxLength: 5
+`,
+                { enabledTypes: ALL_TYPES },
+            );
+
+            expect(result).toEqual({
+                isValid: false,
+                errorCode: "invalidConstraintRange",
+                type: "STRING",
+            });
+        });
+
+        it("rejects negative length constraints", () => {
+            const result = validate(
+                `definition:
+  type: STRING
+  defaultValue: Actual
+  constraints:
+    minLength: -1
+`,
+                { enabledTypes: ALL_TYPES },
+            );
+
+            expect(result).toEqual({
+                isValid: false,
+                errorCode: "invalidConstraints",
+                type: "STRING",
+            });
+        });
+
+        it("rejects non-integer length constraints", () => {
+            const result = validate(
+                `definition:
+  type: STRING
+  defaultValue: Actual
+  constraints:
+    maxLength: 2.5
+`,
+                { enabledTypes: ALL_TYPES },
+            );
+
+            expect(result).toEqual({
+                isValid: false,
+                errorCode: "invalidConstraints",
+                type: "STRING",
+            });
         });
     });
 });

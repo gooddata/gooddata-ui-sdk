@@ -3,7 +3,9 @@
 import { parse as parseYaml } from "yaml";
 import type * as z from "zod/mini";
 
-import { type ParameterSchema, parameterSchema } from "./parameterSchema.js";
+import type { ParameterType } from "@gooddata/sdk-model";
+
+import { type ParameterSchema, buildParameterSchema } from "./parameterSchema.js";
 
 export type ParameterValidationResult =
     | {
@@ -13,6 +15,7 @@ export type ParameterValidationResult =
     | {
           isValid: false;
           errorCode: ParameterValidationErrorCode;
+          type?: ParameterType;
       };
 
 export type ParameterValidationErrorCode =
@@ -27,12 +30,13 @@ export type ParameterValidationErrorCode =
     | "invalidTags";
 
 type ValidateParameterYamlOptions = {
+    enabledTypes: ParameterType[];
     fixedIdentifier?: string;
 };
 
 export function validateParameterYaml(
     value: string,
-    options: ValidateParameterYamlOptions = {},
+    options: ValidateParameterYamlOptions,
 ): ParameterValidationResult {
     if (value.trim() === "") {
         return invalid("empty");
@@ -45,9 +49,9 @@ export function validateParameterYaml(
         return invalid("syntax");
     }
 
-    const result = parameterSchema.safeParse(parsed);
+    const result = buildParameterSchema(options.enabledTypes).safeParse(parsed);
     if (!result.success) {
-        return classifySchemaError(result.error);
+        return classifySchemaError(result.error, readDeclaredType(parsed));
     }
 
     if (options.fixedIdentifier !== undefined && result.data.id !== options.fixedIdentifier) {
@@ -60,23 +64,26 @@ export function validateParameterYaml(
     };
 }
 
-function classifySchemaError(error: z.core.$ZodError): ParameterValidationResult {
+function classifySchemaError(
+    error: z.core.$ZodError,
+    declaredType: ParameterType | undefined,
+): ParameterValidationResult {
     for (const issue of error.issues) {
         const path = issue.path.map(String).join(".");
 
         if (issue.code === "custom") {
             if (issue.message === "invalidConstraintRange") {
-                return invalid("invalidConstraintRange");
+                return invalid("invalidConstraintRange", declaredType);
             }
         }
         if (path === "definition.type") {
             return invalid("unsupportedType");
         }
         if (path === "definition.defaultValue") {
-            return invalid("invalidDefaultValue");
+            return invalid("invalidDefaultValue", declaredType);
         }
         if (path.startsWith("definition.constraints")) {
-            return invalid("invalidConstraints");
+            return invalid("invalidConstraints", declaredType);
         }
         if (path === "tags" || path.startsWith("tags.")) {
             return invalid("invalidTags");
@@ -86,9 +93,23 @@ function classifySchemaError(error: z.core.$ZodError): ParameterValidationResult
     return invalid("invalidStructure");
 }
 
-function invalid(code: ParameterValidationErrorCode): ParameterValidationResult {
+/** The declared `definition.type`, when it names a known model type; drives the type-specific error copy. */
+function readDeclaredType(parsed: unknown): ParameterType | undefined {
+    if (!parsed || typeof parsed !== "object") {
+        return undefined;
+    }
+    const { definition } = parsed as { definition?: unknown };
+    if (!definition || typeof definition !== "object") {
+        return undefined;
+    }
+    const { type } = definition as { type?: unknown };
+    return type === "NUMBER" || type === "STRING" ? type : undefined;
+}
+
+function invalid(code: ParameterValidationErrorCode, type?: ParameterType): ParameterValidationResult {
     return {
         isValid: false,
         errorCode: code,
+        type,
     };
 }

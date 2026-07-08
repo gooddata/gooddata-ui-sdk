@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-code-schemas, sdk-code-convertors, sdk-backend-tiger: support catalog attributes (label references) in the ranking filter \"Out of\" for AAC clone/deploy round-trips, mirroring MeasureValueFilter",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

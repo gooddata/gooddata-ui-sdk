@@ -23,6 +23,7 @@ import {
     type IWorkspaceDescriptor,
     type IWorkspaceDescriptorUpdate,
     type IWorkspaceExportDefinitionsService,
+    type IWorkspaceExportTemplatesService,
     type IWorkspaceFactsService,
     type IWorkspaceInsightsService,
     type IWorkspaceKeyDriverAnalysisService,
@@ -60,6 +61,7 @@ import { TigerWorkspaceDataSets } from "./datasets/index.js";
 import { TigerWorkspaceDateFilterConfigsQuery } from "./dateFilterConfigs/index.js";
 import { TigerExecution } from "./execution/executionFactory.js";
 import { TigerWorkspaceExportDefinitions } from "./exportDefinitions/index.js";
+import { WorkspaceExportTemplatesService } from "./exportTemplates.js";
 import { TigerWorkspaceFacts } from "./facts/index.js";
 import { GenAIService } from "./genAI/index.js";
 import { TigerWorkspaceInsights } from "./insights/index.js";
@@ -238,5 +240,9 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
 
     public references(): IReferencesService {
         return new TigerReferencesService(this.authCall, this.workspace);
+    }
+
+    public exportTemplates(): IWorkspaceExportTemplatesService {
+        return new WorkspaceExportTemplatesService(this.authCall, this.workspace);
     }
 }

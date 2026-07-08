@@ -4,6 +4,7 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
+    background: var(--gd-palette-complementary-0, #fff);
 
     &__header {
         flex-shrink: 0;

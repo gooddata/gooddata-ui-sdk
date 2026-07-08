@@ -7,8 +7,10 @@ import {
     applyPendingAgentSwitchAction,
     cancelAsyncAction,
     clearConversationLoadingAction,
+    clearThreadAction,
     messagesSliceReducer,
     setSelectedAgentAction,
+    startNewConversationAction,
 } from "../messagesSlice.js";
 
 const makeConversation = (id: string): IChatConversationLocal => ({
@@ -223,6 +225,73 @@ describe("messagesSlice", () => {
             expect(state.conversationsData[conversationB.localId].asyncProcess).toBeUndefined();
             // The newer load that superseded B must keep its flag.
             expect(state.conversationsData[conversationS.localId].asyncProcess).toBe("loading");
+        });
+
+        it("startNewConversationAction releases a 'clearing' flag orphaned on the outgoing conversation (LX-2644)", () => {
+            const conversationB = makeConversation("conversation-b");
+
+            // Summarize seed flow: clearThreadAction marks B "clearing", then startNewConversationAction
+            // navigates to a fresh draft - B must not be left "clearing" (skeleton spins forever on reopen).
+            const afterClear = messagesSliceReducer(
+                {
+                    ...messagesSliceReducer(undefined, { type: "test/init" }),
+                    currentConversation: conversationB,
+                    conversations: [conversationB],
+                    conversationsData: {
+                        [conversationB.localId]: { order: ["m1"], items: {}, asyncProcess: undefined },
+                    },
+                },
+                clearThreadAction(),
+            );
+            expect(afterClear.conversationsData[conversationB.localId].asyncProcess).toBe("clearing");
+
+            const state = messagesSliceReducer(afterClear, startNewConversationAction());
+
+            expect(state.conversationsData[conversationB.localId].asyncProcess).toBeUndefined();
+            expect(state.currentConversation?.id).toBeFalsy();
+            expect(state.currentConversation?.localId).not.toBe(conversationB.localId);
+        });
+
+        it("startNewConversationAction preserves an 'evaluating' flag on the outgoing conversation", () => {
+            const conversationB = makeConversation("conversation-b");
+
+            const state = messagesSliceReducer(
+                {
+                    ...messagesSliceReducer(undefined, { type: "test/init" }),
+                    currentConversation: conversationB,
+                    conversations: [conversationB],
+                    conversationsData: {
+                        [conversationB.localId]: { order: ["m1"], items: {}, asyncProcess: "evaluating" },
+                    },
+                },
+                startNewConversationAction(),
+            );
+
+            expect(state.conversationsData[conversationB.localId].asyncProcess).toBe("evaluating");
+        });
+
+        it("clearThreadAction does not clobber an in-flight 'evaluating' marker (LX-2644)", () => {
+            // Summarize while the current conversation is still streaming: clearThreadAction must leave
+            // "evaluating" intact so the thread stays busy (Input.isBusy is driven purely by asyncProcess)
+            // and no second message can be sent while its first reply is in flight.
+            const conversationB = makeConversation("conversation-b");
+
+            const afterClear = messagesSliceReducer(
+                {
+                    ...messagesSliceReducer(undefined, { type: "test/init" }),
+                    currentConversation: conversationB,
+                    conversations: [conversationB],
+                    conversationsData: {
+                        [conversationB.localId]: { order: ["m1"], items: {}, asyncProcess: "evaluating" },
+                    },
+                },
+                clearThreadAction(),
+            );
+            expect(afterClear.conversationsData[conversationB.localId].asyncProcess).toBe("evaluating");
+
+            // startNewConversationAction then leaves the still-streaming conversation untouched.
+            const state = messagesSliceReducer(afterClear, startNewConversationAction());
+            expect(state.conversationsData[conversationB.localId].asyncProcess).toBe("evaluating");
         });
     });
 });

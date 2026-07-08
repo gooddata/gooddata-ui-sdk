@@ -279,6 +279,26 @@
                 "type": "string"
             }
         },
+        "custom_tooltip": {
+            "type": "object",
+            "description": "Custom tooltip section rendered in the visualization tooltip, authored in Markdown with metric/attribute references that resolve per hovered data point.",
+            "additionalProperties": false,
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Whether the custom tooltip section is rendered."
+                },
+                "content": {
+                    "type": "string",
+                    "description": "Markdown content. Supports headings, bold/italic, ordered/unordered lists, images, links, horizontal rules, and metric/attribute references ({metric/id}, {label/id}) that resolve per hovered data point."
+                },
+                "placement": {
+                    "type": "string",
+                    "enum": ["above", "below", "replace"],
+                    "description": "Placement of the custom section relative to the default tooltip content. Defaults to \"above\"."
+                }
+            }
+        },
         "conditional_formatting": {
             "type": "object",
             "description": "Conditional formatting rules that color cells or rows based on their values.",

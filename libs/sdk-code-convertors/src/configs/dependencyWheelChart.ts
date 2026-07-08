@@ -2,9 +2,16 @@
 
 import type { Visualisation } from "@gooddata/sdk-code-schemas/v1";
 
-import { loadColorMapping, loadDisableKda, saveColorMapping } from "../utils/configUtils.js";
+import {
+    DEFAULT_CUSTOM_TOOLTIP,
+    loadColorMapping,
+    loadCustomTooltip,
+    loadDisableKda,
+    saveColorMapping,
+    saveCustomTooltip,
+} from "../utils/configUtils.js";
 
-import { type ColorMapping } from "./types.js";
+import { type ColorMapping, type ICustomTooltip } from "./types.js";
 import {
     type ConfigDefaults,
     type VisualisationConfig,
@@ -28,6 +35,7 @@ export type DependencyWheelChartConfigProperties = {
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
+    customTooltip: ICustomTooltip;
 };
 
 /** @internal */
@@ -45,6 +53,7 @@ const DEFAULTS: ConfigDefaults<DependencyWheelChartConfigProperties> = {
     disableAlerts: false,
     disableScheduledExports: false,
     disableKeyDriveAnalysisOn: {},
+    customTooltip: DEFAULT_CUSTOM_TOOLTIP,
 };
 
 /** @internal */
@@ -92,6 +101,8 @@ export function dependencyWheelChartLoad(props: VisualisationConfig<DependencyWh
                 ];
             case "disableKeyDriveAnalysisOn":
                 return [["disable_key_drive_analysis", loadDisableKda(value as Record<string, boolean>)]];
+            case "customTooltip":
+                return [["custom_tooltip", loadCustomTooltip(value as (typeof DEFAULTS)["customTooltip"])]];
             default:
                 return [];
         }
@@ -126,6 +137,7 @@ export function dependencyWheelChartSave(
             "bool",
         ),
         disableKeyDriveAnalysisOn: saveConfigObject(config.disable_key_drive_analysis),
+        customTooltip: saveConfigObject(saveCustomTooltip(config.custom_tooltip)),
     });
 }
 

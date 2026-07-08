@@ -2,7 +2,6 @@
 
 import { useCallback, useState } from "react";
 
-import { isEqual } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import {
@@ -25,14 +24,10 @@ import {
     type INotificationChannelMetadataObject,
     type IWidget,
     type IWorkspaceUser,
-    isAutomationExternalUserRecipient,
-    isAutomationUnknownUserRecipient,
-    isAutomationUserRecipient,
 } from "@gooddata/sdk-model";
 
 import { useAlertingDialogContext } from "../../../contexts/AlertingDialogContext.js";
 import { useAutomationsContext } from "../../../contexts/AutomationsContext.js";
-import { isEmail } from "../../../scheduledEmail/utils/validate.js";
 import { setAlertExecutionParameters } from "../../../shared/automationFilters/automationParameters.js";
 import { useAutomationAlertParameters } from "../../../shared/automationFilters/useAutomationAlertParameters.js";
 import {
@@ -47,7 +42,6 @@ import {
 } from "../../../shared/utils/automationUtils.js";
 import { type AlertAttribute, type AlertMetric, type AlertMetricComparatorType } from "../../types.js";
 import { createDefaultAlert } from "../utils/convertors.js";
-import { isAlertValueDefined } from "../utils/guards.js";
 import {
     transformAlertByAnomalyDetection,
     transformAlertByAttribute,
@@ -60,9 +54,9 @@ import {
     transformAlertByValue,
 } from "../utils/transformation.js";
 
+import { useAlertFormValidation } from "./useAlertFormValidation.js";
 import { useAlertSelectedValues } from "./useAlertSelectedValues.js";
 import { useAlertSupportedMetrics } from "./useAlertSupportedMetrics.js";
-import { useAlertValidation } from "./useAlertValidation.js";
 import { useThresholdValue } from "./useThresholdValue.js";
 
 export interface IUseEditAlertProps {
@@ -242,15 +236,6 @@ export function useEditAlert({
         supportedAttributes,
         notificationChannels,
     });
-
-    const { isValid: isOriginalAutomationValid, invalidityReason } = useAlertValidation(
-        originalAutomation as IAutomationMetadataObject,
-        widget,
-        insight,
-        catalogDateDatasets,
-        undefined,
-    );
-    const isParentValid = invalidityReason !== "missingWidget";
 
     //
     // Handlers
@@ -597,47 +582,21 @@ export function useEditAlert({
         selectedValue,
     );
 
-    const hasValidThreshold = isAlertValueDefined(editedAutomation?.alert);
-
-    const validationErrorMessage = isOriginalAutomationValid
-        ? undefined
-        : isInvalidConnectionToInsight
-          ? intl.formatMessage({ id: "insightAlert.config.invalidWidget" })
-          : intl.formatMessage({ id: "insightAlert.config.unusedWidget" });
-
-    const hasRecipients = (editedAutomation?.recipients?.length ?? 0) > 0;
-    const hasValidExternalRecipients = allowExternalRecipients
-        ? true
-        : !editedAutomation?.recipients?.some(isAutomationExternalUserRecipient);
-
-    const hasValidCreatorRecipient = allowOnlyLoggedUserRecipients
-        ? editedAutomation?.recipients?.length === 1 &&
-          editedAutomation?.recipients[0].id === defaultRecipient.id
-        : true;
-
-    const hasNoUnknownRecipients = !editedAutomation?.recipients?.some(isAutomationUnknownUserRecipient);
-
-    const respectsRecipientsLimit = (editedAutomation?.recipients?.length ?? 0) <= maxAutomationsRecipients;
-
-    const hasFilledEmails =
-        selectedNotificationChannel?.destinationType === "smtp"
-            ? editedAutomation?.recipients?.every((recipient) =>
-                  isAutomationUserRecipient(recipient) ? isEmail(recipient.email ?? "") : true,
-              )
-            : true;
-
-    const isValid =
-        !!editedAutomation &&
-        hasRecipients &&
-        respectsRecipientsLimit &&
-        hasValidExternalRecipients &&
-        hasValidCreatorRecipient &&
-        hasNoUnknownRecipients &&
-        hasFilledEmails &&
-        hasValidThreshold &&
-        isTitleValid;
-
-    const isSubmitDisabled = !isValid || (alertToEdit && isEqual(originalAutomation, editedAutomation));
+    const { isSubmitDisabled, validationErrorMessage, isParentValid } = useAlertFormValidation({
+        editedAutomation,
+        originalAutomation,
+        alertToEdit,
+        widget,
+        insight,
+        catalogDateDatasets,
+        isInvalidConnectionToInsight: !!isInvalidConnectionToInsight,
+        selectedNotificationChannel,
+        allowExternalRecipients,
+        allowOnlyLoggedUserRecipients,
+        maxAutomationsRecipients,
+        defaultRecipient,
+        isTitleValid,
+    });
 
     return {
         onTitleChange,

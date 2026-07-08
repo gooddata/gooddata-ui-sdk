@@ -94,6 +94,8 @@ export type {
     ExportDefinitionQuerySort,
 } from "./workspace/exportDefinitions/index.js";
 
+export type { IWorkspaceExportTemplatesService } from "./workspace/exportTemplates/index.js";
+
 export {
     type IElementsQueryFactory,
     type IElementsQueryResult,

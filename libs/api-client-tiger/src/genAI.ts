@@ -19,8 +19,6 @@ export type TigerGenAIClient = Pick<
     | "getQualityIssues"
     | "getQualityIssuesCalculationStatus"
     | "triggerQualityIssuesCalculation"
-    | "tags"
-    | "createdBy"
     | "memoryCreatedByUsers"
 > &
     Pick<AIObservabilityAiInterface, "getObservabilityOverview">;
@@ -39,8 +37,6 @@ export const tigerGenAIClientFactory = (axios: AxiosInstance): TigerGenAIClient 
         getQualityIssues: actionsApi.getQualityIssues.bind(actionsApi),
         getQualityIssuesCalculationStatus: actionsApi.getQualityIssuesCalculationStatus.bind(actionsApi),
         triggerQualityIssuesCalculation: actionsApi.triggerQualityIssuesCalculation.bind(actionsApi),
-        tags: actionsApi.tags.bind(actionsApi),
-        createdBy: actionsApi.createdBy.bind(actionsApi),
         memoryCreatedByUsers: actionsApi.memoryCreatedByUsers.bind(actionsApi),
         getObservabilityOverview: observabilityApi.getObservabilityOverview.bind(observabilityApi),
     };

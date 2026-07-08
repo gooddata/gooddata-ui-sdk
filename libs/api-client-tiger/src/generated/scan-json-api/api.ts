@@ -404,10 +404,15 @@ export interface TestDefinitionRequest {
      * Secret for client based authentication for data sources which supports it.
      */
     'clientSecret'?: string;
+    /**
+     * Type of authentication used to connect to the database. Determines how the supplied credentials are used (e.g. KEY_PAIR, OIDC_PASSTHROUGH).
+     */
+    'authenticationType'?: TestDefinitionRequestAuthenticationTypeEnum | null;
     'parameters'?: Array<DataSourceParameter>;
 }
 
 export type TestDefinitionRequestTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'GREENPLUM' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
+export type TestDefinitionRequestAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'OIDC_PASSTHROUGH';
 
 /**
  * A structure containing duration of the test queries run on a data source. It is omitted if an error happens.
@@ -463,8 +468,14 @@ export interface TestRequest {
      * Secret for client based authentication for data sources which supports it.
      */
     'clientSecret'?: string;
+    /**
+     * Type of authentication used to connect to the database. Determines how the supplied credentials are used (e.g. KEY_PAIR, OIDC_PASSTHROUGH).
+     */
+    'authenticationType'?: TestRequestAuthenticationTypeEnum | null;
     'parameters'?: Array<DataSourceParameter>;
 }
+
+export type TestRequestAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'OIDC_PASSTHROUGH';
 
 /**
  * Response from data source testing.

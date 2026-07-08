@@ -74,6 +74,7 @@ import { IDashboardWithReferences } from '@gooddata/sdk-backend-spi';
 import { IDataSetMetadataObject } from '@gooddata/sdk-model';
 import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IDateFilter } from '@gooddata/sdk-model';
+import { IDefaultExportTemplate } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
 import { IDimensionDescriptor } from '@gooddata/sdk-model';
 import { IDrillToLegacyDashboard } from '@gooddata/sdk-model';
@@ -88,6 +89,7 @@ import { IExplainProvider } from '@gooddata/sdk-backend-spi';
 import { IExportConfig } from '@gooddata/sdk-backend-spi';
 import { IExportResult } from '@gooddata/sdk-backend-spi';
 import { IExportTemplate } from '@gooddata/sdk-model';
+import { IExportTemplateDefinition } from '@gooddata/sdk-model';
 import { IFactMetadataObject } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IFilterContext } from '@gooddata/sdk-model';
@@ -527,9 +529,17 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
 export abstract class DecoratedOrganizationExportTemplatesService implements IOrganizationExportTemplatesService {
     protected constructor(decorated: IOrganizationExportTemplatesService);
     // (undocumented)
+    createExportTemplate(template: IExportTemplateDefinition): Promise<IExportTemplate>;
+    // (undocumented)
     protected readonly decorated: IOrganizationExportTemplatesService;
     // (undocumented)
+    deleteExportTemplate(ref: ObjRef): Promise<void>;
+    // (undocumented)
+    getExportTemplate(ref: ObjRef): Promise<IExportTemplate>;
+    // (undocumented)
     getExportTemplates(): Promise<IExportTemplate[]>;
+    // (undocumented)
+    patchExportTemplate(ref: ObjRef, template: Partial<IExportTemplateDefinition>): Promise<IExportTemplate>;
 }
 
 // @alpha
@@ -776,6 +786,8 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
     // (undocumented)
     deleteDashboardFiltersApplyMode(): Promise<void>;
     // (undocumented)
+    deleteDefaultExportTemplate(): Promise<void>;
+    // (undocumented)
     deleteEnableDrillToUrlByDefault(): Promise<void>;
     // (undocumented)
     deleteExportCsvCustomDelimiter(): Promise<void>;
@@ -809,6 +821,8 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
     setDashboardFiltersApplyMode(dashboardFiltersApplyMode: DashboardFiltersApplyMode): Promise<void>;
     // (undocumented)
     setDateFormat(dateFormat: string): Promise<void>;
+    // (undocumented)
+    setDefaultExportTemplate(value: IDefaultExportTemplate): Promise<void>;
     // (undocumented)
     setEnableAiOnData(enabled: boolean): Promise<void>;
     // (undocumented)

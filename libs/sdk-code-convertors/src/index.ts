@@ -315,6 +315,8 @@ export type {
     ColumnLocator,
     ColumnWidth,
     ColumnWidthItem,
+    ICustomTooltip as CustomTooltip,
+    CustomTooltipPlacement,
     IAbsoluteColumnWidth,
     IAllMeasureColumnWidthItem,
     IAllMeasureColumnWidthItemBody,

@@ -1298,8 +1298,6 @@ export {
     selectEnableExecutionCancelling,
     selectEnableOrchestratedTabularExports,
     selectEnableDashboardTabularExport,
-    selectEnableDashboardShareLink,
-    selectEnableAlertsEvaluationFrequencySetup,
     selectEnableKDEmptyDateValuesFilter,
     selectEnableSnapshotExportAccessibility,
     selectEnableExportTimeoutFix,

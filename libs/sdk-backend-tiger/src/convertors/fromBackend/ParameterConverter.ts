@@ -8,8 +8,8 @@ import {
 import {
     type IParameterDefinition,
     type IParameterMetadataObject,
-    assertNever,
     idRef,
+    throwUnexpected,
 } from "@gooddata/sdk-model";
 
 import { isInheritedObject } from "./ObjectInheritance.js";
@@ -44,7 +44,8 @@ export function convertParameter(
 function convertParameterDefinition(
     definition: JsonApiParameterOutWithLinks["attributes"]["definition"],
 ): IParameterDefinition {
-    switch (definition.type) {
+    const { type } = definition;
+    switch (type) {
         case "NUMBER":
             return {
                 type: "NUMBER",
@@ -58,9 +59,6 @@ function convertParameterDefinition(
                 ...(definition.constraints ? { constraints: definition.constraints } : {}),
             };
         default:
-            assertNever(definition);
-            throw new Error(
-                `Unsupported parameter definition type: ${(definition as { type: string }).type}`,
-            );
+            return throwUnexpected(type);
     }
 }

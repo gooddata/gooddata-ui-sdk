@@ -395,12 +395,15 @@ const messagesSlice = createSlice({
             }
         },
         clearThreadAction: (state) => {
+            // Don't clobber an in-flight reply's "evaluating" marker: in multi-conversation mode this
+            // "clear" navigates to a fresh draft and leaves the outgoing conversation intact, so it must
+            // stay busy until its reply resolves (LX-2644).
             if (state.currentConversation) {
                 const data = getConversationData(state.conversationsData, state.currentConversation.localId);
-                if (data) {
+                if (data && data.asyncProcess !== "evaluating") {
                     data.asyncProcess = "clearing";
                 }
-            } else {
+            } else if (state.messageAsyncProcess !== "evaluating") {
                 state.messageAsyncProcess = "clearing";
             }
         },
@@ -701,6 +704,15 @@ const messagesSlice = createSlice({
             state.verbose = verbose;
         },
         startNewConversationAction: (state) => {
+            // Release the outgoing conversation's orphaned load/clear flag so its skeleton doesn't spin
+            // forever when reopened (LX-2644). A still-streaming reply keeps its "evaluating" marker
+            // (clearThreadAction no longer clobbers it) and is left untouched here.
+            if (state.currentConversation) {
+                const data = getConversationData(state.conversationsData, state.currentConversation.localId);
+                if (data?.asyncProcess === "clearing" || data?.asyncProcess === "loading") {
+                    delete data.asyncProcess;
+                }
+            }
             // keep list of conversations, but clear current conversation data in the view
             state.currentConversation = createEmptyConversation();
             // mark as loaded to prevent auto-loading last conversation while on landing

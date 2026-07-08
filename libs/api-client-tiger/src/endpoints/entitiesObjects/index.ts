@@ -365,7 +365,26 @@ export {
     // AutomationOrganizationViewControllerApi
     AutomationOrganizationViewControllerApi_GetAllAutomationsWorkspaceAutomations,
     type AutomationOrganizationViewControllerApiGetAllAutomationsWorkspaceAutomationsRequest,
-    // ExportTemplatesApi
+    // ExportTemplatesApi - organization export templates
     ExportTemplatesApi_GetAllEntitiesExportTemplates,
+    ExportTemplatesApi_GetEntityExportTemplates,
+    ExportTemplatesApi_CreateEntityExportTemplates,
+    ExportTemplatesApi_PatchEntityExportTemplates,
+    ExportTemplatesApi_DeleteEntityExportTemplates,
     type ExportTemplatesApiGetAllEntitiesExportTemplatesRequest,
+    type ExportTemplatesApiGetEntityExportTemplatesRequest,
+    type ExportTemplatesApiCreateEntityExportTemplatesRequest,
+    type ExportTemplatesApiPatchEntityExportTemplatesRequest,
+    type ExportTemplatesApiDeleteEntityExportTemplatesRequest,
+    // EntitiesApi - workspace export templates
+    EntitiesApi_GetAllEntitiesWorkspaceExportTemplates,
+    EntitiesApi_GetEntityWorkspaceExportTemplates,
+    EntitiesApi_CreateEntityWorkspaceExportTemplates,
+    EntitiesApi_PatchEntityWorkspaceExportTemplates,
+    EntitiesApi_DeleteEntityWorkspaceExportTemplates,
+    type EntitiesApiGetAllEntitiesWorkspaceExportTemplatesRequest,
+    type EntitiesApiGetEntityWorkspaceExportTemplatesRequest,
+    type EntitiesApiCreateEntityWorkspaceExportTemplatesRequest,
+    type EntitiesApiPatchEntityWorkspaceExportTemplatesRequest,
+    type EntitiesApiDeleteEntityWorkspaceExportTemplatesRequest,
 } from "../../generated/metadata-json-api/index.js";

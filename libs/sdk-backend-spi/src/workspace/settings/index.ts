@@ -5,6 +5,7 @@ import {
     type IActiveCalendars,
     type IAiRateLimit,
     type IAlertDefault,
+    type IDefaultExportTemplate,
     type IFiscalYear,
     type IMetricFormatOverrideSetting,
     type ISeparators,
@@ -165,6 +166,26 @@ export interface IWorkspaceSettingsService {
      * @alpha
      */
     deleteDashboardFiltersApplyMode(): Promise<void>;
+
+    /**
+     * Sets the default export template applied to slide exports in this workspace when none is explicitly
+     * requested. Default is taken from organization setting.
+     *
+     * @param value - identifier and scope of the export template to use as the default.
+     *
+     * @returns promise
+     * @beta
+     */
+    setDefaultExportTemplate(value: IDefaultExportTemplate): Promise<void>;
+
+    /**
+     * Clears the default export template configuration for workspace so the value inherited from the
+     * organization (or the built-in default) is used.
+     *
+     * @returns promise
+     * @beta
+     */
+    deleteDefaultExportTemplate(): Promise<void>;
 
     /**
      * Sets enable AI on data setting for current workspace.

@@ -214,6 +214,39 @@ describe("PluggableBaseChart", () => {
         expect(renderEl!.props.config!.legend!.position).toEqual("right");
     });
 
+    it("skips the custom-tooltip secondary execution when the feature flag is disabled", () => {
+        const options: IVisProps = {
+            dimensions: { height: 5 },
+            locale: dummyLocale,
+            custom: {},
+            messages,
+        };
+        const testInsight = insightSetProperties(insightWithSingleMeasureAndViewBy, {
+            controls: {
+                customTooltip: { enabled: true, content: "Ext: {metric/not_in_chart}" },
+            },
+        });
+
+        // Flag on (default): the secondary tooltip execution is built.
+        createComponent().update(options, testInsight, emptyPropertiesMeta, executionFactory);
+        expect(
+            getLastRenderEl<IBaseChartProps>(mockRenderFun, mockElement)!.props.tooltipExecution,
+        ).toBeDefined();
+
+        mockRenderFun.mockReset();
+
+        // Flag explicitly off: no execution is built, so no hidden backend query fires.
+        createComponent({ ...defaultProps, featureFlags: { enableCustomTooltip: false } }).update(
+            options,
+            testInsight,
+            emptyPropertiesMeta,
+            executionFactory,
+        );
+        expect(
+            getLastRenderEl<IBaseChartProps>(mockRenderFun, mockElement)!.props.tooltipExecution,
+        ).toBeUndefined();
+    });
+
     it("should render configuration panel with correct properties", () => {
         const expectedHeight = 5;
 

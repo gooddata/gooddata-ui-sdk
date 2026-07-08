@@ -2167,10 +2167,10 @@
                     ]
                 },
                 "attribute": {
-                    "description": "Attribute identifier to use for this filter.",
+                    "description": "Label reference or local identifier to use for this filter.",
                     "oneOf": [
                         {
-                            "$ref": "#/$defs/attributeIdentifier"
+                            "$ref": "#/$defs/labelIdentifier"
                         },
                         {
                             "type": "string",

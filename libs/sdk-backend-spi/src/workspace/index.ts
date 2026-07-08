@@ -12,6 +12,7 @@ import { type IDataFiltersService } from "./dataFilter/index.js";
 import { type IDateFilterConfigsQuery } from "./dateFilterConfigs/index.js";
 import { type IExecutionFactory } from "./execution/index.js";
 import { type IWorkspaceExportDefinitionsService } from "./exportDefinitions/index.js";
+import { type IWorkspaceExportTemplatesService } from "./exportTemplates/index.js";
 import { type IWorkspaceFactsService } from "./facts/index.js";
 import { type IGenAIService } from "./genAI/index.js";
 import { type IWorkspaceInsightsService } from "./insights/index.js";
@@ -203,6 +204,13 @@ export interface IAnalyticalWorkspace {
      * Returns service that can be used to access references.
      */
     references(): IReferencesService;
+
+    /**
+     * Returns service that can be used to query workspace-level export templates for slide exports.
+     *
+     * @beta
+     */
+    exportTemplates(): IWorkspaceExportTemplatesService;
 }
 
 /**

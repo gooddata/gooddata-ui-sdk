@@ -19,6 +19,7 @@ describe("updateConfigWithSettings", () => {
                 enableJoinedAttributeAxisName: true,
                 enableReversedStacking: true,
                 enableSeparateTotalLabels: true,
+                respectLegendPosition: true,
                 useGenericInteractionTooltip: true,
             };
             expect(updateConfigWithSettings(config, settings)).toEqual(expectedConfig);
@@ -32,5 +33,27 @@ describe("updateConfigWithSettings", () => {
             enableCompactSize: true,
         };
         expect(updateConfigWithSettings(config, featureFlags)).toEqual(expectedConfig);
+    });
+
+    describe("enableCustomTooltip", () => {
+        const customTooltip = { enabled: true, content: "Revenue: {metric/m1}" };
+
+        it("keeps customTooltip when the flag is enabled", () => {
+            const config: IChartConfig = { customTooltip };
+            const settings: ISettings = { enableCustomTooltip: true };
+            expect(updateConfigWithSettings(config, settings).customTooltip).toEqual(customTooltip);
+        });
+
+        it("keeps customTooltip when the flag is unset (defaults on)", () => {
+            const config: IChartConfig = { customTooltip };
+            const settings: ISettings = {};
+            expect(updateConfigWithSettings(config, settings).customTooltip).toEqual(customTooltip);
+        });
+
+        it("strips customTooltip when the flag is explicitly disabled", () => {
+            const config: IChartConfig = { customTooltip };
+            const settings: ISettings = { enableCustomTooltip: false };
+            expect(updateConfigWithSettings(config, settings).customTooltip).toBeUndefined();
+        });
     });
 });

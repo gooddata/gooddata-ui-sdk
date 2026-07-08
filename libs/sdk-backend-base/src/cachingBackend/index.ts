@@ -62,8 +62,10 @@ import {
     type IAttributeMetadataObject,
     type IAutomationMetadataObject,
     type IAutomationMetadataObjectDefinition,
+    type IDefaultExportTemplate,
     type IExecutionDefinition,
     type IExportTemplate,
+    type IExportTemplateDefinition,
     type IFiscalYear,
     type IGeoJsonFeature,
     type IInsight,
@@ -904,6 +906,16 @@ class WithWorkspaceSettingsCaching extends DecoratedWorkspaceSettingsService {
 
     public override async deleteDashboardFiltersApplyMode(): Promise<void> {
         await super.deleteDashboardFiltersApplyMode();
+        this.invalidateCache();
+    }
+
+    public override async setDefaultExportTemplate(value: IDefaultExportTemplate): Promise<void> {
+        await super.setDefaultExportTemplate(value);
+        this.invalidateCache();
+    }
+
+    public override async deleteDefaultExportTemplate(): Promise<void> {
+        await super.deleteDefaultExportTemplate();
         this.invalidateCache();
     }
 
@@ -1838,6 +1850,32 @@ class WithOrganizationExportTemplatesCaching extends DecoratedOrganizationExport
         }
 
         return result;
+    }
+
+    public override async createExportTemplate(
+        template: IExportTemplateDefinition,
+    ): Promise<IExportTemplate> {
+        const result = await super.createExportTemplate(template);
+        this.invalidateCache();
+        return result;
+    }
+
+    public override async patchExportTemplate(
+        ref: ObjRef,
+        template: Partial<IExportTemplateDefinition>,
+    ): Promise<IExportTemplate> {
+        const result = await super.patchExportTemplate(ref, template);
+        this.invalidateCache();
+        return result;
+    }
+
+    public override async deleteExportTemplate(ref: ObjRef): Promise<void> {
+        await super.deleteExportTemplate(ref);
+        this.invalidateCache();
+    }
+
+    private invalidateCache(): void {
+        this.ctx.caches.organizationExportTemplates?.delete(this.organizationId);
     }
 }
 

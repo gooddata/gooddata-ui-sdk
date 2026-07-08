@@ -694,17 +694,17 @@ export type RankingFilter = BOTTOM | TOP;
  */
 export type MetricIdentifier4 = string;
 /**
- * Attribute identifier to use for this filter.
+ * A label identifier in the form of label/\{id\}.
  */
-export type AttributeIdentifier12 = string;
+export type LabelIdentifier11 = string;
 /**
  * Metric identifier to use for this filter.
  */
 export type MetricIdentifier5 = string;
 /**
- * Attribute identifier to use for this filter.
+ * A label identifier in the form of label/\{id\}.
  */
-export type AttributeIdentifier13 = string;
+export type LabelIdentifier12 = string;
 export type Filter6 = {
     [k: string]: unknown;
 };
@@ -716,7 +716,7 @@ export type CalculatedMetricFieldGuard = CalculatedMetricField | CalculatedMetri
 /**
  * A attribute identifier in the form of attribute/\{id\}.
  */
-export type AttributeIdentifier14 = string;
+export type AttributeIdentifier12 = string;
 /**
  * Attribute identifier to use for this field.
  */
@@ -724,7 +724,7 @@ export type FactIdentifier1 = string;
 /**
  * Attribute identifier to use for this field.
  */
-export type LabelIdentifier11 = string;
+export type LabelIdentifier13 = string;
 export type InlineMetricFieldGuard = InlineMetricField | InlineMetricFieldGuard1;
 export type ArithmeticMetricFieldGuard = ArithmeticMetricField | ArithmeticMetricFieldGuard1;
 export type PoPMetricFieldGuard = PoPMetricField | PoPMetricFieldGuard1;
@@ -734,20 +734,20 @@ export type Sort1 = AttributeSort;
 /**
  * A attribute identifier in the form of attribute/\{id\}.
  */
-export type AttributeIdentifier15 = string;
+export type AttributeIdentifier13 = string;
 /**
  * Local attribute or label to use in this sort.
  */
-export type LabelIdentifier12 = string;
+export type LabelIdentifier14 = string;
 export type Sort2 = MetricSort;
 /**
  * A attribute identifier in the form of attribute/\{id\}.
  */
-export type AttributeIdentifier16 = string;
+export type AttributeIdentifier14 = string;
 /**
  * Local attribute or label to use in this sort.
  */
-export type LabelIdentifier13 = string;
+export type LabelIdentifier15 = string;
 export type Sort3 = {
     [k: string]: unknown;
 };
@@ -2661,9 +2661,9 @@ export interface BOTTOM {
      */
     using: MetricIdentifier4;
     /**
-     * Attribute identifier to use for this filter.
+     * Label reference or local identifier to use for this filter.
      */
-    attribute?: AttributeIdentifier12;
+    attribute?: LabelIdentifier11;
     /**
      * Number of bottom N values to use in this filter.
      */
@@ -2684,9 +2684,9 @@ export interface TOP {
      */
     using: MetricIdentifier5;
     /**
-     * Attribute identifier to use for this filter.
+     * Label reference or local identifier to use for this filter.
      */
-    attribute?: AttributeIdentifier13;
+    attribute?: LabelIdentifier12;
     /**
      * Number of bottom N values to use in this filter.
      */
@@ -2741,7 +2741,7 @@ export interface CalculatedMetricField {
     /**
      * Attribute identifier to use for this field.
      */
-    using: (AttributeIdentifier14 | FactIdentifier1 | LabelIdentifier11) & string;
+    using: (AttributeIdentifier12 | FactIdentifier1 | LabelIdentifier13) & string;
 }
 /**
  * A list of filters in this query.
@@ -2945,7 +2945,7 @@ export interface AttributeSort {
     /**
      * Local attribute or label to use in this sort.
      */
-    by: string | AttributeIdentifier15 | LabelIdentifier12;
+    by: string | AttributeIdentifier13 | LabelIdentifier14;
     /**
      * Sort direction.
      */
@@ -2971,7 +2971,7 @@ export interface MetricSort {
                   /**
                    * Local attribute or label to use in this sort.
                    */
-                  by: string | AttributeIdentifier16 | LabelIdentifier13;
+                  by: string | AttributeIdentifier14 | LabelIdentifier15;
                   /**
                    * Value of attribute or label to use for this sort.
                    */
@@ -2988,7 +2988,7 @@ export interface MetricSort {
                   /**
                    * Local attribute or label to use in this sort.
                    */
-                  by: string | AttributeIdentifier16 | LabelIdentifier13;
+                  by: string | AttributeIdentifier14 | LabelIdentifier15;
                   /**
                    * Value of attribute or label to use for this sort.
                    */
@@ -3205,6 +3205,23 @@ export interface VisualisationConfig {
     enable_accessibility?: boolean;
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
+    /**
+     * Custom tooltip section rendered in the visualization tooltip, authored in Markdown with metric/attribute references that resolve per hovered data point.
+     */
+    custom_tooltip?: {
+        /**
+         * Whether the custom tooltip section is rendered.
+         */
+        enabled?: boolean;
+        /**
+         * Markdown content. Supports headings, bold/italic, ordered/unordered lists, images, links, horizontal rules, and metric/attribute references (\{metric/id\}, \{label/id\}) that resolve per hovered data point.
+         */
+        content?: string;
+        /**
+         * Placement of the custom section relative to the default tooltip content. Defaults to "above".
+         */
+        placement?: "above" | "below" | "replace";
+    };
     /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
@@ -3610,6 +3627,23 @@ export interface VisualisationConfig1 {
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
     /**
+     * Custom tooltip section rendered in the visualization tooltip, authored in Markdown with metric/attribute references that resolve per hovered data point.
+     */
+    custom_tooltip?: {
+        /**
+         * Whether the custom tooltip section is rendered.
+         */
+        enabled?: boolean;
+        /**
+         * Markdown content. Supports headings, bold/italic, ordered/unordered lists, images, links, horizontal rules, and metric/attribute references (\{metric/id\}, \{label/id\}) that resolve per hovered data point.
+         */
+        content?: string;
+        /**
+         * Placement of the custom section relative to the default tooltip content. Defaults to "above".
+         */
+        placement?: "above" | "below" | "replace";
+    };
+    /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
     conditional_formatting?: {
@@ -3949,6 +3983,23 @@ export interface VisualisationConfig2 {
     enable_accessibility?: boolean;
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
+    /**
+     * Custom tooltip section rendered in the visualization tooltip, authored in Markdown with metric/attribute references that resolve per hovered data point.
+     */
+    custom_tooltip?: {
+        /**
+         * Whether the custom tooltip section is rendered.
+         */
+        enabled?: boolean;
+        /**
+         * Markdown content. Supports headings, bold/italic, ordered/unordered lists, images, links, horizontal rules, and metric/attribute references (\{metric/id\}, \{label/id\}) that resolve per hovered data point.
+         */
+        content?: string;
+        /**
+         * Placement of the custom section relative to the default tooltip content. Defaults to "above".
+         */
+        placement?: "above" | "below" | "replace";
+    };
     /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
@@ -4290,6 +4341,23 @@ export interface VisualisationConfig3 {
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
     /**
+     * Custom tooltip section rendered in the visualization tooltip, authored in Markdown with metric/attribute references that resolve per hovered data point.
+     */
+    custom_tooltip?: {
+        /**
+         * Whether the custom tooltip section is rendered.
+         */
+        enabled?: boolean;
+        /**
+         * Markdown content. Supports headings, bold/italic, ordered/unordered lists, images, links, horizontal rules, and metric/attribute references (\{metric/id\}, \{label/id\}) that resolve per hovered data point.
+         */
+        content?: string;
+        /**
+         * Placement of the custom section relative to the default tooltip content. Defaults to "above".
+         */
+        placement?: "above" | "below" | "replace";
+    };
+    /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
     conditional_formatting?: {
@@ -4629,6 +4697,23 @@ export interface VisualisationConfig4 {
     enable_accessibility?: boolean;
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
+    /**
+     * Custom tooltip section rendered in the visualization tooltip, authored in Markdown with metric/attribute references that resolve per hovered data point.
+     */
+    custom_tooltip?: {
+        /**
+         * Whether the custom tooltip section is rendered.
+         */
+        enabled?: boolean;
+        /**
+         * Markdown content. Supports headings, bold/italic, ordered/unordered lists, images, links, horizontal rules, and metric/attribute references (\{metric/id\}, \{label/id\}) that resolve per hovered data point.
+         */
+        content?: string;
+        /**
+         * Placement of the custom section relative to the default tooltip content. Defaults to "above".
+         */
+        placement?: "above" | "below" | "replace";
+    };
     /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
@@ -4970,6 +5055,23 @@ export interface VisualisationConfig5 {
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
     /**
+     * Custom tooltip section rendered in the visualization tooltip, authored in Markdown with metric/attribute references that resolve per hovered data point.
+     */
+    custom_tooltip?: {
+        /**
+         * Whether the custom tooltip section is rendered.
+         */
+        enabled?: boolean;
+        /**
+         * Markdown content. Supports headings, bold/italic, ordered/unordered lists, images, links, horizontal rules, and metric/attribute references (\{metric/id\}, \{label/id\}) that resolve per hovered data point.
+         */
+        content?: string;
+        /**
+         * Placement of the custom section relative to the default tooltip content. Defaults to "above".
+         */
+        placement?: "above" | "below" | "replace";
+    };
+    /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
     conditional_formatting?: {
@@ -5310,6 +5412,23 @@ export interface VisualisationConfig6 {
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
     /**
+     * Custom tooltip section rendered in the visualization tooltip, authored in Markdown with metric/attribute references that resolve per hovered data point.
+     */
+    custom_tooltip?: {
+        /**
+         * Whether the custom tooltip section is rendered.
+         */
+        enabled?: boolean;
+        /**
+         * Markdown content. Supports headings, bold/italic, ordered/unordered lists, images, links, horizontal rules, and metric/attribute references (\{metric/id\}, \{label/id\}) that resolve per hovered data point.
+         */
+        content?: string;
+        /**
+         * Placement of the custom section relative to the default tooltip content. Defaults to "above".
+         */
+        placement?: "above" | "below" | "replace";
+    };
+    /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
     conditional_formatting?: {
@@ -5645,6 +5764,23 @@ export interface VisualisationConfig7 {
     enable_accessibility?: boolean;
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
+    /**
+     * Custom tooltip section rendered in the visualization tooltip, authored in Markdown with metric/attribute references that resolve per hovered data point.
+     */
+    custom_tooltip?: {
+        /**
+         * Whether the custom tooltip section is rendered.
+         */
+        enabled?: boolean;
+        /**
+         * Markdown content. Supports headings, bold/italic, ordered/unordered lists, images, links, horizontal rules, and metric/attribute references (\{metric/id\}, \{label/id\}) that resolve per hovered data point.
+         */
+        content?: string;
+        /**
+         * Placement of the custom section relative to the default tooltip content. Defaults to "above".
+         */
+        placement?: "above" | "below" | "replace";
+    };
     /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
@@ -5982,6 +6118,23 @@ export interface VisualisationConfig8 {
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
     /**
+     * Custom tooltip section rendered in the visualization tooltip, authored in Markdown with metric/attribute references that resolve per hovered data point.
+     */
+    custom_tooltip?: {
+        /**
+         * Whether the custom tooltip section is rendered.
+         */
+        enabled?: boolean;
+        /**
+         * Markdown content. Supports headings, bold/italic, ordered/unordered lists, images, links, horizontal rules, and metric/attribute references (\{metric/id\}, \{label/id\}) that resolve per hovered data point.
+         */
+        content?: string;
+        /**
+         * Placement of the custom section relative to the default tooltip content. Defaults to "above".
+         */
+        placement?: "above" | "below" | "replace";
+    };
+    /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
     conditional_formatting?: {
@@ -6317,6 +6470,23 @@ export interface VisualisationConfig9 {
     enable_accessibility?: boolean;
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
+    /**
+     * Custom tooltip section rendered in the visualization tooltip, authored in Markdown with metric/attribute references that resolve per hovered data point.
+     */
+    custom_tooltip?: {
+        /**
+         * Whether the custom tooltip section is rendered.
+         */
+        enabled?: boolean;
+        /**
+         * Markdown content. Supports headings, bold/italic, ordered/unordered lists, images, links, horizontal rules, and metric/attribute references (\{metric/id\}, \{label/id\}) that resolve per hovered data point.
+         */
+        content?: string;
+        /**
+         * Placement of the custom section relative to the default tooltip content. Defaults to "above".
+         */
+        placement?: "above" | "below" | "replace";
+    };
     /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
@@ -6654,6 +6824,23 @@ export interface VisualisationConfig10 {
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
     /**
+     * Custom tooltip section rendered in the visualization tooltip, authored in Markdown with metric/attribute references that resolve per hovered data point.
+     */
+    custom_tooltip?: {
+        /**
+         * Whether the custom tooltip section is rendered.
+         */
+        enabled?: boolean;
+        /**
+         * Markdown content. Supports headings, bold/italic, ordered/unordered lists, images, links, horizontal rules, and metric/attribute references (\{metric/id\}, \{label/id\}) that resolve per hovered data point.
+         */
+        content?: string;
+        /**
+         * Placement of the custom section relative to the default tooltip content. Defaults to "above".
+         */
+        placement?: "above" | "below" | "replace";
+    };
+    /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
     conditional_formatting?: {
@@ -6989,6 +7176,23 @@ export interface VisualisationConfig11 {
     enable_accessibility?: boolean;
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
+    /**
+     * Custom tooltip section rendered in the visualization tooltip, authored in Markdown with metric/attribute references that resolve per hovered data point.
+     */
+    custom_tooltip?: {
+        /**
+         * Whether the custom tooltip section is rendered.
+         */
+        enabled?: boolean;
+        /**
+         * Markdown content. Supports headings, bold/italic, ordered/unordered lists, images, links, horizontal rules, and metric/attribute references (\{metric/id\}, \{label/id\}) that resolve per hovered data point.
+         */
+        content?: string;
+        /**
+         * Placement of the custom section relative to the default tooltip content. Defaults to "above".
+         */
+        placement?: "above" | "below" | "replace";
+    };
     /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
@@ -7334,6 +7538,23 @@ export interface VisualisationConfig12 {
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
     /**
+     * Custom tooltip section rendered in the visualization tooltip, authored in Markdown with metric/attribute references that resolve per hovered data point.
+     */
+    custom_tooltip?: {
+        /**
+         * Whether the custom tooltip section is rendered.
+         */
+        enabled?: boolean;
+        /**
+         * Markdown content. Supports headings, bold/italic, ordered/unordered lists, images, links, horizontal rules, and metric/attribute references (\{metric/id\}, \{label/id\}) that resolve per hovered data point.
+         */
+        content?: string;
+        /**
+         * Placement of the custom section relative to the default tooltip content. Defaults to "above".
+         */
+        placement?: "above" | "below" | "replace";
+    };
+    /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
     conditional_formatting?: {
@@ -7670,6 +7891,23 @@ export interface VisualisationConfig13 {
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
     /**
+     * Custom tooltip section rendered in the visualization tooltip, authored in Markdown with metric/attribute references that resolve per hovered data point.
+     */
+    custom_tooltip?: {
+        /**
+         * Whether the custom tooltip section is rendered.
+         */
+        enabled?: boolean;
+        /**
+         * Markdown content. Supports headings, bold/italic, ordered/unordered lists, images, links, horizontal rules, and metric/attribute references (\{metric/id\}, \{label/id\}) that resolve per hovered data point.
+         */
+        content?: string;
+        /**
+         * Placement of the custom section relative to the default tooltip content. Defaults to "above".
+         */
+        placement?: "above" | "below" | "replace";
+    };
+    /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
     conditional_formatting?: {
@@ -8005,6 +8243,23 @@ export interface VisualisationConfig14 {
     enable_accessibility?: boolean;
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
+    /**
+     * Custom tooltip section rendered in the visualization tooltip, authored in Markdown with metric/attribute references that resolve per hovered data point.
+     */
+    custom_tooltip?: {
+        /**
+         * Whether the custom tooltip section is rendered.
+         */
+        enabled?: boolean;
+        /**
+         * Markdown content. Supports headings, bold/italic, ordered/unordered lists, images, links, horizontal rules, and metric/attribute references (\{metric/id\}, \{label/id\}) that resolve per hovered data point.
+         */
+        content?: string;
+        /**
+         * Placement of the custom section relative to the default tooltip content. Defaults to "above".
+         */
+        placement?: "above" | "below" | "replace";
+    };
     /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
@@ -8344,6 +8599,23 @@ export interface VisualisationConfig15 {
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
     /**
+     * Custom tooltip section rendered in the visualization tooltip, authored in Markdown with metric/attribute references that resolve per hovered data point.
+     */
+    custom_tooltip?: {
+        /**
+         * Whether the custom tooltip section is rendered.
+         */
+        enabled?: boolean;
+        /**
+         * Markdown content. Supports headings, bold/italic, ordered/unordered lists, images, links, horizontal rules, and metric/attribute references (\{metric/id\}, \{label/id\}) that resolve per hovered data point.
+         */
+        content?: string;
+        /**
+         * Placement of the custom section relative to the default tooltip content. Defaults to "above".
+         */
+        placement?: "above" | "below" | "replace";
+    };
+    /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
     conditional_formatting?: {
@@ -8682,6 +8954,23 @@ export interface VisualisationConfig16 {
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
     /**
+     * Custom tooltip section rendered in the visualization tooltip, authored in Markdown with metric/attribute references that resolve per hovered data point.
+     */
+    custom_tooltip?: {
+        /**
+         * Whether the custom tooltip section is rendered.
+         */
+        enabled?: boolean;
+        /**
+         * Markdown content. Supports headings, bold/italic, ordered/unordered lists, images, links, horizontal rules, and metric/attribute references (\{metric/id\}, \{label/id\}) that resolve per hovered data point.
+         */
+        content?: string;
+        /**
+         * Placement of the custom section relative to the default tooltip content. Defaults to "above".
+         */
+        placement?: "above" | "below" | "replace";
+    };
+    /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
     conditional_formatting?: {
@@ -9018,6 +9307,23 @@ export interface VisualisationConfig17 {
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
     /**
+     * Custom tooltip section rendered in the visualization tooltip, authored in Markdown with metric/attribute references that resolve per hovered data point.
+     */
+    custom_tooltip?: {
+        /**
+         * Whether the custom tooltip section is rendered.
+         */
+        enabled?: boolean;
+        /**
+         * Markdown content. Supports headings, bold/italic, ordered/unordered lists, images, links, horizontal rules, and metric/attribute references (\{metric/id\}, \{label/id\}) that resolve per hovered data point.
+         */
+        content?: string;
+        /**
+         * Placement of the custom section relative to the default tooltip content. Defaults to "above".
+         */
+        placement?: "above" | "below" | "replace";
+    };
+    /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
     conditional_formatting?: {
@@ -9353,6 +9659,23 @@ export interface VisualisationConfig18 {
     enable_accessibility?: boolean;
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
+    /**
+     * Custom tooltip section rendered in the visualization tooltip, authored in Markdown with metric/attribute references that resolve per hovered data point.
+     */
+    custom_tooltip?: {
+        /**
+         * Whether the custom tooltip section is rendered.
+         */
+        enabled?: boolean;
+        /**
+         * Markdown content. Supports headings, bold/italic, ordered/unordered lists, images, links, horizontal rules, and metric/attribute references (\{metric/id\}, \{label/id\}) that resolve per hovered data point.
+         */
+        content?: string;
+        /**
+         * Placement of the custom section relative to the default tooltip content. Defaults to "above".
+         */
+        placement?: "above" | "below" | "replace";
+    };
     /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
@@ -9694,6 +10017,23 @@ export interface VisualisationConfig19 {
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
     /**
+     * Custom tooltip section rendered in the visualization tooltip, authored in Markdown with metric/attribute references that resolve per hovered data point.
+     */
+    custom_tooltip?: {
+        /**
+         * Whether the custom tooltip section is rendered.
+         */
+        enabled?: boolean;
+        /**
+         * Markdown content. Supports headings, bold/italic, ordered/unordered lists, images, links, horizontal rules, and metric/attribute references (\{metric/id\}, \{label/id\}) that resolve per hovered data point.
+         */
+        content?: string;
+        /**
+         * Placement of the custom section relative to the default tooltip content. Defaults to "above".
+         */
+        placement?: "above" | "below" | "replace";
+    };
+    /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
     conditional_formatting?: {
@@ -10006,6 +10346,23 @@ export interface VisualisationConfig20 {
     enable_accessibility?: boolean;
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
+    /**
+     * Custom tooltip section rendered in the visualization tooltip, authored in Markdown with metric/attribute references that resolve per hovered data point.
+     */
+    custom_tooltip?: {
+        /**
+         * Whether the custom tooltip section is rendered.
+         */
+        enabled?: boolean;
+        /**
+         * Markdown content. Supports headings, bold/italic, ordered/unordered lists, images, links, horizontal rules, and metric/attribute references (\{metric/id\}, \{label/id\}) that resolve per hovered data point.
+         */
+        content?: string;
+        /**
+         * Placement of the custom section relative to the default tooltip content. Defaults to "above".
+         */
+        placement?: "above" | "below" | "replace";
+    };
     /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
@@ -10346,6 +10703,23 @@ export interface VisualisationConfig21 {
     enable_accessibility?: boolean;
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
+    /**
+     * Custom tooltip section rendered in the visualization tooltip, authored in Markdown with metric/attribute references that resolve per hovered data point.
+     */
+    custom_tooltip?: {
+        /**
+         * Whether the custom tooltip section is rendered.
+         */
+        enabled?: boolean;
+        /**
+         * Markdown content. Supports headings, bold/italic, ordered/unordered lists, images, links, horizontal rules, and metric/attribute references (\{metric/id\}, \{label/id\}) that resolve per hovered data point.
+         */
+        content?: string;
+        /**
+         * Placement of the custom section relative to the default tooltip content. Defaults to "above".
+         */
+        placement?: "above" | "below" | "replace";
+    };
     /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
@@ -10690,6 +11064,23 @@ export interface VisualisationConfig22 {
     enable_accessibility?: boolean;
     line_style_control_metrics?: string[];
     line_style_excluded_metrics?: string[];
+    /**
+     * Custom tooltip section rendered in the visualization tooltip, authored in Markdown with metric/attribute references that resolve per hovered data point.
+     */
+    custom_tooltip?: {
+        /**
+         * Whether the custom tooltip section is rendered.
+         */
+        enabled?: boolean;
+        /**
+         * Markdown content. Supports headings, bold/italic, ordered/unordered lists, images, links, horizontal rules, and metric/attribute references (\{metric/id\}, \{label/id\}) that resolve per hovered data point.
+         */
+        content?: string;
+        /**
+         * Placement of the custom section relative to the default tooltip content. Defaults to "above".
+         */
+        placement?: "above" | "below" | "replace";
+    };
     /**
      * Conditional formatting rules that color cells or rows based on their values.
      */

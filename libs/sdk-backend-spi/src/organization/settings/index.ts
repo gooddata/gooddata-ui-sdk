@@ -5,6 +5,7 @@ import {
     type IActiveCalendars,
     type IAiRateLimit,
     type IAlertDefault,
+    type IDefaultExportTemplate,
     type IFiscalYear,
     type IMetricFormatOverrideSetting,
     type IOpenAiConfig,
@@ -212,6 +213,24 @@ export interface IOrganizationSettingsService {
      * @alpha
      */
     setDashboardFiltersApplyMode(dashboardFiltersApplyMode: DashboardFiltersApplyMode): Promise<void>;
+
+    /**
+     * Sets the default export template applied to slide exports when none is explicitly requested.
+     *
+     * @param value - identifier and scope of the export template to use as the default.
+     *
+     * @returns promise
+     * @beta
+     */
+    setDefaultExportTemplate(value: IDefaultExportTemplate): Promise<void>;
+
+    /**
+     * Deletes the default export template setting from the organization, reverting to the built-in default.
+     *
+     * @returns promise
+     * @beta
+     */
+    deleteDefaultExportTemplate(): Promise<void>;
 
     /**
      * Sets enable AI on data setting for organization.

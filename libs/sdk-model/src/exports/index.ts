@@ -8,23 +8,155 @@ import { type FilterContextItem } from "../dashboard/filterContext.js";
 import { type IDashboardExportParameter } from "../dashboard/parameter.js";
 import { type IFilter } from "../execution/filter/index.js";
 import { type IMetadataObject, type IMetadataObjectDefinition } from "../ldm/metadata/types.js";
-import { type Identifier } from "../objRef/index.js";
+import { type Identifier, type ObjRef } from "../objRef/index.js";
+
+/**
+ * Export type a slide template applies to.
+ *
+ * @beta
+ */
+export type ExportTemplateAppliedOn = "PDF" | "PPTX";
+
+/**
+ * Running (header or footer) section of a slide.
+ *
+ * @remarks
+ * Each side is either the `{{logo}}` variable or a custom text combined with other template variables.
+ *
+ * @beta
+ */
+export interface IExportTemplateRunningSection {
+    /**
+     * Left-aligned content.
+     */
+    left?: string | null;
+
+    /**
+     * Right-aligned content.
+     */
+    right?: string | null;
+}
+
+/**
+ * Settings for a content slide.
+ *
+ * @beta
+ */
+export interface IExportTemplateContentSlide {
+    header?: IExportTemplateRunningSection | null;
+    footer?: IExportTemplateRunningSection | null;
+    descriptionField?: string | null;
+}
+
+/**
+ * Settings for a cover slide.
+ *
+ * @beta
+ */
+export interface IExportTemplateCoverSlide {
+    header?: IExportTemplateRunningSection | null;
+    footer?: IExportTemplateRunningSection | null;
+    descriptionField?: string | null;
+
+    /**
+     * Show a background image on the slide.
+     */
+    backgroundImage?: boolean;
+}
+
+/**
+ * Settings for an intro slide.
+ *
+ * @beta
+ */
+export interface IExportTemplateIntroSlide {
+    header?: IExportTemplateRunningSection | null;
+    footer?: IExportTemplateRunningSection | null;
+    titleField?: string | null;
+    descriptionField?: string | null;
+
+    /**
+     * Show a background image on the slide.
+     */
+    backgroundImage?: boolean;
+}
+
+/**
+ * Settings for a section slide.
+ *
+ * @beta
+ */
+export interface IExportTemplateSectionSlide {
+    header?: IExportTemplateRunningSection | null;
+    footer?: IExportTemplateRunningSection | null;
+
+    /**
+     * Show a background image on the slide.
+     */
+    backgroundImage?: boolean;
+}
+
+/**
+ * Template describing how a dashboard is rendered into slides.
+ *
+ * @beta
+ */
+export interface IExportTemplateDashboardSlides {
+    /**
+     * Export types this template applies to.
+     */
+    appliedOn: ExportTemplateAppliedOn[];
+    coverSlide?: IExportTemplateCoverSlide | null;
+    introSlide?: IExportTemplateIntroSlide | null;
+    sectionSlide?: IExportTemplateSectionSlide | null;
+    contentSlide?: IExportTemplateContentSlide | null;
+}
+
+/**
+ * Template describing how a single widget is rendered into slides.
+ *
+ * @beta
+ */
+export interface IExportTemplateWidgetSlides {
+    /**
+     * Export types this template applies to.
+     */
+    appliedOn: ExportTemplateAppliedOn[];
+    contentSlide?: IExportTemplateContentSlide | null;
+}
+
+/**
+ * Export template payload used to create or update an export template.
+ *
+ * @beta
+ */
+export interface IExportTemplateDefinition {
+    /**
+     * User-facing name of the export template.
+     */
+    name: string;
+
+    /**
+     * Template applied to dashboard slide exports.
+     */
+    dashboardSlidesTemplate?: IExportTemplateDashboardSlides | null;
+
+    /**
+     * Template applied to single-widget slide exports.
+     */
+    widgetSlidesTemplate?: IExportTemplateWidgetSlides | null;
+}
 
 /**
  * Export template metadata.
  *
  * @beta
  */
-export interface IExportTemplate {
+export interface IExportTemplate extends IExportTemplateDefinition {
     /**
-     * Unique identifier of the export template.
+     * Reference to the export template.
      */
-    id: string;
-
-    /**
-     * User-facing name of the export template.
-     */
-    name: string;
+    ref: ObjRef;
 }
 
 /**

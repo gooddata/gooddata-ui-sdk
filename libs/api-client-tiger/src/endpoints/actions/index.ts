@@ -22,8 +22,6 @@ export {
     type ActionsApiUnsubscribeSelectedWorkspaceAutomationsRequest,
     ActionsApi_InheritedEntityPrefixes,
     type ActionsApiInheritedEntityPrefixesRequest,
-    ActionsApi_MetadataSync,
-    type ActionsApiMetadataSyncRequest,
     ActionsApi_ListWorkspaceUsers,
     type ActionsApiListWorkspaceUsersRequest,
     ActionsApi_RegisterUploadNotification,

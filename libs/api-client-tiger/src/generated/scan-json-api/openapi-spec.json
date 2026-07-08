@@ -572,6 +572,18 @@
                         "type": "string",
                         "description": "Secret for client based authentication for data sources which supports it."
                     },
+                    "authenticationType": {
+                        "type": "string",
+                        "description": "Type of authentication used to connect to the database. Determines how the supplied credentials are used (e.g. KEY_PAIR, OIDC_PASSTHROUGH).",
+                        "nullable": true,
+                        "enum": [
+                            "USERNAME_PASSWORD",
+                            "TOKEN",
+                            "KEY_PAIR",
+                            "CLIENT_SECRET",
+                            "OIDC_PASSTHROUGH"
+                        ]
+                    },
                     "parameters": {
                         "type": "array",
                         "items": {
@@ -1337,6 +1349,18 @@
                     "clientSecret": {
                         "type": "string",
                         "description": "Secret for client based authentication for data sources which supports it."
+                    },
+                    "authenticationType": {
+                        "type": "string",
+                        "description": "Type of authentication used to connect to the database. Determines how the supplied credentials are used (e.g. KEY_PAIR, OIDC_PASSTHROUGH).",
+                        "nullable": true,
+                        "enum": [
+                            "USERNAME_PASSWORD",
+                            "TOKEN",
+                            "KEY_PAIR",
+                            "CLIENT_SECRET",
+                            "OIDC_PASSTHROUGH"
+                        ]
                     },
                     "parameters": {
                         "type": "array",

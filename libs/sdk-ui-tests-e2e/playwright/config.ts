@@ -40,15 +40,6 @@ const FEATURE_HUB_RESPONSE = [
                 strategies: [],
             },
             {
-                id: "d154cf37-9ffe-4cae-b892-017ff3429a7c",
-                key: "dashboardEditModeDevRollout",
-                l: false,
-                version: 42,
-                type: "BOOLEAN",
-                value: true,
-                strategies: [],
-            },
-            {
                 id: "64b7b92c-6721-461d-a8fb-52664f6ef219",
                 key: "enableNewExecutorFlow",
                 l: false,

@@ -29,7 +29,6 @@ describe("static features", () => {
     it("full definition", () => {
         const results = getStaticFeatures(
             createFeatures({
-                [TigerFeaturesNames.DashboardEditModeDevRollout]: "ENABLED",
                 [TigerFeaturesNames.EnableMetricSqlAndDataExplain]: "ENABLED",
                 [TigerFeaturesNames.EnableSqlDatasets]: "TRUE",
                 [TigerFeaturesNames.EnableGeoChartA11yImprovements]: "TRUE",
@@ -40,7 +39,6 @@ describe("static features", () => {
             }),
         );
         expect(results).toEqual({
-            dashboardEditModeDevRollout: true,
             enableMetricSqlAndDataExplain: true,
             enableSqlDatasets: true,
             enableGeoChartA11yImprovements: true,
@@ -55,7 +53,6 @@ describe("static features", () => {
         const results = getStaticFeatures(
             createFeatures(
                 {
-                    [TigerFeaturesNames.DashboardEditModeDevRollout]: "ENABLED",
                     [TigerFeaturesNames.EnableMetricSqlAndDataExplain]: "ENABLED",
                     [TigerFeaturesNames.EnableSqlDatasets]: "TRUE",
                     [TigerFeaturesNames.EnableGeoChartA11yImprovements]: "TRUE",
@@ -68,7 +65,6 @@ describe("static features", () => {
             ),
         );
         expect(results).toEqual({
-            dashboardEditModeDevRollout: true,
             enableMetricSqlAndDataExplain: true,
             enableSqlDatasets: true,
             enableGeoChartA11yImprovements: true,

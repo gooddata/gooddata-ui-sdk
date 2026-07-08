@@ -27,7 +27,7 @@ export {
     type IObjectCertificationWrite,
 } from "./base/metadata.js";
 export type { ComparatorDirection, IComparator } from "./base/comparators.js";
-export { assertNever } from "./base/typeUtils.js";
+export { assertNever, throwUnexpected } from "./base/typeUtils.js";
 export { type ILocale, DefaultLocale, isLocale, LOCALES } from "./base/localization.js";
 
 export {
@@ -831,6 +831,7 @@ export {
     type IParameterMetadataObjectDefinition,
     type IStringParameterConstraints,
     type IStringParameterDefinition,
+    type ParameterType,
     type ParameterValue,
     getNumberParameterDefaultValue,
     isNumberParameterDefinition,
@@ -1009,6 +1010,8 @@ export {
     type ILlmActiveProvider,
     type IAiRateLimit,
     type DashboardFiltersApplyMode,
+    type ExportTemplateType,
+    type IDefaultExportTemplate,
     type EarlyAccessFeatureContext,
     type EarlyAccessFeatureStatus,
     type IEarlyAccessFeatureConfig,
@@ -1195,6 +1198,15 @@ export type { DataSourceType, IDataSourceIdentifierDescriptor } from "./dataSour
 
 export {
     type IExportTemplate,
+    type IExportTemplateDefinition,
+    type ExportTemplateAppliedOn,
+    type IExportTemplateRunningSection,
+    type IExportTemplateContentSlide,
+    type IExportTemplateCoverSlide,
+    type IExportTemplateIntroSlide,
+    type IExportTemplateSectionSlide,
+    type IExportTemplateDashboardSlides,
+    type IExportTemplateWidgetSlides,
     type IExportDefinitionMetadataObject,
     type IExportDefinitionBase,
     type IExportDefinitionDashboardSettings,

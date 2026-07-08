@@ -4656,6 +4656,55 @@
                 ],
                 "title": "MetricUsageResponse"
             },
+            "MetricValueComparisonFilter": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "metric_value_filter",
+                        "title": "Type"
+                    },
+                    "using": {
+                        "type": "string",
+                        "title": "Using"
+                    },
+                    "condition": {
+                        "type": "string",
+                        "enum": [
+                            "GREATER_THAN",
+                            "GREATER_THAN_OR_EQUAL_TO",
+                            "LESS_THAN",
+                            "LESS_THAN_OR_EQUAL_TO",
+                            "EQUAL_TO",
+                            "NOT_EQUAL_TO"
+                        ],
+                        "title": "Condition"
+                    },
+                    "value": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "integer"
+                            }
+                        ],
+                        "title": "Value"
+                    },
+                    "null_values_as_zero": {
+                        "type": "boolean",
+                        "title": "Null Values As Zero"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "type",
+                    "using",
+                    "condition",
+                    "value"
+                ],
+                "title": "MetricValueComparisonFilter"
+            },
             "MetricValueFilterConditionComparison": {
                 "type": "string",
                 "enum": [
@@ -4673,6 +4722,63 @@
                     "BETWEEN",
                     "NOT_BETWEEN"
                 ]
+            },
+            "MetricValueRangeFilter": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "metric_value_filter",
+                        "title": "Type"
+                    },
+                    "using": {
+                        "type": "string",
+                        "title": "Using"
+                    },
+                    "condition": {
+                        "type": "string",
+                        "enum": [
+                            "BETWEEN",
+                            "NOT_BETWEEN"
+                        ],
+                        "title": "Condition"
+                    },
+                    "from": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "integer"
+                            }
+                        ],
+                        "title": "From"
+                    },
+                    "to": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "integer"
+                            }
+                        ],
+                        "title": "To"
+                    },
+                    "null_values_as_zero": {
+                        "type": "boolean",
+                        "title": "Null Values As Zero"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "type",
+                    "using",
+                    "condition",
+                    "from",
+                    "to"
+                ],
+                "title": "MetricValueRangeFilter"
             },
             "MultipartContent": {
                 "properties": {
@@ -5030,6 +5136,12 @@
                                 },
                                 {
                                     "$ref": "#/components/schemas/app__domain__conversations__visualization__RankingFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/MetricValueComparisonFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/MetricValueRangeFilter"
                                 },
                                 {
                                     "$ref": "#/components/schemas/TextFilterValues"
@@ -7339,6 +7451,13 @@
                     "anomaly_detection_color": {
                         "type": "string",
                         "title": "Anomaly Detection Color"
+                    },
+                    "disable_key_drive_analysis": {
+                        "additionalProperties": {
+                            "type": "boolean"
+                        },
+                        "type": "object",
+                        "title": "Disable Key Drive Analysis"
                     }
                 },
                 "additionalProperties": false,

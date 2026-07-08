@@ -240,16 +240,6 @@ type AttributeIdentifier13 = string;
 // @public
 type AttributeIdentifier14 = string;
 
-// Warning: (ae-missing-release-tag) "AttributeIdentifier15" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public
-type AttributeIdentifier15 = string;
-
-// Warning: (ae-missing-release-tag) "AttributeIdentifier16" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public
-type AttributeIdentifier16 = string;
-
 // Warning: (ae-missing-release-tag) "AttributeIdentifier2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public
@@ -295,7 +285,7 @@ type AttributeIdentifier9 = string;
 // @public (undocumented)
 interface AttributeSort {
     aggregation?: "SUM";
-    by: string | AttributeIdentifier15 | LabelIdentifier12;
+    by: string | AttributeIdentifier13 | LabelIdentifier14;
     direction: "ASC" | "DESC";
     // (undocumented)
     type: "attribute_sort";
@@ -367,7 +357,7 @@ interface BarChart {
 //
 // @public (undocumented)
 interface BOTTOM {
-    attribute?: AttributeIdentifier12;
+    attribute?: LabelIdentifier11;
     bottom: number;
     strict_limit_of_rows?: boolean;
     top?: number;
@@ -457,7 +447,7 @@ interface CalculatedMetricField {
     // (undocumented)
     filter_by?: QueryFilters1;
     title?: string;
-    using: (AttributeIdentifier14 | FactIdentifier1 | LabelIdentifier11) & string;
+    using: (AttributeIdentifier12 | FactIdentifier1 | LabelIdentifier13) & string;
 }
 
 // Warning: (ae-missing-release-tag) "CalculatedMetricFieldGuard" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -1684,6 +1674,16 @@ type LabelIdentifier12 = string;
 //
 // @public
 type LabelIdentifier13 = string;
+
+// Warning: (ae-missing-release-tag) "LabelIdentifier14" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type LabelIdentifier14 = string;
+
+// Warning: (ae-missing-release-tag) "LabelIdentifier15" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type LabelIdentifier15 = string;
 
 // Warning: (ae-missing-release-tag) "LabelIdentifier2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
@@ -4459,6 +4459,26 @@ export const metadata_v1: {
                         type: string;
                         items: {
                             type: string;
+                        };
+                    };
+                    custom_tooltip: {
+                        type: string;
+                        description: string;
+                        additionalProperties: boolean;
+                        properties: {
+                            enabled: {
+                                type: string;
+                                description: string;
+                            };
+                            content: {
+                                type: string;
+                                description: string;
+                            };
+                            placement: {
+                                type: string;
+                                enum: string[];
+                                description: string;
+                            };
                         };
                     };
                     conditional_formatting: {
@@ -9248,12 +9268,12 @@ interface MetricSort {
     // (undocumented)
     metrics: [
     (string | {
-        by: string | AttributeIdentifier16 | LabelIdentifier13;
+        by: string | AttributeIdentifier14 | LabelIdentifier15;
         element?: string;
         function?: "SUM" | "AVG" | "MIN" | "MAX" | "MED" | "NAT";
     }),
     ...(string | {
-        by: string | AttributeIdentifier16 | LabelIdentifier13;
+        by: string | AttributeIdentifier14 | LabelIdentifier15;
         element?: string;
         function?: "SUM" | "AVG" | "MIN" | "MAX" | "MED" | "NAT";
     })[]
@@ -10269,7 +10289,7 @@ interface TextFilter2 {
 //
 // @public (undocumented)
 interface TOP {
-    attribute?: AttributeIdentifier13;
+    attribute?: LabelIdentifier12;
     bottom?: number;
     strict_limit_of_rows?: boolean;
     top: number;
@@ -10478,26 +10498,26 @@ declare namespace v1 {
         Filter5,
         RankingFilter,
         MetricIdentifier4,
-        AttributeIdentifier12,
+        LabelIdentifier11,
         MetricIdentifier5,
-        AttributeIdentifier13,
+        LabelIdentifier12,
         Filter6,
         MetricIdentifier6,
         CalculatedMetricFieldGuard,
-        AttributeIdentifier14,
+        AttributeIdentifier12,
         FactIdentifier1,
-        LabelIdentifier11,
+        LabelIdentifier13,
         InlineMetricFieldGuard,
         ArithmeticMetricFieldGuard,
         PoPMetricFieldGuard,
         PreviousPeriodMetricFieldGuard,
         Sort,
         Sort1,
-        AttributeIdentifier15,
-        LabelIdentifier12,
+        AttributeIdentifier13,
+        LabelIdentifier14,
         Sort2,
-        AttributeIdentifier16,
-        LabelIdentifier13,
+        AttributeIdentifier14,
+        LabelIdentifier15,
         Sort3,
         Sorts,
         WidthValueOrAuto,
@@ -10947,6 +10967,11 @@ interface VisualisationConfig {
     };
     // (undocumented)
     continuous_line?: boolean;
+    custom_tooltip?: {
+        enabled?: boolean;
+        content?: string;
+        placement?: "above" | "below" | "replace";
+    };
     // (undocumented)
     data_labels?: boolean | "auto";
     // (undocumented)
@@ -11227,6 +11252,11 @@ interface VisualisationConfig1 {
     };
     // (undocumented)
     continuous_line?: boolean;
+    custom_tooltip?: {
+        enabled?: boolean;
+        content?: string;
+        placement?: "above" | "below" | "replace";
+    };
     // (undocumented)
     data_labels?: boolean | "auto";
     // (undocumented)
@@ -11507,6 +11537,11 @@ interface VisualisationConfig10 {
     };
     // (undocumented)
     continuous_line?: boolean;
+    custom_tooltip?: {
+        enabled?: boolean;
+        content?: string;
+        placement?: "above" | "below" | "replace";
+    };
     // (undocumented)
     data_labels?: boolean | "auto";
     // (undocumented)
@@ -11787,6 +11822,11 @@ interface VisualisationConfig11 {
     };
     // (undocumented)
     continuous_line?: boolean;
+    custom_tooltip?: {
+        enabled?: boolean;
+        content?: string;
+        placement?: "above" | "below" | "replace";
+    };
     // (undocumented)
     data_labels?: boolean | "auto";
     // (undocumented)
@@ -12067,6 +12107,11 @@ interface VisualisationConfig12 {
     };
     // (undocumented)
     continuous_line?: boolean;
+    custom_tooltip?: {
+        enabled?: boolean;
+        content?: string;
+        placement?: "above" | "below" | "replace";
+    };
     // (undocumented)
     data_labels?: boolean | "auto";
     // (undocumented)
@@ -12347,6 +12392,11 @@ interface VisualisationConfig13 {
     };
     // (undocumented)
     continuous_line?: boolean;
+    custom_tooltip?: {
+        enabled?: boolean;
+        content?: string;
+        placement?: "above" | "below" | "replace";
+    };
     // (undocumented)
     data_labels?: boolean | "auto";
     // (undocumented)
@@ -12627,6 +12677,11 @@ interface VisualisationConfig14 {
     };
     // (undocumented)
     continuous_line?: boolean;
+    custom_tooltip?: {
+        enabled?: boolean;
+        content?: string;
+        placement?: "above" | "below" | "replace";
+    };
     // (undocumented)
     data_labels?: boolean | "auto";
     // (undocumented)
@@ -12907,6 +12962,11 @@ interface VisualisationConfig15 {
     };
     // (undocumented)
     continuous_line?: boolean;
+    custom_tooltip?: {
+        enabled?: boolean;
+        content?: string;
+        placement?: "above" | "below" | "replace";
+    };
     // (undocumented)
     data_labels?: boolean | "auto";
     // (undocumented)
@@ -13187,6 +13247,11 @@ interface VisualisationConfig16 {
     };
     // (undocumented)
     continuous_line?: boolean;
+    custom_tooltip?: {
+        enabled?: boolean;
+        content?: string;
+        placement?: "above" | "below" | "replace";
+    };
     // (undocumented)
     data_labels?: boolean | "auto";
     // (undocumented)
@@ -13467,6 +13532,11 @@ interface VisualisationConfig17 {
     };
     // (undocumented)
     continuous_line?: boolean;
+    custom_tooltip?: {
+        enabled?: boolean;
+        content?: string;
+        placement?: "above" | "below" | "replace";
+    };
     // (undocumented)
     data_labels?: boolean | "auto";
     // (undocumented)
@@ -13747,6 +13817,11 @@ interface VisualisationConfig18 {
     };
     // (undocumented)
     continuous_line?: boolean;
+    custom_tooltip?: {
+        enabled?: boolean;
+        content?: string;
+        placement?: "above" | "below" | "replace";
+    };
     // (undocumented)
     data_labels?: boolean | "auto";
     // (undocumented)
@@ -14027,6 +14102,11 @@ interface VisualisationConfig19 {
     };
     // (undocumented)
     continuous_line?: boolean;
+    custom_tooltip?: {
+        enabled?: boolean;
+        content?: string;
+        placement?: "above" | "below" | "replace";
+    };
     // (undocumented)
     data_labels?: boolean | "auto";
     // (undocumented)
@@ -14307,6 +14387,11 @@ interface VisualisationConfig2 {
     };
     // (undocumented)
     continuous_line?: boolean;
+    custom_tooltip?: {
+        enabled?: boolean;
+        content?: string;
+        placement?: "above" | "below" | "replace";
+    };
     // (undocumented)
     data_labels?: boolean | "auto";
     // (undocumented)
@@ -14587,6 +14672,11 @@ interface VisualisationConfig20 {
     };
     // (undocumented)
     continuous_line?: boolean;
+    custom_tooltip?: {
+        enabled?: boolean;
+        content?: string;
+        placement?: "above" | "below" | "replace";
+    };
     // (undocumented)
     data_labels?: boolean | "auto";
     // (undocumented)
@@ -14867,6 +14957,11 @@ interface VisualisationConfig21 {
     };
     // (undocumented)
     continuous_line?: boolean;
+    custom_tooltip?: {
+        enabled?: boolean;
+        content?: string;
+        placement?: "above" | "below" | "replace";
+    };
     // (undocumented)
     data_labels?: boolean | "auto";
     // (undocumented)
@@ -15147,6 +15242,11 @@ interface VisualisationConfig22 {
     };
     // (undocumented)
     continuous_line?: boolean;
+    custom_tooltip?: {
+        enabled?: boolean;
+        content?: string;
+        placement?: "above" | "below" | "replace";
+    };
     // (undocumented)
     data_labels?: boolean | "auto";
     // (undocumented)
@@ -15427,6 +15527,11 @@ interface VisualisationConfig3 {
     };
     // (undocumented)
     continuous_line?: boolean;
+    custom_tooltip?: {
+        enabled?: boolean;
+        content?: string;
+        placement?: "above" | "below" | "replace";
+    };
     // (undocumented)
     data_labels?: boolean | "auto";
     // (undocumented)
@@ -15707,6 +15812,11 @@ interface VisualisationConfig4 {
     };
     // (undocumented)
     continuous_line?: boolean;
+    custom_tooltip?: {
+        enabled?: boolean;
+        content?: string;
+        placement?: "above" | "below" | "replace";
+    };
     // (undocumented)
     data_labels?: boolean | "auto";
     // (undocumented)
@@ -15987,6 +16097,11 @@ interface VisualisationConfig5 {
     };
     // (undocumented)
     continuous_line?: boolean;
+    custom_tooltip?: {
+        enabled?: boolean;
+        content?: string;
+        placement?: "above" | "below" | "replace";
+    };
     // (undocumented)
     data_labels?: boolean | "auto";
     // (undocumented)
@@ -16267,6 +16382,11 @@ interface VisualisationConfig6 {
     };
     // (undocumented)
     continuous_line?: boolean;
+    custom_tooltip?: {
+        enabled?: boolean;
+        content?: string;
+        placement?: "above" | "below" | "replace";
+    };
     // (undocumented)
     data_labels?: boolean | "auto";
     // (undocumented)
@@ -16547,6 +16667,11 @@ interface VisualisationConfig7 {
     };
     // (undocumented)
     continuous_line?: boolean;
+    custom_tooltip?: {
+        enabled?: boolean;
+        content?: string;
+        placement?: "above" | "below" | "replace";
+    };
     // (undocumented)
     data_labels?: boolean | "auto";
     // (undocumented)
@@ -16827,6 +16952,11 @@ interface VisualisationConfig8 {
     };
     // (undocumented)
     continuous_line?: boolean;
+    custom_tooltip?: {
+        enabled?: boolean;
+        content?: string;
+        placement?: "above" | "below" | "replace";
+    };
     // (undocumented)
     data_labels?: boolean | "auto";
     // (undocumented)
@@ -17107,6 +17237,11 @@ interface VisualisationConfig9 {
     };
     // (undocumented)
     continuous_line?: boolean;
+    custom_tooltip?: {
+        enabled?: boolean;
+        content?: string;
+        placement?: "above" | "below" | "replace";
+    };
     // (undocumented)
     data_labels?: boolean | "auto";
     // (undocumented)
