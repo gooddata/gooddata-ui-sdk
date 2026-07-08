@@ -9,6 +9,7 @@ import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 
 import type { ICatalogItemParameter } from "../../catalogItem/types.js";
 import { TestIntlProvider } from "../../localization/TestIntlProvider.js";
+import { TestPermissionsProvider } from "../../permission/TestPermissionsProvider.js";
 import { ParameterEditDialog } from "../ParameterEditDialog.js";
 import { ParameterMutationProvider } from "../ParameterMutationContext.js";
 import type { IParameterMutationPort } from "../parameterMutationPort.js";
@@ -64,7 +65,9 @@ function createWrapper(port: IParameterMutationPort) {
         return (
             <TestIntlProvider>
                 <ToastsCenterContextProvider>
-                    <ParameterMutationProvider port={port}>{children}</ParameterMutationProvider>
+                    <TestPermissionsProvider>
+                        <ParameterMutationProvider port={port}>{children}</ParameterMutationProvider>
+                    </TestPermissionsProvider>
                 </ToastsCenterContextProvider>
             </TestIntlProvider>
         );

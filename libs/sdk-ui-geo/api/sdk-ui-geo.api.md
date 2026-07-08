@@ -155,6 +155,8 @@ export interface IGeoAreaChartConfig {
     cooperativeGestures?: boolean;
     // @alpha
     customTooltip?: ICustomTooltipConfig;
+    // @internal
+    enableCustomTooltip?: boolean;
     // (undocumented)
     enableExecutionCancelling?: boolean;
     // @internal
@@ -222,6 +224,8 @@ export interface IGeoChartConfig {
     cooperativeGestures?: boolean;
     // @alpha
     customTooltip?: ICustomTooltipConfig;
+    // @internal
+    enableCustomTooltip?: boolean;
     enableExecutionCancelling?: boolean;
     // @internal
     enableGeoBasemapConfig?: boolean;

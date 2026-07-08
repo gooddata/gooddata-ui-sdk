@@ -3,17 +3,21 @@
 import type { Bucket, Visualisation } from "@gooddata/sdk-code-schemas/v1";
 
 import {
+    DEFAULT_CUSTOM_TOOLTIP,
     loadChartFill,
     loadColorMapping,
+    loadCustomTooltip,
     loadDisableKda,
     saveChartFill,
     saveColorMapping,
+    saveCustomTooltip,
 } from "../utils/configUtils.js";
 import { getFullBucket } from "../utils/sharedUtils.js";
 
 import {
     type ChartFillType,
     type ColorMapping,
+    type ICustomTooltip,
     type PatternFillName,
     type PointShapeSymbol,
 } from "./types.js";
@@ -97,6 +101,7 @@ export type ComboChartConfigProperties = {
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
+    customTooltip: ICustomTooltip;
     thresholdMeasures: string[];
     thresholdExcludedMeasures: string[];
 };
@@ -171,6 +176,7 @@ const DEFAULTS: ConfigDefaults<ComboChartConfigProperties> = {
     disableAlerts: false,
     disableScheduledExports: false,
     disableKeyDriveAnalysisOn: {},
+    customTooltip: DEFAULT_CUSTOM_TOOLTIP,
     thresholdMeasures: [],
     thresholdExcludedMeasures: [],
 };
@@ -358,6 +364,8 @@ export function comboChartLoad(props: VisualisationConfig<ComboChartConfigProper
                 ];
             case "disableKeyDriveAnalysisOn":
                 return [["disable_key_drive_analysis", loadDisableKda(value as Record<string, boolean>)]];
+            case "customTooltip":
+                return [["custom_tooltip", loadCustomTooltip(value as (typeof DEFAULTS)["customTooltip"])]];
             case "thresholdMeasures": {
                 return [
                     [
@@ -516,6 +524,7 @@ export function comboChartSave(
             "bool",
         ),
         disableKeyDriveAnalysisOn: saveConfigObject(config.disable_key_drive_analysis),
+        customTooltip: saveConfigObject(saveCustomTooltip(config.custom_tooltip)),
         thresholdMeasures: getValueOrDefault(
             config.line_style_control_metrics,
             DEFAULTS.thresholdMeasures,

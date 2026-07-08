@@ -20,5 +20,10 @@ export function resolveLayerCustomTooltip(
     layer: IGeoLayer,
     chartConfig: IGeoChartConfig | undefined,
 ): ICustomTooltipConfig | undefined {
+    // Feature-flag gate (defaults on): when explicitly disabled, ignore any persisted custom
+    // tooltip (layer or chart-level).
+    if (chartConfig?.enableCustomTooltip === false) {
+        return undefined;
+    }
     return layer.config?.customTooltip ?? chartConfig?.customTooltip;
 }

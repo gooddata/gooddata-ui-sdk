@@ -170,20 +170,20 @@ describe("live features", () => {
     });
 
     it("full definition - BOOLEAN", async () => {
-        mockReturn([createFeature("dashboardEditModeDevRollout", "BOOLEAN", true)]);
+        mockReturn([createFeature("enableSqlDatasets", "BOOLEAN", true)]);
 
         const results = await getFeatureHubFeatures(createFeatures());
         expect(results).toEqual({
-            dashboardEditModeDevRollout: true,
+            enableSqlDatasets: true,
         });
     });
 
     it("full definition - STRING", async () => {
-        mockReturn([createFeature("dashboardEditModeDevRollout", "STRING", "ENABLED")]);
+        mockReturn([createFeature("enableSqlDatasets", "STRING", "ENABLED")]);
 
         const results = await getFeatureHubFeatures(createFeatures());
         expect(results).toEqual({
-            dashboardEditModeDevRollout: true,
+            enableSqlDatasets: true,
         });
     });
 });

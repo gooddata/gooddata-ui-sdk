@@ -668,7 +668,7 @@
         "crowdinContext": "Section header label above the YAML editor in the parameter dialog."
     },
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": {
-        "text": "Create a YAML statement that defines a numeric parameter.",
+        "text": "Create a YAML statement that defines a parameter.",
         "crowdinContext": "Tooltip shown for the help icon next to the parameter definition section header."
     },
     "analyticsCatalog.parameter.dialog.create.submit": {
@@ -708,20 +708,20 @@
         "crowdinContext": "Error shown when the parameter YAML does not follow the expected object structure."
     },
     "analyticsCatalog.parameter.validation.unsupportedType": {
-        "text": "Only NUMBER parameters are supported.",
-        "crowdinContext": "Error shown when the parameter YAML declares an unsupported parameter type."
+        "text": "Only {enabledTypes} parameters are supported.",
+        "crowdinContext": "Error shown when the parameter YAML declares an unsupported parameter type. {enabledTypes} is a comma-separated list of the supported type names (e.g. 'NUMBER' or 'NUMBER and STRING')."
     },
     "analyticsCatalog.parameter.validation.invalidDefaultValue": {
-        "text": "Default value must be a number.",
-        "crowdinContext": "Error shown when the parameter YAML contains a non-numeric defaultValue."
+        "text": "Default value must be {type, select, STRING {a string} other {a number}}.",
+        "crowdinContext": "Error shown when the parameter YAML contains a defaultValue whose kind does not match the declared parameter type. {type} is the declared type: STRING expects a string, otherwise a number."
     },
     "analyticsCatalog.parameter.validation.invalidConstraints": {
-        "text": "Parameter constraints must use numeric min and max values.",
-        "crowdinContext": "Error shown when the parameter YAML contains invalid constraint values."
+        "text": "Invalid constraints: {type, select, STRING {STRING parameters allow non-negative integer minLength and maxLength} other {NUMBER parameters allow numeric min and max}}.",
+        "crowdinContext": "Error shown when the parameter YAML contains invalid constraint values. {type} is the declared type, selecting the constraint keys valid for that type."
     },
     "analyticsCatalog.parameter.validation.invalidConstraintRange": {
-        "text": "Constraint min cannot be greater than max.",
-        "crowdinContext": "Error shown when the parameter YAML declares an invalid numeric range."
+        "text": "Constraint {type, select, STRING {minLength cannot be greater than maxLength} other {min cannot be greater than max}}.",
+        "crowdinContext": "Error shown when the parameter YAML declares an invalid constraint range. {type} is the declared type, selecting the constraint key names for that type."
     },
     "analyticsCatalog.parameter.validation.invalidTags": {
         "text": "Tags must be a list of strings.",

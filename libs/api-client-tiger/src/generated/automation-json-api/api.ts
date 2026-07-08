@@ -909,7 +909,7 @@ export interface AutomationIdentifierRefIdentifier {
     'type': AutomationIdentifierRefIdentifierTypeEnum;
 }
 
-export type AutomationIdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView';
+export type AutomationIdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'workspaceExportTemplate';
 
 /**
  * Export request object describing the export properties and metadata for image exports.
@@ -1633,6 +1633,21 @@ export type AutomationSmtpPortEnum = 25 | 465 | 587 | 2525;
 export type AutomationSmtpTypeEnum = 'SMTP';
 
 /**
+ * A single pre-executed layer in a multi-layer tabular export.
+ */
+export interface AutomationTabularExportExecution {
+    /**
+     * Execution result identifier for this layer.
+     */
+    'executionResult': string;
+    /**
+     * Layer title used for the exported sheet or file name.
+     */
+    'title'?: string;
+    'customOverride'?: AutomationCustomOverride;
+}
+
+/**
  * Export request object describing the export properties and overrides for tabular exports.
  */
 export interface AutomationTabularExportRequest {
@@ -1670,6 +1685,10 @@ export interface AutomationTabularExportRequest {
      * Metadata definition in free-form JSON format.
      */
     'metadata'?: object | null;
+    /**
+     * Pre-executed layers for multi-layer geo visualizations. When provided, this is the canonical source of the exported layers and takes precedence over the top-level executionResult and customOverride, which are ignored. Index 0 is the main layer; each layer carries its own executionResult and customOverride.
+     */
+    'executions'?: Array<AutomationTabularExportExecution>;
 }
 
 export type AutomationTabularExportRequestFormatEnum = 'CSV' | 'XLSX' | 'HTML' | 'PDF';

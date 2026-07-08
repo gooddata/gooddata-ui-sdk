@@ -10767,9 +10767,6 @@ export const selectEffectiveParameterValuesForWidget: (ref: ObjRef | undefined) 
 export const selectEnableAccessibilityMode: DashboardSelector<boolean>;
 
 // @internal
-export const selectEnableAlertsEvaluationFrequencySetup: DashboardSelector<boolean>;
-
-// @internal
 export const selectEnableAnomalyDetectionAlert: DashboardSelector<boolean>;
 
 // @internal
@@ -10792,9 +10789,6 @@ export const selectEnableDashboardSectionHeadersDateDataSet: DashboardSelector<b
 
 // @internal
 export const selectEnableDashboardShareDialogLink: DashboardSelector<boolean>;
-
-// @internal
-export const selectEnableDashboardShareLink: DashboardSelector<boolean>;
 
 // @internal (undocumented)
 export const selectEnableDashboardTabularExport: DashboardSelector<boolean>;

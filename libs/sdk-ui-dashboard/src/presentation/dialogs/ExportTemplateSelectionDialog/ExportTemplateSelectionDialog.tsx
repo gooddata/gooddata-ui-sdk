@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { defineMessages, useIntl } from "react-intl";
 
-import { type IExportTemplate } from "@gooddata/sdk-model";
+import { type IExportTemplate, isIdentifierRef } from "@gooddata/sdk-model";
 import { ConfirmDialog, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 const messages = defineMessages({
@@ -12,6 +12,9 @@ const messages = defineMessages({
     exportButton: { id: "export.template.dialog.export" },
     cancelButton: { id: "cancel" },
 });
+
+const templateId = (template: IExportTemplate): string =>
+    isIdentifierRef(template.ref) ? template.ref.identifier : "";
 
 interface IExportTemplateSelectionDialogProps {
     templates: IExportTemplate[];
@@ -25,7 +28,9 @@ export function ExportTemplateSelectionDialog({
     onCancel,
 }: IExportTemplateSelectionDialogProps) {
     const intl = useIntl();
-    const [selectedTemplateId, setSelectedTemplateId] = useState<string>(templates[0]?.id ?? "");
+    const [selectedTemplateId, setSelectedTemplateId] = useState<string>(
+        templates[0] ? templateId(templates[0]) : "",
+    );
 
     const handleSubmit = () => {
         onConfirm(selectedTemplateId);
@@ -48,27 +53,30 @@ export function ExportTemplateSelectionDialog({
                 role="radiogroup"
                 aria-label={intl.formatMessage(messages.dialogTitle)}
             >
-                {templates.map((template) => (
-                    <UiTooltip
-                        key={template.id}
-                        triggerBy={["hover", "focus"]}
-                        arrowPlacement="bottom"
-                        content={template.name}
-                        anchor={
-                            <label className="gd-export-template-item input-radio-label s-export-template-item">
-                                <input
-                                    type="radio"
-                                    className="input-radio"
-                                    name="exportTemplate"
-                                    value={template.id}
-                                    checked={selectedTemplateId === template.id}
-                                    onChange={() => setSelectedTemplateId(template.id)}
-                                />
-                                <span className="input-label-text">{template.name}</span>
-                            </label>
-                        }
-                    />
-                ))}
+                {templates.map((template) => {
+                    const id = templateId(template);
+                    return (
+                        <UiTooltip
+                            key={id}
+                            triggerBy={["hover", "focus"]}
+                            arrowPlacement="bottom"
+                            content={template.name}
+                            anchor={
+                                <label className="gd-export-template-item input-radio-label s-export-template-item">
+                                    <input
+                                        type="radio"
+                                        className="input-radio"
+                                        name="exportTemplate"
+                                        value={id}
+                                        checked={selectedTemplateId === id}
+                                        onChange={() => setSelectedTemplateId(id)}
+                                    />
+                                    <span className="input-label-text">{template.name}</span>
+                                </label>
+                            }
+                        />
+                    );
+                })}
             </div>
         </ConfirmDialog>
     );

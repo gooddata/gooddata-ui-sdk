@@ -31,6 +31,16 @@ export interface IChartFill {
 export type ChartFillType = "solid" | "pattern" | "outline";
 
 /** @internal */
+export type CustomTooltipPlacement = "above" | "below" | "replace";
+
+/** @internal */
+export interface ICustomTooltip {
+    enabled?: boolean;
+    content?: string;
+    placement?: CustomTooltipPlacement;
+}
+
+/** @internal */
 export type PatternFillName =
     | "diagonal_grid_small"
     | "vertical_lines_small"

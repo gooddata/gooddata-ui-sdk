@@ -1,0 +1,15 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-model: Add `enableStringParameters` settings flag",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        },
+        {
+            "comment": "sdk-ui-catalog: Author `STRING` parameters in the catalog YAML editor behind `enableStringParameters`",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

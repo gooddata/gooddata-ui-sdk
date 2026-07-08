@@ -48,6 +48,7 @@ import {
     type IWorkspaceDatasetsService,
     type IWorkspaceDescriptor,
     type IWorkspaceExportDefinitionsService,
+    type IWorkspaceExportTemplatesService,
     type IWorkspaceFactsService,
     type IWorkspaceInsightsService,
     type IWorkspaceKeyDriverAnalysisService,
@@ -320,6 +321,10 @@ function recordedWorkspace(
         },
 
         references(): IReferencesService {
+            throw new NotSupported("not supported");
+        },
+
+        exportTemplates(): IWorkspaceExportTemplatesService {
             throw new NotSupported("not supported");
         },
     };

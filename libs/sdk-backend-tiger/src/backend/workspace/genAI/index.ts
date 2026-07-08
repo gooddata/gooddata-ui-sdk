@@ -77,19 +77,33 @@ export class GenAIService implements IGenAIService {
         request: IDashboardSummaryRequest,
         options?: { signal?: AbortSignal },
     ): Promise<IDashboardSummary> {
+        // Only forward optional parameters the caller actually provided, so the backend applies
+        // its own defaults for the rest instead of receiving explicit `undefined`s.
+        const aiSummarizeRequest: GenAiApiSummarizeRequest = {
+            dashboardId: request.dashboardId,
+        };
+        if (request.visualizations !== undefined) {
+            aiSummarizeRequest.visualizations = request.visualizations;
+        }
+        if (request.filterContext !== undefined) {
+            // Cast bridges our SPI filter model to the generated union type.
+            aiSummarizeRequest.filterContext =
+                request.filterContext as GenAiApiSummarizeRequest["filterContext"];
+        }
+        if (request.tabId !== undefined) {
+            aiSummarizeRequest.tabId = request.tabId;
+        }
+        if (request.formatHint !== undefined) {
+            aiSummarizeRequest.formatHint = request.formatHint;
+        }
+
         const response = await this.authCall((client) =>
             GenAiApi_SummarizeDashboard(
                 client.axios,
                 client.basePath,
                 {
                     workspaceId: this.workspaceId,
-                    aiSummarizeRequest: {
-                        dashboardId: request.dashboardId,
-                        // Casts strip `| null` from our SPI types — the generated client still
-                        // declares these required. Drop the casts once backend allows null.
-                        visualizations: request.visualizations as string[],
-                        filterContext: request.filterContext as GenAiApiSummarizeRequest["filterContext"],
-                    },
+                    aiSummarizeRequest,
                 },
                 { signal: options?.signal },
             ),
@@ -108,6 +122,7 @@ export class GenAIService implements IGenAIService {
                 title: v.title,
             })),
             generatedAt: response.data.generatedAt,
+            tabId: response.data.tabId ?? undefined,
         };
     }
 }

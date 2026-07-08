@@ -16,8 +16,9 @@ import {
     type ColumnWidth,
     type ColumnWidthItem,
     type IChartFill,
+    type ICustomTooltip,
 } from "../configs/types.js";
-import { getValueOrDefault } from "../configs/utils.js";
+import { getValueOrDefault, saveConfigObject } from "../configs/utils.js";
 
 import { type FullFields, getFullField } from "./sharedUtils.js";
 import { isAttributeField, isMetricField } from "./typeGuards.js";
@@ -399,6 +400,40 @@ export function saveChartFill(config: Visualisation["config"], defaultsChartFill
         type: getValueOrDefault(config!.chart_fill?.type, defaultsChartFill.type),
         measureToPatternName:
             config!.chart_fill?.pattern_name_mapping ?? defaultsChartFill.measureToPatternName,
+    };
+}
+
+/** @internal */
+export const DEFAULT_CUSTOM_TOOLTIP: ICustomTooltip = {
+    enabled: false,
+    content: "",
+    placement: "above",
+};
+
+type YamlCustomTooltip = NonNullable<Visualisation["config"]>["custom_tooltip"];
+
+// declarative controls.customTooltip -> YAML custom_tooltip (saveConfigObject drops it when empty;
+// the YAML serializer drops the individual default-valued keys)
+export function loadCustomTooltip(value: ICustomTooltip | undefined) {
+    if (!value) {
+        return undefined;
+    }
+    return saveConfigObject({
+        enabled: getValueOrDefault(value.enabled, DEFAULT_CUSTOM_TOOLTIP.enabled, "bool"),
+        content: getValueOrDefault(value.content, DEFAULT_CUSTOM_TOOLTIP.content),
+        placement: getValueOrDefault(value.placement, DEFAULT_CUSTOM_TOOLTIP.placement),
+    });
+}
+
+// YAML custom_tooltip -> declarative controls.customTooltip (saveConfigObject drops it when empty)
+export function saveCustomTooltip(value: YamlCustomTooltip): ICustomTooltip | undefined {
+    if (!value) {
+        return undefined;
+    }
+    return {
+        enabled: getValueOrDefault(value.enabled, DEFAULT_CUSTOM_TOOLTIP.enabled, "bool"),
+        content: getValueOrDefault(value.content, DEFAULT_CUSTOM_TOOLTIP.content),
+        placement: getValueOrDefault(value.placement, DEFAULT_CUSTOM_TOOLTIP.placement),
     };
 }
 

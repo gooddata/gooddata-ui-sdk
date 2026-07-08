@@ -48,6 +48,7 @@ import {
     type IWorkspaceDatasetsService,
     type IWorkspaceDescriptor,
     type IWorkspaceExportDefinitionsService,
+    type IWorkspaceExportTemplatesService,
     type IWorkspaceFactsService,
     type IWorkspaceInsightsService,
     type IWorkspaceKeyDriverAnalysisService,
@@ -306,6 +307,12 @@ function recordedWorkspace(
                 async deleteDashboardFiltersApplyMode(): Promise<void> {
                     return Promise.resolve();
                 },
+                async setDefaultExportTemplate(): Promise<void> {
+                    return Promise.resolve();
+                },
+                async deleteDefaultExportTemplate(): Promise<void> {
+                    return Promise.resolve();
+                },
                 async setEnableAiOnData(): Promise<void> {
                     return Promise.resolve();
                 },
@@ -473,6 +480,16 @@ function recordedWorkspace(
                 },
             };
         },
+        exportTemplates(): IWorkspaceExportTemplatesService {
+            return {
+                getExportTemplates: () => Promise.resolve([]),
+                getExportTemplate: (ref) => Promise.resolve({ ref, name: "" }),
+                createExportTemplate: (template) =>
+                    Promise.resolve({ ref: idRef("recordedExportTemplate"), ...template }),
+                patchExportTemplate: (ref, template) => Promise.resolve({ ref, name: "", ...template }),
+                deleteExportTemplate: () => Promise.resolve(),
+            };
+        },
     };
 }
 
@@ -612,6 +629,8 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 setColorPalette: () => Promise.resolve(),
                 setOpenAiConfig: () => Promise.resolve(),
                 setDashboardFiltersApplyMode: () => Promise.resolve(),
+                setDefaultExportTemplate: () => Promise.resolve(),
+                deleteDefaultExportTemplate: () => Promise.resolve(),
                 setEnableAiOnData: () => Promise.resolve(),
                 setAiRateLimit: () => Promise.resolve(),
                 deleteAiRateLimit: () => Promise.resolve(),
@@ -778,6 +797,12 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
         exportTemplates() {
             return {
                 getExportTemplates: () => Promise.resolve([]),
+                getExportTemplate: (ref: ObjRef) => Promise.resolve({ ref, name: "" }),
+                createExportTemplate: (template) =>
+                    Promise.resolve({ ref: idRef("recordedExportTemplate"), ...template }),
+                patchExportTemplate: (ref: ObjRef, template) =>
+                    Promise.resolve({ ref, name: "", ...template }),
+                deleteExportTemplate: () => Promise.resolve(),
             };
         },
         ipAllowlists() {

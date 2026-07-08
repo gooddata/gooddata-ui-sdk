@@ -20,6 +20,7 @@ import {
     type IActiveCalendars,
     type IAiRateLimit,
     type IAlertDefault,
+    type IDefaultExportTemplate,
     type IFiscalYear,
     type ISeparators,
     type ISettings,
@@ -117,6 +118,14 @@ export class TigerWorkspaceSettings
 
     public async deleteDashboardFiltersApplyMode(): Promise<void> {
         return this.deleteSettingByType("DASHBOARD_FILTERS_APPLY_MODE");
+    }
+
+    public async setDefaultExportTemplate(value: IDefaultExportTemplate): Promise<void> {
+        return this.setSetting("DEFAULT_EXPORT_TEMPLATE", value);
+    }
+
+    public async deleteDefaultExportTemplate(): Promise<void> {
+        return this.deleteSettingByType("DEFAULT_EXPORT_TEMPLATE");
     }
 
     public async setEnableAiOnData(enabled: boolean): Promise<void> {

@@ -10,6 +10,7 @@ import {
     type IActiveCalendars,
     type IAiRateLimit,
     type IAlertDefault,
+    type IDefaultExportTemplate,
     type IFiscalYear,
     type IMetricFormatOverrideSetting,
     type ISeparators,
@@ -83,6 +84,14 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
 
     async deleteDashboardFiltersApplyMode(): Promise<void> {
         return this.decorated.deleteDashboardFiltersApplyMode();
+    }
+
+    async setDefaultExportTemplate(value: IDefaultExportTemplate): Promise<void> {
+        return this.decorated.setDefaultExportTemplate(value);
+    }
+
+    async deleteDefaultExportTemplate(): Promise<void> {
+        return this.decorated.deleteDefaultExportTemplate();
     }
 
     async setEnableAiOnData(enabled: boolean): Promise<void> {

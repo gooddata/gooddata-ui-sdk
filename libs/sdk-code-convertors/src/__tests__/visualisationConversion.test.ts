@@ -3,8 +3,12 @@
 import { describe, expect, it } from "vitest";
 
 import type { Visualisation } from "@gooddata/sdk-code-schemas/v1";
+import type { IRankingFilterBody } from "@gooddata/sdk-model";
 
-import { declarativeVisualisationToYaml } from "../from/declarativeVisualisationToYaml.js";
+import {
+    declarativeRankingFilterToYaml,
+    declarativeVisualisationToYaml,
+} from "../from/declarativeVisualisationToYaml.js";
 import {
     yamlBucketsToDeclarative,
     yamlFiltersToDeclarative,
@@ -247,6 +251,37 @@ describe("visualisation conversion", () => {
                     value: 10,
                 },
             });
+        });
+
+        it("round-trips a catalog attribute (label ref) in a ranking filter — CQ-2614", () => {
+            // A catalog attribute in the ranking "Out of" is a label ref. Deploy (YAML -> declarative)
+            // must accept label/…, and clone (declarative -> YAML) must re-emit label/… — so the AAC
+            // round-trip is stable and validates against the schema (which now accepts label refs,
+            // mirroring MeasureValueFilter dimensionality).
+            const filters_by = {
+                f1: {
+                    type: "ranking_filter",
+                    using: "metric/amount",
+                    top: 5,
+                    attribute: "label/county_name",
+                },
+            };
+
+            const { filters } = yamlFiltersToDeclarative(emptyEntities, filters_by);
+            expect(filters[0]).toEqual({
+                rankingFilter: {
+                    measure: { identifier: { id: "amount", type: "metric" } },
+                    attributes: [{ identifier: { id: "county_name", type: "label" } }],
+                    operator: "TOP",
+                    value: 5,
+                },
+            });
+
+            // Clone direction must re-emit label/county_name (not attribute/…).
+            const rankingBody = (filters[0] as { rankingFilter: IRankingFilterBody }).rankingFilter;
+            const yaml = declarativeRankingFilterToYaml(rankingBody).toJSON() as Record<string, unknown>;
+            expect(yaml["attribute"]).toBe("label/county_name");
+            expect(yaml["using"]).toBe("metric/amount");
         });
 
         it("should handle array of filters", () => {
@@ -952,6 +987,92 @@ describe("visualisation conversion", () => {
 
             const { json } = declarativeVisualisationToYaml(emptyFromEntities, declarative);
             expect(json!.config!["conditional_formatting"]).toEqual(conditionalFormatting);
+        });
+    });
+
+    describe("custom tooltip round-trip", () => {
+        it("round-trips enabled custom tooltip with content and non-default placement", () => {
+            const customTooltip = {
+                enabled: true,
+                content: "Revenue: {metric/m1}\nRegion: {label/a1}",
+                placement: "below",
+            };
+            const input = {
+                type: "column_chart",
+                id: "ct_column",
+                query: { fields: { m1: { using: "metric/revenue" }, a1: { using: "label/region" } } },
+                metrics: [{ field: "m1" }],
+                view_by: [{ field: "a1" }],
+                config: { custom_tooltip: customTooltip },
+            } as any;
+
+            // YAML -> internal (save)
+            const declarative = yamlVisualisationToDeclarative(emptyEntities, input);
+            expect((declarative.content as any).properties.controls.customTooltip).toEqual(customTooltip);
+
+            // internal -> YAML (load): comes back identical
+            const { json } = declarativeVisualisationToYaml(emptyFromEntities, declarative);
+            expect(json!.config!["custom_tooltip"]).toEqual(customTooltip);
+        });
+
+        it("omits the default placement ('above') from the serialised YAML", () => {
+            const input = {
+                type: "pie_chart",
+                id: "ct_pie",
+                query: { fields: { m1: { using: "metric/revenue" }, a1: { using: "label/region" } } },
+                metrics: [{ field: "m1" }],
+                view_by: [{ field: "a1" }],
+                config: {
+                    custom_tooltip: { enabled: true, content: "Total: {metric/m1}", placement: "above" },
+                },
+            } as any;
+
+            const declarative = yamlVisualisationToDeclarative(emptyEntities, input);
+            // placement matches the default, so it is dropped on both sides
+            expect((declarative.content as any).properties.controls.customTooltip).toEqual({
+                enabled: true,
+                content: "Total: {metric/m1}",
+            });
+
+            const { json } = declarativeVisualisationToYaml(emptyFromEntities, declarative);
+            expect(json!.config!["custom_tooltip"]).toEqual({
+                enabled: true,
+                content: "Total: {metric/m1}",
+            });
+        });
+
+        it("omits custom_tooltip entirely when disabled with no content", () => {
+            const input = {
+                type: "bar_chart",
+                id: "ct_empty",
+                query: { fields: { m1: { using: "metric/revenue" } } },
+                metrics: [{ field: "m1" }],
+                config: { custom_tooltip: { enabled: false, content: "", placement: "above" } },
+            } as any;
+
+            const declarative = yamlVisualisationToDeclarative(emptyEntities, input);
+            expect((declarative.content as any).properties.controls?.customTooltip).toBeUndefined();
+
+            const { json } = declarativeVisualisationToYaml(emptyFromEntities, declarative);
+            expect(json?.config?.["custom_tooltip"]).toBeUndefined();
+        });
+
+        it("is wired for geo charts (geo_area_chart, 'replace' placement)", () => {
+            const customTooltip = { enabled: true, content: "Area: {label/a1}", placement: "replace" };
+            const input = {
+                type: "geo_area_chart",
+                id: "ct_geo_area",
+                query: { fields: { m1: { using: "metric/revenue" }, a1: { using: "label/region" } } },
+                metrics: [{ field: "m1" }],
+                view_by: [{ field: "a1" }],
+                config: { custom_tooltip: customTooltip },
+            } as any;
+
+            const declarative = yamlVisualisationToDeclarative(emptyEntities, input);
+            expect((declarative.content as any).properties.controls.customTooltip).toEqual(customTooltip);
+
+            const { json } = declarativeVisualisationToYaml(emptyFromEntities, declarative);
+            expect(json!.config!["custom_tooltip"]).toEqual(customTooltip);
         });
     });
 

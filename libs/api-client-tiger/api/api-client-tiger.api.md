@@ -61,6 +61,7 @@ export class ActionsApi extends MetadataBaseApi implements ActionsApiInterface {
     availableAssignees(requestParameters: ActionsApiAvailableAssigneesRequest, options?: AxiosRequestConfig): AxiosPromise<AvailableAssignees>;
     checkEntityOverrides(requestParameters: ActionsApiCheckEntityOverridesRequest, options?: AxiosRequestConfig): AxiosPromise<IdentifierDuplications[]>;
     cleanTranslations(requestParameters: ActionsApiCleanTranslationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    createdBy(requestParameters: GenAiApiCreatedByRequest, options?: AxiosRequestConfig): AxiosPromise<AfmAnalyticsCatalogCreatedBy>;
     dashboardPermissions(requestParameters: ActionsApiDashboardPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<DashboardPermissions>;
     deleteOrganizationAutomations(requestParameters: ActionsApiDeleteOrganizationAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteWorkspaceAutomations(requestParameters: ActionsApiDeleteWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -83,14 +84,13 @@ export class ActionsApi extends MetadataBaseApi implements ActionsApiInterface {
     manageLabelPermissions(requestParameters: ActionsApiManageLabelPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageOrganizationPermissions(requestParameters: ActionsApiManageOrganizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageWorkspacePermissions(requestParameters: ActionsApiManageWorkspacePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    metadataSync(requestParameters: ActionsApiMetadataSyncRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    metadataSyncOrganization(options?: AxiosRequestConfig): AxiosPromise<void>;
     overriddenChildEntities(requestParameters: ActionsApiOverriddenChildEntitiesRequest, options?: AxiosRequestConfig): AxiosPromise<IdentifierDuplications[]>;
     particularPlatformUsage(requestParameters: ActionsApiParticularPlatformUsageRequest, options?: AxiosRequestConfig): AxiosPromise<PlatformUsage[]>;
     pauseOrganizationAutomations(requestParameters: ActionsApiPauseOrganizationAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     pauseWorkspaceAutomations(requestParameters: ActionsApiPauseWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     registerUploadNotification(requestParameters: ActionsApiRegisterUploadNotificationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     registerWorkspaceUploadNotification(requestParameters: ActionsApiRegisterWorkspaceUploadNotificationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    reloadObservabilityLayout(options?: AxiosRequestConfig): AxiosPromise<void>;
     removeTargets(requestParameters: ActionsApiRemoveTargetsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     resolveAllEntitlements(options?: AxiosRequestConfig): AxiosPromise<ApiEntitlement[]>;
     resolveAllSettingsWithoutWorkspace(requestParameters?: ActionsApiResolveAllSettingsWithoutWorkspaceRequest, options?: AxiosRequestConfig): AxiosPromise<ResolvedSetting[]>;
@@ -100,6 +100,7 @@ export class ActionsApi extends MetadataBaseApi implements ActionsApiInterface {
     setCertification(requestParameters: ActionsApiSetCertificationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     setTranslations(requestParameters: ActionsApiSetTranslationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     switchActiveIdentityProvider(requestParameters: ActionsApiSwitchActiveIdentityProviderRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    tags(requestParameters: GenAiApiTagsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmAnalyticsCatalogTags>;
     unpauseOrganizationAutomations(requestParameters: ActionsApiUnpauseOrganizationAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     unpauseWorkspaceAutomations(requestParameters: ActionsApiUnpauseWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     unsubscribeAllAutomations(options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -173,12 +174,6 @@ export function ActionsApi_ManageOrganizationPermissions(axios: AxiosInstance, b
 
 // @public
 export function ActionsApi_ManageWorkspacePermissions(axios: AxiosInstance, basePath: string, requestParameters: ActionsApiManageWorkspacePermissionsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
-
-// @public
-export function ActionsApi_MetadataSync(axios: AxiosInstance, basePath: string, requestParameters: ActionsApiMetadataSyncRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
-
-// @public
-export function ActionsApi_MetadataSyncOrganization(axios: AxiosInstance, basePath: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
 
 // @public
 export function ActionsApi_OverriddenChildEntities(axios: AxiosInstance, basePath: string, requestParameters: ActionsApiOverriddenChildEntitiesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<Array<IdentifierDuplications>>;
@@ -380,12 +375,6 @@ export function ActionsApiAxiosParamCreator_ManageOrganizationPermissions(organi
 export function ActionsApiAxiosParamCreator_ManageWorkspacePermissions(workspaceId: string, workspacePermissionAssignment: Array<WorkspacePermissionAssignment>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function ActionsApiAxiosParamCreator_MetadataSync(workspaceId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function ActionsApiAxiosParamCreator_MetadataSyncOrganization(options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
 export function ActionsApiAxiosParamCreator_OverriddenChildEntities(workspaceId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
@@ -454,6 +443,12 @@ export function ActionsApiAxiosParamCreator_WorkspaceResolveSettings(workspaceId
 // @public
 export interface ActionsApiCancelExecutionsRequest {
     readonly afmCancelTokens: AfmCancelTokens;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiCancelWorkflow1Request {
+    readonly runId: string;
     readonly workspaceId: string;
 }
 
@@ -609,6 +604,12 @@ export interface ActionsApiForecastResultRequest {
 }
 
 // @public
+export interface ActionsApiGenerateDashboardSummary1Request {
+    readonly dashboardSummaryRequestDto: DashboardSummaryRequestDto;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface ActionsApiGenerateDashboardSummaryRequest {
     readonly workflowDashboardSummaryRequestDto: WorkflowDashboardSummaryRequestDto;
     readonly workspaceId: string;
@@ -617,6 +618,12 @@ export interface ActionsApiGenerateDashboardSummaryRequest {
 // @public
 export interface ActionsApiGenerateDescriptionRequest {
     readonly generateDescriptionRequest: GenerateDescriptionRequest;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiGenerateKnowledgeRecommendationsRequest {
+    readonly knowledgeRecommendationsRequestDto: KnowledgeRecommendationsRequestDto;
     readonly workspaceId: string;
 }
 
@@ -661,6 +668,12 @@ export interface ActionsApiGetTranslationTagsRequest {
 }
 
 // @public
+export interface ActionsApiGetWorkflowStatus1Request {
+    readonly runId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface ActionsApiGetWorkflowStatusRequest {
     readonly runId: string;
     readonly workspaceId: string;
@@ -696,6 +709,7 @@ export interface ActionsApiInterface {
     availableAssignees(requestParameters: ActionsApiAvailableAssigneesRequest, options?: AxiosRequestConfig): AxiosPromise<AvailableAssignees>;
     checkEntityOverrides(requestParameters: ActionsApiCheckEntityOverridesRequest, options?: AxiosRequestConfig): AxiosPromise<Array<IdentifierDuplications>>;
     cleanTranslations(requestParameters: ActionsApiCleanTranslationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    createdBy(requestParameters: GenAiApiCreatedByRequest, options?: AxiosRequestConfig): AxiosPromise<AfmAnalyticsCatalogCreatedBy>;
     dashboardPermissions(requestParameters: ActionsApiDashboardPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<DashboardPermissions>;
     deleteOrganizationAutomations(requestParameters: ActionsApiDeleteOrganizationAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteWorkspaceAutomations(requestParameters: ActionsApiDeleteWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -718,14 +732,13 @@ export interface ActionsApiInterface {
     manageLabelPermissions(requestParameters: ActionsApiManageLabelPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageOrganizationPermissions(requestParameters: ActionsApiManageOrganizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageWorkspacePermissions(requestParameters: ActionsApiManageWorkspacePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    metadataSync(requestParameters: ActionsApiMetadataSyncRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    metadataSyncOrganization(options?: AxiosRequestConfig): AxiosPromise<void>;
     overriddenChildEntities(requestParameters: ActionsApiOverriddenChildEntitiesRequest, options?: AxiosRequestConfig): AxiosPromise<Array<IdentifierDuplications>>;
     particularPlatformUsage(requestParameters: ActionsApiParticularPlatformUsageRequest, options?: AxiosRequestConfig): AxiosPromise<Array<PlatformUsage>>;
     pauseOrganizationAutomations(requestParameters: ActionsApiPauseOrganizationAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     pauseWorkspaceAutomations(requestParameters: ActionsApiPauseWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     registerUploadNotification(requestParameters: ActionsApiRegisterUploadNotificationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     registerWorkspaceUploadNotification(requestParameters: ActionsApiRegisterWorkspaceUploadNotificationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    reloadObservabilityLayout(options?: AxiosRequestConfig): AxiosPromise<void>;
     removeTargets(requestParameters: ActionsApiRemoveTargetsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     resolveAllEntitlements(options?: AxiosRequestConfig): AxiosPromise<Array<ApiEntitlement>>;
     resolveAllSettingsWithoutWorkspace(requestParameters: ActionsApiResolveAllSettingsWithoutWorkspaceRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ResolvedSetting>>;
@@ -735,6 +748,7 @@ export interface ActionsApiInterface {
     setCertification(requestParameters: ActionsApiSetCertificationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     setTranslations(requestParameters: ActionsApiSetTranslationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     switchActiveIdentityProvider(requestParameters: ActionsApiSwitchActiveIdentityProviderRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    tags(requestParameters: GenAiApiTagsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmAnalyticsCatalogTags>;
     unpauseOrganizationAutomations(requestParameters: ActionsApiUnpauseOrganizationAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     unpauseWorkspaceAutomations(requestParameters: ActionsApiUnpauseWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     unsubscribeAllAutomations(options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -841,11 +855,6 @@ export interface ActionsApiManageOrganizationPermissionsRequest {
 export interface ActionsApiManageWorkspacePermissionsRequest {
     readonly workspaceId: string;
     readonly workspacePermissionAssignment: Array<WorkspacePermissionAssignment>;
-}
-
-// @public
-export interface ActionsApiMetadataSyncRequest {
-    readonly workspaceId: string;
 }
 
 // @public
@@ -1059,6 +1068,13 @@ export interface ActionsApiUnsubscribeSelectedWorkspaceAutomationsRequest {
 
 // @public
 export interface ActionsApiUnsubscribeWorkspaceAutomationsRequest {
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiUserFeedbackRequest {
+    readonly feedbackRequestDto: FeedbackRequestDto;
+    readonly runId: string;
     readonly workspaceId: string;
 }
 
@@ -1420,6 +1436,10 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     cancelWorkflow(requestParameters: ActionsApiCancelWorkflowRequest, options?: AxiosRequestConfig): AxiosPromise<{
         [key: string]: string;
     }>;
+    // (undocumented)
+    cancelWorkflow1(requestParameters: ActionsApiCancelWorkflow1Request, options?: AxiosRequestConfig): AxiosPromise<{
+        [key: string]: string;
+    }>;
     changeAnalysis(requestParameters: ActionsApiChangeAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<ChangeAnalysisResponse>;
     changeAnalysisResult(requestParameters: ActionsApiChangeAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<ChangeAnalysisResult>;
     clustering(requestParameters: ActionsApiClusteringRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
@@ -1429,18 +1449,23 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     computeReportForVisualizationObject(requestParameters: ActionsApiComputeReportForVisualizationObjectRequest, options?: AxiosRequestConfig): AxiosPromise<AfmExecutionResponse>;
     computeValidDescendants(requestParameters: ActionsApiComputeValidDescendantsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmValidDescendantsResponse>;
     computeValidObjects(requestParameters: ActionsApiComputeValidObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmValidObjectsResponse>;
-    createdBy(requestParameters: GenAiApiCreatedByRequest, options?: AxiosRequestConfig): AxiosPromise<AfmAnalyticsCatalogCreatedBy>;
     explainAFM(requestParameters: ActionsApiExplainAFMRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
     forecast(requestParameters: ActionsApiForecastRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
     forecastResult(requestParameters: ActionsApiForecastResultRequest, options?: AxiosRequestConfig): AxiosPromise<ForecastResult>;
     // (undocumented)
     generateDashboardSummary(requestParameters: ActionsApiGenerateDashboardSummaryRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowDashboardSummaryResponseDto>;
+    // (undocumented)
+    generateDashboardSummary1(requestParameters: ActionsApiGenerateDashboardSummary1Request, options?: AxiosRequestConfig): AxiosPromise<DashboardSummaryResponseDto>;
     generateDescription(requestParameters: ActionsApiGenerateDescriptionRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateDescriptionResponse>;
+    // (undocumented)
+    generateKnowledgeRecommendations(requestParameters: ActionsApiGenerateKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<KnowledgeRecommendationsResponseDto>;
     generateTitle(requestParameters: ActionsApiGenerateTitleRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateTitleResponse>;
     getQualityIssues(requestParameters: ActionsApiGetQualityIssuesRequest, options?: AxiosRequestConfig): AxiosPromise<AfmGetQualityIssuesResponse>;
     getQualityIssuesCalculationStatus(requestParameters: AfmActionsApiGetQualityIssuesCalculationStatusRequest, options?: AxiosRequestConfig): AxiosPromise<AfmQualityIssuesCalculationStatusResponse>;
     // (undocumented)
     getWorkflowStatus(requestParameters: ActionsApiGetWorkflowStatusRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowStatusResponseDto>;
+    // (undocumented)
+    getWorkflowStatus1(requestParameters: ActionsApiGetWorkflowStatus1Request, options?: AxiosRequestConfig): AxiosPromise<WorkflowStatusResponseDto>;
     keyDriverAnalysis(requestParameters: ActionsApiKeyDriverAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResponse>;
     keyDriverAnalysisResult(requestParameters: ActionsApiKeyDriverAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResult>;
     listLlmProviderModels(requestParameters: ActionsApiListLlmProviderModelsRequest, options?: AxiosRequestConfig): AxiosPromise<ListLlmProviderModelsResponse>;
@@ -1454,11 +1479,14 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     retrieveExecutionMetadata(requestParameters: ActionsApiRetrieveExecutionMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<ResultCacheMetadata>;
     retrieveResult(requestParameters: ActionsApiRetrieveResultRequest, options?: AxiosRequestConfig): AxiosPromise<ExecutionResult>;
     retrieveResultBinary(requestParameters: ActionsApiRetrieveResultBinaryRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
-    tags(requestParameters: GenAiApiTagsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmAnalyticsCatalogTags>;
     testLlmProvider(requestParameters: GenAiApiTestLlmProviderRequest, options?: AxiosRequestConfig): AxiosPromise<TestLlmProviderResponse>;
     testLlmProviderById(requestParameters: GenAiApiTestLlmProviderByIdRequest, options?: AxiosRequestConfig): AxiosPromise<TestLlmProviderResponse>;
     trendingObjects(requestParameters: ActionsApiTrendingObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<TrendingObjectsResult>;
     triggerQualityIssuesCalculation(requestParameters: ActionsApiTriggerQualityIssuesCalculationRequest, options?: AxiosRequestConfig): AxiosPromise<AfmTriggerQualityIssuesCalculationResponse>;
+    // (undocumented)
+    userFeedback(requestParameters: ActionsApiUserFeedbackRequest, options?: AxiosRequestConfig): AxiosPromise<{
+        [key: string]: string;
+    }>;
     // @deprecated
     validateLLMEndpoint(options?: AxiosRequestConfig): AxiosPromise<void>;
     // @deprecated
@@ -1487,6 +1515,10 @@ export interface AfmActionsApiInterface {
     cancelWorkflow(requestParameters: ActionsApiCancelWorkflowRequest, options?: AxiosRequestConfig): AxiosPromise<{
         [key: string]: string;
     }>;
+    // (undocumented)
+    cancelWorkflow1(requestParameters: ActionsApiCancelWorkflow1Request, options?: AxiosRequestConfig): AxiosPromise<{
+        [key: string]: string;
+    }>;
     changeAnalysis(requestParameters: ActionsApiChangeAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<ChangeAnalysisResponse>;
     changeAnalysisResult(requestParameters: ActionsApiChangeAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<ChangeAnalysisResult>;
     clustering(requestParameters: ActionsApiClusteringRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
@@ -1496,18 +1528,23 @@ export interface AfmActionsApiInterface {
     computeReportForVisualizationObject(requestParameters: ActionsApiComputeReportForVisualizationObjectRequest, options?: AxiosRequestConfig): AxiosPromise<AfmExecutionResponse>;
     computeValidDescendants(requestParameters: ActionsApiComputeValidDescendantsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmValidDescendantsResponse>;
     computeValidObjects(requestParameters: ActionsApiComputeValidObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmValidObjectsResponse>;
-    createdBy(requestParameters: GenAiApiCreatedByRequest, options?: AxiosRequestConfig): AxiosPromise<AfmAnalyticsCatalogCreatedBy>;
     explainAFM(requestParameters: ActionsApiExplainAFMRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
     forecast(requestParameters: ActionsApiForecastRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
     forecastResult(requestParameters: ActionsApiForecastResultRequest, options?: AxiosRequestConfig): AxiosPromise<ForecastResult>;
     // (undocumented)
     generateDashboardSummary(requestParameters: ActionsApiGenerateDashboardSummaryRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowDashboardSummaryResponseDto>;
+    // (undocumented)
+    generateDashboardSummary1(requestParameters: ActionsApiGenerateDashboardSummary1Request, options?: AxiosRequestConfig): AxiosPromise<DashboardSummaryResponseDto>;
     generateDescription(requestParameters: ActionsApiGenerateDescriptionRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateDescriptionResponse>;
+    // (undocumented)
+    generateKnowledgeRecommendations(requestParameters: ActionsApiGenerateKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<KnowledgeRecommendationsResponseDto>;
     generateTitle(requestParameters: ActionsApiGenerateTitleRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateTitleResponse>;
     getQualityIssues(requestParameters: ActionsApiGetQualityIssuesRequest, options?: AxiosRequestConfig): AxiosPromise<AfmGetQualityIssuesResponse>;
     getQualityIssuesCalculationStatus(requestParameters: AfmActionsApiGetQualityIssuesCalculationStatusRequest, options?: AxiosRequestConfig): AxiosPromise<AfmQualityIssuesCalculationStatusResponse>;
     // (undocumented)
     getWorkflowStatus(requestParameters: ActionsApiGetWorkflowStatusRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowStatusResponseDto>;
+    // (undocumented)
+    getWorkflowStatus1(requestParameters: ActionsApiGetWorkflowStatus1Request, options?: AxiosRequestConfig): AxiosPromise<WorkflowStatusResponseDto>;
     keyDriverAnalysis(requestParameters: ActionsApiKeyDriverAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResponse>;
     keyDriverAnalysisResult(requestParameters: ActionsApiKeyDriverAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResult>;
     listLlmProviderModels(requestParameters: ActionsApiListLlmProviderModelsRequest, options?: AxiosRequestConfig): AxiosPromise<ListLlmProviderModelsResponse>;
@@ -1521,11 +1558,14 @@ export interface AfmActionsApiInterface {
     retrieveExecutionMetadata(requestParameters: ActionsApiRetrieveExecutionMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<ResultCacheMetadata>;
     retrieveResult(requestParameters: ActionsApiRetrieveResultRequest, options?: AxiosRequestConfig): AxiosPromise<ExecutionResult>;
     retrieveResultBinary(requestParameters: ActionsApiRetrieveResultBinaryRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
-    tags(requestParameters: GenAiApiTagsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmAnalyticsCatalogTags>;
     testLlmProvider(requestParameters: GenAiApiTestLlmProviderRequest, options?: AxiosRequestConfig): AxiosPromise<TestLlmProviderResponse>;
     testLlmProviderById(requestParameters: GenAiApiTestLlmProviderByIdRequest, options?: AxiosRequestConfig): AxiosPromise<TestLlmProviderResponse>;
     trendingObjects(requestParameters: ActionsApiTrendingObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<TrendingObjectsResult>;
     triggerQualityIssuesCalculation(requestParameters: ActionsApiTriggerQualityIssuesCalculationRequest, options?: AxiosRequestConfig): AxiosPromise<AfmTriggerQualityIssuesCalculationResponse>;
+    // (undocumented)
+    userFeedback(requestParameters: ActionsApiUserFeedbackRequest, options?: AxiosRequestConfig): AxiosPromise<{
+        [key: string]: string;
+    }>;
     // @deprecated
     validateLLMEndpoint(options?: AxiosRequestConfig): AxiosPromise<void>;
     // @deprecated
@@ -1573,15 +1613,14 @@ export type AfmAllTimeDateFilterAllTimeDateFilterEmptyValueHandlingEnum = 'INCLU
 // @public (undocumented)
 export type AfmAllTimeDateFilterAllTimeDateFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
 
-// @public (undocumented)
+// @public
 export interface AfmAnalyticsCatalogCreatedBy {
     'reasoning': string;
     'users': Array<AfmAnalyticsCatalogUser>;
 }
 
-// @public (undocumented)
+// @public
 export interface AfmAnalyticsCatalogTags {
-    // (undocumented)
     'tags': Array<string>;
 }
 
@@ -2991,8 +3030,6 @@ export class AIApi extends MetadataBaseApi implements AIApiInterface {
     getEntityKnowledgeRecommendations(requestParameters: AIApiGetEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiKnowledgeRecommendationOutDocument>;
     getEntityMemoryItems(requestParameters: AIApiGetEntityMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMemoryItemOutDocument>;
     getEntityOrgMemoryItems(requestParameters: AIApiGetEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
-    metadataSync(requestParameters: AIApiMetadataSyncRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    metadataSyncOrganization(options?: AxiosRequestConfig): AxiosPromise<void>;
     patchEntityKnowledgeRecommendations(requestParameters: AIApiPatchEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiKnowledgeRecommendationOutDocument>;
     patchEntityMemoryItems(requestParameters: AIApiPatchEntityMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMemoryItemOutDocument>;
     patchEntityOrgMemoryItems(requestParameters: AIApiPatchEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
@@ -3026,12 +3063,6 @@ export function AIApi_GetEntityKnowledgeRecommendations(axios: AxiosInstance, ba
 
 // @public
 export function AIApi_GetEntityMemoryItems(axios: AxiosInstance, basePath: string, requestParameters: AIApiGetEntityMemoryItemsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiMemoryItemOutDocument>;
-
-// @public
-export function AIApi_MetadataSync(axios: AxiosInstance, basePath: string, requestParameters: AIApiMetadataSyncRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
-
-// @public
-export function AIApi_MetadataSyncOrganization(axios: AxiosInstance, basePath: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
 
 // @public
 export function AIApi_PatchEntityKnowledgeRecommendations(axios: AxiosInstance, basePath: string, requestParameters: AIApiPatchEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiKnowledgeRecommendationOutDocument>;
@@ -3074,12 +3105,6 @@ export function AIApiAxiosParamCreator_GetEntityKnowledgeRecommendations(workspa
 
 // @public
 export function AIApiAxiosParamCreator_GetEntityMemoryItems(workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function AIApiAxiosParamCreator_MetadataSync(workspaceId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function AIApiAxiosParamCreator_MetadataSyncOrganization(options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function AIApiAxiosParamCreator_PatchEntityKnowledgeRecommendations(workspaceId: string, objectId: string, jsonApiKnowledgeRecommendationPatchDocument: JsonApiKnowledgeRecommendationPatchDocument, filter?: string, include?: Array<'metrics' | 'analyticalDashboards' | 'metric' | 'analyticalDashboard' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -3215,8 +3240,6 @@ export interface AIApiInterface {
     getEntityKnowledgeRecommendations(requestParameters: AIApiGetEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiKnowledgeRecommendationOutDocument>;
     getEntityMemoryItems(requestParameters: AIApiGetEntityMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMemoryItemOutDocument>;
     getEntityOrgMemoryItems(requestParameters: AIApiGetEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
-    metadataSync(requestParameters: AIApiMetadataSyncRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    metadataSyncOrganization(options?: AxiosRequestConfig): AxiosPromise<void>;
     patchEntityKnowledgeRecommendations(requestParameters: AIApiPatchEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiKnowledgeRecommendationOutDocument>;
     patchEntityMemoryItems(requestParameters: AIApiPatchEntityMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMemoryItemOutDocument>;
     patchEntityOrgMemoryItems(requestParameters: AIApiPatchEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
@@ -3225,11 +3248,6 @@ export interface AIApiInterface {
     updateEntityKnowledgeRecommendations(requestParameters: AIApiUpdateEntityKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiKnowledgeRecommendationOutDocument>;
     updateEntityMemoryItems(requestParameters: AIApiUpdateEntityMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMemoryItemOutDocument>;
     updateEntityOrgMemoryItems(requestParameters: AIApiUpdateEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
-}
-
-// @public
-export interface AIApiMetadataSyncRequest {
-    readonly workspaceId: string;
 }
 
 // @public
@@ -3897,13 +3915,15 @@ export interface AiFilterByValue {
     // (undocumented)
     'display_as'?: string;
     // (undocumented)
-    'from': number;
+    'from': AiFrom;
     // (undocumented)
     'granularity': AiAppDomainConversationsVisualizationDateGranularity;
     // (undocumented)
+    'null_values_as_zero'?: boolean;
+    // (undocumented)
     'state': AiAttributeFilterState;
     // (undocumented)
-    'to': number;
+    'to': AiTo;
     // (undocumented)
     'top'?: number;
     // (undocumented)
@@ -3920,7 +3940,7 @@ export interface AiFilterByValue {
 export type AiFilterByValueConditionEnum = 'contains' | 'doesNotContain' | 'startsWith' | 'doesNotStartWith' | 'endsWith' | 'doesNotEndWith';
 
 // @public (undocumented)
-export type AiFilterByValueTypeEnum = 'attribute_filter' | 'date_filter' | 'ranking_filter' | 'text_filter';
+export type AiFilterByValueTypeEnum = 'attribute_filter' | 'date_filter' | 'ranking_filter' | 'metric_value_filter' | 'text_filter';
 
 // @public (undocumented)
 export interface AiForecastPeriod {
@@ -4170,6 +4190,26 @@ export { AiMetricUsageResponse }
 export { AiMetricUsageResponse as GenAiApiMetricUsageResponse }
 
 // @public (undocumented)
+export interface AiMetricValueComparisonFilter {
+    // (undocumented)
+    'condition': AiMetricValueComparisonFilterConditionEnum;
+    // (undocumented)
+    'null_values_as_zero'?: boolean;
+    // (undocumented)
+    'type': AiMetricValueComparisonFilterTypeEnum;
+    // (undocumented)
+    'using': string;
+    // (undocumented)
+    'value': AiValue;
+}
+
+// @public (undocumented)
+export type AiMetricValueComparisonFilterConditionEnum = 'GREATER_THAN' | 'GREATER_THAN_OR_EQUAL_TO' | 'LESS_THAN' | 'LESS_THAN_OR_EQUAL_TO' | 'EQUAL_TO' | 'NOT_EQUAL_TO';
+
+// @public (undocumented)
+export type AiMetricValueComparisonFilterTypeEnum = 'metric_value_filter';
+
+// @public (undocumented)
 export const AiMetricValueFilterConditionComparison: {
     readonly GREATER_THAN: "GREATER_THAN";
     readonly GREATER_THAN_OR_EQUAL_TO: "GREATER_THAN_OR_EQUAL_TO";
@@ -4190,6 +4230,28 @@ export const AiMetricValueFilterConditionRange: {
 
 // @public (undocumented)
 export type AiMetricValueFilterConditionRange = typeof AiMetricValueFilterConditionRange[keyof typeof AiMetricValueFilterConditionRange];
+
+// @public (undocumented)
+export interface AiMetricValueRangeFilter {
+    // (undocumented)
+    'condition': AiMetricValueRangeFilterConditionEnum;
+    // (undocumented)
+    'from': AiFrom;
+    // (undocumented)
+    'null_values_as_zero'?: boolean;
+    // (undocumented)
+    'to': AiTo;
+    // (undocumented)
+    'type': AiMetricValueRangeFilterTypeEnum;
+    // (undocumented)
+    'using': string;
+}
+
+// @public (undocumented)
+export type AiMetricValueRangeFilterConditionEnum = 'BETWEEN' | 'NOT_BETWEEN';
+
+// @public (undocumented)
+export type AiMetricValueRangeFilterTypeEnum = 'metric_value_filter';
 
 // @public (undocumented)
 export interface AiMultipartContent {
@@ -5052,18 +5114,18 @@ export interface AiValidationError {
 export interface AiValidationErrorLocInner {
 }
 
-// @public
+// @public (undocumented)
 export interface AiValue {
 }
 
-// @public (undocumented)
+// @public
 export interface AiValue1 {
 }
 
 // @public
 export interface AiValueOperand {
     // (undocumented)
-    'value': AiValue | null;
+    'value': AiValue1 | null;
 }
 
 // @public (undocumented)
@@ -5154,6 +5216,10 @@ export interface AiVisualizationConfig {
     // (undocumented)
     'clustering_threshold'?: number;
     // (undocumented)
+    'disable_key_drive_analysis'?: {
+        [key: string]: boolean;
+    };
+    // (undocumented)
     'forecast_confidence'?: number;
     // (undocumented)
     'forecast_enabled'?: boolean;
@@ -5213,7 +5279,7 @@ export interface AiVisualizationMetricValueComparisonFilter {
     // (undocumented)
     'using': string;
     // (undocumented)
-    'value': AiValue1;
+    'value': AiValue;
 }
 
 // @public (undocumented)
@@ -5688,7 +5754,7 @@ export interface ApiEntitlement {
 }
 
 // @public (undocumented)
-export type ApiEntitlementNameEnum = 'CacheStrategy' | 'Contract' | 'CustomTheming' | 'ExtraCache' | 'Hipaa' | 'PdfExports' | 'UiLocalization' | 'Tier' | 'UserCount' | 'ManagedIdpUserCount' | 'UnlimitedUsers' | 'UnlimitedWorkspaces' | 'WhiteLabeling' | 'WorkspaceCount' | 'UserTelemetryDisabled' | 'AutomationCount' | 'UnlimitedAutomations' | 'AutomationRecipientCount' | 'UnlimitedAutomationRecipients' | 'DailyScheduledActionCount' | 'UnlimitedDailyScheduledActions' | 'DailyAlertActionCount' | 'UnlimitedDailyAlertActions' | 'ScheduledActionMinimumRecurrenceMinutes' | 'FederatedIdentityManagement' | 'AuditLogging' | 'ControlledFeatureRollout' | 'AiLake' | 'AiModule' | 'AiQueryLimit' | 'AiKnowledgeStorageLimit' | 'AiAgentLimit' | 'AiWorkspaceLimit';
+export type ApiEntitlementNameEnum = 'CacheStrategy' | 'Contract' | 'CustomTheming' | 'ExtraCache' | 'Hipaa' | 'PdfExports' | 'UiLocalization' | 'Tier' | 'UserCount' | 'ManagedIdpUserCount' | 'UnlimitedUsers' | 'UnlimitedWorkspaces' | 'WhiteLabeling' | 'WorkspaceCount' | 'UserTelemetryDisabled' | 'AutomationCount' | 'UnlimitedAutomations' | 'AutomationRecipientCount' | 'UnlimitedAutomationRecipients' | 'DailyScheduledActionCount' | 'UnlimitedDailyScheduledActions' | 'DailyAlertActionCount' | 'UnlimitedDailyAlertActions' | 'ScheduledActionMinimumRecurrenceMinutes' | 'FederatedIdentityManagement' | 'AuditLogging' | 'ControlledFeatureRollout' | 'AiLake' | 'AiModule' | 'AiQueryLimit' | 'AiKnowledgeStorageLimit' | 'AiAgentLimit' | 'AiWorkspaceLimit' | 'AiObservability';
 
 // @public
 export class ApiTokenControllerApi extends MetadataBaseApi implements ApiTokenControllerApiInterface {
@@ -6039,7 +6105,6 @@ export type ArithmeticMeasureOperatorEnum = 'DIFFERENCE' | 'CHANGE';
 
 // @public
 export interface AssigneeIdentifier {
-    // (undocumented)
     'id': string;
     // (undocumented)
     'type': AssigneeIdentifierTypeEnum;
@@ -7666,7 +7731,7 @@ export interface AutomationIdentifierRefIdentifier {
 }
 
 // @public (undocumented)
-export type AutomationIdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView';
+export type AutomationIdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'workspaceExportTemplate';
 
 // @public (undocumented)
 export interface AutomationImageExport {
@@ -8670,10 +8735,19 @@ export interface AutomationTabularExport {
 }
 
 // @public
+export interface AutomationTabularExportExecution {
+    // (undocumented)
+    'customOverride'?: AutomationCustomOverride;
+    'executionResult': string;
+    'title'?: string;
+}
+
+// @public
 export interface AutomationTabularExportRequest {
     // (undocumented)
     'customOverride'?: AutomationCustomOverride;
     'executionResult'?: string;
+    'executions'?: Array<AutomationTabularExportExecution>;
     'fileName': string;
     'format': AutomationTabularExportRequestFormatEnum;
     'metadata'?: object | null;
@@ -10673,6 +10747,38 @@ export interface DashboardSlidesTemplate {
 // @public (undocumented)
 export type DashboardSlidesTemplateAppliedOnEnum = 'PDF' | 'PPTX';
 
+// @public (undocumented)
+export interface DashboardSummaryRequestDto {
+    // (undocumented)
+    'aiModel'?: string;
+    // (undocumented)
+    'customUserPrompt'?: string;
+    // (undocumented)
+    'dashboardId': string;
+    // (undocumented)
+    'dryRun'?: boolean;
+    // (undocumented)
+    'gooddataHost'?: string;
+    // (undocumented)
+    'gooddataToken'?: string;
+    // (undocumented)
+    'keyMetricIds'?: Array<string>;
+    // (undocumented)
+    'referenceQuarter'?: string;
+    // (undocumented)
+    'temperature'?: number;
+}
+
+// @public (undocumented)
+export interface DashboardSummaryResponseDto {
+    // (undocumented)
+    'message': string;
+    // (undocumented)
+    'runId': string;
+    // (undocumented)
+    'status': string;
+}
+
 // @public
 export interface DashboardTabularExportRequestV2 {
     'dashboardFiltersOverride'?: Array<DashboardFilter>;
@@ -12075,7 +12181,7 @@ export interface DeclarativeDataSource {
 }
 
 // @public (undocumented)
-export type DeclarativeDataSourceAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'ACCESS_TOKEN';
+export type DeclarativeDataSourceAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'OIDC_PASSTHROUGH';
 
 // @public (undocumented)
 export type DeclarativeDataSourceCacheStrategyEnum = 'ALWAYS' | 'NEVER';
@@ -12530,7 +12636,7 @@ export interface DeclarativeSetting {
 }
 
 // @public (undocumented)
-export type DeclarativeSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE';
+export type DeclarativeSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE';
 
 // @public (undocumented)
 export interface DeclarativeSingleWorkspacePermission {
@@ -12725,6 +12831,7 @@ export interface DeclarativeWorkspace {
     // (undocumented)
     'hierarchyPermissions'?: Array<DeclarativeWorkspaceHierarchyPermission>;
     'id': string;
+    'managed'?: boolean;
     // (undocumented)
     'model'?: DeclarativeWorkspaceModel;
     'name': string;
@@ -13035,6 +13142,7 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     createEntityVisualizationObjects(requestParameters: EntitiesApiCreateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
     createEntityWorkspaceDataFilters(requestParameters: EntitiesApiCreateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
     createEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiCreateEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
+    createEntityWorkspaceExportTemplates(requestParameters: EntitiesApiCreateEntityWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceExportTemplateOutDocument>;
     createEntityWorkspaces(requestParameters: EntitiesApiCreateEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
     createEntityWorkspaceSettings(requestParameters: EntitiesApiCreateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
     // @deprecated
@@ -13074,6 +13182,7 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     deleteEntityVisualizationObjects(requestParameters: EntitiesApiDeleteEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityWorkspaceDataFilters(requestParameters: EntitiesApiDeleteEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiDeleteEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    deleteEntityWorkspaceExportTemplates(requestParameters: EntitiesApiDeleteEntityWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityWorkspaces(requestParameters: EntitiesApiDeleteEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityWorkspaceSettings(requestParameters: EntitiesApiDeleteEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     getAllAutomationsWorkspaceAutomations(requestParameters?: EntitiesApiGetAllAutomationsWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceAutomationOutList>;
@@ -13123,6 +13232,7 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     getAllEntitiesVisualizationObjects(requestParameters: EntitiesApiGetAllEntitiesVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutList>;
     getAllEntitiesWorkspaceDataFilters(requestParameters: EntitiesApiGetAllEntitiesWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutList>;
     getAllEntitiesWorkspaceDataFilterSettings(requestParameters: EntitiesApiGetAllEntitiesWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutList>;
+    getAllEntitiesWorkspaceExportTemplates(requestParameters: EntitiesApiGetAllEntitiesWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceExportTemplateOutList>;
     getAllEntitiesWorkspaces(requestParameters?: EntitiesApiGetAllEntitiesWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutList>;
     getAllEntitiesWorkspaceSettings(requestParameters: EntitiesApiGetAllEntitiesWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutList>;
     getAllOptions(options?: AxiosRequestConfig): AxiosPromise<object>;
@@ -13177,6 +13287,7 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     getEntityVisualizationObjects(requestParameters: EntitiesApiGetEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
     getEntityWorkspaceDataFilters(requestParameters: EntitiesApiGetEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
     getEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiGetEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
+    getEntityWorkspaceExportTemplates(requestParameters: EntitiesApiGetEntityWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceExportTemplateOutDocument>;
     getEntityWorkspaces(requestParameters: EntitiesApiGetEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
     getEntityWorkspaceSettings(requestParameters: EntitiesApiGetEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
     getOrganization(requestParameters?: EntitiesApiGetOrganizationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -13219,6 +13330,7 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     patchEntityVisualizationObjects(requestParameters: EntitiesApiPatchEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
     patchEntityWorkspaceDataFilters(requestParameters: EntitiesApiPatchEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
     patchEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiPatchEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
+    patchEntityWorkspaceExportTemplates(requestParameters: EntitiesApiPatchEntityWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceExportTemplateOutDocument>;
     patchEntityWorkspaces(requestParameters: EntitiesApiPatchEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
     patchEntityWorkspaceSettings(requestParameters: EntitiesApiPatchEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
     searchEntitiesAggregatedFacts(requestParameters: EntitiesApiSearchEntitiesAggregatedFactsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAggregatedFactOutList>;
@@ -13282,6 +13394,7 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     updateEntityVisualizationObjects(requestParameters: EntitiesApiUpdateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
     updateEntityWorkspaceDataFilters(requestParameters: EntitiesApiUpdateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
     updateEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiUpdateEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
+    updateEntityWorkspaceExportTemplates(requestParameters: EntitiesApiUpdateEntityWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceExportTemplateOutDocument>;
     updateEntityWorkspaces(requestParameters: EntitiesApiUpdateEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
     updateEntityWorkspaceSettings(requestParameters: EntitiesApiUpdateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
 }
@@ -15055,6 +15168,13 @@ export interface EntitiesApiCreateEntityWorkspaceDataFiltersRequest {
 }
 
 // @public
+export interface EntitiesApiCreateEntityWorkspaceExportTemplatesRequest {
+    readonly jsonApiWorkspaceExportTemplatePostOptionalIdDocument: JsonApiWorkspaceExportTemplatePostOptionalIdDocument;
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface EntitiesApiCreateEntityWorkspaceSettingsRequest {
     readonly jsonApiWorkspaceSettingPostOptionalIdDocument: JsonApiWorkspaceSettingPostOptionalIdDocument;
     readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
@@ -15263,6 +15383,12 @@ export interface EntitiesApiDeleteEntityWorkspaceDataFilterSettingsRequest {
 
 // @public
 export interface EntitiesApiDeleteEntityWorkspaceDataFiltersRequest {
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface EntitiesApiDeleteEntityWorkspaceExportTemplatesRequest {
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -15776,6 +15902,18 @@ export interface EntitiesApiGetAllEntitiesWorkspaceDataFiltersRequest {
 }
 
 // @public
+export interface EntitiesApiGetAllEntitiesWorkspaceExportTemplatesRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>;
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE';
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
 export interface EntitiesApiGetAllEntitiesWorkspaceSettingsRequest {
     readonly filter?: string;
     readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>;
@@ -16173,6 +16311,15 @@ export interface EntitiesApiGetEntityWorkspaceDataFiltersRequest {
 }
 
 // @public
+export interface EntitiesApiGetEntityWorkspaceExportTemplatesRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
 export interface EntitiesApiGetEntityWorkspaceSettingsRequest {
     readonly filter?: string;
     readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
@@ -16233,6 +16380,7 @@ export interface EntitiesApiInterface {
     createEntityVisualizationObjects(requestParameters: EntitiesApiCreateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
     createEntityWorkspaceDataFilters(requestParameters: EntitiesApiCreateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
     createEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiCreateEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
+    createEntityWorkspaceExportTemplates(requestParameters: EntitiesApiCreateEntityWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceExportTemplateOutDocument>;
     createEntityWorkspaces(requestParameters: EntitiesApiCreateEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
     createEntityWorkspaceSettings(requestParameters: EntitiesApiCreateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
     // @deprecated
@@ -16272,6 +16420,7 @@ export interface EntitiesApiInterface {
     deleteEntityVisualizationObjects(requestParameters: EntitiesApiDeleteEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityWorkspaceDataFilters(requestParameters: EntitiesApiDeleteEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiDeleteEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    deleteEntityWorkspaceExportTemplates(requestParameters: EntitiesApiDeleteEntityWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityWorkspaces(requestParameters: EntitiesApiDeleteEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityWorkspaceSettings(requestParameters: EntitiesApiDeleteEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     getAllAutomationsWorkspaceAutomations(requestParameters: EntitiesApiGetAllAutomationsWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceAutomationOutList>;
@@ -16321,6 +16470,7 @@ export interface EntitiesApiInterface {
     getAllEntitiesVisualizationObjects(requestParameters: EntitiesApiGetAllEntitiesVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutList>;
     getAllEntitiesWorkspaceDataFilters(requestParameters: EntitiesApiGetAllEntitiesWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutList>;
     getAllEntitiesWorkspaceDataFilterSettings(requestParameters: EntitiesApiGetAllEntitiesWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutList>;
+    getAllEntitiesWorkspaceExportTemplates(requestParameters: EntitiesApiGetAllEntitiesWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceExportTemplateOutList>;
     getAllEntitiesWorkspaces(requestParameters: EntitiesApiGetAllEntitiesWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutList>;
     getAllEntitiesWorkspaceSettings(requestParameters: EntitiesApiGetAllEntitiesWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutList>;
     getAllOptions(options?: AxiosRequestConfig): AxiosPromise<object>;
@@ -16375,6 +16525,7 @@ export interface EntitiesApiInterface {
     getEntityVisualizationObjects(requestParameters: EntitiesApiGetEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
     getEntityWorkspaceDataFilters(requestParameters: EntitiesApiGetEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
     getEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiGetEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
+    getEntityWorkspaceExportTemplates(requestParameters: EntitiesApiGetEntityWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceExportTemplateOutDocument>;
     getEntityWorkspaces(requestParameters: EntitiesApiGetEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
     getEntityWorkspaceSettings(requestParameters: EntitiesApiGetEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
     getOrganization(requestParameters: EntitiesApiGetOrganizationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -16417,6 +16568,7 @@ export interface EntitiesApiInterface {
     patchEntityVisualizationObjects(requestParameters: EntitiesApiPatchEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
     patchEntityWorkspaceDataFilters(requestParameters: EntitiesApiPatchEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
     patchEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiPatchEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
+    patchEntityWorkspaceExportTemplates(requestParameters: EntitiesApiPatchEntityWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceExportTemplateOutDocument>;
     patchEntityWorkspaces(requestParameters: EntitiesApiPatchEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
     patchEntityWorkspaceSettings(requestParameters: EntitiesApiPatchEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
     searchEntitiesAggregatedFacts(requestParameters: EntitiesApiSearchEntitiesAggregatedFactsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAggregatedFactOutList>;
@@ -16480,6 +16632,7 @@ export interface EntitiesApiInterface {
     updateEntityVisualizationObjects(requestParameters: EntitiesApiUpdateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
     updateEntityWorkspaceDataFilters(requestParameters: EntitiesApiUpdateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
     updateEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiUpdateEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
+    updateEntityWorkspaceExportTemplates(requestParameters: EntitiesApiUpdateEntityWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceExportTemplateOutDocument>;
     updateEntityWorkspaces(requestParameters: EntitiesApiUpdateEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
     updateEntityWorkspaceSettings(requestParameters: EntitiesApiUpdateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
 }
@@ -16788,6 +16941,14 @@ export interface EntitiesApiPatchEntityWorkspaceDataFiltersRequest {
     readonly filter?: string;
     readonly include?: Array<'workspaceDataFilterSettings' | 'filterSettings' | 'ALL'>;
     readonly jsonApiWorkspaceDataFilterPatchDocument: JsonApiWorkspaceDataFilterPatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface EntitiesApiPatchEntityWorkspaceExportTemplatesRequest {
+    readonly filter?: string;
+    readonly jsonApiWorkspaceExportTemplatePatchDocument: JsonApiWorkspaceExportTemplatePatchDocument;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -17289,6 +17450,14 @@ export interface EntitiesApiUpdateEntityWorkspaceDataFiltersRequest {
 }
 
 // @public
+export interface EntitiesApiUpdateEntityWorkspaceExportTemplatesRequest {
+    readonly filter?: string;
+    readonly jsonApiWorkspaceExportTemplateInDocument: JsonApiWorkspaceExportTemplateInDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface EntitiesApiUpdateEntityWorkspaceSettingsRequest {
     readonly filter?: string;
     readonly jsonApiWorkspaceSettingInDocument: JsonApiWorkspaceSettingInDocument;
@@ -17410,7 +17579,7 @@ export interface EntitlementsRequest {
 }
 
 // @public (undocumented)
-export type EntitlementsRequestEntitlementsNameEnum = 'CacheStrategy' | 'Contract' | 'CustomTheming' | 'ExtraCache' | 'Hipaa' | 'PdfExports' | 'UiLocalization' | 'Tier' | 'UserCount' | 'ManagedIdpUserCount' | 'UnlimitedUsers' | 'UnlimitedWorkspaces' | 'WhiteLabeling' | 'WorkspaceCount' | 'UserTelemetryDisabled' | 'AutomationCount' | 'UnlimitedAutomations' | 'AutomationRecipientCount' | 'UnlimitedAutomationRecipients' | 'DailyScheduledActionCount' | 'UnlimitedDailyScheduledActions' | 'DailyAlertActionCount' | 'UnlimitedDailyAlertActions' | 'ScheduledActionMinimumRecurrenceMinutes' | 'FederatedIdentityManagement' | 'AuditLogging' | 'ControlledFeatureRollout' | 'AiLake' | 'AiModule' | 'AiQueryLimit' | 'AiKnowledgeStorageLimit' | 'AiAgentLimit' | 'AiWorkspaceLimit';
+export type EntitlementsRequestEntitlementsNameEnum = 'CacheStrategy' | 'Contract' | 'CustomTheming' | 'ExtraCache' | 'Hipaa' | 'PdfExports' | 'UiLocalization' | 'Tier' | 'UserCount' | 'ManagedIdpUserCount' | 'UnlimitedUsers' | 'UnlimitedWorkspaces' | 'WhiteLabeling' | 'WorkspaceCount' | 'UserTelemetryDisabled' | 'AutomationCount' | 'UnlimitedAutomations' | 'AutomationRecipientCount' | 'UnlimitedAutomationRecipients' | 'DailyScheduledActionCount' | 'UnlimitedDailyScheduledActions' | 'DailyAlertActionCount' | 'UnlimitedDailyAlertActions' | 'ScheduledActionMinimumRecurrenceMinutes' | 'FederatedIdentityManagement' | 'AuditLogging' | 'ControlledFeatureRollout' | 'AiLake' | 'AiModule' | 'AiQueryLimit' | 'AiKnowledgeStorageLimit' | 'AiAgentLimit' | 'AiWorkspaceLimit' | 'AiObservability';
 
 // @public (undocumented)
 export interface EntityIdentifier {
@@ -18423,7 +18592,7 @@ export interface ExportIdentifierRefIdentifier {
 }
 
 // @public (undocumented)
-export type ExportIdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView';
+export type ExportIdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'workspaceExportTemplate';
 
 // @public
 export interface ExportImageExportRequest {
@@ -18841,10 +19010,19 @@ export interface ExportSlidesExportRequest {
 export type ExportSlidesExportRequestFormatEnum = 'PDF' | 'PPTX';
 
 // @public
+export interface ExportTabularExportExecution {
+    // (undocumented)
+    'customOverride'?: ExportCustomOverride;
+    'executionResult': string;
+    'title'?: string;
+}
+
+// @public
 export interface ExportTabularExportRequest {
     // (undocumented)
     'customOverride'?: ExportCustomOverride;
     'executionResult'?: string;
+    'executions'?: Array<ExportTabularExportExecution>;
     'fileName': string;
     'format': ExportTabularExportRequestFormatEnum;
     'metadata'?: object | null;
@@ -18957,11 +19135,17 @@ export interface ExportTemplateControllerApiUpdateEntityExportTemplatesRequest {
 // @public
 export class ExportTemplatesApi extends MetadataBaseApi implements ExportTemplatesApiInterface {
     createEntityExportTemplates(requestParameters: ExportTemplatesApiCreateEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutDocument>;
+    createEntityWorkspaceExportTemplates(requestParameters: ExportTemplatesApiCreateEntityWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceExportTemplateOutDocument>;
     deleteEntityExportTemplates(requestParameters: ExportTemplatesApiDeleteEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    deleteEntityWorkspaceExportTemplates(requestParameters: ExportTemplatesApiDeleteEntityWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     getAllEntitiesExportTemplates(requestParameters?: ExportTemplatesApiGetAllEntitiesExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutList>;
+    getAllEntitiesWorkspaceExportTemplates(requestParameters: ExportTemplatesApiGetAllEntitiesWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceExportTemplateOutList>;
     getEntityExportTemplates(requestParameters: ExportTemplatesApiGetEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutDocument>;
+    getEntityWorkspaceExportTemplates(requestParameters: ExportTemplatesApiGetEntityWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceExportTemplateOutDocument>;
     patchEntityExportTemplates(requestParameters: ExportTemplatesApiPatchEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutDocument>;
+    patchEntityWorkspaceExportTemplates(requestParameters: ExportTemplatesApiPatchEntityWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceExportTemplateOutDocument>;
     updateEntityExportTemplates(requestParameters: ExportTemplatesApiUpdateEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutDocument>;
+    updateEntityWorkspaceExportTemplates(requestParameters: ExportTemplatesApiUpdateEntityWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceExportTemplateOutDocument>;
 }
 
 // @public
@@ -19006,8 +19190,21 @@ export interface ExportTemplatesApiCreateEntityExportTemplatesRequest {
 }
 
 // @public
+export interface ExportTemplatesApiCreateEntityWorkspaceExportTemplatesRequest {
+    readonly jsonApiWorkspaceExportTemplatePostOptionalIdDocument: JsonApiWorkspaceExportTemplatePostOptionalIdDocument;
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface ExportTemplatesApiDeleteEntityExportTemplatesRequest {
     readonly id: string;
+}
+
+// @public
+export interface ExportTemplatesApiDeleteEntityWorkspaceExportTemplatesRequest {
+    readonly objectId: string;
+    readonly workspaceId: string;
 }
 
 // @public
@@ -19020,19 +19217,46 @@ export interface ExportTemplatesApiGetAllEntitiesExportTemplatesRequest {
 }
 
 // @public
+export interface ExportTemplatesApiGetAllEntitiesWorkspaceExportTemplatesRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>;
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE';
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
 export interface ExportTemplatesApiGetEntityExportTemplatesRequest {
     readonly filter?: string;
     readonly id: string;
 }
 
 // @public
+export interface ExportTemplatesApiGetEntityWorkspaceExportTemplatesRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
 export interface ExportTemplatesApiInterface {
     createEntityExportTemplates(requestParameters: ExportTemplatesApiCreateEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutDocument>;
+    createEntityWorkspaceExportTemplates(requestParameters: ExportTemplatesApiCreateEntityWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceExportTemplateOutDocument>;
     deleteEntityExportTemplates(requestParameters: ExportTemplatesApiDeleteEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    deleteEntityWorkspaceExportTemplates(requestParameters: ExportTemplatesApiDeleteEntityWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     getAllEntitiesExportTemplates(requestParameters: ExportTemplatesApiGetAllEntitiesExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutList>;
+    getAllEntitiesWorkspaceExportTemplates(requestParameters: ExportTemplatesApiGetAllEntitiesWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceExportTemplateOutList>;
     getEntityExportTemplates(requestParameters: ExportTemplatesApiGetEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutDocument>;
+    getEntityWorkspaceExportTemplates(requestParameters: ExportTemplatesApiGetEntityWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceExportTemplateOutDocument>;
     patchEntityExportTemplates(requestParameters: ExportTemplatesApiPatchEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutDocument>;
+    patchEntityWorkspaceExportTemplates(requestParameters: ExportTemplatesApiPatchEntityWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceExportTemplateOutDocument>;
     updateEntityExportTemplates(requestParameters: ExportTemplatesApiUpdateEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutDocument>;
+    updateEntityWorkspaceExportTemplates(requestParameters: ExportTemplatesApiUpdateEntityWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceExportTemplateOutDocument>;
 }
 
 // @public
@@ -19043,10 +19267,26 @@ export interface ExportTemplatesApiPatchEntityExportTemplatesRequest {
 }
 
 // @public
+export interface ExportTemplatesApiPatchEntityWorkspaceExportTemplatesRequest {
+    readonly filter?: string;
+    readonly jsonApiWorkspaceExportTemplatePatchDocument: JsonApiWorkspaceExportTemplatePatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface ExportTemplatesApiUpdateEntityExportTemplatesRequest {
     readonly filter?: string;
     readonly id: string;
     readonly jsonApiExportTemplateInDocument: JsonApiExportTemplateInDocument;
+}
+
+// @public
+export interface ExportTemplatesApiUpdateEntityWorkspaceExportTemplatesRequest {
+    readonly filter?: string;
+    readonly jsonApiWorkspaceExportTemplateInDocument: JsonApiWorkspaceExportTemplateInDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
 }
 
 // @public
@@ -19281,6 +19521,15 @@ export type FeatureContext = {
     region?: string;
     dataCenter?: string;
 };
+
+// @public (undocumented)
+export interface FeedbackRequestDto {
+    // (undocumented)
+    'sentiment': FeedbackRequestDtoSentimentEnum;
+}
+
+// @public (undocumented)
+export type FeedbackRequestDtoSentimentEnum = 'POSITIVE' | 'NEGATIVE';
 
 // @public
 export interface FilterBy {
@@ -19905,7 +20154,7 @@ export function GenAiApi_AiChatStream(axios: AxiosInstance, basePath: string, re
 export function GenAiApi_AiSearch(axios: AxiosInstance, basePath: string, requestParameters: ActionsApiAiSearchRequest, options?: AxiosRequestConfig, configuration?: LabelElementsConfiguration): AxiosPromise<SearchResult>;
 
 // @public
-export function GenAiApi_CreatedBy(axios: AxiosInstance, basePath: string, requestParameters: GenAiApiCreatedByRequest, options?: AxiosRequestConfig, configuration?: LabelElementsConfiguration): AxiosPromise<AfmAnalyticsCatalogCreatedBy>;
+export function GenAiApi_CreatedBy(axios: AxiosInstance, basePath: string, requestParameters: GenAiApiCreatedByRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<AfmAnalyticsCatalogCreatedBy>;
 
 // @public
 export function GenAiApi_GetQualityIssues(axios: AxiosInstance, basePath: string, requestParameters: ActionsApiGetQualityIssuesRequest, options?: AxiosRequestConfig, configuration?: LabelElementsConfiguration): AxiosPromise<AfmGetQualityIssuesResponse>;
@@ -19917,7 +20166,7 @@ export function GenAiApi_GetQualityIssuesCalculationStatus(axios: AxiosInstance,
 export function GenAiApi_MemoryCreatedByUsers(axios: AxiosInstance, basePath: string, requestParameters: GenAiApiMemoryCreatedByUsersRequest, options?: AxiosRequestConfig, configuration?: LabelElementsConfiguration): AxiosPromise<AfmMemoryItemCreatedByUsers>;
 
 // @public
-export function GenAiApi_Tags(axios: AxiosInstance, basePath: string, requestParameters: GenAiApiTagsRequest, options?: AxiosRequestConfig, configuration?: LabelElementsConfiguration): AxiosPromise<AfmAnalyticsCatalogTags>;
+export function GenAiApi_Tags(axios: AxiosInstance, basePath: string, requestParameters: GenAiApiTagsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<AfmAnalyticsCatalogTags>;
 
 // @public
 export function GenAiApi_TestLlmProvider(axios: AxiosInstance, basePath: string, requestParameters: GenAiApiTestLlmProviderRequest, options?: AxiosRequestConfig, configuration?: LabelElementsConfiguration): AxiosPromise<TestLlmProviderResponse>;
@@ -20498,7 +20747,7 @@ export interface IdentifierRefIdentifier {
 }
 
 // @public (undocumented)
-export type IdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView';
+export type IdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'workspaceExportTemplate';
 
 // @public
 export class IdentityProviderControllerApi extends MetadataBaseApi implements IdentityProviderControllerApiInterface {
@@ -23132,9 +23381,16 @@ export type JsonApiAutomationResultOutWithLinksTypeEnum = 'automationResult';
 // @public
 export interface JsonApiColorPaletteIn {
     // (undocumented)
-    'attributes': JsonApiColorPaletteOutAttributes;
+    'attributes': JsonApiColorPaletteInAttributes;
     'id': string;
     'type': JsonApiColorPaletteInTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiColorPaletteInAttributes {
+    'content': object;
+    // (undocumented)
+    'name': string;
 }
 
 // @public (undocumented)
@@ -23149,16 +23405,9 @@ export type JsonApiColorPaletteInTypeEnum = 'colorPalette';
 // @public
 export interface JsonApiColorPaletteOut {
     // (undocumented)
-    'attributes': JsonApiColorPaletteOutAttributes;
+    'attributes': JsonApiColorPaletteInAttributes;
     'id': string;
     'type': JsonApiColorPaletteOutTypeEnum;
-}
-
-// @public (undocumented)
-export interface JsonApiColorPaletteOutAttributes {
-    'content': object;
-    // (undocumented)
-    'name': string;
 }
 
 // @public (undocumented)
@@ -23185,7 +23434,7 @@ export type JsonApiColorPaletteOutTypeEnum = 'colorPalette';
 // @public (undocumented)
 export interface JsonApiColorPaletteOutWithLinks {
     // (undocumented)
-    'attributes': JsonApiColorPaletteOutAttributes;
+    'attributes': JsonApiColorPaletteInAttributes;
     'id': string;
     // (undocumented)
     'links'?: ObjectLinks;
@@ -23222,16 +23471,9 @@ export type JsonApiColorPalettePatchTypeEnum = 'colorPalette';
 // @public
 export interface JsonApiCookieSecurityConfigurationIn {
     // (undocumented)
-    'attributes'?: JsonApiCookieSecurityConfigurationInAttributes;
+    'attributes'?: JsonApiCookieSecurityConfigurationOutAttributes;
     'id': string;
     'type': JsonApiCookieSecurityConfigurationInTypeEnum;
-}
-
-// @public (undocumented)
-export interface JsonApiCookieSecurityConfigurationInAttributes {
-    // (undocumented)
-    'lastRotation'?: string;
-    'rotationInterval'?: string;
 }
 
 // @public (undocumented)
@@ -23246,9 +23488,16 @@ export type JsonApiCookieSecurityConfigurationInTypeEnum = 'cookieSecurityConfig
 // @public
 export interface JsonApiCookieSecurityConfigurationOut {
     // (undocumented)
-    'attributes'?: JsonApiCookieSecurityConfigurationInAttributes;
+    'attributes'?: JsonApiCookieSecurityConfigurationOutAttributes;
     'id': string;
     'type': JsonApiCookieSecurityConfigurationOutTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiCookieSecurityConfigurationOutAttributes {
+    // (undocumented)
+    'lastRotation'?: string;
+    'rotationInterval'?: string;
 }
 
 // @public (undocumented)
@@ -23265,7 +23514,7 @@ export type JsonApiCookieSecurityConfigurationOutTypeEnum = 'cookieSecurityConfi
 // @public
 export interface JsonApiCookieSecurityConfigurationPatch {
     // (undocumented)
-    'attributes'?: JsonApiCookieSecurityConfigurationInAttributes;
+    'attributes'?: JsonApiCookieSecurityConfigurationOutAttributes;
     'id': string;
     'type': JsonApiCookieSecurityConfigurationPatchTypeEnum;
 }
@@ -24075,12 +24324,13 @@ export interface JsonApiDataSourceIn {
 // @public (undocumented)
 export interface JsonApiDataSourceInAttributes {
     'alternativeDataSourceId'?: string | null;
+    'authenticationType'?: JsonApiDataSourceInAttributesAuthenticationTypeEnum | null;
     'cacheStrategy'?: JsonApiDataSourceInAttributesCacheStrategyEnum | null;
     'clientId'?: string | null;
     'clientSecret'?: string | null;
     'dateTimeSemantics'?: JsonApiDataSourceInAttributesDateTimeSemanticsEnum | null;
     'name': string;
-    'parameters'?: Array<JsonApiDataSourceOutAttributesParametersInner> | null;
+    'parameters'?: Array<JsonApiDataSourceInAttributesParametersInner> | null;
     'password'?: string | null;
     'privateKey'?: string | null;
     'privateKeyPassphrase'?: string | null;
@@ -24092,10 +24342,21 @@ export interface JsonApiDataSourceInAttributes {
 }
 
 // @public (undocumented)
+export type JsonApiDataSourceInAttributesAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'OIDC_PASSTHROUGH';
+
+// @public (undocumented)
 export type JsonApiDataSourceInAttributesCacheStrategyEnum = 'ALWAYS' | 'NEVER';
 
 // @public (undocumented)
 export type JsonApiDataSourceInAttributesDateTimeSemanticsEnum = 'LOCAL' | 'UTC';
+
+// @public (undocumented)
+export interface JsonApiDataSourceInAttributesParametersInner {
+    // (undocumented)
+    'name': string;
+    // (undocumented)
+    'value': string;
+}
 
 // @public (undocumented)
 export type JsonApiDataSourceInAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'GREENPLUM' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
@@ -24126,9 +24387,10 @@ export interface JsonApiDataSourceOutAttributes {
     'cacheStrategy'?: JsonApiDataSourceOutAttributesCacheStrategyEnum | null;
     'clientId'?: string | null;
     'dateTimeSemantics'?: JsonApiDataSourceOutAttributesDateTimeSemanticsEnum | null;
-    'decodedParameters'?: Array<JsonApiDataSourceOutAttributesParametersInner> | null;
+    'decodedParameters'?: Array<JsonApiDataSourceInAttributesParametersInner> | null;
+    'managed'?: boolean;
     'name': string;
-    'parameters'?: Array<JsonApiDataSourceOutAttributesParametersInner> | null;
+    'parameters'?: Array<JsonApiDataSourceInAttributesParametersInner> | null;
     'schema': string;
     'type': JsonApiDataSourceOutAttributesTypeEnum;
     'url'?: string | null;
@@ -24136,21 +24398,13 @@ export interface JsonApiDataSourceOutAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiDataSourceOutAttributesAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'ACCESS_TOKEN';
+export type JsonApiDataSourceOutAttributesAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'OIDC_PASSTHROUGH';
 
 // @public (undocumented)
 export type JsonApiDataSourceOutAttributesCacheStrategyEnum = 'ALWAYS' | 'NEVER';
 
 // @public (undocumented)
 export type JsonApiDataSourceOutAttributesDateTimeSemanticsEnum = 'LOCAL' | 'UTC';
-
-// @public (undocumented)
-export interface JsonApiDataSourceOutAttributesParametersInner {
-    // (undocumented)
-    'name': string;
-    // (undocumented)
-    'value': string;
-}
 
 // @public (undocumented)
 export type JsonApiDataSourceOutAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'GREENPLUM' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
@@ -24202,12 +24456,13 @@ export interface JsonApiDataSourcePatch {
 // @public (undocumented)
 export interface JsonApiDataSourcePatchAttributes {
     'alternativeDataSourceId'?: string | null;
+    'authenticationType'?: JsonApiDataSourcePatchAttributesAuthenticationTypeEnum | null;
     'cacheStrategy'?: JsonApiDataSourcePatchAttributesCacheStrategyEnum | null;
     'clientId'?: string | null;
     'clientSecret'?: string | null;
     'dateTimeSemantics'?: JsonApiDataSourcePatchAttributesDateTimeSemanticsEnum | null;
     'name'?: string;
-    'parameters'?: Array<JsonApiDataSourceOutAttributesParametersInner> | null;
+    'parameters'?: Array<JsonApiDataSourceInAttributesParametersInner> | null;
     'password'?: string | null;
     'privateKey'?: string | null;
     'privateKeyPassphrase'?: string | null;
@@ -24217,6 +24472,9 @@ export interface JsonApiDataSourcePatchAttributes {
     'url'?: string | null;
     'username'?: string | null;
 }
+
+// @public (undocumented)
+export type JsonApiDataSourcePatchAttributesAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'OIDC_PASSTHROUGH';
 
 // @public (undocumented)
 export type JsonApiDataSourcePatchAttributesCacheStrategyEnum = 'ALWAYS' | 'NEVER';
@@ -25677,10 +25935,33 @@ export type JsonApiLabelPatchTypeEnum = 'label';
 // @public
 export interface JsonApiLlmProviderIn {
     // (undocumented)
-    'attributes'?: JsonApiLlmProviderOutAttributes;
+    'attributes'?: JsonApiLlmProviderInAttributes;
     'id': string;
     'type': JsonApiLlmProviderInTypeEnum;
 }
+
+// @public (undocumented)
+export interface JsonApiLlmProviderInAttributes {
+    'defaultModelId'?: string | null;
+    'description'?: string | null;
+    'models'?: Array<JsonApiLlmProviderInAttributesModelsInner> | null;
+    // (undocumented)
+    'name'?: string | null;
+    // (undocumented)
+    'providerConfig'?: JsonApiLlmProviderInAttributesProviderConfig | null;
+}
+
+// @public
+export interface JsonApiLlmProviderInAttributesModelsInner {
+    'family': JsonApiLlmProviderInAttributesModelsInnerFamilyEnum;
+    'id': string;
+}
+
+// @public (undocumented)
+export type JsonApiLlmProviderInAttributesModelsInnerFamilyEnum = 'OPENAI' | 'ANTHROPIC' | 'META' | 'MISTRAL' | 'AMAZON' | 'GOOGLE' | 'COHERE' | 'UNKNOWN';
+
+// @public
+export type JsonApiLlmProviderInAttributesProviderConfig = AnthropicProviderConfig | AwsBedrockProviderConfig | AzureFoundryProviderConfig | OpenAIProviderConfig;
 
 // @public (undocumented)
 export interface JsonApiLlmProviderInDocument {
@@ -25694,33 +25975,10 @@ export type JsonApiLlmProviderInTypeEnum = 'llmProvider';
 // @public
 export interface JsonApiLlmProviderOut {
     // (undocumented)
-    'attributes'?: JsonApiLlmProviderOutAttributes;
+    'attributes'?: JsonApiLlmProviderInAttributes;
     'id': string;
     'type': JsonApiLlmProviderOutTypeEnum;
 }
-
-// @public (undocumented)
-export interface JsonApiLlmProviderOutAttributes {
-    'defaultModelId'?: string | null;
-    'description'?: string | null;
-    'models'?: Array<JsonApiLlmProviderOutAttributesModelsInner> | null;
-    // (undocumented)
-    'name'?: string | null;
-    // (undocumented)
-    'providerConfig'?: JsonApiLlmProviderOutAttributesProviderConfig | null;
-}
-
-// @public
-export interface JsonApiLlmProviderOutAttributesModelsInner {
-    'family': JsonApiLlmProviderOutAttributesModelsInnerFamilyEnum;
-    'id': string;
-}
-
-// @public (undocumented)
-export type JsonApiLlmProviderOutAttributesModelsInnerFamilyEnum = 'OPENAI' | 'ANTHROPIC' | 'META' | 'MISTRAL' | 'AMAZON' | 'GOOGLE' | 'COHERE' | 'UNKNOWN';
-
-// @public
-export type JsonApiLlmProviderOutAttributesProviderConfig = AnthropicProviderConfig | AwsBedrockProviderConfig | AzureFoundryProviderConfig | OpenAIProviderConfig;
 
 // @public (undocumented)
 export interface JsonApiLlmProviderOutDocument {
@@ -25746,7 +26004,7 @@ export type JsonApiLlmProviderOutTypeEnum = 'llmProvider';
 // @public (undocumented)
 export interface JsonApiLlmProviderOutWithLinks {
     // (undocumented)
-    'attributes'?: JsonApiLlmProviderOutAttributes;
+    'attributes'?: JsonApiLlmProviderInAttributes;
     'id': string;
     // (undocumented)
     'links'?: ObjectLinks;
@@ -25759,7 +26017,7 @@ export type JsonApiLlmProviderOutWithLinksTypeEnum = 'llmProvider';
 // @public
 export interface JsonApiLlmProviderPatch {
     // (undocumented)
-    'attributes'?: JsonApiLlmProviderOutAttributes;
+    'attributes'?: JsonApiLlmProviderInAttributes;
     'id': string;
     'type': JsonApiLlmProviderPatchTypeEnum;
 }
@@ -26530,7 +26788,7 @@ export interface JsonApiOrganizationSettingInAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiOrganizationSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE';
+export type JsonApiOrganizationSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE';
 
 // @public (undocumented)
 export interface JsonApiOrganizationSettingInDocument {
@@ -26905,7 +27163,7 @@ export type JsonApiParameterPostOptionalIdTypeEnum = 'parameter';
 // @public
 export interface JsonApiThemeIn {
     // (undocumented)
-    'attributes': JsonApiColorPaletteOutAttributes;
+    'attributes': JsonApiColorPaletteInAttributes;
     'id': string;
     'type': JsonApiThemeInTypeEnum;
 }
@@ -26922,7 +27180,7 @@ export type JsonApiThemeInTypeEnum = 'theme';
 // @public
 export interface JsonApiThemeOut {
     // (undocumented)
-    'attributes': JsonApiColorPaletteOutAttributes;
+    'attributes': JsonApiColorPaletteInAttributes;
     'id': string;
     'type': JsonApiThemeOutTypeEnum;
 }
@@ -26951,7 +27209,7 @@ export type JsonApiThemeOutTypeEnum = 'theme';
 // @public (undocumented)
 export interface JsonApiThemeOutWithLinks {
     // (undocumented)
-    'attributes': JsonApiColorPaletteOutAttributes;
+    'attributes': JsonApiColorPaletteInAttributes;
     'id': string;
     // (undocumented)
     'links'?: ObjectLinks;
@@ -28130,13 +28388,170 @@ export interface JsonApiWorkspaceDataFilterSettingPatchDocument {
 export type JsonApiWorkspaceDataFilterSettingPatchTypeEnum = 'workspaceDataFilterSetting';
 
 // @public
+export interface JsonApiWorkspaceExportTemplateIn {
+    // (undocumented)
+    'attributes': JsonApiWorkspaceExportTemplatePostOptionalIdAttributes;
+    'id': string;
+    'type': JsonApiWorkspaceExportTemplateInTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiWorkspaceExportTemplateInDocument {
+    // (undocumented)
+    'data': JsonApiWorkspaceExportTemplateIn;
+}
+
+// @public (undocumented)
+export type JsonApiWorkspaceExportTemplateInTypeEnum = 'workspaceExportTemplate';
+
+// @public
+export interface JsonApiWorkspaceExportTemplateOut {
+    // (undocumented)
+    'attributes': JsonApiWorkspaceExportTemplatePostOptionalIdAttributes;
+    'id': string;
+    // (undocumented)
+    'meta'?: JsonApiExportDefinitionOutMeta;
+    'type': JsonApiWorkspaceExportTemplateOutTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiWorkspaceExportTemplateOutDocument {
+    // (undocumented)
+    'data': JsonApiWorkspaceExportTemplateOut;
+    // (undocumented)
+    'links'?: ObjectLinks;
+}
+
+// @public
+export interface JsonApiWorkspaceExportTemplateOutList {
+    // (undocumented)
+    'data': Array<JsonApiWorkspaceExportTemplateOutWithLinks>;
+    // (undocumented)
+    'links'?: ListLinks;
+    // (undocumented)
+    'meta'?: JsonApiAgentOutListMeta;
+}
+
+// @public (undocumented)
+export type JsonApiWorkspaceExportTemplateOutTypeEnum = 'workspaceExportTemplate';
+
+// @public (undocumented)
+export interface JsonApiWorkspaceExportTemplateOutWithLinks {
+    // (undocumented)
+    'attributes': JsonApiWorkspaceExportTemplatePostOptionalIdAttributes;
+    'id': string;
+    // (undocumented)
+    'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiExportDefinitionOutMeta;
+    'type': JsonApiWorkspaceExportTemplateOutWithLinksTypeEnum;
+}
+
+// @public (undocumented)
+export type JsonApiWorkspaceExportTemplateOutWithLinksTypeEnum = 'workspaceExportTemplate';
+
+// @public
+export interface JsonApiWorkspaceExportTemplatePatch {
+    // (undocumented)
+    'attributes': JsonApiWorkspaceExportTemplatePatchAttributes;
+    'id': string;
+    'type': JsonApiWorkspaceExportTemplatePatchTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiWorkspaceExportTemplatePatchAttributes {
+    // (undocumented)
+    'dashboardSlidesTemplate'?: JsonApiWorkspaceExportTemplatePostOptionalIdAttributesDashboardSlidesTemplate | null;
+    'name'?: string;
+    // (undocumented)
+    'widgetSlidesTemplate'?: JsonApiWorkspaceExportTemplatePostOptionalIdAttributesWidgetSlidesTemplate | null;
+}
+
+// @public (undocumented)
+export interface JsonApiWorkspaceExportTemplatePatchDocument {
+    // (undocumented)
+    'data': JsonApiWorkspaceExportTemplatePatch;
+}
+
+// @public (undocumented)
+export type JsonApiWorkspaceExportTemplatePatchTypeEnum = 'workspaceExportTemplate';
+
+// @public
+export interface JsonApiWorkspaceExportTemplatePostOptionalId {
+    // (undocumented)
+    'attributes': JsonApiWorkspaceExportTemplatePostOptionalIdAttributes;
+    'id'?: string;
+    'type': JsonApiWorkspaceExportTemplatePostOptionalIdTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiWorkspaceExportTemplatePostOptionalIdAttributes {
+    // (undocumented)
+    'dashboardSlidesTemplate'?: JsonApiWorkspaceExportTemplatePostOptionalIdAttributesDashboardSlidesTemplate | null;
+    'name': string;
+    // (undocumented)
+    'widgetSlidesTemplate'?: JsonApiWorkspaceExportTemplatePostOptionalIdAttributesWidgetSlidesTemplate | null;
+}
+
+// @public
+export interface JsonApiWorkspaceExportTemplatePostOptionalIdAttributesDashboardSlidesTemplate {
+    'appliedOn': Array<JsonApiWorkspaceExportTemplatePostOptionalIdAttributesDashboardSlidesTemplateAppliedOnEnum>;
+    // (undocumented)
+    'contentSlide'?: ContentSlideTemplate | null;
+    // (undocumented)
+    'coverSlide'?: CoverSlideTemplate | null;
+    // (undocumented)
+    'introSlide'?: IntroSlideTemplate | null;
+    // (undocumented)
+    'sectionSlide'?: SectionSlideTemplate | null;
+}
+
+// @public (undocumented)
+export type JsonApiWorkspaceExportTemplatePostOptionalIdAttributesDashboardSlidesTemplateAppliedOnEnum = 'PDF' | 'PPTX';
+
+// @public
+export interface JsonApiWorkspaceExportTemplatePostOptionalIdAttributesWidgetSlidesTemplate {
+    'appliedOn': Array<JsonApiWorkspaceExportTemplatePostOptionalIdAttributesWidgetSlidesTemplateAppliedOnEnum>;
+    // (undocumented)
+    'contentSlide'?: ContentSlideTemplate | null;
+}
+
+// @public (undocumented)
+export type JsonApiWorkspaceExportTemplatePostOptionalIdAttributesWidgetSlidesTemplateAppliedOnEnum = 'PDF' | 'PPTX';
+
+// @public (undocumented)
+export interface JsonApiWorkspaceExportTemplatePostOptionalIdDocument {
+    // (undocumented)
+    'data': JsonApiWorkspaceExportTemplatePostOptionalId;
+}
+
+// @public (undocumented)
+export type JsonApiWorkspaceExportTemplatePostOptionalIdTypeEnum = 'workspaceExportTemplate';
+
+// @public
 export interface JsonApiWorkspaceIn {
     // (undocumented)
-    'attributes'?: JsonApiWorkspaceOutAttributes;
+    'attributes'?: JsonApiWorkspaceInAttributes;
     'id': string;
     // (undocumented)
     'relationships'?: JsonApiWorkspaceOutRelationships;
     'type': JsonApiWorkspaceInTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiWorkspaceInAttributes {
+    // (undocumented)
+    'cacheExtraLimit'?: number;
+    // (undocumented)
+    'dataSource'?: JsonApiWorkspaceOutAttributesDataSource;
+    // (undocumented)
+    'description'?: string | null;
+    // @deprecated
+    'earlyAccess'?: string | null;
+    'earlyAccessValues'?: Array<string> | null;
+    // (undocumented)
+    'name'?: string | null;
+    'prefix'?: string | null;
 }
 
 // @public (undocumented)
@@ -28182,6 +28597,7 @@ export interface JsonApiWorkspaceOutAttributes {
     // @deprecated
     'earlyAccess'?: string | null;
     'earlyAccessValues'?: Array<string> | null;
+    'managed'?: boolean;
     // (undocumented)
     'name'?: string | null;
     'prefix'?: string | null;
@@ -28279,7 +28695,7 @@ export type JsonApiWorkspaceOutWithLinksTypeEnum = 'workspace';
 // @public
 export interface JsonApiWorkspacePatch {
     // (undocumented)
-    'attributes'?: JsonApiWorkspaceOutAttributes;
+    'attributes'?: JsonApiWorkspaceInAttributes;
     'id': string;
     // (undocumented)
     'relationships'?: JsonApiWorkspaceOutRelationships;
@@ -29062,6 +29478,58 @@ export interface KnowledgeRecommendationControllerApiUpdateEntityKnowledgeRecomm
     readonly jsonApiKnowledgeRecommendationInDocument: JsonApiKnowledgeRecommendationInDocument;
     readonly objectId: string;
     readonly workspaceId: string;
+}
+
+// @public (undocumented)
+export interface KnowledgeRecommendationsRequestDto {
+    // (undocumented)
+    'aiModel'?: string;
+    // (undocumented)
+    'analyticalDashboardId'?: string;
+    // (undocumented)
+    'analyzedValue'?: number;
+    // (undocumented)
+    'comparisonType': KnowledgeRecommendationsRequestDtoComparisonTypeEnum;
+    // (undocumented)
+    'direction'?: KnowledgeRecommendationsRequestDtoDirectionEnum;
+    // (undocumented)
+    'dryRun'?: boolean;
+    // (undocumented)
+    'gooddataHost'?: string;
+    // (undocumented)
+    'gooddataToken'?: string;
+    // (undocumented)
+    'limit'?: number;
+    // (undocumented)
+    'maxTokens'?: number;
+    // (undocumented)
+    'metricId': string;
+    // (undocumented)
+    'minScore'?: number;
+    // (undocumented)
+    'referenceValue'?: number;
+    // (undocumented)
+    'temperature'?: number;
+    // (undocumented)
+    'widgetId'?: string;
+    // (undocumented)
+    'widgetName'?: string;
+}
+
+// @public (undocumented)
+export type KnowledgeRecommendationsRequestDtoComparisonTypeEnum = 'MONTH' | 'QUARTER' | 'YEAR';
+
+// @public (undocumented)
+export type KnowledgeRecommendationsRequestDtoDirectionEnum = 'INCREASED' | 'DECREASED';
+
+// @public (undocumented)
+export interface KnowledgeRecommendationsResponseDto {
+    // (undocumented)
+    'message': string;
+    // (undocumented)
+    'runId': string;
+    // (undocumented)
+    'status': string;
 }
 
 // @public
@@ -30630,35 +31098,6 @@ export interface MetadataRequestArgs {
     options: RawAxiosRequestConfig;
     // (undocumented)
     url: string;
-}
-
-// @public
-export class MetadataSyncApi extends MetadataBaseApi implements MetadataSyncApiInterface {
-    metadataSync(requestParameters: MetadataSyncApiMetadataSyncRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    metadataSyncOrganization(options?: AxiosRequestConfig): AxiosPromise<void>;
-}
-
-// @public
-export function MetadataSyncApi_MetadataSync(axios: AxiosInstance, basePath: string, requestParameters: MetadataSyncApiMetadataSyncRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
-
-// @public
-export function MetadataSyncApi_MetadataSyncOrganization(axios: AxiosInstance, basePath: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
-
-// @public
-export function MetadataSyncApiAxiosParamCreator_MetadataSync(workspaceId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function MetadataSyncApiAxiosParamCreator_MetadataSyncOrganization(options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export interface MetadataSyncApiInterface {
-    metadataSync(requestParameters: MetadataSyncApiMetadataSyncRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    metadataSyncOrganization(options?: AxiosRequestConfig): AxiosPromise<void>;
-}
-
-// @public
-export interface MetadataSyncApiMetadataSyncRequest {
-    readonly workspaceId: string;
 }
 
 // @internal
@@ -33217,7 +33656,7 @@ export interface ResolvedSetting {
 }
 
 // @public (undocumented)
-export type ResolvedSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE';
+export type ResolvedSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE';
 
 // @public
 export interface ResolveSettingsRequest {
@@ -33982,6 +34421,14 @@ export interface TableWarning {
 }
 
 // @public
+export interface TabularExportExecution {
+    // (undocumented)
+    'customOverride'?: CustomOverride;
+    'executionResult': string;
+    'title'?: string;
+}
+
+// @public
 export class TabularExportExport extends ExportBaseAPI implements TabularExportExportInterface {
     createDashboardExportRequest(requestParameters: TabularExportExportCreateDashboardExportRequestRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
     createTabularExport(requestParameters: TabularExportExportCreateTabularExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
@@ -34037,6 +34484,7 @@ export interface TabularExportRequest {
     // (undocumented)
     'customOverride'?: CustomOverride;
     'executionResult'?: string;
+    'executions'?: Array<TabularExportExecution>;
     'fileName': string;
     'format': TabularExportRequestFormatEnum;
     'metadata'?: object | null;
@@ -34053,6 +34501,7 @@ export type TabularExportRequestFormatEnum = 'CSV' | 'XLSX' | 'HTML' | 'PDF';
 
 // @public
 export interface TestDefinitionRequest {
+    'authenticationType'?: TestDefinitionRequestAuthenticationTypeEnum | null;
     'clientId'?: string;
     'clientSecret'?: string;
     // (undocumented)
@@ -34066,6 +34515,9 @@ export interface TestDefinitionRequest {
     'url'?: string;
     'username'?: string;
 }
+
+// @public (undocumented)
+export type TestDefinitionRequestAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'OIDC_PASSTHROUGH';
 
 // @public (undocumented)
 export type TestDefinitionRequestTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'GREENPLUM' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
@@ -34102,6 +34554,7 @@ export interface TestQueryDuration {
 
 // @public
 export interface TestRequest {
+    'authenticationType'?: TestRequestAuthenticationTypeEnum | null;
     'clientId'?: string;
     'clientSecret'?: string;
     // (undocumented)
@@ -34114,6 +34567,9 @@ export interface TestRequest {
     'url'?: string;
     'username'?: string;
 }
+
+// @public (undocumented)
+export type TestRequestAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'OIDC_PASSTHROUGH';
 
 // @public
 export interface TestResponse {
@@ -34254,7 +34710,7 @@ export const tigerExecutionResultClientFactory: (axios: AxiosInstance) => Pick<A
 export const tigerExportClientFactory: (axios: AxiosInstance) => ActionsExportInterface;
 
 // @public
-export type TigerGenAIClient = Pick<AfmActionsApiInterface, "aiSearch" | "aiChat" | "aiChatStream" | "aiChatHistory" | "validateLLMEndpoint" | "validateLLMEndpointById" | "getQualityIssues" | "getQualityIssuesCalculationStatus" | "triggerQualityIssuesCalculation" | "tags" | "createdBy" | "memoryCreatedByUsers"> & Pick<AIObservabilityAiInterface, "getObservabilityOverview">;
+export type TigerGenAIClient = Pick<AfmActionsApiInterface, "aiSearch" | "aiChat" | "aiChatStream" | "aiChatHistory" | "validateLLMEndpoint" | "validateLLMEndpointById" | "getQualityIssues" | "getQualityIssuesCalculationStatus" | "triggerQualityIssuesCalculation" | "memoryCreatedByUsers"> & Pick<AIObservabilityAiInterface, "getObservabilityOverview">;
 
 // @public (undocumented)
 export const tigerGenAIClientFactory: (axios: AxiosInstance) => TigerGenAIClient;

@@ -112,12 +112,23 @@ export interface IDashboardSummaryRequest {
     dashboardId: string;
     /**
      * Visualizations to include in the summary. `null` means include all visualizations on the dashboard.
+     * Omit to let the backend decide.
      */
-    visualizations: string[] | null;
+    visualizations?: string[] | null;
     /**
      * Filter context to apply when generating the summary. `null` means use all dashboard filters.
+     * Omit to let the backend decide.
      */
-    filterContext: FilterContextItem[] | null;
+    filterContext?: FilterContextItem[] | null;
+    /**
+     * Identifier of the dashboard tab to summarize. Omit to summarize the whole dashboard.
+     */
+    tabId?: string | null;
+    /**
+     * Hint describing the desired output format of the generated summary.
+     * Use it as an additional prompt.
+     */
+    formatHint?: string | null;
 }
 
 /**
@@ -149,6 +160,10 @@ export interface IDashboardSummary {
     visualizationsIncluded: IDashboardSummaryIncludedVisualization[];
     visualizationsExcluded: IDashboardSummaryExcludedVisualization[];
     generatedAt: string;
+    /**
+     * Identifier of the dashboard tab the summary was generated for, when a tab was requested.
+     */
+    tabId?: string;
 }
 
 /**

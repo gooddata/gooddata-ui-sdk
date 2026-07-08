@@ -36,6 +36,11 @@ export type IParameterDefinition = INumberParameterDefinition | IStringParameter
 /**
  * @alpha
  */
+export type ParameterType = IParameterDefinition["type"];
+
+/**
+ * @alpha
+ */
 export type ParameterValue = IParameterDefinition["defaultValue"];
 
 /**

@@ -13,7 +13,7 @@ function getSettingsBasedConfig(settings: ISettings): Partial<IChartConfig> {
         ...(settings.enableVisualizationFineTuning ? { enableVisualizationFineTuning: true } : {}),
         ...(settings.enableExecutionCancelling ? { enableExecutionCancelling: true } : {}),
         ...(settings.enableHighchartsAccessibility ? { enableHighchartsAccessibility: true } : {}),
-        ...(settings.enableKDRespectLegendPosition ? { respectLegendPosition: true } : {}),
+        respectLegendPosition: true,
         ...(settings.enableAccessibleChartTooltip || settings.enableAccessibilityMode
             ? { enableAccessibleTooltip: true }
             : {}),
@@ -35,7 +35,7 @@ export function updateConfigWithSettings(
         };
     }
 
-    return {
+    const updatedConfig: IChartConfig = {
         ...(config || {}),
         enableCompactSize: true,
         ...(config?.enableJoinedAttributeAxisName === undefined
@@ -48,4 +48,12 @@ export function updateConfigWithSettings(
         enableSeparateTotalLabels: true,
         ...getSettingsBasedConfig(settings),
     };
+
+    // enableCustomTooltip defaults on; when explicitly disabled, strip any persisted custom
+    // tooltip so the insight renders plain.
+    if (settings.enableCustomTooltip === false) {
+        return { ...updatedConfig, customTooltip: undefined };
+    }
+
+    return updatedConfig;
 }

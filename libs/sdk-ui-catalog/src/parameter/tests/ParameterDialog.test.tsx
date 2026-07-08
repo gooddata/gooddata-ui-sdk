@@ -90,7 +90,9 @@ definition:
 function wrapper({ children }: PropsWithChildren) {
     return (
         <TestIntlProvider>
-            <ToastsCenterContextProvider>{children}</ToastsCenterContextProvider>
+            <ToastsCenterContextProvider>
+                <TestPermissionsProvider>{children}</TestPermissionsProvider>
+            </ToastsCenterContextProvider>
         </TestIntlProvider>
     );
 }
@@ -358,6 +360,105 @@ describe("ParameterDialog", () => {
 
         expect(onSubmit).not.toHaveBeenCalled();
         expect(screen.getByText("Only NUMBER parameters are supported.")).toBeInTheDocument();
+    });
+
+    describe("string parameters enabled", () => {
+        function stringEnabledWrapper({ children }: PropsWithChildren) {
+            return (
+                <TestIntlProvider>
+                    <ToastsCenterContextProvider>
+                        <TestPermissionsProvider
+                            result={{
+                                ...defaultPermissionsResult,
+                                settings: {
+                                    enableStringParameters: true,
+                                } as IUserWorkspaceSettings,
+                            }}
+                        >
+                            {children}
+                        </TestPermissionsProvider>
+                    </ToastsCenterContextProvider>
+                </TestIntlProvider>
+            );
+        }
+
+        it("lists every supported type in the unsupported type error", () => {
+            render(
+                <ParameterDialog
+                    mode="create"
+                    initialParameter={createParameter}
+                    onClose={vi.fn()}
+                    onSubmit={vi.fn()}
+                />,
+                { wrapper: stringEnabledWrapper },
+            );
+
+            fireEvent.change(screen.getByTestId("yaml-editor"), {
+                target: {
+                    value: `definition:
+  type: DATE
+  defaultValue: 1
+`,
+                },
+            });
+            fireEvent.click(screen.getByTestId("create"));
+
+            expect(screen.getByText("Only NUMBER and STRING parameters are supported.")).toBeInTheDocument();
+        });
+
+        it("phrases the default value error for the declared STRING type", () => {
+            render(
+                <ParameterDialog
+                    mode="create"
+                    initialParameter={createParameter}
+                    onClose={vi.fn()}
+                    onSubmit={vi.fn()}
+                />,
+                { wrapper: stringEnabledWrapper },
+            );
+
+            fireEvent.change(screen.getByTestId("yaml-editor"), {
+                target: {
+                    value: `definition:
+  type: STRING
+  defaultValue: 5
+`,
+                },
+            });
+            fireEvent.click(screen.getByTestId("create"));
+
+            expect(screen.getByText("Default value must be a string.")).toBeInTheDocument();
+        });
+
+        it("phrases the constraints error for the declared STRING type only", () => {
+            render(
+                <ParameterDialog
+                    mode="create"
+                    initialParameter={createParameter}
+                    onClose={vi.fn()}
+                    onSubmit={vi.fn()}
+                />,
+                { wrapper: stringEnabledWrapper },
+            );
+
+            fireEvent.change(screen.getByTestId("yaml-editor"), {
+                target: {
+                    value: `definition:
+  type: STRING
+  defaultValue: Actual
+  constraints:
+    minLength: -1
+`,
+                },
+            });
+            fireEvent.click(screen.getByTestId("create"));
+
+            expect(
+                screen.getByText(
+                    "Invalid constraints: STRING parameters allow non-negative integer minLength and maxLength.",
+                ),
+            ).toBeInTheDocument();
+        });
     });
 
     it("submits parsed parameter definition in create mode", () => {

@@ -2302,7 +2302,8 @@
                                     "customApplicationSetting",
                                     "workspaceDataFilter",
                                     "workspaceDataFilterSetting",
-                                    "filterView"
+                                    "filterView",
+                                    "workspaceExportTemplate"
                                 ]
                             }
                         }
@@ -3513,6 +3514,28 @@
                 },
                 "description": "Export request object describing the export properties and metadata for slides exports."
             },
+            "TabularExportExecution": {
+                "required": [
+                    "executionResult"
+                ],
+                "type": "object",
+                "properties": {
+                    "executionResult": {
+                        "type": "string",
+                        "description": "Execution result identifier for this layer.",
+                        "example": "ff483727196c9dc862c7fd3a5a84df55c96d61a4"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Layer title used for the exported sheet or file name.",
+                        "example": "Pushpins"
+                    },
+                    "customOverride": {
+                        "$ref": "#/components/schemas/CustomOverride"
+                    }
+                },
+                "description": "A single pre-executed layer in a multi-layer tabular export."
+            },
             "TabularExportRequest": {
                 "required": [
                     "fileName",
@@ -3574,6 +3597,13 @@
                     },
                     "metadata": {
                         "$ref": "#/components/schemas/JsonNode"
+                    },
+                    "executions": {
+                        "type": "array",
+                        "description": "Pre-executed layers for multi-layer geo visualizations. When provided, this is the canonical source of the exported layers and takes precedence over the top-level executionResult and customOverride, which are ignored. Index 0 is the main layer; each layer carries its own executionResult and customOverride.",
+                        "items": {
+                            "$ref": "#/components/schemas/TabularExportExecution"
+                        }
                     }
                 },
                 "description": "Export request object describing the export properties and overrides for tabular exports."

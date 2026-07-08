@@ -13,6 +13,7 @@ import { TestIntlProvider } from "../../localization/TestIntlProvider.js";
 import { ParameterMutationProvider } from "../../parameter/ParameterMutationContext.js";
 import type { IParameterMutationPort } from "../../parameter/parameterMutationPort.js";
 import { createTestParameterMutationPort } from "../../parameter/tests/parameterMutationPort.test.utils.js";
+import { TestPermissionsProvider } from "../../permission/TestPermissionsProvider.js";
 import { CatalogDetailActions } from "../CatalogDetailActions.js";
 
 vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
@@ -73,7 +74,9 @@ function createWrapper(port: IParameterMutationPort = createTestParameterMutatio
             <TestIntlProvider>
                 <WorkspaceProvider workspace="test-workspace">
                     <ToastsCenterContextProvider>
-                        <ParameterMutationProvider port={port}>{children}</ParameterMutationProvider>
+                        <TestPermissionsProvider>
+                            <ParameterMutationProvider port={port}>{children}</ParameterMutationProvider>
+                        </TestPermissionsProvider>
                     </ToastsCenterContextProvider>
                 </WorkspaceProvider>
             </TestIntlProvider>

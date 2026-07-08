@@ -118,20 +118,6 @@ export const FallbackToDefault: DateFilterConfigValidationResult[] = [
     "NoVisibleOptions",
 ];
 
-const conditionallyStripToDateFilters = (
-    config: IDateFilterConfig,
-    enableToDateFilters: boolean,
-): IDateFilterConfig => {
-    if (enableToDateFilters) {
-        return config;
-    }
-
-    return {
-        ...config,
-        relativePresets: config.relativePresets?.filter((preset) => !preset.boundedFilter) ?? [],
-    };
-};
-
 const FISCAL_GRANULARITIES: DateFilterGranularity[] = [
     "GDC.time.fiscal_year",
     "GDC.time.fiscal_quarter",
@@ -238,7 +224,6 @@ export function getValidDateFilterConfig(
     const configValidation = validateDateFilterConfig(config);
     let validConfig = FallbackToDefault.includes(configValidation) ? defaultDateFilterConfig : config;
 
-    validConfig = conditionallyStripToDateFilters(validConfig, settings.enableToDateFilters ?? true);
     validConfig = conditionallyHandleFiscalFilters(validConfig, settings.enableFiscalCalendars ?? true);
     validConfig = conditionallyHandleEmptyValues(validConfig, settings.enableKDEmptyDateValuesFilter ?? true);
 

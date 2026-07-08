@@ -199,6 +199,7 @@ export type AreaChartConfigProperties = {
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
+    customTooltip: CustomTooltip;
 };
 
 // @internal (undocumented)
@@ -301,6 +302,7 @@ export function areaChartSave(_fields: Visualisation["query"]["fields"] | undefi
     } | {
         [k: string]: boolean;
     } | undefined;
+    customTooltip: CustomTooltip | undefined;
 } | undefined;
 
 // @public (undocumented)
@@ -362,6 +364,7 @@ export type BarChartConfigProperties = {
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
+    customTooltip: CustomTooltip;
 };
 
 // @internal (undocumented)
@@ -458,6 +461,7 @@ export function barChartSave(_fields: Visualisation["query"]["fields"] | undefin
     } | {
         [k: string]: boolean;
     } | undefined;
+    customTooltip: CustomTooltip | undefined;
 } | undefined;
 
 // @internal (undocumented)
@@ -509,6 +513,7 @@ export type BubbleChartConfigProperties = {
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
+    customTooltip: CustomTooltip;
 };
 
 // @internal (undocumented)
@@ -601,6 +606,7 @@ export function bubbleChartSave(_fields: Visualisation["query"]["fields"] | unde
     } | {
         [k: string]: boolean;
     } | undefined;
+    customTooltip: CustomTooltip | undefined;
 } | undefined;
 
 // @public (undocumented)
@@ -698,6 +704,7 @@ export type BulletChartConfigProperties = {
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
+    customTooltip: CustomTooltip;
 };
 
 // @internal (undocumented)
@@ -787,6 +794,7 @@ export function bulletChartSave(_fields: Visualisation["query"]["fields"] | unde
     } | {
         [k: string]: boolean;
     } | undefined;
+    customTooltip: CustomTooltip | undefined;
 } | undefined;
 
 // @internal (undocumented)
@@ -869,6 +877,7 @@ export type ColumnChartConfigProperties = {
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
+    customTooltip: CustomTooltip;
 };
 
 // @internal (undocumented)
@@ -965,6 +974,7 @@ export function columnChartSave(_fields: Visualisation["query"]["fields"] | unde
     } | {
         [k: string]: boolean;
     } | undefined;
+    customTooltip: CustomTooltip | undefined;
 } | undefined;
 
 // @public (undocumented)
@@ -1054,6 +1064,7 @@ export type ComboChartConfigProperties = {
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
+    customTooltip: CustomTooltip;
     thresholdMeasures: string[];
     thresholdExcludedMeasures: string[];
 };
@@ -1177,6 +1188,7 @@ export function comboChartSave(_fields: Visualisation["query"]["fields"] | undef
     } | {
         [k: string]: boolean;
     } | undefined;
+    customTooltip: CustomTooltip | undefined;
     thresholdMeasures: string[] | undefined;
     thresholdExcludedMeasures: string[] | undefined;
 } | undefined;
@@ -1230,6 +1242,19 @@ export function createIdentifier<T = AfmObjectIdentifier>(data: string, input?: 
     forceMetric?: boolean;
     forceType?: "user" | "userGroup" | "dataset" | "date" | "attribute" | "label" | "measure" | "workspaceDataFilter" | "visualizationObject" | "analyticalDashboard" | "dashboardPlugin" | "filterContext";
 }): T | null;
+
+// @internal (undocumented)
+export interface CustomTooltip {
+    // (undocumented)
+    content?: string;
+    // (undocumented)
+    enabled?: boolean;
+    // (undocumented)
+    placement?: CustomTooltipPlacement;
+}
+
+// @internal (undocumented)
+export type CustomTooltipPlacement = "above" | "below" | "replace";
 
 // @internal (undocumented)
 export type DashboardDefinition = Pick<OverrideDashboardDefinition, "layout" | "plugins" | "dateFilterConfig" | "dateFilterConfigs" | "disableCrossFiltering" | "disableUserFilterSave" | "disableUserFilterReset" | "disableFilterViews" | "attributeFilterConfigs" | "measureValueFilterConfigs" | "filterContextRef" | "tabs" | "activeTabLocalIdentifier"> & {
@@ -1413,6 +1438,7 @@ export type DependencyWheelChartConfigProperties = {
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
+    customTooltip: CustomTooltip;
 };
 
 // @internal (undocumented)
@@ -1477,6 +1503,7 @@ export function dependencyWheelChartSave(_fields: Visualisation["query"]["fields
     } | {
         [k: string]: boolean;
     } | undefined;
+    customTooltip: CustomTooltip | undefined;
 } | undefined;
 
 // @internal (undocumented)
@@ -1505,6 +1532,7 @@ export type DonutChartConfigProperties = {
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
+    customTooltip: CustomTooltip;
 };
 
 // @internal (undocumented)
@@ -1574,6 +1602,7 @@ export function donutChartSave(_fields: Visualisation["query"]["fields"] | undef
     } | {
         [k: string]: boolean;
     } | undefined;
+    customTooltip: CustomTooltip | undefined;
 } | undefined;
 
 // @internal (undocumented)
@@ -1651,6 +1680,7 @@ export type FunnelChartConfigProperties = {
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
+    customTooltip: CustomTooltip;
 };
 
 // @internal (undocumented)
@@ -1720,6 +1750,7 @@ export function funnelChartSave(_fields: Visualisation["query"]["fields"] | unde
     } | {
         [k: string]: boolean;
     } | undefined;
+    customTooltip: CustomTooltip | undefined;
 } | undefined;
 
 // @public (undocumented)
@@ -1788,6 +1819,7 @@ export type GeoAreaChartConfigProperties = {
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
+    customTooltip: CustomTooltip;
 };
 
 // @internal (undocumented)
@@ -1874,6 +1906,7 @@ export function geoAreaChartSave(_fields: Visualisation["query"]["fields"] | und
     } | {
         [k: string]: boolean;
     } | undefined;
+    customTooltip: CustomTooltip | undefined;
 } | undefined;
 
 // @internal @deprecated (undocumented)
@@ -1922,6 +1955,7 @@ export type GeoChartConfigProperties = {
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
+    customTooltip: CustomTooltip;
 };
 
 // @internal (undocumented)
@@ -2119,6 +2153,7 @@ export type HeatmapChartConfigProperties = {
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
+    customTooltip: CustomTooltip;
 };
 
 // @internal (undocumented)
@@ -2202,6 +2237,7 @@ export function heatmapChartSave(_fields: Visualisation["query"]["fields"] | und
     } | {
         [k: string]: boolean;
     } | undefined;
+    customTooltip: CustomTooltip | undefined;
 } | undefined;
 
 // @public (undocumented)
@@ -2655,6 +2691,7 @@ export type LineChartConfigProperties = {
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
+    customTooltip: CustomTooltip;
     thresholdMeasures: string[];
     thresholdExcludedMeasures: string[];
 };
@@ -2768,6 +2805,7 @@ export function lineChartSave(_fields: Visualisation["query"]["fields"] | undefi
     } | {
         [k: string]: boolean;
     } | undefined;
+    customTooltip: CustomTooltip | undefined;
     thresholdMeasures: string[] | undefined;
     thresholdExcludedMeasures: string[] | undefined;
 } | undefined;
@@ -2827,6 +2865,7 @@ export type PieChartConfigProperties = {
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
+    customTooltip: CustomTooltip;
 };
 
 // @internal (undocumented)
@@ -2896,6 +2935,7 @@ export function pieChartSave(_fields: Visualisation["query"]["fields"] | undefin
     } | {
         [k: string]: boolean;
     } | undefined;
+    customTooltip: CustomTooltip | undefined;
 } | undefined;
 
 // @internal (undocumented)
@@ -2938,6 +2978,7 @@ export type PyramidChartConfigProperties = {
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
+    customTooltip: CustomTooltip;
 };
 
 // @internal (undocumented)
@@ -3007,6 +3048,7 @@ export function pyramidChartSave(_fields: Visualisation["query"]["fields"] | und
     } | {
         [k: string]: boolean;
     } | undefined;
+    customTooltip: CustomTooltip | undefined;
 } | undefined;
 
 // @internal (undocumented)
@@ -3113,6 +3155,7 @@ export type SankeyChartConfigProperties = {
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
+    customTooltip: CustomTooltip;
 };
 
 // @internal (undocumented)
@@ -3178,6 +3221,7 @@ export function sankeyChartSave(_fields: Visualisation["query"]["fields"] | unde
     } | {
         [k: string]: boolean;
     } | undefined;
+    customTooltip: CustomTooltip | undefined;
 } | undefined;
 
 // @public (undocumented)
@@ -3239,6 +3283,7 @@ export type ScatterChartConfigProperties = {
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
+    customTooltip: CustomTooltip;
 };
 
 // @internal (undocumented)
@@ -3332,6 +3377,7 @@ export function scatterChartSave(_fields: Visualisation["query"]["fields"] | und
     } | {
         [k: string]: boolean;
     } | undefined;
+    customTooltip: CustomTooltip | undefined;
 } | undefined;
 
 // @internal @deprecated (undocumented)
@@ -3551,6 +3597,7 @@ export type TreemapChartConfigProperties = {
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
+    customTooltip: CustomTooltip;
 };
 
 // @internal (undocumented)
@@ -3620,6 +3667,7 @@ export function treemapChartSave(_fields: Visualisation["query"]["fields"] | und
     } | {
         [k: string]: boolean;
     } | undefined;
+    customTooltip: CustomTooltip | undefined;
 } | undefined;
 
 // @public (undocumented)
@@ -3695,6 +3743,7 @@ export type WaterfallChartConfigProperties = {
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
+    customTooltip: CustomTooltip;
 };
 
 // @internal (undocumented)
@@ -3795,6 +3844,7 @@ export function waterfallChartSave(_fields: Visualisation["query"]["fields"] | u
     } | {
         [k: string]: boolean;
     } | undefined;
+    customTooltip: CustomTooltip | undefined;
 } | undefined;
 
 // @public (undocumented)

@@ -661,6 +661,12 @@ export function exportDefinitionTitle(exportDefinition: IExportDefinitionMetadat
 // @alpha
 export function exportDefinitionUpdated(exportDefinition: IExportDefinitionMetadataObject): string | undefined;
 
+// @beta
+export type ExportTemplateAppliedOn = "PDF" | "PPTX";
+
+// @beta
+export type ExportTemplateType = "workspaceExportTemplate" | "exportTemplate";
+
 // @alpha
 export type ExternalPluggableApplicationRegistryItem = IExternalPluggableApplicationRegistryItemV1;
 
@@ -2235,6 +2241,12 @@ export interface IDateHierarchyTemplate extends IMetadataObjectIdentity, IMetada
     type: "dateHierarchyTemplate";
 }
 
+// @beta
+export interface IDefaultExportTemplate {
+    id: string;
+    type: ExportTemplateType;
+}
+
 // @beta (undocumented)
 export type IDefaultSmtpDestinationConfiguration = {
     type: "defaultSmtp";
@@ -2418,7 +2430,7 @@ export interface IEntitlementDescriptor {
 }
 
 // @public
-export type IEntitlementsName = "CacheStrategy" | "Contract" | "CustomTheming" | "ExtraCache" | "PdfExports" | "Tier" | "UiLocalization" | "UserCount" | "WhiteLabeling" | "UnlimitedUsers" | "UnlimitedWorkspaces" | "WorkspaceCount" | "Hipaa" | "DailyAlertActionCount" | "UnlimitedDailyAlertActions" | "UserTelemetryDisabled" | "AutomationCount" | "UnlimitedAutomations" | "AutomationRecipientCount" | "UnlimitedAutomationRecipients" | "DailyScheduledActionCount" | "UnlimitedDailyScheduledActions" | "ScheduledActionMinimumRecurrenceMinutes" | "FederatedIdentityManagement" | "AuditLogging" | "ControlledFeatureRollout" | "ManagedIdpUserCount" | "AiLake" | "AiModule" | "AiQueryLimit" | "AiKnowledgeStorageLimit" | "AiAgentLimit" | "AiWorkspaceLimit";
+export type IEntitlementsName = "CacheStrategy" | "Contract" | "CustomTheming" | "ExtraCache" | "PdfExports" | "Tier" | "UiLocalization" | "UserCount" | "WhiteLabeling" | "UnlimitedUsers" | "UnlimitedWorkspaces" | "WorkspaceCount" | "Hipaa" | "DailyAlertActionCount" | "UnlimitedDailyAlertActions" | "UserTelemetryDisabled" | "AutomationCount" | "UnlimitedAutomations" | "AutomationRecipientCount" | "UnlimitedAutomationRecipients" | "DailyScheduledActionCount" | "UnlimitedDailyScheduledActions" | "ScheduledActionMinimumRecurrenceMinutes" | "FederatedIdentityManagement" | "AuditLogging" | "ControlledFeatureRollout" | "ManagedIdpUserCount" | "AiLake" | "AiModule" | "AiQueryLimit" | "AiKnowledgeStorageLimit" | "AiAgentLimit" | "AiWorkspaceLimit" | "AiObservability";
 
 // @public
 export interface IExecutionConfig {
@@ -2567,9 +2579,84 @@ export interface IExportResult {
 export type IExportResultStatus = "SUCCESS" | "ERROR" | "INTERNAL_ERROR" | "TIMEOUT";
 
 // @beta
-export interface IExportTemplate {
-    id: string;
+export interface IExportTemplate extends IExportTemplateDefinition {
+    ref: ObjRef;
+}
+
+// @beta
+export interface IExportTemplateContentSlide {
+    // (undocumented)
+    descriptionField?: string | null;
+    // (undocumented)
+    footer?: IExportTemplateRunningSection | null;
+    // (undocumented)
+    header?: IExportTemplateRunningSection | null;
+}
+
+// @beta
+export interface IExportTemplateCoverSlide {
+    backgroundImage?: boolean;
+    // (undocumented)
+    descriptionField?: string | null;
+    // (undocumented)
+    footer?: IExportTemplateRunningSection | null;
+    // (undocumented)
+    header?: IExportTemplateRunningSection | null;
+}
+
+// @beta
+export interface IExportTemplateDashboardSlides {
+    appliedOn: ExportTemplateAppliedOn[];
+    // (undocumented)
+    contentSlide?: IExportTemplateContentSlide | null;
+    // (undocumented)
+    coverSlide?: IExportTemplateCoverSlide | null;
+    // (undocumented)
+    introSlide?: IExportTemplateIntroSlide | null;
+    // (undocumented)
+    sectionSlide?: IExportTemplateSectionSlide | null;
+}
+
+// @beta
+export interface IExportTemplateDefinition {
+    dashboardSlidesTemplate?: IExportTemplateDashboardSlides | null;
     name: string;
+    widgetSlidesTemplate?: IExportTemplateWidgetSlides | null;
+}
+
+// @beta
+export interface IExportTemplateIntroSlide {
+    backgroundImage?: boolean;
+    // (undocumented)
+    descriptionField?: string | null;
+    // (undocumented)
+    footer?: IExportTemplateRunningSection | null;
+    // (undocumented)
+    header?: IExportTemplateRunningSection | null;
+    // (undocumented)
+    titleField?: string | null;
+}
+
+// @beta
+export interface IExportTemplateRunningSection {
+    left?: string | null;
+    right?: string | null;
+}
+
+// @beta
+export interface IExportTemplateSectionSlide {
+    backgroundImage?: boolean;
+    // (undocumented)
+    footer?: IExportTemplateRunningSection | null;
+    // (undocumented)
+    header?: IExportTemplateRunningSection | null;
+}
+
+// @beta
+export interface IExportTemplateWidgetSlides {
+    appliedOn: ExportTemplateAppliedOn[];
+    // (undocumented)
+    contentSlide?: IExportTemplateContentSlide | null;
 }
 
 // @alpha
@@ -2604,7 +2691,6 @@ export interface IFeatureFlags {
     enableAiLlmAnthropicProvider?: boolean;
     enableAiOnData?: boolean;
     enableAlertOncePerInterval?: boolean;
-    enableAlertsEvaluationFrequencySetup?: boolean;
     enableAmplitudeTracker?: boolean;
     enableAnalyticalCatalog?: boolean;
     enableAnalyticalCatalogMetricEditor?: boolean;
@@ -2636,7 +2722,6 @@ export interface IFeatureFlags {
     // @alpha
     enableDashboardSectionHeadersDateDataSet?: boolean;
     enableDashboardShareDialogLink?: boolean;
-    enableDashboardShareLink?: boolean;
     enableDashboardSidebarResize?: boolean;
     enableDashboardsSearch?: boolean;
     enableDashboardTabularExport?: boolean;
@@ -2672,7 +2757,6 @@ export interface IFeatureFlags {
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
     enableImprovedRankingFilter?: boolean;
     enableKDEmptyDateValuesFilter?: boolean;
-    enableKDRespectLegendPosition?: boolean;
     // (undocumented)
     enableMariaDbDataSource?: boolean;
     enableMatchFilterAD?: boolean;
@@ -2716,20 +2800,16 @@ export interface IFeatureFlags {
     // (undocumented)
     enableSingleStoreDataSource?: boolean;
     enableSlidesExport?: boolean;
-    enableSlideshowExports?: boolean;
     enableSnapshotExport?: boolean;
     enableSnapshotExportAccessibility?: boolean;
     // (undocumented)
-    enableSnowflakeKeyPairAuthentication?: boolean;
-    // (undocumented)
     enableStarrocksDataSource?: boolean;
+    enableStringParameters?: boolean;
     enableSystemAccountFiltering?: boolean;
-    enableToDateFilters?: boolean;
     enableUserDataFiltersUi?: boolean;
     enableVisualizationFilteringByTags?: boolean;
     enableVisualizationFineTuning?: boolean;
     enableWidgetExportPdf?: boolean;
-    enableWidgetExportPngImage?: boolean;
     enableWorkspaceSettingsAppHeaderMenuItem?: boolean;
     // @alpha
     productionFeatures?: IProductionFeaturesConfig;
@@ -4093,6 +4173,8 @@ export interface IPermanentSettings {
     dashboardFiltersApplyMode?: DashboardFiltersApplyMode;
     // @alpha
     dateFilterConfig?: IDateFilterConfig;
+    // @beta
+    defaultExportTemplate?: IDefaultExportTemplate;
     disableKpiDashboardHeadlineUnderline?: boolean;
     // @beta
     earlyAccessFeatures?: IEarlyAccessFeaturesConfig;
@@ -6539,6 +6621,9 @@ export const OrganizationPermissionAssignmentValue: {
 };
 
 // @alpha (undocumented)
+export type ParameterType = IParameterDefinition["type"];
+
+// @alpha (undocumented)
 export type ParameterValue = IParameterDefinition["defaultValue"];
 
 // @alpha
@@ -6775,6 +6860,9 @@ export type ThemeDashboardDensity = "comfortable" | "compact";
 
 // @beta
 export type ThemeFontUri = string;
+
+// @internal
+export const throwUnexpected: (value: never) => never;
 
 // @beta
 export type ToMdObjectDefinition<T extends IMdObject> = Omit<T, "id">;

@@ -13,6 +13,7 @@ import {
     type IActiveCalendars,
     type IAiRateLimit,
     type IAlertDefault,
+    type IDefaultExportTemplate,
     type IFiscalYear,
     type IOpenAiConfig,
     type ISeparators,
@@ -127,6 +128,14 @@ export class OrganizationSettingsService
 
     public async setDashboardFiltersApplyMode(dashboardFiltersApplyMode: DashboardFiltersApplyMode) {
         return this.setSetting("DASHBOARD_FILTERS_APPLY_MODE", dashboardFiltersApplyMode);
+    }
+
+    public async setDefaultExportTemplate(value: IDefaultExportTemplate): Promise<void> {
+        return this.setSetting("DEFAULT_EXPORT_TEMPLATE", value);
+    }
+
+    public async deleteDefaultExportTemplate(): Promise<void> {
+        return this.deleteSettingByType("DEFAULT_EXPORT_TEMPLATE");
     }
 
     public async setEnableAiOnData(enabled: boolean): Promise<void> {

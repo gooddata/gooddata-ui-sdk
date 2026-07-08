@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 6df0eeaa31b12992b78fcd255321fef5104761494582bb7d54062fcaedffca58
+# schema-hash: 0442cdd2eea7db6d6ce38e58b1501dd0a56dfd973a92d1ef9cedfaa4ac3e4149
 
 from __future__ import annotations
 
@@ -27,6 +27,7 @@ __all__ = [
     "Condition",
     "ConditionalFormatting",
     "Config",
+    "CustomTooltip",
     "Dashboard",
     "Dashboard1",
     "DashboardAbsoluteDateFilter",
@@ -540,7 +541,7 @@ QueryMetricValueFilter: TypeAlias = (
 class QueryRankingFilter1(TypedDict):
     type: Literal['ranking_filter']
     using: MetricIdentifier | str
-    attribute: NotRequired[AttributeIdentifier | str]
+    attribute: NotRequired[LabelIdentifier | str]
     bottom: float
     top: NotRequired[float]
     strict_limit_of_rows: NotRequired[bool]
@@ -549,7 +550,7 @@ class QueryRankingFilter1(TypedDict):
 class QueryRankingFilter2(TypedDict):
     type: Literal['ranking_filter']
     using: MetricIdentifier | str
-    attribute: NotRequired[AttributeIdentifier | str]
+    attribute: NotRequired[LabelIdentifier | str]
     bottom: NotRequired[float]
     top: float
     strict_limit_of_rows: NotRequired[bool]
@@ -737,6 +738,12 @@ class TextWrapping(TypedDict):
     wrap_text: NotRequired[bool]
     wrap_header_text: NotRequired[bool]
     column_overrides: NotRequired[list[ColumnOverride]]
+
+
+class CustomTooltip(TypedDict):
+    enabled: NotRequired[bool]
+    content: NotRequired[str]
+    placement: NotRequired[Literal['above', 'below', 'replace']]
 
 
 class Target(TypedDict):
@@ -1426,6 +1433,7 @@ class Config(TypedDict):
     enable_accessibility: NotRequired[bool]
     line_style_control_metrics: NotRequired[list[str]]
     line_style_excluded_metrics: NotRequired[list[str]]
+    custom_tooltip: NotRequired[CustomTooltip]
     conditional_formatting: NotRequired[ConditionalFormatting]
 
 

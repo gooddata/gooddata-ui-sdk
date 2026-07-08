@@ -3,14 +3,17 @@
 import type { Visualisation } from "@gooddata/sdk-code-schemas/v1";
 
 import {
+    DEFAULT_CUSTOM_TOOLTIP,
     loadChartFill,
     loadColorMapping,
+    loadCustomTooltip,
     loadDisableKda,
     saveChartFill,
     saveColorMapping,
+    saveCustomTooltip,
 } from "../utils/configUtils.js";
 
-import { type ChartFillType, type ColorMapping, type PatternFillName } from "./types.js";
+import { type ChartFillType, type ColorMapping, type ICustomTooltip, type PatternFillName } from "./types.js";
 import {
     type ConfigDefaults,
     type VisualisationConfig,
@@ -59,6 +62,7 @@ export type BulletChartConfigProperties = {
     disableAlerts: boolean;
     disableScheduledExports: boolean;
     disableKeyDriveAnalysisOn: Record<string, boolean>;
+    customTooltip: ICustomTooltip;
 };
 
 /** @internal */
@@ -100,6 +104,7 @@ const DEFAULTS: ConfigDefaults<BulletChartConfigProperties> = {
     disableAlerts: false,
     disableScheduledExports: false,
     disableKeyDriveAnalysisOn: {},
+    customTooltip: DEFAULT_CUSTOM_TOOLTIP,
 };
 
 /** @internal */
@@ -194,6 +199,8 @@ export function bulletChartLoad(props: VisualisationConfig<BulletChartConfigProp
                 ];
             case "disableKeyDriveAnalysisOn":
                 return [["disable_key_drive_analysis", loadDisableKda(value as Record<string, boolean>)]];
+            case "customTooltip":
+                return [["custom_tooltip", loadCustomTooltip(value as (typeof DEFAULTS)["customTooltip"])]];
             default:
                 return [];
         }
@@ -250,6 +257,7 @@ export function bulletChartSave(
             "bool",
         ),
         disableKeyDriveAnalysisOn: saveConfigObject(config.disable_key_drive_analysis),
+        customTooltip: saveConfigObject(saveCustomTooltip(config.custom_tooltip)),
     });
 }
 

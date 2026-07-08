@@ -46,6 +46,7 @@ const TYPE_TO_KEY_MAP = {
     SHOW_HIDDEN_CATALOG_ITEMS: "showHiddenCatalogItems",
     OPENAI_CONFIG: "openAiConfig",
     DASHBOARD_FILTERS_APPLY_MODE: "dashboardFiltersApplyMode",
+    DEFAULT_EXPORT_TEMPLATE: "defaultExportTemplate",
     SEPARATORS: "separators",
     organizationSetting: "organizationSetting",
     DATE_FILTER_CONFIG: "dateFilterConfig",

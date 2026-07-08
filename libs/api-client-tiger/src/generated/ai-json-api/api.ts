@@ -796,20 +796,21 @@ export interface AiFilterByValue {
     'type': AiFilterByValueTypeEnum;
     'using': string;
     'state': AiAttributeFilterState;
-    'from': number;
-    'to': number;
+    'from': AiFrom;
+    'to': AiTo;
     'granularity': AiAppDomainConversationsVisualizationDateGranularity;
     'attribute'?: string;
     'top'?: number;
     'bottom'?: number;
     'condition': AiFilterByValueConditionEnum;
+    'value': string;
+    'null_values_as_zero'?: boolean;
     'values': Array<string>;
     'case_sensitive'?: boolean;
     'display_as'?: string;
-    'value': string;
 }
 
-export type AiFilterByValueTypeEnum = 'attribute_filter' | 'date_filter' | 'ranking_filter' | 'text_filter';
+export type AiFilterByValueTypeEnum = 'attribute_filter' | 'date_filter' | 'ranking_filter' | 'metric_value_filter' | 'text_filter';
 export type AiFilterByValueConditionEnum = 'contains' | 'doesNotContain' | 'startsWith' | 'doesNotStartWith' | 'endsWith' | 'doesNotEndWith';
 
 export interface AiForecastPeriod {
@@ -1051,6 +1052,17 @@ export interface AiMetricUsageResponse {
 }
 
 
+export interface AiMetricValueComparisonFilter {
+    'type': AiMetricValueComparisonFilterTypeEnum;
+    'using': string;
+    'condition': AiMetricValueComparisonFilterConditionEnum;
+    'value': AiValue;
+    'null_values_as_zero'?: boolean;
+}
+
+export type AiMetricValueComparisonFilterTypeEnum = 'metric_value_filter';
+export type AiMetricValueComparisonFilterConditionEnum = 'GREATER_THAN' | 'GREATER_THAN_OR_EQUAL_TO' | 'LESS_THAN' | 'LESS_THAN_OR_EQUAL_TO' | 'EQUAL_TO' | 'NOT_EQUAL_TO';
+
 
 export const AiMetricValueFilterConditionComparison = {
     GREATER_THAN: 'GREATER_THAN',
@@ -1072,6 +1084,18 @@ export const AiMetricValueFilterConditionRange = {
 
 export type AiMetricValueFilterConditionRange = typeof AiMetricValueFilterConditionRange[keyof typeof AiMetricValueFilterConditionRange];
 
+
+export interface AiMetricValueRangeFilter {
+    'type': AiMetricValueRangeFilterTypeEnum;
+    'using': string;
+    'condition': AiMetricValueRangeFilterConditionEnum;
+    'from': AiFrom;
+    'to': AiTo;
+    'null_values_as_zero'?: boolean;
+}
+
+export type AiMetricValueRangeFilterTypeEnum = 'metric_value_filter';
+export type AiMetricValueRangeFilterConditionEnum = 'BETWEEN' | 'NOT_BETWEEN';
 
 export interface AiMultipartContent {
     /**
@@ -1779,12 +1803,12 @@ export interface AiValidationError {
 export interface AiValidationErrorLocInner {
 }
 
-/**
- * Value of the alert threshold to compare the metric to.
- */
 export interface AiValue {
 }
 
+/**
+ * Value of the alert threshold to compare the metric to.
+ */
 export interface AiValue1 {
 }
 
@@ -1792,7 +1816,7 @@ export interface AiValue1 {
  * Literal threshold value.
  */
 export interface AiValueOperand {
-    'value': AiValue | null;
+    'value': AiValue1 | null;
 }
 
 export interface AiVisualization {
@@ -1851,6 +1875,7 @@ export interface AiVisualizationConfig {
     'anomaly_detection_sensitivity'?: AiVisualizationConfigAnomalyDetectionSensitivityEnum;
     'anomaly_detection_size'?: AiVisualizationConfigAnomalyDetectionSizeEnum;
     'anomaly_detection_color'?: string;
+    'disable_key_drive_analysis'?: { [key: string]: boolean; };
 }
 
 export type AiVisualizationConfigAnomalyDetectionSensitivityEnum = 'low' | 'medium' | 'high';
@@ -1883,7 +1908,7 @@ export interface AiVisualizationMetricValueComparisonFilter {
     'type': AiVisualizationMetricValueComparisonFilterTypeEnum;
     'using': string;
     'condition': AiMetricValueFilterConditionComparison;
-    'value': AiValue1;
+    'value': AiValue;
     'nullValuesAsZero': boolean;
 }
 

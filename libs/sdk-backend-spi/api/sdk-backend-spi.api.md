@@ -69,6 +69,7 @@ import { IDataSourcePermissionAssignment } from '@gooddata/sdk-model';
 import type { IDateFilter } from '@gooddata/sdk-model';
 import { IDateFilterConfig } from '@gooddata/sdk-model';
 import { IDateHierarchyTemplate } from '@gooddata/sdk-model';
+import { IDefaultExportTemplate } from '@gooddata/sdk-model';
 import type { Identifier } from '@gooddata/sdk-model';
 import { IdentifierRef } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
@@ -81,6 +82,7 @@ import type { IExistingDashboard } from '@gooddata/sdk-model';
 import { IExportDefinitionMetadataObject } from '@gooddata/sdk-model';
 import { IExportDefinitionMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { IExportTemplate } from '@gooddata/sdk-model';
+import { IExportTemplateDefinition } from '@gooddata/sdk-model';
 import { IFactMetadataObject } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import type { IFilterContext } from '@gooddata/sdk-model';
@@ -370,6 +372,8 @@ export interface IAnalyticalWorkspace {
     execution(): IExecutionFactory;
     // @alpha
     exportDefinitions(): IWorkspaceExportDefinitionsService;
+    // @beta
+    exportTemplates(): IWorkspaceExportTemplatesService;
     facts(): IWorkspaceFactsService;
     // @beta
     genAI(): IGenAIService;
@@ -1068,6 +1072,7 @@ export interface IDashboardSummary {
     generatedAt: string;
     // (undocumented)
     summary: string;
+    tabId?: string;
     // (undocumented)
     visualizationsExcluded: IDashboardSummaryExcludedVisualization[];
     // (undocumented)
@@ -1096,8 +1101,10 @@ export interface IDashboardSummaryIncludedVisualization {
 export interface IDashboardSummaryRequest {
     // (undocumented)
     dashboardId: string;
-    filterContext: FilterContextItem[] | null;
-    visualizations: string[] | null;
+    filterContext?: FilterContextItem[] | null;
+    formatHint?: string | null;
+    tabId?: string | null;
+    visualizations?: string[] | null;
 }
 
 // @internal
@@ -2043,7 +2050,11 @@ export type IOrganizationAutomationsQueryResult = IPagedResource<IAutomationMeta
 
 // @beta
 export interface IOrganizationExportTemplatesService {
+    createExportTemplate(template: IExportTemplateDefinition): Promise<IExportTemplate>;
+    deleteExportTemplate(ref: ObjRef): Promise<void>;
+    getExportTemplate(ref: ObjRef): Promise<IExportTemplate>;
     getExportTemplates(): Promise<IExportTemplate[]>;
+    patchExportTemplate(ref: ObjRef, template: Partial<IExportTemplateDefinition>): Promise<IExportTemplate>;
 }
 
 // @alpha
@@ -2135,6 +2146,8 @@ export interface IOrganizationSettingsService {
     // @alpha
     deleteAiRateLimit(): Promise<void>;
     deleteColorPalette(): Promise<void>;
+    // @beta
+    deleteDefaultExportTemplate(): Promise<void>;
     // @alpha
     deleteExportCsvCustomDelimiter(): Promise<void>;
     // @alpha
@@ -2154,6 +2167,8 @@ export interface IOrganizationSettingsService {
     // @alpha
     setDashboardFiltersApplyMode(dashboardFiltersApplyMode: DashboardFiltersApplyMode): Promise<void>;
     setDateFormat(dateFormat: string): Promise<void>;
+    // @beta
+    setDefaultExportTemplate(value: IDefaultExportTemplate): Promise<void>;
     // @alpha
     setEnableAiOnData(enabled: boolean): Promise<void>;
     // @alpha
@@ -2815,6 +2830,15 @@ export interface IWorkspaceExportDefinitionsService {
     updateExportDefinition(ref: ObjRef, exportDefinition: IExportDefinitionMetadataObjectDefinition): Promise<IExportDefinitionMetadataObject>;
 }
 
+// @beta
+export interface IWorkspaceExportTemplatesService {
+    createExportTemplate(template: IExportTemplateDefinition): Promise<IExportTemplate>;
+    deleteExportTemplate(ref: ObjRef): Promise<void>;
+    getExportTemplate(ref: ObjRef): Promise<IExportTemplate>;
+    getExportTemplates(): Promise<IExportTemplate[]>;
+    patchExportTemplate(ref: ObjRef, template: Partial<IExportTemplateDefinition>): Promise<IExportTemplate>;
+}
+
 // @public
 export interface IWorkspaceFactsService {
     getFact(ref: ObjRef, opts?: {
@@ -2905,6 +2929,8 @@ export interface IWorkspaceSettingsService {
     deleteColorPalette(): Promise<void>;
     // @alpha
     deleteDashboardFiltersApplyMode(): Promise<void>;
+    // @beta
+    deleteDefaultExportTemplate(): Promise<void>;
     // @alpha
     deleteEnableDrillToUrlByDefault(): Promise<void>;
     // @alpha
@@ -2929,6 +2955,8 @@ export interface IWorkspaceSettingsService {
     // @alpha
     setDashboardFiltersApplyMode(dashboardFiltersApplyMode: DashboardFiltersApplyMode): Promise<void>;
     setDateFormat(dateFormat: string): Promise<void>;
+    // @beta
+    setDefaultExportTemplate(value: IDefaultExportTemplate): Promise<void>;
     // @alpha
     setEnableAiOnData(enabled: boolean): Promise<void>;
     // @alpha

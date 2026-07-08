@@ -253,14 +253,17 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
 
         // Build secondary execution for custom tooltip external references.
         // Skip in export mode — tooltips are never hovered during PDF/scheduled export.
+        // Also skip when the feature flag is explicitly disabled (defaults on): otherwise a
+        // persisted custom tooltip would still fire this hidden secondary backend query.
         const { isExportMode } = options.config ?? {};
-        const tooltipExecution = isExportMode
-            ? undefined
-            : buildTooltipExecutionFromConfig(
-                  executionFactory,
-                  execution.definition,
-                  supportedControls?.["customTooltip"],
-              );
+        const tooltipExecution =
+            isExportMode || this.featureFlags.enableCustomTooltip === false
+                ? undefined
+                : buildTooltipExecutionFromConfig(
+                      executionFactory,
+                      execution.definition,
+                      supportedControls?.["customTooltip"],
+                  );
 
         this.renderFun(
             <BaseChart

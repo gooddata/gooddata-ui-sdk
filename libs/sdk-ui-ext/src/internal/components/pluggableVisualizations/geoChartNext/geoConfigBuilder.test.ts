@@ -377,6 +377,17 @@ describe("buildGeoVisualizationConfig", () => {
         });
         expect(config.customTooltip).toEqual(customTooltip);
     });
+
+    it("surfaces enableCustomTooltip=false from feature flags so the render gate can fire", () => {
+        const config = buildGeoVisualizationConfig({
+            options,
+            supportedControls: {},
+            colorMapping: undefined,
+            environment: DASHBOARDS_ENVIRONMENT,
+            featureFlags: { enableCustomTooltip: false },
+        });
+        expect(config.enableCustomTooltip).toBe(false);
+    });
 });
 
 describe("buildAreaVisualizationConfig", () => {
@@ -495,5 +506,16 @@ describe("buildAreaVisualizationConfig", () => {
             environment: DASHBOARDS_ENVIRONMENT,
         });
         expect(config.customTooltip).toEqual(customTooltip);
+    });
+
+    it("surfaces enableCustomTooltip=false from feature flags so the render gate can fire", () => {
+        const config = buildAreaVisualizationConfig({
+            options,
+            supportedControls: {},
+            colorMapping: undefined,
+            environment: DASHBOARDS_ENVIRONMENT,
+            featureFlags: { enableCustomTooltip: false },
+        });
+        expect(config.enableCustomTooltip).toBe(false);
     });
 });

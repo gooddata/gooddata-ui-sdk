@@ -119,6 +119,6 @@ export function updateConfigWithSettings(config: IGeoConfig, settings: ISettings
 
     return {
         ...config,
-        ...(settings.enableKDRespectLegendPosition ? { respectLegendPosition: true } : {}),
+        respectLegendPosition: true,
     };
 }

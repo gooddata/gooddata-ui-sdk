@@ -4,7 +4,7 @@ import { type Ref, useState } from "react";
 
 import { defineMessages, useIntl } from "react-intl";
 
-import { type IExportTemplate } from "@gooddata/sdk-model";
+import { type IExportTemplate, isIdentifierRef } from "@gooddata/sdk-model";
 import {
     Button,
     ContentDivider,
@@ -27,6 +27,9 @@ const messages = defineMessages({
     close: { id: "close" },
 });
 
+const getTemplateId = (template: IExportTemplate): string =>
+    isIdentifierRef(template.ref) ? template.ref.identifier : "";
+
 interface ISlidesTemplateSettingsProps {
     templates: IExportTemplate[];
     templateId?: string;
@@ -46,7 +49,8 @@ export function SlidesTemplateSettings({
     }
 
     const settingsLabel = intl.formatMessage(messages.settingsTitle);
-    const effectiveSelection = pendingTemplateId ?? templateId ?? templates[0]?.id;
+    const effectiveSelection =
+        pendingTemplateId ?? templateId ?? (templates[0] ? getTemplateId(templates[0]) : undefined);
     const isSaveDisabled = effectiveSelection === templateId;
 
     return (
@@ -98,27 +102,30 @@ export function SlidesTemplateSettings({
                             role="radiogroup"
                             aria-label={settingsLabel}
                         >
-                            {templates.map((template) => (
-                                <UiTooltip
-                                    key={template.id}
-                                    triggerBy={["hover", "focus"]}
-                                    arrowPlacement="bottom"
-                                    content={template.name}
-                                    anchor={
-                                        <label className="input-radio-label s-slides-template-item">
-                                            <input
-                                                type="radio"
-                                                className="input-radio"
-                                                name="slidesTemplate"
-                                                value={template.id}
-                                                checked={effectiveSelection === template.id}
-                                                onChange={() => setPendingTemplateId(template.id)}
-                                            />
-                                            <span className="input-label-text">{template.name}</span>
-                                        </label>
-                                    }
-                                />
-                            ))}
+                            {templates.map((template) => {
+                                const id = getTemplateId(template);
+                                return (
+                                    <UiTooltip
+                                        key={id}
+                                        triggerBy={["hover", "focus"]}
+                                        arrowPlacement="bottom"
+                                        content={template.name}
+                                        anchor={
+                                            <label className="input-radio-label s-slides-template-item">
+                                                <input
+                                                    type="radio"
+                                                    className="input-radio"
+                                                    name="slidesTemplate"
+                                                    value={id}
+                                                    checked={effectiveSelection === id}
+                                                    onChange={() => setPendingTemplateId(id)}
+                                                />
+                                                <span className="input-label-text">{template.name}</span>
+                                            </label>
+                                        }
+                                    />
+                                );
+                            })}
                         </div>
                     </div>
                     <ContentDivider className="gd-divider-without-margin" />

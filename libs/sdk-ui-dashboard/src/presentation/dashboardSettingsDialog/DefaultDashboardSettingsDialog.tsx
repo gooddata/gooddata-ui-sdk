@@ -28,7 +28,6 @@ import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.j
 import { useDashboardQueryProcessing } from "../../model/react/useDashboardQueryProcessing.js";
 import {
     selectDateFormat,
-    selectEnableAlertsEvaluationFrequencySetup,
     selectEnableDashboardSectionHeadersDateDataSet,
     selectIsWhiteLabeled,
     selectLocale,
@@ -57,9 +56,6 @@ export function DefaultDashboardSettingsDialog({
     const locale = useDashboardSelector(selectLocale);
 
     const isCrossFilteringEnabledAndSupported = useDashboardSelector(selectCrossFilteringEnabledAndSupported);
-    const enableAlertsEvaluationFrequencySetup = useDashboardSelector(
-        selectEnableAlertsEvaluationFrequencySetup,
-    );
     const settings = useDashboardSelector(selectSettings);
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
     const enableDashboardSectionHeadersDateDataSet = useDashboardSelector(
@@ -194,50 +190,48 @@ export function DefaultDashboardSettingsDialog({
                         />
                     ) : null}
                 </div>
-                {enableAlertsEvaluationFrequencySetup ? (
-                    <div className="gd-dashboard-settings-dialog-section">
-                        <DialogListHeader
-                            title={intl.formatMessage({ id: "settingsDashboardDialog.section.alert" })}
-                            className="gd-dashboard-settings-filters"
-                        />
-                        <RecurrenceForm
-                            allowHourlyRecurrence
-                            cronExpression={currentData.evaluationFrequency ?? ""}
-                            placeholder={settings.alertDefault?.defaultCron}
-                            timezone={settings.alertDefault?.defaultTimezone}
-                            onChange={(e, _, valid) => {
-                                setCronValid(valid);
-                                setCurrentData({
-                                    ...currentData,
-                                    evaluationFrequency: e || undefined,
-                                });
-                            }}
-                            repeatLabel={intl.formatMessage({
-                                id: "settingsDashboardDialog.section.alert.label",
-                            })}
-                            showRepeatTypeDescription
-                            showTimezoneInOccurrence
-                            dateFormat={dateFormat}
-                            weekStart={weekStart}
-                            locale={locale}
-                            showInheritValue
-                            isWhiteLabeled={isWhiteLabeled}
-                            customRecurrenceTypeMappingFn={simpleRecurrenceTypeMappingFn}
-                        />
-                        <div className="gd-dashboard-settings-evaluation-note">
-                            {currentData.evaluationFrequency === undefined ? (
-                                <FormattedMessage id="settingsDashboardDialog.section.alert.inherit" />
-                            ) : (
-                                <FormattedMessage
-                                    id="settingsDashboardDialog.section.alert.note"
-                                    values={{
-                                        strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
-                                    }}
-                                />
-                            )}
-                        </div>
+                <div className="gd-dashboard-settings-dialog-section">
+                    <DialogListHeader
+                        title={intl.formatMessage({ id: "settingsDashboardDialog.section.alert" })}
+                        className="gd-dashboard-settings-filters"
+                    />
+                    <RecurrenceForm
+                        allowHourlyRecurrence
+                        cronExpression={currentData.evaluationFrequency ?? ""}
+                        placeholder={settings.alertDefault?.defaultCron}
+                        timezone={settings.alertDefault?.defaultTimezone}
+                        onChange={(e, _, valid) => {
+                            setCronValid(valid);
+                            setCurrentData({
+                                ...currentData,
+                                evaluationFrequency: e || undefined,
+                            });
+                        }}
+                        repeatLabel={intl.formatMessage({
+                            id: "settingsDashboardDialog.section.alert.label",
+                        })}
+                        showRepeatTypeDescription
+                        showTimezoneInOccurrence
+                        dateFormat={dateFormat}
+                        weekStart={weekStart}
+                        locale={locale}
+                        showInheritValue
+                        isWhiteLabeled={isWhiteLabeled}
+                        customRecurrenceTypeMappingFn={simpleRecurrenceTypeMappingFn}
+                    />
+                    <div className="gd-dashboard-settings-evaluation-note">
+                        {currentData.evaluationFrequency === undefined ? (
+                            <FormattedMessage id="settingsDashboardDialog.section.alert.inherit" />
+                        ) : (
+                            <FormattedMessage
+                                id="settingsDashboardDialog.section.alert.note"
+                                values={{
+                                    strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
+                                }}
+                            />
+                        )}
                     </div>
-                ) : null}
+                </div>
             </div>
         </ConfirmDialog>
     );

@@ -8,9 +8,6 @@ import { type IEarlyAccessFeaturesConfig, type IProductionFeaturesConfig } from 
  */
 
 export enum TigerFeaturesNames {
-    // Remove this FF only after 8.12.0 end of life. The following selector is missing parentheses and is not correctly set to true when FF is missing (read more in ticket RAIL-4970)
-    // https://github.com/gooddata/gooddata-ui-sdk/commit/cd47ff9115fc944be721dfda9d58ede00c7c15e9#diff-d047b642946d563ff25cca09624eede9a605d2b8809bac26531324507de4e546R313
-    DashboardEditModeDevRollout = "dashboardEditModeDevRollout",
     EnableMetricSqlAndDataExplain = "enableMetricSqlAndDataExplain",
     EnableMetricFormatOverrides = "enableMetricFormatOverrides",
     EnableColumnLevelPermissions = "enableColumnLevelPermissions",
@@ -28,6 +25,7 @@ export enum TigerFeaturesNames {
     EnableAnalyticalCatalog = "enableAnalyticalCatalog",
     EnableParameters = "enableParameters",
     EnableAnalyticalCatalogMetricEditor = "enableAnalyticalCatalogMetricEditor",
+    EnableStringParameters = "enableStringParameters",
     EnableCustomTooltip = "enableCustomTooltip",
     EnableMotherDuckDataSource = "enableMotherDuckDataSource",
     EnableMongoDbDataSource = "enableMongoDbDataSource",
@@ -38,7 +36,6 @@ export enum TigerFeaturesNames {
     EnableSingleStoreDataSource = "enableSingleStoreDataSource",
     EnableAthenaDataSource = "enableAthenaDataSource",
     EnableCrateDbDataSource = "enableCrateDbDataSource",
-    EnableSnowflakeKeyPairAuthentication = "enableSnowflakeKeyPairAuthentication",
     EnableSemanticSearch = "enableSemanticSearch",
     EnableCatalogSmartSearchResults = "enableCatalogSmartSearchResults",
     EnableGenAIChat = "enableGenAIChat",
@@ -56,7 +53,6 @@ export enum TigerFeaturesNames {
     EnableVisualizationFineTuning = "enableVisualizationFineTuning",
     EnableDashboardDescriptionDynamicHeight = "enableDashboardDescriptionDynamicHeight",
     EnableAmplitudeTracker = "enableAmplitudeTracker",
-    EnableSlideshowExports = "enableSlideshowExports",
     EnableExportTemplateSelection = "enableExportTemplateSelection",
     EnableRawExports = "enableRawExports",
     EnableCustomizableCsvDelimiter = "enableCustomizableCsvDelimiter",
@@ -65,12 +61,8 @@ export enum TigerFeaturesNames {
     EnableOrchestratedTabularExports = "enableOrchestratedTabularExports",
     EnableImmediateAttributeFilterDisplayAsLabelMigration = "enableImmediateAttributeFilterDisplayAsLabelMigration",
     EnableAnalyticalDesignerCatalogSideload = "enableAnalyticalDesignerCatalogSideload",
-    EnableDashboardShareLink = "enableDashboardShareLink",
-    EnableAlertsEvaluationFrequencySetup = "enableAlertsEvaluationFrequencySetup",
-    EnableKDRespectLegendPosition = "enableKDRespectLegendPosition",
     EnableWorkspaceSettingsAppHeaderMenuItem = "enableWorkspaceSettingsAppHeaderMenuItem",
     EnableSnapshotExportAccessibility = "enableSnapshotExportAccessibility",
-    EnableWidgetExportPngImage = "enableWidgetExportPngImage",
     EnableExportToDocumentStorage = "enableExportToDocumentStorage",
     EnableNotificationChannelIdentifiers = "enableNotificationChannelIdentifiers",
     EnableDashboardShareDialogLink = "enableDashboardShareDialogLink",
@@ -78,7 +70,6 @@ export enum TigerFeaturesNames {
     EnableNewScheduledExport = "enableNewScheduledExport",
     EnableSeamlessIdpSwitch = "enableSeamlessIdpSwitch",
     EnablePreAggregationDatasets = "enablePreAggregationDatasets",
-    EnableToDateFilters = "enableToDateFilters",
     EnableCyclicalToDateFilters = "enableCyclicalToDateFilters",
     EnableNewPivotTable = "enableNewPivotTable",
     EnableConditionalFormatting = "enableConditionalFormatting",
@@ -142,7 +133,6 @@ export enum TigerFeaturesNames {
 }
 
 export type ITigerFeatureFlags = {
-    dashboardEditModeDevRollout: (typeof FeatureFlagsValues)["dashboardEditModeDevRollout"][number];
     enableMetricSqlAndDataExplain: (typeof FeatureFlagsValues)["enableMetricSqlAndDataExplain"][number];
     enableMetricFormatOverrides: (typeof FeatureFlagsValues)["enableMetricFormatOverrides"][number];
     enableColumnLevelPermissions: (typeof FeatureFlagsValues)["enableColumnLevelPermissions"][number];
@@ -159,6 +149,7 @@ export type ITigerFeatureFlags = {
     enableAnalyticalCatalog: (typeof FeatureFlagsValues)["enableAnalyticalCatalog"][number];
     enableParameters: (typeof FeatureFlagsValues)["enableParameters"][number];
     enableAnalyticalCatalogMetricEditor: (typeof FeatureFlagsValues)["enableAnalyticalCatalogMetricEditor"][number];
+    enableStringParameters: (typeof FeatureFlagsValues)["enableStringParameters"][number];
     enableLabsSmartFunctions: (typeof FeatureFlagsValues)["enableLabsSmartFunctions"][number];
     enableCustomTooltip: (typeof FeatureFlagsValues)["enableCustomTooltip"][number];
     enableMotherDuckDataSource: (typeof FeatureFlagsValues)["enableMotherDuckDataSource"][number];
@@ -169,7 +160,6 @@ export type ITigerFeatureFlags = {
     enableSingleStoreDataSource: (typeof FeatureFlagsValues)["enableSingleStoreDataSource"][number];
     enableAthenaDataSource: (typeof FeatureFlagsValues)["enableAthenaDataSource"][number];
     enableCrateDbDataSource: (typeof FeatureFlagsValues)["enableCrateDbDataSource"][number];
-    enableSnowflakeKeyPairAuthentication: (typeof FeatureFlagsValues)["enableSnowflakeKeyPairAuthentication"][number];
     enableSemanticSearch: (typeof FeatureFlagsValues)["enableSemanticSearch"][number];
     enableCatalogSmartSearchResults: (typeof FeatureFlagsValues)["enableCatalogSmartSearchResults"][number];
     enableGenAIChat: (typeof FeatureFlagsValues)["enableGenAIChat"][number];
@@ -189,21 +179,16 @@ export type ITigerFeatureFlags = {
     enableOrchestratedTabularExports: (typeof FeatureFlagsValues)["enableOrchestratedTabularExports"][number];
     enableDashboardDescriptionDynamicHeight: (typeof FeatureFlagsValues)["enableDashboardDescriptionDynamicHeight"][number];
     enableAmplitudeTracker: (typeof FeatureFlagsValues)["enableAmplitudeTracker"][number];
-    enableSlideshowExports: (typeof FeatureFlagsValues)["enableSlideshowExports"][number];
     enableExportTemplateSelection: (typeof FeatureFlagsValues)["enableExportTemplateSelection"][number];
     enableRawExports: (typeof FeatureFlagsValues)["enableRawExports"][number];
     enableCustomizableCsvDelimiter: (typeof FeatureFlagsValues)["enableCustomizableCsvDelimiter"][number];
     enableExecutionCancelling: (typeof FeatureFlagsValues)["enableExecutionCancelling"][number];
     enableImmediateAttributeFilterDisplayAsLabelMigration: (typeof FeatureFlagsValues)["enableImmediateAttributeFilterDisplayAsLabelMigration"][number];
     enableAnalyticalDesignerCatalogSideload: (typeof FeatureFlagsValues)["enableAnalyticalDesignerCatalogSideload"][number];
-    enableDashboardShareLink: (typeof FeatureFlagsValues)["enableDashboardShareLink"][number];
     enableHighchartsAccessibility: (typeof FeatureFlagsValues)["enableHighchartsAccessibility"][number];
     enableAccessibleChartTooltip: (typeof FeatureFlagsValues)["enableAccessibleChartTooltip"][number];
-    enableAlertsEvaluationFrequencySetup: (typeof FeatureFlagsValues)["enableAlertsEvaluationFrequencySetup"][number];
-    enableKDRespectLegendPosition: (typeof FeatureFlagsValues)["enableKDRespectLegendPosition"][number];
     enableWorkspaceSettingsAppHeaderMenuItem: (typeof FeatureFlagsValues)["enableWorkspaceSettingsAppHeaderMenuItem"][number];
     enableSnapshotExportAccessibility: (typeof FeatureFlagsValues)["enableSnapshotExportAccessibility"][number];
-    enableWidgetExportPngImage: (typeof FeatureFlagsValues)["enableWidgetExportPngImage"][number];
     enableExportToDocumentStorage: (typeof FeatureFlagsValues)["enableExportToDocumentStorage"][number];
     enableNotificationChannelIdentifiers: (typeof FeatureFlagsValues)["enableNotificationChannelIdentifiers"][number];
     enableDashboardShareDialogLink: (typeof FeatureFlagsValues)["enableDashboardShareDialogLink"][number];
@@ -211,7 +196,6 @@ export type ITigerFeatureFlags = {
     enableNewScheduledExport: (typeof FeatureFlagsValues)["enableNewScheduledExport"][number];
     enableSeamlessIdpSwitch: (typeof FeatureFlagsValues)["enableSeamlessIdpSwitch"][number];
     enablePreAggregationDatasets: (typeof FeatureFlagsValues)["enablePreAggregationDatasets"][number];
-    enableToDateFilters: (typeof FeatureFlagsValues)["enableToDateFilters"][number];
     enableCyclicalToDateFilters: (typeof FeatureFlagsValues)["enableCyclicalToDateFilters"][number];
     enableNewPivotTable: (typeof FeatureFlagsValues)["enableNewPivotTable"][number];
     enableConditionalFormatting: (typeof FeatureFlagsValues)["enableConditionalFormatting"][number];
@@ -274,7 +258,6 @@ export type ITigerFeatureFlags = {
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
-    dashboardEditModeDevRollout: true,
     enableMetricSqlAndDataExplain: false,
     enableMetricFormatOverrides: false,
     enableColumnLevelPermissions: false,
@@ -294,6 +277,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAnalyticalCatalog: false,
     enableParameters: false,
     enableAnalyticalCatalogMetricEditor: false,
+    enableStringParameters: false,
     enableLabsSmartFunctions: false,
     enableCustomTooltip: true,
     enableDataProfiling: false,
@@ -301,7 +285,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableSingleStoreDataSource: false,
     enableAthenaDataSource: true,
     enableCrateDbDataSource: true,
-    enableSnowflakeKeyPairAuthentication: true,
     enableSemanticSearch: false,
     enableCatalogSmartSearchResults: false,
     enableGenAIChat: false,
@@ -321,21 +304,16 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableOrchestratedTabularExports: false,
     enableDashboardDescriptionDynamicHeight: false,
     enableAmplitudeTracker: false,
-    enableSlideshowExports: true,
     enableExportTemplateSelection: true,
     enableRawExports: false,
     enableCustomizableCsvDelimiter: true,
     enableExecutionCancelling: false,
     enableImmediateAttributeFilterDisplayAsLabelMigration: false,
     enableAnalyticalDesignerCatalogSideload: false,
-    enableDashboardShareLink: true,
     enableHighchartsAccessibility: true,
     enableAccessibleChartTooltip: false,
-    enableAlertsEvaluationFrequencySetup: true,
-    enableKDRespectLegendPosition: true,
     enableWorkspaceSettingsAppHeaderMenuItem: false,
     enableSnapshotExportAccessibility: false,
-    enableWidgetExportPngImage: true,
     enableExportToDocumentStorage: false,
     enableNotificationChannelIdentifiers: false,
     enableDashboardShareDialogLink: false,
@@ -343,7 +321,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableNewScheduledExport: true,
     enableSeamlessIdpSwitch: false,
     enablePreAggregationDatasets: false,
-    enableToDateFilters: true,
     enableCyclicalToDateFilters: true,
     enableNewPivotTable: true,
     enableConditionalFormatting: false,
@@ -406,7 +383,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
 };
 
 export const FeatureFlagsValues = {
-    dashboardEditModeDevRollout: [true, false] as const,
     enableMetricSqlAndDataExplain: [true, false] as const,
     enableMetricFormatOverrides: [true, false] as const,
     enableColumnLevelPermissions: [true, false] as const,
@@ -426,6 +402,7 @@ export const FeatureFlagsValues = {
     enableAnalyticalCatalog: [true, false] as const,
     enableParameters: [true, false] as const,
     enableAnalyticalCatalogMetricEditor: [true, false] as const,
+    enableStringParameters: [true, false] as const,
     enableLabsSmartFunctions: [true, false] as const,
     enableCustomTooltip: [true, false] as const,
     enableDataProfiling: [true, false] as const,
@@ -433,7 +410,6 @@ export const FeatureFlagsValues = {
     enableSingleStoreDataSource: [true, false] as const,
     enableAthenaDataSource: [true, false] as const,
     enableCrateDbDataSource: [true, false] as const,
-    enableSnowflakeKeyPairAuthentication: [true, false] as const,
     enableSemanticSearch: [true, false] as const,
     enableCatalogSmartSearchResults: [true, false] as const,
     enableGenAIChat: [true, false] as const,
@@ -453,7 +429,6 @@ export const FeatureFlagsValues = {
     enableOrchestratedTabularExports: [true, false] as const,
     enableDashboardDescriptionDynamicHeight: [true, false] as const,
     enableAmplitudeTracker: [true, false] as const,
-    enableSlideshowExports: [true, false] as const,
     enableExportTemplateSelection: [true, false] as const,
     enableRawExports: [true, false] as const,
     enableCustomizableCsvDelimiter: [true, false] as const,
@@ -462,12 +437,8 @@ export const FeatureFlagsValues = {
     enableExecutionCancelling: [true, false] as const,
     enableImmediateAttributeFilterDisplayAsLabelMigration: [true, false] as const,
     enableAnalyticalDesignerCatalogSideload: [true, false] as const,
-    enableDashboardShareLink: [true, false] as const,
-    enableAlertsEvaluationFrequencySetup: [true, false] as const,
-    enableKDRespectLegendPosition: [true, false] as const,
     enableWorkspaceSettingsAppHeaderMenuItem: [true, false] as const,
     enableSnapshotExportAccessibility: [true, false] as const,
-    enableWidgetExportPngImage: [true, false] as const,
     enableExportToDocumentStorage: [true, false] as const,
     enableNotificationChannelIdentifiers: [true, false] as const,
     enableDashboardShareDialogLink: [true, false] as const,
@@ -475,7 +446,6 @@ export const FeatureFlagsValues = {
     enableNewScheduledExport: [true, false] as const,
     enableSeamlessIdpSwitch: [true, false] as const,
     enablePreAggregationDatasets: [true, false] as const,
-    enableToDateFilters: [true, false] as const,
     enableCyclicalToDateFilters: [true, false] as const,
     enableNewPivotTable: [true, false] as const,
     enableConditionalFormatting: [true, false] as const,

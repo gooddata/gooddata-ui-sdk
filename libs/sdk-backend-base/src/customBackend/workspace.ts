@@ -17,6 +17,7 @@ import {
     type IWorkspaceDatasetsService,
     type IWorkspaceDescriptor,
     type IWorkspaceExportDefinitionsService,
+    type IWorkspaceExportTemplatesService,
     type IWorkspaceFactsService,
     type IWorkspaceInsightsService,
     type IWorkspaceKeyDriverAnalysisService,
@@ -169,5 +170,9 @@ export class CustomWorkspace implements IAnalyticalWorkspace {
 
     public references(): IReferencesService {
         throw new NotSupported("references are not supported");
+    }
+
+    public exportTemplates(): IWorkspaceExportTemplatesService {
+        throw new NotSupported("export templates are not supported");
     }
 }

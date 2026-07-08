@@ -139,6 +139,7 @@ export function buildGeoVisualizationConfig({
         enableGeoBasemapConfig: isBasemapConfigEnabled,
         enableGeoChartA11yImprovements: featureFlags?.["enableGeoChartA11yImprovements"] ?? false,
         enableGeoChartsViewportConfig: isViewportConfigEnabled,
+        enableCustomTooltip: featureFlags?.["enableCustomTooltip"],
         applyViewportNavigation,
     };
 
