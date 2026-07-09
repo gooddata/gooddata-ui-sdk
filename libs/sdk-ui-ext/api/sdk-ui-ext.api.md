@@ -933,6 +933,7 @@ export interface IObjectShareControllerActions {
 // @internal (undocumented)
 export interface IObjectShareControllerState {
     accessUnavailable: boolean;
+    canTransferOwnership: boolean;
     // (undocumented)
     error?: Error;
     // (undocumented)
@@ -1053,6 +1054,7 @@ export interface ITabsIds {
 
 // @internal
 export interface IUseObjectShareOptions {
+    isOpen?: boolean;
     labels?: IObjectShareLabel[];
     labelsError?: boolean;
     labelsLoading?: boolean;

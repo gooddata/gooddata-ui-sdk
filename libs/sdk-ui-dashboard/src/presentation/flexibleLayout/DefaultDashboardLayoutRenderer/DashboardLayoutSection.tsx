@@ -13,7 +13,6 @@ import { type ILayoutItemPath, type RenderMode } from "../../../types.js";
 import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
 import { useSlideSizeStyle } from "../../dashboardContexts/useSlideData.js";
 import { useSectionExportData } from "../../export/useExportData.js";
-import { DashboardLayoutSectionOverlayController } from "../DashboardItemOverlay/DashboardItemOverlayController.js";
 
 import { DashboardLayoutGridRow } from "./DashboardLayoutGridRow.js";
 import { DashboardLayoutGridRowEdit } from "./DashboardLayoutGridRowEdit.js";
@@ -163,7 +162,6 @@ export function DashboardLayoutSection<TWidget>({
                     exportData,
                 })}
                 {items}
-                {renderMode === "edit" ? <DashboardLayoutSectionOverlayController section={section} /> : null}
             </>
         ),
     });

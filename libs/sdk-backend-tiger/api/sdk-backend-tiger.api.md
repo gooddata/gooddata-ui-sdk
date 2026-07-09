@@ -58,6 +58,7 @@ import { PlatformUsage } from '@gooddata/api-client-tiger';
 import { ReadCsvFileManifestsResponse } from '@gooddata/api-client-tiger';
 import { ScanResultPdm } from '@gooddata/api-client-tiger';
 import { ScanSqlResponse } from '@gooddata/api-client-tiger';
+import { TestDefinitionRequestAuthenticationTypeEnum } from '@gooddata/api-client-tiger';
 import { TestDefinitionRequestTypeEnum } from '@gooddata/api-client-tiger';
 import { UploadFileResponse } from '@gooddata/api-client-tiger';
 
@@ -207,6 +208,8 @@ export interface IDataSourceDeletedResponse {
 // @internal (undocumented)
 export interface IDataSourcePatchRequest {
     // (undocumented)
+    authenticationType?: JsonApiDataSourceOutAttributesAuthenticationTypeEnum | null;
+    // (undocumented)
     cacheStrategy?: IDataSourceCacheStrategy;
     // (undocumented)
     clientId?: string | null;
@@ -244,6 +247,8 @@ export type IDataSourcePermission = "MANAGE" | "USE";
 // @internal (undocumented)
 export interface IDataSourceTestConnectionRequest {
     // (undocumented)
+    authenticationType?: TestDefinitionRequestAuthenticationTypeEnum | null;
+    // (undocumented)
     clientId?: string;
     // (undocumented)
     clientSecret?: string;
@@ -280,6 +285,8 @@ export type IDataSourceType = JsonApiDataSourceInAttributesTypeEnum;
 
 // @internal (undocumented)
 export interface IDataSourceUpsertRequest {
+    // (undocumented)
+    authenticationType?: JsonApiDataSourceOutAttributesAuthenticationTypeEnum | null;
     // (undocumented)
     cacheStrategy?: IDataSourceCacheStrategy;
     // (undocumented)

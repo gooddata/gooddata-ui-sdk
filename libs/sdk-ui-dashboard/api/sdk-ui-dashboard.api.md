@@ -10773,9 +10773,6 @@ export const selectEnableAnomalyDetectionAlert: DashboardSelector<boolean>;
 export const selectEnableAutomationEvaluationMode: DashboardSelector<boolean>;
 
 // @internal
-export const selectEnableCustomizedDashboardsWithoutPluginOverlay: DashboardSelector<boolean>;
-
-// @internal
 export const selectEnableDashboardDensitySetting: DashboardSelector<boolean>;
 
 // @internal
@@ -10803,9 +10800,6 @@ export const selectEnableExportTimeoutFix: DashboardSelector<boolean>;
 export const selectEnableExportToDocumentStorage: DashboardSelector<boolean>;
 
 // @internal
-export const selectEnableExportToPdfTabular: DashboardSelector<boolean>;
-
-// @internal
 export const selectEnableFilterControlInDrillingConfiguration: DashboardSelector<boolean>;
 
 // @public
@@ -10819,9 +10813,6 @@ export const selectEnableImmediateAttributeFilterDisplayAsLabelMigration: Dashbo
 
 // @internal
 export const selectEnableKDDependentFilters: DashboardSelector<boolean>;
-
-// @alpha
-export const selectEnableKDEmptyDateValuesFilter: DashboardSelector<boolean>;
 
 // @alpha
 export const selectEnableMeasureValueFilterKD: DashboardSelector<boolean>;
@@ -11284,9 +11275,6 @@ export const selectIsExport: DashboardSelector<boolean>;
 
 // @internal (undocumented)
 export const selectIsExportableToCSV: DashboardSelector<boolean>;
-
-// @internal (undocumented)
-export const selectIsExportableToPdfTabular: DashboardSelector<boolean>;
 
 // @internal (undocumented)
 export const selectIsExportableToPngImage: DashboardSelector<boolean>;

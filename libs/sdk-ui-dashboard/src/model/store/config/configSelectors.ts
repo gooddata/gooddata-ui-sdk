@@ -534,17 +534,6 @@ export const selectEnableCatalogSmartSearchResults: DashboardSelector<boolean> =
 );
 
 /**
- * Returns whether customized dashboards without plugin overlay are enabled.
- * When enabled, the plugin overlay will not be displayed on dashboard items.
- *
- * @internal
- */
-export const selectEnableCustomizedDashboardsWithoutPluginOverlay: DashboardSelector<boolean> =
-    createSelector(selectConfig, (state) => {
-        return state.settings?.enableCustomizedDashboardsWithoutPluginOverlay ?? true;
-    });
-
-/**
  * Returns dashboard focus object.
  *
  * @beta
@@ -716,18 +705,6 @@ export const selectEnableExportTimeoutFix: DashboardSelector<boolean> = createSe
     selectConfig,
     (state) => {
         return Boolean(state.settings?.enableExportTimeoutFix);
-    },
-);
-
-/**
- * Selector for the export to PDF tabular
- *
- * @internal
- */
-export const selectEnableExportToPdfTabular: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableNewPdfTabularExport ?? true;
     },
 );
 
@@ -927,18 +904,6 @@ export const selectEnableDashboardFilterGroups: DashboardSelector<boolean> = cre
     selectConfig,
     (state) => {
         return state.settings?.enableDashboardFilterGroups ?? true;
-    },
-);
-
-/**
- * Selector for enabling empty date values configuration in KPI Dashboards date filter.
- *
- * @alpha
- */
-export const selectEnableKDEmptyDateValuesFilter: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableKDEmptyDateValuesFilter ?? true;
     },
 );
 

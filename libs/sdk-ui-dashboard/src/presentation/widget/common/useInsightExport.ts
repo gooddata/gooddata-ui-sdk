@@ -42,11 +42,11 @@ import {
     selectIsExecutionResultExportableToPdfByRef,
     selectIsExecutionResultExportableToXlsxByRef,
 } from "../../../model/store/executionResults/executionResultsSelectors.js";
+import { selectCanExportTabular } from "../../../model/store/permissions/permissionsSelectors.js";
 import { selectShowWidgetAsTable } from "../../../model/store/showWidgetAsTable/showWidgetAsTableSelectors.js";
 import { selectSlideShowExportVisible } from "../../../model/store/topBar/topBarSelectors.js";
 import {
     selectIsExportableToCSV,
-    selectIsExportableToPdfTabular,
     selectIsExportableToPngImage,
     selectIsExportableToXLSX,
 } from "../../../model/store/widgetExports/widgetExportsSelectors.js";
@@ -412,7 +412,7 @@ export const useInsightExport = (config: {
     const isAccessibilityModeEnabled = settings.enableAccessibilityMode === true;
 
     const isExportPdfTabularVisible =
-        useDashboardSelector(selectIsExportableToPdfTabular) &&
+        useDashboardSelector(selectCanExportTabular) &&
         !!insight &&
         (insightVisualizationType(insight) === VisualizationTypes.TABLE || isWidgetShownAsTable) &&
         !isAccessibilityModeEnabled;

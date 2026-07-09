@@ -188,8 +188,7 @@ export const selectIsExecutionResultExportableToPdfByRef: (ref: ObjRef) => Dashb
             selectSettings,
             (isReadyForExport, canExportTabular, settings): boolean => {
                 const isExportEnabled = Boolean(settings["enableKPIDashboardExport"] && canExportTabular);
-                const isPdfExportEnabled = Boolean(settings.enableNewPdfTabularExport);
-                return isReadyForExport && isExportEnabled && isPdfExportEnabled;
+                return isReadyForExport && isExportEnabled;
             },
         ),
     );

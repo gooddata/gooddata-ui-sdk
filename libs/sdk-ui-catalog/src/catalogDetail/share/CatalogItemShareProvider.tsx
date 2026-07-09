@@ -84,13 +84,13 @@ export function CatalogItemShareProvider({
     // One controller drives both the dialog and the inline access row; the row reads
     // `state.summary`, so a save inside the dialog refreshes it too. labelsLoading/
     // labelsError keep the controller label-unresolved while labels are pending.
+    const [isOpen, setIsOpen] = useState(false);
     const controller = useObjectShare(target, {
         labels: labels.labels,
         labelsError: labels.error,
         labelsLoading: labels.loading,
+        isOpen,
     });
-
-    const [isOpen, setIsOpen] = useState(false);
     // The detail view is reused as the user navigates between objects, so close an
     // open dialog when the shareable target changes (or becomes non-shareable) —
     // otherwise it would linger open on the next object. Reset during render (React's

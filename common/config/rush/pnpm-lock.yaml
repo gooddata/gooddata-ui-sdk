@@ -5970,8 +5970,8 @@ importers:
         specifier: workspace:*
         version: link:../util
       '@module-federation/runtime':
-        specifier: 2.3.1
-        version: 2.3.1
+        specifier: 2.6.0
+        version: 2.6.0(node-fetch@2.7.0)
       lodash-es:
         specifier: ^4.17.23
         version: 4.18.1
@@ -10924,34 +10924,17 @@ packages:
       vue-tsc:
         optional: true
 
-  '@module-federation/error-codes@2.3.1':
-    resolution: {integrity: sha512-s3IjT2OYrSBNNmxdTmmrWBpsFfeNszdL6BSqjXLHb1CgXWUYLNXpb05IopnzMhRLcur6MTGuKR0ZSjJbmvQBbg==}
-
   '@module-federation/error-codes@2.6.0':
     resolution: {integrity: sha512-J9opjWJJZ1JI/9EvNZF8Ps1VMHS9EsH/i0UjCkQQxFVYZxSDBX1CFunvc7awac4cY//LqJUfqBbfoQPhCfKKKw==}
 
   '@module-federation/managers@2.6.0':
     resolution: {integrity: sha512-7Y4Ri6Lh10dCHoEJvNGFmK2Gg1JKy7oJ1TEZhuU3n3mgIpZ519fDNRvU4+tiO9C49p1xyK+mQ8ewxth83waKUA==}
 
-  '@module-federation/runtime-core@2.3.1':
-    resolution: {integrity: sha512-E0WgaCn32AWzD0n6SCH7VQ+kxk46XyX432PQWARgyQzCX/wyLkaT+We3A18RVNUevRT85YHLrrVIhMKJJVHgjA==}
-
   '@module-federation/runtime-core@2.6.0':
     resolution: {integrity: sha512-9sL7Yj3H3COZI9JpK/J4hmJUBkIJdmowkj6phHuFiy5Hm5bHiE5U+9WBbR9KqTdyNhAVSL9FeprBW5/Io6i59A==}
 
-  '@module-federation/runtime@2.3.1':
-    resolution: {integrity: sha512-NiKelHKzOf1Vz8oqcxC/XRUAW224O6lKj9xD0cfp5Bp343iu6s58RlLvX1ypF+UpCl3jA4JM8npGax/3jjyifw==}
-
   '@module-federation/runtime@2.6.0':
     resolution: {integrity: sha512-Y8KgL70RDxD8cCtGWGlGkt+TSDleIjdGmS27gnllibQAIgG/vHhPD11r8kd92x44k4dqtMIntzreOphGICl92g==}
-
-  '@module-federation/sdk@2.3.1':
-    resolution: {integrity: sha512-lgWxFZyLRKDXWRGlV6ROjFJ6MRaJTxs0bBnS6hS9ONfr/0TkeW4JzDbsfzrB8g4p6IgSKB+wQ9XfibJCGBI5OQ==}
-    peerDependencies:
-      node-fetch: ^3.3.2
-    peerDependenciesMeta:
-      node-fetch:
-        optional: true
 
   '@module-federation/sdk@2.6.0':
     resolution: {integrity: sha512-Z3HT1uDciMrvz2at3sw6TJbAK9Fl7RmoC/8iqO35HDtQMQJ1qSsMIAjnsiCpAC0D4nAm6PIqgSqPWRO/WYgo0Q==}
@@ -19998,21 +19981,12 @@ snapshots:
       - node-fetch
       - utf-8-validate
 
-  '@module-federation/error-codes@2.3.1': {}
-
   '@module-federation/error-codes@2.6.0': {}
 
   '@module-federation/managers@2.6.0(node-fetch@2.7.0)':
     dependencies:
       '@module-federation/sdk': 2.6.0(node-fetch@2.7.0)
       find-pkg: 2.0.0
-    transitivePeerDependencies:
-      - node-fetch
-
-  '@module-federation/runtime-core@2.3.1':
-    dependencies:
-      '@module-federation/error-codes': 2.3.1
-      '@module-federation/sdk': 2.3.1
     transitivePeerDependencies:
       - node-fetch
 
@@ -20023,14 +19997,6 @@ snapshots:
     transitivePeerDependencies:
       - node-fetch
 
-  '@module-federation/runtime@2.3.1':
-    dependencies:
-      '@module-federation/error-codes': 2.3.1
-      '@module-federation/runtime-core': 2.3.1
-      '@module-federation/sdk': 2.3.1
-    transitivePeerDependencies:
-      - node-fetch
-
   '@module-federation/runtime@2.6.0(node-fetch@2.7.0)':
     dependencies:
       '@module-federation/error-codes': 2.6.0
@@ -20038,8 +20004,6 @@ snapshots:
       '@module-federation/sdk': 2.6.0(node-fetch@2.7.0)
     transitivePeerDependencies:
       - node-fetch
-
-  '@module-federation/sdk@2.3.1': {}
 
   '@module-federation/sdk@2.6.0(node-fetch@2.7.0)':
     optionalDependencies:

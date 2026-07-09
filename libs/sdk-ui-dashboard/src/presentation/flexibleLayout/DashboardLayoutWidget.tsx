@@ -41,11 +41,6 @@ import {
 } from "../../model/store/renderMode/renderModeSelectors.js";
 import { uiActions } from "../../model/store/ui/index.js";
 import {
-    selectSectionModification,
-    selectWidgetsModification,
-    selectWidgetsOverlayState,
-} from "../../model/store/ui/uiSelectors.js";
-import {
     type ExtendedDashboardWidget,
     isCustomWidget,
     isExtendedDashboardLayoutWidget,
@@ -63,7 +58,6 @@ import { DashboardWidget } from "../widget/widget/DashboardWidget.js";
 import { type IDashboardWidgetProps } from "../widget/widget/types.js";
 
 import { DEFAULT_COLUMN_CLIENT_WIDTH, DEFAULT_WIDTH_RESIZER_HEIGHT } from "./constants.js";
-import { DashboardItemOverlay } from "./DashboardItemOverlay/DashboardItemOverlay.js";
 import { type IDashboardLayoutWidgetRenderProps } from "./DefaultDashboardLayoutRenderer/interfaces.js";
 import { useWidthValidation } from "./DefaultDashboardLayoutRenderer/useItemWidthValidation.js";
 import { getDashboardLayoutItemHeightForRatioAndScreen } from "./DefaultDashboardLayoutRenderer/utils/sizing.js";
@@ -72,7 +66,6 @@ import { useShouldShowRowEndHotspot } from "./dragAndDrop/draggableWidget/RowEnd
 import { HoverDetector } from "./dragAndDrop/Resize/HoverDetector.js";
 import { ResizeOverlay } from "./dragAndDrop/Resize/ResizeOverlay.js";
 import { WidthResizerHotspot } from "./dragAndDrop/Resize/WidthResizerHotspot.js";
-import { getRefsForItem, getRefsForSection } from "./refs.js";
 
 function logInvalidWidth(
     isValid: boolean,
@@ -179,13 +172,6 @@ export function DashboardLayoutWidget({
 
     const index = getWidgetIndex(item);
 
-    const refs = getRefsForItem(item);
-    const sectionModifications = useDashboardSelector(
-        selectSectionModification(getRefsForSection(item.section())),
-    );
-    const itemModifications = useDashboardSelector(selectWidgetsModification(refs));
-    const overlayShow = useDashboardSelector(selectWidgetsOverlayState(refs));
-
     const { isActive, isResizingColumnOrRow, heightLimitReached, widthLimitReached } = useResizeItemStatus(
         widget.identifier,
     );
@@ -224,10 +210,6 @@ export function DashboardLayoutWidget({
             "gd-widget-export": isSnapshotAccessibilityEnabled && isExport,
         },
     ]);
-    const isInsertedByPlugin = sectionModifications.includes("insertedByPlugin");
-    const shouldRenderOverlay = isInEditMode && overlayShow && !isInsertedByPlugin;
-    const handleHideOverlay = () =>
-        dispatch(uiActions.toggleWidgetsOverlay({ refs: [item.ref()], visible: false }));
 
     return (
         <DefaultWidgetRenderer
@@ -299,13 +281,6 @@ export function DashboardLayoutWidget({
                     rowIndex={rowIndex}
                 />
             ) : null}
-
-            <DashboardItemOverlay
-                type="column"
-                onHide={handleHideOverlay}
-                render={shouldRenderOverlay}
-                modifications={itemModifications}
-            />
         </DefaultWidgetRenderer>
     );
 }

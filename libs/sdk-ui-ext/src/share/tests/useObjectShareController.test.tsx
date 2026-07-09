@@ -15,11 +15,13 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import {
     type AccessGranteeDetail,
+    type AccessGranularPermission,
     type IAvailableAccessGrantee,
     type IGranularAccessGrantee,
     type ObjRef,
     areObjRefsEqual,
     idRef,
+    uriRef,
 } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 
@@ -68,13 +70,20 @@ interface IMockService {
 // (downgrade/remove) grant is written for.
 const CURRENT_USER_REF = idRef("self");
 
+// The profile resolved for the signed-in user. Its shape mirrors tiger: `ref` is a
+// uriRef (never comparable to the access list's idRefs), the user id lives in
+// `login` — the controller must resolve the current user from `login`, or nothing
+// self-related matches. A spy so tests can anchor on the profile having actually
+// resolved (`canTransferOwnership === false` is also just its unresolved default).
+const getUserMock = vi.fn(async () => ({ ref: uriRef("/api/v1/profile"), login: "self" }));
+
 function makeBackend(svc: IMockService): IAnalyticalBackend {
     const base = dummyBackendEmptyData();
     return {
         ...base,
         // The transfer flow resolves the current user to write the self grant; the
         // dummy backend doesn't implement currentUser, so stub getUser here.
-        currentUser: () => ({ getUser: async () => ({ ref: CURRENT_USER_REF }) }),
+        currentUser: () => ({ getUser: getUserMock }),
         workspace: (id: string) => ({
             ...base.workspace(id),
             objectPermissions: () => svc as unknown as IWorkspaceObjectPermissionsService,
@@ -96,6 +105,7 @@ function renderController(
     labels?: IObjectShareLabel[],
     labelsError = false,
     labelsLoading = false,
+    isOpen = true,
 ) {
     const backend = makeBackend(svc);
     const wrapper = ({ children }: PropsWithChildren) => (
@@ -105,9 +115,10 @@ function renderController(
             </BackendProvider>
         </IntlProvider>
     );
-    return renderHook(() => useObjectShareController(target, { labels, labelsError, labelsLoading }), {
-        wrapper,
-    });
+    return renderHook(
+        () => useObjectShareController(target, { labels, labelsError, labelsLoading, isOpen }),
+        { wrapper },
+    );
 }
 
 const PRIMARY_LABEL: IObjectShareLabel = {
@@ -158,6 +169,9 @@ describe("useObjectShareController", () => {
         addSuccess.mockClear();
         addError.mockClear();
         addWarning.mockClear();
+        // Not just hygiene: the gate tests anchor on getUserMock having resolved,
+        // which would trivially hold from a previous test's call.
+        getUserMock.mockClear();
     });
 
     it("derives grantee rows and summary from the fetched access list", async () => {
@@ -2237,6 +2251,63 @@ describe("useObjectShareController", () => {
                 await pending;
             });
             expect(result.current.state.transferSaving).toBe(false);
+        });
+    });
+
+    // The gate detects a direct self EDIT grant only — ownership inherited via a
+    // user group is not recognized (open API/product question), and it gates the
+    // affordance, not the actions: the transfer write stays callable and the
+    // backend is the authority.
+    describe("transfer ownership permission gate (canTransferOwnership)", () => {
+        // A grant for the signed-in user (resolved to CURRENT_USER_REF) at the given level.
+        const selfGrant = (permissions: AccessGranularPermission[]): AccessGranteeDetail => ({
+            type: "granularUser",
+            user: { ref: CURRENT_USER_REF, uri: "/self", login: "me", email: "me@x.com", fullName: "Me" },
+            permissions,
+            inheritedPermissions: [],
+        });
+
+        it("allows transfer when the signed-in user holds an EDIT (owner) grant", async () => {
+            const { result } = renderController(makeService([selfGrant(["EDIT", "VIEW"])]), TARGET);
+            await waitFor(() => expect(result.current.state.canTransferOwnership).toBe(true));
+        });
+
+        // The negative tests assert false, which is also the gate's not-yet-resolved
+        // default — so each anchors on BOTH sources having landed (the access list
+        // via state, the profile via the getUserMock spy) before asserting.
+        it("forbids transfer for a View&Share (SHARE) grant", async () => {
+            const { result } = renderController(makeService([selfGrant(["SHARE", "VIEW"])]), TARGET);
+            await waitFor(() =>
+                expect(result.current.state.grantees.some((g) => g.id === "user:self")).toBe(true),
+            );
+            await waitFor(() => expect(getUserMock).toHaveResolved());
+            await act(async () => {});
+            expect(result.current.state.canTransferOwnership).toBe(false);
+        });
+
+        it("forbids transfer when the signed-in user has no grant of their own", async () => {
+            const { result } = renderController(makeService([USER_GRANT]), TARGET);
+            await waitFor(() => expect(result.current.state.status).toBe("success"));
+            await waitFor(() => expect(getUserMock).toHaveResolved());
+            await act(async () => {});
+            expect(result.current.state.canTransferOwnership).toBe(false);
+        });
+
+        it("fires no profile request while the dialog is closed (summary-only path)", async () => {
+            const { result } = renderController(
+                makeService([selfGrant(["EDIT", "VIEW"])]),
+                TARGET,
+                undefined,
+                false,
+                false,
+                false,
+            );
+            await waitFor(() =>
+                expect(result.current.state.grantees.some((g) => g.id === "user:self")).toBe(true),
+            );
+            await act(async () => {});
+            expect(getUserMock).not.toHaveBeenCalled();
+            expect(result.current.state.canTransferOwnership).toBe(false);
         });
     });
 });
