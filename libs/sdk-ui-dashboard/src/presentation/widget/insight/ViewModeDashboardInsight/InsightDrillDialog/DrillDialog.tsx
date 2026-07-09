@@ -21,10 +21,7 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
-import {
-    selectEnableExportToPdfTabular,
-    selectSettings,
-} from "../../../../../model/store/config/configSelectors.js";
+import { selectSettings } from "../../../../../model/store/config/configSelectors.js";
 import { selectCanExportTabular } from "../../../../../model/store/permissions/permissionsSelectors.js";
 
 import { DrillDialogExportDropdownResolver } from "./DrillDialogExportDropdownResolver.js";
@@ -110,7 +107,6 @@ export function DrillDialog({
     const [announcementText, setAnnouncementText] = useState<string>("");
 
     const canExport = useDashboardSelector(selectCanExportTabular);
-    const enablePdfTabularExport = useDashboardSelector(selectEnableExportToPdfTabular);
     const settings = useDashboardSelector(selectSettings);
     const isAccessibilityModeEnabled = settings.enableAccessibilityMode === true;
 
@@ -206,8 +202,7 @@ export function DrillDialog({
                                 exportCSVRawEnabled={exportCSVRawEnabled}
                                 exportPDFEnabled={exportPDFEnabled}
                                 exportPDFVisible={
-                                    exportPDFVisible ||
-                                    (isWidgetAsTable && enablePdfTabularExport && !isAccessibilityModeEnabled)
+                                    exportPDFVisible || (isWidgetAsTable && !isAccessibilityModeEnabled)
                                 }
                                 onExportXLSX={onExportXLSX}
                                 onExportCSV={onExportCSV}

@@ -2223,18 +2223,6 @@
         "text": "Widget is at the maximal height",
         "crowdinContext": "Warning shown when widget cannot be resized taller"
     },
-    "layout.widget.addedByPlugin": {
-        "text": "Added by plugin",
-        "crowdinContext": "Indicator that widget was added by a plugin extension"
-    },
-    "layout.widget.modifiedByPlugin": {
-        "text": "Modified by plugin",
-        "crowdinContext": "Indicator that widget was modified by a plugin extension"
-    },
-    "layout.widget.hideOverlay": {
-        "text": "Hide overlay",
-        "crowdinContext": "Button to hide informational overlay on widget"
-    },
     "dropzone.new.row.desc": {
         "text": "Drop to create a{nbsp}<b>new section</b>",
         "crowdinContext": "Instruction shown when dragging a widget to create a new dashboard section"

@@ -168,10 +168,8 @@ describe("getValidDateFilterConfig empty values handling", () => {
         selectedOption: allTime.localIdentifier,
     };
 
-    it("should inject the default empty values option when the feature is enabled and config omits it", () => {
-        const [config] = getValidDateFilterConfig(baseConfig, {
-            enableKDEmptyDateValuesFilter: true,
-        } as ISettings);
+    it("should inject the default empty values option when config omits it", () => {
+        const [config] = getValidDateFilterConfig(baseConfig, {} as ISettings);
 
         expect(config.emptyValues).toMatchObject({
             localIdentifier: "EMPTY_VALUES",
@@ -182,18 +180,11 @@ describe("getValidDateFilterConfig empty values handling", () => {
 
     it("should preserve an explicitly hidden empty values option (admin set visible:false)", () => {
         const hiddenEmptyValues = { ...emptyValues, visible: false };
-        const [config] = getValidDateFilterConfig({ ...baseConfig, emptyValues: hiddenEmptyValues }, {
-            enableKDEmptyDateValuesFilter: true,
-        } as ISettings);
+        const [config] = getValidDateFilterConfig(
+            { ...baseConfig, emptyValues: hiddenEmptyValues },
+            {} as ISettings,
+        );
 
         expect(config.emptyValues).toEqual(hiddenEmptyValues);
-    });
-
-    it("should not inject the empty values option when the feature flag is disabled", () => {
-        const [config] = getValidDateFilterConfig(baseConfig, {
-            enableKDEmptyDateValuesFilter: false,
-        } as ISettings);
-
-        expect(config.emptyValues).toBeUndefined();
     });
 });

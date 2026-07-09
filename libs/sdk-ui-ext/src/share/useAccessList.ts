@@ -7,6 +7,7 @@ import {
     type IAvailableAccessGrantee,
     type IGranularAccessGrantee,
     type ObjRef,
+    idRef,
     objRefToString,
 } from "@gooddata/sdk-model";
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
@@ -66,10 +67,21 @@ export interface IAccessList {
      * The current user's ref, resolved on demand (and cached). Used by the
      * transfer-ownership flow to write the current user's own grant change. The
      * add-grantee *picker* excludes the current user, but `getAccessList` does
-     * not, so a self grant can still appear as a row. Rejects if the profile
-     * can't be read.
+     * not, so a self grant can still appear as a row. Always an idRef in the
+     * access list's id space, so it is comparable to grantee refs. Rejects if
+     * the profile can't be read.
      */
     getCurrentUserRef: () => Promise<ObjRef>;
+    /**
+     * Whether the signed-in user owns the object (holds a direct EDIT grant) — the
+     * gate for the owner-only transfer-ownership action. Resolved eagerly so the
+     * affordance is correct at render time; false until the current user resolves.
+     * Detects direct grants only: ownership held via a user group is not recognized
+     * (the row model drops inherited EDIT, and whether the access list surfaces a
+     * self row for group-only members is an open API question). Affordance-only by
+     * design — the transfer actions are never blocked on it, the backend decides.
+     */
+    canTransferOwnership: boolean;
     /** Resolve a grantee id back to the picker's original ObjRef (preserves Uri vs Id ref). */
     refForId: (id: string) => ObjRef;
 
@@ -104,6 +116,7 @@ export interface IAccessList {
 export function useAccessList(
     target: IObjectPermissionsObject | undefined,
     onSaved: (() => void) | undefined,
+    dialogOpen: boolean,
 ): IAccessList {
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
@@ -366,7 +379,11 @@ export function useAccessList(
             currentUserRefCache.current = backend
                 .currentUser()
                 .getUser()
-                .then((user) => user.ref)
+                // Not `user.ref`: the profile resolves it as a uriRef while access-list
+                // grantee refs are idRefs keyed by user id (= profile login), and
+                // areObjRefsEqual never matches mixed shapes — self-row matching and
+                // the self grant write need the permission API's id space.
+                .then((user) => idRef(user.login))
                 .catch((error) => {
                     // Don't cache a rejected promise, or a transient profile-read
                     // failure would make every later transfer fail immediately.
@@ -376,6 +393,21 @@ export function useAccessList(
         }
         return currentUserRefCache.current;
     }, [backend]);
+
+    // Resolve the current user only while the dialog is open — keeps the summary-only
+    // path free of a profile request (the transfer gate it feeds isn't shown there).
+    const { result: currentUserRef } = useCancelablePromise<ObjRef>(
+        {
+            promise: dialogOpen && targetKey ? () => getCurrentUserRef() : undefined,
+            onError: () => {},
+        },
+        // Key on target presence, not identity — the resolved user is
+        // target-independent, so a target switch must not reset it.
+        [getCurrentUserRef, targetKey !== undefined, dialogOpen],
+    );
+    const selfId = currentUserRef ? granteeId("user", currentUserRef) : undefined;
+    const canTransferOwnership =
+        selfId !== undefined && namedGrantees.some((g) => g.id === selfId && g.level === "EDIT");
 
     return {
         targetKey,
@@ -391,6 +423,7 @@ export function useAccessList(
         loadOptions,
         refForId,
         getCurrentUserRef,
+        canTransferOwnership,
         setGrantees,
         setGeneralAccess,
         setWorkspaceLevel,

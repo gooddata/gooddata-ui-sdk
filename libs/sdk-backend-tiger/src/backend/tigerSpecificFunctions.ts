@@ -49,6 +49,7 @@ import {
     type ReadCsvFileManifestsResponse,
     type ScanResultPdm,
     type ScanSqlResponse,
+    type TestDefinitionRequestAuthenticationTypeEnum,
     type TestDefinitionRequestTypeEnum,
     type UploadFileResponse,
 } from "@gooddata/api-client-tiger";
@@ -245,6 +246,7 @@ export interface IDataSourceUpsertRequest {
     clientId?: string;
     clientSecret?: string;
     dateTimeSemantics?: IDataSourceDateTimeSemantics | null;
+    authenticationType?: JsonApiDataSourceOutAttributesAuthenticationTypeEnum | null;
 }
 
 /**
@@ -266,6 +268,7 @@ export interface IDataSourcePatchRequest {
     clientId?: string | null;
     clientSecret?: string | null;
     dateTimeSemantics?: IDataSourceDateTimeSemantics | null;
+    authenticationType?: JsonApiDataSourceOutAttributesAuthenticationTypeEnum | null;
 }
 
 /**
@@ -283,6 +286,7 @@ export interface IDataSourceTestConnectionRequest {
     privateKeyPassphrase?: string;
     clientId?: string;
     clientSecret?: string;
+    authenticationType?: TestDefinitionRequestAuthenticationTypeEnum | null;
 }
 
 /**
@@ -1191,6 +1195,7 @@ export const buildTigerSpecificFunctions = (
             clientId,
             clientSecret,
             dateTimeSemantics,
+            authenticationType,
         } = requestData;
         try {
             return await authApiCall(async (sdk) => {
@@ -1212,6 +1217,7 @@ export const buildTigerSpecificFunctions = (
                                 clientId,
                                 clientSecret,
                                 dateTimeSemantics,
+                                authenticationType,
                             },
                             id,
                             type: "dataSource",
@@ -1242,6 +1248,7 @@ export const buildTigerSpecificFunctions = (
             clientId,
             clientSecret,
             dateTimeSemantics,
+            authenticationType,
         } = requestData;
         try {
             return await authApiCall(async (sdk) => {
@@ -1264,6 +1271,7 @@ export const buildTigerSpecificFunctions = (
                                 clientId,
                                 clientSecret,
                                 dateTimeSemantics,
+                                authenticationType,
                             },
                             id: requestDataId,
                             type: "dataSource",
@@ -1294,6 +1302,7 @@ export const buildTigerSpecificFunctions = (
             clientId,
             clientSecret,
             dateTimeSemantics,
+            authenticationType,
         } = requestData;
         try {
             return await authApiCall(async (sdk) => {
@@ -1316,6 +1325,7 @@ export const buildTigerSpecificFunctions = (
                                 clientId,
                                 clientSecret,
                                 dateTimeSemantics,
+                                authenticationType,
                             },
                             id: requestDataId,
                             type: "dataSource",

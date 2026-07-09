@@ -584,11 +584,11 @@ export interface IFeatureFlags {
     enableMySqlDataSource?: boolean;
     enableMariaDbDataSource?: boolean;
     enableOracleDataSource?: boolean;
+    enableOidcAuth?: boolean;
     enableMotherDuckDataSource?: boolean;
     enableMongoDbDataSource?: boolean;
     enableStarrocksDataSource?: boolean;
     enableSingleStoreDataSource?: boolean;
-    enableAthenaDataSource?: boolean;
     enableCrateDbDataSource?: boolean;
 
     /**
@@ -630,12 +630,6 @@ export interface IFeatureFlags {
      * Enable system account filtering.
      */
     enableSystemAccountFiltering?: boolean;
-
-    /**
-     * Enable customized dashboards without plugin overlay.
-     * When enabled, the plugin overlay will not be displayed on dashboard items.
-     */
-    enableCustomizedDashboardsWithoutPluginOverlay?: boolean;
 
     /**
      * Enable the use of default SMTP in destinations.
@@ -688,11 +682,6 @@ export interface IFeatureFlags {
      * when exporting dashboards or widgets as slides.
      */
     enableExportTemplateSelection?: boolean;
-
-    /**
-     * Enable new PDF tabular export option for insights.
-     */
-    enableNewPdfTabularExport?: boolean;
 
     /**
      * Enable rich text widget filter configuration.
@@ -961,11 +950,6 @@ export interface IFeatureFlags {
      * Enable filtering of visualizations by tags provided via URL.
      */
     enableVisualizationFilteringByTags?: boolean;
-
-    /**
-     * Enables "Empty date values" configuration in KPI Dashboards date filter.
-     */
-    enableKDEmptyDateValuesFilter?: boolean;
 
     /**
      * Enable filter control in drilling configuration.

@@ -33,6 +33,7 @@ const stubState: IObjectShareControllerState = {
     transferAlsoRemoveSelf: false,
     transferTargetIsOwner: false,
     transferSaving: false,
+    canTransferOwnership: false,
 };
 const noop = () => {};
 const asyncNoop = async () => {};

@@ -22,6 +22,7 @@ import { ObjectShareDialog } from "../ObjectShareDialog.js";
 const captured = vi.hoisted(() => ({
     addDisabled: [] as Array<boolean | undefined>,
     rowDisabled: [] as Array<boolean | undefined>,
+    transferWired: [] as boolean[],
 }));
 
 vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
@@ -48,6 +49,8 @@ vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
         },
         UiGranteeRowControls: (props: IUiGranteeRowControlsProps) => {
             captured.rowDisabled.push(props.isDisabled);
+            // The "Transfer ownership" item renders only when the handler is wired.
+            captured.transferWired.push(props.onTransferOwnership !== undefined);
             return null;
         },
         UiAddGranteeDialog: () => null,
@@ -101,6 +104,7 @@ function makeController(stateOverrides: Partial<IObjectShareControllerState>): I
         transferAlsoRemoveSelf: false,
         transferTargetIsOwner: false,
         transferSaving: false,
+        canTransferOwnership: false,
         ...stateOverrides,
     };
     return { state, actions };
@@ -109,6 +113,7 @@ function makeController(stateOverrides: Partial<IObjectShareControllerState>): I
 function renderDialog(controller: IObjectShareController) {
     captured.addDisabled.length = 0;
     captured.rowDisabled.length = 0;
+    captured.transferWired.length = 0;
     return render(
         // The dialog computes its confirm-subdialog props via formatMessage even
         // though those children are stubbed here; this test asserts gating booleans,
@@ -146,5 +151,19 @@ describe("ObjectShareDialog gating", () => {
 
         expect(captured.addDisabled.at(-1)).toBe(false);
         expect(captured.rowDisabled.at(-1)).toBe(false);
+    });
+
+    // Transfer ownership is owner-only: the row's `⋯` menu offers it only when the
+    // signed-in user can transfer (holds EDIT/OWNER).
+    it("offers transfer ownership when the signed-in user can transfer", () => {
+        renderDialog(makeController({ canTransferOwnership: true }));
+
+        expect(captured.transferWired.at(-1)).toBe(true);
+    });
+
+    it("hides transfer ownership when the signed-in user cannot transfer (e.g. View&Share)", () => {
+        renderDialog(makeController({ canTransferOwnership: false }));
+
+        expect(captured.transferWired.at(-1)).toBe(false);
     });
 });

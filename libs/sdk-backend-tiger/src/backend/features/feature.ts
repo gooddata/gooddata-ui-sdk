@@ -194,17 +194,17 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableAthenaDataSource,
-            "enableAthenaDataSource",
-            "BOOLEAN",
-            FeatureFlagsValues.enableAthenaDataSource,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableCrateDbDataSource,
             "enableCrateDbDataSource",
             "BOOLEAN",
             FeatureFlagsValues.enableCrateDbDataSource,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableOidcAuth,
+            "enableOidcAuth",
+            "BOOLEAN",
+            FeatureFlagsValues.enableOidcAuth,
         ),
         ...loadFeature(
             features,
@@ -268,13 +268,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableSystemAccountFiltering",
             "BOOLEAN",
             FeatureFlagsValues.enableSystemAccountFiltering,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableCustomizedDashboardsWithoutPluginOverlay,
-            "enableCustomizedDashboardsWithoutPluginOverlay",
-            "BOOLEAN",
-            FeatureFlagsValues.enableCustomizedDashboardsWithoutPluginOverlay,
         ),
         ...loadFeature(
             features,
@@ -460,13 +453,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableCyclicalToDateFilters,
-            "enableCyclicalToDateFilters",
-            "BOOLEAN",
-            FeatureFlagsValues.enableCyclicalToDateFilters,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableNewPivotTable,
             "enableNewPivotTable",
             "BOOLEAN",
@@ -548,13 +534,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableGeoSatelliteBasemapOption",
             "BOOLEAN",
             FeatureFlagsValues.enableGeoSatelliteBasemapOption,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableNewPdfTabularExport,
-            "enableNewPdfTabularExport",
-            "BOOLEAN",
-            FeatureFlagsValues.enableNewPdfTabularExport,
         ),
         ...loadFeature(
             features,
@@ -660,13 +639,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "aiChatSearchLimit",
             "NUMBER",
             FeatureFlagsValues.aiChatSearchLimit,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableKDEmptyDateValuesFilter,
-            "enableKDEmptyDateValuesFilter",
-            "BOOLEAN",
-            FeatureFlagsValues.enableKDEmptyDateValuesFilter,
         ),
         ...loadFeature(
             features,

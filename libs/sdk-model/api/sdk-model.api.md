@@ -2700,8 +2700,6 @@ export interface IFeatureFlags {
     enableAnomalyDetectionVisualization?: boolean;
     enableArbitraryFilterAD?: boolean;
     enableArbitraryFilterKD?: boolean;
-    // (undocumented)
-    enableAthenaDataSource?: boolean;
     enableAutomationTrigger?: boolean;
     enableCatalogSmartSearchResults?: boolean;
     enableCatalogTrendingObjects?: boolean;
@@ -2713,7 +2711,6 @@ export interface IFeatureFlags {
     enableCrateDbDataSource?: boolean;
     enableCustomGeoCollection?: boolean;
     enableCustomizableCsvDelimiter?: boolean;
-    enableCustomizedDashboardsWithoutPluginOverlay?: boolean;
     // @alpha
     enableCustomTooltip?: boolean;
     enableDashboardDensitySetting?: boolean;
@@ -2756,7 +2753,6 @@ export interface IFeatureFlags {
     enableHLL?: boolean;
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
     enableImprovedRankingFilter?: boolean;
-    enableKDEmptyDateValuesFilter?: boolean;
     // (undocumented)
     enableMariaDbDataSource?: boolean;
     enableMatchFilterAD?: boolean;
@@ -2771,11 +2767,12 @@ export interface IFeatureFlags {
     // (undocumented)
     enableMySqlDataSource?: boolean;
     enableNewGeoPushpin?: boolean;
-    enableNewPdfTabularExport?: boolean;
     enableNewPivotTable?: boolean;
     enableNewScheduledExport?: boolean;
     enableNotificationChannelIdentifiers?: boolean;
     enableNullJoins?: boolean;
+    // (undocumented)
+    enableOidcAuth?: boolean;
     // (undocumented)
     enableOracleDataSource?: boolean;
     enableOrchestratedTabularExports?: boolean;

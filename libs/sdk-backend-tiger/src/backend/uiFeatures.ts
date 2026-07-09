@@ -34,8 +34,8 @@ export enum TigerFeaturesNames {
     EnableDataProfiling = "enableDataProfiling",
     EnableExperimentalFeaturesUI = "enableExperimentalFeaturesUI",
     EnableSingleStoreDataSource = "enableSingleStoreDataSource",
-    EnableAthenaDataSource = "enableAthenaDataSource",
     EnableCrateDbDataSource = "enableCrateDbDataSource",
+    EnableOidcAuth = "enableOidcAuth",
     EnableSemanticSearch = "enableSemanticSearch",
     EnableCatalogSmartSearchResults = "enableCatalogSmartSearchResults",
     EnableGenAIChat = "enableGenAIChat",
@@ -45,7 +45,6 @@ export enum TigerFeaturesNames {
     EnableCertification = "enableCertification",
     EnableAIDataSetting = "enableAIDataSetting",
     EnableSystemAccountFiltering = "enableSystemAccountFiltering",
-    EnableCustomizedDashboardsWithoutPluginOverlay = "enableCustomizedDashboardsWithoutPluginOverlay",
     EnableNewInsightChangedPostMessageEvent = "enableNewInsightChangedPostMessageEvent",
     EarlyAccessFeatures = "earlyAccessFeatures",
     EnableDefaultSmtp = "enableDefaultSmtp",
@@ -70,7 +69,6 @@ export enum TigerFeaturesNames {
     EnableNewScheduledExport = "enableNewScheduledExport",
     EnableSeamlessIdpSwitch = "enableSeamlessIdpSwitch",
     EnablePreAggregationDatasets = "enablePreAggregationDatasets",
-    EnableCyclicalToDateFilters = "enableCyclicalToDateFilters",
     EnableNewPivotTable = "enableNewPivotTable",
     EnableConditionalFormatting = "enableConditionalFormatting",
     EnableNewGeoPushpin = "enableNewGeoPushpin",
@@ -83,7 +81,6 @@ export enum TigerFeaturesNames {
     EnableGeoBasemapConfig = "enableGeoBasemapConfig",
     EnableCustomGeoCollection = "enableCustomGeoCollection",
     EnableGeoSatelliteBasemapOption = "enableGeoSatelliteBasemapOption",
-    EnableNewPdfTabularExport = "enableNewPdfTabularExport",
     EnableGenAIMemory = "enableGenAIMemory",
     EnableOrgLevelAIMemory = "enableOrgLevelAIMemory",
     EnableAIKnowledge = "enableAIKnowledge",
@@ -96,7 +93,6 @@ export enum TigerFeaturesNames {
     EnableGenAiVisualizationSummarySkill = "enableGenAiVisualizationSummarySkill",
     EnableGenAiDashboardSummarySkill = "enableGenAiDashboardSummarySkill",
     AIChatSearchLimit = "aiChatSearchLimit",
-    EnableKDEmptyDateValuesFilter = "enableKDEmptyDateValuesFilter",
     EnableRichTextWidgetFilterConfiguration = "enableRichTextWidgetFilterConfiguration",
     EnableDashboardSectionHeadersDateDataSet = "enableDashboardSectionHeadersDateDataSet",
     EnableAnalyticalDashboardVersion3 = "enableAnalyticalDashboardVersion3",
@@ -158,8 +154,8 @@ export type ITigerFeatureFlags = {
     enableDataProfiling: (typeof FeatureFlagsValues)["enableDataProfiling"][number];
     enableExperimentalFeaturesUI: (typeof FeatureFlagsValues)["enableExperimentalFeaturesUI"][number];
     enableSingleStoreDataSource: (typeof FeatureFlagsValues)["enableSingleStoreDataSource"][number];
-    enableAthenaDataSource: (typeof FeatureFlagsValues)["enableAthenaDataSource"][number];
     enableCrateDbDataSource: (typeof FeatureFlagsValues)["enableCrateDbDataSource"][number];
+    enableOidcAuth: (typeof FeatureFlagsValues)["enableOidcAuth"][number];
     enableSemanticSearch: (typeof FeatureFlagsValues)["enableSemanticSearch"][number];
     enableCatalogSmartSearchResults: (typeof FeatureFlagsValues)["enableCatalogSmartSearchResults"][number];
     enableGenAIChat: (typeof FeatureFlagsValues)["enableGenAIChat"][number];
@@ -169,7 +165,6 @@ export type ITigerFeatureFlags = {
     enableCertification: (typeof FeatureFlagsValues)["enableCertification"][number];
     enableAIDataSetting: (typeof FeatureFlagsValues)["enableAIDataSetting"][number];
     enableSystemAccountFiltering: (typeof FeatureFlagsValues)["enableSystemAccountFiltering"][number];
-    enableCustomizedDashboardsWithoutPluginOverlay: (typeof FeatureFlagsValues)["enableCustomizedDashboardsWithoutPluginOverlay"][number];
     enableNewInsightChangedPostMessageEvent: (typeof FeatureFlagsValues)["enableNewInsightChangedPostMessageEvent"][number];
     earlyAccessFeatures: (typeof FeatureFlagsValues)["earlyAccessFeatures"][number];
     enableDefaultSmtp: (typeof FeatureFlagsValues)["enableDefaultSmtp"][number];
@@ -196,7 +191,6 @@ export type ITigerFeatureFlags = {
     enableNewScheduledExport: (typeof FeatureFlagsValues)["enableNewScheduledExport"][number];
     enableSeamlessIdpSwitch: (typeof FeatureFlagsValues)["enableSeamlessIdpSwitch"][number];
     enablePreAggregationDatasets: (typeof FeatureFlagsValues)["enablePreAggregationDatasets"][number];
-    enableCyclicalToDateFilters: (typeof FeatureFlagsValues)["enableCyclicalToDateFilters"][number];
     enableNewPivotTable: (typeof FeatureFlagsValues)["enableNewPivotTable"][number];
     enableConditionalFormatting: (typeof FeatureFlagsValues)["enableConditionalFormatting"][number];
     enableNewGeoPushpin: (typeof FeatureFlagsValues)["enableNewGeoPushpin"][number];
@@ -209,7 +203,6 @@ export type ITigerFeatureFlags = {
     enableGeoBasemapConfig: (typeof FeatureFlagsValues)["enableGeoBasemapConfig"][number];
     enableCustomGeoCollection: (typeof FeatureFlagsValues)["enableCustomGeoCollection"][number];
     enableGeoSatelliteBasemapOption: (typeof FeatureFlagsValues)["enableGeoSatelliteBasemapOption"][number];
-    enableNewPdfTabularExport: (typeof FeatureFlagsValues)["enableNewPdfTabularExport"][number];
     enableGenAIMemory: (typeof FeatureFlagsValues)["enableGenAIMemory"][number];
     enableOrgLevelAIMemory: (typeof FeatureFlagsValues)["enableOrgLevelAIMemory"][number];
     enableAIKnowledge: (typeof FeatureFlagsValues)["enableAIKnowledge"][number];
@@ -220,7 +213,6 @@ export type ITigerFeatureFlags = {
     enableGenAiObservability: (typeof FeatureFlagsValues)["enableGenAiObservability"][number];
     enableGenAIReasoningVisibility: (typeof FeatureFlagsValues)["enableGenAIReasoningVisibility"][number];
     aiChatSearchLimit: (typeof FeatureFlagsValues)["aiChatSearchLimit"][number];
-    enableKDEmptyDateValuesFilter: (typeof FeatureFlagsValues)["enableKDEmptyDateValuesFilter"][number];
     enableRichTextWidgetFilterConfiguration: (typeof FeatureFlagsValues)["enableRichTextWidgetFilterConfiguration"][number];
     enableDashboardSectionHeadersDateDataSet: (typeof FeatureFlagsValues)["enableDashboardSectionHeadersDateDataSet"][number];
     enableAnalyticalDashboardVersion3: (typeof FeatureFlagsValues)["enableAnalyticalDashboardVersion3"][number];
@@ -283,8 +275,8 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDataProfiling: false,
     enableExperimentalFeaturesUI: false,
     enableSingleStoreDataSource: false,
-    enableAthenaDataSource: true,
     enableCrateDbDataSource: true,
+    enableOidcAuth: false,
     enableSemanticSearch: false,
     enableCatalogSmartSearchResults: false,
     enableGenAIChat: false,
@@ -294,7 +286,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableCertification: false,
     enableAIDataSetting: false,
     enableSystemAccountFiltering: true,
-    enableCustomizedDashboardsWithoutPluginOverlay: true,
     enableNewInsightChangedPostMessageEvent: false,
     earlyAccessFeatures: undefined,
     enableDefaultSmtp: false,
@@ -321,7 +312,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableNewScheduledExport: true,
     enableSeamlessIdpSwitch: false,
     enablePreAggregationDatasets: false,
-    enableCyclicalToDateFilters: true,
     enableNewPivotTable: true,
     enableConditionalFormatting: false,
     enableNewGeoPushpin: true,
@@ -334,7 +324,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableGeoBasemapConfig: true,
     enableCustomGeoCollection: true,
     enableGeoSatelliteBasemapOption: false,
-    enableNewPdfTabularExport: true,
     enableGenAIMemory: false,
     enableOrgLevelAIMemory: false,
     enableAIKnowledge: false,
@@ -345,7 +334,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableGenAiObservability: false,
     enableGenAIReasoningVisibility: false,
     aiChatSearchLimit: undefined,
-    enableKDEmptyDateValuesFilter: true,
     enableRichTextWidgetFilterConfiguration: false,
     enableDashboardSectionHeadersDateDataSet: false,
     enableAnalyticalDashboardVersion3: false,
@@ -408,8 +396,8 @@ export const FeatureFlagsValues = {
     enableDataProfiling: [true, false] as const,
     enableExperimentalFeaturesUI: [true, false] as const,
     enableSingleStoreDataSource: [true, false] as const,
-    enableAthenaDataSource: [true, false] as const,
     enableCrateDbDataSource: [true, false] as const,
+    enableOidcAuth: [true, false] as const,
     enableSemanticSearch: [true, false] as const,
     enableCatalogSmartSearchResults: [true, false] as const,
     enableGenAIChat: [true, false] as const,
@@ -419,7 +407,6 @@ export const FeatureFlagsValues = {
     enableCertification: [true, false] as const,
     enableAIDataSetting: [true, false] as const,
     enableSystemAccountFiltering: [true, false] as const,
-    enableCustomizedDashboardsWithoutPluginOverlay: [true, false] as const,
     enableNewInsightChangedPostMessageEvent: [true, false] as const,
     earlyAccessFeatures: [undefined, {} as IEarlyAccessFeaturesConfig] as const,
     enableDefaultSmtp: [true, false] as const,
@@ -446,7 +433,6 @@ export const FeatureFlagsValues = {
     enableNewScheduledExport: [true, false] as const,
     enableSeamlessIdpSwitch: [true, false] as const,
     enablePreAggregationDatasets: [true, false] as const,
-    enableCyclicalToDateFilters: [true, false] as const,
     enableNewPivotTable: [true, false] as const,
     enableConditionalFormatting: [true, false] as const,
     enableNewGeoPushpin: [true, false] as const,
@@ -459,7 +445,6 @@ export const FeatureFlagsValues = {
     enableGeoBasemapConfig: [true, false] as const,
     enableCustomGeoCollection: [true, false] as const,
     enableGeoSatelliteBasemapOption: [true, false] as const,
-    enableNewPdfTabularExport: [true, false] as const,
     enableGenAIMemory: [false, true] as const,
     enableOrgLevelAIMemory: [false, true] as const,
     enableAIKnowledge: [false, true] as const,
@@ -470,7 +455,6 @@ export const FeatureFlagsValues = {
     enableGenAiObservability: [true, false] as const,
     enableGenAIReasoningVisibility: [false, true] as const,
     aiChatSearchLimit: [undefined, {} as number] as const,
-    enableKDEmptyDateValuesFilter: [true, false] as const,
     enableRichTextWidgetFilterConfiguration: [true, false] as const,
     enableDashboardSectionHeadersDateDataSet: [true, false] as const,
     enableAnalyticalDashboardVersion3: [true, false] as const,

@@ -108,6 +108,7 @@ export function ObjectShareDialog({
         labels,
         labelsError,
         labelsLoading,
+        isOpen,
     });
     const { state, actions } = controller ?? ownController;
 
@@ -207,7 +208,11 @@ export function ObjectShareDialog({
                             onRemoveAccess={() => {
                                 void actions.removeGrantee(g.id);
                             }}
-                            onTransferOwnership={actions.openTransferOwnership}
+                            // Owner-only — omitting the handler hides the menu item for
+                            // users who can't transfer (e.g. View&Share).
+                            onTransferOwnership={
+                                state.canTransferOwnership ? actions.openTransferOwnership : undefined
+                            }
                         />
                     ),
                 }))}

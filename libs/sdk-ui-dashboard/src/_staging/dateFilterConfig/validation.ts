@@ -195,14 +195,7 @@ const conditionallyHandleFiscalFilters = (
     };
 };
 
-const conditionallyHandleEmptyValues = (
-    config: IDateFilterConfig,
-    enableEmptyDateValuesFilter: boolean,
-): IDateFilterConfig => {
-    if (!enableEmptyDateValuesFilter) {
-        return config;
-    }
-
+const handleEmptyValues = (config: IDateFilterConfig): IDateFilterConfig => {
     if (config.emptyValues || !defaultDateFilterConfig.emptyValues) {
         return config;
     }
@@ -225,7 +218,7 @@ export function getValidDateFilterConfig(
     let validConfig = FallbackToDefault.includes(configValidation) ? defaultDateFilterConfig : config;
 
     validConfig = conditionallyHandleFiscalFilters(validConfig, settings.enableFiscalCalendars ?? true);
-    validConfig = conditionallyHandleEmptyValues(validConfig, settings.enableKDEmptyDateValuesFilter ?? true);
+    validConfig = handleEmptyValues(validConfig);
 
     return [validConfig, configValidation];
 }

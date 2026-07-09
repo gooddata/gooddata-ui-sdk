@@ -58,7 +58,13 @@ export function useObjectShareController(
     target: IObjectPermissionsObject | undefined,
     options?: IUseObjectShareOptions,
 ): IObjectShareController {
-    const { onSaved, labels = NO_LABELS, labelsError = false, labelsLoading = false } = options ?? {};
+    const {
+        onSaved,
+        labels = NO_LABELS,
+        labelsError = false,
+        labelsLoading = false,
+        isOpen = false,
+    } = options ?? {};
     const toast = useToastMessage();
 
     // UI-local buffers — never backend data.
@@ -93,11 +99,12 @@ export function useObjectShareController(
         loadOptions,
         refForId,
         getCurrentUserRef,
+        canTransferOwnership,
         setGrantees,
         setGeneralAccess,
         setWorkspaceLevel,
         setKnownNames,
-    } = useAccessList(target, onSaved);
+    } = useAccessList(target, onSaved, isOpen);
 
     // Always-current target key, read inside async mutation finalizers that captured
     // an older one. A write started for object A resolves after the user navigated to
@@ -841,6 +848,7 @@ export function useObjectShareController(
             transferAlsoRemoveSelf,
             transferTargetIsOwner,
             transferSaving,
+            canTransferOwnership,
         }),
         [
             subview,
@@ -861,6 +869,7 @@ export function useObjectShareController(
             transferAlsoRemoveSelf,
             transferTargetIsOwner,
             transferSaving,
+            canTransferOwnership,
         ],
     );
 

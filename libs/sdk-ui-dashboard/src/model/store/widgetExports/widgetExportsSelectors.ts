@@ -6,7 +6,6 @@ import {
     selectSupportsExportToCsv,
     selectSupportsExportToXlsx,
 } from "../backendCapabilities/backendCapabilitiesSelectors.js";
-import { selectEnableExportToPdfTabular } from "../config/configSelectors.js";
 import {
     selectCanExecuteRaw,
     selectCanExportPdf,
@@ -41,14 +40,3 @@ export const selectIsExportableToXLSX: DashboardSelector<boolean> = createSelect
  * @internal
  */
 export const selectIsExportableToPngImage: DashboardSelector<boolean> = selectCanExportPdf;
-
-/**
- * @internal
- */
-export const selectIsExportableToPdfTabular: DashboardSelector<boolean> = createSelector(
-    selectEnableExportToPdfTabular,
-    selectCanExportTabular,
-    (enableExportToPdfTabular, canExportTabular): boolean => {
-        return enableExportToPdfTabular && canExportTabular;
-    },
-);

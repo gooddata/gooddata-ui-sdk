@@ -132,6 +132,14 @@ export interface IObjectShareControllerState {
     transferTargetIsOwner: boolean;
     /** Whether the transfer write (or self-removal) is in flight. */
     transferSaving: boolean;
+    /**
+     * Whether the signed-in user may transfer ownership (owner-only). Consumers hide
+     * the transfer affordance when false — e.g. for a View&Share (SHARE) user.
+     * Detects a direct EDIT grant only (ownership inherited via a user group is not
+     * recognized) and gates the affordance, not the actions — the transfer write
+     * stays callable and the backend remains the authority.
+     */
+    canTransferOwnership: boolean;
 }
 
 /**
@@ -238,4 +246,6 @@ export interface IUseObjectShareOptions {
      * controls would reconcile against an empty set and orphan real per-label grants.
      */
     labelsLoading?: boolean;
+    /** Whether the share dialog is open; a summary-only consumer leaves it false. */
+    isOpen?: boolean;
 }

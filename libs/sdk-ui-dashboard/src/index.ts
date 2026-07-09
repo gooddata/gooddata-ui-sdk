@@ -1287,7 +1287,6 @@ export {
     selectIsDisabledCrossFiltering,
     selectIsDisableUserFilterReset,
     selectEnableParameters,
-    selectEnableCustomizedDashboardsWithoutPluginOverlay,
     selectFocusObject,
     selectEnableDashboardDescriptionDynamicHeight,
     selectEnableSlideshowExports,
@@ -1298,7 +1297,6 @@ export {
     selectEnableExecutionCancelling,
     selectEnableOrchestratedTabularExports,
     selectEnableDashboardTabularExport,
-    selectEnableKDEmptyDateValuesFilter,
     selectEnableSnapshotExportAccessibility,
     selectEnableExportTimeoutFix,
     selectEnableExportToDocumentStorage,
@@ -1306,7 +1304,6 @@ export {
     selectEnableDashboardShareDialogLink,
     selectEnableNewScheduledExport,
     selectEnableAutomationEvaluationMode,
-    selectEnableExportToPdfTabular,
     selectEnableSnapshotExport,
     selectEnableAccessibilityMode,
     selectIsAddTabButtonHidden,
@@ -1440,7 +1437,6 @@ export {
 export {
     selectIsExportableToCSV,
     selectIsExportableToXLSX,
-    selectIsExportableToPdfTabular,
     selectIsExportableToPngImage,
 } from "./model/store/widgetExports/widgetExportsSelectors.js";
 export {
