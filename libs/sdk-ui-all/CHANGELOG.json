@@ -2,6 +2,66 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.46.0",
+            "tag": "@gooddata/sdk-ui-all_v11.46.0",
+            "date": "Thu, 09 Jul 2026 07:12:31 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-code-schemas, sdk-code-convertors, sdk-backend-tiger: support catalog attributes (label references) in the ranking filter \"Out of\" for AAC clone/deploy round-trips, mirroring MeasureValueFilter"
+                    },
+                    {
+                        "comment": "sdk-model: Add `enableStringParameters` settings flag"
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Author `STRING` parameters in the catalog YAML editor behind `enableStringParameters`"
+                    },
+                    {
+                        "comment": "sdk-model: Add `ParameterType` alias for the parameter definition type union"
+                    },
+                    {
+                        "comment": "sdk-model: Add STRING parameter type, isStringParameterDefinition guard, isValidParameterValue, and getNumberParameterDefaultValue accessor; sdk-backend-tiger: convert STRING parameter definitions"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Associate parameter value input with its label for accessibility"
+                    },
+                    {
+                        "comment": "sdk-ui-all: Gate custom tooltips behind the enableCustomTooltip feature flag at render time."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Added as-code editor for metrics in workspace catalog."
+                    },
+                    {
+                        "comment": "Bump `@codemirror/lang-yaml` to 6.1.3 to fix the Enter-indent regression in YAML editors"
+                    },
+                    {
+                        "comment": "sdk-e2e-utils: snapshotAndSaveRecording now takes an options object and exposes generic sanitizeMappings/leakPatterns hooks so consumers (e.g. genAILLM.spec.ts) can redact provider-specific secrets from goodmock recordings without baking that knowledge into this package"
+                    },
+                    {
+                        "comment": "Address PR review follow-ups for useAlertSelectedValues (GDP-3167)"
+                    },
+                    {
+                        "comment": "Extract alerting selected-value derivations into useAlertSelectedValues hook (GDP-3167)"
+                    },
+                    {
+                        "comment": "Consolidate alerting draft-validity into useAlertFormValidation hook"
+                    },
+                    {
+                        "comment": "sdk-ui-all: Introduce OIDC Authentication type for Snowflake."
+                    },
+                    {
+                        "comment": "sdk-backend-spi/sdk-backend-tiger/sdk-model: add workspace export templates SPI and full CRUD (get/create/patch/delete by ObjRef) on org and workspace export template services, a DEFAULT_EXPORT_TEMPLATE setting, and extend summarizeDashboard with tabId/formatHint plus optional visualizations/filterContext"
+                    },
+                    {
+                        "comment": "Fix conversation loading forever when reopened after starting a new conversation"
+                    },
+                    {
+                        "comment": "sdk-ui-kit, sdk-ui-catalog: Add reusable certification icon to analytics catalog table and detail views"
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.45.0",
             "tag": "@gooddata/sdk-ui-all_v11.45.0",
             "date": "Thu, 02 Jul 2026 06:53:13 GMT",
