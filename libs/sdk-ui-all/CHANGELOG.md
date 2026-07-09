@@ -1,6 +1,30 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 02 Jul 2026 06:53:13 GMT and should not be manually modified.
+This log was last generated on Thu, 09 Jul 2026 07:12:31 GMT and should not be manually modified.
+
+## 11.46.0
+
+Thu, 09 Jul 2026 07:12:31 GMT
+
+### Updates
+
+- sdk-code-schemas, sdk-code-convertors, sdk-backend-tiger: support catalog attributes (label references) in the ranking filter "Out of" for AAC clone/deploy round-trips, mirroring MeasureValueFilter
+- sdk-model: Add `enableStringParameters` settings flag
+- sdk-ui-catalog: Author `STRING` parameters in the catalog YAML editor behind `enableStringParameters`
+- sdk-model: Add `ParameterType` alias for the parameter definition type union
+- sdk-model: Add STRING parameter type, isStringParameterDefinition guard, isValidParameterValue, and getNumberParameterDefaultValue accessor; sdk-backend-tiger: convert STRING parameter definitions
+- sdk-ui-kit: Associate parameter value input with its label for accessibility
+- sdk-ui-all: Gate custom tooltips behind the enableCustomTooltip feature flag at render time.
+- sdk-ui-catalog: Added as-code editor for metrics in workspace catalog.
+- Bump `@codemirror/lang-yaml` to 6.1.3 to fix the Enter-indent regression in YAML editors
+- sdk-e2e-utils: snapshotAndSaveRecording now takes an options object and exposes generic sanitizeMappings/leakPatterns hooks so consumers (e.g. genAILLM.spec.ts) can redact provider-specific secrets from goodmock recordings without baking that knowledge into this package
+- Address PR review follow-ups for useAlertSelectedValues (GDP-3167)
+- Extract alerting selected-value derivations into useAlertSelectedValues hook (GDP-3167)
+- Consolidate alerting draft-validity into useAlertFormValidation hook
+- sdk-ui-all: Introduce OIDC Authentication type for Snowflake.
+- sdk-backend-spi/sdk-backend-tiger/sdk-model: add workspace export templates SPI and full CRUD (get/create/patch/delete by ObjRef) on org and workspace export template services, a DEFAULT_EXPORT_TEMPLATE setting, and extend summarizeDashboard with tabId/formatHint plus optional visualizations/filterContext
+- Fix conversation loading forever when reopened after starting a new conversation
+- sdk-ui-kit, sdk-ui-catalog: Add reusable certification icon to analytics catalog table and detail views
 
 ## 11.45.0
 
