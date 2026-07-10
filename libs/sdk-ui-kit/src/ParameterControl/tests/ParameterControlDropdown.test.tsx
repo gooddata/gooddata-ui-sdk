@@ -43,6 +43,11 @@ describe("ParameterControlDropdown", () => {
         expect(getByRole("spinbutton", { name: "Value" })).toBe(queryInput(container));
     });
 
+    it("uses the provided inputId for the value input and its label", () => {
+        const { getByLabelText } = renderDropdown({ inputId: "my-input-id" });
+        expect(getByLabelText("Value").id).toBe("my-input-id");
+    });
+
     it("exposes min and max constraints on the input", () => {
         const { container } = renderDropdown();
         const input = queryInput(container);

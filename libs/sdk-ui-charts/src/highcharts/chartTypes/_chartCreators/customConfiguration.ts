@@ -1184,6 +1184,7 @@ function getHoverStyles({ type }: any, config: any) {
         case VisualizationTypes.BAR:
         case VisualizationTypes.COLUMN:
         case VisualizationTypes.BULLET:
+        case VisualizationTypes.MEKKO:
             seriesMapFn = barSeriesMapFn;
             break;
         case VisualizationTypes.HEATMAP:

@@ -43,6 +43,11 @@ describe("ParameterControlButton", () => {
         expect(screen.getByRole("button")).toHaveAttribute("aria-expanded", "true");
     });
 
+    it("forwards dropdownId as aria-controls while active", () => {
+        renderButton({ isActive: true, dropdownId: "drop-id" });
+        expect(screen.getByRole("button")).toHaveAttribute("aria-controls", "drop-id");
+    });
+
     it("calls onClick when clicked", () => {
         const onClick = vi.fn();
         renderButton({ onClick });

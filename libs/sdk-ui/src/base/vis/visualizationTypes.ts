@@ -33,6 +33,7 @@ export const VisualizationTypes = {
     XIRR: "xirr" as const,
     REPEATER: "repeater" as const,
     RADAR: "radar" as const,
+    MEKKO: "mekko" as const,
 };
 
 /**
@@ -64,7 +65,8 @@ export type ChartType =
     | "sankey"
     | "dependencywheel"
     | "repeater"
-    | "radar";
+    | "radar"
+    | "mekko";
 
 /**
  * @public

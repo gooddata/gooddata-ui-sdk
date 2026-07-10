@@ -66,6 +66,13 @@ export { HeadlinePagination, type IHeadlinePaginationProps } from "./compactSize
 export { formatLegendLabel, shouldShowFluid, FLUID_LEGEND_THRESHOLD } from "./legend/helpers.js";
 
 export {
+    POINT_SHAPE_POLYGONS,
+    CUSTOM_POINT_SHAPES,
+    getPointShapeClipPath,
+    getPointShapeSvgPath,
+} from "./legend/pointShapes.js";
+
+export {
     type PositionType,
     type IColorLegendItem,
     type IGeoCategoryLegendItem,

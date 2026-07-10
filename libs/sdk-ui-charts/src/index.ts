@@ -134,6 +134,7 @@ export {
     ScatterPlot,
 } from "./charts/scatterPlot/ScatterPlot.js";
 export { type ITreemapProps, type ITreemapBucketProps, Treemap } from "./charts/treemap/Treemap.js";
+export { type IMekkoProps, type IMekkoBucketProps, Mekko } from "./charts/mekko/Mekko.js";
 export {
     type ISankeyChartProps,
     type ISankeyChartBucketProps,

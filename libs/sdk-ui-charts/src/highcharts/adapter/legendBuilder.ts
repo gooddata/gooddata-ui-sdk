@@ -253,6 +253,7 @@ export function buildLegendOptions(
         VisualizationTypes.PIE,
         VisualizationTypes.DONUT,
         VisualizationTypes.WATERFALL,
+        VisualizationTypes.MEKKO,
     ];
     const defaultHideLegendCharts = [
         VisualizationTypes.SANKEY,

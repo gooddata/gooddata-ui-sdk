@@ -89,6 +89,7 @@ export enum TigerFeaturesNames {
     EnableAiAgenticConversations = "enableAiAgenticConversations",
     EnableGenAiAgentSwitching = "enableGenAiAgentSwitching",
     EnableGenAiObservability = "enableGenAiObservability",
+    EnableGenAiObservabilityPercentages = "enableGenAiObservabilityPercentages",
     EnableGenAiAgenticDataShareOptOut = "enableGenAiAgenticDataShareOptOut",
     EnableGenAiVisualizationSummarySkill = "enableGenAiVisualizationSummarySkill",
     EnableGenAiDashboardSummarySkill = "enableGenAiDashboardSummarySkill",
@@ -110,7 +111,7 @@ export enum TigerFeaturesNames {
     EnableShellApplication = "enableShellApplication",
     EnableShellApplicationCatalog = "enableShellApplication_catalog",
     EnableShellApplicationDashboards = "enableShellApplication_dashboards",
-    EnableNullJoins = "enableNullJoins",
+    EnableNullableJoins = "enableNullableJoins",
     EnableDashboardDensitySetting = "enableDashboardDensitySetting",
     EnableDashboardsSearch = "enableDashboardsSearch",
     EnableAiHub = "enableAiHub",
@@ -120,6 +121,7 @@ export enum TigerFeaturesNames {
     EnableAiAgenticMultiConversations = "enableAiAgenticMultiConversations",
     EnableAiLlmAnthropicProvider = "enableAiLlmAnthropicProvider",
     EnableRadarChart = "enableRadarChart",
+    EnableMekkoChart = "enableMekkoChart",
     EnableMetricEditorRemoteModule = "enableShellApplication_metricEditor",
     EnableAnalyticalDesignerRemoteModule = "enableShellApplication_analyticalDesigner",
     EnableDashboardSidebarResize = "enableDashboardSidebarResize",
@@ -134,6 +136,7 @@ export type ITigerFeatureFlags = {
     enableColumnLevelPermissions: (typeof FeatureFlagsValues)["enableColumnLevelPermissions"][number];
     enableSqlDatasets: (typeof FeatureFlagsValues)["enableSqlDatasets"][number];
     enableRadarChart: (typeof FeatureFlagsValues)["enableRadarChart"][number];
+    enableMekkoChart: (typeof FeatureFlagsValues)["enableMekkoChart"][number];
     enableChangeAnalysis: (typeof FeatureFlagsValues)["enableChangeAnalysis"][number];
     enableMultipleMvfConditions: (typeof FeatureFlagsValues)["enableMultipleMvfConditions"][number];
     enableRankingWithMvf: (typeof FeatureFlagsValues)["enableRankingWithMvf"][number];
@@ -211,6 +214,7 @@ export type ITigerFeatureFlags = {
     enableAiAgenticMultiConversations: (typeof FeatureFlagsValues)["enableAiAgenticMultiConversations"][number];
     enableGenAiAgentSwitching: (typeof FeatureFlagsValues)["enableGenAiAgentSwitching"][number];
     enableGenAiObservability: (typeof FeatureFlagsValues)["enableGenAiObservability"][number];
+    enableGenAiObservabilityPercentages: (typeof FeatureFlagsValues)["enableGenAiObservabilityPercentages"][number];
     enableGenAIReasoningVisibility: (typeof FeatureFlagsValues)["enableGenAIReasoningVisibility"][number];
     aiChatSearchLimit: (typeof FeatureFlagsValues)["aiChatSearchLimit"][number];
     enableRichTextWidgetFilterConfiguration: (typeof FeatureFlagsValues)["enableRichTextWidgetFilterConfiguration"][number];
@@ -230,7 +234,7 @@ export type ITigerFeatureFlags = {
     enableShellApplication: (typeof FeatureFlagsValues)["enableShellApplication"][number];
     enableShellApplication_catalog: (typeof FeatureFlagsValues)["enableShellApplication_catalog"][number];
     enableShellApplication_dashboards: (typeof FeatureFlagsValues)["enableShellApplication_dashboards"][number];
-    enableNullJoins: (typeof FeatureFlagsValues)["enableNullJoins"][number];
+    enableNullableJoins: (typeof FeatureFlagsValues)["enableNullableJoins"][number];
     enableDashboardDensitySetting: (typeof FeatureFlagsValues)["enableDashboardDensitySetting"][number];
     enableDashboardsSearch: (typeof FeatureFlagsValues)["enableDashboardsSearch"][number];
     enableAiHub: (typeof FeatureFlagsValues)["enableAiHub"][number];
@@ -255,6 +259,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableColumnLevelPermissions: false,
     enableSqlDatasets: false,
     enableRadarChart: false,
+    enableMekkoChart: false,
     enableChangeAnalysis: false,
     enableMultipleMvfConditions: true,
     enableRankingWithMvf: false,
@@ -332,6 +337,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAiAgenticMultiConversations: false,
     enableGenAiAgentSwitching: false,
     enableGenAiObservability: false,
+    enableGenAiObservabilityPercentages: false,
     enableGenAIReasoningVisibility: false,
     aiChatSearchLimit: undefined,
     enableRichTextWidgetFilterConfiguration: false,
@@ -351,7 +357,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableShellApplication: true,
     enableShellApplication_catalog: false,
     enableShellApplication_dashboards: false,
-    enableNullJoins: false,
+    enableNullableJoins: false,
     enableDashboardDensitySetting: false,
     enableDashboardsSearch: false,
     enableAiHub: false,
@@ -376,6 +382,7 @@ export const FeatureFlagsValues = {
     enableColumnLevelPermissions: [true, false] as const,
     enableSqlDatasets: [true, false] as const,
     enableRadarChart: [true, false] as const,
+    enableMekkoChart: [true, false] as const,
     enableChangeAnalysis: [true, false] as const,
     enableMultipleMvfConditions: [true, false] as const,
     enableRankingWithMvf: [true, false] as const,
@@ -453,6 +460,7 @@ export const FeatureFlagsValues = {
     enableAiAgenticMultiConversations: [true, false] as const,
     enableGenAiAgentSwitching: [true, false] as const,
     enableGenAiObservability: [true, false] as const,
+    enableGenAiObservabilityPercentages: [true, false] as const,
     enableGenAIReasoningVisibility: [false, true] as const,
     aiChatSearchLimit: [undefined, {} as number] as const,
     enableRichTextWidgetFilterConfiguration: [true, false] as const,
@@ -472,7 +480,7 @@ export const FeatureFlagsValues = {
     enableShellApplication: [true, false] as const,
     enableShellApplication_catalog: [false, true] as const,
     enableShellApplication_dashboards: [false, true] as const,
-    enableNullJoins: [true, false] as const,
+    enableNullableJoins: [true, false] as const,
     enableDashboardDensitySetting: [true, false] as const,
     enableDashboardsSearch: [false, true] as const,
     enableAiHub: [true, false] as const,

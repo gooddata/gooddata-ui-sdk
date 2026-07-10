@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-charts: Render all documented distinctPointShapes symbols (star, cross, plus, pentagon, hexagon, octagon, arrow, and the extra triangle orientations) by registering them as custom Highcharts marker symbols, so charts with six or more line series can be assigned unique markers instead of falling back to circle.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "nikola.cech@gooddata.com"
+}

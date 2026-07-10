@@ -108,4 +108,48 @@ describe("Dropdown", () => {
         await clickButton();
         expect(onOpenStateChanged).toHaveBeenNthCalledWith(3, true);
     });
+
+    it("should call consumer onAlign when the overlay aligns, without looping", async () => {
+        const onAlign = vi.fn();
+        renderDropdown({ onAlign, openOnInit: true });
+
+        await waitFor(() => expect(onAlign).toHaveBeenCalled());
+
+        // The autofocus re-arm on align must not re-render in a way that makes the
+        // overlay realign forever (Overlay realigns after every update).
+        const settledCallCount = onAlign.mock.calls.length;
+        await new Promise((resolve) => setTimeout(resolve, 100));
+        expect(onAlign.mock.calls.length).toBeLessThanOrEqual(settledCallCount + 1);
+    });
+
+    it("should focus the initialFocus element when opened with autofocusOnOpen", async () => {
+        renderDropdown({
+            openOnInit: true,
+            autofocusOnOpen: true,
+            initialFocus: "autofocus-target",
+            renderBody: () => <input id="autofocus-target" />,
+        });
+
+        await waitFor(() => expect(document.activeElement?.id).toBe("autofocus-target"));
+    });
+
+    it("should close on Escape inside the body without leaking the event to ancestors", async () => {
+        const ancestorKeyDown = vi.fn();
+        render(
+            <div onKeyDown={ancestorKeyDown}>
+                <Dropdown
+                    renderButton={buttonMock.component}
+                    renderBody={() => <input id="escape-target" />}
+                    openOnInit
+                    closeOnEscape
+                />
+            </div>,
+        );
+
+        document.getElementById("escape-target")!.focus();
+        await userEvent.keyboard("{Escape}");
+
+        await waitFor(() => expect(document.getElementById("escape-target")).toBeNull());
+        expect(ancestorKeyDown).not.toHaveBeenCalled();
+    });
 });

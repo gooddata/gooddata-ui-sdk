@@ -19,7 +19,6 @@ import {
     type ITab,
     SingleSelectListItem,
     UiIcon,
-    isEscapeKey,
     useIdPrefixed,
 } from "@gooddata/sdk-ui-kit";
 
@@ -104,6 +103,12 @@ export interface IParameterDropdownListItem {
 function isParameterDropdownListItem(item: unknown): item is IParameterDropdownListItem {
     return typeof item === "object" && item !== null && "type" in item && item.type === "parameter";
 }
+
+type AddFilterListItem =
+    | ICatalogAttribute
+    | ICatalogDateDataset
+    | IMetricDropdownListItem
+    | IParameterDropdownListItem;
 
 /**
  * @internal
@@ -310,12 +315,7 @@ export function AttributesDropdown({
 
     const buttonTitle = intl.formatMessage({ id: "addPanel.filter" });
 
-    const items: (
-        | ICatalogAttribute
-        | ICatalogDateDataset
-        | IMetricDropdownListItem
-        | IParameterDropdownListItem
-    )[] = useMemo(() => {
+    const items: AddFilterListItem[] = useMemo(() => {
         if (selectedTabId === "attributes") {
             return filteredAttributes;
         }
@@ -338,6 +338,22 @@ export function AttributesDropdown({
         return tabs.length > 1;
     }, [tabs.length]);
 
+    function selectItem(item: AddFilterListItem, closeDropdown: () => void) {
+        if (isMetricHeaderListItem(item) || isMetricSeparatorListItem(item)) {
+            return;
+        }
+        if (isParameterDropdownListItem(item)) {
+            onParameterSelect?.(item.ref);
+        } else if (isCatalogAttribute(item)) {
+            onSelect(item.defaultDisplayForm.ref, "attribute");
+        } else if (isCatalogMeasure(item)) {
+            onSelect(item.measure.ref, "measure");
+        } else {
+            onSelect(item.dataSet.ref, "dateDataset");
+        }
+        closeDropdown();
+    }
+
     return (
         <Dropdown
             className={dropdownClassName}
@@ -345,6 +361,7 @@ export function AttributesDropdown({
             closeOnParentScroll={closeOnParentScroll}
             closeOnMouseDrag
             closeOnOutsideClick
+            closeOnEscape
             returnFocusTo={returnFocusTo ?? buttonId}
             alignPoints={dropdownAlignPoints}
             openOnInit={openOnInit}
@@ -367,12 +384,6 @@ export function AttributesDropdown({
                             "attributes-list-mvf": enableMeasureValueFilterKD,
                         })}
                         style={enableMeasureValueFilterKD ? { width: WIDTH } : undefined}
-                        onKeyDown={(e) => {
-                            if (isEscapeKey(e)) {
-                                e.stopPropagation();
-                                closeDropdown();
-                            }
-                        }}
                     >
                         <DropdownList
                             width={WIDTH}
@@ -390,20 +401,7 @@ export function AttributesDropdown({
                                 id: "attributesDropdown.placeholder",
                             })}
                             searchLabel={accessibilityConfig?.searchAriaLabel}
-                            onKeyDownSelect={(item) => {
-                                if (isMetricHeaderListItem(item) || isMetricSeparatorListItem(item)) {
-                                    return;
-                                }
-                                if (isParameterDropdownListItem(item)) {
-                                    onParameterSelect?.(item.ref);
-                                } else if (isCatalogAttribute(item)) {
-                                    onSelect(item.defaultDisplayForm.ref);
-                                } else if (isCatalogMeasure(item)) {
-                                    onSelect(item.measure.ref, "measure");
-                                } else {
-                                    onSelect(item.dataSet.ref, "dateDataset");
-                                }
-                            }}
+                            onKeyDownSelect={(item) => selectItem(item, closeDropdown)}
                             closeDropdown={closeDropdown}
                             itemTitleGetter={(item) => {
                                 if (isMetricHeaderListItem(item)) {
@@ -443,10 +441,7 @@ export function AttributesDropdown({
                                                     color="currentColor"
                                                 />
                                             }
-                                            onClick={() => {
-                                                onParameterSelect?.(item.ref);
-                                                closeDropdown();
-                                            }}
+                                            onClick={() => selectItem(item, closeDropdown)}
                                         />
                                     );
                                 }
@@ -457,10 +452,7 @@ export function AttributesDropdown({
                                             item={item}
                                             title={title}
                                             isLocationIconEnabled={shouldDisplayLocationIcon}
-                                            onClick={() => {
-                                                onSelect(item.defaultDisplayForm.ref, "attribute");
-                                                closeDropdown();
-                                            }}
+                                            onClick={() => selectItem(item, closeDropdown)}
                                         />
                                     );
                                 }
@@ -471,10 +463,7 @@ export function AttributesDropdown({
                                         <MetricListItem
                                             title={title}
                                             item={item}
-                                            onClick={() => {
-                                                onSelect(item.measure.ref, "measure");
-                                                closeDropdown();
-                                            }}
+                                            onClick={() => selectItem(item, closeDropdown)}
                                         />
                                     );
                                 }
@@ -483,10 +472,7 @@ export function AttributesDropdown({
                                     <DateAttributeListItem
                                         title={title}
                                         item={item}
-                                        onClick={() => {
-                                            onSelect(item.dataSet.ref, "dateDataset");
-                                            closeDropdown();
-                                        }}
+                                        onClick={() => selectItem(item, closeDropdown)}
                                     />
                                 );
                             }}

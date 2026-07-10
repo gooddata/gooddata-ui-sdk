@@ -38,6 +38,7 @@ import {
     isChartSupported,
     isComboChart,
     isHeatmap,
+    isMekko,
     isOneOfTypes,
     isPyramid,
     isSankeyOrDependencyWheel,
@@ -53,6 +54,7 @@ import {
     getComboChartSeries,
     getComboChartStackingConfig,
 } from "../comboChart/comboChartOptions.js";
+import { dropZeroWidthMekkoColumns, isMekkoPercentBlockedByNegatives } from "../mekko/mekkoChartOptions.js";
 import {
     buildWaterfallChartSeries,
     getColorAssignment,
@@ -153,6 +155,14 @@ function getStackingConfig(
 ): StackingType {
     const { type, stackMeasures, stackMeasuresToPercent } = options;
     const stackingValue: StackingType = stackMeasuresToPercent ? "percent" : "normal";
+
+    // Mekko has a single Height measure, so it stacks ONLY by the Stack-by attribute. Without a
+    // stack attribute there is nothing to stack: applying stack-measures / stack-to-100% to the
+    // single series would collapse every column to uniform full height. Guard before the generic
+    // stackMeasures/stackMeasuresToPercent branch below (which a stale property would otherwise hit).
+    if (isMekko(type)) {
+        return stackByAttribute ? stackingValue : null;
+    }
 
     const supportsStacking = !isOneOfTypes(type, unsupportedStackingTypes);
 
@@ -813,9 +823,22 @@ export function getChartOptions(
     // apply distinct point shapes configuration if enabled
     const finalSeries = setupDistinctPointShapesToSeries(type, series, config, measureGroup);
 
+    // Mekko: drop zero-width columns (Width/point.z of 0) from series + categories in lockstep.
+    const { series: outSeries, categories: outCategories } = isMekko(type)
+        ? dropZeroWidthMekkoColumns(finalSeries, categories)
+        : { series: finalSeries, categories };
+
+    // Mekko: fall back to absolute stacking for negative Height. The stackMeasuresToPercent property
+    // is preserved so 100% re-enables once the data is cleaned. Computed once here and exposed on the
+    // returned options for downstream consumers (stacking config, ChartTransformation).
+    const stackToPercentBlockedByNegativeValues = isMekkoPercentBlockedByNegatives(type, outSeries);
+    const effectiveStacking =
+        stacking === "percent" && stackToPercentBlockedByNegativeValues ? "normal" : stacking;
+
     return {
         type,
-        stacking,
+        stacking: effectiveStacking,
+        stackToPercentBlockedByNegativeValues,
         hasStackByAttribute: Boolean(stackByAttribute),
         hasViewByAttribute: Boolean(viewByAttribute),
         legendLayout: config.legendLayout || "horizontal",
@@ -823,8 +846,8 @@ export function getChartOptions(
         xAxes,
         yAxes,
         data: {
-            series: finalSeries,
-            categories,
+            series: outSeries,
+            categories: outCategories,
         },
         actions: {
             tooltip: tooltipFactory,

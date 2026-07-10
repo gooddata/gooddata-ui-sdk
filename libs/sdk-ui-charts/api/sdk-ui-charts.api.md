@@ -744,6 +744,21 @@ export interface ILineChartProps extends IBucketChartProps, ILineChartBucketProp
     outliersConfig?: IOutliersConfig;
 }
 
+// @beta (undocumented)
+export interface IMekkoBucketProps {
+    filters?: NullableFiltersOrPlaceholders;
+    heightMeasure?: MeasureOrPlaceholder;
+    placeholdersResolutionContext?: any;
+    sortBy?: SortsOrPlaceholders;
+    stackBy?: AttributeOrPlaceholder;
+    viewBy?: AttributeOrPlaceholder;
+    widthMeasure?: MeasureOrPlaceholder;
+}
+
+// @beta (undocumented)
+export interface IMekkoProps extends IBucketChartProps, IMekkoBucketProps {
+}
+
 // @public
 export interface IOrientationConfig {
     // (undocumented)
@@ -1024,6 +1039,9 @@ export interface IXirrProps extends IBucketChartProps, IXirrBucketProps {
 // @public
 export function LineChart(props: ILineChartProps): JSX.Element;
 
+// @beta
+export function Mekko(props: IMekkoProps): JSX.Element;
+
 // @internal (undocumented)
 export const MIDDLE = "middle";
 
@@ -1036,7 +1054,7 @@ export { PatternFillName }
 export function PieChart(props: IPieChartProps): JSX.Element;
 
 // @beta
-export type PointShapeSymbolType = "circle" | "square" | "diamond" | "triangle" | "triangle-down";
+export type PointShapeSymbolType = "circle" | "square" | "diamond" | "triangle" | "triangle-up" | "triangle-down" | "triangle-left" | "triangle-right" | "arrow" | "plus" | "cross" | "star" | "hexagon" | "octagon" | "pentagon";
 
 // @public
 export type PositionType = "left" | "right" | "top" | "bottom" | "auto";

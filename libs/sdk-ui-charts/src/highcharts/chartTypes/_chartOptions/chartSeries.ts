@@ -16,6 +16,7 @@ import {
     isBubbleChart,
     isBulletChart,
     isHeatmap,
+    isMekko,
     isOneOfTypes,
     isRadarChart,
     isSankeyOrDependencyWheel,
@@ -28,6 +29,7 @@ import {
 import { getBubbleChartSeries } from "../bubbleChart/bubbleChartSeries.js";
 import { getBulletChartSeries } from "../bulletChart/bulletChartSeries.js";
 import { getHeatmapSeries } from "../heatmap/heatmapChartSeries.js";
+import { getMekkoSeries } from "../mekko/mekkoSeries.js";
 import { buildSankeyChartSeries } from "../sankeyChart/sankeyChartOptions.js";
 import { getScatterPlotSeries } from "../scatterPlot/scatterPlotSeries.js";
 import { getTreemapStackedSeries } from "../treemap/treemapChartSeries.js";
@@ -226,6 +228,17 @@ export function getSeries(
 ): any {
     if (isHeatmap(type)) {
         return getHeatmapSeries(dv, measureGroup, theme);
+    } else if (isMekko(type)) {
+        return getMekkoSeries(
+            dv,
+            measureGroup,
+            viewByAttribute,
+            stackByAttribute,
+            colorStrategy,
+            emptyHeaderTitle,
+            chartFill,
+            theme,
+        );
     } else if (isScatterPlot(type)) {
         return getScatterPlotSeries(dv, viewByAttribute, stackByAttribute, colorStrategy, emptyHeaderTitle);
     } else if (isBubbleChart(type)) {

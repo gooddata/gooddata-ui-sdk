@@ -122,6 +122,18 @@ describe("buildIdentifierMapping", () => {
             expect(result.measures["m_c"].pointField).toBe("y");
         });
 
+        it("mekko routes the Width (primary) measure to 'z' and the Height (secondary) to 'y'", () => {
+            const def = defWith([
+                newBucket(BucketNames.MEASURES, measureA),
+                newBucket(BucketNames.SECONDARY_MEASURES, measureB),
+            ]);
+
+            const result = buildIdentifierMapping(def, VisualizationTypes.MEKKO);
+
+            expect(result.measures["m_a"].pointField).toBe("z");
+            expect(result.measures["m_b"].pointField).toBe("y");
+        });
+
         it("falls back to 'y' for unknown chart types and when chartType is omitted", () => {
             const def = defWith([newBucket(BucketNames.MEASURES, measureA)]);
 

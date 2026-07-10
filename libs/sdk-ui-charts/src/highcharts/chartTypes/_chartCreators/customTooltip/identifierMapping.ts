@@ -42,6 +42,10 @@ function getMeasurePointField(
             // primary (MEASURES) and comparative (TERTIARY_MEASURES) series
             // both use point.y.
             return bucketLocalId === BucketNames.SECONDARY_MEASURES ? "target" : "y";
+        case VisualizationTypes.MEKKO:
+            // Mekko (variwide): Width (MEASURES) is the column width on point.z,
+            // Height (SECONDARY_MEASURES) is on point.y.
+            return bucketLocalId === BucketNames.MEASURES ? "z" : "y";
         default:
             return "y";
     }

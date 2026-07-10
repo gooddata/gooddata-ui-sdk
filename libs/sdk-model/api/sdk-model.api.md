@@ -2741,6 +2741,7 @@ export interface IFeatureFlags {
     enableGenAIChat?: boolean;
     enableGenAIMemory?: boolean;
     enableGenAiObservability?: boolean;
+    enableGenAiObservabilityPercentages?: boolean;
     enableGenAIReasoningVisibility?: boolean;
     enableGeoArea?: boolean;
     enableGeoBasemapConfig?: boolean;
@@ -2758,6 +2759,7 @@ export interface IFeatureFlags {
     enableMatchFilterAD?: boolean;
     enableMatchFilterKD?: boolean;
     enableMeasureValueFilterKD?: boolean;
+    enableMekkoChart?: boolean;
     enableMetricFormatOverrides?: boolean;
     // (undocumented)
     enableMongoDbDataSource?: boolean;
@@ -2770,7 +2772,7 @@ export interface IFeatureFlags {
     enableNewPivotTable?: boolean;
     enableNewScheduledExport?: boolean;
     enableNotificationChannelIdentifiers?: boolean;
-    enableNullJoins?: boolean;
+    enableNullableJoins?: boolean;
     // (undocumented)
     enableOidcAuth?: boolean;
     // (undocumented)

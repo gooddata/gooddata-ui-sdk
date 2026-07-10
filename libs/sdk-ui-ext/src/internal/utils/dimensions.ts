@@ -164,6 +164,7 @@ export function generateDimensions(
 
         case VisualizationTypes.BAR:
         case VisualizationTypes.COLUMN:
+        case VisualizationTypes.MEKKO:
             return getBarColumnDimensions(insight);
 
         case VisualizationTypes.BULLET:

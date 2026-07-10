@@ -3,6 +3,7 @@
 import {
     type AriaAttributes,
     type AriaRole,
+    type KeyboardEvent,
     type MutableRefObject,
     type ReactNode,
     type RefObject,
@@ -10,6 +11,7 @@ import {
     useEffect,
     useMemo,
     useRef,
+    useState,
 } from "react";
 
 import cx from "classnames";
@@ -24,6 +26,7 @@ import { Overlay } from "../Overlay/Overlay.js";
 import { useMediaQuery } from "../responsive/useMediaQuery.js";
 import { type Alignment, type OverlayPositionType } from "../typings/overlay.js";
 import { type IAlignPoint } from "../typings/positioning.js";
+import { isEscapeKey } from "../utils/events.js";
 import { useId } from "../utils/useId.js";
 
 import { DropdownButtonKeyboardWrapper } from "./DropdownButtonKeyboardWrapper.js";
@@ -316,18 +319,53 @@ export function Dropdown({
         resolveRef(returnFocusTo)?.focus();
     }, [closeDropdown, returnFocusTo]);
 
+    // Escape must close one layer only. Overlay's own closeOnEscape listens on window,
+    // where an ancestor dialog's Escape listener fires too — so handle Escape here in the
+    // body and contain it before it leaves the dropdown.
+    const handleBodyKeyDown = useCallback(
+        (event: KeyboardEvent<HTMLDivElement>) => {
+            if (closeOnEscape && isEscapeKey(event)) {
+                event.stopPropagation();
+                closeDropdown();
+            }
+        },
+        [closeOnEscape, closeDropdown],
+    );
+
+    // `.focus()` silently no-ops while the overlay is still `visibility: hidden` awaiting
+    // alignment, so re-arm autofocus on the first align. A boolean, not a counter — the
+    // overlay realigns after every update, so a per-align value would feed a render loop.
+    const [overlayAligned, setOverlayAligned] = useState(false);
+    if (!isOpen && overlayAligned) {
+        setOverlayAligned(false);
+    }
+    const handleOverlayAlign = useCallback(
+        (alignment: Alignment) => {
+            setOverlayAligned(true);
+            onAlign?.(alignment);
+        },
+        [onAlign],
+    );
+
     const isMobileDevice = useMediaQuery("mobileDevice");
 
     const renderDropdown = isOpen ? (
         fullscreenOnMobile && isMobileDevice ? (
-            <FullScreenOverlay alignTo="body" alignPoints={MOBILE_DROPDOWN_ALIGN_POINTS}>
+            <FullScreenOverlay
+                alignTo="body"
+                alignPoints={MOBILE_DROPDOWN_ALIGN_POINTS}
+                onAlign={handleOverlayAlign}
+            >
                 <UiFocusManager
                     tabOutHandler={shouldTrapFocus ? undefined : handleTabOut}
                     enableFocusTrap={shouldTrapFocus}
-                    enableAutofocus={autofocusOnOpen ? { initialFocus } : false}
+                    enableAutofocus={autofocusOnOpen ? { initialFocus, refocusKey: overlayAligned } : false}
                     enableReturnFocusOnUnmount={{ returnFocusTo }}
                 >
-                    <div className="gd-mobile-dropdown-overlay overlay gd-flex-row-container">
+                    <div
+                        className="gd-mobile-dropdown-overlay overlay gd-flex-row-container"
+                        onKeyDown={handleBodyKeyDown}
+                    >
                         <div className="gd-mobile-dropdown-header gd-flex-item">
                             {_renderButton({
                                 ...renderButtonProps,
@@ -356,7 +394,7 @@ export function Dropdown({
                 closeOnEscape={closeOnEscape}
                 shouldCloseOnClick={shouldCloseOnClick}
                 ignoreClicksOnByClass={ignoreClicksOnByClass}
-                onAlign={onAlign}
+                onAlign={handleOverlayAlign}
                 onClose={closeDropdown}
                 // Overlay prevents event propagation by default using defaultProps for these
                 onClick={enableEventPropagation ? () => {} : undefined}
@@ -367,10 +405,10 @@ export function Dropdown({
                 <UiFocusManager
                     tabOutHandler={shouldTrapFocus ? undefined : handleTabOut}
                     enableFocusTrap={shouldTrapFocus}
-                    enableAutofocus={autofocusOnOpen ? { initialFocus } : false}
+                    enableAutofocus={autofocusOnOpen ? { initialFocus, refocusKey: overlayAligned } : false}
                     enableReturnFocusOnUnmount={{ returnFocusTo }}
                 >
-                    <div className={cx("overlay", DROPDOWN_BODY_CLASS)}>
+                    <div className={cx("overlay", DROPDOWN_BODY_CLASS)} onKeyDown={handleBodyKeyDown}>
                         {renderBody({
                             ...renderBodyProps,
                             isMobile: false,

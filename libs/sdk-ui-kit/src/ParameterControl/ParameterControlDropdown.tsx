@@ -9,6 +9,7 @@ import { type INumberParameterConstraints, isValidNumberParameterValue } from "@
 
 import { bem } from "../@ui/@utils/bem.js";
 import { UiButton } from "../@ui/UiButton/UiButton.js";
+import { type IDropdownBodyRenderProps } from "../Dropdown/Dropdown.js";
 import { useId } from "../utils/useId.js";
 
 const { b, e } = bem("gd-ui-kit-parameter-control");
@@ -38,6 +39,8 @@ export interface IParameterControlDropdownProps {
      */
     resetValue?: number;
     constraints?: INumberParameterConstraints;
+    inputId?: string;
+    ariaAttributes?: IDropdownBodyRenderProps["ariaAttributes"];
     onApply: (value: number) => void;
     onCancel: () => void;
 }
@@ -56,11 +59,14 @@ export function ParameterControlDropdown({
     value,
     resetValue,
     constraints,
+    inputId: inputIdProp,
+    ariaAttributes,
     onApply,
     onCancel,
 }: IParameterControlDropdownProps) {
     const intl = useIntl();
-    const inputId = useId();
+    const generatedInputId = useId();
+    const inputId = inputIdProp ?? generatedInputId;
     const [draft, setDraft] = useState<string>(String(value));
 
     const error = getDraftValidationError(draft, constraints);
@@ -77,6 +83,7 @@ export function ParameterControlDropdown({
 
     return (
         <div
+            {...ariaAttributes}
             className={`${b({ dropdown: true })} overlay gd-dialog gd-dropdown`}
             data-testid="parameter-control-dropdown"
         >

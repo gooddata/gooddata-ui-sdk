@@ -68,7 +68,7 @@ import {
 } from "../../../typings/unsafe.js";
 import { MeasureColorStrategy } from "../../_chartColoring/measure.js";
 import { GRAY } from "../../_util/color.js";
-import { customEscape } from "../../_util/common.js";
+import { customEscape, isNegativeValueIncluded } from "../../_util/common.js";
 import { findMeasureGroupInDimensions } from "../../_util/executionResultHelper.js";
 import { generateChartOptions, getMVS, getMVSForViewByTwoAttributes } from "../../_util/test/helper.js";
 import { BubbleChartColorStrategy } from "../../bubbleChart/bubbleChartColoring.js";
@@ -76,7 +76,7 @@ import { getHeatmapSeries } from "../../heatmap/heatmapChartSeries.js";
 import { HeatmapColorStrategy } from "../../heatmap/heatmapColoring.js";
 import { TreemapColorStrategy } from "../../treemap/treemapColoring.js";
 import { getDrillableSeries } from "../chartDrilling.js";
-import { type IValidationResult, isNegativeValueIncluded, validateData } from "../chartLimits.js";
+import { type IValidationResult, validateData } from "../chartLimits.js";
 import { getHeatmapDataClasses, getTreemapAttributes } from "../chartOptionsBuilder.js";
 import { getSeries, getSeriesItemData } from "../chartSeries.js";
 import {

@@ -139,6 +139,44 @@ export const DEFAULT_SCATTERPLOT_UICONFIG: IUiConfig = {
     ...defaultRootUiConfigProperties,
 };
 
+export const DEFAULT_MEKKO_UICONFIG: IUiConfig = {
+    buckets: {
+        measures: {
+            // Width metric
+            ...measuresBase,
+            isShowInPercentVisible: false,
+            allowsReordering: false,
+            canAddItems: true,
+            itemsLimit: 1,
+        },
+        secondary_measures: {
+            // Height metric
+            ...measuresBase,
+            isShowInPercentVisible: false,
+            allowsReordering: false,
+            canAddItems: true,
+            itemsLimit: 1,
+        },
+        view: {
+            ...viewBase,
+            allowsReordering: false,
+            canAddItems: true,
+            itemsLimit: MAX_CATEGORIES_COUNT,
+        },
+        stack: {
+            ...stackBaseWithDate,
+        },
+        ...defaultFilters,
+    },
+    // Enables the optional-stacking machinery in AD. Mekko has a single primary (width) measure,
+    // so "Stack Measures" stays hidden; "Stack to 100%" shows once a Stack-by attribute is present.
+    optionalStacking: {
+        supported: true,
+        stackMeasures: false,
+    },
+    ...defaultRootUiConfigProperties,
+};
+
 export const DEFAULT_BUBBLE_CHART_CONFIG: IUiConfig = {
     buckets: {
         measures: {

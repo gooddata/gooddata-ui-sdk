@@ -47,6 +47,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableMekkoChart,
+            "enableMekkoChart",
+            "BOOLEAN",
+            FeatureFlagsValues.enableMekkoChart,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableSqlDatasets,
             "enableSqlDatasets",
             "BOOLEAN",
@@ -607,6 +614,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableGenAiObservabilityPercentages,
+            "enableGenAiObservabilityPercentages",
+            "BOOLEAN",
+            FeatureFlagsValues.enableGenAiObservabilityPercentages,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableAiLlmAnthropicProvider,
             "enableAiLlmAnthropicProvider",
             "BOOLEAN",
@@ -761,10 +775,10 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableNullJoins,
-            "enableNullJoins",
+            TigerFeaturesNames.EnableNullableJoins,
+            "enableNullableJoins",
             "BOOLEAN",
-            FeatureFlagsValues.enableNullJoins,
+            FeatureFlagsValues.enableNullableJoins,
         ),
         ...loadFeature(
             features,

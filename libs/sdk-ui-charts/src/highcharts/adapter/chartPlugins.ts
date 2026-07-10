@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ITheme } from "@gooddata/sdk-model";
 
@@ -10,6 +10,7 @@ import { extendDataLabelColors } from "./plugins/dataLabelsColors.js";
 import { groupCategoriesWrapper } from "./plugins/group-categories-wrapper.js";
 import { linearTickPositions } from "./plugins/linearTickPositions.js";
 import { applyPointHaloOptions } from "./plugins/pointHalo.js";
+import { registerPointShapeSymbols } from "./plugins/pointShapeSymbols.js";
 import { renderBubbles } from "./plugins/renderBubbles.js";
 
 let basePluginsInitialized = false;
@@ -29,6 +30,8 @@ export function initChartPlugins(
         adjustTickAmount(highcharts);
         // modify rendering bubbles in bubble chart after upgrade to Highcharts v7.1.1
         renderBubbles(highcharts);
+        // register custom point-shape marker symbols beyond the five Highcharts built-ins
+        registerPointShapeSymbols(highcharts);
 
         basePluginsInitialized = true;
     }
