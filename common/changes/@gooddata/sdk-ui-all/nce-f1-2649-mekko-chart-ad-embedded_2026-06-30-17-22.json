@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-charts: add Mekko (Marimekko) chart visualization type, authorable in Analytical Designer (behind the enableMekkoChart feature flag) and renderable in dashboards and embedded deployments",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "nikola.cech@gooddata.com"
+}

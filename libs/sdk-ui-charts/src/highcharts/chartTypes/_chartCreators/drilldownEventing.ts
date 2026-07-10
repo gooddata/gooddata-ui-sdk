@@ -33,6 +33,7 @@ export function getClickableElementNameByChartType(type: VisType): ChartElementT
         case VisualizationTypes.COLUMN:
         case VisualizationTypes.BAR:
         case VisualizationTypes.WATERFALL:
+        case VisualizationTypes.MEKKO:
             return "bar";
         case VisualizationTypes.PIE:
         case VisualizationTypes.TREEMAP:
@@ -63,7 +64,13 @@ function fireEvent(onDrill: OnFiredDrillEvent, data: any, target: EventTarget) {
 }
 
 const getElementChartType = (chartType: ChartType, point: IHighchartsPointObject): ChartType => {
-    return (point?.series?.type as ChartType) ?? chartType;
+    const seriesType = point?.series?.type as ChartType;
+    // Mekko renders as a `variwide` series; map that series type back to the logical Mekko type so
+    // VisualizationType-based consumers (e.g. getClickableElementNameByChartType) recognize it.
+    if ((seriesType as string) === "variwide") {
+        return VisualizationTypes.MEKKO as ChartType;
+    }
+    return seriesType ?? chartType;
 };
 
 const getDrillPointCustomProps = (

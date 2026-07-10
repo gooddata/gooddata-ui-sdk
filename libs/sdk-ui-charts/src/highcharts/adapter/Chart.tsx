@@ -23,6 +23,7 @@ import "highcharts/esm/modules/heatmap.js";
 import "highcharts/esm/modules/pattern-fill.js";
 import "highcharts/esm/modules/sankey.js";
 import "highcharts/esm/modules/dependency-wheel.js";
+import "highcharts/esm/modules/variwide.js";
 import "highcharts/esm/modules/accessibility.js";
 
 // NOTE: default initialization without accessible tooltip plugin.

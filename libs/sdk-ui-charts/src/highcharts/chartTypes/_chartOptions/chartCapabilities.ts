@@ -28,6 +28,7 @@ export const supportedStackingAttributesChartTypes = [
     VisualizationTypes.COMBO,
     VisualizationTypes.COMBO2,
     VisualizationTypes.WATERFALL,
+    VisualizationTypes.MEKKO,
 ];
 // types with only many measures or one measure and one attribute
 export const multiMeasuresAlternatingTypes = [

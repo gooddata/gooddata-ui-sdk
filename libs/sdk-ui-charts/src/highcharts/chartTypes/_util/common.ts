@@ -8,7 +8,7 @@ import { VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { type ChartOrientationType, type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { DEFAULT_DECIMAL_SEPARATOR } from "../../constants/format.js";
-import { type IChartOptions, type ISeriesItem } from "../../typings/unsafe.js";
+import { type IChartOptions, type ISeriesDataItem, type ISeriesItem } from "../../typings/unsafe.js";
 
 export function parseValue(value: DataValue): number | null {
     if (typeof value === "string") {
@@ -144,6 +144,11 @@ export const isRadarChart = (type: string | undefined): boolean => type === Visu
 /**
  * @internal
  */
+export const isMekko = (type: string | undefined): boolean => type === VisualizationTypes.MEKKO;
+
+/**
+ * @internal
+ */
 export const isSupportingJoinedAttributeAxisName = (type: string | undefined): boolean =>
     isBarChart(type) || isColumnChart(type) || isBulletChart(type);
 
@@ -251,3 +256,31 @@ export const getAxesCounts = (config: IChartConfig): [number, number] => {
     const hasSecondaryYAxis = config.secondary_yaxis && config.secondary_yaxis?.measures?.length !== 0;
     return [hasSecondaryXAxis ? 2 : 1, hasSecondaryYAxis ? 2 : 1];
 };
+
+const isNegativeNumber = (n: number | null | undefined): boolean => typeof n === "number" && n < 0;
+
+export function isNegativeValueIncluded(series: ISeriesItem[] | undefined): boolean {
+    if (!series) {
+        return false;
+    }
+    return series.some((seriesItem: ISeriesItem) =>
+        (seriesItem.data || []).some(
+            ({ y, value, weight }: ISeriesDataItem) =>
+                isNegativeNumber(y) || isNegativeNumber(value) || isNegativeNumber(weight),
+        ),
+    );
+}
+
+/**
+ * Mekko encodes a column's width in the point `z`. A column cannot have a negative width, so any
+ * negative `z` makes the chart unrenderable (validation error + empty state). Negative `y` (Height)
+ * is allowed and intentionally NOT checked here.
+ */
+export function isNegativeWidthIncluded(series: ISeriesItem[] | undefined): boolean {
+    if (!series) {
+        return false;
+    }
+    return series.some((seriesItem: ISeriesItem) =>
+        (seriesItem.data || []).some((point) => isNegativeNumber(point?.z)),
+    );
+}

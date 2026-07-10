@@ -282,6 +282,18 @@ export const visualizationClasses: IVisualizationClass[] = sortBy(
                 uri: "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/1234",
             },
         },
+        {
+            visualizationClass: {
+                checksum: "local",
+                icon: "local:mekko",
+                orderIndex: 19.5,
+                iconSelected: "local:mekko.selected",
+                url: "local:mekko",
+                title: "Mekko chart",
+                identifier: "gdc.visualization.mekko",
+                uri: "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/1519",
+            },
+        },
     ],
     (cls) => cls.visualizationClass.orderIndex,
 );

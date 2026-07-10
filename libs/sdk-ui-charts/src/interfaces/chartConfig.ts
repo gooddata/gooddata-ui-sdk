@@ -679,7 +679,22 @@ export interface IContinuousLineConfig {
  *
  * @beta
  */
-export type PointShapeSymbolType = "circle" | "square" | "diamond" | "triangle" | "triangle-down";
+export type PointShapeSymbolType =
+    | "circle"
+    | "square"
+    | "diamond"
+    | "triangle"
+    | "triangle-up"
+    | "triangle-down"
+    | "triangle-left"
+    | "triangle-right"
+    | "arrow"
+    | "plus"
+    | "cross"
+    | "star"
+    | "hexagon"
+    | "octagon"
+    | "pentagon";
 
 /**
  * Configuration for distinct point shapes feature.
@@ -692,7 +707,8 @@ export interface IDistinctPointShapes {
      *
      * @remarks
      * When enabled, different series in line, area, and combo charts will use different point shapes
-     * (circle, square, diamond, triangle, triangle-down) to help distinguish between series.
+     * to help distinguish between series. See {@link PointShapeSymbolType} for the full set of
+     * supported shapes.
      */
     enabled?: boolean;
 
@@ -704,8 +720,9 @@ export interface IDistinctPointShapes {
      *
      * For measures that are not explicitly mapped in this configuration, the system will
      * automatically assign point shapes based on their series index using the predefined
-     * order: "circle", "square", "triangle", "triangle-down", "diamond". The shapes cycle
-     * through this sequence if there are more series than available shapes.
+     * order: "circle", "square", "triangle", "triangle-down", "diamond", followed by the remaining
+     * supported shapes. The shapes cycle through this sequence if there are more series than
+     * available shapes.
      *
      */
     pointShapeMapping?: Record<string, PointShapeSymbolType>;

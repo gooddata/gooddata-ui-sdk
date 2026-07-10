@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import { type IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 
 import { type IChartConfig } from "../../../../interfaces/chartConfig.js";
-import { type IChartOptions } from "../../../typings/unsafe.js";
+import { type IChartOptions, type ISeriesItem } from "../../../typings/unsafe.js";
 import { setupDistinctPointShapesToSeries } from "../chartDistinctPointShapes.js";
 
 describe("setupDistinctPointShapesToSeries", () => {
@@ -270,31 +270,12 @@ describe("setupDistinctPointShapesToSeries", () => {
             expect(series[2].pointShape).toBe(expectedShapes[2]);
         });
 
-        it("should cycle through shapes when more series than available shapes", () => {
-            const extendedSeriesData: any[] = [
-                ...mockSeriesData,
-                {
-                    name: "Margin",
-                    type: "line",
-                    data: [{ y: 10 }, { y: 20 }, { y: 15 }],
-                    color: "#FFA07A",
-                    measureIdentifier: "margin_metric",
-                },
-                {
-                    name: "Target",
-                    type: "line",
-                    data: [{ y: 120 }, { y: 180 }, { y: 140 }],
-                    color: "#98D8C8",
-                    measureIdentifier: "target_metric",
-                },
-                {
-                    name: "Forecast",
-                    type: "line",
-                    data: [{ y: 110 }, { y: 190 }, { y: 160 }],
-                    color: "#F7DC6F",
-                    measureIdentifier: "forecast_metric",
-                },
-            ];
+        it("should assign distinct shapes beyond the first five series", () => {
+            const eightSeriesData: ISeriesItem[] = Array.from({ length: 8 }, (_, index) => ({
+                name: `Series ${index + 1}`,
+                type: "line",
+                data: [{ y: 100 + index * 10 }],
+            }));
 
             const config: IChartConfig = {
                 distinctPointShapes: { enabled: true },
@@ -302,14 +283,49 @@ describe("setupDistinctPointShapesToSeries", () => {
 
             const result = setupDistinctPointShapesToSeries(
                 mockChartOptions.type,
-                extendedSeriesData,
+                eightSeriesData,
+                config,
+                mockMeasureGroup,
+            );
+
+            // The first five shapes are unchanged; series 6-8 get additional distinct shapes
+            const expectedShapes = [
+                "circle",
+                "square",
+                "triangle",
+                "triangle-down",
+                "diamond",
+                "star",
+                "cross",
+                "plus",
+            ];
+            expectedShapes.forEach((shape, index) => {
+                expect(result[index].marker?.symbol).toBe(shape);
+                expect(result[index].pointShape).toBe(shape);
+            });
+        });
+
+        it("should cycle through shapes when more series than available shapes", () => {
+            // 15th series wraps back to the first shape (14 distinct shapes are available)
+            const manySeriesData: ISeriesItem[] = Array.from({ length: 15 }, (_, index) => ({
+                name: `Series ${index + 1}`,
+                type: "line",
+                data: [{ y: 100 + index * 10 }],
+            }));
+
+            const config: IChartConfig = {
+                distinctPointShapes: { enabled: true },
+            };
+
+            const result = setupDistinctPointShapesToSeries(
+                mockChartOptions.type,
+                manySeriesData,
                 config,
                 mockMeasureGroup,
             );
 
             // Should cycle back to the beginning
-            const series = result as any[];
-            expect(series[5].marker.symbol).toBe("circle"); // 6th series gets first shape again
+            expect(result[14].marker?.symbol).toBe("circle"); // 15th series gets first shape again
         });
 
         it("should preserve existing marker properties", () => {

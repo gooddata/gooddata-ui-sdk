@@ -47,6 +47,7 @@ export function AutomationParameter({
     const lockedTooltip = intl.formatMessage({ id: "dialogs.automation.filters.lockedTooltip" });
     const deleteAriaLabel = intl.formatMessage({ id: "dialogs.automation.filters.deleteAriaLabel" });
     const tooltipId = useIdPrefixed("automation-parameter-tooltip");
+    const valueInputId = useIdPrefixed("parameter-value-input");
 
     if (isReadOnly) {
         // `isDisabled` renders a real disabled button — unfocusable, so keyboard users can't edit or
@@ -88,7 +89,10 @@ export function AutomationParameter({
     return (
         <Dropdown
             overlayPositionType={overlayPositionType}
-            renderButton={({ isOpen, toggleDropdown }) => (
+            autofocusOnOpen
+            initialFocus={valueInputId}
+            closeOnEscape
+            renderButton={({ isOpen, toggleDropdown, accessibilityConfig }) => (
                 <UiChip
                     label={label}
                     iconBefore="parameter"
@@ -98,7 +102,8 @@ export function AutomationParameter({
                     onDelete={() => onDelete?.(ref)}
                     dataTestId={testId}
                     accessibilityConfig={{
-                        isExpanded: isOpen,
+                        ...accessibilityConfig,
+                        popupType: "dialog",
                         deleteAriaLabel: `${deleteAriaLabel} ${title}`,
                     }}
                     onDeleteKeyDown={(event: KeyboardEvent) => {
@@ -108,11 +113,13 @@ export function AutomationParameter({
                     }}
                 />
             )}
-            renderBody={({ closeDropdown }) => (
+            renderBody={({ closeDropdown, ariaAttributes }) => (
                 <ParameterControlDropdown
                     name={title}
                     value={value}
                     constraints={constraints}
+                    inputId={valueInputId}
+                    ariaAttributes={ariaAttributes}
                     onApply={(next) => {
                         onChange?.(ref, next);
                         closeDropdown();

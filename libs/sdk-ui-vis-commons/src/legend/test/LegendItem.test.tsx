@@ -103,6 +103,44 @@ describe("LegendItem", () => {
         expect(legendItem).toHaveAttribute("id", "test-id-Foo");
     });
 
+    describe("custom point shape fill modes", () => {
+        // type must not be "line"/"bullet" so that chartFill is not forced to "solid"
+        const starItem: ISeriesItemMetric = {
+            ...item,
+            type: "area",
+            pointShape: "star",
+        };
+
+        it("should render pattern fill with transparent background and no border", () => {
+            createComponent({ item: starItem, chartFill: "pattern" });
+
+            const icon = screen.getByTestId("legend-item").firstChild as HTMLElement;
+            expect(icon.style.clipPath).toMatch(/^polygon\(/);
+            expect(icon.style.border).toBe("");
+            expect(icon).toHaveStyle({
+                backgroundColor: "transparent",
+                position: "relative",
+            });
+        });
+
+        it("should render outline fill with base color and border", () => {
+            createComponent({ item: starItem, chartFill: "outline" });
+
+            const icon = screen.getByTestId("legend-item").firstChild as HTMLElement;
+            expect(icon.style.clipPath).toMatch(/^polygon\(/);
+            expect(icon.style.border).not.toBe("");
+            expect(icon).toHaveStyle({ backgroundColor: "red" });
+        });
+
+        it("should render solid fill with base color", () => {
+            createComponent({ item: starItem, chartFill: "solid" });
+
+            const icon = screen.getByTestId("legend-item").firstChild as HTMLElement;
+            expect(icon.style.clipPath).toMatch(/^polygon\(/);
+            expect(icon).toHaveStyle({ backgroundColor: "red" });
+        });
+    });
+
     it("should apply focused style when item is focused", () => {
         const focusedContextValue = {
             ...mockContextValue,

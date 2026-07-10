@@ -396,6 +396,10 @@ function MeasuredDiv({
             return;
         }
         const target = e.target as HTMLElement;
+        // Keydown bubbling in from portaled dropdowns must not drive the bar's roving focus.
+        if (!containerRef.current?.contains(target)) {
+            return;
+        }
         if (
             target.closest(
                 'input, textarea, select, [contenteditable="true"], [role="textbox"], [role="combobox"], [role="searchbox"], [role="spinbutton"]',

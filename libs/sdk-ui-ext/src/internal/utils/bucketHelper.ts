@@ -534,6 +534,12 @@ function bucketSupportsSubtitle(visualizationType: string, bucketLocalIdentifier
                 bucketLocalIdentifier === BucketNames.SEGMENT
             );
 
+        case VisualizationTypes.MEKKO:
+            return (
+                bucketLocalIdentifier === BucketNames.MEASURES ||
+                bucketLocalIdentifier === BucketNames.SECONDARY_MEASURES
+            );
+
         case VisualizationTypes.BUBBLE:
             return bucketLocalIdentifier !== BucketNames.VIEW;
 

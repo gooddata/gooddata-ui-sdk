@@ -4667,6 +4667,8 @@ export interface IParameterControlButtonProps {
     // (undocumented)
     className?: string;
     // (undocumented)
+    dropdownId?: string;
+    // (undocumented)
     isActive: boolean;
     // (undocumented)
     isDraggable?: boolean;
@@ -4685,7 +4687,11 @@ export interface IParameterControlButtonProps {
 // @internal (undocumented)
 export interface IParameterControlDropdownProps {
     // (undocumented)
+    ariaAttributes?: IDropdownBodyRenderProps["ariaAttributes"];
+    // (undocumented)
     constraints?: INumberParameterConstraints;
+    // (undocumented)
+    inputId?: string;
     // (undocumented)
     name: string;
     // (undocumented)

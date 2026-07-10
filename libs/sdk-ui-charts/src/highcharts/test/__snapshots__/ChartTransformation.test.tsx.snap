@@ -28,6 +28,7 @@ exports[`ChartTransformation > Legend config > should be always disabled for sin
         "propertiesMeta": {
           "isFilteringRecommended": false,
           "legend_enabled": false,
+          "stackToPercentDisabledByNegativeValues": false,
         },
       },
     ],
@@ -112,6 +113,7 @@ exports[`ChartTransformation > Legend config > should be enabled & on the top by
         "propertiesMeta": {
           "isFilteringRecommended": false,
           "legend_enabled": true,
+          "stackToPercentDisabledByNegativeValues": false,
         },
       },
     ],

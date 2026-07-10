@@ -25,34 +25,21 @@ import {
     WATERFALL_CHART_DATA_POINT_LIMIT,
 } from "../../constants/limits.js";
 import { type ChartType } from "../../typings/chartType.js";
-import {
-    type IChartOptions,
-    type IChartOptionsData,
-    type ISeriesDataItem,
-    type ISeriesItem,
-} from "../../typings/unsafe.js";
+import { type IChartOptions, type IChartOptionsData, type ISeriesItem } from "../../typings/unsafe.js";
 import { isDataOfReasonableSize } from "../_chartCreators/highChartsCreators.js";
-import { isOneOfTypes, isTreemap } from "../_util/common.js";
+import {
+    isMekko,
+    isNegativeValueIncluded,
+    isNegativeWidthIncluded,
+    isOneOfTypes,
+    isTreemap,
+} from "../_util/common.js";
 
 import { unsupportedNegativeValuesTypes } from "./chartCapabilities.js";
 
 export interface IValidationResult {
     dataTooLarge: boolean;
     hasNegativeValue: boolean;
-}
-
-const isNegativeNumber = (n: number | null | undefined): boolean => typeof n === "number" && n < 0;
-
-export function isNegativeValueIncluded(series: ISeriesItem[] | undefined): boolean {
-    if (!series) {
-        return false;
-    }
-    return series.some((seriesItem: ISeriesItem) =>
-        (seriesItem.data || []).some(
-            ({ y, value, weight }: ISeriesDataItem) =>
-                isNegativeNumber(y) || isNegativeNumber(value) || isNegativeNumber(weight),
-        ),
-    );
 }
 
 function getChartLimits(type: string | undefined, chartOptions?: IChartOptions): IChartLimits {
@@ -224,7 +211,9 @@ export function validateData(
         dataTooLarge:
             totalDataTooLarge || !isDataOfReasonableSize(dataToValidate, finalLimits, isViewByTwoAttributes),
         hasNegativeValue:
-            cannotShowNegativeValues(type) && isNegativeValueIncluded(chartOptions.data?.series),
+            (cannotShowNegativeValues(type) && isNegativeValueIncluded(chartOptions.data?.series)) ||
+            // Mekko: a negative Width (point `z`) yields a column with negative width — unrenderable.
+            (isMekko(type) && isNegativeWidthIncluded(chartOptions.data?.series)),
     };
 }
 

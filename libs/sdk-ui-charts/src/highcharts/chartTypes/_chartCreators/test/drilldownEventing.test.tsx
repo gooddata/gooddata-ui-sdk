@@ -93,6 +93,7 @@ describe("Drilldown Eventing", () => {
         expect(fn(VisualizationTypes.PIE)).toBe("slice");
         expect(fn(VisualizationTypes.TREEMAP)).toBe("slice");
         expect(fn(VisualizationTypes.HEATMAP)).toBe("cell");
+        expect(fn(VisualizationTypes.MEKKO)).toBe("bar");
         expect(() => {
             fn("headline"); // headline is not defined
         }).toThrowError();

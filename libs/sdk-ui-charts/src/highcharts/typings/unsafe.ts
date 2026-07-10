@@ -77,6 +77,7 @@ export interface IStackMeasuresConfig {
 export interface ISeriesDataItem {
     x?: number | null;
     y?: number | null;
+    z?: number;
     low?: number;
     high?: number;
     value?: number | null;
@@ -173,6 +174,7 @@ export interface IChartOptions {
     hasStackByAttribute?: boolean;
     hasViewByAttribute?: boolean;
     isViewByTwoAttributes?: boolean;
+    stackToPercentBlockedByNegativeValues?: boolean;
     legendLayout?: string;
     xAxes?: IAxis[];
     yAxes?: IAxis[];

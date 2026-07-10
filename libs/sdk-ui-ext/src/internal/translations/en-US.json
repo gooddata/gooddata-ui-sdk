@@ -67,6 +67,30 @@
         "text": "Metric",
         "crowdinContext": "Label for calculated indicators based on measure data that show performance (e.g., Revenue Growth, Profit Margin)"
     },
+    "dashboard.bucket.measures_title.mekko": {
+        "text": "Metric",
+        "crowdinContext": "Label for the measure that sets each Mekko column's width."
+    },
+    "dashboard.bucket.secondary_measures_title.mekko": {
+        "text": "Metric",
+        "crowdinContext": "Label for the measure that sets each Mekko column's height."
+    },
+    "dashboard.bucket.measures_subtitle.mekko": {
+        "text": "Width",
+        "crowdinContext": "Subtitle: this metric controls the column width in a Mekko chart."
+    },
+    "dashboard.bucket.secondary_measures_subtitle.mekko": {
+        "text": "Height",
+        "crowdinContext": "Subtitle: this metric controls the column height in a Mekko chart."
+    },
+    "dashboard.bucket.view_title.mekko": {
+        "text": "View by",
+        "crowdinContext": "Label for the attribute that creates one Mekko column per element."
+    },
+    "dashboard.bucket.stack_title.mekko": {
+        "text": "Stack by",
+        "crowdinContext": "Label for the attribute that splits each Mekko column into stacked segments."
+    },
     "dashboard.bucket.measures_subtitle.scatter": {
         "text": "X-axis",
         "crowdinContext": "Horizontal axis of a scatter plot."

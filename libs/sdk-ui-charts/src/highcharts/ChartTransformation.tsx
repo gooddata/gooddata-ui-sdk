@@ -156,12 +156,13 @@ function ChartTransformationImpl({
             invariant(onDataTooLarge, "Visualization's onDataTooLarge callback is missing.");
             onDataTooLarge(chartOptions, getDataTooLargeErrorMessage(config.limits!, chartOptions));
         } else if (validationResult.hasNegativeValue) {
-            // ignore hasNegativeValue if validation already fails on dataTooLarge
-            // force onNegativeValues error handling only for pie chart.
-            // hasNegativeValue can be true only for pie chart.
+            // ignore hasNegativeValue if validation already fails on dataTooLarge.
+            // hasNegativeValue is true for pie-family charts (any negative value) and for Mekko
+            // (negative Width). onNegativeValues is always supplied via withEntireDataView, so this
+            // invariant is a safety guard, not a pie-only constraint — both route to the empty state.
             invariant(
                 onNegativeValues,
-                '"onNegativeValues" callback required for pie chart transformation is missing.',
+                '"onNegativeValues" callback required for negative-value error handling is missing.',
             );
             onNegativeValues(chartOptions);
         } else {
@@ -172,6 +173,15 @@ function ChartTransformationImpl({
             propertiesMeta: {
                 legend_enabled: legendOptions.toggleEnabled,
                 isFilteringRecommended,
+                // Mekko: "Stack to 100%" was requested but downgraded to absolute stacking because the
+                // Height metric has negative values (percent of mixed-sign segments is undefined).
+                // Surfaced as an info note in AD; the property stays set so 100% re-enables once cleaned.
+                // No Stack-by means no percent stacking to downgrade (getStackingConfig only yields
+                // "percent" with a stack attribute), so the note must not show.
+                stackToPercentDisabledByNegativeValues:
+                    Boolean(config.stackMeasuresToPercent) &&
+                    Boolean(chartOptions.hasStackByAttribute) &&
+                    Boolean(chartOptions.stackToPercentBlockedByNegativeValues),
             },
             colors: {
                 colorAssignments: chartOptions.colorAssignments,

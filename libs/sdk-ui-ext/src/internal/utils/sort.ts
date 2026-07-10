@@ -167,6 +167,7 @@ export function createSorts(
     switch (type) {
         case VisualizationTypes.COLUMN:
         case VisualizationTypes.LINE:
+        case VisualizationTypes.MEKKO:
             return [];
         case VisualizationTypes.BAR:
             return getDefaultBarChartSort(insight, canSortStackTotalValue(insight, supportedControls));

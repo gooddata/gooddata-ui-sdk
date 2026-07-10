@@ -10,7 +10,12 @@ import {
     isNumberParameterDefinition,
     objRefToString,
 } from "@gooddata/sdk-model";
-import { Dropdown, ParameterControlButton, ParameterControlDropdown } from "@gooddata/sdk-ui-kit";
+import {
+    Dropdown,
+    ParameterControlButton,
+    ParameterControlDropdown,
+    useIdPrefixed,
+} from "@gooddata/sdk-ui-kit";
 
 import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectCatalogParameterByRef } from "../../../model/store/catalog/catalogSelectors.js";
@@ -47,6 +52,7 @@ export function DashboardParameterFilter({ parameter }: IDashboardParameterFilte
     const resetValue = useDashboardSelector(selectParameterResetValueByRef(parameter.ref));
     const reconciliation = useDashboardSelector(selectParameterReconciliationByRef(parameter.ref));
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
+    const valueInputId = useIdPrefixed("parameter-value-input");
 
     if (parameter.mode === DashboardParameterModeValues.HIDDEN || runtimeOverride === undefined) {
         return null;
@@ -79,23 +85,29 @@ export function DashboardParameterFilter({ parameter }: IDashboardParameterFilte
     return (
         <DraggableChipSource dragItem={dragItem} canDrag={isInEditMode}>
             <Dropdown
-                renderButton={({ isOpen, toggleDropdown }) => (
+                autofocusOnOpen
+                initialFocus={valueInputId}
+                closeOnEscape
+                renderButton={({ isOpen, toggleDropdown, dropdownId }) => (
                     <ParameterControlButton
                         name={name}
                         value={runtimeOverride}
                         isActive={isOpen}
                         isDraggable={isInEditMode}
+                        dropdownId={dropdownId}
                         onClick={() => toggleDropdown()}
                         warningTooltip={warningTooltip}
                         data-testid={`dashboard-parameter-${objRefToString(parameter.ref)}`}
                     />
                 )}
-                renderBody={({ closeDropdown }) => (
+                renderBody={({ closeDropdown, ariaAttributes }) => (
                     <ParameterControlDropdown
                         name={name}
                         value={runtimeOverride}
                         resetValue={resetValue}
                         constraints={constraints}
+                        inputId={valueInputId}
+                        ariaAttributes={ariaAttributes}
                         onApply={(value) => {
                             dispatch(tabsActions.setParameterRuntimeValue({ ref: parameter.ref, value }));
                             closeDropdown();

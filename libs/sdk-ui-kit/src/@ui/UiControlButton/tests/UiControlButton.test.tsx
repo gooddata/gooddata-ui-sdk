@@ -139,7 +139,17 @@ describe("UiControlButton", () => {
 
     it("suppresses the warning tooltip while the button is open", () => {
         render(<UiControlButton title="T" isWarning warningTooltip="Out of range" isOpen />);
-        expect(screen.getByRole("button")).not.toHaveAttribute("aria-describedby");
+        expect(screen.getByRole("button")).not.toHaveAccessibleDescription();
+    });
+
+    it("keeps the same chip element and its focus when a warning chip opens", () => {
+        const { rerender } = render(<UiControlButton title="T" isWarning warningTooltip="Out of range" />);
+        const button = screen.getByRole("button");
+        button.focus();
+
+        rerender(<UiControlButton title="T" isWarning warningTooltip="Out of range" isOpen />);
+        expect(screen.getByRole("button")).toBe(button);
+        expect(document.activeElement).toBe(button);
     });
 
     it("still wires a tooltip when warning and disabled co-occur", () => {

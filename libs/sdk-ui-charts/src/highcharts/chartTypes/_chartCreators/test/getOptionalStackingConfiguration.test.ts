@@ -864,5 +864,20 @@ describe("getOptionalStackingConfiguration", () => {
             });
             expect(result).toEqual(expectedConfig);
         });
+
+        it("should not convert min/max for a Mekko whose Height has negative values (percent downgraded to absolute)", () => {
+            // getChartOptions sets the flag when a Mekko's Height metric contains negative values
+            const chartOptions = {
+                type: VisualizationTypes.MEKKO,
+                stackToPercentBlockedByNegativeValues: true,
+            } as IChartOptions;
+            const config = { yAxis: [{ min: 0.1, max: 0.9, opposite: false }] };
+
+            const result = convertMinMaxFromPercentToNumber(chartOptions, config, {
+                stackMeasuresToPercent: true,
+            });
+
+            expect(result).toEqual({});
+        });
     });
 });

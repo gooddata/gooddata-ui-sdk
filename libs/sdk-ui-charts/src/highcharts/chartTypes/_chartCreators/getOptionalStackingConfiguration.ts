@@ -214,7 +214,9 @@ export function getStackMeasuresConfiguration(
 ): IStackMeasuresConfig {
     const { stackMeasures = false, stackMeasuresToPercent = false } = chartConfig;
 
-    const canStackInPercent = canComboChartBeStackedInPercent(chartOptions.data?.series ?? []);
+    const canStackInPercent =
+        canComboChartBeStackedInPercent(chartOptions.data?.series ?? []) &&
+        !chartOptions.stackToPercentBlockedByNegativeValues;
 
     if (!stackMeasures && !stackMeasuresToPercent) {
         return {};
@@ -288,7 +290,9 @@ export function getShowInPercentConfiguration(
     _config: HighchartsOptions = {},
 ): HighchartsOptions {
     const { stackMeasuresToPercent = false, primaryChartType } = chartConfig;
-    const canStackInPercent = canComboChartBeStackedInPercent(chartOptions.data?.series);
+    const canStackInPercent =
+        canComboChartBeStackedInPercent(chartOptions.data?.series) &&
+        !chartOptions.stackToPercentBlockedByNegativeValues;
 
     if (!canStackInPercent || !stackMeasuresToPercent || isLineChart(primaryChartType)) {
         return {};
@@ -318,12 +322,14 @@ export function getShowInPercentConfiguration(
  * Only applied to primary Y axis
  */
 export function convertMinMaxFromPercentToNumber(
-    _chartOptions: IChartOptions,
+    chartOptions: IChartOptions,
     config: HighchartsOptions,
     chartConfig: IChartConfig,
 ): HighchartsOptions {
     const { stackMeasuresToPercent = false } = chartConfig;
-    if (!stackMeasuresToPercent) {
+    // When Mekko downgrades 100%→absolute (negative Height) the axis shows absolute values, so
+    // user min/max must not be rescaled — same guard as the sibling stacking-config functions.
+    if (!stackMeasuresToPercent || chartOptions?.stackToPercentBlockedByNegativeValues) {
         return {};
     }
     let yAxes;

@@ -19,6 +19,15 @@ const POINT_SHAPES_CONFIGS: { symbol: PointShapeSymbolType }[] = [
     { symbol: "triangle" },
     { symbol: "triangle-down" },
     { symbol: "diamond" },
+    { symbol: "star" },
+    { symbol: "cross" },
+    { symbol: "plus" },
+    { symbol: "pentagon" },
+    { symbol: "hexagon" },
+    { symbol: "octagon" },
+    { symbol: "arrow" },
+    { symbol: "triangle-left" },
+    { symbol: "triangle-right" },
 ];
 
 /**

@@ -285,6 +285,28 @@ export const SCATTERPLOT_SUPPORTED_PROPERTIES = [
     ...CUSTOM_TOOLTIP_PROPERTIES,
 ];
 
+export const MEKKO_SUPPORTED_PROPERTIES = [
+    "stackMeasures",
+    "stackMeasuresToPercent",
+    "dataLabels.visible",
+    "dataLabels.style",
+    "legend",
+    "grid",
+    "yaxis.labelsEnabled",
+    "yaxis.rotation",
+    "yaxis.visible",
+    "yaxis.min",
+    "yaxis.max",
+    "yaxis.name.visible",
+    "yaxis.name.position",
+    "yaxis.format",
+    "colorMapping",
+    "disableDrillDown",
+    "disableAlerts",
+    "disableScheduledExports",
+    "chartConfigOverride",
+];
+
 export const PIECHART_SUPPORTED_PROPERTIES = [
     "dataLabels.visible",
     "dataLabels.style",

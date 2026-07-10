@@ -100,7 +100,7 @@ export function UiControlButton({
 }: IUiControlButtonProps) {
     const tooltipId = useIdPrefixed("gd-ui-kit-control-button-tooltip");
     const showDisabledTooltip = !!disabled && !!disabledTooltip;
-    const showWarningTooltip = !!isWarning && !!warningTooltip && !isOpen && !showDisabledTooltip;
+    const showWarningTooltip = !!isWarning && !!warningTooltip && !showDisabledTooltip;
     const showTooltip = showDisabledTooltip || showWarningTooltip;
     const hasSubtitle = subtitle !== undefined || subtitleExtension !== undefined;
     // Trailing colon on the label, only when a subtitle follows it.
@@ -190,6 +190,7 @@ export function UiControlButton({
                 triggerBy={showWarningTooltip ? ["hover", "focus"] : ["focus"]}
                 arrowPlacement="top"
                 showArrow
+                disabled={!!isOpen}
             />
         );
     }

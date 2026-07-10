@@ -22,6 +22,7 @@ import { getDonutConfiguration } from "../donutChart/donutConfiguration.js";
 import { getFunnelConfiguration } from "../funnelChart/funnelConfiguration.js";
 import { getHeatmapConfiguration } from "../heatmap/heatmapConfiguration.js";
 import { getLineConfiguration } from "../lineChart/lineConfiguration.js";
+import { getMekkoConfiguration } from "../mekko/mekkoConfiguration.js";
 import { getPieConfiguration } from "../pieChart/pieConfiguration.js";
 import { getPyramidConfiguration } from "../pyramidChart/pyramidConfiguration.js";
 import { getRadarConfiguration } from "../radarChart/radarConfiguration.js";
@@ -64,6 +65,7 @@ const chartConfigurationMap: {
     [VisualizationTypes.DEPENDENCY_WHEEL]: getDependencyWheelConfiguration,
     [VisualizationTypes.WATERFALL]: getWaterfallConfiguration,
     [VisualizationTypes.RADAR]: getRadarConfiguration,
+    [VisualizationTypes.MEKKO]: getMekkoConfiguration,
 };
 
 export function getHighchartsOptions(

@@ -533,6 +533,11 @@ export interface IFeatureFlags {
     enableRadarChart?: boolean;
 
     /**
+     * Indicates whether the Mekko Chart is available in AD.
+     */
+    enableMekkoChart?: boolean;
+
+    /**
      * Indicates whether the Embed dashboard button is available in KPI dashboards.
      */
     enableEmbedButtonInKD?: boolean;
@@ -980,7 +985,7 @@ export interface IFeatureFlags {
     /**
      * Enable NULL-aware joins used for FULL OUTER JOIN conditions.
      */
-    enableNullJoins?: boolean;
+    enableNullableJoins?: boolean;
 
     /**
      * Enable dashboard density setting.
@@ -1070,6 +1075,11 @@ export interface IFeatureFlags {
      * Enable observability in AI Assistant.
      */
     enableGenAiObservability?: boolean;
+
+    /**
+     * Enable period-over-period comparison percentages in AI Assistant observability.
+     */
+    enableGenAiObservabilityPercentages?: boolean;
 
     /**
      * Enable Anthropic provider in LLM configuration.

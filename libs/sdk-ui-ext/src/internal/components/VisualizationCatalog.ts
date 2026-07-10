@@ -20,6 +20,7 @@ import { GeoPushpinChartNextDescriptor } from "./pluggableVisualizations/geoChar
 import { HeadlineDescriptor } from "./pluggableVisualizations/headline/HeadlineDescriptor.js";
 import { HeatmapDescriptor } from "./pluggableVisualizations/heatMap/HeatmapDescriptor.js";
 import { LineChartDescriptor } from "./pluggableVisualizations/lineChart/LineChartDescriptor.js";
+import { MekkoDescriptor } from "./pluggableVisualizations/mekko/MekkoDescriptor.js";
 import { PieChartDescriptor } from "./pluggableVisualizations/pieChart/PieChartDescriptor.js";
 import { PivotTableDescriptor } from "./pluggableVisualizations/pivotTable/PivotTableDescriptor.js";
 import { PivotTableNextDescriptor } from "./pluggableVisualizations/pivotTableNext/PivotTableNextDescriptor.js";
@@ -182,6 +183,7 @@ const DefaultVisualizations = {
     tablenext: PivotTableNextDescriptor,
     pushpinnext: GeoPushpinChartNextDescriptor,
     choropleth: GeoAreaChartDescriptor,
+    mekko: MekkoDescriptor,
 };
 
 /**

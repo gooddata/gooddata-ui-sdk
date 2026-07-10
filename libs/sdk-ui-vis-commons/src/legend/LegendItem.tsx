@@ -14,6 +14,7 @@ import { PatternFill } from "../coloring/PatternFill.js";
 import { type ChartFillType, type IPatternObject } from "../coloring/types.js";
 
 import { LegendSeriesContextStore, useItemVisibility } from "./context.js";
+import { getPointShapeClipPath } from "./pointShapes.js";
 import { type ISeriesItemMetric } from "./types.js";
 
 const DEFAULT_DISABLED_COLOR = "#CCCCCC";
@@ -50,64 +51,12 @@ function getPointShapeStyles(
                 width: `${Math.round(iconSize * 0.7)}px`,
                 height: `${Math.round(iconSize * 0.7)}px`,
             };
-        case "triangle":
-        case "triangle-down":
-            return {
-                borderRadius: "0",
-                width: "0",
-                height: "0",
-                backgroundColor: "transparent",
-            };
         case "circle":
         default:
             return {
                 borderRadius: "50%", // Circular
             };
     }
-}
-
-function getTrianglePointShapesStyles(
-    pointShape: string | undefined,
-    chartFill: string | undefined,
-    triangleColor: string,
-    iconSize: number,
-): CSSProperties {
-    const isTriangle = pointShape === "triangle" || pointShape === "triangle-down";
-
-    if (!isTriangle) {
-        return {};
-    }
-
-    const triangleStyles: CSSProperties = {
-        width: `${iconSize}px`,
-        height: `${iconSize}px`,
-    };
-
-    // For pattern and outline fills, we need actual area for content/border
-    // Use clip-path method for these cases
-    if (chartFill === "pattern" || chartFill === "outline") {
-        if (pointShape === "triangle") {
-            triangleStyles.clipPath = "polygon(50% 0%, 0% 100%, 100% 100%)";
-        } else if (pointShape === "triangle-down") {
-            triangleStyles.clipPath = "polygon(0% 0%, 100% 0%, 50% 100%)";
-        }
-    } else {
-        // Use border method for solid fills only - ensure clip-path is reset
-        triangleStyles.clipPath = "none";
-        if (pointShape === "triangle") {
-            triangleStyles.borderLeft = `${iconSize / 2}px solid transparent`;
-            triangleStyles.borderRight = `${iconSize / 2}px solid transparent`;
-            triangleStyles.borderBottom = `${iconSize}px solid ${triangleColor}`;
-            triangleStyles.borderTop = "none";
-        } else if (pointShape === "triangle-down") {
-            triangleStyles.borderLeft = `${iconSize / 2}px solid transparent`;
-            triangleStyles.borderRight = `${iconSize / 2}px solid transparent`;
-            triangleStyles.borderTop = `${iconSize}px solid ${triangleColor}`;
-            triangleStyles.borderBottom = "none";
-        }
-    }
-
-    return triangleStyles;
 }
 
 function getIconStyle(
@@ -125,21 +74,26 @@ function getIconStyle(
 
     const iconSize = 9;
 
-    // For triangles, we need special CSS border handling to create the triangle shape
-    const isTriangle = pointShape === "triangle" || pointShape === "triangle-down";
+    // Polygonal shapes (triangles, star, pentagon, cross, ...) are rendered with a CSS clip-path
+    // derived from the same normalized geometry as the Highcharts markers; the fill mode is
+    // applied by the switch below.
+    const clipPath = getPointShapeClipPath(pointShape);
 
-    const baseCssProps: CSSProperties = {
-        ...getPointShapeStyles(pointShape, iconSize, enableBorderRadius),
-        ...getTrianglePointShapesStyles(pointShape, appliedChartFill, baseColor, iconSize),
-    };
+    const baseCssProps: CSSProperties = clipPath
+        ? {
+              clipPath,
+              width: `${iconSize}px`,
+              height: `${iconSize}px`,
+          }
+        : getPointShapeStyles(pointShape, iconSize, enableBorderRadius);
 
     switch (appliedChartFill) {
         case "pattern":
             return {
                 ...baseCssProps,
                 color: baseColor,
-                // Don't override triangle borders
-                border: isTriangle ? undefined : `1px solid ${baseColor}`,
+                // a border on clip-path shapes would be clipped away
+                border: clipPath ? undefined : `1px solid ${baseColor}`,
                 position: "relative",
                 backgroundColor: isVisible ? "transparent" : baseColor,
             };
@@ -153,7 +107,7 @@ function getIconStyle(
         default:
             return {
                 ...baseCssProps,
-                backgroundColor: isTriangle ? "transparent" : baseColor,
+                backgroundColor: baseColor,
             };
     }
 }

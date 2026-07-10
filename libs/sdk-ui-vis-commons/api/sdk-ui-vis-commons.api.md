@@ -98,6 +98,9 @@ export const ColorUtils: {
 // @internal
 export function composeCustomTooltipSectionHtml(content: string, inChartValues: IResolvedReferenceValues, externalValues: IResolvedReferenceValues, localizedStrings: ITooltipLocalizedStrings): string;
 
+// @internal
+export const CUSTOM_POINT_SHAPES: string[];
+
 // @alpha
 export type CustomTooltipPlacement = "above" | "below" | "replace";
 
@@ -157,6 +160,12 @@ export function getPatternFillByIndex(index: number): IPatternOptionsObject;
 
 // @internal
 export function getPatternFillByName(name: PatternFillName): IPatternOptionsObject | undefined;
+
+// @internal
+export function getPointShapeClipPath(pointShape: string | undefined): string | undefined;
+
+// @internal
+export function getPointShapeSvgPath(pointShape: string, x: number, y: number, width: number, height: number): Array<Array<string | number>> | undefined;
 
 // @internal (undocumented)
 export function getRgbFromWebColor(input: string): IRgbColorValue | null;
@@ -709,6 +718,9 @@ export function PatternFill(input: IPatternFillProps): JSX.Element;
 
 // @internal (undocumented)
 export type PatternFillName = (typeof PATTERN_FILLS)[number]["name"];
+
+// @internal
+export const POINT_SHAPE_POLYGONS: Record<string, ReadonlyArray<readonly [number, number]>>;
 
 // @internal (undocumented)
 export function PopUpLegend(input: IPopUpLegendProps): JSX.Element;
