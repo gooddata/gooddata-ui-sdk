@@ -8,9 +8,11 @@ import {
     loadColorMapping,
     loadCustomTooltip,
     loadDisableKda,
+    loadLineStyleMapping,
     saveChartFill,
     saveColorMapping,
     saveCustomTooltip,
+    saveLineStyleMapping,
 } from "../utils/configUtils.js";
 import { getFullBucket } from "../utils/sharedUtils.js";
 
@@ -18,6 +20,7 @@ import {
     type ChartFillType,
     type ColorMapping,
     type ICustomTooltip,
+    type LineStyleMapping,
     type PatternFillName,
     type PointShapeSymbol,
 } from "./types.js";
@@ -104,6 +107,7 @@ export type ComboChartConfigProperties = {
     customTooltip: ICustomTooltip;
     thresholdMeasures: string[];
     thresholdExcludedMeasures: string[];
+    lineStyleMapping: Array<LineStyleMapping>;
 };
 
 /** @internal */
@@ -179,6 +183,7 @@ const DEFAULTS: ConfigDefaults<ComboChartConfigProperties> = {
     customTooltip: DEFAULT_CUSTOM_TOOLTIP,
     thresholdMeasures: [],
     thresholdExcludedMeasures: [],
+    lineStyleMapping: [],
 };
 
 /** @internal */
@@ -382,6 +387,13 @@ export function comboChartLoad(props: VisualisationConfig<ComboChartConfigProper
                     ],
                 ];
             }
+            case "lineStyleMapping":
+                return [
+                    [
+                        "line_style_mapping",
+                        loadLineStyleMapping(value as (typeof DEFAULTS)["lineStyleMapping"]),
+                    ],
+                ];
             default:
                 return [];
         }
@@ -534,6 +546,9 @@ export function comboChartSave(
             config.line_style_excluded_metrics,
             DEFAULTS.thresholdExcludedMeasures,
             "array",
+        ),
+        lineStyleMapping: saveLineStyleMapping(
+            config["line_style_mapping"] as Record<string, { style?: string; width?: number }> | undefined,
         ),
     });
 }

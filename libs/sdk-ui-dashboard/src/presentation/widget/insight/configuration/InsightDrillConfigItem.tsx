@@ -3,13 +3,11 @@
 import { type ReactNode, useMemo } from "react";
 
 import cx from "classnames";
-import { cloneDeep, compact, isEqual } from "lodash-es";
+import { cloneDeep } from "lodash-es";
 import { FormattedMessage, type IntlShape, useIntl } from "react-intl";
 import { invariant } from "ts-invariant";
 
 import {
-    type IDrillToDashboard,
-    type IDrillToInsight,
     type IdentifierRef,
     type InsightDrillDefinition,
     type UriRef,
@@ -21,13 +19,10 @@ import { simplifyText } from "@gooddata/util";
 
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { selectCatalogDateDatasets } from "../../../../model/store/catalog/catalogSelectors.js";
-import { selectEnableFilterControlInDrillingConfiguration } from "../../../../model/store/config/configSelectors.js";
 import { selectDrillTargetsByWidgetRef } from "../../../../model/store/drillTargets/drillTargetsSelectors.js";
-import { selectWidgetDrills } from "../../../../model/store/tabs/layout/layoutSelectors.js";
 import {
     DRILL_TARGET_TYPE,
     type IDrillConfigItem,
-    type IDrillDownAttributeHierarchyConfig,
     type IDrillDownAttributeHierarchyDefinition,
     isDrillDownToAttributeHierarchyConfig,
     isDrillToDashboardConfig,
@@ -37,7 +32,6 @@ import {
 import { DrillFiltersTrigger } from "./DrillFilters/DrillFiltersTrigger.js";
 import { useDrillFiltersCount } from "./DrillFilters/useDrillFiltersCount.js";
 import { useDrillFiltersSubview } from "./DrillFilters/useDrillFiltersSubview.js";
-import { DrillIntersectionIgnoredAttributes } from "./DrillIntersectionIgnoredAttributes.js";
 import { DrillOriginItem } from "./DrillOriginItem.js";
 import { DrillTargets } from "./DrillTargets/DrillTargets.js";
 import { DrillTargetType } from "./DrillTargetType/DrillTargetType.js";
@@ -82,9 +76,6 @@ export function DrillConfigItem({
     onDelete,
 }: IDrillConfigItemProps) {
     const intl = useIntl();
-    const isDrillFiltersConfigEnabled = useDashboardSelector(
-        selectEnableFilterControlInDrillingConfiguration,
-    );
     const { openDrillFilters } = useDrillFiltersSubview();
     const onDeleteClick = () => {
         onDelete(item);
@@ -115,7 +106,6 @@ export function DrillConfigItem({
     );
 
     const { widgetRef } = item;
-    const widgetDrills = useDashboardSelector(selectWidgetDrills(widgetRef));
     invariant(widgetRef, "mush have widget selected");
 
     const { isFromDateAttribute, showDateFilterTransferWarning } = useDateAttributeOptions(item, widgetRef);
@@ -124,12 +114,6 @@ export function DrillConfigItem({
         item.type === "measure",
         intl,
     );
-
-    const isAllowedDrillTypeForDrillIntersectionIgnoredAttributes = compact([
-        DRILL_TARGET_TYPE.DRILL_TO_DASHBOARD,
-        DRILL_TARGET_TYPE.DRILL_TO_INSIGHT,
-        DRILL_TARGET_TYPE.DRILL_DOWN,
-    ]).some((drillTarget) => drillTarget === item?.drillTargetType);
 
     const showDrillConfigButton =
         (item.drillTargetType === DRILL_TARGET_TYPE.DRILL_DOWN &&
@@ -141,44 +125,6 @@ export function DrillConfigItem({
         (item.drillTargetType === DRILL_TARGET_TYPE.DRILL_TO_DASHBOARD &&
             isDrillToDashboardConfig(item) &&
             !!item.dashboard);
-
-    const showDrillIntersectionIgnoredAttributes = isAllowedDrillTypeForDrillIntersectionIgnoredAttributes;
-
-    const onDrillIntersectionIgnoredAttributesChange = (ignoredAttributeLocalIds: string[]) => {
-        const targetDrill = widgetDrills.find((d) => d.localIdentifier === item.localIdentifier);
-        const currentIgnoredAttributes = item.drillIntersectionIgnoredAttributes ?? [];
-        const isDrillDown = item.drillTargetType === DRILL_TARGET_TYPE.DRILL_DOWN;
-        const isChanged = !isEqual(currentIgnoredAttributes, ignoredAttributeLocalIds);
-        if (isDrillDown && isChanged) {
-            const drillDownItem: IDrillDownAttributeHierarchyDefinition = {
-                attributeHierarchyRef: (item as IDrillDownAttributeHierarchyConfig).attributeHierarchyRef,
-                type: "drillDownAttributeHierarchy",
-                attributes: item.attributes,
-                originLocalIdentifier: item.originLocalIdentifier,
-                drillIntersectionIgnoredAttributes: ignoredAttributeLocalIds,
-            };
-
-            onSetup(
-                drillDownItem,
-                {
-                    ...item,
-                    drillIntersectionIgnoredAttributes: ignoredAttributeLocalIds,
-                } as IDrillConfigItem,
-                true,
-            );
-        } else if (targetDrill && isChanged) {
-            onSetup(
-                {
-                    ...targetDrill,
-                    drillIntersectionIgnoredAttributes: ignoredAttributeLocalIds,
-                } as IDrillToInsight | IDrillToDashboard,
-                {
-                    ...item,
-                    drillIntersectionIgnoredAttributes: ignoredAttributeLocalIds,
-                },
-            );
-        }
-    };
 
     return (
         <div className={classNames}>
@@ -211,19 +157,11 @@ export function DrillConfigItem({
 
                     <DrillTargets item={item} onSetup={onSetup} onDeleteInteraction={onDeleteClick} />
 
-                    {isDrillFiltersConfigEnabled ? (
-                        showDrillConfigButton ? (
-                            <DrillFiltersTrigger
-                                label={drillFilterButtonLabel}
-                                isLoading={isLoading}
-                                onClick={() => openDrillFilters(item.localIdentifier)}
-                            />
-                        ) : null
-                    ) : showDrillIntersectionIgnoredAttributes ? (
-                        <DrillIntersectionIgnoredAttributes
-                            drillTargetType={item.drillTargetType}
-                            item={item}
-                            onChange={onDrillIntersectionIgnoredAttributesChange}
+                    {showDrillConfigButton ? (
+                        <DrillFiltersTrigger
+                            label={drillFilterButtonLabel}
+                            isLoading={isLoading}
+                            onClick={() => openDrillFilters(item.localIdentifier)}
                         />
                     ) : null}
                     {!!item.warning && (

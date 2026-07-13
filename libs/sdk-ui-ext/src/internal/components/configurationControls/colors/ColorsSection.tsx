@@ -6,15 +6,15 @@ import cx from "classnames";
 import { cloneDeep, set } from "lodash-es";
 import { useIntl } from "react-intl";
 
-import { type IColor } from "@gooddata/sdk-model";
-import { type ChartFillType } from "@gooddata/sdk-ui-charts";
+import { type IColor, isMeasureDescriptor } from "@gooddata/sdk-model";
+import { type ChartFillType, type LineStyle } from "@gooddata/sdk-ui-charts";
 import { Button } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../../locales.js";
 import { fillDropdownItems } from "../../../constants/dropdowns.js";
 import { type IColorConfiguration, type IColoredItem } from "../../../interfaces/Colors.js";
 import { type IReferences, type IVisualizationProperties } from "../../../interfaces/Visualization.js";
-import { getColoredInputItems, getProperties } from "../../../utils/colors.js";
+import { getColoredInputItems, getLineStyleProperties, getProperties } from "../../../utils/colors.js";
 import { getTranslatedDropdownItems, getTranslation } from "../../../utils/translations.js";
 import { ConfigSection } from "../../configurationControls/ConfigSection.js";
 import { DropdownControl } from "../DropdownControl.js";
@@ -35,6 +35,7 @@ export interface IColorsSectionProps {
     isChartFillDisabled?: boolean;
     /** Optional controls rendered above the fill dropdown, inside the section. */
     additionalControls?: ReactNode;
+    supportsLineStyles?: boolean;
 }
 
 export const COLOR_MAPPING_CHANGED = "COLOR_MAPPING_CHANGED";
@@ -51,6 +52,7 @@ export function ColorsSection({
     chartFillIgnoredMeasures = [],
     isChartFillDisabled,
     additionalControls,
+    supportsLineStyles,
 }: IColorsSectionProps) {
     const intl = useIntl();
     const onSelect = (selectedColorItem: IColoredItem, color: IColor) => {
@@ -65,26 +67,51 @@ export function ColorsSection({
         pushData?.(message);
     };
 
+    const onLineStyleOrWidthChange = (
+        item: IColoredItem,
+        lineStyle: LineStyle | undefined,
+        lineWidth: (1 | 2 | 3 | 4) | undefined,
+    ) => {
+        const { mappingHeader } = item;
+        if (!mappingHeader || !properties || !isMeasureDescriptor(mappingHeader)) {
+            return;
+        }
+        const localId = mappingHeader.measureHeaderItem.localIdentifier;
+        if (!localId) {
+            return;
+        }
+        const newProperties = getLineStyleProperties(properties, localId, lineStyle, lineWidth);
+        pushData?.({ messageId: COLOR_MAPPING_CHANGED, properties: newProperties });
+    };
+
+    const onLineStyleChange = (item: IColoredItem, lineStyle: LineStyle) =>
+        onLineStyleOrWidthChange(item, lineStyle, item.lineWidth);
+
+    const onLineWidthChange = (item: IColoredItem, lineWidth: 1 | 2 | 3 | 4) =>
+        onLineStyleOrWidthChange(item, item.lineStyle, lineWidth);
+
     const isColoredListVisible = () => {
         return isLoading || (!controlsDisabled && colors?.colorPalette && hasMeasures);
     };
 
     const isDefaultColorMapping = () => {
         const colorMapping = properties?.controls?.["colorMapping"] ?? [];
-        return !colorMapping || colorMapping.length === 0;
+        const lineStyleMapping = supportsLineStyles ? (properties?.controls?.["lineStyleMapping"] ?? []) : [];
+        return (
+            (!colorMapping || colorMapping.length === 0) &&
+            (!lineStyleMapping || lineStyleMapping.length === 0)
+        );
     };
 
     const onResetColors = () => {
         if (isDefaultColorMapping()) {
             return;
         }
-        const propertiesWithoutColorMapping = set(cloneDeep(properties!), "controls.colorMapping", undefined);
-        const message: any = {
-            messageId: COLOR_MAPPING_CHANGED,
-            properties: propertiesWithoutColorMapping,
-            references: {},
-        };
-        pushData?.(message);
+        let updatedProperties = set(cloneDeep(properties!), "controls.colorMapping", undefined);
+        if (supportsLineStyles) {
+            updatedProperties = set(updatedProperties, "controls.lineStyleMapping", undefined);
+        }
+        pushData?.({ messageId: COLOR_MAPPING_CHANGED, properties: updatedProperties, references: {} });
     };
 
     const renderResetButton = () => {
@@ -97,7 +124,10 @@ export function ColorsSection({
         return (
             <div className={classes}>
                 <Button
-                    value={getTranslation(messages["resetColors"].id, intl)}
+                    value={getTranslation(
+                        supportsLineStyles ? messages["resetColorsAndStyles"].id : messages["resetColors"].id,
+                        intl,
+                    )}
                     className="gd-button-link s-reset-colors-button"
                     onClick={onResetColors}
                     disabled={isDisabled}
@@ -110,10 +140,10 @@ export function ColorsSection({
         if (!supportsChartFill) {
             return null;
         }
+        // when all colors are used for disabled measures, chart fill is not available
         const isDisabled =
             controlsDisabled ||
             isChartFillDisabled ||
-            // when all colors are used for disabled measures, chart fill is not available
             chartFillIgnoredMeasures.length === colors?.colorAssignments.length;
         const currentChartFillValue: ChartFillType = isChartFillDisabled
             ? "solid"
@@ -135,7 +165,10 @@ export function ColorsSection({
     };
 
     const renderColoredList = () => {
-        const inputItems = getColoredInputItems(colors);
+        const lineStyleMapping = supportsLineStyles
+            ? (properties?.controls?.["lineStyleMapping"] ?? [])
+            : undefined;
+        const inputItems = getColoredInputItems(colors, lineStyleMapping);
         const colorPalette = colors?.colorPalette ? colors.colorPalette : [];
         const chartFill = isChartFillDisabled ? undefined : properties?.controls?.["chartFill"];
 
@@ -149,6 +182,9 @@ export function ColorsSection({
                     isLoading={isLoading}
                     chartFill={chartFill}
                     chartFillIgnoredMeasures={chartFillIgnoredMeasures}
+                    supportsLineStyles={supportsLineStyles}
+                    onLineStyleChange={supportsLineStyles ? onLineStyleChange : undefined}
+                    onLineWidthChange={supportsLineStyles ? onLineWidthChange : undefined}
                 />
                 {renderResetButton()}
                 {additionalControls}
@@ -169,9 +205,11 @@ export function ColorsSection({
         return isColoredListVisible() ? renderColoredList() : renderUnsupportedColoredList();
     };
 
-    const sectionTitleTranslationId = supportsChartFill
-        ? messages["colorsAndFills"].id
-        : messages["colors"].id;
+    const sectionTitleTranslationId = supportsLineStyles
+        ? messages["colorsAndStyles"].id
+        : supportsChartFill
+          ? messages["colorsAndFills"].id
+          : messages["colors"].id;
 
     return (
         <ConfigSection

@@ -731,10 +731,6 @@
             "allowedCategories": ["production"]
         },
         {
-            "name": "fixed-data-table-2",
-            "allowedCategories": ["production"]
-        },
-        {
             "name": "fork-ts-checker-webpack-plugin",
             "allowedCategories": ["examples", "production"]
         },

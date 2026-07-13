@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 0442cdd2eea7db6d6ce38e58b1501dd0a56dfd973a92d1ef9cedfaa4ac3e4149
+# schema-hash: a24115f6345c86cd254fa623ff5aea6964832a8a7585392404e1ac2eb7839bbc
 
 from __future__ import annotations
 
@@ -111,6 +111,8 @@ __all__ = [
     "LayerItem1",
     "LayerItem2",
     "LayerItemBase",
+    "LineStyleMapping",
+    "LineStyleMapping1",
     "Locale",
     "Metadata",
     "Metadata1",
@@ -575,6 +577,14 @@ class WidthItem(TypedDict):
 
 
 SimpleColorItem: TypeAlias = float | str
+
+
+class LineStyleMapping1(TypedDict):
+    style: NotRequired[Literal['solid', 'dashed', 'dotted']]
+    width: NotRequired[Literal[1, 2, 3, 4]]
+
+
+LineStyleMapping: TypeAlias = dict[str, LineStyleMapping1]
 
 
 ComplexColorItem: TypeAlias = float | str
@@ -1434,6 +1444,7 @@ class Config(TypedDict):
     line_style_control_metrics: NotRequired[list[str]]
     line_style_excluded_metrics: NotRequired[list[str]]
     custom_tooltip: NotRequired[CustomTooltip]
+    line_style_mapping: NotRequired[LineStyleMapping]
     conditional_formatting: NotRequired[ConditionalFormatting]
 
 

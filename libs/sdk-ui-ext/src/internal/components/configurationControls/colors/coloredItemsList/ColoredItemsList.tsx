@@ -3,13 +3,14 @@
 import { memo, useRef, useState } from "react";
 
 import { type IColor, type IColorPalette, isMeasureDescriptor } from "@gooddata/sdk-model";
-import { type IChartFillConfig } from "@gooddata/sdk-ui-charts";
+import { type IChartFillConfig, type LineStyle } from "@gooddata/sdk-ui-charts";
 import { DropdownList, GOODSTRAP_SCROLLED_EVENT } from "@gooddata/sdk-ui-kit";
 
 import { type IColoredItem } from "../../../../interfaces/Colors.js";
 import { getSearchedItems } from "../../../../utils/colors.js";
 
 import { ColoredItem } from "./ColoredItem.js";
+import { LineStyleColoredItem } from "./LineStyleColoredItem.js";
 
 const DROPDOWN_MAX_HEIGHT = 150;
 const SEARCH_FIELD_VISIBILITY_THRESHOLD = 7;
@@ -23,6 +24,9 @@ export interface IColoredItemsListProps {
     isLoading?: boolean;
     chartFill?: IChartFillConfig;
     chartFillIgnoredMeasures: string[];
+    supportsLineStyles?: boolean;
+    onLineStyleChange?: (item: IColoredItem, lineStyle: LineStyle) => void;
+    onLineWidthChange?: (item: IColoredItem, lineWidth: 1 | 2 | 3 | 4) => void;
 }
 
 function isChartFillIgnoredMeasure(item: IColoredItem, chartFillIgnoredMeasures: string[]) {
@@ -41,6 +45,9 @@ export const ColoredItemsList = memo(function ColoredItemsList(props: IColoredIt
         isLoading = false,
         chartFill,
         chartFillIgnoredMeasures,
+        supportsLineStyles,
+        onLineStyleChange,
+        onLineWidthChange,
     } = props;
 
     const [searchString, setSearchString] = useState<string>("");
@@ -102,6 +109,20 @@ export const ColoredItemsList = memo(function ColoredItemsList(props: IColoredIt
                     const appliedChartFill = isChartFillIgnoredMeasure(item, chartFillIgnoredMeasures)
                         ? undefined
                         : chartFill;
+                    if (supportsLineStyles && isMeasureDescriptor(item.mappingHeader)) {
+                        return (
+                            <LineStyleColoredItem
+                                colorPalette={colorPalette}
+                                onSelect={onSelect}
+                                disabled={disabled}
+                                item={item}
+                                chartFill={appliedChartFill}
+                                patternFillIndex={itemPatternFillIndexes[rowIndex]}
+                                onLineStyleChange={onLineStyleChange}
+                                onLineWidthChange={onLineWidthChange}
+                            />
+                        );
+                    }
                     return (
                         <ColoredItem
                             colorPalette={colorPalette}

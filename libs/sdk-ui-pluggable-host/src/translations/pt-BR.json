@@ -22,8 +22,6 @@
     "gs.host.error.appBuildExpired": "Este aplicativo está desatualizado e deve ser recompilado pelo autor antes de poder ser executado novamente.",
     "gs.host.error.appSecurityMetadataMissing": "Este aplicativo não tem os metadados de segurança obrigatórios e não pode ser carregado.",
     "gs.host.demoApp.validUntil": "Aplicativo de demonstração válido até {date}",
-    "gs.host.notification.newDeployment.message": "Uma nova versão do GoodData está disponível.",
-    "gs.host.notification.newDeployment.reloadLink": "Recarregar",
     "messages.genAi.visualisation.saved.success": "Legal! Salvamos sua visualização.",
     "messages.genAi.visualisation.saved.error": "Opa, houve um problema ao salvar sua visualização.",
     "messages.genAi.visualisation.saved.error.detail": "{errorType}: {errorMessage}",

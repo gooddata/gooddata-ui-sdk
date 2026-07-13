@@ -68,13 +68,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableMultipleMvfConditions,
-            "enableMultipleMvfConditions",
-            "BOOLEAN",
-            FeatureFlagsValues.enableMultipleMvfConditions,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableRankingWithMvf,
             "enableRankingWithMvf",
             "BOOLEAN",
@@ -744,13 +737,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableMeasureValueFilterKD",
             "BOOLEAN",
             FeatureFlagsValues.enableMeasureValueFilterKD,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableFilterControlInDrillingConfiguration,
-            "enableFilterControlInDrillingConfiguration",
-            "BOOLEAN",
-            FeatureFlagsValues.enableFilterControlInDrillingConfiguration,
         ),
         ...loadFeature(
             features,

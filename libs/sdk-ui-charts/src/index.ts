@@ -43,6 +43,8 @@ export type {
     ChartInlineVisualizationType,
     IInlineVisualizationsConfig,
     IChartClusteringConfig,
+    LineStyle,
+    ILineStyleMappingItem,
 } from "./interfaces/chartConfig.js";
 export type {
     IBucketChartProps,

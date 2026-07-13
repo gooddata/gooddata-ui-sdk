@@ -22,8 +22,6 @@
     "gs.host.error.appBuildExpired": "Ứng dụng này đã lỗi thời và tác giả của ứng dụng phải xây dựng lại trước khi có thể chạy lại.",
     "gs.host.error.appSecurityMetadataMissing": "Ứng dụng này thiếu siêu dữ liệu bảo mật bắt buộc và không thể tải.",
     "gs.host.demoApp.validUntil": "Ứng dụng demo có hiệu lực đến {date}",
-    "gs.host.notification.newDeployment.message": "Đã có phiên bản mới của GoodData.",
-    "gs.host.notification.newDeployment.reloadLink": "Tải lại",
     "messages.genAi.visualisation.saved.success": "Tuyệt vời! Chúng tôi đã lưu trực quan hóa của bạn.",
     "messages.genAi.visualisation.saved.error": "Rất tiếc, đã xảy ra sự cố khi lưu trực quan hóa của bạn.",
     "messages.genAi.visualisation.saved.error.detail": "{errorType}: {errorMessage}",

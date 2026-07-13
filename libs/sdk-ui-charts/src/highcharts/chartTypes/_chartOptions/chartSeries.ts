@@ -8,7 +8,7 @@ import {
     valueWithEmptyHandling,
 } from "@gooddata/sdk-ui-vis-commons";
 
-import { type IChartConfig } from "../../../interfaces/chartConfig.js";
+import { type IChartConfig, type LineStyle } from "../../../interfaces/chartConfig.js";
 import { type IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 import { type IPointData, type ISeriesItemConfig } from "../../typings/unsafe.js";
 import {
@@ -133,6 +133,12 @@ export function getSeriesItemData(
     });
 }
 
+const DASH_STYLE_MAP: Record<LineStyle, string> = {
+    solid: "Solid",
+    dashed: "Dash",
+    dotted: "Dot",
+};
+
 function getDefaultSeries(
     dv: DataViewFacade,
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
@@ -143,6 +149,7 @@ function getDefaultSeries(
     emptyHeaderTitle: string,
     chartFill: IChartFillConfig | undefined,
     theme: ITheme | undefined,
+    chartConfig?: IChartConfig,
 ): ISeriesItemConfig[] {
     return dv
         .rawData()
@@ -181,6 +188,26 @@ function getDefaultSeries(
                 data: seriesItemData,
                 seriesIndex,
             };
+
+            if (!stackByAttribute && chartConfig?.lineStyleMapping) {
+                const localId = measureGroup.items[seriesIndex]?.measureHeaderItem?.localIdentifier;
+                if (localId) {
+                    const styleMapping = chartConfig.lineStyleMapping.find((m) => m.id === localId);
+                    if (styleMapping?.lineStyle) {
+                        seriesItemConfig.dashStyle = DASH_STYLE_MAP[styleMapping.lineStyle];
+                    }
+                    if (styleMapping?.lineWidth !== undefined) {
+                        seriesItemConfig.lineWidth = styleMapping.lineWidth;
+                    }
+                }
+            }
+
+            if (seriesItemConfig.dashStyle && seriesItemConfig.dashStyle !== "Solid") {
+                const nonNullCount = seriesItemData.filter((p) => p.y !== null && p.y !== undefined).length;
+                if (nonNullCount === 1) {
+                    seriesItemConfig.marker = { enabled: true };
+                }
+            }
 
             if (stackByAttribute) {
                 // if stackBy attribute is available, seriesName is a stackBy attribute value of index seriesIndex
@@ -292,5 +319,6 @@ export function getSeries(
         emptyHeaderTitle,
         chartFill,
         theme,
+        chartConfig,
     );
 }

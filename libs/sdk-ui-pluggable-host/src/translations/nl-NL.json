@@ -22,8 +22,6 @@
     "gs.host.error.appBuildExpired": "Deze applicatie is verouderd en moet door de auteur opnieuw worden opgebouwd voordat deze weer kan worden uitgevoerd.",
     "gs.host.error.appSecurityMetadataMissing": "Bij deze applicatie ontbreken vereiste beveiligingsmetadata en deze kan niet worden geladen.",
     "gs.host.demoApp.validUntil": "Demoapplicatie geldig tot {date}",
-    "gs.host.notification.newDeployment.message": "Er is een nieuwe versie van GoodData beschikbaar.",
-    "gs.host.notification.newDeployment.reloadLink": "Herladen",
     "messages.genAi.visualisation.saved.success": "Geweldig We hebben uw visualisatie opgeslagen.",
     "messages.genAi.visualisation.saved.error": "Oeps, er was een probleem bij het opslaan van je visualisatie.",
     "messages.genAi.visualisation.saved.error.detail": "{errorType}: {errorMessage}",

@@ -6,7 +6,8 @@ import { useIntl } from "react-intl";
 
 import { type IColor, type IColorPalette } from "@gooddata/sdk-model";
 import { type IMappingHeader, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
-import { type IChartFillConfig, type PatternFillName } from "@gooddata/sdk-ui-vis-commons";
+import { type IChartFillConfig } from "@gooddata/sdk-ui-charts";
+import { type PatternFillName } from "@gooddata/sdk-ui-vis-commons";
 
 import { type IColoredItem } from "../../../../interfaces/Colors.js";
 import { getTranslation } from "../../../../utils/translations.js";
@@ -28,7 +29,7 @@ export interface IColoredItemProps {
 
 export const ColoredItem = memo(function ColoredItem(props: IColoredItemProps) {
     const intl = useIntl();
-    const { item, colorPalette, onSelect, chartFill, patternFillIndex } = props;
+    const { item, colorPalette, onSelect, chartFill, patternFillIndex, disabled } = props;
 
     const renderLoadingItem = () => {
         return <div className="gd-list-item gd-list-item-not-loaded" />;
@@ -65,6 +66,7 @@ export const ColoredItem = memo(function ColoredItem(props: IColoredItemProps) {
             onColorSelected={onColorSelected}
             chartFill={chartFill}
             patternFillIndex={patternFillIndex}
+            disabled={disabled}
         >
             <ColoredItemContent
                 text={headerText}

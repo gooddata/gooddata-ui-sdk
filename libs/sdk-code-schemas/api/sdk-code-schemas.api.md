@@ -1770,6 +1770,17 @@ interface LineChart {
     view_by?: Bucket[];
 }
 
+// Warning: (ae-missing-release-tag) "LineStyleMapping" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface LineStyleMapping {
+    // (undocumented)
+    [k: string]: {
+        style?: "solid" | "dashed" | "dotted";
+        width?: 1 | 2 | 3 | 4;
+    };
+}
+
 // Warning: (ae-missing-release-tag) "ListOfColors" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public
@@ -4481,6 +4492,10 @@ export const metadata_v1: {
                             };
                         };
                     };
+                    line_style_mapping: {
+                        $ref: string;
+                        description: string;
+                    };
                     conditional_formatting: {
                         type: string;
                         description: string;
@@ -6608,6 +6623,32 @@ export const metadata_v1: {
                 type: string;
                 snippets: string[];
             })[];
+        };
+        lineStyleMapping: {
+            title: string;
+            type: string;
+            $semantic: {
+                type: string;
+                source: string;
+                mode: string;
+            };
+            additionalProperties: {
+                type: string;
+                additionalProperties: boolean;
+                minProperties: number;
+                properties: {
+                    style: {
+                        type: string;
+                        enum: string[];
+                        description: string;
+                    };
+                    width: {
+                        type: string;
+                        enum: number[];
+                        description: string;
+                    };
+                };
+            };
         };
         complexColorItem: {
             title: string;
@@ -10704,6 +10745,7 @@ declare namespace v1 {
         TotalValueWithAttribute,
         ListOfColors,
         ColorDefinition,
+        LineStyleMapping,
         ComplexBucket,
         Total,
         BarChart,
@@ -11047,6 +11089,8 @@ interface VisualisationConfig {
     // (undocumented)
     line_style_excluded_metrics?: string[];
     // (undocumented)
+    line_style_mapping?: LineStyleMapping;
+    // (undocumented)
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     // (undocumented)
     metrics_in?: string;
@@ -11331,6 +11375,8 @@ interface VisualisationConfig1 {
     line_style_control_metrics?: string[];
     // (undocumented)
     line_style_excluded_metrics?: string[];
+    // (undocumented)
+    line_style_mapping?: LineStyleMapping;
     // (undocumented)
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     // (undocumented)
@@ -11617,6 +11663,8 @@ interface VisualisationConfig10 {
     // (undocumented)
     line_style_excluded_metrics?: string[];
     // (undocumented)
+    line_style_mapping?: LineStyleMapping;
+    // (undocumented)
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     // (undocumented)
     metrics_in?: string;
@@ -11901,6 +11949,8 @@ interface VisualisationConfig11 {
     line_style_control_metrics?: string[];
     // (undocumented)
     line_style_excluded_metrics?: string[];
+    // (undocumented)
+    line_style_mapping?: LineStyleMapping;
     // (undocumented)
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     // (undocumented)
@@ -12187,6 +12237,8 @@ interface VisualisationConfig12 {
     // (undocumented)
     line_style_excluded_metrics?: string[];
     // (undocumented)
+    line_style_mapping?: LineStyleMapping;
+    // (undocumented)
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     // (undocumented)
     metrics_in?: string;
@@ -12471,6 +12523,8 @@ interface VisualisationConfig13 {
     line_style_control_metrics?: string[];
     // (undocumented)
     line_style_excluded_metrics?: string[];
+    // (undocumented)
+    line_style_mapping?: LineStyleMapping;
     // (undocumented)
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     // (undocumented)
@@ -12757,6 +12811,8 @@ interface VisualisationConfig14 {
     // (undocumented)
     line_style_excluded_metrics?: string[];
     // (undocumented)
+    line_style_mapping?: LineStyleMapping;
+    // (undocumented)
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     // (undocumented)
     metrics_in?: string;
@@ -13041,6 +13097,8 @@ interface VisualisationConfig15 {
     line_style_control_metrics?: string[];
     // (undocumented)
     line_style_excluded_metrics?: string[];
+    // (undocumented)
+    line_style_mapping?: LineStyleMapping;
     // (undocumented)
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     // (undocumented)
@@ -13327,6 +13385,8 @@ interface VisualisationConfig16 {
     // (undocumented)
     line_style_excluded_metrics?: string[];
     // (undocumented)
+    line_style_mapping?: LineStyleMapping;
+    // (undocumented)
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     // (undocumented)
     metrics_in?: string;
@@ -13611,6 +13671,8 @@ interface VisualisationConfig17 {
     line_style_control_metrics?: string[];
     // (undocumented)
     line_style_excluded_metrics?: string[];
+    // (undocumented)
+    line_style_mapping?: LineStyleMapping;
     // (undocumented)
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     // (undocumented)
@@ -13897,6 +13959,8 @@ interface VisualisationConfig18 {
     // (undocumented)
     line_style_excluded_metrics?: string[];
     // (undocumented)
+    line_style_mapping?: LineStyleMapping;
+    // (undocumented)
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     // (undocumented)
     metrics_in?: string;
@@ -14181,6 +14245,8 @@ interface VisualisationConfig19 {
     line_style_control_metrics?: string[];
     // (undocumented)
     line_style_excluded_metrics?: string[];
+    // (undocumented)
+    line_style_mapping?: LineStyleMapping;
     // (undocumented)
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     // (undocumented)
@@ -14467,6 +14533,8 @@ interface VisualisationConfig2 {
     // (undocumented)
     line_style_excluded_metrics?: string[];
     // (undocumented)
+    line_style_mapping?: LineStyleMapping;
+    // (undocumented)
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     // (undocumented)
     metrics_in?: string;
@@ -14751,6 +14819,8 @@ interface VisualisationConfig20 {
     line_style_control_metrics?: string[];
     // (undocumented)
     line_style_excluded_metrics?: string[];
+    // (undocumented)
+    line_style_mapping?: LineStyleMapping;
     // (undocumented)
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     // (undocumented)
@@ -15037,6 +15107,8 @@ interface VisualisationConfig21 {
     // (undocumented)
     line_style_excluded_metrics?: string[];
     // (undocumented)
+    line_style_mapping?: LineStyleMapping;
+    // (undocumented)
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     // (undocumented)
     metrics_in?: string;
@@ -15321,6 +15393,8 @@ interface VisualisationConfig22 {
     line_style_control_metrics?: string[];
     // (undocumented)
     line_style_excluded_metrics?: string[];
+    // (undocumented)
+    line_style_mapping?: LineStyleMapping;
     // (undocumented)
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     // (undocumented)
@@ -15607,6 +15681,8 @@ interface VisualisationConfig3 {
     // (undocumented)
     line_style_excluded_metrics?: string[];
     // (undocumented)
+    line_style_mapping?: LineStyleMapping;
+    // (undocumented)
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     // (undocumented)
     metrics_in?: string;
@@ -15891,6 +15967,8 @@ interface VisualisationConfig4 {
     line_style_control_metrics?: string[];
     // (undocumented)
     line_style_excluded_metrics?: string[];
+    // (undocumented)
+    line_style_mapping?: LineStyleMapping;
     // (undocumented)
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     // (undocumented)
@@ -16177,6 +16255,8 @@ interface VisualisationConfig5 {
     // (undocumented)
     line_style_excluded_metrics?: string[];
     // (undocumented)
+    line_style_mapping?: LineStyleMapping;
+    // (undocumented)
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     // (undocumented)
     metrics_in?: string;
@@ -16461,6 +16541,8 @@ interface VisualisationConfig6 {
     line_style_control_metrics?: string[];
     // (undocumented)
     line_style_excluded_metrics?: string[];
+    // (undocumented)
+    line_style_mapping?: LineStyleMapping;
     // (undocumented)
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     // (undocumented)
@@ -16747,6 +16829,8 @@ interface VisualisationConfig7 {
     // (undocumented)
     line_style_excluded_metrics?: string[];
     // (undocumented)
+    line_style_mapping?: LineStyleMapping;
+    // (undocumented)
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     // (undocumented)
     metrics_in?: string;
@@ -17032,6 +17116,8 @@ interface VisualisationConfig8 {
     // (undocumented)
     line_style_excluded_metrics?: string[];
     // (undocumented)
+    line_style_mapping?: LineStyleMapping;
+    // (undocumented)
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     // (undocumented)
     metrics_in?: string;
@@ -17316,6 +17402,8 @@ interface VisualisationConfig9 {
     line_style_control_metrics?: string[];
     // (undocumented)
     line_style_excluded_metrics?: string[];
+    // (undocumented)
+    line_style_mapping?: LineStyleMapping;
     // (undocumented)
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     // (undocumented)
