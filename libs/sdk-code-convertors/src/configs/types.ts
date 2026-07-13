@@ -1,6 +1,13 @@
 // (C) 2023-2026 GoodData Corporation
 
 /** @public */
+export type LineStyleMapping = {
+    id: string;
+    lineStyle?: "solid" | "dashed" | "dotted";
+    lineWidth?: 1 | 2 | 3 | 4;
+};
+
+/** @public */
 export type ColorMapping = {
     id: string;
     color:

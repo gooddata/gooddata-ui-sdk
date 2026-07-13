@@ -337,6 +337,9 @@ export interface ISeriesItemConfig {
     type?: string;
     turboThreshold?: number;
     dataLabels?: any;
+    dashStyle?: string;
+    lineWidth?: number;
+    marker?: { enabled: boolean };
 }
 
 export interface IAxis {

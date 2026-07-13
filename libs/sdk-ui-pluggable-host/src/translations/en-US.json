@@ -91,14 +91,6 @@
         "text": "Demo application valid till {date}",
         "crowdinContext": "Text in a small floating badge shown at the bottom-right of the page for a validated demo application loaded from the demo bucket. {date} is the localized date until which the demo build remains valid."
     },
-    "gs.host.notification.newDeployment.message": {
-        "text": "A new version of GoodData is available.",
-        "crowdinContext": "Toast message shown when the host detects that a newer build of the application has been deployed while the user's tab was open. Followed by a reload link."
-    },
-    "gs.host.notification.newDeployment.reloadLink": {
-        "text": "Reload",
-        "crowdinContext": "Clickable text inside the new-deployment toast that triggers a full page reload to load the latest application version."
-    },
     "messages.genAi.visualisation.saved.success": {
         "text": "Great! We saved your visualization.",
         "crowdinContext": "Success message when generative AI visualization is saved"

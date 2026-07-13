@@ -22,8 +22,6 @@
     "gs.host.error.appBuildExpired": "แอปพลิเคชันนี้ล้าสมัยและต้องได้รับการสร้างใหม่โดยผู้สร้างก่อนจึงจะสามารถทำงานได้อีกครั้ง",
     "gs.host.error.appSecurityMetadataMissing": "แอปพลิเคชันนี้ไม่มีข้อมูลเมตาความปลอดภัยที่จำเป็นและไม่สามารถโหลดได้",
     "gs.host.demoApp.validUntil": "แอปพลิเคชันเดโมใช้ได้ถึง {date}",
-    "gs.host.notification.newDeployment.message": "GoodData เวอร์ชันใหม่พร้อมใช้งานแล้ว",
-    "gs.host.notification.newDeployment.reloadLink": "โหลดใหม่",
     "messages.genAi.visualisation.saved.success": "สำเร็จ! เราได้บันทึกการแสดงภาพข้อมูลของคุณแล้ว",
     "messages.genAi.visualisation.saved.error": "ขออภัย มีปัญหาในการบันทึกการแสดงภาพข้อมูลของคุณ",
     "messages.genAi.visualisation.saved.error.detail": "{errorType}: {errorMessage}",

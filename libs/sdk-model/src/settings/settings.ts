@@ -553,14 +553,6 @@ export interface IFeatureFlags {
     enableChangeAnalysis?: boolean;
 
     /**
-     * Enable multiple conditions in measure value filters (MVF).
-     *
-     * @remarks
-     * Defaults to true when not provided by the backend.
-     */
-    enableMultipleMvfConditions?: boolean;
-
-    /**
      * Enable ranking filter to be used together with measure value filters (MVF).
      *
      * @remarks
@@ -957,11 +949,6 @@ export interface IFeatureFlags {
     enableVisualizationFilteringByTags?: boolean;
 
     /**
-     * Enable filter control in drilling configuration.
-     */
-    enableFilterControlInDrillingConfiguration?: boolean;
-
-    /**
      * Enable shell application.
      */
     enableShellApplication?: boolean;
@@ -1108,4 +1095,9 @@ export interface IFeatureFlags {
      * Enables LDM Modeler loading as a remote module in the host application.
      */
     enableShellApplication_ldmModeler?: boolean;
+
+    /**
+     * Enables per-series line style and weight configuration for line-based charts.
+     */
+    enableLineChartStyling?: boolean;
 }

@@ -22,8 +22,6 @@
     "gs.host.error.appBuildExpired": "Это приложение устарело, и его автор должен пересобрать его, прежде чем оно снова сможет работать.",
     "gs.host.error.appSecurityMetadataMissing": "В этом приложении отсутствуют необходимые метаданные безопасности, и его невозможно загрузить.",
     "gs.host.demoApp.validUntil": "Демо-приложение действительно до {date}",
-    "gs.host.notification.newDeployment.message": "Доступна новая версия GoodData.",
-    "gs.host.notification.newDeployment.reloadLink": "Перезагрузить",
     "messages.genAi.visualisation.saved.success": "Отлично! Мы сохранили вашу визуализацию.",
     "messages.genAi.visualisation.saved.error": "К сожалению, при сохранении вашей визуализации возникла проблема.",
     "messages.genAi.visualisation.saved.error.detail": "{errorType}: {errorMessage}",

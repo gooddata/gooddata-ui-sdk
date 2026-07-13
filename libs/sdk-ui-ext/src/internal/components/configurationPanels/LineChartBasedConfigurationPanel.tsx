@@ -13,7 +13,13 @@ import {
     HIDE_DELAY_DEFAULT,
     SHOW_DELAY_DEFAULT,
 } from "../../constants/bubble.js";
+import { isLineChartStylingEnabled } from "../../constants/featureFlags.js";
+import {
+    getChartFillIgnoredMeasureIdsFromMdObject,
+    getMeasuresFromMdObject,
+} from "../../utils/bucketHelper.js";
 import { CheckboxControl } from "../configurationControls/CheckboxControl.js";
+import { ColorsSection } from "../configurationControls/colors/ColorsSection.js";
 import { ConfigSection } from "../configurationControls/ConfigSection.js";
 import { ContinuousLineControl } from "../configurationControls/ContinuousLineControl.js";
 import { DataLabelsControl } from "../configurationControls/DataLabelsControl.js";
@@ -28,6 +34,41 @@ export interface ILineChartBasedConfigurationPanel extends IConfigurationPanelCo
 }
 
 export class LineChartBasedConfigurationPanel extends BaseChartConfigurationPanel<ILineChartBasedConfigurationPanel> {
+    protected override renderColorSection(): ReactNode {
+        const {
+            properties,
+            propertiesMeta,
+            pushData,
+            colors,
+            references,
+            insight,
+            isLoading,
+            panelConfig,
+            featureFlags,
+        } = this.props;
+
+        const controlsDisabled = this.isControlDisabled();
+        const hasMeasures = getMeasuresFromMdObject(insight).length > 0;
+        const chartFillIgnoredMeasures = getChartFillIgnoredMeasureIdsFromMdObject(insight, properties);
+
+        return (
+            <ColorsSection
+                properties={properties}
+                propertiesMeta={propertiesMeta}
+                references={references}
+                colors={colors}
+                controlsDisabled={controlsDisabled}
+                pushData={pushData}
+                hasMeasures={hasMeasures}
+                isLoading={isLoading}
+                supportsChartFill={panelConfig?.supportsChartFill}
+                chartFillIgnoredMeasures={chartFillIgnoredMeasures}
+                isChartFillDisabled={panelConfig?.isChartFillDisabled}
+                supportsLineStyles={isLineChartStylingEnabled(featureFlags)}
+            />
+        );
+    }
+
     protected override renderConfigurationPanel(): ReactNode {
         const { gridEnabled, axes } = this.getControlProperties();
 

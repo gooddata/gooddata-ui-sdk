@@ -3222,6 +3222,7 @@ export interface VisualisationConfig {
          */
         placement?: "above" | "below" | "replace";
     };
+    line_style_mapping?: LineStyleMapping;
     /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
@@ -3337,6 +3338,21 @@ export interface ColorDefinition {
     negative?: Color3;
     positive?: Color3;
     [k: string]: unknown;
+}
+/**
+ * Per-series line style and weight overrides. Keys are measure identifiers.
+ */
+export interface LineStyleMapping {
+    [k: string]: {
+        /**
+         * Line stroke style for this series.
+         */
+        style?: "solid" | "dashed" | "dotted";
+        /**
+         * Line stroke width in pixels for this series.
+         */
+        width?: 1 | 2 | 3 | 4;
+    };
 }
 export interface ComplexBucket {
     /**
@@ -3643,6 +3659,7 @@ export interface VisualisationConfig1 {
          */
         placement?: "above" | "below" | "replace";
     };
+    line_style_mapping?: LineStyleMapping;
     /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
@@ -4000,6 +4017,7 @@ export interface VisualisationConfig2 {
          */
         placement?: "above" | "below" | "replace";
     };
+    line_style_mapping?: LineStyleMapping;
     /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
@@ -4357,6 +4375,7 @@ export interface VisualisationConfig3 {
          */
         placement?: "above" | "below" | "replace";
     };
+    line_style_mapping?: LineStyleMapping;
     /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
@@ -4714,6 +4733,7 @@ export interface VisualisationConfig4 {
          */
         placement?: "above" | "below" | "replace";
     };
+    line_style_mapping?: LineStyleMapping;
     /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
@@ -5071,6 +5091,7 @@ export interface VisualisationConfig5 {
          */
         placement?: "above" | "below" | "replace";
     };
+    line_style_mapping?: LineStyleMapping;
     /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
@@ -5428,6 +5449,7 @@ export interface VisualisationConfig6 {
          */
         placement?: "above" | "below" | "replace";
     };
+    line_style_mapping?: LineStyleMapping;
     /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
@@ -5781,6 +5803,7 @@ export interface VisualisationConfig7 {
          */
         placement?: "above" | "below" | "replace";
     };
+    line_style_mapping?: LineStyleMapping;
     /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
@@ -6134,6 +6157,7 @@ export interface VisualisationConfig8 {
          */
         placement?: "above" | "below" | "replace";
     };
+    line_style_mapping?: LineStyleMapping;
     /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
@@ -6487,6 +6511,7 @@ export interface VisualisationConfig9 {
          */
         placement?: "above" | "below" | "replace";
     };
+    line_style_mapping?: LineStyleMapping;
     /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
@@ -6840,6 +6865,7 @@ export interface VisualisationConfig10 {
          */
         placement?: "above" | "below" | "replace";
     };
+    line_style_mapping?: LineStyleMapping;
     /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
@@ -7193,6 +7219,7 @@ export interface VisualisationConfig11 {
          */
         placement?: "above" | "below" | "replace";
     };
+    line_style_mapping?: LineStyleMapping;
     /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
@@ -7554,6 +7581,7 @@ export interface VisualisationConfig12 {
          */
         placement?: "above" | "below" | "replace";
     };
+    line_style_mapping?: LineStyleMapping;
     /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
@@ -7907,6 +7935,7 @@ export interface VisualisationConfig13 {
          */
         placement?: "above" | "below" | "replace";
     };
+    line_style_mapping?: LineStyleMapping;
     /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
@@ -8260,6 +8289,7 @@ export interface VisualisationConfig14 {
          */
         placement?: "above" | "below" | "replace";
     };
+    line_style_mapping?: LineStyleMapping;
     /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
@@ -8615,6 +8645,7 @@ export interface VisualisationConfig15 {
          */
         placement?: "above" | "below" | "replace";
     };
+    line_style_mapping?: LineStyleMapping;
     /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
@@ -8970,6 +9001,7 @@ export interface VisualisationConfig16 {
          */
         placement?: "above" | "below" | "replace";
     };
+    line_style_mapping?: LineStyleMapping;
     /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
@@ -9323,6 +9355,7 @@ export interface VisualisationConfig17 {
          */
         placement?: "above" | "below" | "replace";
     };
+    line_style_mapping?: LineStyleMapping;
     /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
@@ -9676,6 +9709,7 @@ export interface VisualisationConfig18 {
          */
         placement?: "above" | "below" | "replace";
     };
+    line_style_mapping?: LineStyleMapping;
     /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
@@ -10033,6 +10067,7 @@ export interface VisualisationConfig19 {
          */
         placement?: "above" | "below" | "replace";
     };
+    line_style_mapping?: LineStyleMapping;
     /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
@@ -10363,6 +10398,7 @@ export interface VisualisationConfig20 {
          */
         placement?: "above" | "below" | "replace";
     };
+    line_style_mapping?: LineStyleMapping;
     /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
@@ -10720,6 +10756,7 @@ export interface VisualisationConfig21 {
          */
         placement?: "above" | "below" | "replace";
     };
+    line_style_mapping?: LineStyleMapping;
     /**
      * Conditional formatting rules that color cells or rows based on their values.
      */
@@ -11081,6 +11118,7 @@ export interface VisualisationConfig22 {
          */
         placement?: "above" | "below" | "replace";
     };
+    line_style_mapping?: LineStyleMapping;
     /**
      * Conditional formatting rules that color cells or rows based on their values.
      */

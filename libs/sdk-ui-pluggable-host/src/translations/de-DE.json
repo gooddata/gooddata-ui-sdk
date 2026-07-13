@@ -22,8 +22,6 @@
     "gs.host.error.appBuildExpired": "Diese Anwendung ist veraltet und muss von ihrem Autor neu erstellt werden, bevor sie erneut ausgeführt werden kann.",
     "gs.host.error.appSecurityMetadataMissing": "Dieser Anwendung fehlen erforderliche Sicherheitsmetadaten und sie kann nicht geladen werden.",
     "gs.host.demoApp.validUntil": "Demo-Anwendung gültig bis {date}",
-    "gs.host.notification.newDeployment.message": "Eine neue Version von GoodData ist verfügbar.",
-    "gs.host.notification.newDeployment.reloadLink": "Neu laden",
     "messages.genAi.visualisation.saved.success": "Großartig! Wir haben Ihre Visualisierung gespeichert.",
     "messages.genAi.visualisation.saved.error": "Hoppla, beim Speichern Ihrer Visualisierung ist ein Problem aufgetreten.",
     "messages.genAi.visualisation.saved.error.detail": "{errorType}: {errorMessage}",

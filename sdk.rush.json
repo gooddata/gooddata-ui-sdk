@@ -426,11 +426,6 @@
             "versionPolicyName": "sdk"
         },
         {
-            "packageName": "@gooddata/applink",
-            "projectFolder": "tools/applink",
-            "versionPolicyName": "sdk-not-npm-publish"
-        },
-        {
             "packageName": "@gooddata/util",
             "projectFolder": "libs/util",
             "versionPolicyName": "sdk"

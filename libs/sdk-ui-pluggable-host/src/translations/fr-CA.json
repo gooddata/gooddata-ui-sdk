@@ -22,8 +22,6 @@
     "gs.host.error.appBuildExpired": "Cette application n’est plus à jour et doit être reconstruite par son auteur avant de pouvoir être exécutée à nouveau.",
     "gs.host.error.appSecurityMetadataMissing": "Les métadonnées de sécurité requises sont manquantes pour cette application et elle ne peut pas être chargée.",
     "gs.host.demoApp.validUntil": "Application de démonstration valide jusqu’au {date}",
-    "gs.host.notification.newDeployment.message": "Une nouvelle version de GoodData est disponible.",
-    "gs.host.notification.newDeployment.reloadLink": "Recharger",
     "messages.genAi.visualisation.saved.success": "Parfait ! Votre visualisation a été enregistrée.",
     "messages.genAi.visualisation.saved.error": "Oups, il y a eu un problème lors de l'enregistrement de votre visualisation.",
     "messages.genAi.visualisation.saved.error.detail": "{errorType}: {errorMessage}",

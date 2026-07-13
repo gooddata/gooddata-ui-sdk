@@ -1067,6 +1067,7 @@ export type ComboChartConfigProperties = {
     customTooltip: CustomTooltip;
     thresholdMeasures: string[];
     thresholdExcludedMeasures: string[];
+    lineStyleMapping: Array<LineStyleMapping>;
 };
 
 // @internal (undocumented)
@@ -1191,6 +1192,7 @@ export function comboChartSave(_fields: Visualisation["query"]["fields"] | undef
     customTooltip: CustomTooltip | undefined;
     thresholdMeasures: string[] | undefined;
     thresholdExcludedMeasures: string[] | undefined;
+    lineStyleMapping: LineStyleMapping[] | undefined;
 } | undefined;
 
 // @internal (undocumented)
@@ -2694,6 +2696,7 @@ export type LineChartConfigProperties = {
     customTooltip: CustomTooltip;
     thresholdMeasures: string[];
     thresholdExcludedMeasures: string[];
+    lineStyleMapping: Array<LineStyleMapping>;
 };
 
 // @internal (undocumented)
@@ -2808,7 +2811,15 @@ export function lineChartSave(_fields: Visualisation["query"]["fields"] | undefi
     customTooltip: CustomTooltip | undefined;
     thresholdMeasures: string[] | undefined;
     thresholdExcludedMeasures: string[] | undefined;
+    lineStyleMapping: LineStyleMapping[] | undefined;
 } | undefined;
+
+// @public (undocumented)
+export type LineStyleMapping = {
+    id: string;
+    lineStyle?: "solid" | "dashed" | "dotted";
+    lineWidth?: 1 | 2 | 3 | 4;
+};
 
 // @public (undocumented)
 export function loadColorMapping(mappings: Array<ColorMapping>): YAMLMap<keyof ListOfColors, Color>;

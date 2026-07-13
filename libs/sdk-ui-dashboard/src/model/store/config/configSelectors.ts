@@ -930,15 +930,3 @@ export const selectEnableDashboardDensitySetting: DashboardSelector<boolean> = c
         return state.settings?.enableDashboardDensitySetting ?? false;
     },
 );
-
-/**
- * Returns whether filter control in drilling configuration is enabled.
- *
- * @internal
- */
-export const selectEnableFilterControlInDrillingConfiguration: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableFilterControlInDrillingConfiguration ?? true;
-    },
-);

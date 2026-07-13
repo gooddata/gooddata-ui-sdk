@@ -22,8 +22,6 @@
     "gs.host.error.appBuildExpired": "Tämä sovellus on vanhentunut, ja sen tekijän on muodostettava se uudelleen, ennen kuin sitä voidaan käyttää taas.",
     "gs.host.error.appSecurityMetadataMissing": "Tästä sovelluksesta puuttuvat vaaditut suojausmetatiedot, eikä sitä voida ladata.",
     "gs.host.demoApp.validUntil": "Demo-sovellus voimassa {date} asti",
-    "gs.host.notification.newDeployment.message": "GoodData-ohjelmistosta on saatavilla uusi versio.",
-    "gs.host.notification.newDeployment.reloadLink": "Lataa uudelleen",
     "messages.genAi.visualisation.saved.success": "Hienoa! Tallensimme visualisointisi.",
     "messages.genAi.visualisation.saved.error": "Hups, visualisoinnin tallentamisessa ilmeni ongelma.",
     "messages.genAi.visualisation.saved.error.detail": "{errorType}: {errorMessage}",

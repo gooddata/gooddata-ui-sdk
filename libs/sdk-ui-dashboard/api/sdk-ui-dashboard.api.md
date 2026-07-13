@@ -10799,9 +10799,6 @@ export const selectEnableExportTimeoutFix: DashboardSelector<boolean>;
 // @internal
 export const selectEnableExportToDocumentStorage: DashboardSelector<boolean>;
 
-// @internal
-export const selectEnableFilterControlInDrillingConfiguration: DashboardSelector<boolean>;
-
 // @public
 export const selectEnableFilterValuesResolutionInDrillEvents: DashboardSelector<boolean>;
 

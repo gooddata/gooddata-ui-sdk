@@ -312,6 +312,7 @@ export type {
     IChartFill as ChartFill,
     ChartFillType,
     ColorMapping,
+    LineStyleMapping,
     ColumnLocator,
     ColumnWidth,
     ColumnWidthItem,

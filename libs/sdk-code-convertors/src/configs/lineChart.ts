@@ -7,11 +7,18 @@ import {
     loadColorMapping,
     loadCustomTooltip,
     loadDisableKda,
+    loadLineStyleMapping,
     saveColorMapping,
     saveCustomTooltip,
+    saveLineStyleMapping,
 } from "../utils/configUtils.js";
 
-import { type ColorMapping, type ICustomTooltip, type PointShapeSymbol } from "./types.js";
+import {
+    type ColorMapping,
+    type ICustomTooltip,
+    type LineStyleMapping,
+    type PointShapeSymbol,
+} from "./types.js";
 import {
     type ConfigDefaults,
     type VisualisationConfig,
@@ -85,6 +92,7 @@ export type LineChartConfigProperties = {
     customTooltip: ICustomTooltip;
     thresholdMeasures: string[];
     thresholdExcludedMeasures: string[];
+    lineStyleMapping: Array<LineStyleMapping>;
 };
 
 /** @internal */
@@ -151,6 +159,7 @@ const DEFAULTS: ConfigDefaults<LineChartConfigProperties> = {
     customTooltip: DEFAULT_CUSTOM_TOOLTIP,
     thresholdMeasures: [],
     thresholdExcludedMeasures: [],
+    lineStyleMapping: [],
 };
 
 /** @internal */
@@ -316,6 +325,13 @@ export function lineChartLoad(props: VisualisationConfig<LineChartConfigProperti
                     ],
                 ];
             }
+            case "lineStyleMapping":
+                return [
+                    [
+                        "line_style_mapping",
+                        loadLineStyleMapping(value as (typeof DEFAULTS)["lineStyleMapping"]),
+                    ],
+                ];
             default:
                 return [];
         }
@@ -416,6 +432,9 @@ export function lineChartSave(
             config.line_style_excluded_metrics,
             DEFAULTS.thresholdExcludedMeasures,
             "array",
+        ),
+        lineStyleMapping: saveLineStyleMapping(
+            config["line_style_mapping"] as Record<string, { style?: string; width?: number }> | undefined,
         ),
     });
 }

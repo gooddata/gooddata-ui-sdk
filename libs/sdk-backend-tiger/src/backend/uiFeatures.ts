@@ -15,7 +15,6 @@ export enum TigerFeaturesNames {
     EnableHighchartsAccessibility = "enableHighchartsAccessibility",
     EnableAccessibleChartTooltip = "enableAccessibleChartTooltip",
     EnableChangeAnalysis = "enableChangeAnalysis",
-    EnableMultipleMvfConditions = "enableMultipleMvfConditions",
     EnableRankingWithMvf = "enableRankingWithMvf",
     EnableRankingStrictLimit = "enableRankingStrictLimit",
     EnableImprovedRankingFilter = "enableImprovedRankingFilter",
@@ -107,7 +106,6 @@ export enum TigerFeaturesNames {
     EnableMatchFilterKD = "enableMatchFilterKD",
     EnableArbitraryFilterKD = "enableArbitraryFilterKD",
     EnableMeasureValueFilterKD = "enableMeasureValueFilterKD",
-    EnableFilterControlInDrillingConfiguration = "enableFilterControlInDrillingConfiguration",
     EnableShellApplication = "enableShellApplication",
     EnableShellApplicationCatalog = "enableShellApplication_catalog",
     EnableShellApplicationDashboards = "enableShellApplication_dashboards",
@@ -138,7 +136,6 @@ export type ITigerFeatureFlags = {
     enableRadarChart: (typeof FeatureFlagsValues)["enableRadarChart"][number];
     enableMekkoChart: (typeof FeatureFlagsValues)["enableMekkoChart"][number];
     enableChangeAnalysis: (typeof FeatureFlagsValues)["enableChangeAnalysis"][number];
-    enableMultipleMvfConditions: (typeof FeatureFlagsValues)["enableMultipleMvfConditions"][number];
     enableRankingWithMvf: (typeof FeatureFlagsValues)["enableRankingWithMvf"][number];
     enableRankingStrictLimit: (typeof FeatureFlagsValues)["enableRankingStrictLimit"][number];
     enableImprovedRankingFilter: (typeof FeatureFlagsValues)["enableImprovedRankingFilter"][number];
@@ -230,7 +227,6 @@ export type ITigerFeatureFlags = {
     enableMatchFilterKD: (typeof FeatureFlagsValues)["enableMatchFilterKD"][number];
     enableArbitraryFilterKD: (typeof FeatureFlagsValues)["enableArbitraryFilterKD"][number];
     enableMeasureValueFilterKD: (typeof FeatureFlagsValues)["enableMeasureValueFilterKD"][number];
-    enableFilterControlInDrillingConfiguration: (typeof FeatureFlagsValues)["enableFilterControlInDrillingConfiguration"][number];
     enableShellApplication: (typeof FeatureFlagsValues)["enableShellApplication"][number];
     enableShellApplication_catalog: (typeof FeatureFlagsValues)["enableShellApplication_catalog"][number];
     enableShellApplication_dashboards: (typeof FeatureFlagsValues)["enableShellApplication_dashboards"][number];
@@ -261,7 +257,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableRadarChart: false,
     enableMekkoChart: false,
     enableChangeAnalysis: false,
-    enableMultipleMvfConditions: true,
     enableRankingWithMvf: false,
     enableRankingStrictLimit: false,
     enableImprovedRankingFilter: false,
@@ -353,7 +348,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableMatchFilterKD: true,
     enableArbitraryFilterKD: true,
     enableMeasureValueFilterKD: true,
-    enableFilterControlInDrillingConfiguration: true,
     enableShellApplication: true,
     enableShellApplication_catalog: false,
     enableShellApplication_dashboards: false,
@@ -384,7 +378,6 @@ export const FeatureFlagsValues = {
     enableRadarChart: [true, false] as const,
     enableMekkoChart: [true, false] as const,
     enableChangeAnalysis: [true, false] as const,
-    enableMultipleMvfConditions: [true, false] as const,
     enableRankingWithMvf: [true, false] as const,
     enableRankingStrictLimit: [true, false] as const,
     enableImprovedRankingFilter: [true, false] as const,
@@ -476,7 +469,6 @@ export const FeatureFlagsValues = {
     enableMatchFilterKD: [true, false] as const,
     enableArbitraryFilterKD: [true, false] as const,
     enableMeasureValueFilterKD: [false, true] as const,
-    enableFilterControlInDrillingConfiguration: [true, false] as const,
     enableShellApplication: [true, false] as const,
     enableShellApplication_catalog: [false, true] as const,
     enableShellApplication_dashboards: [false, true] as const,

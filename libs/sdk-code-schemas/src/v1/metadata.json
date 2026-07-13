@@ -2782,6 +2782,10 @@
                             }
                         }
                     },
+                    "line_style_mapping": {
+                        "$ref": "#/$defs/lineStyleMapping",
+                        "description": "Per-series line style and weight overrides. Keys are measure identifiers."
+                    },
                     "conditional_formatting": {
                         "type": "object",
                         "description": "Conditional formatting rules that color cells or rows based on their values.",
@@ -4681,6 +4685,32 @@
                 { "type": "values", "from": ["current.visualisation.colorItem.value"], "mode": "value" },
                 { "type": "snippet", "snippets": ["color"] }
             ]
+        },
+        "lineStyleMapping": {
+            "title": "Line Style Mapping",
+            "type": "object",
+            "$semantic": {
+                "type": "reference",
+                "source": "current.query.metric.localId",
+                "mode": "property"
+            },
+            "additionalProperties": {
+                "type": "object",
+                "additionalProperties": false,
+                "minProperties": 1,
+                "properties": {
+                    "style": {
+                        "type": "string",
+                        "enum": ["solid", "dashed", "dotted"],
+                        "description": "Line stroke style for this series."
+                    },
+                    "width": {
+                        "type": "integer",
+                        "enum": [1, 2, 3, 4],
+                        "description": "Line stroke width in pixels for this series."
+                    }
+                }
+            }
         },
         "complexColorItem": {
             "title": "Color",

@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-pluggable-host: Stop showing the \"new version available\" toast on redeploy. It could trigger an unexpected reload that lost unsaved work and exposed GoodData branding on white-labelled deployments; the redeploy is now only logged to the console.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

@@ -159,6 +159,11 @@ export class TigerDataFiltersService implements IDataFiltersService {
             const dataFilterId = objRefToIdentifier(dataFilter, this.authCall);
             await this.deleteExistingSettings(client, dataFilterId);
 
+            // If there are no values, we don't need to create an empty data filter setting.
+            if (values.length === 0) {
+                return;
+            }
+
             await EntitiesApi_CreateEntityWorkspaceDataFilterSettings(client.axios, client.basePath, {
                 workspaceId: this.workspace,
                 jsonApiWorkspaceDataFilterSettingInDocument: {

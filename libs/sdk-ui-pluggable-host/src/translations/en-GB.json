@@ -22,8 +22,6 @@
     "gs.host.error.appBuildExpired": "This application is out of date and must be rebuilt by its author before it can run again.",
     "gs.host.error.appSecurityMetadataMissing": "This application is missing required security metadata and cannot be loaded.",
     "gs.host.demoApp.validUntil": "Demo application valid till {date}",
-    "gs.host.notification.newDeployment.message": "A new version of GoodData is available.",
-    "gs.host.notification.newDeployment.reloadLink": "Reload",
     "messages.genAi.visualisation.saved.success": "Great! We saved your visualisation.",
     "messages.genAi.visualisation.saved.error": "An error occurred while saving your visualisation.",
     "messages.genAi.visualisation.saved.error.detail": "{errorType}: {errorMessage}",

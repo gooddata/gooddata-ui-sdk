@@ -17,6 +17,7 @@ import {
     type ColumnWidthItem,
     type IChartFill,
     type ICustomTooltip,
+    type LineStyleMapping,
 } from "../configs/types.js";
 import { getValueOrDefault, saveConfigObject } from "../configs/utils.js";
 
@@ -170,6 +171,58 @@ function getIdByDef(def: keyof ColorDefinition): string {
         default:
             throw new Error(`Unknown color definition key: ${def}`);
     }
+}
+
+/** @public */
+export function loadLineStyleMapping(mappings: Array<LineStyleMapping>): YAMLMap | undefined {
+    if (!mappings || mappings.length === 0) {
+        return undefined;
+    }
+    const deduped = new Map<string, Record<string, unknown>>();
+    for (const { id, lineStyle, lineWidth } of mappings) {
+        const entry: Record<string, unknown> = {};
+        if (lineStyle !== undefined) {
+            entry["style"] = lineStyle;
+        }
+        if (lineWidth !== undefined) {
+            entry["width"] = lineWidth;
+        }
+        if (Object.keys(entry).length > 0) {
+            deduped.set(id, entry);
+        }
+    }
+    if (deduped.size === 0) {
+        return undefined;
+    }
+    const map = new YAMLMap();
+    for (const [id, entry] of deduped) {
+        map.add(new Pair(id, entry));
+    }
+    return map;
+}
+
+const VALID_LINE_STYLES: ReadonlyArray<LineStyleMapping["lineStyle"]> = ["solid", "dashed", "dotted"];
+const VALID_LINE_WIDTHS: ReadonlyArray<LineStyleMapping["lineWidth"]> = [1, 2, 3, 4];
+
+/** @public */
+export function saveLineStyleMapping(
+    mapping: Record<string, { style?: string; width?: number }> | undefined,
+): Array<LineStyleMapping> | undefined {
+    if (!mapping) {
+        return undefined;
+    }
+    const entries = Object.entries(mapping)
+        .map(([id, val]) => ({
+            id,
+            lineStyle: VALID_LINE_STYLES.includes(val.style as LineStyleMapping["lineStyle"])
+                ? (val.style as LineStyleMapping["lineStyle"])
+                : undefined,
+            lineWidth: VALID_LINE_WIDTHS.includes(val.width as LineStyleMapping["lineWidth"])
+                ? (val.width as LineStyleMapping["lineWidth"])
+                : undefined,
+        }))
+        .filter((e) => e.lineStyle !== undefined || e.lineWidth !== undefined);
+    return entries.length > 0 ? entries : undefined;
 }
 
 /** @public */

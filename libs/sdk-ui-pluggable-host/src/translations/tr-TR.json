@@ -22,8 +22,6 @@
     "gs.host.error.appBuildExpired": "Bu uygulama güncel değil ve yeniden çalıştırılabilmesi için yazarı tarafından yeniden derlenmelidir.",
     "gs.host.error.appSecurityMetadataMissing": "Bu uygulamada gerekli güvenlik meta verileri eksik ve yüklenemiyor.",
     "gs.host.demoApp.validUntil": "Demo uygulaması {date} tarihine kadar geçerlidir",
-    "gs.host.notification.newDeployment.message": "GoodData'nın yeni bir sürümü kullanılabilir.",
-    "gs.host.notification.newDeployment.reloadLink": "Yeniden Yükle",
     "messages.genAi.visualisation.saved.success": "Harika! Görselleştirmenizi kaydettik.",
     "messages.genAi.visualisation.saved.error": "Görselleştirmenizi kaydederken bir sorun oluştu.",
     "messages.genAi.visualisation.saved.error.detail": "{errorType}: {errorMessage}",

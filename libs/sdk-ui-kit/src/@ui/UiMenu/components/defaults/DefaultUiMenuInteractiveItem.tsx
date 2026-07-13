@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type KeyboardEvent, type MouseEvent, type ReactNode, useCallback } from "react";
 
@@ -9,10 +9,19 @@ import { UiTooltip } from "../../../UiTooltip/UiTooltip.js";
 import { typedUiMenuContextStore } from "../../context.js";
 import { e } from "../../menuBem.js";
 import {
+    type IUiMenuInteractiveItem,
     type IUiMenuInteractiveItemProps,
     type IUiMenuInteractiveItemWrapperProps,
     type IUiMenuItemData,
 } from "../../types.js";
+
+function getTooltipId<T extends IUiMenuItemData = object>(
+    item: IUiMenuInteractiveItem<T>,
+    makeItemId: (item: IUiMenuInteractiveItem<T>) => string | undefined,
+): string | undefined {
+    const itemId = makeItemId(item);
+    return item.tooltip && itemId ? `${itemId}__tooltip` : undefined;
+}
 
 /**
  * @internal
@@ -81,6 +90,7 @@ export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = 
     );
 
     const dataTestId = typeof itemDataTestId === "function" ? itemDataTestId(item) : itemDataTestId;
+    const tooltipId = getTooltipId(item, makeItemId);
 
     return (
         <li
@@ -89,6 +99,9 @@ export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = 
             {...item.ariaAttributes}
             aria-haspopup={item.subItems ? "menu" : item.ariaAttributes?.["aria-haspopup"]}
             aria-disabled={item.isDisabled}
+            aria-describedby={
+                [tooltipId, item.ariaAttributes?.["aria-describedby"]].filter(Boolean).join(" ") || undefined
+            }
             onMouseMove={handleMouseFocus}
             onClick={item.isDisabled ? undefined : handleSelect}
             tabIndex={-1}
@@ -108,8 +121,14 @@ export function DefaultUiMenuInteractiveItem<T extends IUiMenuItemData = object>
     item,
     isFocused,
 }: IUiMenuInteractiveItemProps<T>): ReactNode {
+    const { useContextStore, createSelector } = typedUiMenuContextStore<T>();
+    const selector = createSelector((ctx) => ({ makeItemId: ctx.makeItemId }));
+    const { makeItemId } = useContextStore(selector);
+    const tooltipId = getTooltipId(item, makeItemId);
+
     return (
         <UiTooltip
+            id={tooltipId}
             anchor={
                 <div
                     className={e("item", {

@@ -2,9 +2,15 @@
 
 import { type ISettings } from "@gooddata/sdk-model";
 
+export const ENABLE_LINE_CHART_STYLING = "enableLineChartStyling";
 export const ENABLE_GEO_CHARTS_VIEWPORT_CONFIG = "enableGeoChartsViewportConfig";
 export const ENABLE_GEO_BASEMAP_CONFIG = "enableGeoBasemapConfig";
 export const ENABLE_GEO_PUSHPIN_ICON = "enableGeoPushpinIcon";
+
+export function isLineChartStylingEnabled(featureFlags?: ISettings): boolean {
+    const value = featureFlags?.[ENABLE_LINE_CHART_STYLING];
+    return value === true;
+}
 
 export function isGeoChartsViewportConfigEnabled(featureFlags?: ISettings): boolean {
     const value = featureFlags?.[ENABLE_GEO_CHARTS_VIEWPORT_CONFIG];

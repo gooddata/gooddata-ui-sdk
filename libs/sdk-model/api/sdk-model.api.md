@@ -2733,7 +2733,6 @@ export interface IFeatureFlags {
     enableExportTemplateSelection?: boolean;
     enableExportTimeoutFix?: boolean;
     enableExportToDocumentStorage?: boolean;
-    enableFilterControlInDrillingConfiguration?: boolean;
     enableFiscalCalendars?: boolean;
     enableGenAiAgenticDataShareOptOut?: boolean;
     enableGenAiAgentSwitching?: boolean;
@@ -2754,6 +2753,7 @@ export interface IFeatureFlags {
     enableHLL?: boolean;
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
     enableImprovedRankingFilter?: boolean;
+    enableLineChartStyling?: boolean;
     // (undocumented)
     enableMariaDbDataSource?: boolean;
     enableMatchFilterAD?: boolean;
@@ -2765,7 +2765,6 @@ export interface IFeatureFlags {
     enableMongoDbDataSource?: boolean;
     // (undocumented)
     enableMotherDuckDataSource?: boolean;
-    enableMultipleMvfConditions?: boolean;
     // (undocumented)
     enableMySqlDataSource?: boolean;
     enableNewGeoPushpin?: boolean;

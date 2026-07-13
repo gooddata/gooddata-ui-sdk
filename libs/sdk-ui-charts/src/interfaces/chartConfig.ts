@@ -492,6 +492,50 @@ export interface IChartConfig {
      * @beta
      */
     radarGridLineShape?: "polygon" | "circle";
+
+    /**
+     * Per-series line style and weight configuration for line-based charts.
+     *
+     * @remarks
+     * Each entry maps a measure local identifier to a specific line style and/or weight.
+     * Only applicable to line and combo chart line series.
+     *
+     * @beta
+     */
+    lineStyleMapping?: ILineStyleMappingItem[];
+}
+
+/**
+ * Supported line dash styles for series in line-based charts.
+ *
+ * @beta
+ */
+export type LineStyle = "solid" | "dashed" | "dotted";
+
+/**
+ * Maps a measure to a specific line style and/or weight.
+ *
+ * @beta
+ */
+export interface ILineStyleMappingItem {
+    /**
+     * Measure local identifier.
+     */
+    id: string;
+
+    /**
+     * Line dash style.
+     *
+     * @defaultValue "solid"
+     */
+    lineStyle?: LineStyle;
+
+    /**
+     * Line width in pixels (1–4).
+     *
+     * @defaultValue 3
+     */
+    lineWidth?: 1 | 2 | 3 | 4;
 }
 
 /**

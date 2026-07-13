@@ -22,8 +22,6 @@
     "gs.host.error.appBuildExpired": "此應用程式已過期，必須由其作者重新建置後才能再次執行。",
     "gs.host.error.appSecurityMetadataMissing": "此應用程式缺少必要的安全性中繼資料，無法載入。",
     "gs.host.demoApp.validUntil": "示範應用程式有效至 {date}",
-    "gs.host.notification.newDeployment.message": "有新版本的 GoodData 可供使用。",
-    "gs.host.notification.newDeployment.reloadLink": "重新載入",
     "messages.genAi.visualisation.saved.success": "偉大的！我們保存了您的視覺化。",
     "messages.genAi.visualisation.saved.error": "哎呀，保存可視化時出現問題。",
     "messages.genAi.visualisation.saved.error.detail": "{errorType}: {errorMessage}",

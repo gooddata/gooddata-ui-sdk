@@ -22,8 +22,6 @@
     "gs.host.error.appBuildExpired": "このアプリケーションは古くなっており、再度実行するには作成者が再ビルドする必要があります。",
     "gs.host.error.appSecurityMetadataMissing": "このアプリケーションには必要なセキュリティメタデータが不足しているため、読み込めません。",
     "gs.host.demoApp.validUntil": "デモアプリケーションの有効期限: {date}",
-    "gs.host.notification.newDeployment.message": "GoodData の新しいバージョンが利用可能です。",
-    "gs.host.notification.newDeployment.reloadLink": "リロード",
     "messages.genAi.visualisation.saved.success": "完了！ビジュアライゼーションを保存しました。",
     "messages.genAi.visualisation.saved.error": "ビジュアライゼーションを保存する際に問題が発生しました。",
     "messages.genAi.visualisation.saved.error.detail": "{errorType}: {errorMessage}",

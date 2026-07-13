@@ -119,6 +119,7 @@ export const LINE_CHART_SUPPORTED_PROPERTIES = {
         "distinctPointShapes",
         "thresholdMeasures",
         "thresholdExcludedMeasures",
+        "lineStyleMapping",
     ],
     [AXIS.SECONDARY]: [
         ...BASE_PROPERTIES,
@@ -131,6 +132,7 @@ export const LINE_CHART_SUPPORTED_PROPERTIES = {
         "distinctPointShapes",
         "thresholdMeasures",
         "thresholdExcludedMeasures",
+        "lineStyleMapping",
     ],
     [AXIS.DUAL]: [
         ...BASE_CHART_SUPPORTED_PROPERTIES,
@@ -140,6 +142,7 @@ export const LINE_CHART_SUPPORTED_PROPERTIES = {
         "distinctPointShapes",
         "thresholdMeasures",
         "thresholdExcludedMeasures",
+        "lineStyleMapping",
     ],
 };
 

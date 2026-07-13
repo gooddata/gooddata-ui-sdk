@@ -22,8 +22,6 @@
     "gs.host.error.appBuildExpired": "Ця програма застаріла, і її автор має перебудувати її, перш ніж вона знову зможе працювати.",
     "gs.host.error.appSecurityMetadataMissing": "У цій програмі відсутні обов’язкові метадані безпеки, тому її неможливо завантажити.",
     "gs.host.demoApp.validUntil": "Демо-програма дійсна до {date}",
-    "gs.host.notification.newDeployment.message": "Доступна нова версія GoodData.",
-    "gs.host.notification.newDeployment.reloadLink": "Перезавантажити",
     "messages.genAi.visualisation.saved.success": "Чудово! Ми зберегли вашу візуалізацію.",
     "messages.genAi.visualisation.saved.error": "От халепа, виникла проблема під час збереження вашої візуалізації.",
     "messages.genAi.visualisation.saved.error.detail": "{errorType}: {errorMessage}",

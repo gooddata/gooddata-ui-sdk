@@ -1123,6 +1123,54 @@
         "text": "Colors and fills",
         "crowdinContext": "Label for colors configuration section"
     },
+    "properties.colorsAndStyles": {
+        "text": "Colors and styles",
+        "crowdinContext": "Label for colors and line styles configuration section on line charts"
+    },
+    "properties.colors.reset-colors-and-styles": {
+        "text": "Reset Colors and styles",
+        "crowdinContext": "Button to reset colors and line styles to default values on line charts"
+    },
+    "properties.lineStyle.label": {
+        "text": "Line style",
+        "crowdinContext": "Accessible label for the line style dropdown in the series configuration toolbar"
+    },
+    "properties.lineStyle.triggerAriaLabel": {
+        "text": "Edit color and style for {name}",
+        "crowdinContext": "Accessible label for the button that opens the color and line style dialog for a specific series. {name} is the series/measure name."
+    },
+    "properties.lineStyle.solid": {
+        "text": "Solid",
+        "crowdinContext": "Line style option: solid line"
+    },
+    "properties.lineStyle.dashed": {
+        "text": "Dashed",
+        "crowdinContext": "Line style option: dashed line"
+    },
+    "properties.lineStyle.dotted": {
+        "text": "Dotted",
+        "crowdinContext": "Line style option: dotted line"
+    },
+    "properties.lineWidth.label": {
+        "text": "Line weight",
+        "crowdinContext": "Accessible label for the line weight dropdown in the series configuration toolbar"
+    },
+    "properties.lineWidth.1px": {
+        "text": "1 px",
+        "crowdinContext": "Line weight option: 1 pixel"
+    },
+    "properties.lineWidth.2px": {
+        "text": "2 px",
+        "crowdinContext": "Line weight option: 2 pixels"
+    },
+    "properties.lineWidth.3px": {
+        "text": "3 px",
+        "crowdinContext": "Line weight option: 3 pixels (default)"
+    },
+    "properties.lineWidth.4px": {
+        "text": "4 px",
+        "crowdinContext": "Line weight option: 4 pixels"
+    },
     "properties.fill": {
         "text": "Fill",
         "crowdinContext": "Label for a checkbox that enables usages of pattern fill instead of solid colors in charts"

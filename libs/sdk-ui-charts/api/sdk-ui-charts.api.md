@@ -382,6 +382,8 @@ export interface IChartConfig {
     legendLayout?: "vertical" | "horizontal";
     // @internal (undocumented)
     limits?: IChartLimits;
+    // @beta
+    lineStyleMapping?: ILineStyleMappingItem[];
     // @internal
     orientation?: IOrientationConfig;
     primaryChartType?: "line" | "column" | "area";
@@ -744,6 +746,13 @@ export interface ILineChartProps extends IBucketChartProps, ILineChartBucketProp
     outliersConfig?: IOutliersConfig;
 }
 
+// @beta
+export interface ILineStyleMappingItem {
+    id: string;
+    lineStyle?: LineStyle;
+    lineWidth?: 1 | 2 | 3 | 4;
+}
+
 // @beta (undocumented)
 export interface IMekkoBucketProps {
     filters?: NullableFiltersOrPlaceholders;
@@ -1038,6 +1047,9 @@ export interface IXirrProps extends IBucketChartProps, IXirrBucketProps {
 
 // @public
 export function LineChart(props: ILineChartProps): JSX.Element;
+
+// @beta
+export type LineStyle = "solid" | "dashed" | "dotted";
 
 // @beta
 export function Mekko(props: IMekkoProps): JSX.Element;

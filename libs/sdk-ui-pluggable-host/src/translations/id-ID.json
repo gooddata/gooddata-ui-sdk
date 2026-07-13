@@ -22,8 +22,6 @@
     "gs.host.error.appBuildExpired": "Aplikasi ini sudah usang dan harus dibangun ulang oleh pembuatnya sebelum dapat berjalan lagi.",
     "gs.host.error.appSecurityMetadataMissing": "Aplikasi ini tidak memiliki metadata keamanan yang diperlukan dan tidak dapat dimuat.",
     "gs.host.demoApp.validUntil": "Aplikasi demo berlaku hingga {date}",
-    "gs.host.notification.newDeployment.message": "Versi baru GoodData tersedia.",
-    "gs.host.notification.newDeployment.reloadLink": "Muat ulang",
     "messages.genAi.visualisation.saved.success": "Berhasil. Kami menyimpan visualisasi Anda.",
     "messages.genAi.visualisation.saved.error": "Terjadi masalah saat menyimpan visualisasi Anda.",
     "messages.genAi.visualisation.saved.error.detail": "{errorType}: {errorMessage}",
