@@ -304,6 +304,18 @@ export const selectEnableParameters: DashboardSelector<boolean> = createSelector
 });
 
 /**
+ * Returns whether STRING dashboard parameters are enabled.
+ *
+ * @internal
+ */
+export const selectEnableStringParameters: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableStringParameters ?? false;
+    },
+);
+
+/**
  * Returns whether we should disable the underline in KPIs when they are drillable.
  *
  * @internal

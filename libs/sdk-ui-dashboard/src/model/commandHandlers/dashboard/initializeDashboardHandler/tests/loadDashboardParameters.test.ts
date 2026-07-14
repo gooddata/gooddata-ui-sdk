@@ -20,7 +20,16 @@ const numberParameter: IParameterMetadataObject = {
     definition: { type: "NUMBER", defaultValue: 10 },
 };
 
-const nonNumberParameter = {
+const stringParameter: IParameterMetadataObject = {
+    ...numberParameter,
+    id: "scenario",
+    uri: "/scenario",
+    ref: idRef("scenario", "parameter"),
+    title: "Scenario",
+    definition: { type: "STRING", defaultValue: "Actual" },
+};
+
+const unknownTypeParameter = {
     ...numberParameter,
     id: "stringy",
     ref: idRef("stringy", "parameter"),
@@ -44,17 +53,27 @@ function makeCtx(items: IParameterMetadataObject[]): DashboardContext {
 
 describe("loadDashboardParameters", () => {
     it("returns NUMBER parameters as-is", async () => {
-        const result = await loadDashboardParameters(makeCtx([numberParameter]));
+        const result = await loadDashboardParameters(makeCtx([numberParameter]), false);
         expect(result).toEqual([numberParameter]);
     });
 
-    it("filters out non-NUMBER definitions", async () => {
-        const result = await loadDashboardParameters(makeCtx([numberParameter, nonNumberParameter]));
+    it("filters STRING parameters out when enableStringParameters is off", async () => {
+        const result = await loadDashboardParameters(makeCtx([numberParameter, stringParameter]), false);
+        expect(result).toEqual([numberParameter]);
+    });
+
+    it("loads NUMBER and STRING parameters when enableStringParameters is on", async () => {
+        const result = await loadDashboardParameters(makeCtx([numberParameter, stringParameter]), true);
+        expect(result).toEqual([numberParameter, stringParameter]);
+    });
+
+    it("filters out unknown definition types regardless of the flag", async () => {
+        const result = await loadDashboardParameters(makeCtx([numberParameter, unknownTypeParameter]), true);
         expect(result).toEqual([numberParameter]);
     });
 
     it("returns empty list when no parameters exist", async () => {
-        const result = await loadDashboardParameters(makeCtx([]));
+        const result = await loadDashboardParameters(makeCtx([]), false);
         expect(result).toEqual([]);
     });
 });

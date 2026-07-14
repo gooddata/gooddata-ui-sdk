@@ -68,7 +68,7 @@ vi.mock("../../../../../model/react/DashboardStoreProvider.js", () => ({
 
 vi.mock("../../../../../model/store/tabs/parameters/parametersSelectors.js", () => ({
     selectSmartPersistedTabsParameters: smartPersistedTabsParametersSelector,
-    selectExportEffectiveParameters: () => exportEffectiveParametersSelector,
+    selectAutomationExportEffectiveParameters: () => exportEffectiveParametersSelector,
 }));
 
 const existingAutomation = (

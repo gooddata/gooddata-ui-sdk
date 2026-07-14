@@ -1209,10 +1209,15 @@ export {
     ParameterControlButton,
     type IParameterControlButtonProps,
 } from "./ParameterControl/ParameterControlButton.js";
+export { ParameterControl, type IParameterControlProps } from "./ParameterControl/ParameterControl.js";
 export {
-    ParameterControlDropdown,
-    type IParameterControlDropdownProps,
-} from "./ParameterControl/ParameterControlDropdown.js";
+    NumberParameterControlDropdown,
+    type INumberParameterControlDropdownProps,
+} from "./ParameterControl/NumberParameterControlDropdown.js";
+export {
+    StringParameterControlDropdown,
+    type IStringParameterControlDropdownProps,
+} from "./ParameterControl/StringParameterControlDropdown.js";
 export { UiSectionHeading, type IUiSectionHeadingProps } from "./@ui/UiSectionHeading/UiSectionHeading.js";
 export {
     UiDialogHeader,

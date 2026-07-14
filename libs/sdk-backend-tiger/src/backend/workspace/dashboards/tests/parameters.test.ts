@@ -2,14 +2,25 @@
 
 import { describe, expect, it } from "vitest";
 
-import { type IDashboard, type IDashboardParameter, type IDashboardTab, idRef } from "@gooddata/sdk-model";
+import {
+    type IDashboard,
+    type IDashboardParameter,
+    type IDashboardTab,
+    type ParameterType,
+    type ParameterValue,
+    idRef,
+} from "@gooddata/sdk-model";
 
 import { patchDashboardParametersFromExport } from "../parameters.js";
 
-function makeParameter(id: string, value?: number): IDashboardParameter {
+function makeParameter(
+    id: string,
+    value?: ParameterValue,
+    parameterType: ParameterType = "NUMBER",
+): IDashboardParameter {
     return {
         ref: idRef(id, "parameter"),
-        parameterType: "NUMBER",
+        parameterType,
         mode: "active",
         ...(value === undefined ? {} : { value }),
     };
@@ -71,6 +82,53 @@ describe("patchDashboardParametersFromExport", () => {
 
         expect(result.tabs?.[0].parameters?.[0].value).toBe(7);
         expect(result.tabs?.[1].parameters?.[0].value).toBe(9);
+    });
+
+    it("keeps a STRING parameter's override as a string", () => {
+        const dashboard = makeDashboardWith({
+            tabs: [{ localIdentifier: "tab-A", parameters: [makeParameter("region", "west", "STRING")] }],
+        });
+
+        const result = patchDashboardParametersFromExport(dashboard, {
+            parametersByTab: { "tab-A": [{ id: "region", value: "east", title: "Region" }] },
+        });
+
+        expect(result.tabs?.[0].parameters?.[0].value).toBe("east");
+    });
+
+    it("keeps a numeric-looking STRING override as a string", () => {
+        const dashboard = makeDashboardWith({
+            tabs: [{ localIdentifier: "tab-A", parameters: [makeParameter("region", "west", "STRING")] }],
+        });
+
+        const result = patchDashboardParametersFromExport(dashboard, {
+            parametersByTab: { "tab-A": [{ id: "region", value: "42", title: "Region" }] },
+        });
+
+        expect(result.tabs?.[0].parameters?.[0].value).toBe("42");
+    });
+
+    it("patches NUMBER and STRING parameters in the same tab by their respective types", () => {
+        const dashboard = makeDashboardWith({
+            tabs: [
+                {
+                    localIdentifier: "tab-A",
+                    parameters: [makeParameter("topN", 10), makeParameter("region", "west", "STRING")],
+                },
+            ],
+        });
+
+        const result = patchDashboardParametersFromExport(dashboard, {
+            parametersByTab: {
+                "tab-A": [
+                    { id: "topN", value: "25", title: "Top N" },
+                    { id: "region", value: "east", title: "Region" },
+                ],
+            },
+        });
+
+        expect(result.tabs?.[0].parameters?.[0].value).toBe(25);
+        expect(result.tabs?.[0].parameters?.[1].value).toBe("east");
     });
 
     it("patches legacy V1 root-level parameters as a fallback (tab-less dashboard)", () => {

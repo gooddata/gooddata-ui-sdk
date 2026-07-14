@@ -67,6 +67,26 @@ const boundedWorkspace: IParameterMetadataObject = {
     definition: { type: "NUMBER", defaultValue: 10, constraints: { min: 0, max: 100 } },
 };
 
+const scenarioRef: IdentifierRef = idRef("scenario", "parameter");
+
+const scenarioWorkspace: IParameterMetadataObject = {
+    type: "parameter",
+    id: "scenario",
+    uri: "/scenario",
+    ref: scenarioRef,
+    title: "Scenario",
+    description: "",
+    production: true,
+    deprecated: false,
+    unlisted: false,
+    definition: { type: "STRING", defaultValue: "Actual" },
+};
+
+const boundedScenarioWorkspace: IParameterMetadataObject = {
+    ...scenarioWorkspace,
+    definition: { type: "STRING", defaultValue: "Actual", constraints: { maxLength: 6 } },
+};
+
 describe("computeHydratedRuntimeOverride", () => {
     const parameterWithValue = (value: number): IDashboardParameter => ({
         ref: topNRef,
@@ -113,6 +133,21 @@ describe("computeHydratedRuntimeOverride", () => {
         expect(computeHydratedRuntimeOverride(parameter, boundedWorkspace)).toBe(10);
         expect(computeHydratedRuntimeOverride(parameter, undefined)).toBeUndefined();
     });
+
+    it("seeds a persisted string value verbatim", () => {
+        const parameter: IDashboardParameter = {
+            ref: scenarioRef,
+            parameterType: "STRING",
+            mode: "active",
+            value: "Budget",
+        };
+        expect(computeHydratedRuntimeOverride(parameter, scenarioWorkspace)).toBe("Budget");
+    });
+
+    it("seeds the string workspace default when no value is persisted", () => {
+        const parameter: IDashboardParameter = { ref: scenarioRef, parameterType: "STRING", mode: "active" };
+        expect(computeHydratedRuntimeOverride(parameter, scenarioWorkspace)).toBe("Actual");
+    });
 });
 
 describe("classifyParameterReconciliation", () => {
@@ -128,10 +163,10 @@ describe("classifyParameterReconciliation", () => {
     });
 
     it("classifies a workspace parameter that is no longer a NUMBER as incompatible", () => {
-        const nonNumberWorkspace = {
+        const nonNumberWorkspace: IParameterMetadataObject = {
             ...topNWorkspace,
-            definition: { type: "STRING" },
-        } as unknown as IParameterMetadataObject;
+            definition: scenarioWorkspace.definition,
+        };
         expect(classifyParameterReconciliation(persistedOutOfRange, nonNumberWorkspace)).toBe("incompatible");
     });
 
@@ -148,19 +183,49 @@ describe("classifyParameterReconciliation", () => {
         const noValue: IDashboardParameter = { ref: topNRef, parameterType: "NUMBER", mode: "active" };
         expect(classifyParameterReconciliation(noValue, boundedWorkspace)).toBeUndefined();
     });
+
+    it("returns undefined for a STRING parameter whose persisted value satisfies the constraints", () => {
+        const inRange: IDashboardParameter = {
+            ref: scenarioRef,
+            parameterType: "STRING",
+            mode: "active",
+            value: "Budget",
+        };
+        expect(classifyParameterReconciliation(inRange, boundedScenarioWorkspace)).toBeUndefined();
+    });
+
+    it("classifies a STRING parameter with a too-long persisted value as reset", () => {
+        const tooLong: IDashboardParameter = {
+            ref: scenarioRef,
+            parameterType: "STRING",
+            mode: "active",
+            value: "Forecast",
+        };
+        expect(classifyParameterReconciliation(tooLong, boundedScenarioWorkspace)).toBe("reset");
+    });
+
+    it("classifies a STRING parameter whose workspace parameter is a NUMBER as incompatible", () => {
+        const stringParameter: IDashboardParameter = {
+            ref: topNRef,
+            parameterType: "STRING",
+            mode: "active",
+            value: "Budget",
+        };
+        expect(classifyParameterReconciliation(stringParameter, boundedWorkspace)).toBe("incompatible");
+    });
 });
 
 describe("collectParameterReconciliations", () => {
     it("collects reset, removed and incompatible kinds in entry order", () => {
         const legacyRef = idRef("legacy", "parameter");
-        const incompatibleWorkspace = {
+        const incompatibleWorkspace: IParameterMetadataObject = {
             ...topNWorkspace,
             id: "legacy",
             uri: "/legacy",
             ref: legacyRef,
             title: "Legacy",
-            definition: { type: "STRING" },
-        } as unknown as IParameterMetadataObject;
+            definition: scenarioWorkspace.definition,
+        };
         const entries: IDashboardParameterEntry[] = [
             {
                 parameter: { ref: topNRef, parameterType: "NUMBER", mode: "active", value: 999 },
@@ -313,6 +378,14 @@ describe("formatDashboardParameter", () => {
         };
         expect(formatDashboardParameter(entry, topNWorkspace)?.id).toBe("topN");
     });
+
+    it("emits a string runtimeOverride verbatim", () => {
+        const entry: IDashboardParameterEntry = {
+            parameter: { ref: scenarioRef, parameterType: "STRING", mode: "active" },
+            runtimeOverride: "Budget",
+        };
+        expect(formatDashboardParameter(entry, scenarioWorkspace)?.value).toBe("Budget");
+    });
 });
 
 describe("resolveEffectiveParameterValuesForRefs", () => {
@@ -407,20 +480,15 @@ describe("resolveEffectiveParameterValuesForRefs", () => {
         expect(result).toEqual([{ ref: topNRef, value: 42 }]);
     });
 
-    it("passes an out-of-range value through when the workspace parameter is not a NUMBER (incompatible → surfaces as the widget error)", () => {
-        const incompatibleByRef = new Map([
-            [
-                objRefToString(topNRef),
-                { ...topNWorkspace, definition: { type: "STRING" } } as unknown as IParameterMetadataObject,
-            ],
-        ]);
+    it("substitutes the workspace default for a number override when the workspace parameter is a STRING (recovery)", () => {
+        const stringTypedByRef = new Map([[objRefToString(topNRef), { ...scenarioWorkspace, ref: topNRef }]]);
         const result = resolveEffectiveParameterValuesForRefs(
             [overrideEntry(topNRef, 1000)],
             [topNRef],
             [],
-            incompatibleByRef,
+            stringTypedByRef,
         );
-        expect(result).toEqual([{ ref: topNRef, value: 1000 }]);
+        expect(result).toEqual([{ ref: topNRef, value: "Actual" }]);
     });
 
     it("substitutes the workspace default for an out-of-range insight parameter value (recovery)", () => {
@@ -441,5 +509,44 @@ describe("resolveEffectiveParameterValuesForRefs", () => {
             boundedByRef,
         );
         expect(result).toEqual([{ ref: topNRef, value: 42 }]);
+    });
+
+    const stringOverrideEntry = (runtimeOverride: string): IDashboardParameterEntry => ({
+        parameter: { ref: scenarioRef, parameterType: "STRING", mode: "active" },
+        runtimeOverride,
+    });
+
+    it("includes a string dashboard override for a referenced ref", () => {
+        const result = resolveEffectiveParameterValuesForRefs(
+            [stringOverrideEntry("Budget")],
+            [scenarioRef],
+            [],
+            noWorkspace,
+        );
+        expect(result).toEqual([{ ref: scenarioRef, value: "Budget" }]);
+    });
+
+    it("substitutes the string workspace default for a too-long string override (recovery)", () => {
+        const boundedScenarioByRef = new Map([[objRefToString(scenarioRef), boundedScenarioWorkspace]]);
+        const result = resolveEffectiveParameterValuesForRefs(
+            [stringOverrideEntry("Forecast")],
+            [scenarioRef],
+            [],
+            boundedScenarioByRef,
+        );
+        expect(result).toEqual([{ ref: scenarioRef, value: "Actual" }]);
+    });
+
+    it("substitutes the workspace default for a string override when the workspace parameter is a NUMBER (recovery)", () => {
+        const numberTypedByRef = new Map([
+            [objRefToString(scenarioRef), { ...boundedWorkspace, ref: scenarioRef }],
+        ]);
+        const result = resolveEffectiveParameterValuesForRefs(
+            [stringOverrideEntry("Budget")],
+            [scenarioRef],
+            [],
+            numberTypedByRef,
+        );
+        expect(result).toEqual([{ ref: scenarioRef, value: 10 }]);
     });
 });

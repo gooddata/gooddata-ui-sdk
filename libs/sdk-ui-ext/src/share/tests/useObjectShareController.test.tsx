@@ -18,6 +18,7 @@ import {
     type AccessGranularPermission,
     type IAvailableAccessGrantee,
     type IGranularAccessGrantee,
+    type IUser,
     type ObjRef,
     areObjRefsEqual,
     idRef,
@@ -25,6 +26,7 @@ import {
 } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 
+import type { IUseObjectShareOptions } from "../objectShareController.types.js";
 import type { IObjectShareLabel } from "../types.js";
 import { useObjectShareController } from "../useObjectShareController.js";
 
@@ -50,13 +52,13 @@ const notFound = () => new UnexpectedResponseError("Not Found", 404, {});
 
 const USER_GRANT: AccessGranteeDetail = {
     type: "granularUser",
-    user: { ref: idRef("u1"), uri: "/u1", login: "jane", email: "jane@x.com", fullName: "Jane Good" },
+    user: { ref: idRef("u1"), uri: "/u1", login: "jane", email: "jane@example.com", fullName: "Jane Good" },
     permissions: ["VIEW"],
     inheritedPermissions: [],
 } as AccessGranteeDetail;
 
 const ASSIGNEES: IAvailableAccessGrantee[] = [
-    { type: "user", ref: idRef("u2"), name: "Marek", email: "marek@x.com", status: "ENABLED" },
+    { type: "user", ref: idRef("u2"), name: "Marek", email: "marek@example.com", status: "ENABLED" },
     { type: "group", ref: idRef("g1"), name: "Marketing" },
 ];
 
@@ -75,7 +77,12 @@ const CURRENT_USER_REF = idRef("self");
 // `login` — the controller must resolve the current user from `login`, or nothing
 // self-related matches. A spy so tests can anchor on the profile having actually
 // resolved (`canTransferOwnership === false` is also just its unresolved default).
-const getUserMock = vi.fn(async () => ({ ref: uriRef("/api/v1/profile"), login: "self" }));
+const getUserMock = vi.fn(
+    async (): Promise<Pick<IUser, "ref" | "login" | "fullName" | "email">> => ({
+        ref: uriRef("/api/v1/profile"),
+        login: "self",
+    }),
+);
 
 function makeBackend(svc: IMockService): IAnalyticalBackend {
     const base = dummyBackendEmptyData();
@@ -102,10 +109,7 @@ function makeService(grants: AccessGranteeDetail[] = [USER_GRANT]): IMockService
 function renderController(
     svc: IMockService,
     target: IObjectPermissionsObject | undefined,
-    labels?: IObjectShareLabel[],
-    labelsError = false,
-    labelsLoading = false,
-    isOpen = true,
+    options?: IUseObjectShareOptions,
 ) {
     const backend = makeBackend(svc);
     const wrapper = ({ children }: PropsWithChildren) => (
@@ -115,10 +119,7 @@ function renderController(
             </BackendProvider>
         </IntlProvider>
     );
-    return renderHook(
-        () => useObjectShareController(target, { labels, labelsError, labelsLoading, isOpen }),
-        { wrapper },
-    );
+    return renderHook(() => useObjectShareController(target, { isOpen: true, ...options }), { wrapper });
 }
 
 const PRIMARY_LABEL: IObjectShareLabel = {
@@ -188,7 +189,13 @@ describe("useObjectShareController", () => {
     it("surfaces an EDIT grant as level EDIT without collapsing it to VIEW", async () => {
         const EDIT_GRANT: AccessGranteeDetail = {
             type: "granularUser",
-            user: { ref: idRef("u1"), uri: "/u1", login: "jane", email: "jane@x.com", fullName: "Jane Good" },
+            user: {
+                ref: idRef("u1"),
+                uri: "/u1",
+                login: "jane",
+                email: "jane@example.com",
+                fullName: "Jane Good",
+            },
             permissions: ["EDIT", "VIEW"],
             inheritedPermissions: [],
         } as AccessGranteeDetail;
@@ -204,7 +211,13 @@ describe("useObjectShareController", () => {
     it("does not warn about inherited SHARE when the direct grant is EDIT", async () => {
         const EDIT_INHERITS_SHARE: AccessGranteeDetail = {
             type: "granularUser",
-            user: { ref: idRef("u1"), uri: "/u1", login: "jane", email: "jane@x.com", fullName: "Jane Good" },
+            user: {
+                ref: idRef("u1"),
+                uri: "/u1",
+                login: "jane",
+                email: "jane@example.com",
+                fullName: "Jane Good",
+            },
             permissions: ["EDIT", "VIEW"],
             inheritedPermissions: ["SHARE", "VIEW"],
         } as AccessGranteeDetail;
@@ -220,7 +233,13 @@ describe("useObjectShareController", () => {
         // Direct VIEW, but inherits SHARE (e.g. via a group) → effective is SHARE.
         const INHERITED: AccessGranteeDetail = {
             type: "granularUser",
-            user: { ref: idRef("u1"), uri: "/u1", login: "jane", email: "jane@x.com", fullName: "Jane Good" },
+            user: {
+                ref: idRef("u1"),
+                uri: "/u1",
+                login: "jane",
+                email: "jane@example.com",
+                fullName: "Jane Good",
+            },
             permissions: ["VIEW"],
             inheritedPermissions: ["SHARE", "VIEW"],
         } as AccessGranteeDetail;
@@ -245,7 +264,13 @@ describe("useObjectShareController", () => {
         // the badge must clear (there's no refetch to recompute it).
         const INHERITED: AccessGranteeDetail = {
             type: "granularUser",
-            user: { ref: idRef("u1"), uri: "/u1", login: "jane", email: "jane@x.com", fullName: "Jane Good" },
+            user: {
+                ref: idRef("u1"),
+                uri: "/u1",
+                login: "jane",
+                email: "jane@example.com",
+                fullName: "Jane Good",
+            },
             permissions: ["VIEW"],
             inheritedPermissions: ["SHARE", "VIEW"],
         } as AccessGranteeDetail;
@@ -410,6 +435,10 @@ describe("useObjectShareController", () => {
         const { result } = renderController(svc, TARGET);
         await waitFor(() => expect(result.current.state.status).toBe("success"));
 
+        // Prime the identity cache deterministically (the on-open fetch also does this).
+        await act(async () => {
+            await result.current.actions.loadOptions("");
+        });
         act(() => result.current.actions.openAddGrantee());
         act(() =>
             result.current.actions.setPendingGrantees([
@@ -462,8 +491,8 @@ describe("useObjectShareController", () => {
     it("resolves a granted row's name eagerly when the grant carries only a raw id", async () => {
         // The permissions endpoint returns grants without names (only ids) — the
         // state after a page reload. The row must show the real name without the
-        // user ever opening the picker: the controller eagerly resolves names from
-        // the available-assignees listing when any granted row is still a raw id.
+        // user ever opening the picker: opening the dialog resolves names from
+        // the available-assignees listing.
         const RAW: AccessGranteeDetail = {
             type: "granularUser",
             user: { ref: idRef("u2"), uri: "/u2", login: "u2", email: "u2", fullName: "u2" },
@@ -474,11 +503,73 @@ describe("useObjectShareController", () => {
         const { result } = renderController(svc, TARGET);
         await waitFor(() => expect(result.current.state.status).toBe("success"));
 
-        // No picker interaction — the name resolves from the eager assignee fetch.
+        // No picker interaction — name and email resolve from the eager assignee fetch.
         await waitFor(() =>
             expect(result.current.state.grantees.find((g) => g.id === "user:u2")?.name).toBe("Marek"),
         );
+        expect(result.current.state.grantees.find((g) => g.id === "user:u2")?.email).toBe(
+            "marek@example.com",
+        );
         expect(svc.getAvailableAssignees).toHaveBeenCalled();
+    });
+
+    it("resolves the current user's own row identity from the profile, not the assignee listing", async () => {
+        // The assignee listing excludes the signed-in user, so a self row's facts
+        // can only come from the profile (the F1-2607 reload case).
+        const RAW_SELF: AccessGranteeDetail = {
+            type: "granularUser",
+            user: { ref: idRef("self"), uri: "/self", login: "self", email: "self", fullName: "self" },
+            permissions: ["SHARE", "VIEW"],
+            inheritedPermissions: [],
+        } as AccessGranteeDetail;
+        getUserMock.mockResolvedValueOnce({
+            ref: uriRef("/api/v1/profile"),
+            login: "self",
+            fullName: "Sam Self",
+            email: "sam@example.com",
+        });
+        const svc = makeService([RAW_SELF]);
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+        await waitFor(() => {
+            const row = result.current.state.grantees.find((g) => g.id === "user:self");
+            expect(row?.name).toBe("Sam Self");
+            expect(row?.email).toBe("sam@example.com");
+        });
+    });
+
+    it("does not fabricate an email fact when the current user's email is their user id", async () => {
+        // On tiger the user id is often the email itself (profile email === login);
+        // it must de-collapse, or the row would show the same string twice.
+        const RAW_SELF: AccessGranteeDetail = {
+            type: "granularUser",
+            user: {
+                ref: idRef("sam@example.com"),
+                uri: "/self",
+                login: "sam@example.com",
+                email: "sam@example.com",
+                fullName: "sam@example.com",
+            },
+            permissions: ["SHARE", "VIEW"],
+            inheritedPermissions: [],
+        } as AccessGranteeDetail;
+        getUserMock.mockResolvedValueOnce({
+            ref: uriRef("/api/v1/profile"),
+            login: "sam@example.com",
+            email: "sam@example.com",
+        });
+        const svc = makeService([RAW_SELF]);
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        await waitFor(() => expect(getUserMock).toHaveResolved());
+        await act(async () => {});
+
+        const row = result.current.state.grantees.find((g) => g.id === "user:sam@example.com");
+        expect(row).toBeDefined();
+        // No name and no email fact — the row displays the bare userID alone.
+        expect(row?.name).toBeUndefined();
+        expect(row?.email).toBeUndefined();
     });
 
     it("resolves a group row's name eagerly when the grant carries only a raw id", async () => {
@@ -524,7 +615,8 @@ describe("useObjectShareController", () => {
             </IntlProvider>
         );
         const { result, rerender } = renderHook(
-            ({ target }: { target: IObjectPermissionsObject }) => useObjectShareController(target),
+            ({ target }: { target: IObjectPermissionsObject }) =>
+                useObjectShareController(target, { isOpen: true }),
             // Each rerender passes a fresh object with the same id — identity churn.
             { wrapper, initialProps: { target: { kind: "label", ref: idRef("label.country") } } },
         );
@@ -547,14 +639,19 @@ describe("useObjectShareController", () => {
         expect(svc.getAvailableAssignees).toHaveBeenCalledTimes(1);
     });
 
-    it("does not fetch assignees when every granted row already has a name", async () => {
-        // USER_GRANT carries a real fullName ("Jane Good"), so there is nothing to
-        // resolve — the eager assignee fetch must be skipped entirely. This keeps the
-        // happy path free of an extra workspace user/group listing on every open.
-        const svc = makeService(); // [USER_GRANT] — already named
-        const { result } = renderController(svc, TARGET);
+    it("fires no assignee request while the dialog is closed (summary-only path)", async () => {
+        // The summary renders only counts/levels — no identities — so the on-open
+        // facts resolve must not fire for a closed-dialog (inline row) consumer,
+        // even when the grant carries only a raw id.
+        const RAW: AccessGranteeDetail = {
+            type: "granularUser",
+            user: { ref: idRef("u2"), uri: "/u2", login: "u2", email: "u2", fullName: "u2" },
+            permissions: ["VIEW"],
+            inheritedPermissions: [],
+        } as AccessGranteeDetail;
+        const svc = makeService([RAW]);
+        const { result } = renderController(svc, TARGET, { isOpen: false });
         await waitFor(() => expect(result.current.state.status).toBe("success"));
-        expect(result.current.state.grantees.find((g) => g.id === "user:u1")?.name).toBe("Jane Good");
 
         // Give any stray eager effect a chance to fire, then assert it did not.
         await act(async () => {
@@ -931,7 +1028,7 @@ describe("useObjectShareController", () => {
     });
 
     it("exposes the passed labels in state", async () => {
-        const { result } = renderController(makeLabelAwareService(), TARGET, LABELS);
+        const { result } = renderController(makeLabelAwareService(), TARGET, { labels: LABELS });
         await waitFor(() => expect(result.current.state.status).toBe("success"));
         expect(result.current.state.labels).toEqual(LABELS);
     });
@@ -942,12 +1039,15 @@ describe("useObjectShareController", () => {
         // false — otherwise remove / general-access would reconcile against an empty
         // label set and silently orphan real per-label grants. Consumers gate every
         // access-changing control on this flag.
-        const { result } = renderController(makeLabelAwareService(), TARGET, LABELS, true);
+        const { result } = renderController(makeLabelAwareService(), TARGET, {
+            labels: LABELS,
+            labelsError: true,
+        });
         await waitFor(() => expect(result.current.state.status).toBe("success"));
         expect(result.current.state.labelsResolved).toBe(false);
 
         // Control case: same setup, no error → scope resolves and editing is allowed.
-        const { result: ok } = renderController(makeLabelAwareService(), TARGET, LABELS, false);
+        const { result: ok } = renderController(makeLabelAwareService(), TARGET, { labels: LABELS });
         await waitFor(() => expect(ok.current.state.labelsResolved).toBe(true));
     });
 
@@ -958,12 +1058,15 @@ describe("useObjectShareController", () => {
         // remove would then reconcile against an empty label set and orphan the real
         // per-label grants. So labelsResolved stays false even once the access list
         // loads. Distinguished from a genuine fact (empty list, not loading).
-        const { result: loading } = renderController(makeService(), TARGET, [], false, true);
+        const { result: loading } = renderController(makeService(), TARGET, {
+            labels: [],
+            labelsLoading: true,
+        });
         await waitFor(() => expect(loading.current.state.status).toBe("success"));
         expect(loading.current.state.labelsResolved).toBe(false);
 
         // Control case: a real label-free object (no labels, not loading) resolves.
-        const { result: fact } = renderController(makeService(), TARGET, [], false, false);
+        const { result: fact } = renderController(makeService(), TARGET, { labels: [] });
         await waitFor(() => expect(fact.current.state.status).toBe("success"));
         expect(fact.current.state.labelsResolved).toBe(true);
     });
@@ -1104,7 +1207,7 @@ describe("useObjectShareController", () => {
             manageObjectPermissions: vi.fn(async () => undefined),
             getAvailableAssignees: vi.fn(async () => ASSIGNEES),
         };
-        const { result } = renderController(svc, TARGET, LABELS);
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
         await waitFor(() => expect(result.current.state.status).toBe("success"));
         // Even with zero grantees, the permissionable set resolves and filters 404s.
         await waitFor(() =>
@@ -1115,7 +1218,7 @@ describe("useObjectShareController", () => {
     it("resolves each grantee's label scope from per-label access lists", async () => {
         // u1 is granted on primary + name, but NOT email.
         const svc = makeLabelAwareService(["lbl.primary", "lbl.name"]);
-        const { result } = renderController(svc, TARGET, LABELS);
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
         await waitFor(() => expect(result.current.state.status).toBe("success"));
         await waitFor(() => expect(result.current.state.selectedLabelIdsByGrantee["user:u1"]).toBeDefined());
 
@@ -1151,7 +1254,7 @@ describe("useObjectShareController", () => {
             manageObjectPermissions: vi.fn(async () => undefined),
             getAvailableAssignees: vi.fn(async () => ASSIGNEES),
         };
-        const { result } = renderController(svc, TARGET, LABELS);
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
         await waitFor(() => expect(result.current.state.status).toBe("success"));
         await waitFor(() => expect(result.current.state.selectedLabelIdsByGrantee["user:u1"]).toBeDefined());
 
@@ -1164,7 +1267,7 @@ describe("useObjectShareController", () => {
     it("changeGranteeLabels grants/revokes only the changed labels (primary always kept)", async () => {
         // Currently scoped to primary + name; request primary + email.
         const svc = makeLabelAwareService(["lbl.primary", "lbl.name"]);
-        const { result } = renderController(svc, TARGET, LABELS);
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
         await waitFor(() => expect(result.current.state.status).toBe("success"));
         await waitFor(() => expect(result.current.state.selectedLabelIdsByGrantee["user:u1"]).toBeDefined());
         svc.manageObjectPermissions.mockClear();
@@ -1194,7 +1297,7 @@ describe("useObjectShareController", () => {
 
     it("grants every non-primary label when adding a grantee (all labels by default)", async () => {
         const svc = makeLabelAwareService();
-        const { result } = renderController(svc, TARGET, LABELS);
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
         await waitFor(() => expect(result.current.state.status).toBe("success"));
         svc.manageObjectPermissions.mockClear();
 
@@ -1230,7 +1333,7 @@ describe("useObjectShareController", () => {
 
     it("adds several grantees with one label write per label (not per grantee)", async () => {
         const svc = makeLabelAwareService();
-        const { result } = renderController(svc, TARGET, LABELS);
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
         await waitFor(() => expect(result.current.state.status).toBe("success"));
         svc.manageObjectPermissions.mockClear();
 
@@ -1283,7 +1386,7 @@ describe("useObjectShareController", () => {
             }
             return undefined;
         });
-        const { result } = renderController(svc, TARGET, LABELS);
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
         await waitFor(() => expect(result.current.state.status).toBe("success"));
 
         act(() => result.current.actions.openAddGrantee());
@@ -1318,7 +1421,7 @@ describe("useObjectShareController", () => {
             }
             return undefined;
         });
-        const { result } = renderController(svc, TARGET, LABELS);
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
         await waitFor(() => expect(result.current.state.status).toBe("success"));
 
         act(() => result.current.actions.openAddGrantee());
@@ -1345,7 +1448,7 @@ describe("useObjectShareController", () => {
         // resolution probe — but u2 already has a local scope, so the probe seeds
         // only unknown grantees and the optimistic full scope survives.
         const svc = makeLabelAwareService(["lbl.primary", "lbl.name", "lbl.email"]); // only u1 granted
-        const { result } = renderController(svc, TARGET, LABELS);
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
         await waitFor(() => expect(result.current.state.status).toBe("success"));
 
         act(() => result.current.actions.openAddGrantee());
@@ -1736,7 +1839,7 @@ describe("useObjectShareController", () => {
 
     it("revokes the grantee from every label when removing them", async () => {
         const svc = makeLabelAwareService();
-        const { result } = renderController(svc, TARGET, LABELS);
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
         await waitFor(() => expect(result.current.state.status).toBe("success"));
         await waitFor(() => expect(result.current.state.selectedLabelIdsByGrantee["user:u1"]).toBeDefined());
         svc.manageObjectPermissions.mockClear();
@@ -1770,7 +1873,7 @@ describe("useObjectShareController", () => {
                 throw new Error("object revoke failed");
             }
         });
-        const { result } = renderController(svc, TARGET, LABELS);
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
         await waitFor(() => expect(result.current.state.status).toBe("success"));
         await waitFor(() => expect(result.current.state.selectedLabelIdsByGrantee["user:u1"]).toBeDefined());
         svc.manageObjectPermissions.mockClear();
@@ -1795,7 +1898,7 @@ describe("useObjectShareController", () => {
 
     it("mirrors the all-workspace-members rule onto every label", async () => {
         const svc = makeLabelAwareService();
-        const { result } = renderController(svc, TARGET, LABELS);
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
         await waitFor(() => expect(result.current.state.status).toBe("success"));
         svc.manageObjectPermissions.mockClear();
 
@@ -1830,7 +1933,7 @@ describe("useObjectShareController", () => {
             }
             return undefined;
         });
-        const { result } = renderController(svc, TARGET, LABELS);
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
         await waitFor(() => expect(result.current.state.status).toBe("success"));
         svc.manageObjectPermissions.mockClear();
 
@@ -1864,7 +1967,7 @@ describe("useObjectShareController", () => {
             manageObjectPermissions: vi.fn(async () => undefined),
             getAvailableAssignees: vi.fn(async () => ASSIGNEES),
         };
-        const { result } = renderController(svc, TARGET, LABELS);
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
         await waitFor(() => expect(result.current.state.status).toBe("success"));
         // After resolution, the name label is dropped; only the permissionable ones remain.
         await waitFor(() => expect(result.current.state.labels.map((l) => l.id)).not.toContain("lbl.name"));
@@ -1884,7 +1987,7 @@ describe("useObjectShareController", () => {
             manageObjectPermissions: vi.fn(async () => undefined),
             getAvailableAssignees: vi.fn(async () => ASSIGNEES),
         };
-        const { result } = renderController(svc, TARGET, LABELS);
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
         await waitFor(() => expect(result.current.state.status).toBe("success"));
         // lbl.name is kept (transient), so all three labels stay available.
         await waitFor(() =>
@@ -1909,12 +2012,18 @@ describe("useObjectShareController", () => {
     });
 
     describe("transfer ownership", () => {
-        const NEW_OWNER = { id: "user:u2", kind: "user" as const, name: "Marek", email: "marek@x.com" };
+        const NEW_OWNER = { id: "user:u2", kind: "user" as const, name: "Marek", email: "marek@example.com" };
 
         // u1 holds EDIT — i.e. already an owner.
         const OWNER_GRANT: AccessGranteeDetail = {
             type: "granularUser",
-            user: { ref: idRef("u1"), uri: "/u1", login: "jane", email: "jane@x.com", fullName: "Jane Good" },
+            user: {
+                ref: idRef("u1"),
+                uri: "/u1",
+                login: "jane",
+                email: "jane@example.com",
+                fullName: "Jane Good",
+            },
             permissions: ["EDIT", "VIEW"],
             inheritedPermissions: [],
         } as AccessGranteeDetail;
@@ -1971,6 +2080,10 @@ describe("useObjectShareController", () => {
             // u2 isn't in the access list, only u1 is.
             expect(result.current.state.grantees.some((g) => g.id === "user:u2")).toBe(false);
 
+            // Prime the identity cache deterministically (the on-open fetch also does this).
+            await act(async () => {
+                await result.current.actions.loadOptions("", true);
+            });
             act(() => result.current.actions.openTransferOwnership());
             act(() => result.current.actions.setTransferTarget(NEW_OWNER));
             await act(async () => {
@@ -1985,7 +2098,7 @@ describe("useObjectShareController", () => {
 
         it("grants the new owner every label and revokes self labels on remove (attribute with labels)", async () => {
             const svc = makeLabelAwareService();
-            const { result } = renderController(svc, TARGET, LABELS);
+            const { result } = renderController(svc, TARGET, { labels: LABELS });
             await waitFor(() => expect(result.current.state.status).toBe("success"));
             await waitFor(() => expect(result.current.state.labelsResolved).toBe(true));
             svc.manageObjectPermissions.mockClear();
@@ -2130,7 +2243,7 @@ describe("useObjectShareController", () => {
         // their own grant — getAccessList keeps every grant, including self.
         const SELF_GRANT: AccessGranteeDetail = {
             type: "granularUser",
-            user: { ref: idRef("self"), uri: "/self", login: "me", email: "me@x.com", fullName: "Me" },
+            user: { ref: idRef("self"), uri: "/self", login: "me", email: "me@example.com", fullName: "Me" },
             permissions: ["EDIT", "VIEW"],
             inheritedPermissions: [],
         } as AccessGranteeDetail;
@@ -2262,7 +2375,13 @@ describe("useObjectShareController", () => {
         // A grant for the signed-in user (resolved to CURRENT_USER_REF) at the given level.
         const selfGrant = (permissions: AccessGranularPermission[]): AccessGranteeDetail => ({
             type: "granularUser",
-            user: { ref: CURRENT_USER_REF, uri: "/self", login: "me", email: "me@x.com", fullName: "Me" },
+            user: {
+                ref: CURRENT_USER_REF,
+                uri: "/self",
+                login: "me",
+                email: "me@example.com",
+                fullName: "Me",
+            },
             permissions,
             inheritedPermissions: [],
         });
@@ -2294,14 +2413,9 @@ describe("useObjectShareController", () => {
         });
 
         it("fires no profile request while the dialog is closed (summary-only path)", async () => {
-            const { result } = renderController(
-                makeService([selfGrant(["EDIT", "VIEW"])]),
-                TARGET,
-                undefined,
-                false,
-                false,
-                false,
-            );
+            const { result } = renderController(makeService([selfGrant(["EDIT", "VIEW"])]), TARGET, {
+                isOpen: false,
+            });
             await waitFor(() =>
                 expect(result.current.state.grantees.some((g) => g.id === "user:self")).toBe(true),
             );

@@ -84,6 +84,8 @@ export const ExportTabularPdfDialog = memo<IExportTabularPdfDialogProps>(functio
 
     const dialogId = useIdPrefixed("pdfExportDialog");
     const showInfoPageId = useIdPrefixed("showInfoPage");
+    const pageSizeDropdownButtonId = useIdPrefixed("pageSizeDropdownButton");
+    const orientationDropdownButtonId = useIdPrefixed("orientationDropdownButton");
 
     const handleSubmit = useCallback(() => {
         onSubmit?.({
@@ -124,21 +126,21 @@ export const ExportTabularPdfDialog = memo<IExportTabularPdfDialogProps>(functio
                     dialogId,
                 }}
             >
-                <div className="gd-pdf-export-dialog-item">
-                    <h4 id="page-size-label">
+                <div className="gd-input gd-pdf-export-dialog-item">
+                    <label className="gd-label" htmlFor={pageSizeDropdownButtonId}>
                         <FormattedMessage id="dialogs.export.pdf.pageSize" />
-                    </h4>
+                    </label>
                     <Dropdown
                         fullscreenOnMobile={false}
                         renderButton={({ isOpen, toggleDropdown }) => (
                             <DropdownButton
+                                id={pageSizeDropdownButtonId}
                                 value={
                                     pageSizeMenuItems.find((item) => item.data === selectedSize)?.stringTitle
                                 }
                                 isOpen={isOpen}
                                 onClick={toggleDropdown}
                                 accessibilityConfig={{
-                                    ariaLabelledBy: "page-size-label",
                                     ariaHaspopup: "true",
                                     ariaExpanded: isOpen,
                                     ...(isOpen ? { ariaControls: "page-size-menu" } : {}),
@@ -168,14 +170,15 @@ export const ExportTabularPdfDialog = memo<IExportTabularPdfDialogProps>(functio
                     />
                 </div>
 
-                <div className="gd-pdf-export-dialog-item">
-                    <h4 id="orientation-label">
+                <div className="gd-input gd-pdf-export-dialog-item">
+                    <label className="gd-label" htmlFor={orientationDropdownButtonId}>
                         <FormattedMessage id="dialogs.export.pdf.pageOrientation" />
-                    </h4>
+                    </label>
                     <Dropdown
                         fullscreenOnMobile={false}
                         renderButton={({ isOpen, toggleDropdown }) => (
                             <DropdownButton
+                                id={orientationDropdownButtonId}
                                 value={
                                     orientationMenuItems.find((item) => item.data === selectedOrientation)
                                         ?.stringTitle
@@ -183,7 +186,6 @@ export const ExportTabularPdfDialog = memo<IExportTabularPdfDialogProps>(functio
                                 isOpen={isOpen}
                                 onClick={toggleDropdown}
                                 accessibilityConfig={{
-                                    ariaLabelledBy: "orientation-label",
                                     ariaHaspopup: "true",
                                     ariaExpanded: isOpen,
                                     ...(isOpen ? { ariaControls: "orientation-menu" } : {}),

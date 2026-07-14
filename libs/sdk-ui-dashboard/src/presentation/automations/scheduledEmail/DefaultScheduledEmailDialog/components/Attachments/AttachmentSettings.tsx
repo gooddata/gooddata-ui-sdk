@@ -105,7 +105,9 @@ export function AttachmentSettings({
         legacyPageOrientation ?? DEFAULT_PDF_PAGE_ORIENTATION,
     );
     const [csvDelimiterValue, setCsvDelimiterValue] = useState(resolvedCsvState);
+    const pageSizeDropdownButtonId = useId();
     const pageSizeMenuId = useId();
+    const orientationDropdownButtonId = useId();
     const orientationMenuId = useId();
 
     const settingsLabel = isPdfTabular
@@ -248,14 +250,15 @@ export function AttachmentSettings({
                     <div className="gd-attachment-settings-dropdown-content">
                         {isPdfTabular ? (
                             <>
-                                <div className="gd-pdf-export-dialog-item">
-                                    <h4>
+                                <div className="gd-input gd-pdf-export-dialog-item">
+                                    <label className="gd-label" htmlFor={pageSizeDropdownButtonId}>
                                         <FormattedMessage id="dialogs.export.pdf.pageSize" />
-                                    </h4>
+                                    </label>
                                     <Dropdown
                                         fullscreenOnMobile={false}
                                         renderButton={({ isOpen, toggleDropdown }) => (
                                             <DropdownButton
+                                                id={pageSizeDropdownButtonId}
                                                 value={
                                                     pageSizeMenuItems.find((item) => item.data === pageSize)
                                                         ?.stringTitle
@@ -263,9 +266,6 @@ export function AttachmentSettings({
                                                 isOpen={isOpen}
                                                 onClick={toggleDropdown}
                                                 accessibilityConfig={{
-                                                    ariaLabel: intl.formatMessage({
-                                                        id: "dialogs.export.pdf.pageSize",
-                                                    }),
                                                     ariaHaspopup: "true",
                                                     ariaExpanded: isOpen,
                                                     ...(isOpen
@@ -300,14 +300,15 @@ export function AttachmentSettings({
                                         autofocusOnOpen
                                     />
                                 </div>
-                                <div className="gd-pdf-export-dialog-item">
-                                    <h4>
+                                <div className="gd-input gd-pdf-export-dialog-item">
+                                    <label className="gd-label" htmlFor={orientationDropdownButtonId}>
                                         <FormattedMessage id="dialogs.export.pdf.pageOrientation" />
-                                    </h4>
+                                    </label>
                                     <Dropdown
                                         fullscreenOnMobile={false}
                                         renderButton={({ isOpen, toggleDropdown }) => (
                                             <DropdownButton
+                                                id={orientationDropdownButtonId}
                                                 value={
                                                     orientationMenuItems.find(
                                                         (item) => item.data === pageOrientation,
@@ -316,9 +317,6 @@ export function AttachmentSettings({
                                                 isOpen={isOpen}
                                                 onClick={toggleDropdown}
                                                 accessibilityConfig={{
-                                                    ariaLabel: intl.formatMessage({
-                                                        id: "dialogs.export.pdf.pageOrientation",
-                                                    }),
                                                     ariaHaspopup: "true",
                                                     ariaExpanded: isOpen,
                                                     ...(isOpen

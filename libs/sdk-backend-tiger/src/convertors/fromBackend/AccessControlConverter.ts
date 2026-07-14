@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import {
     type GrantedPermission,
@@ -30,6 +30,8 @@ export const convertRulesPermission = (rule: RulePermission): IGranularRulesAcce
     inheritedPermissions: getPermissionLevels(rule.permissions, "indirect"),
 });
 
+// The `??` collapse chains below are load-bearing: sdk-ui-ext's userIdentityFacts
+// inverts them exactly (pinned by AccessControlConverter.test.ts).
 export const convertUserPermission = (user: UserPermission): IGranularUserAccess => ({
     type: "granularUser",
     user: {
@@ -54,6 +56,7 @@ export const convertUserAssignee = (user: UserAssignee): IAvailableUserAccessGra
     type: "user",
     ref: idRef(user.id),
     name: user.name ?? user.email ?? user.id,
+    email: user.email,
     status: "ENABLED",
 });
 

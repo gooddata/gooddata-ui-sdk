@@ -330,6 +330,7 @@ export { ObjectShareDialog, type IObjectShareDialogProps } from "./share/ObjectS
 export { useObjectShareController as useObjectShare } from "./share/useObjectShareController.js";
 export type { IObjectAccessSummary, IObjectShareLabel } from "./share/types.js";
 export type {
+    IGranteeIdentityFacts,
     IObjectShareController,
     IObjectShareControllerActions,
     IObjectShareControllerState,

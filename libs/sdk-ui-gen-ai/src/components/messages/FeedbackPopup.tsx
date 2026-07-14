@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type ReactElement, useState } from "react";
 
@@ -39,6 +39,10 @@ export function FeedbackPopup({ anchor, onSubmit }: IFeedbackPopupProps) {
         {
             id: "factually-incorrect",
             label: intl.formatMessage({ id: "gd.gen-ai.feedback.reason.factually-incorrect" }),
+        },
+        {
+            id: "answer-too-long",
+            label: intl.formatMessage({ id: "gd.gen-ai.feedback.reason.answer-too-long" }),
         },
         {
             id: "other",

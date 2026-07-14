@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { getDraftValidationError } from "../ParameterControlDropdown.js";
+import { getDraftValidationError } from "../NumberParameterControlDropdown.js";
 
 describe("getDraftValidationError", () => {
     it("flags an empty draft as not-a-number", () => {

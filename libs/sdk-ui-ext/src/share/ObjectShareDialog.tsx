@@ -15,6 +15,7 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import { objectShareMessages } from "./messages.js";
+import { granteeDisplayPair } from "./objectShareController.helpers.js";
 import type { IObjectShareController } from "./objectShareController.types.js";
 import type { IObjectShareLabel } from "./types.js";
 import { useObjectShareController } from "./useObjectShareController.js";
@@ -180,8 +181,7 @@ export function ObjectShareDialog({
                 grantees={state.grantees.map((g) => ({
                     id: g.id,
                     kind: g.kind,
-                    name: g.name,
-                    email: g.email,
+                    ...granteeDisplayPair(g),
                     isPending: g.pending !== undefined,
                     controls: (
                         <UiGranteeRowControls

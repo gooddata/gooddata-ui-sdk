@@ -273,6 +273,29 @@ export interface IWorkspaceSettingsService {
     setEnablePartialDataResults(enabled: boolean): Promise<void>;
 
     /**
+     * Sets enable null joins setting for workspace. Default is taken from organization setting.
+     *
+     * @remarks
+     * When enabled, generated SQL joins coalesce null values before comparing join keys.
+     *
+     * @param enabled - whether to enable null value matching in SQL joins for this workspace.
+     *
+     * @returns promise
+     * @alpha
+     */
+    setEnableNullJoins(enabled: boolean): Promise<void>;
+
+    /**
+     * Sets enable query tags setting for workspace. Default is taken from organization setting.
+     *
+     * @param enabled - whether to enable query tags for this workspace.
+     *
+     * @returns promise
+     * @alpha
+     */
+    setEnableQueryTags(enabled: boolean): Promise<void>;
+
+    /**
      * Sets default CSV delimiter for exports in workspace. Default is taken from organization setting.
      *
      * @param delimiter - single character delimiter to use for CSV exports.

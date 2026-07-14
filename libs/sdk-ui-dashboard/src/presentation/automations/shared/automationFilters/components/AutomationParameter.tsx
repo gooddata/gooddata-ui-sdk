@@ -7,8 +7,8 @@ import { useIntl } from "react-intl";
 import { DashboardParameterModeValues, type IdentifierRef } from "@gooddata/sdk-model";
 import {
     Dropdown,
+    NumberParameterControlDropdown,
     type OverlayPositionType,
-    ParameterControlDropdown,
     UiChip,
     UiTooltip,
     isActionKey,
@@ -114,7 +114,7 @@ export function AutomationParameter({
                 />
             )}
             renderBody={({ closeDropdown, ariaAttributes }) => (
-                <ParameterControlDropdown
+                <NumberParameterControlDropdown
                     name={title}
                     value={value}
                     constraints={constraints}

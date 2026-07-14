@@ -2,6 +2,8 @@
 
 import { defineMessages, useIntl } from "react-intl";
 
+import { type ParameterValue } from "@gooddata/sdk-model";
+
 import { UiControlButton } from "../@ui/UiControlButton/UiControlButton.js";
 import { UiIcon } from "../@ui/UiIcon/UiIcon.js";
 
@@ -14,7 +16,7 @@ const messages = defineMessages({
  */
 export interface IParameterControlButtonProps {
     name: string;
-    value: number;
+    value: ParameterValue;
     isActive: boolean;
     isDraggable?: boolean;
     isDragging?: boolean;

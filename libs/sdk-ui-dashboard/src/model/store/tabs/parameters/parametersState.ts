@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type IDashboardParameter, type IDashboardTab } from "@gooddata/sdk-model";
+import { type IDashboardParameter, type IDashboardTab, type ParameterValue } from "@gooddata/sdk-model";
 
 /**
  * Per-parameter state tracked by the dashboard store.
@@ -20,7 +20,7 @@ export interface IDashboardParameterEntry {
      * off, failed, or missing for the ref). Such entries are skipped when building widget
      * execution overrides so the backend keeps using the parameter's own default.
      */
-    runtimeOverride: number | undefined;
+    runtimeOverride: ParameterValue | undefined;
 }
 
 /**

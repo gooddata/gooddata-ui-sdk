@@ -183,6 +183,10 @@
         "text": "Factually incorrect",
         "crowdinContext": "Feedback reason option: AI provided factually incorrect information"
     },
+    "gd.gen-ai.feedback.reason.answer-too-long": {
+        "text": "Answer took too long",
+        "crowdinContext": "Feedback reason option: AI answer took too long"
+    },
     "gd.gen-ai.feedback.reason.other": {
         "text": "Other",
         "crowdinContext": "Feedback reason option: Other reason not listed"

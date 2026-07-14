@@ -48,6 +48,22 @@ function getPreviewChar(optionId: string): HTMLElement | null {
 }
 
 describe("AttachmentSettings", () => {
+    it("should render PDF dropdowns with associated labels", () => {
+        renderComponent({ type: "PDF_TABULAR" });
+
+        fireEvent.click(screen.getByLabelText("Export settings (.pdf)"));
+
+        const pageSizeLabel = screen.getByText("Page size");
+        const pageSizeDropdown = screen.getByLabelText("Page size");
+        const orientationLabel = screen.getByText("Orientation");
+        const orientationDropdown = screen.getByLabelText("Orientation");
+
+        expect(pageSizeLabel.tagName).toBe("LABEL");
+        expect(pageSizeLabel).toHaveAttribute("for", pageSizeDropdown.id);
+        expect(orientationLabel.tagName).toBe("LABEL");
+        expect(orientationLabel).toHaveAttribute("for", orientationDropdown.id);
+    });
+
     it("should default CSV settings to comma", () => {
         renderComponent();
 

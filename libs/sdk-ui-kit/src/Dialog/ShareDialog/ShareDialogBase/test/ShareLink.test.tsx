@@ -36,6 +36,24 @@ describe("ShareLink", () => {
         expect(decompressFromUrl<IDashboardParameter[]>(encoded!)).toEqual(dashboardParameters);
     });
 
+    it("round-trips a STRING override with spaces, URL delimiters, quotes and non-ASCII", () => {
+        const dashboardParameters: IDashboardParameter[] = [
+            {
+                ref: idRef("scenario", "parameter"),
+                parameterType: "STRING",
+                mode: "active",
+                value: 'Q1 & Q2 = "nejlepší" 100%?#déjà',
+            },
+        ];
+
+        render(<Wrapped {...baseProps} dashboardParameters={dashboardParameters} />);
+
+        // Re-parsing the rendered URL string proves the encoded payload survives URL serialization.
+        const url = new URL(getShareUrl().toString());
+        const encoded = url.searchParams.get("parameters");
+        expect(decompressFromUrl<IDashboardParameter[]>(encoded!)).toEqual(dashboardParameters);
+    });
+
     it.each<[string, IDashboardParameter[] | undefined]>([
         ["undefined", undefined],
         ["empty", []],

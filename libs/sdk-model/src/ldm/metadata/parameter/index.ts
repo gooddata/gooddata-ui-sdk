@@ -126,20 +126,6 @@ export function isStringParameterDefinition(def: IParameterDefinition): def is I
 }
 
 /**
- * Returns the default value of a NUMBER parameter, or `undefined` for any other type.
- *
- * @remarks
- * A NUMBER parameter always carries a default, so `undefined` unambiguously means "not a NUMBER parameter".
- *
- * @alpha
- */
-export function getNumberParameterDefaultValue(
-    definition: IParameterDefinition | undefined,
-): number | undefined {
-    return definition && isNumberParameterDefinition(definition) ? definition.defaultValue : undefined;
-}
-
-/**
  * Tests whether `value` is valid for the given parameter definition.
  *
  * @alpha
@@ -171,7 +157,15 @@ export function isValidNumberParameterValue(
     );
 }
 
-function isValidStringParameterValue(value: string, constraints: IStringParameterConstraints = {}): boolean {
+/**
+ * Tests whether `value` satisfies the optional `minLength`/`maxLength` bounds (inclusive).
+ *
+ * @alpha
+ */
+export function isValidStringParameterValue(
+    value: string,
+    constraints: IStringParameterConstraints = {},
+): boolean {
     const { minLength, maxLength } = constraints;
     return (
         (minLength === undefined || value.length >= minLength) &&

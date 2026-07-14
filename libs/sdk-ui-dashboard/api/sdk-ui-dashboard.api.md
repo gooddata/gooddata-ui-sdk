@@ -204,6 +204,7 @@ import { OnFiredDrillEvent } from '@gooddata/sdk-ui';
 import { OnLoadingChanged } from '@gooddata/sdk-ui';
 import { OverlayController } from '@gooddata/sdk-ui-kit';
 import { OverlayPositionType } from '@gooddata/sdk-ui-kit';
+import { ParameterValue } from '@gooddata/sdk-model';
 import { Patch } from 'immer';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { PlatformEdition } from '@gooddata/sdk-model';
@@ -2239,7 +2240,7 @@ export interface IAddParameterPayload {
     // (undocumented)
     parameter: IDashboardParameter;
     // (undocumented)
-    workspaceDefault: number;
+    workspaceDefault: ParameterValue;
 }
 
 // @beta (undocumented)
@@ -4817,7 +4818,7 @@ export interface IDashboardMetaState {
 export interface IDashboardParameterEntry {
     // (undocumented)
     parameter: IDashboardParameter;
-    runtimeOverride: number | undefined;
+    runtimeOverride: ParameterValue | undefined;
 }
 
 // @alpha
@@ -8368,7 +8369,7 @@ export interface ISetParameterRuntimeValuePayload {
     // (undocumented)
     ref: ObjRef;
     // (undocumented)
-    value: number | undefined;
+    value: ParameterValue | undefined;
 }
 
 // @alpha (undocumented)
@@ -11534,7 +11535,7 @@ export const selectOtherContextAttributeFilterItems: (ref?: ObjRef) => Dashboard
 export const selectOtherContextAttributeFilters: (ref?: ObjRef) => DashboardSelector<IDashboardAttributeFilter[]>;
 
 // @alpha
-export const selectParameterRuntimeOverrideByRef: (ref: ObjRef) => DashboardSelector<number | undefined>;
+export const selectParameterRuntimeOverrideByRef: (ref: ObjRef) => DashboardSelector<ParameterValue | undefined>;
 
 // @internal
 export const selectPdfExportVisible: DashboardSelector<boolean>;

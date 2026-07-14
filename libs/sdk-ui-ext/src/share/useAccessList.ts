@@ -6,6 +6,7 @@ import type { IObjectPermissionsObject } from "@gooddata/sdk-backend-spi";
 import {
     type IAvailableAccessGrantee,
     type IGranularAccessGrantee,
+    type IUser,
     type ObjRef,
     idRef,
     objRefToString,
@@ -17,12 +18,18 @@ import { isPermissionsNotAvailable } from "./accessErrors.js";
 import { deriveGeneralAccess, deriveWorkspacePermissionLevel } from "./accessSummary.js";
 import { objectShareMessages } from "./messages.js";
 import {
+    assigneeIdentityFacts,
     assigneeMatchesQuery,
     granteeId,
-    granteeNameUnresolved,
     granteesFromAccessList,
+    userDisplayPair,
+    userIdentityFacts,
 } from "./objectShareController.helpers.js";
-import type { IObjectShareControllerState, IObjectShareGrantee } from "./objectShareController.types.js";
+import type {
+    IGranteeIdentityFacts,
+    IObjectShareControllerState,
+    IObjectShareGrantee,
+} from "./objectShareController.types.js";
 import type { IObjectAccessSummary } from "./types.js";
 
 /**
@@ -95,7 +102,6 @@ export interface IAccessList {
      * showing a stale SHARE inherited from the initial fetch.
      */
     setWorkspaceLevel: React.Dispatch<React.SetStateAction<"VIEW" | "SHARE">>;
-    setKnownNames: React.Dispatch<React.SetStateAction<Record<string, string>>>;
 }
 
 /**
@@ -131,39 +137,29 @@ export function useAccessList(
     // `targetKey` — a target switch makes the old state stale until the re-seed.
     const [seededTarget, setSeededTarget] = useState<string | undefined>(undefined);
     const [loadError, setLoadError] = useState<Error | undefined>(undefined);
-    // Display names learned from the picker; used to give a fetched row a human
-    // name when its grant carried only a raw id.
-    const [knownNames, setKnownNames] = useState<Record<string, string>>({});
-    // Original ObjRef per grantee id, learned from the picker (the access-list id
-    // is a serialized `kind:identifier`, which loses Uri-vs-Id). Reused for writes.
-    const [knownRefs, setKnownRefs] = useState<Record<string, ObjRef>>({});
-    // Memoized current-user-ref fetch — the profile doesn't change while mounted,
+    // Assignee identities from the listing (picker + on-open resolve), keyed by
+    // grantee id: de-collapsed facts + the original ObjRef (the serialized id
+    // loses Uri-vs-Id). The signed-in user is absent from the listing; their
+    // facts derive from the profile instead.
+    const [knownAssignees, setKnownAssignees] = useState<
+        Record<string, { facts: IGranteeIdentityFacts; ref: ObjRef }>
+    >({});
+    // Memoized current-user fetch — the profile doesn't change while mounted,
     // so resolve it at most once and share the promise across callers.
-    const currentUserRefCache = useRef<Promise<ObjRef> | undefined>(undefined);
+    const currentUserCache = useRef<Promise<IUser> | undefined>(undefined);
 
     const targetKey = target ? objRefToString(target.ref) : undefined;
 
-    // Learn each assignee's real name + ref into the caches, keyed by the same
-    // grantee id the rows use. Written from both the picker (loadOptions) and the
-    // eager resolve below, so a granted row can show a human name even when its
-    // access-list grant carried only a raw id. Must not depend on the caches it
-    // writes, or it would re-trigger loadOptions' fetch.
+    // Written from both the picker (loadOptions) and the on-open resolve. Must not
+    // depend on the cache it writes, or it would re-trigger loadOptions' fetch.
     const cacheAssignees = useCallback((assignees: IAvailableAccessGrantee[]) => {
-        const withIds = assignees.map((a) => ({
-            assignee: a,
-            id: granteeId(a.type === "user" ? "user" : "group", a.ref),
-        }));
-        setKnownNames((prev) => {
+        setKnownAssignees((prev) => {
             const next = { ...prev };
-            for (const { assignee, id } of withIds) {
-                next[id] = assignee.name;
-            }
-            return next;
-        });
-        setKnownRefs((prev) => {
-            const next = { ...prev };
-            for (const { assignee, id } of withIds) {
-                next[id] = assignee.ref;
+            for (const assignee of assignees) {
+                next[granteeId(assignee.type === "user" ? "user" : "group", assignee.ref)] = {
+                    facts: assigneeIdentityFacts(assignee),
+                    ref: assignee.ref,
+                };
             }
             return next;
         });
@@ -213,35 +209,63 @@ export function useAccessList(
         }
     }, [fetchStatus, fetchedList, fetchError, targetKey]);
 
-    // The current target's rows, with a human name backfilled from the picker
-    // cache where the grant returned only a raw id. Empty until the current
-    // target's list is seeded, so a stale previous target's rows never show
-    // through the switch window. Derivation, not state — re-applies as the cache grows.
-    const namedGrantees = useMemo<IObjectShareGrantee[]>(
-        () =>
-            hasList
-                ? grantees.map((g) => {
-                      const known = knownNames[g.id];
-                      return known && granteeNameUnresolved(g) ? { ...g, name: known } : g;
-                  })
-                : [],
-        [hasList, grantees, knownNames],
+    const getCurrentUser = useCallback((): Promise<IUser> => {
+        if (!currentUserCache.current) {
+            currentUserCache.current = backend
+                .currentUser()
+                .getUser()
+                .catch((error) => {
+                    // Don't cache a rejected promise, or a transient profile-read
+                    // failure would make every later transfer fail immediately.
+                    currentUserCache.current = undefined;
+                    throw error;
+                });
+        }
+        return currentUserCache.current;
+    }, [backend]);
+
+    // Resolve the current user only while the dialog is open — keeps the summary-only
+    // path free of a profile request (the transfer gate and self-row facts it feeds
+    // aren't shown there).
+    const { result: currentUser } = useCancelablePromise<IUser>(
+        {
+            promise: dialogOpen && targetKey ? () => getCurrentUser() : undefined,
+            onError: () => {},
+        },
+        // Key on target presence, not identity — the resolved user is
+        // target-independent, so a target switch must not reset it.
+        [getCurrentUser, targetKey !== undefined, dialogOpen],
     );
 
-    // Eagerly resolve display names when a fetched grant carried only a raw id.
-    // The permissions endpoint returns grants without user/group names, so after a
-    // page reload a row would show the raw id until the picker is opened. Fetch the
-    // available assignees (the same source the picker uses) to fill the name cache,
-    // but only when something is actually unresolved — a backend that does return
-    // names skips the extra request entirely. Keyed on the serialized targetKey, not
-    // the target object, so an inline-ref consumer re-rendering mid-fetch doesn't
-    // cancel it. Once the cache lands, `needsNameResolve` flips false and the promise
-    // is withdrawn, so it never refetches — an id the listing can't name just stays.
-    const needsNameResolve = hasList && grantees.some((g) => granteeNameUnresolved(g) && !knownNames[g.id]);
+    const selfId = currentUser ? granteeId("user", idRef(currentUser.login)) : undefined;
+
+    // Rows with identity facts backfilled from the assignee cache — or, for the
+    // signed-in user's own row (absent from the listing by design), from the
+    // profile. Empty until the current target's list is seeded; a derivation, so
+    // it re-applies as the caches grow.
+    const namedGrantees = useMemo<IObjectShareGrantee[]>(() => {
+        if (!hasList) {
+            return [];
+        }
+        // De-collapsed like every listing fact — on tiger the user id is often the email.
+        const selfFacts = currentUser
+            ? userIdentityFacts(idRef(currentUser.login), currentUser.fullName, currentUser.email)
+            : undefined;
+        return grantees.map((g) => {
+            const known = knownAssignees[g.id]?.facts ?? (g.id === selfId ? selfFacts : undefined);
+            return known ? { ...g, name: g.name ?? known.name, email: g.email ?? known.email } : g;
+        });
+    }, [hasList, grantees, knownAssignees, currentUser, selfId]);
+
+    // Resolve identity facts on dialog open — grants often carry only raw ids
+    // (the post-reload state). Unconditional: no missing-facts gate to keep in
+    // sync with the cache, and summary-only consumers never fetch. Keyed on the
+    // serialized targetKey so an inline-ref consumer re-rendering mid-fetch
+    // doesn't cancel it.
     useCancelablePromise<IAvailableAccessGrantee[]>(
         {
             promise:
-                target && needsNameResolve
+                target && dialogOpen
                     ? () => backend.workspace(workspace).objectPermissions().getAvailableAssignees(target)
                     : undefined,
             onSuccess: cacheAssignees,
@@ -249,7 +273,7 @@ export function useAccessList(
             // regression) and the picker can still resolve it on demand. No toast.
             onError: () => {},
         },
-        [backend, workspace, targetKey, needsNameResolve],
+        [backend, workspace, targetKey, dialogOpen],
     );
 
     // Stable sorted key of the currently-granted ids — drives the picker's
@@ -356,8 +380,8 @@ export function useAccessList(
                     .map(({ assignee, id }) => ({
                         id,
                         kind: "user" as const,
-                        name: assignee.name,
-                        email: assignee.type === "user" ? assignee.email : undefined,
+                        // Same fallback pairs as the grantee rows.
+                        ...userDisplayPair(assigneeIdentityFacts(assignee), objRefToString(assignee.ref)),
                     })),
                 groups: selectable
                     .filter(({ assignee }) => assignee.type !== "user")
@@ -370,42 +394,19 @@ export function useAccessList(
     // Reuse the picker's original ref (preserves UriRef vs IdentifierRef);
     // fall back to the serialized id only if it wasn't cached.
     const refForId = useCallback(
-        (id: string): ObjRef => knownRefs[id] ?? { identifier: id.split(":", 2)[1]! },
-        [knownRefs],
+        (id: string): ObjRef => knownAssignees[id]?.ref ?? { identifier: id.split(":", 2)[1]! },
+        [knownAssignees],
     );
 
-    const getCurrentUserRef = useCallback(async (): Promise<ObjRef> => {
-        if (!currentUserRefCache.current) {
-            currentUserRefCache.current = backend
-                .currentUser()
-                .getUser()
-                // Not `user.ref`: the profile resolves it as a uriRef while access-list
-                // grantee refs are idRefs keyed by user id (= profile login), and
-                // areObjRefsEqual never matches mixed shapes — self-row matching and
-                // the self grant write need the permission API's id space.
-                .then((user) => idRef(user.login))
-                .catch((error) => {
-                    // Don't cache a rejected promise, or a transient profile-read
-                    // failure would make every later transfer fail immediately.
-                    currentUserRefCache.current = undefined;
-                    throw error;
-                });
-        }
-        return currentUserRefCache.current;
-    }, [backend]);
-
-    // Resolve the current user only while the dialog is open — keeps the summary-only
-    // path free of a profile request (the transfer gate it feeds isn't shown there).
-    const { result: currentUserRef } = useCancelablePromise<ObjRef>(
-        {
-            promise: dialogOpen && targetKey ? () => getCurrentUserRef() : undefined,
-            onError: () => {},
-        },
-        // Key on target presence, not identity — the resolved user is
-        // target-independent, so a target switch must not reset it.
-        [getCurrentUserRef, targetKey !== undefined, dialogOpen],
+    const getCurrentUserRef = useCallback(
+        // Not `user.ref`: the profile resolves it as a uriRef while access-list
+        // grantee refs are idRefs keyed by user id (= profile login), and
+        // areObjRefsEqual never matches mixed shapes — self-row matching and
+        // the self grant write need the permission API's id space.
+        (): Promise<ObjRef> => getCurrentUser().then((user) => idRef(user.login)),
+        [getCurrentUser],
     );
-    const selfId = currentUserRef ? granteeId("user", currentUserRef) : undefined;
+
     const canTransferOwnership =
         selfId !== undefined && namedGrantees.some((g) => g.id === selfId && g.level === "EDIT");
 
@@ -427,6 +428,5 @@ export function useAccessList(
         setGrantees,
         setGeneralAccess,
         setWorkspaceLevel,
-        setKnownNames,
     };
 }

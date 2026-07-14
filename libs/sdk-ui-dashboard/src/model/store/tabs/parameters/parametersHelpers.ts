@@ -8,15 +8,15 @@ import {
     type IInsight,
     type IInsightDefinition,
     type IInsightParameterValue,
+    type IParameterDefinition,
     type IParameterMetadataObject,
     type IdentifierRef,
     type ObjRef,
-    getNumberParameterDefaultValue,
+    type ParameterValue,
     insightMeasures,
     insightParameters,
     isMeasureDefinition,
-    isNumberParameterDefinition,
-    isValidNumberParameterValue,
+    isValidParameterValue,
     objRefToString,
 } from "@gooddata/sdk-model";
 
@@ -70,8 +70,9 @@ export function collectReferencedParameterRefs(
 /**
  * Effective execution parameters, limited to `referencedRefs`. Precedence per ref: the dashboard
  * `runtimeOverride`, else the insight's own parameter value, else nothing (backend uses the workspace
- * default). An out-of-range value from either source is replaced by the workspace default (recovery),
- * so the backend never receives a bad value.
+ * default). A value from either source that is invalid for the workspace parameter (out of
+ * constraints or of the wrong kind) is replaced by the workspace default (recovery), so the backend
+ * never receives a bad value.
  *
  * @internal
  */
@@ -120,6 +121,7 @@ interface IParameterResolutionContext {
     entries: IDashboardParameterEntry[];
     measureParameters: Record<string, IdentifierRef[]>;
     workspaceParameterByRef: Map<string, IParameterMetadataObject>;
+    isStringEnabled: boolean;
 }
 
 /**
@@ -139,47 +141,60 @@ export function resolveEffectiveParameterValuesForInsight(
     return resolveEffectiveParameterValuesForRefs(
         context.entries,
         referencedRefs,
-        insightParameters(insight),
+        ungatedInsightParameterValues(insight, context.isStringEnabled),
         context.workspaceParameterByRef,
     );
 }
 
 /**
  * The value hydration seeds into `runtimeOverride`: the dashboard parameter's `value`, else the
- * workspace number default, else `undefined`.
+ * workspace default when the workspace parameter is of the matching type, else `undefined`.
  *
  * @internal
  */
 export function computeHydratedRuntimeOverride(
     parameter: IDashboardParameter,
     workspaceParameter: IParameterMetadataObject | undefined,
-): number | undefined {
+): ParameterValue | undefined {
     if (parameter.value !== undefined) {
         return parameter.value;
     }
-    return getNumberParameterDefaultValue(workspaceParameter?.definition);
+    return matchingWorkspaceDefinition(parameter, workspaceParameter)?.defaultValue;
 }
 
 /**
- * The value to execute for a runtime override: an out-of-range NUMBER value is replaced by the
- * workspace default so the dashboard renders the default instead of failing (recovery), while the
- * chip keeps showing the user's saved value. In-range values, and values with no NUMBER definition to
- * validate against (removed / incompatible — meant to surface as the standard widget error), pass
- * through unchanged.
+ * The workspace definition a dashboard parameter binds to: the definition when its type matches
+ * the parameter's own type tag, `undefined` otherwise (removed or incompatible workspace
+ * parameter). The single home of the type-match invariant shared by hydration, reset,
+ * reconciliation, and chip rendering.
+ *
+ * @internal
+ */
+export function matchingWorkspaceDefinition(
+    parameter: IDashboardParameter,
+    workspaceParameter: IParameterMetadataObject | undefined,
+): IParameterDefinition | undefined {
+    const definition = workspaceParameter?.definition;
+    return definition?.type === parameter.parameterType ? definition : undefined;
+}
+
+/**
+ * The value to execute for a runtime override: a value that is not valid for the workspace
+ * parameter (constraint-violating or of the wrong kind) is replaced by the workspace default so
+ * the dashboard renders the default instead of failing (recovery), while the chip keeps showing
+ * the user's saved value. Valid values, and values of removed parameters (no workspace entry —
+ * meant to surface as the standard widget error), pass through unchanged.
  *
  * @internal
  */
 function recoverParameterExecutionValue(
-    runtimeOverride: number,
+    runtimeOverride: ParameterValue,
     workspaceParameter: IParameterMetadataObject | undefined,
-): number {
-    if (workspaceParameter && isNumberParameterDefinition(workspaceParameter.definition)) {
-        const { defaultValue, constraints } = workspaceParameter.definition;
-        if (!isValidNumberParameterValue(runtimeOverride, constraints)) {
-            return defaultValue;
-        }
-    }
-    return runtimeOverride;
+): ParameterValue {
+    const definition = workspaceParameter?.definition;
+    return definition && !isValidParameterValue(definition, runtimeOverride)
+        ? definition.defaultValue
+        : runtimeOverride;
 }
 
 /**
@@ -221,12 +236,12 @@ export function classifyParameterReconciliation(
     if (!workspaceParameter) {
         return "removed";
     }
-    if (!isNumberParameterDefinition(workspaceParameter.definition)) {
+    if (!matchingWorkspaceDefinition(dashboardParameter, workspaceParameter)) {
         return "incompatible";
     }
     if (
         dashboardParameter.value !== undefined &&
-        !isValidNumberParameterValue(dashboardParameter.value, workspaceParameter.definition.constraints)
+        !isValidParameterValue(workspaceParameter.definition, dashboardParameter.value)
     ) {
         return "reset";
     }
@@ -265,6 +280,40 @@ export function collectParameterReconciliations(
         });
     }
     return result;
+}
+
+/**
+ * A STRING entry persisted while `enableStringParameters` was on. Once the flag is off it must not
+ * reach executions, exports, or reconciliation: the catalog omits STRING definitions, so the chip
+ * is hidden and the value would apply as an invisible override.
+ *
+ * @internal
+ */
+export function isGatedStringEntry(entry: IDashboardParameterEntry, isStringEnabled: boolean): boolean {
+    return entry.parameter.parameterType === "STRING" && !isStringEnabled;
+}
+
+/**
+ * The value-shaped twin of {@link isGatedStringEntry}, for insight-level parameter values, which
+ * carry no declared type.
+ *
+ * @internal
+ */
+export function isGatedStringValue(value: ParameterValue, isStringEnabled: boolean): boolean {
+    return typeof value === "string" && !isStringEnabled;
+}
+
+/**
+ * The insight-authored parameter values that pass the string gate — the single home of
+ * insight-level gating for both the widget-execution hook path and the selector path.
+ *
+ * @internal
+ */
+export function ungatedInsightParameterValues(
+    insight: IInsightDefinition,
+    isStringEnabled: boolean,
+): IInsightParameterValue[] {
+    return insightParameters(insight).filter((value) => !isGatedStringValue(value.value, isStringEnabled));
 }
 
 /**
@@ -342,7 +391,7 @@ export function smartPersistResolvedEntry(
     entry: IDashboardParameterEntry,
     workspaceParameter: IParameterMetadataObject,
 ): IDashboardParameter {
-    const workspaceDefault = getNumberParameterDefaultValue(workspaceParameter.definition);
+    const workspaceDefault = workspaceParameter.definition.defaultValue;
     const result: IDashboardParameter = {
         ref: entry.parameter.ref,
         parameterType: entry.parameter.parameterType,
@@ -389,8 +438,8 @@ export function buildPersistedByTabAndRef(
 }
 
 /**
- * Returns `undefined` when reset would be a no-op: missing/non-number workspace parameter, or
- * in edit mode when `parameter.value` is unset / already equals the workspace default.
+ * Returns `undefined` when reset would be a no-op: missing/type-mismatched workspace parameter,
+ * or in edit mode when `parameter.value` is unset / already equals the workspace default.
  *
  * @internal
  */
@@ -398,11 +447,12 @@ export function computeParameterResetValue(
     entry: IDashboardParameterEntry,
     workspaceParameter: IParameterMetadataObject | undefined,
     isInEditMode: boolean,
-): number | undefined {
-    const workspaceDefault = getNumberParameterDefaultValue(workspaceParameter?.definition);
-    if (workspaceDefault === undefined) {
+): ParameterValue | undefined {
+    const definition = matchingWorkspaceDefinition(entry.parameter, workspaceParameter);
+    if (!definition) {
         return undefined;
     }
+    const workspaceDefault = definition.defaultValue;
     const dashboardOverride = entry.parameter.value;
     if (isInEditMode) {
         if (dashboardOverride === undefined || dashboardOverride === workspaceDefault) {
@@ -425,9 +475,10 @@ export function computeParameterResetTargets(
     entries: IDashboardParameterEntry[],
     workspaceParameters: IParameterMetadataObject[],
     isInEditMode: boolean,
-): { ref: IDashboardParameterEntry["parameter"]["ref"]; value: number | undefined }[] {
+): { ref: IDashboardParameterEntry["parameter"]["ref"]; value: ParameterValue | undefined }[] {
     const workspaceParameterByRef = buildWorkspaceParametersByRef(workspaceParameters);
-    const result: { ref: IDashboardParameterEntry["parameter"]["ref"]; value: number | undefined }[] = [];
+    const result: { ref: IDashboardParameterEntry["parameter"]["ref"]; value: ParameterValue | undefined }[] =
+        [];
     for (const entry of entries) {
         if (entry.parameter.mode !== DashboardParameterModeValues.ACTIVE) {
             continue;
@@ -455,10 +506,13 @@ export function computeParameterResetTargets(
 export function collectExportOverrides(
     tabRefSelections: ReadonlyArray<{ tab: ITabState; allowedRefs?: Set<string> }>,
     workspaceParameterByRef: Map<string, IParameterMetadataObject>,
+    includeStringEntries: boolean,
 ): Record<string, IDashboardExportParameter[]> {
     const result: Record<string, IDashboardExportParameter[]> = {};
     for (const { tab, allowedRefs } of tabRefSelections) {
-        const entries = tab.parameters?.parameters ?? parametersInitialState.parameters;
+        const entries = (tab.parameters?.parameters ?? parametersInitialState.parameters).filter(
+            (entry) => !isGatedStringEntry(entry, includeStringEntries),
+        );
         const scoped = allowedRefs
             ? entries.filter((entry) => allowedRefs.has(objRefToString(entry.parameter.ref)))
             : entries;

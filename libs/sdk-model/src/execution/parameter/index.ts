@@ -1,5 +1,6 @@
 // (C) 2026 GoodData Corporation
 
+import { type ParameterValue } from "../../ldm/metadata/parameter/index.js";
 import { type IdentifierRef } from "../../objRef/index.js";
 
 /**
@@ -16,5 +17,5 @@ export interface IInsightParameterValue {
     /**
      * Value to use instead of the parameter's default value.
      */
-    value: number;
+    value: ParameterValue;
 }

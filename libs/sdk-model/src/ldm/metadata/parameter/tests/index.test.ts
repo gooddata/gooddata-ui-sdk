@@ -4,7 +4,6 @@ import { describe, expect, it } from "vitest";
 
 import {
     type IParameterDefinition,
-    getNumberParameterDefaultValue,
     isStringParameterDefinition,
     isValidNumberParameterValue,
     isValidParameterValue,
@@ -81,24 +80,6 @@ describe("isValidParameterValue", () => {
         const stringDefinition: IParameterDefinition = { type: "STRING", defaultValue: "Actual" };
         expect(isValidParameterValue(numberDefinition, "Plan")).toBe(false);
         expect(isValidParameterValue(stringDefinition, 5)).toBe(false);
-    });
-});
-
-describe("getNumberParameterDefaultValue", () => {
-    it("returns the default value for a NUMBER definition", () => {
-        expect(getNumberParameterDefaultValue({ type: "NUMBER", defaultValue: 5 })).toBe(5);
-    });
-
-    it("returns the default value even when it is 0", () => {
-        expect(getNumberParameterDefaultValue({ type: "NUMBER", defaultValue: 0 })).toBe(0);
-    });
-
-    it("returns undefined for a STRING definition", () => {
-        expect(getNumberParameterDefaultValue({ type: "STRING", defaultValue: "Actual" })).toBeUndefined();
-    });
-
-    it("returns undefined for a missing definition", () => {
-        expect(getNumberParameterDefaultValue(undefined)).toBeUndefined();
     });
 });
 

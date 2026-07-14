@@ -175,6 +175,14 @@ export class TigerWorkspaceSettings
         return this.setSetting("ENABLE_PARTIAL_DATA_RESULTS", { value: enabled });
     }
 
+    public async setEnableNullJoins(enabled: boolean): Promise<void> {
+        return this.setSetting("ENABLE_NULL_JOINS", { value: enabled });
+    }
+
+    public async setEnableQueryTags(enabled: boolean): Promise<void> {
+        return this.setSetting("ENABLE_QUERY_TAGS", { value: enabled });
+    }
+
     public async setExportCsvCustomDelimiter(delimiter: string): Promise<void> {
         return this.setSetting("EXPORT_CSV_CUSTOM_DELIMITER", { value: delimiter });
     }

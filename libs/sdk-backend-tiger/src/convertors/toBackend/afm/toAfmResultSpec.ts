@@ -95,7 +95,10 @@ export function convertMeasureDefinitionOverrides(
 
 export function convertParameterValues(values: IInsightParameterValue[]): ParameterItem[] {
     return values.map((value) => {
-        invariant(Number.isFinite(value.value), "Parameter value must be a finite number");
+        invariant(
+            typeof value.value === "string" || Number.isFinite(value.value),
+            "Parameter value must be a string or a finite number",
+        );
 
         return {
             parameter: {

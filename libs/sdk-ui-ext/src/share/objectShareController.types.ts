@@ -22,17 +22,29 @@ import type { IObjectAccessSummary, IObjectShareLabel } from "./types.js";
 export type ObjectSharePermissionLevel = AccessGranularPermission;
 
 /**
- * Dialog row derived from a backend grant.
+ * Known identity facts of a grantee: real name/email only, never an id fallback.
+ * Undefined fields are unknown and may be backfilled.
  *
  * @internal
  */
-export interface IObjectShareGrantee {
+export interface IGranteeIdentityFacts {
+    /** Real full name (users) / group name, when known. */
+    name?: string;
+    /** Real email, when known (users only). */
+    email?: string;
+}
+
+/**
+ * Dialog row derived from a backend grant. `name`/`email` are real facts only;
+ * display fallbacks are `granteeDisplayPair`'s concern.
+ *
+ * @internal
+ */
+export interface IObjectShareGrantee extends IGranteeIdentityFacts {
     /** Stable id used as the dialog row's React key. `user:<ref>` / `group:<ref>`. */
     id: string;
     kind: "user" | "group";
     granteeRef: ObjRef;
-    name: string;
-    email?: string;
     level: ObjectSharePermissionLevel;
     /**
      * Effective permission when it is *higher* than the directly-granted `level`

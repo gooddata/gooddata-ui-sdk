@@ -24,7 +24,7 @@ import { selectCatalogParameters } from "../../../../model/store/catalog/catalog
 import { selectEnableParameters } from "../../../../model/store/config/configSelectors.js";
 import { selectWidgetLocalIdToTabIdMap } from "../../../../model/store/tabs/layout/layoutSelectors.js";
 import {
-    selectExportEffectiveParameters,
+    selectAutomationExportEffectiveParameters,
     selectSmartPersistedTabsParameters,
 } from "../../../../model/store/tabs/parameters/parametersSelectors.js";
 import { selectTabs } from "../../../../model/store/tabs/tabsSelectors.js";
@@ -124,7 +124,9 @@ export function useAutomationExportParameters({
     const tabs = useDashboardSelector(selectTabs);
     const widgetTabMap = useDashboardSelector(selectWidgetLocalIdToTabIdMap);
     const widgetIds = widget ? [objRefToString(widget.ref)] : undefined;
-    const effectiveParametersByTab = useDashboardSelector(selectExportEffectiveParameters(widgetIds));
+    const effectiveParametersByTab = useDashboardSelector(
+        selectAutomationExportEffectiveParameters(widgetIds),
+    );
 
     const flatTabId = resolveFlatTabId(widget, widgetTabMap, tabs);
     const shouldStore = shouldStoreExportParameters(!!widget, storeParameters);

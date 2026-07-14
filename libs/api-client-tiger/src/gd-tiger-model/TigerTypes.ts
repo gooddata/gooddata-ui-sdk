@@ -702,8 +702,8 @@ export interface ITigerDashboardDateFilterConfig {
  */
 export interface ITigerDashboardParameter {
     ref: ObjRef;
-    parameterType: "NUMBER";
-    value?: number;
+    parameterType: "NUMBER" | "STRING";
+    value?: number | string;
     label?: string;
     mode?: "active" | "readonly" | "hidden";
 }

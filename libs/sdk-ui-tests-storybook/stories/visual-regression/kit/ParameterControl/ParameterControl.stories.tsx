@@ -3,7 +3,11 @@
 import { type ReactNode } from "react";
 
 import { IntlWrapper } from "@gooddata/sdk-ui";
-import { ParameterControlButton, ParameterControlDropdown } from "@gooddata/sdk-ui-kit";
+import {
+    NumberParameterControlDropdown,
+    ParameterControlButton,
+    StringParameterControlDropdown,
+} from "@gooddata/sdk-ui-kit";
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 
 import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
@@ -53,9 +57,9 @@ function ParameterControlExamples() {
                     </Section>
                 </div>
                 <div>
-                    <h3>ParameterControlDropdown</h3>
+                    <h3>NumberParameterControlDropdown</h3>
                     <Section title="value === resetValue (Reset hidden)">
-                        <ParameterControlDropdown
+                        <NumberParameterControlDropdown
                             name="Threshold"
                             value={25}
                             resetValue={25}
@@ -65,7 +69,7 @@ function ParameterControlExamples() {
                         />
                     </Section>
                     <Section title="value !== resetValue (Reset shown)">
-                        <ParameterControlDropdown
+                        <NumberParameterControlDropdown
                             name="Threshold"
                             value={50}
                             resetValue={25}
@@ -75,7 +79,7 @@ function ParameterControlExamples() {
                         />
                     </Section>
                     <Section title="No resetValue (Reset hidden)">
-                        <ParameterControlDropdown
+                        <NumberParameterControlDropdown
                             name="Threshold"
                             value={25}
                             constraints={{ min: 0, max: 100 }}
@@ -84,10 +88,42 @@ function ParameterControlExamples() {
                         />
                     </Section>
                     <Section title="No constraints">
-                        <ParameterControlDropdown
+                        <NumberParameterControlDropdown
                             name="Threshold"
                             value={42}
                             resetValue={25}
+                            onApply={() => {}}
+                            onCancel={() => {}}
+                        />
+                    </Section>
+                </div>
+                <div>
+                    <h3>StringParameterControlDropdown</h3>
+                    <Section title="value === resetValue (Reset hidden)">
+                        <StringParameterControlDropdown
+                            name="Scenario"
+                            value="Actual"
+                            resetValue="Actual"
+                            constraints={{ minLength: 1, maxLength: 20 }}
+                            onApply={() => {}}
+                            onCancel={() => {}}
+                        />
+                    </Section>
+                    <Section title="value !== resetValue (Reset shown)">
+                        <StringParameterControlDropdown
+                            name="Scenario"
+                            value="Budget"
+                            resetValue="Actual"
+                            constraints={{ minLength: 1, maxLength: 20 }}
+                            onApply={() => {}}
+                            onCancel={() => {}}
+                        />
+                    </Section>
+                    <Section title="No constraints">
+                        <StringParameterControlDropdown
+                            name="Scenario"
+                            value="Budget"
+                            resetValue="Actual"
                             onApply={() => {}}
                             onCancel={() => {}}
                         />

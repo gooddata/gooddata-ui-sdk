@@ -2,6 +2,7 @@
 
 import { isEmpty } from "lodash-es";
 
+import { type ParameterType, type ParameterValue } from "../ldm/metadata/parameter/index.js";
 import { type IdentifierRef, isIdentifierRef } from "../objRef/index.js";
 
 /**
@@ -46,14 +47,14 @@ export interface IDashboardParameter {
     readonly mode: DashboardParameterMode;
 
     /**
-     * Type tag; only `"NUMBER"` is supported in this slice.
+     * Type tag; matches the workspace parameter definition's `type`.
      */
-    readonly parameterType: "NUMBER";
+    readonly parameterType: ParameterType;
 
     /**
      * Dashboard's pinned override; absent when equal to the workspace default.
      */
-    readonly value?: number;
+    readonly value?: ParameterValue;
 
     /**
      * Author-renamed label; absent when equal to the parameter's title.
@@ -95,5 +96,8 @@ export function isDashboardParameter(obj: unknown): obj is IDashboardParameter {
         return false;
     }
     const candidate = obj as IDashboardParameter;
-    return candidate.parameterType === "NUMBER" && isIdentifierRef(candidate.ref);
+    return (
+        (candidate.parameterType === "NUMBER" || candidate.parameterType === "STRING") &&
+        isIdentifierRef(candidate.ref)
+    );
 }

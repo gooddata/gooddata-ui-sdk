@@ -2,7 +2,7 @@
 
 import { type ReactNode } from "react";
 
-import { render } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { RawIntlProvider } from "react-intl";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -15,6 +15,7 @@ import {
 
 import { selectCatalogParameterByRef } from "../../../../model/store/catalog/catalogSelectors.js";
 import { selectIsInEditMode } from "../../../../model/store/renderMode/renderModeSelectors.js";
+import { tabsActions } from "../../../../model/store/tabs/index.js";
 import { type ParameterReconciliation } from "../../../../model/store/tabs/parameters/parametersHelpers.js";
 import {
     selectParameterReconciliationByRef,
@@ -24,6 +25,7 @@ import { createInternalIntl } from "../../../localization/createInternalIntl.js"
 import { DashboardParameterFilter } from "../DashboardParameterFilter.js";
 
 const paramRef = idRef("topN", "parameter");
+const scenarioRef = idRef("scenario", "parameter");
 
 const workspaceParameter: IParameterMetadataObject = {
     type: "parameter",
@@ -38,11 +40,32 @@ const workspaceParameter: IParameterMetadataObject = {
     definition: { type: "NUMBER", defaultValue: 10, constraints: { min: 0, max: 100 } },
 };
 
+const stringWorkspaceParameter: IParameterMetadataObject = {
+    ...workspaceParameter,
+    id: "scenario",
+    uri: "/scenario",
+    ref: scenarioRef,
+    title: "Scenario",
+    definition: { type: "STRING", defaultValue: "Actual" },
+};
+
 const parameter: IDashboardParameter = {
     ref: paramRef,
     mode: DashboardParameterModeValues.READONLY,
     parameterType: "NUMBER",
     value: 250,
+};
+
+const activeNumberParameter: IDashboardParameter = {
+    ref: paramRef,
+    mode: DashboardParameterModeValues.ACTIVE,
+    parameterType: "NUMBER",
+};
+
+const activeStringParameter: IDashboardParameter = {
+    ref: scenarioRef,
+    mode: DashboardParameterModeValues.ACTIVE,
+    parameterType: "STRING",
 };
 
 const RESET_TOOLTIP =
@@ -51,10 +74,11 @@ const RESET_TOOLTIP =
 let mockReconciliation: ParameterReconciliation | undefined;
 const mockCaptured: { warningTooltip?: string } = {};
 const mockUseDashboardSelector = vi.fn();
+const mockDispatch = vi.fn();
 
 vi.mock("../../../../model/react/DashboardStoreProvider.js", () => ({
     useDashboardSelector: (selector: unknown) => mockUseDashboardSelector(selector),
-    useDashboardDispatch: () => () => {},
+    useDashboardDispatch: () => mockDispatch,
 }));
 
 vi.mock("../../../dragAndDrop/DraggableChipSource.js", () => ({
@@ -65,31 +89,46 @@ vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
     const actual = (await importOriginal()) as Record<string, unknown>;
     return {
         ...actual,
-        ParameterControlButton: (props: { warningTooltip?: string }) => {
+        ParameterControlButton: (props: { warningTooltip?: string; onClick?: () => void }) => {
             mockCaptured.warningTooltip = props.warningTooltip;
-            return null;
+            return <button data-testid="mock-parameter-chip" onClick={props.onClick} />;
         },
     };
 });
 
-function renderFilter() {
+function renderFilter(renderedParameter: IDashboardParameter = parameter) {
     return render(
         <RawIntlProvider value={createInternalIntl()}>
-            <DashboardParameterFilter parameter={parameter} />
+            <DashboardParameterFilter parameter={renderedParameter} />
         </RawIntlProvider>,
     );
+}
+
+function openDropdown() {
+    fireEvent.click(screen.getByTestId("mock-parameter-chip"));
+}
+
+function getDropdownInput() {
+    return screen.getByTestId("parameter-control-dropdown-input");
 }
 
 describe("DashboardParameterFilter", () => {
     beforeEach(() => {
         mockReconciliation = undefined;
         mockCaptured.warningTooltip = undefined;
+        mockDispatch.mockReset();
         mockUseDashboardSelector.mockImplementation((selector: unknown) => {
             if (selector === selectCatalogParameterByRef(paramRef)) {
                 return workspaceParameter;
             }
+            if (selector === selectCatalogParameterByRef(scenarioRef)) {
+                return stringWorkspaceParameter;
+            }
             if (selector === selectParameterRuntimeOverrideByRef(paramRef)) {
                 return 250;
+            }
+            if (selector === selectParameterRuntimeOverrideByRef(scenarioRef)) {
+                return "Budget";
             }
             if (selector === selectParameterReconciliationByRef(paramRef)) {
                 return mockReconciliation;
@@ -115,4 +154,38 @@ describe("DashboardParameterFilter", () => {
             expect(mockCaptured.warningTooltip).toBeUndefined();
         },
     );
+
+    it("renders the number control for a NUMBER parameter", () => {
+        renderFilter(activeNumberParameter);
+        openDropdown();
+        expect(getDropdownInput()).toHaveAttribute("type", "number");
+        expect(getDropdownInput()).toHaveValue(250);
+    });
+
+    it("renders the free-text control for a STRING parameter", () => {
+        renderFilter(activeStringParameter);
+        openDropdown();
+        expect(getDropdownInput()).toHaveAttribute("type", "text");
+        expect(getDropdownInput()).toHaveValue("Budget");
+    });
+
+    it("dispatches the typed string as the runtime value on Apply", () => {
+        renderFilter(activeStringParameter);
+        openDropdown();
+        fireEvent.change(getDropdownInput(), { target: { value: "Forecast" } });
+        fireEvent.click(screen.getByTestId("parameter-control-dropdown-apply"));
+        expect(mockDispatch).toHaveBeenCalledWith(
+            tabsActions.setParameterRuntimeValue({ ref: scenarioRef, value: "Forecast" }),
+        );
+    });
+
+    it("renders nothing when the workspace parameter type differs from the dashboard parameter type", () => {
+        const mismatched: IDashboardParameter = {
+            ref: paramRef,
+            mode: DashboardParameterModeValues.ACTIVE,
+            parameterType: "STRING",
+        };
+        renderFilter(mismatched);
+        expect(screen.queryByTestId("mock-parameter-chip")).not.toBeInTheDocument();
+    });
 });

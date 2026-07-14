@@ -4,29 +4,26 @@ import {
     type IDashboardParameter,
     type IParameterMetadataObject,
     type ObjRef,
+    type ParameterValue,
     areObjRefsEqual,
-    getNumberParameterDefaultValue,
 } from "@gooddata/sdk-model";
+
+import { computeHydratedRuntimeOverride } from "../../store/tabs/parameters/parametersHelpers.js";
 
 interface IResolvedFilterViewParameter {
     ref: ObjRef;
-    value: number | undefined;
+    value: ParameterValue | undefined;
 }
 
 export function resolveFilterViewParameterValues(
     parameters: ReadonlyArray<IDashboardParameter>,
     workspaceParameters: ReadonlyArray<IParameterMetadataObject>,
 ): IResolvedFilterViewParameter[] {
-    return parameters.map((parameter) => {
-        if (parameter.value !== undefined) {
-            return { ref: parameter.ref, value: parameter.value };
-        }
-        const workspaceParameter = workspaceParameters.find((item) =>
-            areObjRefsEqual(item.ref, parameter.ref),
-        );
-        return {
-            ref: parameter.ref,
-            value: getNumberParameterDefaultValue(workspaceParameter?.definition),
-        };
-    });
+    return parameters.map((parameter) => ({
+        ref: parameter.ref,
+        value: computeHydratedRuntimeOverride(
+            parameter,
+            workspaceParameters.find((item) => areObjRefsEqual(item.ref, parameter.ref)),
+        ),
+    }));
 }

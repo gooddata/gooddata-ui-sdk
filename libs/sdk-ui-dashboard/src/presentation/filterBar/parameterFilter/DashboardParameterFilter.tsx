@@ -4,23 +4,14 @@ import { type ReactElement } from "react";
 
 import { defineMessages, useIntl } from "react-intl";
 
-import {
-    DashboardParameterModeValues,
-    type IDashboardParameter,
-    isNumberParameterDefinition,
-    objRefToString,
-} from "@gooddata/sdk-model";
-import {
-    Dropdown,
-    ParameterControlButton,
-    ParameterControlDropdown,
-    useIdPrefixed,
-} from "@gooddata/sdk-ui-kit";
+import { DashboardParameterModeValues, type IDashboardParameter, objRefToString } from "@gooddata/sdk-model";
+import { Dropdown, ParameterControl, ParameterControlButton, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectCatalogParameterByRef } from "../../../model/store/catalog/catalogSelectors.js";
 import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
 import { tabsActions } from "../../../model/store/tabs/index.js";
+import { matchingWorkspaceDefinition } from "../../../model/store/tabs/parameters/parametersHelpers.js";
 import {
     selectParameterReconciliationByRef,
     selectParameterResetValueByRef,
@@ -58,12 +49,12 @@ export function DashboardParameterFilter({ parameter }: IDashboardParameterFilte
         return null;
     }
 
-    if (!workspaceParameter || !isNumberParameterDefinition(workspaceParameter.definition)) {
+    const definition = matchingWorkspaceDefinition(parameter, workspaceParameter);
+    if (!workspaceParameter || !definition) {
         return null;
     }
 
     const name = parameter.label ?? workspaceParameter.title;
-    const { constraints } = workspaceParameter.definition;
     const dragItem = { type: "parameter", ref: parameter.ref } as const;
     const warningTooltip = reconciliation === "reset" ? intl.formatMessage(messages.resetWarning) : undefined;
 
@@ -101,11 +92,11 @@ export function DashboardParameterFilter({ parameter }: IDashboardParameterFilte
                     />
                 )}
                 renderBody={({ closeDropdown, ariaAttributes }) => (
-                    <ParameterControlDropdown
+                    <ParameterControl
                         name={name}
+                        definition={definition}
                         value={runtimeOverride}
                         resetValue={resetValue}
-                        constraints={constraints}
                         inputId={valueInputId}
                         ariaAttributes={ariaAttributes}
                         onApply={(value) => {

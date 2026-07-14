@@ -2,7 +2,12 @@
 
 import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
 
-import { type IDashboardParameter, type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import {
+    type IDashboardParameter,
+    type ObjRef,
+    type ParameterValue,
+    areObjRefsEqual,
+} from "@gooddata/sdk-model";
 
 import { type ITabsState, getActiveTab, getTabOrActive } from "../tabsState.js";
 
@@ -18,7 +23,7 @@ type ParametersReducer<A extends Action> = CaseReducer<ITabsState, A>;
  */
 export interface IAddParameterPayload {
     parameter: IDashboardParameter;
-    workspaceDefault: number;
+    workspaceDefault: ParameterValue;
 }
 
 const addParameter: ParametersReducer<PayloadAction<IAddParameterPayload>> = (state, action) => {
@@ -44,7 +49,7 @@ const addParameter: ParametersReducer<PayloadAction<IAddParameterPayload>> = (st
  */
 export interface ISetParameterRuntimeValuePayload {
     ref: ObjRef;
-    value: number | undefined;
+    value: ParameterValue | undefined;
 }
 
 const setParameterRuntimeValue: ParametersReducer<PayloadAction<ISetParameterRuntimeValuePayload>> = (

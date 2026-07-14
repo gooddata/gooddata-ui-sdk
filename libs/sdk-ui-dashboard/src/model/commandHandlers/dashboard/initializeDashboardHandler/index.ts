@@ -14,6 +14,7 @@ import {
     type IDateHierarchyTemplate,
     type IInsight,
     type IParameterMetadataObject,
+    type ISettings,
     type IWidget,
     type ObjRef,
     areObjRefsEqual,
@@ -313,7 +314,7 @@ function* loadExistingDashboard(
         PromiseFnReturnType<typeof loadMeasureParameterDependencies>,
     ] = yield all([
         call(getTabsFilterConfigs, dashboard, config, ctx, cmd),
-        call(loadWorkspaceParametersWithStatus, ctx, config.settings?.enableParameters ?? false),
+        call(loadWorkspaceParametersWithStatus, ctx, config.settings),
         call(loadMeasureParameterDependencies, ctx, insights, config.settings?.enableParameters ?? false),
     ]);
     const workspaceParametersList = Array.isArray(workspaceParameters) ? workspaceParameters : [];
@@ -412,7 +413,7 @@ function* initializeNewDashboard(
     const workspaceParameters: SagaReturnType<typeof loadWorkspaceParametersWithStatus> = yield call(
         loadWorkspaceParametersWithStatus,
         ctx,
-        config.settings?.enableParameters ?? false,
+        config.settings,
     );
     const workspaceParametersList = Array.isArray(workspaceParameters) ? workspaceParameters : [];
 
@@ -503,15 +504,16 @@ export function* requestCatalog(ctx: DashboardContext, cmd: InitializeDashboard)
 
 function* loadWorkspaceParametersWithStatus(
     ctx: DashboardContext,
-    enableParameters: boolean,
+    settings: ISettings | undefined,
 ): SagaIterator<IParameterMetadataObject[] | "gated-off" | "failed"> {
-    if (!enableParameters) {
+    if (!settings?.enableParameters) {
         return "gated-off";
     }
     try {
         const result: PromiseFnReturnType<typeof loadDashboardParameters> = yield call(
             loadDashboardParameters,
             ctx,
+            settings.enableStringParameters ?? false,
         );
         return result;
     } catch {
