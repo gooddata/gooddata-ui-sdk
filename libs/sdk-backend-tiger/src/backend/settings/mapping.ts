@@ -68,6 +68,7 @@ const TYPE_TO_KEY_MAP = {
     ACTIVE_LLM_PROVIDER: "activeLlmProvider",
     SORT_COLLATION: "sortCollation",
     ENABLE_PARTIAL_DATA_RESULTS: "enablePartialDataResults",
+    ENABLE_NULL_JOINS: "enableNullJoins",
 } as const satisfies Record<MandatoryTypes, keyof ISettings>;
 
 export function mapTypeToKey(

@@ -334,6 +334,12 @@ function recordedWorkspace(
                 async setEnablePartialDataResults(): Promise<void> {
                     return Promise.resolve();
                 },
+                async setEnableNullJoins(): Promise<void> {
+                    return Promise.resolve();
+                },
+                async setEnableQueryTags(): Promise<void> {
+                    return Promise.resolve();
+                },
                 async deleteEnableDrillToUrlByDefault(): Promise<void> {
                     return Promise.resolve();
                 },
@@ -637,6 +643,8 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 getAiRateLimit: () => Promise.resolve(undefined),
                 setEnableDrillToUrlByDefault: () => Promise.resolve(),
                 setEnablePartialDataResults: () => Promise.resolve(),
+                setEnableNullJoins: () => Promise.resolve(),
+                setEnableQueryTags: () => Promise.resolve(),
                 setAlertDefault: () => Promise.resolve(),
                 deleteTheme: () => Promise.resolve(),
                 deleteColorPalette: () => Promise.resolve(),

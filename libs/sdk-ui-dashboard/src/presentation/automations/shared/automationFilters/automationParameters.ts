@@ -15,7 +15,10 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 
-import { exportParametersToValues } from "../../../../_staging/automation/index.js";
+import {
+    exportParametersToValues,
+    isAutomationSupportedParameterValue,
+} from "../../../../_staging/automation/index.js";
 
 /**
  * A workspace parameter resolved for display and editing inside an automation (alert/schedule)
@@ -46,7 +49,10 @@ export function reconstructAutomationParametersFromValues(
         dashboardParameters.map((parameter) => [objRefToString(parameter.ref), parameter]),
     );
     const workspaceByRef = new Map(catalog.map((parameter) => [objRefToString(parameter.ref), parameter]));
-    return stored.map((row) => {
+    return stored.flatMap((row) => {
+        if (!isAutomationSupportedParameterValue(row.value)) {
+            return [];
+        }
         const refKey = objRefToString(row.ref);
         const dashboardParameter = dashboardByRef.get(refKey);
         const workspaceParameter = workspaceByRef.get(refKey);
@@ -120,11 +126,12 @@ export function availableAutomationParameters(
             continue;
         }
         const { defaultValue, constraints } = workspaceParameter.definition;
+        // mirror the live-render precedence: runtimeOverride/insight value > dashboard value > default
+        const effectiveValue = widgetValueByRef.get(refKey) ?? dashboardParameter?.value ?? defaultValue;
         result.push({
             ref,
             title: dashboardParameter?.label ?? workspaceParameter.title,
-            // mirror the live-render precedence: runtimeOverride/insight value > dashboard value > default
-            value: widgetValueByRef.get(refKey) ?? dashboardParameter?.value ?? defaultValue,
+            value: isAutomationSupportedParameterValue(effectiveValue) ? effectiveValue : defaultValue,
             mode: DashboardParameterModeValues.ACTIVE,
             ...(constraints ? { constraints } : {}),
         });

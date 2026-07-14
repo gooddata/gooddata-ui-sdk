@@ -828,7 +828,11 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
     // (undocumented)
     setEnableDrillToUrlByDefault(enabled: boolean): Promise<void>;
     // (undocumented)
+    setEnableNullJoins(enabled: boolean): Promise<void>;
+    // (undocumented)
     setEnablePartialDataResults(enabled: boolean): Promise<void>;
+    // (undocumented)
+    setEnableQueryTags(enabled: boolean): Promise<void>;
     // (undocumented)
     setExportCsvCustomDelimiter(delimiter: string): Promise<void>;
     // (undocumented)

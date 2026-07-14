@@ -2,11 +2,7 @@
 
 import { type ReactElement } from "react";
 
-import {
-    DashboardParameterModeValues,
-    getNumberParameterDefaultValue,
-    isIdentifierRef,
-} from "@gooddata/sdk-model";
+import { DashboardParameterModeValues, isIdentifierRef } from "@gooddata/sdk-model";
 import { ParameterPicker } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
@@ -48,18 +44,17 @@ export function DashboardParameterPicker({ onAdd, onCancel }: IDashboardParamete
             maxListHeight={PICKER_MAX_LIST_HEIGHT}
             onAdd={(selected) => {
                 for (const { ref, definition } of selected) {
-                    const workspaceDefault = getNumberParameterDefaultValue(definition);
-                    if (!isIdentifierRef(ref) || workspaceDefault === undefined) {
+                    if (!isIdentifierRef(ref)) {
                         continue;
                     }
                     dispatch(
                         tabsActions.addParameter({
                             parameter: {
                                 ref,
-                                parameterType: "NUMBER",
+                                parameterType: definition.type,
                                 mode: DashboardParameterModeValues.ACTIVE,
                             },
-                            workspaceDefault,
+                            workspaceDefault: definition.defaultValue,
                         }),
                     );
                 }

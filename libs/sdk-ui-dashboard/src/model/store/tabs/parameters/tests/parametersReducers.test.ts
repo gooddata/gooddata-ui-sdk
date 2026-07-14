@@ -26,6 +26,14 @@ const topNPinned: IDashboardParameter = {
     value: 25,
 };
 
+const scenarioRef = idRef("scenario", "parameter");
+
+const scenarioParameter: IDashboardParameter = {
+    ref: scenarioRef,
+    parameterType: "STRING",
+    mode: "active",
+};
+
 function makeState(parameters?: IParametersState["parameters"]): ITabsState {
     return {
         tabs: [
@@ -57,6 +65,21 @@ describe("parameters reducers (per tab)", () => {
 
             expect(activeParameters(next as ITabsState)).toEqual([
                 { parameter: topNParameter, runtimeOverride: 10 },
+            ]);
+        });
+
+        it("adds a STRING entry initialized to its string workspace default", () => {
+            const initial = makeState();
+
+            const next = produce(initial, (draft) =>
+                parametersReducers.addParameter(
+                    draft,
+                    tabsActions.addParameter({ parameter: scenarioParameter, workspaceDefault: "Actual" }),
+                ),
+            );
+
+            expect(activeParameters(next as ITabsState)).toEqual([
+                { parameter: scenarioParameter, runtimeOverride: "Actual" },
             ]);
         });
 
@@ -131,6 +154,19 @@ describe("parameters reducers (per tab)", () => {
 
             expect(activeParameters(next as ITabsState)[0]?.parameter).toEqual(topNParameter);
             expect(activeParameters(next as ITabsState)[0]?.runtimeOverride).toBe(99);
+        });
+
+        it("stores a string runtime value for a STRING entry", () => {
+            const initial = makeState([{ parameter: scenarioParameter, runtimeOverride: "Actual" }]);
+
+            const next = produce(initial, (draft) =>
+                parametersReducers.setParameterRuntimeValue(
+                    draft,
+                    tabsActions.setParameterRuntimeValue({ ref: scenarioRef, value: "Budget" }),
+                ),
+            );
+
+            expect(activeParameters(next as ITabsState)[0]?.runtimeOverride).toBe("Budget");
         });
 
         it("is a no-op when ref is unknown on the active tab", () => {

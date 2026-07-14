@@ -28,6 +28,8 @@ import {
     selectActiveParameterRefKeys,
     selectActiveTabDrillParameters,
     selectActiveTabExportParameters,
+    selectAutomationExportEffectiveParameters,
+    selectAutomationParameterValuesForWidget,
     selectDashboardParameterEntries,
     selectDashboardParameters,
     selectEffectiveDashboardParametersForWidget,
@@ -115,6 +117,23 @@ const entry: IDashboardParameterEntry = {
     runtimeOverride: 25,
 };
 
+const scenarioRef = idRef("scenario", "parameter");
+
+const scenarioParameter: IDashboardParameter = {
+    ref: scenarioRef,
+    parameterType: "STRING",
+    mode: "active",
+};
+
+const scenarioWorkspace: IParameterMetadataObject = {
+    ...topNWorkspace,
+    id: "scenario",
+    uri: "/scenario",
+    ref: scenarioRef,
+    title: "Scenario",
+    definition: { type: "STRING", defaultValue: "Actual" },
+};
+
 function makeState(parameters: IDashboardParameterEntry[]): DashboardState {
     return {
         tabs: {
@@ -136,6 +155,7 @@ interface IFullStateOptions {
     catalogStatus?: CatalogParametersStatus;
     persistedDashboardParameters?: IDashboardParameter[];
     enableParameters?: boolean;
+    enableStringParameters?: boolean;
     insights?: IInsight[];
     renderMode?: RenderMode;
     measureParametersStatus?: CatalogMeasureParametersStatus;
@@ -152,6 +172,7 @@ function makeFullState({
     catalogStatus = "loaded",
     persistedDashboardParameters,
     enableParameters = true,
+    enableStringParameters = true,
     insights = [],
     renderMode = "view",
     measureParametersStatus = "loaded",
@@ -210,7 +231,7 @@ function makeFullState({
             measureParameters: { status: measureParametersStatus, byMetric },
         },
         meta: { persistedDashboard },
-        config: { config: { settings: { enableParameters } } },
+        config: { config: { settings: { enableParameters, enableStringParameters } } },
         renderMode: { renderMode },
     } as unknown as DashboardState;
 }
@@ -226,12 +247,14 @@ describe("parameter selectors (per tab)", () => {
 
     describe("selectFilterViewParameters", () => {
         it("returns undefined when there are no parameter entries", () => {
-            expect(selectFilterViewParameters(makeState([]))).toBeUndefined();
+            expect(selectFilterViewParameters(makeFullState({ entries: [] }))).toBeUndefined();
         });
 
         it("writes runtime overrides into values", () => {
             expect(
-                selectFilterViewParameters(makeState([{ parameter: topNParameter, runtimeOverride: 42 }])),
+                selectFilterViewParameters(
+                    makeFullState({ entries: [{ parameter: topNParameter, runtimeOverride: 42 }] }),
+                ),
             ).toEqual([{ ...topNParameter, value: 42 }]);
         });
 
@@ -239,7 +262,9 @@ describe("parameter selectors (per tab)", () => {
             const withValue: IDashboardParameter = { ...topNParameter, value: 25 };
 
             expect(
-                selectFilterViewParameters(makeState([{ parameter: withValue, runtimeOverride: undefined }])),
+                selectFilterViewParameters(
+                    makeFullState({ entries: [{ parameter: withValue, runtimeOverride: undefined }] }),
+                ),
             ).toEqual([withValue]);
         });
 
@@ -252,10 +277,12 @@ describe("parameter selectors (per tab)", () => {
 
             expect(
                 selectFilterViewParameters(
-                    makeState([
-                        { parameter: topNParameter, runtimeOverride: 10 },
-                        { parameter: sampleSize, runtimeOverride: 200 },
-                    ]),
+                    makeFullState({
+                        entries: [
+                            { parameter: topNParameter, runtimeOverride: 10 },
+                            { parameter: sampleSize, runtimeOverride: 200 },
+                        ],
+                    }),
                 ),
             ).toEqual([
                 { ...topNParameter, value: 10 },
@@ -366,6 +393,15 @@ describe("parameter selectors (per tab)", () => {
                 workspaceParameters: [],
             });
             expect(selectParameterResetValueByRef(topNRef)(state)).toBeUndefined();
+        });
+
+        it("view mode: falls back to the string workspace default for a STRING parameter", () => {
+            const state = makeFullState({
+                entries: [{ parameter: scenarioParameter, runtimeOverride: "Budget" }],
+                workspaceParameters: [scenarioWorkspace],
+                renderMode: "view",
+            });
+            expect(selectParameterResetValueByRef(scenarioRef)(state)).toBe("Actual");
         });
     });
 
@@ -511,6 +547,24 @@ describe("parameter selectors (per tab)", () => {
             });
             expect(selectSmartPersistedTabsParameters(state)).toEqual({
                 [TAB_ID]: [{ ref: topNRef, parameterType: "NUMBER", mode: "active", value: 25 }],
+            });
+        });
+
+        it("omits a string value equal to the workspace default and emits a differing one", () => {
+            const atDefault = makeFullState({
+                entries: [{ parameter: scenarioParameter, runtimeOverride: "Actual" }],
+                workspaceParameters: [scenarioWorkspace],
+            });
+            expect(selectSmartPersistedTabsParameters(atDefault)).toEqual({
+                [TAB_ID]: [{ ref: scenarioRef, parameterType: "STRING", mode: "active" }],
+            });
+
+            const overridden = makeFullState({
+                entries: [{ parameter: scenarioParameter, runtimeOverride: "Budget" }],
+                workspaceParameters: [scenarioWorkspace],
+            });
+            expect(selectSmartPersistedTabsParameters(overridden)).toEqual({
+                [TAB_ID]: [{ ref: scenarioRef, parameterType: "STRING", mode: "active", value: "Budget" }],
             });
         });
 
@@ -1979,6 +2033,224 @@ describe("parameter reconciliation selectors", () => {
         it("returns undefined when the active tab holds no entry for the ref", () => {
             const state = makeFullState({ entries: [], workspaceParameters: [boundedTopNWorkspace] });
             expect(selectParameterReconciliationByRef(topNRef)(state)).toBeUndefined();
+        });
+    });
+
+    describe("enableStringParameters gating (flag off must behave as if STRING did not exist)", () => {
+        // The gated state arises from a dashboard saved while the flag was on: the persisted STRING
+        // value hydrates into the runtime override, but the flag-off catalog omits its definition.
+        const scenarioMetricRef = idRef("m-scenario", "measure");
+        const insightWithScenario = makeInsightWithMetric(W1_INSIGHT_REF, scenarioMetricRef);
+        const scenarioDepMap = { "m-scenario": [scenarioRef] };
+        const stringEntry: IDashboardParameterEntry = {
+            parameter: { ...scenarioParameter, value: "Budget" },
+            runtimeOverride: "Budget",
+        };
+
+        it("selectEffectiveParameterValuesForWidget withholds a STRING override when the flag is off", () => {
+            const state = makeFullState({
+                entries: [stringEntry],
+                insights: [insightWithScenario],
+                measureParameters: scenarioDepMap,
+                enableStringParameters: false,
+            });
+            expect(selectEffectiveParameterValuesForWidget(W1_REF)(state)).toEqual([]);
+        });
+
+        it("selectEffectiveParameterValuesForWidget sends the STRING override when the flag is on", () => {
+            const state = makeFullState({
+                entries: [stringEntry],
+                workspaceParameters: [scenarioWorkspace],
+                insights: [insightWithScenario],
+                measureParameters: scenarioDepMap,
+            });
+            expect(selectEffectiveParameterValuesForWidget(W1_REF)(state)).toEqual([
+                { ref: scenarioRef, value: "Budget" },
+            ]);
+        });
+
+        it("keeps NUMBER overrides flowing when the flag is off", () => {
+            const topNMetricRef = idRef("m-topn", "measure");
+            const mixedInsight = makeInsightWithMetric(W1_INSIGHT_REF, [scenarioMetricRef, topNMetricRef]);
+            const state = makeFullState({
+                entries: [stringEntry, { parameter: topNParameter, runtimeOverride: 25 }],
+                workspaceParameters: [topNWorkspace],
+                insights: [mixedInsight],
+                measureParameters: { "m-scenario": [scenarioRef], "m-topn": [topNRef] },
+                enableStringParameters: false,
+            });
+            expect(selectEffectiveParameterValuesForWidget(W1_REF)(state)).toEqual([
+                { ref: topNRef, value: 25 },
+            ]);
+        });
+
+        it("withholds an insight-level string value when the flag is off", () => {
+            const insightWithStringValue = makeInsightWithMetric(W1_INSIGHT_REF, scenarioMetricRef, [
+                { ref: scenarioRef, value: "Budget" },
+            ]);
+            const state = makeFullState({
+                entries: [],
+                insights: [insightWithStringValue],
+                measureParameters: scenarioDepMap,
+                enableStringParameters: false,
+            });
+            expect(selectEffectiveParameterValuesForWidget(W1_REF)(state)).toEqual([]);
+        });
+
+        it("sends an insight-level string value when the flag is on", () => {
+            const insightWithStringValue = makeInsightWithMetric(W1_INSIGHT_REF, scenarioMetricRef, [
+                { ref: scenarioRef, value: "Budget" },
+            ]);
+            const state = makeFullState({
+                entries: [],
+                workspaceParameters: [scenarioWorkspace],
+                insights: [insightWithStringValue],
+                measureParameters: scenarioDepMap,
+            });
+            expect(selectEffectiveParameterValuesForWidget(W1_REF)(state)).toEqual([
+                { ref: scenarioRef, value: "Budget" },
+            ]);
+        });
+
+        it("selectExportEffectiveParameters omits STRING rows when the flag is off", () => {
+            const state = makeFullState({
+                entries: [stringEntry, { parameter: topNParameter, runtimeOverride: 25 }],
+                workspaceParameters: [topNWorkspace],
+                enableStringParameters: false,
+            });
+            expect(selectExportEffectiveParameters(undefined)(state)).toEqual({
+                [TAB_ID]: [{ id: "topN", value: "25", title: "Top N" }],
+            });
+        });
+
+        it("selectExportEffectiveParameters emits STRING rows when the flag is on", () => {
+            const state = makeFullState({
+                entries: [stringEntry],
+                workspaceParameters: [scenarioWorkspace],
+            });
+            expect(selectExportEffectiveParameters(undefined)(state)).toEqual({
+                [TAB_ID]: [{ id: "scenario", value: "Budget", title: "Scenario" }],
+            });
+        });
+
+        it("selectParameterReconciliations mutes gated-off STRING entries but keeps NUMBER ones", () => {
+            const state = makeFullState({
+                entries: [stringEntry, { parameter: topNParameter, runtimeOverride: 10 }],
+                workspaceParameters: [],
+                enableStringParameters: false,
+            });
+            expect(selectParameterReconciliations(state)).toEqual([
+                { ref: topNRef, name: "topN", kind: "removed" },
+            ]);
+        });
+
+        it("selectParameterReconciliationByRef is undefined for a gated-off STRING entry", () => {
+            const state = makeFullState({
+                entries: [stringEntry],
+                workspaceParameters: [],
+                enableStringParameters: false,
+            });
+            expect(selectParameterReconciliationByRef(scenarioRef)(state)).toBeUndefined();
+        });
+
+        it("selectFilterViewParameters omits a gated-off STRING entry but keeps NUMBER ones", () => {
+            const state = makeFullState({
+                entries: [stringEntry, { parameter: topNParameter, runtimeOverride: 25 }],
+                enableStringParameters: false,
+            });
+            expect(selectFilterViewParameters(state)).toEqual([{ ...topNParameter, value: 25 }]);
+        });
+
+        it("selectFilterViewParameters returns undefined when only gated-off STRING entries exist", () => {
+            const state = makeFullState({ entries: [stringEntry], enableStringParameters: false });
+            expect(selectFilterViewParameters(state)).toBeUndefined();
+        });
+
+        it("selectFilterViewParameters persists the STRING entry when the flag is on", () => {
+            const state = makeFullState({ entries: [stringEntry] });
+            expect(selectFilterViewParameters(state)).toEqual([{ ...scenarioParameter, value: "Budget" }]);
+        });
+
+        it("selectActiveTabDrillParameters withholds a gated-off STRING override but keeps NUMBER ones", () => {
+            const state = makeFullState({
+                entries: [stringEntry, { parameter: topNParameter, runtimeOverride: 25 }],
+                enableStringParameters: false,
+            });
+            expect(selectActiveTabDrillParameters(state)).toEqual([{ ref: topNRef, value: 25 }]);
+        });
+
+        it("selectActiveTabDrillParameters hands off the STRING override when the flag is on", () => {
+            const state = makeFullState({ entries: [stringEntry] });
+            expect(selectActiveTabDrillParameters(state)).toEqual([{ ref: scenarioRef, value: "Budget" }]);
+        });
+    });
+
+    describe("automation seeding (dialogs are NUMBER-only until the interactions slice: STRING must not enter stored wires)", () => {
+        const scenarioMetricRef = idRef("m-scenario", "measure");
+        const topNMetricRef = idRef("m-topn", "measure");
+        const mixedDepMap = { "m-scenario": [scenarioRef], "m-topn": [topNRef] };
+        const stringEntry: IDashboardParameterEntry = {
+            parameter: { ...scenarioParameter, value: "Budget" },
+            runtimeOverride: "Budget",
+        };
+
+        it("selectAutomationExportEffectiveParameters excludes STRING rows even when the flag is on", () => {
+            const state = makeFullState({
+                entries: [stringEntry, { parameter: topNParameter, runtimeOverride: 25 }],
+                workspaceParameters: [scenarioWorkspace, topNWorkspace],
+            });
+            expect(selectExportEffectiveParameters(undefined)(state)).toEqual({
+                [TAB_ID]: [
+                    { id: "scenario", value: "Budget", title: "Scenario" },
+                    { id: "topN", value: "25", title: "Top N" },
+                ],
+            });
+            expect(selectAutomationExportEffectiveParameters(undefined)(state)).toEqual({
+                [TAB_ID]: [{ id: "topN", value: "25", title: "Top N" }],
+            });
+        });
+
+        it("selectAutomationExportEffectiveParameters excludes STRING rows in widget scope", () => {
+            const mixedInsight = makeInsightWithMetric(W1_INSIGHT_REF, [scenarioMetricRef, topNMetricRef]);
+            const state = makeFullState({
+                entries: [stringEntry, { parameter: topNParameter, runtimeOverride: 25 }],
+                workspaceParameters: [scenarioWorkspace, topNWorkspace],
+                insights: [mixedInsight],
+                measureParameters: mixedDepMap,
+            });
+            expect(selectAutomationExportEffectiveParameters(["w-1"])(state)).toEqual({
+                [TAB_ID]: [{ id: "topN", value: "25", title: "Top N" }],
+            });
+        });
+
+        it("selectAutomationParameterValuesForWidget drops string values even when the flag is on", () => {
+            const mixedInsight = makeInsightWithMetric(W1_INSIGHT_REF, [scenarioMetricRef, topNMetricRef]);
+            const state = makeFullState({
+                entries: [stringEntry, { parameter: topNParameter, runtimeOverride: 25 }],
+                workspaceParameters: [scenarioWorkspace, topNWorkspace],
+                insights: [mixedInsight],
+                measureParameters: mixedDepMap,
+            });
+            expect(selectEffectiveParameterValuesForWidget(W1_REF)(state)).toEqual(
+                expect.arrayContaining([
+                    { ref: scenarioRef, value: "Budget" },
+                    { ref: topNRef, value: 25 },
+                ]),
+            );
+            expect(selectAutomationParameterValuesForWidget(W1_REF)(state)).toEqual([
+                { ref: topNRef, value: 25 },
+            ]);
+        });
+
+        it("selectAutomationParameterValuesForWidget returns empty when only string values apply", () => {
+            const insightOnlyScenario = makeInsightWithMetric(W1_INSIGHT_REF, scenarioMetricRef);
+            const state = makeFullState({
+                entries: [stringEntry],
+                workspaceParameters: [scenarioWorkspace],
+                insights: [insightOnlyScenario],
+                measureParameters: { "m-scenario": [scenarioRef] },
+            });
+            expect(selectAutomationParameterValuesForWidget(W1_REF)(state)).toEqual([]);
         });
     });
 });

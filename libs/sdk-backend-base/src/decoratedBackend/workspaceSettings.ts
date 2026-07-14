@@ -126,6 +126,14 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
         return this.decorated.setEnablePartialDataResults(enabled);
     }
 
+    async setEnableNullJoins(enabled: boolean): Promise<void> {
+        return this.decorated.setEnableNullJoins(enabled);
+    }
+
+    async setEnableQueryTags(enabled: boolean): Promise<void> {
+        return this.decorated.setEnableQueryTags(enabled);
+    }
+
     async setExportCsvCustomDelimiter(delimiter: string): Promise<void> {
         return this.decorated.setExportCsvCustomDelimiter(delimiter);
     }

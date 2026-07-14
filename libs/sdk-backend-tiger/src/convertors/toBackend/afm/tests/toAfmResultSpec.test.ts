@@ -67,6 +67,18 @@ describe("converts execution definition to AFM Execution", () => {
         expect(result.execution.parameters).toBeUndefined();
     });
 
+    it("should pass string parameter values to the wire verbatim", () => {
+        const def = defSetExecConfig(emptyDef(workspace), {
+            parameterValues: [{ ref: idRef("scenario", "parameter"), value: "Budget" }],
+        });
+
+        const result = toAfmExecution(def);
+
+        expect(result.execution.parameters).toEqual([
+            { parameter: { identifier: { id: "scenario", type: "parameter" } }, value: "Budget" },
+        ]);
+    });
+
     it("should serialize small decimal parameter values (scientific notation is accepted by the backend)", () => {
         const def = defSetExecConfig(emptyDef(workspace), {
             parameterValues: [{ ref: idRef("tiny", "parameter"), value: 1e-7 }],

@@ -53,12 +53,14 @@ import { IMeasureSortTarget } from '@gooddata/sdk-model';
 import { IMetadataObjectBase } from '@gooddata/sdk-model';
 import { IntlShape } from 'react-intl';
 import { INumberParameterConstraints } from '@gooddata/sdk-model';
+import { IParameterDefinition } from '@gooddata/sdk-model';
 import { IParameterMetadataObject } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-ui';
 import { ISeparators as ISeparators_2 } from '@gooddata/number-formatter';
 import { ISeparators as ISeparators_3 } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
+import { IStringParameterConstraints } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
 import { IThemeDefinition } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
@@ -79,6 +81,7 @@ import { ObjRef } from '@gooddata/sdk-model';
 import { OffsetOptions } from '@floating-ui/react';
 import { OnError } from '@gooddata/sdk-ui';
 import { OnLoadingChanged } from '@gooddata/sdk-ui';
+import { ParameterValue } from '@gooddata/sdk-model';
 import { Placement } from '@floating-ui/react';
 import { PrimitiveType } from 'react-intl';
 import { PropsWithChildren } from 'react';
@@ -4527,6 +4530,25 @@ export function InsightListItemTypeIcon(input: {
 }): JSX.Element;
 
 // @internal (undocumented)
+export interface INumberParameterControlDropdownProps {
+    // (undocumented)
+    ariaAttributes?: IDropdownBodyRenderProps["ariaAttributes"];
+    // (undocumented)
+    constraints?: INumberParameterConstraints;
+    // (undocumented)
+    inputId?: string;
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    onApply: (value: number) => void;
+    // (undocumented)
+    onCancel: () => void;
+    resetValue?: number;
+    // (undocumented)
+    value: number;
+}
+
+// @internal (undocumented)
 export interface INumericInputProps {
     // (undocumented)
     onValueChanged: (height: string) => void;
@@ -4679,28 +4701,29 @@ export interface IParameterControlButtonProps {
     // (undocumented)
     onClick?: () => void;
     // (undocumented)
-    value: number;
+    value: ParameterValue;
     // (undocumented)
     warningTooltip?: string;
 }
 
 // @internal (undocumented)
-export interface IParameterControlDropdownProps {
+export interface IParameterControlProps {
     // (undocumented)
     ariaAttributes?: IDropdownBodyRenderProps["ariaAttributes"];
     // (undocumented)
-    constraints?: INumberParameterConstraints;
+    definition: IParameterDefinition;
     // (undocumented)
     inputId?: string;
     // (undocumented)
     name: string;
     // (undocumented)
-    onApply: (value: number) => void;
+    onApply: (value: ParameterValue) => void;
     // (undocumented)
     onCancel: () => void;
-    resetValue?: number;
     // (undocumented)
-    value: number;
+    resetValue?: ParameterValue;
+    // (undocumented)
+    value: ParameterValue;
 }
 
 // @internal (undocumented)
@@ -5491,6 +5514,25 @@ export interface IStandardPresetDefinition {
     messageId: string;
     // (undocumented)
     previewNumber: number;
+}
+
+// @internal (undocumented)
+export interface IStringParameterControlDropdownProps {
+    // (undocumented)
+    ariaAttributes?: IDropdownBodyRenderProps["ariaAttributes"];
+    // (undocumented)
+    constraints?: IStringParameterConstraints;
+    // (undocumented)
+    inputId?: string;
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    onApply: (value: string) => void;
+    // (undocumented)
+    onCancel: () => void;
+    resetValue?: string;
+    // (undocumented)
+    value: string;
 }
 
 // @internal (undocumented)
@@ -8551,6 +8593,9 @@ export function NonContextToastsInterop(props: {
 // @internal
 export function normalizeTime(time?: Date, date?: Date, timeAnchor?: number): Date;
 
+// @internal
+export function NumberParameterControlDropdown(input: INumberParameterControlDropdownProps): JSX.Element;
+
 // @internal (undocumented)
 export function NumericInput(input: INumericInputProps): JSX.Element;
 
@@ -8634,11 +8679,11 @@ export type PageOrientation = "PORTRAIT" | "LANDSCAPE";
 // @internal (undocumented)
 export type PageSize = "A3" | "A4" | "LETTER";
 
+// @internal
+export function ParameterControl(input: IParameterControlProps): JSX.Element;
+
 // @internal (undocumented)
 export function ParameterControlButton(input: IParameterControlButtonProps): JSX.Element;
-
-// @internal
-export function ParameterControlDropdown(input: IParameterControlDropdownProps): JSX.Element;
 
 // @internal
 export function ParameterPicker(input: IParameterPickerProps): JSX.Element;
@@ -8912,6 +8957,9 @@ export const STANDARD_PRESET_DEFINITIONS: readonly IStandardPresetDefinition[];
 
 // @internal
 export const STANDARD_TEMPLATE_DEFINITIONS: readonly ITemplateDefinition[];
+
+// @internal
+export function StringParameterControlDropdown(input: IStringParameterControlDropdownProps): JSX.Element;
 
 // @internal
 export type StyleProps = Record<string, string | boolean>;

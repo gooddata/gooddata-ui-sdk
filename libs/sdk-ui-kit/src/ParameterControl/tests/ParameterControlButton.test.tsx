@@ -32,6 +32,11 @@ describe("ParameterControlButton", () => {
         expect(container.textContent).toContain("is 42");
     });
 
+    it("renders a string value in the subtitle", () => {
+        const { container } = renderButton({ value: "Budget" });
+        expect(container.textContent).toContain("is Budget");
+    });
+
     it("delegates rendering to UiControlButton (role=button, dialog popup)", () => {
         renderButton();
         const button = screen.getByRole("button");

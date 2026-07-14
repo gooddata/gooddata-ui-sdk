@@ -28,7 +28,7 @@ import { selectEffectiveAttributeFiltersModeMap } from "../../../../model/store/
 import { selectEffectiveDateFilterMode } from "../../../../model/store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
 import { selectEffectiveDateFiltersModeMap } from "../../../../model/store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
 import { selectWidgetLocalIdToTabIdMap } from "../../../../model/store/tabs/layout/layoutSelectors.js";
-import { selectExportEffectiveParameters } from "../../../../model/store/tabs/parameters/parametersSelectors.js";
+import { selectAutomationExportEffectiveParameters } from "../../../../model/store/tabs/parameters/parametersSelectors.js";
 import { selectTabs } from "../../../../model/store/tabs/tabsSelectors.js";
 import { getWidgetTitle } from "../../../../model/utils/dashboardItemUtils.js";
 import type { IScheduledEmailDialogContextValue } from "../../contexts/ScheduledEmailDialogContext.js";
@@ -52,7 +52,7 @@ export function useBuildScheduledEmailDialogContext(
     const widgetLocalIdToTabIdMap = useDashboardSelector(selectWidgetLocalIdToTabIdMap);
     const commonDateFilterId = useDashboardSelector(selectAutomationCommonDateFilterId);
     const exportParametersByTab = useDashboardSelector(
-        selectExportEffectiveParameters(widget ? [objRefToString(widget.ref)] : undefined),
+        selectAutomationExportEffectiveParameters(widget ? [objRefToString(widget.ref)] : undefined),
     );
     const exportTemplates = useExportTemplates();
 

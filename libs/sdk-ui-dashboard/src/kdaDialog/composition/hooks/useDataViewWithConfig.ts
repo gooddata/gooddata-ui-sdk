@@ -33,6 +33,25 @@ export function useDataViewWithConfig(group: IKdaItemGroup | null, item: IKdaIte
         }
 
         const config = createConfig(settings, colorPalette, group, item);
+
+        const metric = state.definition?.metric;
+        const metricTitle = metric?.measure.title ?? metric?.measure.alias ?? "";
+
+        config.enableHighchartsAccessibility = true;
+        config.a11yTitle = intl.formatMessage(
+            { id: "kdaDialog.dialog.keyDrives.overview.detail.title" },
+            {
+                title: metricTitle,
+                category: item.category,
+            },
+        );
+        config.a11yDescription = intl.formatMessage(
+            { id: "kdaDialog.dialog.keyDrives.overview.detail.tip" },
+            {
+                category: item.category,
+            },
+        );
+
         const dataView = createDataView(workspace, definition, group, item, title);
 
         return {
@@ -40,5 +59,5 @@ export function useDataViewWithConfig(group: IKdaItemGroup | null, item: IKdaIte
             dataView,
             displayForm: group.displayForm,
         };
-    }, [colorPalette, definition, group, item, settings, title, workspace]);
+    }, [colorPalette, definition, group, intl, item, settings, state.definition?.metric, title, workspace]);
 }

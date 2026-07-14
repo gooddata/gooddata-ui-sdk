@@ -2243,6 +2243,14 @@
         "text": "Value is out of range. Enter a value of {max} or less.",
         "crowdinContext": "Inline validation error in the parameter control dropdown when only an upper bound is set; {max} is the highest allowed value"
     },
+    "parameter_filter.dropdown.error.tooShort": {
+        "text": "Value is too short. Enter at least {minLength} characters.",
+        "crowdinContext": "Inline validation error in the string parameter control dropdown when the typed text is shorter than the allowed minimum; {minLength} is the lowest allowed length"
+    },
+    "parameter_filter.dropdown.error.tooLong": {
+        "text": "Value is too long. Enter at most {maxLength} characters.",
+        "crowdinContext": "Inline validation error in the string parameter control dropdown when the typed text is longer than the allowed maximum; {maxLength} is the highest allowed length"
+    },
     "mvf.applyButton.tooltip.noChanges": {
         "text": "No changes to apply.",
         "crowdinContext": "Tooltip shown on the Apply button when it is disabled because there are no changes to apply in the Measure Value Filter."

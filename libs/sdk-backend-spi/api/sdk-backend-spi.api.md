@@ -2174,7 +2174,11 @@ export interface IOrganizationSettingsService {
     // @alpha
     setEnableDrillToUrlByDefault(enabled: boolean): Promise<void>;
     // @alpha
+    setEnableNullJoins(enabled: boolean): Promise<void>;
+    // @alpha
     setEnablePartialDataResults(enabled: boolean): Promise<void>;
+    // @alpha
+    setEnableQueryTags(enabled: boolean): Promise<void>;
     // @alpha
     setExportCsvCustomDelimiter(delimiter: string): Promise<void>;
     setFiscalCalendar(fiscalYear: IFiscalYear): Promise<void>;
@@ -2962,7 +2966,11 @@ export interface IWorkspaceSettingsService {
     // @alpha
     setEnableDrillToUrlByDefault(enabled: boolean): Promise<void>;
     // @alpha
+    setEnableNullJoins(enabled: boolean): Promise<void>;
+    // @alpha
     setEnablePartialDataResults(enabled: boolean): Promise<void>;
+    // @alpha
+    setEnableQueryTags(enabled: boolean): Promise<void>;
     // @alpha
     setExportCsvCustomDelimiter(delimiter: string): Promise<void>;
     setFiscalCalendar(fiscalYear: IFiscalYear): Promise<void>;

@@ -294,6 +294,30 @@ export interface IOrganizationSettingsService {
     setEnablePartialDataResults(enabled: boolean): Promise<void>;
 
     /**
+     * Sets enable null joins configuration for organization.
+     *
+     * @remarks
+     * When enabled, generated SQL joins coalesce null values before comparing join keys. Workspaces inherit
+     * this value unless they override it.
+     *
+     * @param enabled - whether to enable null value matching in SQL joins.
+     *
+     * @returns promise
+     * @alpha
+     */
+    setEnableNullJoins(enabled: boolean): Promise<void>;
+
+    /**
+     * Sets enable query tags setting for organization.
+     *
+     * @param enabled - whether to enable query tags for this organization.
+     *
+     * @returns promise
+     * @alpha
+     */
+    setEnableQueryTags(enabled: boolean): Promise<void>;
+
+    /**
      * Deletes theme from organization settings returning workspace styling to default.
      *
      * @returns promise

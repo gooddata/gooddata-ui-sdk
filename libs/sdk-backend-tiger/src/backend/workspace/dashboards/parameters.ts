@@ -4,6 +4,9 @@ import {
     type IDashboard,
     type IDashboardExportParameter,
     type IDashboardParameter,
+    type ParameterType,
+    type ParameterValue,
+    throwUnexpected,
 } from "@gooddata/sdk-model";
 
 /**
@@ -52,11 +55,23 @@ function applyParameterOverrides(
         return parameters;
     }
     const valueById = new Map(overrides.map((override) => [override.id, override.value]));
-    return parameters.map((parameter) =>
-        valueById.has(parameter.ref.identifier)
-            ? { ...parameter, value: Number(valueById.get(parameter.ref.identifier)) }
-            : parameter,
-    );
+    return parameters.map((parameter) => {
+        const overrideValue = valueById.get(parameter.ref.identifier);
+        return overrideValue === undefined
+            ? parameter
+            : { ...parameter, value: parseParameterValue(parameter.parameterType, overrideValue) };
+    });
+}
+
+function parseParameterValue(type: ParameterType, raw: string): ParameterValue {
+    switch (type) {
+        case "NUMBER":
+            return Number(raw);
+        case "STRING":
+            return raw;
+        default:
+            return throwUnexpected(type);
+    }
 }
 
 export function getParametersMetadata(

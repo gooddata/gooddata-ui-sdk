@@ -94,7 +94,7 @@ vi.mock("../../../../model/store/tabs/tabsSelectors.js", () => ({
 }));
 
 vi.mock("../../../../model/store/tabs/parameters/parametersSelectors.js", () => ({
-    selectExportEffectiveParameters: () => () => ({}),
+    selectAutomationExportEffectiveParameters: () => () => ({}),
 }));
 
 vi.mock("../../../../model/react/useExportTemplates.js", () => ({

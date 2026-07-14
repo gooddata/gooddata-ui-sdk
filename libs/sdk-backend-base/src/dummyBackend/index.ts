@@ -1100,6 +1100,8 @@ class DummyOrganization implements IOrganization {
             getAiRateLimit: () => Promise.resolve(undefined),
             setEnableDrillToUrlByDefault: () => Promise.resolve(),
             setEnablePartialDataResults: () => Promise.resolve(),
+            setEnableNullJoins: () => Promise.resolve(),
+            setEnableQueryTags: () => Promise.resolve(),
             deleteTheme: () => Promise.resolve(),
             deleteColorPalette: () => Promise.resolve(),
             getSettings: () => Promise.resolve({}),
@@ -1409,6 +1411,14 @@ class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
     }
 
     setEnablePartialDataResults(_enabled: boolean): Promise<void> {
+        return Promise.resolve();
+    }
+
+    setEnableNullJoins(_enabled: boolean): Promise<void> {
+        return Promise.resolve();
+    }
+
+    setEnableQueryTags(_enabled: boolean): Promise<void> {
         return Promise.resolve();
     }
 

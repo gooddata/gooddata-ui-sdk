@@ -622,6 +622,20 @@ export interface BoundedFilter {
 export type BoundedFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
 
 /**
+ * Certification state of the object. Who certified and when are never exposed here.
+ */
+export interface CertificationInfo {
+    /**
+     * Certification status, e.g. CERTIFIED.
+     */
+    'status': string;
+    /**
+     * Optional message describing the certification.
+     */
+    'certificationMessage'?: string;
+}
+
+/**
  * Change analysis specification.
  */
 export interface ChangeAnalysisParams {
@@ -3355,6 +3369,7 @@ export interface SearchResultObject {
      * If true, this object is hidden from AI search results by default.
      */
     'isHidden'?: boolean;
+    'certification'?: CertificationInfo;
 }
 
 /**

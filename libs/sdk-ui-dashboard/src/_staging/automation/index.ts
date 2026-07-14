@@ -16,6 +16,7 @@ import {
     type IInsightParameterValue,
     type IUser,
     type IWorkspaceUser,
+    type ParameterValue,
     idRef,
     isExportDefinitionDashboardRequestPayload,
     isExportDefinitionVisualizationObjectRequestPayload,
@@ -197,6 +198,15 @@ export function exportParametersToValues(stored: IDashboardExportParameter[]): I
         }
         return acc;
     }, []);
+}
+
+/**
+ * The parameter values the automation dialogs can carry: NUMBER only, until the interactions
+ * slice (F1-2636…F1-2641) widens the automation model. The single home of that policy — delete
+ * together with the automation seeding gates when the slice lands.
+ */
+export function isAutomationSupportedParameterValue(value: ParameterValue): value is number {
+    return typeof value === "number";
 }
 
 export const getAutomationVisualizationFilters = (

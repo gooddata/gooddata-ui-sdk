@@ -88,7 +88,6 @@ export enum TigerFeaturesNames {
     EnableAiAgenticConversations = "enableAiAgenticConversations",
     EnableGenAiAgentSwitching = "enableGenAiAgentSwitching",
     EnableGenAiObservability = "enableGenAiObservability",
-    EnableGenAiObservabilityPercentages = "enableGenAiObservabilityPercentages",
     EnableGenAiAgenticDataShareOptOut = "enableGenAiAgenticDataShareOptOut",
     EnableGenAiVisualizationSummarySkill = "enableGenAiVisualizationSummarySkill",
     EnableGenAiDashboardSummarySkill = "enableGenAiDashboardSummarySkill",
@@ -211,7 +210,6 @@ export type ITigerFeatureFlags = {
     enableAiAgenticMultiConversations: (typeof FeatureFlagsValues)["enableAiAgenticMultiConversations"][number];
     enableGenAiAgentSwitching: (typeof FeatureFlagsValues)["enableGenAiAgentSwitching"][number];
     enableGenAiObservability: (typeof FeatureFlagsValues)["enableGenAiObservability"][number];
-    enableGenAiObservabilityPercentages: (typeof FeatureFlagsValues)["enableGenAiObservabilityPercentages"][number];
     enableGenAIReasoningVisibility: (typeof FeatureFlagsValues)["enableGenAIReasoningVisibility"][number];
     aiChatSearchLimit: (typeof FeatureFlagsValues)["aiChatSearchLimit"][number];
     enableRichTextWidgetFilterConfiguration: (typeof FeatureFlagsValues)["enableRichTextWidgetFilterConfiguration"][number];
@@ -332,7 +330,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAiAgenticMultiConversations: false,
     enableGenAiAgentSwitching: false,
     enableGenAiObservability: false,
-    enableGenAiObservabilityPercentages: false,
     enableGenAIReasoningVisibility: false,
     aiChatSearchLimit: undefined,
     enableRichTextWidgetFilterConfiguration: false,
@@ -453,7 +450,6 @@ export const FeatureFlagsValues = {
     enableAiAgenticMultiConversations: [true, false] as const,
     enableGenAiAgentSwitching: [true, false] as const,
     enableGenAiObservability: [true, false] as const,
-    enableGenAiObservabilityPercentages: [true, false] as const,
     enableGenAIReasoningVisibility: [false, true] as const,
     aiChatSearchLimit: [undefined, {} as number] as const,
     enableRichTextWidgetFilterConfiguration: [true, false] as const,

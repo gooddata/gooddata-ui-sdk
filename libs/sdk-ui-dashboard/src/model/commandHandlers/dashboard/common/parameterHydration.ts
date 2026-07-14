@@ -4,6 +4,7 @@ import {
     type IDashboardParameter,
     type IDashboardTab,
     type IParameterMetadataObject,
+    type ParameterValue,
     objRefToString,
 } from "@gooddata/sdk-model";
 
@@ -79,7 +80,7 @@ function applyRuntimeOverrides(
     entries: IDashboardParameterEntry[],
     overrides: IDashboardParameter[],
 ): IDashboardParameterEntry[] {
-    const overrideByRef = new Map<string, number | undefined>(
+    const overrideByRef = new Map<string, ParameterValue | undefined>(
         overrides.map((o) => [objRefToString(o.ref), o.value]),
     );
     return entries.map((entry) => {

@@ -1,13 +1,18 @@
 .gd-pdf-export-dialog {
     min-width: 300px;
 
+    .input-checkbox-label {
+        height: auto;
+    }
+
     .gd-dialog-content {
         display: flex;
         flex-direction: column;
         gap: 20px;
 
-        .gd-pdf-export-dialog-item {
-            h4 {
+        .gd-input.gd-pdf-export-dialog-item {
+            .gd-label {
+                display: block;
                 font-size: 14px;
                 font-weight: 400;
                 color: var(--gd-palette-complementary-7);

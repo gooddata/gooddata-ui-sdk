@@ -937,6 +937,16 @@ class WithWorkspaceSettingsCaching extends DecoratedWorkspaceSettingsService {
         this.invalidateCache();
     }
 
+    public override async setEnableNullJoins(enabled: boolean): Promise<void> {
+        await super.setEnableNullJoins(enabled);
+        this.invalidateCache();
+    }
+
+    public override async setEnableQueryTags(enabled: boolean): Promise<void> {
+        await super.setEnableQueryTags(enabled);
+        this.invalidateCache();
+    }
+
     public override async setExportCsvCustomDelimiter(delimiter: string): Promise<void> {
         await super.setExportCsvCustomDelimiter(delimiter);
         this.invalidateCache();

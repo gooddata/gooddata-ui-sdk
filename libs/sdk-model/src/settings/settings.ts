@@ -886,6 +886,16 @@ export interface IFeatureFlags {
     enablePartialDataResults?: boolean;
 
     /**
+     * This setting controls whether generated SQL joins coalesce null values before comparing join keys.
+     */
+    enableNullJoins?: boolean;
+
+    /**
+     * This setting controls whether debugging information in SQL queries is enabled.
+     */
+    enableQueryTags?: boolean;
+
+    /**
      * Enable anomaly detection alert
      */
     enableAnomalyDetectionAlert?: boolean;
@@ -1062,11 +1072,6 @@ export interface IFeatureFlags {
      * Enable observability in AI Assistant.
      */
     enableGenAiObservability?: boolean;
-
-    /**
-     * Enable period-over-period comparison percentages in AI Assistant observability.
-     */
-    enableGenAiObservabilityPercentages?: boolean;
 
     /**
      * Enable Anthropic provider in LLM configuration.

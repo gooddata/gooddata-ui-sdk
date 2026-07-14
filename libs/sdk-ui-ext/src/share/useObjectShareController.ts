@@ -50,7 +50,9 @@ import { useLabelScope } from "./useLabelScope.js";
  * plain props and it owns its controller. Call this (exported as `useObjectShare`)
  * only to share a single access-list fetch between the dialog and an inline summary
  * row: call it once, read `state.summary` for the row, and pass the controller into
- * the dialog.
+ * the dialog. Grantee rows carry identity facts only (`name`/`email` are undefined
+ * when unknown); the display fallback order is not exposed, so {@link ObjectShareDialog}
+ * is the only sanctioned row renderer.
  *
  * @internal
  */
@@ -103,7 +105,6 @@ export function useObjectShareController(
         setGrantees,
         setGeneralAccess,
         setWorkspaceLevel,
-        setKnownNames,
     } = useAccessList(target, onSaved, isOpen);
 
     // Always-current target key, read inside async mutation finalizers that captured
@@ -215,15 +216,15 @@ export function useObjectShareController(
             return;
         }
         const startedFor = targetKey;
-        // Insert the picked grantees as pending rows, carrying the picker's display
-        // name so the new row never renders a raw id.
+        // Insert the picked grantees as pending rows. Identity facts are not copied
+        // from the picker option (its name/email are display fallbacks, not facts) —
+        // rows render from the facts cache the picker fetch already populated.
         const addedIds = pendingGrantees.map((g) => g.id);
         const addedRows = pendingGrantees.map(
             (g): IObjectShareGrantee => ({
                 id: g.id,
                 kind: g.kind,
                 granteeRef: refForId(g.id),
-                name: g.name,
                 level: g.permissionLevel,
                 pending: "saving",
             }),
@@ -237,13 +238,6 @@ export function useObjectShareController(
         const allLabelIds = effectiveLabels.map((l) => l.id);
         const allLabelIdSet = new Set(allLabelIds);
         setGrantees((prev) => [...prev.filter((g) => !addedIds.includes(g.id)), ...addedRows]);
-        setKnownNames((prev) => {
-            const next = { ...prev };
-            for (const g of pendingGrantees) {
-                next[g.id] = g.name;
-            }
-            return next;
-        });
         setSelectedLabelIdsByGrantee((prev) => {
             const next = { ...prev };
             for (const id of addedIds) {
@@ -312,7 +306,6 @@ export function useObjectShareController(
         refForId,
         toast,
         setGrantees,
-        setKnownNames,
         setSelectedLabelIdsByGrantee,
     ]);
 
@@ -607,16 +600,16 @@ export function useObjectShareController(
         [transferTarget, grantees],
     );
 
-    // Insert a brand-new grantee row with its label scope and display name — the
-    // shared seed for a freshly-granted principal (used when a transfer promotes a
-    // user who wasn't already a grantee; the same row shape the add flow creates).
+    // Insert a brand-new grantee row with its label scope — the shared seed for a
+    // freshly-granted principal (used when a transfer promotes a user who wasn't
+    // already a grantee; the same row shape the add flow creates). Identity
+    // renders from the facts cache.
     const seedNewGranteeRow = useCallback(
         (row: IObjectShareGrantee, labelIds: string[]) => {
             setGrantees((prev) => [...prev, row]);
-            setKnownNames((prev) => ({ ...prev, [row.id]: row.name }));
             setSelectedLabelIdsByGrantee((prev) => ({ ...prev, [row.id]: labelIds }));
         },
-        [setGrantees, setKnownNames, setSelectedLabelIdsByGrantee],
+        [setGrantees, setSelectedLabelIdsByGrantee],
     );
 
     const confirmTransferOwnership = useCallback(async (): Promise<void> => {
@@ -731,7 +724,6 @@ export function useObjectShareController(
                         id: transferTarget.id,
                         kind: "user",
                         granteeRef: ownerRef,
-                        name: transferTarget.name,
                         level: "EDIT",
                         effectivePermission: nextEffective,
                     },

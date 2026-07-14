@@ -607,13 +607,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableGenAiObservabilityPercentages,
-            "enableGenAiObservabilityPercentages",
-            "BOOLEAN",
-            FeatureFlagsValues.enableGenAiObservabilityPercentages,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableAiLlmAnthropicProvider,
             "enableAiLlmAnthropicProvider",
             "BOOLEAN",

@@ -411,6 +411,10 @@ $min-content-height: 110px;
 .gd-attachment-settings-dropdown {
     width: 245px;
 
+    .input-checkbox-label {
+        height: auto;
+    }
+
     .gd-list-title {
         line-height: normal;
     }
@@ -430,6 +434,11 @@ $min-content-height: 110px;
         flex-direction: column;
         padding: 15px 10px;
         gap: var(--gd-spacing-10px);
+    }
+
+    .gd-pdf-export-dialog-item .gd-label {
+        display: block;
+        margin-bottom: 0;
     }
 
     .gd-attachment-settings-dropdown-footer {

@@ -16,3 +16,10 @@ export const dashboardParameterFull: IDashboardParameter = {
     mode: "readonly",
     parameterType: "NUMBER",
 };
+
+export const dashboardParameterString: IDashboardParameter = {
+    ref: idRef("scenario", "parameter"),
+    value: "Budget",
+    mode: "active",
+    parameterType: "STRING",
+};

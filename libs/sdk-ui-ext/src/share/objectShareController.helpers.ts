@@ -10,7 +10,11 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 
-import type { IObjectShareGrantee, ObjectSharePermissionLevel } from "./objectShareController.types.js";
+import type {
+    IGranteeIdentityFacts,
+    IObjectShareGrantee,
+    ObjectSharePermissionLevel,
+} from "./objectShareController.types.js";
 import type { IObjectShareLabel } from "./types.js";
 
 /** Stable row id shared by grantee rows and picker options: `user:<ref>` / `group:<ref>`. */
@@ -19,13 +23,56 @@ export function granteeId(kind: "user" | "group", ref: ObjRef): string {
 }
 
 /**
- * Whether a grantee row carries no human name — its name is just the serialized
- * ref the backend grant fell back to when the permissions endpoint returned no
- * name. The signal both for backfilling a row from the picker/assignee cache and
- * for deciding whether to resolve names eagerly at all.
+ * Real identity facts recovered from converter output that collapses missing
+ * fields (`name ?? email ?? id`; grant emails also `email ?? id` — assignee
+ * emails stay raw): a field equal to the raw id is absent, a "name" equal to
+ * the email is the email fallback.
  */
-export function granteeNameUnresolved(grantee: IObjectShareGrantee): boolean {
-    return grantee.name === objRefToString(grantee.granteeRef);
+export function userIdentityFacts(
+    ref: ObjRef,
+    name: string | undefined,
+    email: string | undefined,
+): IGranteeIdentityFacts {
+    const id = objRefToString(ref);
+    const realEmail = email && email !== id ? email : undefined;
+    const realName = name && name !== id && name !== realEmail ? name : undefined;
+    return { name: realName, email: realEmail };
+}
+
+/** Real group name recovered from the converter's `name ?? id` collapse: a name equal to the raw id is absent. */
+export function groupNameFact(ref: ObjRef, name: string | undefined): string | undefined {
+    const id = objRefToString(ref);
+    return name && name !== id ? name : undefined;
+}
+
+/** Identity facts for a listing/picker assignee — {@link userIdentityFacts} for users, a name fact for groups. */
+export function assigneeIdentityFacts(assignee: IAvailableAccessGrantee): IGranteeIdentityFacts {
+    return assignee.type === "user"
+        ? userIdentityFacts(assignee.ref, assignee.name, assignee.email)
+        : { name: groupNameFact(assignee.ref, assignee.name) };
+}
+
+/** Display pair per the spec's fallback order: name + email → name + userID → email + userID → userID. */
+export function userDisplayPair(
+    facts: IGranteeIdentityFacts,
+    userId: string,
+): { name: string; email?: string } {
+    if (facts.name) {
+        return { name: facts.name, email: facts.email ?? userId };
+    }
+    if (facts.email) {
+        return { name: facts.email, email: userId };
+    }
+    return { name: userId };
+}
+
+/** Row display pair — {@link userDisplayPair} for users; groups show name (or raw id), no subline. */
+export function granteeDisplayPair(grantee: IObjectShareGrantee): { name: string; email?: string } {
+    const id = objRefToString(grantee.granteeRef);
+    if (grantee.kind !== "user") {
+        return { name: grantee.name ?? id };
+    }
+    return userDisplayPair(grantee, id);
 }
 
 /** Case-insensitive match of an assignee against the picker query (name, or email for users). */
@@ -80,8 +127,7 @@ export function granteesFromAccessList(list: IObjectAccessList | undefined): IOb
                 id: granteeId("user", g.user.ref),
                 kind: "user",
                 granteeRef: g.user.ref,
-                name: g.user.fullName ?? g.user.email ?? g.user.login,
-                email: g.user.email,
+                ...userIdentityFacts(g.user.ref, g.user.fullName, g.user.email),
                 ...granteeAccess(g.permissions, g.inheritedPermissions),
             });
         } else if (isGranularUserGroupAccess(g)) {
@@ -89,7 +135,7 @@ export function granteesFromAccessList(list: IObjectAccessList | undefined): IOb
                 id: granteeId("group", g.userGroup.ref),
                 kind: "group",
                 granteeRef: g.userGroup.ref,
-                name: g.userGroup.name ?? objRefToString(g.userGroup.ref),
+                name: groupNameFact(g.userGroup.ref, g.userGroup.name),
                 ...granteeAccess(g.permissions, g.inheritedPermissions),
             });
         }

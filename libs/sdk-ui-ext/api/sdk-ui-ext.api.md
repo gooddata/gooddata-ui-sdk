@@ -554,6 +554,12 @@ export interface IGrantedDataSource {
     title: string;
 }
 
+// @internal
+export interface IGranteeIdentityFacts {
+    email?: string;
+    name?: string;
+}
+
 // @internal (undocumented)
 export interface IInsightErrorProps {
     // (undocumented)
@@ -973,10 +979,8 @@ export interface IObjectShareDialogProps {
 }
 
 // @internal
-export interface IObjectShareGrantee {
+export interface IObjectShareGrantee extends IGranteeIdentityFacts {
     effectivePermission?: ObjectSharePermissionLevel;
-    // (undocumented)
-    email?: string;
     // (undocumented)
     granteeRef: ObjRef;
     id: string;
@@ -985,8 +989,6 @@ export interface IObjectShareGrantee {
     kind: "user" | "group";
     // (undocumented)
     level: ObjectSharePermissionLevel;
-    // (undocumented)
-    name: string;
     pending?: "saving" | "removing";
 }
 

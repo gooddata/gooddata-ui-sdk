@@ -831,9 +831,6 @@ export const getHierarchyRef: (hierarchy: ICatalogAttributeHierarchy | ICatalogD
 export const getHierarchyTitle: (hierarchy: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy) => string;
 
 // @alpha
-export function getNumberParameterDefaultValue(definition: IParameterDefinition | undefined): number | undefined;
-
-// @alpha
 export function getSelectedElementsCount(filter: IDashboardAttributeFilter): number;
 
 // @public
@@ -2040,9 +2037,9 @@ export interface IDashboardObjectIdentity {
 export interface IDashboardParameter {
     readonly label?: string;
     readonly mode: DashboardParameterMode;
-    readonly parameterType: "NUMBER";
+    readonly parameterType: ParameterType;
     readonly ref: IdentifierRef;
-    readonly value?: number;
+    readonly value?: ParameterValue;
 }
 
 // @alpha
@@ -2740,7 +2737,6 @@ export interface IFeatureFlags {
     enableGenAIChat?: boolean;
     enableGenAIMemory?: boolean;
     enableGenAiObservability?: boolean;
-    enableGenAiObservabilityPercentages?: boolean;
     enableGenAIReasoningVisibility?: boolean;
     enableGeoArea?: boolean;
     enableGeoBasemapConfig?: boolean;
@@ -2772,6 +2768,7 @@ export interface IFeatureFlags {
     enableNewScheduledExport?: boolean;
     enableNotificationChannelIdentifiers?: boolean;
     enableNullableJoins?: boolean;
+    enableNullJoins?: boolean;
     // (undocumented)
     enableOidcAuth?: boolean;
     // (undocumented)
@@ -2781,6 +2778,7 @@ export interface IFeatureFlags {
     enableParameters?: boolean;
     enablePartialDataResults?: boolean;
     enablePreAggregationDatasets?: boolean;
+    enableQueryTags?: boolean;
     enableRadarChart?: boolean;
     enableRankingStrictLimit?: boolean;
     enableRankingWithMvf?: boolean;
@@ -3180,7 +3178,7 @@ export interface IInsightLayerDefinition {
 // @alpha
 export interface IInsightParameterValue {
     ref: IdentifierRef;
-    value: number;
+    value: ParameterValue;
 }
 
 // @public (undocumented)
@@ -5393,6 +5391,9 @@ export function isValidNumberParameterValue(value: number, constraints?: INumber
 
 // @alpha
 export function isValidParameterValue(definition: IParameterDefinition, value: ParameterValue): boolean;
+
+// @alpha
+export function isValidStringParameterValue(value: string, constraints?: IStringParameterConstraints): boolean;
 
 // @public
 export function isVariableMetadataObject(obj: unknown): obj is IVariableMetadataObject;

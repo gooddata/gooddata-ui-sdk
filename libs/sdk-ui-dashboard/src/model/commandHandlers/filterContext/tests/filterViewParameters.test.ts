@@ -43,4 +43,39 @@ describe("resolveFilterViewParameterValues", () => {
             { ref: topNParameter.ref, value: undefined },
         ]);
     });
+
+    const scenarioParameter: IDashboardParameter = {
+        ref: idRef("scenario", "parameter"),
+        parameterType: "STRING",
+        mode: "active",
+    };
+
+    const scenarioWorkspaceParameter: IParameterMetadataObject = {
+        type: "parameter",
+        id: "scenario",
+        uri: "/scenario",
+        ref: scenarioParameter.ref,
+        title: "Scenario",
+        description: "",
+        production: true,
+        deprecated: false,
+        unlisted: false,
+        definition: { type: "STRING", defaultValue: "Actual" },
+    };
+
+    it("fills a missing string value from the workspace string default", () => {
+        expect(resolveFilterViewParameterValues([scenarioParameter], [scenarioWorkspaceParameter])).toEqual([
+            { ref: scenarioParameter.ref, value: "Actual" },
+        ]);
+    });
+
+    it("keeps a missing value unresolved when the workspace parameter type does not match", () => {
+        const numberTypedWorkspaceParameter: IParameterMetadataObject = {
+            ...scenarioWorkspaceParameter,
+            definition: { type: "NUMBER", defaultValue: 10 },
+        };
+        expect(
+            resolveFilterViewParameterValues([scenarioParameter], [numberTypedWorkspaceParameter]),
+        ).toEqual([{ ref: scenarioParameter.ref, value: undefined }]);
+    });
 });

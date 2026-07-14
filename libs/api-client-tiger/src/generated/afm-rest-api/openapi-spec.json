@@ -7141,6 +7141,23 @@
                     }
                 }
             },
+            "CertificationInfo": {
+                "required": [
+                    "status"
+                ],
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "string",
+                        "description": "Certification status, e.g. CERTIFIED."
+                    },
+                    "certificationMessage": {
+                        "type": "string",
+                        "description": "Optional message describing the certification."
+                    }
+                },
+                "description": "Certification state of the object. Who certified and when are never exposed here."
+            },
             "ErrorInfo": {
                 "required": [
                     "reason",
@@ -7312,6 +7329,9 @@
                     "isHidden": {
                         "type": "boolean",
                         "description": "If true, this object is hidden from AI search results by default."
+                    },
+                    "certification": {
+                        "$ref": "#/components/schemas/CertificationInfo"
                     }
                 }
             },

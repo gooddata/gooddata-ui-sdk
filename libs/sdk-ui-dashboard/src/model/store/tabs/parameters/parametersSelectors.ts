@@ -11,11 +11,12 @@ import {
     type IParameterMetadataObject,
     type IdentifierRef,
     type ObjRef,
+    type ParameterValue,
     areObjRefsEqual,
-    insightParameters,
     objRefToString,
 } from "@gooddata/sdk-model";
 
+import { isAutomationSupportedParameterValue } from "../../../../_staging/automation/index.js";
 import { createMemoizedSelector } from "../../_infra/selectors.js";
 import {
     selectCatalogMeasureParameters,
@@ -24,7 +25,7 @@ import {
     selectCatalogParameters,
     selectCatalogParametersIsLoaded,
 } from "../../catalog/catalogSelectors.js";
-import { selectEnableParameters } from "../../config/configSelectors.js";
+import { selectEnableParameters, selectEnableStringParameters } from "../../config/configSelectors.js";
 import { selectInsightsMap } from "../../insights/insightsSelectors.js";
 import { selectIsInEditMode } from "../../renderMode/renderModeSelectors.js";
 import { type DashboardSelector } from "../../types.js";
@@ -46,8 +47,10 @@ import {
     collectReferencedParameterRefs,
     computeParameterResetTargets,
     computeParameterResetValue,
+    isGatedStringEntry,
     resolveEffectiveParameterValuesForRefs,
     smartPersistResolvedEntry,
+    ungatedInsightParameterValues,
 } from "./parametersHelpers.js";
 import {
     type IDashboardParameterEntry,
@@ -59,7 +62,7 @@ const EMPTY_PARAMETERS: IDashboardParameter[] = [];
 const EMPTY_EXPORT_PARAMETERS: IDashboardExportParameter[] = [];
 const EMPTY_PARAMETER_VALUES: IInsightParameterValue[] = [];
 const EMPTY_TABS: IDashboardTab[] = [];
-const EMPTY_RESET_TARGETS: { ref: ObjRef; value: number | undefined }[] = [];
+const EMPTY_RESET_TARGETS: { ref: ObjRef; value: ParameterValue | undefined }[] = [];
 const EMPTY_RECONCILIATIONS: IParameterReconciliationEntry[] = [];
 
 const selectParametersState = createSelector(
@@ -116,12 +119,17 @@ export const selectDashboardParameterEntries: DashboardSelector<IDashboardParame
  * @internal
  */
 export const selectFilterViewParameters: DashboardSelector<IDashboardParameter[] | undefined> =
-    createSelector(selectDashboardParameterEntries, (entries) => {
-        if (entries.length === 0) {
-            return undefined;
-        }
-        return entries.map(applyRuntimeOverride);
-    });
+    createSelector(
+        selectDashboardParameterEntries,
+        selectEnableStringParameters,
+        (entries, isStringEnabled) => {
+            const persistable = entries.filter((item) => !isGatedStringEntry(item, isStringEnabled));
+            if (persistable.length === 0) {
+                return undefined;
+            }
+            return persistable.map(applyRuntimeOverride);
+        },
+    );
 
 /**
  * Runtime parameter values from the active tab, to hand off on a drill. Values equal to the source's
@@ -131,10 +139,11 @@ export const selectFilterViewParameters: DashboardSelector<IDashboardParameter[]
  */
 export const selectActiveTabDrillParameters: DashboardSelector<IInsightParameterValue[]> = createSelector(
     selectDashboardParameterEntries,
-    (entries) => {
+    selectEnableStringParameters,
+    (entries, isStringEnabled) => {
         const result: IInsightParameterValue[] = [];
         for (const entry of entries) {
-            if (entry.runtimeOverride === undefined) {
+            if (entry.runtimeOverride === undefined || isGatedStringEntry(entry, isStringEnabled)) {
                 continue;
             }
             result.push({ ref: entry.parameter.ref, value: entry.runtimeOverride });
@@ -163,10 +172,11 @@ export const selectDashboardParameterEntryByRef: (
  *
  * @alpha
  */
-export const selectParameterRuntimeOverrideByRef: (ref: ObjRef) => DashboardSelector<number | undefined> =
-    createMemoizedSelector((ref: ObjRef) =>
-        createSelector(selectDashboardParameterEntryByRef(ref), (entry) => entry?.runtimeOverride),
-    );
+export const selectParameterRuntimeOverrideByRef: (
+    ref: ObjRef,
+) => DashboardSelector<ParameterValue | undefined> = createMemoizedSelector((ref: ObjRef) =>
+    createSelector(selectDashboardParameterEntryByRef(ref), (entry) => entry?.runtimeOverride),
+);
 
 /**
  * Reset value for a parameter chip's dropdown, bound to the kit dropdown's `resetValue` prop.
@@ -176,7 +186,7 @@ export const selectParameterRuntimeOverrideByRef: (ref: ObjRef) => DashboardSele
  *
  * @alpha
  */
-export const selectParameterResetValueByRef: (ref: ObjRef) => DashboardSelector<number | undefined> =
+export const selectParameterResetValueByRef: (ref: ObjRef) => DashboardSelector<ParameterValue | undefined> =
     createMemoizedSelector((ref: ObjRef) =>
         createSelector(
             selectDashboardParameterEntryByRef(ref),
@@ -292,7 +302,7 @@ export const selectIsParametersChanged: DashboardSelector<boolean> = createSelec
  * @internal
  */
 export const selectActiveTabParameterResetTargets: DashboardSelector<
-    { ref: ObjRef; value: number | undefined }[]
+    { ref: ObjRef; value: ParameterValue | undefined }[]
 > = createSelector(
     selectDashboardParameterEntries,
     selectCatalogParameters,
@@ -330,11 +340,14 @@ export const selectParameterReconciliations: DashboardSelector<IParameterReconci
         selectCatalogParameters,
         selectCatalogParametersIsLoaded,
         selectEnableParameters,
-        (tabs, workspaceParameters, isCatalogLoaded, isEnabled) => {
+        selectEnableStringParameters,
+        (tabs, workspaceParameters, isCatalogLoaded, isEnabled, isStringEnabled) => {
             if (!isEnabled || !isCatalogLoaded || !tabs) {
                 return EMPTY_RECONCILIATIONS;
             }
-            const entries = tabs.flatMap((tab) => tab.parameters?.parameters ?? []);
+            const entries = tabs
+                .flatMap((tab) => tab.parameters?.parameters ?? [])
+                .filter((entry) => !isGatedStringEntry(entry, isStringEnabled));
             const result = collectParameterReconciliations(entries, workspaceParameters);
             return result.length === 0 ? EMPTY_RECONCILIATIONS : result;
         },
@@ -354,8 +367,9 @@ export const selectParameterReconciliationByRef: (
         selectCatalogParameterByRef(ref),
         selectCatalogParametersIsLoaded,
         selectEnableParameters,
-        (entry, workspaceParameter, isCatalogLoaded, isEnabled) => {
-            if (!isEnabled || !isCatalogLoaded || !entry) {
+        selectEnableStringParameters,
+        (entry, workspaceParameter, isCatalogLoaded, isEnabled, isStringEnabled) => {
+            if (!isEnabled || !isCatalogLoaded || !entry || isGatedStringEntry(entry, isStringEnabled)) {
                 return undefined;
             }
             return classifyParameterReconciliation(applyRuntimeOverride(entry), workspaceParameter);
@@ -370,6 +384,7 @@ interface IWidgetParameterContext {
     workspaceParameterByRef: Map<string, IParameterMetadataObject>;
     // The executed insight can differ from the widget's own (e.g. a drill overlay).
     widgetInsightRef: ObjRef;
+    isStringEnabled: boolean;
 }
 
 /**
@@ -384,10 +399,18 @@ export const selectWidgetParameterContext: (
         createSelector(
             selectAllTabsInsightWidgetContexts,
             selectEnableParameters,
+            selectEnableStringParameters,
             selectCatalogMeasureParameters,
             selectCatalogMeasureParametersStatus,
             selectWorkspaceParametersByRef,
-            (contexts, isEnabled, measureParameters, measureParametersStatus, workspaceParameterByRef) => {
+            (
+                contexts,
+                isEnabled,
+                isStringEnabled,
+                measureParameters,
+                measureParametersStatus,
+                workspaceParameterByRef,
+            ) => {
                 if (!isEnabled || !ref || measureParametersStatus !== "loaded") {
                     return undefined;
                 }
@@ -395,12 +418,15 @@ export const selectWidgetParameterContext: (
                 if (!context) {
                     return undefined;
                 }
-                const entries = context.tab.parameters?.parameters ?? parametersInitialState.parameters;
+                const entries = (
+                    context.tab.parameters?.parameters ?? parametersInitialState.parameters
+                ).filter((entry) => !isGatedStringEntry(entry, isStringEnabled));
                 return {
                     entries,
                     measureParameters,
                     workspaceParameterByRef,
                     widgetInsightRef: context.widget.insight,
+                    isStringEnabled,
                 };
             },
         ),
@@ -413,13 +439,15 @@ const selectWidgetInsightAndReferencedRefs = createMemoizedSelector((ref: ObjRef
         if (!resolved) {
             return undefined;
         }
-        const { entries, measureParameters, workspaceParameterByRef, widgetInsightRef } = resolved;
+        const { entries, measureParameters, workspaceParameterByRef, widgetInsightRef, isStringEnabled } =
+            resolved;
         const insight = insights.get(widgetInsightRef);
         if (!insight) {
             return undefined;
         }
         const referencedRefs = collectReferencedParameterRefs(insight, measureParameters);
-        return { insight, referencedRefs, entries, workspaceParameterByRef };
+        const insightParameterValues = ungatedInsightParameterValues(insight, isStringEnabled);
+        return { insightParameterValues, referencedRefs, entries, workspaceParameterByRef };
     }),
 );
 
@@ -447,13 +475,31 @@ export const selectEffectiveParameterValuesForWidget: (
         if (!resolved) {
             return EMPTY_PARAMETER_VALUES;
         }
-        const { insight, referencedRefs, entries, workspaceParameterByRef } = resolved;
+        const { insightParameterValues, referencedRefs, entries, workspaceParameterByRef } = resolved;
         return resolveEffectiveParameterValuesForRefs(
             entries,
             referencedRefs,
-            insightParameters(insight),
+            insightParameterValues,
             workspaceParameterByRef,
         );
+    }),
+);
+
+/**
+ * {@link selectEffectiveParameterValuesForWidget} minus string values, for seeding an alert's
+ * stored execution parameters. Same rationale as
+ * {@link selectAutomationExportEffectiveParameters}: the automation dialogs are NUMBER-only until
+ * the interactions slice, and a stored string value would be invisible there and deleted by any
+ * edit.
+ *
+ * @internal
+ */
+export const selectAutomationParameterValuesForWidget: (
+    ref: ObjRef | undefined,
+) => DashboardSelector<IInsightParameterValue[]> = createMemoizedSelector((ref: ObjRef | undefined) =>
+    createSelector(selectEffectiveParameterValuesForWidget(ref), (values) => {
+        const supportedValues = values.filter((row) => isAutomationSupportedParameterValue(row.value));
+        return supportedValues.length === 0 ? EMPTY_PARAMETER_VALUES : supportedValues;
     }),
 );
 
@@ -475,11 +521,11 @@ export const selectReferencedInsightParameterValuesForWidget: (
         if (!resolved) {
             return EMPTY_PARAMETER_VALUES;
         }
-        const { insight, referencedRefs, workspaceParameterByRef } = resolved;
+        const { insightParameterValues, referencedRefs, workspaceParameterByRef } = resolved;
         return resolveEffectiveParameterValuesForRefs(
             [],
             referencedRefs,
-            insightParameters(insight),
+            insightParameterValues,
             workspaceParameterByRef,
         );
     }),
@@ -536,35 +582,53 @@ export const selectExportEffectiveParameters: (
     widgetIds: string[] | undefined,
 ) => DashboardSelector<Record<string, IDashboardExportParameter[]>> = (widgetIds) =>
     widgetIds?.length
-        ? selectExportEffectiveParametersForWidgets(widgetIds)
-        : selectExportEffectiveParametersDashboardScope;
+        ? selectExportEffectiveParametersForWidgets(widgetIds, true)
+        : selectExportEffectiveParametersDashboardScope(true);
 
-const selectExportEffectiveParametersDashboardScope: DashboardSelector<
-    Record<string, IDashboardExportParameter[]>
-> = createSelector(
-    selectTabs,
-    selectEnableParameters,
-    selectWorkspaceParametersByRef,
-    selectCatalogParametersIsLoaded,
-    (tabs, isEnabled, workspaceParameterByRef, isCatalogLoaded) => {
-        if (!isEnabled || !isCatalogLoaded || !tabs?.length) {
-            return EMPTY_EXPORT_PARAMETERS_BY_TAB;
-        }
-        return collectExportOverrides(
-            tabs.map((tab) => ({ tab })),
-            workspaceParameterByRef,
-        );
-    },
+/**
+ * {@link selectExportEffectiveParameters} minus STRING entries, for the wire persisted onto
+ * automations. The automation dialogs and restore paths decode NUMBER-only until the interactions
+ * slice (F1-2636…F1-2641): a stored STRING row would drive the headless render while being
+ * invisible in the dialog, and any edit re-encodes the wire without it — so it must not be
+ * persisted at all, regardless of `enableStringParameters`.
+ *
+ * @internal
+ */
+export const selectAutomationExportEffectiveParameters: (
+    widgetIds: string[] | undefined,
+) => DashboardSelector<Record<string, IDashboardExportParameter[]>> = (widgetIds) =>
+    widgetIds?.length
+        ? selectExportEffectiveParametersForWidgets(widgetIds, false)
+        : selectExportEffectiveParametersDashboardScope(false);
+
+const selectExportEffectiveParametersDashboardScope = createMemoizedSelector(
+    (includeStringOverrides: boolean) =>
+        createSelector(
+            selectTabs,
+            selectEnableParameters,
+            selectEnableStringParameters,
+            selectWorkspaceParametersByRef,
+            selectCatalogParametersIsLoaded,
+            (tabs, isEnabled, isStringEnabled, workspaceParameterByRef, isCatalogLoaded) => {
+                if (!isEnabled || !isCatalogLoaded || !tabs?.length) {
+                    return EMPTY_EXPORT_PARAMETERS_BY_TAB;
+                }
+                return collectExportOverrides(
+                    tabs.map((tab) => ({ tab })),
+                    workspaceParameterByRef,
+                    isStringEnabled && includeStringOverrides,
+                );
+            },
+        ),
 );
 
-const selectExportEffectiveParametersForWidgets: (
-    widgetIds: ReadonlyArray<string>,
-) => DashboardSelector<Record<string, IDashboardExportParameter[]>> = createMemoizedSelector(
-    (widgetIds: ReadonlyArray<string>) =>
+const selectExportEffectiveParametersForWidgets = createMemoizedSelector(
+    (widgetIds: ReadonlyArray<string>, includeStringOverrides: boolean) =>
         createSelector(
             selectAllTabsInsightWidgetContexts,
             selectInsightsMap,
             selectEnableParameters,
+            selectEnableStringParameters,
             selectWorkspaceParametersByRef,
             selectCatalogParametersIsLoaded,
             selectCatalogMeasureParameters,
@@ -573,6 +637,7 @@ const selectExportEffectiveParametersForWidgets: (
                 widgetContexts,
                 insights,
                 isEnabled,
+                isStringEnabled,
                 workspaceParameterByRef,
                 isCatalogLoaded,
                 measureParameters,
@@ -587,7 +652,11 @@ const selectExportEffectiveParametersForWidgets: (
                     insights,
                     measureParameters,
                 );
-                return collectExportOverrides(tabRefSelections, workspaceParameterByRef);
+                return collectExportOverrides(
+                    tabRefSelections,
+                    workspaceParameterByRef,
+                    isStringEnabled && includeStringOverrides,
+                );
             },
         ),
 );
@@ -598,7 +667,7 @@ const selectExportEffectiveParametersForWidgets: (
  * @internal
  */
 export const selectActiveTabExportParameters: DashboardSelector<IDashboardExportParameter[]> = createSelector(
-    selectExportEffectiveParametersDashboardScope,
+    selectExportEffectiveParametersDashboardScope(true),
     selectActiveOrDefaultTabLocalIdentifier,
     (parametersByTab, activeTabId) => parametersByTab[activeTabId] ?? EMPTY_EXPORT_PARAMETERS,
 );

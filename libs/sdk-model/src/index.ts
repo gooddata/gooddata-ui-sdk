@@ -833,12 +833,12 @@ export {
     type IStringParameterDefinition,
     type ParameterType,
     type ParameterValue,
-    getNumberParameterDefaultValue,
     isNumberParameterDefinition,
     isParameterMetadataObject,
     isParameterMetadataObjectDefinition,
     isStringParameterDefinition,
     isValidNumberParameterValue,
+    isValidStringParameterValue,
     isValidParameterValue,
 } from "./ldm/metadata/parameter/index.js";
 export {
