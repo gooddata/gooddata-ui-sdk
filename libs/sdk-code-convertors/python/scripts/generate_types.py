@@ -1,18 +1,20 @@
 # (C) 2026 GoodData Corporation
 # /// script
-# dependencies = ["datamodel-code-generator[ruff]>=0.56.0"]
+# dependencies = ["datamodel-code-generator[ruff]>=0.66.1"]
 # requires-python = ">=3.10"
 # ///
 
-"""Generate Python TypedDict types from the AAC JSON Schema.
+"""Generate Python types from the AAC JSON Schema: static TypedDicts and, separately,
+real runtime-validating Pydantic models.
 
 Usage:
-    uv run python scripts/generate_types.py          # generate _types.py
-    uv run python scripts/generate_types.py --check   # verify _types.py is up-to-date
+    uv run python scripts/generate_types.py          # generate _types.py + pydantic_models.py
+    uv run python scripts/generate_types.py --check   # verify both are up-to-date
 """
 
 from __future__ import annotations
 
+import dataclasses
 import hashlib
 import re
 import subprocess
@@ -25,27 +27,79 @@ PYTHON_PKG_DIR = SCRIPT_DIR.parent
 SCHEMAS_PKG_DIR = PYTHON_PKG_DIR.parent.parent / "sdk-code-schemas"
 SCHEMA_PATH = SCHEMAS_PKG_DIR / "src" / "v1" / "metadata.json"
 REFRESH_SCRIPT = SCHEMAS_PKG_DIR / "scripts" / "refresh-schema.mjs"
-OUTPUT_PATH = PYTHON_PKG_DIR / "src" / "gooddata_code_convertors" / "_types.py"
+PACKAGE_DIR = PYTHON_PKG_DIR / "src" / "gooddata_code_convertors"
 
 COPYRIGHT_HEADER = f"# (C) {2026} GoodData Corporation\n"
 SCHEMA_HASH_PREFIX = "# schema-hash: "
 
-# Target Python 3.10+:
-# - --no-use-closed-typed-dict: closed=True (PEP 728) requires Python 3.13+
+# Target Python 3.10+ for both targets:
 # - NotRequired is imported from typing_extensions (moved to typing in 3.11)
 # - TypeAlias and union operator (X | Y) work in 3.10 with __future__.annotations
-CODEGEN_BASE_ARGS = [
+CODEGEN_SHARED_ARGS = [
     "--input-file-type", "jsonschema",
-    "--output-model-type", "typing.TypedDict",
     "--use-standard-collections",
     "--target-python-version", "3.10",
     "--use-union-operator",
     "--strict-nullable",
-    "--no-use-closed-typed-dict",
 ]
 
 
-def post_process(source: str) -> str:
+# Some generated RootModel classes (e.g. Identifier) need model_config regex_engine=
+# "python-re" to validate our schema's negative-lookahead patterns — a config pydantic
+# didn't understand before 2.5.0, and which some 2.10.x RootModel releases silently
+# ignored (pydantic#11042, fixed by pydantic#11184, landed by 2.11.0). That's a SILENT
+# validation failure, not a crash, so pyproject.toml's floor alone can't be trusted to
+# always be honored (stale venvs, transitive resolution) — inject a loud runtime guard
+# into the generated file itself so it travels with the artifact.
+MIN_PYDANTIC_VERSION = (2, 11, 0)
+
+
+@dataclasses.dataclass(frozen=True)
+class Target:
+    """A single datamodel-code-generator invocation: one output model type, one file."""
+
+    output_path: Path
+    extra_args: list[str]
+    require_pydantic: bool = False
+
+
+TARGETS = [
+    Target(
+        output_path=PACKAGE_DIR / "_types.py",
+        extra_args=[
+            "--output-model-type", "typing.TypedDict",
+            # closed=True (PEP 728) requires Python 3.13+, above our 3.10 floor.
+            "--no-use-closed-typed-dict",
+        ],
+    ),
+    Target(
+        # No leading underscore: unlike _types.py (star-imported into __init__.py's
+        # namespace), this is meant to be imported directly by name — `from
+        # gooddata_code_convertors.pydantic_models import Dashboard` — since it can't
+        # share __init__.py's namespace with _types (identical class names would collide).
+        output_path=PACKAGE_DIR / "pydantic_models.py",
+        require_pydantic=True,
+        extra_args=[
+            "--output-model-type", "pydantic_v2.BaseModel",
+            # NOTE: --collapse-root-models was tried to avoid wrapping shared string-pattern
+            # definitions (e.g. "id") in their own `class Id(RootModel[str])` — but it makes
+            # datamodel-code-generator concatenate some prefixed variants (e.g. "metric/...")
+            # with our schema's negative-lookahead patterns (`(?!\.)`), which pydantic-core's
+            # Rust regex engine cannot compile (no look-around support) — SchemaError at import
+            # time. Left uncollapsed: callers of those specific fields access `.root` to get the
+            # str (see python/README.md). Revisit if a future datamodel-code-generator/
+            # pydantic-core release fixes this.
+            #
+            # --generate-schema-validators is a no-op for this schema: every if/then/else
+            # branch here is a pure type-discriminator ($ref selection by `type`), already
+            # fully expressed by the generated Union/RootModel — not a conditional-required-
+            # property rule, which is the only thing that flag actually emits validators for.
+        ],
+    ),
+]
+
+
+def post_process(source: str, schema_hash: str, *, require_pydantic: bool = False) -> str:
     # Strip the generated-by header and timestamp.
     source = re.sub(
         r"^# generated by datamodel-codegen:.*?\n(?:#.*\n)*\n",
@@ -74,10 +128,32 @@ def post_process(source: str) -> str:
     names = sorted({n for group in public_names for n in group if n})
     all_block = "__all__ = [\n" + "".join(f'    "{n}",\n' for n in names) + "]\n\n"
 
-    # Insert __all__ after the imports block (after the last import line).
+    version_guard = ""
+    if require_pydantic:
+        min_version = ".".join(map(str, MIN_PYDANTIC_VERSION))
+        version_guard = (
+            "import re as _re\n"
+            "import pydantic as _pydantic\n\n"
+            # Match only the release core (major.minor.micro): pydantic.VERSION can be a
+            # PEP 440 pre-release/local string (e.g. "2.13.0b2", "2.13.0+dev123"), and
+            # int() on a raw dot-split segment like "0b2" raises ValueError instead of
+            # the intended ImportError for an otherwise-compatible install.
+            "_pydantic_version_match = _re.match(r'(\\d+)\\.(\\d+)\\.(\\d+)', _pydantic.VERSION)\n"
+            f"if not _pydantic_version_match or tuple(int(g) for g in _pydantic_version_match.groups()) < {MIN_PYDANTIC_VERSION!r}:\n"
+            "    raise ImportError(\n"
+            f"        f'gooddata_code_convertors.pydantic_models requires pydantic>={min_version} '\n"
+            "        f'(RootModel classes here need model_config regex_engine=\"python-re\" to validate "
+            "negative-lookahead patterns, silently broken on some earlier/2.10.x releases — see "
+            "pydantic#11042/#11184), but pydantic {_pydantic.VERSION} is installed.'\n"
+            "    )\n\n"
+        )
+
+    # Insert the version guard and __all__ after the imports block (after the last
+    # import line) — must come after `from __future__ import annotations`, which
+    # datamodel-code-generator always emits first.
     last_import = max(source.rfind("\nimport "), source.rfind("\nfrom "))
     insert_pos = source.index("\n", last_import + 1) + 1
-    source = source[:insert_pos] + "\n" + all_block + source[insert_pos:]
+    source = source[:insert_pos] + "\n" + version_guard + all_block + source[insert_pos:]
 
     # Deduplicate Literal values. The narrowed JSON Schema repeats enum values
     # across oneOf branches and datamodel-code-generator concatenates them,
@@ -95,7 +171,6 @@ def post_process(source: str) -> str:
     )
 
     # Embed schema hash so a Node.js check can detect staleness without Python.
-    schema_hash = hashlib.sha256(Path(SCHEMA_PATH).read_bytes()).hexdigest()
     header = COPYRIGHT_HEADER + f"{SCHEMA_HASH_PREFIX}{schema_hash}\n"
 
     return header + "\n" + source
@@ -116,25 +191,18 @@ def get_narrowed_schema() -> str:
     return result.stdout
 
 
-def generate() -> str:
-    narrowed_json = get_narrowed_schema()
-
-    with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=True) as tmp:
-        tmp.write(narrowed_json)
-        tmp.flush()
-
-        result = subprocess.run(
-            [sys.executable, "-m", "datamodel_code_generator",
-             "--input", tmp.name, *CODEGEN_BASE_ARGS],
-            capture_output=True,
-            text=True,
-            check=False,
-        )
-
+def generate(target: Target, schema_path: str, schema_hash: str) -> str:
+    result = subprocess.run(
+        [sys.executable, "-m", "datamodel_code_generator",
+         "--input", schema_path, *CODEGEN_SHARED_ARGS, *target.extra_args],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
     if result.returncode != 0:
         print(result.stderr, file=sys.stderr)
         sys.exit(result.returncode)
-    return post_process(result.stdout)
+    return post_process(result.stdout, schema_hash, require_pydantic=target.require_pydantic)
 
 
 def main() -> None:
@@ -145,24 +213,49 @@ def main() -> None:
         print(f"Schema script not found: {REFRESH_SCRIPT}", file=sys.stderr)
         sys.exit(1)
 
-    content = generate()
+    narrowed_json = get_narrowed_schema()
+    schema_hash = hashlib.sha256(Path(SCHEMA_PATH).read_bytes()).hexdigest()
 
-    if "--check" in sys.argv:
-        if not OUTPUT_PATH.exists():
-            print(f"Types file does not exist: {OUTPUT_PATH}", file=sys.stderr)
-            sys.exit(1)
-        existing = OUTPUT_PATH.read_text()
-        if existing != content:
+    # Single shared temp file: both targets read the same narrowed schema, and
+    # delete=False + explicit unlink is needed because datamodel-code-generator (a
+    # separate process) opens it by path — Windows can't reopen a file while the
+    # writer's handle is still open.
+    tmp = tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False)
+    try:
+        tmp.write(narrowed_json)
+        tmp.close()
+        # Generate all targets before writing any of them: a later target failing
+        # (generate() calls sys.exit itself) must not leave an earlier target's
+        # freshly-regenerated file committed while its sibling is stale/missing.
+        contents = [(target, generate(target, tmp.name, schema_hash)) for target in TARGETS]
+    finally:
+        Path(tmp.name).unlink(missing_ok=True)
+
+    check = "--check" in sys.argv
+    stale: list[Path] = []
+
+    for target, content in contents:
+        if check:
+            if not target.output_path.exists():
+                print(f"Types file does not exist: {target.output_path}", file=sys.stderr)
+                stale.append(target.output_path)
+                continue
+            if target.output_path.read_text() != content:
+                stale.append(target.output_path)
+        else:
+            target.output_path.write_text(content)
+            print(f"Generated {target.output_path}")
+
+    if check:
+        if stale:
+            names = ", ".join(p.name for p in stale)
             print(
-                f"Types file is stale: {OUTPUT_PATH}\n"
+                f"Stale or missing: {names}\n"
                 "Run 'uv run python scripts/generate_types.py' to regenerate.",
                 file=sys.stderr,
             )
             sys.exit(1)
-        print("Types check passed - _types.py is up-to-date.")
-    else:
-        OUTPUT_PATH.write_text(content)
-        print(f"Generated {OUTPUT_PATH}")
+        print("Types check passed - all generated files are up-to-date.")
 
 
 if __name__ == "__main__":

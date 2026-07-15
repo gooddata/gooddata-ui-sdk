@@ -1300,6 +1300,7 @@ export {
     type IAllowedRelationshipType,
     type ISemanticSearchResult,
     type ISemanticSearchError,
+    type ISemanticSearchCertification,
     type ISemanticSearchResultItem,
     type ISemanticSearchRelationship,
     isSemanticSearchResultItem,

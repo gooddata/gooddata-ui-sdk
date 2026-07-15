@@ -63,6 +63,21 @@ export interface ISemanticSearchError {
 }
 
 /**
+ * Certification info surfaced on a semantic search result item.
+ * @beta
+ */
+export interface ISemanticSearchCertification {
+    /**
+     * Certification status.
+     */
+    status: "CERTIFIED";
+    /**
+     * Optional certification message set by the certifier.
+     */
+    certificationMessage?: string;
+}
+
+/**
  * A single search result returned by semantic search.
  * @beta
  */
@@ -120,6 +135,10 @@ export interface ISemanticSearchResultItem {
      * 1000 if the found item is an exact match, 0 otherwise.
      */
     scoreExactMatch?: number;
+    /**
+     * Certification status and optional message for the found metadata object.
+     */
+    certification?: ISemanticSearchCertification;
 }
 
 /**

@@ -15,25 +15,25 @@ import {
 } from "../../permission/TestPermissionsProvider.js";
 import type { ParameterDraft } from "../parameterSerialization.js";
 
-// Mock SyntaxHighlightingInput since CodeMirror doesn't work in happy-dom
+// Mock YamlEditor since CodeMirror doesn't work in happy-dom
 vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
     const original = await importOriginal<Record<string, unknown>>();
     return {
         ...original,
-        SyntaxHighlightingInput: ({
-            value,
+        YamlEditor: ({
+            initialValue,
             onChange,
             disabled,
         }: {
-            value: string;
-            onChange: (value: string) => void;
+            initialValue: string;
+            onChange?: (value: string) => void;
             disabled?: boolean;
         }) => (
             <textarea
                 data-testid="yaml-editor"
-                value={value}
+                defaultValue={initialValue}
                 disabled={disabled}
-                onChange={(e) => onChange(e.target.value)}
+                onChange={(e) => onChange?.(e.target.value)}
             />
         ),
     };

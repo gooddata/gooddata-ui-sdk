@@ -289,6 +289,13 @@ function convertSearchResults(results: AiSearchObject[]): ISemanticSearchResultI
         modifiedAt: result.modifiedAt ?? undefined,
         visualizationUrl: result.visualizationUrl ?? undefined,
         score: result.score,
+        certification:
+            result.certification?.status === "CERTIFIED"
+                ? {
+                      status: "CERTIFIED",
+                      certificationMessage: result.certification.certificationMessage ?? undefined,
+                  }
+                : undefined,
     }));
 }
 

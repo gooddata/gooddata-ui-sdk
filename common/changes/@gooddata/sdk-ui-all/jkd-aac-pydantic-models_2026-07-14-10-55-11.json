@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "Add Pydantic model generation alongside TypedDict AAC types",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "jan.kadlec@gooddata.com"
+}

@@ -19,6 +19,8 @@ export interface IUiCertification {
  */
 export interface IUiCertificationIconProps {
     certification: IUiCertification;
+    size?: number;
+    tabIndex?: number;
     accessibilityConfig?: {
         ariaLabel?: string;
     };

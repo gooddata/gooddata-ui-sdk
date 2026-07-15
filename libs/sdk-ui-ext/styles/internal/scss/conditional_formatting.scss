@@ -34,8 +34,11 @@
 .gd-cf-section__rules {
     display: flex;
     flex-direction: column;
-    gap: 5px;
     margin-bottom: 5px;
+}
+
+.gd-cf-select__option {
+    height: 28px;
 }
 
 .gd-cf-type-icon {
@@ -51,13 +54,100 @@
     }
 }
 
+// Drag grip: AD's icon-drag-field.svg dot grid inlined as a mask (themable color). Absolutely
+// positioned so it never pushes row content; revealed on row hover; placement set per context.
+.gd-cf-reorder__handle {
+    position: absolute;
+    width: 7px;
+    height: 18px;
+    background-color: var(--gd-palette-complementary-5);
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='4'%3E%3Cpath d='M0 0h2v2H0zM5 0h2v2H5z'/%3E%3C/svg%3E");
+    -webkit-mask-repeat: repeat-y;
+    -webkit-mask-size: 7px 4px;
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='4'%3E%3Cpath d='M0 0h2v2H0zM5 0h2v2H5z'/%3E%3C/svg%3E");
+    mask-repeat: repeat-y;
+    mask-size: 7px 4px;
+    cursor: grab;
+    opacity: 0;
+    // Invisible must not swallow clicks meant for the row (opacity keeps it hit-testable); hover re-enables.
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+
+    &:active {
+        cursor: grabbing;
+    }
+}
+
+// The dragged row dims; the drop position shows as a primary-coloured line in the gap above/below.
+.gd-cf-reorder-item--dragging {
+    opacity: 0.4;
+}
+
+.gd-cf-reorder-item--drop-above,
+.gd-cf-reorder-item--drop-below {
+    position: relative;
+}
+
+.gd-cf-reorder-item--drop-above::before,
+.gd-cf-reorder-item--drop-below::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    left: 0;
+    height: 2px;
+    border-radius: 1px;
+    background: var(--gd-palette-primary-base);
+    pointer-events: none;
+}
+
+.gd-cf-reorder-item--drop-above::before {
+    top: -3px;
+}
+
+.gd-cf-reorder-item--drop-below::after {
+    bottom: -3px;
+}
+
+// Hovered rows/cards pop out as an elevated white card; the box-shadow ring avoids a
+// size-changing border. Each context adds its own margin/padding offsets.
+@mixin gd-cf-hover-card {
+    z-index: 1;
+    background: var(--gd-palette-complementary-0);
+    box-shadow:
+        0 0 0 1px var(--gd-palette-complementary-3),
+        0 2px 4px 0 rgba(20, 56, 93, 0.15);
+}
+
 .gd-cf-rule {
+    position: relative;
     display: flex;
     align-items: center;
+    min-height: 30px;
     border-radius: 3px;
+    transition:
+        margin-left 0.15s ease,
+        padding-left 0.15s ease,
+        background-color 0.15s ease,
+        box-shadow 0.15s ease;
 
+    .gd-cf-reorder__handle {
+        top: 50%;
+        left: 6px;
+        transform: translateY(-50%);
+    }
+
+    // Hover pops the row out bleeding 20px past the left gutter; the equal padding keeps the
+    // content in place.
     &:hover {
-        background: var(--gd-palette-complementary-2);
+        @include gd-cf-hover-card;
+
+        margin-left: -20px;
+        padding-left: 20px;
+    }
+
+    &:hover .gd-cf-reorder__handle {
+        opacity: 1;
+        pointer-events: auto;
     }
 
     &:has(.gd-cf-rule__delete:hover) {
@@ -90,23 +180,19 @@
         font-size: 10px;
     }
 
+    // Opacity, not visibility: visibility inherits into the kit button, whose `transition: all`
+    // then holds the icon visible for its full duration after mouse-leave.
     &__delete {
+        display: inline-flex;
         flex: 0 0 auto;
-        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.15s ease;
     }
 
     &:hover &__delete,
     &:focus-within &__delete {
-        visibility: visible;
+        opacity: 1;
     }
-}
-
-.gd-cf-rule .gd-cf-rule__delete::before {
-    color: var(--gd-palette-complementary-6);
-}
-
-.gd-cf-rule .gd-cf-rule__delete:hover::before {
-    color: var(--gd-palette-error-base);
 }
 
 .gd-cf-section__anchor {
@@ -172,19 +258,53 @@
         border-top: 1px solid var(--gd-palette-complementary-3);
     }
 
-    .dropdown-button,
     .gd-input-field {
         width: 100%;
     }
 }
 
 .gd-cf-condition {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 5px;
     padding: 5px 10px 10px;
     border-radius: 3px;
     background: var(--gd-palette-complementary-2);
+    transition:
+        margin 0.15s ease,
+        padding 0.15s ease,
+        background-color 0.15s ease,
+        box-shadow 0.15s ease;
+
+    // Reorderable cards widen their left padding into a grip column (no gutter in the narrow popover).
+    &.gd-cf-reorder-item {
+        padding-left: 18px;
+    }
+
+    .gd-cf-reorder__handle {
+        top: 10px;
+        left: 5px;
+    }
+
+    // Hover expands the card 5px into the dialog padding; the compensating padding keeps the
+    // content in place.
+    &:hover {
+        @include gd-cf-hover-card;
+
+        margin: 0 -5px;
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+
+    &.gd-cf-reorder-item:hover {
+        padding-left: 23px;
+    }
+
+    &:hover .gd-cf-reorder__handle {
+        opacity: 1;
+        pointer-events: auto;
+    }
 
     &__header {
         display: flex;
@@ -200,6 +320,11 @@
     &__range {
         display: flex;
         gap: 5px;
+    }
+
+    &__error {
+        color: var(--gd-palette-error-base);
+        font-size: 11px;
     }
 
     &__format-row {

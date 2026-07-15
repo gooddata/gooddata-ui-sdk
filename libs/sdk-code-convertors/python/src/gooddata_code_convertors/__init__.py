@@ -11,10 +11,17 @@ not raw YAML strings. Declarative-to-YAML functions accept Declarative API dicts
 
 from gooddata_code_convertors._types import *  # noqa: F401,F403 — generated TypedDict types
 from gooddata_code_convertors._types import __all__ as _types_all
+
+# Not star-imported like _types: pydantic_models has the same class names (Dashboard,
+# Metric, ...) and would silently collide with the TypedDict versions above. Exposed as
+# a submodule instead — `gooddata_code_convertors.pydantic_models.Dashboard` or
+# `from gooddata_code_convertors.pydantic_models import Dashboard`.
+from gooddata_code_convertors import pydantic_models
 from gooddata_code_convertors._wasm_runtime import ConversionError, call as _call
 
 __all__ = [
     *_types_all,
+    "pydantic_models",
     "ConversionError",
     # YAML -> Declarative
     "yaml_dataset_to_declarative",

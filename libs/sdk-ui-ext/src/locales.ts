@@ -503,8 +503,10 @@ export const conditionalFormattingMessages = defineMessages({
     dialogValuePlaceholder: { id: "properties.conditionalFormatting.dialog.value" },
     dialogFromPlaceholder: { id: "properties.conditionalFormatting.dialog.from" },
     dialogToPlaceholder: { id: "properties.conditionalFormatting.dialog.to" },
+    dialogUnitPercent: { id: "properties.conditionalFormatting.dialog.unitPercent" },
     dialogCancel: { id: "properties.conditionalFormatting.dialog.cancel" },
     dialogSave: { id: "properties.conditionalFormatting.dialog.save" },
+    dialogErrorRangeOrder: { id: "properties.conditionalFormatting.dialog.error.rangeOrder" },
 });
 
 export const conditionalFormattingOperatorMessages: Record<ConditionalFormattingOperator, MessageDescriptor> =

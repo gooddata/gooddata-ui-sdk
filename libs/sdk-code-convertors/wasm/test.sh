@@ -85,6 +85,13 @@ run_test "error lists available functions" \
     '{"function":"nonExistentFunction","args":[]}' \
     '"available".*"yamlDatasetToDeclarative"'
 
+# Test 4: yamlDashboardToDeclarative exercises filter-context UUID generation
+# (regression test for crypto.getRandomValues() not supported — QuickJS has no global
+# Web Crypto API, and uuid's browser build reads it as a bare global; see crypto-shim.js)
+run_test "yamlDashboardToDeclarative generates filter context id" \
+    '{"function":"yamlDashboardToDeclarative","args":[[],{"type":"dashboard","id":"d1","sections":[{"widgets":[{"size":12,"item":{"visualization":"vis/chart1"}}]}]}]}' \
+    '"result".*"filterContext"'
+
 echo ""
 echo "Results: $PASS passed, $FAIL failed"
 

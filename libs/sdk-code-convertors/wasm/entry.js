@@ -3,6 +3,16 @@
 // WASM entry point: reads JSON from stdin, runs conversion, writes JSON to stdout
 // Protocol: { "function": "yamlDatasetToDeclarative", "args": [...] }
 
+import { getRandomValues, randomUUID } from "./crypto-shim.js";
+
+// QuickJS has no global Web Crypto API. Some bundled deps (e.g. uuid's browser build)
+// read `crypto.getRandomValues` as a bare global rather than importing it, so the
+// --alias:crypto esbuild redirect (which only catches `import ... from "crypto"`) can't
+// reach them. Install the shim as the global before any converter code runs.
+if (typeof globalThis.crypto === "undefined") {
+    globalThis.crypto = { getRandomValues, randomUUID };
+}
+
 import {
     buildAfmExecution,
     declarativeAttributeHierarchyToYaml,

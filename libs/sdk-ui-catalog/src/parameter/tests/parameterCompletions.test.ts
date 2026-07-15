@@ -190,6 +190,36 @@ definition:
         expect(result).toBeNull();
     });
 
+    it("declines on an indented line with no less-indented ancestor", () => {
+        // An orphaned indented line has no enclosing mapping, so it is not treated as top-level.
+        const result = completeAt("  |");
+
+        expect(result).toBeNull();
+    });
+
+    it("ignores an indented type: inside a description block scalar before definition", () => {
+        // Folded scalar `>` (not `|`) so the block indicator does not collide with the `|` cursor marker.
+        const result = completeAt(`description: >
+  type: STRING
+definition:
+  type: NUMBER
+  constraints:
+    |`);
+
+        expect(labelsOf(result)).toEqual(["min", "max"]);
+    });
+
+    it("reads definition.type past a column-zero comment inside the definition block", () => {
+        // A root-column comment does not close the mapping, so the declared type below it still narrows.
+        const result = completeAt(`definition:
+# a number parameter
+  type: NUMBER
+  constraints:
+    |`);
+
+        expect(labelsOf(result)).toEqual(["min", "max"]);
+    });
+
     it("skips blank and comment lines when resolving the parent key", () => {
         const result = completeAt(`definition:
   type: NUMBER

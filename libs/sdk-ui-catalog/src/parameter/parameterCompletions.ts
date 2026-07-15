@@ -67,9 +67,12 @@ function toOptions(keyMap: Record<string, string[]>): Record<string, Completion[
 }
 
 /**
- * The key whose block mapping a new entry at column `indent` would join: the
- * nearest less-indented `key:` line above. Returns "" for the top-level
- * mapping and null when the enclosing line is not a mapping key.
+ * The key whose block mapping a new entry at column `indent` would join: the nearest less-indented
+ * `key:` line above. Returns `""` only for the top-level mapping (`indent === 0`), and `null` when the
+ * enclosing line is not a mapping key or an indented line has no less-indented ancestor above it (an
+ * orphaned line, which is not top-level). Derived purely from indentation, not from a parsed syntax
+ * tree, so it also resolves the parent on a blank indented line; the flip side is that it does not
+ * understand block scalars (`|`, `>`), whose literal content is scanned as if it were mapping keys.
  */
 function getParentKey(doc: Text, lineNumber: number, indent: number): string | null {
     if (indent === 0) {
@@ -79,21 +82,27 @@ function getParentKey(doc: Text, lineNumber: number, indent: number): string | n
     for (let number = lineNumber - 1; number >= 1; number--) {
         const text = doc.line(number).text;
         const content = text.trimStart();
+        // Skip blank lines, comments, and lines indented at least as deep as the new entry.
         if (content === "" || content.startsWith("#") || text.length - content.length >= indent) {
             continue;
         }
         return content.match(/^([\w-]+):/)?.[1] ?? null;
     }
 
-    return "";
+    // Indented with no less-indented ancestor: an orphaned line, not top-level.
+    return null;
 }
 
-/** Value of the first indented `type:` key, i.e. `definition.type` (the top-level `type` is unindented). */
+/**
+ * Value of `definition.type`: the first indented `type:` line whose enclosing mapping is `definition`.
+ * Resolving the parent via {@link getParentKey} keeps a `type:` nested elsewhere — under `constraints`
+ * or inside a block-scalar `description` — from being mistaken for the declared parameter type.
+ */
 function getDeclaredType(doc: Text): string | undefined {
     for (let number = 1; number <= doc.lines; number++) {
-        const match = doc.line(number).text.match(/^\s+type:\s*(\w+)/);
-        if (match) {
-            return match[1];
+        const match = doc.line(number).text.match(/^(\s+)type:\s*(\w+)/);
+        if (match && getParentKey(doc, number, match[1].length) === "definition") {
+            return match[2];
         }
     }
     return undefined;

@@ -16,8 +16,8 @@ interface IRangeInputProps {
     to?: number | null;
     usePercentage: boolean;
     disableAutofocus?: boolean;
-    onFromChange: (value: number) => void;
-    onToChange: (value: number) => void;
+    onFromChange: (value: number | null) => void;
+    onToChange: (value: number | null) => void;
     onEnterKeyPress?: () => void;
     onFromBlur?: () => void;
     onToBlur?: () => void;
@@ -76,7 +76,7 @@ export function RangeInput({
                     dataTestId="mvf-range-from-input"
                     autocomplete="off"
                     value={from!}
-                    onChange={(val) => onFromChange(val as number)}
+                    onChange={(val) => onFromChange(val)}
                     onEnterKeyPress={onEnterKeyPress}
                     onBlur={onFromBlur ? () => onFromBlur() : undefined}
                     hasError={fromHasError}
@@ -113,7 +113,7 @@ export function RangeInput({
                     dataTestId="mvf-range-to-input"
                     autocomplete="off"
                     value={to!}
-                    onChange={(val) => onToChange(val as number)}
+                    onChange={(val) => onToChange(val)}
                     onEnterKeyPress={onEnterKeyPress}
                     onBlur={onToBlur ? () => onToBlur() : undefined}
                     isSmall

@@ -487,8 +487,26 @@ function convertSemanticSearch(data: SearchResult): ISemanticSearchResult {
 
 function convertSemanticSearchResultItem(data: SearchResultObject): ISemanticSearchResultItem {
     return {
-        ...data,
+        id: data.id,
         type: data.type as GenAIObjectType,
+        workspaceId: data.workspaceId,
+        title: data.title,
+        description: data.description,
+        tags: data.tags,
+        createdAt: data.createdAt,
+        modifiedAt: data.modifiedAt,
+        visualizationUrl: data.visualizationUrl,
+        score: data.score,
+        scoreTitle: data.scoreTitle,
+        scoreDescriptor: data.scoreDescriptor,
+        scoreExactMatch: data.scoreExactMatch,
+        certification:
+            data.certification?.status === "CERTIFIED"
+                ? {
+                      status: "CERTIFIED",
+                      certificationMessage: data.certification.certificationMessage ?? undefined,
+                  }
+                : undefined,
     };
 }
 

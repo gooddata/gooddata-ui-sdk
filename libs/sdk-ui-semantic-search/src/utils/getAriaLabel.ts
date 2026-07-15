@@ -1,4 +1,5 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
+
 import {
     type ISemanticSearchRelationship,
     type ISemanticSearchResultItem,
@@ -17,7 +18,8 @@ export function getAriaLabel(item: ISemanticSearchResultItem | ISemanticSearchRe
 }
 
 export function getItemAriaLabel(item: ISemanticSearchResultItem): string {
-    return `${item.title}, ${getTypeLabel(item)}`;
+    const certified = item.certification?.status === "CERTIFIED" ? ", Certified" : "";
+    return `${item.title}, ${getTypeLabel(item)}${certified}`;
 }
 
 export function getRelationshipAriaLabel(item: ISemanticSearchRelationship): string {

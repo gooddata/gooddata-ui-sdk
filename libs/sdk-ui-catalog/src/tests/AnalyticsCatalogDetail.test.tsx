@@ -25,13 +25,19 @@ vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
     const original = await importOriginal<Record<string, unknown>>();
     return {
         ...original,
-        SyntaxHighlightingInput: ({
-            value,
+        YamlEditor: ({
+            initialValue,
             onChange,
         }: {
-            value: string;
-            onChange: (value: string) => void;
-        }) => <textarea data-testid="yaml-editor" value={value} onChange={(e) => onChange(e.target.value)} />,
+            initialValue: string;
+            onChange?: (value: string) => void;
+        }) => (
+            <textarea
+                data-testid="yaml-editor"
+                defaultValue={initialValue}
+                onChange={(e) => onChange?.(e.target.value)}
+            />
+        ),
     };
 });
 

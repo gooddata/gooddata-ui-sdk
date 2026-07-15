@@ -4900,6 +4900,12 @@ export interface ISemanticQualityReport {
 }
 
 // @beta
+export interface ISemanticSearchCertification {
+    certificationMessage?: string;
+    status: "CERTIFIED";
+}
+
+// @beta
 export interface ISemanticSearchError {
     reason: (string & {}) | "METADATA_SYNC_IN_PROGRESS" | "METADATA_SYNC_REQUEST_ERROR";
     statusCode: number;
@@ -4927,6 +4933,7 @@ export interface ISemanticSearchResult {
 
 // @beta
 export interface ISemanticSearchResultItem {
+    certification?: ISemanticSearchCertification;
     createdAt?: string;
     description?: string;
     id: string;

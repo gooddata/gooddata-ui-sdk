@@ -24,8 +24,8 @@ export const Preview = memo(function Preview(props: ICustomFormatPreviewProps) {
 
     const { format, separators } = props;
 
-    const onPreviewChange = useCallback((value: string | number): void => {
-        setPreview(typeof value === "number" ? value : parseFloat(value) || 0);
+    const onPreviewChange = useCallback((value: number | null): void => {
+        setPreview(value ?? 0);
     }, []);
 
     return (

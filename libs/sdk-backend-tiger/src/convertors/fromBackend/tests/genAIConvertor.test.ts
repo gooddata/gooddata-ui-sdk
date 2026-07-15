@@ -5,7 +5,9 @@ import { describe, expect, it, vi } from "vitest";
 import { type AiConversationItemResponse } from "@gooddata/api-client-tiger";
 import {
     type IChatConversationMultipartContent,
+    type IChatConversationMultipartPart,
     type IChatConversationWhatIfContent,
+    isChatConversationSearchContent,
 } from "@gooddata/sdk-backend-spi";
 
 import {
@@ -109,6 +111,82 @@ describe("genAIConvertor", () => {
                         ],
                     },
                 ],
+            });
+        });
+    });
+
+    describe("convertSearchResults (via convertChatConversationItemFromBackend)", () => {
+        const makeSearchItem = (certification?: {
+            status: string;
+            certificationMessage?: string | null;
+        }): AiConversationItemResponse => ({
+            conversationId: "conv-1",
+            itemIndex: 0,
+            itemId: "item-id",
+            role: "assistant",
+            createdAt: "2024-01-01T00:00:00Z",
+            content: {
+                type: "multipart",
+                parts: [
+                    {
+                        type: "searchResults",
+                        keywords: [],
+                        relationships: [],
+                        objects: [
+                            {
+                                id: "obj-1",
+                                type: "dashboard",
+                                workspaceId: "ws-1",
+                                title: "My Dashboard",
+                                score: 0.9,
+                                ...(certification === undefined ? {} : { certification }),
+                            },
+                        ],
+                    },
+                ],
+            },
+        });
+
+        const getFirstResult = (item: AiConversationItemResponse) => {
+            const converted = convertChatConversationItemFromBackend(item, [], dateNormalizer);
+            const content = (converted.content as { parts: IChatConversationMultipartPart[] }).parts[0];
+            if (!isChatConversationSearchContent(content)) {
+                throw new Error("Expected searchResults content");
+            }
+            return content.searchResults[0];
+        };
+
+        it("maps CERTIFIED status and certificationMessage", () => {
+            const result = getFirstResult(
+                makeSearchItem({ status: "CERTIFIED", certificationMessage: "Approved by data team" }),
+            );
+
+            expect(result.certification).toEqual({
+                status: "CERTIFIED",
+                certificationMessage: "Approved by data team",
+            });
+        });
+
+        it("drops certification when status is not CERTIFIED", () => {
+            const result = getFirstResult(makeSearchItem({ status: "DEPRECATED" }));
+
+            expect(result.certification).toBeUndefined();
+        });
+
+        it("returns undefined certification when absent", () => {
+            const result = getFirstResult(makeSearchItem());
+
+            expect(result.certification).toBeUndefined();
+        });
+
+        it("maps certificationMessage as undefined when null", () => {
+            const result = getFirstResult(
+                makeSearchItem({ status: "CERTIFIED", certificationMessage: null }),
+            );
+
+            expect(result.certification).toEqual({
+                status: "CERTIFIED",
+                certificationMessage: undefined,
             });
         });
     });

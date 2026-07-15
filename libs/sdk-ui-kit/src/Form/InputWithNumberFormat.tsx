@@ -90,7 +90,11 @@ export interface IInputWithNumberFormatState {
  * @internal
  */
 
-export interface IInputWithNumberFormatProps extends IInputWithNumberFormatOwnProps, IInputPureProps {}
+export interface IInputWithNumberFormatProps
+    extends IInputWithNumberFormatOwnProps, Omit<IInputPureProps, "onChange"> {
+    /** Called with the parsed number; null when the input is cleared or holds no parseable value yet. */
+    onChange?: (value: number | null, e?: ChangeEvent<HTMLInputElement>) => void;
+}
 
 // Coerces input value to number for formatting (handles string/number/null/undefined)
 const toNumberValue = (value: string | number | null | undefined): number | null | undefined => {
@@ -144,7 +148,7 @@ export const InputWithNumberFormat = memo(function InputWithNumberFormat({
 
         setValue(newValue);
         const parsedValue = parse(newValue, separators);
-        onChange?.(parsedValue as number);
+        onChange?.(parsedValue);
     };
 
     const handleFocus = (e: FocusEvent<HTMLInputElement>): void => {

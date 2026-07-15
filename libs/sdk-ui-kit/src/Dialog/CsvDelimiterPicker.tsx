@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type MutableRefObject, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import cx from "classnames";
 import { type IntlShape, defineMessages, useIntl } from "react-intl";
@@ -211,7 +211,7 @@ export function CsvDelimiterPicker({
                             value={getButtonLabel(presetLabels, selectedPreset)}
                             isOpen={isOpen}
                             onClick={toggleDropdown}
-                            buttonRef={ref as MutableRefObject<HTMLElement>}
+                            buttonRef={ref}
                             dropdownId={dropdownId}
                             accessibilityConfig={{
                                 ...(label ? {} : { ariaLabel: menuAriaLabel }),
