@@ -2607,6 +2607,10 @@
         "text": "To",
         "crowdinContext": "Placeholder for the upper bound of a between/not-between condition."
     },
+    "properties.conditionalFormatting.dialog.unitPercent": {
+        "text": "Value in percent",
+        "crowdinContext": "Aria label for the '%' suffix of a condition's value input when the edited value is expressed in percent."
+    },
     "properties.conditionalFormatting.dialog.cancel": {
         "text": "Cancel",
         "crowdinContext": "Button that discards changes in the conditional-formatting rule dialog."
@@ -2614,6 +2618,10 @@
     "properties.conditionalFormatting.dialog.save": {
         "text": "Save",
         "crowdinContext": "Button that saves the conditional-formatting rule being edited."
+    },
+    "properties.conditionalFormatting.dialog.error.rangeOrder": {
+        "text": "“From” must be less than or equal to “To”.",
+        "crowdinContext": "Inline validation error shown when the lower bound of a between/not-between condition is greater than the upper bound."
     },
     "properties.conditionalFormatting.operator.all": {
         "text": "All values",

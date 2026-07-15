@@ -32,7 +32,10 @@ export function accessibilityConfigToAttributes(
         "aria-controls": accessibilityConfig.ariaControls,
         "aria-haspopup": accessibilityConfig.ariaHaspopup,
         "aria-pressed": accessibilityConfig.ariaPressed,
+        "aria-checked": accessibilityConfig.ariaChecked,
         "aria-autocomplete": accessibilityConfig.ariaAutocomplete,
         "aria-activedescendant": accessibilityConfig.ariaActiveDescendant,
+        "aria-current": accessibilityConfig.ariaCurrent,
+        "aria-description": accessibilityConfig.ariaDescription,
     };
 }

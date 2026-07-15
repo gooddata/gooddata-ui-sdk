@@ -527,14 +527,14 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
 
     // Generic handler for value changes (value/from/to fields)
     const createFieldChangeHandler = useCallback(
-        (field: "value" | "from" | "to") => (index: number, fieldValue: number) => {
+        (field: "value" | "from" | "to") => (index: number, fieldValue: number | null) => {
             setState((prev) => ({
                 ...prev,
                 conditions: prev.conditions.map((c, i) =>
                     i === index
                         ? {
                               ...c,
-                              value: { ...c.value, [field]: fieldValue },
+                              value: { ...c.value, [field]: fieldValue ?? undefined },
                               // Clear error if valid value is entered
                               showError: {
                                   ...c.showError,

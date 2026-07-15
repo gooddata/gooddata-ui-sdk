@@ -10,6 +10,7 @@ import {
 import { type IUiTreeviewItemProps, UiIcon } from "@gooddata/sdk-ui-kit";
 
 import { semanticSearchItemDate, semanticSearchItemTitle } from "../automation/testIds.js";
+import { SearchCertificationIconMemo } from "../certification/SearchCertificationIcon.js";
 import { SearchItem } from "../SearchItem.js";
 import { getAriaLabel } from "../utils/getAriaLabel.js";
 
@@ -51,6 +52,9 @@ export const LeveledSearchTreeViewItemMemo = memo(function LeveledSearchTreeView
                 >
                     {item.stringTitle}
                 </span>
+                {isSemanticSearchResultItem(item.data) ? (
+                    <SearchCertificationIconMemo certification={item.data.certification} />
+                ) : null}
             </span>
             <span
                 className="gd-semantic-search__results-item__text__row"

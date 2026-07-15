@@ -172,7 +172,7 @@ export function TextFilterOperatorDropdown(props: ITextFilterOperatorDropdownPro
                             disabled={disabled}
                             className="gd-text-filter-operator-dropdown__button gd-input-field s-text-filter-operator-select"
                             onClick={toggleDropdown}
-                            buttonRef={buttonRef as React.MutableRefObject<HTMLElement>}
+                            buttonRef={buttonRef}
                             dropdownId={dropdownId}
                             isOpen={isOpen}
                             accessibilityConfig={{

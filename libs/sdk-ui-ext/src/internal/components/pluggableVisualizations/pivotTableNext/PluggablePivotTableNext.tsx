@@ -81,7 +81,10 @@ import {
     getPivotTableNextMeasuresLimit,
     setPivotTableNextUiConfig,
 } from "../../../utils/uiConfigHelpers/pivotTableNextUiConfigHelper.js";
-import { buildTitlesByLocalId } from "../../configurationControls/conditionalFormatting/conditionalFormattingModel.js";
+import {
+    type ICfTargetData,
+    buildCfTargetData,
+} from "../../configurationControls/conditionalFormatting/conditionalFormattingModel.js";
 import { PivotTableConfigurationPanel } from "../../configurationPanels/PivotTableConfigurationPanel.js";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
 import {
@@ -138,9 +141,8 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
     private readonly settings: ISettings;
     private backendCapabilities: IBackendCapabilities;
     private environment: VisualizationEnvironment | undefined;
-    // Resolved from the data view (attribute titles aren't on the insight). Populated on data view;
-    // the config panel re-renders on load completion and reads it.
-    private titlesByLocalId: Record<string, string> = {};
+    // Populated on data view; the config panel re-renders on load completion and reads it.
+    private cfTargetData: ICfTargetData = {};
 
     constructor(props: IVisConstruct) {
         super(props);
@@ -337,7 +339,7 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
     // it here to surface the resolved titles instead of leaving fallback names until the next render.
     private handleDataView = (dataView: DataViewFacade): void => {
         this.onDataView(dataView);
-        this.titlesByLocalId = buildTitlesByLocalId(dataView);
+        this.cfTargetData = buildCfTargetData(dataView);
         this.renderConfigurationPanel(this.currentInsight, this.currentOptions);
     };
 
@@ -345,7 +347,9 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
     // titles so the config panel never shows a previous insight's names. handleDataView repopulates.
     private handleLoadingChanged = (loadingState: ILoadingState): void => {
         if (loadingState.isLoading) {
-            this.titlesByLocalId = {};
+            // Formats and element suggestions are deliberately kept: clearing them would flip an open
+            // percent rule's input from "40" to "0.4" and blank suggestions mid-edit.
+            this.cfTargetData = { ...this.cfTargetData, titles: {} };
         }
         this.onLoadingChanged(loadingState);
     };
@@ -494,7 +498,8 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
                     properties={this.visualizationProperties}
                     propertiesMeta={this.propertiesMeta}
                     insight={insight}
-                    titlesByLocalId={this.titlesByLocalId}
+                    cfTargetData={this.cfTargetData}
+                    separators={options.config?.separators}
                     pushData={this.handlePushData}
                     isError={this.getIsError()}
                     isLoading={this.isLoading}

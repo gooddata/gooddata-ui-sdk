@@ -4,13 +4,14 @@ import { syntaxTree } from "@codemirror/language";
 import { type Diagnostic, linter } from "@codemirror/lint";
 
 /**
- * Creates a CodeMirror linter extension that reports YAML syntax errors
- * by walking the parse tree for error nodes.
+ * Creates a CodeMirror linter extension that reports YAML syntax errors by walking the parse tree
+ * for error nodes.
  *
- * This reuses the tree already built by `@codemirror/lang-yaml` for
- * highlighting — no extra parsing or dependencies required.
+ * This reuses the tree already built by `@codemirror/lang-yaml` for highlighting — no extra parsing
+ * or dependencies required.
  *
- * @param message - localized message shown on each syntax error diagnostic
+ * @param message - localized message shown on each syntax-error diagnostic
+ * @internal
  */
 export function createYamlSyntaxLinter(message: string) {
     return linter((view) => {

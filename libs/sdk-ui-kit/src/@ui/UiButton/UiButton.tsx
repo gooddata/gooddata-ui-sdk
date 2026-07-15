@@ -5,6 +5,7 @@ import { type KeyboardEvent, type MouseEvent, type ReactNode, forwardRef } from 
 import { simplifyText } from "@gooddata/util";
 
 import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
+import { accessibilityConfigToAttributes } from "../../typings/utilities.js";
 import { type IconType } from "../@types/icon.js";
 import { type SizeLarge, type SizeMedium, type SizeSmall } from "../@types/size.js";
 import {
@@ -131,14 +132,7 @@ export const UiButton = forwardRef<HTMLButtonElement, IUiButtonProps>(
                 onKeyDown={onKeyDown}
                 data-id={dataId}
                 data-testid={testId}
-                aria-label={accessibilityConfig?.ariaLabel}
-                aria-labelledby={accessibilityConfig?.ariaLabelledBy}
-                aria-describedby={accessibilityConfig?.ariaDescribedBy}
-                aria-expanded={accessibilityConfig?.ariaExpanded}
-                aria-description={accessibilityConfig?.ariaDescription}
-                aria-controls={accessibilityConfig?.ariaControls}
-                aria-haspopup={accessibilityConfig?.ariaHaspopup}
-                role={accessibilityConfig?.role}
+                {...accessibilityConfigToAttributes(accessibilityConfig)}
             >
                 {iconBefore ? (
                     <UiIcon

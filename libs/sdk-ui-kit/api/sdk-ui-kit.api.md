@@ -887,6 +887,8 @@ export interface IAccessibilityConfigBase {
     // (undocumented)
     ariaAutocomplete?: AriaAttributes["aria-autocomplete"];
     // (undocumented)
+    ariaChecked?: AriaAttributes["aria-checked"];
+    // (undocumented)
     ariaControls?: AriaAttributes["aria-controls"];
     // (undocumented)
     ariaCurrent?: AriaAttributes["aria-current"];
@@ -2331,7 +2333,7 @@ export interface IDropdownButtonProps {
         popupType?: AriaAttributes["aria-haspopup"];
     };
     // (undocumented)
-    buttonRef?: MutableRefObject<HTMLElement>;
+    buttonRef?: Ref<HTMLElement>;
     // (undocumented)
     children?: ReactNode;
     // (undocumented)
@@ -3341,7 +3343,8 @@ export interface IInputWithNumberFormatOwnProps {
 }
 
 // @internal (undocumented)
-export interface IInputWithNumberFormatProps extends IInputWithNumberFormatOwnProps, IInputPureProps {
+export interface IInputWithNumberFormatProps extends IInputWithNumberFormatOwnProps, Omit<IInputPureProps, "onChange"> {
+    onChange?: (value: number | null, e?: ChangeEvent<HTMLInputElement>) => void;
 }
 
 // @internal (undocumented)
@@ -4500,7 +4503,7 @@ export class InputPure extends PureComponent<IInputPureProps> implements IDomNat
     // (undocumented)
     renderInput(): JSX.Element;
     // (undocumented)
-    renderLabel(label: ReactNode): ReactNode;
+    renderLabel(label: ReactNode, htmlFor?: string): ReactNode;
     // (undocumented)
     renderPrefix(prefix: string, ariaLabel?: string): ReactNode;
     // (undocumented)
@@ -6268,6 +6271,10 @@ export interface IUiCertificationIconProps {
     };
     // (undocumented)
     certification: IUiCertification;
+    // (undocumented)
+    size?: number;
+    // (undocumented)
+    tabIndex?: number;
 }
 
 // @internal (undocumented)
@@ -8433,6 +8440,22 @@ export interface IWorkspacePickerHomeFooterProps {
     theme?: ITheme;
 }
 
+// @internal (undocumented)
+export interface IYamlEditorProps {
+    completionSource?: CompletionSource;
+    // (undocumented)
+    disabled?: boolean;
+    extensions?: Extension[];
+    // (undocumented)
+    initialValue: string;
+    label?: string;
+    // (undocumented)
+    onChange?: (value: string) => void;
+    // (undocumented)
+    placeholder?: string;
+    syntaxErrorMessage?: string;
+}
+
 // @internal
 export interface IZoomContextState {
     hasVisualViewport: boolean;
@@ -9740,6 +9763,9 @@ export function withBubble<T>(WrappedComponent: ComponentType<T>): ForwardRefExo
 
 // @internal (undocumented)
 export const WorkspacePickerHomeFooter: ComponentType<Omit<IWorkspacePickerHomeFooterProps, "theme" | "themeIsLoading" | "themeStatus">>;
+
+// @internal
+export function YamlEditor(input: IYamlEditorProps): JSX.Element;
 
 // @internal
 export const ZOOM_THRESHOLD = 1.2;

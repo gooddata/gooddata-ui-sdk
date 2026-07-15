@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 
+import cx from "classnames";
 import { cloneDeep, set } from "lodash-es";
 import { useIntl } from "react-intl";
 
-import { type IInsightDefinition } from "@gooddata/sdk-model";
-import { Button } from "@gooddata/sdk-ui-kit";
+import { type IInsightDefinition, type ISeparators } from "@gooddata/sdk-model";
+import { Button, UiIconButton } from "@gooddata/sdk-ui-kit";
 import { type IConditionalFormatting, type IConditionalFormattingRule } from "@gooddata/sdk-ui-pivot/next";
 
 import { conditionalFormattingMessages } from "../../../../locales.js";
@@ -15,6 +16,7 @@ import { ConfigSection } from "../ConfigSection.js";
 
 import { ConditionalFormattingDialog } from "./ConditionalFormattingDialog.js";
 import {
+    type ICfTargetData,
     type ITargetOption,
     buildTargetOptions,
     findTargetOption,
@@ -22,6 +24,7 @@ import {
     targetIcon,
     targetLocalId,
 } from "./conditionalFormattingModel.js";
+import { type IReorderSlot, ReorderList } from "./ReorderList.js";
 
 const SECTION_ID = "conditionalFormatting_section";
 
@@ -34,7 +37,8 @@ export interface IConditionalFormattingSectionProps {
     properties?: IVisualizationProperties;
     propertiesMeta?: Record<string, unknown>;
     insight?: IInsightDefinition;
-    titlesByLocalId?: Record<string, string>;
+    targetData?: ICfTargetData;
+    separators?: ISeparators;
     isLoading?: boolean;
     pushData?: (data: unknown) => void;
 }
@@ -47,15 +51,16 @@ interface IRuleChipProps {
         edit: string;
         delete: string;
     };
+    slot: IReorderSlot;
     onEdit: () => void;
     onDelete: () => void;
 }
 
-// A saved rule: its target type icon (ABC / metric) + title; the delete (trash) appears on hover.
-// Reorder is preserved as rules-array order (first-match-wins) — drag-to-reorder UI is deferred.
-function RuleChip({ rule, option, labels, onEdit, onDelete }: IRuleChipProps) {
+// Array order = evaluation order (first-match-wins).
+function RuleChip({ rule, option, labels, slot, onEdit, onDelete }: IRuleChipProps) {
     return (
-        <div className="gd-cf-rule">
+        <div className={cx("gd-cf-rule", slot.className)} {...slot.rootProps}>
+            {slot.handle}
             <button type="button" className="gd-cf-rule__body" onClick={onEdit} title={labels.edit}>
                 <span className={`gd-cf-type-icon ${targetIcon(rule.target.kind)}`} aria-hidden="true" />
                 <span className="gd-cf-rule__title">
@@ -63,11 +68,16 @@ function RuleChip({ rule, option, labels, onEdit, onDelete }: IRuleChipProps) {
                 </span>
                 {option ? null : <span className="gd-cf-rule__invalid">{labels.invalid}</span>}
             </button>
-            <Button
-                className="gd-button-link gd-button-icon-only gd-icon-trash gd-cf-rule__delete"
-                accessibilityConfig={{ ariaLabel: labels.delete }}
-                onClick={onDelete}
-            />
+            <span className="gd-cf-rule__delete">
+                <UiIconButton
+                    icon="trash"
+                    size="small"
+                    variant="tertiary"
+                    isDesctructive
+                    label={labels.delete}
+                    onClick={onDelete}
+                />
+            </span>
         </div>
     );
 }
@@ -76,7 +86,8 @@ export function ConditionalFormattingSection({
     properties,
     propertiesMeta,
     insight,
-    titlesByLocalId,
+    targetData,
+    separators,
     isLoading,
     pushData,
 }: IConditionalFormattingSectionProps) {
@@ -86,7 +97,7 @@ export function ConditionalFormattingSection({
     const config: IConditionalFormatting | undefined = properties?.controls?.["conditionalFormatting"];
     const rules = config?.rules ?? [];
     const enabled = config?.enabled ?? false;
-    const targetOptions = insight ? buildTargetOptions(insight, titlesByLocalId) : [];
+    const targetOptions = insight ? buildTargetOptions(insight, targetData) : [];
     const canAddRule = !isLoading && targetOptions.length > 0;
 
     const commit = (rulesNext: readonly IConditionalFormattingRule[], enabledNext: boolean) => {
@@ -155,16 +166,21 @@ export function ConditionalFormattingSection({
                 </div>
             ) : (
                 <div className="gd-cf-section__rules">
-                    {rules.map((rule) => (
-                        <RuleChip
-                            key={rule.id}
-                            rule={rule}
-                            option={findTargetOption(targetOptions, rule.target)}
-                            labels={chipLabels}
-                            onEdit={() => setDialog({ rule, isNew: false })}
-                            onDelete={() => deleteRule(rule.id)}
-                        />
-                    ))}
+                    <ReorderList
+                        items={rules}
+                        getKey={(rule) => rule.id}
+                        onReorder={(next) => commit(next, enabled)}
+                        renderItem={(rule, slot) => (
+                            <RuleChip
+                                rule={rule}
+                                option={findTargetOption(targetOptions, rule.target)}
+                                labels={chipLabels}
+                                slot={slot}
+                                onEdit={() => setDialog({ rule, isNew: false })}
+                                onDelete={() => deleteRule(rule.id)}
+                            />
+                        )}
+                    />
                 </div>
             )}
 
@@ -174,6 +190,7 @@ export function ConditionalFormattingSection({
                     rule={dialog.rule}
                     isNew={dialog.isNew}
                     targetOptions={targetOptions}
+                    separators={separators}
                     alignTo=".s-cf-popover-anchor"
                     onSave={(rule) => saveRule(rule, dialog.isNew)}
                     onClose={() => setDialog(null)}

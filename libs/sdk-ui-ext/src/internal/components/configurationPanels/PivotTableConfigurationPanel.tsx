@@ -5,7 +5,12 @@ import { type ReactNode } from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
-import { insightHasAttributes, insightHasMeasures, insightMeasures } from "@gooddata/sdk-model";
+import {
+    type ISeparators,
+    insightHasAttributes,
+    insightHasMeasures,
+    insightMeasures,
+} from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../locales.js";
@@ -18,6 +23,7 @@ import {
 import { isSetColumnHeadersPositionToLeftAllowed } from "../../utils/controlsHelper.js";
 import { CellsControl } from "../configurationControls/CellsControl.js";
 import { ColumnHeadersPositionControl } from "../configurationControls/ColumnHeadersPositionControl.js";
+import { type ICfTargetData } from "../configurationControls/conditionalFormatting/conditionalFormattingModel.js";
 import { ConditionalFormattingSection } from "../configurationControls/conditionalFormatting/ConditionalFormattingSection.js";
 import { ConfigDummySection } from "../configurationControls/ConfigDummySection.js";
 import { ConfigSection } from "../configurationControls/ConfigSection.js";
@@ -25,10 +31,19 @@ import { GrandTotalsControl } from "../configurationControls/GrandTotalsControl.
 import { MetricsPositionControl } from "../configurationControls/MetricsPositionControl.js";
 import { PagingSection } from "../configurationControls/PagingSection.js";
 
-import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
+import {
+    ConfigurationPanelContent,
+    type IConfigurationPanelContentProps,
+} from "./ConfigurationPanelContent.js";
 import { type SectionName } from "./sectionName.js";
 
-export class PivotTableConfigurationPanel extends ConfigurationPanelContent {
+// Conditional-formatting metadata from the pivot pluggable; kept off the shared panel props.
+interface IPivotTableConfigurationPanelProps extends IConfigurationPanelContentProps {
+    cfTargetData?: ICfTargetData;
+    separators?: ISeparators;
+}
+
+export class PivotTableConfigurationPanel extends ConfigurationPanelContent<IPivotTableConfigurationPanelProps> {
     protected override isControlDisabled(sectionName?: SectionName): boolean {
         if (
             sectionName === "interactions.scheduled_exports" ||
@@ -158,14 +173,16 @@ export class PivotTableConfigurationPanel extends ConfigurationPanelContent {
     }
 
     private renderConditionalFormattingSection() {
-        const { properties, propertiesMeta, insight, titlesByLocalId, pushData, isLoading } = this.props;
+        const { properties, propertiesMeta, insight, cfTargetData, separators, pushData, isLoading } =
+            this.props;
 
         return (
             <ConditionalFormattingSection
                 properties={properties}
                 propertiesMeta={propertiesMeta}
                 insight={insight}
-                titlesByLocalId={titlesByLocalId}
+                targetData={cfTargetData}
+                separators={separators}
                 pushData={pushData}
                 isLoading={isLoading}
             />

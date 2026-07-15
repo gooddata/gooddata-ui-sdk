@@ -63,7 +63,17 @@
         }
 
         .cm-content {
-            caret-color: variables.$gd-medium-gray;
+            caret-color: transparent;
+        }
+
+        .cm-cursor,
+        .cm-dropCursor {
+            border-left-color: variables.$gd-medium-gray;
+        }
+
+        .cm-selectionBackground,
+        &.cm-focused .cm-selectionBackground {
+            background: variables.$gd-palette-primary-dimmed;
         }
 
         .cm-placeholder {

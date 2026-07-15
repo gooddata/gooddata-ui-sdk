@@ -219,6 +219,13 @@
             width: 100%;
         }
     }
+
+    &__certification-icon {
+        .gd-ui-kit-icon-background {
+            background-color: transparent;
+            margin-left: -5px;
+        }
+    }
 }
 
 .gd-ui-kit-treeview {

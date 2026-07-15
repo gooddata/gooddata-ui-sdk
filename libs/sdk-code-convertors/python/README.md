@@ -30,6 +30,27 @@ declarative = yaml_metric_to_declarative(parsed)
 yaml_result = declarative_metric_to_yaml(declarative)
 ```
 
+## Types: static (`_types`) vs. runtime-validating (`pydantic_models`)
+
+Two parallel sets of Python types are generated from the same AAC JSON Schema:
+
+- **`gooddata_code_convertors._types`** — `TypedDict`s, re-exported at the package top level
+  (`from gooddata_code_convertors import Dashboard`). Static typing only, zero runtime cost,
+  zero validation.
+- **`gooddata_code_convertors.pydantic_models`** — real Pydantic v2 `BaseModel`s (not
+  re-exported at the top level, to avoid name collisions with `_types` — import from the
+  submodule directly: `from gooddata_code_convertors.pydantic_models import Dashboard`). Use
+  these when you need actual runtime validation of a payload, e.g.
+  `Dashboard.model_validate(payload)`.
+
+**Gotcha:** shared string-pattern fields (e.g. every entity's `id`) are wrapped in their own
+`RootModel[str]` class in `pydantic_models` rather than being plain `str` — access the value
+via `.root` (e.g. `dashboard.id.root`). This is a deliberate trade-off: collapsing them into
+plain `str` fields breaks import entirely, because pydantic-core's Rust regex engine can't
+compile this schema's negative-lookahead patterns once collapsed. `_types`' `TypedDict`s are
+unaffected (`Dashboard["id"]` is a plain `str` there, since `TypedDict` has no runtime pattern validation
+to trip over).
+
 ## Available Converters
 
 ### YAML -> Declarative API

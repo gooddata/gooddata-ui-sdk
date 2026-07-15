@@ -5924,6 +5924,42 @@
                         "title": "Ishidden",
                         "description": "Whether object is hidden."
                     },
+                    "certification": {
+                        "anyOf": [
+                            {
+                                "properties": {
+                                    "status": {
+                                        "type": "string",
+                                        "title": "Status",
+                                        "description": "Certification status."
+                                    },
+                                    "certificationMessage": {
+                                        "anyOf": [
+                                            {
+                                                "type": "string"
+                                            },
+                                            {
+                                                "type": "null"
+                                            }
+                                        ],
+                                        "title": "Certificationmessage",
+                                        "description": "Optional certification message."
+                                    }
+                                },
+                                "additionalProperties": false,
+                                "type": "object",
+                                "required": [
+                                    "status"
+                                ],
+                                "title": "SearchObjectCertification"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Certification",
+                        "description": "Certification information for the object."
+                    },
                     "score": {
                         "type": "number",
                         "title": "Score",

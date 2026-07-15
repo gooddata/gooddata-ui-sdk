@@ -214,8 +214,14 @@ export class InputPure extends PureComponent<IInputPureProps> implements IDomNat
         );
     }
 
-    renderLabel(label: ReactNode): ReactNode {
-        return label ? <span className="gd-input-label">{label}</span> : false;
+    renderLabel(label: ReactNode, htmlFor?: string): ReactNode {
+        return label ? (
+            <label htmlFor={htmlFor} className="gd-input-label">
+                {label}
+            </label>
+        ) : (
+            false
+        );
     }
 
     renderSearch(isSearch: boolean): ReactNode {
@@ -224,8 +230,8 @@ export class InputPure extends PureComponent<IInputPureProps> implements IDomNat
 
     renderClearIcon(clearOnEsc: boolean): ReactNode {
         return clearOnEsc && (this.props.value as string).length > 0 ? (
-            <span
-                role="button"
+            <button
+                type="button"
                 className="gd-input-icon-clear gd-icon-clear s-input-clear"
                 aria-label="Input clear"
                 onClick={(e) => {
@@ -291,7 +297,6 @@ export class InputPure extends PureComponent<IInputPureProps> implements IDomNat
             value,
             onBlur,
             onFocus,
-            id,
             name,
             type,
             required,
@@ -309,7 +314,7 @@ export class InputPure extends PureComponent<IInputPureProps> implements IDomNat
                         this.inputNodeRef = ref;
                     }}
                     type={type ?? "text"}
-                    id={id}
+                    id={this.getA11yIdBase()}
                     name={name}
                     required={required}
                     className={this.getInputClassNames()}
@@ -347,14 +352,16 @@ export class InputPure extends PureComponent<IInputPureProps> implements IDomNat
     override render() {
         const { className, label } = this.props;
 
-        return label ? (
-            <label className={this.getLabelClassNames(className ?? "")}>
-                {this.renderLabel(label)}
-                {this.renderInput()}
-            </label>
-        ) : (
-            <div className={this.getLabelClassNames(className ?? "")}>{this.renderInput()}</div>
-        );
+        if (label) {
+            return (
+                <div className={this.getLabelClassNames(className ?? "")}>
+                    {this.renderLabel(label, this.getA11yIdBase())}
+                    {this.renderInput()}
+                </div>
+            );
+        }
+
+        return <div className={this.getLabelClassNames(className ?? "")}>{this.renderInput()}</div>;
     }
 
     focus(options?: { preventScroll?: boolean }): void {

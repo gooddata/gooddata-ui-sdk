@@ -34,9 +34,9 @@ export interface IConditionInputSectionProps {
         | undefined;
     usePercentage: boolean;
     separators?: ISeparators;
-    onValueChange: (index: number, value: number) => void;
-    onFromChange: (index: number, from: number) => void;
-    onToChange: (index: number, to: number) => void;
+    onValueChange: (index: number, value: number | null) => void;
+    onFromChange: (index: number, from: number | null) => void;
+    onToChange: (index: number, to: number | null) => void;
     onValueBlur: (index: number) => void;
     onFromBlur: (index: number) => void;
     onToBlur: (index: number) => void;

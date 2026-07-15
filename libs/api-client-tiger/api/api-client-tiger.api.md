@@ -4665,6 +4665,10 @@ export interface AiSearchDocumentsResponse {
 
 // @public (undocumented)
 export interface AiSearchObject {
+    'certification'?: {
+        'status': string;
+        'certificationMessage'?: string | null;
+    } | null;
     // (undocumented)
     'createdAt'?: string | null;
     // (undocumented)

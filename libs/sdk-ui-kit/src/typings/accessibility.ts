@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type AriaAttributes, type HTMLAttributes } from "react";
 
@@ -18,6 +18,7 @@ export interface IAccessibilityConfigBase {
     ariaHaspopup?: AriaAttributes["aria-haspopup"];
     ariaAutocomplete?: AriaAttributes["aria-autocomplete"];
     ariaPressed?: AriaAttributes["aria-pressed"];
+    ariaChecked?: AriaAttributes["aria-checked"];
 }
 
 /**

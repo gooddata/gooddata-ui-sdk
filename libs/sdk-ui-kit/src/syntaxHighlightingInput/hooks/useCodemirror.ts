@@ -1,10 +1,10 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useEffect, useRef } from "react";
 
 import { HighlightStyle, bracketMatching, syntaxHighlighting } from "@codemirror/language";
 import { EditorState, type Extension } from "@codemirror/state";
-import { EditorView } from "@codemirror/view";
+import { EditorView, drawSelection } from "@codemirror/view";
 import { tags as t } from "@lezer/highlight";
 
 import { useAutocompletion } from "./useAutocompletion.js";
@@ -103,6 +103,7 @@ export function useCodemirror({
                 doc: value,
                 extensions: [
                     bracketMatching(),
+                    drawSelection(),
                     domEventsExtension,
                     ...(beforeExtensions ?? []),
                     keymapExtension,

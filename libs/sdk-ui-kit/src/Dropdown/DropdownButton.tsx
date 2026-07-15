@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { type AriaAttributes, type MouseEvent, type MutableRefObject, type ReactNode } from "react";
+import { type AriaAttributes, type MouseEvent, type ReactNode, type Ref } from "react";
 
 import cx from "classnames";
 
@@ -29,7 +29,7 @@ export interface IDropdownButtonProps {
 
     children?: ReactNode;
     dropdownId?: string;
-    buttonRef?: MutableRefObject<HTMLElement>;
+    buttonRef?: Ref<HTMLElement>;
 }
 
 /**

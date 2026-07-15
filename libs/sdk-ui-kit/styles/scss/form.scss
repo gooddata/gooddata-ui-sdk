@@ -143,6 +143,9 @@ textarea {
     right: 10px;
     color: variables.$gd-color-link;
     cursor: pointer;
+    padding: 0;
+    background: none;
+    border: none;
 
     @include form-mixins.gd-searchfield-base;
     @include mixins.transition(all, 0.25s, ease-in-out);

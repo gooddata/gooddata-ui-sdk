@@ -15,7 +15,12 @@ const { b, e } = bem("gd-ui-kit-certification-icon");
 /**
  * @internal
  */
-export function UiCertificationIcon({ certification, accessibilityConfig }: IUiCertificationIconProps) {
+export function UiCertificationIcon({
+    certification,
+    size,
+    tabIndex = 0,
+    accessibilityConfig,
+}: IUiCertificationIconProps) {
     const intl = useIntl();
     const tooltipId = useIdPrefixed("certification-tooltip");
 
@@ -23,10 +28,10 @@ export function UiCertificationIcon({ certification, accessibilityConfig }: IUiC
         accessibilityConfig?.ariaLabel ?? intl.formatMessage({ id: "uiKit.certification.tooltip.title" });
 
     const icon = (
-        <span tabIndex={0} aria-label={certificationAriaLabel} aria-describedby={tooltipId}>
+        <span tabIndex={tabIndex} aria-label={certificationAriaLabel} aria-describedby={tooltipId}>
             <UiIcon
                 type="certification"
-                size={16}
+                size={size ?? 16}
                 backgroundSize={26}
                 color="success"
                 layout="block"

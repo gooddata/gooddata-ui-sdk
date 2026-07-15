@@ -11,7 +11,7 @@ interface IComparisonInputProps {
     value?: number | null;
     usePercentage: boolean;
     disableAutofocus?: boolean;
-    onValueChange: (value: number) => void;
+    onValueChange: (value: number | null) => void;
     onEnterKeyPress?: () => void;
     onBlur?: () => void;
     hasError?: boolean;
@@ -58,7 +58,7 @@ export function ComparisonInput({
                 autocomplete="off"
                 value={value ?? undefined}
                 onEnterKeyPress={onEnterKeyPress}
-                onChange={(val) => onValueChange(val as number)}
+                onChange={(val) => onValueChange(val)}
                 onBlur={onBlur ? () => onBlur() : undefined}
                 hasError={hasError}
                 isSmall

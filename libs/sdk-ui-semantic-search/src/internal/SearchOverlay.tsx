@@ -37,6 +37,7 @@ import { useSearchIds } from "../hooks/useSearchIds.js";
 import { useSemanticSearch } from "../hooks/useSemanticSearch.js";
 import { useSearchKeyboard } from "../hooks/usSearchKeyboard.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
+import { PermissionsProvider } from "../permissions/PermissionsContext.js";
 import { type UIPathOptions } from "../utils/getUIPath.js";
 
 import { ALLOWED_RELATIONSHIP_TYPES_FOR_VIEWER } from "./allowedRelationshipTypes.js";
@@ -418,9 +419,11 @@ export function SearchOverlay({ locale, metadataTimezone, ...props }: SearchOver
     return (
         <MetadataTimezoneProvider value={metadataTimezone}>
             <IntlWrapper locale={locale}>
-                <UiTreeViewEventsProvider>
-                    <SearchOverlayCore {...props} />
-                </UiTreeViewEventsProvider>
+                <PermissionsProvider backend={props.backend} workspace={props.workspace}>
+                    <UiTreeViewEventsProvider>
+                        <SearchOverlayCore {...props} />
+                    </UiTreeViewEventsProvider>
+                </PermissionsProvider>
             </IntlWrapper>
         </MetadataTimezoneProvider>
     );
