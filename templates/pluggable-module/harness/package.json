@@ -1,6 +1,6 @@
 {
     "name": "gdc-app-template-name-harness",
-    "version": "11.47.0-alpha.5",
+    "version": "11.48.0-alpha.0",
     "private": true,
     "description": "Standalone harness for gdc-app-template-name module",
     "license": "UNLICENSED",
