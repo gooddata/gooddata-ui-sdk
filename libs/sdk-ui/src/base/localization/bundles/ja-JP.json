@@ -560,6 +560,8 @@
     "parameter_filter.dropdown.error.outOfRange": "値が範囲外です。{min}から{max}までの値を入力してください。",
     "parameter_filter.dropdown.error.outOfRange.min": "値が範囲外です。{min}以上の値を入力してください。",
     "parameter_filter.dropdown.error.outOfRange.max": "値が範囲外です。{max}以下の値を入力してください。",
+    "parameter_filter.dropdown.error.tooShort": "値が短すぎます。{minLength} 文字以上で入力してください。",
+    "parameter_filter.dropdown.error.tooLong": "値が長すぎます。{maxLength} 文字以内で入力してください。",
     "mvf.applyButton.tooltip.noChanges": "適用する変更はありません。",
     "mvf.applyButton.tooltip.emptyValues": "条件内の 1 つ以上の値が空です。",
     "mvf.applyButton.tooltip.emptyDimensionality": "「各」属性が選択されていません。",

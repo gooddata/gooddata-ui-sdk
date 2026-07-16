@@ -138,13 +138,15 @@ export function CatalogDetailHeader({
                                         </EditableLabel>
                                     )
                                 ) : (
-                                    <>{item.title}</>
+                                    <span className="gd-analytics-catalog-detail__card__header__title__name__text">
+                                        {item.title}
+                                    </span>
                                 )}
+                                <CatalogCertificationIconMemo
+                                    className="gd-analytics-catalog-detail__card__header__title__certified"
+                                    certification={item.certification}
+                                />
                             </div>
-                            <CatalogCertificationIconMemo
-                                className="gd-analytics-catalog-detail__card__header__title__certified"
-                                certification={item.certification}
-                            />
                         </div>
                         {canEdit ? (
                             <div className="gd-analytics-catalog-detail__card__header__row">

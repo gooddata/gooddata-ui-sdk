@@ -1171,6 +1171,10 @@
         "text": "Export failed. Too many rows ({actual}). Limit is {limit}.",
         "crowdinContext": "Error message when data export fails due to too many rows"
     },
+    "messages.exportResultError.timeout": {
+        "text": "Export timed out. Narrow the export (fewer rows or columns) and try again.",
+        "crowdinContext": "Error message when a data export exceeds the time limit"
+    },
     "messages.exportResultRestrictedError": {
         "text": "You cannot export this visualization because it contains restricted data.",
         "crowdinContext": "Error dialog. Exporting visualization to the file fails because contains restricted data."

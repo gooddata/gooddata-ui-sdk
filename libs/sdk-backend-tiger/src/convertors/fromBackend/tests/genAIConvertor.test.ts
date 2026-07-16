@@ -117,7 +117,7 @@ describe("genAIConvertor", () => {
 
     describe("convertSearchResults (via convertChatConversationItemFromBackend)", () => {
         const makeSearchItem = (certification?: {
-            status: string;
+            certification: string;
             certificationMessage?: string | null;
         }): AiConversationItemResponse => ({
             conversationId: "conv-1",
@@ -139,7 +139,7 @@ describe("genAIConvertor", () => {
                                 workspaceId: "ws-1",
                                 title: "My Dashboard",
                                 score: 0.9,
-                                ...(certification === undefined ? {} : { certification }),
+                                ...(certification === undefined ? {} : certification),
                             },
                         ],
                     },
@@ -158,7 +158,7 @@ describe("genAIConvertor", () => {
 
         it("maps CERTIFIED status and certificationMessage", () => {
             const result = getFirstResult(
-                makeSearchItem({ status: "CERTIFIED", certificationMessage: "Approved by data team" }),
+                makeSearchItem({ certification: "CERTIFIED", certificationMessage: "Approved by data team" }),
             );
 
             expect(result.certification).toEqual({
@@ -168,7 +168,7 @@ describe("genAIConvertor", () => {
         });
 
         it("drops certification when status is not CERTIFIED", () => {
-            const result = getFirstResult(makeSearchItem({ status: "DEPRECATED" }));
+            const result = getFirstResult(makeSearchItem({ certification: "DEPRECATED" }));
 
             expect(result.certification).toBeUndefined();
         });
@@ -181,7 +181,7 @@ describe("genAIConvertor", () => {
 
         it("maps certificationMessage as undefined when null", () => {
             const result = getFirstResult(
-                makeSearchItem({ status: "CERTIFIED", certificationMessage: null }),
+                makeSearchItem({ certification: "CERTIFIED", certificationMessage: null }),
             );
 
             expect(result.certification).toEqual({

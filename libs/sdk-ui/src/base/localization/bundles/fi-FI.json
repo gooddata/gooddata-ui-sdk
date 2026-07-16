@@ -560,6 +560,8 @@
     "parameter_filter.dropdown.error.outOfRange": "Arvo on sallitun alueen ulkopuolella. Anna arvo väliltä {min}–{max}.",
     "parameter_filter.dropdown.error.outOfRange.min": "Arvo on sallitun alueen ulkopuolella. Anna arvo, joka on vähintään {min}.",
     "parameter_filter.dropdown.error.outOfRange.max": "Arvo on sallitun alueen ulkopuolella. Anna arvo, joka on enintään {max}.",
+    "parameter_filter.dropdown.error.tooShort": "Arvo on liian lyhyt. Anna vähintään {minLength} merkkiä.",
+    "parameter_filter.dropdown.error.tooLong": "Arvo on liian pitkä. Anna enintään {maxLength} merkkiä.",
     "mvf.applyButton.tooltip.noChanges": "Ei sovellettavia muutoksia.",
     "mvf.applyButton.tooltip.emptyValues": "Yksi tai useampi ehdon arvo on tyhjä.",
     "mvf.applyButton.tooltip.emptyDimensionality": "Kohdan Jokaiselle attribuuttia ei ole valittu.",

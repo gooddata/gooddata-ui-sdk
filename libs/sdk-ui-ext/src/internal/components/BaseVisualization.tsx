@@ -78,6 +78,10 @@ export interface IBaseVisualizationProps extends IVisCallbacks {
     isMdObjectValid?: boolean;
     configPanelClassName?: string;
     theme?: ITheme;
+    /**
+     * Theme of record for derived color computations, independent of the presentation theme.
+     */
+    referenceTheme?: ITheme;
     lastSavedVisClassUrl?: string;
     sourceInsightId?: string;
     onExtendedReferencePointChanged?(referencePoint: IExtendedReferencePoint, sortConfig?: ISortConfig): void;
@@ -468,6 +472,7 @@ export class BaseVisualization extends PureComponent<IBaseVisualizationProps> {
             messages: this.props.messages,
             config: this.props.config,
             theme: this.props.theme,
+            referenceTheme: this.props.referenceTheme,
             executionConfig: this.props.executionConfig,
             supportsChartFill: this.props.supportsChartFill,
         };

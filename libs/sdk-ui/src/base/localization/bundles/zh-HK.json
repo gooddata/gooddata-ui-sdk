@@ -560,6 +560,8 @@
     "parameter_filter.dropdown.error.outOfRange": "值超出範圍。請輸入介乎 {min} 至 {max} 之間的值。",
     "parameter_filter.dropdown.error.outOfRange.min": "值超出範圍。請輸入 {min} 或以上的值。",
     "parameter_filter.dropdown.error.outOfRange.max": "值超出範圍。請輸入 {max} 或以下的值。",
+    "parameter_filter.dropdown.error.tooShort": "值太短。請輸入至少 {minLength} 個字元。",
+    "parameter_filter.dropdown.error.tooLong": "值太長。請輸入最多 {maxLength} 個字元。",
     "mvf.applyButton.tooltip.noChanges": "無變更可套用。",
     "mvf.applyButton.tooltip.emptyValues": "條件中的一個或多個值為空白。",
     "mvf.applyButton.tooltip.emptyDimensionality": "未選取每個屬性。",

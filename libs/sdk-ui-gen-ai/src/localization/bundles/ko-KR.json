@@ -45,6 +45,7 @@
     "gd.gen-ai.feedback.reason.forgot-context": "이전 컨텍스트를 잊었습니다",
     "gd.gen-ai.feedback.reason.ignored-instructions": "무시되거나 거부된 지침",
     "gd.gen-ai.feedback.reason.factually-incorrect": "사실과 다른",
+    "gd.gen-ai.feedback.reason.answer-too-long": "답변이 너무 오래 걸림",
     "gd.gen-ai.feedback.reason.other": "기타",
     "gd.gen-ai.disclaimer": "AI 도우미는 실수를 할 수 있습니다. 이 답변에 의존하기 전에 확인하세요.",
     "gd.gen-ai.dialog.label": "AI 어시스턴트 대화",

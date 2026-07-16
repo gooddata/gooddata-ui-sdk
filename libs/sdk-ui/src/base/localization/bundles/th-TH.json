@@ -560,6 +560,8 @@
     "parameter_filter.dropdown.error.outOfRange": "ค่าอยู่นอกช่วง ป้อนค่าระหว่าง {min} ถึง {max}",
     "parameter_filter.dropdown.error.outOfRange.min": "ค่าอยู่นอกช่วง ป้อนค่าตั้งแต่ {min} ขึ้นไป",
     "parameter_filter.dropdown.error.outOfRange.max": "ค่าอยู่นอกช่วง ป้อนค่าไม่เกิน {max}",
+    "parameter_filter.dropdown.error.tooShort": "ค่าสั้นเกินไป ป้อนอย่างน้อย {minLength} อักขระ",
+    "parameter_filter.dropdown.error.tooLong": "ค่ายาวเกินไป ป้อนได้สูงสุด {maxLength} อักขระ",
     "mvf.applyButton.tooltip.noChanges": "ไม่มีการเปลี่ยนแปลงให้ใช้",
     "mvf.applyButton.tooltip.emptyValues": "มีค่าอย่างน้อยหนึ่งค่าในเงื่อนไขว่างอยู่",
     "mvf.applyButton.tooltip.emptyDimensionality": "ไม่ได้เลือกแอตทริบิวต์สำหรับแต่ละ",

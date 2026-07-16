@@ -560,6 +560,8 @@
     "parameter_filter.dropdown.error.outOfRange": "Wartość jest poza zakresem. Wprowadź wartość od {min} do {max}.",
     "parameter_filter.dropdown.error.outOfRange.min": "Wartość jest poza zakresem. Wprowadź wartość równą {min} lub większą.",
     "parameter_filter.dropdown.error.outOfRange.max": "Wartość jest poza zakresem. Wprowadź wartość równą {max} lub mniejszą.",
+    "parameter_filter.dropdown.error.tooShort": "Wartość jest zbyt krótka. Wpisz co najmniej {minLength} znaków.",
+    "parameter_filter.dropdown.error.tooLong": "Wartość jest zbyt długa. Wpisz co najwyżej {maxLength} znaków.",
     "mvf.applyButton.tooltip.noChanges": "Brak zmian do zastosowania.",
     "mvf.applyButton.tooltip.emptyValues": "Co najmniej jedna wartość w warunku jest pusta.",
     "mvf.applyButton.tooltip.emptyDimensionality": "Nie wybrano „Dla każdego” atrybutu.",

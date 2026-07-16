@@ -90,15 +90,40 @@ $content-font-size: 14px;
                 }
 
                 &__name {
+                    flex: 1 1 0;
+                    min-width: 0;
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                }
+
+                &__name .gd-editable-label,
+                &__name .gd-ui-kit-inline-text-generator,
+                &__name__text {
+                    flex: 0 1 auto;
+                    width: auto;
+                    min-width: 0;
+                    max-width: 100%;
+                }
+
+                &__name__text {
                     overflow: hidden;
                     text-overflow: ellipsis;
-                    display: flex;
-                    align-items: flex-start;
+                    white-space: nowrap;
                 }
 
                 &__name .gd-editable-label-inner {
+                    width: auto;
+                    min-width: 0;
+                    max-width: 100%;
                     overflow: hidden;
                     text-overflow: ellipsis;
+                }
+
+                &__name
+                    .gd-ui-kit-inline-text-generator:not(.gd-ui-kit-inline-text-generator--isEditing)
+                    .gd-editable-label-inner {
+                    padding-right: 0;
                 }
 
                 &__name .gd-editable-label.placeholder {
@@ -118,10 +143,7 @@ $content-font-size: 14px;
                 }
 
                 &__certified {
-                    display: flex;
-                    height: 100%;
-                    align-items: center;
-                    margin-left: -10px;
+                    flex: none;
                 }
             }
 

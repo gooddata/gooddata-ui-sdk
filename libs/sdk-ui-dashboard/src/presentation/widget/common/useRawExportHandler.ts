@@ -6,6 +6,7 @@ import {
     type IDashboardExportRawOptions,
     type IExportResult,
     isProtectedDataError,
+    isTimeoutError,
 } from "@gooddata/sdk-backend-spi";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
@@ -40,6 +41,8 @@ export const useRawExportHandler = (): ExportHandler => {
             }
             if (isProtectedDataError(err)) {
                 addError(messages.messagesExportResultRestrictedError);
+            } else if (isTimeoutError(err)) {
+                addError(messages.messagesExportResultErrorTimeout);
             } else {
                 addError(messages.messagesExportResultError);
             }

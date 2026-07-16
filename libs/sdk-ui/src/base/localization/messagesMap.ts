@@ -13,9 +13,13 @@ export interface ITranslations {
 
 import { en_US } from "./bundles/en-US.localization-bundle.js";
 
+// English (default) messages for this library's own keys, used as the fallback
+// for locales that are missing keys.
+const DEFAULT_OWN_MESSAGES: ITranslations = removeMetadata(en_US);
+
 const asyncMessagesMap: { [locale: string]: () => Promise<ITranslations> } = {
-    "en-US": () => Promise.resolve(removeMetadata(en_US)),
-    "en-US-x-24h": () => Promise.resolve(removeMetadata(en_US)),
+    "en-US": () => Promise.resolve(DEFAULT_OWN_MESSAGES),
+    "en-US-x-24h": () => Promise.resolve(DEFAULT_OWN_MESSAGES),
     "de-DE": () => import("./bundles/de-DE.localization-bundle.js").then((module) => module.de_DE),
     "es-ES": () => import("./bundles/es-ES.localization-bundle.js").then((module) => module.es_ES),
     "fr-FR": () => import("./bundles/fr-FR.localization-bundle.js").then((module) => module.fr_FR),
@@ -44,10 +48,10 @@ const asyncMessagesMap: { [locale: string]: () => Promise<ITranslations> } = {
 };
 
 export const resolveMessagesInternal = async (locale: string): Promise<ITranslations> => {
-    if (asyncMessagesMap[locale]) {
-        return asyncMessagesMap[locale]();
-    }
-    return asyncMessagesMap[DEFAULT_LANGUAGE]();
+    const loader = asyncMessagesMap[locale] ?? asyncMessagesMap[DEFAULT_LANGUAGE];
+    const messages = await loader();
+    // Fall back to English (default) for any keys missing in the locale bundle.
+    return { ...DEFAULT_OWN_MESSAGES, ...messages };
 };
 
 /**
@@ -63,4 +67,4 @@ export const DEFAULT_LANGUAGE = "en-US";
 /**
  * @internal
  */
-export const DEFAULT_MESSAGES = { [DEFAULT_LANGUAGE]: removeMetadata(en_US) };
+export const DEFAULT_MESSAGES = { [DEFAULT_LANGUAGE]: DEFAULT_OWN_MESSAGES };

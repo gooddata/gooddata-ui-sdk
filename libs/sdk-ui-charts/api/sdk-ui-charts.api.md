@@ -253,6 +253,7 @@ export interface IBarChartProps extends IBarChartBucketProps, IBucketChartProps 
 export interface IBaseChartProps extends ICoreChartProps {
     // (undocumented)
     onLegendReady?: OnLegendReady;
+    referenceTheme?: ITheme;
     // (undocumented)
     theme?: ITheme;
     // (undocumented)
@@ -358,6 +359,7 @@ export interface IChartConfig {
     enableAliasAttributeLabel?: boolean;
     enableChartSorting?: boolean;
     enableCompactSize?: boolean;
+    enableContrastSafeDerivedColors?: boolean;
     // @internal
     enableExecutionCancelling?: boolean;
     // @internal

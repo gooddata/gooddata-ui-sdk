@@ -28,6 +28,12 @@ export interface IUiGeneralAccessRadioProps {
     /** Disables both rows — e.g. while the access list is still loading. */
     disabled?: boolean;
     /**
+     * When true, workspace-wide access is inherited from a parent workspace and
+     * cannot be revoked here: the `Restricted` row is disabled and its
+     * description explains why.
+     */
+    workspaceAccessInherited?: boolean;
+    /**
      * Optional slot rendered to the right of the `All workspace members`
      * row — typically the `UiGranteeRowControls` pair that lets the
      * author pick labels and the workspace-wide permission level.
@@ -54,6 +60,7 @@ export function UiGeneralAccessRadio({
     value,
     onChange,
     disabled,
+    workspaceAccessInherited,
     workspaceControls,
     workspaceLevel = "VIEW",
     dataTestId,
@@ -71,9 +78,13 @@ export function UiGeneralAccessRadio({
                 name={name}
                 value="RESTRICTED"
                 checked={value === "RESTRICTED"}
-                disabled={disabled}
+                disabled={disabled || workspaceAccessInherited}
                 title={intl.formatMessage(olpGeneralAccessMessages.restrictedTitle)}
-                description={intl.formatMessage(olpGeneralAccessMessages.restrictedDescription)}
+                description={intl.formatMessage(
+                    workspaceAccessInherited
+                        ? olpGeneralAccessMessages.restrictedDescriptionInherited
+                        : olpGeneralAccessMessages.restrictedDescription,
+                )}
                 onChange={() => onChange("RESTRICTED")}
             />
             <UiRadioRow

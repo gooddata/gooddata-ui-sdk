@@ -1449,12 +1449,13 @@ export interface AiSearchObject {
     'modifiedAt'?: string | null;
     'isHidden'?: boolean | null;
     /**
-     * Certification information for the object.
+     * Certification status for the object, e.g. CERTIFIED.
      */
-    'certification'?: {
-        'status': string;
-        'certificationMessage'?: string | null;
-    } | null;
+    'certification'?: string | null;
+    /**
+     * Optional certification message.
+     */
+    'certificationMessage'?: string | null;
     /**
      * Search relevance score.
      */

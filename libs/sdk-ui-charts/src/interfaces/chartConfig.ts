@@ -256,6 +256,20 @@ export interface IChartConfig {
     enableAccessibleTooltip?: boolean;
 
     /**
+     * Keeps colors derived for comparison (period-over-period) measures at the WCAG 1.4.11
+     * minimum 3:1 contrast ratio against the chart background.
+     *
+     * @remarks
+     * When the standard derivation would produce a color too close to the background, the
+     * closest compliant blend in the same direction is used instead, and when no such blend
+     * exists the search continues in the opposite direction. Candidates keep a minimum
+     * distance from the master measure color so the two series stay distinguishable. If no
+     * candidate meets the ratio (for example on a mid-gray background), the standard color
+     * is kept.
+     */
+    enableContrastSafeDerivedColors?: boolean;
+
+    /**
      * This configuration allows users to customize how the comparative measure looks.
      *
      * @remarks

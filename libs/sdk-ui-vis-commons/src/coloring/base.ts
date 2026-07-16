@@ -43,7 +43,9 @@ export abstract class ColorStrategy implements IColorStrategy {
     protected fullColorAssignment: IColorAssignment[];
     protected outputColorAssignment: IColorAssignment[];
     protected theme?: ITheme;
+    protected referenceTheme?: ITheme;
     protected clusterTitle?: string;
+    protected enableContrastSafeDerivedColors?: boolean;
 
     constructor(
         colorPalette: IColorPalette,
@@ -53,8 +55,12 @@ export abstract class ColorStrategy implements IColorStrategy {
         dv: DataViewFacade,
         theme?: ITheme,
         clusterTitle?: string,
+        enableContrastSafeDerivedColors?: boolean,
+        referenceTheme?: ITheme,
     ) {
         this.theme = theme;
+        this.referenceTheme = referenceTheme;
+        this.enableContrastSafeDerivedColors = enableContrastSafeDerivedColors;
 
         const { fullColorAssignment, outputColorAssignment } = this.createColorAssignment(
             colorPalette,

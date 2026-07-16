@@ -24,6 +24,7 @@ export { isDarkTheme } from "./ThemeProvider/isDarkTheme.js";
 export {
     withTheme,
     useTheme,
+    useReferenceTheme,
     useThemeIsLoading,
     useIsScopeThemed,
     useThemeStatus,

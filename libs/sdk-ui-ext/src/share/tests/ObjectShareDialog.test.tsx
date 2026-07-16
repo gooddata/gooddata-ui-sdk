@@ -95,6 +95,8 @@ function makeController(stateOverrides: Partial<IObjectShareControllerState>): I
         ],
         generalAccess: "RESTRICTED",
         workspaceLevel: "VIEW",
+        workspaceAccessInherited: false,
+        workspaceLevelLocked: false,
         workspaceLevelSaving: false,
         labels: [],
         labelsResolved: true,

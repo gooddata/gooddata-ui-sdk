@@ -24,6 +24,8 @@ const stubState: IObjectShareControllerState = {
     grantees: [],
     generalAccess: "RESTRICTED",
     workspaceLevel: "VIEW",
+    workspaceAccessInherited: false,
+    workspaceLevelLocked: false,
     workspaceLevelSaving: false,
     labels: [],
     labelsResolved: true,

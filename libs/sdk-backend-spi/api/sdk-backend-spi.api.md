@@ -2542,6 +2542,9 @@ export function isNotSupported(obj: unknown): obj is NotSupported;
 export function isProtectedDataError(obj: unknown): obj is ProtectedDataError;
 
 // @public
+export function isTimeoutError(obj: unknown): obj is TimeoutError;
+
+// @public
 export function isUnexpectedError(obj: unknown): obj is UnexpectedError;
 
 // @public

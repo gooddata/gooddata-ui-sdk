@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ComponentType, type ReactNode, createContext, useContext } from "react";
 
@@ -9,6 +9,9 @@ import { isDarkTheme } from "./isDarkTheme.js";
 
 const ThemeContext = createContext<ITheme | undefined>(undefined);
 ThemeContext.displayName = "ThemeContext";
+
+const ThemeReferenceContext = createContext<ITheme | undefined>(undefined);
+ThemeReferenceContext.displayName = "ThemeReferenceContext";
 
 const ThemeIsLoadingContext = createContext<boolean | undefined>(undefined);
 ThemeIsLoadingContext.displayName = "ThemeIsLoadingContext";
@@ -33,6 +36,16 @@ export interface IThemeContextProviderProps {
      * When undefined, no theme is applied and default styling is used.
      */
     theme: ITheme | undefined;
+
+    /**
+     * Theme of record for computations that must not depend on application-specific
+     * presentation adjustments (e.g. a stripped complementary palette).
+     *
+     * @remarks
+     * When undefined, the reference from an enclosing provider is inherited,
+     * falling back to the theme itself.
+     */
+    referenceTheme?: ITheme;
 
     /**
      * Flag telling whether the theme object is being loaded or not
@@ -68,17 +81,25 @@ export interface IThemeContextProviderProps {
 export function ThemeContextProvider({
     children,
     theme,
+    referenceTheme,
     themeIsLoading,
     themeStatus,
     isScopeThemed,
 }: IThemeContextProviderProps) {
+    // nested providers re-providing only the presentation theme must not shadow
+    // an outer reference theme (e.g. chart internals re-wrap the stripped theme in AD)
+    const outerReferenceTheme = useContext(ThemeReferenceContext);
     return (
         <ThemeContext.Provider value={theme}>
-            <ThemeIsLoadingContext.Provider value={themeIsLoading}>
-                <ThemeIsScopeThemedContext.Provider value={isScopeThemed}>
-                    <ThemeStatusContext.Provider value={themeStatus}>{children}</ThemeStatusContext.Provider>
-                </ThemeIsScopeThemedContext.Provider>
-            </ThemeIsLoadingContext.Provider>
+            <ThemeReferenceContext.Provider value={referenceTheme ?? outerReferenceTheme ?? theme}>
+                <ThemeIsLoadingContext.Provider value={themeIsLoading}>
+                    <ThemeIsScopeThemedContext.Provider value={isScopeThemed}>
+                        <ThemeStatusContext.Provider value={themeStatus}>
+                            {children}
+                        </ThemeStatusContext.Provider>
+                    </ThemeIsScopeThemedContext.Provider>
+                </ThemeIsLoadingContext.Provider>
+            </ThemeReferenceContext.Provider>
         </ThemeContext.Provider>
     );
 }
@@ -105,6 +126,20 @@ export function ThemeContextProvider({
 export const useTheme = (theme?: ITheme): ITheme | undefined => {
     const themeFromContext = useContext(ThemeContext);
     return theme ?? themeFromContext;
+};
+
+/**
+ * Hook for reaching the reference theme from context.
+ *
+ * @remarks
+ * The reference theme is the workspace theme prepared with the complementary palette enabled,
+ * regardless of how the application presents itself. Use it for computations that must be
+ * consistent across applications (e.g. color derivation); use {@link useTheme} for presentation.
+ *
+ * @public
+ */
+export const useReferenceTheme = (): ITheme | undefined => {
+    return useContext(ThemeReferenceContext);
 };
 
 /**

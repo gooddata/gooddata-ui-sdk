@@ -6763,6 +6763,7 @@ export interface IUiGeneralAccessRadioProps {
     disabled?: boolean;
     onChange: (value: GeneralAccessValue) => void;
     value: GeneralAccessValue;
+    workspaceAccessInherited?: boolean;
     workspaceControls?: ReactNode;
     workspaceLevel?: "VIEW" | "SHARE";
 }
@@ -7433,6 +7434,7 @@ export interface IUiObjectShareDialogCardProps {
     onAddClick: () => void;
     onClose: () => void;
     onGeneralAccessChange: (value: GeneralAccessValue) => void;
+    workspaceAccessInherited?: boolean;
     workspaceControls?: ReactNode;
     workspaceLevel?: "VIEW" | "SHARE";
 }

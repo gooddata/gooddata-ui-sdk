@@ -17,6 +17,7 @@ export {
     type UseSearchMetricsReturn,
     useSearchMetrics,
 } from "./hooks/useSearchMetrics.js";
+export { PermissionsProvider } from "./permissions/PermissionsContext.js";
 export { LeveledSearchTreeView, type LeveledSearchTreeViewProps } from "./internal/LeveledSearchTreeView.js";
 export { buildSemanticSearchTreeViewItems } from "./internal/itemsBuilder.js";
 export { IntlWrapper as SemanticSearchIntlProvider } from "./localization/IntlWrapper.js";

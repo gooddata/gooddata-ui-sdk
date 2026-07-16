@@ -237,6 +237,7 @@ export {
     isAnalyticalBackendError,
     isNoDataError,
     isDataTooLargeError,
+    isTimeoutError,
     isProtectedDataError,
     isUnexpectedResponseError,
     isUnexpectedError,

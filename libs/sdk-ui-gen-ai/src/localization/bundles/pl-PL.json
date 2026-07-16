@@ -45,6 +45,7 @@
     "gd.gen-ai.feedback.reason.forgot-context": "Zapomniała poprzedniego kontekstu",
     "gd.gen-ai.feedback.reason.ignored-instructions": "Zignorowane lub odrzucone instrukcje",
     "gd.gen-ai.feedback.reason.factually-incorrect": "Niepoprawne faktycznie",
+    "gd.gen-ai.feedback.reason.answer-too-long": "Odpowiedź trwała zbyt długo",
     "gd.gen-ai.feedback.reason.other": "Inne",
     "gd.gen-ai.disclaimer": "Asystenci AI mogą popełniać błędy. Sprawdź, zanim polegasz na tych odpowiedziach.",
     "gd.gen-ai.dialog.label": "Rozmowa z asystentem AI",

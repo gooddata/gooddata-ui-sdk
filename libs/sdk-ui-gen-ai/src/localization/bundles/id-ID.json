@@ -45,6 +45,7 @@
     "gd.gen-ai.feedback.reason.forgot-context": "Lupa konteks sebelumnya",
     "gd.gen-ai.feedback.reason.ignored-instructions": "Mengabaikan atau menolak instruksi",
     "gd.gen-ai.feedback.reason.factually-incorrect": "Salah secara faktual",
+    "gd.gen-ai.feedback.reason.answer-too-long": "Jawaban terlalu lama",
     "gd.gen-ai.feedback.reason.other": "Lainnya",
     "gd.gen-ai.disclaimer": "Asisten AI dapat membuat kesalahan. Periksa sebelum mengandalkan jawaban ini.",
     "gd.gen-ai.dialog.label": "Percakapan asisten AI",

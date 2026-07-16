@@ -560,6 +560,8 @@
     "parameter_filter.dropdown.error.outOfRange": "Vrednost je zunaj obsega. Vnesite vrednost med {min} in {max}.",
     "parameter_filter.dropdown.error.outOfRange.min": "Vrednost je zunaj obsega. Vnesite vrednost {min} ali več.",
     "parameter_filter.dropdown.error.outOfRange.max": "Vrednost je zunaj obsega. Vnesite vrednost {max} ali manj.",
+    "parameter_filter.dropdown.error.tooShort": "Vrednost je prekratka. Vnesite vsaj {minLength} znakov.",
+    "parameter_filter.dropdown.error.tooLong": "Vrednost je predolga. Vnesite največ {maxLength} znakov.",
     "mvf.applyButton.tooltip.noChanges": "Ni sprememb za uveljavitev.",
     "mvf.applyButton.tooltip.emptyValues": "Ena ali več vrednosti v pogoju je praznih.",
     "mvf.applyButton.tooltip.emptyDimensionality": "Za vsak atribut ni izbran.",

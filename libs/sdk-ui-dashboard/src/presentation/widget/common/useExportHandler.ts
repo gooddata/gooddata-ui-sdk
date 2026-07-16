@@ -1,10 +1,15 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { useCallback, useRef } from "react";
 
 import { useIntl } from "react-intl";
 
-import { type IExportResult, isDataTooLargeError, isProtectedDataError } from "@gooddata/sdk-backend-spi";
+import {
+    type IExportResult,
+    isDataTooLargeError,
+    isProtectedDataError,
+    isTimeoutError,
+} from "@gooddata/sdk-backend-spi";
 import { type IExtendedExportConfig } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
@@ -57,6 +62,11 @@ export const useExportHandler = (): ExportHandler => {
                     });
                     return;
                 }
+            }
+
+            if (isTimeoutError(err)) {
+                addError(messages.messagesExportResultErrorTimeout);
+                return;
             }
 
             addError(messages.messagesExportResultError);

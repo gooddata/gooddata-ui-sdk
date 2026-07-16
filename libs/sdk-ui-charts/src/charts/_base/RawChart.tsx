@@ -38,6 +38,7 @@ export function RawChart(props: IRawChartProps) {
         onDataTooLarge = () => {},
         pushData,
         theme,
+        referenceTheme,
         drillableItems,
         onDrill,
         onNegativeValues,
@@ -52,7 +53,7 @@ export function RawChart(props: IRawChartProps) {
 
         return (
             // theme can be undefined for pluggable charts in AD that should not respect theming
-            <ThemeContextProvider theme={theme} themeIsLoading={false}>
+            <ThemeContextProvider theme={theme} referenceTheme={referenceTheme} themeIsLoading={false}>
                 <IntlWrapper locale={locale}>
                     <IntlTranslationsProvider>
                         {(translationProps: ITranslationsComponentProps) => {
@@ -92,6 +93,7 @@ export function RawChart(props: IRawChartProps) {
         onNegativeValues,
         pushData,
         theme,
+        referenceTheme,
         tooltipExecution,
         type,
         width,

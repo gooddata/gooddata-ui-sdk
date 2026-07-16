@@ -57,6 +57,8 @@ export class ColorFactory {
         type: string | undefined,
         theme?: ITheme,
         clusterTitle?: string,
+        enableContrastSafeDerivedColors?: boolean,
+        referenceTheme?: ITheme,
     ): IColorStrategy {
         if (isHeatmap(type)) {
             return new HeatmapColorStrategy(
@@ -153,6 +155,9 @@ export class ColorFactory {
             stackByAttribute,
             dv,
             theme,
+            undefined,
+            enableContrastSafeDerivedColors,
+            referenceTheme,
         );
     }
 }

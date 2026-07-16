@@ -560,6 +560,8 @@
     "parameter_filter.dropdown.error.outOfRange": "Nilai berada di luar rentang. Masukkan nilai antara {min} dan {max}.",
     "parameter_filter.dropdown.error.outOfRange.min": "Nilai berada di luar rentang. Masukkan nilai {min} atau lebih.",
     "parameter_filter.dropdown.error.outOfRange.max": "Nilai berada di luar rentang. Masukkan nilai {max} atau kurang.",
+    "parameter_filter.dropdown.error.tooShort": "Nilai terlalu pendek. Masukkan setidaknya {minLength} karakter.",
+    "parameter_filter.dropdown.error.tooLong": "Nilai terlalu panjang. Masukkan paling banyak {maxLength} karakter.",
     "mvf.applyButton.tooltip.noChanges": "Tidak ada perubahan untuk diterapkan.",
     "mvf.applyButton.tooltip.emptyValues": "Satu atau beberapa nilai dalam kondisi kosong.",
     "mvf.applyButton.tooltip.emptyDimensionality": "Untuk setiap atribut tidak dipilih.",

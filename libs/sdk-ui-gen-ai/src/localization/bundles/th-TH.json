@@ -45,6 +45,7 @@
     "gd.gen-ai.feedback.reason.forgot-context": "ลืมบริบทก่อนหน้า",
     "gd.gen-ai.feedback.reason.ignored-instructions": "เพิกเฉยหรือปฏิเสธคำแนะนำ",
     "gd.gen-ai.feedback.reason.factually-incorrect": "ไม่ถูกต้องตามข้อเท็จจริง",
+    "gd.gen-ai.feedback.reason.answer-too-long": "คำตอบใช้เวลานานเกินไป",
     "gd.gen-ai.feedback.reason.other": "อื่นๆ",
     "gd.gen-ai.disclaimer": "ผู้ช่วย AI อาจทำผิดพลาดได้ โปรดตรวจสอบก่อนที่จะพึ่งพาคำตอบเหล่านี้",
     "gd.gen-ai.dialog.label": "การสนทนากับผู้ช่วย AI",

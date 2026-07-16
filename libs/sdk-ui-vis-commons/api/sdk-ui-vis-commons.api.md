@@ -66,13 +66,15 @@ export const ColorLegend: ComponentType<Omit<IColorLegendProps, "theme" | "theme
 
 // @internal (undocumented)
 export abstract class ColorStrategy implements IColorStrategy {
-    constructor(colorPalette: IColorPalette, colorMapping: IColorMapping[] | undefined, viewByAttribute: any, stackByAttribute: any, dv: DataViewFacade, theme?: ITheme, clusterTitle?: string);
+    constructor(colorPalette: IColorPalette, colorMapping: IColorMapping[] | undefined, viewByAttribute: any, stackByAttribute: any, dv: DataViewFacade, theme?: ITheme, clusterTitle?: string, enableContrastSafeDerivedColors?: boolean, referenceTheme?: ITheme);
     // (undocumented)
     protected clusterTitle?: string;
     // (undocumented)
     protected abstract createColorAssignment(colorPalette: IColorPalette, colorMapping: IColorMapping[] | undefined, viewByAttribute: any, stackByAttribute: any, dv: DataViewFacade, clusterTitle?: string): ICreateColorAssignmentReturnValue;
     // (undocumented)
     protected createPalette(colorPalette: IColorPalette, colorAssignment: IColorAssignment[], _viewByAttribute: any, _stackByAttribute: any): string[];
+    // (undocumented)
+    protected enableContrastSafeDerivedColors?: boolean;
     // (undocumented)
     protected fullColorAssignment: IColorAssignment[];
     // (undocumented)
@@ -85,6 +87,8 @@ export abstract class ColorStrategy implements IColorStrategy {
     protected outputColorAssignment: IColorAssignment[];
     // (undocumented)
     protected palette: string[];
+    // (undocumented)
+    protected referenceTheme?: ITheme;
     // (undocumented)
     protected theme?: ITheme;
 }

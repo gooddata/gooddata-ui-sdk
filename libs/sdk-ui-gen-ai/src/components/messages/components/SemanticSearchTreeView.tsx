@@ -6,9 +6,11 @@ import { useIntl } from "react-intl";
 import { useSelector } from "react-redux";
 
 import { isSemanticSearchRelationship, isSemanticSearchResultItem } from "@gooddata/sdk-model";
+import { useBackendStrict } from "@gooddata/sdk-ui";
 import {
     LeveledSearchTreeView,
     type LeveledSearchTreeViewProps,
+    PermissionsProvider,
     SemanticSearchIntlProvider,
     buildSemanticSearchTreeViewItems,
 } from "@gooddata/sdk-ui-semantic-search/internal";
@@ -35,6 +37,7 @@ export function SemanticSearchTreeView(props: SemanticSearchTreeViewProps) {
 
 export function SemanticSearchTreeViewImpl({ workspace, content, maxHeight }: SemanticSearchTreeViewProps) {
     const intl = useIntl();
+    const backend = useBackendStrict();
     const { canFullControl, canManage, canAnalyze, linkHandler } = useConfig();
     const settings = useSelector(settingsSelector);
 
@@ -99,12 +102,14 @@ export function SemanticSearchTreeViewImpl({ workspace, content, maxHeight }: Se
     }
 
     return (
-        <LeveledSearchTreeView
-            items={items}
-            id={treeViewId}
-            onSelect={handleSelect}
-            maxHeight={maxHeight}
-            tabIndex={0}
-        />
+        <PermissionsProvider backend={backend} workspace={workspace}>
+            <LeveledSearchTreeView
+                items={items}
+                id={treeViewId}
+                onSelect={handleSelect}
+                maxHeight={maxHeight}
+                tabIndex={0}
+            />
+        </PermissionsProvider>
     );
 }

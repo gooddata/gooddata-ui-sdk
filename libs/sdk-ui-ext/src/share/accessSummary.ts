@@ -4,30 +4,67 @@ import type { AccessGranteeDetail, IGranularRulesAccess } from "@gooddata/sdk-mo
 import type { GeneralAccessValue } from "@gooddata/sdk-ui-kit";
 
 /**
- * Find the `allWorkspaceUsers` rule grant if one exists. Its presence with
- * non-empty `permissions` is the single signal that distinguishes WORKSPACE
- * from RESTRICTED general access.
+ * All `allWorkspaceUsers` rule grants. With workspace hierarchy the backend
+ * returns one entry per granting workspace — this workspace's own grant carries
+ * direct `permissions` while a parent's carries `inheritedPermissions`, in
+ * unspecified order. Callers must aggregate across entries, never inspect just
+ * the first.
  */
-export function findAllWorkspaceUsersGrant(grants: AccessGranteeDetail[]): IGranularRulesAccess | undefined {
-    return grants.find((g): g is IGranularRulesAccess => g.type === "allWorkspaceUsers");
-}
-
-export function deriveGeneralAccess(grants: AccessGranteeDetail[]): GeneralAccessValue {
-    const rule = findAllWorkspaceUsersGrant(grants);
-    return rule && rule.permissions.length > 0 ? "WORKSPACE" : "RESTRICTED";
+export function findAllWorkspaceUsersGrants(grants: AccessGranteeDetail[]): IGranularRulesAccess[] {
+    return grants.filter((g): g is IGranularRulesAccess => g.type === "allWorkspaceUsers");
 }
 
 /**
- * Workspace-wide permission level when the rule grant exists. Defaults to
- * VIEW; promoted to SHARE only when the rule explicitly permits SHARE. EDIT
- * is intentionally not surfaced — the UI caps at VIEW/SHARE.
+ * Whether THIS workspace grants access to all workspace users — some rule entry
+ * with non-empty direct `permissions`. Inherited (parent-workspace) rule access
+ * is deliberately excluded: this value backs the mutable direct state; displays
+ * compose it with {@link deriveInheritedWorkspaceLevel}.
+ */
+export function deriveGeneralAccess(grants: AccessGranteeDetail[]): GeneralAccessValue {
+    return findAllWorkspaceUsersGrants(grants).some((rule) => rule.permissions.length > 0)
+        ? "WORKSPACE"
+        : "RESTRICTED";
+}
+
+/**
+ * Workspace-wide permission level of this workspace's own rule grant. Defaults
+ * to VIEW; promoted to SHARE only when some rule entry directly permits SHARE.
+ * EDIT is intentionally not surfaced — the UI caps at VIEW/SHARE.
  */
 export function deriveWorkspacePermissionLevel(grants: AccessGranteeDetail[]): "VIEW" | "SHARE" {
-    const rule = findAllWorkspaceUsersGrant(grants);
-    return rule?.permissions.includes("SHARE") ? "SHARE" : "VIEW";
+    return findAllWorkspaceUsersGrants(grants).some((rule) => rule.permissions.includes("SHARE"))
+        ? "SHARE"
+        : "VIEW";
 }
 
 /**
- * Count of named grantees (users + user groups). The `allWorkspaceUsers` rule
- * grant is excluded.
+ * Strongest workspace-wide level inherited from parent workspaces, or undefined
+ * when none is inherited. Inherited rule access grants every user of this
+ * workspace access too (workspace membership cascades down the hierarchy), yet
+ * cannot be revoked from here — consumers must surface it as workspace access
+ * and disable the Restricted option.
  */
+export function deriveInheritedWorkspaceLevel(grants: AccessGranteeDetail[]): "VIEW" | "SHARE" | undefined {
+    const inherited = findAllWorkspaceUsersGrants(grants).flatMap((rule) => rule.inheritedPermissions);
+    if (inherited.includes("SHARE")) {
+        return "SHARE";
+    }
+    return inherited.length > 0 ? "VIEW" : undefined;
+}
+
+/**
+ * The effective (displayed) workspace access: the direct state composed with
+ * inherited rule access. Inherited access makes general access WORKSPACE even
+ * when this workspace holds no rule of its own, and the level is the strongest
+ * of the two.
+ */
+export function composeEffectiveWorkspaceAccess(
+    direct: GeneralAccessValue,
+    directLevel: "VIEW" | "SHARE",
+    inheritedLevel: "VIEW" | "SHARE" | undefined,
+): { generalAccess: GeneralAccessValue; workspaceLevel: "VIEW" | "SHARE" } {
+    const generalAccess = direct === "WORKSPACE" || inheritedLevel ? "WORKSPACE" : "RESTRICTED";
+    const workspaceLevel =
+        inheritedLevel === "SHARE" || (direct === "WORKSPACE" && directLevel === "SHARE") ? "SHARE" : "VIEW";
+    return { generalAccess, workspaceLevel };
+}

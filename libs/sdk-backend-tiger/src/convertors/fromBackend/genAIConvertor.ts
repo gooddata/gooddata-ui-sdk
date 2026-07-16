@@ -290,10 +290,10 @@ function convertSearchResults(results: AiSearchObject[]): ISemanticSearchResultI
         visualizationUrl: result.visualizationUrl ?? undefined,
         score: result.score,
         certification:
-            result.certification?.status === "CERTIFIED"
+            result.certification === "CERTIFIED"
                 ? {
                       status: "CERTIFIED",
-                      certificationMessage: result.certification.certificationMessage ?? undefined,
+                      certificationMessage: result.certificationMessage ?? undefined,
                   }
                 : undefined,
     }));

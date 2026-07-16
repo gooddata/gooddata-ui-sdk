@@ -45,6 +45,7 @@
     "gd.gen-ai.feedback.reason.forgot-context": "Забыть предыдущий контекст",
     "gd.gen-ai.feedback.reason.ignored-instructions": "Игнорируемые или отклоненные инструкции",
     "gd.gen-ai.feedback.reason.factually-incorrect": "Фактически неверно",
+    "gd.gen-ai.feedback.reason.answer-too-long": "Ответ занял слишком много времени",
     "gd.gen-ai.feedback.reason.other": "Прочие",
     "gd.gen-ai.disclaimer": "AI-ассистенты могут ошибаться. Проверяйте ответы, прежде чем полагаться на них.",
     "gd.gen-ai.dialog.label": "Разговор с AI-ассистентом",

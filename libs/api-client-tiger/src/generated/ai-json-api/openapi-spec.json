@@ -5927,38 +5927,26 @@
                     "certification": {
                         "anyOf": [
                             {
-                                "properties": {
-                                    "status": {
-                                        "type": "string",
-                                        "title": "Status",
-                                        "description": "Certification status."
-                                    },
-                                    "certificationMessage": {
-                                        "anyOf": [
-                                            {
-                                                "type": "string"
-                                            },
-                                            {
-                                                "type": "null"
-                                            }
-                                        ],
-                                        "title": "Certificationmessage",
-                                        "description": "Optional certification message."
-                                    }
-                                },
-                                "additionalProperties": false,
-                                "type": "object",
-                                "required": [
-                                    "status"
-                                ],
-                                "title": "SearchObjectCertification"
+                                "type": "string"
                             },
                             {
                                 "type": "null"
                             }
                         ],
                         "title": "Certification",
-                        "description": "Certification information for the object."
+                        "description": "Certification status for the object, e.g. CERTIFIED."
+                    },
+                    "certificationMessage": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Certificationmessage",
+                        "description": "Optional certification message."
                     },
                     "score": {
                         "type": "number",

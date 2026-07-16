@@ -96,6 +96,9 @@ export const olpGeneralAccessMessages = defineMessages({
     groupLabel: { id: "shareDialog.olp.generalAccess.groupLabel" },
     restrictedTitle: { id: "shareDialog.olp.generalAccess.restricted.title" },
     restrictedDescription: { id: "shareDialog.olp.generalAccess.restricted.description" },
+    restrictedDescriptionInherited: {
+        id: "shareDialog.olp.generalAccess.restricted.description.inherited",
+    },
     workspaceTitle: { id: "shareDialog.olp.generalAccess.workspace.title" },
     workspaceDescription: { id: "shareDialog.olp.generalAccess.workspace.description" },
     workspaceDescriptionShare: { id: "shareDialog.olp.generalAccess.workspace.description.share" },

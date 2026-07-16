@@ -15,6 +15,7 @@ export const messages = defineMessages({
     messagesExportResultRestrictedError: { id: "messages.exportResultRestrictedError" },
     messagesExportResultError: { id: "messages.exportResultError" },
     messagesExportResultErrorTooManyRows: { id: "messages.exportResultError.tooManyRows" },
+    messagesExportResultErrorTimeout: { id: "messages.exportResultError.timeout" },
     messagesSharingChangedSuccess: { id: "messages.sharingChangedSuccess" },
     messagesSharingChangedError: { id: "messages.sharingChangedError.general" },
     messagesShareLinkCopied: { id: "messages.shareLinkCopied" },

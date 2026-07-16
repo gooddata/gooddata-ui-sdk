@@ -45,6 +45,7 @@
     "gd.gen-ai.feedback.reason.forgot-context": "Vorherigen Kontext vergessen",
     "gd.gen-ai.feedback.reason.ignored-instructions": "Anweisungen ignoriert oder abgelehnt",
     "gd.gen-ai.feedback.reason.factually-incorrect": "Sachlich unrichtig",
+    "gd.gen-ai.feedback.reason.answer-too-long": "Antwort hat zu lange gedauert",
     "gd.gen-ai.feedback.reason.other": "Andere",
     "gd.gen-ai.disclaimer": "KI-Assistenten können Fehler machen. Überprüfen Sie alles, bevor Sie sich auf diese Antworten verlassen.",
     "gd.gen-ai.dialog.label": "KI-Assistent Konversation",

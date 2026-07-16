@@ -560,6 +560,8 @@
     "parameter_filter.dropdown.error.outOfRange": "Il valore non rientra nell'intervallo. Inserisci un valore compreso tra {min} e {max}.",
     "parameter_filter.dropdown.error.outOfRange.min": "Il valore non rientra nell'intervallo. Inserisci un valore pari o superiore a {min}.",
     "parameter_filter.dropdown.error.outOfRange.max": "Il valore non rientra nell'intervallo. Inserisci un valore pari o inferiore a {max}.",
+    "parameter_filter.dropdown.error.tooShort": "Il valore è troppo breve. Inserire almeno {minLength} caratteri.",
+    "parameter_filter.dropdown.error.tooLong": "Il valore è troppo lungo. Inserire al massimo {maxLength} caratteri.",
     "mvf.applyButton.tooltip.noChanges": "Nessuna modifica da applicare.",
     "mvf.applyButton.tooltip.emptyValues": "Uno o più valori nella condizione sono vuoti.",
     "mvf.applyButton.tooltip.emptyDimensionality": "Per ogni attributo non è selezionato.",

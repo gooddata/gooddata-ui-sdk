@@ -2871,6 +2871,10 @@
         "text": "Only people and groups added above can access this object.",
         "crowdinContext": "Description of the Restricted general-access option on the OLP share dialog. Explains that access is limited to explicitly listed grantees."
     },
+    "shareDialog.olp.generalAccess.restricted.description.inherited": {
+        "text": "Access for all workspace members is granted from a parent workspace and cannot be restricted here.",
+        "crowdinContext": "Description of the disabled Restricted general-access option on the OLP share dialog, shown when workspace-wide access is inherited from a parent workspace and therefore cannot be revoked in the current workspace."
+    },
     "shareDialog.olp.generalAccess.workspace.title": {
         "text": "All workspace members",
         "crowdinContext": "Title of the second option in the General access radio on the OLP share dialog. Choosing it grants access to every member of the current workspace."

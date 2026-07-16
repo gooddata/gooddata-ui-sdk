@@ -560,6 +560,8 @@
     "parameter_filter.dropdown.error.outOfRange": "Значення поза діапазоном. Введіть значення від {min} до {max}.",
     "parameter_filter.dropdown.error.outOfRange.min": "Значення поза діапазоном. Введіть значення {min} або більше.",
     "parameter_filter.dropdown.error.outOfRange.max": "Значення поза діапазоном. Введіть значення {max} або менше.",
+    "parameter_filter.dropdown.error.tooShort": "Значення закоротке. Введіть принаймні {minLength} символів.",
+    "parameter_filter.dropdown.error.tooLong": "Значення задовге. Введіть щонайбільше {maxLength} символів.",
     "mvf.applyButton.tooltip.noChanges": "Немає змін для застосування.",
     "mvf.applyButton.tooltip.emptyValues": "Одне або більше значень в умові порожні.",
     "mvf.applyButton.tooltip.emptyDimensionality": "Не вибрано «Для кожного атрибута».",
