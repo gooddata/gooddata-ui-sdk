@@ -17,7 +17,9 @@ function getSettingsBasedConfig(settings: ISettings): Partial<IChartConfig> {
         ...(settings.enableAccessibleChartTooltip || settings.enableAccessibilityMode
             ? { enableAccessibleTooltip: true }
             : {}),
-        ...(settings.enableAccessibilityMode ? { enableSingleBubbleSeries: true } : {}),
+        ...(settings.enableAccessibilityMode
+            ? { enableSingleBubbleSeries: true, enableContrastSafeDerivedColors: true }
+            : {}),
     };
 }
 

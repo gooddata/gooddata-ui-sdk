@@ -118,6 +118,9 @@ async function tryParseError(error: any): Promise<never> {
     if (!isAxiosErrorWithBlob(error)) {
         throw error;
     }
+    if (error.status === 504) {
+        throw new TimeoutError(error.message);
+    }
     if (!error.response?.data) {
         throw error;
     }

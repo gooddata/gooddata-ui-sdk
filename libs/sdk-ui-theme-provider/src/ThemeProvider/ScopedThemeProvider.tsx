@@ -98,6 +98,7 @@ export function ScopedThemeProvider({
 
     const [scopeId] = useState(`font${Math.random().toString(36).substring(2, 15)}`);
     const [theme, setTheme] = useState(themeParam ?? {});
+    const [referenceTheme, setReferenceTheme] = useState(themeParam ?? {});
     const [isLoading, setIsLoading] = useState(false);
     const [status, setStatus] = useState<ThemeStatus>("pending");
     const [scope, setScope] = useState<HTMLElement | null>();
@@ -110,6 +111,7 @@ export function ScopedThemeProvider({
         if (themeParam) {
             const preparedTheme = prepareTheme(themeParam, enableComplementaryPalette);
             setTheme(preparedTheme);
+            setReferenceTheme(enableComplementaryPalette ? preparedTheme : prepareTheme(themeParam, true));
             setStatus("success");
             clearCssProperties(true, scope ?? undefined, scopeId);
             setCssProperties(preparedTheme, isDarkTheme(preparedTheme), true, scope ?? undefined, scopeId);
@@ -130,6 +132,9 @@ export function ScopedThemeProvider({
                 const modifiedTheme = modifier(selectedTheme);
                 const preparedTheme = prepareTheme(modifiedTheme, enableComplementaryPalette);
                 setTheme(preparedTheme);
+                setReferenceTheme(
+                    enableComplementaryPalette ? preparedTheme : prepareTheme(modifiedTheme, true),
+                );
                 clearCssProperties(true, scope ?? undefined, scopeId);
                 setCssProperties(
                     preparedTheme,
@@ -155,7 +160,13 @@ export function ScopedThemeProvider({
     }, [removeGlobalStylesOnUnmout, scope, scopeId]);
 
     return (
-        <ThemeContextProvider theme={theme} isScopeThemed themeIsLoading={isLoading} themeStatus={status}>
+        <ThemeContextProvider
+            theme={theme}
+            referenceTheme={referenceTheme}
+            isScopeThemed
+            themeIsLoading={isLoading}
+            themeStatus={status}
+        >
             <div
                 ref={(el) => {
                     if (el) {

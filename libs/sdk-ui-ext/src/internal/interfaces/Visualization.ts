@@ -107,6 +107,10 @@ export interface IVisProps {
     config?: IGdcConfig;
     executionConfig?: IExecutionConfig;
     theme?: ITheme;
+    /**
+     * Theme of record for derived color computations, independent of the presentation theme.
+     */
+    referenceTheme?: ITheme;
     supportsChartFill?: boolean;
 
     /**

@@ -904,6 +904,83 @@ describe("useObjectShareController", () => {
         ]);
     });
 
+    it("derives workspace access from any rule entry when the hierarchy returns several", async () => {
+        // With workspace hierarchy the backend returns one allWorkspaceUsers entry per
+        // granting workspace, in unspecified order — a parent's inherited-only entry
+        // must not shadow this workspace's own grant (the post-refresh repro).
+        const PARENT_RULE: AccessGranteeDetail = {
+            type: "allWorkspaceUsers",
+            permissions: [],
+            inheritedPermissions: ["VIEW"],
+        };
+        const OWN_RULE: AccessGranteeDetail = {
+            type: "allWorkspaceUsers",
+            permissions: ["VIEW"],
+            inheritedPermissions: [],
+        };
+        const { result } = renderController(makeService([PARENT_RULE, OWN_RULE]), TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        expect(result.current.state.generalAccess).toBe("WORKSPACE");
+        expect(result.current.state.workspaceAccessInherited).toBe(true);
+        // A direct rule exists and only VIEW is inherited — re-grading stays possible.
+        expect(result.current.state.workspaceLevelLocked).toBe(false);
+    });
+
+    it("shows inherited-only workspace access as WORKSPACE and refuses Restricted", async () => {
+        const PARENT_RULE: AccessGranteeDetail = {
+            type: "allWorkspaceUsers",
+            permissions: [],
+            inheritedPermissions: ["VIEW"],
+        };
+        const svc = makeService([PARENT_RULE]);
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        // The parent's rule grants every user of this workspace view access, so the
+        // effective state is WORKSPACE even though this workspace holds no rule.
+        expect(result.current.state.generalAccess).toBe("WORKSPACE");
+        expect(result.current.state.summary).toMatchObject({
+            generalAccess: "WORKSPACE",
+            workspaceLevel: "VIEW",
+        });
+        expect(result.current.state.workspaceAccessInherited).toBe(true);
+        // No direct rule to re-grade.
+        expect(result.current.state.workspaceLevelLocked).toBe(true);
+
+        // Restricted can't be honored here (the parent's rule persists) — not stageable.
+        act(() => result.current.actions.requestGeneralAccessChange("RESTRICTED"));
+        expect(result.current.state.pendingGeneralAccess).toBeUndefined();
+
+        // The level guard likewise refuses re-grades: there is no rule to write.
+        await act(async () => {
+            await result.current.actions.changeWorkspaceLevel("SHARE");
+        });
+        expect(svc.manageObjectPermissions).not.toHaveBeenCalled();
+    });
+
+    it("pins the workspace level to an inherited SHARE over a direct VIEW", async () => {
+        const PARENT_SHARE: AccessGranteeDetail = {
+            type: "allWorkspaceUsers",
+            permissions: [],
+            inheritedPermissions: ["SHARE", "VIEW"],
+        };
+        const OWN_VIEW: AccessGranteeDetail = {
+            type: "allWorkspaceUsers",
+            permissions: ["VIEW"],
+            inheritedPermissions: [],
+        };
+        const svc = makeService([PARENT_SHARE, OWN_VIEW]);
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        expect(result.current.state.workspaceLevel).toBe("SHARE");
+        expect(result.current.state.workspaceLevelLocked).toBe(true);
+
+        // A direct downgrade couldn't change the effective level — refused.
+        await act(async () => {
+            await result.current.actions.changeWorkspaceLevel("VIEW");
+        });
+        expect(svc.manageObjectPermissions).not.toHaveBeenCalled();
+    });
+
     it("blocks overlapping workspace-level writes while one is in flight", async () => {
         const WORKSPACE_VIEW: AccessGranteeDetail = {
             type: "allWorkspaceUsers",

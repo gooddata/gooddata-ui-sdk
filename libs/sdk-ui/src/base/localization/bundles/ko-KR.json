@@ -560,6 +560,8 @@
     "parameter_filter.dropdown.error.outOfRange": "값이 범위를 벗어났습니다. {min}에서 {max} 사이의 값을 입력하세요.",
     "parameter_filter.dropdown.error.outOfRange.min": "값이 범위를 벗어났습니다. {min} 이상의 값을 입력하세요.",
     "parameter_filter.dropdown.error.outOfRange.max": "값이 범위를 벗어났습니다. {max} 이하의 값을 입력하세요.",
+    "parameter_filter.dropdown.error.tooShort": "값이 너무 짧습니다. 최소 {minLength}자를 입력하십시오.",
+    "parameter_filter.dropdown.error.tooLong": "값이 너무 깁니다. 최대 {maxLength}자를 입력하십시오.",
     "mvf.applyButton.tooltip.noChanges": "적용할 변경 사항 없음.",
     "mvf.applyButton.tooltip.emptyValues": "조건의 하나 이상의 값이 비어 있습니다.",
     "mvf.applyButton.tooltip.emptyDimensionality": "각 속성이 선택되지 않았습니다.",

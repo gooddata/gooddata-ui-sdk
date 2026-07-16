@@ -220,6 +220,9 @@ export function ObjectShareDialog({
                 isAddDisabled={isAddDisabled}
                 generalAccess={state.generalAccess}
                 onGeneralAccessChange={actions.requestGeneralAccessChange}
+                // Inherited workspace access can't be revoked here — the kit disables
+                // the Restricted option and explains why.
+                workspaceAccessInherited={state.workspaceAccessInherited}
                 // Permission dropdown on the "All workspace members" row — only while
                 // workspace access is on (the rule must exist to be re-graded). No
                 // labels (⋯) menu and no remove: per the Figma spec the workspace row
@@ -232,8 +235,12 @@ export function ObjectShareDialog({
                             selectedLabelIds={[]}
                             permissionLevel={state.workspaceLevel}
                             // Also disabled while its own re-grade is committing, so
-                            // rapid toggles can't queue overlapping writes.
-                            isDisabled={!isMutable || state.workspaceLevelSaving}
+                            // rapid toggles can't queue overlapping writes — and when
+                            // the level is locked (inherited-only access has no direct
+                            // rule to re-grade; an inherited SHARE pins the level).
+                            isDisabled={
+                                !isMutable || state.workspaceLevelSaving || state.workspaceLevelLocked
+                            }
                             onLabelsChange={noop}
                             onPermissionChange={(level) => {
                                 void actions.changeWorkspaceLevel(level);

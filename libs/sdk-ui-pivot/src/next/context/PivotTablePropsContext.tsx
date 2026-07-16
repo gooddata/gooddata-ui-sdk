@@ -149,6 +149,10 @@ export function usePivotTableProps(): PivotTablePropsWithDefaults {
             columnSizing: memoizeDeep("config.columnSizing", baseProps.config.columnSizing),
             textWrapping: memoizeDeep("config.textWrapping", baseProps.config.textWrapping),
             menu: memoizeDeep("config.menu", baseProps.config.menu),
+            conditionalFormatting: memoizeDeep(
+                "config.conditionalFormatting",
+                baseProps.config.conditionalFormatting,
+            ),
         },
     };
 }

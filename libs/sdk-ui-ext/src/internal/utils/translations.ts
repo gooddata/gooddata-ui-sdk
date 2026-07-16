@@ -33,14 +33,18 @@ export function getTranslatedDropdownItems(dropdownItems: IDropdownItem[], intl:
 
 import { en_US } from "../translations/en-US.localization-bundle.js";
 
+// English (default) messages for this library's own keys, used as the fallback
+// for locales that are missing keys.
+const DEFAULT_OWN_MESSAGES: ITranslations = removeMetadata(en_US);
+
 /**
  * @internal
  */
 export const DEFAULT_LANGUAGE = "en-US";
 
 const asyncSdkUiExtTranslations: { [locale: string]: () => Promise<ITranslations> } = {
-    "en-US": () => Promise.resolve(removeMetadata(en_US)),
-    "en-US-x-24h": () => Promise.resolve(removeMetadata(en_US)),
+    "en-US": () => Promise.resolve(DEFAULT_OWN_MESSAGES),
+    "en-US-x-24h": () => Promise.resolve(DEFAULT_OWN_MESSAGES),
     "de-DE": () => import("../translations/de-DE.localization-bundle.js").then((module) => module.de_DE),
     "es-ES": () => import("../translations/es-ES.localization-bundle.js").then((module) => module.es_ES),
     "fr-FR": () => import("../translations/fr-FR.localization-bundle.js").then((module) => module.fr_FR),
@@ -84,7 +88,12 @@ const resolveMessagesInternal = async (locale: string): Promise<ITranslations> =
         sdkUiExtLoader(),
         sdkUiresolveMessages(locale),
     ]);
-    return { ...sdkUiTranslations, ...sdkUiExtTranslations };
+    return {
+        // sdk-ui already falls back to English for its own keys via sdkUiresolveMessages.
+        ...DEFAULT_OWN_MESSAGES,
+        ...sdkUiTranslations,
+        ...sdkUiExtTranslations,
+    };
 };
 
 /**
@@ -97,7 +106,7 @@ export const resolveMessages: (locale: string) => Promise<ITranslations> = memoi
 
 export const DEFAULT_MESSAGES = {
     [DEFAULT_LANGUAGE]: {
-        ...removeMetadata(en_US),
+        ...DEFAULT_OWN_MESSAGES,
         ...DEFAULT_MESSAGES_SDK_UI[DEFAULT_LANGUAGE],
     },
 };

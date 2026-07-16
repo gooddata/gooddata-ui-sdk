@@ -66,6 +66,11 @@ export interface IUiObjectShareDialogCardProps {
     /** Disables the general-access radio — e.g. while the access list is still loading. */
     isGeneralAccessDisabled?: boolean;
     /**
+     * When true, workspace-wide access is inherited from a parent workspace and
+     * cannot be revoked here: the Restricted option is disabled and explains why.
+     */
+    workspaceAccessInherited?: boolean;
+    /**
      * Optional slot rendered next to the "All workspace members" row — typically a
      * `UiGranteeRowControls` pair for the workspace-wide labels picker
      * and permission level.
@@ -106,6 +111,7 @@ export function UiObjectShareDialogCard({
     generalAccess,
     onGeneralAccessChange,
     isGeneralAccessDisabled,
+    workspaceAccessInherited,
     workspaceControls,
     workspaceLevel,
     error,
@@ -157,6 +163,7 @@ export function UiObjectShareDialogCard({
                         value={generalAccess}
                         onChange={onGeneralAccessChange}
                         disabled={isGeneralAccessDisabled}
+                        workspaceAccessInherited={workspaceAccessInherited}
                         workspaceControls={workspaceControls}
                         workspaceLevel={workspaceLevel}
                     />

@@ -560,6 +560,8 @@
     "parameter_filter.dropdown.error.outOfRange": "Waarde valt buiten het bereik. Voer een waarde tussen {min} en {max} in.",
     "parameter_filter.dropdown.error.outOfRange.min": "Waarde valt buiten het bereik. Voer een waarde van {min} of hoger in.",
     "parameter_filter.dropdown.error.outOfRange.max": "Waarde valt buiten het bereik. Voer een waarde van {max} of lager in.",
+    "parameter_filter.dropdown.error.tooShort": "Waarde is te kort. Voer ten minste {minLength} tekens in.",
+    "parameter_filter.dropdown.error.tooLong": "Waarde is te lang. Voer maximaal {maxLength} tekens in.",
     "mvf.applyButton.tooltip.noChanges": "Geen wijzigingen toe te passen.",
     "mvf.applyButton.tooltip.emptyValues": "Een of meer waarden in de voorwaarde zijn leeg.",
     "mvf.applyButton.tooltip.emptyDimensionality": "Voor elk attribuut is niet geselecteerd.",

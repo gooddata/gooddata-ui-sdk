@@ -14,11 +14,15 @@ import { removeMetadata } from "@gooddata/util";
 
 import enUS from "../../translations/en-US.json" with { type: "json" };
 
+// English (default) messages for this library's own keys, used as the fallback
+// for locales that are missing keys.
+const DEFAULT_OWN_MESSAGES: ITranslations = removeMetadata(enUS);
+
 type LocaleOptions = Record<ILocale, () => Promise<ITranslations>>;
 
 const asyncMessagesMap: LocaleOptions = {
-    "en-US": () => Promise.resolve(removeMetadata(enUS)),
-    "en-US-x-24h": () => Promise.resolve(removeMetadata(enUS)),
+    "en-US": () => Promise.resolve(DEFAULT_OWN_MESSAGES),
+    "en-US-x-24h": () => Promise.resolve(DEFAULT_OWN_MESSAGES),
     "de-DE": () => import("../../translations/de-DE.json").then((module) => module.default),
     "es-ES": () => import("../../translations/es-ES.json").then((module) => module.default),
     "fr-FR": () => import("../../translations/fr-FR.json").then((module) => module.default),
@@ -51,7 +55,7 @@ const defaultSdkUiMessages = DEFAULT_MESSAGES_SDK_UI[DEFAULT_LANGUAGE];
 export const DEFAULT_MESSAGES: Record<string, ITranslations> = {
     [DEFAULT_LANGUAGE]: {
         ...defaultSdkUiMessages,
-        ...removeMetadata(enUS), // app messages should override sdk messages
+        ...DEFAULT_OWN_MESSAGES, // app messages should override sdk messages
     },
 };
 
@@ -64,8 +68,12 @@ async function resolveMessagesInternal(locale: string): Promise<ITranslations> {
             resolveMessagesSdkUi(validatedLocale),
         ]);
 
-        // app messages should override sdk messages
-        return { ...sdkUiMessages, ...hostAppMessages };
+        // sdk-ui already falls back to English for its own keys; app messages override sdk messages
+        return {
+            ...DEFAULT_OWN_MESSAGES,
+            ...sdkUiMessages,
+            ...hostAppMessages,
+        };
     } catch (error) {
         // Translation chunks are content-hashed and may have been removed by a redeploy
         // while the tab was open. Fall back to bundled en-US so the chrome still renders;

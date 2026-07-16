@@ -171,6 +171,11 @@
         align-items: center;
         justify-content: center;
         flex: none;
+
+        > * {
+            display: flex;
+            align-items: center;
+        }
     }
 
     &__role-icon {

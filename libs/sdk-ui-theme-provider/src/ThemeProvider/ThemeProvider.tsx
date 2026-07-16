@@ -102,6 +102,7 @@ export function ThemeProvider({
     const workspace = useWorkspace(workspaceParam);
 
     const [theme, setTheme] = useState(themeParam ?? {});
+    const [referenceTheme, setReferenceTheme] = useState(themeParam ?? {});
     const [isLoading, setIsLoading] = useState(false);
     const [status, setStatus] = useState<ThemeStatus>("pending");
 
@@ -115,7 +116,13 @@ export function ThemeProvider({
         const applyTheme = (themeToApply: ITheme) => {
             try {
                 const preparedTheme = prepareTheme(themeToApply, enableComplementaryPalette);
+                // theme of record: always prepared with the complementary palette, so consumers
+                // computing from it get the same values in every application
+                const preparedReferenceTheme = enableComplementaryPalette
+                    ? preparedTheme
+                    : prepareTheme(themeToApply, true);
                 setTheme(preparedTheme);
+                setReferenceTheme(preparedReferenceTheme);
                 clearCssProperties();
                 setCssProperties(preparedTheme, isDarkTheme(preparedTheme));
             } catch (error) {
@@ -123,6 +130,7 @@ export function ThemeProvider({
                 // reset both channels (context theme and global CSS) to the default theme so
                 // context consumers stay consistent with the cleared CSS variables
                 setTheme({});
+                setReferenceTheme({});
                 clearCssProperties();
             } finally {
                 setIsLoading(false);
@@ -158,6 +166,7 @@ export function ThemeProvider({
                     // reset both channels (context theme and global CSS) to the default theme so
                     // context consumers stay consistent with the cleared CSS variables
                     setTheme({});
+                    setReferenceTheme({});
                     clearCssProperties();
                     setIsLoading(false);
                     setStatus("success");
@@ -177,7 +186,12 @@ export function ThemeProvider({
     }, [removeGlobalStylesOnUnmout]);
 
     return (
-        <ThemeContextProvider theme={theme} themeIsLoading={isLoading} themeStatus={status}>
+        <ThemeContextProvider
+            theme={theme}
+            referenceTheme={referenceTheme}
+            themeIsLoading={isLoading}
+            themeStatus={status}
+        >
             {children}
         </ThemeContextProvider>
     );

@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-catalog, sdk-ui-kit: Design QA fixes for Analytics Catalog — place certification badge beside detail title and fix UiAsyncTable suffix icon vertical alignment.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

@@ -560,6 +560,8 @@
     "parameter_filter.dropdown.error.outOfRange": "值超出范围。请输入介于 {min} 和 {max} 之间的值。",
     "parameter_filter.dropdown.error.outOfRange.min": "值超出范围。请输入大于或等于 {min} 的值。",
     "parameter_filter.dropdown.error.outOfRange.max": "值超出范围。请输入小于或等于 {max} 的值。",
+    "parameter_filter.dropdown.error.tooShort": "值太短。请至少输入 {minLength} 个字符。",
+    "parameter_filter.dropdown.error.tooLong": "值太长。请最多输入 {maxLength} 个字符。",
     "mvf.applyButton.tooltip.noChanges": "无需应用任何更改。",
     "mvf.applyButton.tooltip.emptyValues": "条件中的一个或多个值为空。",
     "mvf.applyButton.tooltip.emptyDimensionality": "未选择“对于每个”的属性。",

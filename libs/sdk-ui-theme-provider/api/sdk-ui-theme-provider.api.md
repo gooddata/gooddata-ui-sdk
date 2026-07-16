@@ -51,6 +51,7 @@ export const isValidThemeColor: (color: unknown) => boolean;
 export interface IThemeContextProviderProps {
     children?: ReactNode;
     isScopeThemed?: boolean;
+    referenceTheme?: ITheme;
     theme: ITheme | undefined;
     // @deprecated
     themeIsLoading: boolean;
@@ -88,6 +89,9 @@ export const useIsDarkTheme: () => boolean;
 
 // @internal
 export const useIsScopeThemed: () => boolean | undefined;
+
+// @public
+export const useReferenceTheme: () => ITheme | undefined;
 
 // @public
 export const useTheme: (theme?: ITheme | undefined) => ITheme | undefined;

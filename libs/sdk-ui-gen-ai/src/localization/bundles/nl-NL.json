@@ -45,6 +45,7 @@
     "gd.gen-ai.feedback.reason.forgot-context": "Vorige context vergeten",
     "gd.gen-ai.feedback.reason.ignored-instructions": "Negeren of weigeren van instructies",
     "gd.gen-ai.feedback.reason.factually-incorrect": "Feitelijk onjuist",
+    "gd.gen-ai.feedback.reason.answer-too-long": "Antwoord duurde te lang",
     "gd.gen-ai.feedback.reason.other": "Overige",
     "gd.gen-ai.disclaimer": "AI-assistenten kunnen fouten maken. Controleer alles voordat u op deze antwoorden vertrouwt.",
     "gd.gen-ai.dialog.label": "AI assistent gesprek",

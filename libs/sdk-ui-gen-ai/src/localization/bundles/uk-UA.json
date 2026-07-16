@@ -45,6 +45,7 @@
     "gd.gen-ai.feedback.reason.forgot-context": "Забув попередній контекст",
     "gd.gen-ai.feedback.reason.ignored-instructions": "Проігнорував або відхилив інструкції",
     "gd.gen-ai.feedback.reason.factually-incorrect": "Фактично неправильно",
+    "gd.gen-ai.feedback.reason.answer-too-long": "Відповідь тривала надто довго",
     "gd.gen-ai.feedback.reason.other": "Інші",
     "gd.gen-ai.disclaimer": "AI-помічники можуть помилятися. Перевіряйте відповіді, перш ніж покладатися на них.",
     "gd.gen-ai.dialog.label": "Розмова з AI-помічником",

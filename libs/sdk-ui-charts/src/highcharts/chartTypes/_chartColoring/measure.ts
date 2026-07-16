@@ -5,6 +5,7 @@ import {
     type IColorFromPalette,
     type IColorPalette,
     type IMeasureDescriptor,
+    type IRgbColorValue,
     type RgbType,
     isColorFromPalette,
 } from "@gooddata/sdk-model";
@@ -16,13 +17,20 @@ import {
     type ICreateColorAssignmentReturnValue,
     getColorByGuid,
     getColorFromMapping,
+    getContrastRatio,
     getLighterColorFromRGB,
+    getRgbStringFromRGB,
     isValidMappedColor,
 } from "@gooddata/sdk-ui-vis-commons";
 
 import { findMeasureGroupInDimensions } from "../_util/executionResultHelper.js";
 
 const emptyColorPaletteItem: IColorFromPalette = { type: "guid", value: "none" };
+
+const DERIVED_COLOR_BLEND = 0.6;
+const DERIVED_COLOR_BLEND_STEP = 0.4;
+// WCAG 1.4.11 Non-text Contrast (Level AA)
+const MIN_NON_TEXT_CONTRAST = 3;
 
 export class MeasureColorStrategy extends ColorStrategy {
     protected createColorAssignment(
@@ -150,12 +158,57 @@ export class MeasureColorStrategy extends ColorStrategy {
         const rgbColor = isColorFromPalette(sourceMeasureColor)
             ? getColorByGuid(colorPalette, sourceMeasureColor.value, measureItemIndex)
             : sourceMeasureColor.value;
+        const direction = isDarkTheme(this.theme) ? -1 : 1;
         return {
             ...mapItem,
             color: {
                 type: "rgb" as RgbType,
-                value: getLighterColorFromRGB(rgbColor, isDarkTheme(this.theme) ? -0.6 : 0.6),
+                value: this.enableContrastSafeDerivedColors
+                    ? this.getContrastSafeDerivedColor(rgbColor)
+                    : getLighterColorFromRGB(rgbColor, direction * DERIVED_COLOR_BLEND),
             },
         };
+    }
+
+    private getContrastSafeDerivedColor(sourceColor: IRgbColorValue): IRgbColorValue {
+        // the reference theme keeps the workspace-declared background even in applications
+        // that strip it from the presentation theme, so all applications derive the same color
+        const referenceTheme = this.referenceTheme ?? this.theme;
+        const direction = isDarkTheme(referenceTheme) ? -1 : 1;
+        const backgroundColor =
+            referenceTheme?.chart?.backgroundColor || referenceTheme?.palette?.complementary?.c0 || "#fff";
+
+        // the standard blend first, so compliant charts keep their standard look
+        const preferred = getLighterColorFromRGB(sourceColor, direction * DERIVED_COLOR_BLEND);
+        if (getContrastRatio(getRgbStringFromRGB(preferred), backgroundColor) >= MIN_NON_TEXT_CONTRAST) {
+            return preferred;
+        }
+
+        // then step-multiples below the standard blend, strongest first; blends weaker
+        // than one step would be indistinguishable from the master measure color
+        const stepsBelowStandard = Math.ceil(DERIVED_COLOR_BLEND / DERIVED_COLOR_BLEND_STEP) - 1;
+        for (let step = stepsBelowStandard; step >= 1; step--) {
+            const candidate = getLighterColorFromRGB(
+                sourceColor,
+                direction * step * DERIVED_COLOR_BLEND_STEP,
+            );
+            if (getContrastRatio(getRgbStringFromRGB(candidate), backgroundColor) >= MIN_NON_TEXT_CONTRAST) {
+                return candidate;
+            }
+        }
+
+        // the source color is too close to the background, derive in the opposite direction
+        const maxSteps = Math.floor(1 / DERIVED_COLOR_BLEND_STEP);
+        for (let step = 1; step <= maxSteps; step++) {
+            const candidate = getLighterColorFromRGB(
+                sourceColor,
+                -direction * step * DERIVED_COLOR_BLEND_STEP,
+            );
+            if (getContrastRatio(getRgbStringFromRGB(candidate), backgroundColor) >= MIN_NON_TEXT_CONTRAST) {
+                return candidate;
+            }
+        }
+
+        return preferred;
     }
 }

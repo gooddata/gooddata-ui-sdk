@@ -961,7 +961,9 @@ export interface IObjectShareControllerState {
     transferSaving: boolean;
     transferTarget: IUiGranteeAsyncOption | undefined;
     transferTargetIsOwner: boolean;
+    workspaceAccessInherited: boolean;
     workspaceLevel: "VIEW" | "SHARE";
+    workspaceLevelLocked: boolean;
     workspaceLevelSaving: boolean;
 }
 

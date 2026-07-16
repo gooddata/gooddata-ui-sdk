@@ -560,6 +560,8 @@
     "parameter_filter.dropdown.error.outOfRange": "Значение вне диапазона. Введите значение от {min} до {max}.",
     "parameter_filter.dropdown.error.outOfRange.min": "Значение вне диапазона. Введите значение не меньше {min}.",
     "parameter_filter.dropdown.error.outOfRange.max": "Значение вне диапазона. Введите значение не больше {max}.",
+    "parameter_filter.dropdown.error.tooShort": "Значение слишком короткое. Введите не менее {minLength} символов.",
+    "parameter_filter.dropdown.error.tooLong": "Значение слишком длинное. Введите не более {maxLength} символов.",
     "mvf.applyButton.tooltip.noChanges": "Нет изменений для применения.",
     "mvf.applyButton.tooltip.emptyValues": "Одно или несколько значений в условии пусты.",
     "mvf.applyButton.tooltip.emptyDimensionality": "Не выбран «Для каждого атрибута».",

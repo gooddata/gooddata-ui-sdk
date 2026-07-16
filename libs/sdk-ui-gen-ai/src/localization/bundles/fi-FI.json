@@ -45,6 +45,7 @@
     "gd.gen-ai.feedback.reason.forgot-context": "Aiempi konteksti unohtui",
     "gd.gen-ai.feedback.reason.ignored-instructions": "Ohjeet jätetty huomiotta tai hylätty",
     "gd.gen-ai.feedback.reason.factually-incorrect": "Tosiasiallisesti virheellinen",
+    "gd.gen-ai.feedback.reason.answer-too-long": "Vastaus kesti liian kauan",
     "gd.gen-ai.feedback.reason.other": "Muut",
     "gd.gen-ai.disclaimer": "Tekoälyassistentit voivat tehdä virheitä. Tarkista ennen näihin vastauksiin luottamista.",
     "gd.gen-ai.dialog.label": "Tekoälyavustajan keskustelu",

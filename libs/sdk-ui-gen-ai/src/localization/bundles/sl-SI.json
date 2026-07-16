@@ -45,6 +45,7 @@
     "gd.gen-ai.feedback.reason.forgot-context": "Pozabil prejšnji kontekst",
     "gd.gen-ai.feedback.reason.ignored-instructions": "Prezrl ali zavrnil navodila",
     "gd.gen-ai.feedback.reason.factually-incorrect": "Dejstveno napačno",
+    "gd.gen-ai.feedback.reason.answer-too-long": "Odgovor je trajal predolgo",
     "gd.gen-ai.feedback.reason.other": "Drugo",
     "gd.gen-ai.disclaimer": "AI pomočniki lahko naredijo napake. Preverite, preden se zanesete na te odgovore.",
     "gd.gen-ai.dialog.label": "Pogovor s AI pomočnikom",

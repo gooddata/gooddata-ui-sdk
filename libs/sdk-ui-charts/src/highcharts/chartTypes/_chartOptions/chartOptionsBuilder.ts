@@ -409,6 +409,7 @@ export function getChartOptions(
     totalColumnTitle?: string,
     clusterTitle?: string,
     anomaliesTitle?: string,
+    referenceTheme?: ITheme,
 ): IChartOptions {
     const dv = DataViewFacade.for(dataView);
     const dimensions = dv.meta().dimensions();
@@ -443,6 +444,8 @@ export function getChartOptions(
         type,
         theme,
         clusterTitle,
+        config.enableContrastSafeDerivedColors,
+        referenceTheme,
     );
 
     const gridEnabled = config?.grid?.enabled ?? true;

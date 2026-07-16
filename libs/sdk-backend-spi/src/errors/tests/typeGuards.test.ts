@@ -10,6 +10,7 @@ import {
     NotImplemented,
     NotSupported,
     ProtectedDataError,
+    TimeoutError,
     UnexpectedError,
     UnexpectedResponseError,
     isAnalyticalBackendError,
@@ -19,6 +20,7 @@ import {
     isNotImplemented,
     isNotSupported,
     isProtectedDataError,
+    isTimeoutError,
     isUnexpectedError,
     isUnexpectedResponseError,
 } from "../index.js";
@@ -75,6 +77,25 @@ describe("result type guards", () => {
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
             expect(isDataTooLargeError(input)).toBe(expectedResult);
+        });
+    });
+
+    describe("isTimeoutError", () => {
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "no data error", new NoDataError("fail")],
+            [false, "data too large error", new DataTooLargeError("fail")],
+            [false, "protected data", new ProtectedDataError("fail")],
+            [false, "unexpected response", new UnexpectedResponseError("fail", 400, "")],
+            [false, "unexpected error", new UnexpectedError("fail")],
+            [false, "not supported error", new NotSupported("fail")],
+            [false, "not implemented error", new NotImplemented("fail")],
+            [false, "not authenticated", new NotAuthenticated("fail")],
+            [true, "timeout error", new TimeoutError("fail")],
+        ];
+
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(isTimeoutError(input)).toBe(expectedResult);
         });
     });
 

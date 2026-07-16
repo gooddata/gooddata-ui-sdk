@@ -19,7 +19,7 @@ import {
     emptyHeaderTitleFromIntl,
     totalColumnTitleFromIntl,
 } from "@gooddata/sdk-ui";
-import { withTheme } from "@gooddata/sdk-ui-theme-provider";
+import { useReferenceTheme, withTheme } from "@gooddata/sdk-ui-theme-provider";
 import { type ILegendOptions, type ITooltipExecution, useTooltipLookup } from "@gooddata/sdk-ui-vis-commons";
 
 import { type IChartConfig } from "../interfaces/chartConfig.js";
@@ -75,6 +75,12 @@ export interface IChartTransformationProps {
 
     numericSymbols?: string[];
     theme?: ITheme;
+    /**
+     * Theme of record for derived color computations; when the chart renders in an isolated
+     * React root (pluggable visualizations), the reference cannot travel via context and
+     * must be passed as a prop.
+     */
+    referenceTheme?: ITheme;
     pushData?(data: any): void;
     renderer?(arg: IHighChartsRendererProps): ReactElement;
 
@@ -92,6 +98,7 @@ function ChartTransformationImpl({
     onLegendReady = () => {},
     locale,
     theme,
+    referenceTheme: referenceThemeProp,
     numericSymbols,
     drillableItems = [],
     onDataTooLarge,
@@ -100,6 +107,8 @@ function ChartTransformationImpl({
     tooltipExecution,
 }: IChartTransformationProps) {
     const intl = useIntl();
+    const referenceThemeFromContext = useReferenceTheme();
+    const referenceTheme = referenceThemeProp ?? referenceThemeFromContext;
 
     const visType = config.type;
     const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
@@ -119,6 +128,7 @@ function ChartTransformationImpl({
         totalColumnTitleFromIntl(intl),
         clusterTitleFromIntl(intl),
         anomaliesTitleFromIntl(intl),
+        referenceTheme,
     );
 
     if (config.customTooltip?.enabled) {

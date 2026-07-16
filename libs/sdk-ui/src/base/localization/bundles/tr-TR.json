@@ -560,6 +560,8 @@
     "parameter_filter.dropdown.error.outOfRange": "Değer aralık dışında. {min} ile {max} arasında bir değer girin.",
     "parameter_filter.dropdown.error.outOfRange.min": "Değer aralık dışında. {min} veya daha büyük bir değer girin.",
     "parameter_filter.dropdown.error.outOfRange.max": "Değer aralık dışında. {max} veya daha küçük bir değer girin.",
+    "parameter_filter.dropdown.error.tooShort": "Değer çok kısa. En az {minLength} karakter girin.",
+    "parameter_filter.dropdown.error.tooLong": "Değer çok uzun. En fazla {maxLength} karakter girin.",
     "mvf.applyButton.tooltip.noChanges": "Uygulanacak değişiklik yok.",
     "mvf.applyButton.tooltip.emptyValues": "Koşuldaki bir veya daha fazla değer boş.",
     "mvf.applyButton.tooltip.emptyDimensionality": "Her bir öznitelik için seçilmedi.",

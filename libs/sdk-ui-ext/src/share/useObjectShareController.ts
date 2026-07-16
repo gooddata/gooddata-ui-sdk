@@ -11,6 +11,7 @@ import {
     useToastMessage,
 } from "@gooddata/sdk-ui-kit";
 
+import { composeEffectiveWorkspaceAccess } from "./accessSummary.js";
 import { objectShareMessages } from "./messages.js";
 import {
     EMPTY_IDS,
@@ -93,6 +94,7 @@ export function useObjectShareController(
         grantees,
         generalAccess,
         workspaceLevel,
+        inheritedWorkspaceLevel,
         summary,
         status,
         loadError,
@@ -465,11 +467,20 @@ export function useObjectShareController(
 
     const requestGeneralAccessChange = useCallback(
         (next: GeneralAccessValue) => {
-            if (next !== generalAccess) {
+            // Inherited rule access can't be revoked from this workspace, so a
+            // Restricted request can never be honored — refuse it (the radio row
+            // is also disabled). Compare against the effective value the radio
+            // shows: with inherited access it is WORKSPACE even when this
+            // workspace holds no rule of its own.
+            if (inheritedWorkspaceLevel && next === "RESTRICTED") {
+                return;
+            }
+            const effective = inheritedWorkspaceLevel ? "WORKSPACE" : generalAccess;
+            if (next !== effective) {
                 setPendingGeneralAccess(next);
             }
         },
-        [generalAccess],
+        [generalAccess, inheritedWorkspaceLevel],
     );
 
     const confirmGeneralAccessChange = useCallback(async (): Promise<void> => {
@@ -545,9 +556,16 @@ export function useObjectShareController(
     const changeWorkspaceLevel = useCallback(
         async (level: "VIEW" | "SHARE"): Promise<void> => {
             // Only re-grade an already-granted workspace rule; ignore no-ops, calls made
-            // while access is restricted (no rule to re-grade), and re-entry while a
+            // while this workspace grants no rule of its own (inherited-only access has
+            // nothing to re-grade), calls while an inherited SHARE pins the effective
+            // level (a direct downgrade couldn't change it), and re-entry while a
             // previous re-grade is still in flight (would overlap writes).
-            if (generalAccess !== "WORKSPACE" || level === workspaceLevel || workspaceLevelSaving) {
+            if (
+                generalAccess !== "WORKSPACE" ||
+                inheritedWorkspaceLevel === "SHARE" ||
+                level === workspaceLevel ||
+                workspaceLevelSaving
+            ) {
                 return;
             }
             const startedFor = targetKey;
@@ -572,7 +590,15 @@ export function useObjectShareController(
             }
             setWorkspaceLevelSaving(false);
         },
-        [generalAccess, workspaceLevel, workspaceLevelSaving, targetKey, commit, setWorkspaceLevel],
+        [
+            generalAccess,
+            inheritedWorkspaceLevel,
+            workspaceLevel,
+            workspaceLevelSaving,
+            targetKey,
+            commit,
+            setWorkspaceLevel,
+        ],
     );
 
     const openTransferOwnership = useCallback(() => {
@@ -825,11 +851,14 @@ export function useObjectShareController(
             accessUnavailable,
             summary,
             grantees,
-            generalAccess,
-            // The workspace rule isn't granted while restricted, so its level is
-            // meaningless then — pin to VIEW so the (hidden) dropdown never shows a
-            // stale SHARE left over from a prior workspace grant.
-            workspaceLevel: generalAccess === "WORKSPACE" ? workspaceLevel : "VIEW",
+            // Effective access: the direct state composed with inherited rule
+            // access. Also pins the level to VIEW while restricted, so the (hidden)
+            // dropdown never shows a stale SHARE left over from a prior grant.
+            ...composeEffectiveWorkspaceAccess(generalAccess, workspaceLevel, inheritedWorkspaceLevel),
+            workspaceAccessInherited: inheritedWorkspaceLevel !== undefined,
+            // No direct rule to re-grade (inherited-only access), or an inherited
+            // SHARE pins the effective level — either way the dropdown is read-only.
+            workspaceLevelLocked: generalAccess !== "WORKSPACE" || inheritedWorkspaceLevel === "SHARE",
             workspaceLevelSaving,
             labels: effectiveLabels,
             labelsResolved,
@@ -851,6 +880,7 @@ export function useObjectShareController(
             grantees,
             generalAccess,
             workspaceLevel,
+            inheritedWorkspaceLevel,
             workspaceLevelSaving,
             effectiveLabels,
             labelsResolved,

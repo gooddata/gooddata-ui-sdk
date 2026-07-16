@@ -321,6 +321,15 @@ export function isDataTooLargeError(obj: unknown): obj is DataTooLargeError {
 }
 
 /**
+ * Type guard checking whether input is an instance of {@link TimeoutError}
+ *
+ * @public
+ */
+export function isTimeoutError(obj: unknown): obj is TimeoutError {
+    return isAnalyticalBackendError(obj) && obj.abeType === AnalyticalBackendErrorTypes.TIMEOUT_ERROR;
+}
+
+/**
  * Type guard checking whether input is an instance of {@link ProtectedDataError}
  *
  * @public

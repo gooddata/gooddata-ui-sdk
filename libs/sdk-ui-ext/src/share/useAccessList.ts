@@ -15,7 +15,12 @@ import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@goo
 import { type GeneralAccessValue, type IUiGranteeAsyncOptions, useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { isPermissionsNotAvailable } from "./accessErrors.js";
-import { deriveGeneralAccess, deriveWorkspacePermissionLevel } from "./accessSummary.js";
+import {
+    composeEffectiveWorkspaceAccess,
+    deriveGeneralAccess,
+    deriveInheritedWorkspaceLevel,
+    deriveWorkspacePermissionLevel,
+} from "./accessSummary.js";
 import { objectShareMessages } from "./messages.js";
 import {
     assigneeIdentityFacts,
@@ -44,10 +49,22 @@ export interface IAccessList {
     hasList: boolean;
     /** Local grantee rows — seeded from the fetch, then authoritative; mutations write through. */
     grantees: IObjectShareGrantee[];
-    /** Workspace vs restricted general access — local state; mutations write through. */
+    /**
+     * Workspace vs restricted general access granted by THIS workspace's own rule —
+     * local state; mutations write through. Excludes inherited (parent-workspace)
+     * rule access, which is exposed separately as `inheritedWorkspaceLevel`.
+     */
     generalAccess: GeneralAccessValue;
     /** Workspace-rule permission level (VIEW/SHARE) — local state; mutations write through. */
     workspaceLevel: "VIEW" | "SHARE";
+    /**
+     * Strongest workspace-wide level inherited from parent workspaces, or undefined
+     * when none. Seeded from the fetch and never mutated: inherited access cannot
+     * be changed from this workspace, so no write-through applies. Effective
+     * (displayed) general access is WORKSPACE whenever this is set, regardless of
+     * the direct `generalAccess` state.
+     */
+    inheritedWorkspaceLevel: "VIEW" | "SHARE" | undefined;
     /** Inline access summary, or undefined before the first load. */
     summary: IObjectAccessSummary | undefined;
     /** Top-level load status surfaced as the controller status. */
@@ -132,6 +149,9 @@ export function useAccessList(
     const [grantees, setGrantees] = useState<IObjectShareGrantee[]>([]);
     const [generalAccess, setGeneralAccess] = useState<GeneralAccessValue>("RESTRICTED");
     const [workspaceLevel, setWorkspaceLevel] = useState<"VIEW" | "SHARE">("VIEW");
+    const [inheritedWorkspaceLevel, setInheritedWorkspaceLevel] = useState<"VIEW" | "SHARE" | undefined>(
+        undefined,
+    );
     // The target the local state was seeded for; undefined until the first seed.
     // Reading state as belonging to the current target hinges on this matching
     // `targetKey` — a target switch makes the old state stale until the re-seed.
@@ -197,6 +217,7 @@ export function useAccessList(
             setGrantees(granteesFromAccessList(fetchedList));
             setGeneralAccess(deriveGeneralAccess(fetchedList.grants));
             setWorkspaceLevel(deriveWorkspacePermissionLevel(fetchedList.grants));
+            setInheritedWorkspaceLevel(deriveInheritedWorkspaceLevel(fetchedList.grants));
             setSeededTarget(targetKey);
             setLoadError(undefined);
         } else if (fetchStatus === "error") {
@@ -294,12 +315,13 @@ export function useAccessList(
         if (!hasList) {
             return undefined;
         }
+        // The summary shows effective access: an inherited rule counts as
+        // workspace access even when this workspace holds no rule of its own.
         return {
-            generalAccess,
-            workspaceLevel: generalAccess === "WORKSPACE" ? workspaceLevel : "VIEW",
+            ...composeEffectiveWorkspaceAccess(generalAccess, workspaceLevel, inheritedWorkspaceLevel),
             granteeCount: namedGrantees.filter((g) => g.pending !== "removing").length,
         };
-    }, [hasList, generalAccess, workspaceLevel, namedGrantees]);
+    }, [hasList, generalAccess, workspaceLevel, inheritedWorkspaceLevel, namedGrantees]);
 
     // "success" only once the *current* target's list has been seeded. After a
     // target switch the previous seed is stale (seededTarget !== targetKey), so
@@ -416,6 +438,7 @@ export function useAccessList(
         grantees: namedGrantees,
         generalAccess,
         workspaceLevel,
+        inheritedWorkspaceLevel,
         summary,
         status,
         loadError,

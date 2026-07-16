@@ -560,6 +560,8 @@
     "parameter_filter.dropdown.error.outOfRange": "Giá trị nằm ngoài phạm vi. Nhập giá trị trong khoảng từ {min} đến {max}.",
     "parameter_filter.dropdown.error.outOfRange.min": "Giá trị nằm ngoài phạm vi. Nhập giá trị từ {min} trở lên.",
     "parameter_filter.dropdown.error.outOfRange.max": "Giá trị nằm ngoài phạm vi. Nhập giá trị từ {max} trở xuống.",
+    "parameter_filter.dropdown.error.tooShort": "Giá trị quá ngắn. Nhập ít nhất {minLength} ký tự.",
+    "parameter_filter.dropdown.error.tooLong": "Giá trị quá dài. Nhập tối đa {maxLength} ký tự.",
     "mvf.applyButton.tooltip.noChanges": "Không có thay đổi nào để áp dụng.",
     "mvf.applyButton.tooltip.emptyValues": "Một hoặc nhiều giá trị trong điều kiện đang trống.",
     "mvf.applyButton.tooltip.emptyDimensionality": "Chưa chọn “Cho mỗi thuộc tính”.",

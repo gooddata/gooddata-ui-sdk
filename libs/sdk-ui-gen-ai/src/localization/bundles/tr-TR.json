@@ -45,6 +45,7 @@
     "gd.gen-ai.feedback.reason.forgot-context": "Önceki bağlamı unuttum",
     "gd.gen-ai.feedback.reason.ignored-instructions": "Yoksayılan veya reddedilen talimatlar",
     "gd.gen-ai.feedback.reason.factually-incorrect": "Gerçeklere dayanmayan",
+    "gd.gen-ai.feedback.reason.answer-too-long": "Yanıt çok uzun sürdü",
     "gd.gen-ai.feedback.reason.other": "Diğer",
     "gd.gen-ai.disclaimer": "Yapay zeka asistanları hata yapabilir. Bu yanıtlara güvenmeden önce kontrol edin.",
     "gd.gen-ai.dialog.label": "AI asistanı konuşması",

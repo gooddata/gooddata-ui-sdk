@@ -45,6 +45,7 @@
     "gd.gen-ai.feedback.reason.forgot-context": "前の文脈を忘れた",
     "gd.gen-ai.feedback.reason.ignored-instructions": "指示を無視または拒否",
     "gd.gen-ai.feedback.reason.factually-incorrect": "事実誤認",
+    "gd.gen-ai.feedback.reason.answer-too-long": "回答に時間がかかりすぎました",
     "gd.gen-ai.feedback.reason.other": "その他",
     "gd.gen-ai.disclaimer": "AIアシスタントは間違いを犯す可能性があります。これらの答えに頼る前に確認してください。",
     "gd.gen-ai.dialog.label": "AIアシスタント会話",

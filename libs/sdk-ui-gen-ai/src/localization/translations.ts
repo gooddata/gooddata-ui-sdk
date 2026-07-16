@@ -7,9 +7,13 @@ import { removeMetadata } from "@gooddata/util";
 
 import { en_US } from "./bundles/en-US.localization-bundle.js";
 
+// English (default) messages for this library's own keys, used as the fallback
+// for locales that are missing keys.
+const DEFAULT_OWN_MESSAGES: ITranslations = removeMetadata(en_US);
+
 const asyncGenAiTranslations: { [locale: string]: () => Promise<ITranslations> } = {
-    "en-US": () => Promise.resolve(removeMetadata(en_US)),
-    "en-US-x-24h": () => Promise.resolve(removeMetadata(en_US)),
+    "en-US": () => Promise.resolve(DEFAULT_OWN_MESSAGES),
+    "en-US-x-24h": () => Promise.resolve(DEFAULT_OWN_MESSAGES),
     "de-DE": () => import("./bundles/de-DE.localization-bundle.js").then((module) => module.de_DE),
     "en-AU": () => import("./bundles/en-AU.localization-bundle.js").then((module) => module.en_AU),
     "en-GB": () => import("./bundles/en-GB.localization-bundle.js").then((module) => module.en_GB),
@@ -46,7 +50,9 @@ const asyncGenAiTranslations: { [locale: string]: () => Promise<ITranslations> }
  */
 const resolveMessagesInternal = async (locale: string): Promise<ITranslations> => {
     const loader = asyncGenAiTranslations[locale] || asyncGenAiTranslations["en-US"];
-    return loader();
+    const messages = await loader();
+    // Fall back to English (default) for any keys missing in the locale bundle.
+    return { ...DEFAULT_OWN_MESSAGES, ...messages };
 };
 
 /**
@@ -58,4 +64,4 @@ const resolveMessagesInternal = async (locale: string): Promise<ITranslations> =
 export const resolveMessages: (locale: string) => Promise<ITranslations> = memoize(resolveMessagesInternal);
 
 export const DEFAULT_LANGUAGE = "en-US";
-export const DEFAULT_MESSAGES = { [DEFAULT_LANGUAGE]: removeMetadata(en_US) };
+export const DEFAULT_MESSAGES = { [DEFAULT_LANGUAGE]: DEFAULT_OWN_MESSAGES };

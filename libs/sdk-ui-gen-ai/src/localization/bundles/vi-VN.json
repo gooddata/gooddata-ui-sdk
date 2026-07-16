@@ -45,6 +45,7 @@
     "gd.gen-ai.feedback.reason.forgot-context": "Quên ngữ cảnh trước đó",
     "gd.gen-ai.feedback.reason.ignored-instructions": "Đã bỏ qua hoặc từ chối hướng dẫn",
     "gd.gen-ai.feedback.reason.factually-incorrect": "Không chính xác về mặt dữ kiện",
+    "gd.gen-ai.feedback.reason.answer-too-long": "Câu trả lời mất quá nhiều thời gian",
     "gd.gen-ai.feedback.reason.other": "Khác",
     "gd.gen-ai.disclaimer": "Trợ lý AI có thể mắc lỗi. Hãy kiểm tra trước khi dựa vào các câu trả lời này.",
     "gd.gen-ai.dialog.label": "Cuộc trò chuyện với trợ lý AI",

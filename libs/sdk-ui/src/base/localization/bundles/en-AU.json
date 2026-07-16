@@ -560,6 +560,8 @@
     "parameter_filter.dropdown.error.outOfRange": "Value is out of range. Enter a value between {min} and {max}.",
     "parameter_filter.dropdown.error.outOfRange.min": "Value is out of range. Enter a value of {min} or more.",
     "parameter_filter.dropdown.error.outOfRange.max": "Value is out of range. Enter a value of {max} or less.",
+    "parameter_filter.dropdown.error.tooShort": "Value is too short. Enter at least {minLength} characters.",
+    "parameter_filter.dropdown.error.tooLong": "Value is too long. Enter at most {maxLength} characters.",
     "mvf.applyButton.tooltip.noChanges": "No changes to apply.",
     "mvf.applyButton.tooltip.emptyValues": "One or more values in the condition are empty.",
     "mvf.applyButton.tooltip.emptyDimensionality": "For each attribute is not selected.",

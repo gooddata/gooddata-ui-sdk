@@ -28,6 +28,10 @@ export interface IBaseChartProps extends ICoreChartProps {
     type: ChartType;
     onLegendReady?: OnLegendReady;
     theme?: ITheme;
+    /**
+     * Theme of record for derived color computations, independent of the presentation theme.
+     */
+    referenceTheme?: ITheme;
 }
 
 type Props = IBaseChartProps & ILoadingInjectedProps;

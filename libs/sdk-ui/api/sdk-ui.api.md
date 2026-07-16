@@ -426,7 +426,7 @@ export const DEFAULT_LANGUAGE = "en-US";
 
 // @internal (undocumented)
 export const DEFAULT_MESSAGES: {
-    "en-US": Record<string, string>;
+    "en-US": ITranslations;
 };
 
 // @public

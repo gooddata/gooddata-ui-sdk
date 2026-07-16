@@ -45,6 +45,7 @@
     "gd.gen-ai.feedback.reason.forgot-context": "Contexte précédent oublié",
     "gd.gen-ai.feedback.reason.ignored-instructions": "Instructions ignorées ou refusées",
     "gd.gen-ai.feedback.reason.factually-incorrect": "Informations factuellement incorrectes",
+    "gd.gen-ai.feedback.reason.answer-too-long": "La réponse a pris trop de temps",
     "gd.gen-ai.feedback.reason.other": "Autre",
     "gd.gen-ai.disclaimer": "Les assistants d’IA peuvent faire des erreurs. Vérifiez avant de vous fier à ces réponses.",
     "gd.gen-ai.dialog.label": "Conversation avec l’assistant IA",

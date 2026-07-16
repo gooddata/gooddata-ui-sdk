@@ -45,6 +45,7 @@
     "gd.gen-ai.feedback.reason.forgot-context": "唔記得之前嘅上下文",
     "gd.gen-ai.feedback.reason.ignored-instructions": "無視或拒絕指示",
     "gd.gen-ai.feedback.reason.factually-incorrect": "事實錯誤",
+    "gd.gen-ai.feedback.reason.answer-too-long": "答案需時過長",
     "gd.gen-ai.feedback.reason.other": "其他",
     "gd.gen-ai.disclaimer": "AI助手可能會犯錯誤。 在依賴呢啲答案之前檢查。",
     "gd.gen-ai.dialog.label": "AI助手對話",

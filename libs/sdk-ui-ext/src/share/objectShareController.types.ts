@@ -94,6 +94,20 @@ export interface IObjectShareControllerState {
      */
     workspaceLevel: "VIEW" | "SHARE";
     /**
+     * Whether workspace-wide access is (at least partly) inherited from a parent
+     * workspace. Inherited rule access grants every user of this workspace access
+     * too, yet cannot be revoked from here — consumers disable the Restricted
+     * option and explain why. `generalAccess` and `workspaceLevel` are effective
+     * values that already account for it.
+     */
+    workspaceAccessInherited: boolean;
+    /**
+     * Whether the workspace-rule level dropdown must be read-only: this workspace
+     * holds no rule of its own to re-grade (access is inherited-only), or an
+     * inherited SHARE pins the effective level regardless of the direct grant.
+     */
+    workspaceLevelLocked: boolean;
+    /**
      * Whether a workspace-level re-grade is in flight. Consumers disable the
      * workspace permission dropdown while true so rapid toggles can't issue
      * overlapping writes that settle out of order.
