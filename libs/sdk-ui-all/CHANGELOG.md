@@ -1,6 +1,44 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 09 Jul 2026 07:12:31 GMT and should not be manually modified.
+This log was last generated on Thu, 16 Jul 2026 06:27:45 GMT and should not be manually modified.
+
+## 11.47.0
+
+Thu, 16 Jul 2026 06:27:45 GMT
+
+### Minor changes
+
+- sdk-ui-charts,sdk-ui-ext,sdk-code-convertors,sdk-code-schemas: Add per-series line style and weight configuration for line charts
+
+### Patches
+
+- sdk-ui-ext,sdk-ui-kit: Fix OLP share dialog showing Restricted despite share-with-all in workspace hierarchies
+
+### Updates
+
+- sdk-ui-all: Show grantee name and email with userID fallbacks in the object share dialog.
+- Conditional formatting (pivot next): drag-to-reorder rules and conditions, inline validations, percent-aware measure value inputs, and attribute value autocomplete
+- sdk-ui-dashboard: Add STRING dashboard parameters (free-text filter-bar control, string runtime overrides) behind `enableStringParameters`
+- sdk-ui-kit, sdk-ui-dashboard: Fix keyboard focus for parameter filter chips on dashboards and in automation dialogs; keyboard selection now closes the add filter menu and Escape closes only the parameter dropdown instead of the parent dialog
+- sdk-ui-dashboard: Fixed inconsistent button sizes when content density is set as 'compact'.
+- sdk-ui-gen-ai: Add answer too long feedback reason option
+- sdk-ui-kit: Extracted a generalized YamlEditor component.
+- sdk-ui-charts: Render all documented distinctPointShapes symbols (star, cross, plus, pentagon, hexagon, octagon, arrow, and the extra triangle orientations) by registering them as custom Highcharts marker symbols, so charts with six or more line series can be assigned unique markers instead of falling back to circle.
+- sdk-ui-all: Fix pivot table sorting when conditional formatting is enabled.
+- Add Pydantic model generation alongside TypedDict AAC types
+- Fix WASM dashboard conversion crypto error and bump datamodel-code-generator floor
+- sdk-ui-kit: UiMenu visual improvements
+- sdk-ui-dashboard, sdk-ui-kit: Fix wrong spacing below wrapped checkbox labels and align PDF export dialog labels (scheduled and ad-hoc export) for consistency and accessibility.
+- sdk-ui-charts: add Mekko (Marimekko) chart visualization type, authorable in Analytical Designer (behind the enableMekkoChart feature flag) and renderable in dashboards and embedded deployments
+- Add Null-safe joins (enableNullJoins) setting management at workspace and organization level, including setEnableNullJoins backend service method.
+- Add Debug information (enableQueryTags) setting management at workspace and organization level, including setEnableQueryTags backend service method.
+- Fix conversation loading forever when reopened after starting a new conversation
+- sdk-ui-pluggable-host: Stop showing the "new version available" toast on redeploy. It could trigger an unexpected reload that lost unsaved work and exposed GoodData branding on white-labelled deployments; the redeploy is now only logged to the console.
+- sdk-ui-kit: Add aria-checked support to UiButton accessibility config.
+- sdk-ui-catalog, sdk-ui-kit: Design QA fixes for Analytics Catalog — place certification badge beside detail title and fix UiAsyncTable suffix icon vertical alignment.
+- sdk-ui-kit: Add tabIndex support to UiCertificationIcon to allow disabling focus; sdk-ui-semantic-search: Show certification badge in chatbot search widget
+- sdk-ui-gen-ai: Show certification badge in chatbot search results; api-client-tiger: Align AiSearchObject certification fields with chatbot search API
+- sdk-ui-kit: Replace span role=button with native button element for the input clear icon to improve accessibility
 
 ## 11.46.0
 
