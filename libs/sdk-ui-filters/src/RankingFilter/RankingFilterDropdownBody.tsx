@@ -272,15 +272,21 @@ export function RankingFilterDropdownBody({
                     )}
                 </div>
                 {isAttributesSectionEnabled ? (
-                    // The section renders its own "Out of" header, chips, catalog picker and reset.
-                    <RankingAttributesSection
-                        attributes={attributeItemsState}
-                        insightAttributes={insightAttributes}
-                        catalogAttributes={catalogAttributes}
-                        loadCatalogAttributes={loadCatalogAttributes}
-                        onAttributesChange={handleAttributesChange}
-                        isMigratedFilter={isMigratedFilter}
-                    />
+                    // The growing "out of" pills scroll in a single dedicated container so that wheel
+                    // events over the pills always scroll them. The condition row stays outside: the
+                    // value input's suggestion menu renders inline (not portaled), so a scrollable
+                    // ancestor around it would clip the open menu.
+                    <div className="gd-rf-attributes-scroll-container">
+                        {/* The section renders its own "Out of" header, chips, catalog picker and reset. */}
+                        <RankingAttributesSection
+                            attributes={attributeItemsState}
+                            insightAttributes={insightAttributes}
+                            catalogAttributes={catalogAttributes}
+                            loadCatalogAttributes={loadCatalogAttributes}
+                            onAttributesChange={handleAttributesChange}
+                            isMigratedFilter={isMigratedFilter}
+                        />
+                    </div>
                 ) : (
                     <>
                         <div className="gd-rf-dropdown-section-title">

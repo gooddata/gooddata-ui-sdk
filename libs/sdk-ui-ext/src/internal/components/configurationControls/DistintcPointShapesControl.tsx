@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type ChangeEvent } from "react";
 
@@ -39,7 +39,6 @@ export function DistinctPointShapesControl({
         <BubbleHoverTrigger showDelay={0} hideDelay={0}>
             <label className="input-checkbox-label">
                 <input
-                    aria-label={valuePath}
                     checked={checked}
                     disabled={disabled}
                     type="checkbox"

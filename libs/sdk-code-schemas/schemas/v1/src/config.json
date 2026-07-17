@@ -100,6 +100,8 @@
         "stack_measures_to_100": { "type": "boolean" },
         "stack_measures": { "type": "boolean" },
         "continuous_line": { "type": "boolean" },
+        "render_as": { "type": "string", "enum": ["filled", "outline"] },
+        "grid_line_shape": { "type": "string", "enum": ["polygon", "circle"] },
         "distinct_point_shapes": {
             "type": "object",
             "properties": {

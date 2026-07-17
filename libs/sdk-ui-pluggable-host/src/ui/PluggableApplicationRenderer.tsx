@@ -58,12 +58,13 @@ export interface IPluggableApplicationRendererProps {
     onOpenAiAssistant?: (question?: string, userContext?: IGenAIUserContext) => void;
     /** Close the host-owned chat, requested by the active app. */
     onCloseAiAssistant?: () => void;
-    /** Report the active app's AI-assistant tag scope and presentation to the host-owned chat. */
+    /** Report the active app's AI-assistant tag scope, presentation and ambient user context to the host-owned chat. */
     onAiAssistantContext?: (context: {
         includeTags?: string[];
         excludeTags?: string[];
         dialogPosition?: "left" | "right";
         embedded?: boolean;
+        userContext?: IGenAIUserContext;
     }) => void;
     /**
      * Ref the renderer populates with a handler that delegates a host-chat link click to the active
@@ -140,6 +141,7 @@ export function PluggableApplicationRenderer({
                     excludeTags: event.payload.excludeTags,
                     dialogPosition: event.payload.dialogPosition,
                     embedded: event.payload.embedded,
+                    userContext: event.payload.userContext,
                 });
                 return;
             }

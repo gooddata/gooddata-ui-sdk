@@ -18,7 +18,6 @@ import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { convertAutomationListToAutomations } from "../../../convertors/fromBackend/AutomationConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from "../../common/automations.js";
-import { getSettingsForCurrentUser } from "../settings/index.js";
 
 import { buildFieldFilter, buildStatusFilter } from "./filterBuilders.js";
 
@@ -126,12 +125,6 @@ export class AutomationsQuery implements IAutomationsQuery {
 
                 const filterObj = this.constructFilter();
 
-                const userSettings = await getSettingsForCurrentUser(
-                    this.authCall,
-                    this.requestParameters.workspaceId,
-                );
-                const enableNewScheduledExport = userSettings.enableNewScheduledExport ?? true;
-
                 const items = await this.authCall((client) =>
                     EntitiesApi_GetAllEntitiesAutomations(client.axios, client.basePath, {
                         ...this.requestParameters,
@@ -158,7 +151,7 @@ export class AutomationsQuery implements IAutomationsQuery {
                         if (!(totalCount === null || totalCount === undefined)) {
                             this.setTotalCount(totalCount);
                         }
-                        return convertAutomationListToAutomations(data, enableNewScheduledExport);
+                        return convertAutomationListToAutomations(data);
                     });
 
                 return { items, totalCount: this.totalCount! };

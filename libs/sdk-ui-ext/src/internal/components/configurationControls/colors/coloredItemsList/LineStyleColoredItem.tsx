@@ -21,6 +21,7 @@ export interface ILineStyleColoredItemProps {
     colorPalette: IColorPalette;
     item: IColoredItem;
     onSelect?: (source: IColoredItem, color: IColor) => void;
+    onReset?: () => void;
     disabled?: boolean;
     chartFill?: IChartFillConfig;
     patternFillIndex?: number | PatternFillName;
@@ -34,6 +35,7 @@ export const LineStyleColoredItem = memo(function LineStyleColoredItem(props: IL
         item,
         colorPalette,
         onSelect,
+        onReset,
         chartFill,
         patternFillIndex,
         disabled,
@@ -85,6 +87,7 @@ export const LineStyleColoredItem = memo(function LineStyleColoredItem(props: IL
                     chartFill={chartFill}
                     patternFillIndex={patternFillIndex}
                     onColorSelected={onColorSelected}
+                    onReset={onReset}
                     onLineStyleChange={(lineStyle) => onLineStyleChange?.(item, lineStyle)}
                     onLineWidthChange={(lineWidth) => onLineWidthChange?.(item, lineWidth)}
                     onClose={() => setDialogOpen(false)}

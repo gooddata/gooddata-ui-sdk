@@ -59,6 +59,11 @@ export interface IGenAIChatProps {
      */
     userContext?: IGenAIUserContext;
     /**
+     * Ambient user context kept in sync by the active hosted application (e.g. the open dashboard
+     * and its live filter state). Persists across messages and drives the chat's context indicator.
+     */
+    ambientUserContext?: IGenAIUserContext;
+    /**
      * Tag identifiers the assistant's object search/autocomplete should be restricted to,
      * reflecting the active hosted application's current view.
      */
@@ -94,6 +99,7 @@ export function GenAIChat({
     askedQuestion,
     askSeq,
     userContext,
+    ambientUserContext,
     includeTags,
     excludeTags,
     canManageProject,
@@ -187,6 +193,7 @@ export function GenAIChat({
             askedQuestion={askedQuestion}
             askSeq={askSeq}
             userContext={userContext}
+            ambientUserContext={ambientUserContext}
             includeTags={includeTags}
             excludeTags={excludeTags}
             canManage={canManageProject}

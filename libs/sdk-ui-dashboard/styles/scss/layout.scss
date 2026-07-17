@@ -56,9 +56,9 @@ $gd-dashboards-section-description-color: var(
         &::after {
             content: "";
             position: absolute;
-            right: 10px;
-            bottom: 5px;
-            left: 10px;
+            right: 0;
+            bottom: -5px;
+            left: 0;
             height: 0;
             border-bottom: 1px dashed kit-variables.$gd-color-disabled;
         }
@@ -94,34 +94,31 @@ $gd-dashboards-section-description-color: var(
 }
 
 .gd-fluid-layout-row-header {
-    padding-right: 20px;
-    padding-left: 20px;
     text-align: center;
 
-    .gd-fluid-layout-row-header-container {
-        margin-top: 16px;
-    }
-
     @media #{kit-variables.$medium-up} {
-        padding-right: 0;
-        padding-left: 0;
         text-align: left;
     }
 
     .gd-row-header-view {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+
         .title {
-            padding: 3px 5px;
+            padding: 0 5px 3px;
             white-space: pre-wrap;
             overflow-wrap: break-word;
         }
 
         .description {
-            padding: 4px 5px 2px;
+            padding: 0 5px 7px;
         }
     }
 
     .gd-row-header-title-wrapper {
         display: flex;
+        align-items: center;
 
         h2,
         h3 {
@@ -131,11 +128,16 @@ $gd-dashboards-section-description-color: var(
         &::before,
         &::after {
             content: "";
-            position: relative;
-            top: 16px;
             flex: 1 1 auto;
             height: 0;
             border-top: 1px solid $gd-dashboards-section-title-lineColor;
+        }
+
+        // Move lines slightly down in edit mode.
+        &.gd-editable-label-container::before,
+        &.gd-editable-label-container::after {
+            position: relative;
+            top: 2px;
         }
 
         &::before {
@@ -458,22 +460,10 @@ $gd-dashboards-section-description-color: var(
                 color: kit-variables.$gd-color-state-blank;
             }
         }
-
-        .gd-row-header-view {
-            .description {
-                padding: 4px 5px 15px; // add bottom padding after section description, same as fluid layout
-            }
-        }
     }
 
     .gd-fluid-layout-row-header-container--with-headers {
-        margin-top: 16px;
-    }
-
-    .gd-dashboard-nested-layout-content:not(.is-dragging-widget) {
-        .gd-fluid-layout-row-header-container--no-headers {
-            margin-top: 0;
-        }
+        margin-top: 4px; // Create a bit of space between editable header and top row separator (that appears on header edit or when dragging visualization/container)
     }
 
     .gd-fluidlayout-column-container {
@@ -487,6 +477,14 @@ $gd-dashboards-section-description-color: var(
     column-gap: 20px;
     grid-auto-rows: min-content; // do not render empty row for potential next grid item (chrome weird behavior)
     flex-grow: 1; // take the whole width of the page (parent flex container).
+
+    /**
+     * Row separators (by default invisible) in edit mode already create spaces between items so no need to enlarge it even more there.
+     * Use :where selector to not mess up with specificity.
+     */
+    :where(.sdk-view-mode-on) & {
+        row-gap: 20px;
+    }
 }
 
 .gd-grid-layout__container--nested {
@@ -498,6 +496,18 @@ $gd-dashboards-section-description-color: var(
     position: relative; // necessary to contain plugin overlay inside of the element
     display: grid;
     grid-template-columns: subgrid;
+
+    /**
+     * Doing grid gaps in edit mode is problematical because there are lots of exceptions (such as row separators, width/height resizers) where the gaps shouldn't be,
+     * so scope it only to view mode. Use :where selector to not mess up with specificity.
+     */
+    :where(.sdk-view-mode-on) & {
+        row-gap: 20px;
+
+        .gd-fluid-layout-row-header {
+            margin-bottom: -20px;
+        }
+    }
 }
 
 .gd-grid-layout__item {
@@ -509,6 +519,11 @@ $gd-dashboards-section-description-color: var(
         // fix height of the title of widget in edit mode, long title is shortened to parent height
         max-height: inherit;
         overflow: hidden;
+    }
+
+    // Some grid items are empty (have no content), which creates unneeded gaps when doing `row-gap`. Remove such elements from the flow.
+    &:empty {
+        display: none;
     }
 }
 
@@ -543,12 +558,10 @@ $gd-dashboards-section-description-color: var(
     .gd-grid-layout__section {
         column-gap: 6px;
         row-gap: 6px;
-    }
 
-    // Hidden items (isHidden=true) render with height:0 but still occupy a grid row,
-    // triggering row-gap before the next item. Hide them from grid flow entirely.
-    .gd-grid-layout__item:empty {
-        display: none;
+        .gd-fluid-layout-row-header {
+            margin-bottom: -6px;
+        }
     }
 
     // Nested layout containers have a JS-computed minHeight (inline style) based on gridHeight × row size.
@@ -577,8 +590,10 @@ $gd-dashboards-section-description-color: var(
     .gd-grid-layout {
         .gd-fluid-layout-row-header {
             .gd-row-header-view {
+                gap: 0;
+
                 .description {
-                    padding: 0;
+                    padding: 0 0 4px 0;
                     font-size: 12px;
                     // stylelint-disable-next-line max-nesting-depth
                     .gd-rich-text-content {

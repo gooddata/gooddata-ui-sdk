@@ -108,7 +108,8 @@
                             "combo_chart",
                             "geo_chart",
                             "geo_area_chart",
-                            "repeater_chart"
+                            "repeater_chart",
+                            "radar_chart"
                         ]
                     }
                 },
@@ -160,6 +161,7 @@
                         "geo_chart",
                         "geo_area_chart",
                         "repeater_chart",
+                        "radar_chart",
                         "attribute_hierarchy"
                     ]
                 }
@@ -197,6 +199,7 @@
                 "geo_chart",
                 "geo_area_chart",
                 "repeater_chart",
+                "radar_chart",
                 "attribute_hierarchy"
             ]
         }

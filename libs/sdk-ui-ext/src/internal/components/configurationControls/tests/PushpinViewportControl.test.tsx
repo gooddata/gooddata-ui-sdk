@@ -173,12 +173,8 @@ describe("PushpinViewportControl", () => {
             createComponent();
 
             expect(screen.queryByText("Navigation")).not.toBeInTheDocument();
-            expect(
-                screen.queryByRole("checkbox", { name: "viewport.navigation.pan" }),
-            ).not.toBeInTheDocument();
-            expect(
-                screen.queryByRole("checkbox", { name: "viewport.navigation.zoom" }),
-            ).not.toBeInTheDocument();
+            expect(screen.queryByRole("checkbox", { name: "Pan" })).not.toBeInTheDocument();
+            expect(screen.queryByRole("checkbox", { name: "Zoom" })).not.toBeInTheDocument();
         });
 
         it("should render navigation toggles with default enabled values", () => {
@@ -189,8 +185,8 @@ describe("PushpinViewportControl", () => {
                 }),
             });
 
-            expect(screen.getByRole("checkbox", { name: "viewport.navigation.pan" })).toBeChecked();
-            expect(screen.getByRole("checkbox", { name: "viewport.navigation.zoom" })).toBeChecked();
+            expect(screen.getByRole("checkbox", { name: "Pan" })).toBeChecked();
+            expect(screen.getByRole("checkbox", { name: "Zoom" })).toBeChecked();
         });
 
         it("should show navigation tooltip text when hovering over the question mark", async () => {
@@ -237,8 +233,8 @@ describe("PushpinViewportControl", () => {
                 },
             });
 
-            expect(screen.getByRole("checkbox", { name: "viewport.navigation.pan" })).not.toBeChecked();
-            expect(screen.getByRole("checkbox", { name: "viewport.navigation.zoom" })).not.toBeChecked();
+            expect(screen.getByRole("checkbox", { name: "Pan" })).not.toBeChecked();
+            expect(screen.getByRole("checkbox", { name: "Zoom" })).not.toBeChecked();
         });
     });
 });

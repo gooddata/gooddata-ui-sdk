@@ -106,7 +106,6 @@ function renderEditHook() {
                 setEditedAutomationFilters: () => {},
                 setStoreFilters: () => {},
                 filtersForNewAutomation: [],
-                enableNewScheduledExport: true,
             }),
         { wrapper },
     );

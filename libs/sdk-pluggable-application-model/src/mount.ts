@@ -280,6 +280,13 @@ export interface IAiAssistantContextChangedEvent extends IPluggableAppEvent {
          * the embedded chat presentation and to delegate link clicks back to the application.
          */
         readonly embedded?: boolean;
+        /**
+         * Ambient user context reflecting the application's current view (e.g. the open dashboard,
+         * its live filter state and widgets). The host keeps the latest reported context and passes
+         * it to the assistant with every message, so answers stay grounded in what the user sees.
+         * Omitted/undefined clears the context (e.g. the user left the dashboard).
+         */
+        readonly userContext?: IGenAIUserContext;
     };
 }
 
@@ -293,6 +300,7 @@ export function aiAssistantContextChanged(payload?: {
     excludeTags?: string[];
     dialogPosition?: "left" | "right";
     embedded?: boolean;
+    userContext?: IGenAIUserContext;
 }): IAiAssistantContextChangedEvent {
     return { type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CONTEXT_CHANGED", payload: payload ?? {} };
 }
@@ -314,11 +322,12 @@ export function isAiAssistantContextChangedEvent(obj: unknown): obj is IAiAssist
     if (typeof payload !== "object" || payload === null || Array.isArray(payload)) {
         return false;
     }
-    const { includeTags, excludeTags, dialogPosition, embedded } = payload as {
+    const { includeTags, excludeTags, dialogPosition, embedded, userContext } = payload as {
         includeTags?: unknown;
         excludeTags?: unknown;
         dialogPosition?: unknown;
         embedded?: unknown;
+        userContext?: unknown;
     };
     const isStringArrayOrUndefined = (value: unknown): boolean =>
         value === undefined || (Array.isArray(value) && value.every((item) => typeof item === "string"));
@@ -326,7 +335,11 @@ export function isAiAssistantContextChangedEvent(obj: unknown): obj is IAiAssist
         isStringArrayOrUndefined(includeTags) &&
         isStringArrayOrUndefined(excludeTags) &&
         (dialogPosition === undefined || dialogPosition === "left" || dialogPosition === "right") &&
-        (embedded === undefined || typeof embedded === "boolean")
+        (embedded === undefined || typeof embedded === "boolean") &&
+        // userContext is an opaque structured object; validate only that it is an object when
+        // present so a later property read on the host side cannot throw. It must stay optional —
+        // host and application deploy independently.
+        (userContext === undefined || (typeof userContext === "object" && userContext !== null))
     );
 }
 

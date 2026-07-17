@@ -1127,7 +1127,7 @@
                         "type": "workspace"
                     },
                     "links": {
-                        "self": "https://staging-automation.staging-ui.stg11.panther.intgdc.com/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f?include=parent&metaInclude=config%2Cpermissions"
+                        "self": "https://automation.staging-ui.stg11.panther.intgdc.com/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f?include=parent&metaInclude=config%2Cpermissions"
                     }
                 },
                 "headers": {
@@ -1256,7 +1256,7 @@
                         "type": "visualizationObject"
                     },
                     "links": {
-                        "self": "https://staging-automation.staging-ui.stg11.panther.intgdc.com/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f/visualizationObjects/3fb464aa-4a2c-4412-8811-609e5d6e06a5"
+                        "self": "https://automation.staging-ui.stg11.panther.intgdc.com/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f/visualizationObjects/3fb464aa-4a2c-4412-8811-609e5d6e06a5"
                     }
                 },
                 "headers": {
@@ -1337,7 +1337,7 @@
                     "features": {
                         "live": {
                             "configuration": {
-                                "host": "https://staging-automation.staging-ui.stg11.panther.intgdc.com",
+                                "host": "https://automation.staging-ui.stg11.panther.intgdc.com",
                                 "key": "default/50e8946c-ef93-4748-bfb1-f0522214cc69/uUu2Xu6caqiAhVHcvaPoVifhQPQFxYKaSe0l5Abl"
                             },
                             "context": {
@@ -1347,11 +1347,11 @@
                         }
                     },
                     "links": {
-                        "organization": "https://staging-automation.staging-ui.stg11.panther.intgdc.com/api/v1/entities/admin/organizations/staging-automation-ui",
-                        "self": "https://staging-automation.staging-ui.stg11.panther.intgdc.com/api/v1/profile",
-                        "user": "https://staging-automation.staging-ui.stg11.panther.intgdc.com/api/v1/entities/users/admin"
+                        "organization": "https://automation.staging-ui.stg11.panther.intgdc.com/api/v1/entities/admin/organizations/automation-ui",
+                        "self": "https://automation.staging-ui.stg11.panther.intgdc.com/api/v1/profile",
+                        "user": "https://automation.staging-ui.stg11.panther.intgdc.com/api/v1/entities/users/admin"
                     },
-                    "organizationId": "staging-automation-ui",
+                    "organizationId": "automation-ui",
                     "organizationName": "Staging Automation UI",
                     "permissions": ["MANAGE", "SELF_CREATE_TOKEN", "BASE_UI_ACCESS"],
                     "telemetryConfig": {

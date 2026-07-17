@@ -7369,6 +7369,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.58.0
         version: 8.58.0(eslint@9.39.4(jiti@2.6.1))(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       '@vitest/eslint-plugin':
         specifier: 1.6.19
         version: 1.6.19(@typescript-eslint/eslint-plugin@8.58.0(@typescript-eslint/parser@8.58.0(eslint@9.39.4(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.4(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.4(jiti@2.6.1))(typescript@5.9.3)(vitest@4.1.8)
@@ -7408,6 +7411,9 @@ importers:
       eslint-plugin-sonarjs:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.4(jiti@2.6.1))
+      npm-run-all:
+        specifier: ^4.1.5
+        version: 4.1.5
       oxfmt:
         specifier: 0.52.0
         version: 0.52.0

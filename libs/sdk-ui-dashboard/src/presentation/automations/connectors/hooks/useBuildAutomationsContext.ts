@@ -16,8 +16,6 @@ import {
     selectEnableAlertOncePerInterval,
     selectEnableAnomalyDetectionAlert,
     selectEnableAutomationEvaluationMode,
-    selectEnableCustomizableCsvDelimiter,
-    selectEnableNewScheduledExport,
     selectEnableSlideshowExports,
     selectExternalRecipient,
     selectIsWhiteLabeled,
@@ -84,7 +82,6 @@ const DEFAULT_MIN_RECURRENCE_MINUTES = "60";
 export function useBuildAutomationsContext(): IAutomationsContextValue {
     const locale = useDashboardSelector(selectLocale);
     const separators = useDashboardSelector(selectSeparators);
-    const enableNewScheduledExport = useDashboardSelector(selectEnableNewScheduledExport);
     const settings = useDashboardSelector(selectSettings);
     const catalogAttributes = useDashboardSelector(selectCatalogAttributes);
     const catalogDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
@@ -133,7 +130,6 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
     const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);
     const canUseAiAssistant = useDashboardSelector(selectCanUseAiAssistant);
     const canManageWorkspace = useDashboardSelector(selectCanManageWorkspace);
-    const enableCustomizableCsvDelimiter = useDashboardSelector(selectEnableCustomizableCsvDelimiter);
     const enableSlideshowExports = useDashboardSelector(selectEnableSlideshowExports);
     const enableAutomationEvaluationMode = useDashboardSelector(selectEnableAutomationEvaluationMode);
     const maxAutomationsRecipients = useDashboardSelector(selectMaxAutomationRecipients);
@@ -179,7 +175,6 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
             enableAnomalyDetectionAlert,
             canUseAiAssistant,
             canManageWorkspace,
-            enableCustomizableCsvDelimiter,
             enableSlideshowExports,
             enableAutomationEvaluationMode,
         }),
@@ -189,7 +184,6 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
             enableAnomalyDetectionAlert,
             canUseAiAssistant,
             canManageWorkspace,
-            enableCustomizableCsvDelimiter,
             enableSlideshowExports,
             enableAutomationEvaluationMode,
         ],
@@ -200,7 +194,6 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
             locale,
             separators,
             settings,
-            enableNewScheduledExport,
             maxAutomationsRecipients,
             isExecutionTimestampMode,
             allowHourlyRecurrence,
@@ -241,7 +234,6 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
             locale,
             separators,
             settings,
-            enableNewScheduledExport,
             maxAutomationsRecipients,
             isExecutionTimestampMode,
             allowHourlyRecurrence,

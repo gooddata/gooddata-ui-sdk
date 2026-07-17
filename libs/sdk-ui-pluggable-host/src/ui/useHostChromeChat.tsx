@@ -40,6 +40,11 @@ export interface IHostChromeChat {
      * current view (e.g. AD's include/exclude tag route filters). Pass empty/undefined to clear.
      */
     setTags: (includeTags?: string[], excludeTags?: string[]) => void;
+    /**
+     * Set the ambient user context reported by the active hosted application (e.g. the open
+     * dashboard and its live filter state). Persists across messages; pass undefined to clear.
+     */
+    setAmbientUserContext: (userContext?: IGenAIUserContext) => void;
 }
 
 export interface IUseHostChromeChatArgs {
@@ -76,6 +81,7 @@ export function useHostChromeChat({
     // seeding effect is otherwise keyed on the question text, which does not change on a repeat).
     const [askSeq, setAskSeq] = useState(0);
     const [userContext, setUserContext] = useState<IGenAIUserContext | undefined>(undefined);
+    const [ambientUserContext, setAmbientUserContext] = useState<IGenAIUserContext | undefined>(undefined);
     const [includeTags, setIncludeTags] = useState<string[] | undefined>(undefined);
     const [excludeTags, setExcludeTags] = useState<string[] | undefined>(undefined);
 
@@ -130,6 +136,7 @@ export function useHostChromeChat({
                 askedQuestion={askedQuestion}
                 askSeq={askSeq}
                 userContext={userContext}
+                ambientUserContext={ambientUserContext}
                 includeTags={includeTags}
                 excludeTags={excludeTags}
                 canManageProject={features.canManageProject}
@@ -152,5 +159,6 @@ export function useHostChromeChat({
         toggle,
         askAiAssistant,
         setTags,
+        setAmbientUserContext,
     };
 }

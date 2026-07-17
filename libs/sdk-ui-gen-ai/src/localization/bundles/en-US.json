@@ -119,6 +119,10 @@
         "text": "Ask your question. Use control+space or control+I for suggestions.",
         "crowdinContext": "Label for the input field where Windows users type their questions to the AI chatbot"
     },
+    "gd.gen-ai.context.add_context": {
+        "text": "Add context",
+        "crowdinContext": "Label for the button that adds a new context to the AI chatbot"
+    },
     "gd.gen-ai.agents": {
         "text": "Agents",
         "crowdinContext": "Label for the agent selector in the AI chatbot input"

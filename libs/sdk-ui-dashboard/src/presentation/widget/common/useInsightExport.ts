@@ -33,7 +33,6 @@ import { type IDashboardInsightWidgetExportResolved } from "../../../model/event
 import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { dispatchAndWaitFor } from "../../../model/store/_infra/dispatchAndWaitFor.js";
 import {
-    selectEnableCustomizableCsvDelimiter,
     selectEnableDashboardTabularExport,
     selectSettings,
 } from "../../../model/store/config/configSelectors.js";
@@ -163,65 +162,41 @@ export const useInsightExport = (config: {
     const { openDialog: openXlsxDialog, closeDialog: closeXlsxDialog } = useExportXlsxDialogContext();
     const { openDialog: openCsvDialog } = useExportCsvDialogContext();
     const { openDialog: openPdfDialog, closeDialog: closePdfDialog } = useExportTabularPdfDialogContext();
-    const csvDelimiterDialogEnabled = useDashboardSelector(selectEnableCustomizableCsvDelimiter);
 
     const onExportCSV = useCallback(() => {
         // if this bombs there is an issue with the logic enabling the buttons
         invariant(exportFunction);
-        if (csvDelimiterDialogEnabled) {
-            openCsvDialog({
-                initialDelimiter: settings?.exportCsvCustomDelimiter,
-                onSubmit: ({ delimiter }) => {
-                    setIsExporting(true);
-                    const exportConfig: IExtendedExportConfig = {
-                        format: "csv",
-                        title,
-                        delimiter,
-                        grandTotalsPosition,
-                    };
+        openCsvDialog({
+            initialDelimiter: settings?.exportCsvCustomDelimiter,
+            onSubmit: ({ delimiter }) => {
+                setIsExporting(true);
+                const exportConfig: IExtendedExportConfig = {
+                    format: "csv",
+                    title,
+                    delimiter,
+                    grandTotalsPosition,
+                };
 
-                    void exportHandler(exportFunction, exportConfig).finally(() => setIsExporting(false));
-                },
-            });
-            return;
-        }
-
-        setIsExporting(true);
-        void exportHandler(exportFunction, { format: "csv", title, grandTotalsPosition }).finally(() =>
-            setIsExporting(false),
-        );
-    }, [
-        exportFunction,
-        exportHandler,
-        csvDelimiterDialogEnabled,
-        grandTotalsPosition,
-        openCsvDialog,
-        settings,
-        setIsExporting,
-        title,
-    ]);
+                void exportHandler(exportFunction, exportConfig).finally(() => setIsExporting(false));
+            },
+        });
+    }, [exportFunction, exportHandler, grandTotalsPosition, openCsvDialog, settings, setIsExporting, title]);
 
     const onExportRawCSV = useCallback(() => {
         // if this bombs there is an issue with the logic enabling the buttons
         invariant(exportRawFunction);
-        if (csvDelimiterDialogEnabled) {
-            openCsvDialog({
-                initialDelimiter: settings?.exportCsvCustomDelimiter,
-                onSubmit: ({ delimiter }) => {
-                    setIsExporting(true);
-                    const exportOptions: IDashboardExportRawOptions = { delimiter };
+        openCsvDialog({
+            initialDelimiter: settings?.exportCsvCustomDelimiter,
+            onSubmit: ({ delimiter }) => {
+                setIsExporting(true);
+                const exportOptions: IDashboardExportRawOptions = { delimiter };
 
-                    void exportRawHandler(exportRawFunction, title, exportOptions).finally(() =>
-                        setIsExporting(false),
-                    );
-                },
-            });
-            return;
-        }
-
-        setIsExporting(true);
-        void exportRawHandler(exportRawFunction, title).finally(() => setIsExporting(false));
-    }, [csvDelimiterDialogEnabled, exportRawFunction, exportRawHandler, openCsvDialog, settings, title]);
+                void exportRawHandler(exportRawFunction, title, exportOptions).finally(() =>
+                    setIsExporting(false),
+                );
+            },
+        });
+    }, [exportRawFunction, exportRawHandler, openCsvDialog, settings, title]);
 
     const onExportPowerPointPresentation = useCallback(() => {
         // if this bombs there is an issue with the logic enabling the buttons

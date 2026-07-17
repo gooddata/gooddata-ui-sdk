@@ -24,6 +24,7 @@ export function aiAssistantContextChanged(payload?: {
     excludeTags?: string[];
     dialogPosition?: "left" | "right";
     embedded?: boolean;
+    userContext?: IGenAIUserContext;
 }): IAiAssistantContextChangedEvent;
 
 // @alpha
@@ -56,6 +57,7 @@ export interface IAiAssistantContextChangedEvent extends IPluggableAppEvent {
         readonly excludeTags?: string[];
         readonly dialogPosition?: "left" | "right";
         readonly embedded?: boolean;
+        readonly userContext?: IGenAIUserContext;
     };
     // (undocumented)
     readonly type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CONTEXT_CHANGED";

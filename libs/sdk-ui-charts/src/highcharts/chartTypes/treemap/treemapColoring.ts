@@ -29,7 +29,7 @@ export class TreemapColorStrategy extends MeasureColorStrategy {
                 stackByAttribute,
                 dv,
             );
-            colorAssignment = result.outputColorAssignment!;
+            colorAssignment = result.fullColorAssignment;
         }
 
         return {

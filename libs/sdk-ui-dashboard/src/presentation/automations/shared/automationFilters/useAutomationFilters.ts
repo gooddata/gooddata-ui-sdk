@@ -139,7 +139,7 @@ export const useAutomationFilters = ({
     availableFilters: FilterContextItem[];
     selectedFilters: FilterContextItem[];
     disableDateFilters?: boolean;
-    onFiltersChange: (filters: FilterContextItem[], enableNewScheduledExport: boolean) => void;
+    onFiltersChange: (filters: FilterContextItem[]) => void;
     onStoreFiltersChange: (
         shouldStore: boolean,
         filters: FilterContextItem[],
@@ -157,7 +157,6 @@ export const useAutomationFilters = ({
         dateFilterContextConfig: dateFilterConfig,
         commonDateFilterId,
         lockedFilters,
-        enableNewScheduledExport,
     } = useAutomationsContext();
 
     const [filterAnnouncement, setFilterAnnouncement] = useState<string>("");
@@ -267,7 +266,7 @@ export const useAutomationFilters = ({
                 }
                 return prevFilter;
             });
-            onFiltersChange(updatedFilters, enableNewScheduledExport);
+            onFiltersChange(updatedFilters);
         },
         // eslint-disable-next-line react-hooks/exhaustive-deps
         [onFiltersChange, selectedFilters, allAttributes, allDateDatasets, intl],
@@ -285,7 +284,7 @@ export const useAutomationFilters = ({
             const updatedFilters = selectedFilters.filter(
                 (prevFilter) => !areFiltersMatchedByIdentifier(prevFilter, filter),
             );
-            onFiltersChange(updatedFilters, enableNewScheduledExport);
+            onFiltersChange(updatedFilters);
 
             focusFilterGroup();
         },
@@ -335,7 +334,7 @@ export const useAutomationFilters = ({
                 );
 
                 const updatedFilters = [...selectedFilters, filter];
-                onFiltersChange(updatedFilters, enableNewScheduledExport);
+                onFiltersChange(updatedFilters);
 
                 announceFiltersChanged(message);
                 setTimeout(focusAddFilterButton);

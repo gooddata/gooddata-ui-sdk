@@ -2,19 +2,22 @@
 
 import { type ReactNode } from "react";
 
-import cx from "classnames";
-import { cloneDeep, set } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { type IColor, isMeasureDescriptor } from "@gooddata/sdk-model";
 import { type ChartFillType, type LineStyle } from "@gooddata/sdk-ui-charts";
-import { Button } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../../locales.js";
 import { fillDropdownItems } from "../../../constants/dropdowns.js";
 import { type IColorConfiguration, type IColoredItem } from "../../../interfaces/Colors.js";
 import { type IReferences, type IVisualizationProperties } from "../../../interfaces/Visualization.js";
-import { getColoredInputItems, getLineStyleProperties, getProperties } from "../../../utils/colors.js";
+import {
+    getColoredInputItems,
+    getLineStyleProperties,
+    getMappingHeaderId,
+    getProperties,
+    removeColorMappingFromProperties,
+} from "../../../utils/colors.js";
 import { getTranslatedDropdownItems, getTranslation } from "../../../utils/translations.js";
 import { ConfigSection } from "../../configurationControls/ConfigSection.js";
 import { DropdownControl } from "../DropdownControl.js";
@@ -94,46 +97,15 @@ export function ColorsSection({
         return isLoading || (!controlsDisabled && colors?.colorPalette && hasMeasures);
     };
 
-    const isDefaultColorMapping = () => {
-        const colorMapping = properties?.controls?.["colorMapping"] ?? [];
-        const lineStyleMapping = supportsLineStyles ? (properties?.controls?.["lineStyleMapping"] ?? []) : [];
-        return (
-            (!colorMapping || colorMapping.length === 0) &&
-            (!lineStyleMapping || lineStyleMapping.length === 0)
-        );
-    };
-
-    const onResetColors = () => {
-        if (isDefaultColorMapping()) {
+    const onResetItem = (item: IColoredItem) => {
+        const id = item.mappingHeader ? getMappingHeaderId(item.mappingHeader) : undefined;
+        if (id === undefined) {
             return;
         }
-        let updatedProperties = set(cloneDeep(properties!), "controls.colorMapping", undefined);
-        if (supportsLineStyles) {
-            updatedProperties = set(updatedProperties, "controls.lineStyleMapping", undefined);
-        }
-        pushData?.({ messageId: COLOR_MAPPING_CHANGED, properties: updatedProperties, references: {} });
-    };
-
-    const renderResetButton = () => {
-        const isDisabled = controlsDisabled || isDefaultColorMapping();
-
-        const classes = cx("gd-color-reset-colors-section", {
-            disabled: isDisabled,
+        pushData?.({
+            messageId: COLOR_MAPPING_CHANGED,
+            properties: removeColorMappingFromProperties(properties!, id),
         });
-
-        return (
-            <div className={classes}>
-                <Button
-                    value={getTranslation(
-                        supportsLineStyles ? messages["resetColorsAndStyles"].id : messages["resetColors"].id,
-                        intl,
-                    )}
-                    className="gd-button-link s-reset-colors-button"
-                    onClick={onResetColors}
-                    disabled={isDisabled}
-                />
-            </div>
-        );
     };
 
     const renderFillDropdown = () => {
@@ -168,7 +140,11 @@ export function ColorsSection({
         const lineStyleMapping = supportsLineStyles
             ? (properties?.controls?.["lineStyleMapping"] ?? [])
             : undefined;
-        const inputItems = getColoredInputItems(colors, lineStyleMapping);
+        const inputItems = getColoredInputItems(
+            colors,
+            lineStyleMapping,
+            properties?.controls?.["colorMapping"],
+        );
         const colorPalette = colors?.colorPalette ? colors.colorPalette : [];
         const chartFill = isChartFillDisabled ? undefined : properties?.controls?.["chartFill"];
 
@@ -178,6 +154,7 @@ export function ColorsSection({
                     colorPalette={colorPalette}
                     inputItems={inputItems}
                     onSelect={onSelect}
+                    onResetItem={onResetItem}
                     disabled={controlsDisabled}
                     isLoading={isLoading}
                     chartFill={chartFill}
@@ -186,7 +163,6 @@ export function ColorsSection({
                     onLineStyleChange={supportsLineStyles ? onLineStyleChange : undefined}
                     onLineWidthChange={supportsLineStyles ? onLineWidthChange : undefined}
                 />
-                {renderResetButton()}
                 {additionalControls}
                 {renderFillDropdown()}
             </>

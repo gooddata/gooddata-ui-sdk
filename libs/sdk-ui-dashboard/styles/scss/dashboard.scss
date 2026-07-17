@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 @use "sass:math";
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins";
 
@@ -8,7 +8,6 @@
 @use "kpi_alert_dialog";
 @use "notifications_channels_dialog";
 @use "scheduled_mail_recipients";
-@use "item-states";
 @use "zIndexes";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
@@ -223,35 +222,6 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
         }
     }
 
-    .is-alert-highlighted {
-        &,
-        &:hover {
-            &::before {
-                top: 0;
-                right: 0;
-                bottom: 0;
-                left: 0;
-                background-color: kit-variables.$gd-palette-primary-dimmed;
-                // in animations
-                animation-name: alert-highlighted;
-                animation-duration: 0.3s;
-                animation-iteration-count: 1;
-            }
-        }
-
-        &.is-alert-triggered,
-        &.is-alert-broken {
-            &,
-            &:hover {
-                // refactor
-                // stylelint-disable-next-line max-nesting-depth
-                &::before {
-                    background-color: kit-variables.$gd-palette-warning-dimmed;
-                }
-            }
-        }
-    }
-
     .is-selectable {
         cursor: pointer;
 
@@ -270,49 +240,6 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
 
     &.gd-highlighted > .dash-item-content-wrapper > .dash-item-content {
         border-color: kit-variables.$gd-palette-primary-base;
-    }
-
-    &.is-selected {
-        .dash-item-action-lw-options {
-            display: block;
-            background-color: variables.$darker-grey-background;
-
-            &::before {
-                color: var(--gd-palette-complementary-0, #fff);
-            }
-        }
-    }
-
-    &:focus-visible {
-        .dash-item-action-options {
-            display: block;
-        }
-
-        .dash-item-action-options.dash-item-action-as-table {
-            display: flex;
-        }
-
-        .dash-item-action-description .dash-item-action-description-trigger {
-            display: flex;
-        }
-    }
-}
-
-@keyframes alert-highlighted {
-    0% {
-        top: 50%;
-        right: 50%;
-        bottom: 50%;
-        left: 50%;
-        opacity: 0;
-    }
-
-    100% {
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        opacity: 1;
     }
 }
 
@@ -379,7 +306,6 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
 
 .type-kpi,
 .viz-type-headline {
-    .dash-item-action-alert,
     .dash-item-action-placeholder {
         top: calc(
             -#{variables.$item-outer-padding} - #{variables.$gd-dashboards-content-kpiWidget-borderWidth}
@@ -493,7 +419,6 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
     justify-content: center;
     gap: variables.$item-action-gap;
 
-    .dash-item-action,
     .dash-item-action-placeholder {
         position: relative;
         top: auto;
@@ -506,288 +431,61 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
     }
 }
 
-.dash-item-action {
-    position: absolute;
-    z-index: 2;
-    top: calc(-#{variables.$item-outer-padding} - #{variables.$gd-dashboards-content-widget-borderWidth});
-    right: calc(-#{variables.$item-outer-padding} - #{variables.$gd-dashboards-content-widget-borderWidth});
-    width: variables.$item-action-width;
-    height: 36px;
-    line-height: 36px;
-    color: kit-variables.$gd-color-text-light;
-    cursor: pointer;
-    border-radius: 20px;
-    font-size: 18px;
-    text-align: center;
-
-    &.disabled {
-        cursor: auto;
-    }
-}
-
-.dash-item-action-as-table {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    &:hover {
-        path {
-            fill: kit-variables.$gd-color-white;
-        }
-    }
-}
-
-.is-desktop {
-    .dash-item-action-alert:not(.disabled):hover,
-    .dash-item-action-options:not(.disabled):hover,
-    .dash-item-action-widget-options-active {
-        color: kit-variables.$gd-color-text-light;
-        background-color: var(--gd-palette-complementary-7-from-theme, kit-variables.$gd-color-text-dimmed);
-    }
-}
-
-.is-mobile {
-    .dash-item-action-alert:not(.disabled),
-    .dash-item-action-options:not(.disabled) {
-        color: kit-variables.$gd-color-link;
-        background: none;
-    }
-
-    .dash-item-action-alert.disabled,
-    .dash-item-action-options.disabled {
-        background-color: transparent;
-    }
-
-    .dash-item-action-widget-options:not(.disabled) {
-        color: kit-variables.$gd-color-label;
-        background-color: kit-variables.$is-focused-background;
-    }
-
-    .dash-item-action-widget-options-active:not(.disabled) {
-        background-color: kit-variables.$gd-color-text-dimmed;
-    }
-}
-
-.dash-item-action.dash-item-action-alert,
-.dash-item-action.dash-item-action-options {
-    display: none;
-    color: kit-variables.$gd-color-label;
-    background-color: kit-variables.$is-focused-background;
-    transition: variables.$transition-length;
-
-    .is-mobile & {
-        display: block;
-    }
-
-    &:hover:not(.disabled) {
-        color: var(--gd-palette-complementary-0-from-theme, inherit);
-        background-color: var(--gd-palette-complementary-7-from-theme, inherit);
-    }
-}
-
-.dash-item-action.dash-item-action-alert {
-    &.disabled {
-        background-image: url("@gooddata/sdk-ui-dashboard/esm/assets/alert-bell-na.svg");
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: 16px;
-    }
-
-    .has-set-alert &,
-    .is-alert-dialog &,
-    .dash-item-content:hover & {
-        display: block;
-    }
-}
-
-.dash-item-action,
 .dash-item-action-placeholder {
     position: absolute;
     z-index: 2;
     top: calc(-#{variables.$item-outer-padding} - #{variables.$gd-dashboards-content-widget-borderWidth});
     right: calc(-#{variables.$item-outer-padding} - #{variables.$gd-dashboards-content-widget-borderWidth});
-}
-
-.dash-item-action-placeholder {
     width: variables.$item-action-width;
     height: variables.$item-action-width;
-
-    &:focus-visible {
-        .dash-item-action-options {
-            display: block;
-        }
-
-        .dash-item-action-options.dash-item-action-as-table {
-            display: flex;
-        }
-    }
 }
 
-.dash-item-action-placeholder-headline {
-    right: calc(
-        -#{variables.$item-outer-padding} - #{variables.$gd-dashboards-content-widget-borderWidth} +
-            #{variables.$item-action-width} + 5px
-    );
-}
-
-.dash-item-action-description {
-    .dash-item-action-description-trigger:not(.is-mobile) {
-        display: none;
-    }
-
-    &:focus-visible {
-        .dash-item-action-description-trigger {
-            display: flex;
-        }
-    }
-}
-
-.dash-item-action-description-trigger {
-    display: flex;
+// Widget action buttons (description, show-as-table, three-dots menu)
+.dash-item-action-button {
+    display: none;
     align-items: center;
     justify-content: center;
+    width: variables.$item-action-width;
+    height: variables.$item-action-width;
     border-radius: 50%;
-    width: 36px;
-    height: 36px;
+    color: var(--gd-palette-complementary-7, #6d7680);
     background-color: kit-variables.$is-focused-background;
     cursor: pointer;
-    transition: 0.2s;
-    font-size: variables.$item-action-icon-width;
-    line-height: variables.$item-action-icon-width;
-
-    .gd-icon-circle-question {
-        margin-top: 2px;
-        color: var(--gd-palette-complementary-7, #6d7680);
-    }
-
-    &:hover {
-        background-color: var(--gd-palette-complementary-7-from-theme, kit-variables.$gd-color-text-dimmed);
-
-        .gd-icon-circle-question {
-            color: kit-variables.$gd-color-text-light;
-        }
-    }
+    transition: variables.$transition-length;
 }
 
-.dash-item-action-description-active .dash-item-action-description-trigger {
-    background-color: var(--gd-palette-complementary-7-from-theme, kit-variables.$gd-color-text-dimmed);
-
-    .gd-icon-circle-question {
-        color: kit-variables.$gd-color-text-light;
-    }
+.dash-item-content:hover .dash-item-action-button,
+.dash-item:focus-visible .dash-item-action-button,
+.dash-item-action-placeholder:focus-visible .dash-item-action-button,
+.dash-item-action-button--active {
+    display: flex;
 }
 
-.type-kpi .dash-item-action-description {
-    position: absolute;
-}
-
-.dash-item-content:hover,
-.dash-item-action-description-active {
-    .dash-item-action-description-trigger:not(.is-mobile) {
+// Show widget buttons not just on small viewports, but also on devices that doesn't support hover (e.g. tablets)
+@media #{kit-variables.$small-only}, (hover: none) {
+    .dash-item-action-button {
         display: flex;
     }
 }
 
-.dash-item-action,
-.dash-item-action-options {
-    width: variables.$item-action-width;
-    height: 36px;
-    border-radius: 20px;
-    font-size: 18px;
-    line-height: 36px;
-    text-align: center;
-    color: kit-variables.$gd-color-text-light;
-    cursor: pointer;
-
-    &.disabled {
-        cursor: auto;
-    }
+.dash-item-action-button:hover,
+.dash-item-action-button--active {
+    color: var(--gd-palette-complementary-0, #fff);
+    background-color: var(--gd-palette-complementary-7-from-theme, kit-variables.$gd-color-text-dimmed);
 }
 
-.dash-item-action-delete {
-    z-index: 2;
-    top: 0;
-    right: 0;
-    padding-top: 1px;
-    background-color: kit-variables.$gd-palette-primary-base;
-
-    &.gd-icon-trash::before {
-        content: url("@gooddata/sdk-ui-dashboard/esm/assets/trash.svg");
-        display: inline-block;
-        width: 20px;
-        height: 20px;
-    }
-
-    &::before {
-        z-index: 2;
-    }
-
-    &:hover {
-        background-color: kit-variables.$gd-palette-error-base;
-    }
+.dash-item-action-widget-options::before {
+    content: "...";
+    position: relative;
+    top: -5px;
+    font-size: 22px;
 }
 
-.dash-item-action-options {
-    display: none;
-    color: kit-variables.$gd-color-label;
-    background-color: kit-variables.$is-focused-background;
-    transition: variables.$transition-length;
+.dash-item-action-description-trigger {
+    font-size: variables.$item-action-icon-width;
 
-    .is-mobile & {
-        display: block;
-    }
-}
-
-.dash-item-content:not(.is-alert-dialog):hover .dash-item-action-options {
-    display: block;
-}
-
-.dash-item-content:not(.is-alert-dialog):hover .dash-item-action-options.dash-item-action-as-table {
-    display: flex;
-}
-
-.dash-item-action-options-active,
-.dash-item-action-widget-options-active {
-    display: block;
-}
-
-.dash-item-action-widget-options {
-    &::before {
-        content: "...";
-        align-self: center;
-        position: relative;
-        top: -5px;
-        color: var(--gd-palette-complementary-7, #6d7680);
-        font-size: 22px;
-    }
-
-    &:hover,
-    &.dash-item-action-widget-options-active {
-        background-color: var(--gd-palette-complementary-7-from-theme, kit-variables.$gd-color-text-dimmed);
-
-        &::before {
-            color: kit-variables.$gd-color-white;
-        }
-    }
-}
-
-.dash-item-action-lw-options {
-    top: 30px;
-    right: 30px;
-    display: none;
-    border-radius: 50%;
-    background-color: var(--gd-palette-complementary-2-from-theme, variables.$grey-background);
-    width: 36px;
-    height: 36px;
-    transition: variables.$transition-length;
-
-    &::before {
-        content: "...";
-        font-size: 22px;
-        position: relative;
-        top: -5px;
-        display: inline;
-        color: variables.$darker-grey-background;
+    .gd-icon-circle-question {
+        margin-top: 2px;
     }
 }
 
@@ -807,9 +505,6 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
 
     @media #{kit-variables.$xsmall-only}, #{kit-variables.$small-only} {
         margin: 0;
-        padding-left: 5px;
-        padding-right: 5px;
-        padding-bottom: 5px;
     }
 }
 
@@ -970,25 +665,26 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
             }
         }
 
-        &.gd-dashboard-nested-layout-widget {
-            .gd-dashboard-nested-layout-widget {
-                padding: 10px 0 0 0; // make space for column drop zone in second level and below
+        /**
+         * View mode now uses grid gap. Keep spacing with padding in edit mode only, where using grid gap is problematic.
+         * Use :where selector to not mess up with specificity.
+         */
+        :where(.sdk-edit-mode-on) & {
+            &.gd-dashboard-nested-layout-widget {
+                .gd-dashboard-nested-layout-widget {
+                    padding: 10px 0 0 0; // make space for column drop zone in second level and below
+                }
+            }
+
+            &:not(.gd-dashboard-nested-layout-widget):not(.gd-first-container-row-widget):not(
+                    .drag-info-placeholder
+                ) {
+                padding: 10px 0; // no place between widgets, render only containers for resizers
+            }
+            &.gd-first-container-row-widget:not(.gd-dashboard-nested-layout-widget) {
+                padding: 0 0 10px 0;
             }
         }
-
-        &:not(.gd-dashboard-nested-layout-widget):not(.gd-first-container-row-widget):not(
-                .drag-info-placeholder
-            ) {
-            padding: 10px 0; // no place between widgets, render only containers for resizers
-        }
-
-        &.gd-first-container-row-widget:not(.gd-dashboard-nested-layout-widget) {
-            padding: 0 0 10px 0;
-        }
-    }
-
-    .gd-empty-nested-layout {
-        padding: 10px 0;
     }
 
     .gd-fluidlayout-column-container {
@@ -1024,6 +720,38 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
         font-weight: 800;
     }
 
+    .gd-absolute-row {
+        gap: 5px;
+        top: 10px;
+        right: 15px;
+        height: variables.$item-action-width-compact;
+
+        .dash-item-action-placeholder {
+            top: auto;
+            right: auto;
+        }
+    }
+
+    .dash-item-action-placeholder {
+        top: 10px;
+        right: 15px;
+        width: variables.$item-action-width-compact;
+        height: variables.$item-action-width-compact;
+    }
+
+    .dash-item-action-button {
+        width: variables.$item-action-width-compact;
+        height: variables.$item-action-width-compact;
+    }
+
+    .dash-item-action-widget-options::before {
+        font-size: 14px;
+    }
+
+    .dash-item-action-description-trigger {
+        font-size: 12px;
+    }
+
     .gd-grid-layout {
         .dash-item {
             &.gd-dashboard-nested-layout-widget {
@@ -1041,10 +769,6 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
             &.gd-first-container-row-widget:not(.gd-dashboard-nested-layout-widget) {
                 padding: 0;
             }
-        }
-
-        .gd-empty-nested-layout {
-            padding: 0;
         }
     }
 }

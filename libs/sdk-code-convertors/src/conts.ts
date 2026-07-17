@@ -42,6 +42,7 @@ export const VisualisationsTypes = [
     "geo_chart",
     "geo_area_chart",
     "repeater_chart",
+    "radar_chart",
 ];
 
 /** @internal */

@@ -10815,9 +10815,6 @@ export const selectEnableKDDependentFilters: DashboardSelector<boolean>;
 // @alpha
 export const selectEnableMeasureValueFilterKD: DashboardSelector<boolean>;
 
-// @internal
-export const selectEnableNewScheduledExport: DashboardSelector<boolean>;
-
 // @internal (undocumented)
 export const selectEnableOrchestratedTabularExports: DashboardSelector<boolean>;
 

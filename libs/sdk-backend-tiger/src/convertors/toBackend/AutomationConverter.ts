@@ -30,7 +30,6 @@ import { convertAttribute } from "./afm/AttributeConverter.js";
 import { convertMeasure } from "./afm/MeasureConverter.js";
 import { convertParameterValues } from "./afm/toAfmResultSpec.js";
 import {
-    convertExportDefinitionRequestPayload,
     convertToDashboardTabularExportRequest,
     convertToImageExportRequest,
     convertToRawExportRequest,
@@ -43,7 +42,6 @@ import { toDateDataSetQualifier } from "./ObjRefConverter.js";
 
 export function convertAutomation(
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,
-    enableNewScheduledExport: boolean,
     widgetExecution?: IExecutionDefinition,
     overrides?: IRawExportCustomOverrides,
 ): JsonApiAutomationIn {
@@ -103,17 +101,6 @@ export function convertAutomation(
               metadata,
           }
         : {};
-
-    const tabularExportsOld = exportDefinitions
-        ?.filter((ed) => isExportDefinitionVisualizationObjectRequestPayload(ed.requestPayload))
-        .map((ed) => ({
-            requestPayload: convertExportDefinitionRequestPayload(ed.requestPayload, ed.title),
-        }));
-    const visualExportsOld = exportDefinitions
-        ?.filter((ed) => isExportDefinitionDashboardRequestPayload(ed.requestPayload))
-        .map((ed) => ({
-            requestPayload: convertExportDefinitionRequestPayload(ed.requestPayload, ed.title),
-        }));
 
     const {
         tabularExports,
@@ -246,11 +233,11 @@ export function convertAutomation(
             tags,
             details,
             state,
-            tabularExports: enableNewScheduledExport ? tabularExports : tabularExportsOld,
-            visualExports: enableNewScheduledExport ? visualExports : visualExportsOld,
+            tabularExports,
+            visualExports,
             imageExports,
             slidesExports,
-            dashboardTabularExports: enableNewScheduledExport ? dashboardTabularExports : undefined,
+            dashboardTabularExports,
             rawExports,
             externalRecipients,
             ...metadataObj,

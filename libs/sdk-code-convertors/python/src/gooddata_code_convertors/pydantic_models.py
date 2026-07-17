@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: a24115f6345c86cd254fa623ff5aea6964832a8a7585392404e1ac2eb7839bbc
+# schema-hash: 4c1b8c0da13285736445d4b4810c96a8e87ae2e8bd9230a41f3ffa931abd6d66
 
 from __future__ import annotations
 
@@ -154,6 +154,7 @@ __all__ = [
     "Granularity",
     "Granularity1",
     "Granularity2",
+    "GridLineShape",
     "Identifier",
     "IgnoredDrillDown",
     "IgnoredDrillDown1",
@@ -284,6 +285,7 @@ __all__ = [
     "QueryTextFilter1",
     "QueryTextFilter2",
     "Reference",
+    "RenderAs",
     "RowHeight",
     "Rule",
     "Scope",
@@ -335,6 +337,7 @@ __all__ = [
     "Type118",
     "Type119",
     "Type120",
+    "Type121",
     "Type13",
     "Type15",
     "Type16",
@@ -418,6 +421,7 @@ __all__ = [
     "Visualisation20",
     "Visualisation21",
     "Visualisation22",
+    "Visualisation23",
     "Visualisation3",
     "Visualisation4",
     "Visualisation5",
@@ -467,6 +471,7 @@ class Type(Enum):
     geo_chart = 'geo_chart'
     geo_area_chart = 'geo_area_chart'
     repeater_chart = 'repeater_chart'
+    radar_chart = 'radar_chart'
     attribute_hierarchy = 'attribute_hierarchy'
     dataset_1 = 'dataset'
     date_1 = 'date'
@@ -495,6 +500,7 @@ class Type(Enum):
     geo_chart_1 = 'geo_chart'
     geo_area_chart_1 = 'geo_area_chart'
     repeater_chart_1 = 'repeater_chart'
+    radar_chart_1 = 'radar_chart'
     attribute_hierarchy_1 = 'attribute_hierarchy'
 
 
@@ -3000,6 +3006,16 @@ class ChartFill(BaseModel):
     pattern_name_mapping: dict[str, PatternNameMapping] | None = None
 
 
+class RenderAs(Enum):
+    filled = 'filled'
+    outline = 'outline'
+
+
+class GridLineShape(Enum):
+    polygon = 'polygon'
+    circle = 'circle'
+
+
 class PointShapeMapping(Enum):
     circle = 'circle'
     square = 'square'
@@ -3687,6 +3703,7 @@ class Type99(Enum):
     geo_chart = 'geo_chart'
     geo_area_chart = 'geo_area_chart'
     repeater_chart = 'repeater_chart'
+    radar_chart = 'radar_chart'
     table_1 = 'table'
     bar_chart_1 = 'bar_chart'
     column_chart_1 = 'column_chart'
@@ -3709,6 +3726,7 @@ class Type99(Enum):
     geo_chart_1 = 'geo_chart'
     geo_area_chart_1 = 'geo_area_chart'
     repeater_chart_1 = 'repeater_chart'
+    radar_chart_1 = 'radar_chart'
     table_2 = 'table'
 
 
@@ -3735,6 +3753,7 @@ class Type100(Enum):
     geo_chart = 'geo_chart'
     geo_area_chart = 'geo_area_chart'
     repeater_chart = 'repeater_chart'
+    radar_chart = 'radar_chart'
     table_1 = 'table'
     bar_chart_1 = 'bar_chart'
     column_chart_1 = 'column_chart'
@@ -3757,6 +3776,7 @@ class Type100(Enum):
     geo_chart_1 = 'geo_chart'
     geo_area_chart_1 = 'geo_area_chart'
     repeater_chart_1 = 'repeater_chart'
+    radar_chart_1 = 'radar_chart'
     bar_chart_2 = 'bar_chart'
 
 
@@ -3783,6 +3803,7 @@ class Type101(Enum):
     geo_chart = 'geo_chart'
     geo_area_chart = 'geo_area_chart'
     repeater_chart = 'repeater_chart'
+    radar_chart = 'radar_chart'
     table_1 = 'table'
     bar_chart_1 = 'bar_chart'
     column_chart_1 = 'column_chart'
@@ -3805,6 +3826,7 @@ class Type101(Enum):
     geo_chart_1 = 'geo_chart'
     geo_area_chart_1 = 'geo_area_chart'
     repeater_chart_1 = 'repeater_chart'
+    radar_chart_1 = 'radar_chart'
     column_chart_2 = 'column_chart'
 
 
@@ -3831,6 +3853,7 @@ class Type102(Enum):
     geo_chart = 'geo_chart'
     geo_area_chart = 'geo_area_chart'
     repeater_chart = 'repeater_chart'
+    radar_chart = 'radar_chart'
     table_1 = 'table'
     bar_chart_1 = 'bar_chart'
     column_chart_1 = 'column_chart'
@@ -3853,6 +3876,7 @@ class Type102(Enum):
     geo_chart_1 = 'geo_chart'
     geo_area_chart_1 = 'geo_area_chart'
     repeater_chart_1 = 'repeater_chart'
+    radar_chart_1 = 'radar_chart'
     line_chart_2 = 'line_chart'
 
 
@@ -3879,6 +3903,7 @@ class Type103(Enum):
     geo_chart = 'geo_chart'
     geo_area_chart = 'geo_area_chart'
     repeater_chart = 'repeater_chart'
+    radar_chart = 'radar_chart'
     table_1 = 'table'
     bar_chart_1 = 'bar_chart'
     column_chart_1 = 'column_chart'
@@ -3901,6 +3926,7 @@ class Type103(Enum):
     geo_chart_1 = 'geo_chart'
     geo_area_chart_1 = 'geo_area_chart'
     repeater_chart_1 = 'repeater_chart'
+    radar_chart_1 = 'radar_chart'
     area_chart_2 = 'area_chart'
 
 
@@ -3927,6 +3953,7 @@ class Type104(Enum):
     geo_chart = 'geo_chart'
     geo_area_chart = 'geo_area_chart'
     repeater_chart = 'repeater_chart'
+    radar_chart = 'radar_chart'
     table_1 = 'table'
     bar_chart_1 = 'bar_chart'
     column_chart_1 = 'column_chart'
@@ -3949,6 +3976,7 @@ class Type104(Enum):
     geo_chart_1 = 'geo_chart'
     geo_area_chart_1 = 'geo_area_chart'
     repeater_chart_1 = 'repeater_chart'
+    radar_chart_1 = 'radar_chart'
     scatter_chart_2 = 'scatter_chart'
 
 
@@ -3975,6 +4003,7 @@ class Type105(Enum):
     geo_chart = 'geo_chart'
     geo_area_chart = 'geo_area_chart'
     repeater_chart = 'repeater_chart'
+    radar_chart = 'radar_chart'
     table_1 = 'table'
     bar_chart_1 = 'bar_chart'
     column_chart_1 = 'column_chart'
@@ -3997,6 +4026,7 @@ class Type105(Enum):
     geo_chart_1 = 'geo_chart'
     geo_area_chart_1 = 'geo_area_chart'
     repeater_chart_1 = 'repeater_chart'
+    radar_chart_1 = 'radar_chart'
     bubble_chart_2 = 'bubble_chart'
 
 
@@ -4023,6 +4053,7 @@ class Type106(Enum):
     geo_chart = 'geo_chart'
     geo_area_chart = 'geo_area_chart'
     repeater_chart = 'repeater_chart'
+    radar_chart = 'radar_chart'
     table_1 = 'table'
     bar_chart_1 = 'bar_chart'
     column_chart_1 = 'column_chart'
@@ -4045,6 +4076,7 @@ class Type106(Enum):
     geo_chart_1 = 'geo_chart'
     geo_area_chart_1 = 'geo_area_chart'
     repeater_chart_1 = 'repeater_chart'
+    radar_chart_1 = 'radar_chart'
     pie_chart_2 = 'pie_chart'
 
 
@@ -4071,6 +4103,7 @@ class Type107(Enum):
     geo_chart = 'geo_chart'
     geo_area_chart = 'geo_area_chart'
     repeater_chart = 'repeater_chart'
+    radar_chart = 'radar_chart'
     table_1 = 'table'
     bar_chart_1 = 'bar_chart'
     column_chart_1 = 'column_chart'
@@ -4093,6 +4126,7 @@ class Type107(Enum):
     geo_chart_1 = 'geo_chart'
     geo_area_chart_1 = 'geo_area_chart'
     repeater_chart_1 = 'repeater_chart'
+    radar_chart_1 = 'radar_chart'
     donut_chart_2 = 'donut_chart'
 
 
@@ -4119,6 +4153,7 @@ class Type108(Enum):
     geo_chart = 'geo_chart'
     geo_area_chart = 'geo_area_chart'
     repeater_chart = 'repeater_chart'
+    radar_chart = 'radar_chart'
     table_1 = 'table'
     bar_chart_1 = 'bar_chart'
     column_chart_1 = 'column_chart'
@@ -4141,6 +4176,7 @@ class Type108(Enum):
     geo_chart_1 = 'geo_chart'
     geo_area_chart_1 = 'geo_area_chart'
     repeater_chart_1 = 'repeater_chart'
+    radar_chart_1 = 'radar_chart'
     treemap_chart_2 = 'treemap_chart'
 
 
@@ -4167,6 +4203,7 @@ class Type109(Enum):
     geo_chart = 'geo_chart'
     geo_area_chart = 'geo_area_chart'
     repeater_chart = 'repeater_chart'
+    radar_chart = 'radar_chart'
     table_1 = 'table'
     bar_chart_1 = 'bar_chart'
     column_chart_1 = 'column_chart'
@@ -4189,6 +4226,7 @@ class Type109(Enum):
     geo_chart_1 = 'geo_chart'
     geo_area_chart_1 = 'geo_area_chart'
     repeater_chart_1 = 'repeater_chart'
+    radar_chart_1 = 'radar_chart'
     pyramid_chart_2 = 'pyramid_chart'
 
 
@@ -4215,6 +4253,7 @@ class Type110(Enum):
     geo_chart = 'geo_chart'
     geo_area_chart = 'geo_area_chart'
     repeater_chart = 'repeater_chart'
+    radar_chart = 'radar_chart'
     table_1 = 'table'
     bar_chart_1 = 'bar_chart'
     column_chart_1 = 'column_chart'
@@ -4237,6 +4276,7 @@ class Type110(Enum):
     geo_chart_1 = 'geo_chart'
     geo_area_chart_1 = 'geo_area_chart'
     repeater_chart_1 = 'repeater_chart'
+    radar_chart_1 = 'radar_chart'
     funnel_chart_2 = 'funnel_chart'
 
 
@@ -4263,6 +4303,7 @@ class Type111(Enum):
     geo_chart = 'geo_chart'
     geo_area_chart = 'geo_area_chart'
     repeater_chart = 'repeater_chart'
+    radar_chart = 'radar_chart'
     table_1 = 'table'
     bar_chart_1 = 'bar_chart'
     column_chart_1 = 'column_chart'
@@ -4285,6 +4326,7 @@ class Type111(Enum):
     geo_chart_1 = 'geo_chart'
     geo_area_chart_1 = 'geo_area_chart'
     repeater_chart_1 = 'repeater_chart'
+    radar_chart_1 = 'radar_chart'
     heatmap_chart_2 = 'heatmap_chart'
 
 
@@ -4311,6 +4353,7 @@ class Type112(Enum):
     geo_chart = 'geo_chart'
     geo_area_chart = 'geo_area_chart'
     repeater_chart = 'repeater_chart'
+    radar_chart = 'radar_chart'
     table_1 = 'table'
     bar_chart_1 = 'bar_chart'
     column_chart_1 = 'column_chart'
@@ -4333,6 +4376,7 @@ class Type112(Enum):
     geo_chart_1 = 'geo_chart'
     geo_area_chart_1 = 'geo_area_chart'
     repeater_chart_1 = 'repeater_chart'
+    radar_chart_1 = 'radar_chart'
     bullet_chart_2 = 'bullet_chart'
 
 
@@ -4359,6 +4403,7 @@ class Type113(Enum):
     geo_chart = 'geo_chart'
     geo_area_chart = 'geo_area_chart'
     repeater_chart = 'repeater_chart'
+    radar_chart = 'radar_chart'
     table_1 = 'table'
     bar_chart_1 = 'bar_chart'
     column_chart_1 = 'column_chart'
@@ -4381,6 +4426,7 @@ class Type113(Enum):
     geo_chart_1 = 'geo_chart'
     geo_area_chart_1 = 'geo_area_chart'
     repeater_chart_1 = 'repeater_chart'
+    radar_chart_1 = 'radar_chart'
     waterfall_chart_2 = 'waterfall_chart'
 
 
@@ -4407,6 +4453,7 @@ class Type114(Enum):
     geo_chart = 'geo_chart'
     geo_area_chart = 'geo_area_chart'
     repeater_chart = 'repeater_chart'
+    radar_chart = 'radar_chart'
     table_1 = 'table'
     bar_chart_1 = 'bar_chart'
     column_chart_1 = 'column_chart'
@@ -4429,6 +4476,7 @@ class Type114(Enum):
     geo_chart_1 = 'geo_chart'
     geo_area_chart_1 = 'geo_area_chart'
     repeater_chart_1 = 'repeater_chart'
+    radar_chart_1 = 'radar_chart'
     dependency_wheel_chart_2 = 'dependency_wheel_chart'
 
 
@@ -4455,6 +4503,7 @@ class Type115(Enum):
     geo_chart = 'geo_chart'
     geo_area_chart = 'geo_area_chart'
     repeater_chart = 'repeater_chart'
+    radar_chart = 'radar_chart'
     table_1 = 'table'
     bar_chart_1 = 'bar_chart'
     column_chart_1 = 'column_chart'
@@ -4477,6 +4526,7 @@ class Type115(Enum):
     geo_chart_1 = 'geo_chart'
     geo_area_chart_1 = 'geo_area_chart'
     repeater_chart_1 = 'repeater_chart'
+    radar_chart_1 = 'radar_chart'
     sankey_chart_2 = 'sankey_chart'
 
 
@@ -4503,6 +4553,7 @@ class Type116(Enum):
     geo_chart = 'geo_chart'
     geo_area_chart = 'geo_area_chart'
     repeater_chart = 'repeater_chart'
+    radar_chart = 'radar_chart'
     table_1 = 'table'
     bar_chart_1 = 'bar_chart'
     column_chart_1 = 'column_chart'
@@ -4525,6 +4576,7 @@ class Type116(Enum):
     geo_chart_1 = 'geo_chart'
     geo_area_chart_1 = 'geo_area_chart'
     repeater_chart_1 = 'repeater_chart'
+    radar_chart_1 = 'radar_chart'
     headline_chart_2 = 'headline_chart'
 
 
@@ -4551,6 +4603,7 @@ class Type117(Enum):
     geo_chart = 'geo_chart'
     geo_area_chart = 'geo_area_chart'
     repeater_chart = 'repeater_chart'
+    radar_chart = 'radar_chart'
     table_1 = 'table'
     bar_chart_1 = 'bar_chart'
     column_chart_1 = 'column_chart'
@@ -4573,6 +4626,7 @@ class Type117(Enum):
     geo_chart_1 = 'geo_chart'
     geo_area_chart_1 = 'geo_area_chart'
     repeater_chart_1 = 'repeater_chart'
+    radar_chart_1 = 'radar_chart'
     combo_chart_2 = 'combo_chart'
 
 
@@ -4599,6 +4653,7 @@ class Type118(Enum):
     geo_chart = 'geo_chart'
     geo_area_chart = 'geo_area_chart'
     repeater_chart = 'repeater_chart'
+    radar_chart = 'radar_chart'
     table_1 = 'table'
     bar_chart_1 = 'bar_chart'
     column_chart_1 = 'column_chart'
@@ -4621,6 +4676,7 @@ class Type118(Enum):
     geo_chart_1 = 'geo_chart'
     geo_area_chart_1 = 'geo_area_chart'
     repeater_chart_1 = 'repeater_chart'
+    radar_chart_1 = 'radar_chart'
     geo_chart_2 = 'geo_chart'
 
 
@@ -4647,6 +4703,7 @@ class Type119(Enum):
     geo_chart = 'geo_chart'
     geo_area_chart = 'geo_area_chart'
     repeater_chart = 'repeater_chart'
+    radar_chart = 'radar_chart'
     table_1 = 'table'
     bar_chart_1 = 'bar_chart'
     column_chart_1 = 'column_chart'
@@ -4669,6 +4726,7 @@ class Type119(Enum):
     geo_chart_1 = 'geo_chart'
     geo_area_chart_1 = 'geo_area_chart'
     repeater_chart_1 = 'repeater_chart'
+    radar_chart_1 = 'radar_chart'
     geo_area_chart_2 = 'geo_area_chart'
 
 
@@ -4695,6 +4753,7 @@ class Type120(Enum):
     geo_chart = 'geo_chart'
     geo_area_chart = 'geo_area_chart'
     repeater_chart = 'repeater_chart'
+    radar_chart = 'radar_chart'
     table_1 = 'table'
     bar_chart_1 = 'bar_chart'
     column_chart_1 = 'column_chart'
@@ -4717,7 +4776,58 @@ class Type120(Enum):
     geo_chart_1 = 'geo_chart'
     geo_area_chart_1 = 'geo_area_chart'
     repeater_chart_1 = 'repeater_chart'
+    radar_chart_1 = 'radar_chart'
     repeater_chart_2 = 'repeater_chart'
+
+
+class Type121(Enum):
+    table = 'table'
+    bar_chart = 'bar_chart'
+    column_chart = 'column_chart'
+    line_chart = 'line_chart'
+    area_chart = 'area_chart'
+    scatter_chart = 'scatter_chart'
+    bubble_chart = 'bubble_chart'
+    pie_chart = 'pie_chart'
+    donut_chart = 'donut_chart'
+    treemap_chart = 'treemap_chart'
+    pyramid_chart = 'pyramid_chart'
+    funnel_chart = 'funnel_chart'
+    heatmap_chart = 'heatmap_chart'
+    bullet_chart = 'bullet_chart'
+    waterfall_chart = 'waterfall_chart'
+    dependency_wheel_chart = 'dependency_wheel_chart'
+    sankey_chart = 'sankey_chart'
+    headline_chart = 'headline_chart'
+    combo_chart = 'combo_chart'
+    geo_chart = 'geo_chart'
+    geo_area_chart = 'geo_area_chart'
+    repeater_chart = 'repeater_chart'
+    radar_chart = 'radar_chart'
+    table_1 = 'table'
+    bar_chart_1 = 'bar_chart'
+    column_chart_1 = 'column_chart'
+    line_chart_1 = 'line_chart'
+    area_chart_1 = 'area_chart'
+    scatter_chart_1 = 'scatter_chart'
+    bubble_chart_1 = 'bubble_chart'
+    pie_chart_1 = 'pie_chart'
+    donut_chart_1 = 'donut_chart'
+    treemap_chart_1 = 'treemap_chart'
+    pyramid_chart_1 = 'pyramid_chart'
+    funnel_chart_1 = 'funnel_chart'
+    heatmap_chart_1 = 'heatmap_chart'
+    bullet_chart_1 = 'bullet_chart'
+    waterfall_chart_1 = 'waterfall_chart'
+    dependency_wheel_chart_1 = 'dependency_wheel_chart'
+    sankey_chart_1 = 'sankey_chart'
+    headline_chart_1 = 'headline_chart'
+    combo_chart_1 = 'combo_chart'
+    geo_chart_1 = 'geo_chart'
+    geo_area_chart_1 = 'geo_area_chart'
+    repeater_chart_1 = 'repeater_chart'
+    radar_chart_1 = 'radar_chart'
+    radar_chart_2 = 'radar_chart'
 
 
 class AttributeHierarchy1(BaseModel):
@@ -5575,6 +5685,8 @@ class Config(BaseModel):
     stack_measures_to_100: bool | None = None
     stack_measures: bool | None = None
     continuous_line: bool | None = None
+    render_as: RenderAs | None = None
+    grid_line_shape: GridLineShape | None = None
     distinct_point_shapes: DistinctPointShapes | None = None
     total_enabled: bool | None = None
     total_name: str | None = None
@@ -7475,6 +7587,46 @@ class Visualisation22(BaseModel):
     )
 
 
+class Visualisation23(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    type: Type121 = Field(..., description='Type of visualisation.')
+    id: Identifier = Field(..., description='A unique identifier of the visualisation.')
+    title: Title | None = Field(
+        None,
+        description='An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.',
+    )
+    description: Description | None = Field(
+        None, description='An optional description of the visualisation.'
+    )
+    tags: Tags | None = Field(
+        None, description='A list of strings - metadata tags of this visualisation.'
+    )
+    show_in_ai_results: bool | None = Field(
+        None,
+        description='Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible.',
+    )
+    is_hidden: bool | None = Field(
+        None,
+        deprecated=True,
+        description="Deprecated. Use 'show_in_ai_results' instead.",
+    )
+    query: Query = Field(..., description='Query definition of visualisation.')
+    config: Config | None = Field(
+        None, description='Configuration of visualisation of defined type.'
+    )
+    metrics: list[BucketItem] | None = Field(
+        None, description='A list of metrics in this visualisation.'
+    )
+    view_by: list[BucketItem] | None = Field(
+        None, description='A list of view by attributes in this visualisation.'
+    )
+    segment_by: list[BucketItem] | None = Field(
+        None, description='A list of segment by attributes in this visualisation.'
+    )
+
+
 class Visualisation(
     RootModel[
         Visualisation1
@@ -7499,6 +7651,7 @@ class Visualisation(
         | Visualisation20
         | Visualisation21
         | Visualisation22
+        | Visualisation23
     ]
 ):
     root: (
@@ -7524,6 +7677,7 @@ class Visualisation(
         | Visualisation20
         | Visualisation21
         | Visualisation22
+        | Visualisation23
     ) = Field(
         ...,
         description='JSON schema for Gooddata Analytics Visualisation',

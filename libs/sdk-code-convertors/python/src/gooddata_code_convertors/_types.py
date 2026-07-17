@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: a24115f6345c86cd254fa623ff5aea6964832a8a7585392404e1ac2eb7839bbc
+# schema-hash: 4c1b8c0da13285736445d4b4810c96a8e87ae2e8bd9230a41f3ffa931abd6d66
 
 from __future__ import annotations
 
@@ -209,6 +209,7 @@ __all__ = [
     "Visualisation20",
     "Visualisation21",
     "Visualisation22",
+    "Visualisation23",
     "Visualisation3",
     "Visualisation4",
     "Visualisation5",
@@ -228,7 +229,7 @@ __all__ = [
 
 
 class Metadata8(TypedDict):
-    type: Literal['dataset', 'date', 'metric', 'dashboard', 'plugin', 'table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'attribute_hierarchy']
+    type: Literal['dataset', 'date', 'metric', 'dashboard', 'plugin', 'table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'radar_chart', 'attribute_hierarchy']
 
 
 Identifier: TypeAlias = str
@@ -1355,6 +1356,8 @@ class Config(TypedDict):
     stack_measures_to_100: NotRequired[bool]
     stack_measures: NotRequired[bool]
     continuous_line: NotRequired[bool]
+    render_as: NotRequired[Literal['filled', 'outline']]
+    grid_line_shape: NotRequired[Literal['polygon', 'circle']]
     distinct_point_shapes: NotRequired[DistinctPointShapes]
     total_enabled: NotRequired[bool]
     total_name: NotRequired[str]
@@ -1468,19 +1471,19 @@ DashboardFiltersModel: TypeAlias = dict[
 
 
 class Metadata2(DateDataset):
-    type: Literal['dataset', 'date', 'metric', 'dashboard', 'plugin', 'table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'attribute_hierarchy']
+    type: Literal['dataset', 'date', 'metric', 'dashboard', 'plugin', 'table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'radar_chart', 'attribute_hierarchy']
 
 
 class Metadata3(Metric):
-    type: Literal['dataset', 'date', 'metric', 'dashboard', 'plugin', 'table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'attribute_hierarchy']
+    type: Literal['dataset', 'date', 'metric', 'dashboard', 'plugin', 'table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'radar_chart', 'attribute_hierarchy']
 
 
 class Metadata5(Plugin):
-    type: Literal['dataset', 'date', 'metric', 'dashboard', 'plugin', 'table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'attribute_hierarchy']
+    type: Literal['dataset', 'date', 'metric', 'dashboard', 'plugin', 'table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'radar_chart', 'attribute_hierarchy']
 
 
 class Metadata6(AttributeHierarchy):
-    type: Literal['dataset', 'date', 'metric', 'dashboard', 'plugin', 'table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'attribute_hierarchy']
+    type: Literal['dataset', 'date', 'metric', 'dashboard', 'plugin', 'table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'radar_chart', 'attribute_hierarchy']
 
 
 class DashboardFilters7(TypedDict):
@@ -1731,7 +1734,7 @@ Dataset: TypeAlias = Dataset5 | Dataset6 | Dataset7
 
 
 class Metadata1(TypedDict):
-    type: Literal['dataset', 'date', 'metric', 'dashboard', 'plugin', 'table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'attribute_hierarchy']
+    type: Literal['dataset', 'date', 'metric', 'dashboard', 'plugin', 'table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'radar_chart', 'attribute_hierarchy']
 
 
 class Dataset2(TypedDict):
@@ -1798,7 +1801,7 @@ class Query(TypedDict):
 
 
 class Visualisation1(TypedDict):
-    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart']
+    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'radar_chart']
     id: Identifier
     title: NotRequired[Title]
     description: NotRequired[Description]
@@ -1815,7 +1818,7 @@ class Visualisation1(TypedDict):
 
 
 class Visualisation2(TypedDict):
-    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart']
+    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'radar_chart']
     id: Identifier
     title: NotRequired[Title]
     description: NotRequired[Description]
@@ -1831,7 +1834,7 @@ class Visualisation2(TypedDict):
 
 
 class Visualisation3(TypedDict):
-    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart']
+    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'radar_chart']
     id: Identifier
     title: NotRequired[Title]
     description: NotRequired[Description]
@@ -1847,7 +1850,7 @@ class Visualisation3(TypedDict):
 
 
 class Visualisation4(TypedDict):
-    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart']
+    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'radar_chart']
     id: Identifier
     title: NotRequired[Title]
     description: NotRequired[Description]
@@ -1863,7 +1866,7 @@ class Visualisation4(TypedDict):
 
 
 class Visualisation5(TypedDict):
-    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart']
+    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'radar_chart']
     id: Identifier
     title: NotRequired[Title]
     description: NotRequired[Description]
@@ -1879,7 +1882,7 @@ class Visualisation5(TypedDict):
 
 
 class Visualisation6(TypedDict):
-    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart']
+    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'radar_chart']
     id: Identifier
     title: NotRequired[Title]
     description: NotRequired[Description]
@@ -1895,7 +1898,7 @@ class Visualisation6(TypedDict):
 
 
 class Visualisation7(TypedDict):
-    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart']
+    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'radar_chart']
     id: Identifier
     title: NotRequired[Title]
     description: NotRequired[Description]
@@ -1911,7 +1914,7 @@ class Visualisation7(TypedDict):
 
 
 class Visualisation8(TypedDict):
-    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart']
+    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'radar_chart']
     id: Identifier
     title: NotRequired[Title]
     description: NotRequired[Description]
@@ -1926,7 +1929,7 @@ class Visualisation8(TypedDict):
 
 
 class Visualisation9(TypedDict):
-    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart']
+    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'radar_chart']
     id: Identifier
     title: NotRequired[Title]
     description: NotRequired[Description]
@@ -1941,7 +1944,7 @@ class Visualisation9(TypedDict):
 
 
 class Visualisation10(TypedDict):
-    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart']
+    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'radar_chart']
     id: Identifier
     title: NotRequired[Title]
     description: NotRequired[Description]
@@ -1956,7 +1959,7 @@ class Visualisation10(TypedDict):
 
 
 class Visualisation11(TypedDict):
-    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart']
+    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'radar_chart']
     id: Identifier
     title: NotRequired[Title]
     description: NotRequired[Description]
@@ -1971,7 +1974,7 @@ class Visualisation11(TypedDict):
 
 
 class Visualisation12(TypedDict):
-    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart']
+    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'radar_chart']
     id: Identifier
     title: NotRequired[Title]
     description: NotRequired[Description]
@@ -1986,7 +1989,7 @@ class Visualisation12(TypedDict):
 
 
 class Visualisation13(TypedDict):
-    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart']
+    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'radar_chart']
     id: Identifier
     title: NotRequired[Title]
     description: NotRequired[Description]
@@ -2003,7 +2006,7 @@ class Visualisation13(TypedDict):
 
 
 class Visualisation14(TypedDict):
-    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart']
+    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'radar_chart']
     id: Identifier
     title: NotRequired[Title]
     description: NotRequired[Description]
@@ -2018,7 +2021,7 @@ class Visualisation14(TypedDict):
 
 
 class Visualisation15(TypedDict):
-    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart']
+    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'radar_chart']
     id: Identifier
     title: NotRequired[Title]
     description: NotRequired[Description]
@@ -2035,7 +2038,7 @@ class Visualisation15(TypedDict):
 Visualisation16 = TypedDict(
     'Visualisation16',
     {
-        'type': Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart'],
+        'type': Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'radar_chart'],
         'id': Identifier,
         'title': NotRequired[Title],
         'description': NotRequired[Description],
@@ -2056,7 +2059,7 @@ Visualisation16 = TypedDict(
 Visualisation17 = TypedDict(
     'Visualisation17',
     {
-        'type': Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart'],
+        'type': Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'radar_chart'],
         'id': Identifier,
         'title': NotRequired[Title],
         'description': NotRequired[Description],
@@ -2075,7 +2078,7 @@ Visualisation17 = TypedDict(
 
 
 class Visualisation18(TypedDict):
-    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart']
+    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'radar_chart']
     id: Identifier
     title: NotRequired[Title]
     description: NotRequired[Description]
@@ -2090,7 +2093,7 @@ class Visualisation18(TypedDict):
 
 
 class Visualisation19(TypedDict):
-    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart']
+    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'radar_chart']
     id: Identifier
     title: NotRequired[Title]
     description: NotRequired[Description]
@@ -2105,7 +2108,7 @@ class Visualisation19(TypedDict):
 
 
 class Visualisation20(TypedDict):
-    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart']
+    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'radar_chart']
     id: Identifier
     title: NotRequired[Title]
     description: NotRequired[Description]
@@ -2121,7 +2124,7 @@ class Visualisation20(TypedDict):
 
 
 class Visualisation21(TypedDict):
-    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart']
+    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'radar_chart']
     id: Identifier
     title: NotRequired[Title]
     description: NotRequired[Description]
@@ -2137,7 +2140,7 @@ class Visualisation21(TypedDict):
 
 
 class Visualisation22(TypedDict):
-    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart']
+    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'radar_chart']
     id: Identifier
     title: NotRequired[Title]
     description: NotRequired[Description]
@@ -2151,6 +2154,21 @@ class Visualisation22(TypedDict):
     segment_by: NotRequired[list[BucketItem]]
     rows: NotRequired[list[BucketItem]]
     columns: NotRequired[list[BucketItem]]
+
+
+class Visualisation23(TypedDict):
+    type: Literal['table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'radar_chart']
+    id: Identifier
+    title: NotRequired[Title]
+    description: NotRequired[Description]
+    tags: NotRequired[Tags]
+    show_in_ai_results: NotRequired[bool]
+    is_hidden: NotRequired[bool]
+    query: Query
+    config: NotRequired[Config]
+    metrics: NotRequired[list[BucketItem]]
+    view_by: NotRequired[list[BucketItem]]
+    segment_by: NotRequired[list[BucketItem]]
 
 
 Visualisation: TypeAlias = (
@@ -2176,6 +2194,7 @@ Visualisation: TypeAlias = (
     | Visualisation20
     | Visualisation21
     | Visualisation22
+    | Visualisation23
 )
 
 
@@ -2248,4 +2267,4 @@ class Dashboard(TypedDict):
 
 
 class Metadata4(Dashboard):
-    type: Literal['dataset', 'date', 'metric', 'dashboard', 'plugin', 'table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'attribute_hierarchy']
+    type: Literal['dataset', 'date', 'metric', 'dashboard', 'plugin', 'table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'radar_chart', 'attribute_hierarchy']

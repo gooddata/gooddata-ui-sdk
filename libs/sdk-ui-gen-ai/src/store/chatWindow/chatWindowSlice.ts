@@ -12,6 +12,11 @@ import {
 } from "@gooddata/sdk-model";
 import type { IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
 
+import { addContextReference } from "../../context/addContextReference.js";
+import { type IGenAIContextObject } from "../../context/collectContextReferences.js";
+import { isReferenceChanged } from "../../context/isReferenceChanged.js";
+import { type StoreContext } from "../../types.js";
+
 type ChatWindowSliceState = {
     /**
      * Defines if the chat window is open.
@@ -62,10 +67,9 @@ type ChatWindowSliceState = {
      */
     allowedRelationshipTypes?: IAllowedRelationshipType[];
     /**
-     * One-shot user context for the next message (e.g. active visualization).
-     * Cleared after being consumed by the saga.
+     * Context related to the chat.
      */
-    userContext?: IGenAIUserContext;
+    context: StoreContext;
     /**
      * Whether the chat runs against the caller's preview agent. In preview mode the assistant
      * is pinned to that single agent, so agent switching is not applicable.
@@ -85,7 +89,11 @@ const initialState: ChatWindowSliceState = {
     includeTags: undefined,
     excludeTags: undefined,
     allowedRelationshipTypes: undefined,
-    userContext: undefined,
+    context: {
+        ambientMode: "enabled",
+        ambient: undefined,
+        user: undefined,
+    },
     isPreview: undefined,
 };
 
@@ -171,10 +179,34 @@ const chatWindowSlice = createSlice({
             state,
             { payload: { userContext } }: PayloadAction<{ userContext?: IGenAIUserContext }>,
         ) => {
-            state.userContext = userContext;
+            state.context.user = userContext;
         },
         clearUserContextAction: (state) => {
-            state.userContext = undefined;
+            state.context.user = undefined;
+        },
+        setAmbientUserContextAction: (
+            state,
+            { payload: { userContext } }: PayloadAction<{ userContext?: IGenAIUserContext }>,
+        ) => {
+            if (!state.settings?.enableAiContextSetup) {
+                return;
+            }
+            if (
+                state.context.ambientMode === "suppressed" &&
+                isReferenceChanged(state.context.ambient, userContext)
+            ) {
+                state.context.ambientMode = "enabled";
+            }
+            state.context.ambient = userContext;
+        },
+        addContextReferenceAction: (
+            state,
+            { payload: { object } }: PayloadAction<{ object: IGenAIContextObject }>,
+        ) => {
+            state.context = addContextReference(state.context, object);
+        },
+        removeAmbientUserContextAction: (state) => {
+            state.context.ambientMode = "suppressed";
         },
         setIsPreviewAction: (state, { payload: { isPreview } }: PayloadAction<{ isPreview?: boolean }>) => {
             state.isPreview = isPreview;
@@ -197,7 +229,16 @@ export const {
     setTagsAction,
     setCatalogItemsActions,
     setAllowedRelationshipTypesAction,
-    setUserContextAction,
+    addContextReferenceAction,
+    removeAmbientUserContextAction,
     clearUserContextAction,
     setIsPreviewAction,
+    /**
+     * @public
+     */
+    setAmbientUserContextAction,
+    /**
+     * @public
+     */
+    setUserContextAction,
 } = chatWindowSlice.actions;

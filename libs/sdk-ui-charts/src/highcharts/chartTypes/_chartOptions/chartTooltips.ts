@@ -3,19 +3,23 @@
 import cx from "classnames";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
-import { type IMeasureDescriptor } from "@gooddata/sdk-model";
+import { type IMeasureDescriptor, type ISeparators } from "@gooddata/sdk-model";
 import { getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 
 import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { type IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 import {
+    type IAxis,
     type ICategory,
+    type IPointDescriptionFn,
     type ITooltipFactory,
     type IUnsafeHighchartsTooltipPoint,
+    type UnsafeInternals,
 } from "../../typings/unsafe.js";
 import {
     customEscape,
+    decodeHtmlEntities,
     isCssMultiLineTruncationSupported,
     isOneOfTypes,
     isTreemap,
@@ -217,6 +221,84 @@ export function generateTooltipXYFn(
     };
 }
 
+function decodeAxisLabel(axis: IAxis | undefined): string {
+    return decodeHtmlEntities(axis?.label ?? "");
+}
+
+function formatAxisValue(
+    value: number | undefined,
+    axis: IAxis | undefined,
+    separators: ISeparators | undefined,
+): string {
+    return formatValueForTooltip(value, axis?.format, separators) ?? String(value ?? "");
+}
+
+export function generateDescriptionXYFn(
+    stackByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
+    xAxes: IAxis[] | undefined,
+    yAxes: IAxis[] | undefined,
+    zAxes: IAxis[] | undefined,
+    config: IChartConfig = {},
+): IPointDescriptionFn {
+    const { separators } = config;
+    const attrTitle = decodeHtmlEntities(stackByAttribute?.formOf?.name ?? "");
+
+    return (point: UnsafeInternals): string => {
+        const pointName = decodeHtmlEntities(point.name ?? "");
+        const xAxisLabel = decodeAxisLabel(xAxes?.[0]);
+        const yAxisLabel = decodeAxisLabel(yAxes?.[0]);
+        const zAxisLabel = decodeAxisLabel(zAxes?.[0]);
+        const xVal = formatAxisValue(point.x, xAxes?.[0], separators);
+        const yVal = formatAxisValue(point.y, yAxes?.[0], separators);
+        const zVal = formatAxisValue(point.z, zAxes?.[0], separators);
+
+        const namePart = attrTitle && pointName ? `${attrTitle}: ${pointName}` : pointName;
+
+        const parts: string[] = [];
+        if (namePart) parts.push(namePart);
+        parts.push(xAxisLabel ? `${xAxisLabel}: ${xVal}` : `x: ${xVal}`);
+        if (yAxisLabel) parts.push(`${yAxisLabel}: ${yVal}`);
+        if (Number.isFinite(point.z)) {
+            parts.push(zAxisLabel ? `${zAxisLabel}: ${zVal}` : `z: ${zVal}`);
+        }
+
+        return `${parts.join(", ")}.`;
+    };
+}
+
+export function generateDescriptionScatterPlotFn(
+    viewByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
+    stackByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
+    xAxes: IAxis[] | undefined,
+    yAxes: IAxis[] | undefined,
+    config: IChartConfig = {},
+): IPointDescriptionFn {
+    const { separators } = config;
+    const attrTitle = decodeHtmlEntities(viewByAttribute?.formOf?.name ?? "");
+    const segmentTitle = decodeHtmlEntities(stackByAttribute?.formOf?.name ?? "");
+
+    return (point: UnsafeInternals): string => {
+        const pointName = decodeHtmlEntities(point.name ?? "");
+        const segmentName = decodeHtmlEntities(point.segmentName ?? "");
+        const xAxisLabel = decodeAxisLabel(xAxes?.[0]);
+        const yAxisLabel = decodeAxisLabel(yAxes?.[0]);
+        const xVal = formatAxisValue(point.x, xAxes?.[0], separators);
+        const yVal = formatAxisValue(point.y, yAxes?.[0], separators);
+
+        const namePart = attrTitle && pointName ? `${attrTitle}: ${pointName}` : pointName;
+
+        const parts: string[] = [];
+        if (segmentName) {
+            parts.push(segmentTitle ? `${segmentTitle}: ${segmentName}` : segmentName);
+        }
+        if (namePart) parts.push(namePart);
+        if (xAxisLabel) parts.push(`${xAxisLabel}: ${xVal}`);
+        if (yAxisLabel) parts.push(`${yAxisLabel}: ${yVal}`);
+
+        return `${parts.join(", ")}.`;
+    };
+}
+
 export function generateTooltipScatterPlotFn(
     measures: (IMeasureDescriptor | null)[],
     stackByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
@@ -312,6 +394,62 @@ export function generateTooltipHeatmapFn(
     };
 }
 
+export function generateDescriptionHeatmapFn(
+    xAxes: IAxis[] | undefined,
+    yAxes: IAxis[] | undefined,
+    categories: string[][] | undefined,
+    valueFormat: string | undefined,
+    viewByAttributeTitle: string | undefined,
+    config: IChartConfig = {},
+): IPointDescriptionFn {
+    const { separators } = config;
+    const viewByTitle = decodeHtmlEntities(viewByAttributeTitle ?? "");
+
+    return (point: UnsafeInternals): string => {
+        const xAxisTitle = decodeHtmlEntities(point.series?.xAxis?.axisTitle?.textStr ?? "");
+        const rawCategory = point.category;
+        const category = decodeHtmlEntities(
+            typeof rawCategory === "object" && rawCategory?.name
+                ? rawCategory.name
+                : typeof rawCategory === "string"
+                  ? rawCategory
+                  : "",
+        );
+        const parentCategory = decodeHtmlEntities(
+            typeof rawCategory === "object" ? (rawCategory?.parent?.name ?? "") : "",
+        );
+        const seriesName = decodeHtmlEntities(point.series.name);
+
+        let xPart: string;
+        if (parentCategory && category) {
+            const titleParts = xAxisTitle.split(" › ");
+            xPart =
+                titleParts.length === 2
+                    ? `${titleParts[0]}: ${parentCategory}, ${titleParts[1]}: ${category}`
+                    : `${parentCategory} › ${category}`;
+        } else {
+            const effectiveXTitle = xAxisTitle || viewByTitle || decodeAxisLabel(xAxes?.[0]);
+            xPart = effectiveXTitle && category ? `${effectiveXTitle}: ${category}` : category;
+        }
+
+        const yIdx = typeof point.y === "number" ? point.y : -1;
+        const rowCats = categories?.[1];
+        const yRaw = yIdx >= 0 && Array.isArray(rowCats) ? rowCats[yIdx] : undefined;
+        const yCategory = typeof yRaw === "string" ? decodeHtmlEntities(yRaw) : "";
+        const yTitle = decodeAxisLabel(yAxes?.[0]);
+        const rawValue = point.value;
+        const formattedValue =
+            formatValueForTooltip(rawValue, valueFormat, separators) ?? String(rawValue ?? "");
+
+        const parts: string[] = [];
+        if (yTitle && yCategory) parts.push(`${yTitle}: ${yCategory}`);
+        else if (yCategory) parts.push(yCategory);
+        if (xPart) parts.push(xPart);
+        parts.push(`${seriesName}: ${formattedValue}`);
+        return `${parts.join(", ")}.`;
+    };
+}
+
 export function buildTooltipTreemapFactory(
     viewByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
     stackByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
@@ -357,6 +495,60 @@ export function buildTooltipTreemapFactory(
         }
 
         return renderTooltipHTML(textData, maxTooltipContentWidth);
+    };
+}
+
+export function generateDescriptionTreemapFn(
+    viewByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
+    stackByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
+    yAxes: IAxis[] | undefined,
+    config: IChartConfig = {},
+): IPointDescriptionFn {
+    const { separators } = config;
+    const hasStackByAttribute = Boolean(stackByAttribute);
+    const stackByTitle = decodeHtmlEntities(hasStackByAttribute ? (viewByAttribute?.formOf?.name ?? "") : "");
+    const viewByTitle = decodeHtmlEntities(hasStackByAttribute ? "" : (viewByAttribute?.formOf?.name ?? ""));
+    const segmentByTitle = decodeHtmlEntities(stackByAttribute?.formOf?.name ?? "");
+    const measureName = decodeAxisLabel(yAxes?.[0]);
+
+    return (point: UnsafeInternals): string => {
+        const pointName = decodeHtmlEntities(point.name ?? "");
+        const seriesName = decodeHtmlEntities(point.series.name);
+        const rawValue = point.value;
+        const yValue = formatValueForTooltip(rawValue, point.format, separators) ?? String(rawValue ?? "");
+
+        const hasParent = point.parent !== undefined && point.parent !== "";
+        if (!hasParent && point.value == null) {
+            return "";
+        }
+        if (hasParent) {
+            const seriesPoints = point.series.points as UnsafeInternals[];
+            const parentPoint = seriesPoints?.find((p: UnsafeInternals) => p.id === point.parent);
+            const segmentName = decodeHtmlEntities(parentPoint?.name ?? "");
+            if (segmentByTitle && pointName) {
+                const parts: string[] = [];
+                if (stackByTitle && segmentName) {
+                    parts.push(`${stackByTitle}: ${segmentName}`);
+                }
+                parts.push(`${segmentByTitle}: ${pointName}`);
+                const valueName = stackByTitle
+                    ? measureName || seriesName
+                    : segmentName || measureName || seriesName;
+                parts.push(`${valueName}: ${yValue}`);
+                return `${parts.join(", ")}.`;
+            }
+            if (viewByTitle && segmentName) {
+                return `${viewByTitle}: ${segmentName}, ${measureName || seriesName}: ${yValue}.`;
+            }
+            return segmentName ? `${segmentName}: ${yValue}.` : `${measureName || seriesName}: ${yValue}.`;
+        }
+        if (pointName) {
+            const dimTitle = viewByTitle || stackByTitle;
+            return dimTitle
+                ? `${dimTitle}: ${pointName}, ${measureName || seriesName}: ${yValue}.`
+                : `${pointName}: ${yValue}.`;
+        }
+        return `${seriesName}: ${yValue}.`;
     };
 }
 

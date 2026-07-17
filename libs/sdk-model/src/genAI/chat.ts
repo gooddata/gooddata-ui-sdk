@@ -150,10 +150,88 @@ export interface IGenAIDashboardContext {
      */
     ref: ObjRef;
     /**
+     * Dashboard title.
+     */
+    title?: string;
+    /**
      * Widgets currently visible on the dashboard.
      */
     widgets: IGenAIWidgetDescriptor[];
+    /**
+     * Dashboard filter bar as currently applied in the UI (live state).
+     */
+    filters?: GenAIUserContextFilter[];
 }
+
+/**
+ * Attribute filter in the GenAI user context (wire-aligned shape).
+ * @internal
+ */
+export interface IGenAIUserContextAttributeFilter {
+    type: "attribute_filter";
+    /**
+     * Identifier of the label (display form) the filter uses.
+     */
+    using: string;
+    state: {
+        include?: string[];
+        exclude?: string[];
+    };
+    /**
+     * Human-readable filter title. Display-only — stripped before the request is sent.
+     */
+    title?: string;
+}
+
+/**
+ * Absolute date filter in the GenAI user context (wire-aligned shape).
+ * @internal
+ */
+export interface IGenAIUserContextAbsoluteDateFilter {
+    type: "date_filter";
+    /**
+     * Identifier of the date dataset the filter uses. The dashboard's common date filter has
+     * no dataset ref in the filter context (it resolves per-widget), so it is omitted there;
+     * the backend then uses the filter for prompt context only, not for execution.
+     */
+    using?: string;
+    from: string;
+    to: string;
+    /**
+     * Human-readable filter title. Display-only — stripped before the request is sent.
+     */
+    title?: string;
+}
+
+/**
+ * Relative date filter in the GenAI user context (wire-aligned shape).
+ * @internal
+ */
+export interface IGenAIUserContextRelativeDateFilter {
+    type: "date_filter";
+    /**
+     * Identifier of the date dataset the filter uses. The dashboard's common date filter has
+     * no dataset ref in the filter context (it resolves per-widget), so it is omitted there;
+     * the backend then uses the filter for prompt context only, not for execution.
+     */
+    using?: string;
+    granularity: GenAIDateGranularity | "WEEK_US";
+    from: number;
+    to: number;
+    /**
+     * Human-readable filter title. Display-only — stripped before the request is sent.
+     */
+    title?: string;
+}
+
+/**
+ * Filter in the GenAI user context (wire-aligned shape).
+ * @internal
+ */
+export type GenAIUserContextFilter =
+    | IGenAIUserContextAttributeFilter
+    | IGenAIUserContextAbsoluteDateFilter
+    | IGenAIUserContextRelativeDateFilter;
 
 /**
  * Descriptor for a widget on the dashboard.

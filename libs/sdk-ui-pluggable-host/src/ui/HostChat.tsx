@@ -43,6 +43,11 @@ export interface IHostChatContext {
     excludeTags?: string[];
     dialogPosition?: "left" | "right";
     embedded?: boolean;
+    /**
+     * Ambient user context reported by the active application (e.g. the open dashboard and its
+     * live filter state), attached by the chat to every message without a one-shot context.
+     */
+    userContext?: IGenAIUserContext;
 }
 
 export interface IHostChatProps {
@@ -107,6 +112,7 @@ export function HostChat({
         close: chatClose,
         toggle: chatToggle,
         setTags: chatSetTags,
+        setAmbientUserContext: chatSetAmbientUserContext,
         isOpen: chatIsOpen,
         showChatItem,
     } = chat;
@@ -126,16 +132,19 @@ export function HostChat({
     // when a tag-scope change and an open/ask request land in the same commit, the host chat is
     // already scoped before the seeded question is sent.
 
-    // Clear any stale tag scope when the active application changes. The newly active app re-reports
-    // its own scope (or none) right after it mounts; without this reset, switching from a tag-scoped
-    // app to one that reports no scope (e.g. the metric editor) would leak the old scope.
+    // Clear any stale tag scope and ambient context when the active application changes. The newly
+    // active app re-reports its own scope/context (or none) right after it mounts; without this
+    // reset, switching from a tag-scoped app to one that reports no scope (e.g. the metric editor)
+    // would leak the old scope, and answers could stay grounded in a dashboard no longer on screen.
     useEffect(() => {
         chatSetTags(undefined, undefined);
-    }, [activeAppId, chatSetTags]);
+        chatSetAmbientUserContext(undefined);
+    }, [activeAppId, chatSetTags, chatSetAmbientUserContext]);
 
     useEffect(() => {
         chatSetTags(context?.includeTags, context?.excludeTags);
-    }, [context, chatSetTags]);
+        chatSetAmbientUserContext(context?.userContext);
+    }, [context, chatSetTags, chatSetAmbientUserContext]);
 
     const visibilitySeq = visibility?.seq;
     useEffect(() => {

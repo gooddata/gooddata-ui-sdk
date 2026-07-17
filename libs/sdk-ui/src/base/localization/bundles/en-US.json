@@ -4806,5 +4806,6 @@
     "mvf.details.typeValue": {
         "text": "Metric",
         "crowdinContext": "Value displayed for metric type in the measure value filter details bubble."
-    }
+    },
+    "visualization.stackLabel.aria.total": "total"
 }

@@ -71,10 +71,11 @@ export {
     filterStandardGranularities,
     filterFiscalGranularities,
     getTabForPreset,
-    isFiscalGranularity,
     ensureCompatibleGranularity,
     STANDARD_GRANULARITIES_WITH_FISCAL_EQUIVALENT,
 } from "./DateFilter/utils/presetFilterUtils.js";
+// Canonical fiscal-granularity check lives in sdk-model; re-exported to preserve this package's public API.
+export { isFiscalGranularity } from "@gooddata/sdk-model";
 
 // DateFilter body types
 export type { IFilterConfigurationProps } from "./DateFilter/DateFilterBody/types.js";

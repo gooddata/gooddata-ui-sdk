@@ -1302,7 +1302,6 @@ export {
     selectEnableExportToDocumentStorage,
     selectExternalRecipient,
     selectEnableDashboardShareDialogLink,
-    selectEnableNewScheduledExport,
     selectEnableAutomationEvaluationMode,
     selectEnableSnapshotExport,
     selectEnableAccessibilityMode,

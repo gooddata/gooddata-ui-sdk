@@ -40,15 +40,15 @@ export class MeasureColorStrategy extends ColorStrategy {
         _stackByAttribute: any,
         dv: DataViewFacade,
     ): ICreateColorAssignmentReturnValue {
-        const { allMeasuresAssignment, nonDerivedMeasuresAssignment } = this.mapColorsFromMeasures(
-            dv,
-            colorMapping,
-            colorPalette,
-        );
+        const allMeasuresAssignment = this.mapColorsFromMeasures(dv, colorMapping, colorPalette);
 
         return {
-            fullColorAssignment: this.mapColorsFromDerivedMeasure(dv, allMeasuresAssignment, colorPalette),
-            outputColorAssignment: nonDerivedMeasuresAssignment,
+            fullColorAssignment: this.mapColorsFromDerivedMeasure(
+                dv,
+                allMeasuresAssignment,
+                colorPalette,
+                colorMapping,
+            ),
         };
     }
 
@@ -56,12 +56,11 @@ export class MeasureColorStrategy extends ColorStrategy {
         dv: DataViewFacade,
         colorMapping: IColorMapping[] | undefined,
         colorPalette: IColorPalette,
-    ): { allMeasuresAssignment: IColorAssignment[]; nonDerivedMeasuresAssignment: IColorAssignment[] } {
+    ): IColorAssignment[] {
         let currentColorPaletteIndex = 0;
 
-        const nonDerivedMeasuresAssignment: IColorAssignment[] = [];
         const measureGroup = findMeasureGroupInDimensions(dv.meta().dimensions());
-        const allMeasuresAssignment =
+        return (
             measureGroup?.items.map((headerItem, index) => {
                 if (dv.meta().isDerivedMeasure(measureGroup.items[index])) {
                     return {
@@ -79,15 +78,10 @@ export class MeasureColorStrategy extends ColorStrategy {
                 );
 
                 currentColorPaletteIndex++;
-                nonDerivedMeasuresAssignment.push(mappedMeasure);
 
                 return mappedMeasure;
-            }) ?? [];
-
-        return {
-            allMeasuresAssignment,
-            nonDerivedMeasuresAssignment,
-        };
+            }) ?? []
+        );
     }
 
     private mapMeasureColor(
@@ -116,24 +110,37 @@ export class MeasureColorStrategy extends ColorStrategy {
         dv: DataViewFacade,
         measuresColorAssignment: IColorAssignment[],
         colorPalette: IColorPalette,
+        colorMapping: IColorMapping[] | undefined,
     ): IColorAssignment[] {
         return measuresColorAssignment.map((mapItem, measureItemIndex) => {
             const measureGroup = findMeasureGroupInDimensions(dv.meta().dimensions());
+            const derivedHeader = measureGroup.items[measureItemIndex];
 
-            if (!dv.meta().isDerivedMeasure(measureGroup.items[measureItemIndex])) {
+            if (!dv.meta().isDerivedMeasure(derivedHeader)) {
                 return mapItem;
             }
 
             const masterMeasure = dv
                 .def()
-                .masterMeasureForDerived(
-                    measureGroup.items[measureItemIndex].measureHeaderItem.localIdentifier,
-                );
+                .masterMeasureForDerived(derivedHeader.measureHeaderItem.localIdentifier);
             if (!masterMeasure) {
                 return mapItem;
             }
             const parentMeasureIndex = dv.def().measureIndex(masterMeasure.measure.localIdentifier);
             if (parentMeasureIndex > -1) {
+                // mappings that also match the master target the master; the derived measure
+                // then keeps the color derived from it
+                const masterHeader = measureGroup.items[parentMeasureIndex];
+                const mapping = colorMapping?.find(
+                    (item) => item.predicate(derivedHeader, { dv }) && !item.predicate(masterHeader, { dv }),
+                );
+                if (mapping && isValidMappedColor(mapping.color, colorPalette)) {
+                    return {
+                        ...mapItem,
+                        color: mapping.color,
+                    };
+                }
+
                 const sourceMeasureColor = measuresColorAssignment[parentMeasureIndex].color;
                 return this.getDerivedMeasureColorAssignment(
                     sourceMeasureColor!,

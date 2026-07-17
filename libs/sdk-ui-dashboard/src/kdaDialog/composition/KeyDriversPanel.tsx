@@ -125,6 +125,12 @@ export function KeyDriversPanel({ loading, detailsId }: IKeyDriversPanelProps) {
                                     { count: countSelected },
                                 )}
                                 iconAfterSize={11}
+                                isSelected={props.isOpen}
+                                accessibilityConfig={{
+                                    ariaExpanded: props.isOpen,
+                                    ariaControls: props.ariaAttributes["aria-controls"],
+                                    ariaHaspopup: props.ariaAttributes["aria-haspopup"],
+                                }}
                                 onClick={props.toggleDropdown}
                             />
                         )}

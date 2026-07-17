@@ -222,6 +222,9 @@ export type AutomationEvaluationMode = "SHARED" | "PER_RECIPIENT";
 // @public
 export type AutomationNotificationType = "automation-task.completed" | "automation-task.limit-exceeded";
 
+// @alpha
+export const belongsToCalendar: (g: string | undefined, calendar: "fiscal" | "standard") => boolean;
+
 // @public
 export function bucketAttribute(bucket: IBucket, idOrFun?: string | AttributePredicate): IAttribute | undefined;
 
@@ -305,6 +308,19 @@ export function bucketTotals(bucket: IBucket): ITotal[];
 
 // @alpha
 export const BuiltInWidgetTypes: string[];
+
+// @alpha
+export type CalendarAffinity = "standard" | "fiscal" | "shared";
+
+// @alpha
+export type CalendarContext = {
+    type: "standard";
+} | {
+    type: "fiscal";
+} | {
+    type: "custom";
+    enabledGranularities: IEnabledGranularity[];
+};
 
 // @public
 export type CalendarType = "STANDARD" | "FISCAL";
@@ -774,6 +790,9 @@ export type GenAIRelativeDateFilter = {
 };
 
 // @internal
+export type GenAIUserContextFilter = IGenAIUserContextAttributeFilter | IGenAIUserContextAbsoluteDateFilter | IGenAIUserContextRelativeDateFilter;
+
+// @internal
 export type GenAIVisualizationType = "TABLE" | "HEADLINE" | "BAR" | "LINE" | "PIE" | "COLUMN" | "SCATTER";
 
 // @alpha
@@ -807,6 +826,9 @@ export const GeoVisualizationTypes: {
 export function getAttributeElementsItems(attributeElements: IAttributeElements): Array<string | null>;
 
 // @alpha
+export const getChronologicalOrigin: (g: string | undefined) => DateAttributeGranularity | undefined;
+
+// @alpha
 export function getCsvDelimiterPreset(delimiter?: string): CsvDelimiterPreset;
 
 // @alpha
@@ -821,6 +843,18 @@ export function getCsvDelimiterValidationError(delimiter: string): CsvDelimiterV
 // @alpha
 export function getCsvDelimiterValue(selectedPreset: CsvDelimiterPreset, customDelimiter: string): string;
 
+// @alpha
+export const getDateFilterGranularities: (query: IGranularitiesQuery) => DateFilterGranularity[];
+
+// @alpha
+export const getFiscalEquivalent: (g: string | undefined) => DateAttributeGranularity | undefined;
+
+// @alpha
+export function getGranularities(query: IGranularitiesQuery): DateAttributeGranularity[];
+
+// @alpha
+export function getGranularityDescriptor(granularity: string | undefined): IGranularityDescriptor | undefined;
+
 // @internal (undocumented)
 export const getHierarchyAttributes: (hierarchy: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy) => ObjRef[];
 
@@ -832,6 +866,15 @@ export const getHierarchyTitle: (hierarchy: ICatalogAttributeHierarchy | ICatalo
 
 // @alpha
 export function getSelectedElementsCount(filter: IDashboardAttributeFilter): number;
+
+// @alpha
+export const getStandardEquivalent: (g: string | undefined) => DateAttributeGranularity | undefined;
+
+// @alpha
+export const GRANULARITY_DESCRIPTORS: Record<DateAttributeGranularity, IGranularityDescriptor>;
+
+// @alpha
+export type GranularityFamily = "chronological" | "cyclical";
 
 // @public
 export type GroupableCatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact;
@@ -2419,6 +2462,14 @@ export interface IEmptyValuesDateFilterOption extends IDateFilterOption {
     type: DateFilterOptionEmptyValuesType;
 }
 
+// @alpha
+export interface IEnabledGranularity {
+    // (undocumented)
+    granularity: DateAttributeGranularity;
+    order?: number;
+    prefix?: string;
+}
+
 // @public
 export interface IEntitlementDescriptor {
     expiry?: string;
@@ -2682,6 +2733,7 @@ export interface IFeatureFlags {
     enableAiAgenticConversations?: boolean;
     enableAiAgenticMultiConversations?: boolean;
     enableAiAgenticSuggestions?: boolean;
+    enableAiContextSetup?: boolean;
     enableAIDataSetting?: boolean;
     enableAiHub?: boolean;
     enableAIKnowledge?: boolean;
@@ -2704,10 +2756,7 @@ export interface IFeatureFlags {
     enableChangeAnalysis?: boolean;
     enableColumnLevelPermissions?: boolean;
     enableConditionalFormatting?: boolean;
-    // (undocumented)
-    enableCrateDbDataSource?: boolean;
     enableCustomGeoCollection?: boolean;
-    enableCustomizableCsvDelimiter?: boolean;
     // @alpha
     enableCustomTooltip?: boolean;
     enableDashboardDensitySetting?: boolean;
@@ -2765,7 +2814,6 @@ export interface IFeatureFlags {
     enableMySqlDataSource?: boolean;
     enableNewGeoPushpin?: boolean;
     enableNewPivotTable?: boolean;
-    enableNewScheduledExport?: boolean;
     enableNotificationChannelIdentifiers?: boolean;
     enableNullableJoins?: boolean;
     enableNullJoins?: boolean;
@@ -2924,7 +2972,9 @@ export interface IGenAICreatedVisualizations {
 
 // @internal
 export interface IGenAIDashboardContext {
+    filters?: GenAIUserContextFilter[];
     ref: ObjRef;
+    title?: string;
     widgets: IGenAIWidgetDescriptor[];
 }
 
@@ -2969,6 +3019,45 @@ export interface IGenAIUserContext {
     activeObject?: IGenAIActiveObject;
     referencedObjects?: IGenAIObjectReferenceGroup[];
     view?: IGenAIUIContext;
+}
+
+// @internal
+export interface IGenAIUserContextAbsoluteDateFilter {
+    // (undocumented)
+    from: string;
+    title?: string;
+    // (undocumented)
+    to: string;
+    // (undocumented)
+    type: "date_filter";
+    using?: string;
+}
+
+// @internal
+export interface IGenAIUserContextAttributeFilter {
+    // (undocumented)
+    state: {
+        include?: string[];
+        exclude?: string[];
+    };
+    title?: string;
+    // (undocumented)
+    type: "attribute_filter";
+    using: string;
+}
+
+// @internal
+export interface IGenAIUserContextRelativeDateFilter {
+    // (undocumented)
+    from: number;
+    // (undocumented)
+    granularity: GenAIDateGranularity | "WEEK_US";
+    title?: string;
+    // (undocumented)
+    to: number;
+    // (undocumented)
+    type: "date_filter";
+    using?: string;
 }
 
 // @internal
@@ -3069,6 +3158,27 @@ export interface IGranteeGranularity {
 
 // @public
 export type IGranularAccessGrantee = IGranularUserAccessGrantee | IGranularUserGroupAccessGrantee | IGranularRulesAccessGrantee;
+
+// @alpha
+export interface IGranularitiesQuery {
+    calendars: CalendarContext[];
+    families?: GranularityFamily[];
+    includeNonDefault?: boolean;
+    includeShared?: boolean;
+    includeTime?: boolean;
+}
+
+// @alpha
+export interface IGranularityDescriptor {
+    affinity: CalendarAffinity;
+    chronologicalOrigin?: DateAttributeGranularity;
+    counterpart?: DateAttributeGranularity;
+    family: GranularityFamily;
+    granularity: DateAttributeGranularity;
+    offeredByDefault: boolean;
+    order: number;
+    timeScale: boolean;
+}
 
 // @alpha
 export interface IGranularRulesAccess extends IGranteeGranularity {
@@ -4725,6 +4835,9 @@ export interface IScheduleNotificationDetails extends IAutomationNotificationDet
     data: IWebhookMessageDataSchedule;
 }
 
+// @alpha (undocumented)
+export const isChronologicalGranularity: (g: string | undefined) => boolean;
+
 // @public
 export function isColorDescriptor(obj: unknown): obj is IColorDescriptor;
 
@@ -4745,6 +4858,9 @@ export function isComparisonConditionOperator(obj: unknown): obj is ComparisonCo
 
 // @alpha
 export function isCrossFiltering(obj: unknown): obj is ICrossFiltering;
+
+// @alpha (undocumented)
+export const isCyclicalGranularity: (g: string | undefined) => boolean;
 
 // @alpha
 export function isDashboard(obj: unknown): obj is IDashboard;
@@ -4989,6 +5105,9 @@ export function isFilterContextDefinition(obj: unknown): obj is IFilterContextDe
 
 // @alpha
 export function isFilterContextItem(obj: unknown): obj is FilterContextItem;
+
+// @alpha (undocumented)
+export const isFiscalGranularity: (g: string | undefined) => boolean;
 
 // @public
 export function isGeoLayerType(layerType: string): layerType is GeoLayerType;
@@ -5315,6 +5434,9 @@ export function isSemanticSearchResultItem(item: object): item is ISemanticSearc
 // @public
 export function isSeparators(obj: unknown): obj is ISeparators;
 
+// @alpha (undocumented)
+export const isSharedGranularity: (g: string | undefined) => boolean;
+
 // @public
 export function isSimpleMeasure(obj: unknown): obj is IMeasure<IMeasureDefinition>;
 
@@ -5323,6 +5445,9 @@ export function isSimpleMeasureFilter(obj: unknown): obj is IMeasureFilter;
 
 // @alpha
 export function isSingleSelectionFilter(filter: IDashboardAttributeFilter): boolean;
+
+// @alpha (undocumented)
+export const isStandardGranularity: (g: string | undefined) => boolean;
 
 // @alpha
 export function isStringParameterDefinition(def: IParameterDefinition): def is IStringParameterDefinition;
@@ -5335,6 +5460,9 @@ export function isTestNotification(notification: unknown): notification is ITest
 
 // @alpha
 export function isTextAttributeFilter(obj: unknown): obj is TextAttributeFilter;
+
+// @alpha (undocumented)
+export const isTimeGranularity: (g: string | undefined) => boolean;
 
 // @public
 export function isTotal(obj: unknown): obj is ITotal;
@@ -6602,7 +6730,7 @@ export type ObjectOrigin = "ALL" | "PARENTS" | "NATIVE";
 export type ObjectPermissionsObjectKind = "attribute" | "fact" | "label";
 
 // @public
-export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy" | "exportDefinition" | "automation" | "filterView" | "workspaceDataFilter" | "workspaceDataFilterSetting" | "userDataFilter" | "notificationChannel" | "memoryItem" | "parameter";
+export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "workspaceTheme" | "workspaceColorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy" | "exportDefinition" | "automation" | "filterView" | "workspaceDataFilter" | "workspaceDataFilterSetting" | "userDataFilter" | "notificationChannel" | "memoryItem" | "parameter";
 
 // @public
 export type ObjRef = UriRef | IdentifierRef;

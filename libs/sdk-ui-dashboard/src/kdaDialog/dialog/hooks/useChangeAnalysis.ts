@@ -26,6 +26,7 @@ import {
     dashboardAttributeFilterItemToAttributeFilter,
     dashboardMeasureValueFilterToMeasureValueFilter,
 } from "../../../converters/filterConverters.js";
+import { DEFAULT_MEASURE_FORMAT } from "../../const.js";
 import { useAttribute } from "../../hooks/useAttribute.js";
 import { useDateAttribute } from "../../hooks/useDateAttribute.js";
 import { useRelevantFilters } from "../../hooks/useRelevantFilters.js";
@@ -295,7 +296,7 @@ function createKdaItem(
             standardDeviation: driver.std,
             mean: driver.mean,
             formatValue: (value: number) => {
-                const format = metric.measure.format;
+                const format = metric.measure.format ?? DEFAULT_MEASURE_FORMAT;
                 return ClientFormatterFacade.formatValue(value, format, separators).formattedValue;
             },
         },

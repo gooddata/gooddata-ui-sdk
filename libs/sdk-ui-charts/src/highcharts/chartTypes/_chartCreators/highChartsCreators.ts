@@ -84,7 +84,7 @@ export function getHighchartsOptions(
 
     return merge(
         {},
-        getCommonConfiguration(chartOptions, drillConfig, theme, config),
+        getCommonConfiguration(chartOptions, drillConfig, theme, config, intl),
         getConfigurationByType.call(null, config, definition, theme),
         getCustomizedConfiguration(chartOptions, config, drillConfig, intl, theme),
     );

@@ -54,7 +54,8 @@
                             "combo_chart",
                             "geo_chart",
                             "geo_area_chart",
-                            "repeater_chart"
+                            "repeater_chart",
+                            "radar_chart"
                         ]
                     }
                 },
@@ -95,6 +96,7 @@
                         "geo_chart",
                         "geo_area_chart",
                         "repeater_chart",
+                        "radar_chart",
                         "attribute_hierarchy"
                     ]
                 }
@@ -132,6 +134,7 @@
                 "geo_chart",
                 "geo_area_chart",
                 "repeater_chart",
+                "radar_chart",
                 "attribute_hierarchy"
             ]
         }
@@ -630,7 +633,8 @@
                             "combo_chart",
                             "geo_chart",
                             "geo_area_chart",
-                            "repeater_chart"
+                            "repeater_chart",
+                            "radar_chart"
                         ]
                     }
                 },
@@ -2366,6 +2370,80 @@
                             },
                             "required": ["id", "type", "query"]
                         }
+                    },
+                    {
+                        "if": {
+                            "properties": { "type": { "type": "string", "enum": ["radar_chart"] } },
+                            "required": ["type"]
+                        },
+                        "then": {
+                            "title": "Radar Chart",
+                            "additionalProperties": false,
+                            "properties": {
+                                "type": {
+                                    "description": "Type of visualisation.",
+                                    "type": "string",
+                                    "enum": ["radar_chart"]
+                                },
+                                "id": {
+                                    "$ref": "#/$global/gaac/identifier",
+                                    "description": "A unique identifier of the visualisation.",
+                                    "$semantic": [
+                                        {
+                                            "type": "uniqueness",
+                                            "source": "visualisation.id",
+                                            "code": "core.uniqueness.visualisations.id"
+                                        },
+                                        { "type": "definition", "source": "visualisation.id" }
+                                    ]
+                                },
+                                "title": {
+                                    "$ref": "#/$global/gaac/title",
+                                    "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
+                                },
+                                "description": {
+                                    "$ref": "#/$global/gaac/description",
+                                    "description": "An optional description of the visualisation."
+                                },
+                                "tags": {
+                                    "$ref": "#/$global/gaac/tags",
+                                    "description": "A list of strings - metadata tags of this visualisation."
+                                },
+                                "show_in_ai_results": {
+                                    "type": "boolean",
+                                    "description": "Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible."
+                                },
+                                "is_hidden": {
+                                    "type": "boolean",
+                                    "description": "Deprecated. Use 'show_in_ai_results' instead.",
+                                    "deprecated": true
+                                },
+                                "query": {
+                                    "$ref": "#/$global/gaac/query",
+                                    "description": "Query definition of visualisation."
+                                },
+                                "config": {
+                                    "$ref": "#/$global/gaac/config",
+                                    "description": "Configuration of visualisation of defined type."
+                                },
+                                "metrics": {
+                                    "type": "array",
+                                    "description": "A list of metrics in this visualisation.",
+                                    "items": { "$ref": "#/$defs/bucketItem" }
+                                },
+                                "view_by": {
+                                    "type": "array",
+                                    "description": "A list of view by attributes in this visualisation.",
+                                    "items": { "$ref": "#/$defs/bucketItem" }
+                                },
+                                "segment_by": {
+                                    "type": "array",
+                                    "description": "A list of segment by attributes in this visualisation.",
+                                    "items": { "$ref": "#/$defs/bucketItem" }
+                                }
+                            },
+                            "required": ["id", "type", "query"]
+                        }
                     }
                 ],
                 "required": ["type"],
@@ -2596,6 +2674,8 @@
                     "stack_measures_to_100": { "type": "boolean" },
                     "stack_measures": { "type": "boolean" },
                     "continuous_line": { "type": "boolean" },
+                    "render_as": { "type": "string", "enum": ["filled", "outline"] },
+                    "grid_line_shape": { "type": "string", "enum": ["polygon", "circle"] },
                     "distinct_point_shapes": {
                         "type": "object",
                         "properties": {

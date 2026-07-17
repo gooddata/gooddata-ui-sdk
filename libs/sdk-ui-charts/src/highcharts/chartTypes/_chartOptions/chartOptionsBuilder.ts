@@ -79,6 +79,10 @@ import {
 } from "./chartThresholds.js";
 import {
     buildTooltipFactory,
+    generateDescriptionHeatmapFn,
+    generateDescriptionScatterPlotFn,
+    generateDescriptionTreemapFn,
+    generateDescriptionXYFn,
     generateTooltipHeatmapFn,
     generateTooltipSankeyChartFn,
     generateTooltipScatterPlotFn,
@@ -606,6 +610,8 @@ export function getChartOptions(
             type,
             stacking,
             legendLayout: "horizontal",
+            segmentByLabel: viewByAttribute?.formOf?.name,
+            stackByAttributeLabel: stackByAttribute?.formOf?.name,
             yAxes,
             xAxes,
             data: {
@@ -619,6 +625,13 @@ export function getChartOptions(
                     viewByAttribute,
                     config,
                     clusterTitle,
+                ),
+                pointDescription: generateDescriptionScatterPlotFn(
+                    viewByAttribute,
+                    stackByAttribute,
+                    xAxes,
+                    yAxes,
+                    config,
                 ),
             },
             grid: {
@@ -656,6 +669,14 @@ export function getChartOptions(
                     viewByAttribute,
                     stackByAttribute,
                     emptyHeaderTitle,
+                    config,
+                ),
+                pointDescription: generateDescriptionHeatmapFn(
+                    xAxes,
+                    yAxes,
+                    categories,
+                    unwrap(measureGroup.items[0]).format,
+                    viewByAttribute?.formOf?.name,
                     config,
                 ),
             },
@@ -717,6 +738,7 @@ export function getChartOptions(
             },
             actions: {
                 tooltip: generateTooltipXYFn(measures, stackByAttribute, config),
+                pointDescription: generateDescriptionXYFn(stackByAttribute, xAxes, yAxes, zAxes, config),
             },
             grid: {
                 enabled: gridEnabled,
@@ -846,6 +868,7 @@ export function getChartOptions(
         hasViewByAttribute: Boolean(viewByAttribute),
         legendLayout: config.legendLayout || "horizontal",
         legendLabel: getLegendLabel(type, viewByAttribute, stackByAttribute),
+        segmentByLabel: isTreemap(type) ? stackByAttribute?.formOf?.name : undefined,
         xAxes,
         yAxes,
         data: {
@@ -854,6 +877,9 @@ export function getChartOptions(
         },
         actions: {
             tooltip: tooltipFactory,
+            pointDescription: isTreemap(type)
+                ? generateDescriptionTreemapFn(viewByAttribute, stackByAttribute, yAxes, config)
+                : undefined,
         },
         grid: {
             enabled: gridEnabled,

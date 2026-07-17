@@ -21,7 +21,7 @@ export const driverColumn: (intl: IntlShape, width: number) => IUiAsyncTableColu
                 return "-";
             }
             const first = getSortedSignificantDriver(item)[0];
-            return <UiButton tabIndex={-1} label={first.category} variant="tertiary" size="small" />;
+            return <UiButton tabIndex={-1} label={first.category} variant="tertiary" size="medium" />;
         },
     };
 };

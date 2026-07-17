@@ -3,7 +3,7 @@
 /* oxlint-disable no-barrel-files/no-barrel-files */
 
 import { makeTextContents, makeUserMessage } from "./model.js";
-import { setUserContextAction } from "./store/chatWindow/chatWindowSlice.js";
+import { setAmbientUserContextAction, setUserContextAction } from "./store/chatWindow/chatWindowSlice.js";
 import { clearThreadAction, newMessageAction } from "./store/messages/messagesSlice.js";
 
 export { ChatSkeleton } from "./components/ChatSkeleton.js";
@@ -13,4 +13,11 @@ export {
     type IGenAIChatDialogConnectedProps,
     type GenAIChatConnectedEvent,
 } from "./components/GenAIChatDialogConnected.js";
-export { clearThreadAction, newMessageAction, makeUserMessage, makeTextContents, setUserContextAction };
+export {
+    clearThreadAction,
+    newMessageAction,
+    makeUserMessage,
+    makeTextContents,
+    setUserContextAction,
+    setAmbientUserContextAction,
+};

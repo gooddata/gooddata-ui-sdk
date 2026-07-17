@@ -3762,7 +3762,7 @@ export interface AiDateFilterAbsolute {
     // (undocumented)
     'type': AiDateFilterAbsoluteTypeEnum;
     // (undocumented)
-    'using': string;
+    'using'?: string | null;
 }
 
 // @public (undocumented)
@@ -3801,7 +3801,7 @@ export interface AiDateFilterRelative {
     // (undocumented)
     'type': AiDateFilterRelativeTypeEnum;
     // (undocumented)
-    'using': string;
+    'using'?: string | null;
 }
 
 // @public (undocumented)
@@ -4988,6 +4988,8 @@ export interface AiUserContextDashboard {
     // (undocumented)
     'id': string;
     // (undocumented)
+    'title'?: string | null;
+    // (undocumented)
     'widgets'?: Array<AiUserContextWidgetDescriptor>;
 }
 
@@ -5900,16 +5902,28 @@ export interface APITokensApiInterface {
 export class AppearanceApi extends MetadataBaseApi implements AppearanceApiInterface {
     createEntityColorPalettes(requestParameters: AppearanceApiCreateEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutDocument>;
     createEntityThemes(requestParameters: AppearanceApiCreateEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
+    createEntityWorkspaceColorPalettes(requestParameters: AppearanceApiCreateEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
+    createEntityWorkspaceThemes(requestParameters: AppearanceApiCreateEntityWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
     deleteEntityColorPalettes(requestParameters: AppearanceApiDeleteEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityThemes(requestParameters: AppearanceApiDeleteEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    deleteEntityWorkspaceColorPalettes(requestParameters: AppearanceApiDeleteEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    deleteEntityWorkspaceThemes(requestParameters: AppearanceApiDeleteEntityWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     getAllEntitiesColorPalettes(requestParameters?: AppearanceApiGetAllEntitiesColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutList>;
     getAllEntitiesThemes(requestParameters?: AppearanceApiGetAllEntitiesThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutList>;
+    getAllEntitiesWorkspaceColorPalettes(requestParameters: AppearanceApiGetAllEntitiesWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceColorPaletteOutList>;
+    getAllEntitiesWorkspaceThemes(requestParameters: AppearanceApiGetAllEntitiesWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceThemeOutList>;
     getEntityColorPalettes(requestParameters: AppearanceApiGetEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutDocument>;
     getEntityThemes(requestParameters: AppearanceApiGetEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
+    getEntityWorkspaceColorPalettes(requestParameters: AppearanceApiGetEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
+    getEntityWorkspaceThemes(requestParameters: AppearanceApiGetEntityWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
     patchEntityColorPalettes(requestParameters: AppearanceApiPatchEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutDocument>;
     patchEntityThemes(requestParameters: AppearanceApiPatchEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
+    patchEntityWorkspaceColorPalettes(requestParameters: AppearanceApiPatchEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
+    patchEntityWorkspaceThemes(requestParameters: AppearanceApiPatchEntityWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
     updateEntityColorPalettes(requestParameters: AppearanceApiUpdateEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutDocument>;
     updateEntityThemes(requestParameters: AppearanceApiUpdateEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
+    updateEntityWorkspaceColorPalettes(requestParameters: AppearanceApiUpdateEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
+    updateEntityWorkspaceThemes(requestParameters: AppearanceApiUpdateEntityWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
 }
 
 // @public
@@ -5919,10 +5933,22 @@ export function AppearanceApi_CreateEntityColorPalettes(axios: AxiosInstance, ba
 export function AppearanceApi_CreateEntityThemes(axios: AxiosInstance, basePath: string, requestParameters: AppearanceApiCreateEntityThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiThemeOutDocument>;
 
 // @public
+export function AppearanceApi_CreateEntityWorkspaceColorPalettes(axios: AxiosInstance, basePath: string, requestParameters: AppearanceApiCreateEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
+
+// @public
+export function AppearanceApi_CreateEntityWorkspaceThemes(axios: AxiosInstance, basePath: string, requestParameters: AppearanceApiCreateEntityWorkspaceThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
+
+// @public
 export function AppearanceApi_DeleteEntityColorPalettes(axios: AxiosInstance, basePath: string, requestParameters: AppearanceApiDeleteEntityColorPalettesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
 
 // @public
 export function AppearanceApi_DeleteEntityThemes(axios: AxiosInstance, basePath: string, requestParameters: AppearanceApiDeleteEntityThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
+
+// @public
+export function AppearanceApi_DeleteEntityWorkspaceColorPalettes(axios: AxiosInstance, basePath: string, requestParameters: AppearanceApiDeleteEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
+
+// @public
+export function AppearanceApi_DeleteEntityWorkspaceThemes(axios: AxiosInstance, basePath: string, requestParameters: AppearanceApiDeleteEntityWorkspaceThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
 
 // @public
 export function AppearanceApi_GetAllEntitiesColorPalettes(axios: AxiosInstance, basePath: string, requestParameters: AppearanceApiGetAllEntitiesColorPalettesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiColorPaletteOutList>;
@@ -5931,10 +5957,22 @@ export function AppearanceApi_GetAllEntitiesColorPalettes(axios: AxiosInstance, 
 export function AppearanceApi_GetAllEntitiesThemes(axios: AxiosInstance, basePath: string, requestParameters: AppearanceApiGetAllEntitiesThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiThemeOutList>;
 
 // @public
+export function AppearanceApi_GetAllEntitiesWorkspaceColorPalettes(axios: AxiosInstance, basePath: string, requestParameters: AppearanceApiGetAllEntitiesWorkspaceColorPalettesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceColorPaletteOutList>;
+
+// @public
+export function AppearanceApi_GetAllEntitiesWorkspaceThemes(axios: AxiosInstance, basePath: string, requestParameters: AppearanceApiGetAllEntitiesWorkspaceThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceThemeOutList>;
+
+// @public
 export function AppearanceApi_GetEntityColorPalettes(axios: AxiosInstance, basePath: string, requestParameters: AppearanceApiGetEntityColorPalettesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiColorPaletteOutDocument>;
 
 // @public
 export function AppearanceApi_GetEntityThemes(axios: AxiosInstance, basePath: string, requestParameters: AppearanceApiGetEntityThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiThemeOutDocument>;
+
+// @public
+export function AppearanceApi_GetEntityWorkspaceColorPalettes(axios: AxiosInstance, basePath: string, requestParameters: AppearanceApiGetEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
+
+// @public
+export function AppearanceApi_GetEntityWorkspaceThemes(axios: AxiosInstance, basePath: string, requestParameters: AppearanceApiGetEntityWorkspaceThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
 
 // @public
 export function AppearanceApi_PatchEntityColorPalettes(axios: AxiosInstance, basePath: string, requestParameters: AppearanceApiPatchEntityColorPalettesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiColorPaletteOutDocument>;
@@ -5943,10 +5981,22 @@ export function AppearanceApi_PatchEntityColorPalettes(axios: AxiosInstance, bas
 export function AppearanceApi_PatchEntityThemes(axios: AxiosInstance, basePath: string, requestParameters: AppearanceApiPatchEntityThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiThemeOutDocument>;
 
 // @public
+export function AppearanceApi_PatchEntityWorkspaceColorPalettes(axios: AxiosInstance, basePath: string, requestParameters: AppearanceApiPatchEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
+
+// @public
+export function AppearanceApi_PatchEntityWorkspaceThemes(axios: AxiosInstance, basePath: string, requestParameters: AppearanceApiPatchEntityWorkspaceThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
+
+// @public
 export function AppearanceApi_UpdateEntityColorPalettes(axios: AxiosInstance, basePath: string, requestParameters: AppearanceApiUpdateEntityColorPalettesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiColorPaletteOutDocument>;
 
 // @public
 export function AppearanceApi_UpdateEntityThemes(axios: AxiosInstance, basePath: string, requestParameters: AppearanceApiUpdateEntityThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiThemeOutDocument>;
+
+// @public
+export function AppearanceApi_UpdateEntityWorkspaceColorPalettes(axios: AxiosInstance, basePath: string, requestParameters: AppearanceApiUpdateEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
+
+// @public
+export function AppearanceApi_UpdateEntityWorkspaceThemes(axios: AxiosInstance, basePath: string, requestParameters: AppearanceApiUpdateEntityWorkspaceThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
 
 // @public
 export function AppearanceApiAxiosParamCreator_CreateEntityColorPalettes(jsonApiColorPaletteInDocument: JsonApiColorPaletteInDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -5955,10 +6005,22 @@ export function AppearanceApiAxiosParamCreator_CreateEntityColorPalettes(jsonApi
 export function AppearanceApiAxiosParamCreator_CreateEntityThemes(jsonApiThemeInDocument: JsonApiThemeInDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
+export function AppearanceApiAxiosParamCreator_CreateEntityWorkspaceColorPalettes(workspaceId: string, jsonApiWorkspaceColorPaletteInDocument: JsonApiWorkspaceColorPaletteInDocument, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function AppearanceApiAxiosParamCreator_CreateEntityWorkspaceThemes(workspaceId: string, jsonApiWorkspaceThemeInDocument: JsonApiWorkspaceThemeInDocument, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
 export function AppearanceApiAxiosParamCreator_DeleteEntityColorPalettes(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function AppearanceApiAxiosParamCreator_DeleteEntityThemes(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function AppearanceApiAxiosParamCreator_DeleteEntityWorkspaceColorPalettes(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function AppearanceApiAxiosParamCreator_DeleteEntityWorkspaceThemes(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function AppearanceApiAxiosParamCreator_GetAllEntitiesColorPalettes(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -5967,10 +6029,22 @@ export function AppearanceApiAxiosParamCreator_GetAllEntitiesColorPalettes(filte
 export function AppearanceApiAxiosParamCreator_GetAllEntitiesThemes(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
+export function AppearanceApiAxiosParamCreator_GetAllEntitiesWorkspaceColorPalettes(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function AppearanceApiAxiosParamCreator_GetAllEntitiesWorkspaceThemes(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
 export function AppearanceApiAxiosParamCreator_GetEntityColorPalettes(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function AppearanceApiAxiosParamCreator_GetEntityThemes(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function AppearanceApiAxiosParamCreator_GetEntityWorkspaceColorPalettes(workspaceId: string, objectId: string, filter?: string, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function AppearanceApiAxiosParamCreator_GetEntityWorkspaceThemes(workspaceId: string, objectId: string, filter?: string, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function AppearanceApiAxiosParamCreator_PatchEntityColorPalettes(id: string, jsonApiColorPalettePatchDocument: JsonApiColorPalettePatchDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -5979,10 +6053,22 @@ export function AppearanceApiAxiosParamCreator_PatchEntityColorPalettes(id: stri
 export function AppearanceApiAxiosParamCreator_PatchEntityThemes(id: string, jsonApiThemePatchDocument: JsonApiThemePatchDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
+export function AppearanceApiAxiosParamCreator_PatchEntityWorkspaceColorPalettes(workspaceId: string, objectId: string, jsonApiWorkspaceColorPalettePatchDocument: JsonApiWorkspaceColorPalettePatchDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function AppearanceApiAxiosParamCreator_PatchEntityWorkspaceThemes(workspaceId: string, objectId: string, jsonApiWorkspaceThemePatchDocument: JsonApiWorkspaceThemePatchDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
 export function AppearanceApiAxiosParamCreator_UpdateEntityColorPalettes(id: string, jsonApiColorPaletteInDocument: JsonApiColorPaletteInDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function AppearanceApiAxiosParamCreator_UpdateEntityThemes(id: string, jsonApiThemeInDocument: JsonApiThemeInDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function AppearanceApiAxiosParamCreator_UpdateEntityWorkspaceColorPalettes(workspaceId: string, objectId: string, jsonApiWorkspaceColorPaletteInDocument: JsonApiWorkspaceColorPaletteInDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function AppearanceApiAxiosParamCreator_UpdateEntityWorkspaceThemes(workspaceId: string, objectId: string, jsonApiWorkspaceThemeInDocument: JsonApiWorkspaceThemeInDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export interface AppearanceApiCreateEntityColorPalettesRequest {
@@ -5995,6 +6081,20 @@ export interface AppearanceApiCreateEntityThemesRequest {
 }
 
 // @public
+export interface AppearanceApiCreateEntityWorkspaceColorPalettesRequest {
+    readonly jsonApiWorkspaceColorPaletteInDocument: JsonApiWorkspaceColorPaletteInDocument;
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface AppearanceApiCreateEntityWorkspaceThemesRequest {
+    readonly jsonApiWorkspaceThemeInDocument: JsonApiWorkspaceThemeInDocument;
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface AppearanceApiDeleteEntityColorPalettesRequest {
     readonly id: string;
 }
@@ -6002,6 +6102,18 @@ export interface AppearanceApiDeleteEntityColorPalettesRequest {
 // @public
 export interface AppearanceApiDeleteEntityThemesRequest {
     readonly id: string;
+}
+
+// @public
+export interface AppearanceApiDeleteEntityWorkspaceColorPalettesRequest {
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface AppearanceApiDeleteEntityWorkspaceThemesRequest {
+    readonly objectId: string;
+    readonly workspaceId: string;
 }
 
 // @public
@@ -6023,6 +6135,30 @@ export interface AppearanceApiGetAllEntitiesThemesRequest {
 }
 
 // @public
+export interface AppearanceApiGetAllEntitiesWorkspaceColorPalettesRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>;
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE';
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface AppearanceApiGetAllEntitiesWorkspaceThemesRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>;
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE';
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
 export interface AppearanceApiGetEntityColorPalettesRequest {
     readonly filter?: string;
     readonly id: string;
@@ -6035,19 +6171,49 @@ export interface AppearanceApiGetEntityThemesRequest {
 }
 
 // @public
+export interface AppearanceApiGetEntityWorkspaceColorPalettesRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface AppearanceApiGetEntityWorkspaceThemesRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
 export interface AppearanceApiInterface {
     createEntityColorPalettes(requestParameters: AppearanceApiCreateEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutDocument>;
     createEntityThemes(requestParameters: AppearanceApiCreateEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
+    createEntityWorkspaceColorPalettes(requestParameters: AppearanceApiCreateEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
+    createEntityWorkspaceThemes(requestParameters: AppearanceApiCreateEntityWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
     deleteEntityColorPalettes(requestParameters: AppearanceApiDeleteEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityThemes(requestParameters: AppearanceApiDeleteEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    deleteEntityWorkspaceColorPalettes(requestParameters: AppearanceApiDeleteEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    deleteEntityWorkspaceThemes(requestParameters: AppearanceApiDeleteEntityWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     getAllEntitiesColorPalettes(requestParameters: AppearanceApiGetAllEntitiesColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutList>;
     getAllEntitiesThemes(requestParameters: AppearanceApiGetAllEntitiesThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutList>;
+    getAllEntitiesWorkspaceColorPalettes(requestParameters: AppearanceApiGetAllEntitiesWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceColorPaletteOutList>;
+    getAllEntitiesWorkspaceThemes(requestParameters: AppearanceApiGetAllEntitiesWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceThemeOutList>;
     getEntityColorPalettes(requestParameters: AppearanceApiGetEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutDocument>;
     getEntityThemes(requestParameters: AppearanceApiGetEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
+    getEntityWorkspaceColorPalettes(requestParameters: AppearanceApiGetEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
+    getEntityWorkspaceThemes(requestParameters: AppearanceApiGetEntityWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
     patchEntityColorPalettes(requestParameters: AppearanceApiPatchEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutDocument>;
     patchEntityThemes(requestParameters: AppearanceApiPatchEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
+    patchEntityWorkspaceColorPalettes(requestParameters: AppearanceApiPatchEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
+    patchEntityWorkspaceThemes(requestParameters: AppearanceApiPatchEntityWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
     updateEntityColorPalettes(requestParameters: AppearanceApiUpdateEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutDocument>;
     updateEntityThemes(requestParameters: AppearanceApiUpdateEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
+    updateEntityWorkspaceColorPalettes(requestParameters: AppearanceApiUpdateEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
+    updateEntityWorkspaceThemes(requestParameters: AppearanceApiUpdateEntityWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
 }
 
 // @public
@@ -6065,6 +6231,22 @@ export interface AppearanceApiPatchEntityThemesRequest {
 }
 
 // @public
+export interface AppearanceApiPatchEntityWorkspaceColorPalettesRequest {
+    readonly filter?: string;
+    readonly jsonApiWorkspaceColorPalettePatchDocument: JsonApiWorkspaceColorPalettePatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface AppearanceApiPatchEntityWorkspaceThemesRequest {
+    readonly filter?: string;
+    readonly jsonApiWorkspaceThemePatchDocument: JsonApiWorkspaceThemePatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface AppearanceApiUpdateEntityColorPalettesRequest {
     readonly filter?: string;
     readonly id: string;
@@ -6076,6 +6258,22 @@ export interface AppearanceApiUpdateEntityThemesRequest {
     readonly filter?: string;
     readonly id: string;
     readonly jsonApiThemeInDocument: JsonApiThemeInDocument;
+}
+
+// @public
+export interface AppearanceApiUpdateEntityWorkspaceColorPalettesRequest {
+    readonly filter?: string;
+    readonly jsonApiWorkspaceColorPaletteInDocument: JsonApiWorkspaceColorPaletteInDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface AppearanceApiUpdateEntityWorkspaceThemesRequest {
+    readonly filter?: string;
+    readonly jsonApiWorkspaceThemeInDocument: JsonApiWorkspaceThemeInDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
 }
 
 // @public (undocumented)
@@ -13148,11 +13346,13 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     createEntityUsers(requestParameters: EntitiesApiCreateEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
     createEntityUserSettings(requestParameters: EntitiesApiCreateEntityUserSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserSettingOutDocument>;
     createEntityVisualizationObjects(requestParameters: EntitiesApiCreateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    createEntityWorkspaceColorPalettes(requestParameters: EntitiesApiCreateEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
     createEntityWorkspaceDataFilters(requestParameters: EntitiesApiCreateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
     createEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiCreateEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
     createEntityWorkspaceExportTemplates(requestParameters: EntitiesApiCreateEntityWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceExportTemplateOutDocument>;
     createEntityWorkspaces(requestParameters: EntitiesApiCreateEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
     createEntityWorkspaceSettings(requestParameters: EntitiesApiCreateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
+    createEntityWorkspaceThemes(requestParameters: EntitiesApiCreateEntityWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
     // @deprecated
     deleteEntity(requestParameters: EntitiesApiDeleteEntityRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityAgents(requestParameters: EntitiesApiDeleteEntityAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -13188,11 +13388,13 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     deleteEntityUsers(requestParameters: EntitiesApiDeleteEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityUserSettings(requestParameters: EntitiesApiDeleteEntityUserSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityVisualizationObjects(requestParameters: EntitiesApiDeleteEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    deleteEntityWorkspaceColorPalettes(requestParameters: EntitiesApiDeleteEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityWorkspaceDataFilters(requestParameters: EntitiesApiDeleteEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiDeleteEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityWorkspaceExportTemplates(requestParameters: EntitiesApiDeleteEntityWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityWorkspaces(requestParameters: EntitiesApiDeleteEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityWorkspaceSettings(requestParameters: EntitiesApiDeleteEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    deleteEntityWorkspaceThemes(requestParameters: EntitiesApiDeleteEntityWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     getAllAutomationsWorkspaceAutomations(requestParameters?: EntitiesApiGetAllAutomationsWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceAutomationOutList>;
     // @deprecated
     getAllEntities(options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -13238,11 +13440,13 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     getAllEntitiesUsers(requestParameters?: EntitiesApiGetAllEntitiesUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutList>;
     getAllEntitiesUserSettings(requestParameters: EntitiesApiGetAllEntitiesUserSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserSettingOutList>;
     getAllEntitiesVisualizationObjects(requestParameters: EntitiesApiGetAllEntitiesVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutList>;
+    getAllEntitiesWorkspaceColorPalettes(requestParameters: EntitiesApiGetAllEntitiesWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceColorPaletteOutList>;
     getAllEntitiesWorkspaceDataFilters(requestParameters: EntitiesApiGetAllEntitiesWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutList>;
     getAllEntitiesWorkspaceDataFilterSettings(requestParameters: EntitiesApiGetAllEntitiesWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutList>;
     getAllEntitiesWorkspaceExportTemplates(requestParameters: EntitiesApiGetAllEntitiesWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceExportTemplateOutList>;
     getAllEntitiesWorkspaces(requestParameters?: EntitiesApiGetAllEntitiesWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutList>;
     getAllEntitiesWorkspaceSettings(requestParameters: EntitiesApiGetAllEntitiesWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutList>;
+    getAllEntitiesWorkspaceThemes(requestParameters: EntitiesApiGetAllEntitiesWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceThemeOutList>;
     getAllOptions(options?: AxiosRequestConfig): AxiosPromise<object>;
     getDataSourceDrivers(options?: AxiosRequestConfig): AxiosPromise<{
         [key: string]: string;
@@ -13293,11 +13497,13 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     getEntityUsers(requestParameters: EntitiesApiGetEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
     getEntityUserSettings(requestParameters: EntitiesApiGetEntityUserSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserSettingOutDocument>;
     getEntityVisualizationObjects(requestParameters: EntitiesApiGetEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    getEntityWorkspaceColorPalettes(requestParameters: EntitiesApiGetEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
     getEntityWorkspaceDataFilters(requestParameters: EntitiesApiGetEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
     getEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiGetEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
     getEntityWorkspaceExportTemplates(requestParameters: EntitiesApiGetEntityWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceExportTemplateOutDocument>;
     getEntityWorkspaces(requestParameters: EntitiesApiGetEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
     getEntityWorkspaceSettings(requestParameters: EntitiesApiGetEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
+    getEntityWorkspaceThemes(requestParameters: EntitiesApiGetEntityWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
     getOrganization(requestParameters?: EntitiesApiGetOrganizationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     // @deprecated
     patchEntity(requestParameters: EntitiesApiPatchEntityRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -13336,11 +13542,13 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     patchEntityUserGroups(requestParameters: EntitiesApiPatchEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
     patchEntityUsers(requestParameters: EntitiesApiPatchEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
     patchEntityVisualizationObjects(requestParameters: EntitiesApiPatchEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    patchEntityWorkspaceColorPalettes(requestParameters: EntitiesApiPatchEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
     patchEntityWorkspaceDataFilters(requestParameters: EntitiesApiPatchEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
     patchEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiPatchEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
     patchEntityWorkspaceExportTemplates(requestParameters: EntitiesApiPatchEntityWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceExportTemplateOutDocument>;
     patchEntityWorkspaces(requestParameters: EntitiesApiPatchEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
     patchEntityWorkspaceSettings(requestParameters: EntitiesApiPatchEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
+    patchEntityWorkspaceThemes(requestParameters: EntitiesApiPatchEntityWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
     searchEntitiesAggregatedFacts(requestParameters: EntitiesApiSearchEntitiesAggregatedFactsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAggregatedFactOutList>;
     searchEntitiesAnalyticalDashboards(requestParameters: EntitiesApiSearchEntitiesAnalyticalDashboardsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAnalyticalDashboardOutList>;
     searchEntitiesAttributeHierarchies(requestParameters: EntitiesApiSearchEntitiesAttributeHierarchiesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAttributeHierarchyOutList>;
@@ -13400,11 +13608,13 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     updateEntityUsers(requestParameters: EntitiesApiUpdateEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
     updateEntityUserSettings(requestParameters: EntitiesApiUpdateEntityUserSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserSettingOutDocument>;
     updateEntityVisualizationObjects(requestParameters: EntitiesApiUpdateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    updateEntityWorkspaceColorPalettes(requestParameters: EntitiesApiUpdateEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
     updateEntityWorkspaceDataFilters(requestParameters: EntitiesApiUpdateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
     updateEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiUpdateEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
     updateEntityWorkspaceExportTemplates(requestParameters: EntitiesApiUpdateEntityWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceExportTemplateOutDocument>;
     updateEntityWorkspaces(requestParameters: EntitiesApiUpdateEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
     updateEntityWorkspaceSettings(requestParameters: EntitiesApiUpdateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
+    updateEntityWorkspaceThemes(requestParameters: EntitiesApiUpdateEntityWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
 }
 
 // @public
@@ -13498,6 +13708,9 @@ export function EntitiesApi_CreateEntityUserSettings(axios: AxiosInstance, baseP
 export function EntitiesApi_CreateEntityVisualizationObjects(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiCreateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
 
 // @public
+export function EntitiesApi_CreateEntityWorkspaceColorPalettes(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiCreateEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
+
+// @public
 export function EntitiesApi_CreateEntityWorkspaceDataFilters(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiCreateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
 
 // @public
@@ -13508,6 +13721,9 @@ export function EntitiesApi_CreateEntityWorkspaces(axios: AxiosInstance, basePat
 
 // @public
 export function EntitiesApi_CreateEntityWorkspaceSettings(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiCreateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
+
+// @public
+export function EntitiesApi_CreateEntityWorkspaceThemes(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiCreateEntityWorkspaceThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
 
 // @public
 export function EntitiesApi_DeleteEntityAgents(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiDeleteEntityAgentsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
@@ -13600,6 +13816,9 @@ export function EntitiesApi_DeleteEntityUserSettings(axios: AxiosInstance, baseP
 export function EntitiesApi_DeleteEntityVisualizationObjects(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiDeleteEntityVisualizationObjectsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
 
 // @public
+export function EntitiesApi_DeleteEntityWorkspaceColorPalettes(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiDeleteEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
+
+// @public
 export function EntitiesApi_DeleteEntityWorkspaceDataFilters(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiDeleteEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
 
 // @public
@@ -13610,6 +13829,9 @@ export function EntitiesApi_DeleteEntityWorkspaces(axios: AxiosInstance, basePat
 
 // @public
 export function EntitiesApi_DeleteEntityWorkspaceSettings(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiDeleteEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
+
+// @public
+export function EntitiesApi_DeleteEntityWorkspaceThemes(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiDeleteEntityWorkspaceThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
 
 // @public
 export function EntitiesApi_GetAllAutomationsWorkspaceAutomations(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiGetAllAutomationsWorkspaceAutomationsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceAutomationOutList>;
@@ -13732,6 +13954,9 @@ export function EntitiesApi_GetAllEntitiesUserSettings(axios: AxiosInstance, bas
 export function EntitiesApi_GetAllEntitiesVisualizationObjects(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiGetAllEntitiesVisualizationObjectsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiVisualizationObjectOutList>;
 
 // @public
+export function EntitiesApi_GetAllEntitiesWorkspaceColorPalettes(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiGetAllEntitiesWorkspaceColorPalettesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceColorPaletteOutList>;
+
+// @public
 export function EntitiesApi_GetAllEntitiesWorkspaceDataFilters(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiGetAllEntitiesWorkspaceDataFiltersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceDataFilterOutList>;
 
 // @public
@@ -13742,6 +13967,9 @@ export function EntitiesApi_GetAllEntitiesWorkspaces(axios: AxiosInstance, baseP
 
 // @public
 export function EntitiesApi_GetAllEntitiesWorkspaceSettings(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiGetAllEntitiesWorkspaceSettingsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceSettingOutList>;
+
+// @public
+export function EntitiesApi_GetAllEntitiesWorkspaceThemes(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiGetAllEntitiesWorkspaceThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceThemeOutList>;
 
 // @public
 export function EntitiesApi_GetAllOptions(axios: AxiosInstance, basePath: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<object>;
@@ -13875,6 +14103,9 @@ export function EntitiesApi_GetEntityUserSettings(axios: AxiosInstance, basePath
 export function EntitiesApi_GetEntityVisualizationObjects(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiGetEntityVisualizationObjectsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
 
 // @public
+export function EntitiesApi_GetEntityWorkspaceColorPalettes(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiGetEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
+
+// @public
 export function EntitiesApi_GetEntityWorkspaceDataFilters(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiGetEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
 
 // @public
@@ -13885,6 +14116,9 @@ export function EntitiesApi_GetEntityWorkspaces(axios: AxiosInstance, basePath: 
 
 // @public
 export function EntitiesApi_GetEntityWorkspaceSettings(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiGetEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
+
+// @public
+export function EntitiesApi_GetEntityWorkspaceThemes(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiGetEntityWorkspaceThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
 
 // @public
 export function EntitiesApi_GetOrganization(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiGetOrganizationRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
@@ -13992,6 +14226,9 @@ export function EntitiesApi_PatchEntityUsers(axios: AxiosInstance, basePath: str
 export function EntitiesApi_PatchEntityVisualizationObjects(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiPatchEntityVisualizationObjectsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
 
 // @public
+export function EntitiesApi_PatchEntityWorkspaceColorPalettes(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiPatchEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
+
+// @public
 export function EntitiesApi_PatchEntityWorkspaceDataFilters(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiPatchEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
 
 // @public
@@ -14002,6 +14239,9 @@ export function EntitiesApi_PatchEntityWorkspaces(axios: AxiosInstance, basePath
 
 // @public
 export function EntitiesApi_PatchEntityWorkspaceSettings(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiPatchEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
+
+// @public
+export function EntitiesApi_PatchEntityWorkspaceThemes(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiPatchEntityWorkspaceThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
 
 // @public
 export function EntitiesApi_SearchEntitiesAggregatedFacts(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiSearchEntitiesAggregatedFactsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiAggregatedFactOutList>;
@@ -14166,6 +14406,9 @@ export function EntitiesApi_UpdateEntityUserSettings(axios: AxiosInstance, baseP
 export function EntitiesApi_UpdateEntityVisualizationObjects(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiUpdateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
 
 // @public
+export function EntitiesApi_UpdateEntityWorkspaceColorPalettes(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiUpdateEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
+
+// @public
 export function EntitiesApi_UpdateEntityWorkspaceDataFilters(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiUpdateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
 
 // @public
@@ -14176,6 +14419,9 @@ export function EntitiesApi_UpdateEntityWorkspaces(axios: AxiosInstance, basePat
 
 // @public
 export function EntitiesApi_UpdateEntityWorkspaceSettings(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiUpdateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
+
+// @public
+export function EntitiesApi_UpdateEntityWorkspaceThemes(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiUpdateEntityWorkspaceThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
 
 // @public
 export function EntitiesApiAxiosParamCreator_CreateEntityAgents(jsonApiAgentInDocument: JsonApiAgentInDocument, include?: Array<'userIdentifiers' | 'userGroups' | 'createdBy' | 'modifiedBy' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -14268,6 +14514,9 @@ export function EntitiesApiAxiosParamCreator_CreateEntityUserSettings(userId: st
 export function EntitiesApiAxiosParamCreator_CreateEntityVisualizationObjects(workspaceId: string, jsonApiVisualizationObjectPostOptionalIdDocument: JsonApiVisualizationObjectPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
+export function EntitiesApiAxiosParamCreator_CreateEntityWorkspaceColorPalettes(workspaceId: string, jsonApiWorkspaceColorPaletteInDocument: JsonApiWorkspaceColorPaletteInDocument, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
 export function EntitiesApiAxiosParamCreator_CreateEntityWorkspaceDataFilters(workspaceId: string, jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument, include?: Array<'workspaceDataFilterSettings' | 'filterSettings' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
@@ -14278,6 +14527,9 @@ export function EntitiesApiAxiosParamCreator_CreateEntityWorkspaces(jsonApiWorks
 
 // @public
 export function EntitiesApiAxiosParamCreator_CreateEntityWorkspaceSettings(workspaceId: string, jsonApiWorkspaceSettingPostOptionalIdDocument: JsonApiWorkspaceSettingPostOptionalIdDocument, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function EntitiesApiAxiosParamCreator_CreateEntityWorkspaceThemes(workspaceId: string, jsonApiWorkspaceThemeInDocument: JsonApiWorkspaceThemeInDocument, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function EntitiesApiAxiosParamCreator_DeleteEntityAgents(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -14370,6 +14622,9 @@ export function EntitiesApiAxiosParamCreator_DeleteEntityUserSettings(userId: st
 export function EntitiesApiAxiosParamCreator_DeleteEntityVisualizationObjects(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
+export function EntitiesApiAxiosParamCreator_DeleteEntityWorkspaceColorPalettes(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
 export function EntitiesApiAxiosParamCreator_DeleteEntityWorkspaceDataFilters(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
@@ -14380,6 +14635,9 @@ export function EntitiesApiAxiosParamCreator_DeleteEntityWorkspaces(id: string, 
 
 // @public
 export function EntitiesApiAxiosParamCreator_DeleteEntityWorkspaceSettings(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function EntitiesApiAxiosParamCreator_DeleteEntityWorkspaceThemes(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function EntitiesApiAxiosParamCreator_GetAllAutomationsWorkspaceAutomations(filter?: string, include?: Array<'workspaces' | 'notificationChannels' | 'analyticalDashboards' | 'userIdentifiers' | 'exportDefinitions' | 'users' | 'automationResults' | 'workspace' | 'notificationChannel' | 'analyticalDashboard' | 'createdBy' | 'modifiedBy' | 'recipients' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -14502,6 +14760,9 @@ export function EntitiesApiAxiosParamCreator_GetAllEntitiesUserSettings(userId: 
 export function EntitiesApiAxiosParamCreator_GetAllEntitiesVisualizationObjects(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
+export function EntitiesApiAxiosParamCreator_GetAllEntitiesWorkspaceColorPalettes(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
 export function EntitiesApiAxiosParamCreator_GetAllEntitiesWorkspaceDataFilters(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'workspaceDataFilterSettings' | 'filterSettings' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
@@ -14512,6 +14773,9 @@ export function EntitiesApiAxiosParamCreator_GetAllEntitiesWorkspaces(filter?: s
 
 // @public
 export function EntitiesApiAxiosParamCreator_GetAllEntitiesWorkspaceSettings(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function EntitiesApiAxiosParamCreator_GetAllEntitiesWorkspaceThemes(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function EntitiesApiAxiosParamCreator_GetAllOptions(options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -14643,6 +14907,9 @@ export function EntitiesApiAxiosParamCreator_GetEntityUserSettings(userId: strin
 export function EntitiesApiAxiosParamCreator_GetEntityVisualizationObjects(workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
+export function EntitiesApiAxiosParamCreator_GetEntityWorkspaceColorPalettes(workspaceId: string, objectId: string, filter?: string, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
 export function EntitiesApiAxiosParamCreator_GetEntityWorkspaceDataFilters(workspaceId: string, objectId: string, filter?: string, include?: Array<'workspaceDataFilterSettings' | 'filterSettings' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
@@ -14653,6 +14920,9 @@ export function EntitiesApiAxiosParamCreator_GetEntityWorkspaces(id: string, fil
 
 // @public
 export function EntitiesApiAxiosParamCreator_GetEntityWorkspaceSettings(workspaceId: string, objectId: string, filter?: string, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function EntitiesApiAxiosParamCreator_GetEntityWorkspaceThemes(workspaceId: string, objectId: string, filter?: string, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function EntitiesApiAxiosParamCreator_GetOrganization(metaInclude?: Array<'permissions' | 'all'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -14760,6 +15030,9 @@ export function EntitiesApiAxiosParamCreator_PatchEntityUsers(id: string, jsonAp
 export function EntitiesApiAxiosParamCreator_PatchEntityVisualizationObjects(workspaceId: string, objectId: string, jsonApiVisualizationObjectPatchDocument: JsonApiVisualizationObjectPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
+export function EntitiesApiAxiosParamCreator_PatchEntityWorkspaceColorPalettes(workspaceId: string, objectId: string, jsonApiWorkspaceColorPalettePatchDocument: JsonApiWorkspaceColorPalettePatchDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
 export function EntitiesApiAxiosParamCreator_PatchEntityWorkspaceDataFilters(workspaceId: string, objectId: string, jsonApiWorkspaceDataFilterPatchDocument: JsonApiWorkspaceDataFilterPatchDocument, filter?: string, include?: Array<'workspaceDataFilterSettings' | 'filterSettings' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
@@ -14770,6 +15043,9 @@ export function EntitiesApiAxiosParamCreator_PatchEntityWorkspaces(id: string, j
 
 // @public
 export function EntitiesApiAxiosParamCreator_PatchEntityWorkspaceSettings(workspaceId: string, objectId: string, jsonApiWorkspaceSettingPatchDocument: JsonApiWorkspaceSettingPatchDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function EntitiesApiAxiosParamCreator_PatchEntityWorkspaceThemes(workspaceId: string, objectId: string, jsonApiWorkspaceThemePatchDocument: JsonApiWorkspaceThemePatchDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function EntitiesApiAxiosParamCreator_SearchEntitiesAggregatedFacts(workspaceId: string, entitySearchBody: EntitySearchBody, origin?: 'ALL' | 'PARENTS' | 'NATIVE', xGDCVALIDATERELATIONS?: boolean, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -14934,6 +15210,9 @@ export function EntitiesApiAxiosParamCreator_UpdateEntityUserSettings(userId: st
 export function EntitiesApiAxiosParamCreator_UpdateEntityVisualizationObjects(workspaceId: string, objectId: string, jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'parameters' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
+export function EntitiesApiAxiosParamCreator_UpdateEntityWorkspaceColorPalettes(workspaceId: string, objectId: string, jsonApiWorkspaceColorPaletteInDocument: JsonApiWorkspaceColorPaletteInDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
 export function EntitiesApiAxiosParamCreator_UpdateEntityWorkspaceDataFilters(workspaceId: string, objectId: string, jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument, filter?: string, include?: Array<'workspaceDataFilterSettings' | 'filterSettings' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
@@ -14944,6 +15223,9 @@ export function EntitiesApiAxiosParamCreator_UpdateEntityWorkspaces(id: string, 
 
 // @public
 export function EntitiesApiAxiosParamCreator_UpdateEntityWorkspaceSettings(workspaceId: string, objectId: string, jsonApiWorkspaceSettingInDocument: JsonApiWorkspaceSettingInDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function EntitiesApiAxiosParamCreator_UpdateEntityWorkspaceThemes(workspaceId: string, objectId: string, jsonApiWorkspaceThemeInDocument: JsonApiWorkspaceThemeInDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export interface EntitiesApiCreateEntityAgentsRequest {
@@ -15160,6 +15442,13 @@ export interface EntitiesApiCreateEntityVisualizationObjectsRequest {
 }
 
 // @public
+export interface EntitiesApiCreateEntityWorkspaceColorPalettesRequest {
+    readonly jsonApiWorkspaceColorPaletteInDocument: JsonApiWorkspaceColorPaletteInDocument;
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface EntitiesApiCreateEntityWorkspaceDataFilterSettingsRequest {
     readonly include?: Array<'workspaceDataFilters' | 'workspaceDataFilter' | 'ALL'>;
     readonly jsonApiWorkspaceDataFilterSettingInDocument: JsonApiWorkspaceDataFilterSettingInDocument;
@@ -15194,6 +15483,13 @@ export interface EntitiesApiCreateEntityWorkspacesRequest {
     readonly include?: Array<'workspaces' | 'parent' | 'ALL'>;
     readonly jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument;
     readonly metaInclude?: Array<'config' | 'permissions' | 'hierarchy' | 'dataModelDatasets' | 'all' | 'ALL'>;
+}
+
+// @public
+export interface EntitiesApiCreateEntityWorkspaceThemesRequest {
+    readonly jsonApiWorkspaceThemeInDocument: JsonApiWorkspaceThemeInDocument;
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
+    readonly workspaceId: string;
 }
 
 // @public
@@ -15384,6 +15680,12 @@ export interface EntitiesApiDeleteEntityVisualizationObjectsRequest {
 }
 
 // @public
+export interface EntitiesApiDeleteEntityWorkspaceColorPalettesRequest {
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface EntitiesApiDeleteEntityWorkspaceDataFilterSettingsRequest {
     readonly objectId: string;
     readonly workspaceId: string;
@@ -15410,6 +15712,12 @@ export interface EntitiesApiDeleteEntityWorkspaceSettingsRequest {
 // @public
 export interface EntitiesApiDeleteEntityWorkspacesRequest {
     readonly id: string;
+}
+
+// @public
+export interface EntitiesApiDeleteEntityWorkspaceThemesRequest {
+    readonly objectId: string;
+    readonly workspaceId: string;
 }
 
 // @public
@@ -15884,6 +16192,18 @@ export interface EntitiesApiGetAllEntitiesVisualizationObjectsRequest {
 }
 
 // @public
+export interface EntitiesApiGetAllEntitiesWorkspaceColorPalettesRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>;
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE';
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
 export interface EntitiesApiGetAllEntitiesWorkspaceDataFilterSettingsRequest {
     readonly filter?: string;
     readonly include?: Array<'workspaceDataFilters' | 'workspaceDataFilter' | 'ALL'>;
@@ -15941,6 +16261,18 @@ export interface EntitiesApiGetAllEntitiesWorkspacesRequest {
     readonly page?: number;
     readonly size?: number;
     readonly sort?: Array<string>;
+}
+
+// @public
+export interface EntitiesApiGetAllEntitiesWorkspaceThemesRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>;
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE';
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
 }
 
 // @public
@@ -16299,6 +16631,15 @@ export interface EntitiesApiGetEntityVisualizationObjectsRequest {
 }
 
 // @public
+export interface EntitiesApiGetEntityWorkspaceColorPalettesRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
 export interface EntitiesApiGetEntityWorkspaceDataFilterSettingsRequest {
     readonly filter?: string;
     readonly include?: Array<'workspaceDataFilters' | 'workspaceDataFilter' | 'ALL'>;
@@ -16345,6 +16686,15 @@ export interface EntitiesApiGetEntityWorkspacesRequest {
 }
 
 // @public
+export interface EntitiesApiGetEntityWorkspaceThemesRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
 export interface EntitiesApiGetOrganizationRequest {
     readonly metaInclude?: Array<'permissions' | 'all'>;
 }
@@ -16386,11 +16736,13 @@ export interface EntitiesApiInterface {
     createEntityUsers(requestParameters: EntitiesApiCreateEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
     createEntityUserSettings(requestParameters: EntitiesApiCreateEntityUserSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserSettingOutDocument>;
     createEntityVisualizationObjects(requestParameters: EntitiesApiCreateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    createEntityWorkspaceColorPalettes(requestParameters: EntitiesApiCreateEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
     createEntityWorkspaceDataFilters(requestParameters: EntitiesApiCreateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
     createEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiCreateEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
     createEntityWorkspaceExportTemplates(requestParameters: EntitiesApiCreateEntityWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceExportTemplateOutDocument>;
     createEntityWorkspaces(requestParameters: EntitiesApiCreateEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
     createEntityWorkspaceSettings(requestParameters: EntitiesApiCreateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
+    createEntityWorkspaceThemes(requestParameters: EntitiesApiCreateEntityWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
     // @deprecated
     deleteEntity(requestParameters: EntitiesApiDeleteEntityRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityAgents(requestParameters: EntitiesApiDeleteEntityAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -16426,11 +16778,13 @@ export interface EntitiesApiInterface {
     deleteEntityUsers(requestParameters: EntitiesApiDeleteEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityUserSettings(requestParameters: EntitiesApiDeleteEntityUserSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityVisualizationObjects(requestParameters: EntitiesApiDeleteEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    deleteEntityWorkspaceColorPalettes(requestParameters: EntitiesApiDeleteEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityWorkspaceDataFilters(requestParameters: EntitiesApiDeleteEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiDeleteEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityWorkspaceExportTemplates(requestParameters: EntitiesApiDeleteEntityWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityWorkspaces(requestParameters: EntitiesApiDeleteEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityWorkspaceSettings(requestParameters: EntitiesApiDeleteEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    deleteEntityWorkspaceThemes(requestParameters: EntitiesApiDeleteEntityWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     getAllAutomationsWorkspaceAutomations(requestParameters: EntitiesApiGetAllAutomationsWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceAutomationOutList>;
     // @deprecated
     getAllEntities(options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -16476,11 +16830,13 @@ export interface EntitiesApiInterface {
     getAllEntitiesUsers(requestParameters: EntitiesApiGetAllEntitiesUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutList>;
     getAllEntitiesUserSettings(requestParameters: EntitiesApiGetAllEntitiesUserSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserSettingOutList>;
     getAllEntitiesVisualizationObjects(requestParameters: EntitiesApiGetAllEntitiesVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutList>;
+    getAllEntitiesWorkspaceColorPalettes(requestParameters: EntitiesApiGetAllEntitiesWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceColorPaletteOutList>;
     getAllEntitiesWorkspaceDataFilters(requestParameters: EntitiesApiGetAllEntitiesWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutList>;
     getAllEntitiesWorkspaceDataFilterSettings(requestParameters: EntitiesApiGetAllEntitiesWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutList>;
     getAllEntitiesWorkspaceExportTemplates(requestParameters: EntitiesApiGetAllEntitiesWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceExportTemplateOutList>;
     getAllEntitiesWorkspaces(requestParameters: EntitiesApiGetAllEntitiesWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutList>;
     getAllEntitiesWorkspaceSettings(requestParameters: EntitiesApiGetAllEntitiesWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutList>;
+    getAllEntitiesWorkspaceThemes(requestParameters: EntitiesApiGetAllEntitiesWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceThemeOutList>;
     getAllOptions(options?: AxiosRequestConfig): AxiosPromise<object>;
     getDataSourceDrivers(options?: AxiosRequestConfig): AxiosPromise<{
         [key: string]: string;
@@ -16531,11 +16887,13 @@ export interface EntitiesApiInterface {
     getEntityUsers(requestParameters: EntitiesApiGetEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
     getEntityUserSettings(requestParameters: EntitiesApiGetEntityUserSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserSettingOutDocument>;
     getEntityVisualizationObjects(requestParameters: EntitiesApiGetEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    getEntityWorkspaceColorPalettes(requestParameters: EntitiesApiGetEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
     getEntityWorkspaceDataFilters(requestParameters: EntitiesApiGetEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
     getEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiGetEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
     getEntityWorkspaceExportTemplates(requestParameters: EntitiesApiGetEntityWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceExportTemplateOutDocument>;
     getEntityWorkspaces(requestParameters: EntitiesApiGetEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
     getEntityWorkspaceSettings(requestParameters: EntitiesApiGetEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
+    getEntityWorkspaceThemes(requestParameters: EntitiesApiGetEntityWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
     getOrganization(requestParameters: EntitiesApiGetOrganizationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     // @deprecated
     patchEntity(requestParameters: EntitiesApiPatchEntityRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -16574,11 +16932,13 @@ export interface EntitiesApiInterface {
     patchEntityUserGroups(requestParameters: EntitiesApiPatchEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
     patchEntityUsers(requestParameters: EntitiesApiPatchEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
     patchEntityVisualizationObjects(requestParameters: EntitiesApiPatchEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    patchEntityWorkspaceColorPalettes(requestParameters: EntitiesApiPatchEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
     patchEntityWorkspaceDataFilters(requestParameters: EntitiesApiPatchEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
     patchEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiPatchEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
     patchEntityWorkspaceExportTemplates(requestParameters: EntitiesApiPatchEntityWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceExportTemplateOutDocument>;
     patchEntityWorkspaces(requestParameters: EntitiesApiPatchEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
     patchEntityWorkspaceSettings(requestParameters: EntitiesApiPatchEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
+    patchEntityWorkspaceThemes(requestParameters: EntitiesApiPatchEntityWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
     searchEntitiesAggregatedFacts(requestParameters: EntitiesApiSearchEntitiesAggregatedFactsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAggregatedFactOutList>;
     searchEntitiesAnalyticalDashboards(requestParameters: EntitiesApiSearchEntitiesAnalyticalDashboardsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAnalyticalDashboardOutList>;
     searchEntitiesAttributeHierarchies(requestParameters: EntitiesApiSearchEntitiesAttributeHierarchiesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiAttributeHierarchyOutList>;
@@ -16638,11 +16998,13 @@ export interface EntitiesApiInterface {
     updateEntityUsers(requestParameters: EntitiesApiUpdateEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
     updateEntityUserSettings(requestParameters: EntitiesApiUpdateEntityUserSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserSettingOutDocument>;
     updateEntityVisualizationObjects(requestParameters: EntitiesApiUpdateEntityVisualizationObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
+    updateEntityWorkspaceColorPalettes(requestParameters: EntitiesApiUpdateEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
     updateEntityWorkspaceDataFilters(requestParameters: EntitiesApiUpdateEntityWorkspaceDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
     updateEntityWorkspaceDataFilterSettings(requestParameters: EntitiesApiUpdateEntityWorkspaceDataFilterSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
     updateEntityWorkspaceExportTemplates(requestParameters: EntitiesApiUpdateEntityWorkspaceExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceExportTemplateOutDocument>;
     updateEntityWorkspaces(requestParameters: EntitiesApiUpdateEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
     updateEntityWorkspaceSettings(requestParameters: EntitiesApiUpdateEntityWorkspaceSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceSettingOutDocument>;
+    updateEntityWorkspaceThemes(requestParameters: EntitiesApiUpdateEntityWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
 }
 
 // @public
@@ -16936,6 +17298,14 @@ export interface EntitiesApiPatchEntityVisualizationObjectsRequest {
 }
 
 // @public
+export interface EntitiesApiPatchEntityWorkspaceColorPalettesRequest {
+    readonly filter?: string;
+    readonly jsonApiWorkspaceColorPalettePatchDocument: JsonApiWorkspaceColorPalettePatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface EntitiesApiPatchEntityWorkspaceDataFilterSettingsRequest {
     readonly filter?: string;
     readonly include?: Array<'workspaceDataFilters' | 'workspaceDataFilter' | 'ALL'>;
@@ -16975,6 +17345,14 @@ export interface EntitiesApiPatchEntityWorkspacesRequest {
     readonly id: string;
     readonly include?: Array<'workspaces' | 'parent' | 'ALL'>;
     readonly jsonApiWorkspacePatchDocument: JsonApiWorkspacePatchDocument;
+}
+
+// @public
+export interface EntitiesApiPatchEntityWorkspaceThemesRequest {
+    readonly filter?: string;
+    readonly jsonApiWorkspaceThemePatchDocument: JsonApiWorkspaceThemePatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
 }
 
 // @public
@@ -17440,6 +17818,14 @@ export interface EntitiesApiUpdateEntityVisualizationObjectsRequest {
 }
 
 // @public
+export interface EntitiesApiUpdateEntityWorkspaceColorPalettesRequest {
+    readonly filter?: string;
+    readonly jsonApiWorkspaceColorPaletteInDocument: JsonApiWorkspaceColorPaletteInDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface EntitiesApiUpdateEntityWorkspaceDataFilterSettingsRequest {
     readonly filter?: string;
     readonly include?: Array<'workspaceDataFilters' | 'workspaceDataFilter' | 'ALL'>;
@@ -17479,6 +17865,14 @@ export interface EntitiesApiUpdateEntityWorkspacesRequest {
     readonly id: string;
     readonly include?: Array<'workspaces' | 'parent' | 'ALL'>;
     readonly jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument;
+}
+
+// @public
+export interface EntitiesApiUpdateEntityWorkspaceThemesRequest {
+    readonly filter?: string;
+    readonly jsonApiWorkspaceThemeInDocument: JsonApiWorkspaceThemeInDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
 }
 
 // @public
@@ -28151,6 +28545,115 @@ export interface JsonApiWorkspaceAutomationOutWithLinks {
 export type JsonApiWorkspaceAutomationOutWithLinksTypeEnum = 'workspaceAutomation';
 
 // @public
+export interface JsonApiWorkspaceColorPaletteIn {
+    // (undocumented)
+    'attributes': JsonApiWorkspaceColorPaletteInAttributes;
+    'id': string;
+    'type': JsonApiWorkspaceColorPaletteInTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiWorkspaceColorPaletteInAttributes {
+    'content': object;
+    // (undocumented)
+    'name': string;
+}
+
+// @public (undocumented)
+export interface JsonApiWorkspaceColorPaletteInDocument {
+    // (undocumented)
+    'data': JsonApiWorkspaceColorPaletteIn;
+}
+
+// @public (undocumented)
+export type JsonApiWorkspaceColorPaletteInTypeEnum = 'workspaceColorPalette';
+
+// @public
+export interface JsonApiWorkspaceColorPaletteOut {
+    // (undocumented)
+    'attributes': JsonApiWorkspaceColorPaletteInAttributes;
+    'id': string;
+    // (undocumented)
+    'meta'?: JsonApiWorkspaceColorPaletteOutMeta;
+    'type': JsonApiWorkspaceColorPaletteOutTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiWorkspaceColorPaletteOutDocument {
+    // (undocumented)
+    'data': JsonApiWorkspaceColorPaletteOut;
+    // (undocumented)
+    'links'?: ObjectLinks;
+}
+
+// @public
+export interface JsonApiWorkspaceColorPaletteOutList {
+    // (undocumented)
+    'data': Array<JsonApiWorkspaceColorPaletteOutWithLinks>;
+    // (undocumented)
+    'links'?: ListLinks;
+    // (undocumented)
+    'meta'?: JsonApiAgentOutListMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiWorkspaceColorPaletteOutMeta {
+    // (undocumented)
+    'origin'?: JsonApiWorkspaceColorPaletteOutMetaOrigin;
+}
+
+// @public (undocumented)
+export interface JsonApiWorkspaceColorPaletteOutMetaOrigin {
+    'originId': string;
+    'originType': JsonApiWorkspaceColorPaletteOutMetaOriginOriginTypeEnum;
+}
+
+// @public (undocumented)
+export type JsonApiWorkspaceColorPaletteOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
+
+// @public (undocumented)
+export type JsonApiWorkspaceColorPaletteOutTypeEnum = 'workspaceColorPalette';
+
+// @public (undocumented)
+export interface JsonApiWorkspaceColorPaletteOutWithLinks {
+    // (undocumented)
+    'attributes': JsonApiWorkspaceColorPaletteInAttributes;
+    'id': string;
+    // (undocumented)
+    'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiWorkspaceColorPaletteOutMeta;
+    'type': JsonApiWorkspaceColorPaletteOutWithLinksTypeEnum;
+}
+
+// @public (undocumented)
+export type JsonApiWorkspaceColorPaletteOutWithLinksTypeEnum = 'workspaceColorPalette';
+
+// @public
+export interface JsonApiWorkspaceColorPalettePatch {
+    // (undocumented)
+    'attributes': JsonApiWorkspaceColorPalettePatchAttributes;
+    'id': string;
+    'type': JsonApiWorkspaceColorPalettePatchTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiWorkspaceColorPalettePatchAttributes {
+    'content'?: object;
+    // (undocumented)
+    'name'?: string;
+}
+
+// @public (undocumented)
+export interface JsonApiWorkspaceColorPalettePatchDocument {
+    // (undocumented)
+    'data': JsonApiWorkspaceColorPalettePatch;
+}
+
+// @public (undocumented)
+export type JsonApiWorkspaceColorPalettePatchTypeEnum = 'workspaceColorPalette';
+
+// @public
 export interface JsonApiWorkspaceDataFilterIn {
     // (undocumented)
     'attributes'?: JsonApiWorkspaceDataFilterOutAttributes;
@@ -28815,6 +29318,86 @@ export interface JsonApiWorkspaceSettingPostOptionalIdDocument {
 
 // @public (undocumented)
 export type JsonApiWorkspaceSettingPostOptionalIdTypeEnum = 'workspaceSetting';
+
+// @public
+export interface JsonApiWorkspaceThemeIn {
+    // (undocumented)
+    'attributes': JsonApiWorkspaceColorPaletteInAttributes;
+    'id': string;
+    'type': JsonApiWorkspaceThemeInTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiWorkspaceThemeInDocument {
+    // (undocumented)
+    'data': JsonApiWorkspaceThemeIn;
+}
+
+// @public (undocumented)
+export type JsonApiWorkspaceThemeInTypeEnum = 'workspaceTheme';
+
+// @public
+export interface JsonApiWorkspaceThemeOut {
+    // (undocumented)
+    'attributes': JsonApiWorkspaceColorPaletteInAttributes;
+    'id': string;
+    // (undocumented)
+    'meta'?: JsonApiWorkspaceColorPaletteOutMeta;
+    'type': JsonApiWorkspaceThemeOutTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiWorkspaceThemeOutDocument {
+    // (undocumented)
+    'data': JsonApiWorkspaceThemeOut;
+    // (undocumented)
+    'links'?: ObjectLinks;
+}
+
+// @public
+export interface JsonApiWorkspaceThemeOutList {
+    // (undocumented)
+    'data': Array<JsonApiWorkspaceThemeOutWithLinks>;
+    // (undocumented)
+    'links'?: ListLinks;
+    // (undocumented)
+    'meta'?: JsonApiAgentOutListMeta;
+}
+
+// @public (undocumented)
+export type JsonApiWorkspaceThemeOutTypeEnum = 'workspaceTheme';
+
+// @public (undocumented)
+export interface JsonApiWorkspaceThemeOutWithLinks {
+    // (undocumented)
+    'attributes': JsonApiWorkspaceColorPaletteInAttributes;
+    'id': string;
+    // (undocumented)
+    'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiWorkspaceColorPaletteOutMeta;
+    'type': JsonApiWorkspaceThemeOutWithLinksTypeEnum;
+}
+
+// @public (undocumented)
+export type JsonApiWorkspaceThemeOutWithLinksTypeEnum = 'workspaceTheme';
+
+// @public
+export interface JsonApiWorkspaceThemePatch {
+    // (undocumented)
+    'attributes': JsonApiWorkspaceColorPalettePatchAttributes;
+    'id': string;
+    'type': JsonApiWorkspaceThemePatchTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiWorkspaceThemePatchDocument {
+    // (undocumented)
+    'data': JsonApiWorkspaceThemePatch;
+}
+
+// @public (undocumented)
+export type JsonApiWorkspaceThemePatchTypeEnum = 'workspaceTheme';
 
 // @public
 export class JwkControllerApi extends MetadataBaseApi implements JwkControllerApiInterface {
@@ -31081,7 +31664,7 @@ export type MetadataGetEntitiesOptions = {
 export type MetadataGetEntitiesParams = MetadataGetEntitiesWorkspaceParams | MetadataGetEntitiesUserParams | MetadataGetEntitiesThemeParams | MetadataGetEntitiesColorPaletteParams;
 
 // @internal
-export type MetadataGetEntitiesResult = JsonApiVisualizationObjectOutList | JsonApiAnalyticalDashboardOutList | JsonApiDashboardPluginOutList | JsonApiDatasetOutList | JsonApiAttributeOutList | JsonApiLabelOutList | JsonApiMetricOutList | JsonApiFactOutList | JsonApiFilterContextOutList | JsonApiApiTokenOutList | JsonApiThemeOutList | JsonApiColorPaletteOutList | JsonApiExportDefinitionOutList | JsonApiAutomationOutList | JsonApiUserOutList | JsonApiNotificationChannelOutList | JsonApiNotificationChannelIdentifierOutList;
+export type MetadataGetEntitiesResult = JsonApiVisualizationObjectOutList | JsonApiAnalyticalDashboardOutList | JsonApiDashboardPluginOutList | JsonApiDatasetOutList | JsonApiAttributeOutList | JsonApiLabelOutList | JsonApiMetricOutList | JsonApiFactOutList | JsonApiFilterContextOutList | JsonApiApiTokenOutList | JsonApiThemeOutList | JsonApiColorPaletteOutList | JsonApiWorkspaceThemeOutList | JsonApiWorkspaceColorPaletteOutList | JsonApiExportDefinitionOutList | JsonApiAutomationOutList | JsonApiUserOutList | JsonApiNotificationChannelOutList | JsonApiNotificationChannelIdentifierOutList;
 
 // @internal
 export type MetadataGetEntitiesThemeParams = {
@@ -36785,6 +37368,112 @@ export interface WorkspaceCacheUsage {
 }
 
 // @public
+export class WorkspaceColorPaletteControllerApi extends MetadataBaseApi implements WorkspaceColorPaletteControllerApiInterface {
+    createEntityWorkspaceColorPalettes(requestParameters: WorkspaceColorPaletteControllerApiCreateEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
+    deleteEntityWorkspaceColorPalettes(requestParameters: WorkspaceColorPaletteControllerApiDeleteEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllEntitiesWorkspaceColorPalettes(requestParameters: WorkspaceColorPaletteControllerApiGetAllEntitiesWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceColorPaletteOutList>;
+    getEntityWorkspaceColorPalettes(requestParameters: WorkspaceColorPaletteControllerApiGetEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
+    patchEntityWorkspaceColorPalettes(requestParameters: WorkspaceColorPaletteControllerApiPatchEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
+    updateEntityWorkspaceColorPalettes(requestParameters: WorkspaceColorPaletteControllerApiUpdateEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
+}
+
+// @public
+export function WorkspaceColorPaletteControllerApi_CreateEntityWorkspaceColorPalettes(axios: AxiosInstance, basePath: string, requestParameters: WorkspaceColorPaletteControllerApiCreateEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
+
+// @public
+export function WorkspaceColorPaletteControllerApi_DeleteEntityWorkspaceColorPalettes(axios: AxiosInstance, basePath: string, requestParameters: WorkspaceColorPaletteControllerApiDeleteEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
+
+// @public
+export function WorkspaceColorPaletteControllerApi_GetAllEntitiesWorkspaceColorPalettes(axios: AxiosInstance, basePath: string, requestParameters: WorkspaceColorPaletteControllerApiGetAllEntitiesWorkspaceColorPalettesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceColorPaletteOutList>;
+
+// @public
+export function WorkspaceColorPaletteControllerApi_GetEntityWorkspaceColorPalettes(axios: AxiosInstance, basePath: string, requestParameters: WorkspaceColorPaletteControllerApiGetEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
+
+// @public
+export function WorkspaceColorPaletteControllerApi_PatchEntityWorkspaceColorPalettes(axios: AxiosInstance, basePath: string, requestParameters: WorkspaceColorPaletteControllerApiPatchEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
+
+// @public
+export function WorkspaceColorPaletteControllerApi_UpdateEntityWorkspaceColorPalettes(axios: AxiosInstance, basePath: string, requestParameters: WorkspaceColorPaletteControllerApiUpdateEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
+
+// @public
+export function WorkspaceColorPaletteControllerApiAxiosParamCreator_CreateEntityWorkspaceColorPalettes(workspaceId: string, jsonApiWorkspaceColorPaletteInDocument: JsonApiWorkspaceColorPaletteInDocument, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function WorkspaceColorPaletteControllerApiAxiosParamCreator_DeleteEntityWorkspaceColorPalettes(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function WorkspaceColorPaletteControllerApiAxiosParamCreator_GetAllEntitiesWorkspaceColorPalettes(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function WorkspaceColorPaletteControllerApiAxiosParamCreator_GetEntityWorkspaceColorPalettes(workspaceId: string, objectId: string, filter?: string, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function WorkspaceColorPaletteControllerApiAxiosParamCreator_PatchEntityWorkspaceColorPalettes(workspaceId: string, objectId: string, jsonApiWorkspaceColorPalettePatchDocument: JsonApiWorkspaceColorPalettePatchDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function WorkspaceColorPaletteControllerApiAxiosParamCreator_UpdateEntityWorkspaceColorPalettes(workspaceId: string, objectId: string, jsonApiWorkspaceColorPaletteInDocument: JsonApiWorkspaceColorPaletteInDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export interface WorkspaceColorPaletteControllerApiCreateEntityWorkspaceColorPalettesRequest {
+    readonly jsonApiWorkspaceColorPaletteInDocument: JsonApiWorkspaceColorPaletteInDocument;
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceColorPaletteControllerApiDeleteEntityWorkspaceColorPalettesRequest {
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceColorPaletteControllerApiGetAllEntitiesWorkspaceColorPalettesRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>;
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE';
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspaceColorPaletteControllerApiGetEntityWorkspaceColorPalettesRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspaceColorPaletteControllerApiInterface {
+    createEntityWorkspaceColorPalettes(requestParameters: WorkspaceColorPaletteControllerApiCreateEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
+    deleteEntityWorkspaceColorPalettes(requestParameters: WorkspaceColorPaletteControllerApiDeleteEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllEntitiesWorkspaceColorPalettes(requestParameters: WorkspaceColorPaletteControllerApiGetAllEntitiesWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceColorPaletteOutList>;
+    getEntityWorkspaceColorPalettes(requestParameters: WorkspaceColorPaletteControllerApiGetEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
+    patchEntityWorkspaceColorPalettes(requestParameters: WorkspaceColorPaletteControllerApiPatchEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
+    updateEntityWorkspaceColorPalettes(requestParameters: WorkspaceColorPaletteControllerApiUpdateEntityWorkspaceColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceColorPaletteOutDocument>;
+}
+
+// @public
+export interface WorkspaceColorPaletteControllerApiPatchEntityWorkspaceColorPalettesRequest {
+    readonly filter?: string;
+    readonly jsonApiWorkspaceColorPalettePatchDocument: JsonApiWorkspaceColorPalettePatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceColorPaletteControllerApiUpdateEntityWorkspaceColorPalettesRequest {
+    readonly filter?: string;
+    readonly jsonApiWorkspaceColorPaletteInDocument: JsonApiWorkspaceColorPaletteInDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 export class WorkspaceControllerApi extends MetadataBaseApi implements WorkspaceControllerApiInterface {
     createEntityWorkspaces(requestParameters: WorkspaceControllerApiCreateEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
     deleteEntityWorkspaces(requestParameters: WorkspaceControllerApiDeleteEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -37727,6 +38416,112 @@ export interface WorkspacesSettingsApiWorkspaceResolveAllSettingsRequest {
 export interface WorkspacesSettingsApiWorkspaceResolveSettingsRequest {
     readonly excludeUserSettings?: boolean;
     readonly resolveSettingsRequest: ResolveSettingsRequest;
+    readonly workspaceId: string;
+}
+
+// @public
+export class WorkspaceThemeControllerApi extends MetadataBaseApi implements WorkspaceThemeControllerApiInterface {
+    createEntityWorkspaceThemes(requestParameters: WorkspaceThemeControllerApiCreateEntityWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
+    deleteEntityWorkspaceThemes(requestParameters: WorkspaceThemeControllerApiDeleteEntityWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllEntitiesWorkspaceThemes(requestParameters: WorkspaceThemeControllerApiGetAllEntitiesWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceThemeOutList>;
+    getEntityWorkspaceThemes(requestParameters: WorkspaceThemeControllerApiGetEntityWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
+    patchEntityWorkspaceThemes(requestParameters: WorkspaceThemeControllerApiPatchEntityWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
+    updateEntityWorkspaceThemes(requestParameters: WorkspaceThemeControllerApiUpdateEntityWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
+}
+
+// @public
+export function WorkspaceThemeControllerApi_CreateEntityWorkspaceThemes(axios: AxiosInstance, basePath: string, requestParameters: WorkspaceThemeControllerApiCreateEntityWorkspaceThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
+
+// @public
+export function WorkspaceThemeControllerApi_DeleteEntityWorkspaceThemes(axios: AxiosInstance, basePath: string, requestParameters: WorkspaceThemeControllerApiDeleteEntityWorkspaceThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
+
+// @public
+export function WorkspaceThemeControllerApi_GetAllEntitiesWorkspaceThemes(axios: AxiosInstance, basePath: string, requestParameters: WorkspaceThemeControllerApiGetAllEntitiesWorkspaceThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceThemeOutList>;
+
+// @public
+export function WorkspaceThemeControllerApi_GetEntityWorkspaceThemes(axios: AxiosInstance, basePath: string, requestParameters: WorkspaceThemeControllerApiGetEntityWorkspaceThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
+
+// @public
+export function WorkspaceThemeControllerApi_PatchEntityWorkspaceThemes(axios: AxiosInstance, basePath: string, requestParameters: WorkspaceThemeControllerApiPatchEntityWorkspaceThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
+
+// @public
+export function WorkspaceThemeControllerApi_UpdateEntityWorkspaceThemes(axios: AxiosInstance, basePath: string, requestParameters: WorkspaceThemeControllerApiUpdateEntityWorkspaceThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
+
+// @public
+export function WorkspaceThemeControllerApiAxiosParamCreator_CreateEntityWorkspaceThemes(workspaceId: string, jsonApiWorkspaceThemeInDocument: JsonApiWorkspaceThemeInDocument, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function WorkspaceThemeControllerApiAxiosParamCreator_DeleteEntityWorkspaceThemes(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function WorkspaceThemeControllerApiAxiosParamCreator_GetAllEntitiesWorkspaceThemes(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function WorkspaceThemeControllerApiAxiosParamCreator_GetEntityWorkspaceThemes(workspaceId: string, objectId: string, filter?: string, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function WorkspaceThemeControllerApiAxiosParamCreator_PatchEntityWorkspaceThemes(workspaceId: string, objectId: string, jsonApiWorkspaceThemePatchDocument: JsonApiWorkspaceThemePatchDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function WorkspaceThemeControllerApiAxiosParamCreator_UpdateEntityWorkspaceThemes(workspaceId: string, objectId: string, jsonApiWorkspaceThemeInDocument: JsonApiWorkspaceThemeInDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export interface WorkspaceThemeControllerApiCreateEntityWorkspaceThemesRequest {
+    readonly jsonApiWorkspaceThemeInDocument: JsonApiWorkspaceThemeInDocument;
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceThemeControllerApiDeleteEntityWorkspaceThemesRequest {
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceThemeControllerApiGetAllEntitiesWorkspaceThemesRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>;
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE';
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspaceThemeControllerApiGetEntityWorkspaceThemesRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface WorkspaceThemeControllerApiInterface {
+    createEntityWorkspaceThemes(requestParameters: WorkspaceThemeControllerApiCreateEntityWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
+    deleteEntityWorkspaceThemes(requestParameters: WorkspaceThemeControllerApiDeleteEntityWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllEntitiesWorkspaceThemes(requestParameters: WorkspaceThemeControllerApiGetAllEntitiesWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceThemeOutList>;
+    getEntityWorkspaceThemes(requestParameters: WorkspaceThemeControllerApiGetEntityWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
+    patchEntityWorkspaceThemes(requestParameters: WorkspaceThemeControllerApiPatchEntityWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
+    updateEntityWorkspaceThemes(requestParameters: WorkspaceThemeControllerApiUpdateEntityWorkspaceThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceThemeOutDocument>;
+}
+
+// @public
+export interface WorkspaceThemeControllerApiPatchEntityWorkspaceThemesRequest {
+    readonly filter?: string;
+    readonly jsonApiWorkspaceThemePatchDocument: JsonApiWorkspaceThemePatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface WorkspaceThemeControllerApiUpdateEntityWorkspaceThemesRequest {
+    readonly filter?: string;
+    readonly jsonApiWorkspaceThemeInDocument: JsonApiWorkspaceThemeInDocument;
+    readonly objectId: string;
     readonly workspaceId: string;
 }
 

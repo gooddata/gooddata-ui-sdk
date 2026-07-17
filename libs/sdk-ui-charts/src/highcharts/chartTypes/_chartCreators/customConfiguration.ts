@@ -1710,15 +1710,17 @@ function getReversedStacking(chartOptions: IChartOptions, _config: any, chartCon
         chartConfig?.stackMeasures ||
         chartConfig?.stackMeasuresToPercent ||
         chartOptions?.hasStackByAttribute;
+    const isHorizontalBar = isBarChart(chartConfig?.type);
     const shouldReverseStacking =
-        isBarChart(chartConfig?.type) && chartConfig?.enableReversedStacking && hasAnyStackOptionSelected;
+        isHorizontalBar && chartConfig?.enableReversedStacking && hasAnyStackOptionSelected;
+    const reversedStacks = isHorizontalBar ? !shouldReverseStacking : true;
 
     return {
         yAxis: yAxes.map(
             (axis: IAxis): YAxisOptions =>
                 axis
                     ? {
-                          reversedStacks: !shouldReverseStacking,
+                          reversedStacks,
                       }
                     : {},
         ),

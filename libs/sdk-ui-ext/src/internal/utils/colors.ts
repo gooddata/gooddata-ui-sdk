@@ -34,9 +34,25 @@ export function getSearchedItems(inputItems: IColoredItem[], searchString: strin
     });
 }
 
+export function getMappingHeaderId(item: IMappingHeader): string | undefined {
+    if (isMeasureDescriptor(item)) {
+        return getMeasureMappingIdentifier(item);
+    } else if (isResultAttributeHeader(item)) {
+        return item.attributeHeaderItem.uri;
+    } else if (isAttributeDescriptor(item)) {
+        return isUriRef(item.attributeHeader.ref)
+            ? item.attributeHeader.uri
+            : item.attributeHeader.identifier;
+    } else if (isColorDescriptor(item)) {
+        return item.colorHeaderItem.id;
+    }
+    return undefined;
+}
+
 export function getColoredInputItems(
     colors: IColorConfiguration | undefined,
     lineStyleMapping?: ILineStyleMappingItem[],
+    colorMapping?: IColorMappingItem[],
 ): IColoredItem[] {
     let inputItems: (IColoredItem | undefined)[] = [];
 
@@ -44,17 +60,23 @@ export function getColoredInputItems(
         inputItems = colors.colorAssignments.map((assignmentItem: IColorAssignment, index: number) => {
             let base: IColoredItem | undefined;
 
+            const isCustomMapped = colorMapping?.some(
+                (entry) => entry.color && entry.id === getMappingHeaderId(assignmentItem.headerItem),
+            );
+
             if (isColorFromPalette(assignmentItem.color)) {
                 base = {
                     colorItem: assignmentItem.color,
                     mappingHeader: assignmentItem.headerItem,
                     color: ColorUtils.getColorByGuid(colors.colorPalette, assignmentItem.color.value, index),
+                    isCustomMapped,
                 };
             } else if (isRgbColor(assignmentItem.color)) {
                 base = {
                     colorItem: assignmentItem.color,
                     mappingHeader: assignmentItem.headerItem,
                     color: assignmentItem.color.value,
+                    isCustomMapped,
                 };
             }
 
@@ -103,21 +125,26 @@ export function getProperties(
     item: IMappingHeader,
     color: IColor,
 ): IVisualizationProperties {
-    if (isMeasureDescriptor(item)) {
-        const id = getMeasureMappingIdentifier(item);
-        return mergeColorMappingToProperties(properties, id, color);
-    } else if (isResultAttributeHeader(item)) {
-        return mergeColorMappingToProperties(properties, item.attributeHeaderItem.uri, color);
-    } else if (isAttributeDescriptor(item)) {
-        const id = isUriRef(item.attributeHeader.ref)
-            ? item.attributeHeader.uri
-            : item.attributeHeader.identifier;
-        return mergeColorMappingToProperties(properties, id, color);
-    } else if (isColorDescriptor(item)) {
-        return mergeColorMappingToProperties(properties, item.colorHeaderItem.id, color);
+    const id = getMappingHeaderId(item);
+    if (id === undefined) {
+        return {};
     }
+    return mergeColorMappingToProperties(properties, id, color);
+}
 
-    return {};
+export function removeColorMappingFromProperties(
+    properties: IVisualizationProperties,
+    id: string,
+): IVisualizationProperties {
+    const previousColorMapping: IColorMappingItem[] = properties?.controls?.["colorMapping"] ?? [];
+    // a null color instructs the host application to remove the stored entry;
+    // omitting the entry is not enough because hosts merge pushed properties additively
+    const updatedMapping = previousColorMapping.map((item) =>
+        item.id === id ? ({ id, color: null } as unknown as IColorMappingItem) : item,
+    );
+    const newProperties = cloneDeep(properties);
+    set(newProperties, "controls.colorMapping", updatedMapping);
+    return newProperties;
 }
 
 export function getLineStyleProperties(
@@ -156,6 +183,9 @@ export function getValidProperties(
     if (hasColorMapping) {
         const reducedColorMapping = (properties.controls?.["colorMapping"] ?? []).filter(
             (mappingItem: IColorMappingItem) => {
+                if (!mappingItem.color) {
+                    return false;
+                }
                 const { id } = mappingItem;
                 const colorValue = mappingItem.color.value;
 

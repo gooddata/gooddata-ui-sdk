@@ -33,7 +33,6 @@ export enum TigerFeaturesNames {
     EnableDataProfiling = "enableDataProfiling",
     EnableExperimentalFeaturesUI = "enableExperimentalFeaturesUI",
     EnableSingleStoreDataSource = "enableSingleStoreDataSource",
-    EnableCrateDbDataSource = "enableCrateDbDataSource",
     EnableOidcAuth = "enableOidcAuth",
     EnableSemanticSearch = "enableSemanticSearch",
     EnableCatalogSmartSearchResults = "enableCatalogSmartSearchResults",
@@ -53,7 +52,6 @@ export enum TigerFeaturesNames {
     EnableAmplitudeTracker = "enableAmplitudeTracker",
     EnableExportTemplateSelection = "enableExportTemplateSelection",
     EnableRawExports = "enableRawExports",
-    EnableCustomizableCsvDelimiter = "enableCustomizableCsvDelimiter",
     EnableExecutionCancelling = "enableExecutionCancelling",
     EnableDashboardTabularExport = "enableDashboardTabularExport",
     EnableOrchestratedTabularExports = "enableOrchestratedTabularExports",
@@ -65,7 +63,6 @@ export enum TigerFeaturesNames {
     EnableNotificationChannelIdentifiers = "enableNotificationChannelIdentifiers",
     EnableDashboardShareDialogLink = "enableDashboardShareDialogLink",
     ProductionFeatures = "productionFeatures",
-    EnableNewScheduledExport = "enableNewScheduledExport",
     EnableSeamlessIdpSwitch = "enableSeamlessIdpSwitch",
     EnablePreAggregationDatasets = "enablePreAggregationDatasets",
     EnableNewPivotTable = "enableNewPivotTable",
@@ -125,6 +122,7 @@ export enum TigerFeaturesNames {
     EnableLdmModelerRemoteModule = "enableShellApplication_ldmModeler",
     EnableExportTimeoutFix = "enableExportTimeoutFix",
     EnableAiAssistantEmbedding = "enableAiAssistantEmbedding",
+    EnableAiContextSetup = "enableAiContextSetup",
 }
 
 export type ITigerFeatureFlags = {
@@ -153,7 +151,6 @@ export type ITigerFeatureFlags = {
     enableDataProfiling: (typeof FeatureFlagsValues)["enableDataProfiling"][number];
     enableExperimentalFeaturesUI: (typeof FeatureFlagsValues)["enableExperimentalFeaturesUI"][number];
     enableSingleStoreDataSource: (typeof FeatureFlagsValues)["enableSingleStoreDataSource"][number];
-    enableCrateDbDataSource: (typeof FeatureFlagsValues)["enableCrateDbDataSource"][number];
     enableOidcAuth: (typeof FeatureFlagsValues)["enableOidcAuth"][number];
     enableSemanticSearch: (typeof FeatureFlagsValues)["enableSemanticSearch"][number];
     enableCatalogSmartSearchResults: (typeof FeatureFlagsValues)["enableCatalogSmartSearchResults"][number];
@@ -175,7 +172,6 @@ export type ITigerFeatureFlags = {
     enableAmplitudeTracker: (typeof FeatureFlagsValues)["enableAmplitudeTracker"][number];
     enableExportTemplateSelection: (typeof FeatureFlagsValues)["enableExportTemplateSelection"][number];
     enableRawExports: (typeof FeatureFlagsValues)["enableRawExports"][number];
-    enableCustomizableCsvDelimiter: (typeof FeatureFlagsValues)["enableCustomizableCsvDelimiter"][number];
     enableExecutionCancelling: (typeof FeatureFlagsValues)["enableExecutionCancelling"][number];
     enableImmediateAttributeFilterDisplayAsLabelMigration: (typeof FeatureFlagsValues)["enableImmediateAttributeFilterDisplayAsLabelMigration"][number];
     enableAnalyticalDesignerCatalogSideload: (typeof FeatureFlagsValues)["enableAnalyticalDesignerCatalogSideload"][number];
@@ -187,7 +183,6 @@ export type ITigerFeatureFlags = {
     enableNotificationChannelIdentifiers: (typeof FeatureFlagsValues)["enableNotificationChannelIdentifiers"][number];
     enableDashboardShareDialogLink: (typeof FeatureFlagsValues)["enableDashboardShareDialogLink"][number];
     productionFeatures: (typeof FeatureFlagsValues)["productionFeatures"][number];
-    enableNewScheduledExport: (typeof FeatureFlagsValues)["enableNewScheduledExport"][number];
     enableSeamlessIdpSwitch: (typeof FeatureFlagsValues)["enableSeamlessIdpSwitch"][number];
     enablePreAggregationDatasets: (typeof FeatureFlagsValues)["enablePreAggregationDatasets"][number];
     enableNewPivotTable: (typeof FeatureFlagsValues)["enableNewPivotTable"][number];
@@ -233,6 +228,7 @@ export type ITigerFeatureFlags = {
     enableDashboardsSearch: (typeof FeatureFlagsValues)["enableDashboardsSearch"][number];
     enableAiHub: (typeof FeatureFlagsValues)["enableAiHub"][number];
     enableAiAgenticConversations: (typeof FeatureFlagsValues)["enableAiAgenticConversations"][number];
+    enableAiContextSetup: (typeof FeatureFlagsValues)["enableAiContextSetup"][number];
     enableGenAiAgenticDataShareOptOut: (typeof FeatureFlagsValues)["enableGenAiAgenticDataShareOptOut"][number];
     enableGenAiVisualizationSummarySkill: (typeof FeatureFlagsValues)["enableGenAiVisualizationSummarySkill"][number];
     enableGenAiDashboardSummarySkill: (typeof FeatureFlagsValues)["enableGenAiDashboardSummarySkill"][number];
@@ -273,10 +269,9 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDataProfiling: false,
     enableExperimentalFeaturesUI: false,
     enableSingleStoreDataSource: false,
-    enableCrateDbDataSource: true,
     enableOidcAuth: false,
     enableSemanticSearch: false,
-    enableCatalogSmartSearchResults: false,
+    enableCatalogSmartSearchResults: true,
     enableGenAIChat: false,
     enableGenAICatalogQualityChecker: false,
     enableCatalogTrendingObjects: false,
@@ -295,7 +290,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAmplitudeTracker: false,
     enableExportTemplateSelection: true,
     enableRawExports: false,
-    enableCustomizableCsvDelimiter: true,
     enableExecutionCancelling: false,
     enableImmediateAttributeFilterDisplayAsLabelMigration: false,
     enableAnalyticalDesignerCatalogSideload: false,
@@ -307,7 +301,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableNotificationChannelIdentifiers: false,
     enableDashboardShareDialogLink: false,
     productionFeatures: undefined,
-    enableNewScheduledExport: true,
     enableSeamlessIdpSwitch: false,
     enablePreAggregationDatasets: false,
     enableNewPivotTable: true,
@@ -336,7 +329,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDashboardSectionHeadersDateDataSet: false,
     enableAnalyticalDashboardVersion3: false,
     enableAnomalyDetectionAlert: false,
-    enableAnomalyDetectionVisualization: false,
+    enableAnomalyDetectionVisualization: true,
     enableAlertOncePerInterval: false,
     enableFiscalCalendars: true,
     enableDashboardFilterGroups: true,
@@ -353,6 +346,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDashboardsSearch: false,
     enableAiHub: false,
     enableAiAgenticConversations: false,
+    enableAiContextSetup: false,
     enableGenAiAgenticDataShareOptOut: false,
     enableGenAiVisualizationSummarySkill: false,
     enableGenAiDashboardSummarySkill: false,
@@ -393,7 +387,6 @@ export const FeatureFlagsValues = {
     enableDataProfiling: [true, false] as const,
     enableExperimentalFeaturesUI: [true, false] as const,
     enableSingleStoreDataSource: [true, false] as const,
-    enableCrateDbDataSource: [true, false] as const,
     enableOidcAuth: [true, false] as const,
     enableSemanticSearch: [true, false] as const,
     enableCatalogSmartSearchResults: [true, false] as const,
@@ -415,7 +408,6 @@ export const FeatureFlagsValues = {
     enableAmplitudeTracker: [true, false] as const,
     enableExportTemplateSelection: [true, false] as const,
     enableRawExports: [true, false] as const,
-    enableCustomizableCsvDelimiter: [true, false] as const,
     enableHighchartsAccessibility: [true, false] as const,
     enableAccessibleChartTooltip: [true, false] as const,
     enableExecutionCancelling: [true, false] as const,
@@ -427,7 +419,6 @@ export const FeatureFlagsValues = {
     enableNotificationChannelIdentifiers: [true, false] as const,
     enableDashboardShareDialogLink: [true, false] as const,
     productionFeatures: [undefined, {} as IProductionFeaturesConfig] as const,
-    enableNewScheduledExport: [true, false] as const,
     enableSeamlessIdpSwitch: [true, false] as const,
     enablePreAggregationDatasets: [true, false] as const,
     enableNewPivotTable: [true, false] as const,
@@ -473,6 +464,7 @@ export const FeatureFlagsValues = {
     enableDashboardsSearch: [false, true] as const,
     enableAiHub: [true, false] as const,
     enableAiAgenticConversations: [true, false] as const,
+    enableAiContextSetup: [true, false] as const,
     enableGenAiAgenticDataShareOptOut: [true, false] as const,
     enableGenAiVisualizationSummarySkill: [false, true] as const,
     enableGenAiDashboardSummarySkill: [false, true] as const,

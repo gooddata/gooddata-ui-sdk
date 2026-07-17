@@ -6,5 +6,5 @@
     "ref": { "identifier": "f_owner.region_id", "type": "displayForm" },
     "title": "Region",
     "type": "displayForm",
-    "uri": "https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/referenceworkspace/labels/f_owner.region_id"
+    "uri": "https://automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/referenceworkspace/labels/f_owner.region_id"
 }

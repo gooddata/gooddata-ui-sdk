@@ -77,7 +77,6 @@ import {
     convertDashboardTabularExportRequest,
     convertExportDefinitionMdObject as convertExportDefinitionMdObjectFromBackend,
     convertImageExportRequest,
-    convertInlineExportDefinitionMdObject,
     convertSlidesExportRequest,
     convertTabularExportRequest,
     convertToRawExportRequest,
@@ -208,7 +207,6 @@ const convertAutomationResult = (
 export function convertAutomation(
     automation: JsonApiAutomationOutWithLinks | JsonApiWorkspaceAutomationOutWithLinks,
     included: JsonApiAutomationOutIncludes[],
-    enableNewScheduledExport: boolean,
 ): IAutomationMetadataObject {
     const { id, attributes = {}, relationships = {} } = automation;
     const {
@@ -246,17 +244,10 @@ export function convertAutomation(
             convertExportDefinitionMdObjectFromBackend(ed as JsonApiExportDefinitionOutWithLinks, undefined),
         ),
         ...(visualExports?.map((ve) =>
-            enableNewScheduledExport
-                ? wrapExportDefinition(convertVisualExportRequest(ve), ve.requestPayload.metadata)
-                : convertInlineExportDefinitionMdObject(ve),
+            wrapExportDefinition(convertVisualExportRequest(ve), ve.requestPayload.metadata),
         ) ?? []),
         ...(tabularExports?.map((te) =>
-            enableNewScheduledExport
-                ? wrapExportDefinition(
-                      convertTabularExportRequest(te),
-                      te.requestPayload.metadata ?? undefined,
-                  )
-                : convertInlineExportDefinitionMdObject(te),
+            wrapExportDefinition(convertTabularExportRequest(te), te.requestPayload.metadata ?? undefined),
         ) ?? []),
         ...(imageExports?.map((ie) =>
             wrapExportDefinition(convertImageExportRequest(ie), ie.requestPayload.metadata ?? undefined),
@@ -272,9 +263,7 @@ export function convertAutomation(
         ) ?? []),
     ];
 
-    const normalizedExportDefinitions = enableNewScheduledExport
-        ? exportDefinitions.map(convertLegacyTabularFiltersToFilterContext)
-        : exportDefinitions;
+    const normalizedExportDefinitions = exportDefinitions.map(convertLegacyTabularFiltersToFilterContext);
 
     const recipients = [
         ...(relationships?.recipients?.data
@@ -344,10 +333,9 @@ export function convertAutomation(
 
 export const convertAutomationListToAutomations = (
     automationList: JsonApiAutomationOutList,
-    enableNewScheduledExport: boolean,
 ): IAutomationMetadataObject[] => {
     return automationList.data.map((automationObject) =>
-        convertAutomation(automationObject, automationList.included ?? [], enableNewScheduledExport),
+        convertAutomation(automationObject, automationList.included ?? []),
     );
 };
 

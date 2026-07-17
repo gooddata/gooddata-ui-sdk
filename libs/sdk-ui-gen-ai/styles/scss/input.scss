@@ -44,6 +44,14 @@
         width: 100%;
     }
 
+    &__context {
+        cursor: text;
+        flex-grow: 1;
+        flex-direction: row;
+        align-items: flex-start;
+        display: flex;
+    }
+
     &--agent-switching &__container {
         position: relative;
         z-index: 1;

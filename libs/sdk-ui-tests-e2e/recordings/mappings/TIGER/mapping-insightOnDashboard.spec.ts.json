@@ -25510,12 +25510,12 @@
                         }
                     },
                     "links": {
-                        "organization": "http://application:9500/api/v1/entities/admin/organizations/ephemeral-staging-automation-098067f4",
+                        "organization": "http://application:9500/api/v1/entities/admin/organizations/ephemeral-automation-098067f4",
                         "self": "http://application:9500/api/v1/profile",
                         "user": "http://application:9500/api/v1/entities/users/admin"
                     },
-                    "organizationId": "ephemeral-staging-automation-098067f4",
-                    "organizationName": "ephemeral-staging-automation-098067f4",
+                    "organizationId": "ephemeral-automation-098067f4",
+                    "organizationName": "ephemeral-automation-098067f4",
                     "permissions": ["MANAGE", "SELF_CREATE_TOKEN", "BASE_UI_ACCESS"],
                     "telemetryConfig": {
                         "context": {

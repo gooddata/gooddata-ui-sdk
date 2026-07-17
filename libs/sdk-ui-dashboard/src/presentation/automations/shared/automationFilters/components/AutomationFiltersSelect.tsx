@@ -83,7 +83,7 @@ export interface IAutomationFiltersProps {
 export interface IAutomationFiltersSelectProps {
     availableFilters: FilterContextItem[] | undefined;
     selectedFilters: FilterContextItem[] | undefined;
-    onFiltersChange: (filters: FilterContextItem[], enableNewScheduledExport: boolean) => void;
+    onFiltersChange: (filters: FilterContextItem[]) => void;
     storeFilters: boolean;
     onStoreFiltersChange: (
         value: boolean,
