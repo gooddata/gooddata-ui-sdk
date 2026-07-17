@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type KeyboardEvent, useCallback, useRef, useState } from "react";
 
@@ -66,14 +66,11 @@ export function DescriptionClickTrigger(props: IDescriptionClickTriggerProps) {
         [switchIsOpen],
     );
 
-    const iconClassName = cx(
-        "dash-item-action-description",
-        "dash-item-action-placeholder",
-        {
-            "dash-item-action-description-active": isOpen,
-        },
-        props.className,
-    );
+    const iconClassName = cx("dash-item-action-description", "dash-item-action-placeholder", props.className);
+
+    const triggerClassName = cx("dash-item-action-button", "dash-item-action-description-trigger", {
+        "dash-item-action-button--active": isOpen,
+    });
 
     const title = intl.formatMessage({ id: "widget.options.description" });
 
@@ -104,7 +101,7 @@ export function DescriptionClickTrigger(props: IDescriptionClickTriggerProps) {
                         role="button"
                         tabIndex={0}
                     >
-                        <DescriptionIcon className="dash-item-action-description-trigger" />
+                        <DescriptionIcon className={triggerClassName} />
                     </div>
                 }
             />

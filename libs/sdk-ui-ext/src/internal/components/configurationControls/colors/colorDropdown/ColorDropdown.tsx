@@ -26,6 +26,7 @@ import { type IChartFillConfig, type PatternFillName } from "@gooddata/sdk-ui-vi
 import { ColorOverlay, DropdownVersionType } from "./ColorOverlay.js";
 import { ColorPalette } from "./ColorPalette.js";
 import { CustomColorButton } from "./CustomColorButton.js";
+import { ResetColorButton } from "./ResetColorButton.js";
 
 export enum IconPosition {
     Down,
@@ -50,6 +51,8 @@ export interface IColorDropdownOwnProps {
     onClear?: () => void;
     /** Accessibility label for the "no color" swatch (localized by the caller); required when onClear is set. */
     noneColorAriaLabel?: string;
+    /** When provided, the palette popup shows a "Reset" item that reverts this item's custom color. */
+    onReset?: () => void;
 }
 
 export type IColorDropdownProps = IColorDropdownOwnProps;
@@ -70,6 +73,7 @@ export const ColorDropdown = memo(function ColorDropdown({
     patternFillIndex,
     onClear,
     noneColorAriaLabel,
+    onReset,
 }: IColorDropdownProps) {
     const [id] = useState(() => uuidv4());
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -139,6 +143,15 @@ export const ColorDropdown = memo(function ColorDropdown({
         }, 100);
     }, [onClear]);
 
+    const onResetSelected = useCallback(() => {
+        setIsDropdownOpen(false);
+        setDropdownVersion(DropdownVersionType.ColorPalette);
+
+        setTimeout(() => {
+            onReset?.();
+        }, 100);
+    }, [onReset]);
+
     const onColorPickerSubmit = useCallback(
         (color: IRgbColorValue) => {
             const item: IColor = {
@@ -193,6 +206,7 @@ export const ColorDropdown = memo(function ColorDropdown({
                     onNoneSelected={onNoneSelected}
                     noneColorAriaLabel={noneColorAriaLabel}
                 />
+                {onReset ? <ResetColorButton onClick={onResetSelected} /> : null}
                 <CustomColorButton onClick={onCustomColorButtonClick} />
             </div>
         );
@@ -207,6 +221,8 @@ export const ColorDropdown = memo(function ColorDropdown({
         selectedColorItem,
         onNoneSelected,
         noneColorAriaLabel,
+        onReset,
+        onResetSelected,
     ]);
 
     const renderColorPickerContent = useCallback(() => {

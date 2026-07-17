@@ -20,7 +20,7 @@ export function KdaFooter({ content, onClose }: IKdaFooterProps) {
         <div className={cx("gd-kda-dialog-footer")}>
             <div className={cx("gd-kda-dialog-footer-content")}>{content}</div>
             <div className={cx("gd-kda-dialog-footer-buttons")}>
-                <UiButton size="large" label={closeLabel} variant="secondary" onClick={onClose} />
+                <UiButton size="medium" label={closeLabel} variant="secondary" onClick={onClose} />
             </div>
         </div>
     );

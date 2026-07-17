@@ -769,30 +769,6 @@ export const selectEnableDashboardShareDialogLink: DashboardSelector<boolean> = 
 );
 
 /**
- * Selector for the new scheduled export feature flag
- *
- * @internal
- */
-export const selectEnableNewScheduledExport: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return Boolean(state.settings?.enableNewScheduledExport);
-    },
-);
-
-/**
- * Selector for the customizable CSV delimiter feature flag
- *
- * @internal
- */
-export const selectEnableCustomizableCsvDelimiter: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return Boolean(state.settings?.enableCustomizableCsvDelimiter);
-    },
-);
-
-/**
  * Selector for the alert once per interval feature flag
  *
  * @internal

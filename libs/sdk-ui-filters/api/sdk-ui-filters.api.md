@@ -45,6 +45,7 @@ import { IRelativeDateFilterPreset } from '@gooddata/sdk-model';
 import { IRelativeDateFilterPresetOfGranularity } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-ui';
 import { ISeparators as ISeparators_2 } from '@gooddata/sdk-model';
+import { isFiscalGranularity } from '@gooddata/sdk-model';
 import { ITranslations } from '@gooddata/sdk-ui';
 import { IUpperBoundedFilter } from '@gooddata/sdk-model';
 import { JSX } from 'react/jsx-runtime';
@@ -1447,8 +1448,7 @@ export const isAbsoluteDateFilterOption: (obj: unknown) => obj is AbsoluteDateFi
 // @alpha
 export function isArbitraryOperator(operator: TextFilterOperator): boolean;
 
-// @alpha
-export function isFiscalGranularity(granularity: DateFilterGranularity): boolean;
+export { isFiscalGranularity }
 
 // @public
 export interface ISingleSelectAttributeFilterHandler extends IAttributeFilterLoader, IStagedSingleSelectionHandler<AttributeElementKey | undefined> {

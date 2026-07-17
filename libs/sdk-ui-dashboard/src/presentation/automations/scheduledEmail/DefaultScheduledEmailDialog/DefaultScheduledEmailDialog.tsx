@@ -176,8 +176,6 @@ export function ScheduledMailDialogRenderer({
         allowHourlyRecurrence,
         isCrossFiltering,
         isExecutionTimestampMode,
-        enableNewScheduledExport,
-        enableCustomizableCsvDelimiter,
         isSlidesExportEnabled,
         defaultPdfPageSize,
     } = useDefaultScheduledEmailDialogData();
@@ -234,7 +232,6 @@ export function ScheduledMailDialogRenderer({
         availableFiltersAsVisibleFilters,
         filtersForNewAutomation,
         externalRecipientOverride,
-        enableNewScheduledExport,
         filtersDataByTab: filtersByTab,
         editedAutomationFiltersByTab,
         setEditedAutomationFiltersByTab,
@@ -633,7 +630,6 @@ export function ScheduledMailDialogRenderer({
                                                 onCsvSettingsChange={onCsvSettingsChange}
                                                 csvRawSettings={csvRawSettings}
                                                 onCsvRawSettingsChange={onCsvRawSettingsChange}
-                                                isCsvSettingsEnabled={enableCustomizableCsvDelimiter}
                                                 isSlidesExportEnabled={isSlidesExportEnabled}
                                                 defaultPdfPageSize={defaultPdfPageSize}
                                                 exportTemplates={exportTemplates}
@@ -742,8 +738,7 @@ function useDefaultScheduledEmailDialogData() {
         maxAutomationsRecipients,
         allowHourlyRecurrence,
         isExecutionTimestampMode,
-        enableNewScheduledExport,
-        features: { enableCustomizableCsvDelimiter, enableSlideshowExports },
+        features: { enableSlideshowExports },
     } = useAutomationsContext();
     const { dashboardTitle, dateFormat, isCrossFiltering } = useScheduledEmailDialogContext();
     const formatLocale = settings?.formatLocale;
@@ -759,8 +754,6 @@ function useDefaultScheduledEmailDialogData() {
         allowHourlyRecurrence,
         isCrossFiltering,
         isExecutionTimestampMode,
-        enableNewScheduledExport,
-        enableCustomizableCsvDelimiter,
         isSlidesExportEnabled: enableSlideshowExports,
         defaultPdfPageSize,
     };

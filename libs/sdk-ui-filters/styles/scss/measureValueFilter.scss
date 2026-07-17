@@ -474,11 +474,19 @@ $mvf-condition-action-gap: 10px;
     }
 }
 
+// Intentionally not a scroll container: the pills scroll together with the surrounding dialog
+// content in a single shared scroll area. A nested scroller here would swallow wheel events over
+// the pills and block scrolling of the dialog.
 .gd-mvf-dimensionality-items {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 5px;
+}
+
+// Bounds the pills when the section renders outside a dialog-level scroll container (e.g. the
+// dashboard filter configuration panel) — see the withScrollContainer prop of DimensionalitySection.
+.gd-mvf-dimensionality-scroll-container {
     max-height: 350px;
     overflow-y: auto;
     overscroll-behavior: contain;

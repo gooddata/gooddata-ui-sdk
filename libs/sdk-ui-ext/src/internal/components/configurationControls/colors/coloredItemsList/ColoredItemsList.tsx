@@ -20,6 +20,7 @@ export interface IColoredItemsListProps {
     colorPalette: IColorPalette;
     inputItems: IColoredItem[];
     onSelect: (selectedColorItem: IColoredItem, color: IColor) => void;
+    onResetItem?: (item: IColoredItem) => void;
     disabled?: boolean;
     isLoading?: boolean;
     chartFill?: IChartFillConfig;
@@ -41,6 +42,7 @@ export const ColoredItemsList = memo(function ColoredItemsList(props: IColoredIt
         colorPalette,
         inputItems,
         onSelect: onSelectProp,
+        onResetItem,
         disabled = false,
         isLoading = false,
         chartFill,
@@ -109,11 +111,13 @@ export const ColoredItemsList = memo(function ColoredItemsList(props: IColoredIt
                     const appliedChartFill = isChartFillIgnoredMeasure(item, chartFillIgnoredMeasures)
                         ? undefined
                         : chartFill;
+                    const onReset = item.isCustomMapped && onResetItem ? () => onResetItem(item) : undefined;
                     if (supportsLineStyles && isMeasureDescriptor(item.mappingHeader)) {
                         return (
                             <LineStyleColoredItem
                                 colorPalette={colorPalette}
                                 onSelect={onSelect}
+                                onReset={onReset}
                                 disabled={disabled}
                                 item={item}
                                 chartFill={appliedChartFill}
@@ -127,6 +131,7 @@ export const ColoredItemsList = memo(function ColoredItemsList(props: IColoredIt
                         <ColoredItem
                             colorPalette={colorPalette}
                             onSelect={onSelect}
+                            onReset={onReset}
                             disabled={disabled}
                             item={item}
                             chartFill={appliedChartFill}

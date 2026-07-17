@@ -82,6 +82,7 @@ import { heatmapChart } from "../configs/heatmapChart.js";
 import { lineChart } from "../configs/lineChart.js";
 import { pieChart } from "../configs/pieChart.js";
 import { pyramidChart } from "../configs/pyramidChart.js";
+import { radarChart } from "../configs/radarChart.js";
 import { type InlineVisualizations, repeaterChart } from "../configs/repeaterChart.js";
 import { sankeyChart } from "../configs/sankeyChart.js";
 import { scatterChart } from "../configs/scatterChart.js";
@@ -414,6 +415,8 @@ export function declarativeVisTypeToYaml(def: IInsightDefinition["insight"]): st
             return "geo_area_chart";
         case "local:repeater":
             return "repeater_chart";
+        case "local:radar":
+            return "radar_chart";
         default:
             return null;
     }
@@ -499,6 +502,9 @@ function declarativeVisToYaml(
             break;
         case "local:repeater":
             declarativeVisRepeaterToYaml(doc, def, report, context);
+            break;
+        case "local:radar":
+            declarativeVisRadarToYaml(doc, def, report, context);
             break;
         default:
             break;
@@ -1803,6 +1809,34 @@ function declarativeVisLineToYaml(
     }
 
     const config = lineChart.load(def.properties);
+    if (config) {
+        doc.add(config);
+    }
+}
+
+function declarativeVisRadarToYaml(
+    doc: Document,
+    def: IInsightDefinition["insight"],
+    report: Report,
+    _errorContext?: IErrorContext,
+) {
+    //buckets
+    const metrics = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
+    if (metrics && metrics.items.length > 0) {
+        doc.add(entryWithSpace("metrics", groupToYaml(metrics)));
+    }
+
+    const trend = report.derivedBuckets.find((item) => item.type === BucketsType.Trend);
+    if (trend && trend.items.length > 0) {
+        doc.add(entryWithSpace("view_by", groupToYaml(trend)));
+    }
+
+    const segment = report.derivedBuckets.find((item) => item.type === BucketsType.Segment);
+    if (segment && segment.items.length > 0) {
+        doc.add(entryWithSpace("segment_by", groupToYaml(segment)));
+    }
+
+    const config = radarChart.load(def.properties);
     if (config) {
         doc.add(config);
     }

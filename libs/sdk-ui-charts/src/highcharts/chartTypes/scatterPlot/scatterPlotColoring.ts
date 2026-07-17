@@ -3,7 +3,12 @@
 // import { PointsChartColorStrategy } from "../_chartColoring/pointsChart.js";
 import { uniq } from "lodash-es";
 
-import { type IColor, type IColorDescriptor, type IColorPalette } from "@gooddata/sdk-model";
+import {
+    type IColor,
+    type IColorDescriptor,
+    type IColorPalette,
+    type IMeasureDescriptor,
+} from "@gooddata/sdk-model";
 import { type DataViewFacade, type IColorAssignment } from "@gooddata/sdk-ui";
 import {
     type IColorMapping,
@@ -67,7 +72,11 @@ export class ScatterPlotColorStrategy extends MeasureColorStrategy {
                 stackByAttribute,
                 dv,
             );
-            colorAssignment = result.outputColorAssignment!.slice(0, 1);
+            colorAssignment = result.fullColorAssignment
+                .filter(
+                    (assignment) => !dv.meta().isDerivedMeasure(assignment.headerItem as IMeasureDescriptor),
+                )
+                .slice(0, 1);
         }
 
         return {

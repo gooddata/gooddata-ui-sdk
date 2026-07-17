@@ -673,7 +673,7 @@ export interface AiDashboardRef {
 
 export interface AiDateFilterAbsolute {
     'type': AiDateFilterAbsoluteTypeEnum;
-    'using': string;
+    'using'?: string | null;
     'from': string;
     'to': string;
 }
@@ -704,7 +704,7 @@ export type AiDateFilterGranularity = typeof AiDateFilterGranularity[keyof typeo
 
 export interface AiDateFilterRelative {
     'type': AiDateFilterRelativeTypeEnum;
-    'using': string;
+    'using'?: string | null;
     'granularity': AiAppDomainConversationsVisualizationDateGranularity;
     'from': number;
     'to': number;
@@ -1733,6 +1733,7 @@ export interface AiUserContext {
 
 export interface AiUserContextDashboard {
     'id': string;
+    'title'?: string | null;
     'widgets'?: Array<AiUserContextWidgetDescriptor>;
     'filters'?: Array<AiVisualizationFilter> | null;
 }

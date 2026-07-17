@@ -22,6 +22,8 @@ import {
     type JsonApiThemeOutList,
     type JsonApiUserOutList,
     type JsonApiVisualizationObjectOutList,
+    type JsonApiWorkspaceColorPaletteOutList,
+    type JsonApiWorkspaceThemeOutList,
 } from "./generated/metadata-json-api/index.js";
 
 const DefaultPageSize = 250;
@@ -122,6 +124,8 @@ export type MetadataGetEntitiesResult =
     | JsonApiApiTokenOutList
     | JsonApiThemeOutList
     | JsonApiColorPaletteOutList
+    | JsonApiWorkspaceThemeOutList
+    | JsonApiWorkspaceColorPaletteOutList
     | JsonApiExportDefinitionOutList
     | JsonApiAutomationOutList
     | JsonApiUserOutList

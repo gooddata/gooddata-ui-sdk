@@ -69,7 +69,6 @@ export interface IAutomationsContextValue {
     automationFiltersByTab: IAutomationFiltersTab[];
     defaultSelectedFilters: FilterContextItem[];
     automationAvailableFilters: FilterContextItem[];
-    enableNewScheduledExport: boolean;
     maxAutomationsRecipients: number;
     isExecutionTimestampMode: boolean;
     allowHourlyRecurrence: boolean;
@@ -85,7 +84,6 @@ export interface IAutomationsContextValue {
         enableAnomalyDetectionAlert: boolean;
         canUseAiAssistant: boolean;
         canManageWorkspace: boolean;
-        enableCustomizableCsvDelimiter: boolean;
         enableSlideshowExports: boolean;
         enableAutomationEvaluationMode: boolean;
     };

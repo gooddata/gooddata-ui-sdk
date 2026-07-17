@@ -419,8 +419,10 @@ export const objectTypeToTigerIdType: {
     userDataFilter: TigerObjectType;
     userGroup: TigerObjectType;
     variable: TigerObjectType;
+    workspaceColorPalette: TigerObjectType;
     workspaceDataFilter: TigerObjectType;
     workspaceDataFilterSetting: TigerObjectType;
+    workspaceTheme: TigerObjectType;
 };
 
 // @internal (undocumented)

@@ -20,7 +20,6 @@ function renderComponent(customProps: Partial<ComponentProps<typeof WidgetAttach
         onCsvSettingsChange: () => {},
         csvRawSettings: {},
         onCsvRawSettingsChange: () => {},
-        isCsvSettingsEnabled: false,
         isSlidesExportEnabled: true,
     };
 

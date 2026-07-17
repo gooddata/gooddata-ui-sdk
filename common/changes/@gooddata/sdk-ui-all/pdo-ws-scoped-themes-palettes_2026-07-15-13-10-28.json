@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "Add workspace-scoped theme and color palette resolution and entities",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "petr.dolejsi@gooddata.com"
+}

@@ -33,7 +33,6 @@ import {
 import { convertAutomation as convertAutomationFromBackend } from "../../../convertors/fromBackend/AutomationConverter.js";
 import { convertAutomation as convertAutomationToBackend } from "../../../convertors/toBackend/AutomationConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
-import { getSettingsForCurrentUser } from "../settings/index.js";
 
 import { AutomationsQuery } from "./automationsQuery.js";
 
@@ -45,7 +44,6 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
 
     public getAutomations = async (options: IGetAutomationsOptions): Promise<IAutomationMetadataObject[]> => {
         const { loadUserData = false } = options ?? {};
-        const enableNewScheduledExport = await this.getEnableNewScheduledExport();
 
         return this.authCall(async (client: ITigerClientBase) => {
             const result = await EntitiesApi_GetAllEntitiesAutomations(client.axios, client.basePath, {
@@ -62,11 +60,7 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
 
             const automations = result.data?.data || [];
             return automations.map((automation) =>
-                convertAutomationFromBackend(
-                    automation,
-                    result.data.included ?? [],
-                    enableNewScheduledExport,
-                ),
+                convertAutomationFromBackend(automation, result.data.included ?? []),
             );
         });
     };
@@ -80,7 +74,6 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
         options?: IGetAutomationOptions,
     ): Promise<IAutomationMetadataObject> => {
         const { loadUserData = false } = options ?? {};
-        const enableNewScheduledExport = await this.getEnableNewScheduledExport();
 
         return this.authCall(async (client: ITigerClientBase) => {
             const result = await EntitiesApi_GetEntityAutomations(client.axios, client.basePath, {
@@ -94,11 +87,7 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
                     ...(loadUserData ? (["createdBy", "modifiedBy"] as const) : []),
                 ],
             });
-            return convertAutomationFromBackend(
-                result.data.data,
-                result.data.included ?? [],
-                enableNewScheduledExport,
-            );
+            return convertAutomationFromBackend(result.data.data, result.data.included ?? []);
         });
     };
 
@@ -109,15 +98,9 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
         overrides?: IRawExportCustomOverrides,
     ): Promise<IAutomationMetadataObject> => {
         const { loadUserData = false } = options ?? {};
-        const enableNewScheduledExport = await this.getEnableNewScheduledExport();
 
         return this.authCall(async (client: ITigerClientBase) => {
-            const convertedAutomation = convertAutomationToBackend(
-                automation,
-                enableNewScheduledExport,
-                widgetExecution,
-                overrides,
-            );
+            const convertedAutomation = convertAutomationToBackend(automation, widgetExecution, overrides);
             const result = await EntitiesApi_CreateEntityAutomations(client.axios, client.basePath, {
                 workspaceId: this.workspaceId,
                 jsonApiAutomationInDocument: {
@@ -132,11 +115,7 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
                 ],
             });
 
-            return convertAutomationFromBackend(
-                result.data.data,
-                result.data.included ?? [],
-                enableNewScheduledExport,
-            );
+            return convertAutomationFromBackend(result.data.data, result.data.included ?? []);
         });
     };
 
@@ -147,15 +126,9 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
         overrides?: IRawExportCustomOverrides,
     ): Promise<IAutomationMetadataObject> => {
         const { loadUserData = false } = options ?? {};
-        const enableNewScheduledExport = await this.getEnableNewScheduledExport();
 
         return this.authCall(async (client: ITigerClientBase) => {
-            const convertedAutomation = convertAutomationToBackend(
-                automation,
-                enableNewScheduledExport,
-                widgetExecution,
-                overrides,
-            );
+            const convertedAutomation = convertAutomationToBackend(automation, widgetExecution, overrides);
             const result = await EntitiesApi_UpdateEntityAutomations(client.axios, client.basePath, {
                 objectId: automation.id,
                 workspaceId: this.workspaceId,
@@ -170,11 +143,7 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
                     ...(loadUserData ? (["createdBy", "modifiedBy"] as const) : []),
                 ],
             });
-            return convertAutomationFromBackend(
-                result.data.data,
-                result.data.included ?? [],
-                enableNewScheduledExport,
-            );
+            return convertAutomationFromBackend(result.data.data, result.data.included ?? []);
         });
     };
 
@@ -256,9 +225,4 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
             });
         });
     }
-
-    private getEnableNewScheduledExport = async (): Promise<boolean> => {
-        const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspaceId);
-        return userSettings.enableNewScheduledExport ?? true;
-    };
 }

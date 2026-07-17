@@ -8,6 +8,7 @@ import {
     type IDateFilterOption,
     type IRelativeDateFilterForm,
     type ISettings,
+    getDateFilterGranularities,
 } from "@gooddata/sdk-model";
 
 import { defaultDateFilterConfig } from "./defaultConfig.js";
@@ -118,11 +119,11 @@ export const FallbackToDefault: DateFilterConfigValidationResult[] = [
     "NoVisibleOptions",
 ];
 
-const FISCAL_GRANULARITIES: DateFilterGranularity[] = [
-    "GDC.time.fiscal_year",
-    "GDC.time.fiscal_quarter",
-    "GDC.time.fiscal_month",
-];
+// Derived from the shared sdk-model granularity registry (single source of truth).
+const FISCAL_GRANULARITIES: DateFilterGranularity[] = getDateFilterGranularities({
+    calendars: [{ type: "fiscal" }],
+    includeShared: false,
+});
 
 export function configHasFiscalPresets(config: IDateFilterConfig | undefined): boolean {
     return config?.relativePresets?.some((p) => FISCAL_GRANULARITIES.includes(p.granularity)) ?? false;

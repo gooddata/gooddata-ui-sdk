@@ -170,7 +170,7 @@ describe("MeasureColorStrategy", () => {
         expect(itemsCount).toEqual(updatedPalette.length);
     });
 
-    it("should return only non-derived measures in getColorAssignment", () => {
+    it("should include derived measures in getColorAssignment", () => {
         const dv = recordedDataFacade(
             ReferenceRecordings.Scenarios.BarChart.ViewByDateAndPoPMeasure as unknown as ScenarioRecording,
         );
@@ -187,6 +187,6 @@ describe("MeasureColorStrategy", () => {
             type,
         );
 
-        expect(colorStrategy.getColorAssignment().length).toEqual(2);
+        expect(colorStrategy.getColorAssignment().length).toEqual(3);
     });
 });

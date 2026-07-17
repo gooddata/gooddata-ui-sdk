@@ -376,28 +376,6 @@ export const convertExportDefinitionMdObject = (
     };
 };
 
-export const convertInlineExportDefinitionMdObject = (
-    exportDefinitionOut: AutomationAutomationTabularExport | AutomationAutomationVisualExport,
-): IExportDefinitionMetadataObject => {
-    const id = uuid();
-    const request = convertExportDefinitionRequestPayload(exportDefinitionOut.requestPayload);
-    const metadata = exportDefinitionOut.requestPayload.metadata as MetadataObjectDefinition | undefined;
-
-    return {
-        type: "exportDefinition",
-        id,
-        uri: id,
-        ref: idRef(id, "exportDefinition"),
-        title: metadata?.title ?? "",
-        description: "",
-        tags: [],
-        requestPayload: request,
-        production: true,
-        deprecated: false,
-        unlisted: false,
-    };
-};
-
 const convertExportDefinitionRequestPayload = (
     exportRequest: VisualExportRequest | TabularExportRequest,
 ): IExportDefinitionRequestPayload => {

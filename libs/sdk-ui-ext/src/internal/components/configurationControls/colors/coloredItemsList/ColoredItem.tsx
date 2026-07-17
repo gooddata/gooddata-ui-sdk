@@ -21,6 +21,7 @@ export interface IColoredItemProps {
     className?: string;
     item?: IColoredItem;
     onSelect?: (source: IColoredItem, color: IColor) => void;
+    onReset?: () => void;
     isSelected?: boolean;
     disabled?: boolean;
     chartFill?: IChartFillConfig;
@@ -29,7 +30,7 @@ export interface IColoredItemProps {
 
 export const ColoredItem = memo(function ColoredItem(props: IColoredItemProps) {
     const intl = useIntl();
-    const { item, colorPalette, onSelect, chartFill, patternFillIndex, disabled } = props;
+    const { item, colorPalette, onSelect, onReset, chartFill, patternFillIndex, disabled } = props;
 
     const renderLoadingItem = () => {
         return <div className="gd-list-item gd-list-item-not-loaded" />;
@@ -64,6 +65,7 @@ export const ColoredItem = memo(function ColoredItem(props: IColoredItemProps) {
             selectedColorItem={coloredItem.colorItem}
             colorPalette={colorPalette}
             onColorSelected={onColorSelected}
+            onReset={onReset}
             chartFill={chartFill}
             patternFillIndex={patternFillIndex}
             disabled={disabled}

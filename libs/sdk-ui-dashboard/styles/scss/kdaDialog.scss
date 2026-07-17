@@ -388,6 +388,8 @@
                 justify-content: flex-end;
                 width: 100%;
 
+                --gd-icon-fill-color: var(--gd-palette-complementary-6);
+
                 .gd-ui-kit-button__text {
                     flex-grow: 1;
                     text-align: left;
@@ -948,7 +950,7 @@
     padding: 5px 10px;
     align-items: center;
     justify-content: space-between;
-    width: calc(100% - 20px);
+    width: 100%;
     height: 32px;
     cursor: pointer;
 

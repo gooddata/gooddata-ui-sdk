@@ -41,6 +41,12 @@ interface IDimensionalitySectionProps {
      * This is used to determine whether to show the backward compatibility note.
      */
     isMigratedFilter: boolean;
+    /**
+     * Wraps the pills in a bounded scroll container. Use when the section is rendered outside
+     * a dialog-level scroll container (e.g. the dashboard filter configuration panel); the pills
+     * list itself never scrolls, so without any scroll container the section grows unbounded.
+     */
+    withScrollContainer?: boolean;
 }
 
 /**
@@ -56,6 +62,7 @@ export const DimensionalitySection = memo(function DimensionalitySection({
     isLoadingCatalogDimensionality,
     onDimensionalityChange,
     isMigratedFilter,
+    withScrollContainer = false,
 }: IDimensionalitySectionProps) {
     const intl = useIntl();
 
@@ -87,6 +94,57 @@ export const DimensionalitySection = memo(function DimensionalitySection({
         id: "mvf.dimensionality.reset.tooltip",
     });
 
+    const itemsList = (
+        <div className="gd-mvf-dimensionality-items">
+            {dimensionality.map((item, index) => {
+                // Select icon and color based on item type: date items get date icon (blue)
+                const isDateItem = item.type === "chronologicalDate" || item.type === "genericDate";
+                const icon = isDateItem ? "date" : "ldmAttribute";
+                const iconColor = isDateItem ? "primary" : "warning";
+
+                return (
+                    <WithAddButton
+                        key={objRefToString(item.identifier)}
+                        appendAddButton={index === dimensionality.length - 1}
+                        isDisabled={false}
+                        tooltip={addButtonTooltip}
+                        buttonRef={inlineAddButtonRef}
+                        onClick={handleOpenInlineAttributePicker}
+                        dataTestId="mvf-dimensionality-plus"
+                    >
+                        <div className="gd-mvf-dimensionality-tag-wrapper">
+                            <UiTag
+                                variant="outlined"
+                                size="large"
+                                iconBefore={icon}
+                                iconBeforeColor={iconColor}
+                                label={item.title}
+                                isDeletable
+                                onDelete={() => handleRemoveDimensionality(index)}
+                                dataTestId={`dimensionality-tag-${index}`}
+                            />
+                        </div>
+                    </WithAddButton>
+                );
+            })}
+            {shouldShowResetButton ? (
+                <div className="gd-mvf-dimensionality-reset-button">
+                    <BubbleHoverTrigger>
+                        <UiIconButton
+                            icon="history"
+                            size="small"
+                            variant="tertiary"
+                            onClick={handleResetDimensionality}
+                            label={resetButtonTooltip}
+                            dataTestId="mvf-dimensionality-reset"
+                        />
+                        <Bubble alignPoints={[{ align: "cr cl" }]}>{resetButtonTooltip}</Bubble>
+                    </BubbleHoverTrigger>
+                </div>
+            ) : null}
+        </div>
+    );
+
     return (
         <div
             className="gd-mvf-dropdown-section gd-mvf-dimensionality s-mvf-dimensionality"
@@ -96,54 +154,11 @@ export const DimensionalitySection = memo(function DimensionalitySection({
                 <label>{intl.formatMessage({ id: "mvf.dimensionality.forEach" })}</label>
             </div>
             {dimensionality.length > 0 ? (
-                <div className="gd-mvf-dimensionality-items">
-                    {dimensionality.map((item, index) => {
-                        // Select icon and color based on item type: date items get date icon (blue)
-                        const isDateItem = item.type === "chronologicalDate" || item.type === "genericDate";
-                        const icon = isDateItem ? "date" : "ldmAttribute";
-                        const iconColor = isDateItem ? "primary" : "warning";
-
-                        return (
-                            <WithAddButton
-                                key={objRefToString(item.identifier)}
-                                appendAddButton={index === dimensionality.length - 1}
-                                isDisabled={false}
-                                tooltip={addButtonTooltip}
-                                buttonRef={inlineAddButtonRef}
-                                onClick={handleOpenInlineAttributePicker}
-                                dataTestId="mvf-dimensionality-plus"
-                            >
-                                <div className="gd-mvf-dimensionality-tag-wrapper">
-                                    <UiTag
-                                        variant="outlined"
-                                        size="large"
-                                        iconBefore={icon}
-                                        iconBeforeColor={iconColor}
-                                        label={item.title}
-                                        isDeletable
-                                        onDelete={() => handleRemoveDimensionality(index)}
-                                        dataTestId={`dimensionality-tag-${index}`}
-                                    />
-                                </div>
-                            </WithAddButton>
-                        );
-                    })}
-                    {shouldShowResetButton ? (
-                        <div className="gd-mvf-dimensionality-reset-button">
-                            <BubbleHoverTrigger>
-                                <UiIconButton
-                                    icon="history"
-                                    size="small"
-                                    variant="tertiary"
-                                    onClick={handleResetDimensionality}
-                                    label={resetButtonTooltip}
-                                    dataTestId="mvf-dimensionality-reset"
-                                />
-                                <Bubble alignPoints={[{ align: "cr cl" }]}>{resetButtonTooltip}</Bubble>
-                            </BubbleHoverTrigger>
-                        </div>
-                    ) : null}
-                </div>
+                withScrollContainer ? (
+                    <div className="gd-mvf-dimensionality-scroll-container">{itemsList}</div>
+                ) : (
+                    itemsList
+                )
             ) : (
                 <div className="gd-mvf-dimensionality-empty-actions">
                     <UiButton

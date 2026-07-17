@@ -12,15 +12,10 @@ $attribute-filter-drag-handle-left: 10px;
     position: relative;
 
     .show-all {
-        position: absolute;
-        bottom: -25px;
-        left: 50%;
-        display: block;
-        transform: translateX(-50%);
-
-        @media #{kit-variables.$xsmall-only}, #{kit-variables.$small-only} {
-            z-index: zIndexes.$filterbar-show-all;
-        }
+        position: relative;
+        margin-top: -1px; // Move "Show all" button on top of filter border
+        display: flex;
+        justify-content: center;
     }
 
     .gd-filter-button-custom-icon-wrapper {
@@ -222,8 +217,6 @@ $attribute-filter-drag-handle-left: 10px;
 }
 
 .button-filter-bar-show-all {
-    position: relative;
-    top: -2px;
     height: 24px;
     padding: 5px 24px;
     border: variables.$nav-border;

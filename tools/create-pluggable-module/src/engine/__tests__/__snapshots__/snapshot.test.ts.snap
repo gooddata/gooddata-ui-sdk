@@ -491,6 +491,7 @@ rush-logs
 .__mf__temp
 ",
   "module/.goodchangesrc.json": "{
+    "type": "app",
     "targets": [
         {
             "targetName": "gdc-snap-test-module-unit-tests",

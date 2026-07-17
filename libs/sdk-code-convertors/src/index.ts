@@ -162,6 +162,14 @@ export {
     type LineChartConfigProperties,
 } from "./configs/lineChart.js";
 export {
+    radarChart,
+    radarChartLoad,
+    radarChartSave,
+    RADAR_CHART_DEFAULTS,
+    type IRadarChartConfig,
+    type RadarChartConfigProperties,
+} from "./configs/radarChart.js";
+export {
     areaChart,
     areaChartLoad,
     areaChartSave,

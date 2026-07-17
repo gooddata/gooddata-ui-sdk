@@ -62,6 +62,7 @@ import { heatmapChart } from "../configs/heatmapChart.js";
 import { lineChart } from "../configs/lineChart.js";
 import { pieChart } from "../configs/pieChart.js";
 import { pyramidChart } from "../configs/pyramidChart.js";
+import { radarChart } from "../configs/radarChart.js";
 import { repeaterChart } from "../configs/repeaterChart.js";
 import { sankeyChart } from "../configs/sankeyChart.js";
 import { scatterChart } from "../configs/scatterChart.js";
@@ -215,6 +216,8 @@ function yamlVisTypeToDeclarative(def: Visualisation): string {
             return "local:choropleth";
         case "repeater_chart":
             return "local:repeater";
+        case "radar_chart":
+            return "local:radar";
     }
 }
 
@@ -295,6 +298,9 @@ function yamlConfigToDeclarative(
                 ...(def.metrics ?? []),
                 ...(def.columns ?? []),
             ]);
+            break;
+        case "radar_chart":
+            controls = radarChart.save(def.query?.fields, def.config);
             break;
     }
 
@@ -1274,6 +1280,12 @@ function mapBuckets(input: Visualisation): VisBucket[] {
         case "line_chart": {
             addBucket(buckets, BucketsType.Measures, input.metrics);
             addBucket(buckets, BucketsType.Trend, input.view_by, input.trend_by);
+            addBucket(buckets, BucketsType.Segment, input.segment_by);
+            return buckets;
+        }
+        case "radar_chart": {
+            addBucket(buckets, BucketsType.Measures, input.metrics);
+            addBucket(buckets, BucketsType.Trend, input.view_by);
             addBucket(buckets, BucketsType.Segment, input.segment_by);
             return buckets;
         }

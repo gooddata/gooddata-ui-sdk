@@ -25888,6 +25888,890 @@
                     }
                 }
             }
+        },
+        "/api/v1/entities/workspaces/{workspaceId}/workspaceColorPalettes": {
+            "get": {
+                "operationId": "getAllEntities@WorkspaceColorPalettes",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "workspaceId",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "origin",
+                        "required": false,
+                        "schema": {
+                            "default": "ALL",
+                            "description": "Defines scope of origin of objects. All by default.",
+                            "enum": [
+                                "ALL",
+                                "PARENTS",
+                                "NATIVE"
+                            ],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "example": "name==someString;content==JsonNodeValue",
+                        "in": "query",
+                        "name": "filter",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/page"
+                    },
+                    {
+                        "$ref": "#/components/parameters/size"
+                    },
+                    {
+                        "$ref": "#/components/parameters/sort"
+                    },
+                    {
+                        "in": "header",
+                        "name": "X-GDC-VALIDATE-RELATIONS",
+                        "required": false,
+                        "schema": {
+                            "default": false,
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "description": "Include Meta objects.",
+                        "example": "metaInclude=origin,page,all",
+                        "explode": false,
+                        "in": "query",
+                        "name": "metaInclude",
+                        "required": false,
+                        "schema": {
+                            "description": "Included meta objects",
+                            "items": {
+                                "enum": [
+                                    "origin",
+                                    "page",
+                                    "all",
+                                    "ALL"
+                                ],
+                                "type": "string"
+                            },
+                            "type": "array",
+                            "uniqueItems": true
+                        },
+                        "style": "form"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiWorkspaceColorPaletteOutList"
+                                }
+                            },
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiWorkspaceColorPaletteOutList"
+                                }
+                            }
+                        },
+                        "description": "Request successfully processed"
+                    }
+                },
+                "summary": "Get all Workspace Color Palettes",
+                "tags": [
+                    "Appearance",
+                    "entities",
+                    "workspace-color-palette-controller"
+                ],
+                "x-gdc-security-info": {
+                    "description": "Contains minimal permission level required to view this object type.",
+                    "permissions": [
+                        "VIEW"
+                    ]
+                }
+            },
+            "post": {
+                "operationId": "createEntity@WorkspaceColorPalettes",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "workspaceId",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Include Meta objects.",
+                        "example": "metaInclude=origin,all",
+                        "explode": false,
+                        "in": "query",
+                        "name": "metaInclude",
+                        "required": false,
+                        "schema": {
+                            "description": "Included meta objects",
+                            "items": {
+                                "enum": [
+                                    "origin",
+                                    "all",
+                                    "ALL"
+                                ],
+                                "type": "string"
+                            },
+                            "type": "array",
+                            "uniqueItems": true
+                        },
+                        "style": "form"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiWorkspaceColorPaletteInDocument"
+                            }
+                        },
+                        "application/vnd.gooddata.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiWorkspaceColorPaletteInDocument"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiWorkspaceColorPaletteOutDocument"
+                                }
+                            },
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiWorkspaceColorPaletteOutDocument"
+                                }
+                            }
+                        },
+                        "description": "Request successfully processed"
+                    }
+                },
+                "summary": "Post Workspace Color Palette",
+                "tags": [
+                    "Appearance",
+                    "entities",
+                    "workspace-color-palette-controller"
+                ]
+            }
+        },
+        "/api/v1/entities/workspaces/{workspaceId}/workspaceColorPalettes/{objectId}": {
+            "delete": {
+                "operationId": "deleteEntity@WorkspaceColorPalettes",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "workspaceId",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "path",
+                        "name": "objectId",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "$ref": "#/components/responses/Deleted"
+                    }
+                },
+                "summary": "Delete a Workspace Color Palette",
+                "tags": [
+                    "Appearance",
+                    "entities",
+                    "workspace-color-palette-controller"
+                ]
+            },
+            "get": {
+                "operationId": "getEntity@WorkspaceColorPalettes",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "workspaceId",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "path",
+                        "name": "objectId",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "example": "name==someString;content==JsonNodeValue",
+                        "in": "query",
+                        "name": "filter",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "header",
+                        "name": "X-GDC-VALIDATE-RELATIONS",
+                        "required": false,
+                        "schema": {
+                            "default": false,
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "description": "Include Meta objects.",
+                        "example": "metaInclude=origin,all",
+                        "explode": false,
+                        "in": "query",
+                        "name": "metaInclude",
+                        "required": false,
+                        "schema": {
+                            "description": "Included meta objects",
+                            "items": {
+                                "enum": [
+                                    "origin",
+                                    "all",
+                                    "ALL"
+                                ],
+                                "type": "string"
+                            },
+                            "type": "array",
+                            "uniqueItems": true
+                        },
+                        "style": "form"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiWorkspaceColorPaletteOutDocument"
+                                }
+                            },
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiWorkspaceColorPaletteOutDocument"
+                                }
+                            }
+                        },
+                        "description": "Request successfully processed"
+                    }
+                },
+                "summary": "Get a Workspace Color Palette",
+                "tags": [
+                    "Appearance",
+                    "entities",
+                    "workspace-color-palette-controller"
+                ],
+                "x-gdc-security-info": {
+                    "description": "Contains minimal permission level required to view this object type.",
+                    "permissions": [
+                        "VIEW"
+                    ]
+                }
+            },
+            "patch": {
+                "operationId": "patchEntity@WorkspaceColorPalettes",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "workspaceId",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "path",
+                        "name": "objectId",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "example": "name==someString;content==JsonNodeValue",
+                        "in": "query",
+                        "name": "filter",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiWorkspaceColorPalettePatchDocument"
+                            }
+                        },
+                        "application/vnd.gooddata.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiWorkspaceColorPalettePatchDocument"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiWorkspaceColorPaletteOutDocument"
+                                }
+                            },
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiWorkspaceColorPaletteOutDocument"
+                                }
+                            }
+                        },
+                        "description": "Request successfully processed"
+                    }
+                },
+                "summary": "Patch a Workspace Color Palette",
+                "tags": [
+                    "Appearance",
+                    "entities",
+                    "workspace-color-palette-controller"
+                ]
+            },
+            "put": {
+                "operationId": "updateEntity@WorkspaceColorPalettes",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "workspaceId",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "path",
+                        "name": "objectId",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "example": "name==someString;content==JsonNodeValue",
+                        "in": "query",
+                        "name": "filter",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiWorkspaceColorPaletteInDocument"
+                            }
+                        },
+                        "application/vnd.gooddata.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiWorkspaceColorPaletteInDocument"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiWorkspaceColorPaletteOutDocument"
+                                }
+                            },
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiWorkspaceColorPaletteOutDocument"
+                                }
+                            }
+                        },
+                        "description": "Request successfully processed"
+                    }
+                },
+                "summary": "Put a Workspace Color Palette",
+                "tags": [
+                    "Appearance",
+                    "entities",
+                    "workspace-color-palette-controller"
+                ]
+            }
+        },
+        "/api/v1/entities/workspaces/{workspaceId}/workspaceThemes": {
+            "get": {
+                "operationId": "getAllEntities@WorkspaceThemes",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "workspaceId",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "origin",
+                        "required": false,
+                        "schema": {
+                            "default": "ALL",
+                            "description": "Defines scope of origin of objects. All by default.",
+                            "enum": [
+                                "ALL",
+                                "PARENTS",
+                                "NATIVE"
+                            ],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "example": "name==someString;content==JsonNodeValue",
+                        "in": "query",
+                        "name": "filter",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/page"
+                    },
+                    {
+                        "$ref": "#/components/parameters/size"
+                    },
+                    {
+                        "$ref": "#/components/parameters/sort"
+                    },
+                    {
+                        "in": "header",
+                        "name": "X-GDC-VALIDATE-RELATIONS",
+                        "required": false,
+                        "schema": {
+                            "default": false,
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "description": "Include Meta objects.",
+                        "example": "metaInclude=origin,page,all",
+                        "explode": false,
+                        "in": "query",
+                        "name": "metaInclude",
+                        "required": false,
+                        "schema": {
+                            "description": "Included meta objects",
+                            "items": {
+                                "enum": [
+                                    "origin",
+                                    "page",
+                                    "all",
+                                    "ALL"
+                                ],
+                                "type": "string"
+                            },
+                            "type": "array",
+                            "uniqueItems": true
+                        },
+                        "style": "form"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiWorkspaceThemeOutList"
+                                }
+                            },
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiWorkspaceThemeOutList"
+                                }
+                            }
+                        },
+                        "description": "Request successfully processed"
+                    }
+                },
+                "summary": "Get all Workspace Themes",
+                "tags": [
+                    "Appearance",
+                    "entities",
+                    "workspace-theme-controller"
+                ],
+                "x-gdc-security-info": {
+                    "description": "Contains minimal permission level required to view this object type.",
+                    "permissions": [
+                        "VIEW"
+                    ]
+                }
+            },
+            "post": {
+                "operationId": "createEntity@WorkspaceThemes",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "workspaceId",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Include Meta objects.",
+                        "example": "metaInclude=origin,all",
+                        "explode": false,
+                        "in": "query",
+                        "name": "metaInclude",
+                        "required": false,
+                        "schema": {
+                            "description": "Included meta objects",
+                            "items": {
+                                "enum": [
+                                    "origin",
+                                    "all",
+                                    "ALL"
+                                ],
+                                "type": "string"
+                            },
+                            "type": "array",
+                            "uniqueItems": true
+                        },
+                        "style": "form"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiWorkspaceThemeInDocument"
+                            }
+                        },
+                        "application/vnd.gooddata.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiWorkspaceThemeInDocument"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiWorkspaceThemeOutDocument"
+                                }
+                            },
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiWorkspaceThemeOutDocument"
+                                }
+                            }
+                        },
+                        "description": "Request successfully processed"
+                    }
+                },
+                "summary": "Post Workspace Theme",
+                "tags": [
+                    "Appearance",
+                    "entities",
+                    "workspace-theme-controller"
+                ]
+            }
+        },
+        "/api/v1/entities/workspaces/{workspaceId}/workspaceThemes/{objectId}": {
+            "delete": {
+                "operationId": "deleteEntity@WorkspaceThemes",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "workspaceId",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "path",
+                        "name": "objectId",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "$ref": "#/components/responses/Deleted"
+                    }
+                },
+                "summary": "Delete a Workspace Theme",
+                "tags": [
+                    "Appearance",
+                    "entities",
+                    "workspace-theme-controller"
+                ]
+            },
+            "get": {
+                "operationId": "getEntity@WorkspaceThemes",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "workspaceId",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "path",
+                        "name": "objectId",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "example": "name==someString;content==JsonNodeValue",
+                        "in": "query",
+                        "name": "filter",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "header",
+                        "name": "X-GDC-VALIDATE-RELATIONS",
+                        "required": false,
+                        "schema": {
+                            "default": false,
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "description": "Include Meta objects.",
+                        "example": "metaInclude=origin,all",
+                        "explode": false,
+                        "in": "query",
+                        "name": "metaInclude",
+                        "required": false,
+                        "schema": {
+                            "description": "Included meta objects",
+                            "items": {
+                                "enum": [
+                                    "origin",
+                                    "all",
+                                    "ALL"
+                                ],
+                                "type": "string"
+                            },
+                            "type": "array",
+                            "uniqueItems": true
+                        },
+                        "style": "form"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiWorkspaceThemeOutDocument"
+                                }
+                            },
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiWorkspaceThemeOutDocument"
+                                }
+                            }
+                        },
+                        "description": "Request successfully processed"
+                    }
+                },
+                "summary": "Get a Workspace Theme",
+                "tags": [
+                    "Appearance",
+                    "entities",
+                    "workspace-theme-controller"
+                ],
+                "x-gdc-security-info": {
+                    "description": "Contains minimal permission level required to view this object type.",
+                    "permissions": [
+                        "VIEW"
+                    ]
+                }
+            },
+            "patch": {
+                "operationId": "patchEntity@WorkspaceThemes",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "workspaceId",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "path",
+                        "name": "objectId",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "example": "name==someString;content==JsonNodeValue",
+                        "in": "query",
+                        "name": "filter",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiWorkspaceThemePatchDocument"
+                            }
+                        },
+                        "application/vnd.gooddata.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiWorkspaceThemePatchDocument"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiWorkspaceThemeOutDocument"
+                                }
+                            },
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiWorkspaceThemeOutDocument"
+                                }
+                            }
+                        },
+                        "description": "Request successfully processed"
+                    }
+                },
+                "summary": "Patch a Workspace Theme",
+                "tags": [
+                    "Appearance",
+                    "entities",
+                    "workspace-theme-controller"
+                ]
+            },
+            "put": {
+                "operationId": "updateEntity@WorkspaceThemes",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "workspaceId",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "path",
+                        "name": "objectId",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "example": "name==someString;content==JsonNodeValue",
+                        "in": "query",
+                        "name": "filter",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiWorkspaceThemeInDocument"
+                            }
+                        },
+                        "application/vnd.gooddata.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiWorkspaceThemeInDocument"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiWorkspaceThemeOutDocument"
+                                }
+                            },
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiWorkspaceThemeOutDocument"
+                                }
+                            }
+                        },
+                        "description": "Request successfully processed"
+                    }
+                },
+                "summary": "Put a Workspace Theme",
+                "tags": [
+                    "Appearance",
+                    "entities",
+                    "workspace-theme-controller"
+                ]
+            }
         }
     },
     "components": {
@@ -55476,6 +56360,454 @@
                     }
                 },
                 "description": "List of groups"
+            },
+            "JsonApiWorkspaceColorPaletteOutList": {
+                "description": "A JSON:API document with a list of resources",
+                "properties": {
+                    "data": {
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiWorkspaceColorPaletteOutWithLinks"
+                        },
+                        "type": "array",
+                        "uniqueItems": true
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "meta": {
+                        "properties": {
+                            "page": {
+                                "$ref": "#/components/schemas/PageMetadata"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "required": [
+                    "data"
+                ],
+                "type": "object"
+            },
+            "JsonApiWorkspaceColorPaletteInDocument": {
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiWorkspaceColorPaletteIn"
+                    }
+                },
+                "required": [
+                    "data"
+                ],
+                "type": "object"
+            },
+            "JsonApiWorkspaceColorPaletteOutDocument": {
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiWorkspaceColorPaletteOut"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    }
+                },
+                "required": [
+                    "data"
+                ],
+                "type": "object"
+            },
+            "JsonApiWorkspaceColorPalettePatchDocument": {
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiWorkspaceColorPalettePatch"
+                    }
+                },
+                "required": [
+                    "data"
+                ],
+                "type": "object"
+            },
+            "JsonApiWorkspaceThemeOutList": {
+                "description": "A JSON:API document with a list of resources",
+                "properties": {
+                    "data": {
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiWorkspaceThemeOutWithLinks"
+                        },
+                        "type": "array",
+                        "uniqueItems": true
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "meta": {
+                        "properties": {
+                            "page": {
+                                "$ref": "#/components/schemas/PageMetadata"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "required": [
+                    "data"
+                ],
+                "type": "object"
+            },
+            "JsonApiWorkspaceThemeInDocument": {
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiWorkspaceThemeIn"
+                    }
+                },
+                "required": [
+                    "data"
+                ],
+                "type": "object"
+            },
+            "JsonApiWorkspaceThemeOutDocument": {
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiWorkspaceThemeOut"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    }
+                },
+                "required": [
+                    "data"
+                ],
+                "type": "object"
+            },
+            "JsonApiWorkspaceThemePatchDocument": {
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiWorkspaceThemePatch"
+                    }
+                },
+                "required": [
+                    "data"
+                ],
+                "type": "object"
+            },
+            "JsonApiWorkspaceColorPaletteOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiWorkspaceColorPaletteOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiWorkspaceColorPaletteIn": {
+                "description": "JSON:API representation of workspaceColorPalette entity.",
+                "properties": {
+                    "attributes": {
+                        "properties": {
+                            "content": {
+                                "description": "Free-form JSON content. Maximum supported length is 15000 characters.",
+                                "example": {},
+                                "type": "object"
+                            },
+                            "name": {
+                                "maxLength": 255,
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "content",
+                            "name"
+                        ],
+                        "type": "object"
+                    },
+                    "id": {
+                        "description": "API identifier of an object",
+                        "example": "id1",
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string"
+                    },
+                    "type": {
+                        "description": "Object type",
+                        "enum": [
+                            "workspaceColorPalette"
+                        ],
+                        "example": "workspaceColorPalette",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "attributes",
+                    "id",
+                    "type"
+                ],
+                "type": "object"
+            },
+            "JsonApiWorkspaceColorPaletteOut": {
+                "description": "JSON:API representation of workspaceColorPalette entity.",
+                "properties": {
+                    "attributes": {
+                        "properties": {
+                            "content": {
+                                "description": "Free-form JSON content. Maximum supported length is 15000 characters.",
+                                "example": {},
+                                "type": "object"
+                            },
+                            "name": {
+                                "maxLength": 255,
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "content",
+                            "name"
+                        ],
+                        "type": "object"
+                    },
+                    "id": {
+                        "description": "API identifier of an object",
+                        "example": "id1",
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string"
+                    },
+                    "meta": {
+                        "properties": {
+                            "origin": {
+                                "properties": {
+                                    "originId": {
+                                        "description": "defines id of the workspace where the entity comes from",
+                                        "type": "string"
+                                    },
+                                    "originType": {
+                                        "description": "defines type of the origin of the entity",
+                                        "enum": [
+                                            "NATIVE",
+                                            "PARENT"
+                                        ],
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "originId",
+                                    "originType"
+                                ],
+                                "type": "object"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "type": {
+                        "description": "Object type",
+                        "enum": [
+                            "workspaceColorPalette"
+                        ],
+                        "example": "workspaceColorPalette",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "attributes",
+                    "id",
+                    "type"
+                ],
+                "type": "object"
+            },
+            "JsonApiWorkspaceColorPalettePatch": {
+                "description": "JSON:API representation of patching workspaceColorPalette entity.",
+                "properties": {
+                    "attributes": {
+                        "properties": {
+                            "content": {
+                                "description": "Free-form JSON content. Maximum supported length is 15000 characters.",
+                                "example": {},
+                                "type": "object"
+                            },
+                            "name": {
+                                "maxLength": 255,
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "id": {
+                        "description": "API identifier of an object",
+                        "example": "id1",
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string"
+                    },
+                    "type": {
+                        "description": "Object type",
+                        "enum": [
+                            "workspaceColorPalette"
+                        ],
+                        "example": "workspaceColorPalette",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "attributes",
+                    "id",
+                    "type"
+                ],
+                "type": "object"
+            },
+            "JsonApiWorkspaceThemeOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiWorkspaceThemeOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiWorkspaceThemeIn": {
+                "description": "JSON:API representation of workspaceTheme entity.",
+                "properties": {
+                    "attributes": {
+                        "properties": {
+                            "content": {
+                                "description": "Free-form JSON content. Maximum supported length is 15000 characters.",
+                                "example": {},
+                                "type": "object"
+                            },
+                            "name": {
+                                "maxLength": 255,
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "content",
+                            "name"
+                        ],
+                        "type": "object"
+                    },
+                    "id": {
+                        "description": "API identifier of an object",
+                        "example": "id1",
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string"
+                    },
+                    "type": {
+                        "description": "Object type",
+                        "enum": [
+                            "workspaceTheme"
+                        ],
+                        "example": "workspaceTheme",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "attributes",
+                    "id",
+                    "type"
+                ],
+                "type": "object"
+            },
+            "JsonApiWorkspaceThemeOut": {
+                "description": "JSON:API representation of workspaceTheme entity.",
+                "properties": {
+                    "attributes": {
+                        "properties": {
+                            "content": {
+                                "description": "Free-form JSON content. Maximum supported length is 15000 characters.",
+                                "example": {},
+                                "type": "object"
+                            },
+                            "name": {
+                                "maxLength": 255,
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "content",
+                            "name"
+                        ],
+                        "type": "object"
+                    },
+                    "id": {
+                        "description": "API identifier of an object",
+                        "example": "id1",
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string"
+                    },
+                    "meta": {
+                        "properties": {
+                            "origin": {
+                                "properties": {
+                                    "originId": {
+                                        "description": "defines id of the workspace where the entity comes from",
+                                        "type": "string"
+                                    },
+                                    "originType": {
+                                        "description": "defines type of the origin of the entity",
+                                        "enum": [
+                                            "NATIVE",
+                                            "PARENT"
+                                        ],
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "originId",
+                                    "originType"
+                                ],
+                                "type": "object"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "type": {
+                        "description": "Object type",
+                        "enum": [
+                            "workspaceTheme"
+                        ],
+                        "example": "workspaceTheme",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "attributes",
+                    "id",
+                    "type"
+                ],
+                "type": "object"
+            },
+            "JsonApiWorkspaceThemePatch": {
+                "description": "JSON:API representation of patching workspaceTheme entity.",
+                "properties": {
+                    "attributes": {
+                        "properties": {
+                            "content": {
+                                "description": "Free-form JSON content. Maximum supported length is 15000 characters.",
+                                "example": {},
+                                "type": "object"
+                            },
+                            "name": {
+                                "maxLength": 255,
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "id": {
+                        "description": "API identifier of an object",
+                        "example": "id1",
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string"
+                    },
+                    "type": {
+                        "description": "Object type",
+                        "enum": [
+                            "workspaceTheme"
+                        ],
+                        "example": "workspaceTheme",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "attributes",
+                    "id",
+                    "type"
+                ],
+                "type": "object"
             }
         },
         "responses": {

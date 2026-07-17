@@ -5,7 +5,6 @@ import {
     type LegacyRef,
     type MouseEvent,
     type ReactNode,
-    useCallback,
     useEffect,
     useMemo,
     useReducer,
@@ -18,7 +17,7 @@ import cx from "classnames";
 import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 import { connect } from "react-redux";
 
-import { SyntaxHighlightingInput, UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
+import { SyntaxHighlightingInput } from "@gooddata/sdk-ui-kit";
 
 import {
     type IChatConversationLocalItem,
@@ -27,29 +26,23 @@ import {
     makeUserItem,
     makeUserMessage,
 } from "../model.js";
+import { agentSwitchingEnabledSelector } from "../store/chatWindow/chatWindowSelectors.js";
 import {
-    agentSwitchingActiveSelector,
-    agentSwitchingEnabledSelector,
-} from "../store/chatWindow/chatWindowSelectors.js";
-import {
-    agentsSelector,
     asyncProcessSelector,
     conversationMessagesSelector,
     conversationSelector,
-    conversationsLoadedSelector,
-    conversationsSelector,
     messagesSelector,
-    selectedAgentIdSelector,
 } from "../store/messages/messagesSelectors.js";
 import { newMessageAction, setSelectedAgentAction } from "../store/messages/messagesSlice.js";
 import { type RootState } from "../store/types.js";
 
 import { collectReferences } from "./completion/references.js";
 import { useCompletion } from "./completion/useCompletion.js";
-import { GenAIChatAgentDropdown } from "./GenAIChatAgentDropdown.js";
+import { GenAiChatAgentSwitching } from "./GenAiChatAgentSwitching.js";
+import { GenAiChatContextChooser } from "./GenAiChatContextChooser.js";
+import { GenAIChatContextIndicator } from "./GenAIChatContextIndicator.js";
 import { useHighlight } from "./highlight/useHighlight.js";
 import { useFullscreenCheck } from "./hooks/useFullscreenCheck.js";
-import { getAgentSelectionStatus } from "./utils/agentSelection.js";
 import { escapeMarkdown } from "./utils/markdownUtils.js";
 
 export type InputOwnProps = {
@@ -65,18 +58,12 @@ type InputStateProps = {
     messages: ReturnType<typeof messagesSelector>;
     loading: ReturnType<typeof asyncProcessSelector>;
     conversation: ReturnType<typeof conversationSelector>;
-    conversations: ReturnType<typeof conversationsSelector>;
-    conversationsLoaded: ReturnType<typeof conversationsLoadedSelector>;
     items: ReturnType<typeof conversationMessagesSelector>;
-    agents: ReturnType<typeof agentsSelector>;
     agentSwitchingEnabled: ReturnType<typeof agentSwitchingEnabledSelector>;
-    agentSwitchingActive: ReturnType<typeof agentSwitchingActiveSelector>;
-    selectedAgentId: ReturnType<typeof selectedAgentIdSelector>;
 };
 
 type InputDispatchProps = {
     newMessage: typeof newMessageAction;
-    setSelectedAgent: typeof setSelectedAgentAction;
 };
 
 const msgs = defineMessages({
@@ -88,12 +75,6 @@ const msgs = defineMessages({
     },
     labelWin: {
         id: "gd.gen-ai.input-label.win",
-    },
-    send: {
-        id: "gd.gen-ai.button.send",
-    },
-    noAgentAvailable: {
-        id: "gd.gen-ai.agent.unavailable",
     },
 });
 
@@ -111,15 +92,9 @@ function InputComponent({
     targetRef,
     messages,
     conversation,
-    conversations,
-    conversationsLoaded,
     items,
-    agents,
     agentSwitchingEnabled,
-    agentSwitchingActive,
     loading,
-    selectedAgentId,
-    setSelectedAgent,
 }: InputOwnProps & InputStateProps & InputDispatchProps) {
     const intl = useIntl();
     const { isBigScreen, isSmallScreen, isFullscreen } = useFullscreenCheck();
@@ -129,15 +104,10 @@ function InputComponent({
     const isEmpty = conversation ? !items?.length && !isLoading : !messages?.length && !isLoading;
 
     const [value, setValue] = useState("");
+    const [areAgentsBusy, setAreAgentsBusy] = useState(true);
+    const [hasNoAgents, setHasNoAgents] = useState(false);
     const [editorApi, setApi] = useState<EditorView | null>(null);
     const [focused, setFocused] = useState(false);
-    const { availableAgents, hasNoAgents, isSelectionLoading } = getAgentSelectionStatus({
-        agentSwitchingActive,
-        assistantLoading: isAssistantLoading,
-        conversationsLoaded,
-        agents,
-        selectedAgentId,
-    });
 
     const { onCompletion, used } = useCompletion([], { canManage, canAnalyze });
     const { highlightExtension, atomicCursorExtension } = useHighlight(used);
@@ -180,10 +150,6 @@ function InputComponent({
     );
 
     const handleSubmit = () => {
-        if (agentSwitchingActive && hasNoAgents) {
-            return;
-        }
-
         let item: IChatConversationLocalItem | UserMessage;
         if (conversation) {
             item = makeUserItem({
@@ -203,7 +169,7 @@ function InputComponent({
     const handleKeyDown = (e: KeyboardEvent) => {
         if (e.key === "Enter" && !e.shiftKey) {
             const trimmed = value.trim();
-            if (isBusy || !trimmed || (agentSwitchingActive && (hasNoAgents || isSelectionLoading))) {
+            if (isBusy || !trimmed || areAgentsBusy) {
                 return true;
             }
             e.preventDefault();
@@ -223,21 +189,17 @@ function InputComponent({
         editorApi?.focus();
     };
 
-    const agentDropdownDisabled = isBusy || isEvaluating || isSelectionLoading;
-    const buttonDisabled = !value.trim() || agentDropdownDisabled || (agentSwitchingActive && hasNoAgents);
-    const handleSelectAgent = useCallback(
-        (agentId: string | undefined, options?: { showChangeEvent?: boolean }) => {
-            setSelectedAgent({
-                agentId,
-                previousAgentId: conversation?.agentId ?? selectedAgentId,
-                showChangeEvent: options?.showChangeEvent,
-            });
-        },
-        [conversation?.agentId, selectedAgentId, setSelectedAgent],
-    );
+    const handleContextMouseDown = (e: MouseEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        editorApi?.focus();
+    };
 
-    const sendLabel = intl.formatMessage(msgs.send);
-    const noAgentAvailableLabel = intl.formatMessage(msgs.noAgentAvailable);
+    const handleOnFocus = () => {
+        editorApi?.focus();
+    };
+
+    const agentDropdownDisabled = isBusy || isEvaluating;
+    const buttonDisabled = !value.trim() || agentDropdownDisabled;
 
     return (
         <div
@@ -254,12 +216,10 @@ function InputComponent({
             <div className="gd-gen-ai-chat__input__content">
                 <HintText focused={focused} where="top" />
                 <div className="gd-gen-ai-chat__input__container">
-                    <div
-                        ref={targetRef}
-                        onFocus={() => {
-                            editorApi?.focus();
-                        }}
-                    />
+                    <div className="gd-gen-ai-chat__input__context" onMouseDown={handleContextMouseDown}>
+                        <GenAIChatContextIndicator onDelete={handleOnFocus} />
+                    </div>
+                    <div ref={targetRef} onFocus={handleOnFocus} />
                     <div className="gd-gen-ai-chat__input__text">
                         <SyntaxHighlightingInput
                             className="gd-gen-ai-chat__input__mc"
@@ -287,81 +247,16 @@ function InputComponent({
                             onCompletion={onCompletion}
                         />
                     </div>
-                    <div
-                        className={cx({
-                            "gd-gen-ai-chat__input__actions": agentSwitchingEnabled,
-                            "gd-gen-ai-chat__input__send_button": !agentSwitchingEnabled,
-                            "gd-gen-ai-chat__input__send_button--disabled":
-                                !agentSwitchingEnabled && buttonDisabled,
-                        })}
-                        onMouseDown={agentSwitchingEnabled ? handleActionsMouseDown : undefined}
-                    >
-                        {agentSwitchingActive && hasNoAgents ? (
-                            <span
-                                className="gd-gen-ai-chat__input__no-agent"
-                                data-testid="no_agent_available"
-                                role="status"
-                                aria-live="polite"
-                                aria-atomic="true"
-                            >
-                                {noAgentAvailableLabel}
-                            </span>
-                        ) : agentSwitchingEnabled ? (
-                            <>
-                                {/* The switcher is hidden in preview mode (agentSwitchingActive is
-                                    false): the assistant is pinned to the preview agent being built,
-                                    but the new input/button layout is kept. */}
-                                {agentSwitchingActive ? (
-                                    <GenAIChatAgentDropdown
-                                        agents={availableAgents}
-                                        conversations={conversations}
-                                        conversationAgentId={conversation?.agentId}
-                                        selectedAgentId={selectedAgentId}
-                                        isDisabled={agentDropdownDisabled}
-                                        isLoading={isSelectionLoading}
-                                        onSelectAgent={handleSelectAgent}
-                                    />
-                                ) : null}
-                                <UiTooltip
-                                    triggerBy={["focus", "hover"]}
-                                    arrowPlacement="bottom"
-                                    anchor={
-                                        <UiIconButton
-                                            icon="arrowUp"
-                                            variant="primary"
-                                            size="small"
-                                            dataTestId="send_message"
-                                            isDisabled={buttonDisabled}
-                                            onClick={buttonDisabled ? undefined : handleSubmit}
-                                            accessibilityConfig={{
-                                                ariaLabel: sendLabel,
-                                            }}
-                                        />
-                                    }
-                                    content={sendLabel}
-                                />
-                            </>
-                        ) : (
-                            <UiTooltip
-                                triggerBy={["focus", "hover"]}
-                                arrowPlacement="bottom"
-                                anchor={
-                                    <UiIconButton
-                                        icon="send"
-                                        variant="tertiary"
-                                        size="medium"
-                                        dataTestId="send_message"
-                                        isDisabled={buttonDisabled}
-                                        onClick={buttonDisabled ? undefined : handleSubmit}
-                                        accessibilityConfig={{
-                                            ariaLabel: sendLabel,
-                                        }}
-                                    />
-                                }
-                                content={sendLabel}
-                            />
-                        )}
-                    </div>
+                    <GenAiChatAgentSwitching
+                        disabled={buttonDisabled}
+                        isAssistantLoading={isAssistantLoading}
+                        agentDropdownDisabled={agentDropdownDisabled}
+                        handleSubmit={handleSubmit}
+                        onMouseDown={handleActionsMouseDown}
+                        setBusy={setAreAgentsBusy}
+                        setNoAgents={setHasNoAgents}
+                        leftContent={<GenAiChatContextChooser onAddContext={handleOnFocus} />}
+                    />
                 </div>
                 <HintText focused={focused} where="bottom" />
             </div>
@@ -410,28 +305,18 @@ const mapStateToProps = (
     isEvaluating: boolean;
     items: ReturnType<typeof conversationMessagesSelector>;
     conversation: ReturnType<typeof conversationSelector>;
-    conversations: ReturnType<typeof conversationsSelector>;
-    conversationsLoaded: ReturnType<typeof conversationsLoadedSelector>;
     messages: ReturnType<typeof messagesSelector>;
     loading: ReturnType<typeof asyncProcessSelector>;
-    agents: ReturnType<typeof agentsSelector>;
     agentSwitchingEnabled: ReturnType<typeof agentSwitchingEnabledSelector>;
-    agentSwitchingActive: ReturnType<typeof agentSwitchingActiveSelector>;
-    selectedAgentId: ReturnType<typeof selectedAgentIdSelector>;
 } => {
     const asyncState = asyncProcessSelector(state);
 
     return {
         conversation: conversationSelector(state),
-        conversations: conversationsSelector(state),
-        conversationsLoaded: conversationsLoadedSelector(state),
         items: conversationMessagesSelector(state),
         messages: messagesSelector(state),
         loading: asyncState,
-        agents: agentsSelector(state),
         agentSwitchingEnabled: agentSwitchingEnabledSelector(state),
-        agentSwitchingActive: agentSwitchingActiveSelector(state),
-        selectedAgentId: selectedAgentIdSelector(state),
         isBusy: !!asyncState,
         isEvaluating: asyncState === "evaluating",
     };

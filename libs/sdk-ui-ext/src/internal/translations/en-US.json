@@ -1115,6 +1115,10 @@
         "text": "Reset Colors",
         "crowdinContext": "Button to reset colors to default values"
     },
+    "properties.colors.reset-color": {
+        "text": "Reset",
+        "crowdinContext": "Menu item in the color picker that reverts one item's custom color to its default"
+    },
     "properties.colors": {
         "text": "Colors",
         "crowdinContext": "Label for colors configuration section"
@@ -1126,10 +1130,6 @@
     "properties.colorsAndStyles": {
         "text": "Colors and styles",
         "crowdinContext": "Label for colors and line styles configuration section on line charts"
-    },
-    "properties.colors.reset-colors-and-styles": {
-        "text": "Reset Colors and styles",
-        "crowdinContext": "Button to reset colors and line styles to default values on line charts"
     },
     "properties.lineStyle.label": {
         "text": "Line style",

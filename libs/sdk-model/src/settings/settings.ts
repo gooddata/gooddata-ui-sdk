@@ -586,7 +586,6 @@ export interface IFeatureFlags {
     enableMongoDbDataSource?: boolean;
     enableStarrocksDataSource?: boolean;
     enableSingleStoreDataSource?: boolean;
-    enableCrateDbDataSource?: boolean;
 
     /**
      * Enable Semantic Search in the UI.
@@ -667,11 +666,6 @@ export interface IFeatureFlags {
      * Enable insights export of raw data when limit is reached.
      */
     enableRawExports?: boolean;
-
-    /**
-     * Enable customizable CSV delimiter in exports.
-     */
-    enableCustomizableCsvDelimiter?: boolean;
 
     /**
      * Enable export template selection for slide exports.
@@ -755,11 +749,6 @@ export interface IFeatureFlags {
      * @alpha
      */
     productionFeatures?: IProductionFeaturesConfig;
-
-    /**
-     * Enable new scheduled export
-     */
-    enableNewScheduledExport?: boolean;
 
     /**
      * Enable custom Identity Provider
@@ -1024,6 +1013,11 @@ export interface IFeatureFlags {
      * Enable ai agentic conversations.
      */
     enableAiAgenticConversations?: boolean;
+
+    /**
+     * Enable ai context setup.
+     */
+    enableAiContextSetup?: boolean;
 
     /**
      * Enable per-workspace opt-out from sharing data with the LLM. When this flag is on,

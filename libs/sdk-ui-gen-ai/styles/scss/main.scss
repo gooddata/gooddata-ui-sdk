@@ -36,6 +36,17 @@
         margin: calc(#{variables.$y-spacing} - 1em) 10px variables.$x-spacing;
     }
 
+    &__context-indicator {
+        display: flex;
+        align-items: baseline;
+        gap: 5px;
+        min-width: 0;
+        margin: 7px 7px 0 7px;
+        font-size: 12px;
+        line-height: normal;
+        color: kit-variables.$gd-color-state-blank;
+    }
+
     &__global_error {
         margin: variables.$y-spacing variables.$x-spacing;
         display: flex;

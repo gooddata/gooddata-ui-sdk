@@ -61,7 +61,6 @@ export function CheckboxControl({
         <DisabledBubbleMessage showDisabledMessage={showDisabledMessage} messageId={disabledMessageId}>
             <label className="input-checkbox-label">
                 <input
-                    aria-label={valuePath}
                     checked={checked}
                     disabled={disabled}
                     type="checkbox"

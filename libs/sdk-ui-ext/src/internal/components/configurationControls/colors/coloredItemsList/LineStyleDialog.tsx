@@ -81,6 +81,7 @@ export interface ILineStyleDialogProps {
     chartFill?: IChartFillConfig;
     patternFillIndex?: number | PatternFillName;
     onColorSelected: (color: IColor) => void;
+    onReset?: () => void;
     onLineStyleChange: (lineStyle: LineStyle) => void;
     onLineWidthChange: (lineWidth: 1 | 2 | 3 | 4) => void;
     onClose: () => void;
@@ -98,6 +99,7 @@ export const LineStyleDialog = memo(function LineStyleDialog({
     chartFill,
     patternFillIndex,
     onColorSelected,
+    onReset,
     onLineStyleChange,
     onLineWidthChange,
     onClose,
@@ -144,6 +146,7 @@ export const LineStyleDialog = memo(function LineStyleDialog({
                     selectedColorItem={colorItem}
                     colorPalette={colorPalette}
                     onColorSelected={onColorSelected}
+                    onReset={onReset}
                     disabled={disabled}
                     chartFill={chartFill}
                     patternFillIndex={patternFillIndex}

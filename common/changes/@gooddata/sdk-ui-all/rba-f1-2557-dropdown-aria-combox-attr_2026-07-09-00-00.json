@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-charts: Improve screen reader aria-label accuracy for heatmap (row dimension, correct attribute name, proper number format), radar (attribute prefix), treemap (correct dimension order and labels for both flat and segmented), and stacked bar/column charts (consistent measure formatting). Add keyboard navigation for stacked column/bar totals: the stack label is now reachable with Up/Down arrows alongside individual segments, with correct visual focus management and same-column navigation that bypasses Highcharts' geometry-based heuristic.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "rodrigo.balsells@gooddata.com"
+}

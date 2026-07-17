@@ -83,6 +83,7 @@ import {
     type IWorkspacePermissions,
     type ObjRef,
     idRef,
+    isIdentifierRef,
 } from "@gooddata/sdk-model";
 
 import { createMockGeoService } from "../geoService.js";
@@ -376,6 +377,47 @@ function recordedWorkspace(
             };
         },
         styling(): IWorkspaceStylingService {
+            // Preserve the input identity so create→update round-trips keep a stable id/ref.
+            const resolveTheme = (theme: IThemeDefinition): Promise<IThemeMetadataObject> => {
+                const id =
+                    theme.ref && isIdentifierRef(theme.ref)
+                        ? theme.ref.identifier
+                        : (theme.id ?? "workspace_theme_id");
+                return Promise.resolve({
+                    type: "theme",
+                    id,
+                    title: theme.title ?? "Workspace Theme 1",
+                    description: "",
+                    production: true,
+                    deprecated: false,
+                    unlisted: false,
+                    ref: idRef(id, "workspaceTheme"),
+                    uri: `${id}_uri`,
+                    theme: theme.theme,
+                });
+            };
+
+            const resolveColorPalette = (
+                colorPalette: IColorPaletteDefinition,
+            ): Promise<IColorPaletteMetadataObject> => {
+                const id =
+                    colorPalette.ref && isIdentifierRef(colorPalette.ref)
+                        ? colorPalette.ref.identifier
+                        : (colorPalette.id ?? "workspace_color_palette_id");
+                return Promise.resolve({
+                    type: "colorPalette",
+                    id,
+                    title: colorPalette.title ?? "Workspace Color Palette 1",
+                    description: "",
+                    production: true,
+                    deprecated: false,
+                    unlisted: false,
+                    ref: idRef(id, "workspaceColorPalette"),
+                    uri: `${id}_uri`,
+                    colorPalette: colorPalette.colorPalette,
+                });
+            };
+
             return {
                 async getColorPalette(): Promise<IColorPalette> {
                     return Promise.resolve(implConfig.globalPalette ?? []);
@@ -399,6 +441,22 @@ function recordedWorkspace(
                     return Promise.resolve(undefined);
                 },
                 clearActiveTheme(): Promise<void> {
+                    return Promise.resolve(undefined);
+                },
+                getThemes(): Promise<IThemeMetadataObject[]> {
+                    return Promise.resolve([]);
+                },
+                createTheme: resolveTheme,
+                updateTheme: resolveTheme,
+                deleteTheme(): Promise<void> {
+                    return Promise.resolve(undefined);
+                },
+                getColorPalettes(): Promise<IColorPaletteMetadataObject[]> {
+                    return Promise.resolve([]);
+                },
+                createColorPalette: resolveColorPalette,
+                updateColorPalette: resolveColorPalette,
+                deleteColorPalette(): Promise<void> {
                     return Promise.resolve(undefined);
                 },
             };

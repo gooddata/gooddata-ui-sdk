@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-code-schemas, sdk-code-convertors: Enable radar chart in analytics as code",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "nikola.cech@gooddata.com"
+}

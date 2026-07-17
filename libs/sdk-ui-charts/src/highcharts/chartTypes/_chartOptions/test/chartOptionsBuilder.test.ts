@@ -1507,6 +1507,57 @@ describe("chartOptionsBuilder", () => {
                         expect(pointPadding).toBe(undefined);
                         expect(color).toBe(`rgb(255, 255, 255)`);
                     });
+
+                    it("announces the View By attribute title, not the measure name, when the X axis title is hidden (production wiring)", () => {
+                        const { viewByAttribute } = getMVS(dv);
+                        const chartOptions = generateChartOptions(dv, {
+                            type: "heatmap",
+                            stacking: false,
+                        });
+                        const pointDescription = chartOptions.actions?.pointDescription;
+                        expect(pointDescription).toBeDefined();
+
+                        const categoryValue = chartOptions.data!.categories![0][0];
+                        const description = pointDescription!({
+                            x: 0,
+                            y: 0,
+                            value: 1,
+                            series: { name: measureGroup.items[0].measureHeaderItem.name, xAxis: {} },
+                            category: categoryValue,
+                        });
+
+                        expect(description).toContain(`${viewByAttribute.formOf.name}: ${categoryValue}`);
+                        expect(description).not.toContain(
+                            `${measureGroup.items[0].measureHeaderItem.name}: ${categoryValue}`,
+                        );
+                    });
+
+                    it("announces the View By attribute's underlying title, not its display-form title, when the X axis title is hidden (production wiring)", () => {
+                        const dvWithDivergingTitles = barChartWith3MetricsAndViewByAttribute;
+                        const { viewByAttribute: divergingViewByAttribute } = getMVS(dvWithDivergingTitles);
+                        expect(divergingViewByAttribute.formOf.name).not.toBe(divergingViewByAttribute.name);
+
+                        const chartOptions = generateChartOptions(dvWithDivergingTitles, {
+                            type: "heatmap",
+                            stacking: false,
+                        });
+                        const pointDescription = chartOptions.actions?.pointDescription;
+                        expect(pointDescription).toBeDefined();
+
+                        const categoryValue = chartOptions.data!.categories![0][0];
+                        const description = pointDescription!({
+                            x: 0,
+                            y: 0,
+                            value: 1,
+                            series: { name: "Lost", xAxis: {} },
+                            category: categoryValue,
+                        });
+
+                        expect(description).toContain(
+                            `${divergingViewByAttribute.formOf.name}: ${categoryValue}`,
+                        );
+                        expect(description).not.toContain(`${divergingViewByAttribute.name}:`);
+                    });
                 });
             });
 

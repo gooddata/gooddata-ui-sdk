@@ -14,11 +14,7 @@ import {
     isChatConversationError,
     isChatConversationItem,
 } from "@gooddata/sdk-backend-spi";
-import {
-    type GenAIObjectType,
-    type IAllowedRelationshipType,
-    type IGenAIUserContext,
-} from "@gooddata/sdk-model";
+import { type GenAIObjectType, type IAllowedRelationshipType } from "@gooddata/sdk-model";
 
 import {
     type AssistantMessage,
@@ -35,10 +31,10 @@ import { generateTitleFromQuestion } from "../../utils.js";
 import {
     agentSwitchingActiveSelector,
     allowedRelationshipTypesSelector,
+    effectiveContextSelector,
     objectTypesSelector,
     settingsSelector,
     tagsSelector,
-    userContextSelector,
 } from "../chatWindow/chatWindowSelectors.js";
 import { clearUserContextAction } from "../chatWindow/chatWindowSlice.js";
 import {
@@ -181,7 +177,8 @@ function* evaluateUserMessage(message: AssistantMessage, preparedChatThread: ICh
     const allowedRelationshipTypes: IAllowedRelationshipType[] | undefined = yield select(
         allowedRelationshipTypesSelector,
     );
-    const userContext: IGenAIUserContext | undefined = yield select(userContextSelector);
+    const { user, ambient }: ReturnType<typeof effectiveContextSelector> =
+        yield select(effectiveContextSelector);
     // Clear user context immediately — it is a one-shot value
     yield put(clearUserContextAction());
 
@@ -192,15 +189,16 @@ function* evaluateUserMessage(message: AssistantMessage, preparedChatThread: ICh
     let currentInteractionId: string | undefined = undefined;
 
     let queryBuilder = preparedChatThread
-        .withSearchLimit(Number(settings?.["aiChatSearchLimit"]) || 5)
+        .withSearchLimit(Number(settings?.["aiChatSearchLimit"]) || 10)
         .withObjectTypes(objectTypes);
 
     if (allowedRelationshipTypes?.length) {
         queryBuilder = queryBuilder.withAllowedRelationshipTypes(allowedRelationshipTypes);
     }
 
-    if (userContext) {
-        queryBuilder = queryBuilder.withUserContext(userContext);
+    const context = user ?? ambient;
+    if (context) {
+        queryBuilder = queryBuilder.withUserContext(context);
     }
 
     try {
@@ -499,8 +497,11 @@ function* evaluateUserConversationMessage(
     const allowedRelationshipTypes: IAllowedRelationshipType[] | undefined = yield select(
         allowedRelationshipTypesSelector,
     );
-    const userContext: IGenAIUserContext | undefined = yield select(userContextSelector);
-    // Clear user context immediately — it is a one-shot value
+    // One-shot context (e.g. Summarize) wins over the ambient dashboard context;
+    // the ambient part persists and rides on every message.
+    const { user, ambient }: ReturnType<typeof effectiveContextSelector> =
+        yield select(effectiveContextSelector);
+    // Clear the one-shot user context immediately — it is a one-shot value
     yield put(clearUserContextAction());
 
     // Track interaction ID to assistant message mapping
@@ -509,7 +510,7 @@ function* evaluateUserConversationMessage(
     let currentInteractionId: string | undefined = undefined;
 
     let queryBuilder = preparedChatThread
-        .withSearchLimit(Number(settings?.["aiChatSearchLimit"]) || 5)
+        .withSearchLimit(Number(settings?.["aiChatSearchLimit"]) || 10)
         .withObjectTypes(objectTypes);
 
     if (excludeTags) {
@@ -524,8 +525,9 @@ function* evaluateUserConversationMessage(
         queryBuilder = queryBuilder.withAllowedRelationshipTypes(allowedRelationshipTypes);
     }
 
-    if (userContext) {
-        queryBuilder = queryBuilder.withUserContext(userContext);
+    const context = user ?? ambient;
+    if (context) {
+        queryBuilder = queryBuilder.withUserContext(context);
     }
 
     try {

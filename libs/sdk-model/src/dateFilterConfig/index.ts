@@ -2,6 +2,7 @@
 
 import { isEmpty } from "lodash-es";
 
+import { type IGranularitiesQuery, getGranularities } from "../base/granularityRegistry.js";
 import {
     type EmptyValues,
     type ILowerBoundedFilter,
@@ -105,6 +106,13 @@ const dateFilterGranularity: DateFilterGranularity[] = [
  */
 export const isDateFilterGranularity = (obj: unknown): obj is DateFilterGranularity =>
     !isEmpty(obj) && dateFilterGranularity.some((granularity) => granularity === obj);
+
+/**
+ * Runs {@link getGranularities} and narrows the result to the {@link DateFilterGranularity} subset.
+ * @alpha
+ */
+export const getDateFilterGranularities = (query: IGranularitiesQuery): DateFilterGranularity[] =>
+    getGranularities(query).filter(isDateFilterGranularity);
 
 /**
  * Common props for date filter options

@@ -48,6 +48,8 @@ export type ObjectType =
     | "analyticalDashboard"
     | "theme"
     | "colorPalette"
+    | "workspaceTheme"
+    | "workspaceColorPalette"
     | "filterContext"
     | "dashboardPlugin"
     | "attributeHierarchy"

@@ -10,6 +10,7 @@ export interface IColoredItem {
     mappingHeader?: IMappingHeader;
     lineStyle?: LineStyle;
     lineWidth?: 1 | 2 | 3 | 4;
+    isCustomMapped?: boolean;
 }
 
 export interface IColorConfiguration {

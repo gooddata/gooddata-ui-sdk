@@ -473,7 +473,8 @@ export type Visualisation =
     | Visualisation19
     | Visualisation20
     | Visualisation21
-    | Visualisation22;
+    | Visualisation22
+    | Visualisation23;
 /**
  * JSON schema for Gooddata Analytics Visualisation
  */
@@ -1064,6 +1065,18 @@ export type Id41 = string;
  */
 export type Tags33 = string[];
 /**
+ * JSON schema for Gooddata Analytics Visualisation
+ */
+export type Visualisation23 = RadarChart;
+/**
+ * A unique identifier of the visualisation.
+ */
+export type Id42 = string;
+/**
+ * A list of strings - metadata tags of this visualisation.
+ */
+export type Tags34 = string[];
+/**
  * JSON schema for Gooddata Analytics
  */
 export type Metadata24 = Metadata25 & Metadata26;
@@ -1100,6 +1113,7 @@ export interface Metadata1 {
         | "geo_chart"
         | "geo_area_chart"
         | "repeater_chart"
+        | "radar_chart"
         | "attribute_hierarchy";
     [k: string]: unknown;
 }
@@ -1132,6 +1146,7 @@ export interface Metadata4 {
         | "geo_chart"
         | "geo_area_chart"
         | "repeater_chart"
+        | "radar_chart"
         | "attribute_hierarchy";
     [k: string]: unknown;
 }
@@ -1592,6 +1607,7 @@ export interface Metadata7 {
         | "geo_chart"
         | "geo_area_chart"
         | "repeater_chart"
+        | "radar_chart"
         | "attribute_hierarchy";
     [k: string]: unknown;
 }
@@ -1672,6 +1688,7 @@ export interface Metadata10 {
         | "geo_chart"
         | "geo_area_chart"
         | "repeater_chart"
+        | "radar_chart"
         | "attribute_hierarchy";
     [k: string]: unknown;
 }
@@ -1734,6 +1751,7 @@ export interface Metadata13 {
         | "geo_chart"
         | "geo_area_chart"
         | "repeater_chart"
+        | "radar_chart"
         | "attribute_hierarchy";
     [k: string]: unknown;
 }
@@ -2260,6 +2278,7 @@ export interface Metadata16 {
         | "geo_chart"
         | "geo_area_chart"
         | "repeater_chart"
+        | "radar_chart"
         | "attribute_hierarchy";
     [k: string]: unknown;
 }
@@ -2309,6 +2328,7 @@ export interface Metadata19 {
         | "geo_chart"
         | "geo_area_chart"
         | "repeater_chart"
+        | "radar_chart"
         | "attribute_hierarchy";
     [k: string]: unknown;
 }
@@ -2358,6 +2378,7 @@ export interface Metadata22 {
         | "geo_chart"
         | "geo_area_chart"
         | "repeater_chart"
+        | "radar_chart"
         | "attribute_hierarchy";
     [k: string]: unknown;
 }
@@ -3071,6 +3092,8 @@ export interface VisualisationConfig {
     stack_measures_to_100?: boolean;
     stack_measures?: boolean;
     continuous_line?: boolean;
+    render_as?: "filled" | "outline";
+    grid_line_shape?: "polygon" | "circle";
     distinct_point_shapes?: {
         enabled?: boolean;
         point_shape_mapping?: {
@@ -3508,6 +3531,8 @@ export interface VisualisationConfig1 {
     stack_measures_to_100?: boolean;
     stack_measures?: boolean;
     continuous_line?: boolean;
+    render_as?: "filled" | "outline";
+    grid_line_shape?: "polygon" | "circle";
     distinct_point_shapes?: {
         enabled?: boolean;
         point_shape_mapping?: {
@@ -3866,6 +3891,8 @@ export interface VisualisationConfig2 {
     stack_measures_to_100?: boolean;
     stack_measures?: boolean;
     continuous_line?: boolean;
+    render_as?: "filled" | "outline";
+    grid_line_shape?: "polygon" | "circle";
     distinct_point_shapes?: {
         enabled?: boolean;
         point_shape_mapping?: {
@@ -4224,6 +4251,8 @@ export interface VisualisationConfig3 {
     stack_measures_to_100?: boolean;
     stack_measures?: boolean;
     continuous_line?: boolean;
+    render_as?: "filled" | "outline";
+    grid_line_shape?: "polygon" | "circle";
     distinct_point_shapes?: {
         enabled?: boolean;
         point_shape_mapping?: {
@@ -4582,6 +4611,8 @@ export interface VisualisationConfig4 {
     stack_measures_to_100?: boolean;
     stack_measures?: boolean;
     continuous_line?: boolean;
+    render_as?: "filled" | "outline";
+    grid_line_shape?: "polygon" | "circle";
     distinct_point_shapes?: {
         enabled?: boolean;
         point_shape_mapping?: {
@@ -4940,6 +4971,8 @@ export interface VisualisationConfig5 {
     stack_measures_to_100?: boolean;
     stack_measures?: boolean;
     continuous_line?: boolean;
+    render_as?: "filled" | "outline";
+    grid_line_shape?: "polygon" | "circle";
     distinct_point_shapes?: {
         enabled?: boolean;
         point_shape_mapping?: {
@@ -5298,6 +5331,8 @@ export interface VisualisationConfig6 {
     stack_measures_to_100?: boolean;
     stack_measures?: boolean;
     continuous_line?: boolean;
+    render_as?: "filled" | "outline";
+    grid_line_shape?: "polygon" | "circle";
     distinct_point_shapes?: {
         enabled?: boolean;
         point_shape_mapping?: {
@@ -5652,6 +5687,8 @@ export interface VisualisationConfig7 {
     stack_measures_to_100?: boolean;
     stack_measures?: boolean;
     continuous_line?: boolean;
+    render_as?: "filled" | "outline";
+    grid_line_shape?: "polygon" | "circle";
     distinct_point_shapes?: {
         enabled?: boolean;
         point_shape_mapping?: {
@@ -6006,6 +6043,8 @@ export interface VisualisationConfig8 {
     stack_measures_to_100?: boolean;
     stack_measures?: boolean;
     continuous_line?: boolean;
+    render_as?: "filled" | "outline";
+    grid_line_shape?: "polygon" | "circle";
     distinct_point_shapes?: {
         enabled?: boolean;
         point_shape_mapping?: {
@@ -6360,6 +6399,8 @@ export interface VisualisationConfig9 {
     stack_measures_to_100?: boolean;
     stack_measures?: boolean;
     continuous_line?: boolean;
+    render_as?: "filled" | "outline";
+    grid_line_shape?: "polygon" | "circle";
     distinct_point_shapes?: {
         enabled?: boolean;
         point_shape_mapping?: {
@@ -6714,6 +6755,8 @@ export interface VisualisationConfig10 {
     stack_measures_to_100?: boolean;
     stack_measures?: boolean;
     continuous_line?: boolean;
+    render_as?: "filled" | "outline";
+    grid_line_shape?: "polygon" | "circle";
     distinct_point_shapes?: {
         enabled?: boolean;
         point_shape_mapping?: {
@@ -7068,6 +7111,8 @@ export interface VisualisationConfig11 {
     stack_measures_to_100?: boolean;
     stack_measures?: boolean;
     continuous_line?: boolean;
+    render_as?: "filled" | "outline";
+    grid_line_shape?: "polygon" | "circle";
     distinct_point_shapes?: {
         enabled?: boolean;
         point_shape_mapping?: {
@@ -7430,6 +7475,8 @@ export interface VisualisationConfig12 {
     stack_measures_to_100?: boolean;
     stack_measures?: boolean;
     continuous_line?: boolean;
+    render_as?: "filled" | "outline";
+    grid_line_shape?: "polygon" | "circle";
     distinct_point_shapes?: {
         enabled?: boolean;
         point_shape_mapping?: {
@@ -7784,6 +7831,8 @@ export interface VisualisationConfig13 {
     stack_measures_to_100?: boolean;
     stack_measures?: boolean;
     continuous_line?: boolean;
+    render_as?: "filled" | "outline";
+    grid_line_shape?: "polygon" | "circle";
     distinct_point_shapes?: {
         enabled?: boolean;
         point_shape_mapping?: {
@@ -8138,6 +8187,8 @@ export interface VisualisationConfig14 {
     stack_measures_to_100?: boolean;
     stack_measures?: boolean;
     continuous_line?: boolean;
+    render_as?: "filled" | "outline";
+    grid_line_shape?: "polygon" | "circle";
     distinct_point_shapes?: {
         enabled?: boolean;
         point_shape_mapping?: {
@@ -8494,6 +8545,8 @@ export interface VisualisationConfig15 {
     stack_measures_to_100?: boolean;
     stack_measures?: boolean;
     continuous_line?: boolean;
+    render_as?: "filled" | "outline";
+    grid_line_shape?: "polygon" | "circle";
     distinct_point_shapes?: {
         enabled?: boolean;
         point_shape_mapping?: {
@@ -8850,6 +8903,8 @@ export interface VisualisationConfig16 {
     stack_measures_to_100?: boolean;
     stack_measures?: boolean;
     continuous_line?: boolean;
+    render_as?: "filled" | "outline";
+    grid_line_shape?: "polygon" | "circle";
     distinct_point_shapes?: {
         enabled?: boolean;
         point_shape_mapping?: {
@@ -9204,6 +9259,8 @@ export interface VisualisationConfig17 {
     stack_measures_to_100?: boolean;
     stack_measures?: boolean;
     continuous_line?: boolean;
+    render_as?: "filled" | "outline";
+    grid_line_shape?: "polygon" | "circle";
     distinct_point_shapes?: {
         enabled?: boolean;
         point_shape_mapping?: {
@@ -9558,6 +9615,8 @@ export interface VisualisationConfig18 {
     stack_measures_to_100?: boolean;
     stack_measures?: boolean;
     continuous_line?: boolean;
+    render_as?: "filled" | "outline";
+    grid_line_shape?: "polygon" | "circle";
     distinct_point_shapes?: {
         enabled?: boolean;
         point_shape_mapping?: {
@@ -9916,6 +9975,8 @@ export interface VisualisationConfig19 {
     stack_measures_to_100?: boolean;
     stack_measures?: boolean;
     continuous_line?: boolean;
+    render_as?: "filled" | "outline";
+    grid_line_shape?: "polygon" | "circle";
     distinct_point_shapes?: {
         enabled?: boolean;
         point_shape_mapping?: {
@@ -10247,6 +10308,8 @@ export interface VisualisationConfig20 {
     stack_measures_to_100?: boolean;
     stack_measures?: boolean;
     continuous_line?: boolean;
+    render_as?: "filled" | "outline";
+    grid_line_shape?: "polygon" | "circle";
     distinct_point_shapes?: {
         enabled?: boolean;
         point_shape_mapping?: {
@@ -10605,6 +10668,8 @@ export interface VisualisationConfig21 {
     stack_measures_to_100?: boolean;
     stack_measures?: boolean;
     continuous_line?: boolean;
+    render_as?: "filled" | "outline";
+    grid_line_shape?: "polygon" | "circle";
     distinct_point_shapes?: {
         enabled?: boolean;
         point_shape_mapping?: {
@@ -10967,6 +11032,364 @@ export interface VisualisationConfig22 {
     stack_measures_to_100?: boolean;
     stack_measures?: boolean;
     continuous_line?: boolean;
+    render_as?: "filled" | "outline";
+    grid_line_shape?: "polygon" | "circle";
+    distinct_point_shapes?: {
+        enabled?: boolean;
+        point_shape_mapping?: {
+            [k: string]: "circle" | "square" | "diamond" | "triangle" | "triangle-down";
+        };
+        [k: string]: unknown;
+    };
+    total_enabled?: boolean;
+    total_name?: string;
+    comparison_enabled?: boolean;
+    comparison_type?: string;
+    format?: string;
+    position?: string;
+    indicator_arrow?: boolean;
+    indicator_colors?: boolean;
+    indicator_color_equals?: Color3;
+    indicator_color_negative?: Color3;
+    indicator_color_positive?: Color3;
+    label_default?: string;
+    label_conditional?: boolean;
+    label_equals?: string;
+    label_negative?: string;
+    label_positive?: string;
+    yaxis_primary_type?: "column" | "area" | "line";
+    yaxis_primary_format?: string;
+    yaxis_primary_max?: number;
+    yaxis_primary_min?: number;
+    yaxis_primary_name_position?: string;
+    yaxis_primary_name_visible?: boolean;
+    yaxis_primary_rotation?: string;
+    yaxis_primary_visible?: boolean;
+    yaxis_primary_labels?: boolean;
+    yaxis_secondary_type?: "column" | "area" | "line";
+    yaxis_secondary_format?: string;
+    yaxis_secondary_max?: number;
+    yaxis_secondary_min?: number;
+    yaxis_secondary_name_position?: string;
+    yaxis_secondary_name_visible?: boolean;
+    yaxis_secondary_rotation?: string;
+    yaxis_secondary_visible?: boolean;
+    yaxis_secondary_labels?: boolean;
+    yaxis_secondary_show_on_right?: boolean;
+    tooltip_text?: string;
+    viewport?:
+        | "auto"
+        | "continent_af"
+        | "continent_as"
+        | "continent_au"
+        | "continent_eu"
+        | "continent_na"
+        | "continent_sa"
+        | "world"
+        | "custom";
+    basemap?: string;
+    viewport_pan?: boolean;
+    viewport_zoom?: boolean;
+    center_lat?: number;
+    center_lng?: number;
+    zoom_level?: number;
+    group_nearby_points?: boolean;
+    min_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
+    max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    icon?: string;
+    viewport_bounds_ne_lat?: number;
+    viewport_bounds_ne_lng?: number;
+    viewport_bounds_sw_lat?: number;
+    viewport_bounds_sw_lng?: number;
+    row_height?: "small" | "medium" | "large";
+    cell_vertical_align?: "top" | "middle" | "bottom";
+    cell_text_wrapping?: "clip" | "wrap";
+    cell_image_sizing?: "fit" | "fill";
+    forecast_enabled?: boolean;
+    forecast_confidence?: number;
+    forecast_period?: number;
+    forecast_seasonal?: boolean;
+    anomaly_detection_enabled?: boolean;
+    anomaly_detection_sensitivity?: "low" | "medium" | "high";
+    anomaly_detection_size?: "small" | "medium" | "big";
+    anomaly_detection_color?: Color3;
+    clustering_enabled?: boolean;
+    clustering_amount?: number;
+    clustering_threshold?: number;
+    disable_drill_down?: boolean;
+    disable_drill_into_url?: boolean;
+    disable_alerts?: boolean;
+    disable_scheduled_exports?: boolean;
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
+    /**
+     * Text wrapping settings for table cells and headers.
+     */
+    text_wrapping?: {
+        /**
+         * Enable text wrapping for cell content.
+         */
+        wrap_text?: boolean;
+        /**
+         * Enable text wrapping for header content.
+         */
+        wrap_header_text?: boolean;
+        /**
+         * Per-column text wrapping overrides.
+         */
+        column_overrides?: {
+            locators?: {
+                [k: string]: unknown;
+            }[];
+            wrap_text?: boolean;
+            wrap_header_text?: boolean;
+            match_type?: "column" | "pivotGroup";
+            [k: string]: unknown;
+        }[];
+        [k: string]: unknown;
+    };
+    /**
+     * Enable pagination for tables.
+     */
+    pagination?: boolean;
+    /**
+     * Number of rows per page when pagination is enabled.
+     */
+    page_size?: number;
+    /**
+     * Position of grand totals in the table.
+     */
+    grand_totals_position?: "pinnedBottom" | "pinnedTop" | "bottom" | "top";
+    /**
+     * Enable accessibility features for tables.
+     */
+    enable_accessibility?: boolean;
+    line_style_control_metrics?: string[];
+    line_style_excluded_metrics?: string[];
+    /**
+     * Custom tooltip section rendered in the visualization tooltip, authored in Markdown with metric/attribute references that resolve per hovered data point.
+     */
+    custom_tooltip?: {
+        /**
+         * Whether the custom tooltip section is rendered.
+         */
+        enabled?: boolean;
+        /**
+         * Markdown content. Supports headings, bold/italic, ordered/unordered lists, images, links, horizontal rules, and metric/attribute references (\{metric/id\}, \{label/id\}) that resolve per hovered data point.
+         */
+        content?: string;
+        /**
+         * Placement of the custom section relative to the default tooltip content. Defaults to "above".
+         */
+        placement?: "above" | "below" | "replace";
+    };
+    line_style_mapping?: LineStyleMapping;
+    /**
+     * Conditional formatting rules that color cells or rows based on their values.
+     */
+    conditional_formatting?: {
+        /**
+         * Conditional-formatting model version. "1" (default if omitted) — initial shape: discrete rules, one column per rule with stacked conditions. Readers must tolerate omission (treat as "1") and evolve under the same backward-compat contract as the dashboard model version, so server-side consumers (e.g. XLSX export) stay forward-compatible.
+         */
+        version?: string;
+        /**
+         * Master toggle for all conditional formatting rules.
+         */
+        enabled?: boolean;
+        /**
+         * Ordered list of rules; the first matching rule wins.
+         */
+        rules?: {
+            /**
+             * Stable, table-unique rule id.
+             */
+            id: string;
+            /**
+             * The measure or attribute the rule targets — exactly one of measure/attribute.
+             */
+            target:
+                | {
+                      /**
+                       * Local identifier of the targeted measure.
+                       */
+                      measure: string;
+                  }
+                | {
+                      /**
+                       * Local identifier of the targeted attribute.
+                       */
+                      attribute: string;
+                  };
+            /**
+             * Stacked conditions; the first matching condition wins.
+             */
+            conditions: {
+                id: string;
+                operator:
+                    | "all"
+                    | "equal_to"
+                    | "not_equal_to"
+                    | "less_than"
+                    | "less_than_or_equal_to"
+                    | "greater_than"
+                    | "greater_than_or_equal_to"
+                    | "between"
+                    | "not_between"
+                    | "contains"
+                    | "not_contains"
+                    | "starts_with"
+                    | "not_starts_with"
+                    | "ends_with"
+                    | "not_ends_with"
+                    | "is_empty"
+                    | "is_not_empty";
+                /**
+                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 */
+                value?:
+                    | number
+                    | string
+                    | {
+                          from: number;
+                          to: number;
+                      };
+                format: {
+                    /**
+                     * Text color as hex (e.g. #FFFFFF).
+                     */
+                    text?: string;
+                    /**
+                     * Background color as hex (e.g. #E54D40).
+                     */
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
+    [k: string]: unknown;
+}
+export interface RadarChart {
+    /**
+     * Type of visualisation.
+     */
+    type: "radar_chart";
+    id: Id42;
+    /**
+     * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
+     */
+    title?: string;
+    /**
+     * An optional description of the visualisation.
+     */
+    description?: string;
+    tags?: Tags34;
+    /**
+     * Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible.
+     */
+    show_in_ai_results?: boolean;
+    /**
+     * @deprecated
+     * Deprecated. Use 'show_in_ai_results' instead.
+     */
+    is_hidden?: boolean;
+    query: Query22;
+    config?: VisualisationConfig23;
+    /**
+     * A list of metrics in this visualisation.
+     */
+    metrics?: Bucket[];
+    /**
+     * A list of view by attributes in this visualisation.
+     */
+    view_by?: Bucket[];
+    /**
+     * A list of segment by attributes in this visualisation.
+     */
+    segment_by?: Bucket[];
+}
+/**
+ * Query definition of visualisation.
+ */
+export interface Query22 {
+    fields: Fields3;
+    filter_by?: QueryFilters2;
+    sort_by?: Sorts;
+}
+/**
+ * Configuration of visualisation of defined type.
+ */
+export interface VisualisationConfig23 {
+    /**
+     * A list of widths in this visualisation.
+     */
+    widths?: Width[];
+    colors?: ListOfColors;
+    color?: ColorDefinition;
+    column_header?: string;
+    metrics_in?: string;
+    data_labels?: boolean | "auto";
+    data_labels_style?: "auto" | "backplate";
+    chart_fill?: {
+        type?: "solid" | "pattern" | "outline";
+        pattern_name_mapping?: {
+            [k: string]:
+                | "diagonal_grid_small"
+                | "vertical_lines_small"
+                | "grid_small"
+                | "horizontal_lines_small"
+                | "circle_small"
+                | "flag_small"
+                | "waffle_small"
+                | "dot_small"
+                | "pyramid_small"
+                | "needle_small"
+                | "diamond_small"
+                | "pizza_small"
+                | "diagonal_grid_medium"
+                | "vertical_lines_medium"
+                | "grid_large"
+                | "horizontal_lines_medium"
+                | "circle_medium"
+                | "flag_medium"
+                | "waffle_medium"
+                | "dot_medium"
+                | "pyramid_medium"
+                | "needle_medium"
+                | "diamond_medium"
+                | "pizza_medium";
+        };
+        [k: string]: unknown;
+    };
+    data_points?: boolean | "auto";
+    data_totals?: boolean | "auto";
+    orientation?: string;
+    legend_enabled?: boolean;
+    legend_position?: string;
+    xaxis_format?: string;
+    xaxis_max?: number;
+    xaxis_min?: number;
+    xaxis_name_position?: string;
+    xaxis_name_visible?: boolean;
+    xaxis_rotation?: string;
+    xaxis_visible?: boolean;
+    xaxis_labels?: boolean;
+    yaxis_name_position?: string;
+    yaxis_name_visible?: boolean;
+    yaxis_rotation?: string;
+    yaxis_visible?: boolean;
+    yaxis_labels?: boolean;
+    yaxis_format?: string;
+    yaxis_max?: number;
+    yaxis_min?: number;
+    grid_enabled?: boolean;
+    stack_measures_to_100?: boolean;
+    stack_measures?: boolean;
+    continuous_line?: boolean;
+    render_as?: "filled" | "outline";
+    grid_line_shape?: "polygon" | "circle";
     distinct_point_shapes?: {
         enabled?: boolean;
         point_shape_mapping?: {
@@ -11233,6 +11656,7 @@ export interface Metadata25 {
         | "geo_chart"
         | "geo_area_chart"
         | "repeater_chart"
+        | "radar_chart"
         | "attribute_hierarchy";
     [k: string]: unknown;
 }

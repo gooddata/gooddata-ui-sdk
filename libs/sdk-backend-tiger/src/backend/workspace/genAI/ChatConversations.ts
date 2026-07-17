@@ -590,6 +590,18 @@ function convertUserContext(userContext: IGenAIUserContext | undefined) {
                   view: {
                       dashboard: {
                           id: objRefToString(userContext.view.dashboard.ref),
+                          ...(userContext.view.dashboard.title
+                              ? { title: userContext.view.dashboard.title }
+                              : {}),
+                          ...(userContext.view.dashboard.filters?.length
+                              ? {
+                                    // Filter `title` is display-only (drives the context indicator);
+                                    // the backend filter models reject unknown fields.
+                                    filters: userContext.view.dashboard.filters.map(
+                                        ({ title: _title, ...filter }) => filter,
+                                    ),
+                                }
+                              : {}),
                           widgets: userContext.view.dashboard.widgets.map((w) => ({
                               title: w.title,
                               widgetId: objRefToString(w.widgetRef),

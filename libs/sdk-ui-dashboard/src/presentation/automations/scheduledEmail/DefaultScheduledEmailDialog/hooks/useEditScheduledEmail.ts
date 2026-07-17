@@ -96,7 +96,6 @@ export interface IUseEditScheduledEmailProps {
     setStoreFilters: (storeFilters: boolean) => void;
     filtersForNewAutomation: FilterContextItem[];
     externalRecipientOverride?: string;
-    enableNewScheduledExport: boolean;
     defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
 }
 
@@ -117,7 +116,6 @@ export function useEditScheduledEmail({
     setStoreFilters,
     filtersForNewAutomation,
     externalRecipientOverride,
-    enableNewScheduledExport,
     defaultPdfPageSize,
     filtersDataByTab,
     availableFiltersAsVisibleFiltersByTab,
@@ -248,7 +246,6 @@ export function useEditScheduledEmail({
                           widgetFiltersWithInsight: effectiveWidgetFiltersWithInsight,
                           dashboardFilters: effectiveDashboardFilters,
                           visibleFiltersMetadata: effectiveVisibleWidgetFilters,
-                          enableNewScheduledExport,
                           defaultPdfPageSize,
                           evaluationMode: "PER_RECIPIENT",
                           targetTabId,
@@ -264,7 +261,6 @@ export function useEditScheduledEmail({
                           filtersByTab: effectiveDashboardFiltersByTab,
                           visibleFiltersMetadata: effectiveVisibleDashboardFilters,
                           visibleFiltersByTab: effectiveVisibleDashboardFiltersByTab,
-                          enableNewScheduledExport,
                           defaultPdfPageSize,
                           evaluationMode: "PER_RECIPIENT",
                           parametersByTab: parametersByTabForNewAutomation,
@@ -424,7 +420,6 @@ export function useEditScheduledEmail({
                     widgetFilters: effectiveWidgetFilters,
                     widgetFiltersWithInsight: effectiveWidgetFiltersWithInsight,
                     dashboardFilters: effectiveDashboardFilters,
-                    enableNewScheduledExport,
                     defaultPdfPageSize,
                 }),
             );
@@ -569,7 +564,7 @@ export function useEditScheduledEmail({
     );
 
     const onFiltersChange = useCallback(
-        (filters: FilterContextItem[], enableNewScheduledExport: boolean, storeFiltersParam?: boolean) => {
+        (filters: FilterContextItem[], storeFiltersParam?: boolean) => {
             setEditedAutomationFilters(filters);
             const shouldStoreFilters = storeFiltersParam ?? storeFilters;
 
@@ -616,11 +611,8 @@ export function useEditScheduledEmail({
                                 )
                             ) {
                                 const format = exportDefinition.requestPayload.format;
-                                const shouldUseWidgetFiltersWithInsight = enableNewScheduledExport
-                                    ? format === "CSV"
-                                    : format === "XLSX" || format === "CSV";
-                                const shouldUseWidgetFiltersWithoutInsight =
-                                    enableNewScheduledExport && format === "CSV_RAW";
+                                const shouldUseWidgetFiltersWithInsight = format === "CSV";
+                                const shouldUseWidgetFiltersWithoutInsight = format === "CSV_RAW";
                                 const appliedFilters = shouldUseWidgetFiltersWithInsight
                                     ? appliedWidgetFiltersWithInsight
                                     : shouldUseWidgetFiltersWithoutInsight
@@ -771,11 +763,7 @@ export function useEditScheduledEmail({
         if (filtersByTabForNewAutomation) {
             onFiltersByTabChange(filtersByTabForNewAutomation);
         } else {
-            onFiltersChange(
-                filtersForNewAutomation ?? [],
-                enableNewScheduledExport,
-                widget ? true : storeFilters,
-            );
+            onFiltersChange(filtersForNewAutomation ?? [], widget ? true : storeFilters);
         }
     }, [
         filtersForNewAutomation,
@@ -783,7 +771,6 @@ export function useEditScheduledEmail({
         onFiltersChange,
         onFiltersByTabChange,
         widget,
-        enableNewScheduledExport,
         filtersDataByTab,
     ]);
 
@@ -802,10 +789,10 @@ export function useEditScheduledEmail({
             }
             if (filters) {
                 // Use regular filters change
-                onFiltersChange(filters, enableNewScheduledExport, value);
+                onFiltersChange(filters, value);
             }
         },
-        [onFiltersChange, onFiltersByTabChange, setStoreFilters, enableNewScheduledExport],
+        [onFiltersChange, onFiltersByTabChange, setStoreFilters],
     );
 
     const isDashboardExportSelected =
@@ -1061,7 +1048,6 @@ function newWidgetExportDefinitionMetadataObjectDefinition({
     widgetFilters,
     widgetFiltersWithInsight,
     dashboardFilters,
-    enableNewScheduledExport,
     defaultPdfPageSize,
     defaultCsvDelimiter,
 }: {
@@ -1072,7 +1058,6 @@ function newWidgetExportDefinitionMetadataObjectDefinition({
     widgetFilters?: IFilter[];
     widgetFiltersWithInsight?: IFilter[];
     dashboardFilters?: FilterContextItem[];
-    enableNewScheduledExport: boolean;
     defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
     defaultCsvDelimiter?: string;
 }): IExportDefinitionMetadataObjectDefinition {
@@ -1082,10 +1067,8 @@ function newWidgetExportDefinitionMetadataObjectDefinition({
     // - CSV: Use widgetFiltersWithInsight (insight filters merged on frontend)
     // - CSV_RAW: Use widgetFilters (insight filters merged on backend)
     // - Other formats: Use dashboardFilters (backend handles insight filter merging)
-    const shouldUseCsvFilters = enableNewScheduledExport
-        ? format === "CSV"
-        : format === "XLSX" || format === "CSV";
-    const shouldUseCsvRawFilters = enableNewScheduledExport && format === "CSV_RAW";
+    const shouldUseCsvFilters = format === "CSV";
+    const shouldUseCsvRawFilters = format === "CSV_RAW";
 
     let filtersObj: { filters?: IFilter[] | FilterContextItem[] } = {};
     if (shouldUseCsvFilters && (widgetFiltersWithInsight ?? []).length > 0) {
@@ -1158,7 +1141,6 @@ function newAutomationMetadataObjectDefinition({
     widgetFiltersWithInsight,
     visibleFiltersMetadata,
     visibleFiltersByTab,
-    enableNewScheduledExport,
     defaultPdfPageSize,
     evaluationMode,
     targetTabId,
@@ -1177,7 +1159,6 @@ function newAutomationMetadataObjectDefinition({
     widgetFiltersWithInsight?: IFilter[];
     visibleFiltersMetadata?: IAutomationVisibleFilter[];
     visibleFiltersByTab?: Record<string, IAutomationVisibleFilter[]>;
-    enableNewScheduledExport: boolean;
     defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
     evaluationMode: AutomationEvaluationMode;
     targetTabId?: string;
@@ -1190,11 +1171,10 @@ function newAutomationMetadataObjectDefinition({
                   insight,
                   widget,
                   dashboardId,
-                  format: enableNewScheduledExport ? "PNG" : "XLSX",
+                  format: "PNG",
                   widgetFilters,
                   widgetFiltersWithInsight,
                   dashboardFilters,
-                  enableNewScheduledExport,
                   defaultPdfPageSize,
               })
             : newDashboardExportDefinitionMetadataObjectDefinition({

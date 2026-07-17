@@ -194,13 +194,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableCrateDbDataSource,
-            "enableCrateDbDataSource",
-            "BOOLEAN",
-            FeatureFlagsValues.enableCrateDbDataSource,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableOidcAuth,
             "enableOidcAuth",
             "BOOLEAN",
@@ -348,13 +341,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableCustomizableCsvDelimiter,
-            "enableCustomizableCsvDelimiter",
-            "BOOLEAN",
-            FeatureFlagsValues.enableCustomizableCsvDelimiter,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableExecutionCancelling,
             "enableExecutionCancelling",
             "BOOLEAN",
@@ -429,13 +415,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "productionFeatures",
             "JSON",
             FeatureFlagsValues.productionFeatures,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableNewScheduledExport,
-            "enableNewScheduledExport",
-            "BOOLEAN",
-            FeatureFlagsValues.enableNewScheduledExport,
         ),
         ...loadFeature(
             features,
@@ -583,6 +562,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableAiAgenticConversations",
             "BOOLEAN",
             FeatureFlagsValues.enableAiAgenticConversations,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableAiContextSetup,
+            "enableAiContextSetup",
+            "BOOLEAN",
+            FeatureFlagsValues.enableAiContextSetup,
         ),
         ...loadFeature(
             features,

@@ -33,6 +33,10 @@ export const repeatItemsNTimes = <T>(array: T[], n: number): T[] =>
 export const unEscapeAngleBrackets = (str: string): string =>
     str?.replace(/&lt;|&#60;/g, "<").replace(/&gt;|&#62;/g, ">");
 
+export function decodeHtmlEntities(str: string): string {
+    return str.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
+}
+
 export function isRotationInRange(rotation: number, min: number, max: number): boolean {
     return rotation >= min && rotation <= max;
 }

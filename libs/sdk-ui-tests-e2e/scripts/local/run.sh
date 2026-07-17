@@ -116,7 +116,7 @@ if [[ "$TEST_TYPE" == "isolated" && ("$MODE" == "replay" || "$MODE" == "record")
             if [[ -n "$PROXY_HOST" && "$PROXY_HOST" =~ ^https?:// ]]; then
                 break
             fi
-            read -rp "Please set HOST in .env (e.g. https://staging-automation.staging-ui.stg11.panther.intgdc.com), press Enter to continue..."
+            read -rp "Please set HOST in .env (e.g. https://automation.staging-ui.stg11.panther.intgdc.com), press Enter to continue..."
         done
         GOODMOCK_ENV+=(PROXY_HOST="$PROXY_HOST")
 

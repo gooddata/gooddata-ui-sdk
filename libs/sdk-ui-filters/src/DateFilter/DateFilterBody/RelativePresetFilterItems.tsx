@@ -1,11 +1,15 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { Fragment } from "react";
 
 import cx from "classnames";
 import { kebabCase } from "lodash-es";
 
-import { type DateFilterGranularity, type IRelativeDateFilterPreset } from "@gooddata/sdk-model";
+import {
+    type DateFilterGranularity,
+    type IRelativeDateFilterPreset,
+    getDateFilterGranularities,
+} from "@gooddata/sdk-model";
 import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { DateFilterTextLocalized } from "../DateFilterTextLocalized/DateFilterTextLocalized.js";
@@ -14,18 +18,10 @@ import { ListHeading } from "../ListHeading/ListHeading.js";
 import { ListItem } from "../ListItem/ListItem.js";
 import { RelativePresetTitleTranslated } from "../RelativePresetTitleTranslated/RelativePresetTitleTranslated.js";
 
-const granularityOrder: DateFilterGranularity[] = [
-    "GDC.time.year",
-    "GDC.time.fiscal_year",
-    "GDC.time.quarter",
-    "GDC.time.fiscal_quarter",
-    "GDC.time.month",
-    "GDC.time.fiscal_month",
-    "GDC.time.week_us",
-    "GDC.time.date",
-    "GDC.time.hour",
-    "GDC.time.minute",
-];
+// Canonical coarse→fine order from the registry (fiscal ranked next to its standard sibling).
+const granularityOrder = getDateFilterGranularities({
+    calendars: [{ type: "standard" }, { type: "fiscal" }],
+});
 
 /**
  * @internal

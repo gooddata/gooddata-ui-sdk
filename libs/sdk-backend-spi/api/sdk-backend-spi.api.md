@@ -3028,12 +3028,20 @@ export type IWorkspacesQueryResult = IPagedResource<IAnalyticalWorkspace>;
 export interface IWorkspaceStylingService {
     clearActiveColorPalette(): Promise<void>;
     clearActiveTheme(): Promise<void>;
+    createColorPalette(colorPalette: IColorPaletteDefinition): Promise<IColorPaletteMetadataObject>;
+    createTheme(theme: IThemeDefinition): Promise<IThemeMetadataObject>;
+    deleteColorPalette(colorPaletteRef: ObjRef): Promise<void>;
+    deleteTheme(themeRef: ObjRef): Promise<void>;
     getActiveColorPalette(): Promise<ObjRef | undefined>;
     getActiveTheme(): Promise<ObjRef | undefined>;
     getColorPalette(): Promise<IColorPalette>;
+    getColorPalettes(): Promise<IColorPaletteMetadataObject[]>;
     getTheme(): Promise<ITheme>;
+    getThemes(): Promise<IThemeMetadataObject[]>;
     setActiveColorPalette(colorPaletteRef: ObjRef): Promise<void>;
     setActiveTheme(themeRef: ObjRef): Promise<void>;
+    updateColorPalette(colorPalette: IColorPaletteDefinition): Promise<IColorPaletteMetadataObject>;
+    updateTheme(theme: IThemeDefinition): Promise<IThemeMetadataObject>;
 }
 
 // @alpha

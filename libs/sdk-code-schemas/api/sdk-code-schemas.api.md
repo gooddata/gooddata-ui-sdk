@@ -1378,6 +1378,11 @@ type Id40 = string;
 // @public
 type Id41 = string;
 
+// Warning: (ae-missing-release-tag) "Id42" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Id42 = string;
+
 // Warning: (ae-missing-release-tag) "Id5" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
@@ -1854,7 +1859,7 @@ interface Metadata1 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "attribute_hierarchy";
+    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata10" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -1864,7 +1869,7 @@ interface Metadata10 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "attribute_hierarchy";
+    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata11" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -1884,7 +1889,7 @@ interface Metadata13 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "attribute_hierarchy";
+    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata14" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -1904,7 +1909,7 @@ interface Metadata16 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "attribute_hierarchy";
+    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata17" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -1924,7 +1929,7 @@ interface Metadata19 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "attribute_hierarchy";
+    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -1949,7 +1954,7 @@ interface Metadata22 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "attribute_hierarchy";
+    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata23" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -1969,7 +1974,7 @@ interface Metadata25 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "attribute_hierarchy";
+    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata26" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -1991,7 +1996,7 @@ interface Metadata4 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "attribute_hierarchy";
+    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata5" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -2011,7 +2016,7 @@ interface Metadata7 {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "attribute_hierarchy";
+    type: "dataset" | "date" | "metric" | "dashboard" | "plugin" | "table" | "bar_chart" | "column_chart" | "line_chart" | "area_chart" | "scatter_chart" | "bubble_chart" | "pie_chart" | "donut_chart" | "treemap_chart" | "pyramid_chart" | "funnel_chart" | "heatmap_chart" | "bullet_chart" | "waterfall_chart" | "dependency_wheel_chart" | "sankey_chart" | "headline_chart" | "combo_chart" | "geo_chart" | "geo_area_chart" | "repeater_chart" | "radar_chart" | "attribute_hierarchy";
 }
 
 // Warning: (ae-missing-release-tag) "Metadata8" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -4143,6 +4148,14 @@ export const metadata_v1: {
                     };
                     continuous_line: {
                         type: string;
+                    };
+                    render_as: {
+                        type: string;
+                        enum: string[];
+                    };
+                    grid_line_shape: {
+                        type: string;
+                        enum: string[];
                     };
                     distinct_point_shapes: {
                         type: string;
@@ -9735,6 +9748,18 @@ interface Query21 {
     sort_by?: Sorts;
 }
 
+// Warning: (ae-missing-release-tag) "Query22" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface Query22 {
+    // (undocumented)
+    fields: Fields3;
+    // (undocumented)
+    filter_by?: QueryFilters2;
+    // (undocumented)
+    sort_by?: Sorts;
+}
+
 // Warning: (ae-missing-release-tag) "Query3" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public
@@ -9841,6 +9866,29 @@ interface QueryFilters1 {
 interface QueryFilters2 {
     // (undocumented)
     [k: string]: Filter;
+}
+
+// Warning: (ae-missing-release-tag) "RadarChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface RadarChart {
+    // (undocumented)
+    config?: VisualisationConfig23;
+    description?: string;
+    // (undocumented)
+    id: Id42;
+    // @deprecated (undocumented)
+    is_hidden?: boolean;
+    metrics?: Bucket[];
+    // (undocumented)
+    query: Query22;
+    segment_by?: Bucket[];
+    show_in_ai_results?: boolean;
+    // (undocumented)
+    tags?: Tags34;
+    title?: string;
+    type: "radar_chart";
+    view_by?: Bucket[];
 }
 
 // Warning: (ae-missing-release-tag) "Range1" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -10253,6 +10301,11 @@ type Tags32 = string[];
 // @public
 type Tags33 = string[];
 
+// Warning: (ae-missing-release-tag) "Tags34" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Tags34 = string[];
+
 // Warning: (ae-missing-release-tag) "Tags4" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
@@ -10646,6 +10699,9 @@ declare namespace v1 {
         Visualisation22,
         Id41,
         Tags33,
+        Visualisation23,
+        Id42,
+        Tags34,
         Metadata24,
         Metadata26,
         Metadata1,
@@ -10813,6 +10869,9 @@ declare namespace v1 {
         RepeaterChart,
         Query21,
         VisualisationConfig22,
+        RadarChart,
+        Query22,
+        VisualisationConfig23,
         Metadata25
     }
 }
@@ -10820,7 +10879,7 @@ declare namespace v1 {
 // Warning: (ae-missing-release-tag) "Visualisation" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public
-type Visualisation = Visualisation1 | Visualisation2 | Visualisation3 | Visualisation4 | Visualisation5 | Visualisation6 | Visualisation7 | Visualisation8 | Visualisation9 | Visualisation10 | Visualisation11 | Visualisation12 | Visualisation13 | Visualisation14 | Visualisation15 | Visualisation16 | Visualisation17 | Visualisation18 | Visualisation19 | Visualisation20 | Visualisation21 | Visualisation22;
+type Visualisation = Visualisation1 | Visualisation2 | Visualisation3 | Visualisation4 | Visualisation5 | Visualisation6 | Visualisation7 | Visualisation8 | Visualisation9 | Visualisation10 | Visualisation11 | Visualisation12 | Visualisation13 | Visualisation14 | Visualisation15 | Visualisation16 | Visualisation17 | Visualisation18 | Visualisation19 | Visualisation20 | Visualisation21 | Visualisation22 | Visualisation23;
 
 // Warning: (ae-missing-release-tag) "Visualisation1" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
@@ -10896,6 +10955,11 @@ type Visualisation21 = GeoAreaChart;
 //
 // @public
 type Visualisation22 = RepeaterChart;
+
+// Warning: (ae-missing-release-tag) "Visualisation23" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Visualisation23 = RadarChart;
 
 // Warning: (ae-missing-release-tag) "Visualisation3" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
@@ -11057,6 +11121,8 @@ interface VisualisationConfig {
     // (undocumented)
     grid_enabled?: boolean;
     // (undocumented)
+    grid_line_shape?: "polygon" | "circle";
+    // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
     icon?: string;
@@ -11102,6 +11168,8 @@ interface VisualisationConfig {
     pagination?: boolean;
     // (undocumented)
     position?: string;
+    // (undocumented)
+    render_as?: "filled" | "outline";
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
@@ -11344,6 +11412,8 @@ interface VisualisationConfig1 {
     // (undocumented)
     grid_enabled?: boolean;
     // (undocumented)
+    grid_line_shape?: "polygon" | "circle";
+    // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
     icon?: string;
@@ -11389,6 +11459,8 @@ interface VisualisationConfig1 {
     pagination?: boolean;
     // (undocumented)
     position?: string;
+    // (undocumented)
+    render_as?: "filled" | "outline";
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
@@ -11631,6 +11703,8 @@ interface VisualisationConfig10 {
     // (undocumented)
     grid_enabled?: boolean;
     // (undocumented)
+    grid_line_shape?: "polygon" | "circle";
+    // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
     icon?: string;
@@ -11676,6 +11750,8 @@ interface VisualisationConfig10 {
     pagination?: boolean;
     // (undocumented)
     position?: string;
+    // (undocumented)
+    render_as?: "filled" | "outline";
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
@@ -11918,6 +11994,8 @@ interface VisualisationConfig11 {
     // (undocumented)
     grid_enabled?: boolean;
     // (undocumented)
+    grid_line_shape?: "polygon" | "circle";
+    // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
     icon?: string;
@@ -11963,6 +12041,8 @@ interface VisualisationConfig11 {
     pagination?: boolean;
     // (undocumented)
     position?: string;
+    // (undocumented)
+    render_as?: "filled" | "outline";
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
@@ -12205,6 +12285,8 @@ interface VisualisationConfig12 {
     // (undocumented)
     grid_enabled?: boolean;
     // (undocumented)
+    grid_line_shape?: "polygon" | "circle";
+    // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
     icon?: string;
@@ -12250,6 +12332,8 @@ interface VisualisationConfig12 {
     pagination?: boolean;
     // (undocumented)
     position?: string;
+    // (undocumented)
+    render_as?: "filled" | "outline";
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
@@ -12492,6 +12576,8 @@ interface VisualisationConfig13 {
     // (undocumented)
     grid_enabled?: boolean;
     // (undocumented)
+    grid_line_shape?: "polygon" | "circle";
+    // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
     icon?: string;
@@ -12537,6 +12623,8 @@ interface VisualisationConfig13 {
     pagination?: boolean;
     // (undocumented)
     position?: string;
+    // (undocumented)
+    render_as?: "filled" | "outline";
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
@@ -12779,6 +12867,8 @@ interface VisualisationConfig14 {
     // (undocumented)
     grid_enabled?: boolean;
     // (undocumented)
+    grid_line_shape?: "polygon" | "circle";
+    // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
     icon?: string;
@@ -12824,6 +12914,8 @@ interface VisualisationConfig14 {
     pagination?: boolean;
     // (undocumented)
     position?: string;
+    // (undocumented)
+    render_as?: "filled" | "outline";
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
@@ -13066,6 +13158,8 @@ interface VisualisationConfig15 {
     // (undocumented)
     grid_enabled?: boolean;
     // (undocumented)
+    grid_line_shape?: "polygon" | "circle";
+    // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
     icon?: string;
@@ -13111,6 +13205,8 @@ interface VisualisationConfig15 {
     pagination?: boolean;
     // (undocumented)
     position?: string;
+    // (undocumented)
+    render_as?: "filled" | "outline";
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
@@ -13353,6 +13449,8 @@ interface VisualisationConfig16 {
     // (undocumented)
     grid_enabled?: boolean;
     // (undocumented)
+    grid_line_shape?: "polygon" | "circle";
+    // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
     icon?: string;
@@ -13398,6 +13496,8 @@ interface VisualisationConfig16 {
     pagination?: boolean;
     // (undocumented)
     position?: string;
+    // (undocumented)
+    render_as?: "filled" | "outline";
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
@@ -13640,6 +13740,8 @@ interface VisualisationConfig17 {
     // (undocumented)
     grid_enabled?: boolean;
     // (undocumented)
+    grid_line_shape?: "polygon" | "circle";
+    // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
     icon?: string;
@@ -13685,6 +13787,8 @@ interface VisualisationConfig17 {
     pagination?: boolean;
     // (undocumented)
     position?: string;
+    // (undocumented)
+    render_as?: "filled" | "outline";
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
@@ -13927,6 +14031,8 @@ interface VisualisationConfig18 {
     // (undocumented)
     grid_enabled?: boolean;
     // (undocumented)
+    grid_line_shape?: "polygon" | "circle";
+    // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
     icon?: string;
@@ -13972,6 +14078,8 @@ interface VisualisationConfig18 {
     pagination?: boolean;
     // (undocumented)
     position?: string;
+    // (undocumented)
+    render_as?: "filled" | "outline";
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
@@ -14214,6 +14322,8 @@ interface VisualisationConfig19 {
     // (undocumented)
     grid_enabled?: boolean;
     // (undocumented)
+    grid_line_shape?: "polygon" | "circle";
+    // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
     icon?: string;
@@ -14259,6 +14369,8 @@ interface VisualisationConfig19 {
     pagination?: boolean;
     // (undocumented)
     position?: string;
+    // (undocumented)
+    render_as?: "filled" | "outline";
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
@@ -14501,6 +14613,8 @@ interface VisualisationConfig2 {
     // (undocumented)
     grid_enabled?: boolean;
     // (undocumented)
+    grid_line_shape?: "polygon" | "circle";
+    // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
     icon?: string;
@@ -14546,6 +14660,8 @@ interface VisualisationConfig2 {
     pagination?: boolean;
     // (undocumented)
     position?: string;
+    // (undocumented)
+    render_as?: "filled" | "outline";
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
@@ -14788,6 +14904,8 @@ interface VisualisationConfig20 {
     // (undocumented)
     grid_enabled?: boolean;
     // (undocumented)
+    grid_line_shape?: "polygon" | "circle";
+    // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
     icon?: string;
@@ -14833,6 +14951,8 @@ interface VisualisationConfig20 {
     pagination?: boolean;
     // (undocumented)
     position?: string;
+    // (undocumented)
+    render_as?: "filled" | "outline";
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
@@ -15075,6 +15195,8 @@ interface VisualisationConfig21 {
     // (undocumented)
     grid_enabled?: boolean;
     // (undocumented)
+    grid_line_shape?: "polygon" | "circle";
+    // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
     icon?: string;
@@ -15120,6 +15242,8 @@ interface VisualisationConfig21 {
     pagination?: boolean;
     // (undocumented)
     position?: string;
+    // (undocumented)
+    render_as?: "filled" | "outline";
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
@@ -15362,6 +15486,8 @@ interface VisualisationConfig22 {
     // (undocumented)
     grid_enabled?: boolean;
     // (undocumented)
+    grid_line_shape?: "polygon" | "circle";
+    // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
     icon?: string;
@@ -15407,6 +15533,299 @@ interface VisualisationConfig22 {
     pagination?: boolean;
     // (undocumented)
     position?: string;
+    // (undocumented)
+    render_as?: "filled" | "outline";
+    // (undocumented)
+    row_height?: "small" | "medium" | "large";
+    // (undocumented)
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    // (undocumented)
+    stack_measures?: boolean;
+    // (undocumented)
+    stack_measures_to_100?: boolean;
+    text_wrapping?: {
+        wrap_text?: boolean;
+        wrap_header_text?: boolean;
+        column_overrides?: {
+            locators?: {
+                [k: string]: unknown;
+            }[];
+            wrap_text?: boolean;
+            wrap_header_text?: boolean;
+            match_type?: "column" | "pivotGroup";
+            [k: string]: unknown;
+        }[];
+        [k: string]: unknown;
+    };
+    // (undocumented)
+    tooltip_text?: string;
+    // (undocumented)
+    total_enabled?: boolean;
+    // (undocumented)
+    total_name?: string;
+    // (undocumented)
+    viewport?: "auto" | "continent_af" | "continent_as" | "continent_au" | "continent_eu" | "continent_na" | "continent_sa" | "world" | "custom";
+    // (undocumented)
+    viewport_bounds_ne_lat?: number;
+    // (undocumented)
+    viewport_bounds_ne_lng?: number;
+    // (undocumented)
+    viewport_bounds_sw_lat?: number;
+    // (undocumented)
+    viewport_bounds_sw_lng?: number;
+    // (undocumented)
+    viewport_pan?: boolean;
+    // (undocumented)
+    viewport_zoom?: boolean;
+    widths?: Width[];
+    // (undocumented)
+    xaxis_format?: string;
+    // (undocumented)
+    xaxis_labels?: boolean;
+    // (undocumented)
+    xaxis_max?: number;
+    // (undocumented)
+    xaxis_min?: number;
+    // (undocumented)
+    xaxis_name_position?: string;
+    // (undocumented)
+    xaxis_name_visible?: boolean;
+    // (undocumented)
+    xaxis_rotation?: string;
+    // (undocumented)
+    xaxis_visible?: boolean;
+    // (undocumented)
+    yaxis_format?: string;
+    // (undocumented)
+    yaxis_labels?: boolean;
+    // (undocumented)
+    yaxis_max?: number;
+    // (undocumented)
+    yaxis_min?: number;
+    // (undocumented)
+    yaxis_name_position?: string;
+    // (undocumented)
+    yaxis_name_visible?: boolean;
+    // (undocumented)
+    yaxis_primary_format?: string;
+    // (undocumented)
+    yaxis_primary_labels?: boolean;
+    // (undocumented)
+    yaxis_primary_max?: number;
+    // (undocumented)
+    yaxis_primary_min?: number;
+    // (undocumented)
+    yaxis_primary_name_position?: string;
+    // (undocumented)
+    yaxis_primary_name_visible?: boolean;
+    // (undocumented)
+    yaxis_primary_rotation?: string;
+    // (undocumented)
+    yaxis_primary_type?: "column" | "area" | "line";
+    // (undocumented)
+    yaxis_primary_visible?: boolean;
+    // (undocumented)
+    yaxis_rotation?: string;
+    // (undocumented)
+    yaxis_secondary_format?: string;
+    // (undocumented)
+    yaxis_secondary_labels?: boolean;
+    // (undocumented)
+    yaxis_secondary_max?: number;
+    // (undocumented)
+    yaxis_secondary_min?: number;
+    // (undocumented)
+    yaxis_secondary_name_position?: string;
+    // (undocumented)
+    yaxis_secondary_name_visible?: boolean;
+    // (undocumented)
+    yaxis_secondary_rotation?: string;
+    // (undocumented)
+    yaxis_secondary_show_on_right?: boolean;
+    // (undocumented)
+    yaxis_secondary_type?: "column" | "area" | "line";
+    // (undocumented)
+    yaxis_secondary_visible?: boolean;
+    // (undocumented)
+    yaxis_visible?: boolean;
+    // (undocumented)
+    zoom_level?: number;
+}
+
+// Warning: (ae-missing-release-tag) "VisualisationConfig23" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface VisualisationConfig23 {
+    // (undocumented)
+    [k: string]: unknown;
+    // (undocumented)
+    anomaly_detection_color?: Color3;
+    // (undocumented)
+    anomaly_detection_enabled?: boolean;
+    // (undocumented)
+    anomaly_detection_sensitivity?: "low" | "medium" | "high";
+    // (undocumented)
+    anomaly_detection_size?: "small" | "medium" | "big";
+    // (undocumented)
+    basemap?: string;
+    // (undocumented)
+    cell_image_sizing?: "fit" | "fill";
+    // (undocumented)
+    cell_text_wrapping?: "clip" | "wrap";
+    // (undocumented)
+    cell_vertical_align?: "top" | "middle" | "bottom";
+    // (undocumented)
+    center_lat?: number;
+    // (undocumented)
+    center_lng?: number;
+    // (undocumented)
+    chart_fill?: {
+        type?: "solid" | "pattern" | "outline";
+        pattern_name_mapping?: {
+            [k: string]: "diagonal_grid_small" | "vertical_lines_small" | "grid_small" | "horizontal_lines_small" | "circle_small" | "flag_small" | "waffle_small" | "dot_small" | "pyramid_small" | "needle_small" | "diamond_small" | "pizza_small" | "diagonal_grid_medium" | "vertical_lines_medium" | "grid_large" | "horizontal_lines_medium" | "circle_medium" | "flag_medium" | "waffle_medium" | "dot_medium" | "pyramid_medium" | "needle_medium" | "diamond_medium" | "pizza_medium";
+        };
+        [k: string]: unknown;
+    };
+    // (undocumented)
+    clustering_amount?: number;
+    // (undocumented)
+    clustering_enabled?: boolean;
+    // (undocumented)
+    clustering_threshold?: number;
+    // (undocumented)
+    color?: ColorDefinition;
+    // (undocumented)
+    colors?: ListOfColors;
+    // (undocumented)
+    column_header?: string;
+    // (undocumented)
+    comparison_enabled?: boolean;
+    // (undocumented)
+    comparison_type?: string;
+    conditional_formatting?: {
+        version?: string;
+        enabled?: boolean;
+        rules?: {
+            id: string;
+            target: {
+                measure: string;
+            } | {
+                attribute: string;
+            };
+            conditions: {
+                id: string;
+                operator: "all" | "equal_to" | "not_equal_to" | "less_than" | "less_than_or_equal_to" | "greater_than" | "greater_than_or_equal_to" | "between" | "not_between" | "contains" | "not_contains" | "starts_with" | "not_starts_with" | "ends_with" | "not_ends_with" | "is_empty" | "is_not_empty";
+                value?: number | string | {
+                    from: number;
+                    to: number;
+                };
+                format: {
+                    text?: string;
+                    fill?: string;
+                    scope: "cell" | "row";
+                };
+            }[];
+        }[];
+    };
+    // (undocumented)
+    continuous_line?: boolean;
+    custom_tooltip?: {
+        enabled?: boolean;
+        content?: string;
+        placement?: "above" | "below" | "replace";
+    };
+    // (undocumented)
+    data_labels?: boolean | "auto";
+    // (undocumented)
+    data_labels_style?: "auto" | "backplate";
+    // (undocumented)
+    data_points?: boolean | "auto";
+    // (undocumented)
+    data_totals?: boolean | "auto";
+    // (undocumented)
+    disable_alerts?: boolean;
+    // (undocumented)
+    disable_drill_down?: boolean;
+    // (undocumented)
+    disable_drill_into_url?: boolean;
+    // (undocumented)
+    disable_key_drive_analysis?: {
+        [k: string]: boolean;
+    };
+    // (undocumented)
+    disable_scheduled_exports?: boolean;
+    // (undocumented)
+    distinct_point_shapes?: {
+        enabled?: boolean;
+        point_shape_mapping?: {
+            [k: string]: "circle" | "square" | "diamond" | "triangle" | "triangle-down";
+        };
+        [k: string]: unknown;
+    };
+    enable_accessibility?: boolean;
+    // (undocumented)
+    forecast_confidence?: number;
+    // (undocumented)
+    forecast_enabled?: boolean;
+    // (undocumented)
+    forecast_period?: number;
+    // (undocumented)
+    forecast_seasonal?: boolean;
+    // (undocumented)
+    format?: string;
+    grand_totals_position?: "pinnedBottom" | "pinnedTop" | "bottom" | "top";
+    // (undocumented)
+    grid_enabled?: boolean;
+    // (undocumented)
+    grid_line_shape?: "polygon" | "circle";
+    // (undocumented)
+    group_nearby_points?: boolean;
+    // (undocumented)
+    icon?: string;
+    // (undocumented)
+    indicator_arrow?: boolean;
+    // (undocumented)
+    indicator_color_equals?: Color3;
+    // (undocumented)
+    indicator_color_negative?: Color3;
+    // (undocumented)
+    indicator_color_positive?: Color3;
+    // (undocumented)
+    indicator_colors?: boolean;
+    // (undocumented)
+    label_conditional?: boolean;
+    // (undocumented)
+    label_default?: string;
+    // (undocumented)
+    label_equals?: string;
+    // (undocumented)
+    label_negative?: string;
+    // (undocumented)
+    label_positive?: string;
+    // (undocumented)
+    legend_enabled?: boolean;
+    // (undocumented)
+    legend_position?: string;
+    // (undocumented)
+    line_style_control_metrics?: string[];
+    // (undocumented)
+    line_style_excluded_metrics?: string[];
+    // (undocumented)
+    line_style_mapping?: LineStyleMapping;
+    // (undocumented)
+    max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
+    // (undocumented)
+    metrics_in?: string;
+    // (undocumented)
+    min_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
+    // (undocumented)
+    orientation?: string;
+    page_size?: number;
+    pagination?: boolean;
+    // (undocumented)
+    position?: string;
+    // (undocumented)
+    render_as?: "filled" | "outline";
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
@@ -15649,6 +16068,8 @@ interface VisualisationConfig3 {
     // (undocumented)
     grid_enabled?: boolean;
     // (undocumented)
+    grid_line_shape?: "polygon" | "circle";
+    // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
     icon?: string;
@@ -15694,6 +16115,8 @@ interface VisualisationConfig3 {
     pagination?: boolean;
     // (undocumented)
     position?: string;
+    // (undocumented)
+    render_as?: "filled" | "outline";
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
@@ -15936,6 +16359,8 @@ interface VisualisationConfig4 {
     // (undocumented)
     grid_enabled?: boolean;
     // (undocumented)
+    grid_line_shape?: "polygon" | "circle";
+    // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
     icon?: string;
@@ -15981,6 +16406,8 @@ interface VisualisationConfig4 {
     pagination?: boolean;
     // (undocumented)
     position?: string;
+    // (undocumented)
+    render_as?: "filled" | "outline";
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
@@ -16223,6 +16650,8 @@ interface VisualisationConfig5 {
     // (undocumented)
     grid_enabled?: boolean;
     // (undocumented)
+    grid_line_shape?: "polygon" | "circle";
+    // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
     icon?: string;
@@ -16268,6 +16697,8 @@ interface VisualisationConfig5 {
     pagination?: boolean;
     // (undocumented)
     position?: string;
+    // (undocumented)
+    render_as?: "filled" | "outline";
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
@@ -16510,6 +16941,8 @@ interface VisualisationConfig6 {
     // (undocumented)
     grid_enabled?: boolean;
     // (undocumented)
+    grid_line_shape?: "polygon" | "circle";
+    // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
     icon?: string;
@@ -16555,6 +16988,8 @@ interface VisualisationConfig6 {
     pagination?: boolean;
     // (undocumented)
     position?: string;
+    // (undocumented)
+    render_as?: "filled" | "outline";
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
@@ -16797,6 +17232,8 @@ interface VisualisationConfig7 {
     // (undocumented)
     grid_enabled?: boolean;
     // (undocumented)
+    grid_line_shape?: "polygon" | "circle";
+    // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
     icon?: string;
@@ -16842,6 +17279,8 @@ interface VisualisationConfig7 {
     pagination?: boolean;
     // (undocumented)
     position?: string;
+    // (undocumented)
+    render_as?: "filled" | "outline";
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
@@ -17084,6 +17523,8 @@ interface VisualisationConfig8 {
     // (undocumented)
     grid_enabled?: boolean;
     // (undocumented)
+    grid_line_shape?: "polygon" | "circle";
+    // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
     icon?: string;
@@ -17129,6 +17570,8 @@ interface VisualisationConfig8 {
     pagination?: boolean;
     // (undocumented)
     position?: string;
+    // (undocumented)
+    render_as?: "filled" | "outline";
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
@@ -17371,6 +17814,8 @@ interface VisualisationConfig9 {
     // (undocumented)
     grid_enabled?: boolean;
     // (undocumented)
+    grid_line_shape?: "polygon" | "circle";
+    // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
     icon?: string;
@@ -17416,6 +17861,8 @@ interface VisualisationConfig9 {
     pagination?: boolean;
     // (undocumented)
     position?: string;
+    // (undocumented)
+    render_as?: "filled" | "outline";
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)

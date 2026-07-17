@@ -6,7 +6,7 @@ import { type IAnalyticalBackend, type IUserWorkspaceSettings } from "@gooddata/
 import type { GenAIObjectType, IColorPalette, IGenAIUserContext } from "@gooddata/sdk-model";
 
 import { makeTextContents, makeUserItem, makeUserMessage } from "../model.js";
-import { setUserContextAction } from "../store/chatWindow/chatWindowSlice.js";
+import { setAmbientUserContextAction, setUserContextAction } from "../store/chatWindow/chatWindowSlice.js";
 import {
     type ChatAssistantMessageEvent,
     type ChatClosedEvent,
@@ -90,9 +90,15 @@ export interface IGenAIChatDialogConnectedProps {
     askSeq?: number;
     /** Context of the user's location when the question was asked, sent alongside the seeded question. */
     userContext?: IGenAIUserContext;
+    /**
+     * Ambient user context kept in sync by the host (e.g. the open dashboard and its live filter
+     * state). Unlike the one-shot `userContext` it persists across messages: it is attached to
+     * every message that carries no one-shot context and drives the context indicator in the chat.
+     * Pass `undefined` to clear it (e.g. when the user leaves the dashboard).
+     */
+    ambientUserContext?: IGenAIUserContext;
     /** When true, the seeded question is appended to the existing thread instead of clearing it first. */
     appendToChat?: boolean;
-
     /** Object-search tag scope reflecting the caller's current view. */
     includeTags?: string[];
     excludeTags?: string[];
@@ -140,6 +146,7 @@ export function GenAIChatDialogConnected({
     askedQuestion,
     askSeq,
     userContext,
+    ambientUserContext,
     appendToChat,
     includeTags,
     excludeTags,
@@ -220,6 +227,15 @@ export function GenAIChatDialogConnected({
     const onDispatcher = useCallback((dispatcher: Dispatch) => {
         setDispatcher(() => dispatcher);
     }, []);
+
+    // Mirror the host-provided ambient context into the chat store whenever it changes,
+    // including `undefined` to clear it when the user leaves the context (e.g. the dashboard).
+    useEffect(() => {
+        if (!chatDispatcher) {
+            return;
+        }
+        chatDispatcher(setAmbientUserContextAction({ userContext: ambientUserContext }));
+    }, [chatDispatcher, ambientUserContext]);
 
     // The token of the last seed we applied. Each ask is identified by `askSeq` (bumped on every ask,
     // so even a repeated identical question re-seeds); we seed once per token. Without this guard the

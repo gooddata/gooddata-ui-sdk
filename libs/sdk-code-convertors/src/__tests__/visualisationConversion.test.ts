@@ -42,6 +42,7 @@ const configBackedChartTypes: Array<Visualisation["type"]> = [
     "geo_chart",
     "geo_area_chart",
     "repeater_chart",
+    "radar_chart",
 ];
 
 describe("visualisation conversion", () => {
@@ -515,6 +516,7 @@ describe("visualisation conversion", () => {
                 ["geo_chart", "local:pushpin"],
                 ["geo_area_chart", "local:choropleth"],
                 ["repeater_chart", "local:repeater"],
+                ["radar_chart", "local:radar"],
             ];
 
             for (const [yamlType, expectedUrl] of chartTypeMap) {
@@ -1123,6 +1125,49 @@ describe("visualisation conversion", () => {
             expect(roundTripped.id).toBe("trend_line");
             expect(roundTripped.title).toBe("Trend Line");
             expect((roundTripped.content as any).visualizationUrl).toBe("local:line");
+        });
+
+        it("should round-trip a radar chart with buckets and radar-specific config", () => {
+            const input: Visualisation = {
+                type: "radar_chart",
+                id: "radar_metrics",
+                title: "Radar Metrics",
+                query: {
+                    fields: {
+                        m1: { using: "metric/revenue" },
+                        a1: { using: "label/month" },
+                        a2: { using: "label/region" },
+                    },
+                },
+                metrics: [{ field: "m1" }],
+                view_by: [{ field: "a1" }],
+                segment_by: [{ field: "a2" }],
+                config: {
+                    render_as: "outline",
+                    grid_line_shape: "circle",
+                    legend_position: "bottom",
+                },
+            } as any;
+
+            const declarative = yamlVisualisationToDeclarative(emptyEntities, input);
+
+            expect((declarative.content as any).visualizationUrl).toBe("local:radar");
+            const controls = (declarative.content as any).properties.controls;
+            expect(controls.radarRenderAs).toBe("outline");
+            expect(controls.radarGridLineShape).toBe("circle");
+
+            const buckets = (declarative.content as any).buckets as Array<{ localIdentifier: string }>;
+            expect(buckets.map((b) => b.localIdentifier)).toEqual(["measures", "trend", "segment"]);
+
+            const { json } = declarativeVisualisationToYaml(emptyFromEntities, declarative);
+            expect(json!.type).toBe("radar_chart");
+            expect(json!.metrics).toHaveLength(1);
+            expect(json!.view_by).toHaveLength(1);
+            expect(json!.segment_by).toHaveLength(1);
+            const cfg = json!.config!;
+            expect(cfg["render_as"]).toBe("outline");
+            expect(cfg["grid_line_shape"]).toBe("circle");
+            expect(cfg["legend_position"]).toBe("bottom");
         });
 
         it("should round-trip text filters", () => {

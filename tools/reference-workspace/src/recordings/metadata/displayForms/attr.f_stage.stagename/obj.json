@@ -6,5 +6,5 @@
     "ref": { "identifier": "attr.f_stage.stagename", "type": "displayForm" },
     "title": "Stage Name",
     "type": "displayForm",
-    "uri": "https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/referenceworkspace/labels/attr.f_stage.stagename"
+    "uri": "https://automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/referenceworkspace/labels/attr.f_stage.stagename"
 }

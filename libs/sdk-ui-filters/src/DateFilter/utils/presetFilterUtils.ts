@@ -1,43 +1,27 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type DateFilterGranularity, type IActiveCalendars } from "@gooddata/sdk-model";
+import {
+    type DateFilterGranularity,
+    type IActiveCalendars,
+    belongsToCalendar,
+    getDateFilterGranularities,
+    getFiscalEquivalent,
+    getStandardEquivalent,
+    isDateFilterGranularity,
+} from "@gooddata/sdk-model";
 
 import { type DateFilterOption, type DateFilterRelativeOptionGroup } from "../interfaces/index.js";
 
-/**
- * Granularities for the Standard tab
- */
-const STANDARD_GRANULARITIES: DateFilterGranularity[] = [
-    "GDC.time.year",
-    "GDC.time.quarter",
-    "GDC.time.month",
-    "GDC.time.week_us",
-    "GDC.time.date",
-    "GDC.time.hour",
-    "GDC.time.minute",
-] as const;
-
-/**
- * Fiscal-only granularities (used to detect if fiscal presets are available)
- */
-const FISCAL_ONLY_GRANULARITIES: DateFilterGranularity[] = [
-    "GDC.time.fiscal_year",
-    "GDC.time.fiscal_quarter",
-    "GDC.time.fiscal_month",
-] as const;
-
-/**
- * Granularities for the Fiscal tab (fiscal year/quarter/month + shared week/day/hour/minute)
- */
-const FISCAL_TAB_GRANULARITIES: DateFilterGranularity[] = [
-    "GDC.time.fiscal_year",
-    "GDC.time.fiscal_quarter",
-    "GDC.time.fiscal_month",
-    "GDC.time.week_us",
-    "GDC.time.date",
-    "GDC.time.hour",
-    "GDC.time.minute",
-] as const;
+// Granularity sets derived from the shared sdk-model registry (single source of truth).
+const STANDARD_GRANULARITIES = getDateFilterGranularities({ calendars: [{ type: "standard" }] });
+const FISCAL_ONLY_GRANULARITIES = getDateFilterGranularities({
+    calendars: [{ type: "fiscal" }],
+    includeShared: false,
+});
+const FISCAL_TAB_GRANULARITIES = getDateFilterGranularities({
+    calendars: [{ type: "fiscal" }],
+    includeShared: true,
+});
 
 /**
  * Type representing the calendar tab selection.
@@ -192,45 +176,45 @@ export function getTabForPreset(preset: DateFilterOption): CalendarTabType {
 }
 
 /**
- * Check if a granularity is a fiscal granularity.
- * @param granularity - The granularity to check
- * @returns true if the granularity is fiscal (fiscal_year, fiscal_quarter, or fiscal_month)
- * @alpha
- */
-export function isFiscalGranularity(granularity: DateFilterGranularity): boolean {
-    return FISCAL_ONLY_GRANULARITIES.includes(granularity);
-}
-
-/**
  * Standard granularities that have fiscal equivalents (year, quarter, month).
  * Used for determining which tab to show based on selected granularity.
  * @alpha
  */
-export const STANDARD_GRANULARITIES_WITH_FISCAL_EQUIVALENT: DateFilterGranularity[] = [
-    "GDC.time.year",
-    "GDC.time.quarter",
-    "GDC.time.month",
-];
+export const STANDARD_GRANULARITIES_WITH_FISCAL_EQUIVALENT: DateFilterGranularity[] =
+    STANDARD_GRANULARITIES.filter((g) => getFiscalEquivalent(g) !== undefined);
+
+// Equivalence map, keeping only entries whose equivalent is a valid DateFilterGranularity.
+const buildEquivalenceMap = (
+    from: DateFilterGranularity[],
+    getEquivalent: (g: DateFilterGranularity) => string | undefined,
+): Partial<Record<DateFilterGranularity, DateFilterGranularity>> => {
+    const map: Partial<Record<DateFilterGranularity, DateFilterGranularity>> = {};
+    for (const g of from) {
+        const equivalent = getEquivalent(g);
+        if (isDateFilterGranularity(equivalent)) {
+            map[g] = equivalent;
+        }
+    }
+    return map;
+};
 
 /**
  * Mapping from standard granularities to their fiscal equivalents.
  * @internal
  */
-export const STANDARD_TO_FISCAL_GRANULARITY: Partial<Record<DateFilterGranularity, DateFilterGranularity>> = {
-    "GDC.time.year": "GDC.time.fiscal_year",
-    "GDC.time.quarter": "GDC.time.fiscal_quarter",
-    "GDC.time.month": "GDC.time.fiscal_month",
-};
+export const STANDARD_TO_FISCAL_GRANULARITY = buildEquivalenceMap(
+    STANDARD_GRANULARITIES_WITH_FISCAL_EQUIVALENT,
+    getFiscalEquivalent,
+);
 
 /**
  * Mapping from fiscal granularities to their standard equivalents.
  * @internal
  */
-export const FISCAL_TO_STANDARD_GRANULARITY: Partial<Record<DateFilterGranularity, DateFilterGranularity>> = {
-    "GDC.time.fiscal_year": "GDC.time.year",
-    "GDC.time.fiscal_quarter": "GDC.time.quarter",
-    "GDC.time.fiscal_month": "GDC.time.month",
-};
+export const FISCAL_TO_STANDARD_GRANULARITY = buildEquivalenceMap(
+    FISCAL_ONLY_GRANULARITIES,
+    getStandardEquivalent,
+);
 
 /**
  * Filter granularities for the standard tab view.
@@ -240,7 +224,7 @@ export const FISCAL_TO_STANDARD_GRANULARITY: Partial<Record<DateFilterGranularit
  * @internal
  */
 export function filterStandardGranularities(granularities: DateFilterGranularity[]): DateFilterGranularity[] {
-    return granularities.filter((g) => !isFiscalGranularity(g));
+    return granularities.filter((g) => belongsToCalendar(g, "standard"));
 }
 
 /**
@@ -251,9 +235,7 @@ export function filterStandardGranularities(granularities: DateFilterGranularity
  * @internal
  */
 export function filterFiscalGranularities(granularities: DateFilterGranularity[]): DateFilterGranularity[] {
-    return granularities.filter(
-        (g) => isFiscalGranularity(g) || !STANDARD_GRANULARITIES_WITH_FISCAL_EQUIVALENT.includes(g),
-    );
+    return granularities.filter((g) => belongsToCalendar(g, "fiscal"));
 }
 
 /**

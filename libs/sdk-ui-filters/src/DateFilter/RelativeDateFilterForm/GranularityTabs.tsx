@@ -1,30 +1,21 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { sortBy } from "lodash-es";
 import { FormattedMessage } from "react-intl";
 
-import { type DateFilterGranularity } from "@gooddata/sdk-model";
+import { type DateFilterGranularity, getGranularityDescriptor } from "@gooddata/sdk-model";
 import { type IAccessibilityConfigBase } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../locales.js";
 import { granularityIntlCodesFull } from "../constants/i18n.js";
 import { Tab, TabsWrapper } from "../Tabs/Tabs.js";
 
-const granularityOrders: { [G in DateFilterGranularity]: number } = {
-    "GDC.time.fiscal_year": 0,
-    "GDC.time.fiscal_quarter": 1,
-    "GDC.time.fiscal_month": 2,
-    "GDC.time.year": 3,
-    "GDC.time.quarter": 4,
-    "GDC.time.month": 5,
-    "GDC.time.week_us": 6,
-    "GDC.time.date": 7,
-    "GDC.time.hour": 8,
-    "GDC.time.minute": 9,
-};
-
+// Canonical coarse→fine order from the registry (fiscal ranked next to its standard sibling).
 const sortGranularities = (granularities: DateFilterGranularity[]): DateFilterGranularity[] =>
-    sortBy(granularities, (granularity) => granularityOrders[granularity]);
+    sortBy(
+        granularities,
+        (granularity) => getGranularityDescriptor(granularity)?.order ?? Number.MAX_SAFE_INTEGER,
+    );
 
 export interface IGranularityTabsProps {
     availableGranularities: DateFilterGranularity[];

@@ -48,8 +48,7 @@ export function ShowAsTableButton({
     const widgetRefAsString = objRefToString(widgetRef(widget));
 
     const asTableIconClasses = cx(
-        "dash-item-action-options",
-        "dash-item-action-as-table",
+        "dash-item-action-button",
         `s-dash-item-action-as-table-options-${simplifyText(widgetRefAsString)}`,
         {
             "s-dash-item-action-as-table": !isWidgetAsTable,
@@ -85,7 +84,7 @@ export function ShowAsTableButton({
                             <UiIcon
                                 size={density === "compact" ? 12 : 18}
                                 type={iconType}
-                                color="complementary-7"
+                                color="currentColor"
                             />
                         </div>
                     </div>

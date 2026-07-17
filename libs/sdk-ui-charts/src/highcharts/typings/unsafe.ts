@@ -168,6 +168,8 @@ export type ITooltipFactory = (
     percentageValue?: number,
 ) => string | null;
 
+export type IPointDescriptionFn = (point: UnsafeInternals) => string;
+
 export interface IChartOptions {
     type?: string;
     stacking?: StackingType;
@@ -182,6 +184,7 @@ export interface IChartOptions {
     data?: IChartOptionsData;
     actions?: {
         tooltip: ITooltipFactory;
+        pointDescription?: IPointDescriptionFn;
     };
     grid?: IGridConfig;
     xAxisProps?: IAxisConfig;
@@ -199,6 +202,8 @@ export interface IChartOptions {
     forceDisableDrillOnAxes?: boolean;
     verticalAlign?: ChartAlignTypes;
     legendLabel?: string;
+    segmentByLabel?: string;
+    stackByAttributeLabel?: string;
     chartFill?: IChartFillConfig;
     customTooltipRuntime?: ICustomTooltipRuntime;
 }

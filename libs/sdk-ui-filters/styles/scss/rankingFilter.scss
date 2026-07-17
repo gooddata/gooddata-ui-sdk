@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 @use "@gooddata/sdk-ui-kit/styles/scss/form";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables";
 
@@ -35,6 +35,17 @@ $measure_dropdown_width: $ranking_filter_dropdown_width - 20px;
         background: variables.$is-focused-background;
         font-size: 12px;
         text-transform: uppercase;
+    }
+
+    // Scroll container for the growing "out of" attribute pills. The pills list itself must not
+    // scroll — a nested scroller would swallow wheel events instead of scrolling this container.
+    // The condition row is intentionally not inside: the value input's inline suggestion menu
+    // would be clipped by a scrollable ancestor. "contain" stops the scroll from chaining to the
+    // page once the container hits its boundary.
+    .gd-rf-attributes-scroll-container {
+        max-height: 350px;
+        overflow-y: auto;
+        overscroll-behavior: contain;
     }
 
     .gd-rf-dropdown-section {

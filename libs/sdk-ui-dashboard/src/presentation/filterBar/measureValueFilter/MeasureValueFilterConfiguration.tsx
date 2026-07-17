@@ -86,6 +86,8 @@ export function MeasureValueFilterConfiguration({
                 onDimensionalityChange={onDimensionalityChange}
                 // Dashboard MVFs are newly configured with explicit ObjRef dimensionality.
                 isMigratedFilter
+                // This panel has no dialog-level scroll container, so the section bounds its own pills.
+                withScrollContainer
             />
             {showConfigModeSection ? (
                 <>

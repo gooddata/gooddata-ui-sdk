@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-gen-ai",
-    "version": "11.48.0-alpha.0",
+    "version": "11.48.0-alpha.1",
     "description": "GoodData GenAI SDK",
     "license": "MIT",
     "author": "GoodData Corporation",
@@ -28,6 +28,7 @@
     "exports": {
         ".": "./esm/index.js",
         "./internal": "./esm/internal.js",
+        "./context": "./esm/context.js",
         "./styles/css/*": "./styles/css/*",
         "./styles/scss/*": "./styles/scss/*",
         "./esm/assets/*": "./esm/assets/*"

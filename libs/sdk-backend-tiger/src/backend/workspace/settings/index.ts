@@ -24,6 +24,8 @@ import {
     type IFiscalYear,
     type ISeparators,
     type ISettings,
+    type ObjRef,
+    isIdentifierRef,
 } from "@gooddata/sdk-model";
 
 import { LIB_VERSION } from "../../../__version.js";
@@ -33,6 +35,7 @@ import {
 } from "../../../convertors/fromBackend/DateFilterConfigurationConverter.js";
 import { unwrapSettingContent } from "../../../convertors/fromBackend/SettingsConverter.js";
 import { type TigerAuthenticatedCallGuard, type TigerSettingsType } from "../../../types/index.js";
+import { objRefToIdentifier } from "../../../utils/api.js";
 import {
     TigerFeaturesService,
     getControlledFeatureRollout,
@@ -195,12 +198,46 @@ export class TigerWorkspaceSettings
         return this.deleteSettingByType("EXPORT_CSV_CUSTOM_DELIMITER");
     }
 
-    public override async setTheme(activeThemeId: string): Promise<void> {
-        return this.setSetting("ACTIVE_THEME", { id: activeThemeId, type: "theme" });
+    public override async setTheme(activeTheme: string | ObjRef): Promise<void> {
+        return this.setSetting(
+            "ACTIVE_THEME",
+            this.resolveActiveStyleContent(activeTheme, "theme", "workspaceTheme"),
+        );
     }
 
-    public override async setColorPalette(activeColorPaletteId: string): Promise<void> {
-        return this.setSetting("ACTIVE_COLOR_PALETTE", { id: activeColorPaletteId, type: "colorPalette" });
+    public override async setColorPalette(activeColorPalette: string | ObjRef): Promise<void> {
+        return this.setSetting(
+            "ACTIVE_COLOR_PALETTE",
+            this.resolveActiveStyleContent(activeColorPalette, "colorPalette", "workspaceColorPalette"),
+        );
+    }
+
+    /**
+     * Build the active-styling setting content from a reference. A bare id string (or an untyped/org-typed
+     * reference) is treated as organization-scoped; only a reference explicitly typed as the workspace scope
+     * activates the workspace collection. The scope must be explicit so the id resolves against the right
+     * scope with no cross-scope fallback.
+     */
+    private resolveActiveStyleContent(
+        ref: string | ObjRef,
+        organizationType: "theme" | "colorPalette",
+        workspaceType: "workspaceTheme" | "workspaceColorPalette",
+    ): { id: string; type: string } {
+        if (typeof ref === "string") {
+            return { id: ref, type: organizationType };
+        }
+        const id = objRefToIdentifier(ref, this.authCall);
+        const refType = isIdentifierRef(ref) ? ref.type : undefined;
+        // A bare / uri / untyped reference defaults to the organization scope. A reference whose type is set
+        // but is neither the organization nor the workspace scope for this kind is a caller error - reject it
+        // rather than silently reinterpreting it as organization-scoped.
+        if (refType && refType !== organizationType && refType !== workspaceType) {
+            throw new Error(
+                `Cannot set active ${organizationType}: reference type "${refType}" is neither ` +
+                    `"${organizationType}" nor "${workspaceType}".`,
+            );
+        }
+        return { id, type: refType === workspaceType ? workspaceType : organizationType };
     }
 
     public async deleteTheme() {

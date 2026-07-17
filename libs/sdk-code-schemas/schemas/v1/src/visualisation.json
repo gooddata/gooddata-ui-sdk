@@ -29,7 +29,8 @@
                 "combo_chart",
                 "geo_chart",
                 "geo_area_chart",
-                "repeater_chart"
+                "repeater_chart",
+                "radar_chart"
             ]
         }
     },
@@ -2043,6 +2044,94 @@
                     "columns": {
                         "type": "array",
                         "description": "A list of columns attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    }
+                },
+                "required": ["id", "type", "query"]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": ["radar_chart"]
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "title": "Radar Chart",
+                "additionalProperties": false,
+                "properties": {
+                    "type": {
+                        "description": "Type of visualisation.",
+                        "type": "string",
+                        "enum": ["radar_chart"]
+                    },
+                    "id": {
+                        "$ref": "/gaac/identifier",
+                        "description": "A unique identifier of the visualisation.",
+                        "$semantic": [
+                            {
+                                "type": "uniqueness",
+                                "source": "visualisation.id",
+                                "code": "core.uniqueness.visualisations.id"
+                            },
+                            {
+                                "type": "definition",
+                                "source": "visualisation.id"
+                            }
+                        ]
+                    },
+                    "title": {
+                        "$ref": "/gaac/title",
+                        "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
+                    },
+                    "description": {
+                        "$ref": "/gaac/description",
+                        "description": "An optional description of the visualisation."
+                    },
+                    "tags": {
+                        "$ref": "/gaac/tags",
+                        "description": "A list of strings - metadata tags of this visualisation."
+                    },
+                    "show_in_ai_results": {
+                        "type": "boolean",
+                        "description": "Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible."
+                    },
+                    "is_hidden": {
+                        "type": "boolean",
+                        "description": "Deprecated. Use 'show_in_ai_results' instead.",
+                        "deprecated": true
+                    },
+                    "query": {
+                        "$ref": "/gaac/query",
+                        "description": "Query definition of visualisation."
+                    },
+                    "config": {
+                        "$ref": "/gaac/config",
+                        "description": "Configuration of visualisation of defined type."
+                    },
+                    "metrics": {
+                        "type": "array",
+                        "description": "A list of metrics in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "view_by": {
+                        "type": "array",
+                        "description": "A list of view by attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "segment_by": {
+                        "type": "array",
+                        "description": "A list of segment by attributes in this visualisation.",
                         "items": {
                             "$ref": "#/$defs/bucketItem"
                         }

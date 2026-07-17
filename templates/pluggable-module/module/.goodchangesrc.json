@@ -1,4 +1,5 @@
 {
+    "type": "app",
     "targets": [
         {
             "targetName": "gdc-app-template-name-module-unit-tests",

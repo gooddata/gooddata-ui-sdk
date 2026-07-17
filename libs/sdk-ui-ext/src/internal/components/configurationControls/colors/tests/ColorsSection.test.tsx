@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
@@ -107,12 +107,12 @@ describe("ColorsSection", () => {
         ).toBeInTheDocument();
     });
 
-    it("should render Reset Colors button", () => {
+    it("should not render Reset Colors button", () => {
         createComponent();
-        expect(screen.getByText("Reset Colors")).toBeInTheDocument();
+        expect(screen.queryByText("Reset Colors")).not.toBeInTheDocument();
     });
 
-    it("should call pushData on Reset Colors button click", async () => {
+    it("should call pushData on Reset click in the color dropdown of a custom-mapped item", async () => {
         const pushData = vi.fn();
         const color1: IColor = {
             type: "guid",
@@ -122,32 +122,30 @@ describe("ColorsSection", () => {
             controls: {
                 colorMapping: [
                     {
-                        id: "aaa",
+                        id: "/ahi1",
                         color: color1,
                     },
                 ],
                 test: 1,
             },
         };
-        const references = { aaa: "/a1" };
-        createComponent({
+        const { container } = createComponent({
             pushData,
             properties,
-            references,
         });
 
-        await userEvent.click(screen.getByText("Reset Colors"));
+        await userEvent.click(container.querySelectorAll(".s-colored-items-list-item")[0]!);
+        await userEvent.click(screen.getByText("Reset"));
         await waitFor(() => {
             expect(pushData).toBeCalledWith(
                 expect.objectContaining({
                     messageId: COLOR_MAPPING_CHANGED,
                     properties: {
                         controls: {
-                            colorMapping: undefined,
+                            colorMapping: [{ id: "/ahi1", color: null }],
                             test: 1,
                         },
                     },
-                    references: {},
                 }),
             );
         });

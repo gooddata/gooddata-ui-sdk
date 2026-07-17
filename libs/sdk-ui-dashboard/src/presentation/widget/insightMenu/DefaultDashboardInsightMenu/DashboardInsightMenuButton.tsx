@@ -43,13 +43,13 @@ export function DashboardInsightMenuButton({
     const menuId = `insight-menu-${widgetRefAsString}`;
 
     const optionsIconClasses = cx(
-        "dash-item-action-options",
+        "dash-item-action-button",
         "dash-item-action-widget-options",
         "s-dash-item-action-widget-options",
         `dash-item-action-widget-options-${simplifyText(widgetRefAsString)}`,
         `s-dash-item-action-widget-options-${simplifyText(widgetRefAsString)}`,
         {
-            "dash-item-action-widget-options-active": isOpen,
+            "dash-item-action-button--active": isOpen,
         },
     );
 

@@ -137,3 +137,10 @@
         }
     }
 }
+
+.export-mode,
+.export-slides-mode {
+    .dash-item-action-button {
+        display: none;
+    }
+}

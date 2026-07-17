@@ -106,6 +106,7 @@ export function DashboardInner(props: IDashboardProps) {
                     <div
                         className={cx("component-root", {
                             "sdk-edit-mode-on": isEditMode,
+                            "sdk-view-mode-on": !isEditMode,
                             "catalog-is-loaded": isCatalogLoaded,
                             "accessible-dashboards-loaded": accessibleDashboardsLoaded,
                         })}
