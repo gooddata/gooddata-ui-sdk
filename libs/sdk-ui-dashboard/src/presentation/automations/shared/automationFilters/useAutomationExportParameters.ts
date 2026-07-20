@@ -11,6 +11,7 @@ import {
     type IDashboardParameter,
     type IParameterMetadataObject,
     type IdentifierRef,
+    type ParameterValue,
     areObjRefsEqual,
     objRefToString,
 } from "@gooddata/sdk-model";
@@ -21,10 +22,13 @@ import {
 } from "../../../../_staging/automation/index.js";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { selectCatalogParameters } from "../../../../model/store/catalog/catalogSelectors.js";
-import { selectEnableParameters } from "../../../../model/store/config/configSelectors.js";
+import {
+    selectEnableParameters,
+    selectEnableStringParameters,
+} from "../../../../model/store/config/configSelectors.js";
 import { selectWidgetLocalIdToTabIdMap } from "../../../../model/store/tabs/layout/layoutSelectors.js";
 import {
-    selectAutomationExportEffectiveParameters,
+    selectExportEffectiveParameters,
     selectSmartPersistedTabsParameters,
 } from "../../../../model/store/tabs/parameters/parametersSelectors.js";
 import { selectTabs } from "../../../../model/store/tabs/tabsSelectors.js";
@@ -92,10 +96,10 @@ export interface IUseAutomationExportParameters {
      */
     flatTabId: string | undefined;
     onParameterAdd: (ref: IdentifierRef) => void;
-    onParameterChange: (ref: IdentifierRef, value: number) => void;
+    onParameterChange: (ref: IdentifierRef, value: ParameterValue) => void;
     onParameterDelete: (ref: IdentifierRef) => void;
     onParameterAddByTab: (tabId: string, ref: IdentifierRef) => void;
-    onParameterChangeByTab: (tabId: string, ref: IdentifierRef, value: number) => void;
+    onParameterChangeByTab: (tabId: string, ref: IdentifierRef, value: ParameterValue) => void;
     onParameterDeleteByTab: (tabId: string, ref: IdentifierRef) => void;
     /**
      * Resets the working set to the current dashboard's effective values and writes it back — the
@@ -119,14 +123,13 @@ export function useAutomationExportParameters({
     setParametersWire,
 }: IUseAutomationExportParametersProps): IUseAutomationExportParameters {
     const parametersEnabled = useDashboardSelector(selectEnableParameters);
+    const stringParametersEnabled = useDashboardSelector(selectEnableStringParameters);
     const catalog = useDashboardSelector(selectCatalogParameters);
     const dashboardParametersByTab = useDashboardSelector(selectSmartPersistedTabsParameters);
     const tabs = useDashboardSelector(selectTabs);
     const widgetTabMap = useDashboardSelector(selectWidgetLocalIdToTabIdMap);
     const widgetIds = widget ? [objRefToString(widget.ref)] : undefined;
-    const effectiveParametersByTab = useDashboardSelector(
-        selectAutomationExportEffectiveParameters(widgetIds),
-    );
+    const effectiveParametersByTab = useDashboardSelector(selectExportEffectiveParameters(widgetIds));
 
     const flatTabId = resolveFlatTabId(widget, widgetTabMap, tabs);
     const shouldStore = shouldStoreExportParameters(!!widget, storeParameters);
@@ -140,6 +143,7 @@ export function useAutomationExportParameters({
             storedByTab ?? effectiveParametersByTab,
             dashboardParametersByTab,
             catalog,
+            stringParametersEnabled,
         );
     });
 
@@ -172,13 +176,14 @@ export function useAutomationExportParameters({
             // path; dashboard schedules have no widget context and fall back to dashboard/default
             // inside availableAutomationParameters.
             const widgetParameterValues = widget
-                ? exportParametersToValues(effectiveParametersByTab[tabId] ?? [])
+                ? exportParametersToValues(effectiveParametersByTab[tabId] ?? [], stringParametersEnabled)
                 : [];
             result[tabId] = availableAutomationParameters(
                 catalog,
                 editedParametersByTab[tabId] ?? [],
                 dashboardParametersByTab[tabId] ?? [],
                 widgetParameterValues,
+                stringParametersEnabled,
             );
         }
         return result;
@@ -191,15 +196,27 @@ export function useAutomationExportParameters({
         catalog,
         dashboardParametersByTab,
         effectiveParametersByTab,
+        stringParametersEnabled,
     ]);
 
     // The fresh per-tab execution set reconstructed from the current dashboard's effective values.
     const parametersForNewAutomation = useMemo(
         () =>
             parametersEnabled
-                ? reconstructParametersByTab(effectiveParametersByTab, dashboardParametersByTab, catalog)
+                ? reconstructParametersByTab(
+                      effectiveParametersByTab,
+                      dashboardParametersByTab,
+                      catalog,
+                      stringParametersEnabled,
+                  )
                 : {},
-        [parametersEnabled, effectiveParametersByTab, dashboardParametersByTab, catalog],
+        [
+            parametersEnabled,
+            effectiveParametersByTab,
+            dashboardParametersByTab,
+            catalog,
+            stringParametersEnabled,
+        ],
     );
 
     const applyLatest = useCallback(() => {
@@ -229,7 +246,7 @@ export function useAutomationExportParameters({
     );
 
     const onParameterChangeByTab = useCallback(
-        (tabId: string, ref: IdentifierRef, value: number) => {
+        (tabId: string, ref: IdentifierRef, value: ParameterValue) => {
             patchTabParameters(tabId, (current) =>
                 current.map((parameter) =>
                     areObjRefsEqual(parameter.ref, ref) ? { ...parameter, value } : parameter,
@@ -262,7 +279,7 @@ export function useAutomationExportParameters({
 
     // Flat handlers serve the non-tabbed UI; they delegate to the per-tab ones via `flatTabId`.
     const onParameterChange = useCallback(
-        (ref: IdentifierRef, value: number) => {
+        (ref: IdentifierRef, value: ParameterValue) => {
             if (flatTabId) {
                 onParameterChangeByTab(flatTabId, ref, value);
             }
@@ -323,12 +340,14 @@ function reconstructParametersByTab(
     byTab: Record<string, IDashboardExportParameter[]>,
     dashboardParametersByTab: Record<string, IDashboardParameter[]>,
     catalog: IParameterMetadataObject[],
+    isStringParametersEnabled: boolean,
 ): EditedParametersByTab {
     return mapValues(byTab, (exportParameters, tabId) =>
         reconstructAutomationParametersFromExportParameters(
             exportParameters,
             dashboardParametersByTab[tabId] ?? [],
             catalog,
+            isStringParametersEnabled,
         ),
     );
 }

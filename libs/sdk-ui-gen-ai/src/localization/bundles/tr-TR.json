@@ -29,6 +29,7 @@
     "gd.gen-ai.input-placeholder": "Buraya sorun…",
     "gd.gen-ai.input-label.mac": "Sorunuzu sorun. Öneriler için control+space veya cmd+I kullanın.",
     "gd.gen-ai.input-label.win": "Sorunuzu sorun. Öneriler için kontrol+boşluk veya kontrol+I kullanın.",
+    "gd.gen-ai.context.add_context": "Bağlam ekle",
     "gd.gen-ai.agents": "Aracılar",
     "gd.gen-ai.agents.loading": "Yükleniyor",
     "gd.gen-ai.agent.unavailable": "Kullanılabilir aracı yok",

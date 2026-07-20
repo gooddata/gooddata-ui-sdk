@@ -862,6 +862,8 @@ export {
     isValidNumberParameterValue,
     isValidStringParameterValue,
     isValidParameterValue,
+    parameterValueMatchesType,
+    sanitizeParameterValue,
 } from "./ldm/metadata/parameter/index.js";
 export {
     type IMemoryItemDefinition,

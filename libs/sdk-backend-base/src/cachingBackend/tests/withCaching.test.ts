@@ -13,6 +13,7 @@ import {
     type IGeoService,
     type IGetInsightOptions,
     type IPreparedExecution,
+    type IWorkspaceExportTemplatesService,
     type IWorkspaceInsightsService,
 } from "@gooddata/sdk-backend-spi";
 import {
@@ -20,6 +21,8 @@ import {
     type IAttributeMetadataObject,
     type IAttributeOrMeasure,
     type IBucket,
+    type IExportTemplate,
+    type IExportTemplateDefinition,
     type IGeoJsonFeature,
     type IInsight,
     type ObjRef,
@@ -37,6 +40,7 @@ import {
 } from "../../decoratedBackend/execution.js";
 import { decoratedBackend } from "../../decoratedBackend/index.js";
 import { DecoratedWorkspaceInsightsService } from "../../decoratedBackend/insights.js";
+import { DecoratedWorkspaceExportTemplatesService } from "../../decoratedBackend/workspaceExportTemplates.js";
 import { dummyBackend, dummyBackendEmptyData } from "../../dummyBackend/index.js";
 import { withEventing } from "../../eventingBackend/index.js";
 import { type CacheControl, type CachingConfiguration, withCaching } from "../index.js";
@@ -66,6 +70,7 @@ function withCachingForTests(
         maxWorkspaceSettings: 1,
         maxAutomationsWorkspaces: 1,
         maxInsightsPerWorkspace: 2,
+        maxExportTemplatesWorkspaces: 1,
         cacheGeoStyles: true,
         onCacheReady,
         ...configOverrides,
@@ -183,6 +188,53 @@ function createInsightCountingBackend(getter: InsightGetter): {
     const backend = decoratedBackend(dummyBackendEmptyData(), {
         insights: (decorated, workspace) =>
             new CallCountingInsightsService(decorated, workspace, counter, getter),
+    });
+
+    return { backend, counter };
+}
+
+/**
+ * A call-counting decorator for the workspace export templates service. It counts how many times the
+ * underlying (decorated) getExportTemplates gets invoked - used to assert that the caching layer
+ * de-duplicates reads and invalidates on writes.
+ */
+class CallCountingWorkspaceExportTemplatesService extends DecoratedWorkspaceExportTemplatesService {
+    constructor(
+        decorated: IWorkspaceExportTemplatesService,
+        private readonly counter: { calls: number },
+        private readonly getter: () => Promise<IExportTemplate[]>,
+    ) {
+        super(decorated);
+    }
+
+    public override getExportTemplates = (): Promise<IExportTemplate[]> => {
+        this.counter.calls += 1;
+        return this.getter();
+    };
+
+    public override async createExportTemplate(
+        template: IExportTemplateDefinition,
+    ): Promise<IExportTemplate> {
+        return { ...template, ref: idRef("created") };
+    }
+
+    public override async patchExportTemplate(ref: ObjRef): Promise<IExportTemplate> {
+        return { name: "patched", ref };
+    }
+
+    public override async deleteExportTemplate(): Promise<void> {
+        return undefined;
+    }
+}
+
+function createWorkspaceExportTemplatesCountingBackend(getter: () => Promise<IExportTemplate[]>): {
+    backend: IAnalyticalBackend;
+    counter: { calls: number };
+} {
+    const counter = { calls: 0 };
+    const backend = decoratedBackend(dummyBackendEmptyData(), {
+        workspaceExportTemplates: (decorated) =>
+            new CallCountingWorkspaceExportTemplatesService(decorated, counter, getter),
     });
 
     return { backend, counter };
@@ -848,6 +900,115 @@ describe("withCaching", () => {
             await service.getInsight(REF);
             cacheControl?.resetInsights();
             await service.getInsight(REF);
+
+            expect(counter.calls).toEqual(2);
+        });
+    });
+
+    describe("workspace export templates", () => {
+        const template: IExportTemplate = { name: "template-1", ref: idRef("template-1") };
+
+        it("caches getExportTemplates", async () => {
+            const { backend, counter } = createWorkspaceExportTemplatesCountingBackend(async () => [
+                template,
+            ]);
+            const cachedBackend = withCachingForTests(backend);
+
+            const first = await cachedBackend.workspace("test").exportTemplates().getExportTemplates();
+            const second = await cachedBackend.workspace("test").exportTemplates().getExportTemplates();
+
+            expect(second).toBe(first);
+            expect(counter.calls).toEqual(1);
+        });
+
+        it("does not share cache entries across workspaces", async () => {
+            const { backend, counter } = createWorkspaceExportTemplatesCountingBackend(async () => [
+                template,
+            ]);
+            const cachedBackend = withCachingForTests(backend);
+
+            await cachedBackend.workspace("ws-1").exportTemplates().getExportTemplates();
+            await cachedBackend.workspace("ws-2").exportTemplates().getExportTemplates();
+
+            expect(counter.calls).toEqual(2);
+        });
+
+        it("invalidates other workspaces' cached lists on a write (inherited templates may change)", async () => {
+            const { backend, counter } = createWorkspaceExportTemplatesCountingBackend(async () => [
+                template,
+            ]);
+            const cachedBackend = withCachingForTests(backend);
+
+            // ws-child caches its list (which may include templates inherited from ws-parent)
+            await cachedBackend.workspace("ws-child").exportTemplates().getExportTemplates();
+            // a write in ws-parent must not leave ws-child serving a stale inherited list
+            await cachedBackend.workspace("ws-parent").exportTemplates().createExportTemplate(template);
+            await cachedBackend.workspace("ws-child").exportTemplates().getExportTemplates();
+
+            // ws-child: 1 initial read + 1 re-read after the parent write invalidated the cache
+            expect(counter.calls).toEqual(2);
+        });
+
+        it("evicts the cache entry when getExportTemplates fails", async () => {
+            let shouldFail = true;
+            const { backend, counter } = createWorkspaceExportTemplatesCountingBackend(async () => {
+                if (shouldFail) {
+                    throw new Error("boom");
+                }
+                return [template];
+            });
+            const cachedBackend = withCachingForTests(backend);
+            const service = cachedBackend.workspace("test").exportTemplates();
+
+            await expect(service.getExportTemplates()).rejects.toThrow("boom");
+
+            // the failed entry is evicted, so a subsequent call hits the backend again
+            shouldFail = false;
+            const result = await service.getExportTemplates();
+
+            expect(result).toEqual([template]);
+            expect(counter.calls).toEqual(2);
+        });
+
+        it.each([
+            [
+                "createExportTemplate",
+                (s: IWorkspaceExportTemplatesService) => s.createExportTemplate(template),
+            ],
+            [
+                "patchExportTemplate",
+                (s: IWorkspaceExportTemplatesService) => s.patchExportTemplate(template.ref, template),
+            ],
+            [
+                "deleteExportTemplate",
+                (s: IWorkspaceExportTemplatesService) => s.deleteExportTemplate(template.ref),
+            ],
+        ])("invalidates the cache after %s so edits are not served stale", async (_label, mutate) => {
+            const { backend, counter } = createWorkspaceExportTemplatesCountingBackend(async () => [
+                template,
+            ]);
+            const cachedBackend = withCachingForTests(backend);
+            const service = cachedBackend.workspace("test").exportTemplates();
+
+            await service.getExportTemplates();
+            await mutate(service);
+            await service.getExportTemplates();
+
+            // the write invalidated the cache, so the second read hits the backend again
+            expect(counter.calls).toEqual(2);
+        });
+
+        it("resets export templates cache", async () => {
+            let cacheControl: CacheControl | undefined;
+            const { backend, counter } = createWorkspaceExportTemplatesCountingBackend(async () => [
+                template,
+            ]);
+            const cachedBackend = withCachingForTests(backend, (cc) => (cacheControl = cc));
+            const service = cachedBackend.workspace("test").exportTemplates();
+
+            await service.getExportTemplates();
+            cacheControl?.resetExportTemplates();
+            await service.getExportTemplates();
 
             expect(counter.calls).toEqual(2);
         });

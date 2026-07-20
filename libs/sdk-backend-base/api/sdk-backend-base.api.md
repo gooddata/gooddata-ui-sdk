@@ -162,6 +162,7 @@ import { IWorkspaceCatalogAvailableItemsFactory } from '@gooddata/sdk-backend-sp
 import { IWorkspaceCatalogFactory } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalogFactoryOptions } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceDashboardsService } from '@gooddata/sdk-backend-spi';
+import { IWorkspaceExportTemplatesService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceInsightsService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceSettingsService } from '@gooddata/sdk-backend-spi';
@@ -734,6 +735,23 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     workspace: string;
 }
 
+// @alpha (undocumented)
+export abstract class DecoratedWorkspaceExportTemplatesService implements IWorkspaceExportTemplatesService {
+    protected constructor(decorated: IWorkspaceExportTemplatesService);
+    // (undocumented)
+    createExportTemplate(template: IExportTemplateDefinition): Promise<IExportTemplate>;
+    // (undocumented)
+    protected readonly decorated: IWorkspaceExportTemplatesService;
+    // (undocumented)
+    deleteExportTemplate(ref: ObjRef): Promise<void>;
+    // (undocumented)
+    getExportTemplate(ref: ObjRef): Promise<IExportTemplate>;
+    // (undocumented)
+    getExportTemplates(): Promise<IExportTemplate[]>;
+    // (undocumented)
+    patchExportTemplate(ref: ObjRef, template: Partial<IExportTemplateDefinition>): Promise<IExportTemplate>;
+}
+
 // @alpha
 export abstract class DecoratedWorkspaceInsightsService implements IWorkspaceInsightsService {
     protected constructor(decorated: IWorkspaceInsightsService, workspace: string);
@@ -867,6 +885,7 @@ export type DecoratorFactories = {
     dashboards?: DashboardsDecoratorFactory;
     geo?: GeoDecoratorFactory;
     organizationExportTemplates?: OrganizationExportTemplatesDecoratorFactory;
+    workspaceExportTemplates?: WorkspaceExportTemplatesDecoratorFactory;
 };
 
 // @internal (undocumented)
@@ -1460,6 +1479,9 @@ export function withNormalization(realBackend: IAnalyticalBackend, config?: Norm
 
 // @alpha (undocumented)
 export type WorkspaceCatalogWrapper = (catalog: IWorkspaceCatalog) => IWorkspaceCatalog;
+
+// @alpha (undocumented)
+export type WorkspaceExportTemplatesDecoratorFactory = (exportTemplates: IWorkspaceExportTemplatesService, workspace: string) => IWorkspaceExportTemplatesService;
 
 // @alpha (undocumented)
 export type WorkspaceSettingsDecoratorFactory = (settings: IWorkspaceSettingsService, workspace: string) => IWorkspaceSettingsService;

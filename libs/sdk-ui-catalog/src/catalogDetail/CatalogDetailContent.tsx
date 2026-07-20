@@ -13,7 +13,6 @@ import { canEditCatalogItem } from "../catalogItem/permission.js";
 import { type ICatalogItem, type ICatalogItemRef } from "../catalogItem/types.js";
 import { useIsCertificationAllowed } from "../certification/gate.js";
 import { useIsLineageEnabled } from "../lineage/gate.js";
-import { useIsCatalogMetricEditorEnabled } from "../metric/gate.js";
 import { type ObjectType } from "../objectType/types.js";
 import { usePermissionsState } from "../permission/PermissionsContext.js";
 import { useIsCatalogDescriptionGenerationEnabled, useIsCatalogQualityEnabled } from "../quality/gate.js";
@@ -149,7 +148,6 @@ export function CatalogDetailContent({
     const enableMetricFormatOverrides = Boolean(settings?.["enableMetricFormatOverrides"]);
     const currencyFormatOverride = settings?.currencyFormatOverride ?? null;
     const isDescriptionGenerationEnabled = useIsCatalogDescriptionGenerationEnabled();
-    const isMetricEditorEnabled = useIsCatalogMetricEditorEnabled();
 
     // Quality
     const { status: qualityStatus } = useQualityReportState();
@@ -235,7 +233,6 @@ export function CatalogDetailContent({
                                     <CatalogDetailActions
                                         item={item}
                                         canEdit={canEdit}
-                                        isMetricEditorEnabled={isMetricEditorEnabled}
                                         onOpen={onOpenClick}
                                         onCatalogItemCreate={onCatalogItemCreate}
                                         onCatalogItemUpdate={applyItemUpdate}

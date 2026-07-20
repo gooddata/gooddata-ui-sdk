@@ -1,19 +1,14 @@
 // (C) 2026 GoodData Corporation
 
-import { useFeatureFlag, useWorkspacePermission } from "../permission/PermissionsContext.js";
+import { useCanManageAsCode } from "../asCode/gate.js";
 
-/**
- * Catalog inline metric editor feature gate.
- */
-export function useIsCatalogMetricEditorEnabled(): boolean {
-    return useFeatureFlag("enableAnalyticalCatalogMetricEditor");
-}
+/** The flag gating the in-catalog metric editor. The single source of truth, referenced by both the
+ *  gate below and `metricDescriptor.featureFlag`. */
+export const METRIC_EDITOR_FEATURE_FLAG = "enableAnalyticalCatalogMetricEditor";
 
 /**
  * Whether the current user can create and edit metrics inline in the catalog.
  */
 export function useCanManageMetric(): boolean {
-    const isMetricEditorEnabled = useIsCatalogMetricEditorEnabled();
-    const canManageProject = useWorkspacePermission("canManageProject");
-    return isMetricEditorEnabled && canManageProject;
+    return useCanManageAsCode(METRIC_EDITOR_FEATURE_FLAG);
 }

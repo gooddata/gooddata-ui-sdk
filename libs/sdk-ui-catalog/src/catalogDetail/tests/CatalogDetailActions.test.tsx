@@ -4,17 +4,34 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import type { PropsWithChildren } from "react";
 import { describe, expect, it, vi } from "vitest";
 
-import { UnexpectedResponseError } from "@gooddata/sdk-backend-spi";
-import { WorkspaceProvider } from "@gooddata/sdk-ui";
+import {
+    type IAnalyticalBackend,
+    type IUserWorkspaceSettings,
+    UnexpectedResponseError,
+} from "@gooddata/sdk-backend-spi";
+import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 
+import { AsCodeMutationProvider } from "../../asCode/AsCodeMutationContext.js";
 import type { ICatalogItemDashboard, ICatalogItemParameter } from "../../catalogItem/types.js";
 import { TestIntlProvider } from "../../localization/TestIntlProvider.js";
-import { ParameterMutationProvider } from "../../parameter/ParameterMutationContext.js";
+import { ObjectTypes } from "../../objectType/constants.js";
 import type { IParameterMutationPort } from "../../parameter/parameterMutationPort.js";
 import { createTestParameterMutationPort } from "../../parameter/tests/parameterMutationPort.test.utils.js";
-import { TestPermissionsProvider } from "../../permission/TestPermissionsProvider.js";
+import {
+    TestPermissionsProvider,
+    defaultPermissionsResult,
+} from "../../permission/TestPermissionsProvider.js";
 import { CatalogDetailActions } from "../CatalogDetailActions.js";
+
+// The detail dispatch offers inline parameter editing only when the parameter feature is enabled.
+const parametersEnabledResult = {
+    ...defaultPermissionsResult,
+    settings: { enableParameters: true } as IUserWorkspaceSettings,
+};
+
+// The injected port means the backend is never called, so a bare stub satisfies the provider.
+const stubBackend = {} as unknown as IAnalyticalBackend;
 
 vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
     const original = await importOriginal<Record<string, unknown>>();
@@ -72,13 +89,17 @@ function createWrapper(port: IParameterMutationPort = createTestParameterMutatio
     function Wrapper({ children }: PropsWithChildren) {
         return (
             <TestIntlProvider>
-                <WorkspaceProvider workspace="test-workspace">
-                    <ToastsCenterContextProvider>
-                        <TestPermissionsProvider>
-                            <ParameterMutationProvider port={port}>{children}</ParameterMutationProvider>
-                        </TestPermissionsProvider>
-                    </ToastsCenterContextProvider>
-                </WorkspaceProvider>
+                <BackendProvider backend={stubBackend}>
+                    <WorkspaceProvider workspace="test-workspace">
+                        <ToastsCenterContextProvider>
+                            <TestPermissionsProvider result={parametersEnabledResult}>
+                                <AsCodeMutationProvider ports={{ [ObjectTypes.PARAMETER]: port }}>
+                                    {children}
+                                </AsCodeMutationProvider>
+                            </TestPermissionsProvider>
+                        </ToastsCenterContextProvider>
+                    </WorkspaceProvider>
+                </BackendProvider>
             </TestIntlProvider>
         );
     }
@@ -126,11 +147,11 @@ definition:
             fireEvent.click(screen.getByText("Save", { selector: "button span, button" }));
 
             await waitFor(() => {
+                // The base is the editable definition (from editSeed), which carries `id`, not the
+                // catalog item's `identifier`.
                 expect(port.update).toHaveBeenCalledWith(
-                    expect.objectContaining({
-                        identifier: "param.id",
-                        title: "Renamed Param",
-                    }),
+                    expect.objectContaining({ id: "param.id" }),
+                    expect.objectContaining({ title: "Renamed Param" }),
                 );
             });
             await waitFor(() => {

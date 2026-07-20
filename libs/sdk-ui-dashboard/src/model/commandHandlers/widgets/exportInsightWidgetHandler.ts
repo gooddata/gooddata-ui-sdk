@@ -5,13 +5,22 @@ import { call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
 import { type IExecutionResult, type IExportResult } from "@gooddata/sdk-backend-spi";
-import { type IExecutionDefinition, type ObjRef, serializeObjRef } from "@gooddata/sdk-model";
+import {
+    type IExecutionDefinition,
+    type IInsightDefinition,
+    type ObjRef,
+    serializeObjRef,
+} from "@gooddata/sdk-model";
 import {
     type IExtendedExportConfig,
     createExportFunction,
     prepareGeoInsightForDataExport,
+    prepareGeoLayerInsightsForDataExport,
 } from "@gooddata/sdk-ui";
-import { createExportExecutionDefinition } from "@gooddata/sdk-ui/internal";
+import {
+    type ICreateExportExecutionDefinitionOptions,
+    createExportExecutionDefinition,
+} from "@gooddata/sdk-ui/internal";
 
 import { type IExportInsightWidget } from "../../commands/insight.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
@@ -32,7 +41,6 @@ import {
 import { selectInsightByWidgetRef } from "../../store/insights/insightsSelectors.js";
 import { selectPreloadedAttributesWithReferences } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
-import { type PromiseFnReturnType } from "../../types/sagas.js";
 
 async function performExport(
     ctx: DashboardContext,
@@ -46,6 +54,29 @@ async function performExport(
     const exporter = createExportFunction(exportExecutionResult);
 
     return exporter(config);
+}
+
+async function performMultiLayerExport(
+    ctx: DashboardContext,
+    layers: Array<{ definition: IExecutionDefinition; title: string }>,
+    config: IExtendedExportConfig,
+): Promise<IExportResult> {
+    const results = await Promise.all(
+        layers.map(({ definition }) =>
+            ctx.backend.workspace(ctx.workspace).execution().forDefinition(definition).execute(),
+        ),
+    );
+
+    const [primaryResult, ...additionalResults] = results;
+    const exporter = createExportFunction(primaryResult);
+
+    return exporter({
+        ...config,
+        additionalExecutions: additionalResults.map((executionResult, index) => ({
+            executionResult,
+            title: layers[index + 1].title,
+        })),
+    });
 }
 
 function* validateIsExportable(
@@ -112,6 +143,7 @@ export function* exportInsightWidgetHandler(
 
     // executionResult must be defined at this point
     invariant(executionEnvelope?.executionResult);
+    const executionResult = executionEnvelope.executionResult;
 
     const insight: ReturnType<ReturnType<typeof selectInsightByWidgetRef>> =
         payloadInsight ?? (yield select(selectInsightByWidgetRef(ref)));
@@ -120,36 +152,62 @@ export function* exportInsightWidgetHandler(
         yield select(selectCatalogAttributes);
     const preloadedAttributesWithReferences: ReturnType<typeof selectPreloadedAttributesWithReferences> =
         yield select(selectPreloadedAttributesWithReferences);
-    let exportDefinition: IExecutionDefinition | undefined;
-    if (insight) {
-        const exportInsight =
-            prepareGeoInsightForDataExport(insight, {
-                settings,
-                catalogAttributes,
-                preloadedAttributesWithReferences,
-            }) ?? insight;
 
-        exportDefinition =
-            exportInsight === insight
-                ? undefined
-                : createExportExecutionDefinition(
-                      exportInsight,
-                      ctx.workspace,
-                      executionEnvelope.executionResult.definition,
-                  );
-    }
+    const buildLayerDefinition = (
+        tableInsight: IInsightDefinition,
+        definitionOptions?: ICreateExportExecutionDefinitionOptions,
+    ) =>
+        createExportExecutionDefinition(
+            tableInsight,
+            ctx.workspace,
+            executionResult.definition,
+            definitionOptions,
+        );
+
+    // Per-layer export is defined for XLSX (sheet per layer) and CSV (zipped file per layer) only;
+    // other formats (PDF) keep the original single-execution behavior.
+    const isMultiLayerExportFormat = config.format === "xlsx" || config.format === "csv";
+    const layerInsights =
+        insight && isMultiLayerExportFormat
+            ? prepareGeoLayerInsightsForDataExport(insight, {
+                  settings,
+                  catalogAttributes,
+                  preloadedAttributesWithReferences,
+              })
+            : undefined;
 
     const timeout: ReturnType<typeof selectExportResultPollingTimeout> = yield select(
         selectExportResultPollingTimeout,
     );
 
-    const result: PromiseFnReturnType<typeof performExport> = yield call(
-        performExport,
-        ctx,
-        executionEnvelope.executionResult,
-        { ...config, timeout },
-        exportDefinition,
-    );
+    let result: IExportResult;
+    if (layerInsights && layerInsights.length > 1) {
+        result = yield call(
+            performMultiLayerExport,
+            ctx,
+            layerInsights.map((layer) => ({
+                title: layer.layerName,
+                // Layer filters live on the converted table insight, not in the base (root)
+                // execution — merge them in so each layer exports the data it displays.
+                definition: buildLayerDefinition(layer.tableInsight, {
+                    includeInsightFilters: true,
+                    attributeLocalIdMapping: layer.attributeLocalIdMapping,
+                }),
+            })),
+            { ...config, timeout },
+        );
+    } else {
+        const exportInsight = insight
+            ? (prepareGeoInsightForDataExport(insight, {
+                  settings,
+                  catalogAttributes,
+                  preloadedAttributesWithReferences,
+              }) ?? insight)
+            : undefined;
+        const exportDefinition =
+            exportInsight && exportInsight !== insight ? buildLayerDefinition(exportInsight) : undefined;
+        result = yield call(performExport, ctx, executionResult, { ...config, timeout }, exportDefinition);
+    }
 
     // prepend hostname if provided so that the results are downloaded from there, not from where the app is hosted
     const fullUri = ctx.backend.config.hostname

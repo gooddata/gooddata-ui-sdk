@@ -72,6 +72,7 @@ export enum TigerFeaturesNames {
     EnableHLL = "enableHLL",
     EnableGeoPushpinIcon = "enableGeoPushpinIcon",
     EnableGeoChartA11yImprovements = "enableGeoChartA11yImprovements",
+    EnableGeoLayersExport = "enableGeoLayersExport",
     EnableGeoChartsViewportConfig = "enableGeoChartsViewportConfig",
     EnableGeoSegmentConflictRecommendation = "enableGeoSegmentConflictRecommendation",
     EnableGeoBasemapConfig = "enableGeoBasemapConfig",
@@ -192,6 +193,7 @@ export type ITigerFeatureFlags = {
     enableHLL: (typeof FeatureFlagsValues)["enableHLL"][number];
     enableGeoPushpinIcon: (typeof FeatureFlagsValues)["enableGeoPushpinIcon"][number];
     enableGeoChartA11yImprovements: (typeof FeatureFlagsValues)["enableGeoChartA11yImprovements"][number];
+    enableGeoLayersExport: (typeof FeatureFlagsValues)["enableGeoLayersExport"][number];
     enableGeoChartsViewportConfig: (typeof FeatureFlagsValues)["enableGeoChartsViewportConfig"][number];
     enableGeoSegmentConflictRecommendation: (typeof FeatureFlagsValues)["enableGeoSegmentConflictRecommendation"][number];
     enableGeoBasemapConfig: (typeof FeatureFlagsValues)["enableGeoBasemapConfig"][number];
@@ -310,6 +312,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableHLL: false,
     enableGeoPushpinIcon: true,
     enableGeoChartA11yImprovements: true,
+    enableGeoLayersExport: false,
     enableGeoChartsViewportConfig: true,
     enableGeoSegmentConflictRecommendation: true,
     enableGeoBasemapConfig: true,
@@ -428,6 +431,7 @@ export const FeatureFlagsValues = {
     enableHLL: [true, false] as const,
     enableGeoPushpinIcon: [true, false] as const,
     enableGeoChartA11yImprovements: [true, false] as const,
+    enableGeoLayersExport: [true, false] as const,
     enableGeoChartsViewportConfig: [true, false] as const,
     enableGeoSegmentConflictRecommendation: [true, false] as const,
     enableGeoBasemapConfig: [true, false] as const,

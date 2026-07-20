@@ -9,10 +9,11 @@ import { type IAnalyticalBackend, UnexpectedResponseError } from "@gooddata/sdk-
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 
+import { AsCodeMutationProvider } from "../../asCode/AsCodeMutationContext.js";
+import { asCodeDescriptors } from "../../asCodeRegistry.js";
 import { CatalogFeedProvider } from "../../catalogItem/CatalogFeedContext.js";
 import { TestIntlProvider } from "../../localization/TestIntlProvider.js";
 import type { CatalogCreateObjectType } from "../../objectType/types.js";
-import { ParameterMutationProvider } from "../../parameter/ParameterMutationContext.js";
 import { TestPermissionsProvider } from "../../permission/TestPermissionsProvider.js";
 import { CreateObjectButton } from "../CreateObjectButton.js";
 
@@ -37,9 +38,9 @@ function wrapper({ children, createParameter }: PropsWithChildren<{ createParame
                 <WorkspaceProvider workspace="test-workspace">
                     <CatalogFeedProvider backend={backend} workspace="test-workspace">
                         <TestPermissionsProvider>
-                            <ParameterMutationProvider>
+                            <AsCodeMutationProvider descriptors={asCodeDescriptors}>
                                 <ToastsCenterContextProvider>{children}</ToastsCenterContextProvider>
-                            </ParameterMutationProvider>
+                            </AsCodeMutationProvider>
                         </TestPermissionsProvider>
                     </CatalogFeedProvider>
                 </WorkspaceProvider>

@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { defineMessages, useIntl } from "react-intl";
 
-import { type IdentifierRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import { type IdentifierRef, type ParameterValue, areObjRefsEqual } from "@gooddata/sdk-model";
 
 import { type IAutomationParameter } from "./automationParameters.js";
 
@@ -23,7 +23,11 @@ const messages = defineMessages({
 export function useParameterAnnouncements(): {
     parameterAnnouncement: string;
     announceParameterAdded: (list: IAutomationParameter[], ref: IdentifierRef) => void;
-    announceParameterChanged: (list: IAutomationParameter[], ref: IdentifierRef, value: number) => void;
+    announceParameterChanged: (
+        list: IAutomationParameter[],
+        ref: IdentifierRef,
+        value: ParameterValue,
+    ) => void;
     announceParameterRemoved: (list: IAutomationParameter[], ref: IdentifierRef) => void;
 } {
     const intl = useIntl();

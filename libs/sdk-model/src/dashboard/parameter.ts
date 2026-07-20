@@ -83,6 +83,12 @@ export interface IDashboardExportParameter {
      * execution.
      */
     title: string;
+
+    /**
+     * Parameter type tag; matches the workspace parameter definition's `type`. Absent on rows
+     * persisted before the tag existed — those are decoded as NUMBER.
+     */
+    parameterType?: ParameterType;
 }
 
 /**

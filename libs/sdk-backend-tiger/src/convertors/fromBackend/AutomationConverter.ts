@@ -340,19 +340,18 @@ export const convertAutomationListToAutomations = (
 };
 
 /**
- * Rows whose stringified value does not parse to a finite number are dropped — the toBackend
- * converter invariants on finite values, so passing them through would break the next save.
+ * The wire value is an untyped string with no type tag. A value that parses to a finite number
+ * decodes as a number (legacy NUMBER rows, incl. `Number("") === 0`); everything else passes
+ * through as-is, so a STRING value that happens to look numeric decodes as a number too.
  */
 function convertParameterItems(items: AutomationParameterItem[]): IInsightParameterValue[] {
-    const result: IInsightParameterValue[] = [];
-    for (const item of items) {
+    return items.map((item) => {
         const value = Number(item.value);
-        if (!Number.isFinite(value)) {
-            continue;
-        }
-        result.push({ ref: idRef(item.parameter.identifier.id, "parameter"), value });
-    }
-    return result;
+        return {
+            ref: idRef(item.parameter.identifier.id, "parameter"),
+            value: Number.isFinite(value) ? value : item.value,
+        };
+    });
 }
 
 export const convertAlert = (

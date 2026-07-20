@@ -292,6 +292,7 @@
     "gs.date.yesterday": "昨日",
     "messages.exportResultError": "データをエクスポートできませんでした。後でもう一度お試しください。",
     "messages.exportResultError.tooManyRows": "エクスポートに失敗しました。行数が多すぎます ({actual})。制限は{limit} です。",
+    "messages.exportResultError.timeout": "エクスポートがタイムアウトしました。エクスポート対象を絞り込み（行数または列数を減らす）、もう一度お試しください。",
     "messages.exportResultRestrictedError": "このビジュアライゼーションには制限されたデータが含まれているため、エクスポートできません。",
     "messages.exportResultStart": "エクスポート実行中",
     "messages.exportResultSuccess": "正常にエクスポートしました。",

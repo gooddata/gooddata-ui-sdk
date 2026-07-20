@@ -292,6 +292,7 @@
     "gs.date.yesterday": "Hier",
     "messages.exportResultError": "Échec de l’exportation des données. Réessayez plus tard.",
     "messages.exportResultError.tooManyRows": "L'exportation a échoué. Trop de lignes ({actual}). La limite est fixée à {limit}.",
+    "messages.exportResultError.timeout": "Le délai d’exportation a expiré. Réduisez la portée de l’exportation (moins de lignes ou de colonnes) et réessayez.",
     "messages.exportResultRestrictedError": "Vous ne pouvez pas exporter cette visualisation car elle contient des données restreintes.",
     "messages.exportResultStart": "Exportation en cours",
     "messages.exportResultSuccess": "Exportation effectuée",

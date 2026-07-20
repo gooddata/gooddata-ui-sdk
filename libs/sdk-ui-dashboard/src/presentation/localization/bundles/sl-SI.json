@@ -292,6 +292,7 @@
     "gs.date.yesterday": "Včeraj",
     "messages.exportResultError": "Izvoza podatkov ni uspelo. Poskusite znova pozneje.",
     "messages.exportResultError.tooManyRows": "Izvoz ni uspel. Preveč vrstic ({actual}). Omejitev je {limit}.",
+    "messages.exportResultError.timeout": "Izvoz je potekel. Omejite izvoz (manj vrstic ali stolpcev) in poskusite znova.",
     "messages.exportResultRestrictedError": "Tega prikaza ne morete izvoziti, ker vsebuje omejene podatke.",
     "messages.exportResultStart": "Izvoz v teku",
     "messages.exportResultSuccess": "Izvoz je bil uspešen.",

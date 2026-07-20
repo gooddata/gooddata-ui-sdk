@@ -24,6 +24,7 @@ import {
 import { unwrapSettingContent } from "../../convertors/fromBackend/SettingsConverter.js";
 import { type TigerAuthenticatedCallGuard, type TigerSettingsType } from "../../types/index.js";
 import { mapTypeToKey } from "../settings/mapping.js";
+import { invalidateSettingsResponses, trackSettingsResponse } from "../settings/responseCacheCoherence.js";
 import { TigerSettingsService } from "../settings/settings.js";
 
 export class OrganizationSettingsService
@@ -189,9 +190,15 @@ export class OrganizationSettingsService
 
     public override async getSettings(): Promise<ISettings> {
         const { data } = await this.authCall(async (client) =>
-            ActionsApi_ResolveAllSettingsWithoutWorkspace(client.axios, client.basePath, {
-                excludeUserSettings: true,
-            }),
+            // The user-level read hits the same endpoint without excludeUserSettings; the scope keeps them apart.
+            trackSettingsResponse(client.axios, "org:excludeUser", (requestOptions) =>
+                ActionsApi_ResolveAllSettingsWithoutWorkspace(
+                    client.axios,
+                    client.basePath,
+                    { excludeUserSettings: true },
+                    requestOptions,
+                ),
+            ),
         );
 
         return data.reduce((result: ISettings, setting) => {
@@ -211,7 +218,7 @@ export class OrganizationSettingsService
     }
 
     protected override async updateSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
-        return this.authCall((client) =>
+        const result = await this.authCall((client) =>
             EntitiesApi_UpdateEntityOrganizationSettings(client.axios, client.basePath, {
                 id,
                 jsonApiOrganizationSettingInDocument: {
@@ -226,10 +233,12 @@ export class OrganizationSettingsService
                 },
             }),
         );
+        await invalidateSettingsResponses(this.authCall);
+        return result;
     }
 
     protected override async createSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
-        return this.authCall((client) =>
+        const result = await this.authCall((client) =>
             EntitiesApi_CreateEntityOrganizationSettings(client.axios, client.basePath, {
                 jsonApiOrganizationSettingInDocument: {
                     data: {
@@ -243,16 +252,27 @@ export class OrganizationSettingsService
                 },
             }),
         );
+        await invalidateSettingsResponses(this.authCall);
+        return result;
     }
 
     protected override async deleteSettingByType(type: TigerSettingsType): Promise<void> {
         const settings = await this.getSettingByType(type);
-        for (const setting of settings.data.data) {
-            await this.authCall((client) =>
-                EntitiesApi_DeleteEntityOrganizationSettings(client.axios, client.basePath, {
-                    id: setting.id,
-                }),
-            );
+        let deleted = false;
+        try {
+            for (const setting of settings.data.data) {
+                await this.authCall((client) =>
+                    EntitiesApi_DeleteEntityOrganizationSettings(client.axios, client.basePath, {
+                        id: setting.id,
+                    }),
+                );
+                deleted = true;
+            }
+        } finally {
+            // A failure partway still leaves earlier deletions persisted — invalidate for those.
+            if (deleted) {
+                await invalidateSettingsResponses(this.authCall);
+            }
         }
     }
 }

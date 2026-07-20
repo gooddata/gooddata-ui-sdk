@@ -717,6 +717,7 @@
     "shareDialog.olp.generalAccess.groupLabel": "Общий доступ",
     "shareDialog.olp.generalAccess.restricted.title": "Ограничено",
     "shareDialog.olp.generalAccess.restricted.description": "Только люди и группы, добавленные выше, могут получить доступ к этому объекту.",
+    "shareDialog.olp.generalAccess.restricted.description.inherited": "Доступ для всех участников рабочей области предоставлен из родительской рабочей области и не может быть ограничен здесь.",
     "shareDialog.olp.generalAccess.workspace.title": "Все участники рабочей области",
     "shareDialog.olp.generalAccess.workspace.description": "Все в этой рабочей области могут просматривать этот объект.",
     "shareDialog.olp.generalAccess.workspace.description.share": "Все в этой рабочей области могут просматривать этот объект и предоставлять к нему доступ.",
@@ -1199,5 +1200,6 @@
     "mvf.details.id": "ИД",
     "mvf.details.infoButtonLabel": "Показать сведения о метрике",
     "mvf.details.type": "Тип",
-    "mvf.details.typeValue": "Метрика"
+    "mvf.details.typeValue": "Метрика",
+    "visualization.stackLabel.aria.total": "всего"
 }

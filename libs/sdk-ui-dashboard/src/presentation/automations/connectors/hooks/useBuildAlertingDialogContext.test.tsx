@@ -55,7 +55,7 @@ vi.mock("../../../../model/store/tabs/layout/layoutSelectors.js", () => ({
 }));
 
 vi.mock("../../../../model/store/tabs/parameters/parametersSelectors.js", () => ({
-    selectAutomationParameterValuesForWidget: () => () => [],
+    selectEffectiveParameterValuesForWidget: () => () => [],
 }));
 
 vi.mock("../../../../model/utils/dashboardItemUtils.js", () => ({

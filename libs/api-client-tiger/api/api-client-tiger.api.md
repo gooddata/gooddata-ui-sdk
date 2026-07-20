@@ -9351,6 +9351,9 @@ export interface ChatUsageResponse {
 }
 
 // @public
+export function clearAxiosResponseCache(axiosInstance: AxiosInstance): Promise<void>;
+
+// @public
 export interface ClusteringConfig {
     'numberOfClusters': number;
     'threshold': number;
@@ -34188,6 +34191,9 @@ export interface RelativeWrapper {
     // (undocumented)
     'relative': Relative;
 }
+
+// @public
+export function removeAxiosResponseCacheEntries(axiosInstance: AxiosInstance, ids: readonly string[]): Promise<void>;
 
 // @public
 export class ReportingSettingsApi extends MetadataBaseApi implements ReportingSettingsApiInterface {

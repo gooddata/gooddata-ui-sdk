@@ -292,6 +292,7 @@
     "gs.date.yesterday": "Ieri",
     "messages.exportResultError": "Non è stato possibile esportare i dati. Riprovare più tardi.",
     "messages.exportResultError.tooManyRows": "Esportazione fallita. Troppe righe ({actual}). Il limite è {limit}.",
+    "messages.exportResultError.timeout": "Esportazione scaduta. Limita l'esportazione (meno righe o colonne) e riprova.",
     "messages.exportResultRestrictedError": "Non è possibile esportare questa visualizzazione perché contiene dati riservati.",
     "messages.exportResultStart": "Esportazione in corso",
     "messages.exportResultSuccess": "Esportazione completata.",

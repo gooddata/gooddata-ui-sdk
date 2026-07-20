@@ -2,10 +2,18 @@
 
 import { describe, expect, it } from "vitest";
 
-import { dashboardParameter, workspaceParameter } from "../../test/parameterFixtures.js";
+import {
+    dashboardParameter,
+    workspaceNumberParameter,
+    workspaceStringParameter,
+} from "../../test/parameterFixtures.js";
 import { validateExistingAutomationParameters } from "../useValidateExistingAutomationFilters.js";
 
-const catalog = [workspaceParameter("topN", "topN", 3), workspaceParameter("limit", "limit", 50)];
+const catalog = [
+    workspaceNumberParameter("topN", "topN", 3),
+    workspaceNumberParameter("limit", "limit", 50),
+    workspaceStringParameter("scenario", "scenario", "Actual"),
+];
 
 describe("validateExistingAutomationParameters — stored export parameter staleness", () => {
     it("is not stale when there are no stored parameters", () => {
@@ -52,6 +60,45 @@ describe("validateExistingAutomationParameters — stored export parameter stale
         ).toBe(true);
     });
 
+    it("is stale when a stored row's parameterType tag disagrees with the current workspace type", () => {
+        expect(
+            validateExistingAutomationParameters({
+                storedParametersByTab: {
+                    tab1: [{ id: "topN", value: "8", title: "Top N", parameterType: "STRING" }],
+                },
+                catalog,
+                dashboardParametersByTab: { tab1: [] },
+                existingTabIds: new Set(["tab1"]),
+            }),
+        ).toBe(true);
+    });
+
+    it("is stale when an untagged stored row defaults to NUMBER but the workspace parameter is STRING", () => {
+        expect(
+            validateExistingAutomationParameters({
+                storedParametersByTab: {
+                    tab1: [{ id: "scenario", value: "Actual", title: "Scenario" }],
+                },
+                catalog,
+                dashboardParametersByTab: { tab1: [] },
+                existingTabIds: new Set(["tab1"]),
+            }),
+        ).toBe(true);
+    });
+
+    it("is not stale when a stored STRING row matches the current STRING workspace parameter", () => {
+        expect(
+            validateExistingAutomationParameters({
+                storedParametersByTab: {
+                    tab1: [{ id: "scenario", value: "Actual", title: "Scenario", parameterType: "STRING" }],
+                },
+                catalog,
+                dashboardParametersByTab: { tab1: [] },
+                existingTabIds: new Set(["tab1"]),
+            }),
+        ).toBe(false);
+    });
+
     it("is stale when a readonly parameter's pinned value drifted from the dashboard", () => {
         expect(
             validateExistingAutomationParameters({
@@ -84,6 +131,76 @@ describe("validateExistingAutomationParameters — stored export parameter stale
                 catalog,
                 dashboardParametersByTab: {
                     tab1: [dashboardParameter("topN", { mode: "readonly", value: 5 })],
+                },
+                existingTabIds: new Set(["tab1"]),
+            }),
+        ).toBe(false);
+    });
+
+    it("is not stale when a readonly NUMBER parameter's stored value differs only in encoding", () => {
+        expect(
+            validateExistingAutomationParameters({
+                storedParametersByTab: { tab1: [{ id: "topN", value: "5.0", title: "Top N" }] },
+                catalog,
+                dashboardParametersByTab: {
+                    tab1: [dashboardParameter("topN", { mode: "readonly", value: 5 })],
+                },
+                existingTabIds: new Set(["tab1"]),
+            }),
+        ).toBe(false);
+    });
+
+    it("is stale when a readonly STRING parameter's stored value differs only in numeric-style encoding", () => {
+        expect(
+            validateExistingAutomationParameters({
+                storedParametersByTab: {
+                    tab1: [{ id: "scenario", value: "1.50", title: "Scenario", parameterType: "STRING" }],
+                },
+                catalog,
+                dashboardParametersByTab: {
+                    tab1: [
+                        dashboardParameter("scenario", {
+                            mode: "readonly",
+                            parameterType: "STRING",
+                            value: "1.5",
+                        }),
+                    ],
+                },
+                existingTabIds: new Set(["tab1"]),
+            }),
+        ).toBe(true);
+    });
+
+    it("is stale when a readonly STRING parameter's pinned value drifted from the dashboard", () => {
+        expect(
+            validateExistingAutomationParameters({
+                storedParametersByTab: {
+                    tab1: [{ id: "scenario", value: "Budget", title: "Scenario", parameterType: "STRING" }],
+                },
+                catalog,
+                dashboardParametersByTab: {
+                    tab1: [
+                        dashboardParameter("scenario", {
+                            mode: "readonly",
+                            parameterType: "STRING",
+                            value: "Plan",
+                        }),
+                    ],
+                },
+                existingTabIds: new Set(["tab1"]),
+            }),
+        ).toBe(true);
+    });
+
+    it("is not stale when a hidden STRING parameter still matches its workspace default", () => {
+        expect(
+            validateExistingAutomationParameters({
+                storedParametersByTab: {
+                    tab1: [{ id: "scenario", value: "Actual", title: "Scenario", parameterType: "STRING" }],
+                },
+                catalog,
+                dashboardParametersByTab: {
+                    tab1: [dashboardParameter("scenario", { mode: "hidden", parameterType: "STRING" })],
                 },
                 existingTabIds: new Set(["tab1"]),
             }),

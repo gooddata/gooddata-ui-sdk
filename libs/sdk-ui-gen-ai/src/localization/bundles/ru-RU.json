@@ -29,6 +29,7 @@
     "gd.gen-ai.input-placeholder": "Задайте вопрос здесь…",
     "gd.gen-ai.input-label.mac": "Задайте свой вопрос. Используйте control+space или cmd+I для предложений.",
     "gd.gen-ai.input-label.win": "Задайте ваш вопрос. Используйте control+space или control+I для предложений.",
+    "gd.gen-ai.context.add_context": "Добавить контекст",
     "gd.gen-ai.agents": "Агенты",
     "gd.gen-ai.agents.loading": "Загрузка",
     "gd.gen-ai.agent.unavailable": "Нет доступного агента",

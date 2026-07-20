@@ -16,13 +16,17 @@ import {
     selectCatalogParameters,
     selectCatalogParametersIsLoaded,
 } from "../../../../../model/store/catalog/catalogSelectors.js";
-import { selectEnableParameters } from "../../../../../model/store/config/configSelectors.js";
+import {
+    selectEnableParameters,
+    selectEnableStringParameters,
+} from "../../../../../model/store/config/configSelectors.js";
 import { useAutomationAlertParameters } from "../useAutomationAlertParameters.js";
 
-import { workspaceParameter } from "./parameterFixtures.js";
+import { workspaceNumberParameter, workspaceStringParameter } from "./parameterFixtures.js";
 
 interface IMockStoreState {
     enableParameters: boolean;
+    enableStringParameters: boolean;
     catalogParametersIsLoaded: boolean;
     catalog: IParameterMetadataObject[];
 }
@@ -33,6 +37,8 @@ function resolveSelectorValue(selector: unknown): unknown {
     switch (selector) {
         case selectEnableParameters:
             return mockState.enableParameters;
+        case selectEnableStringParameters:
+            return mockState.enableStringParameters;
         case selectCatalogParameters:
             return mockState.catalog;
         case selectCatalogParametersIsLoaded:
@@ -74,9 +80,75 @@ function renderAlertParametersHook(initial: IAutomationMetadataObjectDefinition)
 beforeEach(() => {
     mockState = {
         enableParameters: true,
+        enableStringParameters: true,
         catalogParametersIsLoaded: true,
-        catalog: [workspaceParameter("topN", "Top N", 3)],
+        catalog: [workspaceNumberParameter("topN", "Top N", 3)],
     };
+});
+
+describe("useAutomationAlertParameters — string parameter chips", () => {
+    const storedParameters = [
+        { ref: idRef("topN", "parameter"), value: 8 },
+        { ref: idRef("scenario", "parameter"), value: "Budget" },
+    ];
+
+    it("renders a stored STRING value as an editable chip when string parameters are enabled", () => {
+        mockState.catalog = [
+            workspaceNumberParameter("topN", "Top N", 3),
+            workspaceStringParameter("scenario", "Scenario", "Actual"),
+        ];
+        const { result } = renderAlertParametersHook(alertAutomation(storedParameters));
+
+        expect(
+            result.current.automationParameters.map((parameter) => [
+                parameter.ref.identifier,
+                parameter.value,
+            ]),
+        ).toEqual([
+            ["topN", 8],
+            ["scenario", "Budget"],
+        ]);
+    });
+
+    it("hides a stored STRING value when string parameters are gated off, without deleting it on edit", () => {
+        // Flag off: the catalog-branch gate drops the STRING definition even though it's still in the catalog.
+        mockState.catalog = [
+            workspaceNumberParameter("topN", "Top N", 3),
+            workspaceStringParameter("scenario", "Scenario", "Actual"),
+        ];
+        mockState.enableStringParameters = false;
+        const { result } = renderAlertParametersHook(alertAutomation(storedParameters));
+
+        expect(result.current.automationParameters.map((parameter) => parameter.ref.identifier)).toEqual([
+            "topN",
+        ]);
+
+        act(() => {
+            result.current.onParameterChange(idRef("topN", "parameter"), 5);
+        });
+
+        expect(result.current.editedAutomation?.alert?.execution.parameters).toEqual([
+            { ref: idRef("topN", "parameter"), value: 5 },
+            { ref: idRef("scenario", "parameter"), value: "Budget" },
+        ]);
+    });
+
+    it("writes an edited STRING chip value back to the stored parameters", () => {
+        mockState.catalog = [
+            workspaceNumberParameter("topN", "Top N", 3),
+            workspaceStringParameter("scenario", "Scenario", "Actual"),
+        ];
+        const { result } = renderAlertParametersHook(alertAutomation(storedParameters));
+
+        act(() => {
+            result.current.onParameterChange(idRef("scenario", "parameter"), "Forecast");
+        });
+
+        expect(result.current.editedAutomation?.alert?.execution.parameters).toEqual([
+            { ref: idRef("topN", "parameter"), value: 8 },
+            { ref: idRef("scenario", "parameter"), value: "Forecast" },
+        ]);
+    });
 });
 
 describe("useAutomationAlertParameters — dropStaleParameters", () => {

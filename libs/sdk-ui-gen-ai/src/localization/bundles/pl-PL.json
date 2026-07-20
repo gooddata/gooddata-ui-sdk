@@ -29,6 +29,7 @@
     "gd.gen-ai.input-placeholder": "Zapytaj tutaj…",
     "gd.gen-ai.input-label.mac": "Zadaj swoje pytanie. Użyj ctrl+spacja lub cmd+I, aby uzyskać sugestie.",
     "gd.gen-ai.input-label.win": "Zadaj swoje pytanie. Użyj ctrl+spacja lub ctrl+I, aby uzyskać sugestie.",
+    "gd.gen-ai.context.add_context": "Dodaj kontekst",
     "gd.gen-ai.agents": "Agenci",
     "gd.gen-ai.agents.loading": "Ładowanie",
     "gd.gen-ai.agent.unavailable": "Brak dostępnego agenta",

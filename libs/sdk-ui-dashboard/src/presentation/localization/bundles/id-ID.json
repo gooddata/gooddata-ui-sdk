@@ -292,6 +292,7 @@
     "gs.date.yesterday": "Kemarin",
     "messages.exportResultError": "Gagal mengekspor data. Coba lagi nanti.",
     "messages.exportResultError.tooManyRows": "Ekspor gagal. Terlalu banyak baris ({actual}). Batasnya {limit}.",
+    "messages.exportResultError.timeout": "Ekspor kehabisan waktu. Persempit ekspor (lebih sedikit baris atau kolom) dan coba lagi.",
     "messages.exportResultRestrictedError": "Anda tidak dapat mengekspor visualisasi ini karena berisi data yang dibatasi.",
     "messages.exportResultStart": "Ekspor sedang berlangsung",
     "messages.exportResultSuccess": "Ekspor berhasil.",

@@ -292,6 +292,7 @@
     "gs.date.yesterday": "昨天",
     "messages.exportResultError": "数据导出失败，请稍后重试。",
     "messages.exportResultError.tooManyRows": "导出失败。行数过多（{actual}）。限制为 {limit}。",
+    "messages.exportResultError.timeout": "导出超时。请缩小导出范围（减少行数或列数），然后重试。",
     "messages.exportResultRestrictedError": "您不能导出此可视化，因为它包含限制数据。",
     "messages.exportResultStart": "正在导出",
     "messages.exportResultSuccess": "导出成功！",

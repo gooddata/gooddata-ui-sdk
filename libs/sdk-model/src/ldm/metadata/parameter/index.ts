@@ -143,6 +143,36 @@ export function isValidParameterValue(definition: IParameterDefinition, value: P
 }
 
 /**
+ * Returns `value` when it is valid for `definition`, the definition's `defaultValue` otherwise.
+ *
+ * @alpha
+ */
+export function sanitizeParameterValue(
+    definition: IParameterDefinition,
+    value: ParameterValue,
+): ParameterValue {
+    return isValidParameterValue(definition, value) ? value : definition.defaultValue;
+}
+
+/**
+ * Tests whether `value`'s runtime kind matches the given parameter definition's type, ignoring
+ * constraints.
+ *
+ * @alpha
+ */
+export function parameterValueMatchesType(definition: IParameterDefinition, value: ParameterValue): boolean {
+    switch (definition.type) {
+        case "NUMBER":
+            return typeof value === "number";
+        case "STRING":
+            return typeof value === "string";
+        default:
+            assertNever(definition);
+            return false;
+    }
+}
+
+/**
  * Tests whether `value` is a finite number within the optional `min`/`max` bounds (inclusive).
  *
  * @alpha

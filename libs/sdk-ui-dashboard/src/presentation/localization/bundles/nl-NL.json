@@ -292,6 +292,7 @@
     "gs.date.yesterday": "Gisteren",
     "messages.exportResultError": "Exporteren van gegevens is mislukt. Probeer het later opnieuw.",
     "messages.exportResultError.tooManyRows": "Export mislukt. Te veel rijen ({actual}). Limiet is {limit}.",
+    "messages.exportResultError.timeout": "Time-out bij het exporteren. Beperk de export (minder rijen of kolommen) en probeer het opnieuw.",
     "messages.exportResultRestrictedError": "U kunt deze visualisatie niet exporteren omdat deze beperkte gegevens bevat.",
     "messages.exportResultStart": "Bezig met exporteren",
     "messages.exportResultSuccess": "Exporteren geslaagd.",

@@ -717,6 +717,7 @@
     "shareDialog.olp.generalAccess.groupLabel": "一般存取",
     "shareDialog.olp.generalAccess.restricted.title": "受限制",
     "shareDialog.olp.generalAccess.restricted.description": "只有上方新增的人員和群組可以存取此物件。",
+    "shareDialog.olp.generalAccess.restricted.description.inherited": "所有工作區成員的存取權是由父工作區授予，無法在此處限制。",
     "shareDialog.olp.generalAccess.workspace.title": "所有工作區成員",
     "shareDialog.olp.generalAccess.workspace.description": "此工作區中的所有人都可以檢視此物件。",
     "shareDialog.olp.generalAccess.workspace.description.share": "此工作區中的所有人都可以檢視和共用此物件。",
@@ -1199,5 +1200,6 @@
     "mvf.details.id": "ID",
     "mvf.details.infoButtonLabel": "顯示指標詳細資訊",
     "mvf.details.type": "類型",
-    "mvf.details.typeValue": "指標"
+    "mvf.details.typeValue": "指標",
+    "visualization.stackLabel.aria.total": "總計"
 }

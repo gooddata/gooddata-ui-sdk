@@ -717,6 +717,7 @@
     "shareDialog.olp.generalAccess.groupLabel": "Quyền truy cập chung",
     "shareDialog.olp.generalAccess.restricted.title": "Bị hạn chế",
     "shareDialog.olp.generalAccess.restricted.description": "Chỉ những người và nhóm được thêm ở trên mới có thể truy cập đối tượng này.",
+    "shareDialog.olp.generalAccess.restricted.description.inherited": "Quyền truy cập cho tất cả thành viên không gian làm việc được cấp từ không gian làm việc cha và không thể bị hạn chế tại đây.",
     "shareDialog.olp.generalAccess.workspace.title": "Tất cả thành viên không gian làm việc",
     "shareDialog.olp.generalAccess.workspace.description": "Mọi người trong không gian làm việc này có thể xem đối tượng này.",
     "shareDialog.olp.generalAccess.workspace.description.share": "Mọi người trong không gian làm việc này có thể xem và chia sẻ đối tượng này.",
@@ -1199,5 +1200,6 @@
     "mvf.details.id": "ID",
     "mvf.details.infoButtonLabel": "Hiển thị chi tiết thước đo",
     "mvf.details.type": "Loại",
-    "mvf.details.typeValue": "Chỉ số"
+    "mvf.details.typeValue": "Chỉ số",
+    "visualization.stackLabel.aria.total": "tổng"
 }

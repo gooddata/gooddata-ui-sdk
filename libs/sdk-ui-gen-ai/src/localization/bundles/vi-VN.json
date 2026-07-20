@@ -29,6 +29,7 @@
     "gd.gen-ai.input-placeholder": "Hỏi tại đây…",
     "gd.gen-ai.input-label.mac": "Hãy đặt câu hỏi của bạn. Sử dụng control+space hoặc cmd+I để xem gợi ý.",
     "gd.gen-ai.input-label.win": "Hãy đặt câu hỏi của bạn. Sử dụng control+space hoặc control+I để xem gợi ý.",
+    "gd.gen-ai.context.add_context": "Thêm ngữ cảnh",
     "gd.gen-ai.agents": "Tác nhân",
     "gd.gen-ai.agents.loading": "Đang tải",
     "gd.gen-ai.agent.unavailable": "Không có tác nhân nào khả dụng",

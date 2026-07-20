@@ -11,6 +11,7 @@ import {
     type IExecutionConfig,
     type IExecutionDefinition,
     type IExecutionResultLimitBreak,
+    type IFilter,
     type IGeoJsonFeature,
     type IInsight,
     type IInsightDefinition,
@@ -22,8 +23,6 @@ import {
 } from "@gooddata/sdk-model";
 
 import { type ICancelable } from "../../cancelation/index.js";
-
-import { type IExportConfig, type IExportResult } from "./export.js";
 
 /**
  * @beta
@@ -544,6 +543,146 @@ export interface IPreparedExecution extends ICancelable<IPreparedExecution> {
      * @returns new execution containing the provided context
      */
     withContext(context: IExecutionContext): IPreparedExecution;
+}
+
+/**
+ * Configuration for exports of results into tabular formats.
+ *
+ * @public
+ */
+export interface IExportConfig {
+    /**
+     * Format of the export file. Defaults to CSV if not specified.
+     */
+    format?: "xlsx" | "csv" | "raw" | "pdf";
+
+    /**
+     * Applicable for XLSX format; specifies title of the workbook.
+     */
+    title?: string;
+
+    /**
+     * Applicable for CSV format; specifies the delimiter to use between values.
+     */
+    delimiter?: string;
+
+    /**
+     * Applicable for XLSX format; indicates whether headers and cells in the sheet
+     * should be merged.
+     */
+    mergeHeaders?: boolean;
+
+    /**
+     * Applicable for XLSX, and PDF format; specifies filters to include as comments / metadata in
+     * the Excel sheet.
+     *
+     * @remarks
+     * Filters provided here are purely to paint a better context for the
+     * person looking at the exported file. They serve no other purpose and are merely serialized
+     * in the export in a human-readable form.
+     * The visualizationObjectId has to be provided to make this work for PDF format.
+     */
+    showFilters?: boolean;
+
+    /**
+     * Applicable for PDF format; specifies configuration for PDF export.
+     */
+    pdfConfiguration?: IExportPdfConfig;
+
+    /**
+     * Visualization object identifier. Used to ensure the export result is generated based on
+     * existing visualization in the PDF document. (PDF only)
+     */
+    visualizationObjectId?: string;
+
+    /**
+     * Optional custom filters (as array of IFilter objects defined in UI SDK) to be applied
+     * when visualizationObject is given. (PDF only)
+     */
+    visualizationObjectCustomFilters?: Array<IFilter>;
+
+    /**
+     * Position of grand totals in the exported document.
+     *
+     * @remarks
+     * Takes precedence over the position specified in the visualization object.
+     * Applicable to all tabular export formats (XLSX, CSV, PDF).
+     */
+    grandTotalsPosition?: "pinnedBottom" | "pinnedTop" | "bottom" | "top";
+
+    /**
+     * Override the default export result polling timeout (in milliseconds).
+     *
+     * @remarks
+     * If not specified, there is still a default timeout applied.
+     * You can use this to make the timeout more aggressive or more relaxed than the default.
+     * We recommend not setting this lower than 5 seconds as it would mean only one attempt would be made.
+     */
+    timeout?: number;
+
+    /**
+     * Pre-executed additional layers for multi-layer geo visualizations.
+     *
+     * @remarks
+     * When set, the export includes one sheet (XLSX) or file (CSV zip) per layer. The result
+     * that {@link IExecutionResult.export} is called on is the main layer (index 0); these are
+     * the additional layers, in their original order. Each layer carries its own execution result
+     * so the backend can build per-layer overrides.
+     *
+     * @alpha
+     */
+    additionalExecutions?: ReadonlyArray<IExportAdditionalExecution>;
+}
+
+/**
+ * A single pre-executed additional layer in a multi-layer tabular export.
+ *
+ * @alpha
+ */
+export interface IExportAdditionalExecution {
+    /** Already-executed result for this layer. */
+    executionResult: IExecutionResult;
+    /** Layer title used for the exported sheet or file name. */
+    title?: string;
+}
+
+/**
+ * Configuration for PDF export.
+ *
+ * @public
+ */
+export interface IExportPdfConfig {
+    /** Page size and orientation (e.g. 'a4 landscape'). @deprecated Use pageSize and pageOrientation instead. */
+    pdfPageSize?: string;
+    /** PDF top left header content. @deprecated This property is no longer supported. */
+    pdfTopLeftContent?: string;
+    /** PDF top right header content. @deprecated This property is no longer supported. */
+    pdfTopRightContent?: string;
+    /** Page size */
+    pageSize?: "A3" | "A4" | "LETTER";
+    /** Page orientation */
+    pageOrientation?: "PORTRAIT" | "LANDSCAPE";
+    /** Show info page with export information. */
+    showInfoPage?: boolean;
+}
+
+/**
+ * Result of export is an object URL pointing to a Blob of downloaded data attached to the current
+ * window instance. The result also contains name of the downloaded file provided by the backend export
+ * service.
+ *
+ * {@link URL#revokeObjectURL} method must be used when object URL is no longer needed to release
+ * the blob memory.
+ *
+ * @public
+ */
+export interface IExportResult {
+    /** URI from which can the export be fetched again */
+    uri: string;
+    /** Object URL pointing to the downloaded blob of exported data */
+    objectUrl: string;
+    /** Name of the exported file provided by the export service */
+    fileName?: string;
 }
 
 /**

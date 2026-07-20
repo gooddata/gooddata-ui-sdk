@@ -717,6 +717,7 @@
     "shareDialog.olp.generalAccess.groupLabel": "常规访问权限",
     "shareDialog.olp.generalAccess.restricted.title": "受限",
     "shareDialog.olp.generalAccess.restricted.description": "只有上方添加的人员和群组可以访问此对象。",
+    "shareDialog.olp.generalAccess.restricted.description.inherited": "所有工作区成员的访问权限由父工作区授予，无法在此处限制。",
     "shareDialog.olp.generalAccess.workspace.title": "所有工作区成员",
     "shareDialog.olp.generalAccess.workspace.description": "此工作区中的所有人都可以查看此对象。",
     "shareDialog.olp.generalAccess.workspace.description.share": "此工作区中的所有人都可以查看和共享此对象。",
@@ -1199,5 +1200,6 @@
     "mvf.details.id": "ID",
     "mvf.details.infoButtonLabel": "显示指标详细信息",
     "mvf.details.type": "类型",
-    "mvf.details.typeValue": "指标"
+    "mvf.details.typeValue": "指标",
+    "visualization.stackLabel.aria.total": "总计"
 }

@@ -15,6 +15,7 @@ import { unwrapSettingContent } from "../../convertors/fromBackend/SettingsConve
 import { type TigerAuthenticatedCallGuard, type TigerSettingsType } from "../../types/index.js";
 import { TigerFeaturesService, pickContext } from "../features/index.js";
 import { mapTypeToKey } from "../settings/mapping.js";
+import { invalidateSettingsResponses, trackSettingsResponse } from "../settings/responseCacheCoherence.js";
 import { TigerSettingsService } from "../settings/settings.js";
 import { DefaultUserSettings } from "../uiSettings.js";
 
@@ -33,10 +34,14 @@ export class TigerUserSettingsService
             const profile = await ProfileApi_GetCurrent(client.axios);
             const context = pickContext(undefined, profile.organizationId, profile.entitlements);
             const features = await this.tigerFeatureService.getFeatures(profile, context);
-            const { data } = await ActionsApi_ResolveAllSettingsWithoutWorkspace(
-                client.axios,
-                client.basePath,
-                {},
+            // The org-level read hits the same endpoint with excludeUserSettings; the scope keeps them apart.
+            const { data } = await trackSettingsResponse(client.axios, "user:withUser", (requestOptions) =>
+                ActionsApi_ResolveAllSettingsWithoutWorkspace(
+                    client.axios,
+                    client.basePath,
+                    {},
+                    requestOptions,
+                ),
             );
             const resolvedSettings = data.reduce(
                 (result: ISettings, setting) => ({
@@ -66,7 +71,7 @@ export class TigerUserSettingsService
     }
 
     protected override async updateSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
-        return this.authCall(async (client) => {
+        const result = await this.authCall(async (client) => {
             const profile = await ProfileApi_GetCurrent(client.axios);
             return EntitiesApi_UpdateEntityUserSettings(client.axios, client.basePath, {
                 id,
@@ -83,10 +88,12 @@ export class TigerUserSettingsService
                 },
             });
         });
+        await invalidateSettingsResponses(this.authCall);
+        return result;
     }
 
     protected override async createSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
-        return this.authCall(async (client) => {
+        const result = await this.authCall(async (client) => {
             const profile = await ProfileApi_GetCurrent(client.axios);
             return EntitiesApi_CreateEntityUserSettings(client.axios, client.basePath, {
                 userId: profile.userId,
@@ -102,18 +109,29 @@ export class TigerUserSettingsService
                 },
             });
         });
+        await invalidateSettingsResponses(this.authCall);
+        return result;
     }
 
     protected override async deleteSettingByType(type: TigerSettingsType): Promise<any> {
         const settings = await this.getSettingByType(type);
-        for (const setting of settings.data.data) {
-            await this.authCall(async (client) => {
-                const profile = await ProfileApi_GetCurrent(client.axios);
-                return EntitiesApi_DeleteEntityUserSettings(client.axios, client.basePath, {
-                    userId: profile.userId,
-                    id: setting.id,
+        let deleted = false;
+        try {
+            for (const setting of settings.data.data) {
+                await this.authCall(async (client) => {
+                    const profile = await ProfileApi_GetCurrent(client.axios);
+                    return EntitiesApi_DeleteEntityUserSettings(client.axios, client.basePath, {
+                        userId: profile.userId,
+                        id: setting.id,
+                    });
                 });
-            });
+                deleted = true;
+            }
+        } finally {
+            // A failure partway still leaves earlier deletions persisted — invalidate for those.
+            if (deleted) {
+                await invalidateSettingsResponses(this.authCall);
+            }
         }
     }
 }

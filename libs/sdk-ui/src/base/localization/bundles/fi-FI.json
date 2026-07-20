@@ -717,6 +717,7 @@
     "shareDialog.olp.generalAccess.groupLabel": "Yleinen käyttöoikeus",
     "shareDialog.olp.generalAccess.restricted.title": "Rajoitettu",
     "shareDialog.olp.generalAccess.restricted.description": "Vain yllä lisätyt henkilöt ja ryhmät voivat käyttää tätä objektia.",
+    "shareDialog.olp.generalAccess.restricted.description.inherited": "Kaikkien työtilan jäsenten käyttöoikeus myönnetään ylätason työtilasta, eikä sitä voi rajoittaa tässä.",
     "shareDialog.olp.generalAccess.workspace.title": "Kaikki työtilan jäsenet",
     "shareDialog.olp.generalAccess.workspace.description": "Kaikki tämän työtilan jäsenet voivat tarkastella tätä objektia.",
     "shareDialog.olp.generalAccess.workspace.description.share": "Kaikki tämän työtilan jäsenet voivat tarkastella ja jakaa tätä objektia.",
@@ -1199,5 +1200,6 @@
     "mvf.details.id": "ID",
     "mvf.details.infoButtonLabel": "Näytä metriikan tiedot",
     "mvf.details.type": "Tyyppi",
-    "mvf.details.typeValue": "Metriikka"
+    "mvf.details.typeValue": "Metriikka",
+    "visualization.stackLabel.aria.total": "yhteensä"
 }

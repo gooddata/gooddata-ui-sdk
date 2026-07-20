@@ -29,6 +29,7 @@
     "gd.gen-ai.input-placeholder": "Chiedere qui…",
     "gd.gen-ai.input-label.mac": "Poni la tua domanda. Utilizzare control+spazio o cmd+I per ottenere suggerimenti.",
     "gd.gen-ai.input-label.win": "Poni la tua domanda. Per i suggerimenti, utilizzare control+spazio o control+I.",
+    "gd.gen-ai.context.add_context": "Aggiungi contesto",
     "gd.gen-ai.agents": "Agenti",
     "gd.gen-ai.agents.loading": "Caricamento",
     "gd.gen-ai.agent.unavailable": "Nessun agente disponibile",

@@ -28,7 +28,11 @@ import { type ISaveScheduledEmail } from "../../commands/scheduledEmail.js";
 import { type IDashboardScheduledEmailSaved, scheduledEmailSaved } from "../../events/scheduledEmail.js";
 import { queryWithInsight } from "../../queryServices/queryWidgetFilters.js";
 import { selectCatalogAttributes } from "../../store/catalog/catalogSelectors.js";
-import { selectLocale, selectSettings } from "../../store/config/configSelectors.js";
+import {
+    selectEnableStringParameters,
+    selectLocale,
+    selectSettings,
+} from "../../store/config/configSelectors.js";
 import { selectExecutionResultByRef } from "../../store/executionResults/executionResultsSelectors.js";
 import { selectAutomationCommonDateFilterId } from "../../store/filtering/dashboardFilterSelectors.js";
 import {
@@ -88,6 +92,9 @@ export function* saveScheduledEmailHandler(
     const insightParameterValues: ReturnType<
         ReturnType<typeof selectReferencedInsightParameterValuesForWidget>
     > = yield select(selectReferencedInsightParameterValuesForWidget(ref));
+    const enableStringParameters: ReturnType<typeof selectEnableStringParameters> = yield select(
+        selectEnableStringParameters,
+    );
 
     const locale = yield select(selectLocale);
     const messages = yield call(resolveMessages, locale);
@@ -116,14 +123,15 @@ export function* saveScheduledEmailHandler(
         }
     }
 
-    const preparedExecutionDefinitionWithFilters = prepareCsvRawExecutionDefinition(
-        preparedExecutionDefinition,
+    const preparedExecutionDefinitionWithFilters = prepareCsvRawExecutionDefinition({
+        executionDefinition: preparedExecutionDefinition,
         csvRawRequest,
         insight,
         insightParameterValues,
+        enableStringParameters,
         widget,
         commonDateFilterId,
-    );
+    });
     const settings = yield select(selectSettings);
     const catalogAttributes = yield select(selectCatalogAttributes);
     const preloadedAttributesWithReferences = yield select(selectPreloadedAttributesWithReferences);

@@ -15,12 +15,12 @@ import {
     UiMenu,
 } from "@gooddata/sdk-ui-kit";
 
+import { AsCodeCreateDialog } from "../asCode/AsCodeCreateDialog.js";
+import { getAsCodeDescriptor } from "../asCodeRegistry.js";
 import { useCatalogFeedActions } from "../catalogItem/CatalogFeedContext.js";
-import { MetricCreateDialog } from "../metric/MetricCreateDialog.js";
 import { ObjectTypes } from "../objectType/constants.js";
 import { getObjectTypeLabel } from "../objectType/labels.js";
 import type { CatalogCreateObjectType } from "../objectType/types.js";
-import { ParameterCreateDialog } from "../parameter/ParameterCreateDialog.js";
 
 type CreateItemData = {
     interactive: CatalogCreateObjectType;
@@ -43,8 +43,21 @@ type Props = {
 export function CreateObjectButton({ onCreateObject, showParameter, showMetricEditor }: Props) {
     const intl = useIntl();
     const { refetchObjectType } = useCatalogFeedActions();
-    const [isParameterDialogOpen, setIsParameterDialogOpen] = useState(false);
-    const [isMetricDialogOpen, setIsMetricDialogOpen] = useState(false);
+    // The type whose create dialog is open, or undefined when none is. One state for every as-code
+    // type, since they all open the same generic dialog.
+    const [openType, setOpenType] = useState<CatalogCreateObjectType | undefined>(undefined);
+
+    // The types created inline in a catalog dialog (the rest redirect to a standalone editor).
+    const inCatalogTypes = useMemo(() => {
+        const types = new Set<CatalogCreateObjectType>();
+        if (showMetricEditor) {
+            types.add(ObjectTypes.METRIC);
+        }
+        if (showParameter) {
+            types.add(ObjectTypes.PARAMETER);
+        }
+        return types;
+    }, [showMetricEditor, showParameter]);
 
     const items = useMemo<IUiMenuItem<CreateItemData>[]>(() => {
         const externalLinkIcon = <MenuItemIcon type="externalLink" />;
@@ -69,10 +82,7 @@ export function CreateObjectButton({ onCreateObject, showParameter, showMetricEd
             interactiveItem(ObjectTypes.VISUALIZATION, true),
             ...(showMetricEditor ? [] : [interactiveItem(ObjectTypes.METRIC, true)]),
         ];
-        const inCatalogItems = [
-            ...(showMetricEditor ? [interactiveItem(ObjectTypes.METRIC, false)] : []),
-            ...(showParameter ? [interactiveItem(ObjectTypes.PARAMETER, false)] : []),
-        ];
+        const inCatalogItems = [...inCatalogTypes].map((type) => interactiveItem(type, false));
 
         if (inCatalogItems.length === 0) {
             return redirectItems;
@@ -82,36 +92,28 @@ export function CreateObjectButton({ onCreateObject, showParameter, showMetricEd
             { type: "static", data: <SeparatorLine pT={5} pR={10} pB={4} pL={10} /> },
             ...inCatalogItems,
         ];
-    }, [intl, showParameter, showMetricEditor]);
+    }, [intl, inCatalogTypes, showMetricEditor]);
 
     const handleSelect = useCallback(
         (item: IUiMenuInteractiveItem<CreateItemData>, _event: MouseEvent | KeyboardEvent) => {
-            if (item.data === ObjectTypes.PARAMETER) {
-                setIsParameterDialogOpen(true);
-            } else if (item.data === ObjectTypes.METRIC && showMetricEditor) {
-                setIsMetricDialogOpen(true);
+            if (inCatalogTypes.has(item.data)) {
+                setOpenType(item.data);
             } else {
                 onCreateObject(item.data);
             }
         },
-        [onCreateObject, showMetricEditor],
+        [inCatalogTypes, onCreateObject],
     );
 
-    const handleParameterDialogClose = useCallback(() => {
-        setIsParameterDialogOpen(false);
-    }, []);
+    const closeDialog = useCallback(() => setOpenType(undefined), []);
 
-    const handleParameterCreated = useCallback(() => {
-        void refetchObjectType(ObjectTypes.PARAMETER);
-    }, [refetchObjectType]);
+    const handleCreated = useCallback(() => {
+        if (openType) {
+            void refetchObjectType(openType);
+        }
+    }, [openType, refetchObjectType]);
 
-    const handleMetricDialogClose = useCallback(() => {
-        setIsMetricDialogOpen(false);
-    }, []);
-
-    const handleMetricCreated = useCallback(() => {
-        void refetchObjectType(ObjectTypes.METRIC);
-    }, [refetchObjectType]);
+    const openDescriptor = openType ? getAsCodeDescriptor(openType) : undefined;
 
     return (
         <>
@@ -151,14 +153,13 @@ export function CreateObjectButton({ onCreateObject, showParameter, showMetricEd
                 closeOnEscape
                 autofocusOnOpen
             />
-            {isParameterDialogOpen ? (
-                <ParameterCreateDialog
-                    onClose={handleParameterDialogClose}
-                    onCreated={handleParameterCreated}
+            {openDescriptor ? (
+                <AsCodeCreateDialog
+                    key={openDescriptor.objectType}
+                    descriptor={openDescriptor}
+                    onClose={closeDialog}
+                    onCreated={handleCreated}
                 />
-            ) : null}
-            {isMetricDialogOpen ? (
-                <MetricCreateDialog onClose={handleMetricDialogClose} onCreated={handleMetricCreated} />
             ) : null}
         </>
     );

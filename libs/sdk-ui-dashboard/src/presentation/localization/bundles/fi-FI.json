@@ -292,6 +292,7 @@
     "gs.date.yesterday": "Eilen",
     "messages.exportResultError": "Datan vienti epäonnistui. Yritä uudelleen myöhemmin.",
     "messages.exportResultError.tooManyRows": "Vienti epäonnistui. Liian monta riviä ({actual}). Raja on {limit}.",
+    "messages.exportResultError.timeout": "Vienti aikakatkaistiin. Rajaa vientiä (vähemmän rivejä tai sarakkeita) ja yritä uudelleen.",
     "messages.exportResultRestrictedError": "Et voi viedä tätä visualisointia, koska se sisältää rajoitettuja tietoja.",
     "messages.exportResultStart": "Vienti meneillään",
     "messages.exportResultSuccess": "Vienti onnistui.",

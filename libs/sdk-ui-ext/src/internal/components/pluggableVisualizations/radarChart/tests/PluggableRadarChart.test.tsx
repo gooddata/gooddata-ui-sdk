@@ -180,6 +180,44 @@ describe("PluggableRadarChart", () => {
         },
     );
 
+    describe("Supported properties", () => {
+        it("should return reference point with only supported properties", async () => {
+            const chart = createComponent();
+
+            const referencePoint: IReferencePoint = {
+                ...oneMetricOneTrendBy,
+                properties: {
+                    controls: {
+                        forecast: { enabled: true, period: 3, confidence: 0.95 },
+                        xaxis: {
+                            rotation: "60",
+                            visible: false,
+                            labelsEnabled: false,
+                            name: { visible: false, position: "left" },
+                        },
+                        yaxis: {
+                            rotation: "30",
+                            visible: false,
+                            labelsEnabled: false,
+                            min: "0",
+                            max: "100",
+                            name: { visible: false, position: "center" },
+                        },
+                        grid: { enabled: false },
+                    },
+                },
+            };
+
+            const extendedReferencePoint = await chart.getExtendedReferencePoint(referencePoint);
+
+            expect(extendedReferencePoint.properties?.controls).toEqual({
+                xaxis: { labelsEnabled: false },
+                yaxis: { labelsEnabled: false, min: "0", max: "100" },
+                grid: { enabled: false },
+            });
+        });
+    });
+
     describe("Over Time Comparison", () => {
         it("should return reference point containing uiConfig with PP, SP supported comparison types", async () => {
             const chart = createComponent();

@@ -2,7 +2,12 @@
 
 import { invariant } from "ts-invariant";
 
-import { type ITigerClient, type IUserProfile, setAxiosAuthorizationToken } from "@gooddata/api-client-tiger";
+import {
+    type ITigerClient,
+    type IUserProfile,
+    clearAxiosResponseCache,
+    setAxiosAuthorizationToken,
+} from "@gooddata/api-client-tiger";
 import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/endpoints/profile";
 import {
     type AuthenticationFlow,
@@ -113,8 +118,17 @@ export class TigerTokenAuthProvider extends TigerAuthProviderBase {
 
     public updateApiToken = (apiToken: string): void => {
         invariant(this.clients.length > 0, "The method cannot be called before initializeClient method.");
+        if (apiToken === this.apiToken) {
+            return;
+        }
         this.apiToken = apiToken;
-        this.clients.forEach((client) => this.initializeClient(client));
+        // The memoized principal and the cached GET responses were obtained under the previous
+        // credential; served after a token change they could replay another identity's data.
+        this.principal = undefined;
+        this.clients.forEach((client) => {
+            this.initializeClient(client);
+            void clearAxiosResponseCache(client.axios);
+        });
     };
 }
 

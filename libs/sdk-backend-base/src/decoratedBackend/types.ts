@@ -9,6 +9,7 @@ import {
     type IWorkspaceAutomationService,
     type IWorkspaceCatalogFactory,
     type IWorkspaceDashboardsService,
+    type IWorkspaceExportTemplatesService,
     type IWorkspaceInsightsService,
     type IWorkspaceSettingsService,
 } from "@gooddata/sdk-backend-spi";
@@ -84,6 +85,14 @@ export type OrganizationExportTemplatesDecoratorFactory = (
 ) => IOrganizationExportTemplatesService;
 
 /**
+ * @alpha
+ */
+export type WorkspaceExportTemplatesDecoratorFactory = (
+    exportTemplates: IWorkspaceExportTemplatesService,
+    workspace: string,
+) => IWorkspaceExportTemplatesService;
+
+/**
  * Provides factory functions for the different decorators (currently only supports execution
  * decorator). Input to each factory function is the original implementation from the wrapped backend, output
  * is whatever decorateur sees fit.
@@ -101,4 +110,5 @@ export type DecoratorFactories = {
     dashboards?: DashboardsDecoratorFactory;
     geo?: GeoDecoratorFactory;
     organizationExportTemplates?: OrganizationExportTemplatesDecoratorFactory;
+    workspaceExportTemplates?: WorkspaceExportTemplatesDecoratorFactory;
 };

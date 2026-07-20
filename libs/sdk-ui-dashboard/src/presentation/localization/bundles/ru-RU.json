@@ -292,6 +292,7 @@
     "gs.date.yesterday": "Вчера",
     "messages.exportResultError": "Не удалось экспортировать данные. Попробуйте позже.",
     "messages.exportResultError.tooManyRows": "Экспорт не выполнен. Слишком много строк ({actual}). Лимит составляет {limit}.",
+    "messages.exportResultError.timeout": "Время ожидания экспорта истекло. Сузьте экспорт (меньше строк или столбцов) и повторите попытку.",
     "messages.exportResultRestrictedError": "Вы не можете экспортировать эту визуализацию, потому что она содержит ограниченные данные.",
     "messages.exportResultStart": "Выполняется экспорт",
     "messages.exportResultSuccess": "Экспорт успешно завершен.",

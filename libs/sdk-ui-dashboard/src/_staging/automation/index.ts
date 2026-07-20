@@ -16,7 +16,9 @@ import {
     type IInsightParameterValue,
     type IUser,
     type IWorkspaceUser,
+    type ParameterType,
     type ParameterValue,
+    assertNever,
     idRef,
     isExportDefinitionDashboardRequestPayload,
     isExportDefinitionVisualizationObjectRequestPayload,
@@ -188,25 +190,42 @@ export function setExportParametersByTab(
 
 /**
  * Converts stored export parameter overrides ({@link IDashboardExportParameter}, value carried as a
- * string) to {@link IInsightParameterValue} runtime values. Non-finite values are dropped.
+ * string) to {@link IInsightParameterValue} runtime values. Each row carries its own type tag:
+ * NUMBER values are parsed (non-finite ones dropped), STRING values stay strings. STRING rows are
+ * dropped while `enableStringParameters` is off (a row persisted before the flag was turned off).
+ * Untagged rows predate the tag and are decoded as NUMBER; rows tagged with a type this version
+ * does not know (persisted by a newer one) are dropped.
  */
-export function exportParametersToValues(stored: IDashboardExportParameter[]): IInsightParameterValue[] {
+export function exportParametersToValues(
+    stored: IDashboardExportParameter[],
+    isStringParametersEnabled: boolean,
+): IInsightParameterValue[] {
     return stored.reduce<IInsightParameterValue[]>((acc, row) => {
-        const value = Number(row.value);
-        if (Number.isFinite(value)) {
+        const value = decodeExportParameterValue(row.parameterType, row.value, isStringParametersEnabled);
+        if (value !== undefined) {
             acc.push({ ref: idRef(row.id, "parameter"), value });
         }
         return acc;
     }, []);
 }
 
-/**
- * The parameter values the automation dialogs can carry: NUMBER only, until the interactions
- * slice (F1-2636…F1-2641) widens the automation model. The single home of that policy — delete
- * together with the automation seeding gates when the slice lands.
- */
-export function isAutomationSupportedParameterValue(value: ParameterValue): value is number {
-    return typeof value === "number";
+function decodeExportParameterValue(
+    parameterType: ParameterType | undefined,
+    wireValue: string,
+    isStringParametersEnabled: boolean,
+): ParameterValue | undefined {
+    const tag = parameterType ?? "NUMBER";
+    switch (tag) {
+        case "NUMBER": {
+            const parsed = Number(wireValue);
+            return Number.isFinite(parsed) ? parsed : undefined;
+        }
+        case "STRING":
+            return isStringParametersEnabled ? wireValue : undefined;
+        default:
+            assertNever(tag);
+            return undefined;
+    }
 }
 
 export const getAutomationVisualizationFilters = (

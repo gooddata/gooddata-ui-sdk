@@ -36,6 +36,7 @@ export type {
     DashboardsDecoratorFactory,
     GeoDecoratorFactory,
     OrganizationExportTemplatesDecoratorFactory,
+    WorkspaceExportTemplatesDecoratorFactory,
 } from "./decoratedBackend/types.js";
 
 export {
@@ -58,6 +59,8 @@ export {
 export { DecoratedSecuritySettingsService } from "./decoratedBackend/securitySettings.js";
 
 export { DecoratedOrganizationExportTemplatesService } from "./decoratedBackend/organizationExportTemplates.js";
+
+export { DecoratedWorkspaceExportTemplatesService } from "./decoratedBackend/workspaceExportTemplates.js";
 
 export { DecoratedWorkspaceSettingsService } from "./decoratedBackend/workspaceSettings.js";
 

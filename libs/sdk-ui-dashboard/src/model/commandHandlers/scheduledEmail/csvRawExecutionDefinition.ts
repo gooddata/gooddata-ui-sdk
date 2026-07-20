@@ -18,14 +18,23 @@ import { exportParametersToValues } from "../../../_staging/automation/index.js"
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters/filterConverters.js";
 import { type ExtendedDashboardWidget } from "../../types/layoutTypes.js";
 
-export function prepareCsvRawExecutionDefinition(
-    executionDefinition: IExecutionDefinition | undefined,
-    csvRawRequest: IExportDefinitionVisualizationObjectRequestPayload,
-    insight: IInsight | undefined,
-    insightParameterValues: IInsightParameterValue[],
-    widget: ExtendedDashboardWidget | undefined,
-    commonDateFilterId: string | undefined,
-): IExecutionDefinition | undefined {
+export function prepareCsvRawExecutionDefinition({
+    executionDefinition,
+    csvRawRequest,
+    insight,
+    insightParameterValues,
+    enableStringParameters,
+    widget,
+    commonDateFilterId,
+}: {
+    executionDefinition: IExecutionDefinition | undefined;
+    csvRawRequest: IExportDefinitionVisualizationObjectRequestPayload;
+    insight: IInsight | undefined;
+    insightParameterValues: IInsightParameterValue[];
+    enableStringParameters: boolean;
+    widget: ExtendedDashboardWidget | undefined;
+    commonDateFilterId: string | undefined;
+}): IExecutionDefinition | undefined {
     if (!executionDefinition) {
         return executionDefinition;
     }
@@ -37,7 +46,7 @@ export function prepareCsvRawExecutionDefinition(
         widget,
         commonDateFilterId,
     );
-    return applyExportParameters(withFilters, csvRawRequest, insightParameterValues);
+    return applyExportParameters(withFilters, csvRawRequest, insightParameterValues, enableStringParameters);
 }
 
 function applyExportFilters(
@@ -74,9 +83,13 @@ function applyExportParameters(
     executionDefinition: IExecutionDefinition,
     csvRawRequest: IExportDefinitionVisualizationObjectRequestPayload,
     insightParameterValues: IInsightParameterValue[],
+    enableStringParameters: boolean,
 ): IExecutionDefinition {
     const stored = Object.values(csvRawRequest?.content?.parametersByTab ?? {}).flat();
-    const parameterValues = mergeParameterValues(insightParameterValues, exportParametersToValues(stored));
+    const parameterValues = mergeParameterValues(
+        insightParameterValues,
+        exportParametersToValues(stored, enableStringParameters),
+    );
 
     if (parameterValues.length === 0) {
         return executionDefinition;

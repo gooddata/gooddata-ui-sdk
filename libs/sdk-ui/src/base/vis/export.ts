@@ -29,6 +29,15 @@ function buildExportRequestConfig(exportConfig: IExtendedExportConfig, exportTit
         title,
         delimiter,
         ...(grandTotalsPosition ? { grandTotalsPosition } : {}),
+        // layer titles become sheet/file names, so they need the same sanitization as the main title
+        ...(exportConfig.additionalExecutions
+            ? {
+                  additionalExecutions: exportConfig.additionalExecutions.map((execution) => ({
+                      ...execution,
+                      ...(execution.title ? { title: escapeFileName(execution.title) } : {}),
+                  })),
+              }
+            : {}),
         timeout,
     };
 

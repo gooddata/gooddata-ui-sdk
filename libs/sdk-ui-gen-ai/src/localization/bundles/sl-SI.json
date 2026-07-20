@@ -29,6 +29,7 @@
     "gd.gen-ai.input-placeholder": "Vprašajte tukaj...",
     "gd.gen-ai.input-label.mac": "Postavite svoje vprašanje. Uporabite control+space ali cmd+I za predloge.",
     "gd.gen-ai.input-label.win": "Postavite svoje vprašanje. Uporabite control+space ali control+I za predloge.",
+    "gd.gen-ai.context.add_context": "Dodaj kontekst",
     "gd.gen-ai.agents": "Agenti",
     "gd.gen-ai.agents.loading": "Nalaganje",
     "gd.gen-ai.agent.unavailable": "Agent ni na voljo",

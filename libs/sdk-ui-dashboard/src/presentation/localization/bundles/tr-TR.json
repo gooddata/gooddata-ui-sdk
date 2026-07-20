@@ -292,6 +292,7 @@
     "gs.date.yesterday": "Dün",
     "messages.exportResultError": "Veri dışa aktarılamadı. Daha sonra tekrar deneyin.",
     "messages.exportResultError.tooManyRows": "Dışa aktarma başarısız oldu. Çok fazla satır var ({actual}). Sınır {limit}.",
+    "messages.exportResultError.timeout": "Dışa aktarma zaman aşımına uğradı. Dışa aktarmayı daraltın (daha az satır veya sütun) ve tekrar deneyin.",
     "messages.exportResultRestrictedError": "Bu görselleştirmeyi dışa aktaramazsınız çünkü kısıtlı veri içeriyor.",
     "messages.exportResultStart": "Dışa aktarma devam ediyor",
     "messages.exportResultSuccess": "Dışa aktarma başarılı",

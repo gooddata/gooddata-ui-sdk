@@ -29,6 +29,7 @@
     "gd.gen-ai.input-placeholder": "Kysy täältä…",
     "gd.gen-ai.input-label.mac": "Esitä kysymyksesi. Käytä ehdotuksiin ohjausta+tilaa tai cmd+I: tä.",
     "gd.gen-ai.input-label.win": "Esitä kysymyksesi. Käytä ehdotuksiin ohjausta+tilaa tai ohjausta+I.",
+    "gd.gen-ai.context.add_context": "Lisää konteksti",
     "gd.gen-ai.agents": "Agentit",
     "gd.gen-ai.agents.loading": "Ladataan",
     "gd.gen-ai.agent.unavailable": "Agenttia ei ole saatavilla",

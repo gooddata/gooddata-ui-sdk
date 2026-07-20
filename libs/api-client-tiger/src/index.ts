@@ -12,8 +12,10 @@
  * @packageDocumentation
  */
 import {
+    clearAxiosResponseCache,
     axios as defaultAxios,
     newAxios,
+    removeAxiosResponseCacheEntries,
     setAxiosAuthorizationToken,
     setGlobalAuthorizationToken,
 } from "./axios.js";
@@ -227,7 +229,13 @@ export {
 // Axios Utilities
 // -----------------------------------------------------------------------------
 
-export { newAxios, setAxiosAuthorizationToken, setGlobalAuthorizationToken };
+export {
+    clearAxiosResponseCache,
+    newAxios,
+    removeAxiosResponseCacheEntries,
+    setAxiosAuthorizationToken,
+    setGlobalAuthorizationToken,
+};
 
 export type {
     GeoAreaConfig as AfmGeoAreaConfig,

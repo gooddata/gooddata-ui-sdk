@@ -18,6 +18,7 @@ import {
     isMeasureDefinition,
     isValidParameterValue,
     objRefToString,
+    sanitizeParameterValue,
 } from "@gooddata/sdk-model";
 
 import { type ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
@@ -96,7 +97,7 @@ export function resolveEffectiveParameterValuesForRefs(
         }
         result.push({
             ref: entry.parameter.ref,
-            value: recoverParameterExecutionValue(runtimeOverride, workspaceParameterByRef.get(refKey)),
+            value: sanitizeParameterExecutionValue(runtimeOverride, workspaceParameterByRef.get(refKey)),
         });
         seen.add(refKey);
     }
@@ -107,7 +108,7 @@ export function resolveEffectiveParameterValuesForRefs(
         }
         result.push({
             ref: insightParameterValue.ref,
-            value: recoverParameterExecutionValue(
+            value: sanitizeParameterExecutionValue(
                 insightParameterValue.value,
                 workspaceParameterByRef.get(refKey),
             ),
@@ -181,20 +182,18 @@ export function matchingWorkspaceDefinition(
 /**
  * The value to execute for a runtime override: a value that is not valid for the workspace
  * parameter (constraint-violating or of the wrong kind) is replaced by the workspace default so
- * the dashboard renders the default instead of failing (recovery), while the chip keeps showing
+ * the dashboard renders the default instead of failing, while the chip keeps showing
  * the user's saved value. Valid values, and values of removed parameters (no workspace entry —
  * meant to surface as the standard widget error), pass through unchanged.
  *
  * @internal
  */
-function recoverParameterExecutionValue(
+function sanitizeParameterExecutionValue(
     runtimeOverride: ParameterValue,
     workspaceParameter: IParameterMetadataObject | undefined,
 ): ParameterValue {
     const definition = workspaceParameter?.definition;
-    return definition && !isValidParameterValue(definition, runtimeOverride)
-        ? definition.defaultValue
-        : runtimeOverride;
+    return definition ? sanitizeParameterValue(definition, runtimeOverride) : runtimeOverride;
 }
 
 /**
@@ -376,8 +375,9 @@ export function formatDashboardParameter(
     }
     return {
         id: entry.parameter.ref.identifier,
-        value: String(recoverParameterExecutionValue(runtimeOverride, workspaceParameter)),
+        value: String(sanitizeParameterExecutionValue(runtimeOverride, workspaceParameter)),
         title: resolveParameterTitle(entry.parameter, workspaceParameter),
+        parameterType: entry.parameter.parameterType,
     };
 }
 
@@ -506,12 +506,12 @@ export function computeParameterResetTargets(
 export function collectExportOverrides(
     tabRefSelections: ReadonlyArray<{ tab: ITabState; allowedRefs?: Set<string> }>,
     workspaceParameterByRef: Map<string, IParameterMetadataObject>,
-    includeStringEntries: boolean,
+    isStringEnabled: boolean,
 ): Record<string, IDashboardExportParameter[]> {
     const result: Record<string, IDashboardExportParameter[]> = {};
     for (const { tab, allowedRefs } of tabRefSelections) {
         const entries = (tab.parameters?.parameters ?? parametersInitialState.parameters).filter(
-            (entry) => !isGatedStringEntry(entry, includeStringEntries),
+            (entry) => !isGatedStringEntry(entry, isStringEnabled),
         );
         const scoped = allowedRefs
             ? entries.filter((entry) => allowedRefs.has(objRefToString(entry.parameter.ref)))

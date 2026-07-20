@@ -16,7 +16,10 @@ vi.mock("../permission/usePermissionsQuery.js", () => ({
         result: {
             permissions: { canManageProject: true } as IWorkspacePermissions,
             user: { login: "test" } as IUser,
-            settings: { enableAnalyticalCatalogMetricEditor: true } as IUserWorkspaceSettings,
+            settings: {
+                enableAnalyticalCatalogMetricEditor: true,
+                enableParameters: true,
+            } as IUserWorkspaceSettings,
         },
     }),
 }));

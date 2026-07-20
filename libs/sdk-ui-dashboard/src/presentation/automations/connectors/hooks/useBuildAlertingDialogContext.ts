@@ -18,7 +18,7 @@ import {
 } from "../../../../model/store/filtering/dashboardFilterSelectors.js";
 import { selectDashboardId, selectEvaluationFrequency } from "../../../../model/store/meta/metaSelectors.js";
 import { selectWidgetLocalIdToTabIdMap } from "../../../../model/store/tabs/layout/layoutSelectors.js";
-import { selectAutomationParameterValuesForWidget } from "../../../../model/store/tabs/parameters/parametersSelectors.js";
+import { selectEffectiveParameterValuesForWidget } from "../../../../model/store/tabs/parameters/parametersSelectors.js";
 import { getWidgetTitle } from "../../../../model/utils/dashboardItemUtils.js";
 import type { IAlertingDialogContextValue } from "../../contexts/AlertingDialogContext.js";
 
@@ -42,7 +42,7 @@ export function useBuildAlertingDialogContext(
     const executionResultEntities = useDashboardSelector(selectExecutionResultEntities);
     const commonDateFilterId = useDashboardSelector(selectAutomationCommonDateFilterId);
     const dashboardEvaluationFrequency = useDashboardSelector(selectEvaluationFrequency);
-    const parameterValues = useDashboardSelector(selectAutomationParameterValuesForWidget(widget?.ref));
+    const parameterValues = useDashboardSelector(selectEffectiveParameterValuesForWidget(widget?.ref));
 
     const widgetTitle = useMemo(() => {
         if (widget) {

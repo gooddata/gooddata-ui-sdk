@@ -4,16 +4,22 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import type { PropsWithChildren } from "react";
 import { describe, expect, it, vi } from "vitest";
 
-import { WorkspaceProvider } from "@gooddata/sdk-ui";
+import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 
+import { getAsCodeDescriptor } from "../../asCodeRegistry.js";
 import type { ICatalogItemMeasure } from "../../catalogItem/types.js";
 import { TestIntlProvider } from "../../localization/TestIntlProvider.js";
-import { MetricDetailActions } from "../MetricDetailActions.js";
-import { MetricMutationProvider } from "../MetricMutationContext.js";
-import type { IMetricMutationPort } from "../metricMutationPort.js";
+import type { IMetricMutationPort } from "../../metric/metricMutationPort.js";
+import { createTestMetricMutationPort } from "../../metric/tests/metricMutationPort.test.utils.js";
+import { ObjectTypes } from "../../objectType/constants.js";
+import { AsCodeDetailActions } from "../AsCodeDetailActions.js";
+import { AsCodeMutationProvider } from "../AsCodeMutationContext.js";
 
-import { createTestMetricMutationPort } from "./metricMutationPort.test.utils.js";
+// A metric is the as-code type that exercises every AsCodeDetailActions capability: the standalone
+// "open" extra action, a load-backed edit/duplicate, and delete with a referencing-count warning.
+const metricDescriptor = getAsCodeDescriptor(ObjectTypes.METRIC)!;
 
 vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
     const original = await importOriginal<Record<string, unknown>>();
@@ -22,16 +28,13 @@ vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
         YamlEditor: ({
             initialValue,
             onChange,
-            disabled,
         }: {
             initialValue: string;
-            onChange?: (value: string) => void;
-            disabled?: boolean;
+            onChange?: (v: string) => void;
         }) => (
             <textarea
                 data-testid="yaml-editor"
                 defaultValue={initialValue}
-                disabled={disabled}
                 onChange={(e) => onChange?.(e.target.value)}
             />
         ),
@@ -53,43 +56,52 @@ const measureItem: ICatalogItemMeasure = {
     format: "",
 };
 
+// The injected port means the backend is never called, so a bare stub satisfies the provider.
+const stubBackend = {} as unknown as IAnalyticalBackend;
+
 function createWrapper(port: IMetricMutationPort = createTestMetricMutationPort()) {
     function Wrapper({ children }: PropsWithChildren) {
         return (
             <TestIntlProvider>
-                <WorkspaceProvider workspace="test-workspace">
-                    <ToastsCenterContextProvider>
-                        <MetricMutationProvider port={port}>{children}</MetricMutationProvider>
-                    </ToastsCenterContextProvider>
-                </WorkspaceProvider>
+                <BackendProvider backend={stubBackend}>
+                    <WorkspaceProvider workspace="test-workspace">
+                        <ToastsCenterContextProvider>
+                            <AsCodeMutationProvider ports={{ [ObjectTypes.METRIC]: port }}>
+                                {children}
+                            </AsCodeMutationProvider>
+                        </ToastsCenterContextProvider>
+                    </WorkspaceProvider>
+                </BackendProvider>
             </TestIntlProvider>
         );
     }
     return Wrapper;
 }
 
-describe("MetricDetailActions", () => {
+function renderActions(props: Partial<Parameters<typeof AsCodeDetailActions>[0]> = {}) {
+    return render(<AsCodeDetailActions descriptor={metricDescriptor} item={measureItem} {...props} />, {
+        wrapper: createWrapper(),
+    });
+}
+
+describe("AsCodeDetailActions (metric)", () => {
     it("renders the Share button and fires onShare when shareable", () => {
         const onShare = vi.fn();
-        render(<MetricDetailActions item={measureItem} onOpen={vi.fn()} canShare onShare={onShare} />, {
-            wrapper: createWrapper(),
-        });
+        renderActions({ onOpen: vi.fn(), canShare: true, onShare });
 
         fireEvent.click(screen.getByRole("button", { name: /^share$/i }));
         expect(onShare).toHaveBeenCalledTimes(1);
     });
 
     it("hides the Share button when not shareable", () => {
-        render(<MetricDetailActions item={measureItem} onOpen={vi.fn()} canShare={false} />, {
-            wrapper: createWrapper(),
-        });
+        renderActions({ onOpen: vi.fn(), canShare: false });
 
         expect(screen.queryByRole("button", { name: /^share$/i })).toBeNull();
     });
 
-    it("offers Open in metric editor and calls onOpen when selected", () => {
+    it("offers the standalone open action and calls onOpen when selected", () => {
         const onOpen = vi.fn();
-        render(<MetricDetailActions item={measureItem} onOpen={onOpen} />, { wrapper: createWrapper() });
+        renderActions({ onOpen });
 
         fireEvent.click(screen.getByRole("button", { name: /actions for/i }));
         fireEvent.click(screen.getByText("Open in metric editor"));
@@ -100,8 +112,8 @@ describe("MetricDetailActions", () => {
         );
     });
 
-    it("omits Open in metric editor when no onOpen handler is provided", () => {
-        render(<MetricDetailActions item={measureItem} />, { wrapper: createWrapper() });
+    it("omits the open action when no onOpen handler is provided", () => {
+        renderActions();
 
         fireEvent.click(screen.getByRole("button", { name: /actions for/i }));
         expect(screen.queryByText("Open in metric editor")).toBeNull();
@@ -110,7 +122,7 @@ describe("MetricDetailActions", () => {
     });
 
     it("opens the inline edit dialog on Edit click", async () => {
-        render(<MetricDetailActions item={measureItem} onOpen={vi.fn()} />, { wrapper: createWrapper() });
+        renderActions({ onOpen: vi.fn() });
 
         fireEvent.click(screen.getByRole("button", { name: /^edit$/i }));
 
@@ -118,7 +130,7 @@ describe("MetricDetailActions", () => {
     });
 
     it("opens the delete confirmation from the menu", async () => {
-        render(<MetricDetailActions item={measureItem} onOpen={vi.fn()} />, { wrapper: createWrapper() });
+        renderActions({ onOpen: vi.fn() });
 
         fireEvent.click(screen.getByRole("button", { name: /actions for/i }));
         fireEvent.click(screen.getByText("Delete"));

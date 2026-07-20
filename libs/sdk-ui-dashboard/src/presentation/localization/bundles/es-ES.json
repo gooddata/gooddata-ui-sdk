@@ -292,6 +292,7 @@
     "gs.date.yesterday": "Ayer",
     "messages.exportResultError": "Error al exportar los datos. Inténtelo de nuevo más tarde.",
     "messages.exportResultError.tooManyRows": "Error de exportación. Demasiadas filas ({actual}). El límite es {limit}.",
+    "messages.exportResultError.timeout": "Se agotó el tiempo de espera de la exportación. Reduzca la exportación (menos filas o columnas) e inténtelo de nuevo.",
     "messages.exportResultRestrictedError": "No puede exportar esta visualización porque contiene datos restringidos.",
     "messages.exportResultStart": "Exportación en curso",
     "messages.exportResultSuccess": "Exportación correcta.",

@@ -29,6 +29,7 @@
     "gd.gen-ai.input-placeholder": "Fragen Sie hier…",
     "gd.gen-ai.input-label.mac": "Stellen Sie Ihre Frage. Verwenden Sie Strg+Leerzeichen oder cmd+I für Vorschläge.",
     "gd.gen-ai.input-label.win": "Stellen Sie Ihre Frage. Verwenden Sie Strg+Leerzeichen oder Strg+I für Vorschläge.",
+    "gd.gen-ai.context.add_context": "Kontext hinzufügen",
     "gd.gen-ai.agents": "Agenten",
     "gd.gen-ai.agents.loading": "Wird geladen",
     "gd.gen-ai.agent.unavailable": "Kein Agent verfügbar",

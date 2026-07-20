@@ -717,6 +717,7 @@
     "shareDialog.olp.generalAccess.groupLabel": "Algemene toegang",
     "shareDialog.olp.generalAccess.restricted.title": "Beperkt",
     "shareDialog.olp.generalAccess.restricted.description": "Alleen hierboven toegevoegde personen en groepen hebben toegang tot dit object.",
+    "shareDialog.olp.generalAccess.restricted.description.inherited": "Toegang voor alle leden van de werkruimte wordt verleend vanuit een bovenliggende werkruimte en kan hier niet worden beperkt.",
     "shareDialog.olp.generalAccess.workspace.title": "Alle werkruimteleden",
     "shareDialog.olp.generalAccess.workspace.description": "Iedereen in deze werkruimte kan dit object bekijken.",
     "shareDialog.olp.generalAccess.workspace.description.share": "Iedereen in deze werkruimte kan dit object bekijken en delen.",
@@ -1199,5 +1200,6 @@
     "mvf.details.id": "ID",
     "mvf.details.infoButtonLabel": "Details van metriek tonen",
     "mvf.details.type": "Type",
-    "mvf.details.typeValue": "Meetgegeven"
+    "mvf.details.typeValue": "Meetgegeven",
+    "visualization.stackLabel.aria.total": "totaal"
 }

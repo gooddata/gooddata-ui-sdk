@@ -63,6 +63,7 @@ import {
     selectEnableMatchFilterKD,
     selectEnableNotificationChannelIdentifiers,
     selectEnableParameters,
+    selectEnableStringParameters,
     selectExternalRecipient,
     selectFocusObject,
     selectIsExport,
@@ -346,12 +347,16 @@ export function* initializeAutomationsHandler(
             // above: alert params apply to the active tab, export params apply per tab.
             const enableParameters: ReturnType<typeof selectEnableParameters> =
                 yield select(selectEnableParameters);
-            const parameterChanges = extractAutomationParameterChanges(
-                enableParameters,
-                getAutomationAlertParameters(targetAutomation),
-                getAutomationExportParametersByTab(targetAutomation),
-                automationId,
+            const enableStringParameters: ReturnType<typeof selectEnableStringParameters> = yield select(
+                selectEnableStringParameters,
             );
+            const parameterChanges = extractAutomationParameterChanges({
+                enableParameters,
+                enableStringParameters,
+                alertParameters: getAutomationAlertParameters(targetAutomation),
+                exportParametersByTab: getAutomationExportParametersByTab(targetAutomation),
+                correlationId: automationId,
+            });
             for (const change of parameterChanges) {
                 yield call(changeParameterValuesHandler, ctx, changeParameterValues(change));
             }

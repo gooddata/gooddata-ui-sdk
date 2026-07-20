@@ -1,9 +1,10 @@
 // (C) 2026 GoodData Corporation
 
-import { parse as parseYaml } from "yaml";
 import type * as z from "zod/mini";
 
 import type { IMeasureMetadataObjectDefinition } from "@gooddata/sdk-model";
+
+import { validateYaml } from "../asCode/validateYaml.js";
 
 import { metricYamlToDefinition } from "./metricConverter.js";
 import { metricSchema } from "./metricSchema.js";
@@ -34,33 +35,21 @@ export function validateMetricYaml(
     value: string,
     options: ValidateMetricYamlOptions = {},
 ): MetricValidationResult {
-    if (value.trim() === "") {
-        return invalid("empty");
-    }
+    const result = validateYaml(value, {
+        schema: metricSchema,
+        fixedIdentifier: options.fixedIdentifier,
+        classifyError: classifyMetricError,
+    });
 
-    let parsed: unknown;
-    try {
-        parsed = parseYaml(value, { strict: true });
-    } catch {
-        return invalid("syntax");
-    }
-
-    const result = metricSchema.safeParse(parsed);
-    if (!result.success) {
-        return classifySchemaError(result.error, parsed);
-    }
-
-    if (options.fixedIdentifier !== undefined && result.data.id !== options.fixedIdentifier) {
-        return invalid("idImmutable");
-    }
-
-    return {
-        isValid: true,
-        measure: metricYamlToDefinition(result.data),
-    };
+    return result.ok
+        ? { isValid: true, measure: metricYamlToDefinition(result.data) }
+        : { isValid: false, errorCode: result.errorCode };
 }
 
-function classifySchemaError(error: z.core.$ZodError, parsed: unknown): MetricValidationResult {
+function classifyMetricError(
+    error: z.core.$ZodError,
+    parsed: unknown,
+): "invalidStructure" | "missingMaql" | "invalidTags" {
     const maqlProvided =
         typeof parsed === "object" && parsed !== null && (parsed as { maql?: unknown }).maql !== undefined;
 
@@ -69,19 +58,12 @@ function classifySchemaError(error: z.core.$ZodError, parsed: unknown): MetricVa
 
         if (path === "maql") {
             // A present-but-wrong-typed maql is a structural error, not a missing field.
-            return invalid(maqlProvided ? "invalidStructure" : "missingMaql");
+            return maqlProvided ? "invalidStructure" : "missingMaql";
         }
         if (path === "tags" || path.startsWith("tags.")) {
-            return invalid("invalidTags");
+            return "invalidTags";
         }
     }
 
-    return invalid("invalidStructure");
-}
-
-function invalid(code: MetricValidationErrorCode): MetricValidationResult {
-    return {
-        isValid: false,
-        errorCode: code,
-    };
+    return "invalidStructure";
 }
