@@ -8,17 +8,25 @@ import { type ChangeParameterValuesParams } from "../../commands/parameters.js";
 /**
  * Pure decision logic for restoring an automation's stored parameter overrides on dashboard load.
  * Returns the {@link changeParameterValues} command params to dispatch: alert params target the
- * active tab, export params target their own tab. Mirrors the filter-side `extractRelevantFilters` —
- * the saga reads the raw pieces off the automation and dispatches each result.
+ * active tab, export params target their own tab. Each export wire row carries its own type tag.
+ * Mirrors the filter-side `extractRelevantFilters` — the saga reads the raw pieces off the
+ * automation and dispatches each result.
  *
  * @internal
  */
-export function extractAutomationParameterChanges(
-    enableParameters: boolean,
-    alertParameters: IInsightParameterValue[] | undefined,
-    exportParametersByTab: Record<string, IDashboardExportParameter[]> | undefined,
-    correlationId: string,
-): ChangeParameterValuesParams[] {
+export function extractAutomationParameterChanges({
+    enableParameters,
+    enableStringParameters,
+    alertParameters,
+    exportParametersByTab,
+    correlationId,
+}: {
+    enableParameters: boolean;
+    enableStringParameters: boolean;
+    alertParameters: IInsightParameterValue[] | undefined;
+    exportParametersByTab: Record<string, IDashboardExportParameter[]> | undefined;
+    correlationId: string;
+}): ChangeParameterValuesParams[] {
     if (!enableParameters) {
         return [];
     }
@@ -27,7 +35,7 @@ export function extractAutomationParameterChanges(
         changes.push({ parameters: alertParameters, correlationId });
     }
     for (const [tabLocalIdentifier, exportParameters] of Object.entries(exportParametersByTab ?? {})) {
-        const parameters = exportParametersToValues(exportParameters);
+        const parameters = exportParametersToValues(exportParameters, enableStringParameters);
         if (parameters.length) {
             changes.push({ parameters, tabLocalIdentifier, correlationId });
         }

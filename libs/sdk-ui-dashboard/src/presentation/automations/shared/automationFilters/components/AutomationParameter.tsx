@@ -4,11 +4,11 @@ import { type KeyboardEvent, type ReactNode } from "react";
 
 import { useIntl } from "react-intl";
 
-import { DashboardParameterModeValues, type IdentifierRef } from "@gooddata/sdk-model";
+import { DashboardParameterModeValues, type IdentifierRef, type ParameterValue } from "@gooddata/sdk-model";
 import {
     Dropdown,
-    NumberParameterControlDropdown,
     type OverlayPositionType,
+    ParameterControl,
     UiChip,
     UiTooltip,
     isActionKey,
@@ -22,7 +22,7 @@ import { type IAutomationParameter } from "../automationParameters.js";
  */
 export interface IAutomationParameterProps {
     parameter: IAutomationParameter;
-    onChange?: (ref: IdentifierRef, value: number) => void;
+    onChange?: (ref: IdentifierRef, value: ParameterValue) => void;
     onDelete?: (ref: IdentifierRef) => void;
     overlayPositionType?: OverlayPositionType;
     isReadOnly?: boolean;
@@ -41,7 +41,7 @@ export function AutomationParameter({
     isReadOnly,
 }: IAutomationParameterProps): ReactNode {
     const intl = useIntl();
-    const { ref, title, value, mode, constraints } = parameter;
+    const { ref, title, value, mode, definition } = parameter;
     const testId = `automation-parameter-${ref.identifier}`;
     const label = intl.formatMessage({ id: "dialogs.automation.parameters.chip" }, { title, value });
     const lockedTooltip = intl.formatMessage({ id: "dialogs.automation.filters.lockedTooltip" });
@@ -114,10 +114,10 @@ export function AutomationParameter({
                 />
             )}
             renderBody={({ closeDropdown, ariaAttributes }) => (
-                <NumberParameterControlDropdown
+                <ParameterControl
                     name={title}
+                    definition={definition}
                     value={value}
-                    constraints={constraints}
                     inputId={valueInputId}
                     ariaAttributes={ariaAttributes}
                     onApply={(next) => {

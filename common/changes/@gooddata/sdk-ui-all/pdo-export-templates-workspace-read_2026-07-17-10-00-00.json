@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "Dashboard export and scheduled export now list both workspace-level and organization-level export templates (merged, deduplicated by ref); add workspace export templates caching decorator mirroring the organization one",
+            "type": "minor",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "petr.dolejsi@gooddata.com"
+}

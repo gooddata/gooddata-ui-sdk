@@ -380,6 +380,9 @@ export function validateExistingAutomationParameters({
             if (!workspaceParameter) {
                 return true;
             }
+            if ((stored.parameterType ?? "NUMBER") !== workspaceParameter.definition.type) {
+                return true;
+            }
             const dashboardParameter = dashboardById.get(stored.id);
             const mode = dashboardParameter?.mode ?? DashboardParameterModeValues.ACTIVE;
             const isPinnedByAuthor =
@@ -388,11 +391,12 @@ export function validateExistingAutomationParameters({
             if (!isPinnedByAuthor) {
                 continue;
             }
-            const workspaceDefault = isNumberParameterDefinition(workspaceParameter.definition)
-                ? workspaceParameter.definition.defaultValue
-                : undefined;
-            const currentValue = dashboardParameter?.value ?? workspaceDefault;
-            if (typeof currentValue === "number" && Number(stored.value) !== currentValue) {
+            const currentValue = dashboardParameter?.value ?? workspaceParameter.definition.defaultValue;
+            // NUMBER compares numerically so a non-canonical stored encoding (e.g. "1.50") doesn't read as drift
+            const valueDrifted = isNumberParameterDefinition(workspaceParameter.definition)
+                ? Number(stored.value) !== currentValue
+                : String(currentValue) !== stored.value;
+            if (valueDrifted) {
                 return true;
             }
         }

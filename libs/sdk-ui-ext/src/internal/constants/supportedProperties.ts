@@ -146,11 +146,14 @@ export const LINE_CHART_SUPPORTED_PROPERTIES = {
     ],
 };
 
+/**
+ * Radar charts have no Cartesian axes; only spoke/radial label visibility and radial scale apply.
+ */
 export const RADAR_CHART_SUPPORTED_PROPERTIES = [
     ...BASE_PROPERTIES,
     ...ANOMALIES_PROPERTIES,
-    ...BASE_X_AXIS_PROPERTIES,
-    ...BASE_Y_AXIS_PROPERTIES,
+    "xaxis.labelsEnabled",
+    "yaxis.labelsEnabled",
     "yaxis.min",
     "yaxis.max",
     "dataPoints.visible",

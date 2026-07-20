@@ -793,6 +793,12 @@ export interface IFeatureFlags {
     enableGeoChartA11yImprovements?: boolean;
 
     /**
+     * Enables tabular exports of multi-layer geo charts with one sheet (XLSX) or file (CSV)
+     * per layer.
+     */
+    enableGeoLayersExport?: boolean;
+
+    /**
      * Enables viewport configuration for geo charts (custom viewport + pan/zoom navigation controls).
      */
     enableGeoChartsViewportConfig?: boolean;

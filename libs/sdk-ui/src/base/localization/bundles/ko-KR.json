@@ -717,6 +717,7 @@
     "shareDialog.olp.generalAccess.groupLabel": "일반 액세스",
     "shareDialog.olp.generalAccess.restricted.title": "제한됨",
     "shareDialog.olp.generalAccess.restricted.description": "위에 추가된 사람과 그룹만 이 개체에 액세스할 수 있습니다.",
+    "shareDialog.olp.generalAccess.restricted.description.inherited": "모든 작업 공간 구성원에 대한 액세스 권한은 상위 작업 공간에서 부여되며 여기에서 제한할 수 없습니다.",
     "shareDialog.olp.generalAccess.workspace.title": "모든 작업 공간 구성원",
     "shareDialog.olp.generalAccess.workspace.description": "이 작업 공간의 모든 사용자가 이 개체를 볼 수 있습니다.",
     "shareDialog.olp.generalAccess.workspace.description.share": "이 작업 공간의 모든 사용자가 이 개체를 보고 공유할 수 있습니다.",
@@ -1199,5 +1200,6 @@
     "mvf.details.id": "ID",
     "mvf.details.infoButtonLabel": "메트릭 세부 정보 표시",
     "mvf.details.type": "유형",
-    "mvf.details.typeValue": "메트릭"
+    "mvf.details.typeValue": "메트릭",
+    "visualization.stackLabel.aria.total": "총계"
 }

@@ -292,6 +292,7 @@
     "gs.date.yesterday": "어제",
     "messages.exportResultError": "데이터 내보내기에 실패했습니다. 나중에 다시 시도하세요.",
     "messages.exportResultError.tooManyRows": "내보내기에 실패했습니다. 행이 너무 많습니다 ({actual}). 제한은 {limit}입니다.",
+    "messages.exportResultError.timeout": "내보내기 시간이 초과되었습니다. 내보내기 범위를 좁히고(행 또는 열 수 감소) 다시 시도하십시오.",
     "messages.exportResultRestrictedError": "이 시각화를 내보낼 수 없습니다. 제한된 데이터가 포함되어 있습니다.",
     "messages.exportResultStart": "내보내기 진행 중",
     "messages.exportResultSuccess": "내보내기 성공",

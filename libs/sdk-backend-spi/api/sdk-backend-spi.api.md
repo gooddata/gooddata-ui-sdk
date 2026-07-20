@@ -1404,8 +1404,16 @@ export type IExplainResult = {
     ["SQL"]: string;
 };
 
+// @alpha
+export interface IExportAdditionalExecution {
+    executionResult: IExecutionResult;
+    title?: string;
+}
+
 // @public
 export interface IExportConfig {
+    // @alpha
+    additionalExecutions?: ReadonlyArray<IExportAdditionalExecution>;
     delimiter?: string;
     format?: "xlsx" | "csv" | "raw" | "pdf";
     grandTotalsPosition?: "pinnedBottom" | "pinnedTop" | "bottom" | "top";

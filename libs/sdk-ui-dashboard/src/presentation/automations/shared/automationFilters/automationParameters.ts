@@ -7,36 +7,37 @@ import {
     type IDashboardExportParameter,
     type IDashboardParameter,
     type IInsightParameterValue,
-    type INumberParameterConstraints,
+    type IParameterDefinition,
     type IParameterMetadataObject,
     type IdentifierRef,
+    type ParameterValue,
     isIdentifierRef,
-    isNumberParameterDefinition,
     objRefToString,
+    parameterValueMatchesType,
+    sanitizeParameterValue,
 } from "@gooddata/sdk-model";
 
-import {
-    exportParametersToValues,
-    isAutomationSupportedParameterValue,
-} from "../../../../_staging/automation/index.js";
+import { exportParametersToValues } from "../../../../_staging/automation/index.js";
 
 /**
  * A workspace parameter resolved for display and editing inside an automation (alert/schedule)
- * dialog. The `value` is the current effective value the headless run will capture.
+ * dialog. The `value` is the current effective value the headless run will capture; `definition`
+ * picks which control renders.
  *
  * @internal
  */
 export interface IAutomationParameter {
     ref: IdentifierRef;
     title: string;
-    value: number;
+    value: ParameterValue;
     mode: DashboardParameterMode;
-    constraints?: INumberParameterConstraints;
+    definition: IParameterDefinition;
 }
 
 /**
  * Stored {@link IInsightParameterValue} overrides carry only {ref, value}; title, mode and
- * constraints are re-derived from the current dashboard and workspace catalog.
+ * definition are re-derived from the current dashboard and workspace catalog. Rows without a
+ * resolvable definition (see {@link resolveParameterDefinition}) are dropped.
  *
  * @internal
  */
@@ -44,33 +45,38 @@ export function reconstructAutomationParametersFromValues(
     stored: IInsightParameterValue[],
     dashboardParameters: IDashboardParameter[],
     catalog: IParameterMetadataObject[],
+    isStringParametersEnabled: boolean,
 ): IAutomationParameter[] {
     const dashboardByRef = new Map(
         dashboardParameters.map((parameter) => [objRefToString(parameter.ref), parameter]),
     );
     const workspaceByRef = new Map(catalog.map((parameter) => [objRefToString(parameter.ref), parameter]));
     return stored.flatMap((row) => {
-        if (!isAutomationSupportedParameterValue(row.value)) {
-            return [];
-        }
         const refKey = objRefToString(row.ref);
         const dashboardParameter = dashboardByRef.get(refKey);
         const workspaceParameter = workspaceByRef.get(refKey);
-        const constraints = numberConstraints(workspaceParameter);
+        const definition = resolveParameterDefinition(
+            workspaceParameter,
+            row.value,
+            isStringParametersEnabled,
+        );
+        if (!definition) {
+            return [];
+        }
         return {
             ref: row.ref,
             title: dashboardParameter?.label ?? workspaceParameter?.title ?? row.ref.identifier,
             value: row.value,
             mode: dashboardParameter?.mode ?? DashboardParameterModeValues.ACTIVE,
-            ...(constraints ? { constraints } : {}),
+            definition,
         };
     });
 }
 
 /**
  * Stored export overrides ({@link IDashboardExportParameter}) carry the value as a string; it is
- * parsed back to a number and non-finite values are dropped. Title, mode and constraints are
- * re-derived from the current dashboard and workspace catalog, mirroring
+ * decoded back by the row's own type tag (see `exportParametersToValues`). Title, mode and
+ * definition are re-derived from the current dashboard and workspace catalog, mirroring
  * {@link reconstructAutomationParametersFromValues}.
  *
  * @internal
@@ -79,18 +85,20 @@ export function reconstructAutomationParametersFromExportParameters(
     stored: IDashboardExportParameter[],
     dashboardParameters: IDashboardParameter[],
     catalog: IParameterMetadataObject[],
+    isStringParametersEnabled: boolean,
 ): IAutomationParameter[] {
     return reconstructAutomationParametersFromValues(
-        exportParametersToValues(stored),
+        exportParametersToValues(stored, isStringParametersEnabled),
         dashboardParameters,
         catalog,
+        isStringParametersEnabled,
     );
 }
 
 /**
- * Parameters of unsupported types are dropped (cannot be rendered/clamped). Dashboard-`hidden`
- * and `readonly` ones are dropped too — once added they would derive back to an invisible or
- * locked (undeletable) chip.
+ * Dashboard-`hidden` and `readonly` parameters are dropped — once added they would derive back to
+ * an invisible or locked (undeletable) parameter. Catalog STRING parameters are dropped too while
+ * `isStringParametersEnabled` is off.
  *
  * @internal
  */
@@ -99,6 +107,7 @@ export function availableAutomationParameters(
     selected: IAutomationParameter[],
     dashboardParameters: IDashboardParameter[] = [],
     widgetParameterValues: IInsightParameterValue[] = [],
+    isStringParametersEnabled: boolean,
 ): IAutomationParameter[] {
     const selectedRefKeys = new Set(selected.map((parameter) => objRefToString(parameter.ref)));
     const dashboardByRef = new Map(
@@ -109,11 +118,8 @@ export function availableAutomationParameters(
     );
     const result: IAutomationParameter[] = [];
     for (const workspaceParameter of catalog) {
-        if (!isNumberParameterDefinition(workspaceParameter.definition)) {
-            continue;
-        }
-        const { ref } = workspaceParameter;
-        if (!isIdentifierRef(ref)) {
+        const { ref, definition } = workspaceParameter;
+        if (!isIdentifierRef(ref) || (definition.type === "STRING" && !isStringParametersEnabled)) {
             continue;
         }
         const refKey = objRefToString(ref);
@@ -125,15 +131,15 @@ export function availableAutomationParameters(
         ) {
             continue;
         }
-        const { defaultValue, constraints } = workspaceParameter.definition;
         // mirror the live-render precedence: runtimeOverride/insight value > dashboard value > default
-        const effectiveValue = widgetValueByRef.get(refKey) ?? dashboardParameter?.value ?? defaultValue;
+        const effectiveValue =
+            widgetValueByRef.get(refKey) ?? dashboardParameter?.value ?? definition.defaultValue;
         result.push({
             ref,
             title: dashboardParameter?.label ?? workspaceParameter.title,
-            value: isAutomationSupportedParameterValue(effectiveValue) ? effectiveValue : defaultValue,
+            value: sanitizeParameterValue(definition, effectiveValue),
             mode: DashboardParameterModeValues.ACTIVE,
-            ...(constraints ? { constraints } : {}),
+            definition,
         });
     }
     return result;
@@ -166,7 +172,8 @@ export function setAlertExecutionParameters(
 
 /**
  * A param dropped from the *dashboard* is not stale: parameters are workspace-scoped, so only
- * removal from the workspace catalog counts.
+ * removal from the workspace catalog counts — as does a parameter recreated with the same id but
+ * the other type, where the decoded value kind disagrees with the current definition.
  *
  * @internal
  */
@@ -177,8 +184,8 @@ export function hasStaleAlertParameters(
     if (!stored?.length) {
         return false;
     }
-    const catalogParameterIds = new Set(catalog.map((parameter) => parameter.id));
-    return stored.some((parameter) => !alertParameterIsInCatalog(parameter, catalogParameterIds));
+    const catalogById = new Map(catalog.map((parameter) => [parameter.id, parameter]));
+    return stored.some((parameter) => !alertParameterMatchesCatalog(parameter, catalogById));
 }
 
 /**
@@ -190,14 +197,14 @@ export function dropStaleAlertParameters(
     stored: IInsightParameterValue[],
     catalog: IParameterMetadataObject[],
 ): IInsightParameterValue[] {
-    const catalogParameterIds = new Set(catalog.map((parameter) => parameter.id));
-    return stored.filter((parameter) => alertParameterIsInCatalog(parameter, catalogParameterIds));
+    const catalogById = new Map(catalog.map((parameter) => [parameter.id, parameter]));
+    return stored.filter((parameter) => alertParameterMatchesCatalog(parameter, catalogById));
 }
 
 /**
- * Encodes the display-ready chip set back to the neutral export wire shape ({id, value:string,
- * title}). The full per-tab execution set (including `hidden` entries) is converted, not just the
- * visible chips, so the server resolver does not drop omitted parameters to the workspace default.
+ * Encodes the display-ready parameter set back to the neutral export wire shape ({id, value:string,
+ * title, parameterType}). The full per-tab execution set (including `hidden` entries) is converted, not just the
+ * visible ones, so the server resolver does not drop omitted parameters to the workspace default.
  *
  * @internal
  */
@@ -208,6 +215,7 @@ export function automationParametersToExportParameters(
         id: parameter.ref.identifier,
         value: String(parameter.value),
         title: parameter.title,
+        parameterType: parameter.definition.type,
     }));
 }
 
@@ -242,17 +250,37 @@ export function shouldStoreExportParameters(isWidgetSchedule: boolean, storeFilt
     return isWidgetSchedule || storeFilters;
 }
 
-function alertParameterIsInCatalog(
+function alertParameterMatchesCatalog(
     parameter: IInsightParameterValue,
-    catalogParameterIds: Set<string>,
+    catalogById: Map<string, IParameterMetadataObject>,
 ): boolean {
-    return catalogParameterIds.has(parameter.ref.identifier);
+    const workspaceParameter = catalogById.get(parameter.ref.identifier);
+    return !!workspaceParameter && parameterValueMatchesType(workspaceParameter.definition, parameter.value);
 }
 
-function numberConstraints(
+/**
+ * Every parameter needs a definition — its `type` picks which control renders. The workspace
+ * parameter definition is the source of truth; when its type disagrees with the stored value the
+ * parameter was recreated as the other type, so the parameter is dropped.
+ */
+function resolveParameterDefinition(
     workspaceParameter: IParameterMetadataObject | undefined,
-): INumberParameterConstraints | undefined {
-    return workspaceParameter && isNumberParameterDefinition(workspaceParameter.definition)
-        ? workspaceParameter.definition.constraints
-        : undefined;
+    value: ParameterValue,
+    isStringParametersEnabled: boolean,
+): IParameterDefinition | undefined {
+    const definition = workspaceParameter?.definition;
+    if (definition) {
+        if (definition.type === "STRING" && !isStringParametersEnabled) {
+            return undefined;
+        }
+        return parameterValueMatchesType(definition, value) ? definition : undefined;
+    }
+    // Deleted workspace parameter: synthesize a definition from the value so the parameter stays
+    // editable (the constraint-less M1 fallback). Its `defaultValue` is a shape-filling
+    // placeholder — rely only on `type`. STRING synthesis is gated the same way as the catalog
+    // branch above.
+    if (typeof value === "number") {
+        return { type: "NUMBER", defaultValue: value };
+    }
+    return isStringParametersEnabled ? { type: "STRING", defaultValue: value } : undefined;
 }

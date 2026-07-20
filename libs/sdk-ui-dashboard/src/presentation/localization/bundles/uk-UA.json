@@ -292,6 +292,7 @@
     "gs.date.yesterday": "Учора",
     "messages.exportResultError": "Не вдалося експортувати дані. Спробуйте пізніше.",
     "messages.exportResultError.tooManyRows": "Не вдалося виконати експорт. Забагато рядків ({actual}). Ліміт — {limit}.",
+    "messages.exportResultError.timeout": "Час очікування експорту минув. Звузьте експорт (менше рядків або стовпців) і повторіть спробу.",
     "messages.exportResultRestrictedError": "Ви не можете експортувати цю візуалізацію, оскільки вона містить обмежені дані.",
     "messages.exportResultStart": "Триває експорт",
     "messages.exportResultSuccess": "Експорт успішний.",

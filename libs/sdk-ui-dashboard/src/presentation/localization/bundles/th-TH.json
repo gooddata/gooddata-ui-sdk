@@ -292,6 +292,7 @@
     "gs.date.yesterday": "เมื่อวาน",
     "messages.exportResultError": "ส่งออกข้อมูลไม่สำเร็จ โปรดลองอีกครั้งภายหลัง",
     "messages.exportResultError.tooManyRows": "ส่งออกไม่สำเร็จ แถวมากเกินไป ({actual}) ขีดจำกัดคือ {limit}",
+    "messages.exportResultError.timeout": "การส่งออกหมดเวลาแล้ว จำกัดขอบเขตการส่งออก (จำนวนแถวหรือคอลัมน์น้อยลง) แล้วลองอีกครั้ง",
     "messages.exportResultRestrictedError": "คุณไม่สามารถส่งออกการแสดงภาพข้อมูลนี้ได้เนื่องจากมีข้อมูลที่ถูกจำกัด",
     "messages.exportResultStart": "กำลังส่งออก",
     "messages.exportResultSuccess": "ส่งออกสำเร็จ",

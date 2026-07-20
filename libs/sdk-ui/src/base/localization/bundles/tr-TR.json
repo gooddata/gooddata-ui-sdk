@@ -717,6 +717,7 @@
     "shareDialog.olp.generalAccess.groupLabel": "Genel erişim",
     "shareDialog.olp.generalAccess.restricted.title": "Kısıtlı",
     "shareDialog.olp.generalAccess.restricted.description": "Bu nesneye yalnızca yukarıya eklenen kişiler ve gruplar erişebilir.",
+    "shareDialog.olp.generalAccess.restricted.description.inherited": "Tüm çalışma alanı üyeleri için erişim bir üst çalışma alanından verilir ve burada kısıtlanamaz.",
     "shareDialog.olp.generalAccess.workspace.title": "Tüm çalışma alanı üyeleri",
     "shareDialog.olp.generalAccess.workspace.description": "Bu çalışma alanındaki herkes bu nesneyi görüntüleyebilir.",
     "shareDialog.olp.generalAccess.workspace.description.share": "Bu çalışma alanındaki herkes bu nesneyi görüntüleyebilir ve paylaşabilir.",
@@ -1199,5 +1200,6 @@
     "mvf.details.id": "Kimlik",
     "mvf.details.infoButtonLabel": "Metrik ayrıntılarını göster",
     "mvf.details.type": "Tür",
-    "mvf.details.typeValue": "Metrik"
+    "mvf.details.typeValue": "Metrik",
+    "visualization.stackLabel.aria.total": "toplam"
 }

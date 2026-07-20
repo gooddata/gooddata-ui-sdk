@@ -12,7 +12,10 @@ import {
 } from "@gooddata/sdk-model";
 
 import { selectCatalogParameters } from "../../../../../model/store/catalog/catalogSelectors.js";
-import { selectEnableParameters } from "../../../../../model/store/config/configSelectors.js";
+import {
+    selectEnableParameters,
+    selectEnableStringParameters,
+} from "../../../../../model/store/config/configSelectors.js";
 import { selectWidgetLocalIdToTabIdMap } from "../../../../../model/store/tabs/layout/layoutSelectors.js";
 import { selectTabs } from "../../../../../model/store/tabs/tabsSelectors.js";
 import type { ExtendedDashboardWidget } from "../../../../../model/types/layoutTypes.js";
@@ -21,10 +24,15 @@ import {
     useAutomationExportParameters,
 } from "../useAutomationExportParameters.js";
 
-import { dashboardParameter, workspaceParameter } from "./parameterFixtures.js";
+import {
+    dashboardParameter,
+    workspaceNumberParameter,
+    workspaceStringParameter,
+} from "./parameterFixtures.js";
 
 interface IMockStoreState {
     enableParameters: boolean;
+    enableStringParameters: boolean;
     catalog: IParameterMetadataObject[];
     dashboardParametersByTab: Record<string, IDashboardParameter[]>;
     tabs: Array<{ localIdentifier: string }> | undefined;
@@ -47,6 +55,8 @@ function resolveSelectorValue(selector: unknown): unknown {
     switch (selector) {
         case selectEnableParameters:
             return mockState.enableParameters;
+        case selectEnableStringParameters:
+            return mockState.enableStringParameters;
         case selectCatalogParameters:
             return mockState.catalog;
         case smartPersistedTabsParametersSelector:
@@ -68,7 +78,7 @@ vi.mock("../../../../../model/react/DashboardStoreProvider.js", () => ({
 
 vi.mock("../../../../../model/store/tabs/parameters/parametersSelectors.js", () => ({
     selectSmartPersistedTabsParameters: smartPersistedTabsParametersSelector,
-    selectAutomationExportEffectiveParameters: () => exportEffectiveParametersSelector,
+    selectExportEffectiveParameters: () => exportEffectiveParametersSelector,
 }));
 
 const existingAutomation = (
@@ -123,11 +133,18 @@ const topNRef = idRef("topN", "parameter");
 beforeEach(() => {
     mockState = {
         enableParameters: true,
-        catalog: [workspaceParameter("topN", "Top N", 3), workspaceParameter("limit", "Limit", 50)],
+        enableStringParameters: true,
+        catalog: [
+            workspaceNumberParameter("topN", "Top N", 3),
+            workspaceNumberParameter("limit", "Limit", 50),
+            workspaceStringParameter("scenario", "Scenario", "Actual"),
+        ],
         dashboardParametersByTab: { tab1: [dashboardParameter("topN", { value: 5 })] },
         tabs: [{ localIdentifier: "tab1" }],
         widgetTabMap: { w1: "tab1" },
-        effectiveParametersByTab: { tab1: [{ id: "topN", value: "5", title: "Top N" }] },
+        effectiveParametersByTab: {
+            tab1: [{ id: "topN", value: "5", title: "Top N", parameterType: "NUMBER" }],
+        },
     };
 });
 
@@ -185,7 +202,7 @@ describe("useAutomationExportParameters — chip edits", () => {
 
         // Seeded from the dashboard-configured value (5), not the workspace default (3)
         expect(setParametersWire).toHaveBeenLastCalledWith({
-            tab1: [{ id: "topN", value: "5", title: "Top N" }],
+            tab1: [{ id: "topN", value: "5", title: "Top N", parameterType: "NUMBER" }],
         });
         expect(result.current.visibleParametersByTab["tab1"]?.map((parameter) => parameter.value)).toEqual([
             5,
@@ -200,7 +217,7 @@ describe("useAutomationExportParameters — chip edits", () => {
         });
 
         expect(setParametersWire).toHaveBeenLastCalledWith({
-            tab1: [{ id: "topN", value: "7", title: "Top N" }],
+            tab1: [{ id: "topN", value: "7", title: "Top N", parameterType: "NUMBER" }],
         });
     });
 
@@ -225,7 +242,7 @@ describe("useAutomationExportParameters — chip edits", () => {
         });
 
         expect(setParametersWire).toHaveBeenLastCalledWith({
-            tab1: [{ id: "topN", value: "9", title: "Top N" }],
+            tab1: [{ id: "topN", value: "9", title: "Top N", parameterType: "NUMBER" }],
         });
     });
 
@@ -238,7 +255,45 @@ describe("useAutomationExportParameters — chip edits", () => {
         });
 
         expect(setParametersWire).toHaveBeenLastCalledWith({
-            tab1: [{ id: "topN", value: "9", title: "Top N" }],
+            tab1: [{ id: "topN", value: "9", title: "Top N", parameterType: "NUMBER" }],
+        });
+    });
+
+    it("keeps a stored STRING row on the wire when an unrelated chip is edited", () => {
+        const { result, setParametersWire } = renderParametersHook({
+            automationToEdit: existingAutomation({
+                tab1: [
+                    { id: "topN", value: "8", title: "Top N", parameterType: "NUMBER" },
+                    { id: "scenario", value: "Budget", title: "Scenario", parameterType: "STRING" },
+                ],
+            }),
+        });
+
+        act(() => {
+            result.current.onParameterChangeByTab("tab1", topNRef, 7);
+        });
+
+        expect(setParametersWire).toHaveBeenLastCalledWith({
+            tab1: [
+                { id: "topN", value: "7", title: "Top N", parameterType: "NUMBER" },
+                { id: "scenario", value: "Budget", title: "Scenario", parameterType: "STRING" },
+            ],
+        });
+    });
+
+    it("changes a STRING chip value and re-encodes the wire verbatim", () => {
+        const { result, setParametersWire } = renderParametersHook({
+            automationToEdit: existingAutomation({
+                tab1: [{ id: "scenario", value: "Budget", title: "Scenario", parameterType: "STRING" }],
+            }),
+        });
+
+        act(() => {
+            result.current.onParameterChangeByTab("tab1", idRef("scenario", "parameter"), "Q1 & Q2 = “best”");
+        });
+
+        expect(setParametersWire).toHaveBeenLastCalledWith({
+            tab1: [{ id: "scenario", value: "Q1 & Q2 = “best”", title: "Scenario", parameterType: "STRING" }],
         });
     });
 
@@ -246,7 +301,9 @@ describe("useAutomationExportParameters — chip edits", () => {
         // Widget renders "limit" as 99 (insight-authored), and the dashboard has no override for it,
         // so the workspace default (50) would be wrong. Re-adding after a delete must restore 99.
         const limitRef = idRef("limit", "parameter");
-        mockState.effectiveParametersByTab = { tab1: [{ id: "limit", value: "99", title: "Limit" }] };
+        mockState.effectiveParametersByTab = {
+            tab1: [{ id: "limit", value: "99", title: "Limit", parameterType: "NUMBER" }],
+        };
         const { result, setParametersWire } = renderParametersHook({ widget: insightWidget });
 
         act(() => {
@@ -257,7 +314,7 @@ describe("useAutomationExportParameters — chip edits", () => {
         });
 
         expect(setParametersWire).toHaveBeenLastCalledWith({
-            tab1: [{ id: "limit", value: "99", title: "Limit" }],
+            tab1: [{ id: "limit", value: "99", title: "Limit", parameterType: "NUMBER" }],
         });
     });
 });
@@ -265,7 +322,9 @@ describe("useAutomationExportParameters — chip edits", () => {
 describe("useAutomationExportParameters — applyLatest", () => {
     it("resets the working set to the dashboard's effective values and writes the wire", () => {
         const { result, setParametersWire } = renderParametersHook({
-            automationToEdit: existingAutomation({ tab1: [{ id: "topN", value: "8", title: "Top N" }] }),
+            automationToEdit: existingAutomation({
+                tab1: [{ id: "topN", value: "8", title: "Top N", parameterType: "NUMBER" }],
+            }),
         });
         expect(result.current.visibleParametersByTab["tab1"]?.map((parameter) => parameter.value)).toEqual([
             8,
@@ -276,7 +335,7 @@ describe("useAutomationExportParameters — applyLatest", () => {
         });
 
         expect(setParametersWire).toHaveBeenCalledWith({
-            tab1: [{ id: "topN", value: "5", title: "Top N" }],
+            tab1: [{ id: "topN", value: "5", title: "Top N", parameterType: "NUMBER" }],
         });
         expect(result.current.visibleParametersByTab["tab1"]?.map((parameter) => parameter.value)).toEqual([
             5,
@@ -287,7 +346,9 @@ describe("useAutomationExportParameters — applyLatest", () => {
 describe("useAutomationExportParameters — onStoreParametersChange", () => {
     it("drops persistence when store-parameters is turned off while keeping the chips", () => {
         const { result, setParametersWire } = renderParametersHook({
-            automationToEdit: existingAutomation({ tab1: [{ id: "topN", value: "8", title: "Top N" }] }),
+            automationToEdit: existingAutomation({
+                tab1: [{ id: "topN", value: "8", title: "Top N", parameterType: "NUMBER" }],
+            }),
         });
 
         act(() => {
@@ -304,7 +365,7 @@ describe("useAutomationExportParameters — onStoreParametersChange", () => {
         });
 
         expect(setParametersWire).toHaveBeenLastCalledWith({
-            tab1: [{ id: "topN", value: "8", title: "Top N" }],
+            tab1: [{ id: "topN", value: "8", title: "Top N", parameterType: "NUMBER" }],
         });
     });
 });

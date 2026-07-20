@@ -2,9 +2,9 @@
 
 import { useCallback } from "react";
 
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { Bubble, BubbleHoverTrigger, Button, useMediaQuery } from "@gooddata/sdk-ui-kit";
+import { UiIconButton, UiTooltip, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../../../locales.js";
 import {
@@ -52,26 +52,29 @@ export function DefaultSettingButton({
     isEnabled,
     isSaving,
     buttonTitle,
+    buttonValue,
     onSettingClick,
 }: ISettingButtonProps) {
+    const intl = useIntl();
+
     if (!isVisible) {
         return null;
     }
 
     return (
-        <BubbleHoverTrigger>
-            <Button
-                className="gd-button-secondary gd-button-icon-only setting-button s-setting_button gd-icon-settings"
-                onClick={onSettingClick}
-                disabled={!isEnabled || isSaving}
-            />
-            <Bubble
-                alignPoints={[{ align: "bc tr" }]}
-                arrowOffsets={{ "bc tr": [10, 20] }}
-                alignTo={`.setting-button`}
-            >
-                <FormattedMessage {...buttonTitle} />
-            </Bubble>
-        </BubbleHoverTrigger>
+        <UiTooltip
+            arrowPlacement="top-end"
+            content={<FormattedMessage {...buttonTitle} />}
+            width={300}
+            anchor={
+                <UiIconButton
+                    onClick={onSettingClick}
+                    isDisabled={!isEnabled || isSaving}
+                    icon="settings"
+                    accessibilityConfig={{ ariaLabel: intl.formatMessage(buttonValue) }}
+                />
+            }
+            triggerBy={["hover", "focus"]}
+        />
     );
 }

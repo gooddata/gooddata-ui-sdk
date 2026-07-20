@@ -392,9 +392,11 @@ export { isGeoVisualizationUsingNewEngine } from "./base/vis/isGeoVisualizationU
 export {
     type GeoTableConversionOptions,
     type IGeoDataExportPreparationOptions,
+    type IGeoLayerExportInsight,
     convertGeoInsightToTableDefinition,
     getGeoDefaultDisplayFormRefs,
     prepareGeoInsightForDataExport,
+    prepareGeoLayerInsightsForDataExport,
     resolveDefaultDisplayFormRefForDisplayForm,
 } from "./base/vis/geoDataExport.js";
 export {

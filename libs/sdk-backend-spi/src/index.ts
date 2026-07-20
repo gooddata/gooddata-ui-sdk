@@ -57,6 +57,10 @@ export type {
     IOutliersResult,
     IExecutionResultBinaryStreamConfig,
     ExecutionResultBinaryStreamFormat,
+    IExportConfig,
+    IExportResult,
+    IExportPdfConfig,
+    IExportAdditionalExecution,
 } from "./workspace/execution/index.js";
 
 export type { IWorkspaceSettingsService } from "./workspace/settings/index.js";
@@ -112,8 +116,6 @@ export {
     isElementsQueryOptionsElementsByPrimaryDisplayFormValue,
     isValueBasedElementsQueryOptionsElements,
 } from "./workspace/attributes/elements/index.js";
-
-export type { IExportConfig, IExportResult, IExportPdfConfig } from "./workspace/execution/export.js";
 
 export {
     type AnalyticsCatalogGenerateTitleObjectType,

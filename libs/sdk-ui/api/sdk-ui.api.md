@@ -1242,6 +1242,14 @@ export type IGeoInsightExportNormalizationOptions = {
 };
 
 // @internal
+export interface IGeoLayerExportInsight {
+    attributeLocalIdMapping?: Record<string, string>;
+    layerId: string;
+    layerName: string;
+    tableInsight: IInsightDefinition;
+}
+
+// @internal
 export function ignoreTitlesForSimpleMeasures<T extends IInsightDefinition>(insight: T): T;
 
 // @public
@@ -2320,6 +2328,9 @@ export type PlaceholderValue<T> = T extends IPlaceholder<infer A> ? A : T extend
 
 // @internal (undocumented)
 export function prepareGeoInsightForDataExport(insight: IInsightDefinition, options: IGeoDataExportPreparationOptions): IInsightDefinition | undefined;
+
+// @internal
+export function prepareGeoLayerInsightsForDataExport(insight: IInsightDefinition, options: IGeoDataExportPreparationOptions): IGeoLayerExportInsight[] | undefined;
 
 // @public
 export class ProtectedReportSdkError extends GoodDataSdkError {

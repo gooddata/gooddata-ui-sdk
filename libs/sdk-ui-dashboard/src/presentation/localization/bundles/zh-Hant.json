@@ -292,6 +292,7 @@
     "gs.date.yesterday": "昨天",
     "messages.exportResultError": "匯出資料失敗。稍後再試。",
     "messages.exportResultError.tooManyRows": "匯出失敗。行數過多 ({actual} ）。極限是 {limit}。",
+    "messages.exportResultError.timeout": "匯出逾時。請縮小匯出範圍（減少列或欄），然後再試一次。",
     "messages.exportResultRestrictedError": "您無法匯出此視覺化效果，因為它包含受限資料。",
     "messages.exportResultStart": "導出正在進行中",
     "messages.exportResultSuccess": "匯出成功。",

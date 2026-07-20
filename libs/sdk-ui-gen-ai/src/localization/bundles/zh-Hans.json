@@ -29,6 +29,7 @@
     "gd.gen-ai.input-placeholder": "在这里询问…",
     "gd.gen-ai.input-label.mac": "提出你的问题。使用 control+space 或 cmd+I 获取建议。",
     "gd.gen-ai.input-label.win": "提出你的问题。使用 Control+Space 或 Control+I 获取建议。",
+    "gd.gen-ai.context.add_context": "添加上下文",
     "gd.gen-ai.agents": "智能体",
     "gd.gen-ai.agents.loading": "正在加载",
     "gd.gen-ai.agent.unavailable": "无可用智能体",

@@ -1,12 +1,9 @@
 // (C) 2026 GoodData Corporation
 
-import type { IAnalyticalBackend, IMeasureReferencing } from "@gooddata/sdk-backend-spi";
-import {
-    type IMeasureMetadataObject,
-    type IMeasureMetadataObjectDefinition,
-    idRef,
-} from "@gooddata/sdk-model";
+import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IMeasureMetadataObjectDefinition, idRef, isMeasureMetadataObject } from "@gooddata/sdk-model";
 
+import type { IAsCodeMutationPort } from "../asCode/descriptor.js";
 import { convertMeasureToCatalogItem } from "../catalogItem/converter.js";
 import {
     createMeasureCatalogItem,
@@ -15,23 +12,18 @@ import {
     getMeasureReferencingObjectsCatalogItem,
     updateMeasureCatalogItem,
 } from "../catalogItem/query.js";
-import type { ICatalogItemMeasure, ICatalogItemRef } from "../catalogItem/types.js";
+import type { ICatalogItemMeasure } from "../catalogItem/types.js";
 
 import { overlayMetricYamlFields } from "./metricConverter.js";
 
 /**
+ * A metric loads its full measure before editing (the catalog item carries no MAQL) and always
+ * supports the optional `load`/`getReferencingObjectsCount` capabilities — hence `Required`.
  * @internal
  */
-export interface IMetricMutationPort {
-    create(definition: IMeasureMetadataObjectDefinition): Promise<ICatalogItemMeasure>;
-    update(
-        existing: IMeasureMetadataObject,
-        definition: IMeasureMetadataObjectDefinition,
-    ): Promise<ICatalogItemMeasure>;
-    delete(ref: ICatalogItemRef): Promise<void>;
-    load(ref: ICatalogItemRef): Promise<IMeasureMetadataObject>;
-    getReferencingObjects(ref: ICatalogItemRef): Promise<IMeasureReferencing>;
-}
+export type IMetricMutationPort = Required<
+    IAsCodeMutationPort<IMeasureMetadataObjectDefinition, ICatalogItemMeasure>
+>;
 
 /**
  * @internal
@@ -45,40 +37,34 @@ export function createMetricMutationAdapter(
             const savedMeasure = await createMeasureCatalogItem(backend, workspace, definition);
             return convertMeasureToCatalogItem(savedMeasure);
         },
-        async update(existing, definition) {
+        async update(base, definition) {
+            // The measures endpoint is a full replace, so overlay the YAML-owned fields onto the loaded
+            // measure to carry over what the YAML cannot express (metricType, isHiddenFromKda, identity).
+            // `base` must be the persisted measure `load` returned — a bare definition (no server-managed
+            // `ref`) would silently drop those fields, so reject it loudly rather than corrupt the update.
+            if (!isMeasureMetadataObject(base)) {
+                throw new Error("Metric update requires the loaded measure as base, not a bare definition.");
+            }
             const savedMeasure = await updateMeasureCatalogItem(
                 backend,
                 workspace,
-                mergeMeasureDefinition(existing, definition),
+                overlayMetricYamlFields(base, definition),
             );
             return convertMeasureToCatalogItem(savedMeasure);
         },
         async delete(ref) {
             await deleteMeasureCatalogItem(backend, workspace, idRef(ref.identifier, "measure"));
         },
-        async load(ref) {
-            return getMeasureCatalogItem(backend, workspace, idRef(ref.identifier, "measure"));
+        async load(item) {
+            return getMeasureCatalogItem(backend, workspace, idRef(item.identifier, "measure"));
         },
-        async getReferencingObjects(ref) {
-            return getMeasureReferencingObjectsCatalogItem(
+        async getReferencingObjectsCount(item) {
+            const referencing = await getMeasureReferencingObjectsCatalogItem(
                 backend,
                 workspace,
-                idRef(ref.identifier, "measure"),
+                idRef(item.identifier, "measure"),
             );
+            return (referencing.insights?.length ?? 0) + (referencing.measures?.length ?? 0);
         },
     };
-}
-
-/**
- * Overlays the fields the as-code YAML owns onto the loaded metric.
- *
- * The measures update endpoint is a full replace, so fields absent from the YAML
- * (`metricType`, `isHiddenFromKda`, identity, ...) must be carried over from the loaded metric to
- * avoid wiping them; `overlayMetricYamlFields` preserves them via the base spread.
- */
-function mergeMeasureDefinition(
-    existing: IMeasureMetadataObject,
-    definition: IMeasureMetadataObjectDefinition,
-): IMeasureMetadataObject {
-    return overlayMetricYamlFields(existing, definition);
 }

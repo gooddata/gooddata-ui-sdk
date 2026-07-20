@@ -29,6 +29,7 @@
     "gd.gen-ai.input-placeholder": "여기에 질문하세요…",
     "gd.gen-ai.input-label.mac": "질문을 입력하세요. 제안 사항을 보려면 control+space 또는 cmd+I를 사용하세요.",
     "gd.gen-ai.input-label.win": "질문을 입력하세요. 제안 사항을 보려면 control+space 또는 control+I를 사용하세요.",
+    "gd.gen-ai.context.add_context": "컨텍스트 추가",
     "gd.gen-ai.agents": "에이전트",
     "gd.gen-ai.agents.loading": "로딩 중",
     "gd.gen-ai.agent.unavailable": "사용 가능한 에이전트가 없습니다",

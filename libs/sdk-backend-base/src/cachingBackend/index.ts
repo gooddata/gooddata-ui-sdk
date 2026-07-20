@@ -46,6 +46,7 @@ import {
     type IWorkspaceCatalog,
     type IWorkspaceCatalogFactory,
     type IWorkspaceCatalogFactoryOptions,
+    type IWorkspaceExportTemplatesService,
     type IWorkspaceInsightsService,
     type IWorkspaceSettings,
     type IWorkspaceSettingsService,
@@ -117,8 +118,10 @@ import {
     type InsightsDecoratorFactory,
     type OrganizationExportTemplatesDecoratorFactory,
     type SecuritySettingsDecoratorFactory,
+    type WorkspaceExportTemplatesDecoratorFactory,
     type WorkspaceSettingsDecoratorFactory,
 } from "../decoratedBackend/types.js";
+import { DecoratedWorkspaceExportTemplatesService } from "../decoratedBackend/workspaceExportTemplates.js";
 import { DecoratedWorkspaceSettingsService } from "../decoratedBackend/workspaceSettings.js";
 import { mergeBbox } from "../toolkit/geoItems.js";
 
@@ -182,6 +185,7 @@ type CachingContext = {
         workspaceAutomations?: LRUCache<string, AutomationCacheEntry>;
         workspaceInsights?: LRUCache<string, InsightsCacheEntry>;
         organizationExportTemplates?: LRUCache<string, Promise<IExportTemplate[]>>;
+        workspaceExportTemplates?: LRUCache<string, Promise<IExportTemplate[]>>;
         workspaceSettings?: LRUCache<string, WorkspaceSettingsCacheEntry>;
         geo?: GeoCacheEntry;
     };
@@ -1850,8 +1854,12 @@ class WithOrganizationExportTemplatesCaching extends DecoratedOrganizationExport
         const result = cache.get(key);
 
         if (!result) {
-            const promise = super.getExportTemplates().catch((e) => {
-                cache.delete(key);
+            const promise: Promise<IExportTemplate[]> = super.getExportTemplates().catch((e) => {
+                // Only evict our own failed promise — a newer in-flight request may already own the
+                // key (after invalidation or LRU eviction) and must not be dropped.
+                if (cache.get(key) === promise) {
+                    cache.delete(key);
+                }
                 throw e;
             });
 
@@ -1892,6 +1900,78 @@ class WithOrganizationExportTemplatesCaching extends DecoratedOrganizationExport
 function cachedOrganizationExportTemplates(ctx: CachingContext): OrganizationExportTemplatesDecoratorFactory {
     return (original, organizationId) =>
         new WithOrganizationExportTemplatesCaching(original, ctx, organizationId);
+}
+
+//
+// WORKSPACE EXPORT TEMPLATES CACHING
+//
+
+class WithWorkspaceExportTemplatesCaching extends DecoratedWorkspaceExportTemplatesService {
+    constructor(
+        decorated: IWorkspaceExportTemplatesService,
+        private readonly ctx: CachingContext,
+        private readonly workspace: string,
+    ) {
+        super(decorated);
+    }
+
+    public override getExportTemplates(): Promise<IExportTemplate[]> {
+        const cache = this.ctx.caches.workspaceExportTemplates!;
+        const key = this.workspace;
+
+        const result = cache.get(key);
+
+        if (!result) {
+            const promise: Promise<IExportTemplate[]> = super.getExportTemplates().catch((e) => {
+                // Only evict our own failed promise — a newer in-flight request may already own the
+                // key (after invalidation or LRU eviction) and must not be dropped.
+                if (cache.get(key) === promise) {
+                    cache.delete(key);
+                }
+                throw e;
+            });
+
+            cache.set(key, promise);
+            return promise;
+        }
+
+        return result;
+    }
+
+    // oxlint-disable-next-line sonarjs/no-identical-functions -- intentionally mirrors the org-scope caching decorator
+    public override async createExportTemplate(
+        template: IExportTemplateDefinition,
+    ): Promise<IExportTemplate> {
+        const result = await super.createExportTemplate(template);
+        this.invalidateCache();
+        return result;
+    }
+
+    // oxlint-disable-next-line sonarjs/no-identical-functions -- intentionally mirrors the org-scope caching decorator
+    public override async patchExportTemplate(
+        ref: ObjRef,
+        template: Partial<IExportTemplateDefinition>,
+    ): Promise<IExportTemplate> {
+        const result = await super.patchExportTemplate(ref, template);
+        this.invalidateCache();
+        return result;
+    }
+
+    public override async deleteExportTemplate(ref: ObjRef): Promise<void> {
+        await super.deleteExportTemplate(ref);
+        this.invalidateCache();
+    }
+
+    private invalidateCache(): void {
+        // Clear every workspace entry, not just this.workspace: a workspace template list can include
+        // templates inherited from a parent workspace, so a write here (or in a parent) can affect the
+        // cached lists of descendant workspaces too. Writes are rare, so over-invalidating is cheap.
+        this.ctx.caches.workspaceExportTemplates?.clear();
+    }
+}
+
+function cachedWorkspaceExportTemplates(ctx: CachingContext): WorkspaceExportTemplatesDecoratorFactory {
+    return (original, workspace) => new WithWorkspaceExportTemplatesCaching(original, ctx, workspace);
 }
 
 //
@@ -2076,6 +2156,7 @@ function cacheControl(ctx: CachingContext): CacheControl {
 
         resetExportTemplates: () => {
             ctx.caches.organizationExportTemplates?.clear();
+            ctx.caches.workspaceExportTemplates?.clear();
         },
 
         resetInsights: () => {
@@ -2345,16 +2426,23 @@ export type CachingConfiguration = {
     maxInsightsPerWorkspace?: number;
 
     /**
-     * Maximum number of organizations for which to cache export templates.
-     * Export templates are organization-level, so typically a single entry suffices.
+     * Maximum number of organizations for which to cache organization-level export templates.
+     * Organization export templates are organization-level, so typically a single entry suffices.
      *
      * When non-positive number is specified, then no caching will be done.
      */
     maxExportTemplatesOrgs?: number;
 
     /**
-     * @deprecated Use {@link CachingConfiguration.maxExportTemplatesOrgs} instead.
-     * Export templates are organization-scoped, not workspace-scoped.
+     * Maximum number of workspaces for which to cache workspace-level export templates.
+     *
+     * When limit is reached, cache entries will be evicted using LRU policy.
+     *
+     * When non-positive number is specified, then no caching will be done.
+     *
+     * For backward compatibility this value is also used as a fallback for
+     * {@link CachingConfiguration.maxExportTemplatesOrgs} when the latter is unset — it used to be
+     * the deprecated alias that sized the organization export-templates cache.
      */
     maxExportTemplatesWorkspaces?: number;
 
@@ -2461,6 +2549,7 @@ export const RecommendedCachingConfiguration: CachingConfiguration = {
     maxAutomationsWorkspaces: 1,
     maxInsightsPerWorkspace: 50,
     maxExportTemplatesOrgs: 1,
+    maxExportTemplatesWorkspaces: 1,
     cacheGeoStyles: true,
 };
 
@@ -2491,9 +2580,12 @@ export function withCaching(
     const workspaceSettingsCaching = cachingEnabled(config.maxWorkspaceSettings);
     const automationsCaching = cachingEnabled(config.maxAutomationsWorkspaces);
     const insightsCaching = cachingEnabled(config.maxInsightsPerWorkspace);
-    // Accept both the new and deprecated config names for backward compatibility
-    const exportTemplatesMaxOrgs = config.maxExportTemplatesOrgs ?? config.maxExportTemplatesWorkspaces;
-    const exportTemplatesCaching = cachingEnabled(exportTemplatesMaxOrgs);
+    // Backward compatibility: `maxExportTemplatesWorkspaces` used to be the (deprecated) alias that
+    // sized the org export-templates cache. It now primarily drives workspace caching, but callers
+    // that only set the old name must keep getting org caching until the alias is removed.
+    const orgExportTemplatesMax = config.maxExportTemplatesOrgs ?? config.maxExportTemplatesWorkspaces;
+    const exportTemplatesCaching = cachingEnabled(orgExportTemplatesMax);
+    const workspaceExportTemplatesCaching = cachingEnabled(config.maxExportTemplatesWorkspaces);
     const geoCaching = config.cacheGeoStyles === true;
 
     // Determine execution cache configuration: count-based (maxExecutions) takes precedence over time-based (maxExecutionsAge)
@@ -2521,7 +2613,10 @@ export function withCaching(
                 ? new LRUCache({ max: config.maxInsightsPerWorkspace! })
                 : undefined,
             organizationExportTemplates: exportTemplatesCaching
-                ? new LRUCache({ max: exportTemplatesMaxOrgs! })
+                ? new LRUCache({ max: orgExportTemplatesMax! })
+                : undefined,
+            workspaceExportTemplates: workspaceExportTemplatesCaching
+                ? new LRUCache({ max: config.maxExportTemplatesWorkspaces! })
                 : undefined,
             geo: geoCaching
                 ? {
@@ -2543,6 +2638,9 @@ export function withCaching(
     const organizationExportTemplates = exportTemplatesCaching
         ? cachedOrganizationExportTemplates(ctx)
         : undefined;
+    const workspaceExportTemplates = workspaceExportTemplatesCaching
+        ? cachedWorkspaceExportTemplates(ctx)
+        : undefined;
     const workspaceSettings = workspaceSettingsCaching ? cachedWorkspaceSettings(ctx) : (v: any) => v;
     const geo = geoCaching ? cachedGeo(ctx) : undefined;
 
@@ -2559,6 +2657,7 @@ export function withCaching(
         automations,
         insights,
         organizationExportTemplates,
+        workspaceExportTemplates,
         geo,
     });
 }

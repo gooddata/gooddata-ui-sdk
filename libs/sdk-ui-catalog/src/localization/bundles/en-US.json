@@ -671,14 +671,6 @@
         "text": "Create a YAML statement that defines a parameter.",
         "crowdinContext": "Tooltip shown for the help icon next to the parameter definition section header."
     },
-    "analyticsCatalog.parameter.dialog.create.submit": {
-        "text": "Create",
-        "crowdinContext": "Label for the submit button in the create parameter dialog."
-    },
-    "analyticsCatalog.parameter.dialog.edit.submit": {
-        "text": "Save",
-        "crowdinContext": "Label for the submit button in the edit parameter dialog."
-    },
     "analyticsCatalog.parameter.dialog.edit.duplicate": {
         "text": "Save as new",
         "crowdinContext": "Label for the duplicate action button in the edit parameter dialog."
@@ -686,10 +678,6 @@
     "analyticsCatalog.parameter.dialog.edit.idImmutable": {
         "text": "Parameter id cannot be changed when saving an existing parameter. Use Save as new instead.",
         "crowdinContext": "Error shown when the user tries to change the parameter id while saving an existing parameter."
-    },
-    "analyticsCatalog.parameter.dialog.cancel": {
-        "text": "Cancel",
-        "crowdinContext": "Label for the cancel button in the parameter dialog."
     },
     "analyticsCatalog.parameter.dialog.help": {
         "text": "How to create a parameter?",
@@ -726,6 +714,10 @@
     "analyticsCatalog.parameter.validation.invalidTags": {
         "text": "Tags must be a list of strings.",
         "crowdinContext": "Error shown when the parameter YAML contains invalid tags."
+    },
+    "analyticsCatalog.parameter.create.defaultTitle": {
+        "text": "My Parameter",
+        "crowdinContext": "Default title seeded into the YAML editor when creating a new parameter from the Analytics Catalog."
     },
     "analyticsCatalog.parameter.create.success": {
         "text": "Parameter created.",
@@ -775,14 +767,6 @@
         "text": "Define the metric in YAML, including its MAQL expression and format.",
         "crowdinContext": "Tooltip explaining the as-code metric editor."
     },
-    "analyticsCatalog.metric.dialog.create.submit": {
-        "text": "Create",
-        "crowdinContext": "Submit button of the create metric dialog."
-    },
-    "analyticsCatalog.metric.dialog.edit.submit": {
-        "text": "Save",
-        "crowdinContext": "Submit button of the edit metric dialog."
-    },
     "analyticsCatalog.metric.actions.openInEditor": {
         "text": "Open in metric editor",
         "crowdinContext": "Detail-panel menu action that opens the metric in the standalone metric editor (as opposed to the inline as-code editor)."
@@ -794,10 +778,6 @@
     "analyticsCatalog.metric.dialog.edit.idImmutable": {
         "text": "The metric id cannot be changed. Use Duplicate to create a metric with a different id.",
         "crowdinContext": "Validation error shown when the user changes the id while editing a metric."
-    },
-    "analyticsCatalog.metric.dialog.cancel": {
-        "text": "Cancel",
-        "crowdinContext": "Cancel button of the metric dialogs."
     },
     "analyticsCatalog.metric.dialog.help": {
         "text": "How to write a metric",
@@ -830,6 +810,18 @@
     "analyticsCatalog.dialog.error.label": {
         "text": "Error:",
         "crowdinContext": "Bold label prefixing the error message in the as-code editor dialogs (metrics, parameters)."
+    },
+    "analyticsCatalog.asCode.dialog.create.submit": {
+        "text": "Create",
+        "crowdinContext": "Confirm button of the as-code editor dialog when creating a new object (metric, parameter)."
+    },
+    "analyticsCatalog.asCode.dialog.edit.submit": {
+        "text": "Save",
+        "crowdinContext": "Confirm button of the as-code editor dialog when editing an existing object (metric, parameter)."
+    },
+    "analyticsCatalog.asCode.dialog.cancel": {
+        "text": "Cancel",
+        "crowdinContext": "Cancel button of the as-code editor dialog (metrics, parameters)."
     },
     "analyticsCatalog.metric.create.defaultTitle": {
         "text": "My metric",

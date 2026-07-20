@@ -5,9 +5,13 @@ import { describe, expect, it, vi } from "vitest";
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import type { IMeasureMetadataObject } from "@gooddata/sdk-model";
 
+import type { ICatalogItemMeasure } from "../../catalogItem/types.js";
 import { createMetricMutationAdapter } from "../metricMutationPort.js";
 
 import { createTestMetricMutationPort } from "./metricMutationPort.test.utils.js";
+
+// load / getReferencingObjectsCount only read the item's identifier, so a minimal ref-shaped item is enough.
+const measureItem = { identifier: "revenue.total", type: "measure" } as ICatalogItemMeasure;
 
 const savedMeasure: IMeasureMetadataObject = {
     id: "revenue.total",
@@ -147,7 +151,7 @@ describe("metricMutationPort adapter", () => {
         const { backend, getMeasure } = createFakeBackend();
         const adapter = createMetricMutationAdapter(backend, "ws-1");
 
-        const measure = await adapter.load({ identifier: "revenue.total", type: "measure" });
+        const measure = await adapter.load(measureItem);
 
         expect(getMeasure).toHaveBeenCalledWith(
             expect.objectContaining({ identifier: "revenue.total", type: "measure" }),
@@ -155,17 +159,24 @@ describe("metricMutationPort adapter", () => {
         expect(measure).toMatchObject({ id: "revenue.total", expression: "SELECT SUM({fact/order_amount})" });
     });
 
-    it("getReferencingObjects queries the backend", async () => {
+    it("getReferencingObjectsCount queries the backend and reports zero when unused", async () => {
         const { backend, getMeasureReferencingObjects } = createFakeBackend();
         const adapter = createMetricMutationAdapter(backend, "ws-1");
 
-        const referencing = await adapter.getReferencingObjects({
-            identifier: "revenue.total",
-            type: "measure",
-        });
+        const count = await adapter.getReferencingObjectsCount(measureItem);
 
         expect(getMeasureReferencingObjects).toHaveBeenCalled();
-        expect(referencing).toEqual({ insights: [], measures: [] });
+        expect(count).toBe(0);
+    });
+
+    it("getReferencingObjectsCount sums the referencing insights and measures", async () => {
+        const { backend, getMeasureReferencingObjects } = createFakeBackend();
+        getMeasureReferencingObjects.mockResolvedValueOnce({ insights: [{}, {}], measures: [{}] });
+        const adapter = createMetricMutationAdapter(backend, "ws-1");
+
+        const count = await adapter.getReferencingObjectsCount(measureItem);
+
+        expect(count).toBe(3);
     });
 
     it("createTestMetricMutationPort returns vi.fn() stubs", async () => {

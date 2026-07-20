@@ -6,6 +6,8 @@ import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { BackendProvider, WorkspaceProvider, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 
+import { AsCodeMutationProvider } from "./asCode/AsCodeMutationContext.js";
+import { asCodeDescriptors } from "./asCodeRegistry.js";
 import { CatalogDetail, type ICatalogDetailProps } from "./catalogDetail/CatalogDetail.js";
 import {
     CatalogDetailContent,
@@ -14,10 +16,8 @@ import {
 import type { OpenHandlerEvent } from "./catalogDetail/types.js";
 import { CatalogResourceProvider } from "./catalogResource/CatalogResourceProvider.js";
 import { IntlWrapper } from "./localization/IntlWrapper.js";
-import { MetricMutationProvider } from "./metric/MetricMutationContext.js";
 import { type ObjectType } from "./objectType/types.js";
 import { OverlayProvider } from "./overlay/OverlayProvider.js";
-import { ParameterMutationProvider } from "./parameter/ParameterMutationContext.js";
 import { PermissionsProvider } from "./permission/PermissionsContext.js";
 import { usePermissionsQuery } from "./permission/usePermissionsQuery.js";
 import { QualityProvider } from "./quality/QualityContext.js";
@@ -133,9 +133,9 @@ function Providers(props: ProvidersProps) {
                             <PermissionsProvider permissionsState={permissionsState}>
                                 <QualityProvider backend={backend} workspace={workspace}>
                                     <CatalogResourceProvider backend={backend} workspace={workspace}>
-                                        <ParameterMutationProvider>
-                                            <MetricMutationProvider>{props.children}</MetricMutationProvider>
-                                        </ParameterMutationProvider>
+                                        <AsCodeMutationProvider descriptors={asCodeDescriptors}>
+                                            {props.children}
+                                        </AsCodeMutationProvider>
                                     </CatalogResourceProvider>
                                 </QualityProvider>
                             </PermissionsProvider>

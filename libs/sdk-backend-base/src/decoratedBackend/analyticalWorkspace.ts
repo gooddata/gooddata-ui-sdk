@@ -205,6 +205,12 @@ export class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
     }
 
     public exportTemplates(): IWorkspaceExportTemplatesService {
+        const { workspaceExportTemplates } = this.factories;
+
+        if (workspaceExportTemplates) {
+            return workspaceExportTemplates(this.decorated.exportTemplates(), this.workspace);
+        }
+
         return this.decorated.exportTemplates();
     }
 }

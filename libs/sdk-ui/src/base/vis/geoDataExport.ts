@@ -9,8 +9,10 @@ import {
     type IAttributeOrMeasure,
     type IBucket,
     type ICatalogAttribute,
+    type IFilter,
     type IInsightDefinition,
     type ISettings,
+    type ISortItem,
     type ObjRef,
     areObjRefsEqual,
     attributeAlias,
@@ -20,11 +22,14 @@ import {
     bucketsFind,
     geoLayerTypeFromVisualizationType,
     insightBuckets,
+    insightFilters,
     insightLayers,
     insightSorts,
+    insightTitle,
     insightVisualizationType,
     isGeoLayerType,
     isMeasure,
+    mergeFilters,
     newAttribute,
     serializeObjRef,
 } from "@gooddata/sdk-model";
@@ -58,6 +63,19 @@ type GeoInsightExportSource = {
 
 function getGeoVisualizationType(layerType: GeoLayerType): string {
     return layerType === GeoLayerTypes.AREA ? VisualizationTypes.CHOROPLETH : VisualizationTypes.PUSHPIN;
+}
+
+/**
+ * Finds the bucket carrying the layer's primary geo attribute. Persisted pushpin layers may
+ * store explicit LATITUDE/LONGITUDE buckets instead of LOCATION (see `geoLayerToInsightLayer`
+ * in sdk-ui-geo) — in that case the latitude attribute is the effective location attribute.
+ */
+function findGeoPrimaryBucket(layerType: GeoLayerType, buckets: IBucket[]): IBucket | undefined {
+    if (layerType === GeoLayerTypes.AREA) {
+        return bucketsFind(buckets, BucketNames.AREA);
+    }
+
+    return bucketsFind(buckets, BucketNames.LOCATION) ?? bucketsFind(buckets, BucketNames.LATITUDE);
 }
 
 function parseGeoLayerType(layerType: string): GeoLayerType | undefined {
@@ -171,23 +189,11 @@ function resolveGeoPrimaryAttribute(
     buckets: IBucket[],
     options: GeoTableConversionOptions,
 ): IAttribute | undefined {
-    if (layerType === GeoLayerTypes.PUSHPIN) {
-        return transformGeoBucketAttributeUsingDefaultDisplayForm(
-            bucketsFind(buckets, BucketNames.LOCATION),
-            options.defaultDisplayFormRefs,
-            "table_default_label",
-        );
-    }
-
-    if (layerType === GeoLayerTypes.AREA) {
-        return transformGeoBucketAttributeUsingDefaultDisplayForm(
-            bucketsFind(buckets, BucketNames.AREA),
-            options.defaultDisplayFormRefs,
-            "table_default_label",
-        );
-    }
-
-    return undefined;
+    return transformGeoBucketAttributeUsingDefaultDisplayForm(
+        findGeoPrimaryBucket(layerType, buckets),
+        options.defaultDisplayFormRefs,
+        "table_default_label",
+    );
 }
 
 function getGeoTableAttributes(
@@ -233,6 +239,31 @@ export function resolveDefaultDisplayFormRefForDisplayForm(
     return getDefaultDisplayFormRef(attribute.displayForms ?? []);
 }
 
+function resolveLayerDefaultDisplayFormRefs(
+    layerType: GeoLayerType,
+    buckets: IBucket[],
+    catalogAttributes: ICatalogAttribute[],
+    preloadedAttributesWithReferences?: IAttributeWithReferences[],
+): Map<string, ObjRef> | undefined {
+    const geoBucket = findGeoPrimaryBucket(layerType, buckets);
+    const geoAttribute = geoBucket ? bucketAttribute(geoBucket) : undefined;
+    if (!geoAttribute) {
+        return undefined;
+    }
+
+    const geoDisplayFormRef = attributeDisplayFormRef(geoAttribute);
+    const defaultDisplayFormRef = resolveDefaultDisplayFormRefForDisplayForm(
+        geoDisplayFormRef,
+        catalogAttributes,
+        preloadedAttributesWithReferences,
+    );
+    if (!defaultDisplayFormRef) {
+        return undefined;
+    }
+
+    return new Map([[serializeObjRef(geoDisplayFormRef), defaultDisplayFormRef]]);
+}
+
 /**
  * @internal
  */
@@ -251,25 +282,12 @@ export function getGeoDefaultDisplayFormRefs(
         return undefined;
     }
 
-    const bucketName =
-        exportSource.layerType === GeoLayerTypes.AREA ? BucketNames.AREA : BucketNames.LOCATION;
-    const geoBucket = bucketsFind(exportSource.buckets, bucketName);
-    const geoAttribute = geoBucket ? bucketAttribute(geoBucket) : undefined;
-    if (!geoAttribute) {
-        return undefined;
-    }
-
-    const geoDisplayFormRef = attributeDisplayFormRef(geoAttribute);
-    const defaultDisplayFormRef = resolveDefaultDisplayFormRefForDisplayForm(
-        geoDisplayFormRef,
+    return resolveLayerDefaultDisplayFormRefs(
+        exportSource.layerType,
+        exportSource.buckets,
         catalogAttributes,
         preloadedAttributesWithReferences,
     );
-    if (!defaultDisplayFormRef) {
-        return undefined;
-    }
-
-    return new Map([[serializeObjRef(geoDisplayFormRef), defaultDisplayFormRef]]);
 }
 
 /**
@@ -297,21 +315,142 @@ export function prepareGeoInsightForDataExport(
 }
 
 /**
+ * A single geo layer prepared as a table insight for a multi-layer data export.
+ *
  * @internal
  */
-export function convertGeoInsightToTableDefinition(
+export interface IGeoLayerExportInsight {
+    /** Stable id — "root" for the root layer, layer.id for additional layers. */
+    layerId: string;
+    /** Human-readable name used for the exported sheet or file. */
+    layerName: string;
+    /** The layer converted to a `local:table` insight definition. */
+    tableInsight: IInsightDefinition;
+    /**
+     * Maps original attribute local ids to their replacements in the table insight (the geo
+     * label is swapped for its default display form under a new local id). Callers use it to
+     * remap local-id filter references when building the layer's execution definition.
+     */
+    attributeLocalIdMapping?: Record<string, string>;
+}
+
+/**
+ * Decomposes a multi-layer geo insight into one table insight per layer for data export.
+ *
+ * @remarks
+ * Returns `undefined` when the insight is not a new-geo insight (flags off, non-geo, etc.).
+ * The returned array starts with the root layer, followed by the additional layers in their
+ * original order. Callers execute each layer and pass the results as export layers so the export
+ * ends up with one sheet (XLSX) or file (CSV zip) per layer.
+ *
+ * @internal
+ */
+export function prepareGeoLayerInsightsForDataExport(
     insight: IInsightDefinition,
-    options: GeoTableConversionOptions = {},
-): IInsightDefinition | undefined {
-    const exportSource = getGeoInsightExportSource(insight);
-    if (
-        !exportSource ||
-        !isGeoVisualizationUsingNewEngine(getGeoVisualizationType(exportSource.layerType), options.settings)
-    ) {
+    options: IGeoDataExportPreparationOptions,
+): IGeoLayerExportInsight[] | undefined {
+    // Per-layer export has its own rollout flag on top of the geo a11y improvements rollout
+    // (which gates the multi-layer geo features, e.g. the layered table view).
+    if (!options.settings?.enableGeoLayersExport) {
         return undefined;
     }
 
-    const buckets = exportSource.buckets;
+    if (!options.settings?.enableGeoChartA11yImprovements) {
+        return undefined;
+    }
+
+    if (!canPrepareGeoInsightForDataExport(insight, options.settings)) {
+        return undefined;
+    }
+
+    const rootLayerType = geoLayerTypeFromVisualizationType(insightVisualizationType(insight));
+    if (!rootLayerType) {
+        return undefined;
+    }
+
+    const buildEntry = (
+        layerId: string,
+        layerName: string,
+        layerType: GeoLayerType,
+        buckets: IBucket[],
+        layerOverrides?: IGeoLayerTableOverrides,
+    ): IGeoLayerExportInsight | undefined => {
+        const defaultDisplayFormRefs = resolveLayerDefaultDisplayFormRefs(
+            layerType,
+            buckets,
+            options.catalogAttributes,
+            options.preloadedAttributesWithReferences,
+        );
+        const conversionOptions = { settings: options.settings, defaultDisplayFormRefs };
+        const tableInsight = buildGeoLayerTableInsight(
+            insight,
+            buckets,
+            layerType,
+            conversionOptions,
+            layerOverrides,
+        );
+        if (!tableInsight) {
+            return undefined;
+        }
+
+        const geoBucket = findGeoPrimaryBucket(layerType, buckets);
+        const originalAttribute = geoBucket ? bucketAttribute(geoBucket) : undefined;
+        const transformedAttribute = resolveGeoPrimaryAttribute(layerType, buckets, conversionOptions);
+        const originalLocalId = originalAttribute ? attributeLocalId(originalAttribute) : undefined;
+        const transformedLocalId = transformedAttribute ? attributeLocalId(transformedAttribute) : undefined;
+        const attributeLocalIdMapping =
+            originalLocalId && transformedLocalId && originalLocalId !== transformedLocalId
+                ? { [originalLocalId]: transformedLocalId }
+                : undefined;
+
+        return {
+            layerId,
+            layerName,
+            tableInsight,
+            ...(attributeLocalIdMapping ? { attributeLocalIdMapping } : {}),
+        };
+    };
+
+    const rootEntry = buildEntry("root", insightTitle(insight), rootLayerType, insightBuckets(insight));
+    if (!rootEntry) {
+        return undefined;
+    }
+
+    const layerEntries = insightLayers(insight).flatMap((layer): IGeoLayerExportInsight[] => {
+        if (!isGeoLayerType(layer.type)) {
+            return [];
+        }
+        const entry = buildEntry(layer.id, layer.name ?? layer.id, layer.type, layer.buckets, {
+            // Mirrors the render path: a layer combines its own filters with the root insight's
+            // (root wins date conflicts, same as global filters at render). Root measure/ranking
+            // filters bound to other layers' local ids are dropped later, when the layer's
+            // execution definition is created.
+            filters: mergeFilters(layer.filters ?? [], insightFilters(insight)),
+            sorts: layer.sorts,
+        });
+        return entry ? [entry] : [];
+    });
+
+    return [rootEntry, ...layerEntries];
+}
+
+/**
+ * Layer-specific overrides applied to the converted table insight. Filters are the layer's
+ * effective filter set (its own combined with the root insight's, as at render); sorts replace
+ * the root insight's when set and are inherited from it when not.
+ */
+interface IGeoLayerTableOverrides {
+    filters?: IFilter[];
+    sorts?: ISortItem[];
+}
+
+function buildGeoLayerTableInsight(
+    insight: IInsightDefinition,
+    buckets: IBucket[],
+    layerType: GeoLayerType,
+    options: GeoTableConversionOptions,
+    layerOverrides?: IGeoLayerTableOverrides,
+): IInsightDefinition | undefined {
     const measureBucketIdentifiers: Set<string> = new Set([
         BucketNames.MEASURES,
         BucketNames.SIZE,
@@ -322,7 +461,7 @@ export function convertGeoInsightToTableDefinition(
         .filter((bucket) => measureBucketIdentifiers.has(bucket.localIdentifier ?? ""))
         .flatMap((bucket) => bucket.items.filter(isMeasure));
 
-    const geoAttributes = getGeoTableAttributes(exportSource.layerType, buckets, options);
+    const geoAttributes = getGeoTableAttributes(layerType, buckets, options);
     if (!geoAttributes) {
         return undefined;
     }
@@ -340,6 +479,8 @@ export function convertGeoInsightToTableDefinition(
                 { localIdentifier: BucketNames.ATTRIBUTE, items: geoAttributes.rowAttributes },
                 { localIdentifier: BucketNames.COLUMNS, items: geoAttributes.columnAttributes },
             ],
+            ...(layerOverrides?.filters ? { filters: layerOverrides.filters } : {}),
+            ...(layerOverrides?.sorts ? { sorts: layerOverrides.sorts } : {}),
             properties: onlyMeasures
                 ? {
                       controls: {
@@ -357,4 +498,22 @@ export function convertGeoInsightToTableDefinition(
             sorts: insightSorts(tableInsight),
         },
     };
+}
+
+/**
+ * @internal
+ */
+export function convertGeoInsightToTableDefinition(
+    insight: IInsightDefinition,
+    options: GeoTableConversionOptions = {},
+): IInsightDefinition | undefined {
+    const exportSource = getGeoInsightExportSource(insight);
+    if (
+        !exportSource ||
+        !isGeoVisualizationUsingNewEngine(getGeoVisualizationType(exportSource.layerType), options.settings)
+    ) {
+        return undefined;
+    }
+
+    return buildGeoLayerTableInsight(insight, exportSource.buckets, exportSource.layerType, options);
 }

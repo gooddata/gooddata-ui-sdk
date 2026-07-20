@@ -1,6 +1,7 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import globalAxios, { type AxiosInstance, type CreateAxiosDefaults } from "axios";
-import { setupCache } from "axios-cache-interceptor";
+import { type AxiosCacheInstance, setupCache } from "axios-cache-interceptor";
 import { cloneDeep, merge } from "lodash-es";
 
 import { LIB_NAME, LIB_VERSION } from "./__version.js";
@@ -122,4 +123,57 @@ export function newAxiosRequestConfig(
 export function newAxios(baseUrl?: string, headers?: { [name: string]: string }): AxiosInstance {
     const config = newAxiosRequestConfig(baseUrl, headers);
     return setupCache(globalAxios.create(config), DEFAULT_CACHE_CONFIG);
+}
+
+// Every instance created by this module is wrapped with axios-cache-interceptor, so it
+// carries a `storage`. The guard keeps the public surface as a plain AxiosInstance.
+function isAxiosCacheInstance(instance: AxiosInstance): instance is AxiosCacheInstance {
+    return "storage" in instance;
+}
+
+/**
+ * Clears the entire in-memory response cache of an axios instance created by {@link newAxios}.
+ *
+ * Every axios instance created by this module is wrapped with `axios-cache-interceptor`, which
+ * caches GET responses based on server Cache-Control headers (and, for header-less responses,
+ * a default TTL). After a write (PUT, PATCH, POST action, DELETE) a subsequent GET may return a
+ * stale cached body. This bulk clear is the safe-but-blunt remedy: it drops all cached GETs, so
+ * any following read hits the server. Prefer {@link removeAxiosResponseCacheEntries} when the
+ * set of reads invalidated by a write is known and bounded.
+ *
+ * @param axiosInstance - an axios instance created by {@link newAxios}
+ * @public
+ */
+export async function clearAxiosResponseCache(axiosInstance: AxiosInstance): Promise<void> {
+    if (isAxiosCacheInstance(axiosInstance) && axiosInstance.storage.clear) {
+        await axiosInstance.storage.clear();
+    }
+}
+
+/**
+ * Removes specific entries from the in-memory response cache of an axios instance created by
+ * {@link newAxios}, leaving every other cached GET intact.
+ *
+ * Each id must match the cache id under which the corresponding GET response was stored. The
+ * default key generator derives the id from the request `method`, `baseURL`, `url`, `params` and
+ * `data`; to make a read's id stable and known up front, pass an explicit `id` on the GET request
+ * config (the id then becomes the cache key verbatim) and reuse that same id here after the write.
+ *
+ * Use this for targeted read-after-write invalidation where the write→read mapping is known and
+ * complete. When coverage is uncertain, fall back to {@link clearAxiosResponseCache}.
+ *
+ * @param axiosInstance - an axios instance created by {@link newAxios}
+ * @param ids - cache ids of the entries to remove
+ * @public
+ */
+export async function removeAxiosResponseCacheEntries(
+    axiosInstance: AxiosInstance,
+    ids: readonly string[],
+): Promise<void> {
+    if (!isAxiosCacheInstance(axiosInstance)) {
+        return;
+    }
+    for (const id of ids) {
+        await axiosInstance.storage.remove(id);
+    }
 }

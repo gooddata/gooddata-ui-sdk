@@ -17,7 +17,7 @@ runs:
     using: "composite"
     steps:
         - name: Setup Hugo
-          uses: peaceiris/actions-hugo@v3
+          uses: peaceiris/actions-hugo@v3.2.1
           with:
               hugo-version: "0.110.0"
               extended: true

@@ -29,6 +29,7 @@
     "gd.gen-ai.input-placeholder": "Поставте запитання тут…",
     "gd.gen-ai.input-label.mac": "Поставте своє запитання. Використовуйте control+space або cmd+I для підказок.",
     "gd.gen-ai.input-label.win": "Поставте своє запитання. Використовуйте control+space або control+I для підказок.",
+    "gd.gen-ai.context.add_context": "Додати контекст",
     "gd.gen-ai.agents": "Агенти",
     "gd.gen-ai.agents.loading": "Завантаження",
     "gd.gen-ai.agent.unavailable": "Немає доступного агента",

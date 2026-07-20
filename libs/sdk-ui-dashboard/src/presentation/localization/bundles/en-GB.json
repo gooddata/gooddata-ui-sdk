@@ -292,6 +292,7 @@
     "gs.date.yesterday": "Yesterday",
     "messages.exportResultError": "Failed to export the data. Try again later.",
     "messages.exportResultError.tooManyRows": "Export failed. Too many rows ({actual}). The limit is {limit}.",
+    "messages.exportResultError.timeout": "Export timed out. Narrow the export (fewer rows or columns) and try again.",
     "messages.exportResultRestrictedError": "You cannot export this visualisation because it contains restricted data.",
     "messages.exportResultStart": "Export in progress",
     "messages.exportResultSuccess": "Export successful.",

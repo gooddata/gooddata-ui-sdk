@@ -3,9 +3,8 @@
 import { describe, expect, it, vi } from "vitest";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import type { IParameterMetadataObject } from "@gooddata/sdk-model";
+import type { IParameterMetadataObject, IParameterMetadataObjectDefinition } from "@gooddata/sdk-model";
 
-import type { ICatalogItemParameter } from "../../catalogItem/types.js";
 import { createParameterMutationAdapter } from "../parameterMutationPort.js";
 
 import { createTestParameterMutationPort } from "./parameterMutationPort.test.utils.js";
@@ -49,21 +48,6 @@ function createFakeBackend(
 }
 
 describe("parameterMutationPort adapter", () => {
-    const existingItem: ICatalogItemParameter = {
-        identifier: "param.id",
-        type: "parameter",
-        title: "My Param",
-        description: "Description",
-        tags: [],
-        createdBy: "user",
-        updatedBy: "user",
-        createdAt: null,
-        updatedAt: null,
-        isLocked: false,
-        isEditable: true,
-        definition: { type: "NUMBER", defaultValue: 10 },
-    };
-
     describe("create", () => {
         it("calls backend createParameter and returns the converted catalog item", async () => {
             const { backend, createParameter } = createFakeBackend();
@@ -131,24 +115,77 @@ describe("parameterMutationPort adapter", () => {
     });
 
     describe("update", () => {
-        it("calls backend updateParameter with the item's fields and returns the converted item", async () => {
+        // The base is what the editor started from (the descriptor's `editSeed` — a definition carrying
+        // the item's identity), not the catalog item.
+        const baseDefinition: IParameterMetadataObjectDefinition = {
+            id: "param.id",
+            type: "parameter",
+            title: "My Param",
+            description: "Description",
+            tags: [],
+            definition: { type: "NUMBER", defaultValue: 10 },
+        };
+
+        it("persists the parsed definition (its 1:1 round-trip is the complete new state)", async () => {
             const { backend, updateParameter } = createFakeBackend();
 
             const adapter = createParameterMutationAdapter(backend, "ws-1");
-            const result = await adapter.update(existingItem);
+            const result = await adapter.update(baseDefinition, {
+                id: "param.id",
+                type: "parameter",
+                title: "Renamed",
+                description: "Updated",
+                tags: ["changed"],
+                definition: { type: "NUMBER", defaultValue: 42 },
+            });
 
             expect(updateParameter).toHaveBeenCalledWith(
                 expect.objectContaining({
-                    title: "My Param",
-                    description: "Description",
-                    tags: [],
-                    definition: { type: "NUMBER", defaultValue: 10 },
+                    identifier: "param.id",
+                    title: "Renamed",
+                    description: "Updated",
+                    tags: ["changed"],
+                    definition: { type: "NUMBER", defaultValue: 42 },
                 }),
             );
             expect(result).toMatchObject({
                 type: "parameter",
                 identifier: "param.id",
             });
+        });
+
+        it("pins the identity to the base, ignoring a divergent id in the parsed definition", async () => {
+            const { backend, updateParameter } = createFakeBackend();
+
+            const adapter = createParameterMutationAdapter(backend, "ws-1");
+            await expect(
+                adapter.update(baseDefinition, {
+                    id: "some.other.param",
+                    type: "parameter",
+                    title: "Renamed",
+                    description: "",
+                    tags: [],
+                    definition: { type: "NUMBER", defaultValue: 42 },
+                }),
+            ).rejects.toThrow(/identity/);
+            expect(updateParameter).not.toHaveBeenCalled();
+        });
+
+        it("rejects when the base has no identity", async () => {
+            const { backend } = createFakeBackend();
+            const { id: _id, ...baseWithoutIdentity } = baseDefinition;
+
+            const adapter = createParameterMutationAdapter(backend, "ws-1");
+            await expect(
+                adapter.update(baseWithoutIdentity, {
+                    id: "param.id",
+                    type: "parameter",
+                    title: "Renamed",
+                    description: "",
+                    tags: [],
+                    definition: { type: "NUMBER", defaultValue: 42 },
+                }),
+            ).rejects.toThrow(/identity/);
         });
     });
 });

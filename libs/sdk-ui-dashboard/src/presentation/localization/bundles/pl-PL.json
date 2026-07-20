@@ -292,6 +292,7 @@
     "gs.date.yesterday": "Wczoraj",
     "messages.exportResultError": "Nie udało się wyeksportować danych. Spróbuj ponownie później.",
     "messages.exportResultError.tooManyRows": "Eksport nie powiódł się. Zbyt wiele wierszy ({actual}). Limit to {limit}.",
+    "messages.exportResultError.timeout": "Przekroczono limit czasu eksportu. Ogranicz eksport (mniej wierszy lub kolumn) i spróbuj ponownie.",
     "messages.exportResultRestrictedError": "Nie można wyeksportować tej wizualizacji, ponieważ zawiera dane z ograniczeniami.",
     "messages.exportResultStart": "Eksport w toku",
     "messages.exportResultSuccess": "Eksport zakończony pomyślnie.",

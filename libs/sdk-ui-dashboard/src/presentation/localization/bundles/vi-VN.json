@@ -292,6 +292,7 @@
     "gs.date.yesterday": "Hôm qua",
     "messages.exportResultError": "Không thể xuất dữ liệu. Hãy thử lại sau.",
     "messages.exportResultError.tooManyRows": "Xuất thất bại. Có quá nhiều hàng ({actual}). Giới hạn là {limit}.",
+    "messages.exportResultError.timeout": "Xuất dữ liệu đã hết thời gian chờ. Thu hẹp phạm vi xuất (ít hàng hoặc ít cột hơn) và thử lại.",
     "messages.exportResultRestrictedError": "Bạn không thể xuất trực quan hóa này vì nó chứa dữ liệu bị hạn chế.",
     "messages.exportResultStart": "Đang xuất",
     "messages.exportResultSuccess": "Xuất thành công.",

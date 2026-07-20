@@ -15,7 +15,7 @@ import {
     selectCatalogParametersIsLoaded,
 } from "../../../../../../model/store/catalog/catalogSelectors.js";
 import { selectEnableParameters } from "../../../../../../model/store/config/configSelectors.js";
-import { workspaceParameter } from "../../test/parameterFixtures.js";
+import { workspaceNumberParameter } from "../../test/parameterFixtures.js";
 import { useValidateExistingAutomationFilters } from "../useValidateExistingAutomationFilters.js";
 
 interface IMockStoreState {
@@ -79,7 +79,7 @@ beforeEach(() => {
     mockState = {
         enableParameters: true,
         catalogParametersIsLoaded: true,
-        catalog: [workspaceParameter("topN", "Top N", 3)],
+        catalog: [workspaceNumberParameter("topN", "Top N", 3)],
     };
 });
 

@@ -42,6 +42,7 @@ import {
     getOrganizationTier,
 } from "../../features/index.js";
 import { mapTypeToKey } from "../../settings/mapping.js";
+import { invalidateSettingsResponses, trackSettingsResponse } from "../../settings/responseCacheCoherence.js";
 import { TigerSettingsService } from "../../settings/settings.js";
 import { DefaultUserSettings } from "../../uiSettings.js";
 import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "../constants.js";
@@ -267,7 +268,7 @@ export class TigerWorkspaceSettings
     }
 
     protected override async updateSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
-        return this.authCall(async (client) =>
+        const result = await this.authCall(async (client) =>
             EntitiesApi_UpdateEntityWorkspaceSettings(client.axios, client.basePath, {
                 workspaceId: this.workspace,
                 objectId: id,
@@ -283,10 +284,12 @@ export class TigerWorkspaceSettings
                 },
             }),
         );
+        await invalidateSettingsResponses(this.authCall);
+        return result;
     }
 
     protected override async createSetting(type: TigerSettingsType, id: string, content: any): Promise<any> {
-        return this.authCall(async (client) =>
+        const result = await this.authCall(async (client) =>
             EntitiesApi_CreateEntityWorkspaceSettings(client.axios, client.basePath, {
                 workspaceId: this.workspace,
                 jsonApiWorkspaceSettingPostOptionalIdDocument: {
@@ -301,17 +304,28 @@ export class TigerWorkspaceSettings
                 },
             }),
         );
+        await invalidateSettingsResponses(this.authCall);
+        return result;
     }
 
     protected override async deleteSettingByType(type: TigerSettingsType): Promise<any> {
         const settings = await this.getSettingByType(type);
-        for (const setting of settings.data.data) {
-            await this.authCall(async (client) =>
-                EntitiesApi_DeleteEntityWorkspaceSettings(client.axios, client.basePath, {
-                    workspaceId: this.workspace,
-                    objectId: setting.id,
-                }),
-            );
+        let deleted = false;
+        try {
+            for (const setting of settings.data.data) {
+                await this.authCall(async (client) =>
+                    EntitiesApi_DeleteEntityWorkspaceSettings(client.axios, client.basePath, {
+                        workspaceId: this.workspace,
+                        objectId: setting.id,
+                    }),
+                );
+                deleted = true;
+            }
+        } finally {
+            // A failure partway still leaves earlier deletions persisted — invalidate for those.
+            if (deleted) {
+                await invalidateSettingsResponses(this.authCall);
+            }
         }
     }
 }
@@ -339,10 +353,20 @@ async function resolveSettings(
     excludeUserSettings = false,
 ): Promise<ISettings> {
     const { data } = await authCall(async (client) =>
-        ActionsApi_WorkspaceResolveAllSettings(client.axios, client.basePath, {
-            workspaceId: workspace,
-            excludeUserSettings: excludeUserSettings || undefined,
-        }),
+        trackSettingsResponse(
+            client.axios,
+            `ws:${workspace}:${excludeUserSettings ? "excludeUser" : "withUser"}`,
+            (requestOptions) =>
+                ActionsApi_WorkspaceResolveAllSettings(
+                    client.axios,
+                    client.basePath,
+                    {
+                        workspaceId: workspace,
+                        excludeUserSettings: excludeUserSettings || undefined,
+                    },
+                    requestOptions,
+                ),
+        ),
     );
 
     const settings = data.reduce((result: ISettings, setting) => {

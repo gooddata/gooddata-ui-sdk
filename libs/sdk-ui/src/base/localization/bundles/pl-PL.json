@@ -717,6 +717,7 @@
     "shareDialog.olp.generalAccess.groupLabel": "Dostęp ogólny",
     "shareDialog.olp.generalAccess.restricted.title": "Ograniczone",
     "shareDialog.olp.generalAccess.restricted.description": "Tylko osoby i grupy dodane powyżej mogą uzyskać dostęp do tego obiektu.",
+    "shareDialog.olp.generalAccess.restricted.description.inherited": "Dostęp dla wszystkich członków przestrzeni roboczej jest przyznany z nadrzędnej przestrzeni roboczej i nie można go tutaj ograniczyć.",
     "shareDialog.olp.generalAccess.workspace.title": "Wszyscy członkowie przestrzeni roboczej",
     "shareDialog.olp.generalAccess.workspace.description": "Wszyscy w tej przestrzeni roboczej mogą wyświetlić ten obiekt.",
     "shareDialog.olp.generalAccess.workspace.description.share": "Wszyscy w tej przestrzeni roboczej mogą wyświetlać i udostępniać ten obiekt.",
@@ -1199,5 +1200,6 @@
     "mvf.details.id": "ID",
     "mvf.details.infoButtonLabel": "Pokaż szczegóły metryki",
     "mvf.details.type": "Typ",
-    "mvf.details.typeValue": "Metryka"
+    "mvf.details.typeValue": "Metryka",
+    "visualization.stackLabel.aria.total": "suma"
 }

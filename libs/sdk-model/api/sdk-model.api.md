@@ -1895,6 +1895,7 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashb
 // @alpha
 export interface IDashboardExportParameter {
     id: string;
+    parameterType?: ParameterType;
     title: string;
     value: string;
 }
@@ -2791,6 +2792,7 @@ export interface IFeatureFlags {
     enableGeoBasemapConfig?: boolean;
     enableGeoChartA11yImprovements?: boolean;
     enableGeoChartsViewportConfig?: boolean;
+    enableGeoLayersExport?: boolean;
     enableGeoPushpinIcon?: boolean;
     enableGeoSatelliteBasemapOption?: boolean;
     enableGeoSegmentConflictRecommendation?: boolean;
@@ -6761,6 +6763,9 @@ export type ParameterType = IParameterDefinition["type"];
 export type ParameterValue = IParameterDefinition["defaultValue"];
 
 // @alpha
+export function parameterValueMatchesType(definition: IParameterDefinition, value: ParameterValue): boolean;
+
+// @alpha
 export type PermissionSource = "direct" | "indirect";
 
 // @public
@@ -6914,6 +6919,9 @@ export type RgbType = "rgb";
 
 // @internal
 export function sanitizeBucketTotals(bucket: IBucket, sortItems: ISortItem[], totals?: ITotal[]): ITotal[];
+
+// @alpha
+export function sanitizeParameterValue(definition: IParameterDefinition, value: ParameterValue): ParameterValue;
 
 // @alpha @deprecated
 export type ScheduledMailAttachment = IDashboardAttachment | IWidgetAttachment;

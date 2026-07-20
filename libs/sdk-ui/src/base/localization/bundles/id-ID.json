@@ -717,6 +717,7 @@
     "shareDialog.olp.generalAccess.groupLabel": "Akses umum",
     "shareDialog.olp.generalAccess.restricted.title": "Dibatasi",
     "shareDialog.olp.generalAccess.restricted.description": "Hanya orang dan grup yang ditambahkan di atas yang dapat mengakses objek ini.",
+    "shareDialog.olp.generalAccess.restricted.description.inherited": "Akses untuk semua anggota ruang kerja diberikan dari ruang kerja induk dan tidak dapat dibatasi di sini.",
     "shareDialog.olp.generalAccess.workspace.title": "Semua anggota ruang kerja",
     "shareDialog.olp.generalAccess.workspace.description": "Semua orang di ruang kerja ini dapat melihat objek ini.",
     "shareDialog.olp.generalAccess.workspace.description.share": "Semua orang di ruang kerja ini dapat melihat dan membagikan objek ini.",
@@ -1199,5 +1200,6 @@
     "mvf.details.id": "ID",
     "mvf.details.infoButtonLabel": "Tampilkan detail metrik",
     "mvf.details.type": "Jenis",
-    "mvf.details.typeValue": "Metrik"
+    "mvf.details.typeValue": "Metrik",
+    "visualization.stackLabel.aria.total": "total"
 }

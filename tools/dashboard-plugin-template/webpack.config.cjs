@@ -323,6 +323,12 @@ module.exports = (_env, argv) => {
                             singleton: true,
                             requiredVersion: false,
                         },
+                        "react-dom/client": {
+                            // Share so createRoot resolves against the host's shared react-dom instance
+                            // instead of the plugin bundling its own react-dom/client against a split react-dom.
+                            singleton: true,
+                            requiredVersion: false,
+                        },
                         "react/jsx-runtime": {
                             singleton: true,
                             import: false,

@@ -8,6 +8,7 @@ import {
     type IInsightParameterValue,
     type IdentifierRef,
     type ObjRef,
+    type ParameterValue,
     areObjRefsEqual,
 } from "@gooddata/sdk-model";
 
@@ -17,7 +18,10 @@ import {
     selectCatalogParameters,
     selectCatalogParametersIsLoaded,
 } from "../../../../model/store/catalog/catalogSelectors.js";
-import { selectEnableParameters } from "../../../../model/store/config/configSelectors.js";
+import {
+    selectEnableParameters,
+    selectEnableStringParameters,
+} from "../../../../model/store/config/configSelectors.js";
 import {
     selectEffectiveDashboardParametersForWidget,
     selectEffectiveParameterValuesForWidget,
@@ -48,7 +52,7 @@ export interface IUseAutomationAlertParameters {
      */
     availableParameters: IAutomationParameter[];
     onParameterAdd: (ref: IdentifierRef) => void;
-    onParameterChange: (ref: IdentifierRef, value: number) => void;
+    onParameterChange: (ref: IdentifierRef, value: ParameterValue) => void;
     onParameterDelete: (ref: IdentifierRef) => void;
     /**
      * Surgically drops stored parameters whose `ref` left the workspace catalog, keeping every
@@ -73,6 +77,7 @@ export function useAutomationAlertParameters({
     widgetRef?: ObjRef;
 }): IUseAutomationAlertParameters {
     const parametersEnabled = useDashboardSelector(selectEnableParameters);
+    const stringParametersEnabled = useDashboardSelector(selectEnableStringParameters);
     const catalog = useDashboardSelector(selectCatalogParameters);
     const catalogIsLoaded = useDashboardSelector(selectCatalogParametersIsLoaded);
     const dashboardParameters = useDashboardSelector(selectEffectiveDashboardParametersForWidget(widgetRef));
@@ -84,11 +89,16 @@ export function useAutomationAlertParameters({
             return EMPTY_PARAMETERS;
         }
         return (
-            reconstructAutomationParametersFromValues(storedParameters, dashboardParameters, catalog)
+            reconstructAutomationParametersFromValues(
+                storedParameters,
+                dashboardParameters,
+                catalog,
+                stringParametersEnabled,
+            )
                 // `hidden` parameters stay in the stored payload but are never rendered or user-editable
                 .filter((parameter) => parameter.mode !== DashboardParameterModeValues.HIDDEN)
         );
-    }, [parametersEnabled, storedParameters, dashboardParameters, catalog]);
+    }, [parametersEnabled, stringParametersEnabled, storedParameters, dashboardParameters, catalog]);
 
     const availableParameters = useMemo(
         () =>
@@ -98,9 +108,17 @@ export function useAutomationAlertParameters({
                       automationParameters,
                       dashboardParameters,
                       widgetParameterValues,
+                      stringParametersEnabled,
                   )
                 : EMPTY_PARAMETERS,
-        [parametersEnabled, catalog, automationParameters, dashboardParameters, widgetParameterValues],
+        [
+            parametersEnabled,
+            catalog,
+            automationParameters,
+            dashboardParameters,
+            widgetParameterValues,
+            stringParametersEnabled,
+        ],
     );
 
     const updateAlertParameters = useCallback(
@@ -118,7 +136,7 @@ export function useAutomationAlertParameters({
     );
 
     const onParameterChange = useCallback(
-        (ref: IdentifierRef, value: number) => {
+        (ref: IdentifierRef, value: ParameterValue) => {
             updateAlertParameters((current) =>
                 current.map((parameter) =>
                     areObjRefsEqual(parameter.ref, ref) ? { ...parameter, value } : parameter,

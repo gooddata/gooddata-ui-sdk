@@ -21,11 +21,12 @@ import {
     newAttribute,
     newAttributeSort,
     newMeasure,
+    newPositiveAttributeFilter,
     sortDirection,
 } from "@gooddata/sdk-model";
 
 import { BucketNames } from "../../constants/bucketNames.js";
-import { prepareGeoInsightForDataExport } from "../geoDataExport.js";
+import { prepareGeoInsightForDataExport, prepareGeoLayerInsightsForDataExport } from "../geoDataExport.js";
 import { normalizeGeoInsightForRawExport } from "../geoExportNormalization.js";
 import { isGeoVisualizationUsingNewEngine } from "../isGeoVisualizationUsingNewEngine.js";
 import { VisualizationTypes } from "../visualizationTypes.js";
@@ -374,6 +375,258 @@ describe("prepareGeoInsightForDataExport", () => {
         expect(preparedInsight).toBeDefined();
         expect(preparedInsight!.insight.sorts).toEqual([]);
         expect(preparedInsight!.insight.properties).toEqual({});
+    });
+});
+
+describe("prepareGeoLayerInsightsForDataExport", () => {
+    const defaultLabel = createDisplayForm("label.default", "geo", { isDefault: true });
+    const areaLabel = createDisplayForm("label.area", "geo");
+    const locationLabel = createDisplayForm("label.location", "geo");
+    const latitudeLabel = createDisplayForm("label.latitude", "geo");
+    const catalogAttributes = [
+        createCatalogAttribute("geo", [defaultLabel, areaLabel, locationLabel, latitudeLabel]),
+    ];
+
+    const settings = {
+        enableGeoArea: true,
+        enableNewGeoPushpin: true,
+        enableGeoChartA11yImprovements: true,
+        enableGeoLayersExport: true,
+    };
+
+    const createMultiLayerInsight = () =>
+        createInsight(
+            VisualizationTypes.CHOROPLETH,
+            [
+                {
+                    localIdentifier: BucketNames.AREA,
+                    items: [
+                        newAttribute(idRef("label.area", "displayForm"), (attribute) =>
+                            attribute.localId("geo"),
+                        ),
+                    ],
+                },
+                {
+                    localIdentifier: BucketNames.COLOR,
+                    items: [newMeasure(idRef("measure.density"), (measure) => measure.localId("m_density"))],
+                },
+            ],
+            undefined,
+            [
+                createLayer(
+                    "layer-1",
+                    "pushpin",
+                    [
+                        {
+                            localIdentifier: BucketNames.LOCATION,
+                            items: [
+                                newAttribute(idRef("label.location", "displayForm"), (attribute) =>
+                                    attribute.localId("city"),
+                                ),
+                            ],
+                        },
+                        {
+                            localIdentifier: BucketNames.SIZE,
+                            items: [
+                                newMeasure(idRef("measure.population"), (measure) =>
+                                    measure.localId("m_population"),
+                                ),
+                            ],
+                        },
+                    ],
+                    "Cities",
+                ),
+            ],
+        );
+
+    it("returns one table insight per layer with root first", () => {
+        const layerInsights = prepareGeoLayerInsightsForDataExport(createMultiLayerInsight(), {
+            settings,
+            catalogAttributes,
+        });
+
+        expect(layerInsights).toBeDefined();
+        expect(layerInsights).toHaveLength(2);
+
+        const [root, cities] = layerInsights!;
+        expect(root.layerId).toBe("root");
+        expect(root.layerName).toBe("Test");
+        expect(root.tableInsight.insight.visualizationUrl).toBe("local:table");
+        // root (area) layer: 1 measure + 1 primary attribute
+        expect(insightBucket(root.tableInsight, BucketNames.MEASURES)?.items).toHaveLength(1);
+        expect(insightBucket(root.tableInsight, BucketNames.ATTRIBUTE)?.items).toHaveLength(1);
+
+        expect(cities.layerId).toBe("layer-1");
+        expect(cities.layerName).toBe("Cities");
+        expect(cities.tableInsight.insight.visualizationUrl).toBe("local:table");
+        // pushpin layer: 1 measure + 1 primary attribute
+        expect(insightBucket(cities.tableInsight, BucketNames.MEASURES)?.items).toHaveLength(1);
+        expect(insightBucket(cities.tableInsight, BucketNames.ATTRIBUTE)?.items).toHaveLength(1);
+
+        // the geo label was replaced with the default display form under a new local id;
+        // the mapping lets callers remap local-id filter references accordingly
+        expect(root.attributeLocalIdMapping).toEqual({ geo: "geo_table_default_label" });
+        expect(cities.attributeLocalIdMapping).toEqual({ city: "city_table_default_label" });
+    });
+
+    it("returns undefined for a non-geo insight", () => {
+        const insight = createInsight(VisualizationTypes.TABLE, [
+            {
+                localIdentifier: BucketNames.MEASURES,
+                items: [newMeasure(idRef("measure.density"), (measure) => measure.localId("m_density"))],
+            },
+        ]);
+
+        expect(
+            prepareGeoLayerInsightsForDataExport(insight, { settings, catalogAttributes }),
+        ).toBeUndefined();
+    });
+
+    it("returns undefined when the new-geo engine flags are off", () => {
+        expect(
+            prepareGeoLayerInsightsForDataExport(createMultiLayerInsight(), {
+                settings: { enableGeoChartA11yImprovements: true, enableGeoLayersExport: true },
+                catalogAttributes,
+            }),
+        ).toBeUndefined();
+    });
+
+    it("returns undefined when enableGeoChartA11yImprovements is off", () => {
+        expect(
+            prepareGeoLayerInsightsForDataExport(createMultiLayerInsight(), {
+                settings: { enableGeoArea: true, enableNewGeoPushpin: true, enableGeoLayersExport: true },
+                catalogAttributes,
+            }),
+        ).toBeUndefined();
+    });
+
+    it("returns undefined when enableGeoLayersExport is off", () => {
+        expect(
+            prepareGeoLayerInsightsForDataExport(createMultiLayerInsight(), {
+                settings: {
+                    enableGeoArea: true,
+                    enableNewGeoPushpin: true,
+                    enableGeoChartA11yImprovements: true,
+                },
+                catalogAttributes,
+            }),
+        ).toBeUndefined();
+    });
+
+    it("combines layer-specific filters with the root insight's and applies layer sorts", () => {
+        const rootFilter = newPositiveAttributeFilter(idRef("root.df", "displayForm"), ["A"]);
+        const layerFilter = newPositiveAttributeFilter(idRef("layer.df", "displayForm"), ["B"]);
+        const layerBuckets = [
+            {
+                localIdentifier: BucketNames.LOCATION,
+                items: [
+                    newAttribute(idRef("label.location", "displayForm"), (attribute) =>
+                        attribute.localId("city"),
+                    ),
+                ],
+            },
+            {
+                localIdentifier: BucketNames.SEGMENT,
+                items: [
+                    newAttribute(idRef("segment.df", "displayForm"), (attribute) => attribute.localId("seg")),
+                ],
+            },
+        ];
+        const insight = createMultiLayerInsight();
+        insight.insight.filters = [rootFilter];
+        insight.insight.layers = [
+            {
+                ...createLayer("layer-1", "pushpin", layerBuckets, "Own filters"),
+                filters: [layerFilter],
+                sorts: [newAttributeSort("seg")],
+            },
+            createLayer("layer-2", "pushpin", layerBuckets, "Inherited"),
+        ];
+
+        const layerInsights = prepareGeoLayerInsightsForDataExport(insight, { settings, catalogAttributes });
+
+        expect(layerInsights).toHaveLength(3);
+        const [root, ownFilters, inherited] = layerInsights!;
+        // root keeps the root insight's filters
+        expect(root.tableInsight.insight.filters).toEqual([rootFilter]);
+        // layer with its own filters combines them with the root insight's (as at render)
+        expect(ownFilters.tableInsight.insight.filters).toEqual([layerFilter, rootFilter]);
+        expect(ownFilters.tableInsight.insight.sorts).toEqual([newAttributeSort("seg")]);
+        // layer without its own filters gets the root insight's
+        expect(inherited.tableInsight.insight.filters).toEqual([rootFilter]);
+    });
+
+    it("falls back to a single root entry when there are no additional layers", () => {
+        const insight = createInsight(VisualizationTypes.CHOROPLETH, [
+            {
+                localIdentifier: BucketNames.AREA,
+                items: [
+                    newAttribute(idRef("label.area", "displayForm"), (attribute) => attribute.localId("geo")),
+                ],
+            },
+            {
+                localIdentifier: BucketNames.COLOR,
+                items: [newMeasure(idRef("measure.density"), (measure) => measure.localId("m_density"))],
+            },
+        ]);
+
+        const layerInsights = prepareGeoLayerInsightsForDataExport(insight, { settings, catalogAttributes });
+
+        expect(layerInsights).toHaveLength(1);
+        expect(layerInsights![0].layerId).toBe("root");
+    });
+
+    it("exports pushpin layers persisted with latitude/longitude buckets instead of location", () => {
+        const insight = createMultiLayerInsight();
+        insight.insight.layers = [
+            createLayer(
+                "layer-latlng",
+                "pushpin",
+                [
+                    {
+                        localIdentifier: BucketNames.LATITUDE,
+                        items: [
+                            newAttribute(idRef("label.latitude", "displayForm"), (attribute) =>
+                                attribute.localId("lat"),
+                            ),
+                        ],
+                    },
+                    {
+                        localIdentifier: BucketNames.LONGITUDE,
+                        items: [
+                            newAttribute(idRef("label.longitude", "displayForm"), (attribute) =>
+                                attribute.localId("lng"),
+                            ),
+                        ],
+                    },
+                    {
+                        localIdentifier: BucketNames.SIZE,
+                        items: [
+                            newMeasure(idRef("measure.population"), (measure) =>
+                                measure.localId("m_population"),
+                            ),
+                        ],
+                    },
+                ],
+                "LatLng",
+            ),
+        ];
+
+        const layerInsights = prepareGeoLayerInsightsForDataExport(insight, { settings, catalogAttributes });
+
+        expect(layerInsights).toHaveLength(2);
+        const [, latLng] = layerInsights!;
+        expect(latLng.layerId).toBe("layer-latlng");
+        // the latitude attribute is the effective location attribute; it is exported under
+        // the default display form of its attribute
+        const attributes = insightBucket(latLng.tableInsight, BucketNames.ATTRIBUTE)?.items ?? [];
+        expect(attributes).toHaveLength(1);
+        expect(isAttribute(attributes[0])).toBe(true);
+        if (!isAttribute(attributes[0])) {
+            throw new Error("Expected the exported latitude attribute");
+        }
+        expect(attributeDisplayFormRef(attributes[0])).toEqual(defaultLabel.ref);
+        expect(latLng.attributeLocalIdMapping).toEqual({ lat: "lat_table_default_label" });
     });
 });
 

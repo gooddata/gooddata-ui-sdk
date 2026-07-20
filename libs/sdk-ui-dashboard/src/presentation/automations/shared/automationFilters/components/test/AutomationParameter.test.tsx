@@ -17,7 +17,7 @@ function renderChip(custom: Partial<ComponentProps<typeof AutomationParameter>> 
             title: "Top N",
             value: 5,
             mode: "active",
-            constraints: { min: 1, max: 10 },
+            definition: { type: "NUMBER", defaultValue: 5, constraints: { min: 1, max: 10 } },
         },
         onChange: vi.fn(),
         onDelete: vi.fn(),
@@ -48,7 +48,13 @@ describe("AutomationParameter", () => {
 
     it("renders a readonly parameter as locked, without a delete button", () => {
         renderChip({
-            parameter: { ref: idRef("topN", "parameter"), title: "Top N", value: 5, mode: "readonly" },
+            parameter: {
+                ref: idRef("topN", "parameter"),
+                title: "Top N",
+                value: 5,
+                mode: "readonly",
+                definition: { type: "NUMBER", defaultValue: 5 },
+            },
         });
 
         expect(screen.getByText("Top N is 5")).toBeInTheDocument();

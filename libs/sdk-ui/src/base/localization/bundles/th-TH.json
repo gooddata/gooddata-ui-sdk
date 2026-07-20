@@ -717,6 +717,7 @@
     "shareDialog.olp.generalAccess.groupLabel": "การเข้าถึงทั่วไป",
     "shareDialog.olp.generalAccess.restricted.title": "ถูกจำกัด",
     "shareDialog.olp.generalAccess.restricted.description": "เฉพาะบุคคลและกลุ่มที่เพิ่มไว้ด้านบนเท่านั้นที่สามารถเข้าถึงออบเจ็กต์นี้ได้",
+    "shareDialog.olp.generalAccess.restricted.description.inherited": "สิทธิ์การเข้าถึงสำหรับสมาชิกพื้นที่ทำงานทั้งหมดได้รับการอนุญาตจากพื้นที่ทำงานแม่ และไม่สามารถจำกัดได้ที่นี่",
     "shareDialog.olp.generalAccess.workspace.title": "สมาชิกทั้งหมดในพื้นที่ทำงานนี้",
     "shareDialog.olp.generalAccess.workspace.description": "ทุกคนในพื้นที่ทำงานนี้สามารถดูออบเจ็กต์นี้ได้",
     "shareDialog.olp.generalAccess.workspace.description.share": "ทุกคนในพื้นที่ทำงานนี้สามารถดูและแชร์ออบเจ็กต์นี้ได้",
@@ -1199,5 +1200,6 @@
     "mvf.details.id": "ID",
     "mvf.details.infoButtonLabel": "แสดงรายละเอียดเมตริก",
     "mvf.details.type": "ชนิด",
-    "mvf.details.typeValue": "เมตริก"
+    "mvf.details.typeValue": "เมตริก",
+    "visualization.stackLabel.aria.total": "รวม"
 }

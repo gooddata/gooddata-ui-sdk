@@ -1491,6 +1491,20 @@ export async function switchToUser(page: Page, request: APIRequestContext, userI
     const body = await response.json();
     const bearerToken = body.data.attributes.bearerToken;
 
+    // A freshly created API token is not usable immediately — it needs a moment
+    // to be stored/synced before auth accepts it with a consistent context.
+    // Injecting it and navigating right away can serve the first requests with a
+    // stale auth context (e.g. a just-revoked viewer still sees the dashboard).
+    // Wait briefly, then poll an authenticated endpoint with the new token until
+    // it succeeds before wiring the token into requests. See QA-28645.
+    await page.waitForTimeout(1000);
+    await expect(async () => {
+        const check = await request.get("/api/v1/profile", {
+            headers: { Authorization: `Bearer ${bearerToken}` },
+        });
+        expect(check.status()).toBe(200);
+    }).toPass({ timeout: 30_000, intervals: [500, 1_000, 2_000] });
+
     await page.route("/api/**", (route) => {
         void route.continue({
             headers: {

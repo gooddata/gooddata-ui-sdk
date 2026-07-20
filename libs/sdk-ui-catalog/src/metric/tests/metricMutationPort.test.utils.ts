@@ -45,7 +45,7 @@ export function createTestMetricMutationPort(
             expression: "SELECT 1",
             format: "#,##0.00",
         }),
-        getReferencingObjects: vi.fn().mockResolvedValue({ insights: [], measures: [] }),
+        getReferencingObjectsCount: vi.fn().mockResolvedValue(0),
         ...overrides,
     };
 }

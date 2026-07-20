@@ -93,24 +93,40 @@ export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = 
     const tooltipId = getTooltipId(item, makeItemId);
 
     return (
-        <li
-            ref={scrollToItem}
-            role="menuitem"
-            {...item.ariaAttributes}
-            aria-haspopup={item.subItems ? "menu" : item.ariaAttributes?.["aria-haspopup"]}
-            aria-disabled={item.isDisabled}
-            aria-describedby={
-                [tooltipId, item.ariaAttributes?.["aria-describedby"]].filter(Boolean).join(" ") || undefined
-            }
-            onMouseMove={handleMouseFocus}
-            onClick={item.isDisabled ? undefined : handleSelect}
-            tabIndex={-1}
-            id={makeItemId(item)}
-            className={classNames}
-            data-testid={dataTestId}
-        >
-            <InteractiveItemComponent item={item} isFocused={isFocused} />
-        </li>
+        <>
+            <li
+                ref={scrollToItem}
+                role="menuitem"
+                {...item.ariaAttributes}
+                aria-haspopup={item.subItems ? "menu" : item.ariaAttributes?.["aria-haspopup"]}
+                aria-disabled={item.isDisabled}
+                aria-describedby={
+                    [tooltipId, item.ariaAttributes?.["aria-describedby"]].filter(Boolean).join(" ") ||
+                    undefined
+                }
+                onMouseMove={handleMouseFocus}
+                onClick={item.isDisabled ? undefined : handleSelect}
+                tabIndex={-1}
+                id={makeItemId(item)}
+                className={classNames}
+                data-testid={dataTestId}
+            >
+                <InteractiveItemComponent item={item} isFocused={isFocused} />
+            </li>
+            {/*
+                Sibling of the <li>, not a descendant — so this text is exposed via aria-describedby
+                without also being folded into the <li>'s accessible NAME (which is computed from its
+                own descendant content). Rendered statically (not gated on UiTooltip's hover/focus-driven
+                open state) so aria-describedby always resolves to real content, matching the pattern in
+                MeasureValueFilterDropdownActions.tsx. Wrapped in a role="none" <li> (rather than a bare
+                <span>) so it stays valid content inside the enclosing <menu>/<ul>.
+            */}
+            {tooltipId ? (
+                <li role="none" className="sr-only">
+                    <span id={tooltipId}>{item.tooltip}</span>
+                </li>
+            ) : null}
+        </>
     );
 }
 
@@ -121,14 +137,8 @@ export function DefaultUiMenuInteractiveItem<T extends IUiMenuItemData = object>
     item,
     isFocused,
 }: IUiMenuInteractiveItemProps<T>): ReactNode {
-    const { useContextStore, createSelector } = typedUiMenuContextStore<T>();
-    const selector = createSelector((ctx) => ({ makeItemId: ctx.makeItemId }));
-    const { makeItemId } = useContextStore(selector);
-    const tooltipId = getTooltipId(item, makeItemId);
-
     return (
         <UiTooltip
-            id={tooltipId}
             anchor={
                 <div
                     className={e("item", {
@@ -153,6 +163,11 @@ export function DefaultUiMenuInteractiveItem<T extends IUiMenuItemData = object>
             triggerBy={["hover"]}
             arrowPlacement={"left"}
             width={item.tooltipWidth}
+            // The accessible description is provided by the dedicated sr-only <li> in
+            // DefaultUiMenuInteractiveItemWrapper; suppress UiTooltip's own internal
+            // screen-reader copy so its (hover-gated) text isn't also folded into this
+            // menu item's accessible name as a descendant of the <li>.
+            accessibilityHidden
         />
     );
 }

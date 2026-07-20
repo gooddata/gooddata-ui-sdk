@@ -7,6 +7,8 @@ import {
     isStringParameterDefinition,
     isValidNumberParameterValue,
     isValidParameterValue,
+    parameterValueMatchesType,
+    sanitizeParameterValue,
 } from "../index.js";
 
 describe("isValidNumberParameterValue", () => {
@@ -80,6 +82,49 @@ describe("isValidParameterValue", () => {
         const stringDefinition: IParameterDefinition = { type: "STRING", defaultValue: "Actual" };
         expect(isValidParameterValue(numberDefinition, "Plan")).toBe(false);
         expect(isValidParameterValue(stringDefinition, 5)).toBe(false);
+    });
+});
+
+describe("sanitizeParameterValue", () => {
+    it("passes a valid value through and recovers an invalid one to the default", () => {
+        const definition: IParameterDefinition = {
+            type: "NUMBER",
+            defaultValue: 5,
+            constraints: { min: 0, max: 10 },
+        };
+        expect(sanitizeParameterValue(definition, 7)).toBe(7);
+        expect(sanitizeParameterValue(definition, 999)).toBe(5);
+        expect(sanitizeParameterValue(definition, "Plan")).toBe(5);
+    });
+
+    it("passes a valid STRING value through and recovers an invalid one to the string default", () => {
+        const definition: IParameterDefinition = {
+            type: "STRING",
+            defaultValue: "Actual",
+            constraints: { maxLength: 5 },
+        };
+        expect(sanitizeParameterValue(definition, "Plan")).toBe("Plan");
+        expect(sanitizeParameterValue(definition, 7)).toBe("Actual");
+        expect(sanitizeParameterValue(definition, "TooLong")).toBe("Actual");
+    });
+});
+
+describe("parameterValueMatchesType", () => {
+    it("matches values by runtime kind, ignoring constraints", () => {
+        const numberDefinition: IParameterDefinition = {
+            type: "NUMBER",
+            defaultValue: 5,
+            constraints: { min: 0, max: 10 },
+        };
+        const stringDefinition: IParameterDefinition = {
+            type: "STRING",
+            defaultValue: "Actual",
+            constraints: { maxLength: 3 },
+        };
+        expect(parameterValueMatchesType(numberDefinition, 999)).toBe(true);
+        expect(parameterValueMatchesType(numberDefinition, "Plan")).toBe(false);
+        expect(parameterValueMatchesType(stringDefinition, "TooLong")).toBe(true);
+        expect(parameterValueMatchesType(stringDefinition, 5)).toBe(false);
     });
 });
 

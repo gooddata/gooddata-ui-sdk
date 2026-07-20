@@ -15,6 +15,7 @@ import {
     type IDashboardMeasureValueFilter,
     type IdentifierRef,
     type ObjRef,
+    type ParameterValue,
     areObjRefsEqual,
     dashboardFilterLocalIdentifier,
     dashboardFilterObjRef,
@@ -127,7 +128,7 @@ export interface IAutomationFiltersSelectProps {
     /**
      * Called when an `active` parameter chip's value is edited.
      */
-    onParameterChange?: (ref: IdentifierRef, value: number) => void;
+    onParameterChange?: (ref: IdentifierRef, value: ParameterValue) => void;
     /**
      * Called when an `active` parameter chip is removed.
      */
@@ -147,7 +148,7 @@ export interface IAutomationFiltersSelectProps {
     /**
      * Called when an `active` parameter chip's value is edited in a tab section.
      */
-    onParameterChangeByTab?: (tabId: string, ref: IdentifierRef, value: number) => void;
+    onParameterChangeByTab?: (tabId: string, ref: IdentifierRef, value: ParameterValue) => void;
     /**
      * Called when an `active` parameter chip is removed in a tab section.
      */
@@ -833,7 +834,7 @@ interface IAutomationFiltersTabSectionProps {
     onChange: (filter: FilterContextItem | undefined) => void;
     onDelete: (filter: FilterContextItem) => void;
     parameters: IAutomationParameter[];
-    onParameterChange: (ref: IdentifierRef, value: number) => void;
+    onParameterChange: (ref: IdentifierRef, value: ParameterValue) => void;
     onParameterDelete: (ref: IdentifierRef) => void;
     overlayPositionType?: OverlayPositionType;
     /** Show divider after this tab section */

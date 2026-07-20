@@ -717,6 +717,7 @@
     "shareDialog.olp.generalAccess.groupLabel": "General access",
     "shareDialog.olp.generalAccess.restricted.title": "Restricted",
     "shareDialog.olp.generalAccess.restricted.description": "Only people and groups added above can access this object.",
+    "shareDialog.olp.generalAccess.restricted.description.inherited": "Access for all workspace members is granted from a parent workspace and cannot be restricted here.",
     "shareDialog.olp.generalAccess.workspace.title": "All workspace members",
     "shareDialog.olp.generalAccess.workspace.description": "Everyone in this workspace can view this object.",
     "shareDialog.olp.generalAccess.workspace.description.share": "Everyone in this workspace can view and share this object.",
@@ -1199,5 +1200,6 @@
     "mvf.details.id": "ID",
     "mvf.details.infoButtonLabel": "Show metric details",
     "mvf.details.type": "Type",
-    "mvf.details.typeValue": "Metric"
+    "mvf.details.typeValue": "Metric",
+    "visualization.stackLabel.aria.total": "total"
 }

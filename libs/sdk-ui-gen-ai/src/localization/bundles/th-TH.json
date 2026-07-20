@@ -29,6 +29,7 @@
     "gd.gen-ai.input-placeholder": "ถามที่นี่…",
     "gd.gen-ai.input-label.mac": "ถามคำถามของคุณ ใช้ control+space หรือ cmd+I สำหรับคำแนะนำ",
     "gd.gen-ai.input-label.win": "ถามคำถามของคุณ ใช้ control+space หรือ control+I สำหรับคำแนะนำ",
+    "gd.gen-ai.context.add_context": "เพิ่มบริบท",
     "gd.gen-ai.agents": "เอเจนต์",
     "gd.gen-ai.agents.loading": "กำลังโหลด",
     "gd.gen-ai.agent.unavailable": "ไม่มีเอเจนต์ที่ใช้งานได้",

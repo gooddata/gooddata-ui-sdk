@@ -447,17 +447,17 @@ function updateParameterCatalogItemMeta(
 export function updateParameterCatalogItem(
     backend: IAnalyticalBackend,
     workspace: string,
-    item: ICatalogItemParameter,
+    definition: IParameterMetadataObjectDefinition & { id: string },
 ) {
     return backend
         .workspace(workspace)
         .parameters()
         .updateParameter({
-            ...buildIdentity(item),
-            title: item.title,
-            description: item.description,
-            tags: item.tags,
-            definition: item.definition,
+            ...buildIdentity({ identifier: definition.id, type: "parameter" }),
+            title: definition.title,
+            description: definition.description,
+            tags: definition.tags,
+            definition: definition.definition,
         });
 }
 

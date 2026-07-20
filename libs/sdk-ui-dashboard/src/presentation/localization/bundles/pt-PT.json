@@ -292,6 +292,7 @@
     "gs.date.yesterday": "Ontem",
     "messages.exportResultError": "Falha ao exportar os dados. Tente mais tarde.",
     "messages.exportResultError.tooManyRows": "Falha na exportação. Muitas linhas ({actual}). O limite é {limit}.",
+    "messages.exportResultError.timeout": "A exportação excedeu o tempo limite. Restrinja a exportação (menos linhas ou colunas) e tente novamente.",
     "messages.exportResultRestrictedError": "Não é possível exportar essa visualização porque ela contém dados restritos.",
     "messages.exportResultStart": "Exportação em curso",
     "messages.exportResultSuccess": "Exportação bem sucedida.",

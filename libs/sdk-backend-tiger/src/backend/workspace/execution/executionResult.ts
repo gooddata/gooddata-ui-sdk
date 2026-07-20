@@ -7,6 +7,7 @@ import {
     type AfmExecutionResponse,
     type ExecutionResult,
     type Settings,
+    type TabularExportExecution,
     type TabularExportRequest,
     type TabularExportRequestFormatEnum,
 } from "@gooddata/api-client-tiger";
@@ -93,6 +94,19 @@ const TABULAR_EXPORT_FORMATS: TabularExportRequestFormatEnum[] = ["CSV", "XLSX",
 
 function isTabularExportFormat(format: string = ""): format is TabularExportRequestFormatEnum {
     return TABULAR_EXPORT_FORMATS.includes(format as TabularExportRequestFormatEnum);
+}
+
+function buildTabularExportExecution(
+    resultId: string,
+    result: IExecutionResult,
+    title?: string,
+): TabularExportExecution {
+    const customOverride = resolveCustomOverride(result.dimensions, result.definition);
+    return {
+        executionResult: resultId,
+        title,
+        customOverride: augmentCustomOverrideWithNormalizedKeys(customOverride, result.definition),
+    };
 }
 
 function sanitizeOffset(offset: number[]): number[] {
@@ -438,6 +452,21 @@ export class TigerExecutionResult implements IExecutionResult {
             visualizationObject: options.visualizationObjectId,
             visualizationObjectCustomFilters: options.visualizationObjectCustomFilters,
         };
+
+        // For multi-layer geo visualizations the export ships one sheet/file per layer. The main
+        // layer is this result (index 0); the additional layers come pre-executed in the config.
+        // When executions is present the backend ignores the top-level executionResult/customOverride.
+        if (options.additionalExecutions?.length) {
+            payload.executions = [
+                { executionResult: this._resultId, title: options.title, customOverride: augmented },
+                ...options.additionalExecutions.flatMap(({ executionResult, title }) => {
+                    const layerResultId = executionResult.resultId();
+                    return layerResultId
+                        ? [buildTabularExportExecution(layerResultId, executionResult, title)]
+                        : [];
+                }),
+            ];
+        }
 
         return this.authCall(async (client) => {
             const tabularExport = await ExportApi_CreateTabularExport(client.axios, client.basePath, {

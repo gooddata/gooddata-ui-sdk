@@ -29,6 +29,7 @@
     "gd.gen-ai.input-placeholder": "こちらでお尋ねください...",
     "gd.gen-ai.input-label.mac": "ご質問ください。control+spaceまたはcmd+Iを使用してください。",
     "gd.gen-ai.input-label.win": "ご質問ください。control+spaceまたはcontrol+Iを使用してください。",
+    "gd.gen-ai.context.add_context": "コンテキストを追加",
     "gd.gen-ai.agents": "エージェント",
     "gd.gen-ai.agents.loading": "読み込んでいます",
     "gd.gen-ai.agent.unavailable": "利用可能なエージェントがありません",

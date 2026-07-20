@@ -130,22 +130,25 @@ describe("convertAlert (fromBackend) — parameters", () => {
         expect(convertAlert(baseAlert())?.execution.parameters).toBeUndefined();
     });
 
-    it("drops rows whose value is not a finite number, keeping the rest", () => {
+    it("passes non-numeric string values through unchanged, keeping the rest as numbers", () => {
         const result = convertAlert(
             baseAlert([
-                { parameter: { identifier: { id: "broken", type: "parameter" } }, value: "not-a-number" },
+                { parameter: { identifier: { id: "scenario", type: "parameter" } }, value: "Budget" },
                 { parameter: { identifier: { id: "topN", type: "parameter" } }, value: "5" },
             ]),
         );
 
-        expect(result?.execution.parameters).toEqual([{ ref: idRef("topN", "parameter"), value: 5 }]);
+        expect(result?.execution.parameters).toEqual([
+            { ref: idRef("scenario", "parameter"), value: "Budget" },
+            { ref: idRef("topN", "parameter"), value: 5 },
+        ]);
     });
 
-    it("leaves parameters undefined when every row is non-numeric", () => {
+    it("decodes a numeric string value as a number", () => {
         const result = convertAlert(
-            baseAlert([{ parameter: { identifier: { id: "broken", type: "parameter" } }, value: "NaN" }]),
+            baseAlert([{ parameter: { identifier: { id: "topN", type: "parameter" } }, value: "8" }]),
         );
 
-        expect(result?.execution.parameters).toBeUndefined();
+        expect(result?.execution.parameters).toEqual([{ ref: idRef("topN", "parameter"), value: 8 }]);
     });
 });

@@ -28,8 +28,6 @@ import {
     selectActiveParameterRefKeys,
     selectActiveTabDrillParameters,
     selectActiveTabExportParameters,
-    selectAutomationExportEffectiveParameters,
-    selectAutomationParameterValuesForWidget,
     selectDashboardParameterEntries,
     selectDashboardParameters,
     selectEffectiveDashboardParametersForWidget,
@@ -1465,7 +1463,7 @@ describe("parameter selectors (per tab)", () => {
                     measureParameters: depMapTopN,
                 });
                 expect(selectExportEffectiveParameters(undefined)(state)).toEqual({
-                    [TAB_ID]: [{ id: "topN", value: "25", title: "Top N" }],
+                    [TAB_ID]: [{ id: "topN", value: "25", title: "Top N", parameterType: "NUMBER" }],
                 });
             });
 
@@ -1484,8 +1482,8 @@ describe("parameter selectors (per tab)", () => {
                 });
                 expect(selectExportEffectiveParameters(undefined)(state)).toEqual({
                     [TAB_ID]: [
-                        { id: "topN", value: "25", title: "Top N" },
-                        { id: "sampleSize", value: "99", title: "Sample Size" },
+                        { id: "topN", value: "25", title: "Top N", parameterType: "NUMBER" },
+                        { id: "sampleSize", value: "99", title: "Sample Size", parameterType: "NUMBER" },
                     ],
                 });
             });
@@ -1501,7 +1499,9 @@ describe("parameter selectors (per tab)", () => {
                     workspaceParameters: [exportSampleSizeWorkspace],
                 });
                 expect(selectExportEffectiveParameters(undefined)(state)).toEqual({
-                    [TAB_ID]: [{ id: "sampleSize", value: "99", title: "Sample Size" }],
+                    [TAB_ID]: [
+                        { id: "sampleSize", value: "99", title: "Sample Size", parameterType: "NUMBER" },
+                    ],
                 });
             });
 
@@ -1527,7 +1527,7 @@ describe("parameter selectors (per tab)", () => {
                     workspaceParameters: [topNWorkspace],
                 });
                 expect(selectExportEffectiveParameters([])(state)).toEqual({
-                    [TAB_ID]: [{ id: "topN", value: "25", title: "Top N" }],
+                    [TAB_ID]: [{ id: "topN", value: "25", title: "Top N", parameterType: "NUMBER" }],
                 });
             });
 
@@ -1541,7 +1541,9 @@ describe("parameter selectors (per tab)", () => {
                 });
                 const result = selectExportEffectiveParameters(undefined)(state);
                 expect(Object.keys(result)).toEqual([TAB_ID]);
-                expect(result[TAB_ID]).toEqual([{ id: "topN", value: "7", title: "Top N" }]);
+                expect(result[TAB_ID]).toEqual([
+                    { id: "topN", value: "7", title: "Top N", parameterType: "NUMBER" },
+                ]);
             });
         });
 
@@ -1563,7 +1565,7 @@ describe("parameter selectors (per tab)", () => {
                 });
                 // Insight references only topN, so sampleSize is excluded.
                 expect(selectExportEffectiveParameters(["w-1"])(state)).toEqual({
-                    [TAB_ID]: [{ id: "topN", value: "25", title: "Top N" }],
+                    [TAB_ID]: [{ id: "topN", value: "25", title: "Top N", parameterType: "NUMBER" }],
                 });
             });
 
@@ -1686,7 +1688,7 @@ describe("parameter selectors (per tab)", () => {
 
                 // Exporting widget B from active tab A → result must key on tab B (B's owning tab).
                 expect(selectExportEffectiveParameters(["w-B"])(state)).toEqual({
-                    "tab-B": [{ id: "topN", value: "99", title: "Top N" }],
+                    "tab-B": [{ id: "topN", value: "99", title: "Top N", parameterType: "NUMBER" }],
                 });
             });
 
@@ -1768,8 +1770,8 @@ describe("parameter selectors (per tab)", () => {
 
                 expect(selectExportEffectiveParameters(["w-1", "w-2"])(state)).toEqual({
                     [TAB_ID]: [
-                        { id: "topN", value: "25", title: "Top N" },
-                        { id: "sampleSize", value: "99", title: "Sample Size" },
+                        { id: "topN", value: "25", title: "Top N", parameterType: "NUMBER" },
+                        { id: "sampleSize", value: "99", title: "Sample Size", parameterType: "NUMBER" },
                     ],
                 });
             });
@@ -1829,7 +1831,7 @@ describe("parameter selectors (per tab)", () => {
                     measureParametersStatus: "uninitialized",
                 });
                 expect(selectExportEffectiveParameters(undefined)(state)).toEqual({
-                    [TAB_ID]: [{ id: "topN", value: "25", title: "Top N" }],
+                    [TAB_ID]: [{ id: "topN", value: "25", title: "Top N", parameterType: "NUMBER" }],
                 });
             });
         });
@@ -1860,13 +1862,13 @@ describe("parameter selectors (per tab)", () => {
 
         it("returns only the active tab's rows", () => {
             expect(selectActiveTabExportParameters(makeTwoTabState("tab-B", "tab-A"))).toEqual([
-                { id: "topN", value: "99", title: "Top N" },
+                { id: "topN", value: "99", title: "Top N", parameterType: "NUMBER" },
             ]);
         });
 
         it("scopes to the active tab, not other tabs", () => {
             expect(selectActiveTabExportParameters(makeTwoTabState("tab-A", "tab-A"))).toEqual([
-                { id: "topN", value: "10", title: "Top N" },
+                { id: "topN", value: "10", title: "Top N", parameterType: "NUMBER" },
             ]);
         });
 
@@ -2119,7 +2121,7 @@ describe("parameter reconciliation selectors", () => {
                 enableStringParameters: false,
             });
             expect(selectExportEffectiveParameters(undefined)(state)).toEqual({
-                [TAB_ID]: [{ id: "topN", value: "25", title: "Top N" }],
+                [TAB_ID]: [{ id: "topN", value: "25", title: "Top N", parameterType: "NUMBER" }],
             });
         });
 
@@ -2129,7 +2131,24 @@ describe("parameter reconciliation selectors", () => {
                 workspaceParameters: [scenarioWorkspace],
             });
             expect(selectExportEffectiveParameters(undefined)(state)).toEqual({
-                [TAB_ID]: [{ id: "scenario", value: "Budget", title: "Scenario" }],
+                [TAB_ID]: [{ id: "scenario", value: "Budget", title: "Scenario", parameterType: "STRING" }],
+            });
+        });
+
+        it("selectExportEffectiveParameters emits STRING rows in widget scope when the flag is on", () => {
+            const topNMetricRef = idRef("m-topn", "measure");
+            const mixedInsight = makeInsightWithMetric(W1_INSIGHT_REF, [scenarioMetricRef, topNMetricRef]);
+            const state = makeFullState({
+                entries: [stringEntry, { parameter: topNParameter, runtimeOverride: 25 }],
+                workspaceParameters: [scenarioWorkspace, topNWorkspace],
+                insights: [mixedInsight],
+                measureParameters: { "m-scenario": [scenarioRef], "m-topn": [topNRef] },
+            });
+            expect(selectExportEffectiveParameters(["w-1"])(state)).toEqual({
+                [TAB_ID]: [
+                    { id: "scenario", value: "Budget", title: "Scenario", parameterType: "STRING" },
+                    { id: "topN", value: "25", title: "Top N", parameterType: "NUMBER" },
+                ],
             });
         });
 
@@ -2182,75 +2201,6 @@ describe("parameter reconciliation selectors", () => {
         it("selectActiveTabDrillParameters hands off the STRING override when the flag is on", () => {
             const state = makeFullState({ entries: [stringEntry] });
             expect(selectActiveTabDrillParameters(state)).toEqual([{ ref: scenarioRef, value: "Budget" }]);
-        });
-    });
-
-    describe("automation seeding (dialogs are NUMBER-only until the interactions slice: STRING must not enter stored wires)", () => {
-        const scenarioMetricRef = idRef("m-scenario", "measure");
-        const topNMetricRef = idRef("m-topn", "measure");
-        const mixedDepMap = { "m-scenario": [scenarioRef], "m-topn": [topNRef] };
-        const stringEntry: IDashboardParameterEntry = {
-            parameter: { ...scenarioParameter, value: "Budget" },
-            runtimeOverride: "Budget",
-        };
-
-        it("selectAutomationExportEffectiveParameters excludes STRING rows even when the flag is on", () => {
-            const state = makeFullState({
-                entries: [stringEntry, { parameter: topNParameter, runtimeOverride: 25 }],
-                workspaceParameters: [scenarioWorkspace, topNWorkspace],
-            });
-            expect(selectExportEffectiveParameters(undefined)(state)).toEqual({
-                [TAB_ID]: [
-                    { id: "scenario", value: "Budget", title: "Scenario" },
-                    { id: "topN", value: "25", title: "Top N" },
-                ],
-            });
-            expect(selectAutomationExportEffectiveParameters(undefined)(state)).toEqual({
-                [TAB_ID]: [{ id: "topN", value: "25", title: "Top N" }],
-            });
-        });
-
-        it("selectAutomationExportEffectiveParameters excludes STRING rows in widget scope", () => {
-            const mixedInsight = makeInsightWithMetric(W1_INSIGHT_REF, [scenarioMetricRef, topNMetricRef]);
-            const state = makeFullState({
-                entries: [stringEntry, { parameter: topNParameter, runtimeOverride: 25 }],
-                workspaceParameters: [scenarioWorkspace, topNWorkspace],
-                insights: [mixedInsight],
-                measureParameters: mixedDepMap,
-            });
-            expect(selectAutomationExportEffectiveParameters(["w-1"])(state)).toEqual({
-                [TAB_ID]: [{ id: "topN", value: "25", title: "Top N" }],
-            });
-        });
-
-        it("selectAutomationParameterValuesForWidget drops string values even when the flag is on", () => {
-            const mixedInsight = makeInsightWithMetric(W1_INSIGHT_REF, [scenarioMetricRef, topNMetricRef]);
-            const state = makeFullState({
-                entries: [stringEntry, { parameter: topNParameter, runtimeOverride: 25 }],
-                workspaceParameters: [scenarioWorkspace, topNWorkspace],
-                insights: [mixedInsight],
-                measureParameters: mixedDepMap,
-            });
-            expect(selectEffectiveParameterValuesForWidget(W1_REF)(state)).toEqual(
-                expect.arrayContaining([
-                    { ref: scenarioRef, value: "Budget" },
-                    { ref: topNRef, value: 25 },
-                ]),
-            );
-            expect(selectAutomationParameterValuesForWidget(W1_REF)(state)).toEqual([
-                { ref: topNRef, value: 25 },
-            ]);
-        });
-
-        it("selectAutomationParameterValuesForWidget returns empty when only string values apply", () => {
-            const insightOnlyScenario = makeInsightWithMetric(W1_INSIGHT_REF, scenarioMetricRef);
-            const state = makeFullState({
-                entries: [stringEntry],
-                workspaceParameters: [scenarioWorkspace],
-                insights: [insightOnlyScenario],
-                measureParameters: { "m-scenario": [scenarioRef] },
-            });
-            expect(selectAutomationParameterValuesForWidget(W1_REF)(state)).toEqual([]);
         });
     });
 });

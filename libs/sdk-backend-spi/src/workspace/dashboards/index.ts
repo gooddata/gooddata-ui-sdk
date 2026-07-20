@@ -37,7 +37,7 @@ import type {
 import type { IFilterBaseOptions } from "../../common/filtering.js";
 import type { IPagedResource } from "../../common/paging.js";
 import type { QueryMethod } from "../../common/query.js";
-import type { IExportResult } from "../execution/export.js";
+import type { IExportResult } from "../execution/index.js";
 
 /**
  * Dashboard referenced objects

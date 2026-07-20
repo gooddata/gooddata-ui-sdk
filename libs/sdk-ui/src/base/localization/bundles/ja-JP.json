@@ -717,6 +717,7 @@
     "shareDialog.olp.generalAccess.groupLabel": "一般アクセス",
     "shareDialog.olp.generalAccess.restricted.title": "制限あり",
     "shareDialog.olp.generalAccess.restricted.description": "上記で追加されたユーザーとグループのみがこのオブジェクトにアクセスできます。",
+    "shareDialog.olp.generalAccess.restricted.description.inherited": "すべてのワークスペースメンバーへのアクセス権は親ワークスペースから付与されているため、ここでは制限できません。",
     "shareDialog.olp.generalAccess.workspace.title": "すべてのワークスペースメンバー",
     "shareDialog.olp.generalAccess.workspace.description": "このワークスペース内の全員がこのオブジェクトを表示できます。",
     "shareDialog.olp.generalAccess.workspace.description.share": "このワークスペース内の全員がこのオブジェクトを表示および共有できます。",
@@ -1199,5 +1200,6 @@
     "mvf.details.id": "ID",
     "mvf.details.infoButtonLabel": "メトリックの詳細を表示",
     "mvf.details.type": "タイプ",
-    "mvf.details.typeValue": "メトリック"
+    "mvf.details.typeValue": "メトリック",
+    "visualization.stackLabel.aria.total": "合計"
 }
