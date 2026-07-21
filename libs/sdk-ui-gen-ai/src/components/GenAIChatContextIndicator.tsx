@@ -7,8 +7,9 @@ import { connect, useSelector } from "react-redux";
 import { UiChip } from "@gooddata/sdk-ui-kit";
 
 import { collectContextReferences } from "../context/collectContextReferences.js";
-import { effectiveContextSelector } from "../store/chatWindow/chatWindowSelectors.js";
-import { removeAmbientUserContextAction } from "../store/chatWindow/chatWindowSlice.js";
+import { userContextSelector } from "../store/chatWindow/chatWindowSelectors.js";
+import { removeContextReferenceAction } from "../store/chatWindow/chatWindowSlice.js";
+import { type IGenAIContextObject } from "../types.js";
 
 import { getIconByType } from "./utils/icons.js";
 
@@ -17,7 +18,7 @@ type GenAIChatContextIndicatorOwnProps = {
 };
 
 type GenAIChatContextIndicatorDispatchProps = {
-    removeAmbientUserContext: typeof removeAmbientUserContextAction;
+    removeContextReference: typeof removeContextReferenceAction;
 };
 
 /**
@@ -29,33 +30,36 @@ type GenAIChatContextIndicatorDispatchProps = {
  * @internal
  */
 function GenAIChatContextIndicatorCore({
-    removeAmbientUserContext,
+    removeContextReference,
     onDelete,
 }: GenAIChatContextIndicatorDispatchProps & GenAIChatContextIndicatorOwnProps) {
-    const { ambient } = useSelector(effectiveContextSelector);
-    const ambientReferences = collectContextReferences(ambient, "ambient");
+    const context = useSelector(userContextSelector);
+    const references = collectContextReferences(context);
 
-    const onAmbientDelete = useCallback(() => {
-        return () => {
-            removeAmbientUserContext();
-            onDelete?.();
-        };
-    }, [removeAmbientUserContext, onDelete]);
+    const onDeleteHandler = useCallback(
+        (reference: IGenAIContextObject) => {
+            return () => {
+                removeContextReference({ object: reference });
+                onDelete?.();
+            };
+        },
+        [removeContextReference, onDelete],
+    );
 
-    if (ambientReferences.length === 0) {
+    if (references.length === 0) {
         return null;
     }
 
     return (
         <div className="gd-gen-ai-chat__context-indicator" aria-live="polite">
-            {ambientReferences.map((reference, index) => (
+            {references.map((reference, index) => (
                 <UiChip
                     key={index}
                     {...getIconByType(reference.type)}
                     label={reference.title}
                     isExpandable={false}
                     isDeletable
-                    onDelete={onAmbientDelete()}
+                    onDelete={onDeleteHandler(reference)}
                 />
             ))}
         </div>
@@ -63,7 +67,7 @@ function GenAIChatContextIndicatorCore({
 }
 
 const mapDispatchToProps = {
-    removeAmbientUserContext: removeAmbientUserContextAction,
+    removeContextReference: removeContextReferenceAction,
 };
 
 export const GenAIChatContextIndicator: FC<GenAIChatContextIndicatorOwnProps> = connect(

@@ -15,6 +15,7 @@ import {
 } from "../../constants/bubble.js";
 import {
     getChartFillIgnoredMeasureIdsFromMdObject,
+    getDerivedMeasureIdsFromMdObject,
     getMeasuresFromMdObject,
 } from "../../utils/bucketHelper.js";
 import { CheckboxControl } from "../configurationControls/CheckboxControl.js";
@@ -164,6 +165,7 @@ export class RadarChartConfigurationPanel extends LineChartBasedConfigurationPan
         const controlsDisabled = this.isControlDisabled();
         const hasMeasures = getMeasuresFromMdObject(insight!).length > 0;
         const chartFillIgnoredMeasures = getChartFillIgnoredMeasureIdsFromMdObject(insight, properties);
+        const derivedMeasureLocalIds = getDerivedMeasureIdsFromMdObject(insight);
         const isOutlineMode = (properties?.controls?.["radarRenderAs"] ?? "filled") === "outline";
 
         return (
@@ -179,6 +181,7 @@ export class RadarChartConfigurationPanel extends LineChartBasedConfigurationPan
                 supportsChartFill
                 chartFillIgnoredMeasures={chartFillIgnoredMeasures}
                 isChartFillDisabled={isOutlineMode}
+                derivedMeasureLocalIds={derivedMeasureLocalIds}
                 additionalControls={
                     <div className="gd-chart-fill-section">
                         <RadarRenderAsControl

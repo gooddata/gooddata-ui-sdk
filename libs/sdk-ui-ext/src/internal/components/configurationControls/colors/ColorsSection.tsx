@@ -2,10 +2,13 @@
 
 import { type ReactNode } from "react";
 
+import cx from "classnames";
+import { cloneDeep, set } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { type IColor, isMeasureDescriptor } from "@gooddata/sdk-model";
 import { type ChartFillType, type LineStyle } from "@gooddata/sdk-ui-charts";
+import { Button } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../../locales.js";
 import { fillDropdownItems } from "../../../constants/dropdowns.js";
@@ -39,6 +42,8 @@ export interface IColorsSectionProps {
     /** Optional controls rendered above the fill dropdown, inside the section. */
     additionalControls?: ReactNode;
     supportsLineStyles?: boolean;
+    /** Local identifiers of derived measures; only their items offer the per-item reset. */
+    derivedMeasureLocalIds?: string[];
 }
 
 export const COLOR_MAPPING_CHANGED = "COLOR_MAPPING_CHANGED";
@@ -56,6 +61,7 @@ export function ColorsSection({
     isChartFillDisabled,
     additionalControls,
     supportsLineStyles,
+    derivedMeasureLocalIds,
 }: IColorsSectionProps) {
     const intl = useIntl();
     const onSelect = (selectedColorItem: IColoredItem, color: IColor) => {
@@ -108,6 +114,48 @@ export function ColorsSection({
         });
     };
 
+    const isDefaultColorMapping = () => {
+        const colorMapping = properties?.controls?.["colorMapping"] ?? [];
+        const lineStyleMapping = supportsLineStyles ? (properties?.controls?.["lineStyleMapping"] ?? []) : [];
+        return (
+            (!colorMapping || colorMapping.length === 0) &&
+            (!lineStyleMapping || lineStyleMapping.length === 0)
+        );
+    };
+
+    const onResetColors = () => {
+        if (isDefaultColorMapping()) {
+            return;
+        }
+        let updatedProperties = set(cloneDeep(properties!), "controls.colorMapping", undefined);
+        if (supportsLineStyles) {
+            updatedProperties = set(updatedProperties, "controls.lineStyleMapping", undefined);
+        }
+        pushData?.({ messageId: COLOR_MAPPING_CHANGED, properties: updatedProperties, references: {} });
+    };
+
+    const renderResetButton = () => {
+        const isDisabled = controlsDisabled || isDefaultColorMapping();
+
+        const classes = cx("gd-color-reset-colors-section", {
+            disabled: isDisabled,
+        });
+
+        return (
+            <div className={classes}>
+                <Button
+                    value={getTranslation(
+                        supportsLineStyles ? messages["resetColorsAndStyles"].id : messages["resetColors"].id,
+                        intl,
+                    )}
+                    className="gd-button-link s-reset-colors-button"
+                    onClick={onResetColors}
+                    disabled={isDisabled}
+                />
+            </div>
+        );
+    };
+
     const renderFillDropdown = () => {
         if (!supportsChartFill) {
             return null;
@@ -155,6 +203,7 @@ export function ColorsSection({
                     inputItems={inputItems}
                     onSelect={onSelect}
                     onResetItem={onResetItem}
+                    derivedMeasureLocalIds={derivedMeasureLocalIds}
                     disabled={controlsDisabled}
                     isLoading={isLoading}
                     chartFill={chartFill}
@@ -163,6 +212,7 @@ export function ColorsSection({
                     onLineStyleChange={supportsLineStyles ? onLineStyleChange : undefined}
                     onLineWidthChange={supportsLineStyles ? onLineWidthChange : undefined}
                 />
+                {renderResetButton()}
                 {additionalControls}
                 {renderFillDropdown()}
             </>

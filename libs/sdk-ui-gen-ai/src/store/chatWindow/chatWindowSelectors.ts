@@ -12,7 +12,6 @@ import {
 } from "@gooddata/sdk-model";
 import type { IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
 
-import { type StoreContext } from "../../types.js";
 import { type RootState } from "../types.js";
 
 import { chatWindowSliceName } from "./chatWindowSlice.js";
@@ -98,37 +97,12 @@ export const keyDriverAnalysisMinimizedSelector: (state: RootState) => boolean |
     (state) => state.keyDriverAnalysisMinimized,
 );
 
-const userContextSelector: (state: RootState) => IGenAIUserContext | undefined = createSelector(
+export const userContextSelector: (state: RootState) => IGenAIUserContext | undefined = createSelector(
     chatWindowSliceSelector,
-    (state) => state.context.user,
+    (state) => state.context.active,
 );
 
 export const ambientContextSelector: (state: RootState) => IGenAIUserContext | undefined = createSelector(
     chatWindowSliceSelector,
     (state) => state.context.ambient,
-);
-
-const contextModeSelector: (state: RootState) => StoreContext["ambientMode"] = createSelector(
-    chatWindowSliceSelector,
-    (state) => state.context.ambientMode,
-);
-
-/**
- * Context to attach to the next message: an explicit one-shot context (e.g. Summarize)
- * wins over the ambient context kept in sync by the host.
- */
-export const effectiveContextSelector: (state: RootState) => {
-    user: IGenAIUserContext | undefined;
-    ambient: IGenAIUserContext | undefined;
-} = createSelector(
-    userContextSelector,
-    ambientContextSelector,
-    contextModeSelector,
-    (userContext, ambientUserContext, mode) => {
-        const suppressed = mode === "suppressed";
-        return {
-            user: userContext,
-            ambient: suppressed ? undefined : ambientUserContext,
-        };
-    },
 );

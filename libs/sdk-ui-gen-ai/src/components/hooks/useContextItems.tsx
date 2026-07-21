@@ -6,21 +6,21 @@ import { type IGenAIUserContext } from "@gooddata/sdk-model";
 import { type IUiMenuItem, UiIcon } from "@gooddata/sdk-ui-kit";
 
 import {
-    type IGenAIContextObject,
+    collectAvailableReferences,
     collectContextReferences,
 } from "../../context/collectContextReferences.js";
+import { type IGenAIContextObject } from "../../types.js";
 import { getIconByType } from "../utils/icons.js";
 
 export function useContextItems(
-    current: IGenAIUserContext | undefined,
-    selected: IGenAIUserContext | undefined,
-    type: "ambient" | "user",
+    ambient: IGenAIUserContext | undefined,
+    active: IGenAIUserContext | undefined,
 ): IUiMenuItem<{ interactive: IGenAIContextObject }>[] {
     return useMemo(() => {
         const items: IUiMenuItem<{ interactive: IGenAIContextObject }>[] = [];
 
-        const currentReferences = collectContextReferences(current, type);
-        const selectedReferences = collectContextReferences(selected, type);
+        const currentReferences = collectAvailableReferences(ambient);
+        const selectedReferences = collectContextReferences(active);
 
         currentReferences.forEach((reference) => {
             const isSelected = selectedReferences.some(
@@ -46,5 +46,5 @@ export function useContextItems(
         });
 
         return items;
-    }, [current, selected, type]);
+    }, [active, ambient]);
 }

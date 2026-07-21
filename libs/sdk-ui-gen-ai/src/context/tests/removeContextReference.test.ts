@@ -27,6 +27,7 @@ describe("removeContextReference", () => {
         } as any;
         const reference = {
             where: "view.dashboard",
+            ref: idRef("dash1"),
         } as any;
         const result = removeContextReference(context, reference);
         expect(result).toBeUndefined();
@@ -39,7 +40,7 @@ describe("removeContextReference", () => {
                 somethingElse: {},
             },
         } as any;
-        const reference = { where: "view.dashboard" } as any;
+        const reference = { where: "view.dashboard", ref: idRef("dash1") } as any;
         const result = removeContextReference(context, reference);
         expect(result).toEqual({ view: { somethingElse: {} } });
     });
@@ -49,7 +50,7 @@ describe("removeContextReference", () => {
             view: { dashboard: { ref: idRef("dash1") } },
             referencedObjects: [],
         } as any;
-        const reference = { where: "view.dashboard" } as any;
+        const reference = { where: "view.dashboard", ref: idRef("dash1") } as any;
         const result = removeContextReference(context, reference);
         expect(result).toBeUndefined();
     });
@@ -61,7 +62,7 @@ describe("removeContextReference", () => {
                 other: "value",
             },
         } as any;
-        const reference = { where: "view.dashboard" } as any;
+        const reference = { where: "view.dashboard", ref: idRef("dash1") } as any;
         removeContextReference(context, reference);
 
         expect(context.view.dashboard).toBeDefined();

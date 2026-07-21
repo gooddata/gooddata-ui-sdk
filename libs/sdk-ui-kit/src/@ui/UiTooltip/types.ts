@@ -101,6 +101,15 @@ export interface IUiTooltipProps {
     onOpenChange?: (open: boolean) => void;
 
     /**
+     * When true, the anchor wrapper collapses to its content and centers it
+     * (`display: inline-flex; align-items: center`). Use for inline/icon anchors that would
+     * otherwise ride high on the wrapper's block line-box. `anchorWrapperStyles` still applies
+     * on top and can override.
+     * @defaultValue false
+     */
+    inlineAnchor?: boolean;
+
+    /**
      * Custom styles for the anchor wrapper element
      */
     anchorWrapperStyles?: CSSProperties;

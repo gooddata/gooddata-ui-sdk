@@ -8,10 +8,10 @@ import { connect } from "react-redux";
 import { type IGenAIUserContext } from "@gooddata/sdk-model";
 import { Dropdown, UiIconButton, UiMenu, UiSubmenuHeader } from "@gooddata/sdk-ui-kit";
 
-import { type IGenAIContextObject } from "../context/collectContextReferences.js";
-import { ambientContextSelector, effectiveContextSelector } from "../store/chatWindow/chatWindowSelectors.js";
+import { ambientContextSelector, userContextSelector } from "../store/chatWindow/chatWindowSelectors.js";
 import { addContextReferenceAction } from "../store/chatWindow/chatWindowSlice.js";
 import { type RootState } from "../store/types.js";
+import { type IGenAIContextObject } from "../types.js";
 
 import { useContextItems } from "./hooks/useContextItems.js";
 
@@ -20,8 +20,8 @@ type GenAiChatContextChooserOwnProps = {
 };
 
 type GenAiChatContextChooserStateProps = {
-    currentAmbient: IGenAIUserContext | undefined;
-    selectedAmbient: IGenAIUserContext | undefined;
+    active: IGenAIUserContext | undefined;
+    ambient: IGenAIUserContext | undefined;
 };
 
 type IGenAiChatContextChooserDispatchProps = {
@@ -35,17 +35,17 @@ const msgs = defineMessages({
 });
 
 function GenAiChatContextChooserCore({
-    currentAmbient,
-    selectedAmbient,
+    active,
+    ambient,
     addContextReference,
     onAddContext,
 }: GenAiChatContextChooserOwnProps &
     GenAiChatContextChooserStateProps &
     IGenAiChatContextChooserDispatchProps) {
     const intl = useIntl();
-    const items = useContextItems(currentAmbient, selectedAmbient, "ambient");
+    const items = useContextItems(ambient, active);
 
-    if (!currentAmbient) {
+    if (!ambient) {
         return null;
     }
 
@@ -96,12 +96,12 @@ function GenAiChatContextChooserCore({
 }
 
 const mapStateToProps = (state: RootState): GenAiChatContextChooserStateProps => {
-    const currentAmbient = ambientContextSelector(state);
-    const { ambient } = effectiveContextSelector(state);
+    const ambient = ambientContextSelector(state);
+    const active = userContextSelector(state);
 
     return {
-        currentAmbient,
-        selectedAmbient: ambient,
+        active,
+        ambient,
     };
 };
 

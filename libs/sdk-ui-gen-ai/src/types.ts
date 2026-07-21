@@ -1,7 +1,13 @@
 // (C) 2022-2026 GoodData Corporation
 
 import { type IChatConversationVisualisationContent } from "@gooddata/sdk-backend-spi";
-import { type IGenAIUserContext, type IGenAIVisualization } from "@gooddata/sdk-model";
+import {
+    type GenAIObjectType,
+    type IGenAIObjectReference,
+    type IGenAIUserContext,
+    type IGenAIVisualization,
+    type ObjRef,
+} from "@gooddata/sdk-model";
 
 import { type IChatConversationLocalItem } from "./model.js";
 
@@ -47,20 +53,26 @@ export type StoredConversation = {
 
 export type StoreContext = {
     /**
-     * One-shot user context for the next message (e.g. active visualization).
-     * Cleared after being consumed by the saga.
-     */
-    user?: IGenAIUserContext;
-    /**
      * Ambient user context kept in sync by the host (e.g. the open dashboard and its
      * live filter state). Unlike the one-shot userContext it persists across messages
      * and is attached to every message that has no one-shot context.
      */
     ambient?: IGenAIUserContext;
     /**
-     * Ambient mode for the chat.
-     * "suppressed" - ambient context is not used, but automatically change to auto if id is changed
-     * "enabled" - ambient context is used if available and updated in real-time
+     * Active context
      */
-    ambientMode?: "suppressed" | "enabled";
+    active?: IGenAIUserContext;
 };
+
+/**
+ * @internal
+ */
+export interface IGenAIContextObject {
+    id: string;
+    ref: ObjRef;
+    title: string;
+    nesting: number;
+    type: GenAIObjectType | "widget";
+    where: "view.dashboard" | "referencedObjects";
+    context?: IGenAIObjectReference;
+}

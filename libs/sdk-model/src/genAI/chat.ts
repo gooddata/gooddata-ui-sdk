@@ -249,7 +249,7 @@ export interface IGenAIWidgetDescriptor {
     /**
      * Widget type.
      */
-    widgetType: string;
+    widgetType: "insight" | "visualizationSwitcher" | "richText";
     /**
      * Insight reference (required for insight widgets). For a visualization switcher this is
      * the active (rendered) child's insight reference.
@@ -260,7 +260,7 @@ export interface IGenAIWidgetDescriptor {
      * Lets the backend summarize the whole switcher by executing the non-active children, which
      * carry no cached result.
      */
-    visualizationRefs?: ObjRef[];
+    visualizations?: IGenAIWidgetDescriptor[];
     /**
      * Signed result ID for this widget's cached execution result.
      */
@@ -301,6 +301,10 @@ export type GenAIObjectReferenceType = "WIDGET" | "METRIC" | "ATTRIBUTE" | "DASH
  * @internal
  */
 export interface IGenAIObjectReference {
+    /**
+     * Title of the referenced object.
+     */
+    title: string;
     /**
      * Type of the referenced object.
      */

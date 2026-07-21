@@ -1,5 +1,6 @@
 // (C) 2026 GoodData Corporation
 
+import { type JsonApiExportDefinitionOutMeta } from "@gooddata/api-client-tiger";
 import {
     type IExportTemplate,
     type IExportTemplateDashboardSlides,
@@ -7,16 +8,24 @@ import {
     idRef,
 } from "@gooddata/sdk-model";
 
+import { isInheritedObject } from "./ObjectInheritance.js";
+
 /**
- * Structural view of the JSON:API export template attributes. Organization- and workspace-level
- * export template entities share the same attribute shape, so a single converter handles both.
+ * Structural view of a JSON:API export template entity. Organization- and workspace-level export
+ * template entities share this shape (attributes + inheritance `meta`), so a single converter handles
+ * both — mirroring how {@link convertMemoryItem} accepts either scope's generated type.
  *
  * @internal
  */
-interface IExportTemplateOutAttributes {
-    name: string;
-    dashboardSlidesTemplate?: IExportTemplateDashboardSlides | null;
-    widgetSlidesTemplate?: IExportTemplateWidgetSlides | null;
+interface IExportTemplateOutEntity {
+    id: string;
+    type: string;
+    meta?: JsonApiExportDefinitionOutMeta;
+    attributes: {
+        name: string;
+        dashboardSlidesTemplate?: IExportTemplateDashboardSlides | null;
+        widgetSlidesTemplate?: IExportTemplateWidgetSlides | null;
+    };
 }
 
 /**
@@ -24,11 +33,14 @@ interface IExportTemplateOutAttributes {
  *
  * @internal
  */
-export function convertExportTemplate(id: string, attributes: IExportTemplateOutAttributes): IExportTemplate {
+export function convertExportTemplate(entity: IExportTemplateOutEntity): IExportTemplate {
     return {
-        ref: idRef(id),
-        name: attributes.name,
-        dashboardSlidesTemplate: attributes.dashboardSlidesTemplate,
-        widgetSlidesTemplate: attributes.widgetSlidesTemplate,
+        ref: idRef(entity.id),
+        name: entity.attributes.name,
+        dashboardSlidesTemplate: entity.attributes.dashboardSlidesTemplate,
+        widgetSlidesTemplate: entity.attributes.widgetSlidesTemplate,
+        // Templates inherited from a parent workspace (or the organization) come back with a PARENT
+        // origin and are read-only in the current scope.
+        isInherited: isInheritedObject(entity),
     };
 }

@@ -44,7 +44,7 @@ export function SelectionTypeItem({
                     content={<span style={{ whiteSpace: "pre-line", maxWidth: 240 }}>{tooltip}</span>}
                     arrowPlacement="left"
                     triggerBy={["hover"]}
-                    anchorWrapperStyles={{ display: "flex", alignItems: "center" }}
+                    inlineAnchor
                 />
             )}
         </div>

@@ -162,6 +162,14 @@ export interface IOpenAiAssistantRequestedEvent extends IPluggableAppEvent {
          * passed to the assistant alongside the seeded question.
          */
         readonly userContext?: IGenAIUserContext;
+        /**
+         * When true, the question is appended to the existing chat, otherwise it replaces the existing chat.
+         */
+        readonly appendToChat?: boolean;
+        /**
+         * When true, the userContext is replaced with the new one, otherwise it is merged with the existing one.
+         */
+        readonly replaceUserContext?: boolean;
     };
 }
 
@@ -173,6 +181,8 @@ export interface IOpenAiAssistantRequestedEvent extends IPluggableAppEvent {
 export function openAiAssistantRequested(payload?: {
     question?: string;
     userContext?: IGenAIUserContext;
+    appendToChat?: boolean;
+    replaceUserContext?: boolean;
 }): IOpenAiAssistantRequestedEvent {
     return { type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.OPEN_REQUESTED", payload: payload ?? {} };
 }

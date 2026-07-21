@@ -17,7 +17,7 @@ jobs:
             group: infra1-runners-arc
             labels: runners-small
         steps:
-            - uses: actions/github-script@v9
+            - uses: actions/github-script@v9.0.0
               id: check-sync-label
               with:
                   script: |

@@ -31,12 +31,11 @@ import { generateTitleFromQuestion } from "../../utils.js";
 import {
     agentSwitchingActiveSelector,
     allowedRelationshipTypesSelector,
-    effectiveContextSelector,
     objectTypesSelector,
     settingsSelector,
     tagsSelector,
+    userContextSelector,
 } from "../chatWindow/chatWindowSelectors.js";
-import { clearUserContextAction } from "../chatWindow/chatWindowSlice.js";
 import {
     conversationMessagesByIdSelector,
     conversationSelector,
@@ -177,10 +176,7 @@ function* evaluateUserMessage(message: AssistantMessage, preparedChatThread: ICh
     const allowedRelationshipTypes: IAllowedRelationshipType[] | undefined = yield select(
         allowedRelationshipTypesSelector,
     );
-    const { user, ambient }: ReturnType<typeof effectiveContextSelector> =
-        yield select(effectiveContextSelector);
-    // Clear user context immediately — it is a one-shot value
-    yield put(clearUserContextAction());
+    const context: ReturnType<typeof userContextSelector> = yield select(userContextSelector);
 
     const showReasoning = Boolean(settings?.enableGenAIReasoningVisibility);
 
@@ -196,7 +192,6 @@ function* evaluateUserMessage(message: AssistantMessage, preparedChatThread: ICh
         queryBuilder = queryBuilder.withAllowedRelationshipTypes(allowedRelationshipTypes);
     }
 
-    const context = user ?? ambient;
     if (context) {
         queryBuilder = queryBuilder.withUserContext(context);
     }
@@ -497,12 +492,8 @@ function* evaluateUserConversationMessage(
     const allowedRelationshipTypes: IAllowedRelationshipType[] | undefined = yield select(
         allowedRelationshipTypesSelector,
     );
-    // One-shot context (e.g. Summarize) wins over the ambient dashboard context;
-    // the ambient part persists and rides on every message.
-    const { user, ambient }: ReturnType<typeof effectiveContextSelector> =
-        yield select(effectiveContextSelector);
-    // Clear the one-shot user context immediately — it is a one-shot value
-    yield put(clearUserContextAction());
+
+    const context: ReturnType<typeof userContextSelector> = yield select(userContextSelector);
 
     // Track interaction ID to assistant message mapping
     let currentUserMessage: IChatConversationLocalItem | undefined = userMessage;
@@ -525,7 +516,6 @@ function* evaluateUserConversationMessage(
         queryBuilder = queryBuilder.withAllowedRelationshipTypes(allowedRelationshipTypes);
     }
 
-    const context = user ?? ambient;
     if (context) {
         queryBuilder = queryBuilder.withUserContext(context);
     }

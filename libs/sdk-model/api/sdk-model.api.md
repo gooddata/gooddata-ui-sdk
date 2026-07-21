@@ -2629,6 +2629,7 @@ export type IExportResultStatus = "SUCCESS" | "ERROR" | "INTERNAL_ERROR" | "TIME
 
 // @beta
 export interface IExportTemplate extends IExportTemplateDefinition {
+    isInherited?: boolean;
     ref: ObjRef;
 }
 
@@ -2778,6 +2779,7 @@ export interface IFeatureFlags {
     enableEnhancedInsightPicker?: boolean;
     enableExecutionCancelling?: boolean;
     enableExportTemplateSelection?: boolean;
+    enableExportTemplatesSettingUi?: boolean;
     enableExportTimeoutFix?: boolean;
     enableExportToDocumentStorage?: boolean;
     enableFiscalCalendars?: boolean;
@@ -2996,6 +2998,7 @@ export interface IGenAIFoundObjects {
 // @internal
 export interface IGenAIObjectReference {
     ref: ObjRef;
+    title: string;
     type: GenAIObjectReferenceType;
 }
 
@@ -3124,9 +3127,9 @@ export interface IGenAIWidgetDescriptor {
     insightRef?: ObjRef;
     resultId?: string;
     title: string;
-    visualizationRefs?: ObjRef[];
+    visualizations?: IGenAIWidgetDescriptor[];
     widgetRef: ObjRef;
-    widgetType: string;
+    widgetType: "insight" | "visualizationSwitcher" | "richText";
 }
 
 // @alpha

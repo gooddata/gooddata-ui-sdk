@@ -915,15 +915,6 @@
     margin-top: 6px;
 }
 
-.gd-list-item span.gd-kda-attributes-dropdown__key_drivers {
-    flex: 0 0 auto;
-    font-weight: bold;
-    color: var(--gd-palette-complementary-7);
-    margin-left: 5px;
-    min-width: 35px;
-    text-align: right;
-}
-
 .gd-kda-attributes-dropdown__subheader {
     display: flex;
     justify-content: flex-start;
@@ -941,6 +932,36 @@
     .gd-kda-attributes-dropdown__subheader__key_drivers {
         flex: 0 0 auto;
     }
+}
+
+.gd-kda-attributes-dropdown__body {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: 260px;
+}
+
+.gd-kda-attributes-dropdown__actions-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 10px;
+}
+
+.gd-kda-attributes-select-item__right {
+    flex: 0 0 auto;
+    min-width: 35px;
+    margin-left: 5px;
+    text-align: right;
+}
+
+.gd-kda-attributes-dropdown__key_drivers {
+    font-weight: bold;
+    color: var(--gd-palette-complementary-7);
+}
+
+.gd-kda-attributes-select .gd-ui-kit-paged-virtual-list__scroll-container {
+    padding-right: 7px;
 }
 
 .gd-kda-trend-item {

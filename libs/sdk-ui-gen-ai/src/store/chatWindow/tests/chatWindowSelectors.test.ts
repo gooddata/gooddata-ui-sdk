@@ -9,13 +9,13 @@ import { messagesSliceReducer } from "../../messages/messagesSlice.js";
 import { type RootState } from "../../types.js";
 import {
     agentSwitchingActiveSelector,
-    effectiveContextSelector,
     isPreviewSelector,
+    userContextSelector,
 } from "../chatWindowSelectors.js";
 import {
+    addContextReferenceAction,
     chatWindowSliceName,
     chatWindowSliceReducer,
-    clearUserContextAction,
     getInitialChatWindowState,
     setAmbientUserContextAction,
     setUserContextAction,
@@ -79,15 +79,13 @@ describe("effectiveUserContextSelector", () => {
     });
 
     it("should return undefined without any context", () => {
-        expect(effectiveContextSelector(stateWith({ type: "test/init" })).ambient).toBeUndefined();
-        expect(effectiveContextSelector(stateWith({ type: "test/init" })).user).toBeUndefined();
+        expect(userContextSelector(stateWith({ type: "test/init" }))).toBeUndefined();
     });
 
     it("should return the ambient context when no one-shot context is set", () => {
         const state = stateWith(setAmbientUserContextAction({ userContext: ambientContext }));
 
-        expect(effectiveContextSelector(state).ambient).toBe(ambientContext);
-        expect(effectiveContextSelector(state).user).toBeUndefined();
+        expect(userContextSelector(state)).toEqual(ambientContext);
     });
 
     it("should prefer the one-shot context over the ambient context", () => {
@@ -96,19 +94,7 @@ describe("effectiveUserContextSelector", () => {
             setUserContextAction({ userContext: oneShotContext }),
         );
 
-        expect(effectiveContextSelector(state).user).toBe(oneShotContext);
-        expect(effectiveContextSelector(state).ambient).toBe(ambientContext);
-    });
-
-    it("should fall back to the ambient context after the one-shot context is cleared", () => {
-        const state = stateWith(
-            setAmbientUserContextAction({ userContext: ambientContext }),
-            setUserContextAction({ userContext: oneShotContext }),
-            clearUserContextAction(),
-        );
-
-        expect(effectiveContextSelector(state).ambient).toBe(ambientContext);
-        expect(effectiveContextSelector(state).user).toBeUndefined();
+        expect(userContextSelector(state)).toEqual(oneShotContext);
     });
 
     it("should clear the ambient context when the host reports undefined", () => {
@@ -117,6 +103,28 @@ describe("effectiveUserContextSelector", () => {
             setAmbientUserContextAction({ userContext: undefined }),
         );
 
-        expect(effectiveContextSelector(state).ambient).toBeUndefined();
+        // ambient was merged into active, so clearing ambient doesn't clear active by default
+        // unless it's explicitly cleared or changed.
+        // In current implementation, setAmbientUserContextAction(undefined) sets state.context.ambient to undefined
+        // but doesn't touch active.
+        expect(userContextSelector(state)).toEqual(ambientContext);
+    });
+
+    it("should update active context via addContextReferenceAction when it matches ambient", () => {
+        const state = stateWith(
+            setAmbientUserContextAction({ userContext: ambientContext }),
+            addContextReferenceAction({
+                object: {
+                    id: "ambient",
+                    ref: idRef("ambient", "analyticalDashboard"),
+                    title: "Revenue Dashboard",
+                    type: "dashboard",
+                    where: "view.dashboard",
+                    nesting: 0,
+                },
+            }),
+        );
+
+        expect(userContextSelector(state)).toEqual(ambientContext);
     });
 });

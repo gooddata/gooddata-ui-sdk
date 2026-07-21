@@ -96,7 +96,11 @@ hence the default behavior is as if `__GD_ASSET_PATH__` was set to `.`.
 - Properties are the live control surface.
 - Property assignment replaces the previous snapshot.
 - Bootstrap attributes stay minimal and are meant only for initial setup.
-- The `dashboard` identity is immutable after the first successful render.
+- The `dashboard` identity is immutable after the first successful render. Reassigning the `dashboard`
+  property/attribute on an element that has already rendered is rejected (a `gd-error` is dispatched) rather
+  than navigating to the new dashboard. To switch to a different dashboard (for example when implementing
+  drill-to-dashboard), mount a new `gd-dashboard-embed` element for the target dashboard instead of rebinding
+  the existing one's `dashboard` input.
 
 Supported properties:
 
@@ -116,7 +120,10 @@ Supported attributes:
 Supported methods:
 
 - `refresh(): Promise<void>` - reinitializes the dashboard using the current `config` snapshot
-- `replaceFilters(filters): Promise<void>` - replaces the dashboard filter selection through the dashboard command model
+- `replaceFilters(filters): Promise<void>` - replaces the dashboard filter selection through the dashboard command model.
+  This is the Web Components equivalent of the `setFilterContext` postMessage command documented for iframe embedding -
+  `setFilterContext` is iframe-only and has no effect on `gd-dashboard-embed`, since there is no iframe/postMessage
+  boundary to receive it. `replaceFilters()` must only be called after the element has emitted `gd-ready`.
 
 Supported events:
 
@@ -148,6 +155,50 @@ Example:
     });
 
     await dashboardEl.refresh();
+</script>
+```
+
+#### Drill-to-dashboard filter propagation
+
+`gd-dashboard-embed` does not automatically navigate to a different dashboard when the user drills into it -
+this is true for every embedding method, including the React SDK's `<Dashboard>` component. Only drilling to
+the _same_ dashboard is handled automatically (it re-focuses the dashboard's own filters). For drilling to a
+_different_ target dashboard, the host application is responsible for mounting the target dashboard and
+applying the drill filters itself.
+
+To do this:
+
+1. Listen for the forwarded `GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.RESOLVED` event on the source
+   `gd-dashboard-embed`. Its `detail` already contains everything needed - no manual conversion of the raw
+   drill event is required:
+    - `detail.filters` - drill intersection filters, already in the `(IDashboardFilter | FilterContextItem)[]`
+      shape expected by `replaceFilters()`
+    - `detail.drillDefinition.target` - the `ObjRef` of the target dashboard
+2. Mount a new `gd-dashboard-embed` element for that target dashboard (see the note on immutable `dashboard`
+   identity above - do not reuse the source element or rebind its `dashboard` property).
+3. Once the new element emits `gd-ready`, call `replaceFilters(detail.filters)` on it.
+
+```html
+<gd-dashboard-embed dashboard="source-dashboard-id" id="source-dashboard"></gd-dashboard-embed>
+<script type="module">
+    const sourceEl = document.getElementById("source-dashboard");
+
+    sourceEl.addEventListener("GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.RESOLVED", (event) => {
+        const { filters, drillDefinition } = event.detail;
+
+        const targetEl = document.createElement("gd-dashboard-embed");
+        targetEl.dashboard = drillDefinition.target;
+
+        targetEl.addEventListener(
+            "gd-ready",
+            () => {
+                targetEl.replaceFilters(filters);
+            },
+            { once: true },
+        );
+
+        sourceEl.replaceWith(targetEl);
+    });
 </script>
 ```
 

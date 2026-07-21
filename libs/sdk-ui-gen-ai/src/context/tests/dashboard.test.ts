@@ -122,7 +122,7 @@ describe("buildWidgetsContext", () => {
         expect(result.widgets).toHaveLength(2);
         expect(result.widgets[0]).toMatchObject({ title: "W1", resultId: "res1" });
         expect(result.widgets[1]).toMatchObject({ title: "W2", content: "text" });
-        expect(result.referencedObjects).toEqual([{ type: "WIDGET", ref: idRef("w1") }]);
+        expect(result.referencedObjects).toEqual([{ type: "WIDGET", ref: idRef("w1"), title: "W1" }]);
     });
 
     it("should handle visualization switcher and ignore its child insights", () => {
@@ -144,6 +144,6 @@ describe("buildWidgetsContext", () => {
         const result = buildWidgetsContext(widgetsMap);
         expect(result.widgets).toHaveLength(1);
         expect(result.widgets[0].widgetType).toBe("visualizationSwitcher");
-        expect(result.referencedObjects).toEqual([{ type: "WIDGET", ref: w1Ref }]);
+        expect(result.referencedObjects).toEqual([{ type: "WIDGET", ref: w1Ref, title: "Switcher" }]);
     });
 });

@@ -51,6 +51,7 @@ export enum TigerFeaturesNames {
     EnableDashboardDescriptionDynamicHeight = "enableDashboardDescriptionDynamicHeight",
     EnableAmplitudeTracker = "enableAmplitudeTracker",
     EnableExportTemplateSelection = "enableExportTemplateSelection",
+    EnableExportTemplatesSettingUi = "enableExportTemplatesSettingUi",
     EnableRawExports = "enableRawExports",
     EnableExecutionCancelling = "enableExecutionCancelling",
     EnableDashboardTabularExport = "enableDashboardTabularExport",
@@ -172,6 +173,7 @@ export type ITigerFeatureFlags = {
     enableDashboardDescriptionDynamicHeight: (typeof FeatureFlagsValues)["enableDashboardDescriptionDynamicHeight"][number];
     enableAmplitudeTracker: (typeof FeatureFlagsValues)["enableAmplitudeTracker"][number];
     enableExportTemplateSelection: (typeof FeatureFlagsValues)["enableExportTemplateSelection"][number];
+    enableExportTemplatesSettingUi: (typeof FeatureFlagsValues)["enableExportTemplatesSettingUi"][number];
     enableRawExports: (typeof FeatureFlagsValues)["enableRawExports"][number];
     enableExecutionCancelling: (typeof FeatureFlagsValues)["enableExecutionCancelling"][number];
     enableImmediateAttributeFilterDisplayAsLabelMigration: (typeof FeatureFlagsValues)["enableImmediateAttributeFilterDisplayAsLabelMigration"][number];
@@ -291,6 +293,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDashboardDescriptionDynamicHeight: false,
     enableAmplitudeTracker: false,
     enableExportTemplateSelection: true,
+    enableExportTemplatesSettingUi: false,
     enableRawExports: false,
     enableExecutionCancelling: false,
     enableImmediateAttributeFilterDisplayAsLabelMigration: false,
@@ -410,6 +413,7 @@ export const FeatureFlagsValues = {
     enableDashboardDescriptionDynamicHeight: [true, false] as const,
     enableAmplitudeTracker: [true, false] as const,
     enableExportTemplateSelection: [true, false] as const,
+    enableExportTemplatesSettingUi: [true, false] as const,
     enableRawExports: [true, false] as const,
     enableHighchartsAccessibility: [true, false] as const,
     enableAccessibleChartTooltip: [true, false] as const,

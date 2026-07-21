@@ -55,7 +55,12 @@ export interface IPluggableApplicationRendererProps {
     /** Host-owned AI assistant chat open-state, forwarded to the mounted app's handle. */
     aiAssistantOpen?: boolean;
     /** Open/ask the host-owned chat, requested by the active app via an open-assistant event. */
-    onOpenAiAssistant?: (question?: string, userContext?: IGenAIUserContext) => void;
+    onOpenAiAssistant?: (
+        question?: string,
+        userContext?: IGenAIUserContext,
+        appendToChat?: boolean,
+        replaceUserContext?: boolean,
+    ) => void;
     /** Close the host-owned chat, requested by the active app. */
     onCloseAiAssistant?: () => void;
     /** Report the active app's AI-assistant tag scope, presentation and ambient user context to the host-owned chat. */
@@ -128,7 +133,12 @@ export function PluggableApplicationRenderer({
             // the host's single (host-owned) assistant through these events (open/ask, close and
             // tag-scope changes), which the host runtime drives directly via these callbacks.
             if (isOpenAiAssistantRequestedEvent(event)) {
-                onOpenAiAssistantRef.current?.(event.payload.question, event.payload.userContext);
+                onOpenAiAssistantRef.current?.(
+                    event.payload.question,
+                    event.payload.userContext,
+                    event.payload.appendToChat,
+                    event.payload.replaceUserContext,
+                );
                 return;
             }
             if (isCloseAiAssistantRequestedEvent(event)) {

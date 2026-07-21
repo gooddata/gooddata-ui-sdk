@@ -2,6 +2,7 @@
 
 import { v4 as uuidv4 } from "uuid";
 
+import { ActionsUtilities } from "@gooddata/api-client-tiger";
 import {
     ExportTemplatesApi_CreateEntityExportTemplates,
     ExportTemplatesApi_DeleteEntityExportTemplates,
@@ -20,14 +21,15 @@ export class OrganizationExportTemplatesService implements IOrganizationExportTe
     constructor(private readonly authCall: TigerAuthenticatedCallGuard) {}
 
     public getExportTemplates = async (): Promise<IExportTemplate[]> => {
-        return this.authCall(async (client) => {
-            const response = await ExportTemplatesApi_GetAllEntitiesExportTemplates(
-                client.axios,
-                client.basePath,
-                {},
-            );
-            return response.data.data.map((item) => convertExportTemplate(item.id, item.attributes));
-        });
+        // loadAllPages walks every page (a single request returns only the first).
+        return this.authCall((client) =>
+            ActionsUtilities.loadAllPages(({ page, size }) =>
+                ExportTemplatesApi_GetAllEntitiesExportTemplates(client.axios, client.basePath, {
+                    page,
+                    size,
+                }).then((response) => response.data.data.map(convertExportTemplate)),
+            ),
+        );
     };
 
     public getExportTemplate = async (ref: ObjRef): Promise<IExportTemplate> => {
@@ -40,7 +42,7 @@ export class OrganizationExportTemplatesService implements IOrganizationExportTe
                     id,
                 },
             );
-            return convertExportTemplate(response.data.data.id, response.data.data.attributes);
+            return convertExportTemplate(response.data.data);
         });
     };
 
@@ -60,7 +62,7 @@ export class OrganizationExportTemplatesService implements IOrganizationExportTe
                     },
                 },
             );
-            return convertExportTemplate(response.data.data.id, response.data.data.attributes);
+            return convertExportTemplate(response.data.data);
         });
     };
 
@@ -84,7 +86,7 @@ export class OrganizationExportTemplatesService implements IOrganizationExportTe
                     },
                 },
             );
-            return convertExportTemplate(response.data.data.id, response.data.data.attributes);
+            return convertExportTemplate(response.data.data);
         });
     };
 

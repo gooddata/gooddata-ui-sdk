@@ -157,6 +157,12 @@ export interface IExportTemplate extends IExportTemplateDefinition {
      * Reference to the export template.
      */
     ref: ObjRef;
+
+    /**
+     * Whether the template is inherited from a parent (a parent workspace or the organization) and is
+     * therefore read-only in the current scope. Native templates (created here) are editable.
+     */
+    isInherited?: boolean;
 }
 
 /**

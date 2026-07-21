@@ -70,9 +70,24 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate }: IHostUi
     const [aiVisibility, setAiVisibility] = useState<IHostChatVisibility | null>(null);
     const [aiContext, setAiContext] = useState<IHostChatContext | null>(null);
     const aiVisibilitySeqRef = useRef(0);
-    const requestOpenAi = useCallback((question?: string, userContext?: IGenAIUserContext) => {
-        setAiVisibility({ kind: "open", question, userContext, seq: ++aiVisibilitySeqRef.current });
-    }, []);
+    const requestOpenAi = useCallback(
+        (
+            question?: string,
+            userContext?: IGenAIUserContext,
+            appendToChat?: boolean,
+            replaceUserContext?: boolean,
+        ) => {
+            setAiVisibility({
+                kind: "open",
+                question,
+                userContext,
+                appendToChat,
+                replaceUserContext,
+                seq: ++aiVisibilitySeqRef.current,
+            });
+        },
+        [],
+    );
     const requestCloseAi = useCallback(() => {
         setAiVisibility({ kind: "close", seq: ++aiVisibilitySeqRef.current });
     }, []);

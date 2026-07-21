@@ -2,6 +2,7 @@
 
 import { v4 as uuidv4 } from "uuid";
 
+import { ActionsUtilities } from "@gooddata/api-client-tiger";
 import {
     EntitiesApi_CreateEntityWorkspaceExportTemplates,
     EntitiesApi_DeleteEntityWorkspaceExportTemplates,
@@ -23,14 +24,19 @@ export class WorkspaceExportTemplatesService implements IWorkspaceExportTemplate
     ) {}
 
     public getExportTemplates = async (): Promise<IExportTemplate[]> => {
-        return this.authCall(async (client) => {
-            const response = await EntitiesApi_GetAllEntitiesWorkspaceExportTemplates(
-                client.axios,
-                client.basePath,
-                { workspaceId: this.workspace },
-            );
-            return response.data.data.map((item) => convertExportTemplate(item.id, item.attributes));
-        });
+        // loadAllPages walks every page (a single request returns only the first).
+        // `metaInclude: ["origin"]` populates each entity's origin meta so the converter can flag
+        // templates inherited from a parent workspace (PARENT origin) as read-only.
+        return this.authCall((client) =>
+            ActionsUtilities.loadAllPages(({ page, size }) =>
+                EntitiesApi_GetAllEntitiesWorkspaceExportTemplates(client.axios, client.basePath, {
+                    workspaceId: this.workspace,
+                    metaInclude: ["origin"],
+                    page,
+                    size,
+                }).then((response) => response.data.data.map(convertExportTemplate)),
+            ),
+        );
     };
 
     public getExportTemplate = async (ref: ObjRef): Promise<IExportTemplate> => {
@@ -42,9 +48,12 @@ export class WorkspaceExportTemplatesService implements IWorkspaceExportTemplate
                 {
                     workspaceId: this.workspace,
                     objectId,
+                    // Populate origin meta so the converter can flag a template inherited from a
+                    // parent workspace / the organization, consistent with getExportTemplates.
+                    metaInclude: ["origin"],
                 },
             );
-            return convertExportTemplate(response.data.data.id, response.data.data.attributes);
+            return convertExportTemplate(response.data.data);
         });
     };
 
@@ -65,7 +74,7 @@ export class WorkspaceExportTemplatesService implements IWorkspaceExportTemplate
                     },
                 },
             );
-            return convertExportTemplate(response.data.data.id, response.data.data.attributes);
+            return convertExportTemplate(response.data.data);
         });
     };
 
@@ -90,7 +99,7 @@ export class WorkspaceExportTemplatesService implements IWorkspaceExportTemplate
                     },
                 },
             );
-            return convertExportTemplate(response.data.data.id, response.data.data.attributes);
+            return convertExportTemplate(response.data.data);
         });
     };
 

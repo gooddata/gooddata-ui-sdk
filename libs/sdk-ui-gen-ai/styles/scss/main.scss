@@ -38,6 +38,7 @@
 
     &__context-indicator {
         display: flex;
+        flex-wrap: wrap;
         align-items: baseline;
         gap: 5px;
         min-width: 0;

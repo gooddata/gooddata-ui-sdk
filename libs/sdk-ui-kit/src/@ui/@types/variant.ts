@@ -43,6 +43,12 @@ export type VariantLink = "link";
 
 /**
  * @internal
+ * Link button variant identical to `link` but in a dimmed/gray tone instead of the primary color.
+ */
+export type VariantLinkDimmed = "linkDimmed";
+
+/**
+ * @internal
  * Icon button variant same as tertiary but removing extra padding around the icon
  */
 export type VariantBare = "bare";

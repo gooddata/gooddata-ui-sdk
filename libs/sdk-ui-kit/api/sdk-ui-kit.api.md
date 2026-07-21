@@ -6001,6 +6001,8 @@ export interface IUiAsyncTableProps<T extends {
     // (undocumented)
     hasNextPage?: boolean;
     // (undocumented)
+    hideHeader?: boolean;
+    // (undocumented)
     isFiltersTooLarge?: boolean;
     // (undocumented)
     isLoading?: boolean;
@@ -6238,7 +6240,7 @@ export interface IUiButtonProps {
     // (undocumented)
     tooltip?: ReactNode;
     // (undocumented)
-    variant?: VariantPrimary | VariantSecondary | VariantTertiary | VariantPopOut | VariantDanger | VariantTooltip | VariantLink | VariantDropdownInline;
+    variant?: VariantPrimary | VariantSecondary | VariantTertiary | VariantPopOut | VariantDanger | VariantTooltip | VariantLink | VariantLinkDimmed | VariantDropdownInline;
 }
 
 // @internal (undocumented)
@@ -7992,6 +7994,7 @@ export interface IUiTooltipProps {
     hoverCloseDelay?: number;
     hoverOpenDelay?: number;
     id?: string;
+    inlineAnchor?: boolean;
     isOpen?: boolean;
     offset?: number;
     onClose?: () => void;
@@ -9732,6 +9735,9 @@ export type VariantDropdownInline = "dropdownInline";
 
 // @internal (undocumented)
 export type VariantLink = "link";
+
+// @internal
+export type VariantLinkDimmed = "linkDimmed";
 
 // @internal (undocumented)
 export type VariantPopOut = "popout";

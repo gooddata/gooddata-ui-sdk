@@ -99,6 +99,8 @@ export interface IGenAIChatDialogConnectedProps {
     ambientUserContext?: IGenAIUserContext;
     /** When true, the seeded question is appended to the existing thread instead of clearing it first. */
     appendToChat?: boolean;
+    /** When true, the user context is replaced instead of merged with the existing one. */
+    replaceUserContext?: boolean;
     /** Object-search tag scope reflecting the caller's current view. */
     includeTags?: string[];
     excludeTags?: string[];
@@ -148,6 +150,7 @@ export function GenAIChatDialogConnected({
     userContext,
     ambientUserContext,
     appendToChat,
+    replaceUserContext,
     includeTags,
     excludeTags,
     objectTypes: objectTypesOverride,
@@ -244,27 +247,42 @@ export function GenAIChatDialogConnected({
 
     useEffect(() => {
         // Only seed while the chat is open, and only once per ask (LX-2544).
-        if (!isOpen || !chatDispatcher || !askedQuestion || !settings) {
+        if (!isOpen || !chatDispatcher || !settings) {
             return;
         }
-        const seedToken = askSeq ?? askedQuestion;
+
+        const seedToken = askSeq ?? askedQuestion ?? JSON.stringify(userContext ?? {});
         if (lastSeedTokenRef.current === seedToken) {
             return;
         }
         lastSeedTokenRef.current = seedToken;
 
-        if (!appendToChat) {
+        // Check clean
+        const clear = (askedQuestion || userContext) && !appendToChat;
+        if (clear) {
             chatDispatcher(clearThreadAction());
         }
         // Always set (and thereby clear when undefined) so a follow-up ask without context does not
         // inherit the previous ask's user context (LX-2544).
-        chatDispatcher(setUserContextAction({ userContext }));
-        if (settings.enableAiAgenticConversations) {
-            chatDispatcher(newMessageAction(makeUserItem({ type: "text", text: askedQuestion })));
-        } else {
-            chatDispatcher(newMessageAction(makeUserMessage([makeTextContents(askedQuestion, [])])));
+        chatDispatcher(setUserContextAction({ userContext, replaceUserContext }));
+        // Ask question
+        if (askedQuestion) {
+            if (settings.enableAiAgenticConversations) {
+                chatDispatcher(newMessageAction(makeUserItem({ type: "text", text: askedQuestion })));
+            } else {
+                chatDispatcher(newMessageAction(makeUserMessage([makeTextContents(askedQuestion, [])])));
+            }
         }
-    }, [isOpen, chatDispatcher, askedQuestion, askSeq, userContext, appendToChat, settings]);
+    }, [
+        isOpen,
+        chatDispatcher,
+        askedQuestion,
+        askSeq,
+        userContext,
+        appendToChat,
+        settings,
+        replaceUserContext,
+    ]);
 
     return (
         <GenAIChatDialog

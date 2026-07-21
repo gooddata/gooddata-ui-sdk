@@ -12,10 +12,10 @@ import {
 } from "@gooddata/sdk-model";
 import type { IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
 
-import { addContextReference } from "../../context/addContextReference.js";
-import { type IGenAIContextObject } from "../../context/collectContextReferences.js";
-import { isReferenceChanged } from "../../context/isReferenceChanged.js";
-import { type StoreContext } from "../../types.js";
+import { addAmbientContextReferences, addContextReference } from "../../context/addContextReference.js";
+import { mergeContexts } from "../../context/build.js";
+import { removeContextReference, removeUserContextReferences } from "../../context/removeContextReference.js";
+import { type IGenAIContextObject, type StoreContext } from "../../types.js";
 
 type ChatWindowSliceState = {
     /**
@@ -90,9 +90,8 @@ const initialState: ChatWindowSliceState = {
     excludeTags: undefined,
     allowedRelationshipTypes: undefined,
     context: {
-        ambientMode: "enabled",
         ambient: undefined,
-        user: undefined,
+        active: undefined,
     },
     isPreview: undefined,
 };
@@ -177,12 +176,18 @@ const chatWindowSlice = createSlice({
         },
         setUserContextAction: (
             state,
-            { payload: { userContext } }: PayloadAction<{ userContext?: IGenAIUserContext }>,
+            {
+                payload: { userContext, replaceUserContext },
+            }: PayloadAction<{ userContext?: IGenAIUserContext; replaceUserContext?: boolean }>,
         ) => {
-            state.context.user = userContext;
-        },
-        clearUserContextAction: (state) => {
-            state.context.user = undefined;
+            if (replaceUserContext) {
+                state.context.active = mergeContexts(
+                    removeUserContextReferences(state.context.active),
+                    userContext,
+                );
+            } else {
+                state.context.active = mergeContexts(state.context.active, userContext);
+            }
         },
         setAmbientUserContextAction: (
             state,
@@ -191,13 +196,7 @@ const chatWindowSlice = createSlice({
             if (!state.settings?.enableAiContextSetup) {
                 return;
             }
-            if (
-                state.context.ambientMode === "suppressed" &&
-                isReferenceChanged(state.context.ambient, userContext)
-            ) {
-                state.context.ambientMode = "enabled";
-            }
-            state.context.ambient = userContext;
+            state.context = addAmbientContextReferences(state.context, userContext);
         },
         addContextReferenceAction: (
             state,
@@ -205,8 +204,11 @@ const chatWindowSlice = createSlice({
         ) => {
             state.context = addContextReference(state.context, object);
         },
-        removeAmbientUserContextAction: (state) => {
-            state.context.ambientMode = "suppressed";
+        removeContextReferenceAction: (
+            state,
+            { payload: { object } }: PayloadAction<{ object: IGenAIContextObject }>,
+        ) => {
+            state.context.active = removeContextReference(state.context.active, object);
         },
         setIsPreviewAction: (state, { payload: { isPreview } }: PayloadAction<{ isPreview?: boolean }>) => {
             state.isPreview = isPreview;
@@ -230,8 +232,7 @@ export const {
     setCatalogItemsActions,
     setAllowedRelationshipTypesAction,
     addContextReferenceAction,
-    removeAmbientUserContextAction,
-    clearUserContextAction,
+    removeContextReferenceAction,
     setIsPreviewAction,
     /**
      * @public

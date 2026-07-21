@@ -59,6 +59,14 @@ export interface IGenAIChatProps {
      */
     userContext?: IGenAIUserContext;
     /**
+     * When true, the user context is replaced instead of merged with the existing one.
+     */
+    replaceUserContext?: boolean;
+    /**
+     * When true, the seeded question is appended to the existing thread instead of clearing it first.
+     */
+    appendToChat?: boolean;
+    /**
      * Ambient user context kept in sync by the active hosted application (e.g. the open dashboard
      * and its live filter state). Persists across messages and drives the chat's context indicator.
      */
@@ -98,7 +106,9 @@ export function GenAIChat({
     onClose,
     askedQuestion,
     askSeq,
+    appendToChat,
     userContext,
+    replaceUserContext,
     ambientUserContext,
     includeTags,
     excludeTags,
@@ -193,6 +203,8 @@ export function GenAIChat({
             askedQuestion={askedQuestion}
             askSeq={askSeq}
             userContext={userContext}
+            appendToChat={appendToChat}
+            replaceUserContext={replaceUserContext}
             ambientUserContext={ambientUserContext}
             includeTags={includeTags}
             excludeTags={excludeTags}
