@@ -30,6 +30,13 @@
         }
     }
 
+    // Drop the divider under the LAST row only. Rows are wrapped one-per-item by
+    // UiPagedVirtualList, so `#{$root}__row:last-child` would match every row; target the last
+    // virtual-list item wrapper instead.
+    .gd-ui-kit-paged-virtual-list__item:last-child #{$root}__cell {
+        border-bottom: none;
+    }
+
     &__header {
         display: flex;
         height: var(--gd-table-row-height-normal);

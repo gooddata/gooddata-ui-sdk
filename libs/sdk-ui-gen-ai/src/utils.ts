@@ -2,10 +2,11 @@
 
 import { type IntlShape } from "react-intl";
 
-import { type IAttributeOrMeasure } from "@gooddata/sdk-model";
+import { type GenAIObjectReferenceType, type IAttributeOrMeasure } from "@gooddata/sdk-model";
 
 import { REFERENCE_REGEX } from "./components/completion/references.js";
 import { type IChatConversationLocal } from "./model.js";
+import { type IGenAIContextObject } from "./types.js";
 
 export function getVisualizationHref(wsId: string, visId: string, useHostedAnalyticalDesigner?: boolean) {
     return useHostedAnalyticalDesigner
@@ -125,4 +126,34 @@ export function generateTitleFromQuestion(text: string): string {
     }
 
     return `${sanitizedText.slice(0, sliceEnd).trim()}...`;
+}
+
+export function convertReferenceTypeToGenAiType(type: GenAIObjectReferenceType): IGenAIContextObject["type"] {
+    switch (type) {
+        case "METRIC":
+            return "metric";
+        case "WIDGET":
+            return "widget";
+        case "ATTRIBUTE":
+            return "attribute";
+        case "DASHBOARD":
+            return "dashboard";
+        default:
+            return "dashboard";
+    }
+}
+
+export function convertGenAiTypeToReferenceType(type: IGenAIContextObject["type"]): GenAIObjectReferenceType {
+    switch (type) {
+        case "metric":
+            return "METRIC";
+        case "widget":
+            return "WIDGET";
+        case "attribute":
+            return "ATTRIBUTE";
+        case "dashboard":
+            return "DASHBOARD";
+        default:
+            return "DASHBOARD";
+    }
 }

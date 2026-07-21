@@ -17,6 +17,8 @@ import {
     insightBuckets,
     insightVisualizationType,
     isObjRef,
+    isPoPMeasure,
+    isPreviousPeriodMeasure,
     isSimpleMeasure,
 } from "@gooddata/sdk-model";
 import {
@@ -1378,4 +1380,17 @@ export function getChartFillIgnoredMeasureIdsFromMdObject(
         );
     }
     return [];
+}
+
+/**
+ * The function returns local identifiers of derived (period-over-period and previous period) measures.
+ * @param insight - the insight to get the measures from
+ */
+export function getDerivedMeasureIdsFromMdObject(insight: IInsightDefinition | undefined): string[] {
+    if (!insight) {
+        return [];
+    }
+    return bucketsMeasures(insightBuckets(insight))
+        .filter((measure) => isPoPMeasure(measure) || isPreviousPeriodMeasure(measure))
+        .map(asLocalIdentifier);
 }

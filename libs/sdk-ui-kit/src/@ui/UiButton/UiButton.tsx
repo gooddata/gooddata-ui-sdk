@@ -12,6 +12,7 @@ import {
     type VariantDanger,
     type VariantDropdownInline,
     type VariantLink,
+    type VariantLinkDimmed,
     type VariantPopOut,
     type VariantPrimary,
     type VariantSecondary,
@@ -42,6 +43,7 @@ export interface IUiButtonProps {
         | VariantDanger
         | VariantTooltip
         | VariantLink
+        | VariantLinkDimmed
         | VariantDropdownInline;
     disableIconAnimation?: boolean;
     iconBefore?: IconType;

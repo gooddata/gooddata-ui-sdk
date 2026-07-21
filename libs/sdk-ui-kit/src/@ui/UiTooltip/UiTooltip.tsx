@@ -60,6 +60,7 @@ export function UiTooltip({
     onOpen,
     onClose,
     onOpenChange,
+    inlineAnchor = false,
     anchorWrapperStyles,
 }: IUiTooltipProps) {
     const [isOpenInternal, setIsOpen] = useState(false);
@@ -191,7 +192,7 @@ export function UiTooltip({
     return (
         <>
             <div
-                className={e("anchor")}
+                className={e("anchor", { inline: inlineAnchor })}
                 ref={refs.setReference}
                 style={anchorWrapperStyles}
                 {...getReferenceProps()}

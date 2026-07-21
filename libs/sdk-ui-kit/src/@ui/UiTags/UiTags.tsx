@@ -292,7 +292,7 @@ export function UiTags({
                                 <UiTooltip
                                     content={addLabel}
                                     triggerBy={["hover", "focus"]}
-                                    anchorWrapperStyles={{ display: "flex", alignItems: "center" }}
+                                    inlineAnchor
                                     anchor={
                                         <UiButton
                                             label={showedTags.length > 0 ? "" : addLabel}

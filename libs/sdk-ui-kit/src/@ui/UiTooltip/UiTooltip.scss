@@ -35,6 +35,12 @@
 
     &__anchor {
         width: fit-content;
+
+        // Collapse to the anchor and center it (for inline/icon anchors) — opt-in via `inlineAnchor`.
+        &--inline {
+            display: inline-flex;
+            align-items: center;
+        }
     }
 
     &__arrow {

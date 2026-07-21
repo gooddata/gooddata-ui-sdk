@@ -34,7 +34,17 @@ export interface IHostChromeChat {
      * Open the chat dialog with a pre-seeded user question and optional user-location context
      * (e.g. the active dashboard a hosted application forwards alongside the question).
      */
-    askAiAssistant: (question: string, userContext?: IGenAIUserContext) => void;
+    askAiAssistant: (
+        question: string,
+        userContext?: IGenAIUserContext,
+        appendToChat?: boolean,
+        replaceUserContext?: boolean,
+    ) => void;
+    /**
+     * Open the chat dialog with a pre-seeded optional user-location context
+     * (e.g. the active dashboard a hosted application forwards alongside the question).
+     */
+    openAiAssistant: (userContext?: IGenAIUserContext, replaceUserContext?: boolean) => void;
     /**
      * Set the assistant's object-search tag scope, reflecting the active hosted application's
      * current view (e.g. AD's include/exclude tag route filters). Pass empty/undefined to clear.
@@ -76,6 +86,8 @@ export function useHostChromeChat({
 }: IUseHostChromeChatArgs): IHostChromeChat {
     const [isChatOpen, setIsChatOpen] = useState(false);
     const [askedQuestion, setAskedQuestion] = useState<string | null>(null);
+    const [appendToChat, setAppendToChat] = useState(false);
+    const [replaceUserContext, setReplaceUserContext] = useState(false);
     // Bumped on every ask so the chat re-seeds (clears the thread + sends the message) even when the
     // same prompt is asked again — e.g. "Summarize" clicked twice, or repeated after a close (the
     // seeding effect is otherwise keyed on the question text, which does not change on a repeat).
@@ -99,12 +111,34 @@ export function useHostChromeChat({
         setIsChatOpen((isOpen) => !isOpen);
     }, []);
 
-    const askAiAssistant = useCallback((question: string, questionUserContext?: IGenAIUserContext) => {
-        setAskedQuestion(question);
-        setUserContext(questionUserContext);
-        setAskSeq((seq) => seq + 1);
-        setIsChatOpen(true);
-    }, []);
+    const askAiAssistant = useCallback(
+        (
+            question: string,
+            questionUserContext?: IGenAIUserContext,
+            appendToChat?: boolean,
+            replaceUserContext?: boolean,
+        ) => {
+            setAskedQuestion(question);
+            setUserContext(questionUserContext);
+            setAskSeq((seq) => seq + 1);
+            setAppendToChat(appendToChat ?? false);
+            setReplaceUserContext(replaceUserContext ?? false);
+            setIsChatOpen(true);
+        },
+        [],
+    );
+
+    const openAiAssistant = useCallback(
+        (questionUserContext?: IGenAIUserContext, replaceUserContext?: boolean) => {
+            setAskedQuestion(null);
+            setAppendToChat(false);
+            setUserContext(questionUserContext);
+            setReplaceUserContext(replaceUserContext ?? false);
+            setAskSeq((seq) => seq + 1);
+            setIsChatOpen(true);
+        },
+        [],
+    );
 
     const setTags = useCallback((nextIncludeTags?: string[], nextExcludeTags?: string[]) => {
         // Normalize empty arrays to undefined so the chat treats "no scope" uniformly.
@@ -134,6 +168,8 @@ export function useHostChromeChat({
                 onOpen={open}
                 onClose={close}
                 askedQuestion={askedQuestion}
+                appendToChat={appendToChat}
+                replaceUserContext={replaceUserContext}
                 askSeq={askSeq}
                 userContext={userContext}
                 ambientUserContext={ambientUserContext}
@@ -158,6 +194,7 @@ export function useHostChromeChat({
         close,
         toggle,
         askAiAssistant,
+        openAiAssistant,
         setTags,
         setAmbientUserContext,
     };

@@ -165,23 +165,36 @@ export function buildWidgetsContext(
                         resultId: resultsIdMap?.get(serializeObjRef(widget.ref)),
                     }),
                 );
-                referencedObjects.push({ type: "WIDGET", ref: widget.ref });
+                referencedObjects.push({ type: "WIDGET", ref: widget.ref, title: widget.title });
             }
         }
         if (isVisualizationSwitcherWidget(widget)) {
             const activeVisualization = widget.visualizations[0];
             widgets.push(
-                buildWidgetContext(widget.title, widget.ref, "visualizationSwitcher", {
-                    insightRef: activeVisualization?.insight,
-                    resultId: activeVisualization
-                        ? resultsIdMap?.get(serializeObjRef(activeVisualization.ref))
-                        : undefined,
-                    // All child insights, so the BE can execute the non-active children
-                    // (which have no cached result).
-                    visualizationRefs: widget.visualizations.map((v) => v.insight),
-                }),
+                buildWidgetContext(
+                    widget.title || activeVisualization?.title,
+                    widget.ref,
+                    "visualizationSwitcher",
+                    {
+                        insightRef: activeVisualization?.insight,
+                        resultId: activeVisualization
+                            ? resultsIdMap?.get(serializeObjRef(activeVisualization.ref))
+                            : undefined,
+                        // All child insights, so the BE can execute the non-active children
+                        // (which have no cached result).
+                        visualizations: widget.visualizations.map((v) =>
+                            buildWidgetContext(v.title, v.ref, "insight", {
+                                insightRef: v.insight,
+                            }),
+                        ),
+                    },
+                ),
             );
-            referencedObjects.push({ type: "WIDGET", ref: widget.ref });
+            referencedObjects.push({
+                type: "WIDGET",
+                ref: widget.ref,
+                title: widget.title || activeVisualization?.title,
+            });
         }
         if (isRichTextWidget(widget)) {
             widgets.push(

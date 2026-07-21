@@ -5,7 +5,7 @@ import { userEvent } from "@testing-library/user-event";
 import { cloneDeep } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
-import { type IColor } from "@gooddata/sdk-model";
+import { type IColor, type IMeasureDescriptor } from "@gooddata/sdk-model";
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
 
 import { type IColorConfiguration } from "../../../../interfaces/Colors.js";
@@ -107,12 +107,12 @@ describe("ColorsSection", () => {
         ).toBeInTheDocument();
     });
 
-    it("should not render Reset Colors button", () => {
+    it("should render Reset Colors button", () => {
         createComponent();
-        expect(screen.queryByText("Reset Colors")).not.toBeInTheDocument();
+        expect(screen.getByText("Reset Colors")).toBeInTheDocument();
     });
 
-    it("should call pushData on Reset click in the color dropdown of a custom-mapped item", async () => {
+    it("should call pushData on Reset Colors button click", async () => {
         const pushData = vi.fn();
         const color1: IColor = {
             type: "guid",
@@ -122,9 +122,65 @@ describe("ColorsSection", () => {
             controls: {
                 colorMapping: [
                     {
-                        id: "/ahi1",
+                        id: "aaa",
                         color: color1,
                     },
+                ],
+                test: 1,
+            },
+        };
+        const references = { aaa: "/a1" };
+        createComponent({
+            pushData,
+            properties,
+            references,
+        });
+
+        await userEvent.click(screen.getByText("Reset Colors"));
+        await waitFor(() => {
+            expect(pushData).toBeCalledWith(
+                expect.objectContaining({
+                    messageId: COLOR_MAPPING_CHANGED,
+                    properties: {
+                        controls: {
+                            colorMapping: undefined,
+                            test: 1,
+                        },
+                    },
+                    references: {},
+                }),
+            );
+        });
+    });
+
+    it("should offer Reset in the color dropdown only for a custom-mapped derived measure", async () => {
+        const pushData = vi.fn();
+        const color1: IColor = {
+            type: "guid",
+            value: "guid1",
+        };
+        const measureColors: IColorConfiguration = {
+            colorPalette: DefaultColorPalette,
+            colorAssignments: [
+                {
+                    headerItem: {
+                        measureHeaderItem: { localIdentifier: "m1_pop", name: "Amount - period ago" },
+                    } as IMeasureDescriptor,
+                    color: { type: "guid", value: "4" },
+                },
+                {
+                    headerItem: {
+                        measureHeaderItem: { localIdentifier: "m1", name: "Amount" },
+                    } as IMeasureDescriptor,
+                    color: { type: "guid", value: "5" },
+                },
+            ],
+        };
+        const properties = {
+            controls: {
+                colorMapping: [
+                    { id: "m1_pop", color: color1 },
+                    { id: "m1", color: color1 },
                 ],
                 test: 1,
             },
@@ -132,7 +188,13 @@ describe("ColorsSection", () => {
         const { container } = createComponent({
             pushData,
             properties,
+            colors: measureColors,
+            derivedMeasureLocalIds: ["m1_pop"],
         });
+
+        // master measure item offers no Reset even though it is custom mapped
+        await userEvent.click(container.querySelectorAll(".s-colored-items-list-item")[1]!);
+        expect(screen.queryByText("Reset")).not.toBeInTheDocument();
 
         await userEvent.click(container.querySelectorAll(".s-colored-items-list-item")[0]!);
         await userEvent.click(screen.getByText("Reset"));
@@ -142,7 +204,10 @@ describe("ColorsSection", () => {
                     messageId: COLOR_MAPPING_CHANGED,
                     properties: {
                         controls: {
-                            colorMapping: [{ id: "/ahi1", color: null }],
+                            colorMapping: [
+                                { id: "m1_pop", color: null },
+                                { id: "m1", color: color1 },
+                            ],
                             test: 1,
                         },
                     },

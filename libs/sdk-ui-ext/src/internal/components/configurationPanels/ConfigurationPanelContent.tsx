@@ -20,6 +20,7 @@ import {
 } from "../../interfaces/Visualization.js";
 import {
     getChartFillIgnoredMeasureIdsFromMdObject,
+    getDerivedMeasureIdsFromMdObject,
     getMeasuresFromMdObject,
 } from "../../utils/bucketHelper.js";
 import { isForecastEnabled } from "../../utils/forecastHelper.js";
@@ -122,6 +123,7 @@ export abstract class ConfigurationPanelContent<
         const controlsDisabled = this.isControlDisabled();
         const hasMeasures = getMeasuresFromMdObject(insight).length > 0;
         const chartFillIgnoredMeasures = getChartFillIgnoredMeasureIdsFromMdObject(insight, properties);
+        const derivedMeasureLocalIds = getDerivedMeasureIdsFromMdObject(insight);
         return (
             <ColorsSection
                 properties={properties}
@@ -135,6 +137,7 @@ export abstract class ConfigurationPanelContent<
                 supportsChartFill={panelConfig?.supportsChartFill}
                 chartFillIgnoredMeasures={chartFillIgnoredMeasures}
                 isChartFillDisabled={panelConfig?.isChartFillDisabled}
+                derivedMeasureLocalIds={derivedMeasureLocalIds}
             />
         );
     }

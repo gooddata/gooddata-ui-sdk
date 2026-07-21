@@ -36,8 +36,22 @@ describe("mergeContexts", () => {
         const c1 = { view: { dashboard: { title: "Dash", widgets: [] } } } as any;
         const c2 = { view: { dashboard: { title: "Dash1", filters: [] } } } as any;
         const result = mergeContexts(c1, c2);
-        expect(result.view?.dashboard?.title).toBe("Dash1");
-        expect(result.view?.dashboard?.widgets).toEqual(undefined);
-        expect(result.view?.dashboard?.filters).toEqual([]);
+        expect(result?.view?.dashboard?.title).toBe("Dash1");
+        expect(result?.view?.dashboard?.widgets).toEqual([]);
+        expect(result?.view?.dashboard?.filters).toEqual([]);
+    });
+
+    it("should return undefined if is empty object", () => {
+        const c1 = { view: {} } as any;
+        const c2 = { view: {} } as any;
+        const result = mergeContexts(c1, c2);
+        expect(result).toEqual(undefined);
+    });
+
+    it("should return undefined if references empty", () => {
+        const c1 = { referencedObjects: [] } as any;
+        const c2 = { referencedObjects: [] } as any;
+        const result = mergeContexts(c1, c2);
+        expect(result).toEqual(undefined);
     });
 });

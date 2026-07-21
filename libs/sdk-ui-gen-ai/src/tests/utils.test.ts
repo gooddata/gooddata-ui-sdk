@@ -2,7 +2,11 @@
 
 import { describe, expect, it } from "vitest";
 
-import { generateTitleFromQuestion } from "../utils.js";
+import {
+    convertGenAiTypeToReferenceType,
+    convertReferenceTypeToGenAiType,
+    generateTitleFromQuestion,
+} from "../utils.js";
 
 describe("generateTitleFromQuestion", () => {
     it("should return trimmed original text when text length is up to 50 characters", () => {
@@ -37,5 +41,49 @@ describe("generateTitleFromQuestion", () => {
         const input = `  ${"a".repeat(30)}\n\t${"b".repeat(30)}  `;
 
         expect(generateTitleFromQuestion(input)).toBe(`${"a".repeat(30)} ${"b".repeat(19)}...`);
+    });
+});
+
+describe("convertReferenceTypeToGenAiType", () => {
+    it("should convert METRIC to metric", () => {
+        expect(convertReferenceTypeToGenAiType("METRIC")).toBe("metric");
+    });
+
+    it("should convert WIDGET to widget", () => {
+        expect(convertReferenceTypeToGenAiType("WIDGET")).toBe("widget");
+    });
+
+    it("should convert ATTRIBUTE to attribute", () => {
+        expect(convertReferenceTypeToGenAiType("ATTRIBUTE")).toBe("attribute");
+    });
+
+    it("should convert DASHBOARD to dashboard", () => {
+        expect(convertReferenceTypeToGenAiType("DASHBOARD")).toBe("dashboard");
+    });
+
+    it("should return dashboard for unknown types", () => {
+        expect(convertReferenceTypeToGenAiType("UNKNOWN" as any)).toBe("dashboard");
+    });
+});
+
+describe("convertGenAiTypeToReferenceType", () => {
+    it("should convert metric to METRIC", () => {
+        expect(convertGenAiTypeToReferenceType("metric")).toBe("METRIC");
+    });
+
+    it("should convert widget to WIDGET", () => {
+        expect(convertGenAiTypeToReferenceType("widget")).toBe("WIDGET");
+    });
+
+    it("should convert attribute to ATTRIBUTE", () => {
+        expect(convertGenAiTypeToReferenceType("attribute")).toBe("ATTRIBUTE");
+    });
+
+    it("should convert dashboard to DASHBOARD", () => {
+        expect(convertGenAiTypeToReferenceType("dashboard")).toBe("DASHBOARD");
+    });
+
+    it("should return DASHBOARD for unknown types", () => {
+        expect(convertGenAiTypeToReferenceType("unknown" as any)).toBe("DASHBOARD");
     });
 });

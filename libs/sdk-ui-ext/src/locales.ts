@@ -237,6 +237,7 @@ export const messages = defineMessages({
     pointsSizeMaxTitle: { id: "properties.points.size.max.title" },
     customColor: { id: "gs.color-dropdown.custom-color" },
     resetColors: { id: "properties.colors.reset-colors" },
+    resetColorsAndStyles: { id: "properties.colors.reset-colors-and-styles" },
     resetColor: { id: "properties.colors.reset-color" },
     unsupportedColors: { id: "properties.colors.unsupported" },
     colors: { id: "properties.colors" },

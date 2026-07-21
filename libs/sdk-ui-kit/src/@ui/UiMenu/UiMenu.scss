@@ -18,6 +18,7 @@
             --item-padding-vertical: 4px;
             --item-padding-horizontal: 10px;
             --item-font-size: 12px;
+            --item-line-height: 18px;
             --item-height: 26px;
         }
 
@@ -25,6 +26,7 @@
             --item-padding-vertical: 8px;
             --item-padding-horizontal: 10px;
             --item-font-size: 14px;
+            --item-line-height: 20px;
             --item-height: 36px;
         }
     }
@@ -152,7 +154,7 @@
         display: flex;
         align-items: center;
         font-size: var(--item-font-size);
-        line-height: 20px;
+        line-height: var(--item-line-height, 20px);
         color: var(--gd-palette-complementary-8);
         transition: background-color 0.2s;
         box-sizing: border-box;

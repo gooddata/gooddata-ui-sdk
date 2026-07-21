@@ -51,13 +51,12 @@ import {
     transformAlertByMetric,
     transformAlertByRelativeOperator,
     transformAlertBySensitivity,
-    transformAlertByValue,
 } from "../utils/transformation.js";
 
 import { useAlertFormValidation } from "./useAlertFormValidation.js";
 import { useAlertSelectedValues } from "./useAlertSelectedValues.js";
 import { useAlertSupportedMetrics } from "./useAlertSupportedMetrics.js";
-import { useThresholdValue } from "./useThresholdValue.js";
+import { useAlertThreshold } from "./useAlertThreshold.js";
 
 export interface IUseEditAlertProps {
     alertToEdit?: IAutomationMetadataObject;
@@ -114,9 +113,6 @@ export function useEditAlert({
 
     // Determine target tab ID if widget is present
     const targetTabIdentifier = widget?.localIdentifier ? widgetTabMap[widget.localIdentifier] : undefined;
-
-    // Computed values
-    const isNewAlert = !alertToEdit;
 
     const {
         measureFormatMap,
@@ -286,12 +282,6 @@ export function useEditAlert({
         },
         [supportedAttributes],
     );
-
-    const onValueChange = useCallback((value: number) => {
-        setEditedAutomation((alert) =>
-            alert ? transformAlertByValue(alert as IAutomationMetadataObject, value) : undefined,
-        );
-    }, []);
 
     const onComparisonOperatorChange = useCallback(
         (measure: AlertMetric, comparisonOperator: IAlertComparisonOperator) => {
@@ -566,21 +556,16 @@ export function useEditAlert({
         onFiltersChange(filtersForNewAutomation);
     }, [filtersForNewAutomation, onFiltersChange]);
 
-    const {
-        value,
-        onChange,
-        onBlur,
-        errorMessage: thresholdErrorMessage,
-    } = useThresholdValue(
-        onValueChange,
+    const { value, onChange, onBlur, thresholdErrorMessage } = useAlertThreshold({
+        setEditedAutomation,
+        editedAutomation,
         getMetricValue,
-        isNewAlert,
-        editedAutomation?.alert,
+        isNewAlert: !alertToEdit,
         selectedRelativeOperator,
         selectedMeasure,
         selectedAttribute,
         selectedValue,
-    );
+    });
 
     const { isSubmitDisabled, validationErrorMessage, isParentValid } = useAlertFormValidation({
         editedAutomation,

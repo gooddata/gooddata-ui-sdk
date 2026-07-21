@@ -179,6 +179,8 @@ export interface IOpenAiAssistantRequestedEvent extends IPluggableAppEvent {
     readonly payload: {
         readonly question?: string;
         readonly userContext?: IGenAIUserContext;
+        readonly appendToChat?: boolean;
+        readonly replaceUserContext?: boolean;
     };
     // (undocumented)
     readonly type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.OPEN_REQUESTED";
@@ -379,6 +381,8 @@ export const LIB_VERSION: string;
 export function openAiAssistantRequested(payload?: {
     question?: string;
     userContext?: IGenAIUserContext;
+    appendToChat?: boolean;
+    replaceUserContext?: boolean;
 }): IOpenAiAssistantRequestedEvent;
 
 // @alpha

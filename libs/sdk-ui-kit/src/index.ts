@@ -829,6 +829,7 @@ export type {
     VariantTooltip,
     VariantTable,
     VariantLink,
+    VariantLinkDimmed,
     VariantBare,
     VariantDropdownInline,
 } from "./@ui/@types/variant.js";

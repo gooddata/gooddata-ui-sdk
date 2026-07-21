@@ -1,9 +1,13 @@
 // (C) 2026 GoodData Corporation
 
-import { type GenAIObjectType } from "@gooddata/sdk-model";
 import { type IconType, type ThemeColor } from "@gooddata/sdk-ui-kit";
 
-export function getIconByType(type: GenAIObjectType): { iconBefore?: IconType; iconColor?: ThemeColor } {
+import { type IGenAIContextObject } from "../../types.js";
+
+export function getIconByType(type: IGenAIContextObject["type"]): {
+    iconBefore?: IconType;
+    iconColor?: ThemeColor;
+} {
     switch (type) {
         case "dashboard":
             return {
@@ -11,6 +15,7 @@ export function getIconByType(type: GenAIObjectType): { iconBefore?: IconType; i
                 iconColor: "complementary-6",
             };
         case "visualization":
+        case "widget":
             return {
                 iconBefore: "visualization",
             };

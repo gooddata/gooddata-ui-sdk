@@ -87,6 +87,9 @@ export interface IUiAsyncTableProps<T extends { id: string } | { ref: ObjRef }> 
     renderHeader?: () => ReactNode;
     renderEmptyState?: () => ReactNode;
 
+    //when true, the column header row is not rendered (e.g. a single-column list styling)
+    hideHeader?: boolean;
+
     //locale
     locale?: string;
 

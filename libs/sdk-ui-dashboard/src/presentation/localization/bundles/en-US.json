@@ -19,6 +19,14 @@
         "text": "Apply",
         "crowdinContext": "Button label to apply the current selection or changes"
     },
+    "gs.list.only": {
+        "text": "Only",
+        "crowdinContext": "Action to select only this item in a multi-select list"
+    },
+    "attributesDropdown.onlyLabel": {
+        "text": "Select only {itemTitle}",
+        "crowdinContext": "Accessible label for the action that selects only the given item"
+    },
     "messages.dashboardSaveSuccess": {
         "text": "Great. We saved your dashboard.",
         "crowdinContext": "Success notification shown after successfully saving a dashboard"
@@ -3316,12 +3324,16 @@
         "crowdinContext": "Key drivers overview summary drivers description in key driver analysis dialog"
     },
     "kdaDialog.dialog.keyDrives.overview.summary.drivers.popupLabel": {
-        "text": "Change attribute selection",
-        "crowdinContext": "Change attribute selection button label in key driver analysis dialog"
+        "text": "Change attributes selection",
+        "crowdinContext": "Change attributes selection dialog label and visual header in key driver analysis dialog"
     },
-    "kdaDialog.dialog.keyDrives.overview.summary.drivers.attributes": {
-        "text": "Attributes",
-        "crowdinContext": "Key drivers overview summary drivers attributes in key driver analysis dialog"
+    "kdaDialog.dialog.keyDrives.overview.summary.drivers.countLabel": {
+        "text": "{count, plural, one {# driver} other {# drivers}}",
+        "crowdinContext": "Accessible label for the number of drivers of an attribute in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.keyDrives.overview.summary.drivers.noDrivers": {
+        "text": "No drivers",
+        "crowdinContext": "Accessible label when an attribute has no drivers in key driver analysis dialog"
     },
     "kdaDialog.dialog.keyDrives.overview.diff.title": {
         "text": "Diff",

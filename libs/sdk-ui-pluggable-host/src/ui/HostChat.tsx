@@ -23,6 +23,8 @@ export interface IHostChatVisibility {
     kind: "open" | "close" | "toggle";
     question?: string;
     userContext?: IGenAIUserContext;
+    appendToChat?: boolean;
+    replaceUserContext?: boolean;
     seq: number;
 }
 
@@ -108,6 +110,7 @@ export function HostChat({
     });
     const {
         askAiAssistant: chatAskAiAssistant,
+        openAiAssistant: chatOpenAiAssistant,
         open: chatOpen,
         close: chatClose,
         toggle: chatToggle,
@@ -156,13 +159,20 @@ export function HostChat({
         } else if (visibility.kind === "toggle") {
             chatToggle();
         } else if (visibility.question) {
-            chatAskAiAssistant(visibility.question, visibility.userContext);
+            chatAskAiAssistant(
+                visibility.question,
+                visibility.userContext,
+                visibility.appendToChat,
+                visibility.replaceUserContext,
+            );
+        } else if (visibility.userContext) {
+            chatOpenAiAssistant(visibility.userContext, visibility.replaceUserContext);
         } else {
             chatOpen();
         }
         // `seq` changes on every request, so a repeated identical open/ask/toggle still re-runs this.
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [visibilitySeq, chatAskAiAssistant, chatOpen, chatClose, chatToggle]);
+    }, [visibilitySeq, chatAskAiAssistant, chatOpenAiAssistant, chatOpen, chatClose, chatToggle]);
 
     return (
         <HostIntlProvider locale={resolveLocale(ctx.preferredLocale)}>

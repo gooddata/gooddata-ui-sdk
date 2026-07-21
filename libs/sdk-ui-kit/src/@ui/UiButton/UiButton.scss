@@ -232,6 +232,41 @@
             height: auto;
         }
 
+        // Same as `link` (underlined, no button chrome, height:auto) but in a dimmed gray tone.
+        &-linkDimmed {
+            --gd-icon-fill-color: var(--gd-palette-complementary-5);
+            color: var(--gd-palette-complementary-7);
+            text-decoration: underline;
+            border: 0;
+            padding: 0;
+            height: auto;
+            background-color: transparent;
+            border-color: transparent;
+
+            &:not(&:disabled) {
+                &:hover,
+                &:focus-visible,
+                &:active,
+                &[aria-expanded="true"],
+                &#{$root}--isSelected {
+                    --gd-icon-fill-color: var(--gd-palette-complementary-6);
+
+                    color: var(--gd-palette-complementary-8);
+                }
+            }
+
+            &:disabled {
+                color: var(--gd-palette-complementary-5);
+            }
+
+            &#{$root}--hasIconAfter {
+                padding-right: 0;
+            }
+            &#{$root}--hasIconBefore {
+                padding-left: 0;
+            }
+        }
+
         &-danger {
             --gd-icon-fill-color: var(--gd-palette-complementary-0);
             color: var(--gd-palette-complementary-0);

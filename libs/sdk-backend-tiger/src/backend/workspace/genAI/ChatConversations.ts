@@ -610,10 +610,13 @@ function convertUserContext(userContext: IGenAIUserContext | undefined) {
                                   ? w.widgetType === "visualizationSwitcher"
                                       ? {
                                             activeVisualizationId: objRefToString(w.insightRef),
-                                            ...(w.visualizationRefs
+                                            ...(w.visualizations
                                                 ? {
-                                                      visualizationIds:
-                                                          w.visualizationRefs.map(objRefToString),
+                                                      visualizationIds: w.visualizations
+                                                          .map(({ insightRef }) =>
+                                                              insightRef ? objRefToString(insightRef) : "",
+                                                          )
+                                                          .filter(Boolean),
                                                   }
                                                 : {}),
                                         }

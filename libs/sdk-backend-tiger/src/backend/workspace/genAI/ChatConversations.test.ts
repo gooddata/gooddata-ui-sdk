@@ -210,9 +210,21 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
                                 widgetRef: idRef("switcher-1", "analyticalDashboard"),
                                 widgetType: "visualizationSwitcher",
                                 insightRef: idRef("vis-active", "insight"),
-                                visualizationRefs: [
-                                    idRef("vis-active", "insight"),
-                                    idRef("vis-other", "insight"),
+                                visualizations: [
+                                    {
+                                        title: "Active",
+                                        widgetRef: idRef("switcher-1", "analyticalDashboard"),
+                                        widgetType: "insight",
+                                        insightRef: idRef("vis-active", "insight"),
+                                        resultId: "result-active",
+                                    },
+                                    {
+                                        title: "Others",
+                                        widgetRef: idRef("switcher-1", "analyticalDashboard"),
+                                        widgetType: "insight",
+                                        insightRef: idRef("vis-other", "insight"),
+                                        resultId: "result-active",
+                                    },
                                 ],
                                 resultId: "result-active",
                             },

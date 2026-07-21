@@ -4,6 +4,7 @@ import {
     ComponentTable,
     type IUiTooltipProps,
     UiButton,
+    UiIcon,
     UiTooltip,
     propCombinationsFor,
 } from "@gooddata/sdk-ui-kit";
@@ -144,6 +145,31 @@ function UiTooltipExamples() {
                 anchor={<input type="text" />}
                 content="Tooltip content"
             />
+            <h4>
+                Use inlineAnchor to collapse the wrapper to an inline/icon anchor and vertically center it
+                (default wraps the anchor in a block box)
+            </h4>
+            <div style={{ display: "flex", alignItems: "center", gap: "40px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                    default
+                    <UiTooltip
+                        arrowPlacement="right"
+                        triggerBy={["hover"]}
+                        anchor={<UiIcon type="question" size={14} />}
+                        content="Tooltip content"
+                    />
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                    inlineAnchor
+                    <UiTooltip
+                        inlineAnchor
+                        arrowPlacement="right"
+                        triggerBy={["hover"]}
+                        anchor={<UiIcon type="question" size={14} />}
+                        content="Tooltip content"
+                    />
+                </div>
+            </div>
         </div>
     );
 }

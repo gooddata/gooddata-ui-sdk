@@ -14,6 +14,9 @@ const allVariants = propCombination("variant", [
     "tertiary",
     "popout",
     "link",
+    "linkDimmed",
+    "dropdownInline",
+    "tooltip",
     "danger",
 ]);
 const allIconLeft = propCombination("iconBefore", ["check", "plus", "sync"]);

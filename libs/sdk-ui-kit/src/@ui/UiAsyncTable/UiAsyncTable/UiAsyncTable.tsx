@@ -44,6 +44,7 @@ function AsyncTableCore<T extends { id: string } | { ref: ObjRef }>(props: IUiAs
         renderToolbarCustomElement,
         accessibilityConfig,
         allowSearch,
+        hideHeader,
     } = props;
 
     return (
@@ -72,7 +73,7 @@ function AsyncTableCore<T extends { id: string } | { ref: ObjRef }>(props: IUiAs
                 aria-rowcount={totalItemsCount}
                 aria-colcount={bulkActions ? columns.length + 1 : columns.length}
             >
-                {renderHeader()}
+                {hideHeader ? null : renderHeader()}
                 <UiAsyncTableBody
                     items={items}
                     maxHeight={maxHeight}

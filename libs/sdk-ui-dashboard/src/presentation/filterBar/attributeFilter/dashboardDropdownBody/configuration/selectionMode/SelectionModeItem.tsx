@@ -47,7 +47,7 @@ export function SelectionModeItem({
                     arrowPlacement="left"
                     triggerBy={["hover"]}
                     width={TOOLTIP_WIDTH_MEDIUM}
-                    anchorWrapperStyles={{ display: "flex", alignItems: "center" }}
+                    inlineAnchor
                 />
             ) : null}
         </div>

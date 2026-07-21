@@ -675,6 +675,12 @@ export interface IFeatureFlags {
     enableExportTemplateSelection?: boolean;
 
     /**
+     * Enable the slide deck export templates settings UI in organization and workspace settings.
+     * When enabled, the export templates setting item is shown; otherwise it is hidden.
+     */
+    enableExportTemplatesSettingUi?: boolean;
+
+    /**
      * Enable rich text widget filter configuration.
      * Allows users to configure date and attribute filter settings for rich text widgets.
      * @alpha

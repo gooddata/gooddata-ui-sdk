@@ -334,6 +334,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableExportTemplatesSettingUi,
+            "enableExportTemplatesSettingUi",
+            "BOOLEAN",
+            FeatureFlagsValues.enableExportTemplatesSettingUi,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableRawExports,
             "enableRawExports",
             "BOOLEAN",
