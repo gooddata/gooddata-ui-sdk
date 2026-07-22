@@ -13,6 +13,7 @@ import {
     type IMeasureValueFilter,
     type ISeparators,
     type ISettings,
+    type IUser,
     type Identifier,
     type ObjRef,
 } from "@gooddata/sdk-model";
@@ -121,6 +122,13 @@ export type DashboardConfig = {
      * Settings may influence how the dashboard behaves or what features it exposes.
      */
     settings?: ISettings;
+
+    /**
+     * The current user. When provided, the dashboard reuses it instead of loading the current
+     * user from the backend on initialization - allowing an embedding application that has already
+     * resolved the user to avoid a duplicate request.
+     */
+    user?: IUser;
 
     /**
      * Date filter configuration.
@@ -350,6 +358,15 @@ export type DashboardConfig = {
     disableUserFilterReset?: boolean;
 
     /**
+     * Disable persisted filters
+     *
+     * @remarks
+     * If set to true, persistent filters across tabs will be disabled even if the dashboard is configured to support it.
+     * If set to false or not set, persisted filters will be enabled if the dashboard is configured to support it.
+     */
+    disablePersistentFiltersAcrossTabs?: boolean;
+
+    /**
      * Hide the add tab button in dashboard edit mode.
      *
      * @remarks
@@ -516,6 +533,7 @@ export type ResolvedDashboardConfig = Omit<
     | "entitlements"
     | "initialContent"
     | "executionTimestamp"
+    | "user"
     | "overrideDefaultFilters"
     | "overrideDefaultParameters"
     | "overrideTitle"

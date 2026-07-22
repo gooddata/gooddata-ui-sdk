@@ -135,6 +135,10 @@ export function declarativeDashboardToYaml(
         doc.add(entryWithSpace("filter_views", false));
     }
 
+    if (content.disablePersistentFiltersAcrossTabs) {
+        doc.add(entryWithSpace("persistent_filters_across_tabs", false));
+    }
+
     // Add dashboard tabs
     // Note: If there's only 1 tab without a title (implicit first tab visible in edit mode),
     // treat as "no tabs" and use sections format to preserve previous YAML structure

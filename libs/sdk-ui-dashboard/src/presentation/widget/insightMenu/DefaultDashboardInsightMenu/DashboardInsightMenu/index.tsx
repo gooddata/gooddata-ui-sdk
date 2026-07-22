@@ -17,7 +17,6 @@ import {
     UiFocusManager,
     UiMenu,
     getSelectedMenuId,
-    separatorStaticItem,
 } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
@@ -94,7 +93,7 @@ const convertToUiMenuItems = (
 ): Array<IUiMenuItem<IMenuItemData>> => {
     return items.map((item): IUiMenuItem<IMenuItemData> => {
         if (item.type === "separator") {
-            return separatorStaticItem;
+            return { type: "separator", id: item.itemId };
         }
 
         if (item.type === "group") {

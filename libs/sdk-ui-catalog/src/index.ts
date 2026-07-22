@@ -20,7 +20,7 @@ export { AnalyticsCatalogFilter, type IAnalyticsCatalogFilterProps } from "./Ana
  */
 
 export type { ICatalogDetailProps } from "./catalogDetail/CatalogDetail.js";
-export type { ICatalogDetailAction, EditHandlerEvent, OpenHandlerEvent } from "./catalogDetail/types.js";
+export type { EditHandlerEvent, OpenHandlerEvent } from "./catalogDetail/types.js";
 export type { ICatalogDetailContentProps } from "./catalogDetail/CatalogDetailContent.js";
 export type { ObjectType, CatalogCreateObjectType } from "./objectType/types.js";
 export type {

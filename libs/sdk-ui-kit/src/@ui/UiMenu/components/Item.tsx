@@ -5,6 +5,8 @@ import { memo } from "react";
 import { typedUiMenuContextStore } from "../context.js";
 import { type IUiMenuItemProps } from "../types.js";
 
+import { MenuDivider } from "./MenuDivider.js";
+
 export const Item = memo<IUiMenuItemProps>(function Item({ item }) {
     const { InteractiveItemWrapper, StaticItem, GroupItem, ContentItemWrapper } =
         typedUiMenuContextStore().useContextStoreValues([
@@ -19,6 +21,13 @@ export const Item = memo<IUiMenuItemProps>(function Item({ item }) {
     }
     if (item.type === "static") {
         return <StaticItem item={item} />;
+    }
+    if (item.type === "separator") {
+        return (
+            <li role="separator">
+                <MenuDivider />
+            </li>
+        );
     }
     if (item.type === "group") {
         return <GroupItem item={item} />;

@@ -163,6 +163,7 @@ import { IWorkspaceCatalogFactory } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalogFactoryOptions } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceDashboardsService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceExportTemplatesService } from '@gooddata/sdk-backend-spi';
+import { IWorkspaceFactsService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceInsightsService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceSettingsService } from '@gooddata/sdk-backend-spi';
@@ -318,6 +319,7 @@ export type CacheControl = {
     resetCatalogs: () => void;
     resetSecuritySettings: () => void;
     resetAttributes: () => void;
+    resetFacts: () => void;
     resetWorkspaceSettings: () => void;
     resetGeoStyles: () => void;
     resetExportTemplates: () => void;
@@ -340,6 +342,8 @@ export type CachingConfiguration = {
     maxAttributeWorkspaces?: number;
     maxAutomationsWorkspaces?: number;
     maxInsightsPerWorkspace?: number;
+    maxFactsWorkspaces?: number;
+    maxFactsPerWorkspace?: number;
     maxExportTemplatesOrgs?: number;
     maxExportTemplatesWorkspaces?: number;
     maxAttributeDisplayFormsPerWorkspace?: number;
@@ -883,6 +887,7 @@ export type DecoratorFactories = {
     automations?: AutomationsDecoratorFactory;
     insights?: InsightsDecoratorFactory;
     dashboards?: DashboardsDecoratorFactory;
+    facts?: FactsDecoratorFactory;
     geo?: GeoDecoratorFactory;
     organizationExportTemplates?: OrganizationExportTemplatesDecoratorFactory;
     workspaceExportTemplates?: WorkspaceExportTemplatesDecoratorFactory;
@@ -1025,6 +1030,9 @@ export class FactMetadataObjectBuilder<T extends IFactMetadataObject = IFactMeta
     // (undocumented)
     isLocked(value: boolean): this;
 }
+
+// @alpha (undocumented)
+export type FactsDecoratorFactory = (facts: IWorkspaceFactsService, workspace: string) => IWorkspaceFactsService;
 
 // @internal
 export const generateDateFilterLocalIdentifier: (index: number, dateDatasetRef?: ObjRef | undefined) => string;

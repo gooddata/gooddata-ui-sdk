@@ -80,18 +80,6 @@ export interface IAnalyticsCatalogProps {
     workspace?: string;
 }
 
-// @public
-export interface ICatalogDetailAction {
-    // (undocumented)
-    dataTestId?: string;
-    // (undocumented)
-    id: string;
-    // (undocumented)
-    isDestructive?: boolean;
-    // (undocumented)
-    label: string;
-}
-
 // @public (undocumented)
 export interface ICatalogDetailContentProps {
     objectDefinition?: ICatalogItemRef | ICatalogItem | null;

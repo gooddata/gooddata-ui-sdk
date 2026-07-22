@@ -29,6 +29,17 @@ export type IUiMenuStaticItem<T extends IUiMenuItemData = object> = {
 };
 
 /**
+ * Renders as the design-system menu divider. Dangling separators (leading, trailing, or adjacent
+ * after conditional items drop out) are collapsed automatically.
+ *
+ * @internal
+ */
+export type IUiMenuSeparatorItem = {
+    type: "separator";
+    id?: string;
+};
+
+/**
  * @internal
  */
 export type IUiMenuInteractiveItem<T extends IUiMenuItemData = object> = {
@@ -80,6 +91,7 @@ export type IUiMenuContentItem<T extends IUiMenuItemData = object> = {
  */
 export type IUiMenuItem<T extends IUiMenuItemData = object> =
     | IUiMenuStaticItem<T>
+    | IUiMenuSeparatorItem
     | IUiMenuInteractiveItem<T>
     | IUiMenuGroupItem<T>
     | IUiMenuContentItem<T>;

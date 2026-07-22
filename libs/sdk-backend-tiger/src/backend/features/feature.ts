@@ -607,6 +607,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableGenAiInteractionIntelligence,
+            "enableGenAiInteractionIntelligence",
+            "BOOLEAN",
+            FeatureFlagsValues.enableGenAiInteractionIntelligence,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableAiLlmAnthropicProvider,
             "enableAiLlmAnthropicProvider",
             "BOOLEAN",
@@ -803,13 +810,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableMetricEditorRemoteModule,
-            "enableShellApplication_metricEditor",
-            "BOOLEAN",
-            FeatureFlagsValues.enableShellApplication_metricEditor,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableAnalyticalDesignerRemoteModule,
             "enableShellApplication_analyticalDesigner",
             "BOOLEAN",
@@ -824,17 +824,17 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableLdmModelerRemoteModule,
-            "enableShellApplication_ldmModeler",
-            "BOOLEAN",
-            FeatureFlagsValues.enableShellApplication_ldmModeler,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableExportTimeoutFix,
             "enableExportTimeoutFix",
             "BOOLEAN",
             FeatureFlagsValues.enableExportTimeoutFix,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableDashboardPersistentFiltersAcrossTabs,
+            "enableDashboardPersistentFiltersAcrossTabs",
+            "BOOLEAN",
+            FeatureFlagsValues.enableDashboardPersistentFiltersAcrossTabs,
         ),
     };
 }

@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 4c1b8c0da13285736445d4b4810c96a8e87ae2e8bd9230a41f3ffa931abd6d66
+# schema-hash: 0264da25c488ece235d746a7c7fd59831f9a92e5c5bc184c0bb3043b813a0fad
 
 from __future__ import annotations
 
@@ -7725,6 +7725,10 @@ class Dashboard1(BaseModel):
         None,
         description='Whether user can save and apply filter views for this dashboard. Defaults to true.',
     )
+    persistent_filters_across_tabs: bool | None = Field(
+        None,
+        description='Whether persistent filters across tabs are enabled for this dashboard. Defaults to true.',
+    )
     enable_section_headers: bool | None = Field(
         None,
         description='Applies to the root layout. Whether all sections headers are enabled. Defaults to true.',
@@ -7839,6 +7843,10 @@ class Dashboard(BaseModel):
     filter_views: bool | None = Field(
         None,
         description='Whether user can save and apply filter views for this dashboard. Defaults to true.',
+    )
+    persistent_filters_across_tabs: bool | None = Field(
+        None,
+        description='Whether persistent filters across tabs are enabled for this dashboard. Defaults to true.',
     )
     enable_section_headers: bool | None = Field(
         None,

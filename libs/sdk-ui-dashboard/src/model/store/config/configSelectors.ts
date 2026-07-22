@@ -918,3 +918,15 @@ export const selectEnableDashboardDensitySetting: DashboardSelector<boolean> = c
         return state.settings?.enableDashboardDensitySetting ?? false;
     },
 );
+
+/**
+ * Returns whether dashboard persistent filters across tabs feature flag is enabled.
+ *
+ * @alpha
+ */
+export const selectEnableDashboardPersistentFiltersAcrossTabs: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableDashboardPersistentFiltersAcrossTabs ?? false;
+    },
+);

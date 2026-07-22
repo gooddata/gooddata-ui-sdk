@@ -27,7 +27,7 @@ jobs:
     needs: [prepare-versions-master]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v7.0.0
+        uses: actions/checkout@v7.0.1
         with:
           token: ${{ secrets.TOKEN_GITHUB_YENKINS}}
       - name: Inform to slack

@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ComponentType } from "react";
 
@@ -16,6 +16,7 @@ export interface IDashboardSettingsApplyPayload {
     disableFilterViews: boolean;
     evaluationFrequency: string | undefined;
     sectionHeadersDateDataSet: ObjRef | undefined;
+    disablePersistentFiltersAcrossTabs: boolean;
 }
 
 /**

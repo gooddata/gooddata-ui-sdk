@@ -6,7 +6,6 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import cx from "classnames";
 import { describe, expect, it, vi } from "vitest";
 
-import { separatorStaticItem } from "../defaults/DefaultUiListboxStaticItemComponent.js";
 import { b, e } from "../listboxBem.js";
 import {
     type IUiListboxInteractiveItemProps,
@@ -282,20 +281,19 @@ describe("UiListbox", () => {
         expect(screen.getByText("Static: static-data")).toBeInTheDocument();
     });
 
-    it("should render separator items correctly", () => {
-        const itemsWithSeparator: IUiListboxItem<string>[] = [
+    it("should render first-class separator items and collapse dangling ones", () => {
+        const itemsWithSeparators: IUiListboxItem<string>[] = [
+            { type: "separator" },
             mockItems[0],
-            separatorStaticItem,
+            { type: "separator" },
+            { type: "separator" },
             mockItems[1],
+            { type: "separator" },
         ];
 
-        renderListbox({ items: itemsWithSeparator });
+        renderListbox({ items: itemsWithSeparators });
 
-        // Check that separator is rendered
-        const separators = document.querySelectorAll(".gd-list-item-separator");
-        expect(separators.length).toBe(1);
-
-        // Check that regular items are still rendered
+        expect(document.querySelectorAll(".gd-separator").length).toBe(1);
         expect(screen.getByText("Item 1")).toBeInTheDocument();
         expect(screen.getByText("Item 2")).toBeInTheDocument();
     });

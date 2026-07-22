@@ -894,17 +894,14 @@ export type { NavigationDirection } from "./typings/navigation.js";
 export { UiLink, type IUiLinkProps } from "./@ui/UiLink/UiLink.js";
 export { UiListbox } from "./@ui/UiListbox/UiListbox.js";
 export { DefaultUiListboxInteractiveItemComponent } from "./@ui/UiListbox/defaults/DefaultUiListboxInteractiveItemComponent.js";
-export {
-    separatorStaticItem,
-    DefaultUiListboxStaticItemComponent,
-    isSeparator,
-} from "./@ui/UiListbox/defaults/DefaultUiListboxStaticItemComponent.js";
+export { DefaultUiListboxStaticItemComponent } from "./@ui/UiListbox/defaults/DefaultUiListboxStaticItemComponent.js";
 export type {
     IUiListboxProps,
     IUiListboxContext,
     IUiListboxItem,
     IUiListboxStaticItem,
     IUiListboxStaticItemProps,
+    IUiListboxSeparatorItem,
     IUiListboxInteractiveItem,
     IUiListboxInteractiveItemProps,
     UiListboxAriaAttributes,
@@ -975,6 +972,7 @@ export type {
     IUiMenuFocusableItem,
     IUiMenuStaticItem,
     IUiMenuStaticItemProps,
+    IUiMenuSeparatorItem,
     IUiMenuInteractiveItem,
     IUiMenuInteractiveItemProps,
     IUiMenuGroupItem,

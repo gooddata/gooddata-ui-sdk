@@ -819,7 +819,7 @@
     "kdaDialog.dialog.bars.filters.title": "Filtros",
     "kdaDialog.dialog.bars.date.title": "Intervalo de datas: {title}",
     "kdaDialog.dialog.bars.date.splitter": "Vs",
-    "kdaDialog.dialog.keyDrives.title": "Principais impulsionadores",
+    "kdaDialog.dialog.keyDrives.title": "Fatores-chave",
     "kdaDialog.dialog.keyDrives.tooltip": "Lista dos principais fatores classificados por impacto",
     "kdaDialog.dialog.keyDrives.button.trendUp": "Aumentar",
     "kdaDialog.dialog.keyDrives.button.trendDown": "Diminuir",

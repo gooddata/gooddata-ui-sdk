@@ -25,7 +25,6 @@ type CustomHyperlinkProps = CustomHyperlinkOwnProps & {
  */
 export function CustomHyperlinkComponent({ href, text, settings }: CustomHyperlinkProps) {
     const { linkHandler, allowNativeLinks, canManage, canAnalyze } = useConfig();
-    const enableShellApplication_metricEditor = Boolean(settings?.enableShellApplication_metricEditor);
     const enableShellApplication_analyticalDesigner = Boolean(
         settings?.enableShellApplication_analyticalDesigner,
     );
@@ -56,7 +55,6 @@ export function CustomHyperlinkComponent({ href, text, settings }: CustomHyperli
             workspaceId,
             id,
             type,
-            enableShellApplication_metricEditor,
             enableShellApplication_analyticalDesigner,
             enableShellApplication_dashboards,
         );
@@ -71,12 +69,7 @@ export function CustomHyperlinkComponent({ href, text, settings }: CustomHyperli
             id,
             itemUrl,
         };
-    }, [
-        href,
-        enableShellApplication_metricEditor,
-        enableShellApplication_analyticalDesigner,
-        enableShellApplication_dashboards,
-    ]);
+    }, [href, enableShellApplication_analyticalDesigner, enableShellApplication_dashboards]);
 
     if (!parsedRef) {
         return text;
@@ -127,7 +120,6 @@ const getItemUrl = (
     workspaceId: string,
     id: string,
     objectType: string,
-    enableShellApplication_metricEditor?: boolean,
     enableShellApplication_analyticalDesigner?: boolean,
     enableShellApplication_dashboards?: boolean,
 ) => {
@@ -141,9 +133,7 @@ const getItemUrl = (
                 ? `/workspace/${workspaceId}/dashboards/#/dashboard/${id}`
                 : `/dashboards/#/workspace/${workspaceId}/dashboard/${id}`;
         case "metric":
-            return enableShellApplication_metricEditor
-                ? `/workspace/${workspaceId}/metrics/metric/${id}`
-                : `/metrics/#/${workspaceId}/metric/${id}`;
+            return `/workspace/${workspaceId}/metrics/metric/${id}`;
         default:
             return null;
     }

@@ -9,7 +9,6 @@ import {
     type IUiTabsProps,
     UiTabs,
     propCombinationsFor,
-    separatorStaticItem,
 } from "@gooddata/sdk-ui-kit";
 
 import {
@@ -109,7 +108,7 @@ function UiTabsWithOverflowTest() {
                     label: `Disapprove`,
                     onSelect: () => setApproved(`tab${i + 1}`, false),
                 },
-                separatorStaticItem,
+                { type: "separator" },
                 {
                     id: "closeAll",
                     label: "Close all",

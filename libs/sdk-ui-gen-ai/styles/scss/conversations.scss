@@ -55,13 +55,6 @@
         background-color: kit-variables.$gd-border-color;
     }
 
-    &__divider_menu {
-        width: calc(100% - 20px);
-        height: 1px;
-        margin: 0 10px;
-        background-color: kit-variables.$gd-border-color;
-    }
-
     &__empty {
         display: flex;
         padding: 20px 0;

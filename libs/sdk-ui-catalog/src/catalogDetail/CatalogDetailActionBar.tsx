@@ -22,7 +22,8 @@ type DetailActionMenuItemData = {
 export type ICatalogDetailActionBarProps = {
     item: ICatalogItem;
     workspaceId: string;
-    actions: ICatalogDetailAction[];
+    /** Groups are joined with a divider in the actions menu. */
+    actionGroups: ICatalogDetailAction[][];
     /** Rendered before the Edit button (e.g. a Share button). */
     leadingActions?: ReactNode;
     onEditClick?: (event: MouseEvent, editClickEvent: EditHandlerEvent) => void;
@@ -35,22 +36,29 @@ export type ICatalogDetailActionBarProps = {
 export function CatalogDetailActionBar({
     item,
     workspaceId,
-    actions,
+    actionGroups,
     leadingActions,
     onEditClick,
     onActionsMenuSelect,
 }: ICatalogDetailActionBarProps) {
     const intl = useIntl();
 
-    const actionsMenuItems = useMemo((): IUiMenuItem<DetailActionMenuItemData>[] => {
-        return actions.map((action) => ({
-            type: "interactive",
-            id: action.id,
-            stringTitle: action.label,
-            data: { id: action.id, dataTestId: action.dataTestId },
-            isDestructive: action.isDestructive,
-        }));
-    }, [actions]);
+    const actionsMenuItems = useMemo(
+        () =>
+            actionGroups.flatMap((group, groupIndex): IUiMenuItem<DetailActionMenuItemData>[] => {
+                const items = group.map(
+                    (action): IUiMenuItem<DetailActionMenuItemData> => ({
+                        type: "interactive",
+                        id: action.id,
+                        stringTitle: action.label,
+                        data: { id: action.id, dataTestId: action.dataTestId },
+                        isDestructive: action.isDestructive,
+                    }),
+                );
+                return groupIndex > 0 ? [{ type: "separator" }, ...items] : items;
+            }),
+        [actionGroups],
+    );
 
     return (
         <div className="gd-analytics-catalog-detail__detail-actions">

@@ -28,6 +28,7 @@ import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.j
 import { useDashboardQueryProcessing } from "../../model/react/useDashboardQueryProcessing.js";
 import {
     selectDateFormat,
+    selectEnableDashboardPersistentFiltersAcrossTabs,
     selectEnableDashboardSectionHeadersDateDataSet,
     selectIsWhiteLabeled,
     selectLocale,
@@ -60,6 +61,9 @@ export function DefaultDashboardSettingsDialog({
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
     const enableDashboardSectionHeadersDateDataSet = useDashboardSelector(
         selectEnableDashboardSectionHeadersDateDataSet,
+    );
+    const enableDashboardPersistentFiltersAcrossTabs = useDashboardSelector(
+        selectEnableDashboardPersistentFiltersAcrossTabs,
     );
 
     const {
@@ -170,6 +174,23 @@ export function DefaultDashboardSettingsDialog({
                             });
                         }}
                     />
+                    {enableDashboardPersistentFiltersAcrossTabs ? (
+                        <ConfigurationOption
+                            label={intl.formatMessage({
+                                id: "filters.configurationPanel.persistentFiltersAcrossTabs.toggle",
+                            })}
+                            tooltip={intl.formatMessage({
+                                id: "filters.configurationPanel.persistentFiltersAcrossTabs.toggle.tooltip",
+                            })}
+                            isChecked={!currentData.disablePersistentFiltersAcrossTabs}
+                            onChange={(newValue: boolean) => {
+                                setCurrentData({
+                                    ...currentData,
+                                    disablePersistentFiltersAcrossTabs: newValue,
+                                });
+                            }}
+                        />
+                    ) : null}
                     {enableDashboardSectionHeadersDateDataSet ? (
                         <DateDatasetDropdown
                             label={intl.formatMessage({

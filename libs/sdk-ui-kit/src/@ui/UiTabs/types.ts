@@ -14,7 +14,7 @@ import { type EmptyObject } from "@gooddata/util";
 import { type IDropdownButtonRenderProps } from "../../Dropdown/Dropdown.js";
 import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { type SizeLarge, type SizeMedium, type SizeSmall } from "../@types/size.js";
-import { type separatorStaticItem } from "../UiListbox/defaults/DefaultUiListboxStaticItemComponent.js";
+import { type IUiMenuSeparatorItem } from "../UiMenu/types.js";
 
 /**
  * @internal
@@ -74,7 +74,7 @@ export type IUiTab<
      * When provided, used instead of `label` for the `aria-label` attribute.
      */
     ariaLabel?: string;
-    actions?: Array<IUiTabAction<TTabProps, TTabActionProps> | typeof separatorStaticItem>;
+    actions?: Array<IUiTabAction<TTabProps, TTabActionProps> | IUiMenuSeparatorItem>;
 } & TTabProps;
 
 /**

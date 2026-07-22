@@ -1,6 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import {
+    type IUiListboxInteractiveItem,
     type IUiListboxItem,
     SingleSelectListItem,
     type UiListboxAriaAttributes,
@@ -15,10 +16,10 @@ export type IFilterMenuDropdownBodyProps = {
     showDisplayForms: boolean;
     selectionTypeListboxItems: IUiListboxItem<ISelectionTypeItemData, never>[];
     selectedSelectionTypeItemId?: string;
-    onSelectionTypeSelect: (item: IUiListboxItem<ISelectionTypeItemData, never>) => void;
+    onSelectionTypeSelect: (item: IUiListboxInteractiveItem<ISelectionTypeItemData>) => void;
     labelListboxItems: IUiListboxItem<ILabelItemData, never>[];
     selectedLabelItemId?: string;
-    onLabelSelect: (item: IUiListboxItem<ILabelItemData, never>) => void;
+    onLabelSelect: (item: IUiListboxInteractiveItem<ILabelItemData>) => void;
     closeDropdown: () => void;
     ariaAttributes: UiListboxAriaAttributes;
     selectionTitle: string;

@@ -14,6 +14,7 @@ import {
     type IGetInsightOptions,
     type IPreparedExecution,
     type IWorkspaceExportTemplatesService,
+    type IWorkspaceFactsService,
     type IWorkspaceInsightsService,
 } from "@gooddata/sdk-backend-spi";
 import {
@@ -23,8 +24,10 @@ import {
     type IBucket,
     type IExportTemplate,
     type IExportTemplateDefinition,
+    type IFactMetadataObject,
     type IGeoJsonFeature,
     type IInsight,
+    type IMetadataObject,
     type ObjRef,
     geoFeatureId,
     idRef,
@@ -71,6 +74,8 @@ function withCachingForTests(
         maxAutomationsWorkspaces: 1,
         maxInsightsPerWorkspace: 2,
         maxExportTemplatesWorkspaces: 1,
+        maxFactsWorkspaces: 1,
+        maxFactsPerWorkspace: 2,
         cacheGeoStyles: true,
         onCacheReady,
         ...configOverrides,
@@ -137,6 +142,56 @@ function createGeoStyleBackend(
             ...backend.geo(),
             getDefaultStyle,
             getDefaultStyleSpriteIcons,
+        }),
+    };
+}
+
+const FACT_REF: ObjRef = idRef("fact.foo", "fact");
+
+const SAMPLE_FACT = {
+    type: "fact",
+    id: "fact.foo",
+    uri: "/facts/fact.foo",
+    ref: FACT_REF,
+    title: "Foo fact",
+    description: "",
+    production: true,
+    deprecated: false,
+    unlisted: false,
+} as IFactMetadataObject;
+
+const SAMPLE_FACT_DATASET = {
+    type: "dataSet",
+    id: "dataset.foo",
+    uri: "/datasets/dataset.foo",
+    ref: idRef("dataset.foo", "dataSet"),
+    title: "Foo dataset",
+    description: "",
+    production: true,
+    deprecated: false,
+    unlisted: false,
+} as IMetadataObject;
+
+/**
+ * Builds a backend whose facts service delegates to the provided (typically call-counting) implementations.
+ * The default dummy backend's facts service throws NotSupported, so tests need to supply their own.
+ */
+function createFactsBackend(
+    getFact: IWorkspaceFactsService["getFact"],
+    getFactDatasetMeta: IWorkspaceFactsService["getFactDatasetMeta"] = () =>
+        Promise.resolve(SAMPLE_FACT_DATASET),
+): IAnalyticalBackend {
+    const backend = dummyBackendEmptyData();
+
+    return {
+        ...backend,
+        workspace: (id: string) => ({
+            ...backend.workspace(id),
+            facts: () => ({
+                ...backend.workspace(id).facts(),
+                getFact,
+                getFactDatasetMeta,
+            }),
         }),
     };
 }
@@ -1287,6 +1342,124 @@ describe("withCaching", () => {
                 );
 
                 expect(second).not.toBe(first);
+            });
+        });
+    });
+
+    describe("facts", () => {
+        describe("getFact", () => {
+            it("collapses concurrent same-ref calls into a single underlying call", async () => {
+                const underlying = vi.fn(async () => ({ ...SAMPLE_FACT }) as IFactMetadataObject);
+                const backend = withCachingForTests(createFactsBackend(underlying));
+
+                const [a, b, c] = await Promise.all([
+                    backend.workspace("test").facts().getFact(FACT_REF),
+                    backend.workspace("test").facts().getFact(FACT_REF),
+                    backend.workspace("test").facts().getFact(FACT_REF),
+                ]);
+
+                // de-duplication: only one underlying request despite three concurrent callers
+                expect(underlying).toHaveBeenCalledTimes(1);
+                // all callers share the exact same result
+                expect(a).toBe(b);
+                expect(b).toBe(c);
+            });
+
+            it("evicts the cached entry when the underlying call fails", async () => {
+                const underlying = vi
+                    .fn<IWorkspaceFactsService["getFact"]>()
+                    .mockRejectedValueOnce(new Error("boom"))
+                    .mockResolvedValueOnce({ ...SAMPLE_FACT } as IFactMetadataObject);
+                const backend = withCachingForTests(createFactsBackend(underlying));
+
+                await expect(backend.workspace("test").facts().getFact(FACT_REF)).rejects.toThrow("boom");
+
+                // failed promise must not be cached - a retry hits the backend again and succeeds
+                await expect(backend.workspace("test").facts().getFact(FACT_REF)).resolves.toMatchObject({
+                    id: "fact.foo",
+                });
+
+                expect(underlying).toHaveBeenCalledTimes(2);
+            });
+
+            it("does not collapse calls with different include options", async () => {
+                const underlying = vi.fn(async () => ({ ...SAMPLE_FACT }) as IFactMetadataObject);
+                const backend = withCachingForTests(createFactsBackend(underlying));
+
+                await Promise.all([
+                    backend.workspace("test").facts().getFact(FACT_REF),
+                    backend
+                        .workspace("test")
+                        .facts()
+                        .getFact(FACT_REF, { include: ["dataset"] }),
+                ]);
+
+                expect(underlying).toHaveBeenCalledTimes(2);
+            });
+
+            it("resets facts cache with resetFacts", async () => {
+                let cacheControl: CacheControl | undefined;
+                const underlying = vi.fn(async () => ({ ...SAMPLE_FACT }) as IFactMetadataObject);
+                const backend = withCachingForTests(
+                    createFactsBackend(underlying),
+                    (cc) => (cacheControl = cc),
+                );
+
+                await backend.workspace("test").facts().getFact(FACT_REF);
+                cacheControl?.resetFacts();
+                await backend.workspace("test").facts().getFact(FACT_REF);
+
+                expect(underlying).toHaveBeenCalledTimes(2);
+            });
+
+            it("resets facts cache with resetAll", async () => {
+                let cacheControl: CacheControl | undefined;
+                const underlying = vi.fn(async () => ({ ...SAMPLE_FACT }) as IFactMetadataObject);
+                const backend = withCachingForTests(
+                    createFactsBackend(underlying),
+                    (cc) => (cacheControl = cc),
+                );
+
+                await backend.workspace("test").facts().getFact(FACT_REF);
+                cacheControl?.resetAll();
+                await backend.workspace("test").facts().getFact(FACT_REF);
+
+                expect(underlying).toHaveBeenCalledTimes(2);
+            });
+        });
+
+        describe("getFactDatasetMeta", () => {
+            it("collapses concurrent same-ref calls into a single underlying call", async () => {
+                const underlying = vi.fn(async () => ({ ...SAMPLE_FACT_DATASET }) as IMetadataObject);
+                const backend = withCachingForTests(createFactsBackend(vi.fn(), underlying));
+
+                const [a, b, c] = await Promise.all([
+                    backend.workspace("test").facts().getFactDatasetMeta(FACT_REF),
+                    backend.workspace("test").facts().getFactDatasetMeta(FACT_REF),
+                    backend.workspace("test").facts().getFactDatasetMeta(FACT_REF),
+                ]);
+
+                expect(underlying).toHaveBeenCalledTimes(1);
+                expect(a).toBe(b);
+                expect(b).toBe(c);
+            });
+
+            it("evicts the cached entry when the underlying call fails", async () => {
+                const underlying = vi
+                    .fn<IWorkspaceFactsService["getFactDatasetMeta"]>()
+                    .mockRejectedValueOnce(new Error("boom"))
+                    .mockResolvedValueOnce({ ...SAMPLE_FACT_DATASET } as IMetadataObject);
+                const backend = withCachingForTests(createFactsBackend(vi.fn(), underlying));
+
+                await expect(backend.workspace("test").facts().getFactDatasetMeta(FACT_REF)).rejects.toThrow(
+                    "boom",
+                );
+
+                await expect(
+                    backend.workspace("test").facts().getFactDatasetMeta(FACT_REF),
+                ).resolves.toMatchObject({ id: "dataset.foo" });
+
+                expect(underlying).toHaveBeenCalledTimes(2);
             });
         });
     });

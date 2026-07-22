@@ -2,23 +2,7 @@
 
 import { type ReactNode } from "react";
 
-import { Separator } from "../../../List/MenuList.js";
 import { type IUiListboxStaticItemProps } from "../types.js";
-
-/**
- * @internal
- */
-export const separatorStaticItem = {
-    data: <Separator />,
-    type: "static" as const,
-};
-
-/**
- * @internal
- */
-export function isSeparator(item: unknown): item is typeof separatorStaticItem {
-    return item === separatorStaticItem;
-}
 
 /**
  * By default just renders the data.

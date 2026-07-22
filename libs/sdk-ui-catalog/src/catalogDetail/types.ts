@@ -31,7 +31,7 @@ export type EditHandlerEvent = OpenHandlerEvent;
 
 /**
  * Generic detail drawer action definition.
- * @public
+ * @internal
  */
 export interface ICatalogDetailAction {
     id: string;

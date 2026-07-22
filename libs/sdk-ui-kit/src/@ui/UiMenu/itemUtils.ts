@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type IUiMenuContentItem,
@@ -7,6 +7,48 @@ import {
     type IUiMenuItem,
     type IUiMenuItemData,
 } from "./types.js";
+
+/**
+ * Normalizes menu items on every level: collapses dangling separators and drops
+ * interactive or group items whose submenu normalizes to empty, so no item renders
+ * as an entry point to nothing.
+ * @internal
+ */
+export const normalizeMenuItems = <T extends IUiMenuItemData = object>(
+    items: IUiMenuItem<T>[],
+): IUiMenuItem<T>[] => {
+    return collapseSeparators(
+        items.flatMap((item) => {
+            if ((item.type === "interactive" || item.type === "group") && item.subItems !== undefined) {
+                const subItems = normalizeMenuItems(item.subItems);
+                return subItems.length === 0 ? [] : [{ ...item, subItems }];
+            }
+            return [item];
+        }),
+    );
+};
+
+/**
+ * Drops separators that would render dangling: at the start or end of the list, or directly
+ * after another separator. Lets callers place separators between groups unconditionally, even
+ * when a whole group is filtered out.
+ *
+ * @internal
+ */
+export function collapseSeparators<T extends { type: string }>(items: T[]): T[] {
+    const result: T[] = [];
+    for (const item of items) {
+        const previous = result[result.length - 1];
+        if (item.type === "separator" && (previous === undefined || previous.type === "separator")) {
+            continue;
+        }
+        result.push(item);
+    }
+    if (result[result.length - 1]?.type === "separator") {
+        result.pop();
+    }
+    return result;
+}
 
 /**
  * Recursively finds an item in the menu tree that matches the predicate.
@@ -126,6 +168,7 @@ export const getItemInteractiveParent = <T extends IUiMenuItemData = object>(
     const parent = findItem(items, (item) => {
         if (
             item.type === "static" ||
+            item.type === "separator" ||
             (item.type === "interactive" && item.subItems === undefined) ||
             item.type === "content"
         ) {

@@ -63,27 +63,29 @@ export function AsCodeDetailActions({
     const workspaceId = useWorkspaceStrict();
     const [dialog, setDialog] = useState<DialogState | undefined>(undefined);
 
-    const actions = useMemo<ICatalogDetailAction[]>(() => {
-        const result: ICatalogDetailAction[] = [];
+    const actionGroups = useMemo<ICatalogDetailAction[][]>(() => {
+        const mainGroup: ICatalogDetailAction[] = [];
         // The open action reaches the standalone editor via onOpen, so it is offered only when the host
         // provides that handler and the descriptor declares one; the menu then never shows a dead item.
         if (onOpen && descriptor.openAction) {
-            result.push({ id: OPEN_ACTION_ID, label: intl.formatMessage(descriptor.openAction) });
+            mainGroup.push({ id: OPEN_ACTION_ID, label: intl.formatMessage(descriptor.openAction) });
         }
-        result.push(
-            {
-                id: "duplicate",
-                label: intl.formatMessage(descriptor.messages.duplicate),
-                dataTestId: catalogDetailActionDuplicate,
-            },
-            {
-                id: "delete",
-                label: intl.formatMessage(descriptor.messages.deleteSubmit),
-                isDestructive: true,
-                dataTestId: catalogDetailActionDelete,
-            },
-        );
-        return result;
+        mainGroup.push({
+            id: "duplicate",
+            label: intl.formatMessage(descriptor.messages.duplicate),
+            dataTestId: catalogDetailActionDuplicate,
+        });
+        return [
+            mainGroup,
+            [
+                {
+                    id: "delete",
+                    label: intl.formatMessage(descriptor.messages.deleteSubmit),
+                    isDestructive: true,
+                    dataTestId: catalogDetailActionDelete,
+                },
+            ],
+        ];
     }, [descriptor, intl, onOpen]);
 
     const closeDialog = useCallback(() => setDialog(undefined), []);
@@ -121,7 +123,7 @@ export function AsCodeDetailActions({
             <CatalogDetailActionBar
                 item={item}
                 workspaceId={workspaceId}
-                actions={actions}
+                actionGroups={actionGroups}
                 leadingActions={canShare && onShare ? <ShareButton onClick={onShare} /> : null}
                 onEditClick={handleEditOpen}
                 onActionsMenuSelect={handleActionsMenuSelect}

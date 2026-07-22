@@ -18,7 +18,6 @@ import {
     ShortenedText,
     UiListbox,
     bemFactory,
-    separatorStaticItem,
 } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
@@ -120,7 +119,7 @@ export function Alert({
                       stringTitle: formatMessage(isPaused ? labelMessages.resume : labelMessages.pause),
                       data: "pause" as const,
                   },
-                  separatorStaticItem,
+                  { type: "separator" },
                   deleteItem,
               ]
             : [deleteItem];

@@ -36,6 +36,7 @@ import {
     getItemInteractiveParent,
     getItemsByInteractiveParent,
     getSiblingItems,
+    normalizeMenuItems,
     unwrapGroupItems,
 } from "./itemUtils.js";
 import {
@@ -57,7 +58,7 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
     itemsContainerRef: RefObject<HTMLElement>,
 ): IUiMenuContext<T, M> {
     const {
-        items,
+        items: rawItems,
 
         size = "medium",
 
@@ -85,6 +86,8 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
 
         menuCtxData,
     } = props;
+
+    const items = useMemo(() => normalizeMenuItems(rawItems), [rawItems]);
 
     const [controlType, setControlType] = useState<IUiMenuControlType>("unknown");
 

@@ -575,6 +575,14 @@
         "text": "<p>Allows users to save filters state as a personal views they can return to later.</p><p>Only the user who saved the view can access it and set it as their default view.</p>",
         "crowdinContext": "Tooltip explaining saved views functionality when hovering over the toggle"
     },
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle": {
+        "text": "Persistent filters across tabs",
+        "crowdinContext": "Label for toggle that enables or disables persistent filters across tabs"
+    },
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle.tooltip": {
+        "text": "Allow persistent filters across tabs. When enabled, filters will be persistent across tabs.",
+        "crowdinContext": "Tooltip explaining persistent filters across tabs functionality when hovering over the toggle"
+    },
     "settingsDashboardDialog.sectionHeaders.dateDataset": {
         "text": "Date range in descriptions",
         "crowdinContext": "Label for dropdown to select date dataset for section header Rich Text"
