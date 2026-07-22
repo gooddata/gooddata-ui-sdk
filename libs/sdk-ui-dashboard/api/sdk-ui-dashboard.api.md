@@ -940,6 +940,7 @@ export type DashboardConfig = {
     locale?: ILocale;
     separators?: ISeparators;
     settings?: ISettings;
+    user?: IUser;
     dateFilterConfig?: IDateFilterConfig;
     overrideDefaultFilters?: FilterContextItem[];
     overrideDefaultParameters?: IDashboardParameter[];
@@ -968,6 +969,7 @@ export type DashboardConfig = {
     exportMetadata?: Record<string, string>;
     disableCrossFiltering?: boolean;
     disableUserFilterReset?: boolean;
+    disablePersistentFiltersAcrossTabs?: boolean;
     hideAddTabButton?: boolean;
     openAutomationOnLoad?: boolean;
     focusObject?: IDashboardFocusObject;
@@ -1042,7 +1044,7 @@ export type DashboardDeinitializedPayload = {
 export type DashboardDensity = "comfortable" | "compact";
 
 // @public (undocumented)
-export type DashboardDescriptor = Pick<IDashboard, "title" | "description" | "tags" | "disableCrossFiltering" | "disableUserFilterReset" | "disableUserFilterSave" | "disableFilterViews" | "evaluationFrequency" | "sectionHeadersDateDataSet"> & IAccessControlAware;
+export type DashboardDescriptor = Pick<IDashboard, "title" | "description" | "tags" | "disableCrossFiltering" | "disableUserFilterReset" | "disableUserFilterSave" | "disableFilterViews" | "disablePersistentFiltersAcrossTabs" | "evaluationFrequency" | "sectionHeadersDateDataSet"> & IAccessControlAware;
 
 // @public (undocumented)
 export type DashboardDispatch = Dispatch<AnyAction>;
@@ -5040,6 +5042,8 @@ export interface IDashboardSettingsApplyPayload {
     disableCrossFiltering: boolean;
     // (undocumented)
     disableFilterViews: boolean;
+    // (undocumented)
+    disablePersistentFiltersAcrossTabs: boolean;
     // (undocumented)
     disableUserFilterReset: boolean;
     // (undocumented)
@@ -9432,6 +9436,7 @@ export const metaActions: {
     }, "meta/setMeta">;
     setDashboardTitle: ActionCreatorWithPayload<string, "meta/setDashboardTitle">;
     setDisableCrossFiltering: ActionCreatorWithPayload<boolean, "meta/setDisableCrossFiltering">;
+    setDisablePersistentFiltersAcrossTabs: ActionCreatorWithPayload<boolean, "meta/setDisablePersistentFiltersAcrossTabs">;
     setDisableUserFilterReset: ActionCreatorWithPayload<boolean, "meta/setDisableUserFilterReset">;
     setDisableUserFilterSave: ActionCreatorWithPayload<boolean, "meta/setDisableUserFilterSave">;
     setDisableFilterViews: ActionCreatorWithPayload<boolean, "meta/setDisableFilterViews">;
@@ -10083,7 +10088,7 @@ export type ResolveAsyncRenderPayload = {
 };
 
 // @public
-export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "agGridToken" | "maxZoomLevel" | "exportId" | "exportType" | "exportMetadata" | "focusObject" | "slideConfig" | "references" | "entitlements" | "initialContent" | "executionTimestamp" | "overrideDefaultFilters" | "overrideDefaultParameters" | "overrideTitle" | "hideWidgetTitles" | "workspaceDescriptor" | "evaluationFrequency" | "externalRecipient" | "openAutomationOnLoad" | "hideAddTabButton"> & DashboardConfig;
+export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "agGridToken" | "maxZoomLevel" | "exportId" | "exportType" | "exportMetadata" | "focusObject" | "slideConfig" | "references" | "entitlements" | "initialContent" | "executionTimestamp" | "user" | "overrideDefaultFilters" | "overrideDefaultParameters" | "overrideTitle" | "hideWidgetTitles" | "workspaceDescriptor" | "evaluationFrequency" | "externalRecipient" | "openAutomationOnLoad" | "hideAddTabButton"> & DashboardConfig;
 
 // @alpha (undocumented)
 export type ResolvedDateFilterValues = IResolvedDateFilterValue[];

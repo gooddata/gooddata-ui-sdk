@@ -1788,6 +1788,10 @@ export interface Dashboard {
      */
     filter_views?: boolean;
     /**
+     * Whether persistent filters across tabs are enabled for this dashboard. Defaults to true.
+     */
+    persistent_filters_across_tabs?: boolean;
+    /**
      * Applies to the root layout. Whether all sections headers are enabled. Defaults to true.
      */
     enable_section_headers?: boolean;

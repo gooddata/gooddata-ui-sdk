@@ -159,6 +159,7 @@ describe("dashboard conversion", () => {
                 user_filters_save: false,
                 user_filters_reset: false,
                 filter_views: false,
+                persistent_filters_across_tabs: false,
             });
 
             const result = yamlDashboardToDeclarative(emptyEntities, input);
@@ -168,6 +169,7 @@ describe("dashboard conversion", () => {
             expect(content.disableUserFilterSave).toBe(true);
             expect(content.disableUserFilterReset).toBe(true);
             expect(content.disableFilterViews).toBe(true);
+            expect(content.disablePersistentFiltersAcrossTabs).toBe(true);
         });
 
         it("should derive title from id when not provided", () => {

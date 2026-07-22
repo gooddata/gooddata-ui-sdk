@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
@@ -13,6 +13,7 @@ import {
     getNextSiblings,
     getPreviousSiblings,
     getSiblingItems,
+    normalizeMenuItems,
     unwrapGroupItems,
 } from "../itemUtils.js";
 import { type IUiMenuItem } from "../types.js";
@@ -565,6 +566,175 @@ describe("itemUtils", () => {
                 direction: "backward",
             });
             expect(prevFromFirstInSecondGroup?.id).toBe("group1item2");
+        });
+    });
+
+    describe("normalizeMenuItems", () => {
+        it("should drop leading, trailing and adjacent separators", () => {
+            const items: IUiMenuItem[] = [
+                { type: "separator" },
+                { type: "interactive", id: "a", stringTitle: "A", data: "" },
+                { type: "separator" },
+                { type: "separator" },
+                { type: "interactive", id: "b", stringTitle: "B", data: "" },
+                { type: "separator" },
+            ];
+
+            expect(normalizeMenuItems(items).map((item) => item.type)).toEqual([
+                "interactive",
+                "separator",
+                "interactive",
+            ]);
+        });
+
+        it("should normalize submenu and group subItems recursively", () => {
+            const items: IUiMenuItem[] = [
+                {
+                    type: "interactive",
+                    id: "parent",
+                    stringTitle: "Parent",
+                    data: "",
+                    subItems: [
+                        { type: "interactive", id: "child", stringTitle: "Child", data: "" },
+                        { type: "separator" },
+                    ],
+                },
+                {
+                    type: "group",
+                    id: "group",
+                    stringTitle: "Group",
+                    data: "",
+                    subItems: [
+                        { type: "separator" },
+                        { type: "interactive", id: "groupChild", stringTitle: "Group child", data: "" },
+                    ],
+                },
+            ];
+
+            const [submenu, group] = normalizeMenuItems(items);
+
+            expect(submenu.type === "interactive" && submenu.subItems?.map((item) => item.type)).toEqual([
+                "interactive",
+            ]);
+            expect(group.type === "group" && group.subItems.map((item) => item.type)).toEqual([
+                "interactive",
+            ]);
+        });
+
+        it("should drop an interactive item whose subItems contain only separators", () => {
+            const items: IUiMenuItem[] = [
+                {
+                    type: "interactive",
+                    id: "parent",
+                    stringTitle: "Parent",
+                    data: "",
+                    subItems: [{ type: "separator" }],
+                },
+                { type: "interactive", id: "sibling", stringTitle: "Sibling", data: "" },
+            ];
+
+            expect(normalizeMenuItems(items).map((item) => item.id)).toEqual(["sibling"]);
+        });
+
+        it("should collapse a separator orphaned by a dropped parent", () => {
+            const items: IUiMenuItem[] = [
+                { type: "interactive", id: "before", stringTitle: "Before", data: "" },
+                { type: "separator" },
+                {
+                    type: "interactive",
+                    id: "parent",
+                    stringTitle: "Parent",
+                    data: "",
+                    subItems: [{ type: "separator" }],
+                },
+                { type: "separator" },
+                { type: "interactive", id: "after", stringTitle: "After", data: "" },
+            ];
+
+            expect(normalizeMenuItems(items).map((item) => item.type)).toEqual([
+                "interactive",
+                "separator",
+                "interactive",
+            ]);
+        });
+
+        it("should cascade drop a submenu whose only child normalizes to empty", () => {
+            const items: IUiMenuItem[] = [
+                {
+                    type: "interactive",
+                    id: "grandparent",
+                    stringTitle: "Grandparent",
+                    data: "",
+                    subItems: [
+                        {
+                            type: "interactive",
+                            id: "parent",
+                            stringTitle: "Parent",
+                            data: "",
+                            subItems: [{ type: "separator" }],
+                        },
+                    ],
+                },
+                { type: "interactive", id: "sibling", stringTitle: "Sibling", data: "" },
+            ];
+
+            expect(normalizeMenuItems(items).map((item) => item.id)).toEqual(["sibling"]);
+        });
+
+        it("should drop an interactive item with authored empty subItems", () => {
+            const items: IUiMenuItem[] = [
+                {
+                    type: "interactive",
+                    id: "parent",
+                    stringTitle: "Parent",
+                    data: "",
+                    subItems: [],
+                },
+                { type: "interactive", id: "sibling", stringTitle: "Sibling", data: "" },
+            ];
+
+            expect(normalizeMenuItems(items).map((item) => item.id)).toEqual(["sibling"]);
+        });
+
+        it("should keep an interactive item whose subItems are all disabled interactive items", () => {
+            const items: IUiMenuItem[] = [
+                {
+                    type: "interactive",
+                    id: "parent",
+                    stringTitle: "Parent",
+                    data: "",
+                    subItems: [
+                        {
+                            type: "interactive",
+                            id: "disabledChild",
+                            stringTitle: "Disabled child",
+                            isDisabled: true,
+                            data: "",
+                        },
+                    ],
+                },
+            ];
+
+            const [parent] = normalizeMenuItems(items);
+
+            expect(parent.type === "interactive" && parent.subItems?.map((item) => item.id)).toEqual([
+                "disabledChild",
+            ]);
+        });
+
+        it("should drop a group item whose subItems normalize to empty", () => {
+            const items: IUiMenuItem[] = [
+                {
+                    type: "group",
+                    id: "group",
+                    stringTitle: "Group",
+                    data: "",
+                    subItems: [{ type: "separator" }],
+                },
+                { type: "interactive", id: "sibling", stringTitle: "Sibling", data: "" },
+            ];
+
+            expect(normalizeMenuItems(items).map((item) => item.id)).toEqual(["sibling"]);
         });
     });
 });

@@ -1080,14 +1080,14 @@ export interface IFeatureFlags {
     enableGenAiObservability?: boolean;
 
     /**
+     * Enable interaction intelligence in AI Assistant.
+     */
+    enableGenAiInteractionIntelligence?: boolean;
+
+    /**
      * Enable Anthropic provider in LLM configuration.
      */
     enableAiLlmAnthropicProvider?: boolean;
-
-    /**
-     * Enables Metric Editor loading as a remote module in the host application.
-     */
-    enableShellApplication_metricEditor?: boolean;
 
     /**
      * Per-app sub-flag under enableShellApplication. When true (and
@@ -1103,12 +1103,12 @@ export interface IFeatureFlags {
     enableDashboardSidebarResize?: boolean;
 
     /**
-     * Enables LDM Modeler loading as a remote module in the host application.
-     */
-    enableShellApplication_ldmModeler?: boolean;
-
-    /**
      * Enables per-series line style and weight configuration for line-based charts.
      */
     enableLineChartStyling?: boolean;
+
+    /**
+     * Enable persistent filters across tabs for dashboards.
+     */
+    enableDashboardPersistentFiltersAcrossTabs?: boolean;
 }

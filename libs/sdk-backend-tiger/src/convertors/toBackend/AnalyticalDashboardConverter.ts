@@ -149,6 +149,7 @@ function convertDashboardTabToBackend(
  * @param useWidgetLocalIdentifiers - Whether to preserve widget local identifiers
  * @param enableDashboardSectionHeadersDateDataSet - Whether to include section headers date data set
  * @param enableAnalyticalDashboardVersion3 - When true and the dashboard has tabs, produce a V3 analytical
+ * @param enableDashboardPersistentFiltersAcrossTabs - Whether to include disable persistent filters across tabs
  *   dashboard: tabs-only, no root-level layout / filter configs / parameters. V3 cannot be read
  *   by SDK versions that only know V2 root-level properties. Opt-in.
  * @returns Tiger analytical dashboard (V2 by default, V3 when the flag is on and tabs are present).
@@ -159,6 +160,7 @@ export function convertAnalyticalDashboard(
     useWidgetLocalIdentifiers?: boolean,
     enableDashboardSectionHeadersDateDataSet?: boolean,
     enableAnalyticalDashboardVersion3?: false,
+    enableDashboardPersistentFiltersAcrossTabs?: boolean,
 ): AnalyticalDashboardModelV2.IAnalyticalDashboard;
 export function convertAnalyticalDashboard(
     dashboard: IDashboardDefinition,
@@ -166,6 +168,7 @@ export function convertAnalyticalDashboard(
     useWidgetLocalIdentifiers?: boolean,
     enableDashboardSectionHeadersDateDataSet?: boolean,
     enableAnalyticalDashboardVersion3?: boolean,
+    enableDashboardPersistentFiltersAcrossTabs?: boolean,
 ): AnalyticalDashboardModelV2.IAnalyticalDashboard | AnalyticalDashboardModelV3.IAnalyticalDashboard;
 
 export function convertAnalyticalDashboard(
@@ -174,6 +177,7 @@ export function convertAnalyticalDashboard(
     useWidgetLocalIdentifiers?: boolean,
     enableDashboardSectionHeadersDateDataSet?: boolean,
     enableAnalyticalDashboardVersion3?: boolean,
+    enableDashboardPersistentFiltersAcrossTabs?: boolean,
 ): AnalyticalDashboardModelV2.IAnalyticalDashboard | AnalyticalDashboardModelV3.IAnalyticalDashboard {
     const hasTabs = Boolean(dashboard.tabs && dashboard.tabs.length > 0);
     const emitV3 = Boolean(enableAnalyticalDashboardVersion3 && hasTabs);
@@ -191,6 +195,9 @@ export function convertAnalyticalDashboard(
             disableUserFilterReset: dashboard.disableUserFilterReset,
             disableUserFilterSave: dashboard.disableUserFilterSave,
             disableFilterViews: dashboard.disableFilterViews,
+            ...(enableDashboardPersistentFiltersAcrossTabs
+                ? { disablePersistentFiltersAcrossTabs: dashboard.disablePersistentFiltersAcrossTabs }
+                : {}),
             evaluationFrequency: dashboard.evaluationFrequency,
         };
 
@@ -249,6 +256,9 @@ export function convertAnalyticalDashboard(
         disableUserFilterReset: dashboard.disableUserFilterReset,
         disableUserFilterSave: dashboard.disableUserFilterSave,
         disableFilterViews: dashboard.disableFilterViews,
+        ...(enableDashboardPersistentFiltersAcrossTabs
+            ? { disablePersistentFiltersAcrossTabs: dashboard.disablePersistentFiltersAcrossTabs }
+            : {}),
         evaluationFrequency: dashboard.evaluationFrequency,
         tabs: convertedTabs,
         version: "2",

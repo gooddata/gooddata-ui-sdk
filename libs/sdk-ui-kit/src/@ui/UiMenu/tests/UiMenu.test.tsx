@@ -594,4 +594,57 @@ describe("UiMenu", () => {
         fireEvent.keyDown(menu, { code: "ArrowDown" });
         expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("groupitem2"));
     });
+
+    describe("separator items", () => {
+        it('should render a separator between items with role="separator"', () => {
+            renderMenu({
+                items: [
+                    { type: "interactive", id: "a", stringTitle: "A", data: "a" },
+                    { type: "separator" },
+                    { type: "interactive", id: "b", stringTitle: "B", data: "b" },
+                ],
+            });
+
+            expect(screen.getByRole("separator")).toBeInTheDocument();
+        });
+
+        it("should collapse leading, trailing and adjacent separators", () => {
+            renderMenu({
+                items: [
+                    { type: "separator" },
+                    { type: "interactive", id: "a", stringTitle: "A", data: "a" },
+                    { type: "separator" },
+                    { type: "separator" },
+                    { type: "interactive", id: "b", stringTitle: "B", data: "b" },
+                    { type: "separator" },
+                ],
+            });
+
+            expect(screen.getAllByRole("separator")).toHaveLength(1);
+        });
+
+        it("should render no separator when only one side of it has items", () => {
+            renderMenu({
+                items: [{ type: "interactive", id: "a", stringTitle: "A", data: "a" }, { type: "separator" }],
+            });
+
+            expect(screen.queryByRole("separator")).not.toBeInTheDocument();
+        });
+
+        it("should skip separators in keyboard navigation", () => {
+            renderMenu({
+                items: [
+                    { type: "interactive", id: "first-item", stringTitle: "A", data: "a" },
+                    { type: "separator" },
+                    { type: "interactive", id: "second-item", stringTitle: "B", data: "b" },
+                ],
+            });
+
+            const menu = screen.getByRole("menu");
+            expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("first-item"));
+
+            fireEvent.keyDown(menu, { code: "ArrowDown" });
+            expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("second-item"));
+        });
+    });
 });

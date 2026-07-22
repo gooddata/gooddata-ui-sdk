@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type RefObject, useCallback, useEffect, useState } from "react";
 
@@ -14,6 +14,7 @@ import { ScopedIdStore, useScopedIdStoreValue } from "../../hooks/useScopedId.js
 import { UiDropdown } from "../../UiDropdown/UiDropdown.js";
 import { UiTabsBem } from "../bem.js";
 import { getTypedUiTabsContextStore } from "../context.js";
+import { hasInteractiveTabActions } from "../itemUtils.js";
 import { type IUiTab, type IUiTabComponentProps } from "../types.js";
 
 /**
@@ -48,7 +49,7 @@ export function DefaultUiTabsAllTabs<
     const { onKeyboardNavigation, focusedItem, focusedAction, setFocusedIndex, setFocusedAction } =
         useListWithActionsKeyboardNavigation({
             items: tabs,
-            getItemAdditionalActions: (item) => ((item.actions ?? []).length ? ["selectTabActions"] : []),
+            getItemAdditionalActions: (item) => (hasInteractiveTabActions(item) ? ["selectTabActions"] : []),
             actionHandlers: {
                 selectItem: handleDropdownSelect,
                 selectTabActions: () => undefined,
@@ -211,7 +212,7 @@ function TabListItem<
                     <TabValue tab={item} isSelected={isSelected} location={"allList"} />
                 </div>
             </div>
-            {(item.actions ?? []).length ? (
+            {hasInteractiveTabActions(item) ? (
                 <div
                     className={UiTabsBem.e("tab-list-item-actions", {
                         focused: isFocused,

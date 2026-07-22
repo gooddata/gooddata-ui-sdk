@@ -653,6 +653,7 @@ interface Dashboard {
         EDIT?: Permission;
         SHARE?: Permission;
     };
+    persistent_filters_across_tabs?: boolean;
     plugins?: ({
         id: Id14;
         parameters?: {
@@ -2422,6 +2423,10 @@ export const metadata_v1: {
                         description: string;
                     };
                     filter_views: {
+                        type: string;
+                        description: string;
+                    };
+                    persistent_filters_across_tabs: {
                         type: string;
                         description: string;
                     };
@@ -6736,6 +6741,10 @@ export const metadata_v1: {
                     description: string;
                 };
                 filter_views: {
+                    type: string;
+                    description: string;
+                };
+                persistent_filters_across_tabs: {
                     type: string;
                     description: string;
                 };

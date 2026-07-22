@@ -7,6 +7,7 @@ import { type EmptyObject } from "@gooddata/util";
 import { UiIcon } from "../../UiIcon/UiIcon.js";
 import { UiLink } from "../../UiLink/UiLink.js";
 import { getTypedUiTabsContextStore } from "../context.js";
+import { hasInteractiveTabActions } from "../itemUtils.js";
 import { messages } from "../messages.js";
 import { type IUiTabComponentProps } from "../types.js";
 
@@ -27,7 +28,7 @@ export function DefaultUiTabsTabActionsButton<
     const store = getTypedUiTabsContextStore<TTabProps, TTabActionProps>();
     const { size } = store.useContextStoreValues(["size"]);
 
-    if ((tab.actions ?? []).length === 0) {
+    if (!hasInteractiveTabActions(tab)) {
         return null;
     }
 

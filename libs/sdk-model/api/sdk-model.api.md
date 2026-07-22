@@ -1736,6 +1736,7 @@ export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, 
     readonly dateFilterConfigs?: IDashboardDateFilterConfigItem[];
     readonly disableCrossFiltering?: boolean;
     readonly disableFilterViews?: boolean;
+    readonly disablePersistentFiltersAcrossTabs?: boolean;
     readonly disableUserFilterReset?: boolean;
     readonly disableUserFilterSave?: boolean;
     readonly evaluationFrequency?: string;
@@ -1878,6 +1879,7 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashb
     readonly dateFilterConfigs?: IDashboardDateFilterConfigItem[];
     readonly disableCrossFiltering?: boolean;
     readonly disableFilterViews?: boolean;
+    readonly disablePersistentFiltersAcrossTabs?: boolean;
     readonly disableUserFilterReset?: boolean;
     readonly disableUserFilterSave?: boolean;
     readonly evaluationFrequency?: string;
@@ -2764,6 +2766,7 @@ export interface IFeatureFlags {
     enableDashboardDensitySetting?: boolean;
     enableDashboardDescriptionDynamicHeight?: boolean;
     enableDashboardFilterGroups?: boolean;
+    enableDashboardPersistentFiltersAcrossTabs?: boolean;
     // @alpha
     enableDashboardSectionHeadersDateDataSet?: boolean;
     enableDashboardShareDialogLink?: boolean;
@@ -2787,6 +2790,7 @@ export interface IFeatureFlags {
     enableGenAiAgentSwitching?: boolean;
     enableGenAICatalogQualityChecker?: boolean;
     enableGenAIChat?: boolean;
+    enableGenAiInteractionIntelligence?: boolean;
     enableGenAIMemory?: boolean;
     enableGenAiObservability?: boolean;
     enableGenAIReasoningVisibility?: boolean;
@@ -2843,8 +2847,6 @@ export interface IFeatureFlags {
     enableShellApplication_analyticalDesigner?: boolean;
     enableShellApplication_catalog?: boolean;
     enableShellApplication_dashboards?: boolean;
-    enableShellApplication_ldmModeler?: boolean;
-    enableShellApplication_metricEditor?: boolean;
     // (undocumented)
     enableSingleStoreDataSource?: boolean;
     enableSlidesExport?: boolean;

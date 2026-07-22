@@ -1,13 +1,18 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { type IUiListboxItem, UiListbox, type UiListboxAriaAttributes } from "@gooddata/sdk-ui-kit";
+import {
+    type IUiListboxInteractiveItem,
+    type IUiListboxItem,
+    UiListbox,
+    type UiListboxAriaAttributes,
+} from "@gooddata/sdk-ui-kit";
 
 import { FilterMenuListItem } from "./FilterMenuListItem.js";
 
 export type IFilterMenuSelectableSectionProps<TData> = {
     items: IUiListboxItem<TData, never>[];
     selectedItemId?: string;
-    onSelect: (item: IUiListboxItem<TData, never>) => void;
+    onSelect: (item: IUiListboxInteractiveItem<TData>) => void;
     onClose: () => void;
     ariaAttributes: UiListboxAriaAttributes;
 };

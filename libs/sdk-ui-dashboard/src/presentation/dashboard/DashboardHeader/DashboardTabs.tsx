@@ -15,7 +15,9 @@ import { v4 as uuid } from "uuid";
 import { usePropState } from "@gooddata/sdk-ui";
 import {
     DefaultUiTabsTabValue,
+    type IUiMenuSeparatorItem,
     type IUiTab,
+    type IUiTabAction,
     type IUiTabComponentProps,
     UiFocusManager,
     UiIcon,
@@ -23,7 +25,6 @@ import {
     UiTabs,
     UiTooltip,
     bemFactory,
-    separatorStaticItem,
     useId,
     useScopedIdOptional,
 } from "@gooddata/sdk-ui-kit";
@@ -130,11 +131,11 @@ function createDeleteAction(params: ITabActionsParams, isOnlyOneTab: boolean) {
 }
 
 function buildTabActions(params: ITabActionsParams, isOnlyOneTab: boolean) {
-    const actions = [
+    const actions: Array<IUiTabAction<{ isRenaming?: boolean }> | IUiMenuSeparatorItem | undefined> = [
         createRenameAction(params),
         createMoveLeftAction(params),
         createMoveRightAction(params),
-        separatorStaticItem,
+        { type: "separator" },
         createDeleteAction(params, isOnlyOneTab),
     ];
     return actions.filter((x): x is NonNullable<typeof x> => !!x);

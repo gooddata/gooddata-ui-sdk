@@ -4,7 +4,7 @@ import { type ReactNode } from "react";
 
 import { action } from "storybook/actions";
 
-import { type IUiListboxItem, UiListbox, separatorStaticItem } from "@gooddata/sdk-ui-kit";
+import { type IUiListboxItem, UiListbox } from "@gooddata/sdk-ui-kit";
 
 import { type IStoryParameters, State } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
@@ -34,7 +34,7 @@ const mixedItems: IUiListboxItem<string, ReactNode>[] = [
     { type: "interactive", id: "item1", stringTitle: "Item 1", data: "data1" },
     { type: "static", data: "<<Static item>>" },
     { type: "interactive", id: "item2", stringTitle: "Item 2", data: "data2" },
-    separatorStaticItem,
+    { type: "separator" },
     { type: "interactive", id: "item3", stringTitle: "Item 3", data: "data3" },
 ];
 

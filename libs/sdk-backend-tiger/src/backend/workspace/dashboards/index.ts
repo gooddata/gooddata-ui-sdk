@@ -411,6 +411,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const enableDashboardSectionHeadersDateDataSet =
             userSettings.enableDashboardSectionHeadersDateDataSet ?? false;
         const enableAnalyticalDashboardVersion3 = userSettings.enableAnalyticalDashboardVersion3 ?? false;
+        const enableDashboardPersistentFiltersAcrossTabs =
+            userSettings.enableDashboardPersistentFiltersAcrossTabs ?? false;
 
         const dashboardContent = convertAnalyticalDashboard(
             dashboardWithTabFilterContexts,
@@ -418,6 +420,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             true,
             enableDashboardSectionHeadersDateDataSet,
             enableAnalyticalDashboardVersion3,
+            enableDashboardPersistentFiltersAcrossTabs,
         );
         const result = await this.authCall((client) => {
             return DashboardsApi_CreateEntityAnalyticalDashboards(client.axios, client.basePath, {
@@ -499,12 +502,15 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const enableDashboardSectionHeadersDateDataSet =
             userSettings.enableDashboardSectionHeadersDateDataSet ?? false;
         const enableAnalyticalDashboardVersion3 = userSettings.enableAnalyticalDashboardVersion3 ?? false;
+        const enableDashboardPersistentFiltersAcrossTabs =
+            userSettings.enableDashboardPersistentFiltersAcrossTabs ?? false;
         const dashboardContent = convertAnalyticalDashboard(
             updatedDashboardWithTabFilterContexts,
             filterContext?.ref,
             true,
             enableDashboardSectionHeadersDateDataSet,
             enableAnalyticalDashboardVersion3,
+            enableDashboardPersistentFiltersAcrossTabs,
         );
 
         const result = await this.authCall((client) => {

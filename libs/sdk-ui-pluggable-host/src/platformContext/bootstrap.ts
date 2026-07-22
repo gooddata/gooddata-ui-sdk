@@ -99,15 +99,7 @@ export async function bootstrapApplication(backend: IAnalyticalBackend): Promise
                 .catch(logAndRethrow("Failed to load current organization."))
         ).organizationId;
 
-    const [userInfo, organizationDescriptor, entitlements, theme] = await Promise.all([
-        backend
-            .organization(organizationId)
-            .users()
-            .getUser(userProfile.login)
-            .catch((error): undefined => {
-                logBootstrapWarning("Failed to load user details from organization.", error);
-                return undefined;
-            }),
+    const [organizationDescriptor, entitlements, theme] = await Promise.all([
         fetchOrganizationDetails(backend, organizationId, includeAdditionalDetails),
         entitlementsPromise,
         backend
@@ -120,10 +112,9 @@ export async function bootstrapApplication(backend: IAnalyticalBackend): Promise
             }),
     ]);
 
-    const user: typeof userProfile = {
-        ...userProfile,
-        email: userInfo?.email ?? userProfile.email,
-    };
+    // getUserWithDetails already resolves the user entity (including email), so a separate
+    // organization user lookup would only repeat the uncacheable /entities/users request.
+    const user = userProfile;
 
     const organizationPermissions: IOrganizationPermissions = {
         canManageOrganization: user.permissions?.includes("MANAGE") ?? false,

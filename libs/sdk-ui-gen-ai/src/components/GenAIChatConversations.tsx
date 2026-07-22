@@ -201,11 +201,8 @@ function GenAIChatConversationsComponent({
                                                 data: conversation,
                                             },
                                             {
-                                                type: "static",
+                                                type: "separator",
                                                 id: "delete-separator",
-                                                data: (
-                                                    <div className="gd-gen-ai-chat__window__conversations__divider_menu" />
-                                                ),
                                             },
                                             {
                                                 type: "interactive",
@@ -372,7 +369,7 @@ function GenAIChatConversationsComponent({
 
     const handleMenuUnhandledKeyDown = useCallback(
         (event: KeyboardEvent, { focusedItem }: { focusedItem?: IUiMenuItem }) => {
-            if (event.key === "Delete" && focusedItem) {
+            if (event.key === "Delete" && focusedItem?.type === "interactive") {
                 event.preventDefault();
                 event.stopPropagation();
                 setConversationToDelete(focusedItem.data as IChatConversationLocal);

@@ -47,6 +47,7 @@ import {
     type IWorkspaceCatalogFactory,
     type IWorkspaceCatalogFactoryOptions,
     type IWorkspaceExportTemplatesService,
+    type IWorkspaceFactsService,
     type IWorkspaceInsightsService,
     type IWorkspaceSettings,
     type IWorkspaceSettingsService,
@@ -67,6 +68,7 @@ import {
     type IExecutionDefinition,
     type IExportTemplate,
     type IExportTemplateDefinition,
+    type IFactMetadataObject,
     type IFiscalYear,
     type IGeoJsonFeature,
     type IInsight,
@@ -105,6 +107,7 @@ import {
     DecoratedPreparedExecution,
     type PreparedExecutionWrapper,
 } from "../decoratedBackend/execution.js";
+import { DecoratedWorkspaceFactsService } from "../decoratedBackend/facts.js";
 import { decoratedBackend } from "../decoratedBackend/index.js";
 import { DecoratedWorkspaceInsightsService } from "../decoratedBackend/insights.js";
 import { DecoratedOrganizationExportTemplatesService } from "../decoratedBackend/organizationExportTemplates.js";
@@ -114,6 +117,7 @@ import {
     type AutomationsDecoratorFactory,
     type CatalogDecoratorFactory,
     type ExecutionDecoratorFactory,
+    type FactsDecoratorFactory,
     type GeoDecoratorFactory,
     type InsightsDecoratorFactory,
     type OrganizationExportTemplatesDecoratorFactory,
@@ -157,6 +161,11 @@ type InsightsCacheEntry = {
     insights: LRUCache<string, Promise<IInsight>>;
 };
 
+type FactsCacheEntry = {
+    facts: LRUCache<string, Promise<IFactMetadataObject>>;
+    factDatasetsMeta: LRUCache<string, Promise<IMetadataObject>>;
+};
+
 type CollectionItemsCacheEntry = {
     values: LRUCache<string, IGeoJsonFeature[]>;
     bbox?: number[];
@@ -184,6 +193,7 @@ type CachingContext = {
         workspaceAttributes?: LRUCache<string, AttributeCacheEntry>;
         workspaceAutomations?: LRUCache<string, AutomationCacheEntry>;
         workspaceInsights?: LRUCache<string, InsightsCacheEntry>;
+        workspaceFacts?: LRUCache<string, FactsCacheEntry>;
         organizationExportTemplates?: LRUCache<string, Promise<IExportTemplate[]>>;
         workspaceExportTemplates?: LRUCache<string, Promise<IExportTemplate[]>>;
         workspaceSettings?: LRUCache<string, WorkspaceSettingsCacheEntry>;
@@ -1835,6 +1845,109 @@ function cachedInsights(ctx: CachingContext): InsightsDecoratorFactory {
 }
 
 //
+// FACTS CACHING
+//
+
+function factsIncludeKeySuffix(opts?: { include?: ["dataset"] }): string {
+    return opts?.include?.length ? `:${opts.include.join(",")}` : "";
+}
+
+function getOrCreateFactsCache(ctx: CachingContext, workspace: string): FactsCacheEntry {
+    const cache = ctx.caches.workspaceFacts!;
+    let cacheEntry = cache.get(workspace);
+
+    if (!cacheEntry) {
+        cacheEntry = {
+            facts: new LRUCache<string, Promise<IFactMetadataObject>>({
+                max: ctx.config.maxFactsPerWorkspace!,
+            }),
+            factDatasetsMeta: new LRUCache<string, Promise<IMetadataObject>>({
+                max: ctx.config.maxFactsPerWorkspace!,
+            }),
+        };
+        cache.set(workspace, cacheEntry);
+    }
+
+    return cacheEntry;
+}
+
+class WithFactsCaching extends DecoratedWorkspaceFactsService {
+    constructor(
+        decorated: IWorkspaceFactsService,
+        private readonly ctx: CachingContext,
+        private readonly workspace: string,
+    ) {
+        super(decorated);
+    }
+
+    public override getFact = (
+        ref: ObjRef,
+        opts?: { include?: ["dataset"] },
+    ): Promise<IFactMetadataObject> => {
+        const cache = getOrCreateFactsCache(this.ctx, this.workspace).facts;
+
+        const suffix = factsIncludeKeySuffix(opts);
+        const idCacheKey = isIdentifierRef(ref) ? `${ref.identifier}${suffix}` : undefined;
+        const uriCacheKey = isUriRef(ref) ? `${ref.uri}${suffix}` : undefined;
+
+        let cacheItem = firstDefined([idCacheKey, uriCacheKey].map((key) => key && cache.get(key)));
+
+        if (!cacheItem) {
+            cacheItem = super.getFact(ref, opts).catch((e) => {
+                if (idCacheKey) {
+                    cache.delete(idCacheKey);
+                }
+                if (uriCacheKey) {
+                    cache.delete(uriCacheKey);
+                }
+                throw e;
+            });
+
+            if (idCacheKey) {
+                cache.set(idCacheKey, cacheItem);
+            }
+
+            if (uriCacheKey) {
+                cache.set(uriCacheKey, cacheItem);
+            }
+        }
+
+        return cacheItem;
+    };
+
+    public override getFactDatasetMeta = (ref: ObjRef): Promise<IMetadataObject> => {
+        const cache = getOrCreateFactsCache(this.ctx, this.workspace).factDatasetsMeta;
+
+        const idCacheKey = isIdentifierRef(ref) ? ref.identifier : undefined;
+        const uriCacheKey = isUriRef(ref) ? ref.uri : undefined;
+
+        let cacheItem = firstDefined([idCacheKey, uriCacheKey].map((key) => key && cache.get(key)));
+
+        if (!cacheItem) {
+            cacheItem = super.getFactDatasetMeta(ref).catch((e) => {
+                if (idCacheKey) {
+                    cache.delete(idCacheKey);
+                }
+                if (uriCacheKey) {
+                    cache.delete(uriCacheKey);
+                }
+                throw e;
+            });
+
+            if (idCacheKey) {
+                cache.set(idCacheKey, cacheItem);
+            }
+
+            if (uriCacheKey) {
+                cache.set(uriCacheKey, cacheItem);
+            }
+        }
+
+        return cacheItem;
+    };
+}
+
+//
 // ORGANIZATION EXPORT TEMPLATES CACHING
 //
 
@@ -2038,6 +2151,10 @@ function cachedAutomations(ctx: CachingContext): AutomationsDecoratorFactory {
     return (original, workspace) => new WithAutomationsCaching(original, ctx, workspace);
 }
 
+function cachedFacts(ctx: CachingContext): FactsDecoratorFactory {
+    return (original, workspace) => new WithFactsCaching(original, ctx, workspace);
+}
+
 //
 // Geo caching
 //
@@ -2143,6 +2260,10 @@ function cacheControl(ctx: CachingContext): CacheControl {
             ctx.caches.workspaceAttributes?.clear();
         },
 
+        resetFacts: () => {
+            ctx.caches.workspaceFacts?.clear();
+        },
+
         resetWorkspaceSettings: () => {
             ctx.caches.workspaceSettings?.clear();
         },
@@ -2168,6 +2289,7 @@ function cacheControl(ctx: CachingContext): CacheControl {
             control.resetCatalogs();
             control.resetSecuritySettings();
             control.resetAttributes();
+            control.resetFacts();
             control.resetWorkspaceSettings();
             control.resetGeoStyles();
             control.resetExportTemplates();
@@ -2211,6 +2333,11 @@ export type CacheControl = {
      * Resets all workspace attribute caches.
      */
     resetAttributes: () => void;
+
+    /**
+     * Resets all workspace facts caches.
+     */
+    resetFacts: () => void;
 
     /**
      * Resets all workspace settings caches.
@@ -2426,6 +2553,38 @@ export type CachingConfiguration = {
     maxInsightsPerWorkspace?: number;
 
     /**
+     * Maximum number of workspaces for which to cache selected {@link @gooddata/sdk-backend-spi#IWorkspaceFactsService} calls.
+     * The workspace identifier is used as cache key.
+     * For each workspace, there will be a cache entry holding `maxFactsPerWorkspace` entries for fact-related calls.
+     *
+     * When limit is reached, cache entries will be evicted using LRU policy.
+     *
+     * When no maximum number is specified, the cache will be unbounded and no evictions will happen. Unbounded
+     * cache may be OK in applications where number of workspaces is small - the cache will be limited
+     * naturally and will not grow uncontrollably.
+     *
+     * When non-positive number is specified, then no caching will be done.
+     */
+    maxFactsWorkspaces?: number;
+
+    /**
+     * Maximum number of facts to cache per workspace.
+     *
+     * This limit applies independently to the cache of facts (`getFact`) and the cache of fact dataset
+     * metadata (`getFactDatasetMeta`).
+     *
+     * When limit is reached, cache entries will be evicted using LRU policy.
+     *
+     * When no maximum number is specified, the cache will be unbounded and no evictions will happen. Unbounded
+     * facts cache may be OK in applications where number of facts is small and/or they are requested
+     * infrequently - the cache will be limited naturally and will not grow uncontrollably.
+     *
+     * Setting non-positive number here is invalid. If you want to turn off facts caching,
+     * tweak the `maxFactsWorkspaces` value.
+     */
+    maxFactsPerWorkspace?: number;
+
+    /**
      * Maximum number of organizations for which to cache organization-level export templates.
      * Organization export templates are organization-level, so typically a single entry suffices.
      *
@@ -2548,6 +2707,8 @@ export const RecommendedCachingConfiguration: CachingConfiguration = {
     maxWorkspaceSettings: 1,
     maxAutomationsWorkspaces: 1,
     maxInsightsPerWorkspace: 50,
+    maxFactsWorkspaces: 1,
+    maxFactsPerWorkspace: 500,
     maxExportTemplatesOrgs: 1,
     maxExportTemplatesWorkspaces: 1,
     cacheGeoStyles: true,
@@ -2580,6 +2741,7 @@ export function withCaching(
     const workspaceSettingsCaching = cachingEnabled(config.maxWorkspaceSettings);
     const automationsCaching = cachingEnabled(config.maxAutomationsWorkspaces);
     const insightsCaching = cachingEnabled(config.maxInsightsPerWorkspace);
+    const factsCaching = cachingEnabled(config.maxFactsWorkspaces);
     // Backward compatibility: `maxExportTemplatesWorkspaces` used to be the (deprecated) alias that
     // sized the org export-templates cache. It now primarily drives workspace caching, but callers
     // that only set the old name must keep getting org caching until the alias is removed.
@@ -2612,6 +2774,7 @@ export function withCaching(
             workspaceInsights: insightsCaching
                 ? new LRUCache({ max: config.maxInsightsPerWorkspace! })
                 : undefined,
+            workspaceFacts: factsCaching ? new LRUCache({ max: config.maxFactsWorkspaces! }) : undefined,
             organizationExportTemplates: exportTemplatesCaching
                 ? new LRUCache({ max: orgExportTemplatesMax! })
                 : undefined,
@@ -2635,6 +2798,7 @@ export function withCaching(
     const attributes = attributeCaching ? cachedAttributes(ctx) : (v: any) => v;
     const automations = automationsCaching ? cachedAutomations(ctx) : (v: any) => v;
     const insights = insightsCaching ? cachedInsights(ctx) : (v: any) => v;
+    const facts = factsCaching ? cachedFacts(ctx) : (v: any) => v;
     const organizationExportTemplates = exportTemplatesCaching
         ? cachedOrganizationExportTemplates(ctx)
         : undefined;
@@ -2656,6 +2820,7 @@ export function withCaching(
         workspaceSettings,
         automations,
         insights,
+        facts,
         organizationExportTemplates,
         workspaceExportTemplates,
         geo,

@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { type MutableRefObject, type ReactNode, useCallback, useMemo, useState } from "react";
+import { type MutableRefObject, useCallback, useMemo, useState } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -16,7 +16,6 @@ import {
     DropdownButton,
     type IUiMenuInteractiveItem,
     type IUiMenuItem,
-    type IUiMenuStaticItemProps,
     InvertableSelectSearchBar,
     Item,
     Separator,
@@ -74,14 +73,9 @@ const createInteractiveItem = (
 });
 
 const createSeparator = (id: string): IUiMenuItem<IAttributeMenuData> => ({
-    type: "static" as const,
+    type: "separator",
     id,
-    data: {},
 });
-
-function CustomStaticItem({ item: _item }: IUiMenuStaticItemProps<IAttributeMenuData>): ReactNode {
-    return <div className="gd-alert-attribute-select__dropdown-separator" />;
-}
 
 interface IAttributeValuesSearchContentProps {
     attribute: AlertAttribute;
@@ -376,7 +370,6 @@ export function AlertAttributeSelect({
                             }}
                             shouldCloseOnSelect
                             onClose={closeDropdown}
-                            StaticItem={CustomStaticItem}
                             ariaAttributes={ariaAttributes}
                             dataTestId="s-alert-attribute-select-list"
                             size={"small"}

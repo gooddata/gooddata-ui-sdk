@@ -244,6 +244,7 @@ const CONFIG_DEFAULTS: Required<
         | "hideShareButton"
         | "disableCrossFiltering"
         | "disableUserFilterReset"
+        | "disablePersistentFiltersAcrossTabs"
         | "widgetsOverlay"
         | "hideAddTabButton"
     >
@@ -264,6 +265,7 @@ const CONFIG_DEFAULTS: Required<
     hideShareButton: false,
     disableCrossFiltering: false,
     disableUserFilterReset: false,
+    disablePersistentFiltersAcrossTabs: false,
     widgetsOverlay: {},
     externalRecipient: undefined,
     hideAddTabButton: false,

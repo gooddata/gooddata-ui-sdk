@@ -102,6 +102,7 @@ export type DashboardDefinition = Pick<
     | "disableUserFilterSave"
     | "disableUserFilterReset"
     | "disableFilterViews"
+    | "disablePersistentFiltersAcrossTabs"
     | "attributeFilterConfigs"
     | "measureValueFilterConfigs"
     | "filterContextRef"
@@ -362,6 +363,9 @@ export function yamlDashboardToDeclarative(
                   ...(input.user_filters_save === false ? { disableUserFilterSave: true } : {}),
                   ...(input.user_filters_reset === false ? { disableUserFilterReset: true } : {}),
                   ...(input.filter_views === false ? { disableFilterViews: true } : {}),
+                  ...(input.persistent_filters_across_tabs === false
+                      ? { disablePersistentFiltersAcrossTabs: true }
+                      : {}),
               }
             : {
                   version: "2",
@@ -376,6 +380,9 @@ export function yamlDashboardToDeclarative(
                   ...(input.user_filters_save === false ? { disableUserFilterSave: true } : {}),
                   ...(input.user_filters_reset === false ? { disableUserFilterReset: true } : {}),
                   ...(input.filter_views === false ? { disableFilterViews: true } : {}),
+                  ...(input.persistent_filters_across_tabs === false
+                      ? { disablePersistentFiltersAcrossTabs: true }
+                      : {}),
                   filterContextRef: filterContext
                       ? createIdentifier<any>(filterContext.id, { forceType: "filterContext" })
                       : undefined,

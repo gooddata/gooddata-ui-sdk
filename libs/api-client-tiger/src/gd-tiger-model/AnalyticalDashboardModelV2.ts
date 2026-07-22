@@ -45,6 +45,7 @@ export interface IAnalyticalDashboardCommonProps {
     disableUserFilterReset?: boolean;
     disableUserFilterSave?: boolean;
     disableFilterViews?: boolean;
+    disablePersistentFiltersAcrossTabs?: boolean;
     evaluationFrequency?: string;
     sectionHeadersDateDataSet?: ObjRef;
 }

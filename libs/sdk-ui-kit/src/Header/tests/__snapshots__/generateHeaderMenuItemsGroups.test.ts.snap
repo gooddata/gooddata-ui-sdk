@@ -17,13 +17,13 @@ exports[`generateHeaderMenuItemsGroups > should return absolute paths for Panthe
     },
     {
       "className": "s-menu-metrics",
-      "href": "https://cdnUrl/metrics/#/TestWorkspaceId",
+      "href": "https://cdnUrl/workspace/TestWorkspaceId/metrics",
       "isActiveByStartWith": undefined,
       "key": "gs.header.metrics",
     },
     {
       "className": "s-menu-data",
-      "href": "https://cdnUrl/modeler/#/TestWorkspaceId",
+      "href": "https://cdnUrl/workspace/TestWorkspaceId/modeler",
       "isActiveByStartWith": undefined,
       "key": "gs.header.data",
     },
@@ -48,13 +48,13 @@ exports[`generateHeaderMenuItemsGroups > should return correct absolute paths fo
     },
     {
       "className": "s-menu-metrics",
-      "href": "https://cdnUr/metrics/#/TestWorkspaceId",
+      "href": "https://cdnUr/workspace/TestWorkspaceId/metrics",
       "isActiveByStartWith": undefined,
       "key": "gs.header.metrics",
     },
     {
       "className": "s-menu-data",
-      "href": "https://cdnUr/modeler/#/TestWorkspaceId",
+      "href": "https://cdnUr/workspace/TestWorkspaceId/modeler",
       "isActiveByStartWith": undefined,
       "key": "gs.header.data",
     },
@@ -79,13 +79,13 @@ exports[`generateHeaderMenuItemsGroups > should return relative paths for Panthe
     },
     {
       "className": "s-menu-metrics",
-      "href": "/metrics/#/TestWorkspaceId",
+      "href": "/workspace/TestWorkspaceId/metrics",
       "isActiveByStartWith": undefined,
       "key": "gs.header.metrics",
     },
     {
       "className": "s-menu-data",
-      "href": "/modeler/#/TestWorkspaceId",
+      "href": "/workspace/TestWorkspaceId/modeler",
       "isActiveByStartWith": undefined,
       "key": "gs.header.data",
     },

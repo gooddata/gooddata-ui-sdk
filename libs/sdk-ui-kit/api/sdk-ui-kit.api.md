@@ -5498,9 +5498,6 @@ export interface ISpinnerProps {
     className?: string;
 }
 
-// @internal (undocumented)
-export function isSeparator(item: unknown): item is typeof separatorStaticItem;
-
 // @internal
 export const isSpaceKey: (event: KeyboardEvent_2<Element>) => boolean;
 
@@ -7069,7 +7066,7 @@ export interface IUiListboxInteractiveItemProps<T> {
 }
 
 // @internal (undocumented)
-export type IUiListboxItem<InteractiveItemData, StaticItemData = ReactNode> = IUiListboxStaticItem<StaticItemData> | IUiListboxInteractiveItem<InteractiveItemData>;
+export type IUiListboxItem<InteractiveItemData, StaticItemData = ReactNode> = IUiListboxStaticItem<StaticItemData> | IUiListboxSeparatorItem | IUiListboxInteractiveItem<InteractiveItemData>;
 
 // @internal (undocumented)
 export interface IUiListboxProps<InteractiveItemData, StaticItemData = ReactNode> {
@@ -7084,7 +7081,7 @@ export interface IUiListboxProps<InteractiveItemData, StaticItemData = ReactNode
     // (undocumented)
     isDisabledFocusable?: boolean;
     // (undocumented)
-    itemDataTestId?: string | ((item: IUiListboxItem<InteractiveItemData, StaticItemData>) => string | undefined);
+    itemDataTestId?: string | ((item: IUiListboxStaticItem<StaticItemData> | IUiListboxInteractiveItem<InteractiveItemData>) => string | undefined);
     // (undocumented)
     items: IUiListboxItem<InteractiveItemData, StaticItemData>[];
     // (undocumented)
@@ -7115,6 +7112,9 @@ export interface IUiListboxProps<InteractiveItemData, StaticItemData = ReactNode
     // (undocumented)
     width?: number;
 }
+
+// @internal (undocumented)
+export type IUiListboxSeparatorItem = IUiMenuSeparatorItem;
 
 // @internal (undocumented)
 export interface IUiListboxStaticItem<T> {
@@ -7272,7 +7272,7 @@ export interface IUiMenuInteractiveItemWrapperProps<T extends IUiMenuItemData = 
 }
 
 // @internal (undocumented)
-export type IUiMenuItem<T extends IUiMenuItemData = object> = IUiMenuStaticItem<T> | IUiMenuInteractiveItem<T> | IUiMenuGroupItem<T> | IUiMenuContentItem<T>;
+export type IUiMenuItem<T extends IUiMenuItemData = object> = IUiMenuStaticItem<T> | IUiMenuSeparatorItem | IUiMenuInteractiveItem<T> | IUiMenuGroupItem<T> | IUiMenuContentItem<T>;
 
 // @internal (undocumented)
 export type IUiMenuItemData = {
@@ -7350,6 +7350,12 @@ export interface IUiMenuProps<T extends IUiMenuItemData = object, M = object> ex
     // (undocumented)
     size?: SizeSmall | SizeMedium;
 }
+
+// @internal
+export type IUiMenuSeparatorItem = {
+    type: "separator";
+    id?: string;
+};
 
 // @internal (undocumented)
 export type IUiMenuStaticItem<T extends IUiMenuItemData = object> = {
@@ -7725,7 +7731,7 @@ export type IUiTab<TTabProps extends Record<any, any> = EmptyObject, TTabActionP
     panelId?: string;
     autoSelectOnFocus?: boolean;
     ariaLabel?: string;
-    actions?: Array<IUiTabAction<TTabProps, TTabActionProps> | typeof separatorStaticItem>;
+    actions?: Array<IUiTabAction<TTabProps, TTabActionProps> | IUiMenuSeparatorItem>;
 } & TTabProps;
 
 // @internal (undocumented)
@@ -8837,12 +8843,6 @@ export function SeparatorLine(input: ISeparatorLineProps): JSX.Element;
 export type Separators = {
     thousand: string;
     decimal: string;
-};
-
-// @internal (undocumented)
-export const separatorStaticItem: {
-    data: JSX.Element;
-    type: "static";
 };
 
 // @internal (undocumented)

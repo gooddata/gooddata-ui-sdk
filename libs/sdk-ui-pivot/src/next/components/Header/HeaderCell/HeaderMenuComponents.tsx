@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -12,7 +12,6 @@ import {
     type IUiMenuItem,
     IconColumns,
     IconRows,
-    separatorStaticItem,
 } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
@@ -148,8 +147,7 @@ function buildUiAggregationMenuItems(
         }
 
         if (hasRows && hasColumns) {
-            // Use a single shared separator for consistent visuals
-            subItems.push(separatorStaticItem);
+            subItems.push({ type: "separator" });
         }
 
         if (hasColumns) {

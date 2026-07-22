@@ -12,7 +12,7 @@
         "crowdinContext": "Show less button label"
     },
     "analyticsCatalog.objectType.title": {
-        "text": "Object types",
+        "text": "Objects",
         "crowdinContext": "Title of the header section containing the object type selection."
     },
     "analyticsCatalog.objectType.dashboard.button.ariaLabel": {

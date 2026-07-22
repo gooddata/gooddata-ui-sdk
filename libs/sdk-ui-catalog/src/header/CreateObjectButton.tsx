@@ -9,7 +9,6 @@ import {
     type IUiMenuInteractiveItem,
     type IUiMenuItem,
     type IconType,
-    SeparatorLine,
     UiButton,
     UiIcon,
     UiMenu,
@@ -24,7 +23,6 @@ import type { CatalogCreateObjectType } from "../objectType/types.js";
 
 type CreateItemData = {
     interactive: CatalogCreateObjectType;
-    static: unknown;
 };
 
 const icons: Record<CatalogCreateObjectType, IconType> = {
@@ -77,20 +75,12 @@ export function CreateObjectButton({ onCreateObject, showParameter, showMetricEd
 
         // A separator divides creates that redirect to a standalone editor from those handled inline
         // in a catalog dialog. Metric switches sides: it redirects unless its in-catalog editor is on.
-        const redirectItems = [
+        return [
             interactiveItem(ObjectTypes.DASHBOARD, true),
             interactiveItem(ObjectTypes.VISUALIZATION, true),
             ...(showMetricEditor ? [] : [interactiveItem(ObjectTypes.METRIC, true)]),
-        ];
-        const inCatalogItems = [...inCatalogTypes].map((type) => interactiveItem(type, false));
-
-        if (inCatalogItems.length === 0) {
-            return redirectItems;
-        }
-        return [
-            ...redirectItems,
-            { type: "static", data: <SeparatorLine pT={5} pR={10} pB={4} pL={10} /> },
-            ...inCatalogItems,
+            { type: "separator" },
+            ...[...inCatalogTypes].map((type) => interactiveItem(type, false)),
         ];
     }, [intl, inCatalogTypes, showMetricEditor]);
 
@@ -127,7 +117,6 @@ export function CreateObjectButton({ onCreateObject, showParameter, showMetricEd
                         label={intl.formatMessage({ id: "analyticsCatalog.create" })}
                         onClick={toggleDropdown}
                         variant="primary"
-                        iconBefore="plus"
                         iconAfter="navigateDown"
                         accessibilityConfig={{
                             ...accessibilityConfig,

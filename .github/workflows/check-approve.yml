@@ -59,7 +59,7 @@ jobs:
       - ready-to-merge-approved
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v7.0.0
+        uses: actions/checkout@v7.0.1
         with:
           token: ${{ secrets.TOKEN_GITHUB_YENKINS}}
       - name: Notify sync PR check failure

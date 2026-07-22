@@ -87,6 +87,7 @@ export enum TigerFeaturesNames {
     EnableAiAgenticConversations = "enableAiAgenticConversations",
     EnableGenAiAgentSwitching = "enableGenAiAgentSwitching",
     EnableGenAiObservability = "enableGenAiObservability",
+    EnableGenAiInteractionIntelligence = "enableGenAiInteractionIntelligence",
     EnableGenAiAgenticDataShareOptOut = "enableGenAiAgenticDataShareOptOut",
     EnableGenAiVisualizationSummarySkill = "enableGenAiVisualizationSummarySkill",
     EnableGenAiDashboardSummarySkill = "enableGenAiDashboardSummarySkill",
@@ -118,13 +119,12 @@ export enum TigerFeaturesNames {
     EnableAiLlmAnthropicProvider = "enableAiLlmAnthropicProvider",
     EnableRadarChart = "enableRadarChart",
     EnableMekkoChart = "enableMekkoChart",
-    EnableMetricEditorRemoteModule = "enableShellApplication_metricEditor",
     EnableAnalyticalDesignerRemoteModule = "enableShellApplication_analyticalDesigner",
     EnableDashboardSidebarResize = "enableDashboardSidebarResize",
-    EnableLdmModelerRemoteModule = "enableShellApplication_ldmModeler",
     EnableExportTimeoutFix = "enableExportTimeoutFix",
     EnableAiAssistantEmbedding = "enableAiAssistantEmbedding",
     EnableAiContextSetup = "enableAiContextSetup",
+    EnableDashboardPersistentFiltersAcrossTabs = "enableDashboardPersistentFiltersAcrossTabs",
 }
 
 export type ITigerFeatureFlags = {
@@ -209,6 +209,7 @@ export type ITigerFeatureFlags = {
     enableAiAgenticMultiConversations: (typeof FeatureFlagsValues)["enableAiAgenticMultiConversations"][number];
     enableGenAiAgentSwitching: (typeof FeatureFlagsValues)["enableGenAiAgentSwitching"][number];
     enableGenAiObservability: (typeof FeatureFlagsValues)["enableGenAiObservability"][number];
+    enableGenAiInteractionIntelligence: (typeof FeatureFlagsValues)["enableGenAiInteractionIntelligence"][number];
     enableGenAIReasoningVisibility: (typeof FeatureFlagsValues)["enableGenAIReasoningVisibility"][number];
     aiChatSearchLimit: (typeof FeatureFlagsValues)["aiChatSearchLimit"][number];
     enableRichTextWidgetFilterConfiguration: (typeof FeatureFlagsValues)["enableRichTextWidgetFilterConfiguration"][number];
@@ -240,11 +241,10 @@ export type ITigerFeatureFlags = {
     enableUserDataFiltersUi: (typeof FeatureFlagsValues)["enableUserDataFiltersUi"][number];
     enableEnhancedInsightPicker: (typeof FeatureFlagsValues)["enableEnhancedInsightPicker"][number];
     enableAiLlmAnthropicProvider: (typeof FeatureFlagsValues)["enableAiLlmAnthropicProvider"][number];
-    enableShellApplication_metricEditor: (typeof FeatureFlagsValues)["enableShellApplication_metricEditor"][number];
     enableShellApplication_analyticalDesigner: (typeof FeatureFlagsValues)["enableShellApplication_analyticalDesigner"][number];
     enableDashboardSidebarResize: (typeof FeatureFlagsValues)["enableDashboardSidebarResize"][number];
-    enableShellApplication_ldmModeler: (typeof FeatureFlagsValues)["enableShellApplication_ldmModeler"][number];
     enableExportTimeoutFix: (typeof FeatureFlagsValues)["enableExportTimeoutFix"][number];
+    enableDashboardPersistentFiltersAcrossTabs: (typeof FeatureFlagsValues)["enableDashboardPersistentFiltersAcrossTabs"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -256,8 +256,8 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableMekkoChart: false,
     enableChangeAnalysis: false,
     enableRankingWithMvf: false,
-    enableRankingStrictLimit: false,
-    enableImprovedRankingFilter: false,
+    enableRankingStrictLimit: true,
+    enableImprovedRankingFilter: true,
     enableMySqlDataSource: false,
     enableMariaDbDataSource: false,
     enableMotherDuckDataSource: false,
@@ -265,7 +265,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableStarrocksDataSource: false,
     enableOracleDataSource: false,
     enableAnalyticalCatalog: false,
-    enableParameters: false,
+    enableParameters: true,
     enableAnalyticalCatalogMetricEditor: false,
     enableStringParameters: false,
     enableLabsSmartFunctions: false,
@@ -329,6 +329,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAiAgenticMultiConversations: false,
     enableGenAiAgentSwitching: false,
     enableGenAiObservability: false,
+    enableGenAiInteractionIntelligence: false,
     enableGenAIReasoningVisibility: false,
     aiChatSearchLimit: undefined,
     enableRichTextWidgetFilterConfiguration: false,
@@ -360,11 +361,10 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableUserDataFiltersUi: false,
     enableEnhancedInsightPicker: false,
     enableAiLlmAnthropicProvider: false,
-    enableShellApplication_metricEditor: true,
     enableShellApplication_analyticalDesigner: false,
     enableDashboardSidebarResize: true,
-    enableShellApplication_ldmModeler: true,
     enableExportTimeoutFix: false,
+    enableDashboardPersistentFiltersAcrossTabs: false,
 };
 
 export const FeatureFlagsValues = {
@@ -449,6 +449,7 @@ export const FeatureFlagsValues = {
     enableAiAgenticMultiConversations: [true, false] as const,
     enableGenAiAgentSwitching: [true, false] as const,
     enableGenAiObservability: [true, false] as const,
+    enableGenAiInteractionIntelligence: [true, false] as const,
     enableGenAIReasoningVisibility: [false, true] as const,
     aiChatSearchLimit: [undefined, {} as number] as const,
     enableRichTextWidgetFilterConfiguration: [true, false] as const,
@@ -480,9 +481,8 @@ export const FeatureFlagsValues = {
     enableUserDataFiltersUi: [true, false] as const,
     enableEnhancedInsightPicker: [true, false] as const,
     enableAiLlmAnthropicProvider: [true, false] as const,
-    enableShellApplication_metricEditor: [true, false] as const,
     enableShellApplication_analyticalDesigner: [true, false] as const,
     enableDashboardSidebarResize: [true, false] as const,
-    enableShellApplication_ldmModeler: [true, false] as const,
     enableExportTimeoutFix: [true, false] as const,
+    enableDashboardPersistentFiltersAcrossTabs: [true, false] as const,
 };

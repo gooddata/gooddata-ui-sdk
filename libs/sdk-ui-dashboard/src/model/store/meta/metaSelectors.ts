@@ -609,6 +609,39 @@ export const selectDisableDashboardCrossFiltering: DashboardSelector<boolean> = 
 );
 
 /**
+ * Selects whether dashboard persisted filters are disabled.
+ *
+ * @alpha
+ */
+export const selectDisableDashboardPersistentFiltersAcrossTabs: DashboardSelector<boolean> = createSelector(
+    selectDashboardDescriptor,
+    (state) => {
+        return state.disablePersistentFiltersAcrossTabs ?? false;
+    },
+);
+
+/**
+ * Selects persisted persistent filters across tabs - that is the value that was used to initialize
+ * the dashboard state during the initial load of the dashboard.
+ */
+const selectPersistedDashboardDisablePersistentFiltersAcrossTabs = createSelector(selectSelf, (state) => {
+    return state.persistedDashboard?.disablePersistentFiltersAcrossTabs ?? false;
+});
+
+/**
+ * Selects a boolean indication if the dashboard has any changes to the persistent filters across tabs compared to the persisted version (if any)
+ *
+ * @internal
+ */
+export const selectIsDisablePersistentFiltersAcrossTabsChanged: DashboardSelector<boolean> = createSelector(
+    selectPersistedDashboardDisablePersistentFiltersAcrossTabs,
+    selectDisableDashboardPersistentFiltersAcrossTabs,
+    (persistedDisablePersistentFiltersAcrossTabs, currentDisablePersistentFiltersAcrossTabs) => {
+        return persistedDisablePersistentFiltersAcrossTabs !== currentDisablePersistentFiltersAcrossTabs;
+    },
+);
+
+/**
  * Selects whether dashboard kda is disabled.
  *
  * @public
@@ -1123,6 +1156,7 @@ export const selectIsDashboardDirty: DashboardSelector<boolean> = createSelector
     selectIsDisableUserFilterResetChanged,
     selectIsDisableUserFilterSaveChanged,
     selectIsDisableFilterViewsChanged,
+    selectIsDisablePersistentFiltersAcrossTabsChanged,
     selectEvaluationFrequencyChanged,
     selectIsSectionHeadersDateDataSetChanged,
     selectIsTabsChanged,
@@ -1138,6 +1172,7 @@ export const selectIsDashboardDirty: DashboardSelector<boolean> = createSelector
         isDisableUserFilterResetChanged,
         isDisableUserFilterSaveChanged,
         isDisableFilterViewsChanged,
+        isDisablePersistentFiltersAcrossTabsChanged,
         isEvaluationFrequencyChanged,
         isSectionHeadersDateDataSetChanged,
         isTabsChanged,
@@ -1156,6 +1191,7 @@ export const selectIsDashboardDirty: DashboardSelector<boolean> = createSelector
             isDisableUserFilterResetChanged,
             isDisableUserFilterSaveChanged,
             isDisableFilterViewsChanged,
+            isDisablePersistentFiltersAcrossTabsChanged,
             isEvaluationFrequencyChanged,
             isSectionHeadersDateDataSetChanged,
             isTabsChanged,

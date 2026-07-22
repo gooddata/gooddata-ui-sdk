@@ -83,6 +83,10 @@
                     "type": "boolean",
                     "description": "Whether user can save and apply filter views for this dashboard. Defaults to true."
                 },
+                "persistent_filters_across_tabs": {
+                    "type": "boolean",
+                    "description": "Whether persistent filters across tabs are enabled for this dashboard. Defaults to true."
+                },
                 "enable_section_headers": {
                     "type": "boolean",
                     "description": "Applies to the root layout. Whether all sections headers are enabled. Defaults to true."

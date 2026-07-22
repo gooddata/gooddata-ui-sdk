@@ -137,7 +137,7 @@ function createInsightsItemsGroup(
         canShowAnalyzeItem(workspacePermissions),
     );
 
-    const measuresUrl = measuresItemUrl(baseUrl, workspaceId, featureFlags);
+    const measuresUrl = measuresItemUrl(baseUrl, workspaceId);
     pushConditionally(
         insightItemsGroup,
         createIHeaderMenuItem(HEADER_ITEM_ID_METRICS, "s-menu-metrics", measuresUrl),
@@ -150,7 +150,6 @@ function createInsightsItemsGroup(
         backendSupportsDataItem,
         hasNoDataSet,
         baseUrl,
-        featureFlags,
     );
     pushConditionally(
         insightItemsGroup,
@@ -223,11 +222,8 @@ function canShowCatalogItem(featureFlags: ISettings, workspacePermissions: IWork
 function manageItemUrl(workspaceId: string): string {
     return `/#s=/gdc/workspaces/${workspaceId}|dataPage|`;
 }
-function measuresItemUrl(baseUrl: string, workspaceId: string, featureFlags: ISettings): string {
-    if (featureFlags.enableShellApplication_metricEditor) {
-        return withBaseUrl(baseUrl, `/workspace/${workspaceId}/metrics`);
-    }
-    return withBaseUrl(baseUrl, `/metrics/#/${workspaceId}`);
+function measuresItemUrl(baseUrl: string, workspaceId: string): string {
+    return withBaseUrl(baseUrl, `/workspace/${workspaceId}/metrics`);
 }
 function canShowMetricsItem(hasMetrics: boolean, workspacePermissions: IWorkspacePermissions): boolean {
     return Boolean(workspacePermissions.canManageMetric === true && hasMetrics);
@@ -262,20 +258,16 @@ function dataItemUrl(
     backendSupportsDataItem: boolean,
     hasNoDataSet: boolean,
     baseUrl: string,
-    featureFlags: ISettings,
 ): string {
-    // When the LDM Modeler runs as a pluggable host application, link to its host route
-    // (/workspace/{ws}/modeler) instead of the legacy standalone /modeler/#/ path.
-    const ldmModelerUrl = featureFlags.enableShellApplication_ldmModeler
-        ? `/workspace/${workspaceId}/modeler`
-        : undefined;
+    // The LDM Modeler runs as a pluggable host application, so link to its host route.
+    const ldmModelerUrl = `/workspace/${workspaceId}/modeler`;
     if (backendSupportsDataItem) {
-        return withBaseUrl(baseUrl, ldmModelerUrl ?? `/modeler/#/${workspaceId}`);
+        return withBaseUrl(baseUrl, ldmModelerUrl);
     }
     if (workspacePermissions.canManageProject && hasNoDataSet) {
         return withBaseUrl(baseUrl, `/admin/connect/#/workspaces/${workspaceId}/datasource`);
     }
-    return withBaseUrl(baseUrl, ldmModelerUrl ?? `/modeler/#/workspaces/${workspaceId}`);
+    return withBaseUrl(baseUrl, ldmModelerUrl);
 }
 function canShowDataItem(featureFlags: ISettings, workspacePermissions: IWorkspacePermissions): boolean {
     return Boolean(

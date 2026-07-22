@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback, useMemo } from "react";
 
@@ -6,11 +6,11 @@ import { type EmptyObject } from "@gooddata/util";
 
 import { useScopedId } from "../../hooks/useScopedId.js";
 import { UiDropdown } from "../../UiDropdown/UiDropdown.js";
-import { isSeparator } from "../../UiListbox/defaults/DefaultUiListboxStaticItemComponent.js";
 import { type IUiMenuItem } from "../../UiMenu/types.js";
 import { UiMenu } from "../../UiMenu/UiMenu.js";
 import { UiTabsBem } from "../bem.js";
 import { getTypedUiTabsContextStore } from "../context.js";
+import { hasInteractiveTabActions, isSeparatorAction } from "../itemUtils.js";
 import { type IUiTab, type IUiTabAction, type IUiTabComponentProps } from "../types.js";
 
 type IMenuItemType<
@@ -49,7 +49,7 @@ export function DefaultUiTabsTabActions<
     const menuItems: IMenuItemType<TTabProps, TTabActionProps>[] = useMemo(
         () =>
             tab.actions?.map((action) => {
-                return isSeparator(action)
+                return isSeparatorAction(action)
                     ? action
                     : {
                           type: "interactive" as const,
@@ -112,7 +112,7 @@ export function DefaultUiTabsTabActions<
         [],
     );
 
-    if (menuItems.length === 0) {
+    if (!hasInteractiveTabActions(tab)) {
         return null;
     }
 

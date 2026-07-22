@@ -30,6 +30,7 @@ const setMeta: MetaReducer<PayloadAction<SetMetaPayload>> = (state, action) => {
               disableUserFilterReset: dashboard.disableUserFilterReset,
               disableUserFilterSave: dashboard.disableUserFilterSave,
               disableFilterViews: dashboard.disableFilterViews,
+              disablePersistentFiltersAcrossTabs: dashboard.disablePersistentFiltersAcrossTabs,
               sectionHeadersDateDataSet: dashboard.sectionHeadersDateDataSet,
           }
         : { ...EmptyDashboardDescriptor };
@@ -46,6 +47,12 @@ const setDisableCrossFiltering: MetaReducer<PayloadAction<boolean>> = (state, ac
     invariant(state.descriptor);
 
     state.descriptor.disableCrossFiltering = action.payload;
+};
+
+const setDisablePersistentFiltersAcrossTabs: MetaReducer<PayloadAction<boolean>> = (state, action) => {
+    invariant(state.descriptor);
+
+    state.descriptor.disablePersistentFiltersAcrossTabs = action.payload;
 };
 
 const setDisableUserFilterReset: MetaReducer<PayloadAction<boolean>> = (state, action) => {
@@ -82,6 +89,7 @@ export const metaReducers = {
     setMeta,
     setDashboardTitle,
     setDisableCrossFiltering,
+    setDisablePersistentFiltersAcrossTabs,
     setDisableUserFilterReset,
     setDisableUserFilterSave,
     setDisableFilterViews,

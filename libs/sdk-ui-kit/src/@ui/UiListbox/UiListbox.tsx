@@ -5,6 +5,8 @@ import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } fro
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
 
 import { makeMenuKeyboardNavigation } from "../@utils/keyboardNavigation.js";
+import { MenuDivider } from "../UiMenu/components/MenuDivider.js";
+import { collapseSeparators } from "../UiMenu/itemUtils.js";
 
 import { DefaultUiListboxInteractiveItemComponent } from "./defaults/DefaultUiListboxInteractiveItemComponent.js";
 import { DefaultUiListboxStaticItemComponent } from "./defaults/DefaultUiListboxStaticItemComponent.js";
@@ -25,7 +27,7 @@ import {
  * @internal
  */
 export function UiListbox<InteractiveItemData, StaticItemData>({
-    items,
+    items: rawItems,
 
     dataTestId,
     itemDataTestId,
@@ -50,6 +52,7 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
     reference,
     ariaAttributes,
 }: IUiListboxProps<InteractiveItemData, StaticItemData>): ReactNode {
+    const items = useMemo(() => collapseSeparators(rawItems), [rawItems]);
     const isItemFocusable = useCallback(
         (item?: IUiListboxItem<InteractiveItemData, StaticItemData>) => {
             if (item?.type !== "interactive") {
@@ -201,7 +204,11 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
             >
                 {items.map((item, index) => {
                     const testId =
-                        typeof itemDataTestId === "function" ? itemDataTestId(item) : itemDataTestId;
+                        item.type === "separator"
+                            ? undefined
+                            : typeof itemDataTestId === "function"
+                              ? itemDataTestId(item)
+                              : itemDataTestId;
 
                     return item.type === "interactive" ? (
                         <li
@@ -230,7 +237,7 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
                             />
                         </li>
                     ) : (
-                        // Static items (separators, headers) are presentational; `role="presentation"`
+                        // Static and separator items are presentational; `role="presentation"`
                         // keeps the <li> out of the a11y tree so it isn't exposed as a `listitem`,
                         // which is an invalid child of `role="listbox"` (only `option`/`group` allowed).
                         <li
@@ -241,7 +248,11 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
                             role="presentation"
                             data-testid={testId}
                         >
-                            <StaticItemComponent item={item} />
+                            {item.type === "separator" ? (
+                                <MenuDivider />
+                            ) : (
+                                <StaticItemComponent item={item} />
+                            )}
                         </li>
                     );
                 })}

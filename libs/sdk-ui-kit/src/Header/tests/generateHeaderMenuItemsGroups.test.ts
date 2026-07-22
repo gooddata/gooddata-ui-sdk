@@ -30,7 +30,7 @@ describe("generateHeaderMenuItemsGroups", () => {
                 },
                 {
                     className: "s-menu-data",
-                    href: "/modeler/#/workspaces/TestWorkspaceId",
+                    href: "/workspace/TestWorkspaceId/modeler",
                     key: "gs.header.data",
                 },
                 {
@@ -72,7 +72,7 @@ describe("generateHeaderMenuItemsGroups", () => {
                 },
                 {
                     className: "s-menu-data",
-                    href: "/modeler/#/workspaces/TestWorkspaceId",
+                    href: "/workspace/TestWorkspaceId/modeler",
                     key: "gs.header.data",
                 },
                 {
@@ -113,7 +113,7 @@ describe("generateHeaderMenuItemsGroups", () => {
                 },
                 {
                     className: "s-menu-data",
-                    href: "/modeler/#/workspaces/TestWorkspaceId",
+                    href: "/workspace/TestWorkspaceId/modeler",
                     key: "gs.header.data",
                 },
             ],
@@ -149,7 +149,7 @@ describe("generateHeaderMenuItemsGroups", () => {
                 },
                 {
                     className: "s-menu-data",
-                    href: "/modeler/#/workspaces/TestWorkspaceId",
+                    href: "/workspace/TestWorkspaceId/modeler",
                     key: "gs.header.data",
                 },
             ],
@@ -257,7 +257,7 @@ describe("generateHeaderMenuItemsGroups", () => {
                 },
                 {
                     className: "s-menu-data",
-                    href: "/modeler/#/workspaces/TestWorkspaceId",
+                    href: "/workspace/TestWorkspaceId/modeler",
                     key: "gs.header.data",
                 },
             ],
@@ -286,7 +286,7 @@ describe("generateHeaderMenuItemsGroups", () => {
                 },
                 {
                     className: "s-menu-data",
-                    href: "/modeler/#/workspaces/TestWorkspaceId",
+                    href: "/workspace/TestWorkspaceId/modeler",
                     key: "gs.header.data",
                 },
             ],
@@ -316,7 +316,7 @@ describe("generateHeaderMenuItemsGroups", () => {
                 },
                 {
                     className: "s-menu-data",
-                    href: "/modeler/#/workspaces/TestWorkspaceId",
+                    href: "/workspace/TestWorkspaceId/modeler",
                     key: "gs.header.data",
                 },
                 {
@@ -351,7 +351,7 @@ describe("generateHeaderMenuItemsGroups", () => {
                 },
                 {
                     className: "s-menu-data",
-                    href: "/modeler/#/workspaces/TestWorkspaceId",
+                    href: "/workspace/TestWorkspaceId/modeler",
                     key: "gs.header.data",
                 },
                 {

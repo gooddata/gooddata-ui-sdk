@@ -536,6 +536,12 @@ export interface IDashboard<TWidget = IDashboardWidget>
     readonly disableFilterViews?: boolean;
 
     /**
+     * Disables persistent filters across tabs for this dashboard.
+     * @alpha
+     */
+    readonly disablePersistentFiltersAcrossTabs?: boolean;
+
+    /**
      * Data sets related to the dashboard, as defined by the includes directive
      */
     readonly dataSets?: IDataSetMetadataObject[];
@@ -632,6 +638,11 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget>
      * Disables listing and saving of filter views for this dashboard.
      */
     readonly disableFilterViews?: boolean;
+
+    /**
+     * Disables persistent filters across tabs for this dashboard.
+     */
+    readonly disablePersistentFiltersAcrossTabs?: boolean;
 
     /**
      * Evaluation frequency of alerts for the dashboard.

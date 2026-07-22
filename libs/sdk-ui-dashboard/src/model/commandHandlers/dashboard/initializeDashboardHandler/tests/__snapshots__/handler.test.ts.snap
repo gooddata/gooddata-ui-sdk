@@ -471,6 +471,7 @@ exports[`initialize dashboard handler > for any dashboard > should resolve confi
   },
   "disableCrossFiltering": false,
   "disableDefaultDrills": false,
+  "disablePersistentFiltersAcrossTabs": false,
   "disableUserFilterReset": false,
   "enableFilterValuesResolutionInDrillEvents": false,
   "externalRecipient": undefined,

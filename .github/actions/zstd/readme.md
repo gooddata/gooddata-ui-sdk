@@ -40,7 +40,7 @@ jobs:
         runs-on: ubuntu-latest
         image: some-docker-image
         steps:
-            - uses: actions/checkout@v7.0.0
+            - uses: actions/checkout@v7.0.1
 
             - name: Detect zstd
               id: detect

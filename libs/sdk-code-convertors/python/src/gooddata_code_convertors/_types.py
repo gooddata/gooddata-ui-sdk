@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 4c1b8c0da13285736445d4b4810c96a8e87ae2e8bd9230a41f3ffa931abd6d66
+# schema-hash: 0264da25c488ece235d746a7c7fd59831f9a92e5c5bc184c0bb3043b813a0fad
 
 from __future__ import annotations
 
@@ -2214,6 +2214,7 @@ class Dashboard1(TypedDict):
     user_filters_reset: NotRequired[bool]
     user_filters_save: NotRequired[bool]
     filter_views: NotRequired[bool]
+    persistent_filters_across_tabs: NotRequired[bool]
     enable_section_headers: NotRequired[bool]
     sections: NotRequired[list[Section]]
     filters: NotRequired[DashboardFiltersModel]
@@ -2258,6 +2259,7 @@ class Dashboard(TypedDict):
     user_filters_reset: NotRequired[bool]
     user_filters_save: NotRequired[bool]
     filter_views: NotRequired[bool]
+    persistent_filters_across_tabs: NotRequired[bool]
     enable_section_headers: NotRequired[bool]
     sections: NotRequired[list[Section]]
     filters: NotRequired[DashboardFiltersModel]

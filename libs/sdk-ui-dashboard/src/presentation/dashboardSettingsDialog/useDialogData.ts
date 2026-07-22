@@ -7,6 +7,7 @@ import { isEqual } from "lodash-es";
 import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
 import {
     selectDisableDashboardCrossFiltering,
+    selectDisableDashboardPersistentFiltersAcrossTabs,
     selectDisableDashboardUserFilterReset,
     selectDisableDashboardUserFilterSave,
     selectDisableFilterViews,
@@ -21,6 +22,8 @@ export function useDialogData() {
     const disableUserFilterReset = useDashboardSelector(selectDisableDashboardUserFilterReset) ?? false;
     const disableFilterViews = useDashboardSelector(selectDisableFilterViews) ?? false;
     const disableUserFilterSave = useDashboardSelector(selectDisableDashboardUserFilterSave) ?? false;
+    const disablePersistentFiltersAcrossTabs =
+        useDashboardSelector(selectDisableDashboardPersistentFiltersAcrossTabs) ?? false;
     const evaluationFrequency = useDashboardSelector(selectEvaluationFrequency) ?? undefined;
     const sectionHeadersDateDataSet = useDashboardSelector(selectSectionHeadersDateDataSet) ?? undefined;
 
@@ -29,6 +32,7 @@ export function useDialogData() {
         disableUserFilterSave,
         disableUserFilterReset,
         disableFilterViews,
+        disablePersistentFiltersAcrossTabs,
         evaluationFrequency,
         sectionHeadersDateDataSet,
     });

@@ -13,6 +13,7 @@ import {
 
 import { type IDropdownBodyRenderProps } from "../../Dropdown/Dropdown.js";
 import { type IconType } from "../@types/icon.js";
+import { type IUiMenuSeparatorItem } from "../UiMenu/types.js";
 
 /**
  * @internal
@@ -39,8 +40,14 @@ export interface IUiListboxInteractiveItem<T> {
 /**
  * @internal
  */
+export type IUiListboxSeparatorItem = IUiMenuSeparatorItem;
+
+/**
+ * @internal
+ */
 export type IUiListboxItem<InteractiveItemData, StaticItemData = ReactNode> =
     | IUiListboxStaticItem<StaticItemData>
+    | IUiListboxSeparatorItem
     | IUiListboxInteractiveItem<InteractiveItemData>;
 
 /**
@@ -96,7 +103,9 @@ export interface IUiListboxProps<InteractiveItemData, StaticItemData = ReactNode
     dataTestId?: string;
     itemDataTestId?:
         | string
-        | ((item: IUiListboxItem<InteractiveItemData, StaticItemData>) => string | undefined);
+        | ((
+              item: IUiListboxStaticItem<StaticItemData> | IUiListboxInteractiveItem<InteractiveItemData>,
+          ) => string | undefined);
 
     width?: number;
     maxWidth?: number;
