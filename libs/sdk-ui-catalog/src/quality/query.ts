@@ -88,8 +88,10 @@ async function pollingForSemanticCheckStatus(
     return currentReport;
 }
 
+let queryIdSequence = 0;
+
 export function createQueryId(): string {
-    return crypto.randomUUID();
+    return `quality-query-${queryIdSequence++}`;
 }
 
 function wait(delay: number) {

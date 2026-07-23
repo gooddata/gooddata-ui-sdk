@@ -12,10 +12,13 @@ import {
     type IExecutionResult,
     type IGeoService,
     type IGetInsightOptions,
+    type IMeasureExpressionToken,
+    type IMeasureReferencing,
     type IPreparedExecution,
     type IWorkspaceExportTemplatesService,
     type IWorkspaceFactsService,
     type IWorkspaceInsightsService,
+    type IWorkspaceMeasuresService,
 } from "@gooddata/sdk-backend-spi";
 import {
     type IAttributeDisplayFormMetadataObject,
@@ -43,6 +46,7 @@ import {
 } from "../../decoratedBackend/execution.js";
 import { decoratedBackend } from "../../decoratedBackend/index.js";
 import { DecoratedWorkspaceInsightsService } from "../../decoratedBackend/insights.js";
+import { DecoratedWorkspaceMeasuresService } from "../../decoratedBackend/measures.js";
 import { DecoratedWorkspaceExportTemplatesService } from "../../decoratedBackend/workspaceExportTemplates.js";
 import { dummyBackend, dummyBackendEmptyData } from "../../dummyBackend/index.js";
 import { withEventing } from "../../eventingBackend/index.js";
@@ -76,6 +80,8 @@ function withCachingForTests(
         maxExportTemplatesWorkspaces: 1,
         maxFactsWorkspaces: 1,
         maxFactsPerWorkspace: 2,
+        maxMeasuresWorkspaces: 1,
+        maxMeasuresPerWorkspace: 2,
         cacheGeoStyles: true,
         onCacheReady,
         ...configOverrides,
@@ -114,6 +120,58 @@ function doGetAttributeByDisplayForm(
 
 function doGetAttributeElements(backend: IAnalyticalBackend, ref: ObjRef): Promise<IElementsQueryResult> {
     return backend.workspace("test").attributes().elements().forDisplayForm(ref).query();
+}
+
+function doGetMeasureExpressionTokens(
+    backend: IAnalyticalBackend,
+    ref: ObjRef,
+): Promise<IMeasureExpressionToken[]> {
+    return backend.workspace("test").measures().getMeasureExpressionTokens(ref);
+}
+
+function doGetMeasureReferencingObjects(
+    backend: IAnalyticalBackend,
+    ref: ObjRef,
+): Promise<IMeasureReferencing> {
+    return backend.workspace("test").measures().getMeasureReferencingObjects(ref);
+}
+
+type MeasureProviders = {
+    getMeasureExpressionTokens?: (ref: ObjRef) => Promise<IMeasureExpressionToken[]>;
+    getMeasureReferencingObjects?: (ref: ObjRef) => Promise<IMeasureReferencing>;
+};
+
+/**
+ * Call-counting decorator over the measures service - used to assert that concurrent same-ref calls collapse
+ * to a single underlying call once the caching decorator is in place.
+ */
+class CountingMeasuresService extends DecoratedWorkspaceMeasuresService {
+    constructor(
+        decorated: IWorkspaceMeasuresService,
+        private readonly providers: MeasureProviders,
+    ) {
+        super(decorated);
+    }
+
+    public override getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]> {
+        return this.providers.getMeasureExpressionTokens
+            ? this.providers.getMeasureExpressionTokens(ref)
+            : super.getMeasureExpressionTokens(ref);
+    }
+
+    public override getMeasureReferencingObjects(ref: ObjRef): Promise<IMeasureReferencing> {
+        return this.providers.getMeasureReferencingObjects
+            ? this.providers.getMeasureReferencingObjects(ref)
+            : super.getMeasureReferencingObjects(ref);
+    }
+}
+
+function createMeasuresBackend(providers: MeasureProviders): IAnalyticalBackend {
+    const backend = dummyBackendEmptyData();
+
+    return decoratedBackend(backend, {
+        measures: (decorated) => new CountingMeasuresService(decorated, providers),
+    });
 }
 
 type CollectionItemsProvider = (config: ICollectionItemsConfig) => ICollectionItemsResult;
@@ -1459,6 +1517,126 @@ describe("withCaching", () => {
                     backend.workspace("test").facts().getFactDatasetMeta(FACT_REF),
                 ).resolves.toMatchObject({ id: "dataset.foo" });
 
+                expect(underlying).toHaveBeenCalledTimes(2);
+            });
+        });
+    });
+
+    describe("measures", () => {
+        const measureRef = idRef("my_measure", "measure");
+
+        describe("getMeasureExpressionTokens", () => {
+            it("should cache the calls", () => {
+                const backend = withCachingForTests();
+
+                const first = doGetMeasureExpressionTokens(backend, measureRef);
+                const second = doGetMeasureExpressionTokens(backend, measureRef);
+
+                expect(second).toBe(first);
+            });
+
+            it("collapses N concurrent same-ref calls into one underlying call with identical results", async () => {
+                const tokens: IMeasureExpressionToken[] = [{ type: "text", value: "1" }];
+                const underlying = vi.fn(async () => tokens);
+                const backend = withCachingForTests(
+                    createMeasuresBackend({ getMeasureExpressionTokens: underlying }),
+                );
+
+                const promises = Array.from({ length: 5 }, () =>
+                    doGetMeasureExpressionTokens(backend, measureRef),
+                );
+                const results = await Promise.all(promises);
+
+                expect(underlying).toHaveBeenCalledTimes(1);
+                results.forEach((result) => expect(result).toBe(results[0]));
+            });
+
+            it("evicts the cache entry on error so a subsequent call retries", async () => {
+                const underlying = vi
+                    .fn<(ref: ObjRef) => Promise<IMeasureExpressionToken[]>>()
+                    .mockRejectedValueOnce(new Error("boom"))
+                    .mockResolvedValue([]);
+                const backend = withCachingForTests(
+                    createMeasuresBackend({ getMeasureExpressionTokens: underlying }),
+                );
+
+                const first = doGetMeasureExpressionTokens(backend, measureRef);
+                await expect(first).rejects.toThrow("boom");
+
+                const second = doGetMeasureExpressionTokens(backend, measureRef);
+                await expect(second).resolves.toEqual([]);
+
+                expect(second).not.toBe(first);
+                expect(underlying).toHaveBeenCalledTimes(2);
+            });
+
+            it("should reset measures cache with resetMeasures", () => {
+                let cacheControl: CacheControl | undefined;
+
+                const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
+
+                const first = doGetMeasureExpressionTokens(backend, measureRef);
+                cacheControl?.resetMeasures();
+                const second = doGetMeasureExpressionTokens(backend, measureRef);
+
+                expect(second).not.toBe(first);
+            });
+
+            it("should reset measures cache with resetAll", () => {
+                let cacheControl: CacheControl | undefined;
+
+                const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
+
+                const first = doGetMeasureExpressionTokens(backend, measureRef);
+                cacheControl?.resetAll();
+                const second = doGetMeasureExpressionTokens(backend, measureRef);
+
+                expect(second).not.toBe(first);
+            });
+        });
+
+        describe("getMeasureReferencingObjects", () => {
+            it("should cache the calls", () => {
+                const backend = withCachingForTests();
+
+                const first = doGetMeasureReferencingObjects(backend, measureRef);
+                const second = doGetMeasureReferencingObjects(backend, measureRef);
+
+                expect(second).toBe(first);
+            });
+
+            it("collapses N concurrent same-ref calls into one underlying call with identical results", async () => {
+                const referencing: IMeasureReferencing = { measures: [], insights: [] };
+                const underlying = vi.fn(async () => referencing);
+                const backend = withCachingForTests(
+                    createMeasuresBackend({ getMeasureReferencingObjects: underlying }),
+                );
+
+                const promises = Array.from({ length: 5 }, () =>
+                    doGetMeasureReferencingObjects(backend, measureRef),
+                );
+                const results = await Promise.all(promises);
+
+                expect(underlying).toHaveBeenCalledTimes(1);
+                results.forEach((result) => expect(result).toBe(results[0]));
+            });
+
+            it("evicts the cache entry on error so a subsequent call retries", async () => {
+                const underlying = vi
+                    .fn<(ref: ObjRef) => Promise<IMeasureReferencing>>()
+                    .mockRejectedValueOnce(new Error("boom"))
+                    .mockResolvedValue({});
+                const backend = withCachingForTests(
+                    createMeasuresBackend({ getMeasureReferencingObjects: underlying }),
+                );
+
+                const first = doGetMeasureReferencingObjects(backend, measureRef);
+                await expect(first).rejects.toThrow("boom");
+
+                const second = doGetMeasureReferencingObjects(backend, measureRef);
+                await expect(second).resolves.toEqual({});
+
+                expect(second).not.toBe(first);
                 expect(underlying).toHaveBeenCalledTimes(2);
             });
         });

@@ -33,6 +33,7 @@ export type {
     AutomationsDecoratorFactory,
     AttributesDecoratorFactory,
     InsightsDecoratorFactory,
+    MeasuresDecoratorFactory,
     DashboardsDecoratorFactory,
     FactsDecoratorFactory,
     GeoDecoratorFactory,

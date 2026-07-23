@@ -34,6 +34,8 @@ import {
     type IGetAutomationsOptions,
     type IGetAutomationsQueryOptions,
     type IGetInsightOptions,
+    type IMeasureExpressionToken,
+    type IMeasureReferencing,
     type IOrganizationExportTemplatesService,
     type IOutliersConfig,
     type IOutliersResult,
@@ -49,6 +51,7 @@ import {
     type IWorkspaceExportTemplatesService,
     type IWorkspaceFactsService,
     type IWorkspaceInsightsService,
+    type IWorkspaceMeasuresService,
     type IWorkspaceSettings,
     type IWorkspaceSettingsService,
     type ValidationContext,
@@ -110,6 +113,7 @@ import {
 import { DecoratedWorkspaceFactsService } from "../decoratedBackend/facts.js";
 import { decoratedBackend } from "../decoratedBackend/index.js";
 import { DecoratedWorkspaceInsightsService } from "../decoratedBackend/insights.js";
+import { DecoratedWorkspaceMeasuresService } from "../decoratedBackend/measures.js";
 import { DecoratedOrganizationExportTemplatesService } from "../decoratedBackend/organizationExportTemplates.js";
 import { DecoratedSecuritySettingsService } from "../decoratedBackend/securitySettings.js";
 import {
@@ -120,6 +124,7 @@ import {
     type FactsDecoratorFactory,
     type GeoDecoratorFactory,
     type InsightsDecoratorFactory,
+    type MeasuresDecoratorFactory,
     type OrganizationExportTemplatesDecoratorFactory,
     type SecuritySettingsDecoratorFactory,
     type WorkspaceExportTemplatesDecoratorFactory,
@@ -166,6 +171,11 @@ type FactsCacheEntry = {
     factDatasetsMeta: LRUCache<string, Promise<IMetadataObject>>;
 };
 
+type MeasureCacheEntry = {
+    expressionTokens: LRUCache<string, Promise<IMeasureExpressionToken[]>>;
+    referencingObjects: LRUCache<string, Promise<IMeasureReferencing>>;
+};
+
 type CollectionItemsCacheEntry = {
     values: LRUCache<string, IGeoJsonFeature[]>;
     bbox?: number[];
@@ -194,6 +204,7 @@ type CachingContext = {
         workspaceAutomations?: LRUCache<string, AutomationCacheEntry>;
         workspaceInsights?: LRUCache<string, InsightsCacheEntry>;
         workspaceFacts?: LRUCache<string, FactsCacheEntry>;
+        workspaceMeasures?: LRUCache<string, MeasureCacheEntry>;
         organizationExportTemplates?: LRUCache<string, Promise<IExportTemplate[]>>;
         workspaceExportTemplates?: LRUCache<string, Promise<IExportTemplate[]>>;
         workspaceSettings?: LRUCache<string, WorkspaceSettingsCacheEntry>;
@@ -1948,6 +1959,105 @@ class WithFactsCaching extends DecoratedWorkspaceFactsService {
 }
 
 //
+// MEASURES CACHING
+//
+
+function getOrCreateMeasuresCache(ctx: CachingContext, workspace: string): MeasureCacheEntry {
+    const cache = ctx.caches.workspaceMeasures!;
+    let cacheEntry = cache.get(workspace);
+
+    if (!cacheEntry) {
+        cacheEntry = {
+            expressionTokens: new LRUCache<string, Promise<IMeasureExpressionToken[]>>({
+                max: ctx.config.maxMeasuresPerWorkspace!,
+            }),
+            referencingObjects: new LRUCache<string, Promise<IMeasureReferencing>>({
+                max: ctx.config.maxMeasuresPerWorkspace!,
+            }),
+        };
+        cache.set(workspace, cacheEntry);
+    }
+
+    return cacheEntry;
+}
+
+class WithMeasuresCaching extends DecoratedWorkspaceMeasuresService {
+    constructor(
+        decorated: IWorkspaceMeasuresService,
+        private readonly ctx: CachingContext,
+        private readonly workspace: string,
+    ) {
+        super(decorated);
+    }
+
+    public override getMeasureExpressionTokens = (ref: ObjRef): Promise<IMeasureExpressionToken[]> => {
+        const cache = getOrCreateMeasuresCache(this.ctx, this.workspace).expressionTokens;
+
+        const idCacheKey = isIdentifierRef(ref) ? ref.identifier : undefined;
+        const uriCacheKey = isUriRef(ref) ? ref.uri : undefined;
+
+        let cacheItem = firstDefined([idCacheKey, uriCacheKey].map((key) => key && cache.get(key)));
+
+        if (!cacheItem) {
+            cacheItem = super.getMeasureExpressionTokens(ref).catch((e) => {
+                if (idCacheKey) {
+                    cache.delete(idCacheKey);
+                }
+                if (uriCacheKey) {
+                    cache.delete(uriCacheKey);
+                }
+                throw e;
+            });
+
+            if (idCacheKey) {
+                cache.set(idCacheKey, cacheItem);
+            }
+
+            if (uriCacheKey) {
+                cache.set(uriCacheKey, cacheItem);
+            }
+        }
+
+        return cacheItem;
+    };
+
+    public override getMeasureReferencingObjects = (measureRef: ObjRef): Promise<IMeasureReferencing> => {
+        const cache = getOrCreateMeasuresCache(this.ctx, this.workspace).referencingObjects;
+
+        const idCacheKey = isIdentifierRef(measureRef) ? measureRef.identifier : undefined;
+        const uriCacheKey = isUriRef(measureRef) ? measureRef.uri : undefined;
+
+        let cacheItem = firstDefined([idCacheKey, uriCacheKey].map((key) => key && cache.get(key)));
+
+        if (!cacheItem) {
+            cacheItem = super.getMeasureReferencingObjects(measureRef).catch((e) => {
+                if (idCacheKey) {
+                    cache.delete(idCacheKey);
+                }
+                if (uriCacheKey) {
+                    cache.delete(uriCacheKey);
+                }
+                throw e;
+            });
+
+            if (idCacheKey) {
+                cache.set(idCacheKey, cacheItem);
+            }
+
+            if (uriCacheKey) {
+                cache.set(uriCacheKey, cacheItem);
+            }
+        }
+
+        return cacheItem;
+    };
+}
+
+function cachedMeasures(ctx: CachingContext): MeasuresDecoratorFactory {
+    return (original, workspace) => new WithMeasuresCaching(original, ctx, workspace);
+}
+
+//
 // ORGANIZATION EXPORT TEMPLATES CACHING
 //
 
@@ -2284,6 +2394,10 @@ function cacheControl(ctx: CachingContext): CacheControl {
             ctx.caches.workspaceInsights?.clear();
         },
 
+        resetMeasures: () => {
+            ctx.caches.workspaceMeasures?.clear();
+        },
+
         resetAll: () => {
             control.resetExecutions();
             control.resetCatalogs();
@@ -2294,6 +2408,7 @@ function cacheControl(ctx: CachingContext): CacheControl {
             control.resetGeoStyles();
             control.resetExportTemplates();
             control.resetInsights();
+            control.resetMeasures();
         },
     };
 
@@ -2358,6 +2473,11 @@ export type CacheControl = {
      * Resets all workspace insight caches.
      */
     resetInsights: () => void;
+
+    /**
+     * Resets all workspace measures caches.
+     */
+    resetMeasures: () => void;
 
     /**
      * Convenience method to reset all caches (calls all the particular resets).
@@ -2585,6 +2705,35 @@ export type CachingConfiguration = {
     maxFactsPerWorkspace?: number;
 
     /**
+     * Maximum number of workspaces for which to cache selected {@link @gooddata/sdk-backend-spi#IWorkspaceMeasuresService} calls.
+     * The workspace identifier is used as cache key.
+     * For each workspace, there will be a cache entry holding `maxMeasuresPerWorkspace` entries.
+     *
+     * When limit is reached, cache entries will be evicted using LRU policy.
+     *
+     * When no maximum number is specified, the cache will be unbounded and no evictions will happen. Unbounded
+     * cache may be OK in applications where number of workspaces is small - the cache will be limited
+     * naturally and will not grow uncontrollably.
+     *
+     * When non-positive number is specified, then no caching will be done.
+     */
+    maxMeasuresWorkspaces?: number;
+
+    /**
+     * Maximum number of measures to cache per workspace.
+     *
+     * When limit is reached, cache entries will be evicted using LRU policy.
+     *
+     * When no maximum number is specified, the cache will be unbounded and no evictions will happen. Unbounded
+     * measures cache may be OK in applications where number of measures is small and/or they are requested
+     * infrequently - the cache will be limited naturally and will not grow uncontrollably.
+     *
+     * Setting non-positive number here is invalid. If you want to turn off measures caching,
+     * tweak the `maxMeasuresWorkspaces` value.
+     */
+    maxMeasuresPerWorkspace?: number;
+
+    /**
      * Maximum number of organizations for which to cache organization-level export templates.
      * Organization export templates are organization-level, so typically a single entry suffices.
      *
@@ -2709,6 +2858,8 @@ export const RecommendedCachingConfiguration: CachingConfiguration = {
     maxInsightsPerWorkspace: 50,
     maxFactsWorkspaces: 1,
     maxFactsPerWorkspace: 500,
+    maxMeasuresWorkspaces: 1,
+    maxMeasuresPerWorkspace: 100,
     maxExportTemplatesOrgs: 1,
     maxExportTemplatesWorkspaces: 1,
     cacheGeoStyles: true,
@@ -2742,6 +2893,7 @@ export function withCaching(
     const automationsCaching = cachingEnabled(config.maxAutomationsWorkspaces);
     const insightsCaching = cachingEnabled(config.maxInsightsPerWorkspace);
     const factsCaching = cachingEnabled(config.maxFactsWorkspaces);
+    const measuresCaching = cachingEnabled(config.maxMeasuresWorkspaces);
     // Backward compatibility: `maxExportTemplatesWorkspaces` used to be the (deprecated) alias that
     // sized the org export-templates cache. It now primarily drives workspace caching, but callers
     // that only set the old name must keep getting org caching until the alias is removed.
@@ -2775,6 +2927,9 @@ export function withCaching(
                 ? new LRUCache({ max: config.maxInsightsPerWorkspace! })
                 : undefined,
             workspaceFacts: factsCaching ? new LRUCache({ max: config.maxFactsWorkspaces! }) : undefined,
+            workspaceMeasures: measuresCaching
+                ? new LRUCache({ max: config.maxMeasuresWorkspaces! })
+                : undefined,
             organizationExportTemplates: exportTemplatesCaching
                 ? new LRUCache({ max: orgExportTemplatesMax! })
                 : undefined,
@@ -2799,6 +2954,7 @@ export function withCaching(
     const automations = automationsCaching ? cachedAutomations(ctx) : (v: any) => v;
     const insights = insightsCaching ? cachedInsights(ctx) : (v: any) => v;
     const facts = factsCaching ? cachedFacts(ctx) : (v: any) => v;
+    const measures = measuresCaching ? cachedMeasures(ctx) : (v: any) => v;
     const organizationExportTemplates = exportTemplatesCaching
         ? cachedOrganizationExportTemplates(ctx)
         : undefined;
@@ -2821,6 +2977,7 @@ export function withCaching(
         automations,
         insights,
         facts,
+        measures,
         organizationExportTemplates,
         workspaceExportTemplates,
         geo,

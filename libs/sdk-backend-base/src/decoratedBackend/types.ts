@@ -12,6 +12,7 @@ import {
     type IWorkspaceExportTemplatesService,
     type IWorkspaceFactsService,
     type IWorkspaceInsightsService,
+    type IWorkspaceMeasuresService,
     type IWorkspaceSettingsService,
 } from "@gooddata/sdk-backend-spi";
 
@@ -55,6 +56,14 @@ export type AutomationsDecoratorFactory = (
     automations: IWorkspaceAutomationService,
     workspace: string,
 ) => IWorkspaceAutomationService;
+
+/**
+ * @alpha
+ */
+export type MeasuresDecoratorFactory = (
+    measures: IWorkspaceMeasuresService,
+    workspace: string,
+) => IWorkspaceMeasuresService;
 
 /**
  * @alpha
@@ -116,6 +125,7 @@ export type DecoratorFactories = {
     attributes?: AttributesDecoratorFactory;
     automations?: AutomationsDecoratorFactory;
     insights?: InsightsDecoratorFactory;
+    measures?: MeasuresDecoratorFactory;
     dashboards?: DashboardsDecoratorFactory;
     facts?: FactsDecoratorFactory;
     geo?: GeoDecoratorFactory;

@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 @use "EditableLabel/_mixins" as form-mixins;
 @use "mixins";
 
@@ -69,6 +69,16 @@ $editable-label-border: #b1c1d1;
 
     textarea {
         @extend %textarea-base;
+
+        /** 
+        * If a browser needs to programmatically scroll horizontally (such as for example when the text is long and overflows), make sure
+        * it's on textarea itself (i.e. make sure the textarea is not bigger than the container element `.gd-editable-label-inner`), and
+        * not on the nearest container (`.gd-editable-label-inner`), which can have unintended consequences if the `.scrollLeft` DOM property
+        * is leftover and still has an effect even after leaving editing mode (such as in the case of invisible span inside of this container
+        * that keeps overflowing even in non editing mode). See LX-2691 for more details.
+        */
+        max-width: 100%;
+        min-width: inherit;
 
         display: block;
         padding: 0;

@@ -165,6 +165,7 @@ import { IWorkspaceDashboardsService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceExportTemplatesService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceFactsService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceInsightsService } from '@gooddata/sdk-backend-spi';
+import { IWorkspaceMeasuresService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceSettingsService } from '@gooddata/sdk-backend-spi';
 import { KpiDrillDefinition } from '@gooddata/sdk-model';
@@ -324,6 +325,7 @@ export type CacheControl = {
     resetGeoStyles: () => void;
     resetExportTemplates: () => void;
     resetInsights: () => void;
+    resetMeasures: () => void;
     resetAll: () => void;
 };
 
@@ -344,6 +346,8 @@ export type CachingConfiguration = {
     maxInsightsPerWorkspace?: number;
     maxFactsWorkspaces?: number;
     maxFactsPerWorkspace?: number;
+    maxMeasuresWorkspaces?: number;
+    maxMeasuresPerWorkspace?: number;
     maxExportTemplatesOrgs?: number;
     maxExportTemplatesWorkspaces?: number;
     maxAttributeDisplayFormsPerWorkspace?: number;
@@ -886,6 +890,7 @@ export type DecoratorFactories = {
     attributes?: AttributesDecoratorFactory;
     automations?: AutomationsDecoratorFactory;
     insights?: InsightsDecoratorFactory;
+    measures?: MeasuresDecoratorFactory;
     dashboards?: DashboardsDecoratorFactory;
     facts?: FactsDecoratorFactory;
     geo?: GeoDecoratorFactory;
@@ -1250,6 +1255,9 @@ export class MeasureMetadataObjectBuilder<T extends IMeasureMetadataObject = IMe
     // (undocumented)
     updatedBy(updatedBy?: IUser): this;
 }
+
+// @alpha (undocumented)
+export type MeasuresDecoratorFactory = (measures: IWorkspaceMeasuresService, workspace: string) => IWorkspaceMeasuresService;
 
 // @internal
 export function mergeBbox(a?: number[], b?: number[]): number[] | undefined;
