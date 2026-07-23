@@ -93,6 +93,12 @@ export class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
     }
 
     public measures(): IWorkspaceMeasuresService {
+        const { measures } = this.factories;
+
+        if (measures) {
+            return measures(this.decorated.measures(), this.workspace);
+        }
+
         return this.decorated.measures();
     }
 

@@ -212,6 +212,10 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
     // Measure the hidden span to compute dynamic textarea width before paint
     useLayoutEffect(() => {
         if (isEditableLabelWidthDynamic && isEditing && measureSpanRef.current) {
+            /**
+             * NOTE: In the future consider using `field-sizing: content` to automatically adjust size when typing. This CSS property
+             * is only 2026 baseline so as of this writing, the current solution is kept for backward browser compatibility.
+             */
             const width = Math.ceil(measureSpanRef.current.getBoundingClientRect().width) + 2;
             setDynamicWidth(width);
         }

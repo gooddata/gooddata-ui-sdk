@@ -86,6 +86,12 @@ $gd-dashboards-section-title-lineColor: var(
     display: block;
     overflow: hidden;
     margin-right: 5px;
+
+    .gd-editable-label-inner {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 }
 
 .dash-title {

@@ -53,6 +53,7 @@ import {
     transformAlertBySensitivity,
 } from "../utils/transformation.js";
 
+import { useAlertFilters } from "./useAlertFilters.js";
 import { useAlertFormValidation } from "./useAlertFormValidation.js";
 import { useAlertSelectedValues } from "./useAlertSelectedValues.js";
 import { useAlertSupportedMetrics } from "./useAlertSupportedMetrics.js";
@@ -469,92 +470,24 @@ export function useEditAlert({
         );
     }, []);
 
-    const onFiltersChange = useCallback(
-        (filters: FilterContextItem[]) => {
-            setEditedAutomationFilters(filters);
-            setEditedAutomation((s) => {
-                if (!s) {
-                    return undefined;
-                }
-
-                const appliedFilters = getAppliedWidgetFilters(
-                    filters,
-                    dashboardHiddenFilters,
-                    widget,
-                    insight,
-                    commonDateFilterId,
-                    true,
-                    !s.metadata?.widget,
-                );
-                const visibleFilters = getVisibleFiltersByFilters(
-                    filters,
-                    availableFiltersAsVisibleFilters,
-                    true,
-                );
-
-                const updatedAutomationWithFilters = {
-                    ...s,
-                    alert: {
-                        ...s.alert!,
-                        execution: {
-                            ...s.alert!.execution,
-                            filters: appliedFilters,
-                        },
-                    },
-                    metadata: {
-                        ...s.metadata,
-                        visibleFilters,
-                    },
-                };
-
-                const updatedAutomationWithAttribute = transformAlertByAttribute(
-                    supportedAttributes,
-                    updatedAutomationWithFilters as IAutomationMetadataObject,
-                    selectedAttribute,
-                    {
-                        name: selectedValue ?? "",
-                        title: "",
-                        value: "",
-                    },
-                );
-
-                return selectedMeasure
-                    ? transformAlertByMetric(
-                          supportedMeasures,
-                          updatedAutomationWithAttribute,
-                          selectedMeasure,
-                          measureFormatMap,
-                          weekStart,
-                          timezone,
-                      )
-                    : updatedAutomationWithAttribute;
-            });
-        },
-        [
-            setEditedAutomationFilters,
-            setEditedAutomation,
-            availableFiltersAsVisibleFilters,
-            widget,
-            insight,
-            dashboardHiddenFilters,
-            commonDateFilterId,
-            //
-            selectedAttribute,
-            selectedValue,
-            supportedAttributes,
-            //
-            selectedMeasure,
-            supportedMeasures,
-            measureFormatMap,
-            //
-            weekStart,
-            timezone,
-        ],
-    );
-
-    const onApplyCurrentFilters = useCallback(() => {
-        onFiltersChange(filtersForNewAutomation);
-    }, [filtersForNewAutomation, onFiltersChange]);
+    const { onFiltersChange, onApplyCurrentFilters } = useAlertFilters({
+        setEditedAutomation,
+        setEditedAutomationFilters,
+        filtersForNewAutomation,
+        availableFiltersAsVisibleFilters,
+        dashboardHiddenFilters,
+        commonDateFilterId,
+        widget,
+        insight,
+        supportedMeasures,
+        supportedAttributes,
+        measureFormatMap,
+        selectedMeasure,
+        selectedAttribute,
+        selectedValue,
+        weekStart,
+        timezone,
+    });
 
     const { value, onChange, onBlur, thresholdErrorMessage } = useAlertThreshold({
         setEditedAutomation,
