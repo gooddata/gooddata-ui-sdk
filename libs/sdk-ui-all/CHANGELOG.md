@@ -1,6 +1,65 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 16 Jul 2026 06:27:45 GMT and should not be manually modified.
+This log was last generated on Thu, 23 Jul 2026 06:56:19 GMT and should not be manually modified.
+
+## 11.48.0
+
+Thu, 23 Jul 2026 06:56:19 GMT
+
+### Minor changes
+
+- Add shared calendar-aware date granularity registry in sdk-model (getGranularities, getDateFilterGranularities, classification predicates and standard/fiscal relations) as the single source of truth for granularity lists
+- Dashboard export and scheduled export now list both workspace-level and organization-level export templates (merged, deduplicated by ref); add workspace export templates caching decorator mirroring the organization one
+- Export templates: IExportTemplate.isInherited via origin meta (sdk-model, sdk-backend-tiger) and the enableExportTemplatesSettingUi feature flag through FeatureHub
+- UiButton: linkDimmed variant; UiTooltip: inlineAnchor prop; UiAsyncTable: hideHeader prop and no divider under the last row; UiMenu: size-scoped item line-height; UiIcon: filePptx honours the color prop
+
+### Patches
+
+- sdk-model, sdk-backend-tiger: remove the enableShellApplication_ldmModeler and enableShellApplication_metricEditor feature flags; the LDM modeler and metric editor are now always served as host-application modules
+
+### Updates
+
+- sdk-ui-catalog: Change object types filter label to "Objects"
+- sdk-ui-catalog: Remove plus icon from the catalog Create button
+- sdk-ui-catalog: Add divider before Delete in the detail actions menu
+- sdk-ui-kit: Add first-class `separator` item to `UiMenu`, `UiListbox`, and `UiTabs` actions; deprecate `separatorStaticItem`
+- sdk-ui-kit: Remove deprecated `separatorStaticItem` and `isSeparator`; migrate all menus to the first-class `separator` item
+- sdk-ui-catalog: Remove unused `ICatalogDetailAction` from public API
+- sdk-ui-dashboard: Propagate STRING dashboard parameter overrides through automations (alerts, scheduled exports) and drill; automation dialogs render string chips via `ParameterControl`
+- sdk-model: Add `sanitizeParameterValue` and `parameterValueMatchesType` parameter helpers
+- sdk-backend-tiger: Preserve string alert parameter values loaded from the backend
+- sdk-backend-tiger: Enable `enableParameters` feature flag by default
+- sdk-ui-dashboard: Fixed visual regression of dashboard settings button in edit mode.
+- sdk-ui-dashboard: Deleted dead CSS code related to legacy dashboard widget buttons.
+- sdk-ui-dashboard: Fixed inconsistent styling of dashboard widget buttons, such as "Show as table" button not having background on mobile and similar.
+- sdk-ui-dashboard: Fixed incorrect positioning of dashboard widget buttons on mobile. Made sure that the spacing between dashboard widgets is always the same (mobile and desktop).
+- sdk-ui-kit: Fixed `<EditableLabel />` text scrolled out of view after editing a value longer than the available width.
+- sdk-ui-dashboard: Made sure the editable label adjusts its width as the user edits the dashboard title.
+- sdk-ui-dashboard: Truncated long dashboard titles with ellipsis.
+- sdk-ui-dashboard: Fixed UI regression of dashboard widget buttons showing in exports.
+- sdk-ui-gen-ai: Add support for dashboard GenAI user context setup.
+- sdk-ui-gen-ai: Add "Ask About This" feature.
+- sdk-ui-catalog: Refactored catalog parameter and metric CRUD to a unified framework.
+- sdk-backend-base: Cache and de-duplicate facts service reads (getFact, getFactDatasetMeta)
+- Cache and de-dupe measures service reads (getMeasureExpressionTokens, getMeasureReferencingObjects)
+- Fix scrolling of filter dialogs: the dimensionality/'out of' attribute pills no longer swallow wheel events; the growing dialog content scrolls in a single common container (MVF dropdown, ranking filter, dashboard MVF configuration panel)
+- Extract alerting filter-change reconciliation into useAlertFilters hook (GDP-3167)
+- Package alerting threshold field into useAlertThreshold hook (GDP-3167)
+- sdk-ui-catalog: Fix Catalog crash caused by crypto.randomUUID being unavailable on HTTP or older browsers.
+- Export multi-layer geo charts with each layer as its own sheet (XLSX) or file (CSV) in Analytical Designer and dashboard widget exports.
+- sdk-code-schemas, sdk-code-convertors: Enable radar chart in analytics as code
+- sdk-ui-ext: fix radar chart property sanitization to strip unsupported cartesian xaxis/yaxis properties
+- sdk-ui-ext: fix screen reader announcing internal property keys instead of visible labels for configuration panel checkboxes
+- Introduce new feature flag and dashboard setting for Persistent filters accros tabs. This feature enables dashboard filter state to remain active when users switch between dashboard tabs.
+- Fix conversation loading forever when reopened after starting a new conversation
+- Add workspace-scoped theme and color palette resolution and entities
+- sdk-ui-charts, sdk-ui-ext: Allow configuring explicit colors for period comparison measures in the color configuration, with a Reset option in the color picker that returns to the automatically derived color.
+- sdk-ui-dashboard: Fix visual polish issues in Key driver analysis dialog.
+- sdk-ui-dashboard: Fix metric number format in KDA dialog
+- sdk-ui-dashboard: Make the Key Driver Analysis attribute selector popup accessible
+- sdk-ui-all: Turn on improved ranking filter by default.
+- sdk-ui-charts: Improve screen reader aria-label accuracy for heatmap (row dimension, correct attribute name, proper number format), radar (attribute prefix), treemap (correct dimension order and labels for both flat and segmented), and stacked bar/column charts (consistent measure formatting). Add keyboard navigation for stacked column/bar totals: the stack label is now reachable with Up/Down arrows alongside individual segments, with correct visual focus management and same-column navigation that bypasses Highcharts' geometry-based heuristic.
+- sdk-backend-tiger: Invalidate cached settings resolutions on settings writes to fix read-after-write staleness
 
 ## 11.47.0
 
