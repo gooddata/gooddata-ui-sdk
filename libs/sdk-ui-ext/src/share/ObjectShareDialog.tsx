@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -10,13 +10,13 @@ import {
     UiConfirmDialog,
     UiGranteeRowControls,
     UiObjectShareDialog,
-    UiRadioRow,
-    UiTransferOwnershipDialog,
+    UiTag,
+    UiTooltip,
 } from "@gooddata/sdk-ui-kit";
 
 import { objectShareMessages } from "./messages.js";
-import { granteeDisplayPair } from "./objectShareController.helpers.js";
-import type { IObjectShareController } from "./objectShareController.types.js";
+import { granteeDisplayPair, userDisplayPair } from "./objectShareController.helpers.js";
+import type { IObjectShareController, ObjectSharePermissionLevel } from "./objectShareController.types.js";
 import type { IObjectShareLabel } from "./types.js";
 import { useObjectShareController } from "./useObjectShareController.js";
 
@@ -113,35 +113,33 @@ export function ObjectShareDialog({
     });
     const { state, actions } = controller ?? ownController;
 
+    // Staged self-restriction — the level (or removal) the signed-in user picked
+    // for their own sole grant, held until the "Restrict your access?" confirm.
+    const [pendingSelfChange, setPendingSelfChange] = useState<
+        { granteeId: string; level: ObjectSharePermissionLevel | "none" } | undefined
+    >(undefined);
+
+    // Drop the staged self-restriction whenever `isOpen` flips OR the target
+    // changes — the detail view navigates between objects by toggling `isOpen`
+    // alone (no onClose), but a consumer may also swap the target while open, and
+    // the self row's id is target-independent: a stale confirm could otherwise
+    // apply the restriction to the NEXT object. Render-time adjust, matching the
+    // controller's own reset-on-target idiom.
+    const [lastOpen, setLastOpen] = useState(isOpen);
+    const [lastTargetKey, setLastTargetKey] = useState(state.targetKey);
+    if (lastOpen !== isOpen || lastTargetKey !== state.targetKey) {
+        setLastOpen(isOpen);
+        setLastTargetKey(state.targetKey);
+        setPendingSelfChange(undefined);
+    }
+
     const handleClose = useCallback(() => {
+        setPendingSelfChange(undefined);
         actions.reset();
         onClose();
     }, [actions, onClose]);
 
-    // Owner is always an individual user, so the transfer picker drops any groups
-    // the shared loader returns. `includeGranted` keeps already-granted users in
-    // the list — promoting an existing viewer to owner is a primary case.
-    //
-    // Depend on the stable `loadOptions` alone, not the whole `actions` object:
-    // `actions` changes identity as transfer state ticks (and as the picker's own
-    // name-cache writes re-derive grantees), and the autocomplete refetches page 0
-    // whenever its loader's identity changes — depending on `actions` here would
-    // self-feed into an infinite assignee-fetch loop.
-    const { loadOptions } = actions;
-    const loadOwnerOptions = useCallback(
-        async (search: string) => {
-            const { users } = await loadOptions(search, true);
-            return { groups: [], users };
-        },
-        [loadOptions],
-    );
-
     const isAddGranteeOpen = isOpen && state.subview === "addGrantee";
-    // The transfer subview splits into two co-mounted dialogs: the transfer card
-    // while picking a non-owner, and the "already an owner" confirm once the picked
-    // user already owns the object.
-    const isTransferOpen = isOpen && state.subview === "transferOwnership" && !state.transferTargetIsOwner;
-    const isAlreadyOwnerOpen = isOpen && state.subview === "transferOwnership" && state.transferTargetIsOwner;
     const isShareOpen = isOpen && state.subview === "main";
     const isConfirmOpen = isOpen && !!state.pendingGeneralAccess;
 
@@ -154,14 +152,37 @@ export function ObjectShareDialog({
     // wrong labels). `labelsResolved` is false while labels are still loading and
     // when their fetch failed, so a pending/failed label set blocks every
     // access-changing control here — Add, row controls and general access alike.
-    // Also locked while a transfer-ownership write is committing: the transfer
-    // dialog can be dismissed (Back/Cancel/close) mid-save, so without this the
-    // user could return here and mutate other grantees concurrently with the
-    // in-flight ownership write — racing the same object's permissions with no
-    // refetch to reconcile. `transferSaving` clears when the transfer settles.
     const isLoaded = state.status === "success";
-    const isMutable = isLoaded && state.labelsResolved && !state.transferSaving;
+    const isMutable = isLoaded && state.labelsResolved;
     const isAddDisabled = !isMutable;
+
+    // Single-viewer empty states (design: the "restrict own access" board):
+    // (a) the sole explicit grant is the signed-in user's own → their row hosts a
+    //     merged menu managing their own access, with lowering gated by a confirm.
+    const soleSelfGrantee = state.grantees.length === 1 && !!state.grantees[0].isSelf;
+    // Until the profile resolves (or when it silently failed), a sole USER row
+    // can't be told apart from the caller's own grant — mutating it then would
+    // bypass the self-restriction confirm, so it stays disabled, not merely
+    // unmerged. Group rows are never the caller's own, and multi-row lists are
+    // unaffected: their rows aren't self-managed.
+    const soleRowIdentityPending =
+        state.grantees.length === 1 && state.grantees[0].kind === "user" && !state.selfIdentityResolved;
+    // (b) the manage-gated list LOADED with no explicit grants at all → the caller
+    //     can only have passed the backend's gate through administrator/manager
+    //     rights, so render a synthesized self row with a static Admin tag. Keyed
+    //     to the load-time fact (`seededWithoutGrants`), not the live list — a
+    //     grant-holder who removes their own sole grant empties the list without
+    //     having grant-independent access. A workspace-wide SHARE rule is the one
+    //     other way through the gate — the viewer may then be any workspace
+    //     member, so no badge (list stays empty).
+    const workspaceShareCapable = state.generalAccess === "WORKSPACE" && state.workspaceLevel === "SHARE";
+    const adminSelfIdentity =
+        isLoaded && state.grantees.length === 0 && state.seededWithoutGrants && !workspaceShareCapable
+            ? state.selfIdentity
+            : undefined;
+    const adminDisplay = adminSelfIdentity
+        ? userDisplayPair(adminSelfIdentity, adminSelfIdentity.id)
+        : undefined;
 
     // Map the controller's labels to the picker's item shape; the primary label
     // is rendered locked (always selected, can't be unchecked).
@@ -178,44 +199,106 @@ export function ObjectShareDialog({
                 isOpen={isShareOpen}
                 objectTitle={objectTitle}
                 onClose={handleClose}
-                grantees={state.grantees.map((g) => ({
-                    id: g.id,
-                    kind: g.kind,
-                    ...granteeDisplayPair(g),
-                    isPending: g.pending !== undefined,
-                    controls: (
-                        <UiGranteeRowControls
-                            labels={labelItems}
-                            selectedLabelIds={
-                                state.selectedLabelIdsByGrantee[g.id] ?? state.labels.map((l) => l.id)
-                            }
-                            permissionLevel={g.level}
-                            effectivePermission={g.effectivePermission}
-                            // Disable row controls while saving, and until per-label
-                            // scope resolves (labels still loading, failed, or the
-                            // probe in flight) — removing or re-scoping before then
-                            // would diff against the "assume all"/empty placeholder
-                            // and silently orphan real per-label grants.
-                            isDisabled={
-                                g.pending !== undefined || !state.labelsResolved || state.transferSaving
-                            }
-                            onLabelsChange={(selectedIds) => {
-                                void actions.changeGranteeLabels(g.id, selectedIds);
-                            }}
-                            onPermissionChange={(level) => {
-                                void actions.changePermissionLevel(g.id, level);
-                            }}
-                            onRemoveAccess={() => {
-                                void actions.removeGrantee(g.id);
-                            }}
-                            // Owner-only — omitting the handler hides the menu item for
-                            // users who can't transfer (e.g. View&Share).
-                            onTransferOwnership={
-                                state.canTransferOwnership ? actions.openTransferOwnership : undefined
-                            }
-                        />
-                    ),
-                }))}
+                grantees={
+                    adminDisplay
+                        ? [
+                              {
+                                  id: "self-admin",
+                                  kind: "user" as const,
+                                  name: intl.formatMessage(objectShareMessages.granteeYou, {
+                                      name: adminDisplay.name,
+                                  }),
+                                  email: adminDisplay.email,
+                                  controls: (
+                                      <UiTooltip
+                                          triggerBy={["hover", "focus"]}
+                                          content={intl.formatMessage(objectShareMessages.adminTagTooltip)}
+                                          anchor={
+                                              <span tabIndex={0}>
+                                                  <UiTag
+                                                      label={intl.formatMessage(
+                                                          objectShareMessages.adminTagLabel,
+                                                      )}
+                                                      size="small"
+                                                      variant="solid"
+                                                  />
+                                              </span>
+                                          }
+                                      />
+                                  ),
+                              },
+                          ]
+                        : state.grantees.map((g) => {
+                              const display = granteeDisplayPair(g);
+                              const isManagedSelf = soleSelfGrantee && !!g.isSelf;
+                              return {
+                                  id: g.id,
+                                  kind: g.kind,
+                                  name: g.isSelf
+                                      ? intl.formatMessage(objectShareMessages.granteeYou, {
+                                            name: display.name,
+                                        })
+                                      : display.name,
+                                  email: display.email,
+                                  isPending: g.pending !== undefined,
+                                  controls: (
+                                      <UiGranteeRowControls
+                                          labels={labelItems}
+                                          selectedLabelIds={
+                                              state.selectedLabelIdsByGrantee[g.id] ??
+                                              state.labels.map((l) => l.id)
+                                          }
+                                          permissionLevel={g.level}
+                                          effectivePermission={g.effectivePermission}
+                                          mergedControls={isManagedSelf}
+                                          // Above the user's own level there is no way back
+                                          // (you can't raise yourself) — offered levels above
+                                          // it render disabled with the shared warning.
+                                          disabledLevels={
+                                              isManagedSelf && g.level === "VIEW" ? ["SHARE"] : undefined
+                                          }
+                                          disabledTooltip={
+                                              isManagedSelf
+                                                  ? intl.formatMessage(
+                                                        objectShareMessages.selfRestrictWarning,
+                                                    )
+                                                  : undefined
+                                          }
+                                          // Disable row controls while saving, until per-label
+                                          // scope resolves (labels still loading, failed, or the
+                                          // probe in flight) — removing or re-scoping before then
+                                          // would diff against the "assume all"/empty placeholder
+                                          // and silently orphan real per-label grants — and while
+                                          // a sole row's self identity is still unknown.
+                                          isDisabled={
+                                              g.pending !== undefined ||
+                                              !state.labelsResolved ||
+                                              soleRowIdentityPending
+                                          }
+                                          onLabelsChange={(selectedIds) => {
+                                              void actions.changeGranteeLabels(g.id, selectedIds);
+                                          }}
+                                          onPermissionChange={(level) => {
+                                              if (isManagedSelf) {
+                                                  if (level !== g.level) {
+                                                      setPendingSelfChange({ granteeId: g.id, level });
+                                                  }
+                                                  return;
+                                              }
+                                              void actions.changePermissionLevel(g.id, level);
+                                          }}
+                                          onRemoveAccess={() => {
+                                              if (isManagedSelf) {
+                                                  setPendingSelfChange({ granteeId: g.id, level: "none" });
+                                                  return;
+                                              }
+                                              void actions.removeGrantee(g.id);
+                                          }}
+                                      />
+                                  ),
+                              };
+                          })
+                }
                 onAddClick={actions.openAddGrantee}
                 isAddDisabled={isAddDisabled}
                 generalAccess={state.generalAccess}
@@ -280,54 +363,6 @@ export function ObjectShareDialog({
                 }}
             />
 
-            <UiTransferOwnershipDialog
-                isOpen={isTransferOpen}
-                objectTitle={objectTitle}
-                loadOptions={loadOwnerOptions}
-                selectedOwner={state.transferTarget}
-                onSelectedOwnerChange={actions.setTransferTarget}
-                alsoRemoveMyAccess={state.transferAlsoRemoveSelf}
-                onAlsoRemoveMyAccessChange={actions.setTransferAlsoRemoveSelf}
-                onBack={actions.closeTransferOwnership}
-                onClose={handleClose}
-                onCancel={actions.closeTransferOwnership}
-                onTransfer={() => {
-                    void actions.confirmTransferOwnership();
-                }}
-                isSaving={state.transferSaving}
-            />
-
-            <UiConfirmDialog
-                isOpen={isAlreadyOwnerOpen}
-                title={intl.formatMessage(objectShareMessages.transferAlreadyOwnerTitle, {
-                    name: state.transferTarget?.name ?? "",
-                })}
-                description={
-                    <>
-                        <p>{intl.formatMessage(objectShareMessages.transferAlreadyOwnerDescription)}</p>
-                        <UiRadioRow
-                            name="transfer-already-owner"
-                            checked={!state.transferAlsoRemoveSelf}
-                            onChange={() => actions.setTransferAlsoRemoveSelf(false)}
-                            title={intl.formatMessage(objectShareMessages.transferAlreadyOwnerKeepAccess)}
-                        />
-                        <UiRadioRow
-                            name="transfer-already-owner"
-                            checked={state.transferAlsoRemoveSelf}
-                            onChange={() => actions.setTransferAlsoRemoveSelf(true)}
-                            title={intl.formatMessage(objectShareMessages.transferAlreadyOwnerRemoveAccess)}
-                        />
-                    </>
-                }
-                confirmLabel={intl.formatMessage(objectShareMessages.transferConfirmButton)}
-                confirmVariant="primary"
-                onCancel={actions.closeTransferOwnership}
-                onClose={actions.closeTransferOwnership}
-                onConfirm={() => {
-                    void actions.confirmTransferOwnership();
-                }}
-            />
-
             <UiConfirmDialog
                 isOpen={isConfirmOpen}
                 title={intl.formatMessage(
@@ -347,6 +382,28 @@ export function ObjectShareDialog({
                 onClose={actions.cancelGeneralAccessChange}
                 onConfirm={() => {
                     void actions.confirmGeneralAccessChange();
+                }}
+            />
+
+            <UiConfirmDialog
+                isOpen={Boolean(isOpen && pendingSelfChange)}
+                title={intl.formatMessage(objectShareMessages.selfRestrictTitle)}
+                description={intl.formatMessage(objectShareMessages.selfRestrictWarning)}
+                confirmLabel={intl.formatMessage(objectShareMessages.confirmButton)}
+                confirmVariant="primary"
+                onCancel={() => setPendingSelfChange(undefined)}
+                onClose={() => setPendingSelfChange(undefined)}
+                onConfirm={() => {
+                    if (!pendingSelfChange) {
+                        return;
+                    }
+                    const { granteeId, level } = pendingSelfChange;
+                    setPendingSelfChange(undefined);
+                    if (level === "none") {
+                        void actions.removeGrantee(granteeId);
+                    } else {
+                        void actions.changePermissionLevel(granteeId, level);
+                    }
                 }}
             />
         </>

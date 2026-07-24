@@ -63,8 +63,8 @@ export interface IUiControlButtonProps {
 }
 
 /**
- * Generic chip-shaped dropdown trigger primitive. One source of truth for filter-bar chip
- * visuals; consumed by both attribute filter chips and parameter chips.
+ * Generic dropdown trigger primitive. One source of truth for filter-bar button visuals;
+ * consumed by both attribute filter buttons and parameter controls.
  *
  * Owns: layout, visual states, keyboard activation, ARIA contract.
  *

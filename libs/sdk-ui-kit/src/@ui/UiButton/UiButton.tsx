@@ -52,6 +52,7 @@ export interface IUiButtonProps {
     iconAfter?: IconType;
     iconAfterSize?: number;
     label: string;
+    type?: "button" | "submit" | "reset";
     isDisabled?: boolean;
     isLoading?: boolean;
     isSelected?: boolean;
@@ -89,6 +90,7 @@ export const UiButton = forwardRef<HTMLButtonElement, IUiButtonProps>(
             variant = "secondary",
             tabIndex = 0,
             label,
+            type,
             isDisabled,
             isSelected,
             isLoading,
@@ -119,6 +121,7 @@ export const UiButton = forwardRef<HTMLButtonElement, IUiButtonProps>(
             <button
                 id={id}
                 ref={ref}
+                type={type}
                 className={b({
                     size,
                     variant,

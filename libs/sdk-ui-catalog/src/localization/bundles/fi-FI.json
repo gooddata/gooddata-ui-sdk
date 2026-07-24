@@ -2,7 +2,7 @@
     "analyticsCatalog.title": "Analytiikkakatalogi",
     "analyticsCatalog.showMore": "näytä lisää",
     "analyticsCatalog.showLess": "näytä vähemmän",
-    "analyticsCatalog.objectType.title": "Objektityypit",
+    "analyticsCatalog.objectType.title": "Objektit",
     "analyticsCatalog.objectType.dashboard.button.ariaLabel": "Koontinäyttö: {count}",
     "analyticsCatalog.objectType.visualization.button.ariaLabel": "Visualisointi: {count}",
     "analyticsCatalog.objectType.metric.button.ariaLabel": "Metrikka: {count}",

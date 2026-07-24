@@ -143,6 +143,8 @@
     "filters.configurationPanel.userFilterSave.toggle.tooltip": "Permitir el autoguardado del último estado de los filtros. Cuando los usuarios regresen, sus filtros permanecerán como los dejaron.",
     "filters.configurationPanel.filterViews.toggle": "Vistas guardadas",
     "filters.configurationPanel.filterViews.toggle.tooltip": "<p>Permite a los usuarios guardar el estado de los filtros como una vista personal a la que pueden volver más tarde.</p><p>Sólo el usuario que guardó la vista puede acceder a ella y establecerla como su vista predeterminada.</p>",
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle": "Filtros persistentes entre pestañas",
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle.tooltip": "Permitir filtros persistentes entre pestañas. Cuando está activado, los filtros serán persistentes entre pestañas.",
     "settingsDashboardDialog.sectionHeaders.dateDataset": "Rango de fechas en las descripciones",
     "settingsDashboardDialog.sectionHeaders.dateDataset.tooltip": "Conjunto de datos de fechas utilizado por el filtro Intervalo de fechas para las referencias métricas en las descripciones de las secciones.",
     "dateDataset.autoSelect": "Autoselección",

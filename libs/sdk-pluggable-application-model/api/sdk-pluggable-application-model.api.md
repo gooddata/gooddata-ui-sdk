@@ -145,7 +145,7 @@ export interface IHostUiMountOptions {
     container: HTMLElement;
     ctx: IPlatformContext;
     navigate: (url: string) => void;
-    onAskAiAssistant?: (question: string, userContext?: IGenAIUserContext) => void;
+    onAskAiAssistant?: (question: string, agentId?: string, userContext?: IGenAIUserContext, appendToChat?: boolean, replaceUserContext?: boolean) => void;
     onChatToggleRequested?: () => void;
     pathname: string;
     replace: (url: string) => void;
@@ -178,6 +178,7 @@ export interface IOpenAiAssistantRequestedEvent extends IPluggableAppEvent {
     // (undocumented)
     readonly payload: {
         readonly question?: string;
+        readonly agentId?: string;
         readonly userContext?: IGenAIUserContext;
         readonly appendToChat?: boolean;
         readonly replaceUserContext?: boolean;
@@ -379,6 +380,7 @@ export const LIB_VERSION: string;
 
 // @alpha
 export function openAiAssistantRequested(payload?: {
+    agentId?: string;
     question?: string;
     userContext?: IGenAIUserContext;
     appendToChat?: boolean;

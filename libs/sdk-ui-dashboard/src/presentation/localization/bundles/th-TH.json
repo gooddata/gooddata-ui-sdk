@@ -143,6 +143,8 @@
     "filters.configurationPanel.userFilterSave.toggle.tooltip": "อนุญาตให้บันทึกสถานะล่าสุดของตัวกรองอัตโนมัติ เมื่อผู้ใช้กลับมา ตัวกรองของพวกเขาจะคงอยู่ตามที่ได้ตั้งไว้",
     "filters.configurationPanel.filterViews.toggle": "มุมมองที่บันทึกไว้",
     "filters.configurationPanel.filterViews.toggle.tooltip": "<p>อนุญาตให้ผู้ใช้บันทึกสถานะของตัวกรองเป็นมุมมองส่วนบุคคลที่สามารถกลับมาใช้ได้ในภายหลัง</p><p>เฉพาะผู้ใช้ที่บันทึกมุมมองเท่านั้นที่สามารถเข้าถึงได้ และตั้งเป็นมุมมองเริ่มต้นของตนได้</p>",
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle": "ตัวกรองที่คงอยู่ข้ามแท็บ",
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle.tooltip": "อนุญาตให้ตัวกรองคงอยู่ข้ามแท็บ เมื่อเปิดใช้งาน ตัวกรองจะคงอยู่ข้ามแท็บ",
     "settingsDashboardDialog.sectionHeaders.dateDataset": "ช่วงวันที่ในคำอธิบาย",
     "settingsDashboardDialog.sectionHeaders.dateDataset.tooltip": "ชุดข้อมูลวันที่ที่ใช้โดยตัวกรองช่วงวันที่สำหรับการอ้างอิงเมตริกในคำอธิบายของส่วน",
     "dateDataset.autoSelect": "เลือกอัตโนมัติ",

@@ -87,36 +87,36 @@ describe("UiMoreOptionsMenu", () => {
     });
 
     it("returns to the menu list when Back is pressed in the checklist", () => {
-        renderMenu({ labels: LABELS, selectedLabelIds: ["id"], onTransferOwnership: () => {} });
+        renderMenu({ labels: LABELS, selectedLabelIds: ["id"], onRemoveAccess: () => {} });
         openMenu();
         fireEvent.click(screen.getByRole("menuitem", { name: /labels access/i }));
         expect(screen.getByRole("checkbox", { name: /Customer Email/ })).toBeInTheDocument();
         fireEvent.click(screen.getByRole("button", { name: /back/i }));
         expect(screen.queryByRole("checkbox", { name: /Customer Email/ })).not.toBeInTheDocument();
         expect(screen.getByRole("menuitem", { name: /labels access/i })).toBeInTheDocument();
-        expect(screen.getByRole("menuitem", { name: /Transfer ownership/ })).toBeInTheDocument();
+        expect(screen.getByRole("menuitem", { name: /Remove access/ })).toBeInTheDocument();
     });
 
-    it("shows Transfer ownership and fires it (closing the menu) when picked", () => {
-        const onTransferOwnership = vi.fn();
-        renderMenu({ onTransferOwnership });
+    it("shows Remove access and fires it (closing the menu) when picked", () => {
+        const onRemoveAccess = vi.fn();
+        renderMenu({ onRemoveAccess });
         openMenu();
-        fireEvent.click(screen.getByRole("menuitem", { name: /Transfer ownership/ }));
-        expect(onTransferOwnership).toHaveBeenCalledOnce();
+        fireEvent.click(screen.getByRole("menuitem", { name: /Remove access/ }));
+        expect(onRemoveAccess).toHaveBeenCalledOnce();
         // Picking it closes the popover.
-        expect(screen.queryByRole("menuitem", { name: /Transfer ownership/ })).not.toBeInTheDocument();
+        expect(screen.queryByRole("menuitem", { name: /Remove access/ })).not.toBeInTheDocument();
     });
 
     it("omits Manage labels access when no labels are provided", () => {
-        renderMenu({ onTransferOwnership: () => {} });
+        renderMenu({ onRemoveAccess: () => {} });
         openMenu();
         expect(screen.queryByRole("menuitem", { name: /labels access/i })).not.toBeInTheDocument();
     });
 
-    it("omits Transfer ownership when no handler is provided", () => {
+    it("omits Remove access when no handler is provided", () => {
         renderMenu({ labels: LABELS, selectedLabelIds: ["id"] });
         openMenu();
-        expect(screen.queryByRole("menuitem", { name: /Transfer ownership/ })).not.toBeInTheDocument();
+        expect(screen.queryByRole("menuitem", { name: /Remove access/ })).not.toBeInTheDocument();
     });
 
     it("forwards dataTestId", () => {

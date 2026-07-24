@@ -17,6 +17,8 @@ import {
     ActionsApi_ManageAttributePermissions,
     ActionsApi_ManageFactPermissions,
     ActionsApi_ManageLabelPermissions,
+    ActionsApi_ManageMetricPermissions,
+    ActionsApi_MetricPermissions,
 } from "@gooddata/api-client-tiger/endpoints/actions";
 import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/endpoints/profile";
 import {
@@ -168,6 +170,8 @@ const fetchPermissionsByKind = (
             return ActionsApi_FactPermissions(axios, basePath, { workspaceId, factId: objectId });
         case "label":
             return ActionsApi_LabelPermissions(axios, basePath, { workspaceId, labelId: objectId });
+        case "measure":
+            return ActionsApi_MetricPermissions(axios, basePath, { workspaceId, metricId: objectId });
     }
 };
 
@@ -197,6 +201,12 @@ const manageByKind = (
                 workspaceId,
                 labelId: objectId,
                 manageLabelPermissionsRequestInner,
+            });
+        case "measure":
+            return ActionsApi_ManageMetricPermissions(axios, basePath, {
+                workspaceId,
+                metricId: objectId,
+                manageMetricPermissionsRequestInner: manageLabelPermissionsRequestInner,
             });
     }
 };

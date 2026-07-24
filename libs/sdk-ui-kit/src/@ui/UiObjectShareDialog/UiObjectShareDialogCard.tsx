@@ -35,11 +35,12 @@ export interface IUiObjectShareDialogGrantee {
     name: string;
     /** Optional email subline. */
     email?: string;
-    /** When true, the row is rendered with the "Owner" tag instead of controls. */
-    isOwner?: boolean;
     /** When true, the row is visually muted to signal an in-flight save. */
     isPending?: boolean;
-    /** Per-row controls — usually `UiGranteeRowControls`. Owner rows leave this empty. */
+    /**
+     * Per-row controls — usually `UiGranteeRowControls`; the caller may plug in
+     * any other trailing content (e.g. a static tag) instead.
+     */
     controls?: ReactNode;
 }
 
@@ -149,7 +150,6 @@ export function UiObjectShareDialogCard({
                                 kind={grantee.kind}
                                 name={grantee.name}
                                 email={grantee.email}
-                                isOwner={grantee.isOwner}
                                 isPending={grantee.isPending}
                                 controls={grantee.controls}
                             />

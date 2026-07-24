@@ -2,7 +2,7 @@
     "analyticsCatalog.title": "Katalog analitik",
     "analyticsCatalog.showMore": "tampilkan lebih banyak",
     "analyticsCatalog.showLess": "tampilkan lebih sedikit",
-    "analyticsCatalog.objectType.title": "Jenis objek",
+    "analyticsCatalog.objectType.title": "Objek",
     "analyticsCatalog.objectType.dashboard.button.ariaLabel": "Dasbor: {count}",
     "analyticsCatalog.objectType.visualization.button.ariaLabel": "Visualisasi: {count}",
     "analyticsCatalog.objectType.metric.button.ariaLabel": "Metrik: {count}",

@@ -279,6 +279,7 @@
     "gs.color-dropdown.custom-color": "Custom colour",
     "properties.colors.reset-colors": "Reset Colours",
     "properties.colors.reset-color": "Reset",
+    "properties.colors.reset-colors-and-styles": "Reset Colours and styles",
     "properties.colors": "Colours",
     "properties.colorsAndFills": "Colours and fills",
     "properties.colorsAndStyles": "Colours and styles",

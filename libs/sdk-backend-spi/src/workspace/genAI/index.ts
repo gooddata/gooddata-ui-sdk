@@ -11,6 +11,7 @@ import type {
     IAutomationAlert,
     IAutomationRecipient,
     IAutomationSchedule,
+    IDashboard,
     IFilter,
     IGenAIChangeAnalysisParams,
     IGenAIChatInteraction,
@@ -993,7 +994,8 @@ export type IChatConversationMultipartPart =
     | IChatConversationAlertProposalContent
     | IChatConversationKeyDriverAnalysisContent
     | IChatConversationWhatIfContent
-    | IChatConversationSearchContent;
+    | IChatConversationSearchContent
+    | IChatConversationDashboardContent;
 
 /**
  * GenAI Chat Conversation text content
@@ -1313,6 +1315,26 @@ export function isChatConversationSearchContent(
     content: IChatConversationMultipartPart,
 ): content is IChatConversationSearchContent {
     return content.type === "searchResults";
+}
+
+/**
+ * GenAI Chat Conversation dashboard content
+ * @internal
+ */
+export type IChatConversationDashboardContent = {
+    type: "dashboard";
+    dashboard: IDashboard | null;
+    saved: boolean;
+};
+
+/**
+ * Is chat conversation dashboard content
+ * @internal
+ */
+export function isChatConversationDashboardContent(
+    content: IChatConversationMultipartPart,
+): content is IChatConversationDashboardContent {
+    return content.type === "dashboard";
 }
 
 /**

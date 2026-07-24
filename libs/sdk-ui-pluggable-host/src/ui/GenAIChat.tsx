@@ -67,6 +67,10 @@ export interface IGenAIChatProps {
      */
     appendToChat?: boolean;
     /**
+     * Agent ID to use for the seeded question. If not provided, the default agent will be used.
+     */
+    agentId?: string;
+    /**
      * Ambient user context kept in sync by the active hosted application (e.g. the open dashboard
      * and its live filter state). Persists across messages and drives the chat's context indicator.
      */
@@ -107,6 +111,7 @@ export function GenAIChat({
     askedQuestion,
     askSeq,
     appendToChat,
+    agentId,
     userContext,
     replaceUserContext,
     ambientUserContext,
@@ -204,6 +209,7 @@ export function GenAIChat({
             askSeq={askSeq}
             userContext={userContext}
             appendToChat={appendToChat}
+            agentId={agentId}
             replaceUserContext={replaceUserContext}
             ambientUserContext={ambientUserContext}
             includeTags={includeTags}

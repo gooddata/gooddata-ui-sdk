@@ -335,6 +335,7 @@ export type {
     IObjectShareControllerActions,
     IObjectShareControllerState,
     IObjectShareGrantee,
+    ISelfIdentity,
     IUseObjectShareOptions,
     ObjectSharePermissionLevel,
 } from "./share/objectShareController.types.js";

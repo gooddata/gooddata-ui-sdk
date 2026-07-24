@@ -143,6 +143,8 @@
     "filters.configurationPanel.userFilterSave.toggle.tooltip": "Consentire il salvataggio automatico dell'ultimo stato dei filtri. Quando gli utenti tornano, i loro filtri rimarranno come li hanno lasciati.",
     "filters.configurationPanel.filterViews.toggle": "Visualizzazioni salvate",
     "filters.configurationPanel.filterViews.toggle.tooltip": "<p>Consente agli utenti di salvare lo stato dei filtri come una visualizzazione personale sulla quale tornare in seguito.</p><p>Solo l'utente che ha salvato la visualizzazione potrà accedervi e impostarla come predefinita.</p>",
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle": "Filtri persistenti tra schede",
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle.tooltip": "Consenti filtri persistenti tra schede. Quando abilitati, i filtri saranno persistenti tra schede.",
     "settingsDashboardDialog.sectionHeaders.dateDataset": "Intervallo di date nelle descrizioni",
     "settingsDashboardDialog.sectionHeaders.dateDataset.tooltip": "Set di dati utilizzati dal filtro Intervallo di date per i riferimenti metrici nelle descrizioni delle sezioni.",
     "dateDataset.autoSelect": "Selezione automatica",

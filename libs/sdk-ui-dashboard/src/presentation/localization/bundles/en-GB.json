@@ -143,6 +143,8 @@
     "filters.configurationPanel.userFilterSave.toggle.tooltip": "Allow auto-save of the filters' last state. When users return, their filters will remain as they left them.",
     "filters.configurationPanel.filterViews.toggle": "Saved views",
     "filters.configurationPanel.filterViews.toggle.tooltip": "<p>Allows users to save filter states as personal views they can return to later.</p><p>Only the user who saved the view can access it and set it as their default view.</p>",
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle": "Persistent filters across tabs",
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle.tooltip": "Allow persistent filters across tabs. When enabled, filters will be persistent across tabs.",
     "settingsDashboardDialog.sectionHeaders.dateDataset": "Date range in descriptions",
     "settingsDashboardDialog.sectionHeaders.dateDataset.tooltip": "Date dataset used by the Date range filter for metric references in section descriptions.",
     "dateDataset.autoSelect": "Auto-select",

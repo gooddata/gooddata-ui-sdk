@@ -9,6 +9,7 @@ import {
     UiGranteeRow,
     UiGranteeRowControls,
     UiIcon,
+    UiTag,
 } from "@gooddata/sdk-ui-kit";
 
 import { type IStoryParameters, State } from "../../_infra/backstopScenario.js";
@@ -52,7 +53,12 @@ function UiGranteeRowExample() {
     return (
         <IntlProvider locale={DEFAULT_LANGUAGE} messages={DEFAULT_MESSAGES[DEFAULT_LANGUAGE]}>
             <div className="screenshot-target" style={{ width: 560 }}>
-                <UiGranteeRow kind="user" name="Marek Stránský" email="marek.stransky@gooddata.com" isOwner />
+                <UiGranteeRow
+                    kind="user"
+                    name="Marek Stránský (you)"
+                    email="marek.stransky@gooddata.com"
+                    controls={<UiTag label="Admin" size="small" variant="solid" />}
+                />
                 <UiGranteeRow kind="group" name="Admin" controls={makeControls("Admin", "VIEW")} />
                 <UiGranteeRow
                     kind="user"

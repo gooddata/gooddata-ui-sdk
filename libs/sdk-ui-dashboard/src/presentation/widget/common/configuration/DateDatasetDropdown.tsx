@@ -70,7 +70,9 @@ function DateDatasetsListItem({
 
     return (
         <div className={classNames} onClick={onClick}>
-            <ShortenedText tooltipAlignPoints={tooltipAlignPoints}>{title}</ShortenedText>
+            <ShortenedText tooltipAlignPoints={tooltipAlignPoints} ellipsisPosition="end">
+                {title}
+            </ShortenedText>
         </div>
     );
 }

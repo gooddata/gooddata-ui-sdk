@@ -2,7 +2,7 @@
     "analyticsCatalog.title": "Каталог аналитики",
     "analyticsCatalog.showMore": "показать больше",
     "analyticsCatalog.showLess": "показать меньше",
-    "analyticsCatalog.objectType.title": "Типы объектов",
+    "analyticsCatalog.objectType.title": "Объекты",
     "analyticsCatalog.objectType.dashboard.button.ariaLabel": "Дашборд: {count}",
     "analyticsCatalog.objectType.visualization.button.ariaLabel": "Визуализация: {count}",
     "analyticsCatalog.objectType.metric.button.ariaLabel": "Метрика: {count}",

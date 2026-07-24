@@ -143,6 +143,8 @@
     "filters.configurationPanel.userFilterSave.toggle.tooltip": "필터의 마지막 상태를 자동 저장하도록 허용합니다. 사용자가 돌아오면 필터는 사용자가 남긴 상태 그대로 유지됩니다.",
     "filters.configurationPanel.filterViews.toggle": "저장된 보기",
     "filters.configurationPanel.filterViews.toggle.tooltip": "<p>사용자가 나중에 다시 볼 수 있는 개인적인 보기로 필터 상태를 저장할 수 있습니다.</p><p> 뷰를 저장한 사용자만 뷰에 접근하여 기본 뷰로 설정할 수 있습니다.</p>",
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle": "탭 간 지속 필터",
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle.tooltip": "탭 간 지속 필터를 허용합니다. 활성화하면 필터가 탭 간에 지속됩니다.",
     "settingsDashboardDialog.sectionHeaders.dateDataset": "설명에서 날짜 범위",
     "settingsDashboardDialog.sectionHeaders.dateDataset.tooltip": "섹션 설명에서 메트릭 참조를 위한 날짜 범위 필터에 사용된 날짜 데이터셋.",
     "dateDataset.autoSelect": "자동 선택",

@@ -162,6 +162,7 @@ import { IWorkspaceCatalogAvailableItemsFactory } from '@gooddata/sdk-backend-sp
 import { IWorkspaceCatalogFactory } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalogFactoryOptions } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceDashboardsService } from '@gooddata/sdk-backend-spi';
+import { IWorkspaceDatasetsService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceExportTemplatesService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceFactsService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceInsightsService } from '@gooddata/sdk-backend-spi';
@@ -321,6 +322,7 @@ export type CacheControl = {
     resetSecuritySettings: () => void;
     resetAttributes: () => void;
     resetFacts: () => void;
+    resetDatasets: () => void;
     resetWorkspaceSettings: () => void;
     resetGeoStyles: () => void;
     resetExportTemplates: () => void;
@@ -348,10 +350,14 @@ export type CachingConfiguration = {
     maxFactsPerWorkspace?: number;
     maxMeasuresWorkspaces?: number;
     maxMeasuresPerWorkspace?: number;
+    maxDatasetWorkspaces?: number;
+    maxDatasetsPerWorkspace?: number;
     maxExportTemplatesOrgs?: number;
     maxExportTemplatesWorkspaces?: number;
     maxAttributeDisplayFormsPerWorkspace?: number;
     maxAttributesPerWorkspace?: number;
+    maxCommonAttributesPerWorkspace?: number;
+    maxConnectedAttributesPerWorkspace?: number;
     maxAttributeElementResultsPerWorkspace?: number;
     maxWorkspaceSettings?: number;
     cacheGeoStyles?: boolean;
@@ -472,6 +478,9 @@ export type DataProviderContext = CustomCallContext & {
 // @beta
 export class DataSetMetadataObjectBuilder<T extends IDataSetMetadataObject = IDataSetMetadataObject> extends MetadataObjectBuilder<T> {
 }
+
+// @alpha (undocumented)
+export type DatasetsDecoratorFactory = (datasets: IWorkspaceDatasetsService, workspace: string) => IWorkspaceDatasetsService;
 
 // @alpha
 export function decoratedBackend(backend: IAnalyticalBackend, decorators: DecoratorFactories): IAnalyticalBackend;
@@ -891,6 +900,7 @@ export type DecoratorFactories = {
     automations?: AutomationsDecoratorFactory;
     insights?: InsightsDecoratorFactory;
     measures?: MeasuresDecoratorFactory;
+    datasets?: DatasetsDecoratorFactory;
     dashboards?: DashboardsDecoratorFactory;
     facts?: FactsDecoratorFactory;
     geo?: GeoDecoratorFactory;

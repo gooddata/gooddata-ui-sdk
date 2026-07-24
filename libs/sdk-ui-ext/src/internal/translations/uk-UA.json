@@ -279,6 +279,7 @@
     "gs.color-dropdown.custom-color": "Власний колір",
     "properties.colors.reset-colors": "Скинути кольори",
     "properties.colors.reset-color": "Скинути",
+    "properties.colors.reset-colors-and-styles": "Скинути кольори та стилі",
     "properties.colors": "Кольори",
     "properties.colorsAndFills": "Кольори та заливки",
     "properties.colorsAndStyles": "Кольори та стилі",

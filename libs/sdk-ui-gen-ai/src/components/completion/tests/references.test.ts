@@ -35,6 +35,15 @@ describe("replaceReferences", () => {
 
         expect(replaceReferences(text, references)).toBe("Label: Product Name");
     });
+
+    it("should replace visualization references", () => {
+        const text = "Viz: {visualization/sales-viz}";
+        const references: TextContentObject[] = [
+            { id: "sales-viz", type: "visualization", title: "Sales Visualization" },
+        ];
+
+        expect(replaceReferences(text, references)).toBe("Viz: Sales Visualization");
+    });
 });
 
 describe("collectReferences", () => {

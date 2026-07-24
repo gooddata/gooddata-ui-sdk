@@ -518,6 +518,13 @@ export interface IFeatureFlags {
     enableColumnLevelPermissions?: boolean;
 
     /**
+     * Enables metric-level (object-level) permissions: the backend enforces per-object
+     * access rules on metrics, and the UI for managing that access (e.g. the catalog
+     * share dialog) becomes available for metrics.
+     */
+    enableMetricPermissions?: boolean;
+
+    /**
      * Enables Highcharts accessibility features.
      */
     enableHighchartsAccessibility?: boolean;

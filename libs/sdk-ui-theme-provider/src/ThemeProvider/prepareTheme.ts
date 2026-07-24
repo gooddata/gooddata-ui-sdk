@@ -134,9 +134,6 @@ export const stripComplementaryPalette = (theme: ITheme): ITheme => {
     if (strippedTheme?.chart) {
         delete strippedTheme.chart;
     }
-    if (strippedTheme?.table) {
-        delete strippedTheme.table;
-    }
 
     return strippedTheme;
 };

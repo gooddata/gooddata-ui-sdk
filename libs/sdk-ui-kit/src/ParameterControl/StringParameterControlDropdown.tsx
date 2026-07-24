@@ -36,7 +36,7 @@ export interface IStringParameterControlDropdownProps {
 
 /**
  * Dropdown panel for editing a string parameter value as free text. Owns the draft, inline
- * length validation, preview, and (mode-aware) Reset via `resetValue`.
+ * length validation, and (mode-aware) Reset via `resetValue`.
  *
  * @internal
  */
@@ -61,7 +61,7 @@ export function StringParameterControlDropdown({
             name={name}
             draft={draft}
             onDraftChange={setDraft}
-            inputProps={{ type: "text" }}
+            inputType="text"
             inputId={inputId}
             ariaAttributes={ariaAttributes}
             errorMessage={
@@ -72,7 +72,6 @@ export function StringParameterControlDropdown({
                     />
                 ) : undefined
             }
-            previewValue={effectiveValue}
             onReset={showReset ? () => setDraft(resetValue) : undefined}
             onApply={() => onApply(draft)}
             onCancel={onCancel}

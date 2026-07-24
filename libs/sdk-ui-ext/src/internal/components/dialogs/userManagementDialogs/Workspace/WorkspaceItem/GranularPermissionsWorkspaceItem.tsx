@@ -33,6 +33,7 @@ export function GranularPermissionsWorkspaceItem({
     const itemClassName = cx("s-user-management-workspace-item", "gd-share-dialog-grantee-item", {
         "is-active": isDropdownOpen,
         "is-inherited": isInherited,
+        "is-clickable": !isInherited && !!onClick,
     });
     const subtitle = getHumanReadablePermissionsTitle(workspace.permissions, intl);
 

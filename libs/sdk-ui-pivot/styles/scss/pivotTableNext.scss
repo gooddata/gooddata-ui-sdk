@@ -25,8 +25,8 @@
     // Shared background variables for totals/subtotals
     // We take the darkest color and add transparency to get the desired lighter background color
     --overall-total-bg: var(--gd-table-overallTotalBackgroundColor);
-    --subtotal-bg: color-mix(in sRGB, var(--overall-total-bg) 20%, transparent);
-    --total-bg: color-mix(in sRGB, var(--overall-total-bg) 40%, transparent);
+    --subtotal-bg: var(--gd-table-subtotalBackgroundColor);
+    --total-bg: var(--gd-table-totalBackgroundColor);
     --column-subtotal-bg: var(--subtotal-bg);
     --column-total-bg: var(--total-bg);
     --row-subtotal-column-subtotal-bg: color-mix(in sRGB, var(--overall-total-bg) 40%, transparent);

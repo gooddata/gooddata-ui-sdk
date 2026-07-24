@@ -57,6 +57,7 @@ export interface IPluggableApplicationRendererProps {
     /** Open/ask the host-owned chat, requested by the active app via an open-assistant event. */
     onOpenAiAssistant?: (
         question?: string,
+        agentId?: string,
         userContext?: IGenAIUserContext,
         appendToChat?: boolean,
         replaceUserContext?: boolean,
@@ -135,6 +136,7 @@ export function PluggableApplicationRenderer({
             if (isOpenAiAssistantRequestedEvent(event)) {
                 onOpenAiAssistantRef.current?.(
                     event.payload.question,
+                    event.payload.agentId,
                     event.payload.userContext,
                     event.payload.appendToChat,
                     event.payload.replaceUserContext,

@@ -1,12 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import type { AccessGranularPermission, ObjRef } from "@gooddata/sdk-model";
-import type {
-    GeneralAccessValue,
-    IUiGranteeAsyncOption,
-    IUiGranteeAsyncOptions,
-    IUiPickedGrantee,
-} from "@gooddata/sdk-ui-kit";
+import type { GeneralAccessValue, IUiGranteeAsyncOptions, IUiPickedGrantee } from "@gooddata/sdk-ui-kit";
 
 import type { IObjectAccessSummary, IObjectShareLabel } from "./types.js";
 
@@ -35,6 +30,16 @@ export interface IGranteeIdentityFacts {
 }
 
 /**
+ * Signed-in user's identity: real facts plus the stable `id` (profile login)
+ * used as the display fallback, mirroring grantee rows.
+ *
+ * @internal
+ */
+export interface ISelfIdentity extends IGranteeIdentityFacts {
+    id: string;
+}
+
+/**
  * Dialog row derived from a backend grant. `name`/`email` are real facts only;
  * display fallbacks are `granteeDisplayPair`'s concern.
  *
@@ -45,6 +50,11 @@ export interface IObjectShareGrantee extends IGranteeIdentityFacts {
     id: string;
     kind: "user" | "group";
     granteeRef: ObjRef;
+    /**
+     * Whether this row is the signed-in user's own grant. Derived from the
+     * profile, so it holds for rows of any origin (fetched or optimistic).
+     */
+    isSelf?: boolean;
     level: ObjectSharePermissionLevel;
     /**
      * Effective permission when it is *higher* than the directly-granted `level`
@@ -71,7 +81,7 @@ export interface IObjectShareGrantee extends IGranteeIdentityFacts {
  * @internal
  */
 export interface IObjectShareControllerState {
-    subview: "main" | "addGrantee" | "transferOwnership";
+    subview: "main" | "addGrantee";
     status: "idle" | "loading" | "success" | "error" | "saving";
     error?: Error;
     /**
@@ -84,6 +94,32 @@ export interface IObjectShareControllerState {
     accessUnavailable: boolean;
     summary: IObjectAccessSummary | undefined;
 
+    /**
+     * Stable serialized key of the current target's ref, or undefined when none.
+     * Consumers key target-scoped transient UI (e.g. a staged confirmation) on it,
+     * so nothing staged for one object can be applied to another.
+     */
+    targetKey: string | undefined;
+    /**
+     * Signed-in user's identity, once the profile resolves. Feeds their
+     * synthesized row when they can manage the object without holding any
+     * grant (administrator access) and the grantee list is empty.
+     */
+    selfIdentity: ISelfIdentity | undefined;
+    /**
+     * Whether the profile request resolved successfully. Until then — or after a
+     * silently-swallowed failure — `isSelf` on the rows is only its unresolved
+     * default, so a sole grantee row cannot be told apart from the caller's own
+     * grant and must not be offered destructive controls.
+     */
+    selfIdentityResolved: boolean;
+    /**
+     * Whether the manage-gated access list was LOADED with zero explicit grants —
+     * the caller reached it without holding a grant of their own. A load-time
+     * fact (never recomputed from the live list): removing your own sole grant
+     * empties the list but does not make this true.
+     */
+    seededWithoutGrants: boolean;
     grantees: IObjectShareGrantee[];
     generalAccess: GeneralAccessValue;
     /**
@@ -137,35 +173,6 @@ export interface IObjectShareControllerState {
     pendingGeneralAccess?: GeneralAccessValue;
     /** Grantees staged in the add-grantee dialog before confirmation. */
     pendingGrantees: IUiPickedGrantee[];
-
-    /**
-     * The user picked as the new owner in the transfer-ownership subview, or
-     * undefined before one is chosen. Only users can own an object, so this is
-     * never a group.
-     */
-    transferTarget: IUiGranteeAsyncOption | undefined;
-    /**
-     * Whether "Also remove my access" is checked in the transfer dialog. When
-     * true the current user's grant is removed after the transfer; otherwise it
-     * is downgraded to VIEW.
-     */
-    transferAlsoRemoveSelf: boolean;
-    /**
-     * Whether `transferTarget` already owns the object (already holds EDIT). When
-     * true there is nothing to transfer — consumers show the "already an owner"
-     * variant offering to remove the current user's own access instead.
-     */
-    transferTargetIsOwner: boolean;
-    /** Whether the transfer write (or self-removal) is in flight. */
-    transferSaving: boolean;
-    /**
-     * Whether the signed-in user may transfer ownership (owner-only). Consumers hide
-     * the transfer affordance when false — e.g. for a View&Share (SHARE) user.
-     * Detects a direct EDIT grant only (ownership inherited via a user group is not
-     * recognized) and gates the affordance, not the actions — the transfer write
-     * stays callable and the backend remains the authority.
-     */
-    canTransferOwnership: boolean;
 }
 
 /**
@@ -179,13 +186,11 @@ export interface IObjectShareControllerActions {
     closeAddGrantee: () => void;
     setPendingGrantees: (next: IUiPickedGrantee[]) => void;
     /**
-     * Loader for the grantee pickers. Wraps `getAvailableAssignees` with
+     * Loader for the add-grantee picker. Wraps `getAvailableAssignees` with
      * client-side search + already-picked filtering, returning the picker's
-     * `{ groups, users }` shape. By default excludes already-granted grantees
-     * (add-grantee picker); pass `includeGranted` to keep them (transfer-ownership
-     * picker, which may promote an existing viewer to owner).
+     * `{ groups, users }` shape. Excludes already-granted grantees.
      */
-    loadOptions: (search: string, includeGranted?: boolean) => Promise<IUiGranteeAsyncOptions>;
+    loadOptions: (search: string) => Promise<IUiGranteeAsyncOptions>;
     /** Commit all pending grantees to the backend. */
     confirmAddGrantees: () => Promise<void>;
 
@@ -211,25 +216,6 @@ export interface IObjectShareControllerActions {
      * already-granted rule.
      */
     changeWorkspaceLevel: (level: "VIEW" | "SHARE") => Promise<void>;
-
-    /** Open the transfer-ownership subview with an empty picker. */
-    openTransferOwnership: () => void;
-    /** Close the transfer-ownership subview and clear its buffers; returns to main. */
-    closeTransferOwnership: () => void;
-    /**
-     * Pick (or replace) the candidate new owner. Recomputes whether that user
-     * already owns the object (`transferTargetIsOwner`).
-     */
-    setTransferTarget: (owner: IUiGranteeAsyncOption) => void;
-    /** Toggle "Also remove my access" in the transfer dialog. */
-    setTransferAlsoRemoveSelf: (next: boolean) => void;
-    /**
-     * Commit the ownership transfer: grant the picked user EDIT and downgrade the
-     * current user to VIEW (or remove them if "Also remove my access" is set), in
-     * one write. When the picked user already owns the object this transfers
-     * nothing and only applies the self-access choice. Auto-saves.
-     */
-    confirmTransferOwnership: () => Promise<void>;
 }
 
 /**

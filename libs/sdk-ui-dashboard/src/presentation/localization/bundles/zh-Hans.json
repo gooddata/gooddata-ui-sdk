@@ -143,6 +143,8 @@
     "filters.configurationPanel.userFilterSave.toggle.tooltip": "允许自动保存过滤器的上次状态。当用户返回时，他们的过滤器将保持离开时的状态。",
     "filters.configurationPanel.filterViews.toggle": "已保存的视图",
     "filters.configurationPanel.filterViews.toggle.tooltip": "<p>允许用户将过滤器状态保存为以后可以返回的个人视图。</p><p>只有保存视图的用户才能访问它并将其设置为默认视图。</p>",
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle": "跨选项卡保留筛选器",
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle.tooltip": "允许跨选项卡保留筛选器。启用后，筛选器将在选项卡之间保留。",
     "settingsDashboardDialog.sectionHeaders.dateDataset": "描述中的日期范围",
     "settingsDashboardDialog.sectionHeaders.dateDataset.tooltip": "日期范围筛选器用于章节描述中的指标引用的日期数据集。",
     "dateDataset.autoSelect": "自动选择",

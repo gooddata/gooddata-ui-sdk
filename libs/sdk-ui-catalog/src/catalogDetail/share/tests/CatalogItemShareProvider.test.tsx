@@ -31,11 +31,10 @@ const stubState: IObjectShareControllerState = {
     labelsResolved: true,
     selectedLabelIdsByGrantee: {},
     pendingGrantees: [],
-    transferTarget: undefined,
-    transferAlsoRemoveSelf: false,
-    transferTargetIsOwner: false,
-    transferSaving: false,
-    canTransferOwnership: false,
+    targetKey: undefined,
+    selfIdentity: undefined,
+    selfIdentityResolved: false,
+    seededWithoutGrants: false,
 };
 const noop = () => {};
 const asyncNoop = async () => {};
@@ -53,11 +52,6 @@ const stubActions: IObjectShareControllerActions = {
     cancelGeneralAccessChange: noop,
     confirmGeneralAccessChange: asyncNoop,
     changeWorkspaceLevel: asyncNoop,
-    openTransferOwnership: noop,
-    closeTransferOwnership: noop,
-    setTransferTarget: noop,
-    setTransferAlsoRemoveSelf: noop,
-    confirmTransferOwnership: asyncNoop,
 };
 // Mutable so a test can drive the controller into the not-permissionable state.
 let controllerStub: IObjectShareController = { state: stubState, actions: stubActions };

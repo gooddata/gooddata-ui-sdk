@@ -2,7 +2,7 @@
     "analyticsCatalog.title": "アナリティクスカタログ",
     "analyticsCatalog.showMore": "もっと表示",
     "analyticsCatalog.showLess": "表示を減らす",
-    "analyticsCatalog.objectType.title": "オブジェクトタイプ",
+    "analyticsCatalog.objectType.title": "オブジェクト",
     "analyticsCatalog.objectType.dashboard.button.ariaLabel": "ダッシュボード: {count}",
     "analyticsCatalog.objectType.visualization.button.ariaLabel": "可視化: {count}",
     "analyticsCatalog.objectType.metric.button.ariaLabel": "メトリック: {count}",

@@ -9,7 +9,7 @@ import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
 import { type IUiObjectShareDialogGrantee, UiObjectShareDialogCard } from "../UiObjectShareDialogCard.js";
 
 const GRANTEES: IUiObjectShareDialogGrantee[] = [
-    { id: "owner", kind: "user", name: "Marek Stránský", email: "marek@example.com", isOwner: true },
+    { id: "owner", kind: "user", name: "Marek Stránský", email: "marek@example.com" },
     { id: "group", kind: "group", name: "Admin" },
     { id: "jana", kind: "user", name: "Jana Dvořák", email: "jana@example.com" },
 ];
