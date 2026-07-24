@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "Allow label references for the ranking filter \"Out of\" attribute so catalog attributes deploy via AAC, mirroring MeasureValueFilter dimensionality",
+            "type": "patch"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

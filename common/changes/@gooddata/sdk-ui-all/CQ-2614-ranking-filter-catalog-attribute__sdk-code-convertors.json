@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "Regenerate Python types so the ranking filter attribute accepts label references (catalog attributes) for AAC clone/deploy round-trips",
+            "type": "patch"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

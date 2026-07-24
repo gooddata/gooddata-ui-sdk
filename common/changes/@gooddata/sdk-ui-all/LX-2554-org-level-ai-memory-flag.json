@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "Register enableOrgLevelAIMemory feature flag",
+            "type": "patch"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

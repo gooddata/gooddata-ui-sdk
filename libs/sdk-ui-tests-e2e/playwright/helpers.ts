@@ -697,8 +697,19 @@ export async function configureLimitingParentFilterDependency(
     await selectFilterConfiguration(page);
     await page.locator(".s-add").click();
     await page.locator(".s-add-limit-dashboard_filter").click();
-    await page.locator(getTestClassByTitle(parentFilterName, "dashboard-filter-")).click();
-    await expect(page.locator(".s-gd-configuration-bubble")).toBeHidden();
+    // The parent-filter row is a <div> whose onClick is a no-op while the item is
+    // `is-disabled` — which it stays until the async connecting-attribute validation
+    // (validParentFilters) resolves. Clicking too early silently does nothing, so the
+    // "Choose dashboard filter" popup never closes (observed: bubble visible 45s across
+    // all retries). Wait for the row to be enabled before clicking.
+    const parentItem = page.locator(getTestClassByTitle(parentFilterName, "dashboard-filter-"));
+    await expect(parentItem).toBeVisible();
+    await expect(parentItem).not.toHaveClass(/is-disabled/);
+    await parentItem.click();
+    // Selecting a parent closes the add-limit popup. Assert on THAT popup specifically:
+    // `.s-gd-configuration-bubble` is stamped on every ConfigurationBubble (the outer
+    // filter configuration AND this popup), so it is ambiguous — scope to the popup class.
+    await expect(page.locator(".attribute-filter__limit__popup")).toBeHidden();
     await filterDropdown(page).locator(".s-apply").click();
 }
 

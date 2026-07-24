@@ -1,12 +1,13 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { call, cancelled, getContext, put, race, select, take } from "redux-saga/effects";
+import { all, call, cancelled, getContext, put, race, select, spawn, take } from "redux-saga/effects";
 
 import {
     type IAnalyticalBackend,
     type IChatConversationItem,
     type IChatConversationItemsQueryResult,
     type IChatConversationThread,
+    type IChatConversations,
     type IChatThread,
     type IChatThreadHistory,
     type IUserWorkspaceSettings,
@@ -239,6 +240,23 @@ function* fetchCurrentConversation() {
     const conversations: IChatConversationLocal[] | undefined = yield select(conversationsSelector);
     const conversation: IChatConversationLocal | undefined = yield select(conversationSelector);
 
+    // Preview always starts a brand-new conversation on mount. Preview conversations live under a
+    // hidden, reused sandbox agent that has no history UI to prune them, so we also delete any
+    // pre-existing ones. Deletion is spawned (detached) and fail-silent: it must never block or
+    // break the chat, so we seed the fresh conversation without waiting for it. A detached task
+    // also keeps the prune from being cancelled when takeLatest supersedes this load saga.
+    if (isPreview) {
+        const api = backend.workspace(workspace).genAI().getChatConversations({ isPreview });
+        yield spawn(deletePreviewConversations, api, conversations);
+        yield put(
+            loadConversationSuccessAction({
+                currentConversation: createEmptyConversation(),
+                conversationItems: [],
+            }),
+        );
+        return;
+    }
+
     // New conversation selected
     if (conversation?.localId && !conversation.id) {
         yield put(
@@ -299,6 +317,25 @@ function* fetchCurrentConversation() {
             }),
         );
     }
+}
+
+function* deletePreviewConversation(api: IChatConversations, conversationId: string) {
+    try {
+        yield call(api.delete.bind(api), conversationId);
+    } catch {
+        // Fail silently - a leftover preview conversation is cosmetic; cleanup must never
+        // disrupt the chat.
+    }
+}
+
+function* deletePreviewConversations(
+    api: IChatConversations,
+    conversations: IChatConversationLocal[] | undefined,
+) {
+    // Only the conversations already persisted on the backend. The fresh draft we seed alongside
+    // this has no id and is not in this list, so it can never be swept.
+    const persisted = (conversations ?? []).filter((conversation) => Boolean(conversation.id));
+    yield all(persisted.map((conversation) => call(deletePreviewConversation, api, conversation.id)));
 }
 
 function* fetchConversationHistory(preparedChatThread: IChatConversationThread) {

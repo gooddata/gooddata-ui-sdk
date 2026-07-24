@@ -10,7 +10,10 @@ import {
 import { type IGenAIContextObject } from "../types.js";
 import { convertReferenceTypeToGenAiType } from "../utils.js";
 
-export function collectContextReferences(context: IGenAIUserContext | undefined): IGenAIContextObject[] {
+export function collectContextReferences(
+    context: IGenAIUserContext | undefined,
+    placeholderTitle?: string,
+): IGenAIContextObject[] {
     if (!context) {
         return [];
     }
@@ -27,7 +30,7 @@ export function collectContextReferences(context: IGenAIUserContext | undefined)
             ref,
             type: "dashboard",
             where: "view.dashboard",
-            title: dashboard.title ?? id,
+            title: dashboard.title || placeholderTitle || id,
             nesting: 0,
         });
     }
@@ -43,7 +46,7 @@ export function collectContextReferences(context: IGenAIUserContext | undefined)
                 ref,
                 nesting: 1,
                 where: "referencedObjects",
-                title: item.title ?? id,
+                title: item.title || placeholderTitle || id,
                 type: convertReferenceTypeToGenAiType(item.type),
             });
         });
@@ -52,7 +55,10 @@ export function collectContextReferences(context: IGenAIUserContext | undefined)
     return references.sort((a, b) => a.nesting - b.nesting);
 }
 
-export function collectAvailableReferences(context: IGenAIUserContext | undefined): IGenAIContextObject[] {
+export function collectAvailableReferences(
+    context: IGenAIUserContext | undefined,
+    placeholderTitle?: string,
+): IGenAIContextObject[] {
     if (!context) {
         return [];
     }
@@ -70,7 +76,7 @@ export function collectAvailableReferences(context: IGenAIUserContext | undefine
             ref: dashboardRef,
             type: "dashboard",
             where: "view.dashboard",
-            title: dashboard.title ?? dashboardId,
+            title: dashboard.title || placeholderTitle || dashboardId,
             nesting: 0,
         });
         used.push(serializeObjRef(dashboardRef));
@@ -78,7 +84,7 @@ export function collectAvailableReferences(context: IGenAIUserContext | undefine
         const context: IGenAIObjectReference = {
             ref: dashboardRef,
             type: "DASHBOARD",
-            title: dashboard.title ?? dashboardId,
+            title: dashboard.title || placeholderTitle || dashboardId,
         };
         dashboard.widgets.forEach((widget) => {
             switch (widget.widgetType) {
@@ -96,7 +102,7 @@ export function collectAvailableReferences(context: IGenAIUserContext | undefine
                             ref,
                             nesting: 1,
                             where: "referencedObjects",
-                            title: widget.title ?? id,
+                            title: widget.title || placeholderTitle || id,
                             type: "widget",
                             context,
                         });
@@ -118,7 +124,7 @@ export function collectAvailableReferences(context: IGenAIUserContext | undefine
                                 ref,
                                 nesting: 1,
                                 where: "referencedObjects",
-                                title: visualization.title ?? id,
+                                title: visualization.title || placeholderTitle || id,
                                 type: "widget",
                                 context,
                             });

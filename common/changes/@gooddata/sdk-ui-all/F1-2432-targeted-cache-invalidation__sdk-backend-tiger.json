@@ -1,0 +1,15 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-backend-tiger: Invalidate cached settings resolutions on settings writes to fix read-after-write staleness",
+            "type": "patch"
+        },
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-backend-tiger: Clear cached API responses and the memoized principal when the API token or JWT is updated, so a credential change cannot replay data fetched under the previous credential",
+            "type": "patch"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

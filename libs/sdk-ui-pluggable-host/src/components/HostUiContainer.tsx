@@ -73,12 +73,14 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate }: IHostUi
     const requestOpenAi = useCallback(
         (
             question?: string,
+            agentId?: string,
             userContext?: IGenAIUserContext,
             appendToChat?: boolean,
             replaceUserContext?: boolean,
         ) => {
             setAiVisibility({
                 kind: "open",
+                agentId,
                 question,
                 userContext,
                 appendToChat,

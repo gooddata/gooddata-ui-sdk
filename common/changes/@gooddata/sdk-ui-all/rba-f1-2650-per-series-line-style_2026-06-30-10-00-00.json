@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-code-convertors: Add YAML serialization support for line_style_mapping in line and combo charts",
+            "type": "minor",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

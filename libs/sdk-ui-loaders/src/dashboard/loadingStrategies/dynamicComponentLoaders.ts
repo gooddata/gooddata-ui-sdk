@@ -174,6 +174,81 @@ function addScriptTag(url: string): { element: HTMLScriptElement; promise: Promi
     };
 }
 
+// React, ReactDOM and the JSX runtimes must resolve to the single host-provided instance —
+// hooks and context break across duplicate React copies. A prebuilt (webpack) plugin bundles
+// its own React and registers it into the share scope on container.init(). When that copy is a
+// higher semver than the host's, the plugin's singleton consume selects the plugin's (lazily
+// loaded) copy and reads a null React at render ("Cannot read properties of null (reading
+// 'useEffect')"), blanking the dashboard.
+const REACT_SINGLETON_SHARES = [
+    "react",
+    "react-dom",
+    "react-dom/client",
+    "react/jsx-runtime",
+    "react/jsx-dev-runtime",
+];
+
+function snapshotSharedVersions(shareScope: any): Record<string, Set<string>> {
+    const snapshot: Record<string, Set<string>> = {};
+    for (const key of REACT_SINGLETON_SHARES) {
+        snapshot[key] = new Set(Object.keys(shareScope?.[key] ?? {}));
+    }
+    return snapshot;
+}
+
+// The host's React versions are captured once per share scope and cached. Snapshotting them
+// per loadEntry call would race under concurrent plugin loads: a later call could snapshot the
+// scope after an earlier plugin's container.init() already registered its own React and mistake
+// that copy for a host version, leaving a plugin React in the scope for the singleton consume to
+// pick. The read-then-set below is synchronous, so the first call to reach it captures the scope
+// before any plugin container has initialized, and every other call reuses that snapshot.
+const hostReactVersionsByScope = new WeakMap<object, Record<string, Set<string>>>();
+
+function getHostReactVersions(shareScope: any): Record<string, Set<string>> {
+    if (!shareScope) {
+        return snapshotSharedVersions(shareScope);
+    }
+    let snapshot = hostReactVersionsByScope.get(shareScope);
+    if (!snapshot) {
+        snapshot = snapshotSharedVersions(shareScope);
+        hostReactVersionsByScope.set(shareScope, snapshot);
+    }
+    return snapshot;
+}
+
+// Drop the React copies the plugin just registered so it reuses the host's already-provided
+// singleton, then resolve that copy up front so the plugin's synchronous consume reads a live
+// module rather than an unresolved lazy factory.
+async function pinReactSharesToHost(
+    shareScope: any,
+    hostVersions: Record<string, Set<string>>,
+): Promise<void> {
+    await Promise.all(
+        REACT_SINGLETON_SHARES.map(async (key) => {
+            const versions = shareScope?.[key];
+            if (!versions) {
+                return;
+            }
+            const hostKeys = Object.keys(versions).filter((version) => hostVersions[key]?.has(version));
+            // Only strip plugin-added copies when a host copy remains to fall back on.
+            if (hostKeys.length > 0) {
+                for (const version of Object.keys(versions)) {
+                    if (!hostVersions[key]?.has(version)) {
+                        delete versions[version];
+                    }
+                }
+            }
+            const entry = versions[hostKeys[0] ?? Object.keys(versions)[0]];
+            if (entry && typeof entry.get === "function") {
+                const factory = await entry.get();
+                if (typeof factory === "function") {
+                    factory();
+                }
+            }
+        }),
+    );
+}
+
 function loadEntry(
     moduleName: string,
     { __webpack_init_sharing__, __webpack_share_scopes__ }: ModuleFederationIntegration,
@@ -182,9 +257,16 @@ function loadEntry(
         // Initializes the share scope. This fills it with known provided modules from this build and all remotes
         await __webpack_init_sharing__("default");
 
+        const shareScope = __webpack_share_scopes__.default;
+        // The host's React versions, captured once before any plugin container contributes its own.
+        const hostReactVersions = getHostReactVersions(shareScope);
+
         const container = (<any>window)[moduleName]; // or get the container somewhere else
         // Initialize the container, it may provide shared modules
-        await container.init(__webpack_share_scopes__.default);
+        await container.init(shareScope);
+
+        await pinReactSharesToHost(shareScope, hostReactVersions);
+
         // the `./${moduleName}_ENTRY` corresponds to exposes in the dashboard-plugin-template webpack config
         const entryFactory = await (<any>window)[moduleName].get(`./${moduleName}_ENTRY`);
 

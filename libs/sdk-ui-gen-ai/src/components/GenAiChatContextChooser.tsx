@@ -79,8 +79,8 @@ function GenAiChatContextChooserCore({
                         size="medium"
                         minWidth={245}
                         maxWidth={245}
-                        containerTopPadding="small"
-                        containerBottomPadding="small"
+                        containerTopPadding="none"
+                        containerBottomPadding="none"
                         MenuHeader={ContextMenuHeader}
                         ariaAttributes={ariaAttributes}
                         onSelect={(item) => {

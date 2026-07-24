@@ -72,7 +72,13 @@ export interface IHostUiMountOptions {
      * Used by host UI affordances that hand a question to the assistant (e.g. the header semantic
      * search "ask AI" action). `userContext` carries the user's current location when available.
      */
-    onAskAiAssistant?: (question: string, userContext?: IGenAIUserContext) => void;
+    onAskAiAssistant?: (
+        question: string,
+        agentId?: string,
+        userContext?: IGenAIUserContext,
+        appendToChat?: boolean,
+        replaceUserContext?: boolean,
+    ) => void;
 }
 
 /**

@@ -663,6 +663,48 @@ export interface AiCreateConversationRequest {
     'agentId'?: string | null;
 }
 
+/**
+ * AAC ref: dashboard.json (PoC subset).  The dashboard builder always emits the tabbed layout (``tabs``); ``sections`` is kept for compatibility with the AAC schema\'s flat (single-layout) form.
+ */
+export interface AiDashboard {
+    'type': AiDashboardTypeEnum;
+    'id': string;
+    'title': string;
+    'description'?: string;
+    'tabs'?: Array<AiDashboardTab>;
+    'sections'?: Array<AiDashboardSection>;
+    'filters'?: { [key: string]: AiDashboardDateFilter; };
+}
+
+export type AiDashboardTypeEnum = 'dashboard';
+
+export interface AiDashboardDateFilter {
+    'type': AiDashboardDateFilterTypeEnum;
+    'granularity'?: AiAppDomainConversationsVisualizationDateGranularity;
+    'from'?: number;
+    'to'?: number;
+}
+
+export type AiDashboardDateFilterTypeEnum = 'date_filter';
+
+/**
+ * PATCH /conversations/{conversationId}/dashboards/{dashboardId} body.
+ */
+export interface AiDashboardIdUpdateRequest {
+    'id': string;
+}
+
+export interface AiDashboardPart {
+    /**
+     * Type of multipart part.
+     */
+    'type'?: AiDashboardPartTypeEnum;
+    'dashboard'?: AiDashboard | null;
+    'savedDashboardId'?: string | null;
+}
+
+export type AiDashboardPartTypeEnum = 'dashboard';
+
 export interface AiDashboardRef {
     /**
      * Bound dashboard identifier.
@@ -671,9 +713,38 @@ export interface AiDashboardRef {
     'title'?: string | null;
 }
 
+/**
+ * AAC ref: dashboard.json section.
+ */
+export interface AiDashboardSection {
+    'title'?: string;
+    'description'?: string;
+    'widgets': Array<AiDashboardWidget>;
+}
+
+/**
+ * AAC ref: dashboard.json tab (the latest, tabbed dashboard layout).  In the tabbed layout filters live on the tab, not on the dashboard root (the convertor treats tab-level and root-level filters as mutually exclusive).
+ */
+export interface AiDashboardTab {
+    'id': string;
+    'title': string;
+    'sections': Array<AiDashboardSection>;
+    'filters'?: { [key: string]: AiDashboardDateFilter; };
+}
+
+/**
+ * AAC ref: dashboard.json visualization widget (size hints in 12-column grid units).
+ */
+export interface AiDashboardWidget {
+    'visualization': string;
+    'title'?: string;
+    'columns'?: number;
+    'rows'?: number;
+}
+
 export interface AiDateFilterAbsolute {
     'type': AiDateFilterAbsoluteTypeEnum;
-    'using'?: string | null;
+    'using': string;
     'from': string;
     'to': string;
 }
@@ -704,7 +775,7 @@ export type AiDateFilterGranularity = typeof AiDateFilterGranularity[keyof typeo
 
 export interface AiDateFilterRelative {
     'type': AiDateFilterRelativeTypeEnum;
-    'using'?: string | null;
+    'using': string;
     'granularity': AiAppDomainConversationsVisualizationDateGranularity;
     'from': number;
     'to': number;
@@ -1114,7 +1185,7 @@ export type AiMultipartContentTypeEnum = 'multipart';
 /**
  * @type AiMultipartContentPartsInner
  */
-export type AiMultipartContentPartsInner = { type: 'alertProposal' } & AiAlertProposalPart | { type: 'kda' } & AiKeyDriverAnalysisPart | { type: 'searchResults' } & AiSearchResults | { type: 'text' } & AiTextPart | { type: 'visualization' } & AiVisualizationPart | { type: 'whatIf' } & AiWhatIfAnalysisPart;
+export type AiMultipartContentPartsInner = { type: 'alertProposal' } & AiAlertProposalPart | { type: 'dashboard' } & AiDashboardPart | { type: 'kda' } & AiKeyDriverAnalysisPart | { type: 'searchResults' } & AiSearchResults | { type: 'text' } & AiTextPart | { type: 'visualization' } & AiVisualizationPart | { type: 'whatIf' } & AiWhatIfAnalysisPart;
 
 export interface AiNegativeAttributeFilter {
     'negativeAttributeFilter': AiNegativeAttributeFilterBody;
@@ -1449,17 +1520,11 @@ export interface AiSearchObject {
     'modifiedAt'?: string | null;
     'isHidden'?: boolean | null;
     /**
-     * Certification status for the object, e.g. CERTIFIED.
-     */
-    'certification'?: string | null;
-    /**
-     * Optional certification message.
-     */
-    'certificationMessage'?: string | null;
-    /**
      * Search relevance score.
      */
     'score': number;
+    'certification'?: string | null;
+    'certificationMessage'?: string | null;
 }
 
 export interface AiSearchRelationship {
@@ -1843,7 +1908,7 @@ export type AiVisualizationTypeEnum = 'table' | 'headline_chart' | 'bar_chart' |
 
 export interface AiVisualizationAbsoluteDateFilter {
     'type': AiVisualizationAbsoluteDateFilterTypeEnum;
-    'using': string;
+    'using'?: string | null;
     'from': string;
     'to': string;
 }
@@ -1950,7 +2015,7 @@ export type AiVisualizationPartTypeEnum = 'visualization';
 
 export interface AiVisualizationRelativeDateFilter {
     'type': AiVisualizationRelativeDateFilterTypeEnum;
-    'using': string;
+    'using'?: string | null;
     'granularity': AiDateFilterGranularity;
     'from': number;
     'to': number;
@@ -3289,6 +3354,177 @@ export class ConversationsAi extends BaseAPI implements ConversationsAiInterface
      */
     public switchAgent(requestParameters: ConversationsAiSwitchAgentRequest, options?: AxiosRequestConfig) {
         return ConversationsAi_SwitchAgent(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+}
+
+
+// DashboardsAi FP - DashboardsAiAxiosParamCreator
+/**
+ * 
+ * @summary Patch Dashboard
+ * @param {string} workspaceId 
+ * @param {string} conversationId 
+ * @param {string} dashboardId 
+ * @param {AiDashboardIdUpdateRequest} aiDashboardIdUpdateRequest 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DashboardsAiAxiosParamCreator_PatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(
+    workspaceId: string, conversationId: string, dashboardId: string, aiDashboardIdUpdateRequest: AiDashboardIdUpdateRequest, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('patchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch', 'workspaceId', workspaceId)
+    // verify required parameter 'conversationId' is not null or undefined
+    assertParamExists('patchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch', 'conversationId', conversationId)
+    // verify required parameter 'dashboardId' is not null or undefined
+    assertParamExists('patchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch', 'dashboardId', dashboardId)
+    // verify required parameter 'aiDashboardIdUpdateRequest' is not null or undefined
+    assertParamExists('patchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch', 'aiDashboardIdUpdateRequest', aiDashboardIdUpdateRequest)
+    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/dashboards/{dashboard_id}`
+        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"conversation_id"}}`, encodeURIComponent(String(conversationId)))
+        .replace(`{${"dashboard_id"}}`, encodeURIComponent(String(dashboardId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof aiDashboardIdUpdateRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(aiDashboardIdUpdateRequest !== undefined ? aiDashboardIdUpdateRequest : {})
+        : aiDashboardIdUpdateRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+
+// DashboardsAi Api FP
+/**
+ * 
+ * @summary Patch Dashboard
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {DashboardsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DashboardsAi_PatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: DashboardsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await DashboardsAiAxiosParamCreator_PatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(
+        requestParameters.workspaceId, requestParameters.conversationId, requestParameters.dashboardId, requestParameters.aiDashboardIdUpdateRequest, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+/**
+ * DashboardsAi - interface
+ * @export
+ * @interface DashboardsAi
+ */
+export interface DashboardsAiInterface {
+    /**
+     * 
+     * @summary Patch Dashboard
+     * @param {DashboardsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DashboardsAiInterface
+     */
+    patchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(requestParameters: DashboardsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+}
+
+/**
+ * Request parameters for patchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch operation in DashboardsAi.
+ * @export
+ * @interface DashboardsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest
+ */
+export interface DashboardsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch
+     */
+    readonly conversationId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof DashboardsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch
+     */
+    readonly dashboardId: string
+
+    /**
+     * 
+     * @type {AiDashboardIdUpdateRequest}
+     * @memberof DashboardsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch
+     */
+    readonly aiDashboardIdUpdateRequest: AiDashboardIdUpdateRequest
+}
+
+/**
+ * DashboardsAi - object-oriented interface
+ * @export
+ * @class DashboardsAi
+ * @extends {BaseAPI}
+ */
+export class DashboardsAi extends BaseAPI implements DashboardsAiInterface {
+    /**
+     * 
+     * @summary Patch Dashboard
+     * @param {DashboardsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DashboardsAi
+     */
+    public patchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(requestParameters: DashboardsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest, options?: AxiosRequestConfig) {
+        return DashboardsAi_PatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 }
 

@@ -12,6 +12,7 @@ import {
 import { loadWhatIfScenarios } from "../../whatIf/whatIfMapping.js";
 
 import { ConversationAlertProposalContent } from "./conversationContents/ConversationAlertProposalContent.js";
+import { ConversationDashboardContent } from "./conversationContents/ConversationDashboardContent.js";
 import { ConversationErrorContent } from "./conversationContents/ConversationErrorContent.js";
 import { ConversationKdaContent } from "./conversationContents/ConversationKdaContent.js";
 import { ConversationReasoningContent } from "./conversationContents/ConversationReasoningContent.js";
@@ -130,6 +131,16 @@ export function ConversationItemContents({ message, references, isLoading }: Con
                                 message={message}
                                 part={part}
                                 whatIf={whatIf}
+                            />
+                        );
+                    }
+                    if (part.type === "dashboard") {
+                        return (
+                            <ConversationDashboardContent
+                                key={index}
+                                message={message}
+                                part={part}
+                                dashboard={part.dashboard}
                             />
                         );
                     }

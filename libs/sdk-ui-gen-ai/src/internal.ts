@@ -4,7 +4,11 @@
 
 import { makeTextContents, makeUserMessage } from "./model.js";
 import { setAmbientUserContextAction, setUserContextAction } from "./store/chatWindow/chatWindowSlice.js";
-import { clearThreadAction, newMessageAction } from "./store/messages/messagesSlice.js";
+import {
+    clearThreadAction,
+    newMessageAction,
+    setSelectedAgentAction,
+} from "./store/messages/messagesSlice.js";
 
 export { ChatSkeleton } from "./components/ChatSkeleton.js";
 export { GenAIChatDialog, type GenAIChatDialogProps } from "./components/GenAIChatDialog.js";
@@ -20,4 +24,6 @@ export {
     makeTextContents,
     setUserContextAction,
     setAmbientUserContextAction,
+    setSelectedAgentAction,
 };
+export { GenAIStandaloneInput, type GenAIStandaloneInputProps } from "./components/GenAIStandaloneInput.js";

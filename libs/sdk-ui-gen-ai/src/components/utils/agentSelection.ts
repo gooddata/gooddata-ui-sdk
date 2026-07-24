@@ -33,13 +33,13 @@ export function getEffectiveSelectedAgentId({
 export function getAgentSelectionStatus({
     agentSwitchingActive,
     assistantLoading = false,
-    conversationsLoaded = true,
+    conversationsLoading = true,
     agents,
     selectedAgentId,
 }: {
     agentSwitchingActive: boolean;
     assistantLoading?: boolean;
-    conversationsLoaded?: boolean;
+    conversationsLoading?: boolean;
     agents: GenAIAgent[] | undefined;
     selectedAgentId?: string;
 }): AgentSelectionStatus {
@@ -58,7 +58,7 @@ export function getAgentSelectionStatus({
             agentSwitchingActive &&
             (assistantLoading ||
                 agents === undefined ||
-                !conversationsLoaded ||
+                conversationsLoading ||
                 (availableAgents.length > 0 && !isSelectedAgentAvailable)),
     };
 }

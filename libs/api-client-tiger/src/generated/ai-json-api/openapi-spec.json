@@ -767,6 +767,75 @@
                 }
             }
         },
+        "/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/dashboards/{dashboard_id}": {
+            "patch": {
+                "tags": [
+                    "Dashboards"
+                ],
+                "summary": "Patch Dashboard",
+                "operationId": "patch_dashboard_api_v1_ai_workspaces__workspace_id__chat_conversations__conversation_id__dashboards__dashboard_id__patch",
+                "parameters": [
+                    {
+                        "name": "workspace_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Workspace Id"
+                        }
+                    },
+                    {
+                        "name": "conversation_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Conversation Id"
+                        }
+                    },
+                    {
+                        "name": "dashboard_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Dashboard Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DashboardIdUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "Successful Response"
+                    },
+                    "400": {
+                        "description": "Bad request payload."
+                    },
+                    "404": {
+                        "description": "Conversation or dashboard not found, or the dashboard builder feature is disabled."
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/ai/agent/skills": {
             "get": {
                 "tags": [
@@ -3835,6 +3904,135 @@
                 "title": "CreateConversationRequest",
                 "description": "POST /conversations body."
             },
+            "Dashboard": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "dashboard",
+                        "title": "Type"
+                    },
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    },
+                    "title": {
+                        "type": "string",
+                        "title": "Title"
+                    },
+                    "description": {
+                        "type": "string",
+                        "title": "Description"
+                    },
+                    "tabs": {
+                        "items": {
+                            "$ref": "#/components/schemas/DashboardTab"
+                        },
+                        "type": "array",
+                        "title": "Tabs"
+                    },
+                    "sections": {
+                        "items": {
+                            "$ref": "#/components/schemas/DashboardSection"
+                        },
+                        "type": "array",
+                        "title": "Sections"
+                    },
+                    "filters": {
+                        "additionalProperties": {
+                            "$ref": "#/components/schemas/DashboardDateFilter"
+                        },
+                        "type": "object",
+                        "title": "Filters"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "type",
+                    "id",
+                    "title"
+                ],
+                "title": "Dashboard",
+                "description": "AAC ref: dashboard.json (PoC subset).\n\nThe dashboard builder always emits the tabbed layout (``tabs``); ``sections``\nis kept for compatibility with the AAC schema's flat (single-layout) form."
+            },
+            "DashboardDateFilter": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "date_filter",
+                        "title": "Type"
+                    },
+                    "granularity": {
+                        "$ref": "#/components/schemas/app__domain__conversations__visualization__DateGranularity"
+                    },
+                    "from": {
+                        "type": "integer",
+                        "title": "From"
+                    },
+                    "to": {
+                        "type": "integer",
+                        "title": "To"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "type"
+                ],
+                "title": "DashboardDateFilter"
+            },
+            "DashboardIdUpdateRequest": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "title": "Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id"
+                ],
+                "title": "DashboardIdUpdateRequest",
+                "description": "PATCH /conversations/{conversationId}/dashboards/{dashboardId} body."
+            },
+            "DashboardPart": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "dashboard",
+                        "title": "Type",
+                        "description": "Type of multipart part.",
+                        "default": "dashboard"
+                    },
+                    "dashboard": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Dashboard"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Optional full dashboard draft payload (AAC JSON) when available."
+                    },
+                    "savedDashboardId": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Saveddashboardid",
+                        "description": "Id of the persisted analyticalDashboard once the user has saved this draft; null while it is still an unsaved draft. Lets the client distinguish a saved dashboard from a draft (e.g. after reload) and update it in place on further edits."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "title": "DashboardPart"
+            },
             "DashboardRef": {
                 "properties": {
                     "id": {
@@ -3861,6 +4059,94 @@
                     "id"
                 ],
                 "title": "DashboardRef"
+            },
+            "DashboardSection": {
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "title": "Title"
+                    },
+                    "description": {
+                        "type": "string",
+                        "title": "Description"
+                    },
+                    "widgets": {
+                        "items": {
+                            "$ref": "#/components/schemas/DashboardWidget"
+                        },
+                        "type": "array",
+                        "title": "Widgets"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "widgets"
+                ],
+                "title": "DashboardSection",
+                "description": "AAC ref: dashboard.json section."
+            },
+            "DashboardTab": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    },
+                    "title": {
+                        "type": "string",
+                        "title": "Title"
+                    },
+                    "sections": {
+                        "items": {
+                            "$ref": "#/components/schemas/DashboardSection"
+                        },
+                        "type": "array",
+                        "title": "Sections"
+                    },
+                    "filters": {
+                        "additionalProperties": {
+                            "$ref": "#/components/schemas/DashboardDateFilter"
+                        },
+                        "type": "object",
+                        "title": "Filters"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "id",
+                    "title",
+                    "sections"
+                ],
+                "title": "DashboardTab",
+                "description": "AAC ref: dashboard.json tab (the latest, tabbed dashboard layout).\n\nIn the tabbed layout filters live on the tab, not on the dashboard root\n(the convertor treats tab-level and root-level filters as mutually exclusive)."
+            },
+            "DashboardWidget": {
+                "properties": {
+                    "visualization": {
+                        "type": "string",
+                        "title": "Visualization"
+                    },
+                    "title": {
+                        "type": "string",
+                        "title": "Title"
+                    },
+                    "columns": {
+                        "type": "integer",
+                        "title": "Columns"
+                    },
+                    "rows": {
+                        "type": "number",
+                        "title": "Rows"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "visualization"
+                ],
+                "title": "DashboardWidget",
+                "description": "AAC ref: dashboard.json visualization widget (size hints in 12-column grid units)."
             },
             "DateFilterAbsolute": {
                 "properties": {
@@ -4799,6 +5085,9 @@
                                     "$ref": "#/components/schemas/VisualizationPart"
                                 },
                                 {
+                                    "$ref": "#/components/schemas/DashboardPart"
+                                },
+                                {
                                     "$ref": "#/components/schemas/KeyDriverAnalysisPart"
                                 },
                                 {
@@ -4815,6 +5104,7 @@
                                 "propertyName": "type",
                                 "mapping": {
                                     "alertProposal": "#/components/schemas/AlertProposalPart",
+                                    "dashboard": "#/components/schemas/DashboardPart",
                                     "kda": "#/components/schemas/KeyDriverAnalysisPart",
                                     "searchResults": "#/components/schemas/SearchResults",
                                     "text": "#/components/schemas/TextPart",
@@ -5924,6 +6214,11 @@
                         "title": "Ishidden",
                         "description": "Whether object is hidden."
                     },
+                    "score": {
+                        "type": "number",
+                        "title": "Score",
+                        "description": "Search relevance score."
+                    },
                     "certification": {
                         "anyOf": [
                             {
@@ -5934,7 +6229,7 @@
                             }
                         ],
                         "title": "Certification",
-                        "description": "Certification status for the object, e.g. CERTIFIED."
+                        "description": "Certification status, e.g. CERTIFIED."
                     },
                     "certificationMessage": {
                         "anyOf": [
@@ -5946,12 +6241,7 @@
                             }
                         ],
                         "title": "Certificationmessage",
-                        "description": "Optional certification message."
-                    },
-                    "score": {
-                        "type": "number",
-                        "title": "Score",
-                        "description": "Search relevance score."
+                        "description": "Certification message."
                     }
                 },
                 "additionalProperties": false,
@@ -6862,6 +7152,17 @@
                         "type": "string",
                         "title": "Id"
                     },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title"
+                    },
                     "widgets": {
                         "items": {
                             "$ref": "#/components/schemas/UserContextWidgetDescriptor"
@@ -7289,7 +7590,14 @@
                         "title": "Type"
                     },
                     "using": {
-                        "type": "string",
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
                         "title": "Using"
                     },
                     "from": {
@@ -7305,7 +7613,6 @@
                 "type": "object",
                 "required": [
                     "type",
-                    "using",
                     "from",
                     "to"
                 ],
@@ -7708,7 +8015,14 @@
                         "title": "Type"
                     },
                     "using": {
-                        "type": "string",
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
                         "title": "Using"
                     },
                     "granularity": {
@@ -7727,7 +8041,6 @@
                 "type": "object",
                 "required": [
                     "type",
-                    "using",
                     "granularity",
                     "from",
                     "to"

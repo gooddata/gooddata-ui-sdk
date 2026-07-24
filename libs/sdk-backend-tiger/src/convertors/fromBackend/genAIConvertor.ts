@@ -14,6 +14,12 @@ import {
     type AiSearchRelationship,
     type AiSuggestions,
     type AiWhatIfScenario,
+    type DeclarativeAnalyticalDashboard,
+    type DeclarativeFilterContext,
+    type JsonApiAnalyticalDashboardOutAttributes,
+    type JsonApiAnalyticalDashboardOutDocument,
+    type JsonApiFilterContextOutAttributes,
+    type JsonApiFilterContextOutDocument,
 } from "@gooddata/api-client-tiger";
 import {
     type IAlertProposal,
@@ -27,8 +33,10 @@ import {
     type IChatWhatIfDefinition,
 } from "@gooddata/sdk-backend-spi";
 import {
+    type AacDashboard,
     type AacFilter,
     type AacVisualisation,
+    yamlDashboardToDeclarative,
     yamlFiltersToDeclarative,
     yamlVisualisationToMetadataObject,
 } from "@gooddata/sdk-code-convertors";
@@ -45,6 +53,10 @@ import {
 import { getFormatByGranularity } from "../../utils/dateUtils.js";
 
 import { convertMeasure } from "./afm/MeasureConverter.js";
+import {
+    convertDashboard,
+    convertFilterContextFromBackend,
+} from "./analyticalDashboards/AnalyticalDashboardConverter.js";
 import { convertAttribute } from "./AttributeConvertor.js";
 import { convertAlert } from "./AutomationConverter.js";
 import type { FormattingLocale } from "./dateFormatting/defaultDateFormatter.js";
@@ -157,6 +169,34 @@ function convertChatConversationContentFromBackend(
                                       )
                                     : null,
                             };
+                        case "dashboard": {
+                            const data = part.dashboard
+                                ? yamlDashboardToDeclarative([], part.dashboard as AacDashboard)
+                                : null;
+
+                            const filters = data?.filterContext
+                                ? convertFilterContextFromBackend(
+                                      buildFilterContextWrapper(data.filterContext),
+                                  )
+                                : undefined;
+
+                            const dashboard = data
+                                ? convertDashboard(
+                                      buildDashboardWrapper(
+                                          data.dashboard,
+                                          data.tabFilterContexts,
+                                          part.savedDashboardId,
+                                      ),
+                                      filters,
+                                  )
+                                : null;
+
+                            return {
+                                type: "dashboard",
+                                dashboard,
+                                saved: !!part.savedDashboardId,
+                            };
+                        }
                         case "kda":
                             return {
                                 type: "kda",
@@ -383,5 +423,43 @@ function buildObjRef(identifier: string, type: ObjectType | "metric" | string): 
     return {
         identifier,
         type: (type === "metric" ? "measure" : type) as ObjectType,
+    };
+}
+
+function buildFilterContextWrapper(filterContext: DeclarativeFilterContext): JsonApiFilterContextOutDocument {
+    return {
+        data: {
+            id: filterContext.id,
+            type: "filterContext",
+            attributes: filterContext as JsonApiFilterContextOutAttributes,
+        },
+        links: {
+            self: "",
+        },
+    };
+}
+
+function buildDashboardWrapper(
+    dashboard: DeclarativeAnalyticalDashboard,
+    tabFilterContexts: DeclarativeFilterContext[] = [],
+    savedDashboardId?: string | null,
+): JsonApiAnalyticalDashboardOutDocument {
+    return {
+        data: {
+            id: savedDashboardId ?? dashboard.id,
+            type: "analyticalDashboard",
+            attributes: dashboard as JsonApiAnalyticalDashboardOutAttributes,
+        },
+        included: tabFilterContexts?.map((fc) => ({
+            type: "filterContext",
+            attributes: fc as JsonApiFilterContextOutAttributes,
+            id: fc.id,
+            links: {
+                self: "",
+            },
+        })),
+        links: {
+            self: "",
+        },
     };
 }

@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-code-schemas: Add radar_chart visualisation type with render_as and grid_line_shape config keys",
+            "type": "minor",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

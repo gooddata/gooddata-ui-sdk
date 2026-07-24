@@ -261,6 +261,21 @@ describe("objRefToTextContentObject", () => {
             title: "Revenue",
             type: "fact",
         });
+
+        expect(
+            objRefToTextContentObject(
+                {
+                    type: "insight",
+                    identifier: "viz.id",
+                },
+                "Visualization",
+                "visualization",
+            ),
+        ).toEqual({
+            id: "viz.id",
+            title: "Visualization",
+            type: "visualization",
+        });
     });
 
     it("should return null for uri refs", () => {

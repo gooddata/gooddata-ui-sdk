@@ -1,9 +1,13 @@
 // (C) 2026 GoodData Corporation
 
-import type { ICatalogItemAttribute, ICatalogItemFact } from "../../catalogItem/types.js";
+import type {
+    ICatalogItemAttribute,
+    ICatalogItemFact,
+    ICatalogItemMeasure,
+} from "../../catalogItem/types.js";
 
 /**
- * Catalog items that can be shared: attributes and facts. Labels are sub-selected
- * from inside an attribute share, not shared as standalone targets.
+ * Catalog items that can be shared: attributes, facts and measures. Labels are
+ * sub-selected from inside an attribute share, not shared as standalone targets.
  */
-export type ShareableCatalogItem = ICatalogItemAttribute | ICatalogItemFact;
+export type ShareableCatalogItem = ICatalogItemAttribute | ICatalogItemFact | ICatalogItemMeasure;

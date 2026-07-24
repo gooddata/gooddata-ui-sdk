@@ -158,6 +158,10 @@ export interface IOpenAiAssistantRequestedEvent extends IPluggableAppEvent {
          */
         readonly question?: string;
         /**
+         * Agent ID to seed the chat with. When omitted, default will be used.
+         */
+        readonly agentId?: string;
+        /**
          * Context of the user's current location (e.g. the active dashboard and its widgets),
          * passed to the assistant alongside the seeded question.
          */
@@ -179,6 +183,7 @@ export interface IOpenAiAssistantRequestedEvent extends IPluggableAppEvent {
  * @alpha
  */
 export function openAiAssistantRequested(payload?: {
+    agentId?: string;
     question?: string;
     userContext?: IGenAIUserContext;
     appendToChat?: boolean;

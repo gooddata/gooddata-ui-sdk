@@ -711,6 +711,13 @@ export type IChatConversationCreateOptions = {
 };
 
 // @internal
+export type IChatConversationDashboardContent = {
+    type: "dashboard";
+    dashboard: IDashboard | null;
+    saved: boolean;
+};
+
+// @internal
 export type IChatConversationError = {
     type: "error";
     code: number;
@@ -767,7 +774,7 @@ export type IChatConversationMultipartContent = {
 };
 
 // @internal
-export type IChatConversationMultipartPart = IChatConversationTextContent | IChatConversationVisualisationContent | IChatConversationAlertProposalContent | IChatConversationKeyDriverAnalysisContent | IChatConversationWhatIfContent | IChatConversationSearchContent;
+export type IChatConversationMultipartPart = IChatConversationTextContent | IChatConversationVisualisationContent | IChatConversationAlertProposalContent | IChatConversationKeyDriverAnalysisContent | IChatConversationWhatIfContent | IChatConversationSearchContent | IChatConversationDashboardContent;
 
 // @internal
 export type IChatConversationReasoningContent = {
@@ -2433,6 +2440,9 @@ export function isAnalyticalBackendError(obj: unknown): obj is AnalyticalBackend
 
 // @internal
 export function isChatConversationAlertProposalContent(content: IChatConversationMultipartPart): content is IChatConversationAlertProposalContent;
+
+// @internal
+export function isChatConversationDashboardContent(content: IChatConversationMultipartPart): content is IChatConversationDashboardContent;
 
 // @internal
 export function isChatConversationError(item: Partial<IChatConversationItem | IChatConversationError>): item is IChatConversationError;

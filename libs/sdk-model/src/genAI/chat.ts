@@ -150,6 +150,10 @@ export interface IGenAIDashboardContext {
      */
     ref: ObjRef;
     /**
+     * Flag indicating whether the dashboard is new (not yet saved).
+     */
+    isNew?: boolean;
+    /**
      * Dashboard title.
      */
     title?: string;

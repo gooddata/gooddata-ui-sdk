@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-code-schemas: Add line_style_mapping schema for per-series line style and weight overrides",
+            "type": "minor",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

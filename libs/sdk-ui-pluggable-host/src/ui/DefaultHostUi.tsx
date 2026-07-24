@@ -36,7 +36,13 @@ interface IHostUiBridgeProps {
     navigate: (url: string) => void;
     replace: (url: string) => void;
     onChatToggleRequested?: () => void;
-    onAskAiAssistant?: (question: string, userContext?: IGenAIUserContext) => void;
+    onAskAiAssistant?: (
+        question: string,
+        agentId?: string,
+        userContext?: IGenAIUserContext,
+        appendToChat?: boolean,
+        replaceUserContext?: boolean,
+    ) => void;
     onAppContainerReady: (el: HTMLElement) => void;
     onReady: (
         setCtx: (ctx: IPlatformContext) => void,

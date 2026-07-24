@@ -35,6 +35,7 @@
 
 .gd-gen-ai-chat__animations--loader {
     position: relative;
+    flex-shrink: 0;
 
     &--inner {
         position: absolute;

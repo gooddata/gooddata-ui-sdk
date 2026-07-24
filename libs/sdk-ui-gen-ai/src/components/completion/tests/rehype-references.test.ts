@@ -40,4 +40,23 @@ describe("rehypeReferences", () => {
 
         expect(renderedReference).toContain("dashboard");
     });
+
+    it("should render visualization references with visualization css class", () => {
+        const tree = {
+            type: "root",
+            children: [{ type: "text", value: "{visualization/sales-viz}" }],
+        };
+        const plugin = rehypeReferences([
+            { id: "sales-viz", type: "visualization", title: "Sales Visualization" },
+        ]);
+
+        const transformed = plugin()(tree as unknown as never);
+        const renderedReference = (
+            (transformed as unknown as { children: unknown[] }).children[0] as {
+                properties: { className: string };
+            }
+        ).properties.className;
+
+        expect(renderedReference).toContain("visualization");
+    });
 });

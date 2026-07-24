@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "Expose accessUnavailable on the object share controller when permissions can't be read",
+            "type": "patch",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}
