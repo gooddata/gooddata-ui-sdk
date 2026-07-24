@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+@use "./ParameterInput.scss";
+
 .gd-ui-kit-parameter-control {
     &--dropdown {
         display: flex;
@@ -13,7 +15,7 @@
     }
 
     &__dropdown-field {
-        padding: 10px 10px 0;
+        padding: 10px;
     }
 
     &__dropdown-field-header {
@@ -21,25 +23,12 @@
         align-items: center;
         justify-content: space-between;
         padding-bottom: 5px;
+        font-size: 12px;
     }
 
     &__dropdown-label {
         color: var(--gd-palette-complementary-8);
-        font-size: 12px;
         font-weight: 400;
-    }
-
-    &__dropdown-reset {
-        padding: 0;
-        background: none;
-        border: none;
-        color: var(--gd-palette-primary-base);
-        font-size: 12px;
-        cursor: pointer;
-
-        &:hover {
-            text-decoration: underline;
-        }
     }
 
     &__dropdown-error {
@@ -50,7 +39,7 @@
 
     &__dropdown-divider {
         height: 1px;
-        margin: 10px 0;
+        margin: 10px;
         background-color: var(--gd-palette-complementary-3);
     }
 
@@ -78,7 +67,8 @@
         display: flex;
         justify-content: flex-end;
         gap: 10px;
-        padding: 10px;
+        margin: 0 10px;
+        padding: 10px 0;
         border-top: 1px solid var(--gd-palette-complementary-3);
     }
 }

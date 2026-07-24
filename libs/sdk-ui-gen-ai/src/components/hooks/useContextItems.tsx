@@ -2,6 +2,8 @@
 
 import { useMemo } from "react";
 
+import { useIntl } from "react-intl";
+
 import { type IGenAIUserContext } from "@gooddata/sdk-model";
 import { type IUiMenuItem, UiIcon } from "@gooddata/sdk-ui-kit";
 
@@ -16,11 +18,14 @@ export function useContextItems(
     ambient: IGenAIUserContext | undefined,
     active: IGenAIUserContext | undefined,
 ): IUiMenuItem<{ interactive: IGenAIContextObject }>[] {
+    const intl = useIntl();
+    const emptyReferenceLabel = intl.formatMessage({ id: "gd.gen-ai.context.untitled" });
+
     return useMemo(() => {
         const items: IUiMenuItem<{ interactive: IGenAIContextObject }>[] = [];
 
-        const currentReferences = collectAvailableReferences(ambient);
-        const selectedReferences = collectContextReferences(active);
+        const currentReferences = collectAvailableReferences(ambient, emptyReferenceLabel);
+        const selectedReferences = collectContextReferences(active, emptyReferenceLabel);
 
         currentReferences.forEach((reference) => {
             const isSelected = selectedReferences.some(
@@ -38,7 +43,7 @@ export function useContextItems(
                     stringTitle: reference.title,
                     ...(icon.iconBefore
                         ? {
-                              iconLeft: <UiIcon type={icon.iconBefore} color={icon.iconColor} />,
+                              iconLeft: <UiIcon size={16} type={icon.iconBefore} color={icon.iconColor} />,
                           }
                         : {}),
                 });
@@ -46,5 +51,5 @@ export function useContextItems(
         });
 
         return items;
-    }, [active, ambient]);
+    }, [active, ambient, emptyReferenceLabel]);
 }

@@ -279,6 +279,7 @@
     "gs.color-dropdown.custom-color": "Mukautettu väri",
     "properties.colors.reset-colors": "Nollaa värit",
     "properties.colors.reset-color": "Nollaa",
+    "properties.colors.reset-colors-and-styles": "Palauta värit ja tyylit",
     "properties.colors": "Värit",
     "properties.colorsAndFills": "Värit ja täytteet",
     "properties.colorsAndStyles": "Värit ja tyylit",

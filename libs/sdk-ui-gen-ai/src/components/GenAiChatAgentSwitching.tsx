@@ -38,17 +38,17 @@ type GenAiChatAgentSwitchingOwnProps = {
     disabled: boolean;
     agentDropdownDisabled: boolean;
     isAssistantLoading: boolean;
+    isConversationsLoading: boolean;
     handleSubmit: () => void;
     onMouseDown?: (event: MouseEvent<HTMLDivElement>) => void;
-    setBusy: (busy: boolean) => void;
-    setNoAgents: (noAgents: boolean) => void;
+    setBusy?: (busy: boolean) => void;
+    setNoAgents?: (noAgents: boolean) => void;
     leftContent?: ReactNode;
 };
 
 type GenAiChatAgentSwitchingStateProps = {
     conversation: ReturnType<typeof conversationSelector>;
     conversations: ReturnType<typeof conversationsSelector>;
-    conversationsLoaded: ReturnType<typeof conversationsLoadedSelector>;
     agents: ReturnType<typeof agentsSelector>;
     agentSwitchingEnabled: ReturnType<typeof agentSwitchingEnabledSelector>;
     agentSwitchingActive: ReturnType<typeof agentSwitchingActiveSelector>;
@@ -62,11 +62,11 @@ type IGenAiChatAgentSwitchingDispatchProps = {
 function GenAiChatAgentSwitchingCore({
     agentSwitchingEnabled,
     isAssistantLoading,
+    isConversationsLoading,
     handleSubmit,
     conversations,
     conversation,
     agentDropdownDisabled,
-    conversationsLoaded,
     agents,
     selectedAgentId,
     agentSwitchingActive,
@@ -87,7 +87,7 @@ function GenAiChatAgentSwitchingCore({
     const { availableAgents, hasNoAgents, isSelectionLoading } = getAgentSelectionStatus({
         agentSwitchingActive,
         assistantLoading: isAssistantLoading,
-        conversationsLoaded,
+        conversationsLoading: isConversationsLoading,
         agents,
         selectedAgentId,
     });

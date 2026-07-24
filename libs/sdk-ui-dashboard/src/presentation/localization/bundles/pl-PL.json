@@ -143,6 +143,8 @@
     "filters.configurationPanel.userFilterSave.toggle.tooltip": "Zezwól na automatyczne zapisywanie ostatniego stanu filtrów. Gdy użytkownicy wrócą, ich filtry pozostaną w takim stanie, w jakim je zostawili.",
     "filters.configurationPanel.filterViews.toggle": "Zapisane widoki",
     "filters.configurationPanel.filterViews.toggle.tooltip": "<p>Pozwala użytkownikom zapisać stan filtrów jako widoki osobiste, do których mogą wrócić później.</p><p>Tylko użytkownik, który zapisał widok, może go otworzyć i ustawić jako swój domyślny widok.</p>",
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle": "Trwałe filtry między kartami",
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle.tooltip": "Zezwalaj na trwałe filtry między kartami. Po włączeniu filtry będą trwałe między kartami.",
     "settingsDashboardDialog.sectionHeaders.dateDataset": "Zakres dat w opisach",
     "settingsDashboardDialog.sectionHeaders.dateDataset.tooltip": "Zbiór danych dat używany przez filtr zakresu dat dla odniesień do metryk w opisach sekcji.",
     "dateDataset.autoSelect": "Automatyczny wybór",

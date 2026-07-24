@@ -50,10 +50,7 @@
         color: variables.$gd-color-text;
         border-color: button-variables.$button-normal-active-border-color;
 
-        @include mixins.gradient-linear(
-            button-variables.$button-normal-active-gradient-top,
-            button-variables.$button-normal-active-gradient-bottom
-        );
+        @include button-mixins.button-normal-active-gradient;
     }
 
     &.is-full-width {

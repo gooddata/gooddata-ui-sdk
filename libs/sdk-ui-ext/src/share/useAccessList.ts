@@ -10,6 +10,7 @@ import {
     type ObjRef,
     idRef,
     objRefToString,
+    serializeObjRef,
 } from "@gooddata/sdk-model";
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { type GeneralAccessValue, type IUiGranteeAsyncOptions, useToastMessage } from "@gooddata/sdk-ui-kit";
@@ -34,6 +35,7 @@ import type {
     IGranteeIdentityFacts,
     IObjectShareControllerState,
     IObjectShareGrantee,
+    ISelfIdentity,
 } from "./objectShareController.types.js";
 import type { IObjectAccessSummary } from "./types.js";
 
@@ -49,6 +51,22 @@ export interface IAccessList {
     hasList: boolean;
     /** Local grantee rows — seeded from the fetch, then authoritative; mutations write through. */
     grantees: IObjectShareGrantee[];
+    /**
+     * Whether the manage-gated fetch seeded ZERO explicit grants for the current
+     * target — i.e. the caller reached the access list without holding a grant of
+     * their own (grant-independent access). A load-time fact: locally emptying the
+     * list later (e.g. removing your own sole grant) must not retroactively claim
+     * grant-independent access, so this is never recomputed from the live list.
+     */
+    seededWithoutGrants: boolean;
+    /** Signed-in user's identity facts + login id, once the profile resolves. */
+    selfIdentity: ISelfIdentity | undefined;
+    /**
+     * Whether the profile request resolved successfully — until then (or after a
+     * failure) rows' `isSelf` is only its unresolved default, so a sole grantee
+     * row cannot be told apart from the caller's own grant.
+     */
+    selfIdentityResolved: boolean;
     /**
      * Workspace vs restricted general access granted by THIS workspace's own rule —
      * local state; mutations write through. Excludes inherited (parent-workspace)
@@ -82,30 +100,10 @@ export interface IAccessList {
     /** Write a grant change to the backend and toast. False on failure; no refetch. */
     commit: (mutate: IGranularAccessGrantee[], successMessage: { id: string }) => Promise<boolean>;
     /**
-     * Picker loader — available assignees filtered by query. By default excludes
-     * already-granted grantees (add-grantee picker); pass `includeGranted` to keep
-     * them (transfer-ownership picker, which may promote an existing viewer).
+     * Picker loader — available assignees filtered by query, excluding
+     * already-granted grantees (add-grantee picker).
      */
-    loadOptions: (search: string, includeGranted?: boolean) => Promise<IUiGranteeAsyncOptions>;
-    /**
-     * The current user's ref, resolved on demand (and cached). Used by the
-     * transfer-ownership flow to write the current user's own grant change. The
-     * add-grantee *picker* excludes the current user, but `getAccessList` does
-     * not, so a self grant can still appear as a row. Always an idRef in the
-     * access list's id space, so it is comparable to grantee refs. Rejects if
-     * the profile can't be read.
-     */
-    getCurrentUserRef: () => Promise<ObjRef>;
-    /**
-     * Whether the signed-in user owns the object (holds a direct EDIT grant) — the
-     * gate for the owner-only transfer-ownership action. Resolved eagerly so the
-     * affordance is correct at render time; false until the current user resolves.
-     * Detects direct grants only: ownership held via a user group is not recognized
-     * (the row model drops inherited EDIT, and whether the access list surfaces a
-     * self row for group-only members is an open API question). Affordance-only by
-     * design — the transfer actions are never blocked on it, the backend decides.
-     */
-    canTransferOwnership: boolean;
+    loadOptions: (search: string) => Promise<IUiGranteeAsyncOptions>;
     /** Resolve a grantee id back to the picker's original ObjRef (preserves Uri vs Id ref). */
     refForId: (id: string) => ObjRef;
 
@@ -147,6 +145,9 @@ export function useAccessList(
 
     // Authoritative local state, seeded from the fetch below.
     const [grantees, setGrantees] = useState<IObjectShareGrantee[]>([]);
+    // Load-time fact, deliberately NOT derived from the live list: local mutations
+    // must not change it (see the IAccessList doc).
+    const [seededWithoutGrants, setSeededWithoutGrants] = useState(false);
     const [generalAccess, setGeneralAccess] = useState<GeneralAccessValue>("RESTRICTED");
     const [workspaceLevel, setWorkspaceLevel] = useState<"VIEW" | "SHARE">("VIEW");
     const [inheritedWorkspaceLevel, setInheritedWorkspaceLevel] = useState<"VIEW" | "SHARE" | undefined>(
@@ -168,7 +169,11 @@ export function useAccessList(
     // so resolve it at most once and share the promise across callers.
     const currentUserCache = useRef<Promise<IUser> | undefined>(undefined);
 
-    const targetKey = target ? objRefToString(target.ref) : undefined;
+    // Kind-qualified: distinct permission targets can share an identifier (e.g. an
+    // attribute and a metric), and every target-scoped guard — the seed stamp, the
+    // async-finalizer bail-outs, the dialog's staged-confirm reset — compares this
+    // key. serializeObjRef keeps the ref's own `type` qualifier too.
+    const targetKey = target ? `${target.kind}:${serializeObjRef(target.ref)}` : undefined;
 
     // Written from both the picker (loadOptions) and the on-open resolve. Must not
     // depend on the cache it writes, or it would re-trigger loadOptions' fetch.
@@ -214,7 +219,9 @@ export function useAccessList(
     useEffect(() => {
         if (fetchStatus === "success" && fetchedList) {
             // The cancelable promise is keyed on targetKey, so this list is for it.
-            setGrantees(granteesFromAccessList(fetchedList));
+            const seededGrantees = granteesFromAccessList(fetchedList);
+            setGrantees(seededGrantees);
+            setSeededWithoutGrants(seededGrantees.length === 0);
             setGeneralAccess(deriveGeneralAccess(fetchedList.grants));
             setWorkspaceLevel(deriveWorkspacePermissionLevel(fetchedList.grants));
             setInheritedWorkspaceLevel(deriveInheritedWorkspaceLevel(fetchedList.grants));
@@ -237,7 +244,7 @@ export function useAccessList(
                 .getUser()
                 .catch((error) => {
                     // Don't cache a rejected promise, or a transient profile-read
-                    // failure would make every later transfer fail immediately.
+                    // failure would stick for the rest of the session.
                     currentUserCache.current = undefined;
                     throw error;
                 });
@@ -246,9 +253,8 @@ export function useAccessList(
     }, [backend]);
 
     // Resolve the current user only while the dialog is open — keeps the summary-only
-    // path free of a profile request (the transfer gate and self-row facts it feeds
-    // aren't shown there).
-    const { result: currentUser } = useCancelablePromise<IUser>(
+    // path free of a profile request (the self-row facts it feeds aren't shown there).
+    const { result: currentUser, status: currentUserStatus } = useCancelablePromise<IUser>(
         {
             promise: dialogOpen && targetKey ? () => getCurrentUser() : undefined,
             onError: () => {},
@@ -257,8 +263,25 @@ export function useAccessList(
         // target-independent, so a target switch must not reset it.
         [getCurrentUser, targetKey !== undefined, dialogOpen],
     );
+    // Success only: while pending OR after a (silently swallowed) failure the
+    // rows' isSelf is just its unresolved default, and consumers must not treat
+    // an unidentified row as safe to mutate. Retried naturally on dialog reopen
+    // (the promise is keyed on `dialogOpen`; the failure isn't cached).
+    const selfIdentityResolved = currentUserStatus === "success";
 
     const selfId = currentUser ? granteeId("user", idRef(currentUser.login)) : undefined;
+
+    // De-collapsed like every listing fact — on tiger the user id is often the email.
+    const selfIdentity = useMemo<ISelfIdentity | undefined>(
+        () =>
+            currentUser
+                ? {
+                      ...userIdentityFacts(idRef(currentUser.login), currentUser.fullName, currentUser.email),
+                      id: currentUser.login,
+                  }
+                : undefined,
+        [currentUser],
+    );
 
     // Rows with identity facts backfilled from the assignee cache — or, for the
     // signed-in user's own row (absent from the listing by design), from the
@@ -268,15 +291,14 @@ export function useAccessList(
         if (!hasList) {
             return [];
         }
-        // De-collapsed like every listing fact — on tiger the user id is often the email.
-        const selfFacts = currentUser
-            ? userIdentityFacts(idRef(currentUser.login), currentUser.fullName, currentUser.email)
-            : undefined;
         return grantees.map((g) => {
-            const known = knownAssignees[g.id]?.facts ?? (g.id === selfId ? selfFacts : undefined);
-            return known ? { ...g, name: g.name ?? known.name, email: g.email ?? known.email } : g;
+            const known = knownAssignees[g.id]?.facts ?? (g.id === selfId ? selfIdentity : undefined);
+            const isSelf = g.id === selfId;
+            return known
+                ? { ...g, isSelf, name: g.name ?? known.name, email: g.email ?? known.email }
+                : { ...g, isSelf };
         });
-    }, [hasList, grantees, knownAssignees, currentUser, selfId]);
+    }, [hasList, grantees, knownAssignees, selfIdentity, selfId]);
 
     // Resolve identity facts on dialog open — grants often carry only raw ids
     // (the post-reload state). Unconditional: no missing-facts gate to keep in
@@ -366,15 +388,11 @@ export function useAccessList(
     );
 
     // Picker loader — fetches available assignees on demand, filters by the typed
-    // query, and by default excludes anything already granted. Depends only on the
+    // query, and excludes anything already granted. Depends only on the
     // granted set (grantees), so its identity changes only when that set actually
     // changes. It must NOT write state that feeds its own deps.
-    //
-    // `includeGranted` keeps already-granted grantees in the result. The
-    // transfer-ownership picker needs this: promoting an existing viewer to owner
-    // is a primary case, and the add-grantee exclusion would otherwise hide them.
     const loadOptions = useCallback(
-        async (search: string, includeGranted = false): Promise<IUiGranteeAsyncOptions> => {
+        async (search: string): Promise<IUiGranteeAsyncOptions> => {
             if (!target) {
                 return { groups: [], users: [] };
             }
@@ -391,7 +409,7 @@ export function useAccessList(
             // even when the access-list grant later returns only a raw id. Safe here:
             // the caches aren't dependencies of loadOptions, so this won't re-trigger it.
             cacheAssignees(assignees);
-            const excluded = new Set(includeGranted || !excludedIdsKey ? [] : excludedIdsKey.split(","));
+            const excluded = new Set(excludedIdsKey ? excludedIdsKey.split(",") : []);
             const selectable = withIds
                 .filter(({ id }) => !excluded.has(id)) // hide anyone already granted
                 .filter(({ assignee }) => assigneeMatchesQuery(assignee, query));
@@ -420,22 +438,13 @@ export function useAccessList(
         [knownAssignees],
     );
 
-    const getCurrentUserRef = useCallback(
-        // Not `user.ref`: the profile resolves it as a uriRef while access-list
-        // grantee refs are idRefs keyed by user id (= profile login), and
-        // areObjRefsEqual never matches mixed shapes — self-row matching and
-        // the self grant write need the permission API's id space.
-        (): Promise<ObjRef> => getCurrentUser().then((user) => idRef(user.login)),
-        [getCurrentUser],
-    );
-
-    const canTransferOwnership =
-        selfId !== undefined && namedGrantees.some((g) => g.id === selfId && g.level === "EDIT");
-
     return {
         targetKey,
         hasList,
         grantees: namedGrantees,
+        seededWithoutGrants,
+        selfIdentity,
+        selfIdentityResolved,
         generalAccess,
         workspaceLevel,
         inheritedWorkspaceLevel,
@@ -446,8 +455,6 @@ export function useAccessList(
         commit,
         loadOptions,
         refForId,
-        getCurrentUserRef,
-        canTransferOwnership,
         setGrantees,
         setGeneralAccess,
         setWorkspaceLevel,

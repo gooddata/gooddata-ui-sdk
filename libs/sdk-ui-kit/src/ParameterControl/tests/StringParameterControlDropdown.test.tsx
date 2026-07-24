@@ -29,7 +29,11 @@ describe("StringParameterControlDropdown", () => {
     it("renders a free-text input with the current value", () => {
         renderDropdown({ value: "Actual" });
         expect(getInput()).toHaveValue("Actual");
-        expect(getInput()).toHaveProperty("type", "text");
+    });
+
+    it("shares the parameter-input shell with the numeric variant", () => {
+        renderDropdown();
+        expect(getInput().parentElement).toHaveClass("gd-ui-kit-parameter-input");
     });
 
     it("calls onApply with the typed text on Apply", () => {
@@ -125,11 +129,9 @@ describe("StringParameterControlDropdown", () => {
         expect(onApply).toHaveBeenCalledWith("Budget");
     });
 
-    it("mirrors the current value in the preview while the draft is invalid", () => {
-        renderDropdown({ value: "Actual", constraints: { maxLength: 6 } });
-        fireEvent.change(getInput(), { target: { value: "Forecast" } });
-        const preview = screen.getByTestId("parameter-control-dropdown-preview");
-        expect(preview).toHaveTextContent("Actual");
-        expect(preview).not.toHaveTextContent("Forecast");
+    it("renders no stepper", () => {
+        renderDropdown();
+        expect(screen.queryByTestId("parameter-control-dropdown-input-stepper-up")).not.toBeInTheDocument();
+        expect(screen.queryByTestId("parameter-control-dropdown-input-stepper-down")).not.toBeInTheDocument();
     });
 });

@@ -62,10 +62,6 @@ export const olpGranteeAvatarMessages = defineMessages({
     group: { id: "shareDialog.olp.granteeAvatar.group" },
 });
 
-export const olpGranteeRowMessages = defineMessages({
-    ownerTag: { id: "shareDialog.olp.granteeRow.ownerTag" },
-});
-
 export const olpObjectShareDialogMessages = defineMessages({
     title: { id: "shareDialog.olp.objectShareDialog.title" },
     sharedWith: { id: "shareDialog.olp.objectShareDialog.sharedWith" },
@@ -79,17 +75,6 @@ export const olpAddGranteeDialogMessages = defineMessages({
     searchPlaceholder: { id: "shareDialog.olp.addGranteeDialog.searchPlaceholder" },
     emptyState: { id: "shareDialog.olp.addGranteeDialog.emptyState" },
     add: { id: "shareDialog.olp.addGranteeDialog.add" },
-});
-
-export const olpTransferOwnershipDialogMessages = defineMessages({
-    title: { id: "shareDialog.olp.transferOwnershipDialog.title" },
-    back: { id: "shareDialog.olp.transferOwnershipDialog.back" },
-    userLabel: { id: "shareDialog.olp.transferOwnershipDialog.userLabel" },
-    searchPlaceholder: { id: "shareDialog.olp.transferOwnershipDialog.searchPlaceholder" },
-    alsoRemoveMyAccess: { id: "shareDialog.olp.transferOwnershipDialog.alsoRemoveMyAccess" },
-    noteKeepAccess: { id: "shareDialog.olp.transferOwnershipDialog.note.keepAccess" },
-    noteLoseAccess: { id: "shareDialog.olp.transferOwnershipDialog.note.loseAccess" },
-    transfer: { id: "shareDialog.olp.transferOwnershipDialog.transfer" },
 });
 
 export const olpGeneralAccessMessages = defineMessages({
@@ -118,7 +103,6 @@ export const olpPermissionMessages = defineMessages({
     canEdit: { id: "shareDialog.olp.permission.edit" },
     canViewAndShareTooltip: { id: "shareDialog.olp.permission.tooltip.share" },
     canViewTooltip: { id: "shareDialog.olp.permission.tooltip.view" },
-    transferOwnership: { id: "shareDialog.olp.permission.transferOwnership" },
     labels: { id: "shareDialog.olp.permission.labels" },
     removeAccess: { id: "shareDialog.olp.permission.removeAccess" },
     menuLabel: { id: "shareDialog.olp.permission.menuLabel" },

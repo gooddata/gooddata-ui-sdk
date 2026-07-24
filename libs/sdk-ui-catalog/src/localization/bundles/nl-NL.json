@@ -2,7 +2,7 @@
     "analyticsCatalog.title": "Analyticscatalogus",
     "analyticsCatalog.showMore": "meer tonen",
     "analyticsCatalog.showLess": "minder tonen",
-    "analyticsCatalog.objectType.title": "Objecttypen",
+    "analyticsCatalog.objectType.title": "Objecten",
     "analyticsCatalog.objectType.dashboard.button.ariaLabel": "Dashboard: {count}",
     "analyticsCatalog.objectType.visualization.button.ariaLabel": "Visualisatie: {count}",
     "analyticsCatalog.objectType.metric.button.ariaLabel": "Metriek: {count}",

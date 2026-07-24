@@ -143,6 +143,8 @@
     "filters.configurationPanel.userFilterSave.toggle.tooltip": "允許自動儲存過濾器的最後狀態。當用戶返回時，他們的過濾器將保持原樣。",
     "filters.configurationPanel.filterViews.toggle": "已儲存的視圖",
     "filters.configurationPanel.filterViews.toggle.tooltip": "<p>允許使用者將過濾器狀態儲存為個人視圖，以便稍後返回。</p><p>只有儲存視圖的使用者才能存取它並將其設定為預設視圖。</p>",
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle": "跨分頁的持續性篩選器",
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle.tooltip": "允許跨分頁使用持續性篩選器。啟用後，篩選器將跨分頁持續保留。",
     "settingsDashboardDialog.sectionHeaders.dateDataset": "描述中的日期範圍",
     "settingsDashboardDialog.sectionHeaders.dateDataset.tooltip": "日期範圍篩選器用於章節描述中的指標所引用的日期資料集。",
     "dateDataset.autoSelect": "自動選擇",

@@ -2471,29 +2471,25 @@
         "text": "Confirm",
         "crowdinContext": "Primary action label in the general-access confirm dialog."
     },
-    "objectShare.transfer.alreadyOwner.title": {
-        "text": "{name} is already an owner",
-        "crowdinContext": "Title of the confirm dialog shown when the user picked to receive ownership already owns the object. {name} is that user's name."
+    "objectShare.selfRestrict.title": {
+        "text": "Restrict your access?",
+        "crowdinContext": "Title of the confirm dialog shown when the user is about to lower the permission level of their own grant in the share dialog."
     },
-    "objectShare.transfer.alreadyOwner.description": {
-        "text": "There's nothing to transfer. If you want to remove your ownership, choose what happens to your access:",
-        "crowdinContext": "Description in the confirm dialog shown when the picked user already owns the object. Offers to remove the current user's own access instead of transferring."
+    "objectShare.selfRestrict.warning": {
+        "text": "You can't set higher permissions for yourself.",
+        "crowdinContext": "Warning that lowering your own permission is one-way. Shown both as the body of the self-restrict confirm dialog and as the tooltip on permission options that are disabled because they are higher than the user's current level — the copy is identical in both places by design."
     },
-    "objectShare.transfer.alreadyOwner.keepAccess": {
-        "text": "Keep view access",
-        "crowdinContext": "Radio option in the 'already an owner' dialog: the current user keeps view access to the object."
+    "objectShare.grantee.you": {
+        "text": "{name} (you)",
+        "crowdinContext": "Display name of the signed-in user's own row in the share dialog grantee list. {name} is the user's full name."
     },
-    "objectShare.transfer.alreadyOwner.removeAccess": {
-        "text": "Remove my access",
-        "crowdinContext": "Radio option in the 'already an owner' dialog: the current user's access to the object is removed entirely."
+    "objectShare.adminTag.label": {
+        "text": "Admin",
+        "crowdinContext": "Static badge on the signed-in user's own row in the share dialog when they access the object through administrator rights rather than an explicit grant."
     },
-    "objectShare.transfer.confirmButton": {
-        "text": "Confirm",
-        "crowdinContext": "Primary button in the 'already an owner' dialog. Applies the chosen change to the current user's own access."
-    },
-    "objectShare.toast.ownershipTransferred": {
-        "text": "The ownership has been transferred.",
-        "crowdinContext": "Toast shown after ownership of the shared object was successfully transferred to another user."
+    "objectShare.adminTag.tooltip": {
+        "text": "You and other administrators have full access to this object.",
+        "crowdinContext": "Tooltip of the Admin badge in the share dialog, explaining why the row has no permission controls."
     },
     "objectShare.toast.granteeAdded": {
         "text": "Access added.",

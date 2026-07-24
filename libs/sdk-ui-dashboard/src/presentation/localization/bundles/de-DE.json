@@ -143,6 +143,8 @@
     "filters.configurationPanel.userFilterSave.toggle.tooltip": "Automatisches Speichern des letzten Status der Filter zulassen. Wenn Benutzer zurückkehren, bleiben ihre Filter so, wie sie sie verlassen haben.",
     "filters.configurationPanel.filterViews.toggle": "Gespeicherte Ansichten",
     "filters.configurationPanel.filterViews.toggle.tooltip": "<p>Ermöglicht Benutzern, den Filterstatus als persönliche Ansicht zu speichern, zu der sie später zurückkehren können.</p><p>Nur der Benutzer, der die Ansicht gespeichert hat, kann darauf zugreifen und sie als Standardansicht festlegen.</p>",
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle": "Persistente Filter über Tabs hinweg",
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle.tooltip": "Persistente Filter über Tabs hinweg zulassen. Wenn aktiviert, bleiben Filter über Tabs hinweg erhalten.",
     "settingsDashboardDialog.sectionHeaders.dateDataset": "Datumsbereich in Beschreibungen",
     "settingsDashboardDialog.sectionHeaders.dateDataset.tooltip": "Datumsdatensatz, der vom Datumsbereichsfilter für Metrikreferenzen in Abschnittsbeschreibungen verwendet wird.",
     "dateDataset.autoSelect": "Automatische Auswahl",

@@ -1,16 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import {
-    type FC,
-    type LegacyRef,
-    type MouseEvent,
-    type ReactNode,
-    useEffect,
-    useMemo,
-    useReducer,
-    useRef,
-    useState,
-} from "react";
+import { type FC, type LegacyRef, type MouseEvent, type ReactNode, useMemo, useState } from "react";
 
 import { type EditorView } from "@codemirror/view";
 import cx from "classnames";
@@ -31,6 +21,7 @@ import {
     asyncProcessSelector,
     conversationMessagesSelector,
     conversationSelector,
+    conversationsLoadedSelector,
     messagesSelector,
 } from "../store/messages/messagesSelectors.js";
 import { newMessageAction, setSelectedAgentAction } from "../store/messages/messagesSlice.js";
@@ -43,6 +34,7 @@ import { GenAiChatContextChooser } from "./GenAiChatContextChooser.js";
 import { GenAIChatContextIndicator } from "./GenAIChatContextIndicator.js";
 import { useHighlight } from "./highlight/useHighlight.js";
 import { useFullscreenCheck } from "./hooks/useFullscreenCheck.js";
+import { useInputAutofocus } from "./hooks/useInputAutofocus.js";
 import { escapeMarkdown } from "./utils/markdownUtils.js";
 
 export type InputOwnProps = {
@@ -58,6 +50,7 @@ type InputStateProps = {
     messages: ReturnType<typeof messagesSelector>;
     loading: ReturnType<typeof asyncProcessSelector>;
     conversation: ReturnType<typeof conversationSelector>;
+    conversationsLoaded: ReturnType<typeof conversationsLoadedSelector>;
     items: ReturnType<typeof conversationMessagesSelector>;
     agentSwitchingEnabled: ReturnType<typeof agentSwitchingEnabledSelector>;
 };
@@ -92,6 +85,7 @@ function InputComponent({
     targetRef,
     messages,
     conversation,
+    conversationsLoaded,
     items,
     agentSwitchingEnabled,
     loading,
@@ -116,38 +110,7 @@ function InputComponent({
     const extensions = useMemo(() => [highlightExtension], [highlightExtension]);
 
     // Force focus when autofocus is enables on the first mount, right after the initial state is loaded
-    const forceFocusOnce = useRef<boolean>(autofocus);
-    const [updates, update] = useReducer((x) => x + 1, 0);
-    useEffect(() => {
-        // Autofocus the textarea when the chat is not disabled and the user is not focusing on another element
-        // Important, given the disabled states changes depending on the agent's loading state
-        // And it's loosing focus after the loading state changes
-        if (isBusy || !editorApi) {
-            return;
-        }
-        const makeFocus = forceFocusOnce.current || document.activeElement === document.body;
-        let timeout: number | undefined;
-        if (makeFocus) {
-            editorApi.focus();
-            if (document.activeElement === editorApi.contentDOM) {
-                forceFocusOnce.current = false;
-            } else {
-                timeout = window.setTimeout(update, 25);
-            }
-        }
-        return () => {
-            if (timeout) {
-                window.clearTimeout(timeout);
-            }
-        };
-    }, [isBusy, editorApi, updates]);
-    useEffect(
-        () => () => {
-            // When unmount occurred, reset the autofocus
-            forceFocusOnce.current = true;
-        },
-        [],
-    );
+    const ref = useInputAutofocus(editorApi, autofocus, { isBusy });
 
     const handleSubmit = () => {
         let item: IChatConversationLocalItem | UserMessage;
@@ -220,7 +183,7 @@ function InputComponent({
                         <GenAIChatContextIndicator onDelete={handleOnFocus} />
                     </div>
                     <div ref={targetRef} onFocus={handleOnFocus} />
-                    <div className="gd-gen-ai-chat__input__text">
+                    <div className="gd-gen-ai-chat__input__text" {...ref}>
                         <SyntaxHighlightingInput
                             className="gd-gen-ai-chat__input__mc"
                             placeholder={intl.formatMessage(msgs.placeholder)}
@@ -249,6 +212,7 @@ function InputComponent({
                     </div>
                     <GenAiChatAgentSwitching
                         disabled={buttonDisabled}
+                        isConversationsLoading={!conversationsLoaded}
                         isAssistantLoading={isAssistantLoading}
                         agentDropdownDisabled={agentDropdownDisabled}
                         handleSubmit={handleSubmit}
@@ -305,6 +269,7 @@ const mapStateToProps = (
     isEvaluating: boolean;
     items: ReturnType<typeof conversationMessagesSelector>;
     conversation: ReturnType<typeof conversationSelector>;
+    conversationsLoaded: ReturnType<typeof conversationsLoadedSelector>;
     messages: ReturnType<typeof messagesSelector>;
     loading: ReturnType<typeof asyncProcessSelector>;
     agentSwitchingEnabled: ReturnType<typeof agentSwitchingEnabledSelector>;
@@ -313,6 +278,7 @@ const mapStateToProps = (
 
     return {
         conversation: conversationSelector(state),
+        conversationsLoaded: conversationsLoadedSelector(state),
         items: conversationMessagesSelector(state),
         messages: messagesSelector(state),
         loading: asyncState,

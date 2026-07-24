@@ -1,0 +1,91 @@
+// (C) 2026 GoodData Corporation
+
+.gd-ui-kit-parameter-input {
+    display: flex;
+    overflow: hidden;
+    box-sizing: border-box;
+    width: 100%;
+    border: 1px solid var(--gd-palette-complementary-4);
+    border-radius: 3px;
+    background-color: var(--gd-palette-complementary-0);
+
+    &:hover {
+        border-color: var(--gd-palette-complementary-5);
+    }
+
+    &:focus-within {
+        border-color: var(--gd-palette-primary-base);
+        box-shadow: 0 0 0 1px var(--gd-palette-primary-base);
+    }
+
+    &--hasError {
+        border-color: var(--gd-palette-error-base);
+
+        &:focus-within {
+            border-color: var(--gd-palette-error-base);
+            box-shadow: 0 0 0 1px var(--gd-palette-error-base);
+        }
+    }
+
+    &__field {
+        flex: 1 1 auto;
+        width: 100%;
+        min-width: 0;
+        padding: 6px 10px 5px;
+        border: 0;
+        background: transparent;
+        color: var(--gd-palette-complementary-9);
+        font-family: inherit;
+        font-size: 14px;
+        line-height: normal;
+
+        &:focus-visible {
+            outline: none;
+        }
+
+        &--number {
+            text-align: right;
+            appearance: textfield;
+            -moz-appearance: textfield;
+
+            &::-webkit-outer-spin-button,
+            &::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+        }
+    }
+
+    &__stepper {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: center;
+        width: 25px;
+        min-width: 25px;
+        padding: 0;
+        border-left: 1px solid var(--gd-palette-complementary-4);
+        background-color: var(--gd-palette-complementary-1);
+    }
+
+    &__stepper-button {
+        display: flex;
+        flex: 1 1 0;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        border: 0;
+        background: none;
+        cursor: pointer;
+        color: var(--gd-palette-complementary-6);
+
+        &:hover {
+            color: var(--gd-palette-complementary-8);
+        }
+
+        &:disabled {
+            color: var(--gd-palette-complementary-5);
+            cursor: default;
+        }
+    }
+}

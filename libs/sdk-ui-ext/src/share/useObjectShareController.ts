@@ -3,13 +3,8 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 
 import type { IObjectPermissionsObject } from "@gooddata/sdk-backend-spi";
-import { type IGranularAccessGrantee, type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
-import {
-    type GeneralAccessValue,
-    type IUiGranteeAsyncOption,
-    type IUiPickedGrantee,
-    useToastMessage,
-} from "@gooddata/sdk-ui-kit";
+import { type IGranularAccessGrantee } from "@gooddata/sdk-model";
+import { type GeneralAccessValue, type IUiPickedGrantee, useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { composeEffectiveWorkspaceAccess } from "./accessSummary.js";
 import { objectShareMessages } from "./messages.js";
@@ -71,15 +66,11 @@ export function useObjectShareController(
     const toast = useToastMessage();
 
     // UI-local buffers — never backend data.
-    const [subview, setSubview] = useState<"main" | "addGrantee" | "transferOwnership">("main");
+    const [subview, setSubview] = useState<"main" | "addGrantee">("main");
     const [pendingGrantees, setPendingGrantees] = useState<IUiPickedGrantee[]>([]);
     const [pendingGeneralAccess, setPendingGeneralAccess] = useState<GeneralAccessValue | undefined>(
         undefined,
     );
-    // Transfer-ownership buffers. Cleared on close and on target switch.
-    const [transferTarget, setTransferTargetState] = useState<IUiGranteeAsyncOption | undefined>(undefined);
-    const [transferAlsoRemoveSelf, setTransferAlsoRemoveSelf] = useState(false);
-    const [transferSaving, setTransferSaving] = useState(false);
     // True while a workspace-level re-grade is committing. The workspace rule has no
     // grantee row to carry a `pending` flag (unlike named grantees), so this gates
     // re-entry and disables the dropdown to keep rapid VIEW↔SHARE toggles from issuing
@@ -92,6 +83,9 @@ export function useObjectShareController(
         targetKey,
         hasList,
         grantees,
+        seededWithoutGrants,
+        selfIdentity,
+        selfIdentityResolved,
         generalAccess,
         workspaceLevel,
         inheritedWorkspaceLevel,
@@ -102,8 +96,6 @@ export function useObjectShareController(
         commit,
         loadOptions,
         refForId,
-        getCurrentUserRef,
-        canTransferOwnership,
         setGrantees,
         setGeneralAccess,
         setWorkspaceLevel,
@@ -148,9 +140,6 @@ export function useObjectShareController(
         setPendingGrantees([]);
         setPendingGeneralAccess(undefined);
         setWorkspaceLevelSaving(false);
-        setTransferTargetState(undefined);
-        setTransferAlsoRemoveSelf(false);
-        setTransferSaving(false);
     }
 
     const reset = useCallback(() => {
@@ -158,12 +147,6 @@ export function useObjectShareController(
         setPendingGrantees([]);
         setPendingGeneralAccess(undefined);
         setWorkspaceLevelSaving(false);
-        setTransferTargetState(undefined);
-        setTransferAlsoRemoveSelf(false);
-        // Deliberately NOT clearing transferSaving here: closing the dialog must not
-        // release the transfer lock while the write is still in flight, or a reopened
-        // dialog could mutate concurrently with the unfinished transfer. The in-flight
-        // confirmTransferOwnership clears it itself once the write settles.
     }, []);
 
     const openAddGrantee = useCallback(() => {
@@ -601,208 +584,6 @@ export function useObjectShareController(
         ],
     );
 
-    const openTransferOwnership = useCallback(() => {
-        setSubview("transferOwnership");
-        setTransferTargetState(undefined);
-        setTransferAlsoRemoveSelf(false);
-    }, []);
-
-    const closeTransferOwnership = useCallback(() => {
-        setSubview("main");
-        setTransferTargetState(undefined);
-        setTransferAlsoRemoveSelf(false);
-    }, []);
-
-    const setTransferTarget = useCallback((owner: IUiGranteeAsyncOption) => {
-        setTransferTargetState(owner);
-    }, []);
-
-    // The picked user already owns the object when a grantee row for them holds
-    // EDIT — then there's nothing to transfer (the dialog offers to remove the
-    // current user's own access instead).
-    const transferTargetIsOwner = useMemo(
-        () =>
-            transferTarget ? grantees.some((g) => g.id === transferTarget.id && g.level === "EDIT") : false,
-        [transferTarget, grantees],
-    );
-
-    // Insert a brand-new grantee row with its label scope — the shared seed for a
-    // freshly-granted principal (used when a transfer promotes a user who wasn't
-    // already a grantee; the same row shape the add flow creates). Identity
-    // renders from the facts cache.
-    const seedNewGranteeRow = useCallback(
-        (row: IObjectShareGrantee, labelIds: string[]) => {
-            setGrantees((prev) => [...prev, row]);
-            setSelectedLabelIdsByGrantee((prev) => ({ ...prev, [row.id]: labelIds }));
-        },
-        [setGrantees, setSelectedLabelIdsByGrantee],
-    );
-
-    const confirmTransferOwnership = useCallback(async (): Promise<void> => {
-        if (!transferTarget || transferSaving) {
-            return;
-        }
-        const startedFor = targetKey;
-        const ownerRef = refForId(transferTarget.id);
-
-        let selfRef: ObjRef;
-        try {
-            selfRef = await getCurrentUserRef();
-        } catch {
-            toast.addError(objectShareMessages.toastError);
-            return;
-        }
-        if (targetKeyRef.current !== startedFor) {
-            return;
-        }
-        // Guard against transferring to yourself: the picker's loader already
-        // excludes the current user, but if a backend ever returned self the batch
-        // below would emit conflicting grants for one ref (EDIT + VIEW/none). Bail
-        // and just close — there is nothing to transfer to oneself.
-        if (areObjRefsEqual(ownerRef, selfRef)) {
-            closeTransferOwnership();
-            return;
-        }
-
-        // Build the write. A real transfer grants the picked user EDIT and changes
-        // the current user's own grant: kept as VIEW by default, or removed when
-        // "Also remove my access" is set. When the picked user already owns the
-        // object there's nothing to transfer — only the self-access choice applies,
-        // and "keep" is then a pure no-op (don't downgrade an existing owner-self to
-        // VIEW just for confirming).
-        const mutations: IGranularAccessGrantee[] = [];
-        if (!transferTargetIsOwner) {
-            mutations.push(toGranularGrantee("user", ownerRef, "EDIT"));
-            mutations.push(toGranularGrantee("user", selfRef, transferAlsoRemoveSelf ? "none" : "VIEW"));
-        } else if (transferAlsoRemoveSelf) {
-            mutations.push(toGranularGrantee("user", selfRef, "none"));
-        }
-        if (mutations.length === 0) {
-            closeTransferOwnership();
-            return;
-        }
-
-        // Whether the new owner already has a grantee row (was granted before this
-        // transfer). A brand-new owner needs a row seeded and their labels mirrored,
-        // exactly like the add-grantee flow; an existing grantee already has both.
-        const existingOwnerRow = transferTargetIsOwner
-            ? undefined
-            : grantees.find((g) => g.id === transferTarget.id);
-        const ownerIsNew = !transferTargetIsOwner && !existingOwnerRow;
-        const allLabelIds = effectiveLabels.map((l) => l.id);
-
-        setTransferSaving(true);
-
-        // "Ownership transferred" only when ownership actually moves; the
-        // already-owner path just changes the current user's own access.
-        const successMessage = transferTargetIsOwner
-            ? objectShareMessages.toastAccessUpdated
-            : objectShareMessages.toastOwnershipTransferred;
-        const ok = await commit(mutations, successMessage);
-        if (targetKeyRef.current !== startedFor) {
-            return;
-        }
-        if (!ok) {
-            setTransferSaving(false);
-            return;
-        }
-
-        // Mirror per-label grants for the same reason add/remove do: label
-        // permissions are independent access-list entries, so the object write
-        // alone would leave a new owner without label access, or leave a removed
-        // self with orphaned label grants. A failed label write is non-fatal here
-        // (the object grant is what matters) — surfaced as a warning, like remove.
-        //
-        // Do every backend label write first, then apply all local state behind a
-        // single target guard. Since no local write happens before that guard, a
-        // target switch during a label await can't land a half-applied transfer on
-        // the next object's seeded list — unlike the optimistic finalizers, which
-        // write before committing and so must re-guard after each await.
-        let labelsOk = true;
-        if (ownerIsNew) {
-            // Grant the brand-new owner every label — the add-grantee default scope.
-            const granted = await reconcileLabelScope(
-                { kind: "user", granteeRef: ownerRef },
-                new Set(allLabelIds),
-                EMPTY_IDS,
-            );
-            labelsOk = labelsOk && granted;
-        }
-        if (transferAlsoRemoveSelf) {
-            // Self lost object access — revoke their per-label grants too.
-            const revoked = await reconcileLabelScope(
-                { kind: "user", granteeRef: selfRef },
-                EMPTY_IDS,
-                new Set(allLabelIds),
-            );
-            labelsOk = labelsOk && revoked;
-        }
-        if (targetKeyRef.current !== startedFor) {
-            return;
-        }
-
-        // Reflect the object-grant changes locally (authoritative, no refetch).
-        if (!transferTargetIsOwner) {
-            const nextEffective = effectivePermissionAbove("EDIT", []);
-            if (ownerIsNew) {
-                seedNewGranteeRow(
-                    {
-                        id: transferTarget.id,
-                        kind: "user",
-                        granteeRef: ownerRef,
-                        level: "EDIT",
-                        effectivePermission: nextEffective,
-                    },
-                    allLabelIds,
-                );
-            } else {
-                // Existing grantee: their label scope is unchanged by an
-                // object-level promotion, so only the row's level is raised.
-                setGrantees((prev) =>
-                    prev.map((g) =>
-                        g.id === transferTarget.id
-                            ? { ...g, level: "EDIT", effectivePermission: nextEffective }
-                            : g,
-                    ),
-                );
-            }
-        }
-        // The current user may have their own grantee row (the access list keeps
-        // every grant, including self) — reflect their object-grant change locally
-        // too: dropped when "remove my access", otherwise downgraded to VIEW. Match
-        // by ref since self isn't tied to a picker-derived row id.
-        setGrantees((prev) =>
-            transferAlsoRemoveSelf
-                ? prev.filter((g) => !areObjRefsEqual(g.granteeRef, selfRef))
-                : prev.map((g) =>
-                      areObjRefsEqual(g.granteeRef, selfRef)
-                          ? { ...g, level: "VIEW", effectivePermission: undefined }
-                          : g,
-                  ),
-        );
-        if (!labelsOk) {
-            toast.addWarning(objectShareMessages.toastLabelScopePartial);
-        }
-        setTransferSaving(false);
-        closeTransferOwnership();
-    }, [
-        transferTarget,
-        transferSaving,
-        transferTargetIsOwner,
-        transferAlsoRemoveSelf,
-        targetKey,
-        grantees,
-        effectiveLabels,
-        refForId,
-        getCurrentUserRef,
-        commit,
-        reconcileLabelScope,
-        toast,
-        setGrantees,
-        seedNewGranteeRow,
-        closeTransferOwnership,
-    ]);
-
     const actions = useMemo<IObjectShareControllerActions>(
         () => ({
             reset,
@@ -818,11 +599,6 @@ export function useObjectShareController(
             cancelGeneralAccessChange: () => setPendingGeneralAccess(undefined),
             confirmGeneralAccessChange,
             changeWorkspaceLevel,
-            openTransferOwnership,
-            closeTransferOwnership,
-            setTransferTarget,
-            setTransferAlsoRemoveSelf,
-            confirmTransferOwnership,
         }),
         [
             reset,
@@ -836,10 +612,6 @@ export function useObjectShareController(
             requestGeneralAccessChange,
             confirmGeneralAccessChange,
             changeWorkspaceLevel,
-            openTransferOwnership,
-            closeTransferOwnership,
-            setTransferTarget,
-            confirmTransferOwnership,
         ],
     );
 
@@ -850,6 +622,10 @@ export function useObjectShareController(
             error: loadError,
             accessUnavailable,
             summary,
+            targetKey,
+            selfIdentity,
+            selfIdentityResolved,
+            seededWithoutGrants,
             grantees,
             // Effective access: the direct state composed with inherited rule
             // access. Also pins the level to VIEW while restricted, so the (hidden)
@@ -865,11 +641,6 @@ export function useObjectShareController(
             selectedLabelIdsByGrantee,
             pendingGeneralAccess,
             pendingGrantees,
-            transferTarget,
-            transferAlsoRemoveSelf,
-            transferTargetIsOwner,
-            transferSaving,
-            canTransferOwnership,
         }),
         [
             subview,
@@ -877,6 +648,10 @@ export function useObjectShareController(
             loadError,
             accessUnavailable,
             summary,
+            targetKey,
+            selfIdentity,
+            selfIdentityResolved,
+            seededWithoutGrants,
             grantees,
             generalAccess,
             workspaceLevel,
@@ -887,11 +662,6 @@ export function useObjectShareController(
             selectedLabelIdsByGrantee,
             pendingGeneralAccess,
             pendingGrantees,
-            transferTarget,
-            transferAlsoRemoveSelf,
-            transferTargetIsOwner,
-            transferSaving,
-            canTransferOwnership,
         ],
     );
 

@@ -143,6 +143,8 @@
     "filters.configurationPanel.userFilterSave.toggle.tooltip": "Cho phép tự động lưu trạng thái gần nhất của các bộ lọc. Khi người dùng quay lại, các bộ lọc của họ sẽ giữ nguyên như lúc họ rời đi.",
     "filters.configurationPanel.filterViews.toggle": "Chế độ xem đã lưu",
     "filters.configurationPanel.filterViews.toggle.tooltip": "<p>Cho phép người dùng lưu trạng thái bộ lọc dưới dạng chế độ xem cá nhân mà họ có thể quay lại sau.</p><p>Chỉ người dùng đã lưu chế độ xem mới có thể truy cập và đặt nó làm chế độ xem mặc định của họ.</p>",
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle": "Bộ lọc được duy trì trên các tab",
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle.tooltip": "Cho phép các bộ lọc được duy trì trên các tab. Khi bật, các bộ lọc sẽ được duy trì trên các tab.",
     "settingsDashboardDialog.sectionHeaders.dateDataset": "Phạm vi ngày trong mô tả",
     "settingsDashboardDialog.sectionHeaders.dateDataset.tooltip": "Tập dữ liệu ngày được dùng bởi bộ lọc Phạm vi ngày cho các tham chiếu chỉ số trong mô tả phần.",
     "dateDataset.autoSelect": "Tự động chọn",

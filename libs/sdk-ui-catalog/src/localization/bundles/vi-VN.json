@@ -2,7 +2,7 @@
     "analyticsCatalog.title": "Danh mục phân tích",
     "analyticsCatalog.showMore": "hiện thêm",
     "analyticsCatalog.showLess": "hiện ít",
-    "analyticsCatalog.objectType.title": "Loại đối tượng",
+    "analyticsCatalog.objectType.title": "Đối tượng",
     "analyticsCatalog.objectType.dashboard.button.ariaLabel": "Bảng điều khiển: {count}",
     "analyticsCatalog.objectType.visualization.button.ariaLabel": "Trực quan hóa: {count}",
     "analyticsCatalog.objectType.metric.button.ariaLabel": "Chỉ số: {count}",

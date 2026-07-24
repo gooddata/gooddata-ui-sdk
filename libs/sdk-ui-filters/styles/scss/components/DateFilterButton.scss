@@ -4,7 +4,7 @@
 @use "@gooddata/sdk-ui-kit/styles/scss/variables";
 @use "@gooddata/sdk-ui-kit/styles/scss/button";
 @use "@gooddata/sdk-ui-kit/styles/scss/Button/variables" as button-variables;
-@use "@gooddata/sdk-ui-kit/styles/scss/mixins";
+@use "@gooddata/sdk-ui-kit/styles/scss/Button/mixins" as button-mixins;
 @use "@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
 
 $transition-length: 0.2s;
@@ -127,12 +127,7 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
                     button-variables.$button-normal-hover-border-color
                 );
 
-                // refactor
-                // stylelint-disable-next-line max-line-length
-                @include mixins.gradient-linear(
-                    button-variables.$button-normal-active-gradient-top,
-                    button-variables.$button-normal-active-gradient-bottom
-                );
+                @include button-mixins.button-normal-active-gradient;
             }
         }
     }

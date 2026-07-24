@@ -31,11 +31,6 @@ describe("UiGranteeRow", () => {
         expect(screen.queryByText(/@/)).not.toBeInTheDocument();
     });
 
-    it("renders the Owner tag when isOwner is true", () => {
-        renderWithIntl(<UiGranteeRow kind="user" name="Marek" isOwner />);
-        expect(screen.getByText("Owner")).toBeInTheDocument();
-    });
-
     it("renders the avatar as decorative (hidden from assistive tech)", () => {
         const { container } = renderWithIntl(<UiGranteeRow kind="group" name="Admin" />);
         // Inside a row the visible name is the accessible name; the avatar must not

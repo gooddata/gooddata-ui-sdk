@@ -2,7 +2,7 @@
     "analyticsCatalog.title": "Analitik kataloğu",
     "analyticsCatalog.showMore": "daha fazla göster",
     "analyticsCatalog.showLess": "daha az göster",
-    "analyticsCatalog.objectType.title": "Nesne türleri",
+    "analyticsCatalog.objectType.title": "Nesneler",
     "analyticsCatalog.objectType.dashboard.button.ariaLabel": "Gösterge tablosu: {count}",
     "analyticsCatalog.objectType.visualization.button.ariaLabel": "Görselleştirme: {count}",
     "analyticsCatalog.objectType.metric.button.ariaLabel": "Metrik: {count}",

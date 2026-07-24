@@ -38,7 +38,7 @@ export interface INumberParameterControlDropdownProps {
 
 /**
  * Dropdown panel for editing a numeric parameter value. Owns the draft, inline validation,
- * preview, and (mode-aware) Reset via `resetValue`.
+ * and (mode-aware) Reset via `resetValue`.
  *
  * @internal
  */
@@ -63,7 +63,9 @@ export function NumberParameterControlDropdown({
             name={name}
             draft={draft}
             onDraftChange={setDraft}
-            inputProps={{ type: "number", min: constraints?.min, max: constraints?.max }}
+            inputType="number"
+            min={constraints?.min}
+            max={constraints?.max}
             inputId={inputId}
             ariaAttributes={ariaAttributes}
             errorMessage={
@@ -71,7 +73,6 @@ export function NumberParameterControlDropdown({
                     <FormattedMessage {...error} values={{ min: constraints?.min, max: constraints?.max }} />
                 ) : undefined
             }
-            previewValue={effectiveValue}
             onReset={showReset ? () => setDraft(String(resetValue)) : undefined}
             onApply={() => onApply(parseDraft(draft))}
             onCancel={onCancel}

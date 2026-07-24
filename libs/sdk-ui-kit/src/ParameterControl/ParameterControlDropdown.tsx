@@ -1,8 +1,7 @@
 // (C) 2026 GoodData Corporation
 
-import { type ComponentPropsWithoutRef, type ReactNode } from "react";
+import { type ReactNode } from "react";
 
-import cx from "classnames";
 import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 
 import { type ParameterValue } from "@gooddata/sdk-model";
@@ -12,6 +11,8 @@ import { UiButton } from "../@ui/UiButton/UiButton.js";
 import { type IDropdownBodyRenderProps } from "../Dropdown/Dropdown.js";
 import { useId } from "../utils/useId.js";
 
+import { ParameterInput } from "./ParameterInput.js";
+
 const { b, e } = bem("gd-ui-kit-parameter-control");
 
 const messages = defineMessages({
@@ -20,6 +21,8 @@ const messages = defineMessages({
     previewLabel: { id: "parameter_filter.dropdown.preview_label" },
     apply: { id: "parameter_filter.dropdown.apply" },
     cancel: { id: "cancel" },
+    increment: { id: "parameter_filter.input.increment" },
+    decrement: { id: "parameter_filter.input.decrement" },
 });
 
 /**
@@ -29,11 +32,13 @@ export interface IParameterControlDropdownProps {
     name: string;
     draft: string;
     onDraftChange: (draft: string) => void;
-    inputProps?: Pick<ComponentPropsWithoutRef<"input">, "type" | "min" | "max">;
+    inputType: "text" | "number";
+    min?: number;
+    max?: number;
     inputId?: string;
     ariaAttributes?: IDropdownBodyRenderProps["ariaAttributes"];
     errorMessage?: ReactNode;
-    previewValue: ParameterValue;
+    previewValue?: ParameterValue;
     onReset?: () => void;
     onApply: () => void;
     onCancel: () => void;
@@ -49,7 +54,9 @@ export function ParameterControlDropdown({
     name,
     draft,
     onDraftChange,
-    inputProps,
+    inputType,
+    min,
+    max,
     inputId: inputIdProp,
     ariaAttributes,
     errorMessage,
@@ -61,6 +68,7 @@ export function ParameterControlDropdown({
     const intl = useIntl();
     const generatedInputId = useId();
     const inputId = inputIdProp ?? generatedInputId;
+    const errorMessageId = errorMessage ? `${inputId}-error` : undefined;
 
     return (
         <div
@@ -68,54 +76,68 @@ export function ParameterControlDropdown({
             className={`${b({ dropdown: true })} overlay gd-dialog gd-dropdown`}
             data-testid="parameter-control-dropdown"
         >
-            <div className={cx(e("dropdown-field"), { "has-error": !!errorMessage })}>
+            <div className={e("dropdown-field")}>
                 <div className={e("dropdown-field-header")}>
                     <label htmlFor={inputId} className={e("dropdown-label")}>
                         {intl.formatMessage(messages.valueLabel)}
                     </label>
                     {onReset ? (
-                        <button
+                        <UiButton
                             type="button"
-                            className={e("dropdown-reset")}
-                            data-testid="parameter-control-dropdown-reset"
+                            variant="linkDimmed"
+                            size="small"
+                            label={intl.formatMessage(messages.reset)}
+                            dataTestId="parameter-control-dropdown-reset"
                             onClick={onReset}
-                        >
-                            {intl.formatMessage(messages.reset)}
-                        </button>
+                        />
                     ) : null}
                 </div>
-                <input
-                    {...inputProps}
+                <ParameterInput
+                    type={inputType}
+                    min={min}
+                    max={max}
                     id={inputId}
-                    className={`${e("dropdown-input")} gd-input-field`}
-                    data-testid="parameter-control-dropdown-input"
                     value={draft}
-                    onChange={(event) => onDraftChange(event.target.value)}
+                    hasError={!!errorMessage}
+                    errorMessageId={errorMessageId}
+                    onChange={onDraftChange}
+                    dataTestId="parameter-control-dropdown-input"
+                    incrementAriaLabel={intl.formatMessage(messages.increment)}
+                    decrementAriaLabel={intl.formatMessage(messages.decrement)}
                 />
                 {errorMessage ? (
-                    <div className={e("dropdown-error")} data-testid="parameter-control-dropdown-error">
+                    <div
+                        id={errorMessageId}
+                        className={e("dropdown-error")}
+                        data-testid="parameter-control-dropdown-error"
+                    >
                         {errorMessage}
                     </div>
                 ) : null}
             </div>
-            <div className={e("dropdown-divider")} />
-            <div className={e("dropdown-preview")} data-testid="parameter-control-dropdown-preview">
-                <span className={e("dropdown-preview-label")}>
-                    {intl.formatMessage(messages.previewLabel)}
-                </span>
-                <span className={e("dropdown-preview-text")}>
-                    <FormattedMessage
-                        id="parameter_filter.dropdown.preview"
-                        values={{
-                            name,
-                            value: previewValue,
-                            strong: (chunks) => <strong>{chunks}</strong>,
-                        }}
-                    />
-                </span>
-            </div>
+            {previewValue === undefined ? null : (
+                <>
+                    <div className={e("dropdown-divider")} />
+                    <div className={e("dropdown-preview")} data-testid="parameter-control-dropdown-preview">
+                        <span className={e("dropdown-preview-label")}>
+                            {intl.formatMessage(messages.previewLabel)}
+                        </span>
+                        <span className={e("dropdown-preview-text")}>
+                            <FormattedMessage
+                                id="parameter_filter.dropdown.preview"
+                                values={{
+                                    name,
+                                    value: previewValue,
+                                    strong: (chunks) => <strong>{chunks}</strong>,
+                                }}
+                            />
+                        </span>
+                    </div>
+                </>
+            )}
             <div className={e("dropdown-footer")}>
                 <UiButton
+                    type="button"
                     variant="secondary"
                     size="small"
                     label={intl.formatMessage(messages.cancel)}
@@ -123,6 +145,7 @@ export function ParameterControlDropdown({
                     onClick={onCancel}
                 />
                 <UiButton
+                    type="button"
                     variant="primary"
                     size="small"
                     label={intl.formatMessage(messages.apply)}

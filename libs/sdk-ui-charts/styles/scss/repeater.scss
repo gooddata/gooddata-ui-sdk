@@ -3,7 +3,7 @@
 @use "sass:meta";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/Button/_variables" as button-variables;
-@use "@gooddata/sdk-ui-kit/styles/scss/mixins";
+@use "@gooddata/sdk-ui-kit/styles/scss/Button/mixins" as button-mixins;
 
 $custom-foreground-color: var(--gd-table-valueColor, kit-variables.$gd-color-text);
 $custom-secondary-foreground-color: var(--gd-table-valueColor, kit-variables.$gd-color-text);
@@ -676,10 +676,7 @@ $subtotal-odd-background-color: var(
                 &:active {
                     border-color: button-variables.$button-normal-active-border-color;
 
-                    @include mixins.gradient-linear(
-                        button-variables.$button-normal-active-gradient-top,
-                        button-variables.$button-normal-active-gradient-bottom
-                    );
+                    @include button-mixins.button-normal-active-gradient;
                 }
             }
         }

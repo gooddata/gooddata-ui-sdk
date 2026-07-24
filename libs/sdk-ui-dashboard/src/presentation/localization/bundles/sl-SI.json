@@ -143,6 +143,8 @@
     "filters.configurationPanel.userFilterSave.toggle.tooltip": "Omogoči samodejno shranjevanje zadnjega stanja filtrov. Ko se uporabniki vrnejo, bodo filtri ostali takšni, kot so jih pustili.",
     "filters.configurationPanel.filterViews.toggle": "Shranjeni pogledi",
     "filters.configurationPanel.filterViews.toggle.tooltip": "<p>Omogoča uporabnikom, da shranijo stanje filtrov kot osebni pogled, na katerega se lahko pozneje vrnejo.</p><p>Samo uporabnik, ki je shranil pogled, ima dostop do njega in ga nastavite kot privzet pogled.</p>",
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle": "Trajni filtri med zavihki",
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle.tooltip": "Dovoli trajne filtre med zavihki. Ko je omogočeno, bodo filtri trajni med zavihki.",
     "settingsDashboardDialog.sectionHeaders.dateDataset": "Datum razpona v opisih",
     "settingsDashboardDialog.sectionHeaders.dateDataset.tooltip": "Nabor datumov, ki ga uporablja filter obsega datuma za merilne sklice v opisih odsek.",
     "dateDataset.autoSelect": "Samodejna izbira",

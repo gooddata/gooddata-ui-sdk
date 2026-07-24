@@ -42,7 +42,7 @@ export function getShortenedTitle(
     } else {
         const SIDE_SCALE_RATIO = 1;
         const numCharsSideStrip = Math.floor(numChars * SIDE_SCALE_RATIO);
-        const pre = title.substr(0, numCharsSideStrip - 3); // -3 for ellipsis
+        const pre = title.substr(0, Math.max(0, numCharsSideStrip - 3)); // -3 for ellipsis
         return `${pre}…`;
     }
 }
@@ -108,6 +108,7 @@ export class ShortenedText extends PureComponent<IShortenedTextProps, IShortened
     };
 
     textRef = createRef<HTMLElement>();
+    private naturalScrollWidth: number | null = null;
 
     constructor(props: IShortenedTextProps) {
         super(props);
@@ -124,6 +125,7 @@ export class ShortenedText extends PureComponent<IShortenedTextProps, IShortened
 
     override UNSAFE_componentWillReceiveProps(nextProps: IShortenedTextProps): void {
         if (this.props.children !== nextProps.children) {
+            this.naturalScrollWidth = null;
             this.setState({
                 title: nextProps.children,
                 customTitle: false,
@@ -145,8 +147,20 @@ export class ShortenedText extends PureComponent<IShortenedTextProps, IShortened
         const elementWidth = getElementWidth(element);
         const ellipsisPosition = this.props.ellipsisPosition;
 
-        if (elementWidth > 0 && elementWidth < element.scrollWidth) {
-            this.setState({ title: getShortenedTitle(title, element, ellipsisPosition), customTitle: true });
+        if (!this.state.customTitle || this.naturalScrollWidth === null) {
+            this.naturalScrollWidth = element.scrollWidth;
+        }
+        const scrollWidth = this.naturalScrollWidth;
+        const measuredElement = {
+            getBoundingClientRect: () => element.getBoundingClientRect(),
+            scrollWidth,
+        };
+
+        if (elementWidth > 0 && elementWidth < scrollWidth) {
+            this.setState({
+                title: getShortenedTitle(title, measuredElement, ellipsisPosition),
+                customTitle: true,
+            });
         } else {
             this.setState({
                 title: this.props.children,
@@ -156,6 +170,20 @@ export class ShortenedText extends PureComponent<IShortenedTextProps, IShortened
     }
 
     recomputeShortening(): void {
+        if (this.state.customTitle) {
+            this.naturalScrollWidth = null;
+            this.setState(
+                {
+                    title: this.props.children,
+                    customTitle: false,
+                },
+                () => {
+                    this.checkTitle();
+                },
+            );
+            return;
+        }
+
         this.checkTitle();
     }
 

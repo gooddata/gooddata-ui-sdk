@@ -18,6 +18,7 @@ export function getIconByType(type: IGenAIContextObject["type"]): {
         case "widget":
             return {
                 iconBefore: "visualization",
+                iconColor: "complementary-6",
             };
         default:
             return {};

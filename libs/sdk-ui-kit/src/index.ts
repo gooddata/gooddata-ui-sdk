@@ -167,7 +167,11 @@ export {
     type IItemsWrapperProps,
     type IHeaderProps,
 } from "./List/MenuList.js";
-export { DateDatasetsListItem, type IDateDatasetsListItemProps } from "./List/DateDatasetsListItem.js";
+export {
+    DATE_DATASET_LIST_ITEM_CLASSNAME,
+    DateDatasetsListItem,
+    type IDateDatasetsListItemProps,
+} from "./List/DateDatasetsListItem.js";
 export {
     InsightListItem,
     InsightListItemTypeIcon,
@@ -1210,14 +1214,6 @@ export {
     type IParameterControlButtonProps,
 } from "./ParameterControl/ParameterControlButton.js";
 export { ParameterControl, type IParameterControlProps } from "./ParameterControl/ParameterControl.js";
-export {
-    NumberParameterControlDropdown,
-    type INumberParameterControlDropdownProps,
-} from "./ParameterControl/NumberParameterControlDropdown.js";
-export {
-    StringParameterControlDropdown,
-    type IStringParameterControlDropdownProps,
-} from "./ParameterControl/StringParameterControlDropdown.js";
 export { UiSectionHeading, type IUiSectionHeadingProps } from "./@ui/UiSectionHeading/UiSectionHeading.js";
 export {
     UiDialogHeader,
@@ -1264,14 +1260,6 @@ export {
     UiAddGranteeDialogCard,
     type IUiAddGranteeDialogCardProps,
 } from "./@ui/UiAddGranteeDialog/UiAddGranteeDialogCard.js";
-export {
-    UiTransferOwnershipDialog,
-    type IUiTransferOwnershipDialogProps,
-} from "./@ui/UiTransferOwnershipDialog/UiTransferOwnershipDialog.js";
-export {
-    UiTransferOwnershipDialogCard,
-    type IUiTransferOwnershipDialogCardProps,
-} from "./@ui/UiTransferOwnershipDialog/UiTransferOwnershipDialogCard.js";
 export {
     UiGeneralAccessRadio,
     type IUiGeneralAccessRadioProps,

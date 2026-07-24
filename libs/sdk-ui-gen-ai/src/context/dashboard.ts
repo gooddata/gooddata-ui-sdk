@@ -141,11 +141,15 @@ export function buildFiltersContext(
  * @internal
  */
 export function buildWidgetsContext(
-    widgetsMap: Pick<Map<ObjRef, IWidget>, "values" | "get">,
+    widgetsMap: Pick<Map<ObjRef, IWidget>, "values" | "get"> | undefined,
     resultsIdMap?: Pick<Map<string, string | undefined>, "values" | "get">,
 ): { widgets: IGenAIWidgetDescriptor[]; referencedObjects: IGenAIObjectReference[] } {
     const widgets: IGenAIWidgetDescriptor[] = [];
     const referencedObjects: IGenAIObjectReference[] = [];
+
+    if (!widgetsMap) {
+        return { widgets, referencedObjects };
+    }
 
     const switcherChildRefs = new Set<string>();
     for (const widget of widgetsMap.values()) {

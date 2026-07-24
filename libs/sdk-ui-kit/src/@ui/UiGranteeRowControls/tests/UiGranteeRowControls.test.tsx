@@ -175,27 +175,39 @@ describe("UiGranteeRowControls", () => {
         expect(onRemoveAccess).toHaveBeenCalledOnce();
     });
 
-    it("exposes Transfer ownership on the ⋯ menu and fires it when picked", () => {
-        const onTransferOwnership = vi.fn();
-        renderControls({ onTransferOwnership });
-        openMoreOptions();
-        fireEvent.click(screen.getByRole("menuitem", { name: /Transfer ownership/ }));
-        expect(onTransferOwnership).toHaveBeenCalledOnce();
-    });
-
-    it("omits the ⋯ labels row when there are no labels but keeps transfer", () => {
-        renderControls({ labels: [], selectedLabelIds: [], onTransferOwnership: () => {} });
-        openMoreOptions();
-        expect(screen.queryByRole("menuitem", { name: /labels access/i })).not.toBeInTheDocument();
-        expect(screen.getByRole("menuitem", { name: /Transfer ownership/ })).toBeInTheDocument();
-    });
-
-    it("does not render the ⋯ menu at all when there are no labels and no transfer", () => {
+    it("does not render the ⋯ menu at all when it would be empty (no labels, Remove in the dropdown)", () => {
         renderControls({ labels: [], selectedLabelIds: [] });
         // The ellipsis trigger button is absent.
         expect(screen.queryByRole("button", { name: /More options/ })).not.toBeInTheDocument();
         // The permission trigger is still there.
         expect(screen.getByRole("button", { name: /^Can view$/ })).toBeInTheDocument();
+    });
+
+    it("merged mode hosts levels, labels and Remove access in one dropdown with no ⋯ menu", () => {
+        renderControls({ mergedControls: true, onRemoveAccess: () => {} });
+        expect(screen.queryByRole("button", { name: /more options/i })).not.toBeInTheDocument();
+        openPermissionMenu();
+        expect(screen.getByRole("menuitemradio", { name: /^Can view$/ })).toBeInTheDocument();
+        expect(screen.getByRole("menuitem", { name: /labels access/i })).toBeInTheDocument();
+        expect(screen.getByRole("menuitem", { name: /Remove access/i })).toBeInTheDocument();
+    });
+
+    it("merged mode offers the level dropdown even for an EDIT grant, anchored on 'Can edit'", () => {
+        renderControls({ mergedControls: true, permissionLevel: "EDIT" });
+        fireEvent.click(screen.getByRole("button", { name: /^Can edit$/ }));
+        // EDIT itself is not selectable — the menu opens with no level checked.
+        expect(screen.getByRole("menuitemradio", { name: /^Can view & share$/ })).not.toBeChecked();
+        expect(screen.getByRole("menuitemradio", { name: /^Can view$/ })).not.toBeChecked();
+    });
+
+    it("merged mode drills into the labels checklist from the permission menu", () => {
+        const onLabelsChange = vi.fn();
+        renderControls({ mergedControls: true, onLabelsChange });
+        openPermissionMenu();
+        fireEvent.click(screen.getByRole("menuitem", { name: /labels access/i }));
+        fireEvent.click(screen.getByRole("checkbox", { name: /Customer Email/ }));
+        fireEvent.click(screen.getByRole("button", { name: "Apply" }));
+        expect(onLabelsChange).toHaveBeenCalledWith(["id", "name", "ssn"]);
     });
 
     it("forwards dataTestId", () => {

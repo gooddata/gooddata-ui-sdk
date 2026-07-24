@@ -2,7 +2,7 @@
     "analyticsCatalog.title": "分析目录",
     "analyticsCatalog.showMore": "显示更多",
     "analyticsCatalog.showLess": "显示更少",
-    "analyticsCatalog.objectType.title": "对象类型",
+    "analyticsCatalog.objectType.title": "对象",
     "analyticsCatalog.objectType.dashboard.button.ariaLabel": "仪表板：{count}",
     "analyticsCatalog.objectType.visualization.button.ariaLabel": "可视化：{count}",
     "analyticsCatalog.objectType.metric.button.ariaLabel": "指标：{count}",

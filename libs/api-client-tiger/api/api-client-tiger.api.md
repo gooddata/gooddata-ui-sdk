@@ -82,8 +82,10 @@ export class ActionsApi extends MetadataBaseApi implements ActionsApiInterface {
     manageDataSourcePermissions(requestParameters: ActionsApiManageDataSourcePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageFactPermissions(requestParameters: ActionsApiManageFactPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageLabelPermissions(requestParameters: ActionsApiManageLabelPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    manageMetricPermissions(requestParameters: ActionsApiManageMetricPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageOrganizationPermissions(requestParameters: ActionsApiManageOrganizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageWorkspacePermissions(requestParameters: ActionsApiManageWorkspacePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    metricPermissions(requestParameters: ActionsApiMetricPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<MetricPermissions>;
     overriddenChildEntities(requestParameters: ActionsApiOverriddenChildEntitiesRequest, options?: AxiosRequestConfig): AxiosPromise<IdentifierDuplications[]>;
     particularPlatformUsage(requestParameters: ActionsApiParticularPlatformUsageRequest, options?: AxiosRequestConfig): AxiosPromise<PlatformUsage[]>;
     pauseOrganizationAutomations(requestParameters: ActionsApiPauseOrganizationAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -730,8 +732,10 @@ export interface ActionsApiInterface {
     manageDataSourcePermissions(requestParameters: ActionsApiManageDataSourcePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageFactPermissions(requestParameters: ActionsApiManageFactPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageLabelPermissions(requestParameters: ActionsApiManageLabelPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    manageMetricPermissions(requestParameters: ActionsApiManageMetricPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageOrganizationPermissions(requestParameters: ActionsApiManageOrganizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageWorkspacePermissions(requestParameters: ActionsApiManageWorkspacePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    metricPermissions(requestParameters: ActionsApiMetricPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<MetricPermissions>;
     overriddenChildEntities(requestParameters: ActionsApiOverriddenChildEntitiesRequest, options?: AxiosRequestConfig): AxiosPromise<Array<IdentifierDuplications>>;
     particularPlatformUsage(requestParameters: ActionsApiParticularPlatformUsageRequest, options?: AxiosRequestConfig): AxiosPromise<Array<PlatformUsage>>;
     pauseOrganizationAutomations(requestParameters: ActionsApiPauseOrganizationAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -847,6 +851,13 @@ export interface ActionsApiManageLabelPermissionsRequest {
 }
 
 // @public
+export interface ActionsApiManageMetricPermissionsRequest {
+    readonly manageMetricPermissionsRequestInner: Array<ManageMetricPermissionsRequestInner>;
+    readonly metricId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface ActionsApiManageOrganizationPermissionsRequest {
     readonly organizationPermissionAssignment: Array<OrganizationPermissionAssignment>;
 }
@@ -855,6 +866,12 @@ export interface ActionsApiManageOrganizationPermissionsRequest {
 export interface ActionsApiManageWorkspacePermissionsRequest {
     readonly workspaceId: string;
     readonly workspacePermissionAssignment: Array<WorkspacePermissionAssignment>;
+}
+
+// @public
+export interface ActionsApiMetricPermissionsRequest {
+    readonly metricId: string;
+    readonly workspaceId: string;
 }
 
 // @public
@@ -3746,11 +3763,103 @@ export interface AiCreateConversationRequest {
     'agentId'?: string | null;
 }
 
+// @public
+export interface AiDashboard {
+    // (undocumented)
+    'description'?: string;
+    // (undocumented)
+    'filters'?: {
+        [key: string]: AiDashboardDateFilter;
+    };
+    // (undocumented)
+    'id': string;
+    // (undocumented)
+    'sections'?: Array<AiDashboardSection>;
+    // (undocumented)
+    'tabs'?: Array<AiDashboardTab>;
+    // (undocumented)
+    'title': string;
+    // (undocumented)
+    'type': AiDashboardTypeEnum;
+}
+
+// @public (undocumented)
+export interface AiDashboardDateFilter {
+    // (undocumented)
+    'from'?: number;
+    // (undocumented)
+    'granularity'?: AiAppDomainConversationsVisualizationDateGranularity;
+    // (undocumented)
+    'to'?: number;
+    // (undocumented)
+    'type': AiDashboardDateFilterTypeEnum;
+}
+
+// @public (undocumented)
+export type AiDashboardDateFilterTypeEnum = 'date_filter';
+
+// @public
+export interface AiDashboardIdUpdateRequest {
+    // (undocumented)
+    'id': string;
+}
+
+// @public (undocumented)
+export interface AiDashboardPart {
+    // (undocumented)
+    'dashboard'?: AiDashboard | null;
+    // (undocumented)
+    'savedDashboardId'?: string | null;
+    'type'?: AiDashboardPartTypeEnum;
+}
+
+// @public (undocumented)
+export type AiDashboardPartTypeEnum = 'dashboard';
+
 // @public (undocumented)
 export interface AiDashboardRef {
     'id': string;
     // (undocumented)
     'title'?: string | null;
+}
+
+// @public
+export interface AiDashboardSection {
+    // (undocumented)
+    'description'?: string;
+    // (undocumented)
+    'title'?: string;
+    // (undocumented)
+    'widgets': Array<AiDashboardWidget>;
+}
+
+// @public
+export interface AiDashboardTab {
+    // (undocumented)
+    'filters'?: {
+        [key: string]: AiDashboardDateFilter;
+    };
+    // (undocumented)
+    'id': string;
+    // (undocumented)
+    'sections': Array<AiDashboardSection>;
+    // (undocumented)
+    'title': string;
+}
+
+// @public (undocumented)
+export type AiDashboardTypeEnum = 'dashboard';
+
+// @public
+export interface AiDashboardWidget {
+    // (undocumented)
+    'columns'?: number;
+    // (undocumented)
+    'rows'?: number;
+    // (undocumented)
+    'title'?: string;
+    // (undocumented)
+    'visualization': string;
 }
 
 // @public (undocumented)
@@ -3762,7 +3871,7 @@ export interface AiDateFilterAbsolute {
     // (undocumented)
     'type': AiDateFilterAbsoluteTypeEnum;
     // (undocumented)
-    'using'?: string | null;
+    'using': string;
 }
 
 // @public (undocumented)
@@ -3801,7 +3910,7 @@ export interface AiDateFilterRelative {
     // (undocumented)
     'type': AiDateFilterRelativeTypeEnum;
     // (undocumented)
-    'using'?: string | null;
+    'using': string;
 }
 
 // @public (undocumented)
@@ -4265,6 +4374,8 @@ export interface AiMultipartContent {
 export type AiMultipartContentPartsInner = ({
     type: 'alertProposal';
 } & AiAlertProposalPart) | ({
+    type: 'dashboard';
+} & AiDashboardPart) | ({
     type: 'kda';
 } & AiKeyDriverAnalysisPart) | ({
     type: 'searchResults';
@@ -4665,7 +4776,9 @@ export interface AiSearchDocumentsResponse {
 
 // @public (undocumented)
 export interface AiSearchObject {
+    // (undocumented)
     'certification'?: string | null;
+    // (undocumented)
     'certificationMessage'?: string | null;
     // (undocumented)
     'createdAt'?: string | null;
@@ -5161,7 +5274,7 @@ export interface AiVisualizationAbsoluteDateFilter {
     // (undocumented)
     'type': AiVisualizationAbsoluteDateFilterTypeEnum;
     // (undocumented)
-    'using': string;
+    'using'?: string | null;
 }
 
 // @public (undocumented)
@@ -5329,7 +5442,7 @@ export interface AiVisualizationRelativeDateFilter {
     // (undocumented)
     'type': AiVisualizationRelativeDateFilterTypeEnum;
     // (undocumented)
-    'using': string;
+    'using'?: string | null;
 }
 
 // @public (undocumented)
@@ -10810,6 +10923,30 @@ export interface DashboardPluginControllerApiUpdateEntityDashboardPluginsRequest
     readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly jsonApiDashboardPluginInDocument: JsonApiDashboardPluginInDocument;
     readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export class DashboardsAi extends AiBaseAPI implements DashboardsAiInterface {
+    patchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(requestParameters: DashboardsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+}
+
+// @public
+export function DashboardsAi_PatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(axios: AxiosInstance, basePath: string, requestParameters: DashboardsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<void>;
+
+// @public
+export function DashboardsAiAxiosParamCreator_PatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(workspaceId: string, conversationId: string, dashboardId: string, aiDashboardIdUpdateRequest: AiDashboardIdUpdateRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
+
+// @public
+export interface DashboardsAiInterface {
+    patchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatch(requestParameters: DashboardsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+}
+
+// @public
+export interface DashboardsAiPatchDashboardApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDashboardsDashboardIdPatchRequest {
+    readonly aiDashboardIdUpdateRequest: AiDashboardIdUpdateRequest;
+    readonly conversationId: string;
+    readonly dashboardId: string;
     readonly workspaceId: string;
 }
 
@@ -31328,6 +31465,9 @@ export type ManageDashboardPermissionsRequestInner = PermissionsForAssignee | Pe
 export type ManageLabelPermissionsRequestInner = LdmObjectPermissionsForAssignee | LdmObjectPermissionsForAssigneeRule;
 
 // @public
+export type ManageMetricPermissionsRequestInner = MetricPermissionsForAssignee | MetricPermissionsForAssigneeRule;
+
+// @public
 export class ManagePermissionsApi extends MetadataBaseApi implements ManagePermissionsApiInterface {
     getDataSourcePermissions(requestParameters: ManagePermissionsApiGetDataSourcePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeDataSourcePermissions>;
     manageDataSourcePermissions(requestParameters: ManagePermissionsApiManageDataSourcePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -31850,6 +31990,44 @@ export interface MetricDefinitionOverride {
     // (undocumented)
     'item': AfmObjectIdentifierCore;
 }
+
+// @public (undocumented)
+export interface MetricPermissions {
+    'rules': Array<RulePermission>;
+    'userGroups': Array<UserGroupPermission>;
+    'users': Array<UserPermission>;
+}
+
+// @public
+export interface MetricPermissionsAssignment {
+    // (undocumented)
+    'permissions': Array<MetricPermissionsAssignmentPermissionsEnum>;
+}
+
+// @public (undocumented)
+export type MetricPermissionsAssignmentPermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
+
+// @public
+export interface MetricPermissionsForAssignee {
+    // (undocumented)
+    'assigneeIdentifier': AssigneeIdentifier;
+    // (undocumented)
+    'permissions': Array<MetricPermissionsForAssigneePermissionsEnum>;
+}
+
+// @public (undocumented)
+export type MetricPermissionsForAssigneePermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
+
+// @public
+export interface MetricPermissionsForAssigneeRule {
+    // (undocumented)
+    'assigneeRule': AssigneeRule;
+    // (undocumented)
+    'permissions': Array<MetricPermissionsForAssigneeRulePermissionsEnum>;
+}
+
+// @public (undocumented)
+export type MetricPermissionsForAssigneeRulePermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
 
 // @public
 export class MetricsApi extends MetadataBaseApi implements MetricsApiInterface {
@@ -33436,8 +33614,10 @@ export class PermissionsApi extends MetadataBaseApi implements PermissionsApiInt
     manageDataSourcePermissions(requestParameters: PermissionsApiManageDataSourcePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageFactPermissions(requestParameters: PermissionsApiManageFactPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageLabelPermissions(requestParameters: PermissionsApiManageLabelPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    manageMetricPermissions(requestParameters: PermissionsApiManageMetricPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageOrganizationPermissions(requestParameters: PermissionsApiManageOrganizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageWorkspacePermissions(requestParameters: PermissionsApiManageWorkspacePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    metricPermissions(requestParameters: PermissionsApiMetricPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<MetricPermissions>;
     setOrganizationPermissions(requestParameters: PermissionsApiSetOrganizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     setUserGroupPermissions(requestParameters: PermissionsApiSetUserGroupPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     setUserPermissions(requestParameters: PermissionsApiSetUserPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -33583,8 +33763,10 @@ export interface PermissionsApiInterface {
     manageDataSourcePermissions(requestParameters: PermissionsApiManageDataSourcePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageFactPermissions(requestParameters: PermissionsApiManageFactPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageLabelPermissions(requestParameters: PermissionsApiManageLabelPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    manageMetricPermissions(requestParameters: PermissionsApiManageMetricPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageOrganizationPermissions(requestParameters: PermissionsApiManageOrganizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageWorkspacePermissions(requestParameters: PermissionsApiManageWorkspacePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    metricPermissions(requestParameters: PermissionsApiMetricPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<MetricPermissions>;
     setOrganizationPermissions(requestParameters: PermissionsApiSetOrganizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     setUserGroupPermissions(requestParameters: PermissionsApiSetUserGroupPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     setUserPermissions(requestParameters: PermissionsApiSetUserPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -33632,6 +33814,13 @@ export interface PermissionsApiManageLabelPermissionsRequest {
 }
 
 // @public
+export interface PermissionsApiManageMetricPermissionsRequest {
+    readonly manageMetricPermissionsRequestInner: Array<ManageMetricPermissionsRequestInner>;
+    readonly metricId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface PermissionsApiManageOrganizationPermissionsRequest {
     readonly organizationPermissionAssignment: Array<OrganizationPermissionAssignment>;
 }
@@ -33640,6 +33829,12 @@ export interface PermissionsApiManageOrganizationPermissionsRequest {
 export interface PermissionsApiManageWorkspacePermissionsRequest {
     readonly workspaceId: string;
     readonly workspacePermissionAssignment: Array<WorkspacePermissionAssignment>;
+}
+
+// @public
+export interface PermissionsApiMetricPermissionsRequest {
+    readonly metricId: string;
+    readonly workspaceId: string;
 }
 
 // @public

@@ -4,17 +4,38 @@ import { IntlProvider } from "react-intl";
 import { action } from "storybook/actions";
 
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
-import { UiButton, UiPermissionMenu } from "@gooddata/sdk-ui-kit";
+import { type IUiLabelsChecklistItem, UiButton, UiPermissionMenu } from "@gooddata/sdk-ui-kit";
 
 import { type IStoryParameters, State } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
-function MenuExample({ label, withRemove = false }: { label: string; withRemove?: boolean }) {
+const LABELS: IUiLabelsChecklistItem[] = [
+    { id: "id", label: "Customer ID", kind: "primary", locked: true },
+    { id: "name", label: "Customer Name", kind: "default" },
+    { id: "email", label: "Customer Email" },
+];
+
+function MenuExample({
+    label,
+    withRemove = false,
+    withLabels = false,
+    withDisabledShare = false,
+}: {
+    label: string;
+    withRemove?: boolean;
+    withLabels?: boolean;
+    withDisabledShare?: boolean;
+}) {
     return (
         <UiPermissionMenu
             anchor={<UiButton label={label} size="small" variant="secondary" iconAfter="chevronDown" />}
             selectedLevel="VIEW"
             onPermissionChange={action(`${label} → permission change`)}
+            disabledLevels={withDisabledShare ? ["SHARE"] : undefined}
+            disabledTooltip={withDisabledShare ? "You can't set higher permissions for yourself." : undefined}
+            labels={withLabels ? LABELS : undefined}
+            selectedLabelIds={withLabels ? LABELS.map((l) => l.id) : undefined}
+            onLabelsChange={withLabels ? action(`${label} → labels change`) : undefined}
             onRemoveAccess={withRemove ? action(`${label} → remove access`) : undefined}
         />
     );
@@ -29,6 +50,8 @@ function UiPermissionMenuExample() {
             >
                 <MenuExample label="Levels only" />
                 <MenuExample label="With remove" withRemove />
+                <MenuExample label="Disabled level" withRemove withDisabledShare />
+                <MenuExample label="Merged (labels + remove)" withRemove withLabels />
             </div>
         </IntlProvider>
     );

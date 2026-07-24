@@ -279,6 +279,7 @@
     "gs.color-dropdown.custom-color": "Нестандартный цвет",
     "properties.colors.reset-colors": "Сбросить цвета",
     "properties.colors.reset-color": "Сброс",
+    "properties.colors.reset-colors-and-styles": "Сбросить цвета и стили",
     "properties.colors": "Цвета",
     "properties.colorsAndFills": "Цвета и заливки",
     "properties.colorsAndStyles": "Цвета и стили",

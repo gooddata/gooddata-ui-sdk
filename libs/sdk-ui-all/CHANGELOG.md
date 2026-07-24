@@ -1,6 +1,64 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 23 Jul 2026 06:56:19 GMT and should not be manually modified.
+This log was last generated on Fri, 24 Jul 2026 12:57:57 GMT and should not be manually modified.
+
+## 11.49.0
+
+Fri, 24 Jul 2026 12:57:57 GMT
+
+### Minor changes
+
+- api-client-tiger: Add clearAxiosResponseCache and removeAxiosResponseCacheEntries cache helpers
+- sdk-code-convertors: Add YAML round-trip conversion support for radar charts
+- sdk-code-schemas: Add radar_chart visualisation type with render_as and grid_line_shape config keys
+- sdk-code-convertors: Add YAML serialization support for line_style_mapping in line and combo charts
+- sdk-code-schemas: Add line_style_mapping schema for per-series line style and weight overrides
+- sdk-ui-charts: Add lineStyleMapping to IChartConfig for per-series line style and weight overrides
+- sdk-ui-ext: Add per-series line style and weight configuration UI for line charts
+
+### Patches
+
+- Convert ranking filter dimensionality back to attributes and normalize the measure reference when reading AFM filters, mirroring MeasureValueFilter handling
+- Regenerate Python types so the ranking filter attribute accepts label references (catalog attributes) for AAC clone/deploy round-trips
+- Allow label references for the ranking filter "Out of" attribute so catalog attributes deploy via AAC, mirroring MeasureValueFilter dimensionality
+- sdk-backend-tiger: Invalidate cached settings resolutions on settings writes to fix read-after-write staleness
+- sdk-backend-tiger: Clear cached API responses and the memoized principal when the API token or JWT is updated, so a credential change cannot replay data fetched under the previous credential
+- sdk-ui-ext: Show grantee name and email with userID fallbacks in the object share dialog.
+- feat: add insightIsHidden helper for checking IInsight.insight.isHidden
+- Convert STRING parameter definitions to and from Tiger metadata
+- Add STRING parameter definitions, guards, and validation helpers
+- Register enableOrgLevelAIMemory feature flag
+- Add enableOrgLevelAIMemory settings flag
+- Hide catalog item sharing UI from users who can't manage the object's permissions
+- Expose accessUnavailable on the object share controller when permissions can't be read
+- Fix conversation loading forever when reopened after starting a new conversation
+- sdk-ui-kit, sdk-ui-dashboard: date-dataset dropdown truncates long names from the end instead of the middle, and the AD date-dataset dropdown grows to fit content instead of clipping to the trigger width
+
+### Updates
+
+- sdk-ui-kit: Align parameter filter bar controls with design (`ParameterInput`, dropdown layout, active state)
+- sdk-ui-kit: Add optional `type` prop to `UiButton`
+- sdk-ui-kit: Remove internal `NumberParameterControlDropdown` and `StringParameterControlDropdown` exports (use `ParameterControl`)
+- sdk-ui-dashboard: Include `ParameterControl` styles in the dashboard stylesheet
+- Register `enableStringParameters` as a FeatureHub feature flag
+- sdk-ui-gen-ai: Preparations for experimental AI-assisted dashboard creation.
+- sdk-code-convertors: Round-trip the custom tooltip control (enabled/content/placement) through AAC YAML as config.custom_tooltip for all supporting chart types.
+- sdk-code-schemas: Add custom_tooltip (enabled/content/placement) to the visualisation config schema.
+- sdk-backend-base: cache and de-duplicate in-flight attribute reads (getAttributes, getAttribute, getCommonAttributes, getCommonAttributesBatch, getConnectedAttributesByDisplayForm)
+- sdk-backend-base: Cache and de-duplicate dataset metadata reads (getDataset, getDataSets)
+- sdk-backend-base: in-flight de-dupe getAttributeDisplayForms so concurrent callers share a single bulk request
+- Cache and de-dupe measures service reads (getMeasureExpressionTokens, getMeasureReferencingObjects)
+- useAlertFormState owns the alerting draft state + init (GDP-3167)
+- Extract alerting form change-handlers into useAlertFormState hook (GDP-3167)
+- sdk-ui-ext: Fix missing pointer cursor on clickable (unlocked) workspace rows in the Users/Groups workspaces tab.
+- sdk-backend-tiger: Register `enableLineChartStyling` as a FeatureHub feature flag
+- sdk-ui-catalog: Added metric sharing to the catalog detail behind enableMetricPermissions.
+- sdk-ui-ext: Removed the ownership concept from the object share dialog and added the single-viewer empty state (Admin badge, self-restrict confirmation).
+- sdk-ui-theme-provider: keep the theme table section when the complementary palette is disabled so totalBackgroundColor and subtotalBackgroundColor apply
+- sdk-ui-pivot: honor theme totalBackgroundColor and subtotalBackgroundColor in the pivot table (incl. PivotTableNext)
+- Fix conversation loading forever when reopened after starting a new conversation
+- Fix conversation loading forever when reopened after starting a new conversation
+- Fix conversation loading forever when reopened after starting a new conversation
 
 ## 11.48.0
 

@@ -34,6 +34,7 @@ export type {
     AttributesDecoratorFactory,
     InsightsDecoratorFactory,
     MeasuresDecoratorFactory,
+    DatasetsDecoratorFactory,
     DashboardsDecoratorFactory,
     FactsDecoratorFactory,
     GeoDecoratorFactory,

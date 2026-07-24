@@ -143,6 +143,8 @@
     "filters.configurationPanel.userFilterSave.toggle.tooltip": "Разрешить автосохранение последнего состояния фильтров. Когда пользователи вернутся, их фильтры сохранятся в том виде, в каком они их оставили.",
     "filters.configurationPanel.filterViews.toggle": "Сохранённые представления",
     "filters.configurationPanel.filterViews.toggle.tooltip": "<p>Позволяет пользователям сохранять состояние фильтров как личные представления, к которым они могут вернуться позже.</p><p>Только пользователь, который сохранил представление, может получить к нему доступ и установить его как представление по умолчанию.</p>",
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle": "Постоянные фильтры между вкладками",
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle.tooltip": "Разрешить постоянные фильтры между вкладками. Если этот параметр включен, фильтры будут сохраняться между вкладками.",
     "settingsDashboardDialog.sectionHeaders.dateDataset": "Диапазон дат в описаниях",
     "settingsDashboardDialog.sectionHeaders.dateDataset.tooltip": "Набор данных даты, используемый фильтром диапазона дат для ссылок на метрики в описаниях разделов.",
     "dateDataset.autoSelect": "Автовыбор",

@@ -9,6 +9,7 @@ import {
     type IWorkspaceAutomationService,
     type IWorkspaceCatalogFactory,
     type IWorkspaceDashboardsService,
+    type IWorkspaceDatasetsService,
     type IWorkspaceExportTemplatesService,
     type IWorkspaceFactsService,
     type IWorkspaceInsightsService,
@@ -64,6 +65,14 @@ export type MeasuresDecoratorFactory = (
     measures: IWorkspaceMeasuresService,
     workspace: string,
 ) => IWorkspaceMeasuresService;
+
+/**
+ * @alpha
+ */
+export type DatasetsDecoratorFactory = (
+    datasets: IWorkspaceDatasetsService,
+    workspace: string,
+) => IWorkspaceDatasetsService;
 
 /**
  * @alpha
@@ -126,6 +135,7 @@ export type DecoratorFactories = {
     automations?: AutomationsDecoratorFactory;
     insights?: InsightsDecoratorFactory;
     measures?: MeasuresDecoratorFactory;
+    datasets?: DatasetsDecoratorFactory;
     dashboards?: DashboardsDecoratorFactory;
     facts?: FactsDecoratorFactory;
     geo?: GeoDecoratorFactory;

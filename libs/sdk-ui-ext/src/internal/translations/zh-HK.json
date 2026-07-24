@@ -279,6 +279,7 @@
     "gs.color-dropdown.custom-color": "自定義顏色",
     "properties.colors.reset-colors": "重置顏色",
     "properties.colors.reset-color": "重置",
+    "properties.colors.reset-colors-and-styles": "重設顏色和樣式",
     "properties.colors": "顏色",
     "properties.colorsAndFills": "顏色和填充",
     "properties.colorsAndStyles": "顏色和樣式",

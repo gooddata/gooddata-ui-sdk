@@ -52,7 +52,7 @@ export function ParameterControlButton({
             isOpen={isActive}
             isDraggable={isDraggable}
             isDragging={isDragging}
-            icon={<UiIcon type={warningTooltip ? "warning" : "parameter"} size={16} color="currentColor" />}
+            icon={warningTooltip ? <UiIcon type="warning" size={16} color="currentColor" /> : undefined}
             isWarning={!!warningTooltip}
             warningTooltip={warningTooltip}
             dropdownId={dropdownId}

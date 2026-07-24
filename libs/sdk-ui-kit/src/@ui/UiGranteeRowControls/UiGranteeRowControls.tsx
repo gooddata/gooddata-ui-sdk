@@ -29,10 +29,20 @@ export interface IUiGranteeRowControlsProps {
      * (e.g. from a group); drives the warning badge. Undefined when not elevated.
      */
     effectivePermission?: AccessGranularPermission;
+    /**
+     * Merge every action into the permission dropdown: the labels drill-in and
+     * Remove access render inside {@link UiPermissionMenu} (no "⋯" menu), and
+     * the level dropdown is offered even for an EDIT row. Used for the signed-in
+     * user's own row when they manage their own access.
+     */
+    mergedControls?: boolean;
+    /** Levels rendered disabled in the permission menu — see {@link UiPermissionMenu}. */
+    disabledLevels?: ReadonlyArray<PermissionMenuLevel>;
+    /** Tooltip shown on disabled level rows in place of the level's info text. */
+    disabledTooltip?: string;
     onLabelsChange: (selectedIds: string[]) => void;
     /** Fires only for selectable rows (VIEW/SHARE); EDIT rows have no level control. */
     onPermissionChange: (level: PermissionMenuLevel) => void;
-    onTransferOwnership?: () => void;
     onRemoveAccess?: () => void;
     /** Disables both triggers, e.g. while the row's change is saving. */
     isDisabled?: boolean;
@@ -42,8 +52,7 @@ export interface IUiGranteeRowControlsProps {
 /**
  * Per-row controls in the OLP share dialog: a permission trigger
  * ({@link UiPermissionMenu}) plus a "⋯" menu ({@link UiMoreOptionsMenu}) for
- * labels access and Transfer ownership, with an optional inherited-permission
- * warning badge.
+ * labels access, with an optional inherited-permission warning badge.
  *
  * @internal
  */
@@ -52,9 +61,11 @@ export function UiGranteeRowControls({
     selectedLabelIds,
     permissionLevel,
     effectivePermission,
+    mergedControls,
+    disabledLevels,
+    disabledTooltip,
     onLabelsChange,
     onPermissionChange,
-    onTransferOwnership,
     onRemoveAccess,
     isDisabled,
     dataTestId,
@@ -66,11 +77,15 @@ export function UiGranteeRowControls({
     // EDIT is display-only: the dialog can't assign or change it, and offering the
     // VIEW/SHARE menu on an EDIT row would silently downgrade the grant on pick.
     // So an EDIT row shows a static, non-interactive "Can edit" label instead of
-    // the permission dropdown.
-    const isReadOnlyLevel = permissionLevel === "EDIT";
+    // the permission dropdown — except in merged mode, where the user manages
+    // their own access and downgrading is exactly the offered action.
+    const isReadOnlyLevel = permissionLevel === "EDIT" && !mergedControls;
+    // EDIT is not selectable — a merged EDIT row anchors on "Can edit" with no
+    // radio checked, offering only the (lower) selectable levels.
+    const selectedLevel = permissionLevel === "EDIT" ? undefined : permissionLevel;
 
     const permissionTriggerText = intl.formatMessage(
-        isReadOnlyLevel
+        permissionLevel === "EDIT"
             ? olpPermissionMessages.canEdit
             : permissionLevel === "SHARE"
               ? olpPermissionMessages.canViewAndShare
@@ -81,8 +96,9 @@ export function UiGranteeRowControls({
     // action moves into the ⋯ menu for those rows (dropdown rows keep it in the menu).
     const removeInMoreOptions = isReadOnlyLevel ? onRemoveAccess : undefined;
 
-    // Nothing to put in the ⋯ menu → drop it.
-    const hasMoreOptions = hasLabels || !!onTransferOwnership || !!removeInMoreOptions;
+    // Nothing to put in the ⋯ menu → drop it. Merged mode hosts everything in
+    // the permission dropdown, so the ⋯ menu never renders there.
+    const hasMoreOptions = !mergedControls && (hasLabels || !!removeInMoreOptions);
 
     // Guard on permissionLevel too, so the badge can't show when the assigned
     // level already matches the inherited one.
@@ -111,7 +127,7 @@ export function UiGranteeRowControls({
                     }
                 />
             ) : null}
-            {permissionLevel === "EDIT" ? (
+            {isReadOnlyLevel ? (
                 <span className={e("readonly-permission")}>{permissionTriggerText}</span>
             ) : (
                 <UiPermissionMenu
@@ -124,8 +140,13 @@ export function UiGranteeRowControls({
                             isDisabled={isDisabled}
                         />
                     }
-                    selectedLevel={permissionLevel}
+                    selectedLevel={selectedLevel}
                     onPermissionChange={onPermissionChange}
+                    disabledLevels={disabledLevels}
+                    disabledTooltip={disabledTooltip}
+                    labels={mergedControls && hasLabels ? labels : undefined}
+                    selectedLabelIds={mergedControls ? selectedLabelIds : undefined}
+                    onLabelsChange={mergedControls ? onLabelsChange : undefined}
                     onRemoveAccess={onRemoveAccess}
                 />
             )}
@@ -134,7 +155,6 @@ export function UiGranteeRowControls({
                     labels={hasLabels ? labels : undefined}
                     selectedLabelIds={selectedLabelIds}
                     onLabelsChange={onLabelsChange}
-                    onTransferOwnership={onTransferOwnership}
                     onRemoveAccess={removeInMoreOptions}
                     isDisabled={isDisabled}
                 />
