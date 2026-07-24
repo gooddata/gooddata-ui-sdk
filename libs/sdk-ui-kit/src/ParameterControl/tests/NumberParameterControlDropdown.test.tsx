@@ -25,6 +25,8 @@ const renderDropdown = (props: Partial<React.ComponentProps<typeof NumberParamet
 
 const getInput = () => screen.getByTestId("parameter-control-dropdown-input");
 const getApply = () => screen.getByTestId("parameter-control-dropdown-apply");
+const getStepperUp = () => screen.getByTestId("parameter-control-dropdown-input-stepper-up");
+const getStepperDown = () => screen.getByTestId("parameter-control-dropdown-input-stepper-down");
 
 describe("NumberParameterControlDropdown", () => {
     it("renders the input with the current value", () => {
@@ -46,6 +48,7 @@ describe("NumberParameterControlDropdown", () => {
         renderDropdown();
         expect(getInput()).toHaveAttribute("min", "0");
         expect(getInput()).toHaveAttribute("max", "100");
+        expect(getInput()).not.toHaveAttribute("step");
     });
 
     it("calls onApply with the numeric value on Apply", () => {
@@ -104,21 +107,6 @@ describe("NumberParameterControlDropdown", () => {
         expect(onApply).toHaveBeenCalledWith(100);
     });
 
-    it("mirrors the current value in the preview while the draft is out of range", () => {
-        renderDropdown({ value: 25 });
-        fireEvent.change(getInput(), { target: { value: "999" } });
-        const preview = screen.getByTestId("parameter-control-dropdown-preview");
-        expect(preview).toHaveTextContent("25");
-        expect(preview).not.toHaveTextContent("999");
-    });
-
-    it("renders the preview line with name and current value", () => {
-        renderDropdown({ value: 25, name: "Threshold" });
-        const preview = screen.getByTestId("parameter-control-dropdown-preview");
-        expect(preview).toHaveTextContent("Threshold");
-        expect(preview).toHaveTextContent("25");
-    });
-
     it("hides Reset when value equals resetValue", () => {
         renderDropdown({ value: 25, resetValue: 25 });
         expect(screen.queryByTestId("parameter-control-dropdown-reset")).not.toBeInTheDocument();
@@ -153,5 +141,97 @@ describe("NumberParameterControlDropdown", () => {
     it("emits the dropdown root data-testid", () => {
         renderDropdown();
         expect(screen.getByTestId("parameter-control-dropdown")).toBeInTheDocument();
+    });
+
+    it("increments the draft with the native number input when the up stepper is clicked", () => {
+        renderDropdown({ value: 25 });
+        fireEvent.click(getStepperUp());
+        expect(getInput()).toHaveValue(26);
+    });
+
+    it("decrements the draft by 1 when the down stepper is clicked", () => {
+        renderDropdown({ value: 25 });
+        fireEvent.click(getStepperDown());
+        expect(getInput()).toHaveValue(24);
+    });
+
+    it("snaps a fractional draft up to the next whole step", () => {
+        renderDropdown();
+        fireEvent.change(getInput(), { target: { value: "25.5" } });
+        fireEvent.click(getStepperUp());
+        expect(getInput()).toHaveValue(26);
+    });
+
+    it("clamps the stepped value to the max bound", () => {
+        renderDropdown({ value: 99.5 });
+        fireEvent.click(getStepperUp());
+        expect(getInput()).toHaveValue(100);
+        expect(getStepperUp()).toBeDisabled();
+    });
+
+    it("snaps a fractional draft down to the next whole step", () => {
+        renderDropdown();
+        fireEvent.change(getInput(), { target: { value: "25.5" } });
+        fireEvent.click(getStepperDown());
+        expect(getInput()).toHaveValue(25);
+    });
+
+    it("keeps the draft unchanged when no whole step fits below max", () => {
+        renderDropdown({ value: 0, constraints: { min: 0, max: 0.5 } });
+        fireEvent.click(getStepperUp());
+        expect(getInput()).toHaveValue(0);
+        expect(getStepperUp()).not.toBeDisabled();
+    });
+
+    it("steps a fractional draft down to min", () => {
+        renderDropdown({ value: 0.5, constraints: { min: 0, max: 0.5 } });
+        fireEvent.click(getStepperDown());
+        expect(getInput()).toHaveValue(0);
+        expect(getStepperDown()).toBeDisabled();
+    });
+
+    it("disables the up stepper when the draft is at max", () => {
+        renderDropdown({ value: 100 });
+        expect(getStepperUp()).toBeDisabled();
+        expect(getStepperDown()).not.toBeDisabled();
+    });
+
+    it("disables the down stepper when the draft is at min", () => {
+        renderDropdown({ value: 0 });
+        expect(getStepperDown()).toBeDisabled();
+        expect(getStepperUp()).not.toBeDisabled();
+    });
+
+    it("keeps focus on the input when pointer activation steps", () => {
+        renderDropdown({ value: 25 });
+        const input = getInput();
+        input.focus();
+        fireEvent.mouseDown(getStepperUp());
+        fireEvent.click(getStepperUp());
+        expect(getInput()).toHaveValue(26);
+        expect(input).toHaveFocus();
+    });
+
+    it("exposes named step controls that reference the input", () => {
+        renderDropdown({ inputId: "threshold-input" });
+        const increment = screen.getByRole("button", { name: "Increase value" });
+        const decrement = screen.getByRole("button", { name: "Decrease value" });
+        expect(increment).toHaveAttribute("aria-controls", "threshold-input");
+        expect(decrement).toHaveAttribute("aria-controls", "threshold-input");
+        expect(increment).toHaveAttribute("tabindex", "-1");
+        expect(decrement).toHaveAttribute("tabindex", "-1");
+    });
+
+    it("associates validation errors with the numeric input", () => {
+        renderDropdown();
+        const compoundInput = getInput().parentElement;
+        expect(compoundInput).toHaveClass("gd-ui-kit-parameter-input");
+        fireEvent.change(getInput(), { target: { value: "999" } });
+        expect(getInput()).toBeInvalid();
+        expect(getInput()).toHaveErrorMessage("Value is out of range. Enter a value between 0 and 100.");
+        expect(getInput()).toHaveAccessibleDescription(
+            "Value is out of range. Enter a value between 0 and 100.",
+        );
+        expect(compoundInput).toHaveClass("gd-ui-kit-parameter-input--hasError");
     });
 });

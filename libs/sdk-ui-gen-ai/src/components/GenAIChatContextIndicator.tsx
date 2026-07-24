@@ -2,6 +2,7 @@
 
 import { type FC, useCallback } from "react";
 
+import { useIntl } from "react-intl";
 import { connect, useSelector } from "react-redux";
 
 import { UiChip } from "@gooddata/sdk-ui-kit";
@@ -33,8 +34,11 @@ function GenAIChatContextIndicatorCore({
     removeContextReference,
     onDelete,
 }: GenAIChatContextIndicatorDispatchProps & GenAIChatContextIndicatorOwnProps) {
+    const intl = useIntl();
+    const emptyReferenceLabel = intl.formatMessage({ id: "gd.gen-ai.context.untitled" });
+
     const context = useSelector(userContextSelector);
-    const references = collectContextReferences(context);
+    const references = collectContextReferences(context, emptyReferenceLabel);
 
     const onDeleteHandler = useCallback(
         (reference: IGenAIContextObject) => {
@@ -55,10 +59,11 @@ function GenAIChatContextIndicatorCore({
             {references.map((reference, index) => (
                 <UiChip
                     key={index}
+                    isDisabled
+                    isDeletable
                     {...getIconByType(reference.type)}
                     label={reference.title}
                     isExpandable={false}
-                    isDeletable
                     onDelete={onDeleteHandler(reference)}
                 />
             ))}

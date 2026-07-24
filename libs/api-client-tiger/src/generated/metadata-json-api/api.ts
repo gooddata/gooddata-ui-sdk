@@ -11268,6 +11268,11 @@ export type ManageDashboardPermissionsRequestInner = PermissionsForAssignee | Pe
 export type ManageLabelPermissionsRequestInner = LdmObjectPermissionsForAssignee | LdmObjectPermissionsForAssigneeRule;
 
 /**
+ * @type ManageMetricPermissionsRequestInner
+ */
+export type ManageMetricPermissionsRequestInner = MetricPermissionsForAssignee | MetricPermissionsForAssigneeRule;
+
+/**
  * Filter via label with given match type and literal value.
  */
 export interface MatchAttributeFilter {
@@ -11352,6 +11357,50 @@ export interface MetricDefinitionOverride {
     'item': AfmObjectIdentifierCore;
     'definition': InlineMeasureDefinition;
 }
+
+export interface MetricPermissions {
+    /**
+     * List of rules
+     */
+    'rules': Array<RulePermission>;
+    /**
+     * List of users
+     */
+    'users': Array<UserPermission>;
+    /**
+     * List of user groups
+     */
+    'userGroups': Array<UserGroupPermission>;
+}
+
+/**
+ * Desired levels of permissions on a metric for an assignee.
+ */
+export interface MetricPermissionsAssignment {
+    'permissions': Array<MetricPermissionsAssignmentPermissionsEnum>;
+}
+
+export type MetricPermissionsAssignmentPermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
+
+/**
+ * Desired levels of metric permissions for an assignee identified by an identifier.
+ */
+export interface MetricPermissionsForAssignee {
+    'permissions': Array<MetricPermissionsForAssigneePermissionsEnum>;
+    'assigneeIdentifier': AssigneeIdentifier;
+}
+
+export type MetricPermissionsForAssigneePermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
+
+/**
+ * Desired levels of metric permissions for a collection of assignees identified by a rule.
+ */
+export interface MetricPermissionsForAssigneeRule {
+    'permissions': Array<MetricPermissionsForAssigneeRulePermissionsEnum>;
+    'assigneeRule': AssigneeRule;
+}
+
+export type MetricPermissionsForAssigneeRulePermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
 
 export interface ModelFile {
     'skeleton'?: Skeleton;
@@ -18890,6 +18939,72 @@ export async function ActionsApiAxiosParamCreator_ManageLabelPermissions(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
+ * 
+ * @summary (BETA) Manage Permissions for a Metric
+ * @param {string} workspaceId 
+ * @param {string} metricId 
+ * @param {Array<ManageMetricPermissionsRequestInner>} manageMetricPermissionsRequestInner 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_ManageMetricPermissions(
+    workspaceId: string, metricId: string, manageMetricPermissionsRequestInner: Array<ManageMetricPermissionsRequestInner>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('manageMetricPermissions', 'workspaceId', workspaceId)
+    // verify required parameter 'metricId' is not null or undefined
+    assertParamExists('manageMetricPermissions', 'metricId', metricId)
+    // verify required parameter 'manageMetricPermissionsRequestInner' is not null or undefined
+    assertParamExists('manageMetricPermissions', 'manageMetricPermissionsRequestInner', manageMetricPermissionsRequestInner)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/metrics/{metricId}/managePermissions`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"metricId"}}`, encodeURIComponent(String(metricId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof manageMetricPermissionsRequestInner !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(manageMetricPermissionsRequestInner !== undefined ? manageMetricPermissionsRequestInner : {})
+        : manageMetricPermissionsRequestInner || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
  * Manage Permissions for a Organization
  * @summary Manage Permissions for a Organization
  * @param {Array<OrganizationPermissionAssignment>} organizationPermissionAssignment 
@@ -19000,6 +19115,55 @@ export async function ActionsApiAxiosParamCreator_ManageWorkspacePermissions(
     localVarRequestOptions.data = needsSerialization
         ? JSON.stringify(workspacePermissionAssignment !== undefined ? workspacePermissionAssignment : {})
         : workspacePermissionAssignment || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * 
+ * @summary (BETA) Get Metric Permissions
+ * @param {string} workspaceId 
+ * @param {string} metricId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_MetricPermissions(
+    workspaceId: string, metricId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('metricPermissions', 'workspaceId', workspaceId)
+    // verify required parameter 'metricId' is not null or undefined
+    assertParamExists('metricPermissions', 'metricId', metricId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/metrics/{metricId}/permissions`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"metricId"}}`, encodeURIComponent(String(metricId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
 
     return {
         url: toPathString(localVarUrlObj),
@@ -21063,6 +21227,32 @@ export async function ActionsApi_ManageLabelPermissions(
 
 // ActionsApi Api FP
 /**
+ * 
+ * @summary (BETA) Manage Permissions for a Metric
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiManageMetricPermissionsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_ManageMetricPermissions(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiManageMetricPermissionsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ManageMetricPermissions(
+        requestParameters.workspaceId, requestParameters.metricId, requestParameters.manageMetricPermissionsRequestInner, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
  * Manage Permissions for a Organization
  * @summary Manage Permissions for a Organization
  * @param {AxiosInstance} axios Axios instance.
@@ -21106,6 +21296,32 @@ export async function ActionsApi_ManageWorkspacePermissions(
 ): AxiosPromise<void> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ManageWorkspacePermissions(
         requestParameters.workspaceId, requestParameters.workspacePermissionAssignment, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
+ * 
+ * @summary (BETA) Get Metric Permissions
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiMetricPermissionsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_MetricPermissions(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiMetricPermissionsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<MetricPermissions> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_MetricPermissions(
+        requestParameters.workspaceId, requestParameters.metricId, 
         options || {},
         configuration,
     );
@@ -22040,6 +22256,16 @@ export interface ActionsApiInterface {
     manageLabelPermissions(requestParameters: ActionsApiManageLabelPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
+     * 
+     * @summary (BETA) Manage Permissions for a Metric
+     * @param {ActionsApiManageMetricPermissionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    manageMetricPermissions(requestParameters: ActionsApiManageMetricPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
      * Manage Permissions for a Organization
      * @summary Manage Permissions for a Organization
      * @param {ActionsApiManageOrganizationPermissionsRequest} requestParameters Request parameters.
@@ -22058,6 +22284,16 @@ export interface ActionsApiInterface {
      * @memberof ActionsApiInterface
      */
     manageWorkspacePermissions(requestParameters: ActionsApiManageWorkspacePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * 
+     * @summary (BETA) Get Metric Permissions
+     * @param {ActionsApiMetricPermissionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    metricPermissions(requestParameters: ActionsApiMetricPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<MetricPermissions>;
 
     /**
      * Finds API identifier overrides in given workspace hierarchy.
@@ -22837,6 +23073,34 @@ export interface ActionsApiManageLabelPermissionsRequest {
 }
 
 /**
+ * Request parameters for manageMetricPermissions operation in ActionsApi.
+ * @export
+ * @interface ActionsApiManageMetricPermissionsRequest
+ */
+export interface ActionsApiManageMetricPermissionsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionsApiManageMetricPermissions
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionsApiManageMetricPermissions
+     */
+    readonly metricId: string
+
+    /**
+     * 
+     * @type {Array<ManageMetricPermissionsRequestInner>}
+     * @memberof ActionsApiManageMetricPermissions
+     */
+    readonly manageMetricPermissionsRequestInner: Array<ManageMetricPermissionsRequestInner>
+}
+
+/**
  * Request parameters for manageOrganizationPermissions operation in ActionsApi.
  * @export
  * @interface ActionsApiManageOrganizationPermissionsRequest
@@ -22869,6 +23133,27 @@ export interface ActionsApiManageWorkspacePermissionsRequest {
      * @memberof ActionsApiManageWorkspacePermissions
      */
     readonly workspacePermissionAssignment: Array<WorkspacePermissionAssignment>
+}
+
+/**
+ * Request parameters for metricPermissions operation in ActionsApi.
+ * @export
+ * @interface ActionsApiMetricPermissionsRequest
+ */
+export interface ActionsApiMetricPermissionsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionsApiMetricPermissions
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionsApiMetricPermissions
+     */
+    readonly metricId: string
 }
 
 /**
@@ -23582,6 +23867,18 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
+     * 
+     * @summary (BETA) Manage Permissions for a Metric
+     * @param {ActionsApiManageMetricPermissionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public manageMetricPermissions(requestParameters: ActionsApiManageMetricPermissionsRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_ManageMetricPermissions(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
      * Manage Permissions for a Organization
      * @summary Manage Permissions for a Organization
      * @param {ActionsApiManageOrganizationPermissionsRequest} requestParameters Request parameters.
@@ -23603,6 +23900,18 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      */
     public manageWorkspacePermissions(requestParameters: ActionsApiManageWorkspacePermissionsRequest, options?: AxiosRequestConfig) {
         return ActionsApi_ManageWorkspacePermissions(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary (BETA) Get Metric Permissions
+     * @param {ActionsApiMetricPermissionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public metricPermissions(requestParameters: ActionsApiMetricPermissionsRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_MetricPermissions(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -143386,6 +143695,72 @@ export async function PermissionsApiAxiosParamCreator_ManageLabelPermissions(
 
 // PermissionsApi FP - PermissionsApiAxiosParamCreator
 /**
+ * 
+ * @summary (BETA) Manage Permissions for a Metric
+ * @param {string} workspaceId 
+ * @param {string} metricId 
+ * @param {Array<ManageMetricPermissionsRequestInner>} manageMetricPermissionsRequestInner 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PermissionsApiAxiosParamCreator_ManageMetricPermissions(
+    workspaceId: string, metricId: string, manageMetricPermissionsRequestInner: Array<ManageMetricPermissionsRequestInner>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('manageMetricPermissions', 'workspaceId', workspaceId)
+    // verify required parameter 'metricId' is not null or undefined
+    assertParamExists('manageMetricPermissions', 'metricId', metricId)
+    // verify required parameter 'manageMetricPermissionsRequestInner' is not null or undefined
+    assertParamExists('manageMetricPermissions', 'manageMetricPermissionsRequestInner', manageMetricPermissionsRequestInner)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/metrics/{metricId}/managePermissions`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"metricId"}}`, encodeURIComponent(String(metricId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof manageMetricPermissionsRequestInner !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(manageMetricPermissionsRequestInner !== undefined ? manageMetricPermissionsRequestInner : {})
+        : manageMetricPermissionsRequestInner || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// PermissionsApi FP - PermissionsApiAxiosParamCreator
+/**
  * Manage Permissions for a Organization
  * @summary Manage Permissions for a Organization
  * @param {Array<OrganizationPermissionAssignment>} organizationPermissionAssignment 
@@ -143496,6 +143871,55 @@ export async function PermissionsApiAxiosParamCreator_ManageWorkspacePermissions
     localVarRequestOptions.data = needsSerialization
         ? JSON.stringify(workspacePermissionAssignment !== undefined ? workspacePermissionAssignment : {})
         : workspacePermissionAssignment || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// PermissionsApi FP - PermissionsApiAxiosParamCreator
+/**
+ * 
+ * @summary (BETA) Get Metric Permissions
+ * @param {string} workspaceId 
+ * @param {string} metricId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PermissionsApiAxiosParamCreator_MetricPermissions(
+    workspaceId: string, metricId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('metricPermissions', 'workspaceId', workspaceId)
+    // verify required parameter 'metricId' is not null or undefined
+    assertParamExists('metricPermissions', 'metricId', metricId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/metrics/{metricId}/permissions`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"metricId"}}`, encodeURIComponent(String(metricId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
 
     return {
         url: toPathString(localVarUrlObj),
@@ -144114,6 +144538,32 @@ export async function PermissionsApi_ManageLabelPermissions(
 
 // PermissionsApi Api FP
 /**
+ * 
+ * @summary (BETA) Manage Permissions for a Metric
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {PermissionsApiManageMetricPermissionsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PermissionsApi_ManageMetricPermissions(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: PermissionsApiManageMetricPermissionsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await PermissionsApiAxiosParamCreator_ManageMetricPermissions(
+        requestParameters.workspaceId, requestParameters.metricId, requestParameters.manageMetricPermissionsRequestInner, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// PermissionsApi Api FP
+/**
  * Manage Permissions for a Organization
  * @summary Manage Permissions for a Organization
  * @param {AxiosInstance} axios Axios instance.
@@ -144157,6 +144607,32 @@ export async function PermissionsApi_ManageWorkspacePermissions(
 ): AxiosPromise<void> {
     const localVarAxiosArgs = await PermissionsApiAxiosParamCreator_ManageWorkspacePermissions(
         requestParameters.workspaceId, requestParameters.workspacePermissionAssignment, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// PermissionsApi Api FP
+/**
+ * 
+ * @summary (BETA) Get Metric Permissions
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {PermissionsApiMetricPermissionsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PermissionsApi_MetricPermissions(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: PermissionsApiMetricPermissionsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<MetricPermissions> {
+    const localVarAxiosArgs = await PermissionsApiAxiosParamCreator_MetricPermissions(
+        requestParameters.workspaceId, requestParameters.metricId, 
         options || {},
         configuration,
     );
@@ -144414,6 +144890,16 @@ export interface PermissionsApiInterface {
     manageLabelPermissions(requestParameters: PermissionsApiManageLabelPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
+     * 
+     * @summary (BETA) Manage Permissions for a Metric
+     * @param {PermissionsApiManageMetricPermissionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PermissionsApiInterface
+     */
+    manageMetricPermissions(requestParameters: PermissionsApiManageMetricPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
      * Manage Permissions for a Organization
      * @summary Manage Permissions for a Organization
      * @param {PermissionsApiManageOrganizationPermissionsRequest} requestParameters Request parameters.
@@ -144432,6 +144918,16 @@ export interface PermissionsApiInterface {
      * @memberof PermissionsApiInterface
      */
     manageWorkspacePermissions(requestParameters: PermissionsApiManageWorkspacePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * 
+     * @summary (BETA) Get Metric Permissions
+     * @param {PermissionsApiMetricPermissionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PermissionsApiInterface
+     */
+    metricPermissions(requestParameters: PermissionsApiMetricPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<MetricPermissions>;
 
     /**
      * Sets organization permissions
@@ -144756,6 +145252,34 @@ export interface PermissionsApiManageLabelPermissionsRequest {
 }
 
 /**
+ * Request parameters for manageMetricPermissions operation in PermissionsApi.
+ * @export
+ * @interface PermissionsApiManageMetricPermissionsRequest
+ */
+export interface PermissionsApiManageMetricPermissionsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PermissionsApiManageMetricPermissions
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PermissionsApiManageMetricPermissions
+     */
+    readonly metricId: string
+
+    /**
+     * 
+     * @type {Array<ManageMetricPermissionsRequestInner>}
+     * @memberof PermissionsApiManageMetricPermissions
+     */
+    readonly manageMetricPermissionsRequestInner: Array<ManageMetricPermissionsRequestInner>
+}
+
+/**
  * Request parameters for manageOrganizationPermissions operation in PermissionsApi.
  * @export
  * @interface PermissionsApiManageOrganizationPermissionsRequest
@@ -144788,6 +145312,27 @@ export interface PermissionsApiManageWorkspacePermissionsRequest {
      * @memberof PermissionsApiManageWorkspacePermissions
      */
     readonly workspacePermissionAssignment: Array<WorkspacePermissionAssignment>
+}
+
+/**
+ * Request parameters for metricPermissions operation in PermissionsApi.
+ * @export
+ * @interface PermissionsApiMetricPermissionsRequest
+ */
+export interface PermissionsApiMetricPermissionsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PermissionsApiMetricPermissions
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PermissionsApiMetricPermissions
+     */
+    readonly metricId: string
 }
 
 /**
@@ -145042,6 +145587,18 @@ export class PermissionsApi extends BaseAPI implements PermissionsApiInterface {
     }
 
     /**
+     * 
+     * @summary (BETA) Manage Permissions for a Metric
+     * @param {PermissionsApiManageMetricPermissionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PermissionsApi
+     */
+    public manageMetricPermissions(requestParameters: PermissionsApiManageMetricPermissionsRequest, options?: AxiosRequestConfig) {
+        return PermissionsApi_ManageMetricPermissions(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
      * Manage Permissions for a Organization
      * @summary Manage Permissions for a Organization
      * @param {PermissionsApiManageOrganizationPermissionsRequest} requestParameters Request parameters.
@@ -145063,6 +145620,18 @@ export class PermissionsApi extends BaseAPI implements PermissionsApiInterface {
      */
     public manageWorkspacePermissions(requestParameters: PermissionsApiManageWorkspacePermissionsRequest, options?: AxiosRequestConfig) {
         return PermissionsApi_ManageWorkspacePermissions(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary (BETA) Get Metric Permissions
+     * @param {PermissionsApiMetricPermissionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PermissionsApi
+     */
+    public metricPermissions(requestParameters: PermissionsApiMetricPermissionsRequest, options?: AxiosRequestConfig) {
+        return PermissionsApi_MetricPermissions(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**

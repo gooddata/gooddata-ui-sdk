@@ -157,7 +157,11 @@ export const useDrillDialogExportItems = ({
         // When the execution reached a result limit, keep the (disabled) formatted export items in the menu
         // so the user sees they are unavailable because of the limit, instead of hiding them.
         if (hasLimitBreaks) {
-            return allItems;
+            const visibleItems = isExportRawVisible
+                ? allItems
+                : allItems.filter((item) => item.id !== "csv-raw");
+
+            return visibleItems;
         }
 
         // Otherwise, when raw exports are not shown, disabled items are hidden as usual.

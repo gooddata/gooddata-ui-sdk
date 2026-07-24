@@ -24,8 +24,6 @@ export interface IUiMoreOptionsMenuProps {
     /** Locked items are always treated as selected. */
     selectedLabelIds?: ReadonlyArray<string>;
     onLabelsChange?: (selectedIds: string[]) => void;
-    /** Omit to hide the row (Transfer ownership is gated until wired). */
-    onTransferOwnership?: () => void;
     /**
      * Omit to hide the row. Used for read-only permission rows (e.g. EDIT), whose
      * level control has no dropdown to host Remove access — so the action lives here.
@@ -73,10 +71,10 @@ function LabelsChecklistContent({ onBack, onClose, dataRef }: ILabelsContentProp
 }
 
 /**
- * Per-grantee "⋯" menu: "Manage labels access" (drills into {@link UiLabelsChecklist}),
- * "Transfer ownership" and "Remove access". Each row shows only when its data/handler
- * is given. Remove access appears here for read-only permission rows whose level control
- * has no dropdown to host it.
+ * Per-grantee "⋯" menu: "Manage labels access" (drills into {@link UiLabelsChecklist})
+ * and "Remove access". Each row shows only when its data/handler is given. Remove
+ * access appears here for read-only permission rows whose level control has no
+ * dropdown to host it.
  *
  * @internal
  */
@@ -84,7 +82,6 @@ export function UiMoreOptionsMenu({
     labels,
     selectedLabelIds,
     onLabelsChange,
-    onTransferOwnership,
     onRemoveAccess,
     isDisabled,
     dataTestId,
@@ -128,15 +125,6 @@ export function UiMoreOptionsMenu({
                 Component: labelsContentRef.current!,
             });
         }
-        if (onTransferOwnership) {
-            result.push({
-                type: "interactive",
-                id: "transfer",
-                stringTitle: intl.formatMessage(olpPermissionMessages.transferOwnership),
-                iconLeft: <UiIcon type="sync" size={16} color="complementary-7" />,
-                data: undefined,
-            });
-        }
         if (onRemoveAccess) {
             result.push({
                 type: "interactive",
@@ -147,7 +135,7 @@ export function UiMoreOptionsMenu({
             });
         }
         return result;
-    }, [hasLabels, onTransferOwnership, onRemoveAccess, intl]);
+    }, [hasLabels, onRemoveAccess, intl]);
 
     return (
         <UiPopover
@@ -171,9 +159,7 @@ export function UiMoreOptionsMenu({
                         items={items}
                         size="small"
                         onSelect={(item) => {
-                            if (item.id === "transfer") {
-                                onTransferOwnership?.();
-                            } else if (item.id === "remove") {
+                            if (item.id === "remove") {
                                 onRemoveAccess?.();
                             }
                         }}

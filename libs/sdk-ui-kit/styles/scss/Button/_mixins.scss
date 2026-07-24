@@ -3,9 +3,9 @@
 @use "_variables" as button-variables;
 @use "../variables";
 
-/* ==========================================================================
-   Silent classes - more clever mixins
-   ========================================================================== */
+// ==========================================================================
+// Silent classes - more clever mixins
+// ==========================================================================
 
 %btn {
     position: relative;
@@ -157,4 +157,11 @@
     .ss-icon {
         vertical-align: middle;
     }
+}
+
+@mixin button-normal-active-gradient {
+    @include mixins.gradient-linear(
+        button-variables.$button-normal-active-gradient-top,
+        button-variables.$button-normal-active-gradient-bottom
+    );
 }

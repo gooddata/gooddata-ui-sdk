@@ -66,7 +66,7 @@ describe("prepareBaseColors", () => {
 });
 
 describe("stripComplementaryPalette", () => {
-    it("should return theme without complementary palette, chart and pivot table properties", () => {
+    it("should remove complementary palette and chart but preserve table", () => {
         const theme: ITheme = {
             palette: {
                 complementary: { c0: "#fff", c9: "#000" },
@@ -83,7 +83,7 @@ describe("stripComplementaryPalette", () => {
 
         expect(strippedTheme.palette?.complementary).toEqual(undefined);
         expect(strippedTheme.chart).toEqual(undefined);
-        expect(strippedTheme.table).toEqual(undefined);
+        expect(strippedTheme.table).toEqual({ backgroundColor: "#fff" });
     });
 });
 

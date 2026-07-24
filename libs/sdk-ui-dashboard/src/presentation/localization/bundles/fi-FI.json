@@ -143,6 +143,8 @@
     "filters.configurationPanel.userFilterSave.toggle.tooltip": "Salli suodattimien viimeisen tilan automaattinen tallennus. Kun käyttäjät palaavat, heidän suodattimensa pysyvät ennallaan.",
     "filters.configurationPanel.filterViews.toggle": "Tallennetut näkymät",
     "filters.configurationPanel.filterViews.toggle.tooltip": "<p>Antaa käyttäjien tallentaa suodattimen tilan henkilökohtaisina näkyminä, joihin he voivat palata myöhemmin.</p><p>Vain näkymän tallentanut käyttäjä voi käyttää sitä ja asettaa sen oletusnäkymäksi.</p>",
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle": "Pysyvät suodattimet välilehdillä",
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle.tooltip": "Salli pysyvät suodattimet välilehdillä. Kun tämä on käytössä, suodattimet pysyvät välilehdillä.",
     "settingsDashboardDialog.sectionHeaders.dateDataset": "Ajanjakso kuvauksissa",
     "settingsDashboardDialog.sectionHeaders.dateDataset.tooltip": "Päivämäärätietojoukko, jota Ajanjaksosuodatin käyttää osion kuvausten metristen viittausten osalta.",
     "dateDataset.autoSelect": "Automaattinen valinta",

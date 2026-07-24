@@ -151,6 +151,12 @@ export class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
     }
 
     public datasets(): IWorkspaceDatasetsService {
+        const { datasets } = this.factories;
+
+        if (datasets) {
+            return datasets(this.decorated.datasets(), this.workspace);
+        }
+
         return this.decorated.datasets();
     }
 

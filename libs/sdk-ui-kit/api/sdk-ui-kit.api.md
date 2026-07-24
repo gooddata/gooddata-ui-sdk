@@ -52,7 +52,6 @@ import { ILocale } from '@gooddata/sdk-ui';
 import { IMeasureSortTarget } from '@gooddata/sdk-model';
 import { IMetadataObjectBase } from '@gooddata/sdk-model';
 import { IntlShape } from 'react-intl';
-import { INumberParameterConstraints } from '@gooddata/sdk-model';
 import { IParameterDefinition } from '@gooddata/sdk-model';
 import { IParameterMetadataObject } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-ui';
@@ -60,7 +59,6 @@ import { ISeparators as ISeparators_2 } from '@gooddata/number-formatter';
 import { ISeparators as ISeparators_3 } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
-import { IStringParameterConstraints } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
 import { IThemeDefinition } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
@@ -363,6 +361,9 @@ export type CurrentUserPermissions = {
 
 // @internal (undocumented)
 export function CustomizableCheckmark(input: ICustomizableCheckmarkProps): JSX.Element;
+
+// @internal (undocumented)
+export const DATE_DATASET_LIST_ITEM_CLASSNAME = "gd-list-item gd-list-item-shortened";
 
 // @internal (undocumented)
 export function DateDatasetsListItem(input: IDateDatasetsListItemProps): JSX.Element;
@@ -2026,6 +2027,8 @@ export interface IDateDatasetsListItemProps {
     onClick: (e: MouseEvent_2<HTMLDivElement>) => void;
     // (undocumented)
     title?: string;
+    // (undocumented)
+    width?: number;
 }
 
 // @internal (undocumented)
@@ -4533,25 +4536,6 @@ export function InsightListItemTypeIcon(input: {
 }): JSX.Element;
 
 // @internal (undocumented)
-export interface INumberParameterControlDropdownProps {
-    // (undocumented)
-    ariaAttributes?: IDropdownBodyRenderProps["ariaAttributes"];
-    // (undocumented)
-    constraints?: INumberParameterConstraints;
-    // (undocumented)
-    inputId?: string;
-    // (undocumented)
-    name: string;
-    // (undocumented)
-    onApply: (value: number) => void;
-    // (undocumented)
-    onCancel: () => void;
-    resetValue?: number;
-    // (undocumented)
-    value: number;
-}
-
-// @internal (undocumented)
 export interface INumericInputProps {
     // (undocumented)
     onValueChanged: (height: string) => void;
@@ -5517,25 +5501,6 @@ export interface IStandardPresetDefinition {
 }
 
 // @internal (undocumented)
-export interface IStringParameterControlDropdownProps {
-    // (undocumented)
-    ariaAttributes?: IDropdownBodyRenderProps["ariaAttributes"];
-    // (undocumented)
-    constraints?: IStringParameterConstraints;
-    // (undocumented)
-    inputId?: string;
-    // (undocumented)
-    name: string;
-    // (undocumented)
-    onApply: (value: string) => void;
-    // (undocumented)
-    onCancel: () => void;
-    resetValue?: string;
-    // (undocumented)
-    value: string;
-}
-
-// @internal (undocumented)
 export interface IStylingEditorDialogProps<T extends StylingPickerItemContent> extends TStylingEditorDialogFooterProps, Pick<IDialogBaseProps, "onClose" | "className"> {
     // (undocumented)
     examples?: IStylingPickerItem<T>[];
@@ -6237,6 +6202,8 @@ export interface IUiButtonProps {
     // (undocumented)
     tooltip?: ReactNode;
     // (undocumented)
+    type?: "button" | "submit" | "reset";
+    // (undocumented)
     variant?: VariantPrimary | VariantSecondary | VariantTertiary | VariantPopOut | VariantDanger | VariantTooltip | VariantLink | VariantLinkDimmed | VariantDropdownInline;
 }
 
@@ -6804,16 +6771,17 @@ export interface IUiGranteeAvatarProps {
 export interface IUiGranteeRowControlsProps {
     // (undocumented)
     dataTestId?: string;
+    disabledLevels?: ReadonlyArray<PermissionMenuLevel>;
+    disabledTooltip?: string;
     effectivePermission?: AccessGranularPermission;
     isDisabled?: boolean;
     labels: ReadonlyArray<IUiLabelsChecklistItem>;
+    mergedControls?: boolean;
     // (undocumented)
     onLabelsChange: (selectedIds: string[]) => void;
     onPermissionChange: (level: PermissionMenuLevel) => void;
     // (undocumented)
     onRemoveAccess?: () => void;
-    // (undocumented)
-    onTransferOwnership?: () => void;
     permissionLevel: AccessGranularPermission;
     // (undocumented)
     selectedLabelIds: ReadonlyArray<string>;
@@ -6824,7 +6792,6 @@ export interface IUiGranteeRowProps {
     controls?: ReactNode;
     dataTestId?: string;
     email?: string;
-    isOwner?: boolean;
     isPending?: boolean;
     kind: GranteeAvatarKind;
     name: string;
@@ -7402,7 +7369,6 @@ export interface IUiMoreOptionsMenuProps {
     // (undocumented)
     onLabelsChange?: (selectedIds: string[]) => void;
     onRemoveAccess?: () => void;
-    onTransferOwnership?: () => void;
     selectedLabelIds?: ReadonlyArray<string>;
 }
 
@@ -7452,7 +7418,6 @@ export interface IUiObjectShareDialogGrantee {
     controls?: ReactNode;
     email?: string;
     id: string;
-    isOwner?: boolean;
     isPending?: boolean;
     kind: GranteeAvatarKind;
     name: string;
@@ -7557,10 +7522,15 @@ export interface IUiPaginationButtonProps {
 
 // @internal (undocumented)
 export interface IUiPermissionMenuProps {
-    anchor: ReactElement<any>;
+    anchor: ReactElement;
     dataTestId?: string;
+    disabledLevels?: ReadonlyArray<PermissionMenuLevel>;
+    disabledTooltip?: string;
+    labels?: ReadonlyArray<IUiLabelsChecklistItem>;
+    onLabelsChange?: (selectedIds: string[]) => void;
     onPermissionChange: (level: PermissionMenuLevel) => void;
     onRemoveAccess?: () => void;
+    selectedLabelIds?: ReadonlyArray<string>;
     selectedLevel?: PermissionMenuLevel;
 }
 
@@ -8011,28 +7981,6 @@ export interface IUiTooltipProps {
     triggerBy?: Array<"hover" | "focus" | "click">;
     variant?: "default" | "error" | "none";
     width?: number | "same-as-anchor";
-}
-
-// @internal (undocumented)
-export interface IUiTransferOwnershipDialogCardProps {
-    alsoRemoveMyAccess: boolean;
-    dataTestId?: string;
-    isSaving?: boolean;
-    loadOptions: (search: string) => Promise<IUiGranteeAsyncOptions>;
-    objectTitle: string;
-    // (undocumented)
-    onAlsoRemoveMyAccessChange: (next: boolean) => void;
-    onBack: () => void;
-    onCancel: () => void;
-    onClose: () => void;
-    onSelectedOwnerChange: (owner: IUiGranteeAsyncOption) => void;
-    onTransfer: () => void;
-    selectedOwner: IUiGranteeAsyncOption | undefined;
-}
-
-// @internal (undocumented)
-export interface IUiTransferOwnershipDialogProps extends IUiTransferOwnershipDialogCardProps {
-    isOpen: boolean;
 }
 
 // @internal (undocumented)
@@ -8627,9 +8575,6 @@ export function NonContextToastsInterop(props: {
 // @internal
 export function normalizeTime(time?: Date, date?: Date, timeAnchor?: number): Date;
 
-// @internal
-export function NumberParameterControlDropdown(input: INumberParameterControlDropdownProps): JSX.Element;
-
 // @internal (undocumented)
 export function NumericInput(input: INumericInputProps): JSX.Element;
 
@@ -8985,9 +8930,6 @@ export const STANDARD_PRESET_DEFINITIONS: readonly IStandardPresetDefinition[];
 
 // @internal
 export const STANDARD_TEMPLATE_DEFINITIONS: readonly ITemplateDefinition[];
-
-// @internal
-export function StringParameterControlDropdown(input: IStringParameterControlDropdownProps): JSX.Element;
 
 // @internal
 export type StyleProps = Record<string, string | boolean>;
@@ -9446,12 +9388,6 @@ export function UiToastsContainer(input: IUiToastsContainerProps): ReactNode;
 
 // @internal (undocumented)
 export function UiTooltip(input: IUiTooltipProps): JSX.Element;
-
-// @internal
-export function UiTransferOwnershipDialog(input: IUiTransferOwnershipDialogProps): JSX.Element;
-
-// @internal
-export function UiTransferOwnershipDialogCard(input: IUiTransferOwnershipDialogCardProps): JSX.Element;
 
 // @internal (undocumented)
 export type UiTreeViewAddLevel<N extends number> = [...Array<N>, unknown]["length"];

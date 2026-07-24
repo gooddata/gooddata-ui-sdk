@@ -15,6 +15,8 @@ import {
     type IMeasureExpressionToken,
     type IMeasureReferencing,
     type IPreparedExecution,
+    type IWorkspaceAttributesService,
+    type IWorkspaceDatasetsService,
     type IWorkspaceExportTemplatesService,
     type IWorkspaceFactsService,
     type IWorkspaceInsightsService,
@@ -25,6 +27,7 @@ import {
     type IAttributeMetadataObject,
     type IAttributeOrMeasure,
     type IBucket,
+    type IDataSetMetadataObject,
     type IExportTemplate,
     type IExportTemplateDefinition,
     type IFactMetadataObject,
@@ -32,12 +35,17 @@ import {
     type IInsight,
     type IMetadataObject,
     type ObjRef,
+    areObjRefsEqual,
     geoFeatureId,
     idRef,
+    isIdentifierRef,
+    isUriRef,
     newBucket,
     newInsightDefinition,
 } from "@gooddata/sdk-model";
 
+import { DecoratedWorkspaceAttributesService } from "../../decoratedBackend/attributes.js";
+import { DecoratedWorkspaceDatasetsService } from "../../decoratedBackend/datasets.js";
 import {
     DecoratedDataView,
     DecoratedExecutionFactory,
@@ -82,6 +90,9 @@ function withCachingForTests(
         maxFactsPerWorkspace: 2,
         maxMeasuresWorkspaces: 1,
         maxMeasuresPerWorkspace: 2,
+        maxDatasetWorkspaces: 1,
+        // set to two as one dataset can take up two places (one for id, one for uri)
+        maxDatasetsPerWorkspace: 2,
         cacheGeoStyles: true,
         onCacheReady,
         ...configOverrides,
@@ -172,6 +183,135 @@ function createMeasuresBackend(providers: MeasureProviders): IAnalyticalBackend 
     return decoratedBackend(backend, {
         measures: (decorated) => new CountingMeasuresService(decorated, providers),
     });
+}
+
+type AttributeCallCounts = {
+    getAttribute: number;
+    getAttributes: number;
+    getAttributeDisplayForms: number;
+    getCommonAttributes: number;
+    getCommonAttributesBatch: number;
+    getConnectedAttributesByDisplayForm: number;
+};
+
+function makeAttributeCallCounts(): AttributeCallCounts {
+    return {
+        getAttribute: 0,
+        getAttributes: 0,
+        getAttributeDisplayForms: 0,
+        getCommonAttributes: 0,
+        getCommonAttributesBatch: 0,
+        getConnectedAttributesByDisplayForm: 0,
+    };
+}
+
+function makeAttribute(ref: ObjRef): IAttributeMetadataObject {
+    const identifier = isIdentifierRef(ref) ? ref.identifier : "dummyAttribute";
+    const uri = isUriRef(ref) ? ref.uri : `/gdc/md/${identifier}`;
+    return {
+        type: "attribute",
+        ref,
+        id: identifier,
+        uri,
+        title: "Counting attribute",
+        description: "",
+        production: true,
+        deprecated: false,
+        unlisted: false,
+        displayForms: [],
+    };
+}
+
+function makeDisplayForm(ref: ObjRef): IAttributeDisplayFormMetadataObject {
+    const identifier = isIdentifierRef(ref) ? ref.identifier : "dummyDisplayForm";
+    const uri = isUriRef(ref) ? ref.uri : `/gdc/md/${identifier}`;
+    return {
+        type: "displayForm",
+        ref,
+        id: identifier,
+        uri,
+        title: "Counting display form",
+        description: "",
+        attribute: idRef(`${identifier}.attr`, "attribute"),
+        production: true,
+        deprecated: false,
+        unlisted: false,
+    };
+}
+
+/**
+ * Attributes service that counts how many times each (uncached) read method reached the network and
+ * returns resolvable data, so tests can verify in-flight de-duplication and error eviction.
+ */
+class CountingAttributesService extends DecoratedWorkspaceAttributesService {
+    constructor(
+        decorated: IWorkspaceAttributesService,
+        private readonly counts: AttributeCallCounts,
+        private readonly opts: { failGetAttribute?: boolean; omitDisplayFormRefs?: ObjRef[] } = {},
+    ) {
+        super(decorated);
+    }
+
+    public override getAttribute(ref: ObjRef): Promise<IAttributeMetadataObject> {
+        this.counts.getAttribute++;
+        if (this.opts.failGetAttribute) {
+            return Promise.reject(new Error("getAttribute failed"));
+        }
+        return Promise.resolve(makeAttribute(ref));
+    }
+
+    public override getAttributes(refs: ObjRef[]): Promise<IAttributeMetadataObject[]> {
+        this.counts.getAttributes++;
+        return Promise.resolve(refs.map(makeAttribute));
+    }
+
+    public override getAttributeDisplayForms(refs: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]> {
+        this.counts.getAttributeDisplayForms++;
+        const omitted = this.opts.omitDisplayFormRefs ?? [];
+        return Promise.resolve(
+            refs.filter((ref) => !omitted.some((omit) => areObjRefsEqual(omit, ref))).map(makeDisplayForm),
+        );
+    }
+
+    public override getCommonAttributes(attributeRefs: ObjRef[]): Promise<ObjRef[]> {
+        this.counts.getCommonAttributes++;
+        return Promise.resolve(attributeRefs);
+    }
+
+    public override getCommonAttributesBatch(attributesRefsBatch: ObjRef[][]): Promise<ObjRef[][]> {
+        this.counts.getCommonAttributesBatch++;
+        return Promise.resolve(attributesRefsBatch);
+    }
+
+    public override getConnectedAttributesByDisplayForm(ref: ObjRef): Promise<ObjRef[]> {
+        this.counts.getConnectedAttributesByDisplayForm++;
+        return Promise.resolve([ref]);
+    }
+}
+
+function makeCountingBackend(
+    counts: AttributeCallCounts,
+    opts: {
+        failGetAttribute?: boolean;
+        omitDisplayFormRefs?: ObjRef[];
+        allowsInconsistentRelations?: boolean;
+    } = {},
+): IAnalyticalBackend {
+    const backend = decoratedBackend(dummyBackendEmptyData(), {
+        attributes: (attributes) => new CountingAttributesService(attributes, counts, opts),
+    });
+
+    if (opts.allowsInconsistentRelations) {
+        // capabilities is a plain field on the decorated backend; withCaching reads it when it builds its
+        // caching context, so overriding it here is enough to flip the flag for the test. The interface
+        // marks it readonly, hence the cast.
+        (backend as { capabilities: IAnalyticalBackend["capabilities"] }).capabilities = {
+            ...backend.capabilities,
+            allowsInconsistentRelations: true,
+        };
+    }
+
+    return backend;
 }
 
 type CollectionItemsProvider = (config: ICollectionItemsConfig) => ICollectionItemsResult;
@@ -363,6 +503,60 @@ function createTestInsight(id: string): IInsight {
             title: id,
         },
     };
+}
+
+type DatasetsCallCounters = {
+    getDataset: number;
+    getDataSets: number;
+};
+
+type DatasetsBackendOptions = {
+    counters?: DatasetsCallCounters;
+    // when provided, only refs for which this returns true will be returned by the bulk call
+    // (used to simulate inconsistent relations where the backend omits some refs)
+    shouldReturn?: (ref: ObjRef) => boolean;
+};
+
+/**
+ * Datasets service decorator that counts how many times the underlying read methods are invoked
+ * and can simulate a backend that omits some of the requested refs.
+ */
+class CallCountingDatasetsService extends DecoratedWorkspaceDatasetsService {
+    constructor(
+        decorated: IWorkspaceDatasetsService,
+        private readonly options: DatasetsBackendOptions,
+    ) {
+        super(decorated);
+    }
+
+    public override getDataset = (ref: ObjRef): Promise<IDataSetMetadataObject> => {
+        if (this.options.counters) {
+            this.options.counters.getDataset += 1;
+        }
+        return this.decorated.getDataset(ref);
+    };
+
+    public override getDataSets = (refs: ObjRef[]): Promise<IDataSetMetadataObject[]> => {
+        if (this.options.counters) {
+            this.options.counters.getDataSets += 1;
+        }
+        const refsToReturn = this.options.shouldReturn ? refs.filter(this.options.shouldReturn) : refs;
+        return this.decorated.getDataSets(refsToReturn);
+    };
+}
+
+function createCountingDatasetsBackend(options: DatasetsBackendOptions = {}): IAnalyticalBackend {
+    return decoratedBackend(dummyBackendEmptyData(), {
+        datasets: (decorated) => new CallCountingDatasetsService(decorated, options),
+    });
+}
+
+function doGetDataset(backend: IAnalyticalBackend, ref: ObjRef): Promise<IDataSetMetadataObject> {
+    return backend.workspace("test").datasets().getDataset(ref);
+}
+
+function doGetDataSets(backend: IAnalyticalBackend, refs: ObjRef[]): Promise<IDataSetMetadataObject[]> {
+    return backend.workspace("test").datasets().getDataSets(refs);
 }
 
 describe("withCaching", () => {
@@ -1328,6 +1522,161 @@ describe("withCaching", () => {
             });
         });
 
+        describe("de-duplication of uncached reads", () => {
+            it("collapses concurrent getAttributes calls to a single underlying call", async () => {
+                const counts = makeAttributeCallCounts();
+                const backend = withCachingForTests(makeCountingBackend(counts));
+                const refs = [idRef("a1"), idRef("a2")];
+
+                const [first, second] = await Promise.all([
+                    backend.workspace("test").attributes().getAttributes(refs),
+                    backend.workspace("test").attributes().getAttributes(refs),
+                ]);
+
+                expect(counts.getAttributes).toBe(1);
+                expect(second).toEqual(first);
+                expect(second[0]).toBe(first[0]);
+            });
+
+            it("collapses concurrent getAttributeDisplayForms calls to a single underlying call", async () => {
+                const counts = makeAttributeCallCounts();
+                const backend = withCachingForTests(makeCountingBackend(counts));
+                const refs = [idRef("df1"), idRef("df2")];
+
+                const [first, second] = await Promise.all([
+                    backend.workspace("test").attributes().getAttributeDisplayForms(refs),
+                    backend.workspace("test").attributes().getAttributeDisplayForms(refs),
+                ]);
+
+                // de-duplication: only one underlying bulk request despite two concurrent callers
+                expect(counts.getAttributeDisplayForms).toBe(1);
+                expect(second).toEqual(first);
+                // callers share the exact same result references, in the same order
+                expect(second[0]).toBe(first[0]);
+                expect(second[1]).toBe(first[1]);
+            });
+
+            it("drops a server-omitted display form ref shared via an in-flight promise (inconsistent relations)", async () => {
+                const counts = makeAttributeCallCounts();
+                const present = idRef("df-present");
+                const missing = idRef("df-missing");
+                const backend = withCachingForTests(
+                    makeCountingBackend(counts, {
+                        omitDisplayFormRefs: [missing],
+                        allowsInconsistentRelations: true,
+                    }),
+                );
+
+                // Two concurrent callers: the first requests both refs, the second shares the in-flight
+                // promise for the omitted ref. Neither may trip the result invariant.
+                const [first, second] = await Promise.all([
+                    backend.workspace("test").attributes().getAttributeDisplayForms([present, missing]),
+                    backend.workspace("test").attributes().getAttributeDisplayForms([missing, present]),
+                ]);
+
+                // single underlying bulk request, omitted ref dropped from both results
+                expect(counts.getAttributeDisplayForms).toBe(1);
+                expect(first.map((df) => df.id)).toEqual(["df-present"]);
+                expect(second.map((df) => df.id)).toEqual(["df-present"]);
+                expect(second[0]).toBe(first[0]);
+            });
+
+            it("collapses concurrent getAttribute calls to a single underlying call", async () => {
+                const counts = makeAttributeCallCounts();
+                const backend = withCachingForTests(makeCountingBackend(counts));
+                const ref = idRef("a1");
+
+                const [first, second] = await Promise.all([
+                    backend.workspace("test").attributes().getAttribute(ref),
+                    backend.workspace("test").attributes().getAttribute(ref),
+                ]);
+
+                expect(counts.getAttribute).toBe(1);
+                expect(second).toBe(first);
+            });
+
+            it("shares a cached getAttributes result with getAttribute", async () => {
+                const counts = makeAttributeCallCounts();
+                const backend = withCachingForTests(makeCountingBackend(counts));
+                const ref = idRef("a1");
+
+                const [fromBulk] = await backend.workspace("test").attributes().getAttributes([ref]);
+                const fromScalar = await backend.workspace("test").attributes().getAttribute(ref);
+
+                expect(counts.getAttributes).toBe(1);
+                expect(counts.getAttribute).toBe(0);
+                expect(fromScalar).toBe(fromBulk);
+            });
+
+            it("collapses concurrent getCommonAttributes calls to a single underlying call", async () => {
+                const counts = makeAttributeCallCounts();
+                const backend = withCachingForTests(makeCountingBackend(counts));
+                const refs = [idRef("a1"), idRef("a2")];
+
+                const [first, second] = await Promise.all([
+                    backend.workspace("test").attributes().getCommonAttributes(refs),
+                    // same set, different order - must hit the same (sorted) cache key
+                    backend.workspace("test").attributes().getCommonAttributes([refs[1], refs[0]]),
+                ]);
+
+                expect(counts.getCommonAttributes).toBe(1);
+                expect(second).toBe(first);
+            });
+
+            it("collapses concurrent getCommonAttributesBatch calls to a single underlying call", async () => {
+                const counts = makeAttributeCallCounts();
+                const backend = withCachingForTests(makeCountingBackend(counts));
+                const batch = [[idRef("a1"), idRef("a2")], [idRef("a3")]];
+
+                const [first, second] = await Promise.all([
+                    backend.workspace("test").attributes().getCommonAttributesBatch(batch),
+                    backend.workspace("test").attributes().getCommonAttributesBatch(batch),
+                ]);
+
+                expect(counts.getCommonAttributesBatch).toBe(1);
+                expect(second).toBe(first);
+            });
+
+            it("collapses concurrent getConnectedAttributesByDisplayForm calls to a single underlying call", async () => {
+                const counts = makeAttributeCallCounts();
+                const backend = withCachingForTests(makeCountingBackend(counts));
+                const ref = idRef("df1");
+
+                const [first, second] = await Promise.all([
+                    backend.workspace("test").attributes().getConnectedAttributesByDisplayForm(ref),
+                    backend.workspace("test").attributes().getConnectedAttributesByDisplayForm(ref),
+                ]);
+
+                expect(counts.getConnectedAttributesByDisplayForm).toBe(1);
+                expect(second).toBe(first);
+            });
+
+            it("evicts the getAttribute cache entry on error so it is retried", async () => {
+                const counts = makeAttributeCallCounts();
+                const backend = withCachingForTests(makeCountingBackend(counts, { failGetAttribute: true }));
+                const ref = idRef("a1");
+
+                await expect(backend.workspace("test").attributes().getAttribute(ref)).rejects.toThrow();
+                await expect(backend.workspace("test").attributes().getAttribute(ref)).rejects.toThrow();
+
+                // a non-evicting cache would have reused the rejected promise and kept the count at 1
+                expect(counts.getAttribute).toBe(2);
+            });
+
+            it("resets the new attribute caches with resetAttributes", async () => {
+                let cacheControl: CacheControl | undefined;
+                const counts = makeAttributeCallCounts();
+                const backend = withCachingForTests(makeCountingBackend(counts), (cc) => (cacheControl = cc));
+                const ref = idRef("a1");
+
+                await backend.workspace("test").attributes().getConnectedAttributesByDisplayForm(ref);
+                cacheControl?.resetAttributes();
+                await backend.workspace("test").attributes().getConnectedAttributesByDisplayForm(ref);
+
+                expect(counts.getConnectedAttributesByDisplayForm).toBe(2);
+            });
+        });
+
         describe("elements", () => {
             it("should cache the calls", async () => {
                 const backend = withCachingForTests();
@@ -1638,6 +1987,125 @@ describe("withCaching", () => {
 
                 expect(second).not.toBe(first);
                 expect(underlying).toHaveBeenCalledTimes(2);
+            });
+        });
+    });
+
+    describe("datasets", () => {
+        describe("getDataset", () => {
+            it("should cache the calls", async () => {
+                const backend = withCachingForTests();
+                const ref = idRef("dataset.a", "dataSet");
+
+                const first = await doGetDataset(backend, ref);
+                const second = await doGetDataset(backend, ref);
+
+                expect(second).toBe(first);
+            });
+
+            it("should de-duplicate concurrent same-ref calls into a single underlying call", async () => {
+                const counters: DatasetsCallCounters = { getDataset: 0, getDataSets: 0 };
+                const backend = withCachingForTests(createCountingDatasetsBackend({ counters }));
+                const ref = idRef("dataset.a", "dataSet");
+
+                const [first, second, third] = await Promise.all([
+                    doGetDataset(backend, ref),
+                    doGetDataset(backend, ref),
+                    doGetDataset(backend, ref),
+                ]);
+
+                expect(counters.getDataset).toBe(1);
+                expect(second).toBe(first);
+                expect(third).toBe(first);
+            });
+
+            it("should reset datasets cache with resetDatasets", () => {
+                let cacheControl: CacheControl | undefined;
+
+                const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
+                const ref = idRef("dataset.a", "dataSet");
+
+                const first = doGetDataset(backend, ref);
+
+                cacheControl?.resetDatasets();
+
+                const second = doGetDataset(backend, ref);
+
+                expect(second).not.toBe(first);
+            });
+
+            it("should reset datasets cache with resetAll", () => {
+                let cacheControl: CacheControl | undefined;
+
+                const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
+                const ref = idRef("dataset.a", "dataSet");
+
+                const first = doGetDataset(backend, ref);
+
+                cacheControl?.resetAll();
+
+                const second = doGetDataset(backend, ref);
+
+                expect(second).not.toBe(first);
+            });
+        });
+
+        describe("getDataSets", () => {
+            it("should de-duplicate concurrent same-ref bulk calls into a single underlying call", async () => {
+                const counters: DatasetsCallCounters = { getDataset: 0, getDataSets: 0 };
+                const backend = withCachingForTests(createCountingDatasetsBackend({ counters }));
+                const refs = [idRef("dataset.a", "dataSet"), idRef("dataset.b", "dataSet")];
+
+                const [first, second, third] = await Promise.all([
+                    doGetDataSets(backend, refs),
+                    doGetDataSets(backend, refs),
+                    doGetDataSets(backend, refs),
+                ]);
+
+                expect(counters.getDataSets).toBe(1);
+                // the per-ref results are shared instances across concurrent callers
+                expect(second[0]).toBe(first[0]);
+                expect(third[0]).toBe(first[0]);
+                expect(second[1]).toBe(first[1]);
+                // ordering is preserved
+                expect(first.map((d) => d.id)).toEqual(["dataset.a", "dataset.b"]);
+            });
+
+            it("should reuse the scalar cache in the bulk call", async () => {
+                const counters: DatasetsCallCounters = { getDataset: 0, getDataSets: 0 };
+                const backend = withCachingForTests(createCountingDatasetsBackend({ counters }));
+                const refA = idRef("dataset.a", "dataSet");
+                const refB = idRef("dataset.b", "dataSet");
+
+                const scalar = await doGetDataset(backend, refA);
+                const bulk = await doGetDataSets(backend, [refA, refB]);
+
+                expect(bulk[0]).toBe(scalar);
+                // scalar caused one scalar call; bulk only needed to load the missing ref
+                expect(counters.getDataset).toBe(1);
+                expect(counters.getDataSets).toBe(1);
+            });
+
+            it("should omit and evict refs the backend does not return (inconsistent relations)", async () => {
+                const counters: DatasetsCallCounters = { getDataset: 0, getDataSets: 0 };
+                const presentRef = idRef("dataset.present", "dataSet");
+                const missingRef = idRef("dataset.missing", "dataSet");
+                const backend = withCachingForTests(
+                    createCountingDatasetsBackend({
+                        counters,
+                        shouldReturn: (ref) => ref !== missingRef,
+                    }),
+                );
+
+                const result = await doGetDataSets(backend, [presentRef, missingRef]);
+
+                // omitted ref is dropped from the output, ordering of the rest preserved
+                expect(result).toHaveLength(1);
+                expect(result[0].id).toBe("dataset.present");
+
+                // the omitted ref was evicted, so requesting it again triggers another underlying load
+                await doGetDataSets(backend, [missingRef]);
+                expect(counters.getDataSets).toBe(2);
             });
         });
     });

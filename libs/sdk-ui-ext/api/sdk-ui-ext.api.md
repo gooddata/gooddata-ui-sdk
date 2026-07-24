@@ -42,7 +42,6 @@ import { IPivotTableConfig } from '@gooddata/sdk-ui-pivot';
 import { ISettings } from '@gooddata/sdk-model';
 import { ITab } from '@gooddata/sdk-ui-kit';
 import { ITheme } from '@gooddata/sdk-model';
-import type { IUiGranteeAsyncOption } from '@gooddata/sdk-ui-kit';
 import type { IUiGranteeAsyncOptions } from '@gooddata/sdk-ui-kit';
 import type { IUiPickedGrantee } from '@gooddata/sdk-ui-kit';
 import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
@@ -919,27 +918,21 @@ export interface IObjectShareControllerActions {
     changeWorkspaceLevel: (level: "VIEW" | "SHARE") => Promise<void>;
     // (undocumented)
     closeAddGrantee: () => void;
-    closeTransferOwnership: () => void;
     confirmAddGrantees: () => Promise<void>;
     confirmGeneralAccessChange: () => Promise<void>;
-    confirmTransferOwnership: () => Promise<void>;
-    loadOptions: (search: string, includeGranted?: boolean) => Promise<IUiGranteeAsyncOptions>;
+    loadOptions: (search: string) => Promise<IUiGranteeAsyncOptions>;
     // (undocumented)
     openAddGrantee: () => void;
-    openTransferOwnership: () => void;
     removeGrantee: (granteeId: string) => Promise<void>;
     requestGeneralAccessChange: (next: GeneralAccessValue) => void;
     reset: () => void;
     // (undocumented)
     setPendingGrantees: (next: IUiPickedGrantee[]) => void;
-    setTransferAlsoRemoveSelf: (next: boolean) => void;
-    setTransferTarget: (owner: IUiGranteeAsyncOption) => void;
 }
 
 // @internal (undocumented)
 export interface IObjectShareControllerState {
     accessUnavailable: boolean;
-    canTransferOwnership: boolean;
     // (undocumented)
     error?: Error;
     // (undocumented)
@@ -950,17 +943,17 @@ export interface IObjectShareControllerState {
     labelsResolved: boolean;
     pendingGeneralAccess?: GeneralAccessValue;
     pendingGrantees: IUiPickedGrantee[];
+    seededWithoutGrants: boolean;
     selectedLabelIdsByGrantee: Record<string, string[]>;
+    selfIdentity: ISelfIdentity | undefined;
+    selfIdentityResolved: boolean;
     // (undocumented)
     status: "idle" | "loading" | "success" | "error" | "saving";
     // (undocumented)
-    subview: "main" | "addGrantee" | "transferOwnership";
+    subview: "main" | "addGrantee";
     // (undocumented)
     summary: IObjectAccessSummary | undefined;
-    transferAlsoRemoveSelf: boolean;
-    transferSaving: boolean;
-    transferTarget: IUiGranteeAsyncOption | undefined;
-    transferTargetIsOwner: boolean;
+    targetKey: string | undefined;
     workspaceAccessInherited: boolean;
     workspaceLevel: "VIEW" | "SHARE";
     workspaceLevelLocked: boolean;
@@ -987,6 +980,7 @@ export interface IObjectShareGrantee extends IGranteeIdentityFacts {
     granteeRef: ObjRef;
     id: string;
     inheritsShare?: boolean;
+    isSelf?: boolean;
     // (undocumented)
     kind: "user" | "group";
     // (undocumented)
@@ -1005,6 +999,12 @@ export interface IObjectShareLabel {
 
 // @beta
 export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition;
+
+// @internal
+export interface ISelfIdentity extends IGranteeIdentityFacts {
+    // (undocumented)
+    id: string;
+}
 
 // @alpha (undocumented)
 export function isEmptyAfm(obj: unknown): obj is EmptyAfmSdkError;

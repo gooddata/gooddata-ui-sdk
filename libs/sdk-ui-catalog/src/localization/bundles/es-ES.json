@@ -2,7 +2,7 @@
     "analyticsCatalog.title": "Catálogo de analítica",
     "analyticsCatalog.showMore": "mostrar más",
     "analyticsCatalog.showLess": "mostrar menos",
-    "analyticsCatalog.objectType.title": "Tipos de objetos",
+    "analyticsCatalog.objectType.title": "Objetos",
     "analyticsCatalog.objectType.dashboard.button.ariaLabel": "Panel: {count}",
     "analyticsCatalog.objectType.visualization.button.ariaLabel": "Visualización: {count}",
     "analyticsCatalog.objectType.metric.button.ariaLabel": "Métrica: {count}",

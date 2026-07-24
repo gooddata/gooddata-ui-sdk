@@ -154,6 +154,62 @@ describe("ShortenedText", () => {
         expect(screen.queryByText("…", { exact: false })).not.toBeInTheDocument();
     });
 
+    it("should shorten further when recomputeShortening is called after the container shrinks further while already truncated", () => {
+        let elementWidth = 250;
+        const scrollWidth = 250;
+        const ref = createRef<ShortenedText>();
+
+        render(
+            <ShortenedText
+                ref={ref}
+                tagName="div"
+                getElement={() => createElement(elementWidth, scrollWidth)}
+            >
+                {longText}
+            </ShortenedText>,
+        );
+        expect(screen.getByText(longText)).toBeInTheDocument();
+
+        elementWidth = 100;
+        act(() => {
+            ref.current?.recomputeShortening();
+        });
+        const firstShortened = screen.getByText("…", { exact: false }).textContent;
+
+        elementWidth = 20;
+        act(() => {
+            ref.current?.recomputeShortening();
+        });
+        const secondShortened = screen.getByText("…", { exact: false }).textContent;
+
+        expect(secondShortened.length).toBeLessThan(firstShortened.length);
+    });
+
+    it("should re-measure against the current DOM state, not a stale cached width, when recomputeShortening is called while already truncated and typography changed", () => {
+        const elementWidth = 100;
+        let scrollWidth = 200;
+        const ref = createRef<ShortenedText>();
+
+        render(
+            <ShortenedText
+                ref={ref}
+                tagName="div"
+                getElement={() => createElement(elementWidth, scrollWidth)}
+            >
+                {longText}
+            </ShortenedText>,
+        );
+        const firstShortened = screen.getByText("…", { exact: false }).textContent;
+
+        scrollWidth = 800;
+        act(() => {
+            ref.current?.recomputeShortening();
+        });
+        const secondShortened = screen.getByText("…", { exact: false }).textContent;
+
+        expect(secondShortened.length).toBeLessThan(firstShortened.length);
+    });
+
     it("should render bubble if displayTooltip is true", async () => {
         renderShortenedText({
             children: longText,
@@ -208,6 +264,26 @@ describe("ShortenedText", () => {
                     createElement(200, 210),
                 ),
             ).toEqual("abcdefghijklmnopqrstu…utsrqponmlkjihgfedcba");
+        });
+
+        it("should shorten from the end when ellipsisPosition is 'end'", () => {
+            expect(
+                getShortenedTitle(
+                    "abcdefghijklmnopqrstuvwxyz zyxwvutsrqponmlkjihgfedcba",
+                    createElement(200, 600),
+                    "end",
+                ),
+            ).toEqual("abcdefghijklmn…");
+        });
+
+        it("should shorten to just an ellipsis, not overflow with a long prefix, when the available width fits fewer than three characters", () => {
+            expect(
+                getShortenedTitle(
+                    "abcdefghijklmnopqrstuvwxyz zyxwvutsrqponmlkjihgfedcba",
+                    createElement(1, 600),
+                    "end",
+                ),
+            ).toEqual("…");
         });
 
         it("should return original title when the text is not overflowing the wrapper", () => {

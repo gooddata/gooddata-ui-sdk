@@ -279,6 +279,7 @@
     "gs.color-dropdown.custom-color": "Prilagojena barva",
     "properties.colors.reset-colors": "Ponastavi barve",
     "properties.colors.reset-color": "Ponastavi",
+    "properties.colors.reset-colors-and-styles": "Ponastavi barve in sloge",
     "properties.colors": "Barve",
     "properties.colorsAndFills": "Barve in polnila",
     "properties.colorsAndStyles": "Barve in slogi",

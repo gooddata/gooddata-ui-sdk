@@ -2,7 +2,7 @@
     "analyticsCatalog.title": "Katalog analityczny",
     "analyticsCatalog.showMore": "pokaż więcej",
     "analyticsCatalog.showLess": "pokaż mniej",
-    "analyticsCatalog.objectType.title": "Typy obiektów",
+    "analyticsCatalog.objectType.title": "Obiekty",
     "analyticsCatalog.objectType.dashboard.button.ariaLabel": "Pulpit: {count}",
     "analyticsCatalog.objectType.visualization.button.ariaLabel": "Wizualizacja: {count}",
     "analyticsCatalog.objectType.metric.button.ariaLabel": "Metryka: {count}",

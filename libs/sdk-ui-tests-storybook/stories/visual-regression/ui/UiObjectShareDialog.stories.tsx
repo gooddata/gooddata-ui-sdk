@@ -27,11 +27,23 @@ const LABELS: IUiLabelsChecklistItem[] = [
 function buildGrantees(): IUiObjectShareDialogGrantee[] {
     return [
         {
-            id: "owner",
+            // Self-managed row: merged menu offered even for an EDIT grant.
+            id: "self",
             kind: "user",
-            name: "Marek Stránský",
+            name: "Marek Stránský (you)",
             email: "marek.stransky@gooddata.com",
-            isOwner: true,
+            controls: (
+                <UiGranteeRowControls
+                    labels={LABELS}
+                    selectedLabelIds={["id", "name", "email", "ssn"]}
+                    permissionLevel="EDIT"
+                    mergedControls
+                    disabledTooltip="You can't set higher permissions for yourself."
+                    onLabelsChange={action("Self → labels change")}
+                    onPermissionChange={action("Self → permission change")}
+                    onRemoveAccess={action("Self → remove")}
+                />
+            ),
         },
         {
             id: "group",

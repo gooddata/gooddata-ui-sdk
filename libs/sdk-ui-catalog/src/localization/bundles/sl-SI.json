@@ -2,7 +2,7 @@
     "analyticsCatalog.title": "Katalog analitike",
     "analyticsCatalog.showMore": "prikaži več",
     "analyticsCatalog.showLess": "prikaži manj",
-    "analyticsCatalog.objectType.title": "Vrste objektov",
+    "analyticsCatalog.objectType.title": "Predmeti",
     "analyticsCatalog.objectType.dashboard.button.ariaLabel": "Nadzorna plošča: {count}",
     "analyticsCatalog.objectType.visualization.button.ariaLabel": "Vizualizacija: {count}",
     "analyticsCatalog.objectType.metric.button.ariaLabel": "Metrika: {count}",

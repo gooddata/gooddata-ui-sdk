@@ -10,7 +10,7 @@ import { UiObjectShareDialog } from "../UiObjectShareDialog.js";
 import { type IUiObjectShareDialogGrantee } from "../UiObjectShareDialogCard.js";
 
 const GRANTEES: IUiObjectShareDialogGrantee[] = [
-    { id: "owner", kind: "user", name: "Marek Stránský", email: "marek@example.com", isOwner: true },
+    { id: "owner", kind: "user", name: "Marek Stránský", email: "marek@example.com" },
 ];
 
 const baseProps = {

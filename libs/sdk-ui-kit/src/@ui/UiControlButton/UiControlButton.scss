@@ -1,5 +1,9 @@
 // (C) 2026 GoodData Corporation
 
+@use "../../../styles/scss/Button/variables" as button-variables;
+@use "../../../styles/scss/Button/mixins" as button-mixins;
+@use "../../../styles/scss/variables";
+
 $drag-handle-icon: "data:image/svg+xml,%3Csvg width='7' height='26' viewBox='0 0 7 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4h2v2H0V4zm0-4h2v2H0V0zm5 4h2v2H5V4zm0-4h2v2H5V0zm0 8h2v2H5V8zM0 8h2v2H0V8zm0 4h2v2H0v-2zm5 4h2v2H5v-2zm-5 0h2v2H0v-2zm5 4h2v2H5v-2zm-5 0h2v2H0v-2zm5 4h2v2H5v-2zm-5 0h2v2H0v-2zm5-12h2v2H5v-2z' fill='%23B0BECA' fill-rule='evenodd'/%3E%3C/svg%3E";
 
 .gd-ui-kit-control-button {
@@ -8,7 +12,7 @@ $drag-handle-icon: "data:image/svg+xml,%3Csvg width='7' height='26' viewBox='0 0
     position: relative;
     max-width: 230px;
     padding: 5px 10px;
-    font-family: var(--gd-font-family), gdcustomfont, Avenir, "Helvetica Neue", arial, sans-serif;
+    font-family: variables.$gd-font-primary;
     font-size: 12px;
     font-weight: 400;
     line-height: 16px;
@@ -50,13 +54,13 @@ $drag-handle-icon: "data:image/svg+xml,%3Csvg width='7' height='26' viewBox='0 0
 
     &:hover {
         &::after {
-            border-color: var(--gd-palette-complementary-4-from-theme, rgba(31, 52, 73, 0.2));
+            border-color: button-variables.$button-normal-hover-border-color;
         }
 
         &#{$root}--isDraggable {
             box-shadow:
-                0 1px 3px 0 rgba(20, 56, 93, 0.1),
-                0 2px 9px 0 rgba(20, 56, 93, 0.15);
+                0 1px 3px 0 button-variables.$button-shadow-lighter,
+                0 2px 9px 0 button-variables.$button-shadow-darker;
 
             &::before {
                 opacity: 1;
@@ -66,11 +70,13 @@ $drag-handle-icon: "data:image/svg+xml,%3Csvg width='7' height='26' viewBox='0 0
 
     &--isOpen {
         &::after {
-            box-shadow: inset 0 1px 0 0 rgba(20, 56, 93, 0.1);
+            box-shadow: inset 0 1px 0 0 button-variables.$button-normal-active-shadow;
             border-color: var(
                 --gd-palette-complementary-5-from-theme,
-                var(--gd-palette-complementary-4-from-theme, rgba(31, 52, 73, 0.2))
+                button-variables.$button-normal-hover-border-color
             );
+
+            @include button-mixins.button-normal-active-gradient;
         }
 
         &#{$root}--isDraggable::before {
@@ -86,7 +92,7 @@ $drag-handle-icon: "data:image/svg+xml,%3Csvg width='7' height='26' viewBox='0 0
         display: inline-block;
 
         &::after {
-            border-color: var(--gd-palette-complementary-4-from-theme, rgba(31, 52, 73, 0.2));
+            border-color: button-variables.$button-normal-hover-border-color;
             background: var(--gd-palette-complementary-0-from-theme, rgba(255, 255, 255, 0.95));
         }
 
@@ -97,13 +103,13 @@ $drag-handle-icon: "data:image/svg+xml,%3Csvg width='7' height='26' viewBox='0 0
 
     &--isError {
         font-size: 12px;
-        color: var(--gd-palette-error-base, #e54d42);
+        color: variables.$gd-palette-error-base;
         background: var(--gd-palette-error-base-t85, rgba(229, 77, 66, 0.15));
     }
 
     &--isWarning {
         font-size: 12px;
-        color: var(--gd-palette-warning-base, #f18600);
+        color: variables.$gd-palette-warning-base;
         background: var(--gd-palette-warning-base-t85, rgba(241, 134, 0, 0.15));
     }
 
@@ -134,7 +140,7 @@ $drag-handle-icon: "data:image/svg+xml,%3Csvg width='7' height='26' viewBox='0 0
         // Room for the pinned chevron
         padding-right: 28px;
 
-        // Flat: no chip border or open-state gradient.
+        // Flat: no border or open-state gradient.
         &::after {
             display: none;
         }
@@ -215,7 +221,7 @@ $drag-handle-icon: "data:image/svg+xml,%3Csvg width='7' height='26' viewBox='0 0
 
     &__title {
         overflow: hidden;
-        color: var(--gd-palette-complementary-7, #6d7680);
+        color: variables.$gd-color-label;
         margin-right: auto;
         max-width: 100%;
         white-space: nowrap;
@@ -239,17 +245,17 @@ $drag-handle-icon: "data:image/svg+xml,%3Csvg width='7' height='26' viewBox='0 0
         white-space: nowrap;
         text-overflow: ellipsis;
         font-weight: bold;
-        color: var(--gd-palette-complementary-9, #000);
+        color: variables.$gd-color-dark;
 
         &::after {
             content: "\e612";
             display: inline-block;
             margin-left: 0.5em;
-            font-family: "Indigo", sans-serif;
+            font-family: variables.$gd-font-indigo;
             font-weight: normal;
             font-size: inherit;
             vertical-align: top;
-            color: var(--gd-palette-complementary-6, #94a1ad);
+            color: variables.$gd-color-state-blank;
             transition: all 0.2s ease;
         }
     }

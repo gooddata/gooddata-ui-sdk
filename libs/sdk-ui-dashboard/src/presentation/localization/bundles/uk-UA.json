@@ -143,6 +143,8 @@
     "filters.configurationPanel.userFilterSave.toggle.tooltip": "Дозволити автозбереження останнього стану фільтрів. Коли користувачі повернуться, їхні фільтри залишаться такими, як вони їх залишили.",
     "filters.configurationPanel.filterViews.toggle": "Збережені подання",
     "filters.configurationPanel.filterViews.toggle.tooltip": "<p>Дозволяє користувачам зберігати стан фільтрів як особисті подання, до яких вони зможуть повернутися пізніше.</p><p>Лише користувач, який зберіг подання, може отримати до нього доступ і встановити його як своє стандартне подання.</p>",
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle": "Постійні фільтри на всіх вкладках",
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle.tooltip": "Дозвольте постійні фільтри на всіх вкладках. Якщо ввімкнено, фільтри будуть постійними на всіх вкладках.",
     "settingsDashboardDialog.sectionHeaders.dateDataset": "Діапазон дат в описах",
     "settingsDashboardDialog.sectionHeaders.dateDataset.tooltip": "Набір даних дат, який використовується фільтром Діапазон дат для посилань на метрики в описах розділів.",
     "dateDataset.autoSelect": "Автовибір",

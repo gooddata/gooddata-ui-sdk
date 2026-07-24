@@ -143,6 +143,8 @@
     "filters.configurationPanel.userFilterSave.toggle.tooltip": "Izinkan simpan otomatis status terakhir filter. Saat pengguna kembali, filter mereka akan tetap seperti terakhir mereka tinggalkan.",
     "filters.configurationPanel.filterViews.toggle": "Tampilan tersimpan",
     "filters.configurationPanel.filterViews.toggle.tooltip": "<p>Memungkinkan pengguna menyimpan status filter sebagai tampilan pribadi yang dapat mereka kembalikan nanti.</p><p>Hanya pengguna yang menyimpan tampilan yang dapat mengaksesnya dan menetapkannya sebagai tampilan default mereka.</p>",
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle": "Filter persisten di seluruh tab",
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle.tooltip": "Izinkan filter persisten di seluruh tab. Saat diaktifkan, filter akan persisten di seluruh tab.",
     "settingsDashboardDialog.sectionHeaders.dateDataset": "Rentang tanggal dalam deskripsi",
     "settingsDashboardDialog.sectionHeaders.dateDataset.tooltip": "Dataset tanggal yang digunakan oleh filter Rentang tanggal untuk referensi metrik dalam deskripsi bagian.",
     "dateDataset.autoSelect": "Pilih otomatis",

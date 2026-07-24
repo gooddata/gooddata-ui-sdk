@@ -279,6 +279,7 @@
     "gs.color-dropdown.custom-color": "カスタム色",
     "properties.colors.reset-colors": "色をリセット",
     "properties.colors.reset-color": "リセット",
+    "properties.colors.reset-colors-and-styles": "色とスタイルをリセット",
     "properties.colors": "色",
     "properties.colorsAndFills": "色と塗りつぶし",
     "properties.colorsAndStyles": "色とスタイル",

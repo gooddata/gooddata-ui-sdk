@@ -58,6 +58,11 @@
             color: var(--gd-palette-primary-base);
             font-weight: 700;
         }
+
+        &--disabled {
+            color: var(--gd-palette-complementary-5);
+            cursor: default;
+        }
     }
 
     &__item-label {

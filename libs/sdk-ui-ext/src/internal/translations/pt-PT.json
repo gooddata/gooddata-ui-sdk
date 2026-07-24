@@ -279,6 +279,7 @@
     "gs.color-dropdown.custom-color": "Cor personalizada",
     "properties.colors.reset-colors": "Repor Cores",
     "properties.colors.reset-color": "Repor",
+    "properties.colors.reset-colors-and-styles": "Redefinir cores e estilos",
     "properties.colors": "Cores",
     "properties.colorsAndFills": "Cores e preenchimentos",
     "properties.colorsAndStyles": "Cores e estilos",

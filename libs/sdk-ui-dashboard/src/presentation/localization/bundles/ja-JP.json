@@ -143,6 +143,8 @@
     "filters.configurationPanel.userFilterSave.toggle.tooltip": "フィルターの最終状態の自動保存を許可する。ユーザーが戻ってきたとき、フィルタは前回の状態のままです。",
     "filters.configurationPanel.filterViews.toggle": "保存されたビュー",
     "filters.configurationPanel.filterViews.toggle.tooltip": "<p>ユーザーがフィルタの状態を個人ビューとして保存し、後で戻ることができるようにします。</p><p>ビューを保存したユーザーだけがそのビューにアクセスし、デフォルトのビューとして設定できます。</p>",
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle": "タブ間でのフィルターの保持",
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle.tooltip": "タブ間でのフィルターの保持を許可します。有効にすると、フィルターはタブ間で保持されます。",
     "settingsDashboardDialog.sectionHeaders.dateDataset": "記述の日付範囲",
     "settingsDashboardDialog.sectionHeaders.dateDataset.tooltip": "日付範囲フィルターがセクションの説明でメトリック参照に使用する日付データセット。",
     "dateDataset.autoSelect": "自動選択",

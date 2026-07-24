@@ -16,15 +16,19 @@ export const objectShareMessages = defineMessages({
     confirmGrantWorkspaceTitle: { id: "objectShare.confirm.grantWorkspace.title" },
     confirmGrantWorkspaceDescription: { id: "objectShare.confirm.grantWorkspace.description" },
     confirmButton: { id: "objectShare.confirm.button" },
-    transferAlreadyOwnerTitle: { id: "objectShare.transfer.alreadyOwner.title" },
-    transferAlreadyOwnerDescription: { id: "objectShare.transfer.alreadyOwner.description" },
-    transferAlreadyOwnerKeepAccess: { id: "objectShare.transfer.alreadyOwner.keepAccess" },
-    transferAlreadyOwnerRemoveAccess: { id: "objectShare.transfer.alreadyOwner.removeAccess" },
-    transferConfirmButton: { id: "objectShare.transfer.confirmButton" },
+    selfRestrictTitle: { id: "objectShare.selfRestrict.title" },
+    /**
+     * Single source for the self-restriction warning: shown as the confirm dialog
+     * body AND as the disabled-option tooltip in the self row's permission menu —
+     * the copy must stay identical in both places by design.
+     */
+    selfRestrictWarning: { id: "objectShare.selfRestrict.warning" },
+    granteeYou: { id: "objectShare.grantee.you" },
+    adminTagLabel: { id: "objectShare.adminTag.label" },
+    adminTagTooltip: { id: "objectShare.adminTag.tooltip" },
     toastGranteeAdded: { id: "objectShare.toast.granteeAdded" },
     toastAccessUpdated: { id: "objectShare.toast.accessUpdated" },
     toastGeneralAccessUpdated: { id: "objectShare.toast.generalAccessUpdated" },
-    toastOwnershipTransferred: { id: "objectShare.toast.ownershipTransferred" },
     toastError: { id: "objectShare.toast.error" },
     toastLabelScopePartial: { id: "objectShare.toast.labelScopePartial" },
     loadError: { id: "objectShare.loadError" },

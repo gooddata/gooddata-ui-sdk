@@ -32,11 +32,11 @@ const MANY_LABELS: IUiLabelsChecklistItem[] = [
 function MenuExample({
     label,
     labels,
-    withTransfer = false,
+    withRemove = false,
 }: {
     label: string;
     labels?: IUiLabelsChecklistItem[];
-    withTransfer?: boolean;
+    withRemove?: boolean;
 }) {
     return (
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
@@ -45,7 +45,7 @@ function MenuExample({
                 labels={labels}
                 selectedLabelIds={labels?.map((l) => l.id)}
                 onLabelsChange={action(`${label} → labels change`)}
-                onTransferOwnership={withTransfer ? action(`${label} → transfer`) : undefined}
+                onRemoveAccess={withRemove ? action(`${label} → remove access`) : undefined}
             />
         </div>
     );
@@ -58,10 +58,10 @@ function UiMoreOptionsMenuExample() {
                 className="screenshot-target"
                 style={{ display: "flex", gap: 24, padding: 24, flexWrap: "wrap" }}
             >
-                <MenuExample label="Labels + transfer" labels={LABELS} withTransfer />
+                <MenuExample label="Labels + remove" labels={LABELS} withRemove />
                 <MenuExample label="Labels only" labels={LABELS} />
                 <MenuExample label="Many labels (scrolls)" labels={MANY_LABELS} />
-                <MenuExample label="Transfer only" withTransfer />
+                <MenuExample label="Remove only" withRemove />
             </div>
         </IntlProvider>
     );

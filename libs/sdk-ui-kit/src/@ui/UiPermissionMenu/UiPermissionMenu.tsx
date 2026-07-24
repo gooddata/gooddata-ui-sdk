@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type KeyboardEvent, type ReactElement, useRef } from "react";
+import { type KeyboardEvent, type ReactElement, useRef, useState } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -9,6 +9,7 @@ import { type IconType } from "../@types/icon.js";
 import { bem } from "../@utils/bem.js";
 import { UiIcon } from "../UiIcon/UiIcon.js";
 import { UiIconButton } from "../UiIconButton/UiIconButton.js";
+import { type IUiLabelsChecklistItem, UiLabelsChecklist } from "../UiLabelsChecklist/UiLabelsChecklist.js";
 import { UiPopover } from "../UiPopover/UiPopover.js";
 import { UiTooltip } from "../UiTooltip/UiTooltip.js";
 
@@ -28,11 +29,27 @@ export type PermissionMenuLevel = "VIEW" | "SHARE";
  */
 export interface IUiPermissionMenuProps {
     /** Element that opens the menu on click. */
-    anchor: ReactElement<any>;
+    anchor: ReactElement;
     /** Currently selected permission level — drives `aria-checked`. */
     selectedLevel?: PermissionMenuLevel;
     /** Fires when the user picks a permission level. */
     onPermissionChange: (level: PermissionMenuLevel) => void;
+    /**
+     * Levels rendered disabled (`aria-disabled`, click blocked) — e.g. levels
+     * above the caller's own when they manage their own access.
+     */
+    disabledLevels?: ReadonlyArray<PermissionMenuLevel>;
+    /** Tooltip shown on disabled level rows in place of the level's info text. */
+    disabledTooltip?: string;
+    /**
+     * Non-empty enables a labels row that drills into {@link UiLabelsChecklist}
+     * within the menu — for rows whose menu hosts every action (no "⋯" menu).
+     */
+    labels?: ReadonlyArray<IUiLabelsChecklistItem>;
+    /** Locked items are always treated as selected. */
+    selectedLabelIds?: ReadonlyArray<string>;
+    /** Fires with the applied label selection from the labels drill-in. */
+    onLabelsChange?: (selectedIds: string[]) => void;
     /** Fires when the user picks Remove access. */
     onRemoveAccess?: () => void;
     /** Test id forwarded to the menu body. */
@@ -45,6 +62,8 @@ interface IPermissionItem {
     tooltip?: string;
     /** Leading icon (action rows only, e.g. the trash icon on Remove access). */
     icon?: IconType;
+    /** Trailing icon (the labels row's drill-in chevron). */
+    iconRight?: IconType;
     /**
      * When set, the row participates in the radio group as a
      * `menuitemradio` with `aria-checked` driven by
@@ -52,15 +71,17 @@ interface IPermissionItem {
      * as a plain `menuitem`.
      */
     radioValue?: PermissionMenuLevel;
+    /** Renders the row `aria-disabled` and blocks its onClick. */
+    disabled?: boolean;
     onClick: () => void;
 }
 
 /**
  * Per-grantee permission popover. Renders a fixed set of rows — two
  * permission levels (Can view & share / Can view), an optional divider,
- * and an optional Remove access action row. Each level row carries an
- * `infoCircle` tooltip. Labels and Transfer ownership live in the separate
- * {@link UiMoreOptionsMenu}.
+ * an optional labels drill-in and an optional Remove access action row.
+ * Each level row carries an `infoCircle` tooltip; disabled level rows
+ * (`disabledLevels`) swap it for `disabledTooltip`.
  *
  * @internal
  */
@@ -68,18 +89,29 @@ export function UiPermissionMenu({
     anchor,
     selectedLevel,
     onPermissionChange,
+    disabledLevels,
+    disabledTooltip,
+    labels,
+    selectedLabelIds,
+    onLabelsChange,
     onRemoveAccess,
     dataTestId,
 }: IUiPermissionMenuProps) {
+    const hasLabels = (labels?.length ?? 0) > 0;
     return (
         <UiPopover
             anchor={anchor}
             anchorAccessibilityConfig={{ ariaHaspopup: "menu" }}
-            width={180}
+            width={hasLabels ? 200 : 180}
             content={({ onClose }) => (
                 <MenuBody
                     selectedLevel={selectedLevel}
                     onPermissionChange={onPermissionChange}
+                    disabledLevels={disabledLevels}
+                    disabledTooltip={disabledTooltip}
+                    labels={labels}
+                    selectedLabelIds={selectedLabelIds}
+                    onLabelsChange={onLabelsChange}
                     onRemoveAccess={onRemoveAccess}
                     onClose={onClose}
                     dataTestId={dataTestId}
@@ -92,6 +124,11 @@ export function UiPermissionMenu({
 interface IMenuBodyProps {
     selectedLevel?: PermissionMenuLevel;
     onPermissionChange: (level: PermissionMenuLevel) => void;
+    disabledLevels?: ReadonlyArray<PermissionMenuLevel>;
+    disabledTooltip?: string;
+    labels?: ReadonlyArray<IUiLabelsChecklistItem>;
+    selectedLabelIds?: ReadonlyArray<string>;
+    onLabelsChange?: (selectedIds: string[]) => void;
     onRemoveAccess?: () => void;
     onClose: () => void;
     dataTestId?: string;
@@ -100,34 +137,63 @@ interface IMenuBodyProps {
 function MenuBody({
     selectedLevel,
     onPermissionChange,
+    disabledLevels,
+    disabledTooltip,
+    labels,
+    selectedLabelIds,
+    onLabelsChange,
     onRemoveAccess,
     onClose,
     dataTestId,
 }: IMenuBodyProps) {
     const intl = useIntl();
+    // Drill-in state — swaps the row list for the labels checklist. Local to the
+    // popover content, so it resets every time the menu opens.
+    const [view, setView] = useState<"menu" | "labels">("menu");
     const choose = (next: () => void) => () => {
         next();
         onClose();
     };
 
+    const hasLabels = (labels?.length ?? 0) > 0;
+
+    const levelItem = (level: PermissionMenuLevel, label: string, tooltip: string): IPermissionItem => {
+        const disabled = disabledLevels?.includes(level) ?? false;
+        return {
+            key: level,
+            label,
+            // A disabled level explains why it can't be picked instead of what it does.
+            tooltip: disabled && disabledTooltip ? disabledTooltip : tooltip,
+            radioValue: level,
+            disabled,
+            onClick: disabled ? () => {} : choose(() => onPermissionChange(level)),
+        };
+    };
+
     const levelItems: IPermissionItem[] = [
-        {
-            key: "SHARE",
-            label: intl.formatMessage(olpPermissionMessages.canViewAndShare),
-            tooltip: intl.formatMessage(olpPermissionMessages.canViewAndShareTooltip),
-            radioValue: "SHARE",
-            onClick: choose(() => onPermissionChange("SHARE")),
-        },
-        {
-            key: "VIEW",
-            label: intl.formatMessage(olpPermissionMessages.canView),
-            tooltip: intl.formatMessage(olpPermissionMessages.canViewTooltip),
-            radioValue: "VIEW",
-            onClick: choose(() => onPermissionChange("VIEW")),
-        },
+        levelItem(
+            "SHARE",
+            intl.formatMessage(olpPermissionMessages.canViewAndShare),
+            intl.formatMessage(olpPermissionMessages.canViewAndShareTooltip),
+        ),
+        levelItem(
+            "VIEW",
+            intl.formatMessage(olpPermissionMessages.canView),
+            intl.formatMessage(olpPermissionMessages.canViewTooltip),
+        ),
     ];
 
     const actionItems: IPermissionItem[] = [];
+    if (hasLabels) {
+        actionItems.push({
+            key: "labels",
+            label: intl.formatMessage(olpPermissionMessages.labels),
+            icon: "ldmLabel",
+            iconRight: "navigateRight",
+            // Drill in — the checklist owns Back/Cancel/Apply and closes the menu itself.
+            onClick: () => setView("labels"),
+        });
+    }
     if (onRemoveAccess) {
         actionItems.push({
             key: "remove",
@@ -165,6 +231,21 @@ function MenuBody({
         event.preventDefault();
         focusable[nextIndex]?.focus();
     };
+
+    if (view === "labels") {
+        return (
+            <div className={b()} data-testid={dataTestId}>
+                <UiLabelsChecklist
+                    items={labels ?? []}
+                    defaultSelectedIds={selectedLabelIds ?? []}
+                    onApply={(ids) => onLabelsChange?.(ids)}
+                    onBack={() => setView("menu")}
+                    onClose={onClose}
+                    dataTestId={dataTestId}
+                />
+            </div>
+        );
+    }
 
     return (
         <div className={b()} data-testid={dataTestId}>
@@ -207,11 +288,15 @@ function PermissionMenuItem({ item, selectedLevel }: IPermissionMenuItemProps) {
                 type="button"
                 role={isRadio ? "menuitemradio" : "menuitem"}
                 aria-checked={isRadio ? isChecked : undefined}
-                className={e("item")}
+                // Disabled rows stay focusable so their explanatory tooltip is
+                // keyboard-reachable — aria-disabled, not the disabled attribute.
+                aria-disabled={item.disabled ? true : undefined}
+                className={e("item", { disabled: Boolean(item.disabled) })}
                 onClick={item.onClick}
             >
                 {item.icon ? <UiIcon type={item.icon} size={16} color="complementary-7" /> : null}
                 <span className={e("item-label")}>{item.label}</span>
+                {item.iconRight ? <UiIcon type={item.iconRight} size={14} color="complementary-7" /> : null}
             </button>
             {item.tooltip ? (
                 <UiTooltip

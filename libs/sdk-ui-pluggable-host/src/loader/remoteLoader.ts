@@ -163,36 +163,28 @@ export async function loadRemoteHostUiModule(
     return asHostUiModule(remote, loaded);
 }
 
-export function preloadRemotePluggableApplication(
+export async function preloadRemotePluggableApplication(
     remote: IRemotePluggableApplicationModule,
-): Promise<IPluggableApp> {
-    registerRemote(remote);
-
-    // Runtime manifest preloading works for manifest URLs (for example mf-manifest.json).
-    // For JS entry URLs (remoteEntry.js), preloadRemote tries to parse JSON and fails,
-    // so we skip manifest preload and only warm the actual exposed module below.
-    if (!isJSEntry(remote.url)) {
-        void getFederation()
-            .preloadRemote([
-                {
-                    nameOrAlias: remote.scope,
-                    exposes: [normalizeModuleName(remote.module)],
-                },
-            ])
-            .catch((error: unknown) => {
-                console.error(
-                    `[host-runtime/remote-loader] Failed to preload remote entry for "${remote.scope}/${remote.module}".`,
-                    error,
-                );
-            });
-    }
-
-    // Warm the module promise itself so hover/focus reduces click-to-mount latency.
-    return loadRemotePluggableApplication(remote).catch((error: unknown) => {
+): Promise<void> {
+    // Warm the remote's JS + CSS as <link rel="preload"> from the MF manifest without
+    // executing the module — CSS is fetched but never applied, so hovering doesn't restyle
+    // the page. Registration and preload run inside the try so a synchronous registration
+    // failure is caught too; on any failure reject after logging, so the caller skips
+    // onPreloadCompleted (matching the local and load-remote paths).
+    try {
+        registerRemote(remote);
+        await getFederation().preloadRemote([
+            {
+                nameOrAlias: remote.scope,
+                exposes: [normalizeModuleName(remote.module)],
+                resourceCategory: "all",
+            },
+        ]);
+    } catch (error: unknown) {
         console.error(
-            `[host-runtime/remote-loader] Failed to preload remote module "${remote.scope}/${remote.module}".`,
+            `[host-runtime/remote-loader] Failed to preload remote "${remote.scope}/${remote.module}".`,
             error,
         );
         throw error;
-    });
+    }
 }

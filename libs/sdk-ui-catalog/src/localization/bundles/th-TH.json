@@ -2,7 +2,7 @@
     "analyticsCatalog.title": "แค็ตตาล็อก Analytics",
     "analyticsCatalog.showMore": "แสดงเพิ่มเติม",
     "analyticsCatalog.showLess": "แสดงน้อยลง",
-    "analyticsCatalog.objectType.title": "ประเภทอ็อบเจ็กต์",
+    "analyticsCatalog.objectType.title": "ออบเจ็กต์",
     "analyticsCatalog.objectType.dashboard.button.ariaLabel": "แดชบอร์ด: {count}",
     "analyticsCatalog.objectType.visualization.button.ariaLabel": "การแสดงภาพข้อมูล: {count}",
     "analyticsCatalog.objectType.metric.button.ariaLabel": "เมตริก: {count}",

@@ -123,6 +123,10 @@
         "text": "Add context",
         "crowdinContext": "Label for the button that adds a new context to the AI chatbot"
     },
+    "gd.gen-ai.context.untitled": {
+        "text": "Untitled",
+        "crowdinContext": "Label for untitled objects in the AI chatbot context"
+    },
     "gd.gen-ai.agents": {
         "text": "Agents",
         "crowdinContext": "Label for the agent selector in the AI chatbot input"
@@ -414,6 +418,22 @@
     "sdk.ui.genAi.alertProposal.triggerInterval.year": {
         "text": "Yearly",
         "crowdinContext": "Year trigger interval for alert in alert proposal dialog."
+    },
+    "gd.gen-ai.dashboard.title": {
+        "text": "Dashboard",
+        "crowdinContext": "Title shown above dashboard proposal."
+    },
+    "gd.gen-ai.dashboard.name": {
+        "text": "Name",
+        "crowdinContext": "Name for dashboard proposal."
+    },
+    "gd.gen-ai.dashboard.description": {
+        "text": "Description",
+        "crowdinContext": "Description for dashboard proposal."
+    },
+    "gd.gen-ai.dashboard.open-dashboard": {
+        "text": "Open dashboard",
+        "crowdinContext": "Open dashboard button label."
     },
     "gd.gen-ai.alert-proposal.summary.trigger": {
         "text": "Trigger",

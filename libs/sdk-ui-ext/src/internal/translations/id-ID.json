@@ -279,6 +279,7 @@
     "gs.color-dropdown.custom-color": "Warna kustom",
     "properties.colors.reset-colors": "Reset Warna",
     "properties.colors.reset-color": "Reset",
+    "properties.colors.reset-colors-and-styles": "Atur ulang Warna dan gaya",
     "properties.colors": "Warna",
     "properties.colorsAndFills": "Warna dan isian",
     "properties.colorsAndStyles": "Warna dan gaya",

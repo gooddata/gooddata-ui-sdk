@@ -164,6 +164,18 @@
             }
         }
 
+        &.visualization {
+            font-weight: bold;
+            @if $type == "user" {
+                color: kit-variables.$gd-color-white;
+            } @else {
+                color: kit-variables.$gd-color-text;
+                .gd-gen-ai-chat__message-icon::before {
+                    background-color: kit-variables.$gd-color-text;
+                }
+            }
+        }
+
         .gd-gen-ai-chat__message-icon {
             display: inline-block;
             width: 18px;
@@ -199,6 +211,10 @@
 
         &.dashboard .gd-gen-ai-chat__message-icon {
             @include variables.gd-svg-mask("dashboard");
+        }
+
+        &.visualization .gd-gen-ai-chat__message-icon {
+            @include variables.gd-svg-mask("visualization");
         }
     }
 }
@@ -1331,10 +1347,12 @@
         }
     }
 
-    &--alertProposal {
+    &--alertProposal,
+    &--dashboard {
         display: grid;
 
-        .gd-gen-ai-chat__conversation__item__content-alertProposal-header {
+        .gd-gen-ai-chat__conversation__item__content-alertProposal-header,
+        .gd-gen-ai-chat__conversation__item__content-dashboard-header {
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -1356,7 +1374,8 @@
             color: kit-variables.$gd-color-link;
         }
 
-        .gd-gen-ai-chat__conversation__item__content-alertProposal-frame {
+        .gd-gen-ai-chat__conversation__item__content-alertProposal-frame,
+        .gd-gen-ai-chat__conversation__item__content-dashboard-frame {
             display: flex;
             max-height: 500px;
             padding: 10px;
@@ -1374,19 +1393,22 @@
                 margin: 0;
             }
 
-            .gd-gen-ai-chat__conversation__item__content-alertProposal-item-title {
+            .gd-gen-ai-chat__conversation__item__content-alertProposal-item-title,
+            .gd-gen-ai-chat__conversation__item__content-dashboard-item-title {
                 display: inline-block;
                 margin-right: 5px;
             }
 
-            .gd-gen-ai-chat__conversation__item__content-alertProposal-item-description {
+            .gd-gen-ai-chat__conversation__item__content-alertProposal-item-description,
+            .gd-gen-ai-chat__conversation__item__content-dashboard-item-description {
                 display: inline;
 
                 p {
                     display: inline;
                 }
 
-                &.bold p {
+                &.gd-gen-ai-chat__conversation__item__content-alertProposal-item-bold p,
+                &.gd-gen-ai-chat__conversation__item__content-dashboard-item-bold p {
                     font-weight: bold;
                 }
 
@@ -1401,6 +1423,14 @@
                 margin-left: 5px;
                 display: inline;
                 color: kit-variables.$gd-color-state-blank;
+            }
+
+            .gd-gen-ai-chat__conversation__item__content-alertProposal-item-buttons,
+            .gd-gen-ai-chat__conversation__item__content-dashboard-item-buttons {
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+                width: 100%;
             }
         }
 

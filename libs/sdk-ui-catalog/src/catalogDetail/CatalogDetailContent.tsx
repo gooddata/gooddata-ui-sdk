@@ -29,7 +29,7 @@ import { useCatalogItemUpdate } from "./hooks/useCatalogItemUpdate.js";
 import { CatalogItemAccessRow } from "./share/CatalogItemAccessRow.js";
 import { CatalogItemShareDialog } from "./share/CatalogItemShareDialog.js";
 import { CatalogItemShareProvider } from "./share/CatalogItemShareProvider.js";
-import { isShareableCatalogItem, toShareTarget } from "./share/guards.js";
+import { isShareableCatalogItem, isSharingEnabledForItem, toShareTarget } from "./share/guards.js";
 import { useShareableLabels } from "./share/useShareableLabels.js";
 import type { OpenHandlerEvent } from "./types.js";
 
@@ -131,11 +131,9 @@ export function CatalogDetailContent({
 
     const canEdit = canEditCatalogItem(permissions, item);
 
-    // Sharing (object-level permissions) — gated by the column-level-permissions
-    // flag and limited to shareable item kinds (attributes, facts).
     const enableColumnLevelPermissions = Boolean(settings?.enableColumnLevelPermissions);
     const shareableItem =
-        item && enableColumnLevelPermissions && isShareableCatalogItem(item) ? item : undefined;
+        item && isShareableCatalogItem(item) && isSharingEnabledForItem(item, settings) ? item : undefined;
     const shareTarget = useMemo(
         () => (shareableItem ? toShareTarget(shareableItem) : undefined),
         [shareableItem],

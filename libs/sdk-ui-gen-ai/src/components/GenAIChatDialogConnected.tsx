@@ -30,7 +30,11 @@ import {
     isChatSaveVisualizationSuccessEvent,
     isChatUserMessageEvent,
 } from "../store/events.js";
-import { clearThreadAction, newMessageAction } from "../store/messages/messagesSlice.js";
+import {
+    clearThreadAction,
+    newMessageAction,
+    setSelectedAgentAction,
+} from "../store/messages/messagesSlice.js";
 
 import { type LinkHandlerEvent } from "./ConfigContext.js";
 import { GenAIChatDialog, type GenAIChatDialogProps } from "./GenAIChatDialog.js";
@@ -97,6 +101,10 @@ export interface IGenAIChatDialogConnectedProps {
      * Pass `undefined` to clear it (e.g. when the user leaves the dashboard).
      */
     ambientUserContext?: IGenAIUserContext;
+    /**
+     * Agent ID to use for the seeded question. If not provided, the default agent will be used.
+     */
+    agentId?: string;
     /** When true, the seeded question is appended to the existing thread instead of clearing it first. */
     appendToChat?: boolean;
     /** When true, the user context is replaced instead of merged with the existing one. */
@@ -142,6 +150,7 @@ export function GenAIChatDialogConnected({
     canAnalyze,
     canFullControl,
     settings,
+    agentId,
     isOpen,
     onOpen,
     onClose,
@@ -262,6 +271,10 @@ export function GenAIChatDialogConnected({
         if (clear) {
             chatDispatcher(clearThreadAction());
         }
+        // Agent id override
+        if (userContext || askedQuestion) {
+            chatDispatcher(setSelectedAgentAction({ agentId }));
+        }
         // Always set (and thereby clear when undefined) so a follow-up ask without context does not
         // inherit the previous ask's user context (LX-2544).
         chatDispatcher(setUserContextAction({ userContext, replaceUserContext }));
@@ -275,6 +288,7 @@ export function GenAIChatDialogConnected({
         }
     }, [
         isOpen,
+        agentId,
         chatDispatcher,
         askedQuestion,
         askSeq,

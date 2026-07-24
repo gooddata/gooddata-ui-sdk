@@ -12,12 +12,12 @@ import type { ShareableCatalogItem } from "./types.js";
  * @internal
  */
 export interface IShareableLabels {
-    /** Display forms of the shareable attribute; empty for facts. */
+    /** Display forms of the shareable attribute; empty for facts and measures. */
     labels: IObjectShareLabel[];
     /**
-     * True while an attribute's labels are still being fetched. Facts skip the
-     * fetch and report `false`. Gates the dialog's Add action so a grantee can't
-     * be added before its labels are known.
+     * True while an attribute's labels are still being fetched. Facts and measures
+     * skip the fetch and report `false`. Gates the dialog's Add action so a grantee
+     * can't be added before its labels are known.
      */
     loading: boolean;
     /**
@@ -31,8 +31,9 @@ export interface IShareableLabels {
 
 /**
  * Loads the labels (display forms) of a shareable attribute so the share dialog
- * can scope a grantee's access per label. Facts have no labels — returns an empty
- * list and skips the fetch. The result feeds {@link ObjectShareDialog}'s `labels`.
+ * can scope a grantee's access per label. Facts and measures have no labels —
+ * returns an empty list and skips the fetch. The result feeds
+ * {@link ObjectShareDialog}'s `labels`.
  *
  * @internal
  */
@@ -40,7 +41,7 @@ export function useShareableLabels(item: ShareableCatalogItem | undefined): ISha
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
 
-    // Only attributes carry labels; facts do not.
+    // Only attributes carry labels; facts and measures do not.
     const attributeRef = item?.type === "attribute" ? item.identifier : undefined;
 
     const { result, status } = useCancelablePromise(
@@ -68,8 +69,8 @@ export function useShareableLabels(item: ShareableCatalogItem | undefined): ISha
         [result],
     );
 
-    // A fact has no fetch, so it never "loads". An attribute loads until its
-    // fetch settles (success or error).
+    // Facts and measures have no fetch, so they never "load". An attribute loads
+    // until its fetch settles (success or error).
     const loading = attributeRef !== undefined && status !== "success" && status !== "error";
     const error = attributeRef !== undefined && status === "error";
 

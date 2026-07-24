@@ -22,6 +22,7 @@ import "@gooddata/sdk-ui-gen-ai/styles/css/main.css";
 export interface IHostChatVisibility {
     kind: "open" | "close" | "toggle";
     question?: string;
+    agentId?: string;
     userContext?: IGenAIUserContext;
     appendToChat?: boolean;
     replaceUserContext?: boolean;
@@ -161,12 +162,13 @@ export function HostChat({
         } else if (visibility.question) {
             chatAskAiAssistant(
                 visibility.question,
+                visibility.agentId,
                 visibility.userContext,
                 visibility.appendToChat,
                 visibility.replaceUserContext,
             );
         } else if (visibility.userContext) {
-            chatOpenAiAssistant(visibility.userContext, visibility.replaceUserContext);
+            chatOpenAiAssistant(visibility.userContext, visibility.replaceUserContext, visibility.agentId);
         } else {
             chatOpen();
         }

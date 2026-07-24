@@ -143,6 +143,8 @@
     "filters.configurationPanel.userFilterSave.toggle.tooltip": "Autoriser la sauvegarde automatique du dernier état des filtres. Lorsque les utilisateurs reviennent, leurs filtres restent tels qu'ils les ont laissés.",
     "filters.configurationPanel.filterViews.toggle": "Vues enregistrées",
     "filters.configurationPanel.filterViews.toggle.tooltip": "<p>Permet aux utilisateurs d’enregistrer l’état des filtres comme des vues personnelles auxquelles ils peuvent revenir plus tard. </p><p>Seul l’utilisateur qui a enregistré la vue peut y accéder et la définir comme sa vue par défaut.</p>",
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle": "Filtres persistants d’un onglet à l’autre",
+    "filters.configurationPanel.persistentFiltersAcrossTabs.toggle.tooltip": "Autoriser les filtres persistants d’un onglet à l’autre. Lorsque cette option est activée, les filtres seront persistants d’un onglet à l’autre.",
     "settingsDashboardDialog.sectionHeaders.dateDataset": "Fourchette de dates dans les descriptions",
     "settingsDashboardDialog.sectionHeaders.dateDataset.tooltip": "Ensemble de données de date utilisé par le filtre Date range pour les références métriques dans les descriptions de section.",
     "dateDataset.autoSelect": "Sélection automatique",
