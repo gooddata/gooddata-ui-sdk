@@ -508,7 +508,7 @@ function AlertItem({ markdown, title, description, objects, bold, type = "normal
             </div>
             <div
                 className={cx("gd-gen-ai-chat__conversation__item__content-alertProposal-item-description", {
-                    bold,
+                    "gd-gen-ai-chat__conversation__item__content-alertProposal-item-bold": bold,
                 })}
             >
                 {type === "normal" ? (

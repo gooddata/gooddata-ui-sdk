@@ -50,6 +50,7 @@ describe("getAgentSelectionStatus", () => {
         expect(
             getAgentSelectionStatus({
                 agentSwitchingActive: false,
+                conversationsLoading: false,
                 agents: undefined,
             }),
         ).toEqual({
@@ -63,6 +64,7 @@ describe("getAgentSelectionStatus", () => {
         expect(
             getAgentSelectionStatus({
                 agentSwitchingActive: true,
+                conversationsLoading: false,
                 agents: [],
             }),
         ).toEqual({
@@ -99,6 +101,7 @@ describe("getAgentSelectionStatus", () => {
         expect(
             getAgentSelectionStatus({
                 agentSwitchingActive: true,
+                conversationsLoading: false,
                 agents: [agent("sales")],
                 selectedAgentId: "sales",
             }).isSelectionLoading,

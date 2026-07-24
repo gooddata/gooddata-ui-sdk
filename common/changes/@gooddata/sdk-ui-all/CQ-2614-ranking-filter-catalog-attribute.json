@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "Convert ranking filter dimensionality back to attributes and normalize the measure reference when reading AFM filters, mirroring MeasureValueFilter handling",
+            "type": "patch"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

@@ -1377,6 +1377,8 @@ export default defineConfig(({ mode, command }): UserConfig => {
             federation({
                 name: "gdc_snap_test",
                 filename: "remoteEntry.js",
+                manifest: true,
+                publicPath: "auto",
                 dts: false,
                 exposes: {
                     "./pluggableApp": "./src/pluggableApp.tsx",

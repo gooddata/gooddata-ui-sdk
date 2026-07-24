@@ -36,6 +36,7 @@ export interface IHostChromeChat {
      */
     askAiAssistant: (
         question: string,
+        agentId?: string,
         userContext?: IGenAIUserContext,
         appendToChat?: boolean,
         replaceUserContext?: boolean,
@@ -44,7 +45,11 @@ export interface IHostChromeChat {
      * Open the chat dialog with a pre-seeded optional user-location context
      * (e.g. the active dashboard a hosted application forwards alongside the question).
      */
-    openAiAssistant: (userContext?: IGenAIUserContext, replaceUserContext?: boolean) => void;
+    openAiAssistant: (
+        userContext?: IGenAIUserContext,
+        replaceUserContext?: boolean,
+        agentId?: string,
+    ) => void;
     /**
      * Set the assistant's object-search tag scope, reflecting the active hosted application's
      * current view (e.g. AD's include/exclude tag route filters). Pass empty/undefined to clear.
@@ -87,6 +92,7 @@ export function useHostChromeChat({
     const [isChatOpen, setIsChatOpen] = useState(false);
     const [askedQuestion, setAskedQuestion] = useState<string | null>(null);
     const [appendToChat, setAppendToChat] = useState(false);
+    const [agentId, setAgentId] = useState<string | undefined>(undefined);
     const [replaceUserContext, setReplaceUserContext] = useState(false);
     // Bumped on every ask so the chat re-seeds (clears the thread + sends the message) even when the
     // same prompt is asked again — e.g. "Summarize" clicked twice, or repeated after a close (the
@@ -114,11 +120,13 @@ export function useHostChromeChat({
     const askAiAssistant = useCallback(
         (
             question: string,
+            agentId?: string,
             questionUserContext?: IGenAIUserContext,
             appendToChat?: boolean,
             replaceUserContext?: boolean,
         ) => {
             setAskedQuestion(question);
+            setAgentId(agentId);
             setUserContext(questionUserContext);
             setAskSeq((seq) => seq + 1);
             setAppendToChat(appendToChat ?? false);
@@ -129,9 +137,10 @@ export function useHostChromeChat({
     );
 
     const openAiAssistant = useCallback(
-        (questionUserContext?: IGenAIUserContext, replaceUserContext?: boolean) => {
+        (questionUserContext?: IGenAIUserContext, replaceUserContext?: boolean, agentId?: string) => {
             setAskedQuestion(null);
             setAppendToChat(false);
+            setAgentId(agentId);
             setUserContext(questionUserContext);
             setReplaceUserContext(replaceUserContext ?? false);
             setAskSeq((seq) => seq + 1);
@@ -169,6 +178,7 @@ export function useHostChromeChat({
                 onClose={close}
                 askedQuestion={askedQuestion}
                 appendToChat={appendToChat}
+                agentId={agentId}
                 replaceUserContext={replaceUserContext}
                 askSeq={askSeq}
                 userContext={userContext}

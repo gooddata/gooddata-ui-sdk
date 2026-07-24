@@ -1400,7 +1400,6 @@ export const {
     saveVisualisationRenderStatusAction,
     saveVisualisationRenderStatusSuccessAction,
     visualizationErrorAction,
-    setSelectedAgentAction,
     applyPendingAgentSwitchAction,
     revertAgentSwitchAction,
     setAgentsAction,
@@ -1414,6 +1413,10 @@ export const {
     deleteConversationStartAction,
     deleteConversationSuccessAction,
     deleteConversationFailureAction,
+    /**
+     * @public
+     */
+    setSelectedAgentAction,
     /**
      * @public
      */

@@ -48,6 +48,7 @@ import {
     type IWorkspaceCatalog,
     type IWorkspaceCatalogFactory,
     type IWorkspaceCatalogFactoryOptions,
+    type IWorkspaceDatasetsService,
     type IWorkspaceExportTemplatesService,
     type IWorkspaceFactsService,
     type IWorkspaceInsightsService,
@@ -67,6 +68,7 @@ import {
     type IAttributeMetadataObject,
     type IAutomationMetadataObject,
     type IAutomationMetadataObjectDefinition,
+    type IDataSetMetadataObject,
     type IDefaultExportTemplate,
     type IExecutionDefinition,
     type IExportTemplate,
@@ -102,6 +104,7 @@ import {
     DecoratedWorkspaceAutomationsService,
 } from "../decoratedBackend/automations.js";
 import { DecoratedWorkspaceCatalogFactory } from "../decoratedBackend/catalog.js";
+import { DecoratedWorkspaceDatasetsService } from "../decoratedBackend/datasets.js";
 import { DecoratedElementsQuery, DecoratedElementsQueryFactory } from "../decoratedBackend/elements.js";
 import {
     DecoratedDataView,
@@ -120,6 +123,7 @@ import {
     type AttributesDecoratorFactory,
     type AutomationsDecoratorFactory,
     type CatalogDecoratorFactory,
+    type DatasetsDecoratorFactory,
     type ExecutionDecoratorFactory,
     type FactsDecoratorFactory,
     type GeoDecoratorFactory,
@@ -153,6 +157,10 @@ type SecuritySettingsCacheEntry = {
 type AttributeCacheEntry = {
     displayForms: LRUCache<string, Promise<IAttributeDisplayFormMetadataObject>>;
     attributesByDisplayForms: LRUCache<string, Promise<IAttributeMetadataObject>>;
+    attributes: LRUCache<string, Promise<IAttributeMetadataObject | undefined>>;
+    commonAttributes: LRUCache<string, Promise<ObjRef[]>>;
+    commonAttributesBatch: LRUCache<string, Promise<ObjRef[][]>>;
+    connectedAttributes: LRUCache<string, Promise<ObjRef[]>>;
     attributeElementResults?: LRUCache<string, Promise<IElementsQueryResult>>;
     dataSetsMeta: LRUCache<string, Promise<IMetadataObject>>;
 };
@@ -174,6 +182,10 @@ type FactsCacheEntry = {
 type MeasureCacheEntry = {
     expressionTokens: LRUCache<string, Promise<IMeasureExpressionToken[]>>;
     referencingObjects: LRUCache<string, Promise<IMeasureReferencing>>;
+};
+
+type DatasetCacheEntry = {
+    datasets: LRUCache<string, Promise<IDataSetMetadataObject>>;
 };
 
 type CollectionItemsCacheEntry = {
@@ -205,6 +217,7 @@ type CachingContext = {
         workspaceInsights?: LRUCache<string, InsightsCacheEntry>;
         workspaceFacts?: LRUCache<string, FactsCacheEntry>;
         workspaceMeasures?: LRUCache<string, MeasureCacheEntry>;
+        workspaceDatasets?: LRUCache<string, DatasetCacheEntry>;
         organizationExportTemplates?: LRUCache<string, Promise<IExportTemplate[]>>;
         workspaceExportTemplates?: LRUCache<string, Promise<IExportTemplate[]>>;
         workspaceSettings?: LRUCache<string, WorkspaceSettingsCacheEntry>;
@@ -1055,6 +1068,25 @@ function elementsCacheKey(
     return new SparkMD5().append(objRefToString(ref)).append(fingerprint).end();
 }
 
+/**
+ * Returns the identifier- and uri-based cache keys for the given ref. A ref yields at most one of the two.
+ */
+function refCacheKeys(ref: ObjRef): { idCacheKey?: string; uriCacheKey?: string } {
+    return {
+        idCacheKey: isIdentifierRef(ref) ? ref.identifier : undefined,
+        uriCacheKey: isUriRef(ref) ? ref.uri : undefined,
+    };
+}
+
+/**
+ * Builds a stable cache key for a set of refs. The order of refs does not matter (the refs are sorted),
+ * so callers requesting the same set in a different order share the same cache entry.
+ */
+function refSetCacheKey(refs: ObjRef[]): string {
+    const serialized = refs.map(objRefToString).sort();
+    return new SparkMD5().append(stringify(serialized) || "undefined").end();
+}
+
 function getOrCreateAttributeCache(ctx: CachingContext, workspace: string): AttributeCacheEntry {
     const cache = ctx.caches.workspaceAttributes!;
     let cacheEntry = cache.get(workspace);
@@ -1069,6 +1101,18 @@ function getOrCreateAttributeCache(ctx: CachingContext, workspace: string): Attr
             }),
             attributesByDisplayForms: new LRUCache<string, Promise<IAttributeMetadataObject>>({
                 max: ctx.config.maxAttributesPerWorkspace!,
+            }),
+            attributes: new LRUCache<string, Promise<IAttributeMetadataObject | undefined>>({
+                max: ctx.config.maxAttributesPerWorkspace!,
+            }),
+            commonAttributes: new LRUCache<string, Promise<ObjRef[]>>({
+                max: (ctx.config.maxCommonAttributesPerWorkspace ?? ctx.config.maxAttributesPerWorkspace)!,
+            }),
+            commonAttributesBatch: new LRUCache<string, Promise<ObjRef[][]>>({
+                max: (ctx.config.maxCommonAttributesPerWorkspace ?? ctx.config.maxAttributesPerWorkspace)!,
+            }),
+            connectedAttributes: new LRUCache<string, Promise<ObjRef[]>>({
+                max: (ctx.config.maxConnectedAttributesPerWorkspace ?? ctx.config.maxAttributesPerWorkspace)!,
             }),
             attributeElementResults: cachingEnabled(ctx.config.maxAttributeElementResultsPerWorkspace)
                 ? new LRUCache<string, Promise<IElementsQueryResult>>({
@@ -1282,6 +1326,214 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
 
         if (!cacheItem) {
             cacheItem = super.getAttributeByDisplayForm(ref).catch((e) => {
+                if (idCacheKey) {
+                    cache.delete(idCacheKey);
+                }
+                if (uriCacheKey) {
+                    cache.delete(uriCacheKey);
+                }
+                throw e;
+            });
+
+            if (idCacheKey) {
+                cache.set(idCacheKey, cacheItem);
+            }
+
+            if (uriCacheKey) {
+                cache.set(uriCacheKey, cacheItem);
+            }
+        }
+
+        return cacheItem;
+    };
+
+    public override getAttribute = (
+        ref: ObjRef,
+        opts: { include?: ["dataset"] } = {},
+    ): Promise<IAttributeMetadataObject> => {
+        const cache = getOrCreateAttributeCache(this.ctx, this.workspace).attributes;
+
+        // The `include` option changes the shape of the returned object, so it must be part of the key.
+        // With the default (empty) options the key is just the identifier/uri, which lets `getAttribute`
+        // share cached entries with the bulk `getAttributes` method.
+        const suffix = opts.include?.length ? `:${opts.include.join(",")}` : "";
+        const { idCacheKey, uriCacheKey } = refCacheKeys(ref);
+        const idKey = idCacheKey && `${idCacheKey}${suffix}`;
+        const uriKey = uriCacheKey && `${uriCacheKey}${suffix}`;
+
+        let cacheItem = firstDefined([idKey, uriKey].map((key) => key && cache.get(key)));
+
+        if (!cacheItem) {
+            cacheItem = super.getAttribute(ref, opts).catch((e) => {
+                if (idKey) {
+                    cache.delete(idKey);
+                }
+                if (uriKey) {
+                    cache.delete(uriKey);
+                }
+                throw e;
+            });
+
+            if (idKey) {
+                cache.set(idKey, cacheItem);
+            }
+
+            if (uriKey) {
+                cache.set(uriKey, cacheItem);
+            }
+        }
+
+        // The shared `attributes` cache can momentarily hold an in-flight bulk entry that resolves to
+        // `undefined` for a ref the server omitted. Guard against it so the scalar contract (an attribute
+        // or a rejection) is preserved; such a gap is never written back to the cache.
+        return cacheItem.then((value) => value ?? this.decorated.getAttribute(ref, opts));
+    };
+
+    public override getAttributes = async (refs: ObjRef[]): Promise<IAttributeMetadataObject[]> => {
+        const cache = getOrCreateAttributeCache(this.ctx, this.workspace).attributes;
+
+        // Grab a reference to the cache results as soon as possible in case they would get evicted while
+        // loading the ones missing from the cache.
+        const refsWithCacheResults = refs.map((ref) => {
+            const { idCacheKey, uriCacheKey } = refCacheKeys(ref);
+            const cacheHit = firstDefined([idCacheKey, uriCacheKey].map((key) => key && cache.get(key)));
+            return {
+                ref,
+                idCacheKey,
+                uriCacheKey,
+                cacheHit: cacheHit as Promise<IAttributeMetadataObject | undefined> | undefined,
+            };
+        });
+
+        const [withCacheHits, withoutCacheHits] = partition(
+            refsWithCacheResults,
+            ({ cacheHit }) => !!cacheHit,
+        );
+
+        const refsToLoad = withoutCacheHits.map((item) => item.ref);
+
+        // Use a single shared load promise so that concurrent callers asking for the same uncached refs
+        // collapse onto one underlying request. Per-ref promises are derived from it and registered into
+        // the cache synchronously - before any await - so a concurrent caller sees the in-flight promise.
+        const loadPromise =
+            refsToLoad.length > 0
+                ? Promise.resolve(this.decorated.getAttributes(refsToLoad))
+                : Promise.resolve([] as IAttributeMetadataObject[]);
+
+        withoutCacheHits.forEach((item) => {
+            const perRefPromise = loadPromise
+                .then((loaded) => {
+                    const match = loaded.find((attribute) =>
+                        refMatchesMdObject(item.ref, attribute, "attribute"),
+                    );
+                    if (!match) {
+                        // The server omitted this ref; evict so a later call can retry it.
+                        if (item.idCacheKey) {
+                            cache.delete(item.idCacheKey);
+                        }
+                        if (item.uriCacheKey) {
+                            cache.delete(item.uriCacheKey);
+                        }
+                    }
+                    return match;
+                })
+                .catch((e) => {
+                    if (item.idCacheKey) {
+                        cache.delete(item.idCacheKey);
+                    }
+                    if (item.uriCacheKey) {
+                        cache.delete(item.uriCacheKey);
+                    }
+                    throw e;
+                });
+
+            // Prevent an unhandled rejection if nobody else awaits this per-ref promise (the primary caller
+            // below awaits `loadPromise` directly). Concurrent callers awaiting the cached promise still see
+            // the rejection through their own reference.
+            perRefPromise.catch(() => undefined);
+
+            item.cacheHit = perRefPromise;
+
+            if (item.idCacheKey) {
+                cache.set(item.idCacheKey, perRefPromise);
+            }
+            if (item.uriCacheKey) {
+                cache.set(item.uriCacheKey, perRefPromise);
+            }
+        });
+
+        const [loadedFromServer, alreadyInCache] = await Promise.all([
+            loadPromise,
+            Promise.all(withCacheHits.map((item) => item.cacheHit!)),
+        ]);
+
+        const loadedRefs = loadedFromServer.map((item) => item.ref);
+        const outputRefs = this.ctx.capabilities.allowsInconsistentRelations
+            ? skipMissingReferences(refs, refsToLoad, loadedRefs)
+            : refs;
+
+        // reconstruct the original ordering
+        const candidates = compact([...loadedFromServer, ...alreadyInCache]);
+
+        return outputRefs
+            .map((ref) => candidates.find((item) => refMatchesMdObject(ref, item, "attribute")))
+            .filter((match): match is IAttributeMetadataObject => {
+                // When the backend guarantees consistent relations, every requested ref must resolve.
+                if (!match) {
+                    invariant(this.ctx.capabilities.allowsInconsistentRelations);
+                    return false;
+                }
+                return true;
+            });
+    };
+
+    public override getCommonAttributes = (attributeRefs: ObjRef[]): Promise<ObjRef[]> => {
+        const cache = getOrCreateAttributeCache(this.ctx, this.workspace).commonAttributes;
+        const cacheKey = refSetCacheKey(attributeRefs);
+
+        let result = cache.get(cacheKey);
+
+        if (!result) {
+            result = super.getCommonAttributes(attributeRefs).catch((e) => {
+                cache.delete(cacheKey);
+                throw e;
+            });
+
+            cache.set(cacheKey, result);
+        }
+
+        return result;
+    };
+
+    public override getCommonAttributesBatch = (attributesRefsBatch: ObjRef[][]): Promise<ObjRef[][]> => {
+        const cache = getOrCreateAttributeCache(this.ctx, this.workspace).commonAttributesBatch;
+        const cacheKey = new SparkMD5()
+            .append(stringify(attributesRefsBatch.map(refSetCacheKey)) || "undefined")
+            .end();
+
+        let result = cache.get(cacheKey);
+
+        if (!result) {
+            result = super.getCommonAttributesBatch(attributesRefsBatch).catch((e) => {
+                cache.delete(cacheKey);
+                throw e;
+            });
+
+            cache.set(cacheKey, result);
+        }
+
+        return result;
+    };
+
+    public override getConnectedAttributesByDisplayForm = (ref: ObjRef): Promise<ObjRef[]> => {
+        const cache = getOrCreateAttributeCache(this.ctx, this.workspace).connectedAttributes;
+
+        const { idCacheKey, uriCacheKey } = refCacheKeys(ref);
+
+        let cacheItem = firstDefined([idCacheKey, uriCacheKey].map((key) => key && cache.get(key)));
+
+        if (!cacheItem) {
+            cacheItem = super.getConnectedAttributesByDisplayForm(ref).catch((e) => {
                 if (idCacheKey) {
                     cache.delete(idCacheKey);
                 }
@@ -2058,6 +2310,150 @@ function cachedMeasures(ctx: CachingContext): MeasuresDecoratorFactory {
 }
 
 //
+// Datasets caching
+//
+
+function getOrCreateDatasetsCache(ctx: CachingContext, workspace: string): DatasetCacheEntry {
+    const cache = ctx.caches.workspaceDatasets!;
+    let cacheEntry = cache.get(workspace);
+
+    if (!cacheEntry) {
+        cacheEntry = {
+            datasets: new LRUCache<string, Promise<IDataSetMetadataObject>>({
+                max: ctx.config.maxDatasetsPerWorkspace!,
+            }),
+        };
+        cache.set(workspace, cacheEntry);
+    }
+
+    return cacheEntry;
+}
+
+class WithDatasetsCaching extends DecoratedWorkspaceDatasetsService {
+    constructor(
+        decorated: IWorkspaceDatasetsService,
+        private readonly ctx: CachingContext,
+        private readonly workspace: string,
+    ) {
+        super(decorated);
+    }
+
+    // Pattern 1: scalar read keyed by ref identifier/uri (mirrors getAttributeByDisplayForm).
+    public override getDataset = (ref: ObjRef): Promise<IDataSetMetadataObject> => {
+        const cache = getOrCreateDatasetsCache(this.ctx, this.workspace).datasets;
+
+        const idCacheKey = isIdentifierRef(ref) ? ref.identifier : undefined;
+        const uriCacheKey = isUriRef(ref) ? ref.uri : undefined;
+
+        let cacheItem = firstDefined([idCacheKey, uriCacheKey].map((key) => key && cache.get(key)));
+
+        if (!cacheItem) {
+            cacheItem = super.getDataset(ref).catch((e) => {
+                if (idCacheKey) {
+                    cache.delete(idCacheKey);
+                }
+                if (uriCacheKey) {
+                    cache.delete(uriCacheKey);
+                }
+                throw e;
+            });
+
+            if (idCacheKey) {
+                cache.set(idCacheKey, cacheItem);
+            }
+
+            if (uriCacheKey) {
+                cache.set(uriCacheKey, cacheItem);
+            }
+        }
+
+        return cacheItem;
+    };
+
+    // Pattern 2 (the pilot): bulk read that de-duplicates in-flight requests. A single underlying
+    // load promise is issued for the missing refs and the per-ref promises derived from it are
+    // registered in the cache synchronously, before awaiting, so concurrent callers share them.
+    public override getDataSets = async (refs: ObjRef[]): Promise<IDataSetMetadataObject[]> => {
+        const cache = getOrCreateDatasetsCache(this.ctx, this.workspace).datasets;
+
+        // Grab references to the cache results as soon as possible in case they would get evicted
+        // while loading the ones missing from the cache.
+        const entries = refs.map((ref) => {
+            const idCacheKey = isIdentifierRef(ref) ? ref.identifier : undefined;
+            const uriCacheKey = isUriRef(ref) ? ref.uri : undefined;
+            const cacheHit = firstDefined([idCacheKey, uriCacheKey].map((key) => key && cache.get(key)));
+
+            return {
+                ref,
+                idCacheKey,
+                uriCacheKey,
+                promise: cacheHit as Promise<IDataSetMetadataObject> | undefined,
+            };
+        });
+
+        const missing = entries.filter((entry) => !entry.promise);
+
+        if (missing.length > 0) {
+            // Single underlying request shared by every missing ref.
+            const loadPromise = this.decorated.getDataSets(missing.map((entry) => entry.ref));
+            // Attach a no-op handler so the shared promise never produces an unhandled rejection;
+            // the per-ref promises below carry the real error handling.
+            loadPromise.catch(() => undefined);
+
+            missing.forEach((entry) => {
+                const perRefPromise = loadPromise.then((loaded) => {
+                    const match = loaded.find((dataSet) => refMatchesMdObject(entry.ref, dataSet, "dataSet"));
+
+                    // The backend may omit refs it could not resolve (inconsistent relations).
+                    // Evict the omitted ref so it is not cached and gets reloaded next time.
+                    if (!match) {
+                        if (entry.idCacheKey) {
+                            cache.delete(entry.idCacheKey);
+                        }
+                        if (entry.uriCacheKey) {
+                            cache.delete(entry.uriCacheKey);
+                        }
+                    }
+
+                    return match;
+                });
+
+                // Evict on error so a rejected promise is never left cached.
+                const guarded = perRefPromise.catch((e) => {
+                    if (entry.idCacheKey) {
+                        cache.delete(entry.idCacheKey);
+                    }
+                    if (entry.uriCacheKey) {
+                        cache.delete(entry.uriCacheKey);
+                    }
+                    throw e;
+                }) as Promise<IDataSetMetadataObject>;
+
+                if (entry.idCacheKey) {
+                    cache.set(entry.idCacheKey, guarded);
+                }
+                if (entry.uriCacheKey) {
+                    cache.set(entry.uriCacheKey, guarded);
+                }
+
+                entry.promise = guarded;
+            });
+        }
+
+        // Derive the output from what actually resolved, preserving the input ordering and
+        // dropping refs that the backend omitted. Omitted refs resolve to `undefined` (see the
+        // `match` lookup above), so genuine backend rejections still propagate and are not masked.
+        const resolved = await Promise.all(entries.map((entry) => entry.promise!));
+
+        return resolved.filter((dataSet): dataSet is IDataSetMetadataObject => dataSet !== undefined);
+    };
+}
+
+function cachedDatasets(ctx: CachingContext): DatasetsDecoratorFactory {
+    return (original, workspace) => new WithDatasetsCaching(original, ctx, workspace);
+}
+
+//
 // ORGANIZATION EXPORT TEMPLATES CACHING
 //
 
@@ -2374,6 +2770,10 @@ function cacheControl(ctx: CachingContext): CacheControl {
             ctx.caches.workspaceFacts?.clear();
         },
 
+        resetDatasets: () => {
+            ctx.caches.workspaceDatasets?.clear();
+        },
+
         resetWorkspaceSettings: () => {
             ctx.caches.workspaceSettings?.clear();
         },
@@ -2404,6 +2804,7 @@ function cacheControl(ctx: CachingContext): CacheControl {
             control.resetSecuritySettings();
             control.resetAttributes();
             control.resetFacts();
+            control.resetDatasets();
             control.resetWorkspaceSettings();
             control.resetGeoStyles();
             control.resetExportTemplates();
@@ -2453,6 +2854,11 @@ export type CacheControl = {
      * Resets all workspace facts caches.
      */
     resetFacts: () => void;
+
+    /**
+     * Resets all workspace dataset caches.
+     */
+    resetDatasets: () => void;
 
     /**
      * Resets all workspace settings caches.
@@ -2734,6 +3140,35 @@ export type CachingConfiguration = {
     maxMeasuresPerWorkspace?: number;
 
     /**
+     * Maximum number of workspaces for which to cache selected {@link @gooddata/sdk-backend-spi#IWorkspaceDatasetsService} calls.
+     * The workspace identifier is used as cache key.
+     * For each workspace, there will be a cache entry holding `maxDatasetsPerWorkspace` entries for dataset metadata reads.
+     *
+     * When limit is reached, cache entries will be evicted using LRU policy.
+     *
+     * When no maximum number is specified, the cache will be unbounded and no evictions will happen. Unbounded
+     * cache may be OK in applications where number of workspaces is small - the cache will be limited
+     * naturally and will not grow uncontrollably.
+     *
+     * When non-positive number is specified, then no caching will be done.
+     */
+    maxDatasetWorkspaces?: number;
+
+    /**
+     * Maximum number of datasets to cache per workspace.
+     *
+     * When limit is reached, cache entries will be evicted using LRU policy.
+     *
+     * When no maximum number is specified, the cache will be unbounded and no evictions will happen. Unbounded
+     * dataset cache may be OK in applications where number of datasets is small and/or they are requested
+     * infrequently - the cache will be limited naturally and will not grow uncontrollably.
+     *
+     * Setting non-positive number here is invalid. If you want to turn off dataset caching,
+     * tweak the `maxDatasetWorkspaces` value.
+     */
+    maxDatasetsPerWorkspace?: number;
+
+    /**
      * Maximum number of organizations for which to cache organization-level export templates.
      * Organization export templates are organization-level, so typically a single entry suffices.
      *
@@ -2781,6 +3216,36 @@ export type CachingConfiguration = {
      * tweak the `maxAttributeWorkspaces` value.
      */
     maxAttributesPerWorkspace?: number;
+
+    /**
+     * Maximum number of common attribute results to cache per workspace.
+     *
+     * This bounds the cache used by `getCommonAttributes` and `getCommonAttributesBatch`, keyed by the
+     * (order-independent) set of input attribute references.
+     *
+     * When limit is reached, cache entries will be evicted using LRU policy.
+     *
+     * When no maximum number is specified, the cache will be unbounded and no evictions will happen.
+     *
+     * Setting non-positive number here is invalid. If you want to turn off common attribute caching,
+     * tweak the `maxAttributeWorkspaces` value.
+     */
+    maxCommonAttributesPerWorkspace?: number;
+
+    /**
+     * Maximum number of connected attribute results to cache per workspace.
+     *
+     * This bounds the cache used by `getConnectedAttributesByDisplayForm`, keyed by the display form
+     * reference identifier/uri.
+     *
+     * When limit is reached, cache entries will be evicted using LRU policy.
+     *
+     * When no maximum number is specified, the cache will be unbounded and no evictions will happen.
+     *
+     * Setting non-positive number here is invalid. If you want to turn off connected attribute caching,
+     * tweak the `maxAttributeWorkspaces` value.
+     */
+    maxConnectedAttributesPerWorkspace?: number;
 
     /**
      * Maximum number of attribute element results to cache per workspace.
@@ -2852,6 +3317,8 @@ export const RecommendedCachingConfiguration: CachingConfiguration = {
     maxAttributeWorkspaces: 1,
     maxAttributeDisplayFormsPerWorkspace: 500,
     maxAttributesPerWorkspace: 500,
+    maxCommonAttributesPerWorkspace: 500,
+    maxConnectedAttributesPerWorkspace: 500,
     maxAttributeElementResultsPerWorkspace: 100,
     maxWorkspaceSettings: 1,
     maxAutomationsWorkspaces: 1,
@@ -2860,6 +3327,8 @@ export const RecommendedCachingConfiguration: CachingConfiguration = {
     maxFactsPerWorkspace: 500,
     maxMeasuresWorkspaces: 1,
     maxMeasuresPerWorkspace: 100,
+    maxDatasetWorkspaces: 1,
+    maxDatasetsPerWorkspace: 500,
     maxExportTemplatesOrgs: 1,
     maxExportTemplatesWorkspaces: 1,
     cacheGeoStyles: true,
@@ -2894,6 +3363,7 @@ export function withCaching(
     const insightsCaching = cachingEnabled(config.maxInsightsPerWorkspace);
     const factsCaching = cachingEnabled(config.maxFactsWorkspaces);
     const measuresCaching = cachingEnabled(config.maxMeasuresWorkspaces);
+    const datasetsCaching = cachingEnabled(config.maxDatasetWorkspaces);
     // Backward compatibility: `maxExportTemplatesWorkspaces` used to be the (deprecated) alias that
     // sized the org export-templates cache. It now primarily drives workspace caching, but callers
     // that only set the old name must keep getting org caching until the alias is removed.
@@ -2930,6 +3400,9 @@ export function withCaching(
             workspaceMeasures: measuresCaching
                 ? new LRUCache({ max: config.maxMeasuresWorkspaces! })
                 : undefined,
+            workspaceDatasets: datasetsCaching
+                ? new LRUCache({ max: config.maxDatasetWorkspaces! })
+                : undefined,
             organizationExportTemplates: exportTemplatesCaching
                 ? new LRUCache({ max: orgExportTemplatesMax! })
                 : undefined,
@@ -2955,6 +3428,7 @@ export function withCaching(
     const insights = insightsCaching ? cachedInsights(ctx) : (v: any) => v;
     const facts = factsCaching ? cachedFacts(ctx) : (v: any) => v;
     const measures = measuresCaching ? cachedMeasures(ctx) : (v: any) => v;
+    const datasets = datasetsCaching ? cachedDatasets(ctx) : (v: any) => v;
     const organizationExportTemplates = exportTemplatesCaching
         ? cachedOrganizationExportTemplates(ctx)
         : undefined;
@@ -2978,6 +3452,7 @@ export function withCaching(
         insights,
         facts,
         measures,
+        datasets,
         organizationExportTemplates,
         workspaceExportTemplates,
         geo,

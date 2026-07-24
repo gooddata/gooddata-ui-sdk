@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "api-client-tiger: Add clearAxiosResponseCache and removeAxiosResponseCacheEntries cache helpers",
+            "type": "minor"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-code-convertors: Round-trip the custom tooltip control (enabled/content/placement) through AAC YAML as config.custom_tooltip for all supporting chart types.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

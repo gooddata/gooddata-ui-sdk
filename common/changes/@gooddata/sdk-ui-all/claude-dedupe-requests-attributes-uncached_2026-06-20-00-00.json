@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-backend-base: cache and de-duplicate in-flight attribute reads (getAttributes, getAttribute, getCommonAttributes, getCommonAttributesBatch, getConnectedAttributesByDisplayForm)",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

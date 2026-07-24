@@ -11,6 +11,7 @@ export enum TigerFeaturesNames {
     EnableMetricSqlAndDataExplain = "enableMetricSqlAndDataExplain",
     EnableMetricFormatOverrides = "enableMetricFormatOverrides",
     EnableColumnLevelPermissions = "enableColumnLevelPermissions",
+    EnableMetricPermissions = "enableMetricPermissions",
     EnableSqlDatasets = "enableSqlDatasets",
     EnableHighchartsAccessibility = "enableHighchartsAccessibility",
     EnableAccessibleChartTooltip = "enableAccessibleChartTooltip",
@@ -119,21 +120,25 @@ export enum TigerFeaturesNames {
     EnableAiLlmAnthropicProvider = "enableAiLlmAnthropicProvider",
     EnableRadarChart = "enableRadarChart",
     EnableMekkoChart = "enableMekkoChart",
+    EnableLineChartStyling = "enableLineChartStyling",
     EnableAnalyticalDesignerRemoteModule = "enableShellApplication_analyticalDesigner",
     EnableDashboardSidebarResize = "enableDashboardSidebarResize",
     EnableExportTimeoutFix = "enableExportTimeoutFix",
     EnableAiAssistantEmbedding = "enableAiAssistantEmbedding",
     EnableAiContextSetup = "enableAiContextSetup",
     EnableDashboardPersistentFiltersAcrossTabs = "enableDashboardPersistentFiltersAcrossTabs",
+    EnableGenAiDashboardBuilderSkill = "enableGenAiDashboardBuilderSkill",
 }
 
 export type ITigerFeatureFlags = {
     enableMetricSqlAndDataExplain: (typeof FeatureFlagsValues)["enableMetricSqlAndDataExplain"][number];
     enableMetricFormatOverrides: (typeof FeatureFlagsValues)["enableMetricFormatOverrides"][number];
     enableColumnLevelPermissions: (typeof FeatureFlagsValues)["enableColumnLevelPermissions"][number];
+    enableMetricPermissions: (typeof FeatureFlagsValues)["enableMetricPermissions"][number];
     enableSqlDatasets: (typeof FeatureFlagsValues)["enableSqlDatasets"][number];
     enableRadarChart: (typeof FeatureFlagsValues)["enableRadarChart"][number];
     enableMekkoChart: (typeof FeatureFlagsValues)["enableMekkoChart"][number];
+    enableLineChartStyling: (typeof FeatureFlagsValues)["enableLineChartStyling"][number];
     enableChangeAnalysis: (typeof FeatureFlagsValues)["enableChangeAnalysis"][number];
     enableRankingWithMvf: (typeof FeatureFlagsValues)["enableRankingWithMvf"][number];
     enableRankingStrictLimit: (typeof FeatureFlagsValues)["enableRankingStrictLimit"][number];
@@ -234,6 +239,7 @@ export type ITigerFeatureFlags = {
     enableAiHub: (typeof FeatureFlagsValues)["enableAiHub"][number];
     enableAiAgenticConversations: (typeof FeatureFlagsValues)["enableAiAgenticConversations"][number];
     enableAiContextSetup: (typeof FeatureFlagsValues)["enableAiContextSetup"][number];
+    enableGenAiDashboardBuilderSkill: (typeof FeatureFlagsValues)["enableGenAiDashboardBuilderSkill"][number];
     enableGenAiAgenticDataShareOptOut: (typeof FeatureFlagsValues)["enableGenAiAgenticDataShareOptOut"][number];
     enableGenAiVisualizationSummarySkill: (typeof FeatureFlagsValues)["enableGenAiVisualizationSummarySkill"][number];
     enableGenAiDashboardSummarySkill: (typeof FeatureFlagsValues)["enableGenAiDashboardSummarySkill"][number];
@@ -251,9 +257,11 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableMetricSqlAndDataExplain: false,
     enableMetricFormatOverrides: false,
     enableColumnLevelPermissions: false,
+    enableMetricPermissions: false,
     enableSqlDatasets: false,
     enableRadarChart: false,
     enableMekkoChart: false,
+    enableLineChartStyling: true,
     enableChangeAnalysis: false,
     enableRankingWithMvf: false,
     enableRankingStrictLimit: true,
@@ -354,6 +362,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAiHub: false,
     enableAiAgenticConversations: false,
     enableAiContextSetup: false,
+    enableGenAiDashboardBuilderSkill: false,
     enableGenAiAgenticDataShareOptOut: false,
     enableGenAiVisualizationSummarySkill: false,
     enableGenAiDashboardSummarySkill: false,
@@ -371,9 +380,11 @@ export const FeatureFlagsValues = {
     enableMetricSqlAndDataExplain: [true, false] as const,
     enableMetricFormatOverrides: [true, false] as const,
     enableColumnLevelPermissions: [true, false] as const,
+    enableMetricPermissions: [true, false] as const,
     enableSqlDatasets: [true, false] as const,
     enableRadarChart: [true, false] as const,
     enableMekkoChart: [true, false] as const,
+    enableLineChartStyling: [true, false] as const,
     enableChangeAnalysis: [true, false] as const,
     enableRankingWithMvf: [true, false] as const,
     enableRankingStrictLimit: [true, false] as const,
@@ -474,6 +485,7 @@ export const FeatureFlagsValues = {
     enableAiHub: [true, false] as const,
     enableAiAgenticConversations: [true, false] as const,
     enableAiContextSetup: [true, false] as const,
+    enableGenAiDashboardBuilderSkill: [true, false] as const,
     enableGenAiAgenticDataShareOptOut: [true, false] as const,
     enableGenAiVisualizationSummarySkill: [false, true] as const,
     enableGenAiDashboardSummarySkill: [false, true] as const,

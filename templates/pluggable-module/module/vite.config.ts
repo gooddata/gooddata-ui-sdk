@@ -125,6 +125,8 @@ export default defineConfig(({ mode, command }): UserConfig => {
             federation({
                 name: "{applicationTemplateFederationName}",
                 filename: "remoteEntry.js",
+                manifest: true,
+                publicPath: "auto",
                 dts: false,
                 exposes: {
                     "./pluggableApp": "./src/pluggableApp.tsx",

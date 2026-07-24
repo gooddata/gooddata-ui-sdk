@@ -512,7 +512,7 @@ export const startNewConversationAction: ActionCreatorWithoutPayload<"messages/s
 // @public (undocumented)
 export type TextContentObject = {
     id: string;
-    type: "metric" | "attribute" | "fact" | "date" | "label" | "dashboard";
+    type: "metric" | "attribute" | "fact" | "date" | "label" | "dashboard" | "visualization";
     title: string;
 };
 

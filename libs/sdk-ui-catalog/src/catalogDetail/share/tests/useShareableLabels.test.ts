@@ -48,6 +48,12 @@ const attribute: ShareableCatalogItem = {
     identifier: "attr.region",
     title: "Region",
 };
+const measure: ShareableCatalogItem = {
+    ...itemBase,
+    type: "measure",
+    identifier: "metric.revenue",
+    title: "Revenue metric",
+};
 
 describe("useShareableLabels", () => {
     it("reports a fact as not loading with no labels (no fetch)", () => {
@@ -56,6 +62,15 @@ describe("useShareableLabels", () => {
         mockPromise("pending");
 
         const { result } = renderHook(() => useShareableLabels(fact));
+
+        expect(result.current.loading).toBe(false);
+        expect(result.current.labels).toEqual([]);
+    });
+
+    it("reports a measure as not loading with no labels (no fetch)", () => {
+        mockPromise("pending");
+
+        const { result } = renderHook(() => useShareableLabels(measure));
 
         expect(result.current.loading).toBe(false);
         expect(result.current.labels).toEqual([]);

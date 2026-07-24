@@ -26772,6 +26772,100 @@
                     "workspace-theme-controller"
                 ]
             }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/metrics/{metricId}/permissions": {
+            "get": {
+                "tags": [
+                    "Permissions",
+                    "actions"
+                ],
+                "summary": "(BETA) Get Metric Permissions",
+                "operationId": "metricPermissions",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "metricId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MetricPermissions"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/metrics/{metricId}/managePermissions": {
+            "post": {
+                "tags": [
+                    "Permissions",
+                    "actions"
+                ],
+                "summary": "(BETA) Manage Permissions for a Metric",
+                "operationId": "manageMetricPermissions",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "metricId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "description": "An array of metric-permission assignments.",
+                                "items": {
+                                    "oneOf": [
+                                        {
+                                            "$ref": "#/components/schemas/MetricPermissionsForAssignee"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/MetricPermissionsForAssigneeRule"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -56808,6 +56902,99 @@
                     "type"
                 ],
                 "type": "object"
+            },
+            "MetricPermissions": {
+                "required": [
+                    "rules",
+                    "userGroups",
+                    "users"
+                ],
+                "type": "object",
+                "properties": {
+                    "rules": {
+                        "type": "array",
+                        "description": "List of rules",
+                        "items": {
+                            "$ref": "#/components/schemas/RulePermission"
+                        }
+                    },
+                    "users": {
+                        "type": "array",
+                        "description": "List of users",
+                        "items": {
+                            "$ref": "#/components/schemas/UserPermission"
+                        }
+                    },
+                    "userGroups": {
+                        "type": "array",
+                        "description": "List of user groups",
+                        "items": {
+                            "$ref": "#/components/schemas/UserGroupPermission"
+                        }
+                    }
+                }
+            },
+            "MetricPermissionsForAssignee": {
+                "required": [
+                    "assigneeIdentifier",
+                    "permissions"
+                ],
+                "type": "object",
+                "description": "Desired levels of metric permissions for an assignee identified by an identifier.",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/MetricPermissionsAssignment"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "assigneeIdentifier": {
+                                "$ref": "#/components/schemas/AssigneeIdentifier"
+                            }
+                        }
+                    }
+                ]
+            },
+            "MetricPermissionsForAssigneeRule": {
+                "required": [
+                    "assigneeRule",
+                    "permissions"
+                ],
+                "type": "object",
+                "description": "Desired levels of metric permissions for a collection of assignees identified by a rule.",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/MetricPermissionsAssignment"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "assigneeRule": {
+                                "$ref": "#/components/schemas/AssigneeRule"
+                            }
+                        }
+                    }
+                ]
+            },
+            "MetricPermissionsAssignment": {
+                "required": [
+                    "permissions"
+                ],
+                "type": "object",
+                "properties": {
+                    "permissions": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "EDIT",
+                                "SHARE",
+                                "VIEW"
+                            ]
+                        }
+                    }
+                },
+                "description": "Desired levels of permissions on a metric for an assignee."
             }
         },
         "responses": {

@@ -2814,6 +2814,7 @@ export interface IFeatureFlags {
     enableMeasureValueFilterKD?: boolean;
     enableMekkoChart?: boolean;
     enableMetricFormatOverrides?: boolean;
+    enableMetricPermissions?: boolean;
     // (undocumented)
     enableMongoDbDataSource?: boolean;
     // (undocumented)
@@ -2979,6 +2980,7 @@ export interface IGenAICreatedVisualizations {
 // @internal
 export interface IGenAIDashboardContext {
     filters?: GenAIUserContextFilter[];
+    isNew?: boolean;
     ref: ObjRef;
     title?: string;
     widgets: IGenAIWidgetDescriptor[];
@@ -6734,7 +6736,7 @@ export type NotificationType = "alertNotification" | "scheduleNotification" | "t
 export type ObjectOrigin = "ALL" | "PARENTS" | "NATIVE";
 
 // @alpha
-export type ObjectPermissionsObjectKind = "attribute" | "fact" | "label";
+export type ObjectPermissionsObjectKind = "attribute" | "fact" | "label" | "measure";
 
 // @public
 export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "workspaceTheme" | "workspaceColorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy" | "exportDefinition" | "automation" | "filterView" | "workspaceDataFilter" | "workspaceDataFilterSetting" | "userDataFilter" | "notificationChannel" | "memoryItem" | "parameter";

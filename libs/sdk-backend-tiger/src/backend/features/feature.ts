@@ -40,6 +40,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableMetricPermissions,
+            "enableMetricPermissions",
+            "BOOLEAN",
+            FeatureFlagsValues.enableMetricPermissions,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableRadarChart,
             "enableRadarChart",
             "BOOLEAN",
@@ -51,6 +58,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableMekkoChart",
             "BOOLEAN",
             FeatureFlagsValues.enableMekkoChart,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableLineChartStyling,
+            "enableLineChartStyling",
+            "BOOLEAN",
+            FeatureFlagsValues.enableLineChartStyling,
         ),
         ...loadFeature(
             features,
@@ -583,6 +597,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableAiContextSetup",
             "BOOLEAN",
             FeatureFlagsValues.enableAiContextSetup,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableGenAiDashboardBuilderSkill,
+            "enableGenAiDashboardBuilderSkill",
+            "BOOLEAN",
+            FeatureFlagsValues.enableGenAiDashboardBuilderSkill,
         ),
         ...loadFeature(
             features,

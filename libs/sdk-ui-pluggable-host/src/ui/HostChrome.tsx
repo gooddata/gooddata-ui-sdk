@@ -81,7 +81,13 @@ export interface IHostChromeProps {
     /** Toggles the host-owned chat; wired to the header chat button. */
     onChatToggle?: () => void;
     /** Hands a question to the host-owned chat; wired to the header search "ask AI" action. */
-    onAskAiAssistant?: (question: string, userContext?: IGenAIUserContext) => void;
+    onAskAiAssistant?: (
+        question: string,
+        agentId?: string,
+        userContext?: IGenAIUserContext,
+        appendToChat?: boolean,
+        replaceUserContext?: boolean,
+    ) => void;
     /**
      * Page-title segment set by the active pluggable application via a document-title-changed
      * event. When omitted, the active application's manifest title is used instead.
@@ -122,7 +128,7 @@ export function HostChrome({
     // search's questions to it via `onAskAiAssistant`.
     const handleAskAiAssistant = useCallback(
         (question: string, userContext?: IGenAIUserContext) => {
-            onAskAiAssistant?.(question, userContext);
+            onAskAiAssistant?.(question, undefined, userContext);
         },
         [onAskAiAssistant],
     );

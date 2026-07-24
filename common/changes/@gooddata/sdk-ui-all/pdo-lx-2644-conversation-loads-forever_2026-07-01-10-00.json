@@ -3,7 +3,7 @@
         {
             "comment": "Fix conversation loading forever when reopened after starting a new conversation",
             "type": "patch",
-            "packageName": "@gooddata/sdk-ui-gen-ai"
+            "packageName": "@gooddata/sdk-ui-all"
         },
         {
             "comment": "Fix conversation loading forever when reopened after starting a new conversation",
@@ -13,14 +13,13 @@
         {
             "comment": "Fix conversation loading forever when reopened after starting a new conversation",
             "type": "none",
-            "packageName": "@gooddata/sdk-ui-pluggable-host"
+            "packageName": "@gooddata/sdk-ui-all"
         },
         {
             "comment": "Fix conversation loading forever when reopened after starting a new conversation",
             "type": "none",
-            "packageName": "@gooddata/sdk-ui-web-components"
+            "packageName": "@gooddata/sdk-ui-all"
         }
     ],
-    "packageName": "@gooddata/sdk-ui-all",
-    "email": "petr.dolejsi@gooddata.com"
+    "packageName": "@gooddata/sdk-ui-all"
 }

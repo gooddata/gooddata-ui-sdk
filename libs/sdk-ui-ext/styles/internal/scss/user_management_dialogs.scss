@@ -249,6 +249,16 @@
     line-height: 20px;
 }
 
+// Unlocked workspace rows are clickable (navigate to the permissions edit view). Pointer cursor is
+// set on both the content area and the label, since the label has its own cursor: default in
+// shareDialog.scss that would otherwise take precedence over the inherited cursor.
+.gd-share-dialog-grantee-item.is-clickable {
+    .gd-grantee-content,
+    .gd-grantee-content-label {
+        cursor: pointer;
+    }
+}
+
 // Workspaces accessible only indirectly (via a user group or a parent workspace) are read-only here,
 // so their row must not look interactive and shows a non-actionable lock icon instead of remove.
 .gd-share-dialog-grantee-item.is-inherited {
