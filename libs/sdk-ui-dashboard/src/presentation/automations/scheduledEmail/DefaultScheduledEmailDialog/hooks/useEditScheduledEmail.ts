@@ -2,13 +2,9 @@
 
 import { useCallback, useMemo, useRef, useState } from "react";
 
-import { useIntl } from "react-intl";
-import { invariant } from "ts-invariant";
-
 import {
     type AutomationEvaluationMode,
     DEFAULT_CSV_DELIMITER,
-    type DashboardAttachmentType,
     type FilterContextItem,
     type IAutomationMetadataObject,
     type IAutomationMetadataObjectBase,
@@ -16,7 +12,6 @@ import {
     type IAutomationRecipient,
     type IAutomationVisibleFilter,
     type IDashboardExportParameter,
-    type IExportDefinitionMetadataObjectDefinition,
     type IExportDefinitionVisualizationObjectSettings,
     type IFilter,
     type IInsight,
@@ -24,11 +19,6 @@ import {
     type INotificationChannelMetadataObject,
     type IWidget,
     type IWorkspaceUser,
-    type WidgetAttachmentType,
-    insightProperties,
-    isAutomationExternalUserRecipient,
-    isAutomationUnknownUserRecipient,
-    isAutomationUserRecipient,
     isExportDefinitionDashboardRequestPayload,
     isExportDefinitionVisualizationObjectRequestPayload,
     isInsightWidget,
@@ -50,7 +40,6 @@ import {
     getVisibleFiltersByFiltersByTab,
 } from "../../../shared/automationFilters/utils.js";
 import {
-    areAutomationsEqual,
     convertCurrentUserToAutomationRecipient,
     convertCurrentUserToWorkspaceUser,
     convertExternalRecipientToAutomationRecipient,
@@ -61,9 +50,13 @@ import {
     toNormalizedStartDate,
 } from "../../utils/date.js";
 import { getUserTimezone } from "../../utils/timezone.js";
-import { isEmail } from "../../utils/validate.js";
+import {
+    newDashboardExportDefinitionMetadataObjectDefinition,
+    newWidgetExportDefinitionMetadataObjectDefinition,
+} from "../utils/exportDefinitions.js";
 
-import { useScheduleValidation } from "./useScheduleValidation.js";
+import { useScheduledEmailExportSettings } from "./useScheduledEmailExportSettings.js";
+import { useScheduledEmailFormValidity } from "./useScheduledEmailFormValidity.js";
 
 export interface IUseEditScheduledEmailProps {
     scheduledExportToEdit?: IAutomationMetadataObject;
@@ -120,7 +113,6 @@ export function useEditScheduledEmail({
     filtersDataByTab,
     availableFiltersAsVisibleFiltersByTab,
 }: IUseEditScheduledEmailProps) {
-    const intl = useIntl();
     const {
         settings,
         timezone,
@@ -285,14 +277,6 @@ export function useEditScheduledEmail({
         setEditedAutomation((automation) => setExportParametersByTab(automation, wire));
     }, []);
 
-    const selectedAttachments = useMemo(() => {
-        return (
-            editedAutomation.exportDefinitions
-                ?.map((exportDefinition) => exportDefinition.requestPayload.format)
-                .filter(Boolean) ?? []
-        );
-    }, [editedAutomation.exportDefinitions]);
-
     const onTitleChange = (value: string, isValid: boolean) => {
         setIsTitleValid(isValid);
         setEditedAutomation((s) => ({ ...s, title: value }));
@@ -352,216 +336,6 @@ export function useEditScheduledEmail({
             },
         }));
     };
-
-    const onDashboardAttachmentsChange = (formats: DashboardAttachmentType[]): void => {
-        setEditedAutomation((s) => {
-            const currentExportDefinitions = s.exportDefinitions || [];
-
-            const currentDashboardExportDefinitions = currentExportDefinitions.filter((exportDefinition) =>
-                isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload),
-            );
-
-            const currentFormats = currentDashboardExportDefinitions.map(
-                (exportDefinition) => exportDefinition.requestPayload.format,
-            );
-
-            const formatsToKeep = currentFormats.filter((format) =>
-                formats.includes(format as DashboardAttachmentType),
-            );
-            const formatsToAdd = formats.filter((format) => !currentFormats.includes(format));
-
-            const keptExportDefinitions = currentDashboardExportDefinitions.filter((exportDefinition) =>
-                formatsToKeep.includes(exportDefinition.requestPayload.format),
-            );
-
-            const newExportDefinitions = formatsToAdd.map((format) =>
-                newDashboardExportDefinitionMetadataObjectDefinition({
-                    dashboardId: dashboardId!,
-                    dashboardTitle,
-                    dashboardFilters: storeFilters ? effectiveDashboardFilters : undefined,
-                    filtersByTab: storeFilters ? effectiveDashboardFiltersByTab : undefined,
-                    format,
-                }),
-            );
-
-            const updatedExportDefinitions = [...keptExportDefinitions, ...newExportDefinitions];
-            return withRebuiltExportDefinitions(s, updatedExportDefinitions, latestParametersWireRef.current);
-        });
-    };
-
-    const onWidgetAttachmentsChange = (formats: WidgetAttachmentType[]): void => {
-        invariant(isWidget, "Widget or insight is missing in scheduling dialog context.");
-        setEditedAutomation((s) => {
-            const currentExportDefinitions = s.exportDefinitions || [];
-
-            const currentWidgetExportDefinitions = currentExportDefinitions.filter((exportDefinition) =>
-                isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload),
-            );
-
-            const currentFormats = currentWidgetExportDefinitions.map(
-                (exportDefinition) => exportDefinition.requestPayload.format,
-            );
-
-            const formatsToKeep = currentFormats.filter((format) =>
-                formats.includes(format as WidgetAttachmentType),
-            );
-            const formatsToAdd = formats.filter((format) => !currentFormats.includes(format));
-
-            const keptExportDefinitions = currentWidgetExportDefinitions.filter((exportDefinition) =>
-                formatsToKeep.includes(exportDefinition.requestPayload.format),
-            );
-
-            const newExportDefinitions = formatsToAdd.map((format) =>
-                newWidgetExportDefinitionMetadataObjectDefinition({
-                    insight,
-                    widget,
-                    dashboardId: dashboardId!,
-                    format,
-                    widgetFilters: effectiveWidgetFilters,
-                    widgetFiltersWithInsight: effectiveWidgetFiltersWithInsight,
-                    dashboardFilters: effectiveDashboardFilters,
-                    defaultPdfPageSize,
-                }),
-            );
-
-            const updatedExportDefinitions = [...keptExportDefinitions, ...newExportDefinitions];
-            return withRebuiltExportDefinitions(s, updatedExportDefinitions, latestParametersWireRef.current);
-        });
-    };
-
-    const onXlsxSettingsChange = useCallback(
-        (settings: IExportDefinitionVisualizationObjectSettings) => {
-            setEditedAutomation((s) => ({
-                ...s,
-                exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
-                    if (exportDefinition.requestPayload.format !== "XLSX") {
-                        return exportDefinition;
-                    }
-
-                    const nextSettings = {
-                        ...exportDefinition.requestPayload?.settings,
-                        mergeHeaders: settings.mergeHeaders,
-                        exportInfo: settings.exportInfo,
-                    };
-
-                    return {
-                        ...exportDefinition,
-                        requestPayload: {
-                            ...exportDefinition.requestPayload,
-                            settings: nextSettings,
-                        },
-                    };
-                }),
-            }));
-        },
-        [setEditedAutomation],
-    );
-
-    const onPdfSettingsChange = useCallback(
-        (settings: IExportDefinitionVisualizationObjectSettings) => {
-            setEditedAutomation((s) => ({
-                ...s,
-                exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
-                    if (exportDefinition.requestPayload.format !== "PDF_TABULAR") {
-                        return exportDefinition;
-                    }
-
-                    const nextSettings = {
-                        ...exportDefinition.requestPayload?.settings,
-                        pageSize: settings.pageSize,
-                        orientation: settings.orientation ?? "portrait",
-                        exportInfo: settings.exportInfo,
-                    };
-
-                    return {
-                        ...exportDefinition,
-                        requestPayload: {
-                            ...exportDefinition.requestPayload,
-                            settings: nextSettings,
-                        },
-                    };
-                }),
-            }));
-        },
-        [setEditedAutomation],
-    );
-
-    const onCsvSettingsChange = useCallback(
-        (settings: IExportDefinitionVisualizationObjectSettings) => {
-            setEditedAutomation((s) => ({
-                ...s,
-                exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
-                    if (exportDefinition.requestPayload.format !== "CSV") {
-                        return exportDefinition;
-                    }
-
-                    return {
-                        ...exportDefinition,
-                        requestPayload: {
-                            ...exportDefinition.requestPayload,
-                            settings: {
-                                ...exportDefinition.requestPayload.settings,
-                                delimiter: settings.delimiter,
-                            },
-                        },
-                    };
-                }),
-            }));
-        },
-        [setEditedAutomation],
-    );
-
-    const onCsvRawSettingsChange = useCallback(
-        (settings: IExportDefinitionVisualizationObjectSettings) => {
-            setEditedAutomation((s) => ({
-                ...s,
-                exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
-                    if (exportDefinition.requestPayload.format !== "CSV_RAW") {
-                        return exportDefinition;
-                    }
-
-                    return {
-                        ...exportDefinition,
-                        requestPayload: {
-                            ...exportDefinition.requestPayload,
-                            settings: {
-                                ...exportDefinition.requestPayload.settings,
-                                delimiter: settings.delimiter,
-                            },
-                        },
-                    };
-                }),
-            }));
-        },
-        [setEditedAutomation],
-    );
-
-    const onSlidesTemplateIdChange = useCallback(
-        (templateId: string | undefined, format: "PPTX" | "PDF_SLIDES" | "PDF") => {
-            setEditedAutomation((s) => ({
-                ...s,
-                exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
-                    const matchesFormat = exportDefinition.requestPayload.format === format;
-                    const matchesType = isWidget
-                        ? isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload)
-                        : isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload);
-
-                    if (!matchesFormat || !matchesType) {
-                        return exportDefinition;
-                    }
-
-                    return {
-                        ...exportDefinition,
-                        requestPayload: {
-                            ...exportDefinition.requestPayload,
-                            templateId,
-                        },
-                    };
-                }),
-            }));
-        },
-        [setEditedAutomation, isWidget],
-    );
 
     const onFiltersChange = useCallback(
         (filters: FilterContextItem[], storeFiltersParam?: boolean) => {
@@ -795,149 +569,63 @@ export function useEditScheduledEmail({
         [onFiltersChange, onFiltersByTabChange, setStoreFilters],
     );
 
-    const isDashboardExportSelected =
-        editedAutomation.exportDefinitions?.some((exportDefinition) =>
-            isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload),
-        ) ?? true;
-
-    const isCsvExportSelected =
-        editedAutomation.exportDefinitions?.some((exportDefinition) => {
-            if (isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload)) {
-                return exportDefinition.requestPayload.format === "CSV";
-            }
-
-            return false;
-        }) ?? false;
-
-    const isXlsxExportSelected =
-        editedAutomation.exportDefinitions?.some((exportDefinition) => {
-            if (isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload)) {
-                return exportDefinition.requestPayload.format === "XLSX";
-            }
-
-            return false;
-        }) ?? false;
-
-    const xlsxExportSettings = editedAutomation.exportDefinitions?.find(
-        (exportDefinition) => exportDefinition.requestPayload.format === "XLSX",
-    )?.requestPayload.settings;
-
-    const xlsxSettings = {
-        mergeHeaders: xlsxExportSettings?.mergeHeaders ?? true,
-        exportInfo: xlsxExportSettings?.exportInfo ?? true,
-    };
-
-    const pdfVisualizationSettings = editedAutomation.exportDefinitions?.find(
-        (exportDefinition) =>
-            isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload) &&
-            exportDefinition.requestPayload.format === "PDF_TABULAR",
-    )?.requestPayload.settings;
-    const pdfTabularSettings =
-        pdfVisualizationSettings && "pageSize" in pdfVisualizationSettings
-            ? pdfVisualizationSettings
-            : undefined;
-    const pdfSettings = {
-        pageSize: pdfTabularSettings?.pageSize ?? defaultPdfPageSize ?? "A4",
-        orientation: pdfTabularSettings?.orientation ?? "portrait",
-        exportInfo: pdfTabularSettings?.exportInfo ?? true,
-    };
-
-    const csvExportDefinition = editedAutomation.exportDefinitions?.find(
-        (exportDefinition) =>
-            isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload) &&
-            exportDefinition.requestPayload.format === "CSV",
-    );
-    const csvExportSettings =
-        csvExportDefinition &&
-        isExportDefinitionVisualizationObjectRequestPayload(csvExportDefinition.requestPayload)
-            ? csvExportDefinition.requestPayload.settings
-            : undefined;
-    const csvSettings = {
-        delimiter: csvExportSettings?.delimiter ?? resolvedDefaultCsvDelimiter,
-    };
-
-    const csvRawExportDefinition = editedAutomation.exportDefinitions?.find(
-        (exportDefinition) =>
-            isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload) &&
-            exportDefinition.requestPayload.format === "CSV_RAW",
-    );
-    const csvRawExportSettings =
-        csvRawExportDefinition &&
-        isExportDefinitionVisualizationObjectRequestPayload(csvRawExportDefinition.requestPayload)
-            ? csvRawExportDefinition.requestPayload.settings
-            : undefined;
-    const csvRawSettings = {
-        delimiter: csvRawExportSettings?.delimiter ?? resolvedDefaultCsvDelimiter,
-    };
-
-    // Extract templateId per slides format, scoped to the current dialog mode
-    const getTemplateIdForFormat = (format: "PPTX" | "PDF_SLIDES" | "PDF") => {
-        const def = editedAutomation.exportDefinitions?.find(
-            (ed) =>
-                ed.requestPayload.format === format &&
-                (isWidget
-                    ? isExportDefinitionVisualizationObjectRequestPayload(ed.requestPayload)
-                    : isExportDefinitionDashboardRequestPayload(ed.requestPayload)),
-        );
-        return def?.requestPayload.templateId;
-    };
-    const slidesTemplateIds = {
-        PPTX: getTemplateIdForFormat("PPTX"),
-        PDF_SLIDES: getTemplateIdForFormat("PDF_SLIDES"),
-        PDF: getTemplateIdForFormat("PDF"),
-    };
+    const {
+        selectedAttachments,
+        isDashboardExportSelected,
+        isCsvExportSelected,
+        isXlsxExportSelected,
+        xlsxSettings,
+        pdfSettings,
+        csvSettings,
+        csvRawSettings,
+        slidesTemplateIds,
+        onDashboardAttachmentsChange,
+        onWidgetAttachmentsChange,
+        onXlsxSettingsChange,
+        onPdfSettingsChange,
+        onCsvSettingsChange,
+        onCsvRawSettingsChange,
+        onSlidesTemplateIdChange,
+    } = useScheduledEmailExportSettings({
+        editedAutomation,
+        setEditedAutomation,
+        insight,
+        widget,
+        dashboardId,
+        dashboardTitle,
+        storeFilters,
+        effectiveDashboardFilters,
+        effectiveDashboardFiltersByTab,
+        effectiveWidgetFilters,
+        effectiveWidgetFiltersWithInsight,
+        defaultPdfPageSize,
+        resolvedDefaultCsvDelimiter,
+        latestParametersWireRef,
+    });
 
     const startDate = toNormalizedStartDate(
         editedAutomation.schedule?.firstRun,
         editedAutomation.schedule?.timezone,
     );
 
-    const selectedNotificationChannel = notificationChannels.find(
-        (channel) => channel.id === editedAutomation.notificationChannel,
-    );
-    const allowExternalRecipients = selectedNotificationChannel?.allowedRecipients === "external";
-    const allowOnlyLoggedUserRecipients = selectedNotificationChannel?.allowedRecipients === "creator";
-
-    const { isValid: isParentValid } = useScheduleValidation(originalAutomation);
-    const validationErrorMessage = isParentValid
-        ? undefined
-        : intl.formatMessage({ id: "dialogs.schedule.email.widgetError" });
-
-    const hasAttachments = !!editedAutomation.exportDefinitions?.length;
-    const hasRecipients = (editedAutomation.recipients?.length ?? 0) > 0;
-    const hasValidExternalRecipients = allowExternalRecipients
-        ? true
-        : !editedAutomation.recipients?.some(isAutomationExternalUserRecipient);
-    const hasValidCreatorRecipient = allowOnlyLoggedUserRecipients
-        ? editedAutomation.recipients?.length === 1 &&
-          editedAutomation.recipients[0].id === defaultRecipient.id
-        : true;
-    const hasNoUnknownRecipients = !editedAutomation.recipients?.some(isAutomationUnknownUserRecipient);
-    const hasDestination = !!editedAutomation.notificationChannel;
-    const respectsRecipientsLimit = (editedAutomation.recipients?.length ?? 0) <= maxAutomationsRecipients;
-    const hasFilledEmails =
-        selectedNotificationChannel?.destinationType === "smtp"
-            ? editedAutomation.recipients?.every((recipient) =>
-                  isAutomationUserRecipient(recipient) ? isEmail(recipient.email ?? "") : true,
-              )
-            : true;
-
-    const isValid =
-        isCronValid &&
-        hasRecipients &&
-        respectsRecipientsLimit &&
-        hasAttachments &&
-        hasDestination &&
-        hasValidExternalRecipients &&
-        hasValidCreatorRecipient &&
-        hasNoUnknownRecipients &&
-        hasFilledEmails &&
-        isOnMessageValid &&
-        isTitleValid &&
-        isSubjectValid;
-
-    const isSubmitDisabled =
-        !isValid || (scheduledExportToEdit && areAutomationsEqual(originalAutomation, editedAutomation));
+    const {
+        isSubmitDisabled,
+        validationErrorMessage,
+        isParentValid,
+        allowExternalRecipients,
+        allowOnlyLoggedUserRecipients,
+    } = useScheduledEmailFormValidity({
+        editedAutomation,
+        originalAutomation,
+        scheduledExportToEdit,
+        notificationChannels,
+        defaultRecipient,
+        maxAutomationsRecipients,
+        isCronValid,
+        isTitleValid,
+        isSubjectValid,
+        isOnMessageValid,
+    });
 
     return {
         defaultUser,
@@ -982,148 +670,6 @@ export function useEditScheduledEmail({
         onFiltersByTabChange,
         setParametersWire,
         enableAutomationEvaluationMode,
-    };
-}
-
-/**
- * Rebuilds the export definitions and re-applies the parameter wire (fresh definitions carry no
- * `content.parametersByTab`). The wire is passed in rather than read off `automation` so it survives
- * a rebuild from zero definitions — see `latestParametersWireRef`.
- */
-function withRebuiltExportDefinitions(
-    automation: IAutomationMetadataObjectDefinition,
-    exportDefinitions: NonNullable<IAutomationMetadataObjectDefinition["exportDefinitions"]>,
-    parametersByTab: Record<string, IDashboardExportParameter[]> | undefined,
-): IAutomationMetadataObjectDefinition {
-    const next = { ...automation, exportDefinitions };
-    return parametersByTab ? setExportParametersByTab(next, parametersByTab) : next;
-}
-
-function newDashboardExportDefinitionMetadataObjectDefinition({
-    dashboardId,
-    dashboardTitle,
-    dashboardFilters,
-    filtersByTab,
-    format,
-    templateId,
-}: {
-    dashboardId: string;
-    dashboardTitle: string;
-    dashboardFilters?: FilterContextItem[];
-    filtersByTab?: Record<string, FilterContextItem[]>;
-    format: DashboardAttachmentType;
-    templateId?: string;
-}): IExportDefinitionMetadataObjectDefinition {
-    // Use filtersByTab if provided, otherwise fall back to simple filters
-    const filtersObj = filtersByTab
-        ? { filtersByTab }
-        : dashboardFilters
-          ? { filters: dashboardFilters }
-          : {};
-
-    const settingsObj = format === "XLSX" ? { settings: { mergeHeaders: true, exportInfo: true } } : {};
-
-    return {
-        type: "exportDefinition",
-        title: dashboardTitle,
-        requestPayload: {
-            type: "dashboard",
-            fileName: dashboardTitle,
-            format,
-            content: {
-                dashboard: dashboardId,
-                ...filtersObj,
-            },
-            ...settingsObj,
-            ...(templateId ? { templateId } : {}),
-        },
-    };
-}
-
-function newWidgetExportDefinitionMetadataObjectDefinition({
-    insight,
-    widget,
-    dashboardId,
-    format,
-    widgetFilters,
-    widgetFiltersWithInsight,
-    dashboardFilters,
-    defaultPdfPageSize,
-    defaultCsvDelimiter,
-}: {
-    insight: IInsight;
-    widget: IWidget;
-    dashboardId: string;
-    format: WidgetAttachmentType;
-    widgetFilters?: IFilter[];
-    widgetFiltersWithInsight?: IFilter[];
-    dashboardFilters?: FilterContextItem[];
-    defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
-    defaultCsvDelimiter?: string;
-}): IExportDefinitionMetadataObjectDefinition {
-    const widgetTitle = widget.title;
-
-    // Determine which filters to use based on format:
-    // - CSV: Use widgetFiltersWithInsight (insight filters merged on frontend)
-    // - CSV_RAW: Use widgetFilters (insight filters merged on backend)
-    // - Other formats: Use dashboardFilters (backend handles insight filter merging)
-    const shouldUseCsvFilters = format === "CSV";
-    const shouldUseCsvRawFilters = format === "CSV_RAW";
-
-    let filtersObj: { filters?: IFilter[] | FilterContextItem[] } = {};
-    if (shouldUseCsvFilters && (widgetFiltersWithInsight ?? []).length > 0) {
-        filtersObj = { filters: widgetFiltersWithInsight };
-    } else if (shouldUseCsvRawFilters && (widgetFilters ?? []).length > 0) {
-        filtersObj = { filters: widgetFilters };
-    } else if (!shouldUseCsvFilters && !shouldUseCsvRawFilters && (dashboardFilters ?? []).length > 0) {
-        filtersObj = { filters: dashboardFilters };
-    }
-
-    const grandTotalsPosition = insightProperties(insight)?.["controls"]?.["grandTotalsPosition"];
-
-    const pdfSettings: IExportDefinitionVisualizationObjectSettings = {
-        pageSize: defaultPdfPageSize ?? "A4",
-        orientation: "portrait",
-        exportInfo: true,
-        ...(grandTotalsPosition ? { grandTotalsPosition } : {}),
-    };
-
-    const xlsxSettings: IExportDefinitionVisualizationObjectSettings = {
-        mergeHeaders: true,
-        exportInfo: true,
-        ...(grandTotalsPosition ? { grandTotalsPosition } : {}),
-    };
-
-    const csvSettings: IExportDefinitionVisualizationObjectSettings = {
-        ...(defaultCsvDelimiter ? { delimiter: defaultCsvDelimiter } : {}),
-        ...(grandTotalsPosition ? { grandTotalsPosition } : {}),
-    };
-    const hasCsvSettings = Object.keys(csvSettings).length > 0;
-
-    const settingsObj =
-        format === "XLSX"
-            ? { settings: xlsxSettings }
-            : format === "PDF_TABULAR"
-              ? { settings: pdfSettings }
-              : (format === "CSV" || format === "CSV_RAW") && hasCsvSettings
-                ? { settings: csvSettings }
-                : {};
-
-    return {
-        type: "exportDefinition",
-        title: widgetTitle,
-        requestPayload: {
-            type: "visualizationObject",
-            fileName: widgetTitle,
-            format: format,
-            content: {
-                visualizationObject: insight.insight.identifier,
-                widget: widget.identifier,
-                dashboard: dashboardId,
-                ...filtersObj,
-            },
-            ...settingsObj,
-        },
     };
 }
 
