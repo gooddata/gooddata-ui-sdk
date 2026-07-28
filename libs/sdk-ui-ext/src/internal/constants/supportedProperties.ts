@@ -316,6 +316,7 @@ export const MEKKO_SUPPORTED_PROPERTIES = [
 export const PIECHART_SUPPORTED_PROPERTIES = [
     "dataLabels.visible",
     "dataLabels.style",
+    "dataLabels.position",
     "legend",
     "colorMapping",
     "chart.verticalAlign",

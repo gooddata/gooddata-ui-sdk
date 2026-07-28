@@ -12,7 +12,7 @@ import { join, resolve } from "node:path";
 import { compile } from "json-schema-to-typescript";
 import { cloneDeep, mergeWith } from "lodash-es";
 import { format as oxfmt } from "oxfmt";
-import { readdirp } from "readdirp";
+import { readdirpPromise } from "readdirp";
 
 const mergable = ["required"];
 // Match sdk/.oxfmtrc.json settings so generated files pass format-check.
@@ -57,13 +57,11 @@ async function main() {
 async function processSchema(basedir, saveDir, rootSchema, name) {
     let start = Date.now();
 
-    const files = [];
-    for await (const entry of readdirp(basedir, {
+    const entries = await readdirpPromise(basedir, {
         fileFilter: (f) => f.fullPath.endsWith(".json"),
         depth: 5,
-    })) {
-        files.push(entry.fullPath);
-    }
+    });
+    const files = entries.map((entry) => entry.fullPath);
 
     log(`Found ${files.length} schema files in ${Date.now() - start}ms`);
 

@@ -62,8 +62,10 @@ function DefaultFilterBarContainerCore({ children }: { children?: ReactNode }) {
     const { rows, height, isFilterBarExpanded, scrollable, setFilterBarExpanded, setCalculatedRows } =
         useFilterBarState();
 
+    const hasMultipleRows = rows.length > 1;
+
     const dropRef = useFilterExpansionByDragAndDrop(
-        rows.length > 1,
+        hasMultipleRows,
         isFilterBarExpanded,
         setFilterBarExpanded,
     );
@@ -100,9 +102,11 @@ function DefaultFilterBarContainerCore({ children }: { children?: ReactNode }) {
             return;
         }
         setCollapseAnnouncement("");
-        setFilterBarExpanded(true);
-        setExpandedAutomatically(true);
-    }, [setFilterBarExpanded]);
+        if (hasMultipleRows && !isFilterBarExpanded) {
+            setFilterBarExpanded(true);
+            setExpandedAutomatically(true);
+        }
+    }, [hasMultipleRows, isFilterBarExpanded, setFilterBarExpanded]);
 
     const onContainerBlur = useCallback(() => {
         if (isFocusVisible() && expandedAutomatically) {
@@ -173,7 +177,10 @@ function DefaultFilterBarContainerCore({ children }: { children?: ReactNode }) {
                 <ShowAllFiltersButton
                     isFilterBarExpanded={isFilterBarExpanded}
                     isVisible={rows.length > 1}
-                    onToggle={(isExpanded) => setFilterBarExpanded(isExpanded)}
+                    onToggle={(isExpanded) => {
+                        setFilterBarExpanded(isExpanded);
+                        setExpandedAutomatically(false);
+                    }}
                 />
                 {isInEditMode ? <FlexibleBulletsBar /> : null}
             </div>

@@ -779,6 +779,11 @@ export interface IFeatureFlags {
     enableNewPivotTable?: boolean;
 
     /**
+     * Enable the new pie/donut data label styles (inside/outside) and adaptive auto mode.
+     */
+    enableDonutDataLabels?: boolean;
+
+    /**
      * Enable conditional formatting for the pivot table
      */
     enableConditionalFormatting?: boolean;

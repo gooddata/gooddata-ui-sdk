@@ -195,25 +195,26 @@ export interface ChatEventHandler<TEvent extends ChatEvent = any> {
 
 Here is a list of the relevant events:
 
-| Event name                            | Guard name                              | Description                           |
-| ------------------------------------- | --------------------------------------- | ------------------------------------- |
-| `ChatResetEvent`                      | `isChatResetEvent`                      | Chat history was reset                |
-| `ChatUserMessageEvent`                | `isChatUserMessageEvent`                | User sent a message                   |
-| `ChatAssistantMessageEvent`           | `isChatAssistantMessageEvent`           | Assistant responded with a message    |
-| `ChatFeedbackEvent`                   | `isChatFeedbackEvent`                   | User gave a feedback                  |
-| `ChatVisualizationErrorEvent`         | `isChatVisualizationErrorEvent`         | Visualization failed to render        |
-| `ChatSaveVisualizationErrorEvent`     | `isChatSaveVisualizationErrorEvent`     | Chat failed to save visualisation     |
-| `ChatSaveVisualizationSuccessEvent`   | `isChatSaveVisualizationSuccessEvent`   | Chat successfully saved visualisation |
-| `ChatCopyToClipboardEvent`            | `isChatCopyToClipboardEvent`            | Chat copy to clipboard event          |
-| `ChatConversationPinnedEvent`         | `isChatConversationPinnedEvent`         | Conversation pinned state changed     |
-| `ChatConversationPinErrorEvent`       | `isChatConversationPinErrorEvent`       | Conversation pin/unpin failed         |
-| `ChatConversationDeleteEvent`         | `isChatConversationDeleteEvent`         | Conversation delete requested         |
-| `ChatConversationDeletedSuccessEvent` | `isChatConversationDeletedSuccessEvent` | Conversation deleted successfully     |
-| `ChatConversationDeletedErrorEvent`   | `isChatConversationDeletedErrorEvent`   | Conversation delete failed            |
-| `ChatConversationRenameEvent`         | `isChatConversationRenameEvent`         | Conversation rename requested         |
-| `ChatConversationRenamedSuccessEvent` | `isChatConversationRenamedSuccessEvent` | Conversation renamed successfully     |
-| `ChatConversationRenamedErrorEvent`   | `isChatConversationRenamedErrorEvent`   | Conversation rename failed            |
-| `ChatConversationChangedEvent`        | `isChatConversationChangedEvent`        | Active conversation changed           |
+| Event name                            | Guard name                              | Description                                    |
+| ------------------------------------- | --------------------------------------- | ---------------------------------------------- |
+| `ChatResetEvent`                      | `isChatResetEvent`                      | Chat history was reset                         |
+| `ChatUserMessageEvent`                | `isChatUserMessageEvent`                | User sent a message                            |
+| `ChatAssistantMessageEvent`           | `isChatAssistantMessageEvent`           | Assistant responded with a message             |
+| `ChatFeedbackEvent`                   | `isChatFeedbackEvent`                   | User gave a feedback                           |
+| `ChatVisualizationErrorEvent`         | `isChatVisualizationErrorEvent`         | Visualization failed to render                 |
+| `ChatSaveVisualizationErrorEvent`     | `isChatSaveVisualizationErrorEvent`     | Chat failed to save visualisation              |
+| `ChatSaveVisualizationSuccessEvent`   | `isChatSaveVisualizationSuccessEvent`   | Chat successfully saved visualisation          |
+| `ChatCopyToClipboardEvent`            | `isChatCopyToClipboardEvent`            | Chat copy to clipboard event                   |
+| `ChatConversationPinnedEvent`         | `isChatConversationPinnedEvent`         | Conversation pinned state changed              |
+| `ChatConversationPinErrorEvent`       | `isChatConversationPinErrorEvent`       | Conversation pin/unpin failed                  |
+| `ChatConversationDeleteEvent`         | `isChatConversationDeleteEvent`         | Conversation delete requested                  |
+| `ChatConversationDeletedSuccessEvent` | `isChatConversationDeletedSuccessEvent` | Conversation deleted successfully              |
+| `ChatConversationDeletedErrorEvent`   | `isChatConversationDeletedErrorEvent`   | Conversation delete failed                     |
+| `ChatConversationRenameEvent`         | `isChatConversationRenameEvent`         | Conversation rename requested                  |
+| `ChatConversationRenamedSuccessEvent` | `isChatConversationRenamedSuccessEvent` | Conversation renamed successfully              |
+| `ChatConversationRenamedErrorEvent`   | `isChatConversationRenamedErrorEvent`   | Conversation rename failed                     |
+| `ChatConversationChangedEvent`        | `isChatConversationChangedEvent`        | Active conversation changed                    |
+| `ChatDefinitionReceivedEvent`         | `isChatDefinitionReceivedEvent`         | Dashboard or visualization definition received |
 
 #### onLinkClick
 
@@ -227,9 +228,44 @@ Each event contains the following properties:
 | itemUrl        | string     | The URL of the metadata object, if opened in GoodData Web interface                      |
 | newTab         | boolean    | Whether the link should be opened in a new tab                                           |
 | preventDefault | () => void | Prevent default behavior of the link click                                               |
+| dashboard      | IDashboard | (Optional) The dashboard definition, if the clicked item is a dashboard.                 |
+| visualization  | IInsight   | (Optional) The visualization definition, if the clicked item is a visualization.         |
 
 > Note: If `allowNativeLinks` is set to `false` (default), you must implement the `onLinkClick` handler to handle
 > the links in chat messages. Otherwise, the links will not be clickable and do not have any effect.
+
+#### onDefinitionReceived
+
+This event is triggered immediately when a message with a visualization or dashboard definition is received from history or from a stream.
+
+| Property       | Type                           | Description                              |
+| -------------- | ------------------------------ | ---------------------------------------- |
+| type           | `onDefinitionReceived`         | Event type identifier.                   |
+| definitionType | "dashboard" \| "visualization" | The type of the received definition.     |
+| itemId         | string                         | The ID of the received item.             |
+| conversationId | string                         | The ID of the conversation.              |
+| interactionId  | string                         | (Optional) The ID of the interaction.    |
+| dashboard      | IDashboard                     | (Optional) The dashboard definition.     |
+| visualization  | IInsight                       | (Optional) The visualization definition. |
+
+Example usage:
+
+```tsx
+<GenAIAssistant
+    eventHandlers={[
+        {
+            eval: isChatDefinitionReceivedEvent,
+            handler: (event: ChatDefinitionReceivedEvent) => {
+                console.log(`Received ${event.definitionType} definition:`, event.itemId);
+                if (event.definitionType === "dashboard") {
+                    // handle dashboard definition
+                    console.log(event.dashboard);
+                }
+            },
+        },
+    ]}
+/>
+```
 
 ## Initial Assistant Experience
 

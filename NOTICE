@@ -7,9 +7,9 @@
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2026-7-16
+Date generated: 2026-7-27
 
-Revision ID: 673cff1911eb24f1e212d2c51b5463b98c9b6c96
+Revision ID: 8409fe979ded6f97ece873ef163dc792102e2b62
 
 ================================================================================
 ================================================================================
@@ -122,8 +122,8 @@ Revision ID: 673cff1911eb24f1e212d2c51b5463b98c9b6c96
 - @babel/traverse (7.29.7) [MIT]
 - @babel/types (7.29.7) [MIT]
 - @braintree/sanitize-url (6.0.4) [MIT]
-- @cacheable/memory (2.0.9) [MIT]
-- @cacheable/utils (2.4.1) [MIT]
+- @cacheable/memory (2.2.0) [MIT]
+- @cacheable/utils (2.5.0) [MIT]
 - @codemirror/autocomplete (6.20.0) [MIT]
 - @codemirror/commands (6.10.1) [MIT]
 - @codemirror/lang-yaml (6.1.3) [MIT]
@@ -132,7 +132,7 @@ Revision ID: 673cff1911eb24f1e212d2c51b5463b98c9b6c96
 - @codemirror/state (6.5.3) [MIT]
 - @codemirror/view (6.39.10) [MIT]
 - @csstools/css-parser-algorithms (3.0.5) [MIT]
-- @csstools/css-syntax-patches-for-csstree (1.1.5) [mit-0]
+- @csstools/css-syntax-patches-for-csstree (1.1.7) [mit-0]
 - @csstools/css-tokenizer (3.0.4) [MIT]
 - @csstools/media-query-list-parser (4.0.3) [MIT]
 - @csstools/selector-specificity (5.0.0) [CC0-1.0]
@@ -153,13 +153,13 @@ Revision ID: 673cff1911eb24f1e212d2c51b5463b98c9b6c96
 - @emotion/utils (1.4.2) [MIT]
 - @emotion/weak-memoize (0.4.0) [MIT]
 - @evil-internetmann/react-dnd (16.2.1) [MIT]
-- @floating-ui/core (1.7.5) [MIT]
+- @floating-ui/core (1.8.0) [MIT]
 - @floating-ui/dom (1.6.13) [MIT]
-- @floating-ui/dom (1.7.6) [MIT]
-- @floating-ui/react (0.27.19) [MIT]
+- @floating-ui/dom (1.8.0) [MIT]
+- @floating-ui/react (0.27.20) [MIT]
 - @floating-ui/react-dom (2.1.2) [MIT]
-- @floating-ui/react-dom (2.1.8) [MIT]
-- @floating-ui/utils (0.2.11) [MIT]
+- @floating-ui/react-dom (2.1.9) [MIT]
+- @floating-ui/utils (0.2.12) [MIT]
 - @formatjs/cli-lib (6.6.6) [MIT]
 - @formatjs/ecma402-abstract (2.2.4) [MIT]
 - @formatjs/ecma402-abstract (2.3.4) [MIT]
@@ -186,8 +186,8 @@ Revision ID: 673cff1911eb24f1e212d2c51b5463b98c9b6c96
 - @internationalized/string (3.2.9) [Apache-2.0]
 - @isaacs/cliui (9.0.0) [blueoak-1.0.0]
 - @isaacs/fs-minipass (4.0.1) [ISC]
-- @joint/core (4.2.5) [MPL-2.0]
-- @joint/layout-directed-graph (4.2.5) [MPL-2.0]
+- @joint/core (4.3.0) [MPL-2.0]
+- @joint/layout-directed-graph (4.3.0) [MPL-2.0]
 - @jridgewell/gen-mapping (0.3.13) [MIT]
 - @jridgewell/remapping (2.3.5) [MIT]
 - @jridgewell/resolve-uri (3.1.2) [MIT]
@@ -200,14 +200,14 @@ Revision ID: 673cff1911eb24f1e212d2c51b5463b98c9b6c96
 - @jsonjoy.com/buffers (17.67.0) [Apache-2.0, MIT]
 - @jsonjoy.com/codegen (1.0.0) [Apache-2.0]
 - @jsonjoy.com/codegen (17.67.0) [Apache-2.0]
-- @jsonjoy.com/fs-core (4.57.8) [Apache-2.0]
-- @jsonjoy.com/fs-fsa (4.57.8) [Apache-2.0]
-- @jsonjoy.com/fs-node (4.57.8) [Apache-2.0]
-- @jsonjoy.com/fs-node-builtins (4.57.8) [Apache-2.0]
-- @jsonjoy.com/fs-node-to-fsa (4.57.8) [Apache-2.0]
-- @jsonjoy.com/fs-node-utils (4.57.8) [Apache-2.0]
-- @jsonjoy.com/fs-print (4.57.8) [Apache-2.0]
-- @jsonjoy.com/fs-snapshot (4.57.8) [Apache-2.0]
+- @jsonjoy.com/fs-core (4.64.0) [Apache-2.0]
+- @jsonjoy.com/fs-fsa (4.64.0) [Apache-2.0]
+- @jsonjoy.com/fs-node (4.64.0) [Apache-2.0]
+- @jsonjoy.com/fs-node-builtins (4.64.0) [Apache-2.0]
+- @jsonjoy.com/fs-node-to-fsa (4.64.0) [Apache-2.0]
+- @jsonjoy.com/fs-node-utils (4.64.0) [Apache-2.0]
+- @jsonjoy.com/fs-print (4.64.0) [Apache-2.0]
+- @jsonjoy.com/fs-snapshot (4.64.0) [Apache-2.0]
 - @jsonjoy.com/json-pack (1.21.0) [Apache-2.0]
 - @jsonjoy.com/json-pack (17.67.0) [Apache-2.0]
 - @jsonjoy.com/json-pointer (1.0.2) [Apache-2.0]
@@ -222,7 +222,7 @@ Revision ID: 673cff1911eb24f1e212d2c51b5463b98c9b6c96
 - @lezer/lr (1.4.10) [MIT]
 - @lezer/yaml (1.0.4) [MIT]
 - @mapbox/geojson-rewind (0.5.2) [ISC]
-- @mapbox/jsonlint-lines-primitives (2.0.2) [MIT]
+- @mapbox/jsonlint-lines-primitives (2.0.3) [MIT]
 - @mapbox/mapbox-gl-supported (2.0.1) [BSD-3-Clause]
 - @mapbox/point-geometry (0.1.0) [ISC]
 - @mapbox/tiny-sdf (2.2.0) [BSD-2-Clause]
@@ -230,7 +230,7 @@ Revision ID: 673cff1911eb24f1e212d2c51b5463b98c9b6c96
 - @mapbox/vector-tile (1.3.1) [BSD-3-Clause]
 - @mapbox/whoots-js (3.1.0) [ISC]
 - @maplibre/maplibre-gl-style-spec (20.4.0) [MIT, ISC, BSD-3-Clause]
-- @marijn/find-cluster-break (1.0.2) [MIT]
+- @marijn/find-cluster-break (1.0.3) [MIT]
 - @module-federation/error-codes (2.6.0) [MIT]
 - @module-federation/runtime (2.6.0) [MIT]
 - @module-federation/runtime-core (2.6.0) [MIT]
@@ -259,12 +259,12 @@ Revision ID: 673cff1911eb24f1e212d2c51b5463b98c9b6c96
 - @react-dnd/invariant (4.0.2) [MIT]
 - @react-dnd/shallowequal (4.0.2) [MIT]
 - @react-types/shared (3.36.0) [Apache-2.0]
-- @redux-saga/core (1.5.0) [MIT]
+- @redux-saga/core (1.5.1) [MIT]
 - @redux-saga/deferred (1.3.1) [MIT]
 - @redux-saga/delay-p (1.3.1) [MIT]
 - @redux-saga/is (1.2.1) [MIT]
 - @redux-saga/symbols (1.2.1) [MIT]
-- @redux-saga/types (1.4.0) [MIT]
+- @redux-saga/types (1.4.1) [MIT]
 - @reduxjs/toolkit (2.9.0) [MIT]
 - @seznam/compose-react-refs (1.0.6) [ISC]
 - @sidvind/better-ajv-errors (4.0.0) [Apache-2.0]
@@ -272,8 +272,8 @@ Revision ID: 673cff1911eb24f1e212d2c51b5463b98c9b6c96
 - @standard-schema/spec (1.1.0) [MIT]
 - @standard-schema/utils (0.3.0) [MIT]
 - @swc/helpers (0.5.23) [Apache-2.0]
-- @tanstack/react-virtual (3.14.3) [MIT]
-- @tanstack/virtual-core (3.17.1) [MIT]
+- @tanstack/react-virtual (3.14.8) [MIT]
+- @tanstack/virtual-core (3.17.6) [MIT]
 - @ts-morph/common (0.28.1) [MIT, Apache-2.0]
 - @types/body-parser (1.19.6) [MIT]
 - @types/bonjour (3.5.13) [MIT]
@@ -283,11 +283,11 @@ Revision ID: 673cff1911eb24f1e212d2c51b5463b98c9b6c96
 - @types/estree (1.0.9) [MIT]
 - @types/estree-jsx (1.0.5) [MIT]
 - @types/express (4.17.25) [MIT]
-- @types/express-serve-static-core (4.19.8) [MIT]
+- @types/express-serve-static-core (4.19.9) [MIT]
 - @types/fs-extra (9.0.13) [MIT]
 - @types/geojson (7946.0.16) [MIT]
 - @types/geojson-vt (3.2.5) [MIT]
-- @types/hast (3.0.4) [MIT]
+- @types/hast (3.0.5) [MIT]
 - @types/hoist-non-react-statics (3.3.7) [MIT]
 - @types/http-errors (2.0.5) [MIT]
 - @types/http-proxy (1.17.17) [MIT]
@@ -299,7 +299,7 @@ Revision ID: 673cff1911eb24f1e212d2c51b5463b98c9b6c96
 - @types/mime (1.3.5) [MIT]
 - @types/ms (2.1.0) [MIT]
 - @types/node (24.12.0) [MIT]
-- @types/node (22.20.0) [MIT]
+- @types/node (22.20.1) [MIT]
 - @types/parse-json (4.0.2) [MIT]
 - @types/pbf (3.0.5) [MIT]
 - @types/qs (6.15.1) [MIT]
@@ -317,7 +317,7 @@ Revision ID: 673cff1911eb24f1e212d2c51b5463b98c9b6c96
 - @types/unist (2.0.11) [MIT]
 - @types/use-sync-external-store (0.0.6) [MIT]
 - @types/ws (8.18.1) [MIT]
-- @ungap/structured-clone (1.3.2) [ISC]
+- @ungap/structured-clone (1.3.3) [ISC]
 - @vtaits/use-lazy-ref (0.1.4) [MIT]
 - @webassemblyjs/ast (1.14.1) [MIT]
 - @webassemblyjs/floating-point-hex-parser (1.13.2) [MIT]
@@ -362,7 +362,7 @@ Revision ID: 673cff1911eb24f1e212d2c51b5463b98c9b6c96
 - astral-regex (2.0.0) [MIT]
 - asynckit (0.4.0) [MIT]
 - available-typed-arrays (1.0.7) [MIT]
-- axios (1.16.1) [MIT]
+- axios (1.18.1) [MIT]
 - axios-cache-interceptor (1.12.0) [MIT]
 - babel-plugin-macros (3.1.0) [MIT]
 - babel-plugin-polyfill-corejs2 (0.4.17) [MIT]
@@ -373,28 +373,28 @@ Revision ID: 673cff1911eb24f1e212d2c51b5463b98c9b6c96
 - balanced-match (2.0.0) [MIT]
 - balanced-match (4.0.4) [MIT]
 - base64-js (1.5.1) [MIT]
-- baseline-browser-mapping (2.10.43) [Apache-2.0]
+- baseline-browser-mapping (2.11.4) [Apache-2.0]
 - batch (0.6.1) [MIT]
 - binary-extensions (2.3.0) [MIT]
 - bl (4.1.0) [MIT]
-- body-parser (1.20.5) [MIT]
-- bonjour-service (1.4.2) [MIT]
-- brace-expansion (1.1.15) [MIT]
-- brace-expansion (5.0.6) [MIT]
+- body-parser (1.20.6) [MIT]
+- bonjour-service (1.4.3) [MIT]
+- brace-expansion (1.1.16) [MIT]
+- brace-expansion (5.0.8) [MIT]
 - braces (3.0.3) [MIT]
-- browserslist (4.28.6) [MIT]
+- browserslist (4.28.7) [MIT]
 - buffer (5.7.1) [MIT]
 - buffer-from (1.1.2) [MIT]
 - bundle-name (4.1.0) [MIT]
 - bytes (3.1.2) [MIT]
 - bytestreamjs (2.0.1) [BSD-3-Clause]
 - cache-parser (1.2.6) [MIT]
-- cacheable (2.3.5) [MIT]
+- cacheable (2.5.0) [MIT]
 - call-bind (1.0.9) [MIT]
 - call-bind-apply-helpers (1.0.2) [MIT]
 - call-bound (1.0.4) [MIT]
 - callsites (3.1.0) [MIT]
-- caniuse-lite (1.0.30001805) [CC-BY-4.0]
+- caniuse-lite (1.0.30001806) [CC-BY-4.0]
 - ccount (2.0.1) [MIT]
 - chalk (5.3.0) [MIT]
 - chalk (4.1.2) [MIT]
@@ -445,8 +445,8 @@ Revision ID: 673cff1911eb24f1e212d2c51b5463b98c9b6c96
 - core-util-is (1.0.3) [MIT]
 - cosmiconfig (7.1.0) [MIT]
 - cosmiconfig (9.0.2) [MIT]
-- crelt (1.0.6) [MIT]
-- cron-parser (5.6.1) [MIT]
+- crelt (1.0.7) [MIT]
+- cron-parser (5.6.2) [MIT]
 - cross-spawn (7.0.6) [MIT]
 - css-functions-list (3.3.3) [MIT]
 - css-mediaquery (0.1.2) [BSD-3-Clause]
@@ -485,21 +485,21 @@ Revision ID: 673cff1911eb24f1e212d2c51b5463b98c9b6c96
 - downshift (3.4.8) [MIT]
 - dunder-proto (1.0.1) [MIT]
 - earcut (2.2.4) [ISC]
-- earcut (3.0.2) [ISC]
+- earcut (3.2.3) [ISC]
 - ee-first (1.1.1) [MIT]
-- electron-to-chromium (1.5.392) [ISC]
+- electron-to-chromium (1.5.396) [ISC]
 - emailjs-base64 (1.1.4) [MIT]
 - emoji-regex (8.0.0) [MIT]
 - emojilib (2.4.0) [MIT]
 - emoticon (4.1.0) [MIT]
 - encodeurl (2.0.0) [MIT]
-- enhanced-resolve (5.24.1) [MIT]
+- enhanced-resolve (5.24.3) [MIT]
 - env-paths (2.2.1) [MIT]
 - envinfo (7.21.0) [MIT]
 - error-ex (1.3.4) [MIT]
 - es-define-property (1.0.1) [MIT]
 - es-errors (1.3.0) [MIT]
-- es-module-lexer (2.1.0) [MIT]
+- es-module-lexer (2.3.1) [MIT]
 - es-object-atoms (1.1.2) [MIT]
 - es-set-tostringtag (2.1.0) [MIT]
 - escalade (3.2.0) [MIT]
@@ -521,21 +521,21 @@ Revision ID: 673cff1911eb24f1e212d2c51b5463b98c9b6c96
 - extend (3.0.2) [MIT]
 - fast-deep-equal (3.1.3) [MIT]
 - fast-defer (1.1.9) [MIT]
-- fast-equals (5.4.0) [MIT]
+- fast-equals (5.4.1) [MIT]
 - fast-glob (3.3.3) [MIT]
-- fast-uri (3.1.2) [BSD-3-Clause, bsd-2-clause-views]
+- fast-uri (3.1.4) [BSD-3-Clause, bsd-2-clause-views]
 - fastest-levenshtein (1.0.16) [MIT]
 - fastq (1.20.1) [ISC]
 - faye-websocket (0.11.4) [Apache-2.0]
 - fdir (6.5.0) [MIT]
-- file-entry-cache (11.1.3) [MIT]
+- file-entry-cache (11.1.5) [MIT]
 - fill-range (7.1.1) [MIT]
 - finalhandler (1.3.2) [MIT]
 - find-root (1.1.0) [MIT]
 - find-up (4.1.0) [MIT]
 - flat (5.0.2) [BSD-3-Clause]
-- flat-cache (6.1.22) [MIT]
-- flatted (3.4.2) [ISC]
+- flat-cache (6.1.23) [MIT]
+- flatted (3.4.3) [ISC]
 - follow-redirects (1.16.0) [MIT]
 - for-each (0.3.5) [MIT]
 - foreground-child (3.3.1) [ISC]
@@ -600,10 +600,10 @@ Revision ID: 673cff1911eb24f1e212d2c51b5463b98c9b6c96
 - hyperdyperid (1.2.0) [MIT]
 - hyphenate-style-name (1.1.0) [BSD-3-Clause]
 - iconv-lite (0.4.24) [MIT]
-- iconv-lite (0.7.2) [MIT]
+- iconv-lite (0.7.3) [MIT]
 - ieee754 (1.2.1) [BSD-3-Clause]
 - ignore (5.3.2) [MIT]
-- ignore (7.0.5) [MIT]
+- ignore (7.0.6) [MIT]
 - immer (10.1.1) [MIT]
 - import-fresh (3.3.1) [MIT]
 - import-local (3.2.0) [MIT]
@@ -657,7 +657,7 @@ Revision ID: 673cff1911eb24f1e212d2c51b5463b98c9b6c96
 - jackspeak (4.2.3) [blueoak-1.0.0]
 - jest-worker (27.5.1) [MIT]
 - js-tokens (4.0.0) [MIT]
-- js-yaml (4.2.0) [MIT]
+- js-yaml (4.3.0) [MIT]
 - jsesc (3.1.0) [MIT]
 - json-parse-even-better-errors (2.3.1) [MIT]
 - json-schema-traverse (1.0.0) [MIT]
@@ -713,9 +713,9 @@ Revision ID: 673cff1911eb24f1e212d2c51b5463b98c9b6c96
 - mdast-util-to-markdown (2.1.2) [MIT]
 - mdast-util-to-string (4.0.0) [MIT]
 - mdn-data (2.27.1) [CC0-1.0]
-- mdn-data (2.28.1) [CC0-1.0]
+- mdn-data (2.29.0) [CC0-1.0]
 - media-typer (0.3.0) [MIT]
-- memfs (4.57.8) [Unlicense]
+- memfs (4.64.0) [Unlicense]
 - memoize-one (6.0.0) [MIT]
 - meow (13.2.0) [MIT, ISC, Apache-2.0, BSD-2-Clause]
 - merge-descriptors (1.0.3) [MIT]
@@ -770,7 +770,7 @@ Revision ID: 673cff1911eb24f1e212d2c51b5463b98c9b6c96
 - multicast-dns (7.2.5) [MIT]
 - murmurhash-js (1.0.0) [MIT]
 - mute-stream (1.0.0) [ISC]
-- nanoid (3.3.15) [MIT]
+- nanoid (3.3.16) [MIT]
 - negotiator (0.6.3) [MIT]
 - negotiator (0.6.4) [MIT]
 - neo-async (2.6.2) [MIT]
@@ -811,7 +811,7 @@ Revision ID: 673cff1911eb24f1e212d2c51b5463b98c9b6c96
 - pbf (3.3.0) [BSD-3-Clause, MIT]
 - picocolors (1.1.1) [ISC]
 - picomatch (2.3.2) [MIT]
-- picomatch (4.0.4) [MIT]
+- picomatch (4.0.5) [MIT]
 - pify (4.0.1) [MIT]
 - pkg-dir (4.2.0) [MIT]
 - pkijs (3.4.0) [BSD-3-Clause]
@@ -844,6 +844,7 @@ Revision ID: 673cff1911eb24f1e212d2c51b5463b98c9b6c96
 - quickselect (3.0.0) [ISC]
 - ramda (0.31.3) [MIT]
 - range-parser (1.2.1) [MIT]
+- range-parser (1.3.0) [MIT]
 - raw-body (2.5.3) [MIT]
 - react (19.1.1) [MIT]
 - react-aria (3.50.0) [Apache-2.0]
@@ -861,7 +862,7 @@ Revision ID: 673cff1911eb24f1e212d2c51b5463b98c9b6c96
 - react-portal (4.3.0) [MIT]
 - react-redux (9.2.0) [MIT]
 - react-responsive (10.0.1) [MIT, BSD-3-Clause]
-- react-router (7.18.0) [MIT]
+- react-router (7.18.1) [MIT]
 - react-select (5.10.2) [MIT]
 - react-select-async-paginate (0.7.11) [MIT]
 - react-stately (3.48.0) [Apache-2.0]
@@ -962,7 +963,7 @@ Revision ID: 673cff1911eb24f1e212d2c51b5463b98c9b6c96
 - stylelint-config-recommended (16.0.0) [MIT]
 - stylelint-config-standard (38.0.0) [MIT]
 - stylelint-order (6.0.4) [MIT]
-- stylelint-plugin-defensive-css (2.9.3) [MIT]
+- stylelint-plugin-defensive-css (2.9.4) [MIT]
 - stylelint-scss (6.14.0) [MIT]
 - stylis (4.2.0) [MIT]
 - supercluster (8.0.1) [ISC]
@@ -974,11 +975,11 @@ Revision ID: 673cff1911eb24f1e212d2c51b5463b98c9b6c96
 - tabbable (6.5.0) [MIT]
 - table (6.9.0) [BSD-3-Clause]
 - tapable (2.3.3) [MIT]
-- tar (7.5.16) [ISC]
-- terser (5.48.0) [BSD-2-Clause]
+- tar (7.5.22) [ISC]
+- terser (5.49.0) [BSD-2-Clause]
 - terser-webpack-plugin (5.6.1) [MIT]
 - text-encoding (0.7.0) [Multi-license: Apache-2.0 OR Unlicense]
-- thingies (2.6.0) [MIT]
+- thingies (2.6.1) [MIT]
 - thunky (1.1.0) [MIT]
 - tinycolor2 (1.6.0) [MIT]
 - tinyglobby (0.2.17) [MIT]
@@ -1041,7 +1042,7 @@ Revision ID: 673cff1911eb24f1e212d2c51b5463b98c9b6c96
 - webpack-dev-middleware (7.4.5) [MIT]
 - webpack-dev-server (5.2.4) [MIT]
 - webpack-merge (6.0.1) [MIT]
-- webpack-sources (3.5.0) [MIT]
+- webpack-sources (3.5.1) [MIT]
 - websocket-driver (0.7.5) [Apache-2.0]
 - websocket-extensions (0.1.4) [Apache-2.0]
 - which (1.3.1) [ISC]
@@ -1052,7 +1053,7 @@ Revision ID: 673cff1911eb24f1e212d2c51b5463b98c9b6c96
 - wrap-ansi (6.2.0) [MIT]
 - wrappy (1.0.2) [ISC]
 - write-file-atomic (5.0.1) [ISC]
-- ws (8.21.0) [MIT]
+- ws (8.21.1) [MIT]
 - wsl-utils (0.1.0) [MIT]
 - yallist (3.1.1) [ISC]
 - yallist (5.0.0) [ISC]
@@ -2240,9 +2241,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: @cacheable/memory (2.0.9)
+Package Title: @cacheable/memory (2.2.0)
 
-Package Locator: npm+@cacheable/memory$2.0.9
+Package Locator: npm+@cacheable/memory$2.2.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -2252,9 +2253,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: @cacheable/utils (2.4.1)
+Package Title: @cacheable/utils (2.5.0)
 
-Package Locator: npm+@cacheable/utils$2.4.1
+Package Locator: npm+@cacheable/utils$2.5.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -2360,9 +2361,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: @csstools/css-syntax-patches-for-csstree (1.1.5)
+Package Title: @csstools/css-syntax-patches-for-csstree (1.1.7)
 
-Package Locator: npm+@csstools/css-syntax-patches-for-csstree$1.1.5
+Package Locator: npm+@csstools/css-syntax-patches-for-csstree$1.1.7
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -2620,9 +2621,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: @floating-ui/core (1.7.5)
+Package Title: @floating-ui/core (1.8.0)
 
-Package Locator: npm+@floating-ui/core$1.7.5
+Package Locator: npm+@floating-ui/core$1.8.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -2644,9 +2645,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: @floating-ui/dom (1.7.6)
+Package Title: @floating-ui/dom (1.8.0)
 
-Package Locator: npm+@floating-ui/dom$1.7.6
+Package Locator: npm+@floating-ui/dom$1.8.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -2656,9 +2657,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: @floating-ui/react (0.27.19)
+Package Title: @floating-ui/react (0.27.20)
 
-Package Locator: npm+@floating-ui/react$0.27.19
+Package Locator: npm+@floating-ui/react$0.27.20
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -2680,9 +2681,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: @floating-ui/react-dom (2.1.8)
+Package Title: @floating-ui/react-dom (2.1.9)
 
-Package Locator: npm+@floating-ui/react-dom$2.1.8
+Package Locator: npm+@floating-ui/react-dom$2.1.9
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -2692,9 +2693,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: @floating-ui/utils (0.2.11)
+Package Title: @floating-ui/utils (0.2.12)
 
-Package Locator: npm+@floating-ui/utils$0.2.11
+Package Locator: npm+@floating-ui/utils$0.2.12
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -3016,9 +3017,9 @@ ISC
 
 
 --------------------------------------------------------------------------------
-Package Title: @joint/core (4.2.5)
+Package Title: @joint/core (4.3.0)
 
-Package Locator: npm+@joint/core$4.2.5
+Package Locator: npm+@joint/core$4.3.0
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -3028,9 +3029,9 @@ MPL-2.0
 
 
 --------------------------------------------------------------------------------
-Package Title: @joint/layout-directed-graph (4.2.5)
+Package Title: @joint/layout-directed-graph (4.3.0)
 
-Package Locator: npm+@joint/layout-directed-graph$4.2.5
+Package Locator: npm+@joint/layout-directed-graph$4.3.0
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -3188,21 +3189,9 @@ Apache-2.0
 
 
 --------------------------------------------------------------------------------
-Package Title: @jsonjoy.com/fs-core (4.57.8)
+Package Title: @jsonjoy.com/fs-core (4.64.0)
 
-Package Locator: npm+@jsonjoy.com/fs-core$4.57.8
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-Apache-2.0
-
-
---------------------------------------------------------------------------------
-Package Title: @jsonjoy.com/fs-fsa (4.57.8)
-
-Package Locator: npm+@jsonjoy.com/fs-fsa$4.57.8
+Package Locator: npm+@jsonjoy.com/fs-core$4.64.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -3212,21 +3201,9 @@ Apache-2.0
 
 
 --------------------------------------------------------------------------------
-Package Title: @jsonjoy.com/fs-node (4.57.8)
+Package Title: @jsonjoy.com/fs-fsa (4.64.0)
 
-Package Locator: npm+@jsonjoy.com/fs-node$4.57.8
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-Apache-2.0
-
-
---------------------------------------------------------------------------------
-Package Title: @jsonjoy.com/fs-node-builtins (4.57.8)
-
-Package Locator: npm+@jsonjoy.com/fs-node-builtins$4.57.8
+Package Locator: npm+@jsonjoy.com/fs-fsa$4.64.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -3236,21 +3213,9 @@ Apache-2.0
 
 
 --------------------------------------------------------------------------------
-Package Title: @jsonjoy.com/fs-node-to-fsa (4.57.8)
+Package Title: @jsonjoy.com/fs-node (4.64.0)
 
-Package Locator: npm+@jsonjoy.com/fs-node-to-fsa$4.57.8
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-Apache-2.0
-
-
---------------------------------------------------------------------------------
-Package Title: @jsonjoy.com/fs-node-utils (4.57.8)
-
-Package Locator: npm+@jsonjoy.com/fs-node-utils$4.57.8
+Package Locator: npm+@jsonjoy.com/fs-node$4.64.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -3260,9 +3225,9 @@ Apache-2.0
 
 
 --------------------------------------------------------------------------------
-Package Title: @jsonjoy.com/fs-print (4.57.8)
+Package Title: @jsonjoy.com/fs-node-builtins (4.64.0)
 
-Package Locator: npm+@jsonjoy.com/fs-print$4.57.8
+Package Locator: npm+@jsonjoy.com/fs-node-builtins$4.64.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -3272,9 +3237,45 @@ Apache-2.0
 
 
 --------------------------------------------------------------------------------
-Package Title: @jsonjoy.com/fs-snapshot (4.57.8)
+Package Title: @jsonjoy.com/fs-node-to-fsa (4.64.0)
 
-Package Locator: npm+@jsonjoy.com/fs-snapshot$4.57.8
+Package Locator: npm+@jsonjoy.com/fs-node-to-fsa$4.64.0
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+Apache-2.0
+
+
+--------------------------------------------------------------------------------
+Package Title: @jsonjoy.com/fs-node-utils (4.64.0)
+
+Package Locator: npm+@jsonjoy.com/fs-node-utils$4.64.0
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+Apache-2.0
+
+
+--------------------------------------------------------------------------------
+Package Title: @jsonjoy.com/fs-print (4.64.0)
+
+Package Locator: npm+@jsonjoy.com/fs-print$4.64.0
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+Apache-2.0
+
+
+--------------------------------------------------------------------------------
+Package Title: @jsonjoy.com/fs-snapshot (4.64.0)
+
+Package Locator: npm+@jsonjoy.com/fs-snapshot$4.64.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -3452,9 +3453,9 @@ ISC
 
 
 --------------------------------------------------------------------------------
-Package Title: @mapbox/jsonlint-lines-primitives (2.0.2)
+Package Title: @mapbox/jsonlint-lines-primitives (2.0.3)
 
-Package Locator: npm+@mapbox/jsonlint-lines-primitives$2.0.2
+Package Locator: npm+@mapbox/jsonlint-lines-primitives$2.0.3
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -3548,9 +3549,9 @@ MIT, ISC, BSD-3-Clause
 
 
 --------------------------------------------------------------------------------
-Package Title: @marijn/find-cluster-break (1.0.2)
+Package Title: @marijn/find-cluster-break (1.0.3)
 
-Package Locator: npm+@marijn/find-cluster-break$1.0.2
+Package Locator: npm+@marijn/find-cluster-break$1.0.3
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -3896,9 +3897,9 @@ Apache-2.0
 
 
 --------------------------------------------------------------------------------
-Package Title: @redux-saga/core (1.5.0)
+Package Title: @redux-saga/core (1.5.1)
 
-Package Locator: npm+@redux-saga/core$1.5.0
+Package Locator: npm+@redux-saga/core$1.5.1
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -3956,9 +3957,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: @redux-saga/types (1.4.0)
+Package Title: @redux-saga/types (1.4.1)
 
-Package Locator: npm+@redux-saga/types$1.4.0
+Package Locator: npm+@redux-saga/types$1.4.1
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -4052,9 +4053,9 @@ Apache-2.0
 
 
 --------------------------------------------------------------------------------
-Package Title: @tanstack/react-virtual (3.14.3)
+Package Title: @tanstack/react-virtual (3.14.8)
 
-Package Locator: npm+@tanstack/react-virtual$3.14.3
+Package Locator: npm+@tanstack/react-virtual$3.14.8
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -4064,9 +4065,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: @tanstack/virtual-core (3.17.1)
+Package Title: @tanstack/virtual-core (3.17.6)
 
-Package Locator: npm+@tanstack/virtual-core$3.17.1
+Package Locator: npm+@tanstack/virtual-core$3.17.6
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -4188,9 +4189,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: @types/express-serve-static-core (4.19.8)
+Package Title: @types/express-serve-static-core (4.19.9)
 
-Package Locator: npm+@types/express-serve-static-core$4.19.8
+Package Locator: npm+@types/express-serve-static-core$4.19.9
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -4236,9 +4237,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: @types/hast (3.0.4)
+Package Title: @types/hast (3.0.5)
 
-Package Locator: npm+@types/hast$3.0.4
+Package Locator: npm+@types/hast$3.0.5
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -4380,9 +4381,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: @types/node (22.20.0)
+Package Title: @types/node (22.20.1)
 
-Package Locator: npm+@types/node$22.20.0
+Package Locator: npm+@types/node$22.20.1
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -4596,9 +4597,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: @ungap/structured-clone (1.3.2)
+Package Title: @ungap/structured-clone (1.3.3)
 
-Package Locator: npm+@ungap/structured-clone$1.3.2
+Package Locator: npm+@ungap/structured-clone$1.3.3
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -5144,9 +5145,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: axios (1.16.1)
+Package Title: axios (1.18.1)
 
-Package Locator: npm+axios$1.16.1
+Package Locator: npm+axios$1.18.1
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -5276,9 +5277,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: baseline-browser-mapping (2.10.43)
+Package Title: baseline-browser-mapping (2.11.4)
 
-Package Locator: npm+baseline-browser-mapping$2.10.43
+Package Locator: npm+baseline-browser-mapping$2.11.4
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -5324,21 +5325,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: body-parser (1.20.5)
+Package Title: body-parser (1.20.6)
 
-Package Locator: npm+body-parser$1.20.5
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
---------------------------------------------------------------------------------
-Package Title: bonjour-service (1.4.2)
-
-Package Locator: npm+bonjour-service$1.4.2
+Package Locator: npm+body-parser$1.20.6
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -5348,9 +5337,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: brace-expansion (1.1.15)
+Package Title: bonjour-service (1.4.3)
 
-Package Locator: npm+brace-expansion$1.1.15
+Package Locator: npm+bonjour-service$1.4.3
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -5360,9 +5349,21 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: brace-expansion (5.0.6)
+Package Title: brace-expansion (1.1.16)
 
-Package Locator: npm+brace-expansion$5.0.6
+Package Locator: npm+brace-expansion$1.1.16
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
+Package Title: brace-expansion (5.0.8)
+
+Package Locator: npm+brace-expansion$5.0.8
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -5384,9 +5385,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: browserslist (4.28.6)
+Package Title: browserslist (4.28.7)
 
-Package Locator: npm+browserslist$4.28.6
+Package Locator: npm+browserslist$4.28.7
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -5468,9 +5469,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: cacheable (2.3.5)
+Package Title: cacheable (2.5.0)
 
-Package Locator: npm+cacheable$2.3.5
+Package Locator: npm+cacheable$2.5.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -5528,9 +5529,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: caniuse-lite (1.0.30001805)
+Package Title: caniuse-lite (1.0.30001806)
 
-Package Locator: npm+caniuse-lite$1.0.30001805
+Package Locator: npm+caniuse-lite$1.0.30001806
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -6140,9 +6141,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: crelt (1.0.6)
+Package Title: crelt (1.0.7)
 
-Package Locator: npm+crelt$1.0.6
+Package Locator: npm+crelt$1.0.7
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -6152,9 +6153,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: cron-parser (5.6.1)
+Package Title: cron-parser (5.6.2)
 
-Package Locator: npm+cron-parser$5.6.1
+Package Locator: npm+cron-parser$5.6.2
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -6624,9 +6625,9 @@ ISC
 
 
 --------------------------------------------------------------------------------
-Package Title: earcut (3.0.2)
+Package Title: earcut (3.2.3)
 
-Package Locator: npm+earcut$3.0.2
+Package Locator: npm+earcut$3.2.3
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -6648,9 +6649,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: electron-to-chromium (1.5.392)
+Package Title: electron-to-chromium (1.5.396)
 
-Package Locator: npm+electron-to-chromium$1.5.392
+Package Locator: npm+electron-to-chromium$1.5.396
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -6720,9 +6721,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: enhanced-resolve (5.24.1)
+Package Title: enhanced-resolve (5.24.3)
 
-Package Locator: npm+enhanced-resolve$5.24.1
+Package Locator: npm+enhanced-resolve$5.24.3
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -6792,9 +6793,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: es-module-lexer (2.1.0)
+Package Title: es-module-lexer (2.3.1)
 
-Package Locator: npm+es-module-lexer$2.1.0
+Package Locator: npm+es-module-lexer$2.3.1
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -7056,9 +7057,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: fast-equals (5.4.0)
+Package Title: fast-equals (5.4.1)
 
-Package Locator: npm+fast-equals$5.4.0
+Package Locator: npm+fast-equals$5.4.1
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -7080,9 +7081,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: fast-uri (3.1.2)
+Package Title: fast-uri (3.1.4)
 
-Package Locator: npm+fast-uri$3.1.2
+Package Locator: npm+fast-uri$3.1.4
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -7144,9 +7145,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: file-entry-cache (11.1.3)
+Package Title: file-entry-cache (11.1.5)
 
-Package Locator: npm+file-entry-cache$11.1.3
+Package Locator: npm+file-entry-cache$11.1.5
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -7216,9 +7217,9 @@ BSD-3-Clause
 
 
 --------------------------------------------------------------------------------
-Package Title: flat-cache (6.1.22)
+Package Title: flat-cache (6.1.23)
 
-Package Locator: npm+flat-cache$6.1.22
+Package Locator: npm+flat-cache$6.1.23
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -7228,9 +7229,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: flatted (3.4.2)
+Package Title: flatted (3.4.3)
 
-Package Locator: npm+flatted$3.4.2
+Package Locator: npm+flatted$3.4.3
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -8010,9 +8011,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: iconv-lite (0.7.2)
+Package Title: iconv-lite (0.7.3)
 
-Package Locator: npm+iconv-lite$0.7.2
+Package Locator: npm+iconv-lite$0.7.3
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -8046,9 +8047,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: ignore (7.0.5)
+Package Title: ignore (7.0.6)
 
-Package Locator: npm+ignore$7.0.5
+Package Locator: npm+ignore$7.0.6
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -8694,9 +8695,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: js-yaml (4.2.0)
+Package Title: js-yaml (4.3.0)
 
-Package Locator: npm+js-yaml$4.2.0
+Package Locator: npm+js-yaml$4.3.0
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -9374,9 +9375,9 @@ CC0-1.0
 
 
 --------------------------------------------------------------------------------
-Package Title: mdn-data (2.28.1)
+Package Title: mdn-data (2.29.0)
 
-Package Locator: npm+mdn-data$2.28.1
+Package Locator: npm+mdn-data$2.29.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -9398,9 +9399,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: memfs (4.57.8)
+Package Title: memfs (4.64.0)
 
-Package Locator: npm+memfs$4.57.8
+Package Locator: npm+memfs$4.64.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -10062,9 +10063,9 @@ ISC
 
 
 --------------------------------------------------------------------------------
-Package Title: nanoid (3.3.15)
+Package Title: nanoid (3.3.16)
 
-Package Locator: npm+nanoid$3.3.15
+Package Locator: npm+nanoid$3.3.16
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -10564,9 +10565,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: picomatch (4.0.4)
+Package Title: picomatch (4.0.5)
 
-Package Locator: npm+picomatch$4.0.4
+Package Locator: npm+picomatch$4.0.5
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -10976,6 +10977,18 @@ MIT
 
 
 --------------------------------------------------------------------------------
+Package Title: range-parser (1.3.0)
+
+Package Locator: npm+range-parser$1.3.0
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
 Package Title: raw-body (2.5.3)
 
 Package Locator: npm+raw-body$2.5.3
@@ -11188,9 +11201,9 @@ BSD-3-Clause
 
 
 --------------------------------------------------------------------------------
-Package Title: react-router (7.18.0)
+Package Title: react-router (7.18.1)
 
-Package Locator: npm+react-router$7.18.0
+Package Locator: npm+react-router$7.18.1
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -12412,9 +12425,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: stylelint-plugin-defensive-css (2.9.3)
+Package Title: stylelint-plugin-defensive-css (2.9.4)
 
-Package Locator: npm+stylelint-plugin-defensive-css$2.9.3
+Package Locator: npm+stylelint-plugin-defensive-css$2.9.4
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -12556,9 +12569,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: tar (7.5.16)
+Package Title: tar (7.5.22)
 
-Package Locator: npm+tar$7.5.16
+Package Locator: npm+tar$7.5.22
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -12568,9 +12581,9 @@ ISC
 
 
 --------------------------------------------------------------------------------
-Package Title: terser (5.48.0)
+Package Title: terser (5.49.0)
 
-Package Locator: npm+terser$5.48.0
+Package Locator: npm+terser$5.49.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -12604,9 +12617,9 @@ Multi-license: Apache-2.0 OR Unlicense
 
 
 --------------------------------------------------------------------------------
-Package Title: thingies (2.6.0)
+Package Title: thingies (2.6.1)
 
-Package Locator: npm+thingies$2.6.0
+Package Locator: npm+thingies$2.6.1
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -13376,9 +13389,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: webpack-sources (3.5.0)
+Package Title: webpack-sources (3.5.1)
 
-Package Locator: npm+webpack-sources$3.5.0
+Package Locator: npm+webpack-sources$3.5.1
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -13508,9 +13521,9 @@ ISC
 
 
 --------------------------------------------------------------------------------
-Package Title: ws (8.21.0)
+Package Title: ws (8.21.1)
 
-Package Locator: npm+ws$8.21.0
+Package Locator: npm+ws$8.21.1
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -24884,6 +24897,20 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 * MIT *
 
 MIT License
+-----------
+
+Copyright (C) 2018-2022 Guy Bedford
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+* MIT *
+
+MIT License
 Copyright (c)  
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24976,20 +25003,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-
-* MIT *
-
-MIT License
------------
-
-Copyright (C) 2018-2022 Guy Bedford
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 * MIT *
@@ -29272,4 +29285,4 @@ POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2026-7-16
+Report Generated by FOSSA on 2026-7-27

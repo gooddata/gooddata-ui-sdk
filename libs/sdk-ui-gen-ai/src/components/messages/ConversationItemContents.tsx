@@ -141,6 +141,7 @@ export function ConversationItemContents({ message, references, isLoading }: Con
                                 message={message}
                                 part={part}
                                 dashboard={part.dashboard}
+                                saved={part.saved}
                             />
                         );
                     }

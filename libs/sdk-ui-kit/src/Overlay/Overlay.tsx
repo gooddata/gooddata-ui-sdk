@@ -15,6 +15,7 @@ import isReactEqual from "react-fast-compare";
 import { Portal } from "react-portal";
 import { v4 as uuid } from "uuid";
 
+import { isClickInsideOwnSubtree } from "../@ui/hooks/useCloseOnOutsideClick.js";
 import { type Alignment, type OverlayPositionType, type SameAsTargetPosition } from "../typings/overlay.js";
 import { ENUM_KEY_CODE } from "../typings/utilities.js";
 import { elementRegion, isFixedPosition } from "../utils/domUtilities.js";
@@ -511,7 +512,10 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
     };
 
     public onDocumentMouseDown(e: MouseEvent): void {
-        this.clickedInside = (this.overlayRef.current as any).contains(e.target);
+        const target = e.target instanceof Element ? e.target : null;
+        this.clickedInside =
+            !!this.overlayRef.current?.contains(target) ||
+            isClickInsideOwnSubtree(target, this.overlayRef.current);
         if (this.clickedInside) {
             e.stopPropagation();
         }

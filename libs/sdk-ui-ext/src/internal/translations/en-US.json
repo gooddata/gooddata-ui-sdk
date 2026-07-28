@@ -515,13 +515,17 @@
         "text": "Property is not applicable for this configuration of the visualization",
         "crowdinContext": "Tooltip for distinct point shapes configuration option"
     },
-    "properties.canvas.dataLabels": {
-        "text": "Data Labels",
-        "crowdinContext": "Label for data labels configuration option"
+    "properties.canvas.labels.subsectionTitle": {
+        "text": "Labels",
+        "crowdinContext": "Sub-header grouping label configuration controls (Display, Style, Position) inside the Canvas section"
     },
     "properties.canvas.dataLabels.auto": {
         "text": "auto (default)",
         "crowdinContext": "Label for automatic data labels configuration option"
+    },
+    "properties.canvas.dataLabels.auto.info": {
+        "text": "Shows labels, but hides individual ones that would overlap.",
+        "crowdinContext": "Tooltip for the auto (default) option in the Display dropdown"
     },
     "properties.canvas.dataLabels.show": {
         "text": "show",
@@ -532,16 +536,44 @@
         "crowdinContext": "Label for hide data labels configuration option"
     },
     "properties.canvas.dataLabelStyle": {
-        "text": "Labels Style",
+        "text": "Style",
         "crowdinContext": "Label for data label style configuration option"
     },
     "properties.canvas.dataLabelStyle.auto": {
         "text": "auto (default)",
         "crowdinContext": "Option for automatic data label style"
     },
+    "properties.canvas.dataLabelStyle.auto.info": {
+        "text": "Automatically colors label text for contrast.",
+        "crowdinContext": "Tooltip for the auto (default) option in the Style dropdown"
+    },
     "properties.canvas.dataLabelStyle.backplate": {
         "text": "backplate",
         "crowdinContext": "Option for data label style with backplate"
+    },
+    "properties.canvas.dataLabelDisplay": {
+        "text": "Display",
+        "crowdinContext": "Label for data label visibility configuration (show / hide / auto)"
+    },
+    "properties.canvas.dataLabelPosition": {
+        "text": "Position",
+        "crowdinContext": "Label for pie/donut data label placement configuration (inside / outside / auto)"
+    },
+    "properties.canvas.dataLabelPosition.auto": {
+        "text": "auto (default)",
+        "crowdinContext": "Option for automatic label placement on pie/donut: whole-chart decision based on smallest slice size"
+    },
+    "properties.canvas.dataLabelPosition.auto.info": {
+        "text": "Places all labels inside, or all outside, if slices are too small.",
+        "crowdinContext": "Tooltip for the auto (default) option in the Position dropdown"
+    },
+    "properties.canvas.dataLabelPosition.inside": {
+        "text": "inside",
+        "crowdinContext": "Option that forces all pie/donut labels inside their slices"
+    },
+    "properties.canvas.dataLabelPosition.outside": {
+        "text": "outside",
+        "crowdinContext": "Option that places all pie/donut labels outside with leader lines"
     },
     "properties.canvas.rowHeight": {
         "text": "Row height",

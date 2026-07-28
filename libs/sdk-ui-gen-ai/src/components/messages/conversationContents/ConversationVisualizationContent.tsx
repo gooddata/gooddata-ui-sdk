@@ -726,10 +726,12 @@ function useHandlers({ visualization, setSaveDialogOpen, onCopyToClipboard }: IU
             }
 
             if (isSaved) {
+                const visualizationStatus = "saved";
                 if (config.allowNativeLinks) {
                     window.location.href = getVisualizationHref(
                         workspaceId,
                         visualization.insight.identifier,
+                        visualizationStatus,
                         useHostedAnalyticalDesigner,
                     );
                 } else {
@@ -742,8 +744,11 @@ function useHandlers({ visualization, setSaveDialogOpen, onCopyToClipboard }: IU
                         itemUrl: getVisualizationHref(
                             workspaceId,
                             visualization.insight.identifier,
+                            visualizationStatus,
                             useHostedAnalyticalDesigner,
                         ),
+                        visualization,
+                        visualizationStatus,
                     });
                     e.stopPropagation();
                 }
@@ -760,11 +765,13 @@ function useHandlers({ visualization, setSaveDialogOpen, onCopyToClipboard }: IU
                 return;
             }
 
+            const visualizationStatus = "saved";
             let link: string | undefined = undefined;
             if (config.allowNativeLinks) {
                 link = getAbsoluteVisualizationHref(
                     workspaceId,
                     visualization.insight.identifier,
+                    visualizationStatus,
                     useHostedAnalyticalDesigner,
                 );
             } else {
@@ -777,8 +784,11 @@ function useHandlers({ visualization, setSaveDialogOpen, onCopyToClipboard }: IU
                     itemUrl: getAbsoluteVisualizationHref(
                         workspaceId,
                         visualization.insight.identifier,
+                        visualizationStatus,
                         useHostedAnalyticalDesigner,
                     ),
+                    visualization,
+                    visualizationStatus,
                 });
             }
             if (link) {

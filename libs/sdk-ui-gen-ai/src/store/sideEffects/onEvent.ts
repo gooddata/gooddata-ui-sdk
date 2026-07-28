@@ -16,7 +16,11 @@ import {
     isTextContents,
     isUserMessage,
 } from "../../model.js";
-import { copyToClipboardAction, setOpenAction } from "../chatWindow/chatWindowSlice.js";
+import {
+    copyToClipboardAction,
+    onDefinitionReceivedAction,
+    setOpenAction,
+} from "../chatWindow/chatWindowSlice.js";
 import { type EventDispatcher } from "../events.js";
 import { clearCachedMessages, saveMessages, setIsOpened } from "../localStorage.js";
 import {
@@ -59,6 +63,7 @@ export function* onEvent() {
     yield takeEvery(visualizationErrorAction.type, onVisualizationError);
     yield takeEvery(saveVisualizationErrorAction.type, onSaveVisualizationError);
     yield takeEvery(saveVisualizationSuccessAction.type, onSaveVisualizationSuccess);
+    yield takeEvery(onDefinitionReceivedAction.type, onDefinitionReceived);
     yield takeEvery(copyToClipboardAction.type, onCopyToClipboard);
     yield takeEvery(pinConversationSuccessAction.type, onConversationPinUpdated);
     yield takeEvery(pinConversationFailureAction.type, onConversationPinError);
@@ -414,6 +419,17 @@ function* onCopyToClipboard({ payload: { content } }: ReturnType<typeof copyToCl
         type: "chatCopyToClipboard",
         threadId,
         content,
+    });
+}
+
+function* onDefinitionReceived({ payload }: ReturnType<typeof onDefinitionReceivedAction>) {
+    const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
+    const threadId: string | undefined = yield select(threadIdSelector);
+
+    eventDispatcher.dispatch({
+        type: "onDefinitionReceived",
+        threadId,
+        ...payload,
     });
 }
 

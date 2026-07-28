@@ -1,6 +1,8 @@
 // (C) 2025 GoodData Corporation
 // Date Filter Form Buttons styling
 
+@use "@gooddata/sdk-ui-kit/styles/scss/list" as list;
+
 .gd-date-filter-form-buttons {
     padding-top: 2px;
     padding-bottom: 2px;
@@ -11,7 +13,7 @@
         gap: 0;
 
         .gd-date-filter-form-button {
-            padding: 0 10px 0 10px;
+            padding: 0 list.$menu-item-icon-width 0 10px;
             border: 0;
             height: 23px;
         }

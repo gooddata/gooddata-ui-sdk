@@ -116,16 +116,35 @@ export const orientationDropdownItems: IDropdownItem[] = [
 ];
 
 export const dataLabelsDropdownItems: IDropdownItem[] = [
-    { title: messages["dataLabelsAuto"].id, value: "auto" },
+    {
+        title: messages["dataLabelsAuto"].id,
+        value: "auto",
+        info: messages["dataLabelsAutoInfo"].id,
+    },
     { type: "separator" },
     { title: messages["dataLabelsShow"].id, value: true },
     { title: messages["dataLabelsHide"].id, value: false },
 ];
 
 export const dataLabelStyleDropdownItems: IDropdownItem[] = [
-    { title: messages["dataLabelStyleAuto"].id, value: "auto" },
+    {
+        title: messages["dataLabelStyleAuto"].id,
+        value: "auto",
+        info: messages["dataLabelStyleAutoInfo"].id,
+    },
     { type: "separator" },
     { title: messages["dataLabelStyleBackplate"].id, value: "backplate" },
+];
+
+export const dataLabelPositionDropdownItems: IDropdownItem[] = [
+    {
+        title: messages["dataLabelPositionAuto"].id,
+        value: "auto",
+        info: messages["dataLabelPositionAutoInfo"].id,
+    },
+    { type: "separator" },
+    { title: messages["dataLabelPositionInside"].id, value: "inside" },
+    { title: messages["dataLabelPositionOutside"].id, value: "outside" },
 ];
 
 export const rowSizingDropdownItems: IDropdownItem[] = [

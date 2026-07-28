@@ -1,12 +1,13 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ITheme } from "@gooddata/sdk-model";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { getContrastRatio, getRgbFromWebColor, parseRGBColorCode } from "@gooddata/sdk-ui-vis-commons";
+import { getContrastRatio, getRgbFromWebColor } from "@gooddata/sdk-ui-vis-commons";
 
 import { getDataLabelAttributes } from "../../chartTypes/_chartCreators/dataLabelsHelpers.js";
 import {
     getChartType,
+    getResolvedPiePosition,
     getShapeAttributes,
     getVisibleSeries,
     isStacked,
@@ -114,8 +115,8 @@ export function isLightNotContrastEnough(
         // to keep first 17 colors from our default palette with white labels
         const HIGHCHARTS_CONTRAST_THRESHOLD = 530;
 
-        const { R, G, B } = parseRGBColorCode(backgroundColor);
-        const lightnessHCH = R + G + B;
+        const rgb = getRgbFromWebColor(backgroundColor);
+        const lightnessHCH = (rgb?.r ?? 0) + (rgb?.g ?? 0) + (rgb?.b ?? 0);
 
         return lightnessHCH > HIGHCHARTS_CONTRAST_THRESHOLD;
     } else {
@@ -136,6 +137,19 @@ function setContrastLabelsColor(chart: any, theme: ITheme | null) {
             setBlackColor(point, darkColor);
         } else {
             setWhiteColor(point, lightStyle.color, lightStyle["textShadow"]);
+        }
+    });
+}
+
+// Applies per-slice contrast to every inside label. Bypasses the theme's autoLightTextColor/
+// autoDarkTextColor so pie inside labels stay readable even if the workspace theme misconfigures
+// those to dark values (contrast decision uses hardcoded white/black).
+function setPieInsideLabelsContrast(chart: Highcharts.Chart): void {
+    getVisiblePointsWithLabel(chart).forEach((point: any) => {
+        if (isLightNotContrastEnough(point.color)) {
+            setBlackColor(point);
+        } else {
+            setWhiteColor(point);
         }
     });
 }
@@ -175,8 +189,14 @@ function getDataLabelsStyle(chart: any) {
     return chart.options.plotOptions?.gdcOptions?.dataLabels?.style;
 }
 
+function isDonutDataLabelsEnabled(chart: Highcharts.Chart): boolean {
+    const plotOptions = chart.options.plotOptions as
+        | { gdcOptions?: { enableDonutDataLabels?: boolean } }
+        | undefined;
+    return plotOptions?.gdcOptions?.enableDonutDataLabels === true;
+}
+
 function applyNormalModeColorLogic(chart: any, type: string | undefined, theme: ITheme | null): void {
-    // Normal mode: Use custom color logic
     if (type === VisualizationTypes.BAR) {
         setTimeout(() => {
             setBarDataLabelsColor(chart, theme);
@@ -203,17 +223,31 @@ export function extendDataLabelColors(Highcharts: any, theme: ITheme | null): vo
         const labelsStyle = getDataLabelsStyle(chart);
 
         const changeLabelColor = () => {
-            // Backplate mode: styles already set in config
+            // Backplate style: static config already sets background/border/text — no override
             if (labelsStyle === "backplate") {
                 return;
             }
 
+            // WCHM takes precedence over any custom color logic so system colors win
             if (isHighContrastMode()) {
-                // In WCHM: Ensure all data labels use system colors
                 ensureWCHMDataLabels(chart);
-            } else {
-                applyNormalModeColorLogic(chart, type, theme);
+                return;
             }
+
+            // New pie/donut behavior gated behind the enableDonutDataLabels feature flag.
+            // Position is resolved once for the whole chart — all labels are either inside or outside.
+            const isPieOrDonut = isOneOfTypes(type, [VisualizationTypes.PIE, VisualizationTypes.DONUT]);
+            if (isDonutDataLabelsEnabled(chart) && isPieOrDonut) {
+                // Outside labels sit on the chart background — static config already sets black text
+                if (getResolvedPiePosition(chart) === "outside") {
+                    return;
+                }
+                // Inside labels sit on the colored slice — pick contrasting text per slice
+                setPieInsideLabelsContrast(chart);
+                return;
+            }
+
+            applyNormalModeColorLogic(chart, type, theme);
         };
 
         changeLabelColor();

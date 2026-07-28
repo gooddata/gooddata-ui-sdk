@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-model, sdk-ui-charts, sdk-ui-ext: Add pie/donut data label position control (auto/inside/outside) with whole-chart adaptive auto mode and backplate composition, gated behind the enableDonutDataLabels feature flag",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "armana.hajovska@gooddata.com"
+}

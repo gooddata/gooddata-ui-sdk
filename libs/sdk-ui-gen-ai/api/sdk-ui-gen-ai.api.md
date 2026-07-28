@@ -19,10 +19,13 @@ import { IChatConversationContent } from '@gooddata/sdk-backend-spi';
 import { IChatConversationError } from '@gooddata/sdk-backend-spi';
 import { IChatConversationItem } from '@gooddata/sdk-backend-spi';
 import { IChatConversationMultipartPart } from '@gooddata/sdk-backend-spi';
+import { IChatConversationVisualisationContent } from '@gooddata/sdk-backend-spi';
 import { IChatSuggestions } from '@gooddata/sdk-backend-spi';
 import { IColorPalette } from '@gooddata/sdk-model';
+import { IDashboard } from '@gooddata/sdk-model';
 import type { IGenAIChangeAnalysisParams } from '@gooddata/sdk-model';
 import type { IGenAIVisualization } from '@gooddata/sdk-model';
+import { IInsight } from '@gooddata/sdk-model';
 import type { ISemanticSearchRelationship } from '@gooddata/sdk-model';
 import type { ISemanticSearchResultItem } from '@gooddata/sdk-model';
 import { IUiButtonProps } from '@gooddata/sdk-ui-kit';
@@ -140,7 +143,18 @@ export type ChatCopyToClipboardEvent = BaseEvent & {
 };
 
 // @public
-export type ChatEvent = ChatOpenedEvent | ChatClosedEvent | ChatResetEvent | ChatConversationPinnedEvent | ChatConversationPinErrorEvent | ChatConversationDeleteEvent | ChatConversationDeletedSuccessEvent | ChatConversationDeletedErrorEvent | ChatConversationRenameEvent | ChatConversationRenamedSuccessEvent | ChatConversationRenamedErrorEvent | ChatUserMessageEvent | ChatAssistantMessageEvent | ChatFeedbackEvent | ChatFeedbackErrorEvent | ChatCopyToClipboardEvent | ChatVisualizationErrorEvent | ChatSaveVisualizationErrorEvent | ChatSaveVisualizationSuccessEvent | ChatConversationChangedEvent;
+export type ChatDefinitionReceivedEvent = BaseEvent & {
+    type: "onDefinitionReceived";
+    definitionType: "dashboard" | "visualization";
+    itemId: string;
+    conversationId: string;
+    interactionId?: string;
+    dashboard?: IDashboard;
+    visualization?: NonNullable<IChatConversationVisualisationContent["visualization"]>;
+};
+
+// @public
+export type ChatEvent = ChatOpenedEvent | ChatClosedEvent | ChatResetEvent | ChatConversationPinnedEvent | ChatConversationPinErrorEvent | ChatConversationDeleteEvent | ChatConversationDeletedSuccessEvent | ChatConversationDeletedErrorEvent | ChatConversationRenameEvent | ChatConversationRenamedSuccessEvent | ChatConversationRenamedErrorEvent | ChatUserMessageEvent | ChatAssistantMessageEvent | ChatFeedbackEvent | ChatFeedbackErrorEvent | ChatCopyToClipboardEvent | ChatVisualizationErrorEvent | ChatSaveVisualizationErrorEvent | ChatSaveVisualizationSuccessEvent | ChatConversationChangedEvent | ChatDefinitionReceivedEvent;
 
 // @public
 export type ChatEventHandler<TEvent extends ChatEvent = any> = {
@@ -402,6 +416,9 @@ export const isChatConversationRenameEvent: (event: ChatEvent) => event is ChatC
 export const isChatCopyToClipboardEvent: (event: ChatEvent) => event is ChatCopyToClipboardEvent;
 
 // @public
+export const isChatDefinitionReceivedEvent: (event: ChatEvent) => event is ChatDefinitionReceivedEvent;
+
+// @public
 export const isChatFeedbackErrorEvent: (event: ChatEvent) => event is ChatFeedbackErrorEvent;
 
 // @public
@@ -442,6 +459,10 @@ export type LinkHandlerEvent = {
     itemUrl: string;
     preventDefault: () => void;
     section?: "ai";
+    dashboard?: IDashboard;
+    dashboardStatus?: "saved" | "draft";
+    visualization?: IInsight;
+    visualizationStatus?: "saved" | "draft";
 };
 
 // @internal

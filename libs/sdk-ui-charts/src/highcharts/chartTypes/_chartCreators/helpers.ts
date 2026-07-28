@@ -60,6 +60,16 @@ export const getDataPointsOfVisibleSeries = (chart: Highcharts.Chart): Highchart
     getDataPoints(getVisibleSeries(chart));
 
 export const getChartType = (chart: Highcharts.Chart): string | undefined => chart.options.chart?.type;
+
+// Reads the pie/donut label position that customConfiguration resolved from chart data at build
+// time (see resolvePiePosition). Stored on plotOptions.gdcOptions rather than the standard
+// Highcharts config so the load event and the label-color plugin can share the same decision.
+export const getResolvedPiePosition = (chart: Highcharts.Chart): "inside" | "outside" | undefined => {
+    const plotOptions = chart.options.plotOptions as
+        | { gdcOptions?: { dataLabels?: { resolvedPosition?: "inside" | "outside" } } }
+        | undefined;
+    return plotOptions?.gdcOptions?.dataLabels?.resolvedPosition;
+};
 export const isStacked = (chart: Highcharts.Chart): boolean => {
     const chartType = getChartType(chart) as keyof PlotOptions;
 

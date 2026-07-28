@@ -2776,6 +2776,7 @@ export interface IFeatureFlags {
     // (undocumented)
     enableDataSection?: boolean;
     enableDefaultSmtp?: boolean;
+    enableDonutDataLabels?: boolean;
     enableDrillToUrlByDefault?: boolean;
     enableEmbedButtonInAD?: boolean;
     enableEmbedButtonInKD?: boolean;

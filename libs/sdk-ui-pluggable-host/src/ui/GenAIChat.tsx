@@ -8,6 +8,7 @@ import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import type { IGenAIUserContext } from "@gooddata/sdk-model";
 import { useBackendStrict } from "@gooddata/sdk-ui";
 import {
+    type ChatDefinitionReceivedEvent,
     type ChatAssistantMessageEvent,
     type ChatClosedEvent,
     type ChatFeedbackEvent,
@@ -40,6 +41,7 @@ export type GenAIChatEvent =
     | { name: "chat.reset"; payload: ChatResetEvent }
     | { name: "chat.feedback"; payload: ChatFeedbackEvent }
     | { name: "chat.user-message"; payload: ChatUserMessageEvent }
+    | { name: "chat.definition-received"; payload: ChatDefinitionReceivedEvent }
     | { name: "chat.assistant-message"; payload: ChatAssistantMessageEvent };
 
 export interface IGenAIChatProps {
@@ -189,6 +191,9 @@ export function GenAIChat({
                     break;
                 case "copy-to-clipboard":
                     addSuccess(defineMessage({ id: "messages.genAi.visualisation.link.copied" }));
+                    break;
+                case "definition-received":
+                    onEvent?.({ name: "chat.definition-received", payload: event.payload });
                     break;
                 default:
                     break;

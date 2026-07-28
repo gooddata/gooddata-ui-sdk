@@ -5,6 +5,7 @@ import { describe, expect, it, vi } from "vitest";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import {
     type IAnalyticalBackend,
+    type IAttributeWithReferences,
     type ICollectionItemsConfig,
     type ICollectionItemsResult,
     type IDataView,
@@ -389,6 +390,89 @@ function createFactsBackend(
                 ...backend.workspace(id).facts(),
                 getFact,
                 getFactDatasetMeta,
+            }),
+        }),
+    };
+}
+
+const AWR_DF_REF: ObjRef = idRef("df.account.name", "displayForm");
+// a sibling display form of the same attribute; used to assert cross-display-form cache coverage
+const AWR_DF_REF_2: ObjRef = idRef("df.account.id", "displayForm");
+const AWR_ATTR_REF: ObjRef = idRef("attr.account", "attribute");
+const AWR_DATASET_REF: ObjRef = idRef("dataset.account", "dataSet");
+
+const SAMPLE_ATTRIBUTE_WITH_REFERENCES = {
+    attribute: {
+        type: "attribute",
+        id: "attr.account",
+        uri: "/attributes/attr.account",
+        ref: AWR_ATTR_REF,
+        title: "Account",
+        description: "",
+        production: true,
+        deprecated: false,
+        unlisted: false,
+        displayForms: [
+            {
+                type: "displayForm",
+                id: "df.account.name",
+                uri: "/displayForms/df.account.name",
+                ref: AWR_DF_REF,
+                attribute: AWR_ATTR_REF,
+                title: "Name",
+                description: "",
+                production: true,
+                deprecated: false,
+                unlisted: false,
+            },
+            {
+                type: "displayForm",
+                id: "df.account.id",
+                uri: "/displayForms/df.account.id",
+                ref: AWR_DF_REF_2,
+                attribute: AWR_ATTR_REF,
+                title: "Id",
+                description: "",
+                production: true,
+                deprecated: false,
+                unlisted: false,
+            },
+        ],
+    },
+    dataSet: {
+        type: "dataSet",
+        id: "dataset.account",
+        uri: "/datasets/dataset.account",
+        ref: AWR_DATASET_REF,
+        title: "Account dataset",
+        description: "",
+        production: true,
+        deprecated: false,
+        unlisted: false,
+    },
+} as IAttributeWithReferences;
+
+type AttributesProviders = {
+    getAttributesWithReferences?: IWorkspaceAttributesService["getAttributesWithReferences"];
+    getAttributeByDisplayForm?: IWorkspaceAttributesService["getAttributeByDisplayForm"];
+    getAttributeDatasetMeta?: IWorkspaceAttributesService["getAttributeDatasetMeta"];
+};
+
+/**
+ * Builds a backend whose attributes service delegates to the provided (typically call-counting)
+ * implementations. The default dummy backend's getAttributesWithReferences / getAttributeDatasetMeta throw
+ * NotSupported, so tests need to supply their own to assert de-duplication and secondary caching.
+ */
+function createAttributesBackend(providers: AttributesProviders): IAnalyticalBackend {
+    const backend = dummyBackendEmptyData();
+
+    return {
+        ...backend,
+        workspace: (id: string) => ({
+            ...backend.workspace(id),
+            attributes: () => ({
+                ...backend.workspace(id).attributes(),
+                ...providers,
             }),
         }),
     };
@@ -1674,6 +1758,149 @@ describe("withCaching", () => {
                 await backend.workspace("test").attributes().getConnectedAttributesByDisplayForm(ref);
 
                 expect(counts.getConnectedAttributesByDisplayForm).toBe(2);
+            });
+        });
+
+        describe("getAttributesWithReferences", () => {
+            it("collapses N concurrent same-ref calls into one underlying call with identical results", async () => {
+                // resolve only after all concurrent callers have registered on the in-flight promise
+                const underlying = vi.fn(
+                    () =>
+                        new Promise<IAttributeWithReferences[]>((resolve) =>
+                            setTimeout(() => resolve([{ ...SAMPLE_ATTRIBUTE_WITH_REFERENCES }]), 10),
+                        ),
+                );
+                const backend = withCachingForTests(
+                    createAttributesBackend({ getAttributesWithReferences: underlying }),
+                );
+                const service = backend.workspace("test").attributes();
+
+                const results = await Promise.all(
+                    Array.from({ length: 5 }, () => service.getAttributesWithReferences([AWR_DF_REF])),
+                );
+
+                // de-duplication: a single underlying call serves all concurrent callers
+                expect(underlying).toHaveBeenCalledTimes(1);
+                // and they all observe identical result references
+                results.forEach((result) => {
+                    expect(result).toHaveLength(1);
+                    expect(result[0]).toBe(results[0][0]);
+                });
+            });
+
+            it("populates the secondary caches so follow-up scalar reads are served from cache", async () => {
+                const getAttributesWithReferences = vi.fn(async () => [
+                    { ...SAMPLE_ATTRIBUTE_WITH_REFERENCES },
+                ]);
+                const getAttributeByDisplayForm = vi.fn();
+                const getAttributeDatasetMeta = vi.fn();
+                const backend = withCachingForTests(
+                    createAttributesBackend({
+                        getAttributesWithReferences,
+                        getAttributeByDisplayForm,
+                        getAttributeDatasetMeta,
+                    }),
+                );
+                const service = backend.workspace("test").attributes();
+
+                await service.getAttributesWithReferences([AWR_DF_REF]);
+
+                // attribute-by-display-form cache is populated -> underlying scalar read is not hit
+                const attribute = await service.getAttributeByDisplayForm(AWR_DF_REF);
+                expect(attribute).toBe(SAMPLE_ATTRIBUTE_WITH_REFERENCES.attribute);
+                expect(getAttributeByDisplayForm).not.toHaveBeenCalled();
+
+                // dataset-by-attribute cache is populated -> underlying scalar read is not hit
+                const dataSet = await service.getAttributeDatasetMeta(AWR_ATTR_REF);
+                expect(dataSet).toBe(SAMPLE_ATTRIBUTE_WITH_REFERENCES.dataSet);
+                expect(getAttributeDatasetMeta).not.toHaveBeenCalled();
+            });
+
+            it("evicts the cache entry on error so a subsequent call retries", async () => {
+                const underlying = vi
+                    .fn<IWorkspaceAttributesService["getAttributesWithReferences"]>()
+                    .mockRejectedValueOnce(new Error("boom"))
+                    .mockResolvedValueOnce([{ ...SAMPLE_ATTRIBUTE_WITH_REFERENCES }]);
+                const backend = withCachingForTests(
+                    createAttributesBackend({ getAttributesWithReferences: underlying }),
+                );
+                const service = backend.workspace("test").attributes();
+
+                await expect(service.getAttributesWithReferences([AWR_DF_REF])).rejects.toThrow("boom");
+
+                // the failed entry is evicted, so a subsequent call hits the backend again and succeeds
+                const result = await service.getAttributesWithReferences([AWR_DF_REF]);
+                expect(result[0].attribute.id).toEqual("attr.account");
+                expect(underlying).toHaveBeenCalledTimes(2);
+            });
+
+            it("reuses cached results for a subsequent call for the same ref", async () => {
+                const underlying = vi.fn(async () => [{ ...SAMPLE_ATTRIBUTE_WITH_REFERENCES }]);
+                const backend = withCachingForTests(
+                    createAttributesBackend({ getAttributesWithReferences: underlying }),
+                );
+                const service = backend.workspace("test").attributes();
+
+                const first = await service.getAttributesWithReferences([AWR_DF_REF]);
+                const second = await service.getAttributesWithReferences([AWR_DF_REF]);
+
+                expect(underlying).toHaveBeenCalledTimes(1);
+                expect(second[0]).toBe(first[0]);
+            });
+
+            it("serves a sibling display form of an already-loaded attribute from cache", async () => {
+                // e2e-representative (drillToDashboard): the source and the drilled-to filter reference
+                // different display forms of the same attribute. Loading the attribute for one display form
+                // must make any other display form of that attribute a cache hit - no second request - so
+                // the outgoing request set stays identical to master.
+                const underlying = vi.fn(async () => [{ ...SAMPLE_ATTRIBUTE_WITH_REFERENCES }]);
+                const backend = withCachingForTests(
+                    createAttributesBackend({ getAttributesWithReferences: underlying }),
+                );
+                const service = backend.workspace("test").attributes();
+
+                // load the attribute via its first display form
+                await service.getAttributesWithReferences([AWR_DF_REF]);
+
+                // then request a DIFFERENT display form of the same attribute
+                const sibling = await service.getAttributesWithReferences([AWR_DF_REF_2]);
+
+                // served from cache - no second underlying call - and the attribute is returned
+                expect(underlying).toHaveBeenCalledTimes(1);
+                expect(sibling).toHaveLength(1);
+                expect(sibling[0].attribute.id).toEqual("attr.account");
+            });
+
+            it("resets attributes cache with resetAttributes", async () => {
+                let cacheControl: CacheControl | undefined;
+                const underlying = vi.fn(async () => [{ ...SAMPLE_ATTRIBUTE_WITH_REFERENCES }]);
+                const backend = withCachingForTests(
+                    createAttributesBackend({ getAttributesWithReferences: underlying }),
+                    (cc) => (cacheControl = cc),
+                );
+                const service = backend.workspace("test").attributes();
+
+                await service.getAttributesWithReferences([AWR_DF_REF]);
+                cacheControl?.resetAttributes();
+                await service.getAttributesWithReferences([AWR_DF_REF]);
+
+                expect(underlying).toHaveBeenCalledTimes(2);
+            });
+
+            it("resets attributes cache with resetAll", async () => {
+                let cacheControl: CacheControl | undefined;
+                const underlying = vi.fn(async () => [{ ...SAMPLE_ATTRIBUTE_WITH_REFERENCES }]);
+                const backend = withCachingForTests(
+                    createAttributesBackend({ getAttributesWithReferences: underlying }),
+                    (cc) => (cacheControl = cc),
+                );
+                const service = backend.workspace("test").attributes();
+
+                await service.getAttributesWithReferences([AWR_DF_REF]);
+                cacheControl?.resetAll();
+                await service.getAttributesWithReferences([AWR_DF_REF]);
+
+                expect(underlying).toHaveBeenCalledTimes(2);
             });
         });
 
