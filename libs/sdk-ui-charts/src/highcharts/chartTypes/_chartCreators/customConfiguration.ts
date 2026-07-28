@@ -11,6 +11,7 @@ import { type ChartType, type IDrillConfig, VisualizationTypes } from "@gooddata
 import { buildTooltipLocalizedStrings, getLighterColor, isPatternObject } from "@gooddata/sdk-ui-vis-commons";
 
 import { type IAxisConfig, type IChartConfig } from "../../../interfaces/chartConfig.js";
+import { getBlackLabelStyle } from "../../constants/label.js";
 import {
     type AxisLabelsFormatterCallbackFunction,
     type HighchartsOptions,
@@ -22,6 +23,7 @@ import {
     type IChartOptions,
     type IChartOptionsData,
     type ICustomTooltipRuntime,
+    type ISeriesDataItem,
     type ISeriesItem,
     type ITooltipFactory,
     type IUnsafeHighchartsTooltipPoint,
@@ -781,6 +783,49 @@ function shouldDisableHeatmapDataLabels(series: ISeriesItem[]): boolean {
     return series.some((item) => (item.data?.length ?? 0) >= HEATMAP_DATA_LABELS_LIMIT);
 }
 
+const AUTO_POSITION_OUTSIDE_THRESHOLD = 5;
+
+// Whole-chart auto decision: if the smallest visible slice is <= 5%, all labels render outside
+// as callouts; otherwise all labels render inside. A chart never mixes inside and outside.
+function resolvePiePosition(
+    position: "auto" | "inside" | "outside" | undefined,
+    seriesData: ISeriesDataItem[] | undefined,
+): "inside" | "outside" {
+    if (position === "inside" || position === "outside") {
+        return position;
+    }
+    const positiveValues = (seriesData ?? [])
+        .map((item) => (typeof item?.y === "number" ? item.y : 0))
+        .filter((value) => value > 0);
+    if (positiveValues.length === 0) {
+        return "inside";
+    }
+    const total = positiveValues.reduce((sum, value) => sum + value, 0);
+    const minPercentage = (Math.min(...positiveValues) / total) * 100;
+    return minPercentage <= AUTO_POSITION_OUTSIDE_THRESHOLD ? "outside" : "inside";
+}
+
+function getPieLabelDataLabelsConfig(
+    labelsStyle: "auto" | "backplate" | undefined,
+    resolvedPosition: "inside" | "outside",
+    defaultLabelsConfig: Highcharts.DataLabelsOptions,
+    theme?: ITheme,
+): Highcharts.SeriesPieDataLabelsOptionsObject[] {
+    // Backplate composes with either placement — keep the pre-computed backplate style so
+    // its backgroundColor/borderColor flow through. Non-backplate outside labels need black
+    // text because they sit on the chart background rather than a slice (pie inherits white
+    // via whiteDataLabelTypes which would blend into a light chart bg).
+    const insideStyle: Highcharts.CSSObject = { ...defaultLabelsConfig.style, textOutline: "none" };
+    const outsideStyle: Highcharts.CSSObject =
+        labelsStyle === "backplate" ? insideStyle : { ...getBlackLabelStyle(theme), textOutline: "none" };
+
+    if (resolvedPosition === "outside") {
+        return [{ ...defaultLabelsConfig, style: outsideStyle, distance: 30 }];
+    }
+    // Load event in pieConfiguration/donutConfiguration patches the distance after render.
+    return [{ ...defaultLabelsConfig, style: insideStyle, verticalAlign: "middle" }];
+}
+
 function getDataLabelsConfiguration(
     chartOptions: IChartOptions,
     _config: any,
@@ -794,6 +839,13 @@ function getDataLabelsConfiguration(
 
     const labelsVisible = chartConfig?.dataLabels?.visible;
     const labelsStyle = chartConfig?.dataLabels?.style;
+    const labelsPosition = chartConfig?.dataLabels?.position;
+    // Position is a pie/donut-only concept — resolve only for those chart types so we don't
+    // pollute gdcOptions on every chart.
+    const isPieOrDonut = type === VisualizationTypes.PIE || type === VisualizationTypes.DONUT;
+    const resolvedPiePosition = isPieOrDonut
+        ? resolvePiePosition(labelsPosition, chartOptions.data?.series?.[0]?.data)
+        : undefined;
 
     // handling of existing behaviour
     const totalsVisible =
@@ -846,7 +898,11 @@ function getDataLabelsConfiguration(
                     visible: labelsVisible,
                     totalsVisible: totalsVisible,
                     style: labelsStyle,
+                    // Read by the pie/donut load event and the label-color plugin at runtime
+                    // (see getResolvedPiePosition in helpers.ts).
+                    resolvedPosition: resolvedPiePosition,
                 },
+                enableDonutDataLabels: chartConfig?.enableDonutDataLabels,
             },
             bar: {
                 dataLabels: {
@@ -894,10 +950,15 @@ function getDataLabelsConfiguration(
                 },
             },
             pie: {
-                dataLabels: {
-                    ...DEFAULT_LABELS_CONFIG,
-                    verticalAlign: "middle",
-                },
+                dataLabels:
+                    chartConfig?.enableDonutDataLabels && resolvedPiePosition
+                        ? getPieLabelDataLabelsConfig(
+                              labelsStyle,
+                              resolvedPiePosition,
+                              DEFAULT_LABELS_CONFIG,
+                              theme,
+                          )
+                        : { ...DEFAULT_LABELS_CONFIG, verticalAlign: "middle" },
             },
             waterfall: {
                 dataLabels: {

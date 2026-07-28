@@ -20,6 +20,7 @@ function getSettingsBasedConfig(settings: ISettings): Partial<IChartConfig> {
         ...(settings.enableAccessibilityMode
             ? { enableSingleBubbleSeries: true, enableContrastSafeDerivedColors: true }
             : {}),
+        ...(settings.enableDonutDataLabels ? { enableDonutDataLabels: true } : {}),
     };
 }
 

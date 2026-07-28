@@ -8,18 +8,45 @@ import { REFERENCE_REGEX } from "./components/completion/references.js";
 import { type IChatConversationLocal } from "./model.js";
 import { type IGenAIContextObject } from "./types.js";
 
-export function getVisualizationHref(wsId: string, visId: string, useHostedAnalyticalDesigner?: boolean) {
+export function getVisualizationHref(
+    wsId: string,
+    visId: string,
+    status: "draft" | "saved",
+    useHostedAnalyticalDesigner?: boolean,
+) {
+    if (status === "draft") {
+        return useHostedAnalyticalDesigner
+            ? `/workspace/${wsId}/analyze/?aibuilder=true`
+            : `/analyze/#/${wsId}/?aibuilder=true`;
+    }
     return useHostedAnalyticalDesigner
         ? `/workspace/${wsId}/analyze/#/${visId}/edit`
         : `/analyze/#/${wsId}/${visId}/edit`;
 }
 
+export function getDashboardHref(
+    wsId: string,
+    dasId: string,
+    status: "draft" | "saved",
+    useHostedDashboards?: boolean,
+) {
+    if (status === "draft") {
+        return useHostedDashboards
+            ? `/workspace/${wsId}/dashboards/#/new-dashboard`
+            : `/dashboards/#/workspace/${wsId}/new-dashboard`;
+    }
+    return useHostedDashboards
+        ? `/workspace/${wsId}/dashboards/#/dashboard/${dasId}/tab/defaultTabId`
+        : `/dashboards/#/workspace/${wsId}/${dasId}/tab/defaultTabId`;
+}
+
 export function getAbsoluteVisualizationHref(
     wsId: string,
     visId: string,
+    status: "draft" | "saved",
     useHostedAnalyticalDesigner?: boolean,
 ) {
-    return `${window.location.origin}${getVisualizationHref(wsId, visId, useHostedAnalyticalDesigner)}`;
+    return `${window.location.origin}${getVisualizationHref(wsId, visId, status, useHostedAnalyticalDesigner)}`;
 }
 
 export function getSettingHref(section: string, action?: string) {

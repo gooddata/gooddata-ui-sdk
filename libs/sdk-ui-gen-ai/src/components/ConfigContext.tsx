@@ -2,7 +2,7 @@
 
 import { type PropsWithChildren, createContext, useContext, useMemo } from "react";
 
-import { type CatalogItem, type GenAIObjectType } from "@gooddata/sdk-model";
+import { type CatalogItem, type GenAIObjectType, type IDashboard, type IInsight } from "@gooddata/sdk-model";
 
 export type ConfigContext = {
     allowNativeLinks?: boolean;
@@ -24,6 +24,10 @@ export type LinkHandlerEvent = {
     itemUrl: string;
     preventDefault: () => void;
     section?: "ai";
+    dashboard?: IDashboard;
+    dashboardStatus?: "saved" | "draft";
+    visualization?: IInsight;
+    visualizationStatus?: "saved" | "draft";
 };
 
 const configContext = createContext<ConfigContext>({});

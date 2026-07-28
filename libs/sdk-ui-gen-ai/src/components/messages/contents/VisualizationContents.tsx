@@ -262,13 +262,20 @@ function VisualizationContentsComponentCore({
         if (!vis?.savedVisualizationId) {
             return;
         }
+        const visualizationStatus = "saved";
         config.linkHandler?.({
             id: vis.id,
             type: "visualization",
             workspaceId,
             newTab: e.metaKey,
             preventDefault: e.preventDefault.bind(e),
-            itemUrl: getVisualizationHref(workspaceId, vis.savedVisualizationId, useHostedAnalyticalDesigner),
+            itemUrl: getVisualizationHref(
+                workspaceId,
+                vis.savedVisualizationId,
+                visualizationStatus,
+                useHostedAnalyticalDesigner,
+            ),
+            visualizationStatus,
         });
         e.stopPropagation();
     };
@@ -285,6 +292,7 @@ function VisualizationContentsComponentCore({
                         window.location.href = getVisualizationHref(
                             workspaceId,
                             visualization.savedVisualizationId,
+                            "saved",
                             useHostedAnalyticalDesigner,
                         );
                     } else {
@@ -297,11 +305,13 @@ function VisualizationContentsComponentCore({
                 break;
             case "button-copy":
                 if (visualization?.savedVisualizationId) {
+                    const visualizationStatus = "saved";
                     let link: string | undefined = undefined;
                     if (config.allowNativeLinks) {
                         link = getAbsoluteVisualizationHref(
                             workspaceId,
                             visualization.savedVisualizationId,
+                            visualizationStatus,
                             useHostedAnalyticalDesigner,
                         );
                     } else {
@@ -314,8 +324,10 @@ function VisualizationContentsComponentCore({
                             itemUrl: getAbsoluteVisualizationHref(
                                 workspaceId,
                                 visualization.savedVisualizationId,
+                                visualizationStatus,
                                 useHostedAnalyticalDesigner,
                             ),
+                            visualizationStatus,
                         });
                     }
                     if (link) {

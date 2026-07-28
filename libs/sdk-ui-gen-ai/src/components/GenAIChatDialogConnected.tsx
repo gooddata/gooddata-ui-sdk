@@ -11,6 +11,7 @@ import {
     type ChatAssistantMessageEvent,
     type ChatClosedEvent,
     type ChatCopyToClipboardEvent,
+    type ChatDefinitionReceivedEvent,
     type ChatEvent,
     type ChatFeedbackErrorEvent,
     type ChatFeedbackEvent,
@@ -22,6 +23,7 @@ import {
     isChatAssistantMessageEvent,
     isChatClosedEvent,
     isChatCopyToClipboardEvent,
+    isChatDefinitionReceivedEvent,
     isChatFeedbackErrorEvent,
     isChatFeedbackEvent,
     isChatOpenedEvent,
@@ -59,7 +61,8 @@ export type GenAIChatConnectedEvent =
     | { name: "feedback-error"; payload: ChatFeedbackErrorEvent }
     | { name: "save-visualization-success"; payload: ChatSaveVisualizationSuccessEvent }
     | { name: "save-visualization-error"; payload: ChatSaveVisualizationErrorEvent }
-    | { name: "copy-to-clipboard"; payload: ChatCopyToClipboardEvent };
+    | { name: "copy-to-clipboard"; payload: ChatCopyToClipboardEvent }
+    | { name: "definition-received"; payload: ChatDefinitionReceivedEvent };
 
 type Dispatch = Parameters<Required<GenAIChatDialogProps>["onDispatcher"]>[0];
 
@@ -173,7 +176,18 @@ export function GenAIChatDialogConnected({
     returnFocusTo,
 }: IGenAIChatDialogConnectedProps) {
     const defaultLinkClick = useCallback(
-        ({ itemUrl, newTab, preventDefault }: LinkHandlerEvent): string | undefined => {
+        ({
+            itemUrl,
+            newTab,
+            preventDefault,
+            type,
+            dashboardStatus,
+        }: LinkHandlerEvent): string | undefined => {
+            // NOTE: If dashboard is draft, do nothing for now
+            if (type === "dashboard" && dashboardStatus === "draft") {
+                return;
+            }
+
             if (itemUrl) {
                 preventDefault();
                 if (newTab) {
@@ -217,6 +231,8 @@ export function GenAIChatDialogConnected({
                         onEvent({ name: "save-visualization-error", payload: event });
                     } else if (isChatCopyToClipboardEvent(event)) {
                         onEvent({ name: "copy-to-clipboard", payload: event });
+                    } else if (isChatDefinitionReceivedEvent(event)) {
+                        onEvent({ name: "definition-received", payload: event });
                     }
                 },
             },

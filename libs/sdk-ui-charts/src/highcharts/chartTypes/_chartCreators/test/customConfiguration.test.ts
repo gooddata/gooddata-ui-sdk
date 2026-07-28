@@ -7,7 +7,7 @@ import { describe, expect, it, vi } from "vitest";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { type IDrillConfig, VisualizationTypes, createIntlMock } from "@gooddata/sdk-ui";
 
-import { type IDataLabelsConfig } from "../../../../interfaces/chartConfig.js";
+import { type IChartConfig, type IDataLabelsConfig } from "../../../../interfaces/chartConfig.js";
 import {
     type IChartOptions,
     type IPointData,
@@ -1341,4 +1341,93 @@ describe("highlighting configuration", () => {
 
         expect(result.chart!.events).toEqual({});
     });
+});
+
+describe("pie chart label placement modes", () => {
+    // Even-sized slices → smallest is 25% → auto resolves to inside
+    const evenPieOptions: IChartOptions = {
+        ...chartOptions,
+        type: VisualizationTypes.PIE,
+        data: getData([{ y: 25 }, { y: 25 }, { y: 25 }, { y: 25 }]),
+    };
+    // A tiny slice (2%) → auto resolves to outside for the whole chart
+    const withTinySlicePieOptions: IChartOptions = {
+        ...chartOptions,
+        type: VisualizationTypes.PIE,
+        data: getData([{ y: 49 }, { y: 49 }, { y: 2 }]),
+    };
+
+    const getPieDataLabels = (
+        options: IChartOptions,
+        config: IChartConfig,
+    ): Highcharts.SeriesPieDataLabelsOptionsObject[] =>
+        getCustomizedConfiguration(options, {
+            enableDonutDataLabels: true,
+            ...config,
+        }).plotOptions?.pie?.dataLabels as Highcharts.SeriesPieDataLabelsOptionsObject[];
+
+    it("falls back to legacy plain-object config when enableDonutDataLabels flag is off", () => {
+        const result = getCustomizedConfiguration(evenPieOptions, {
+            dataLabels: { visible: true },
+        });
+        const pieDataLabels = result.plotOptions?.pie?.dataLabels;
+        expect(Array.isArray(pieDataLabels)).toBe(false);
+        expect(pieDataLabels).toEqual(expect.objectContaining({ verticalAlign: "middle" }));
+    });
+
+    it("auto position with all slices > 5%: resolves to inside placement", () => {
+        const pieDataLabels = getPieDataLabels(evenPieOptions, {
+            dataLabels: { visible: true, position: "auto" },
+        });
+        expect(pieDataLabels).toEqual([expect.objectContaining({ verticalAlign: "middle" })]);
+    });
+
+    it("auto position with a slice at or below 5%: resolves to outside placement (distance 30)", () => {
+        const pieDataLabels = getPieDataLabels(withTinySlicePieOptions, {
+            dataLabels: { visible: true, position: "auto" },
+        });
+        expect(pieDataLabels).toEqual([expect.objectContaining({ distance: 30 })]);
+    });
+
+    it("explicit inside position: single-element array with verticalAlign 'middle'", () => {
+        const pieDataLabels = getPieDataLabels(withTinySlicePieOptions, {
+            dataLabels: { visible: true, position: "inside" },
+        });
+        expect(pieDataLabels).toEqual([expect.objectContaining({ verticalAlign: "middle" })]);
+    });
+
+    it("explicit outside position: single-element array at distance 30", () => {
+        const pieDataLabels = getPieDataLabels(evenPieOptions, {
+            dataLabels: { visible: true, position: "outside" },
+        });
+        expect(pieDataLabels).toEqual([expect.objectContaining({ distance: 30 })]);
+    });
+
+    // backplate must compose with either placement — a bug we could introduce is overriding
+    // backplate styling with getBlackLabelStyle in the outside branch of getPieLabelDataLabelsConfig.
+    it.each(["inside" as const, "outside" as const])(
+        "backplate style with %s position preserves backplate backgroundColor",
+        (position) => {
+            const auto = getPieDataLabels(evenPieOptions, {
+                dataLabels: { visible: true, style: "auto", position },
+            });
+            const backplate = getPieDataLabels(evenPieOptions, {
+                dataLabels: { visible: true, style: "backplate", position },
+            });
+            expect(auto[0].backgroundColor).toBeUndefined();
+            expect(backplate[0].backgroundColor).toBeDefined();
+        },
+    );
+
+    // Guards the export border regression: Highcharts' default `textOutline: "1px contrast"` would
+    // reintroduce a white outline around white pie labels once we hand a fresh array to series.update.
+    it.each(["inside" as const, "outside" as const])(
+        "bakes textOutline 'none' into %s label config",
+        (position) => {
+            const pieDataLabels = getPieDataLabels(evenPieOptions, {
+                dataLabels: { visible: true, position },
+            });
+            expect(pieDataLabels[0].style?.textOutline).toBe("none");
+        },
+    );
 });

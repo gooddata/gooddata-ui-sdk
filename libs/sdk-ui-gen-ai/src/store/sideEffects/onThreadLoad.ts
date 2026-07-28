@@ -44,6 +44,7 @@ import { createEmptyConversation } from "../utils.js";
 
 import { interactionsToMessages } from "./converters/interactionsToMessages.js";
 import { convertToLocalContent } from "./converters/toLocalContent.js";
+import { notifyDefinitionReceived } from "./onDefinitionReceivedTrigger.js";
 
 /**
  * Load thread history and put it to the store.
@@ -293,22 +294,25 @@ function* fetchCurrentConversation() {
             selectedConversation.localId,
         );
 
+        const items = resultsItems.map((item) => {
+            return makeConversationItem({
+                ...item,
+                content: convertToLocalContent(item.content),
+            });
+        });
+
         yield put(
             loadConversationSuccessAction({
                 currentConversation: selectedConversation,
                 conversationItems: [
                     // Drop unconfirmed optimistic system items: the backend returns the persisted version.
                     ...messages.filter((msg) => !(msg.role === "system" && msg.id === "")),
-                    ...resultsItems.map((item) => {
-                        return makeConversationItem({
-                            ...item,
-                            content: convertToLocalContent(item.content),
-                        });
-                    }),
+                    ...items,
                 ],
                 threadId: selectedConversation.id,
             }),
         );
+        yield call(notifyDefinitionReceived, items, selectedConversation.localId);
     } else {
         yield put(
             loadConversationSuccessAction({

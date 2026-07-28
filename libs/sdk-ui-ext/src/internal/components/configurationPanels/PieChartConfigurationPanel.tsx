@@ -21,8 +21,9 @@ import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
 
 export class PieChartConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel(): ReactNode {
-        const { propertiesMeta, properties, pushData } = this.props;
+        const { propertiesMeta, properties, pushData, featureFlags } = this.props;
         const controlsDisabled = this.isControlDisabled();
+        const donutDataLabelsEnabled = !!featureFlags?.enableDonutDataLabels;
 
         return (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
@@ -42,6 +43,7 @@ export class PieChartConfigurationPanel extends ConfigurationPanelContent {
                             properties={properties}
                             isDisabled={controlsDisabled}
                             defaultValue={false}
+                            enablePositionSelector={donutDataLabelsEnabled}
                         />
                     </ConfigSection>
                     {this.renderCustomTooltipSection()}

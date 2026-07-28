@@ -30,6 +30,7 @@ export function* onVisualizationSuccessSave({
     const useHostedAnalyticalDesigner = Boolean(settings?.enableShellApplication_analyticalDesigner);
 
     const { onLinkClick, allowNativeLinks } = options.getOnLinkClick();
+    const visualizationStatus = "saved";
 
     if (conversation) {
         if (payload.explore) {
@@ -37,6 +38,7 @@ export function* onVisualizationSuccessSave({
                 window.location.href = getVisualizationHref(
                     workspace,
                     payload.savedVisualizationId,
+                    visualizationStatus,
                     useHostedAnalyticalDesigner,
                 );
             } else {
@@ -49,8 +51,10 @@ export function* onVisualizationSuccessSave({
                     itemUrl: getVisualizationHref(
                         workspace,
                         payload.savedVisualizationId,
+                        visualizationStatus,
                         useHostedAnalyticalDesigner,
                     ),
+                    visualizationStatus,
                 });
             }
         }
@@ -65,6 +69,7 @@ export function* onVisualizationSuccessSave({
                 window.location.href = getVisualizationHref(
                     workspace,
                     payload.savedVisualizationId,
+                    visualizationStatus,
                     useHostedAnalyticalDesigner,
                 );
             } else {
@@ -77,8 +82,10 @@ export function* onVisualizationSuccessSave({
                     itemUrl: getVisualizationHref(
                         workspace,
                         payload.savedVisualizationId,
+                        visualizationStatus,
                         useHostedAnalyticalDesigner,
                     ),
+                    visualizationStatus,
                 });
             }
         }

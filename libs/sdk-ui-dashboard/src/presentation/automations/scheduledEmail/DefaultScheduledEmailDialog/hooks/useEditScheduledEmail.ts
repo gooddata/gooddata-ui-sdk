@@ -1,15 +1,11 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useRef } from "react";
 
 import {
-    type AutomationEvaluationMode,
     DEFAULT_CSV_DELIMITER,
     type FilterContextItem,
     type IAutomationMetadataObject,
-    type IAutomationMetadataObjectBase,
-    type IAutomationMetadataObjectDefinition,
-    type IAutomationRecipient,
     type IAutomationVisibleFilter,
     type IDashboardExportParameter,
     type IExportDefinitionVisualizationObjectSettings,
@@ -31,7 +27,6 @@ import {
 import type { IAutomationFiltersTab } from "../../../../../model/store/filtering/types.js";
 import { useAutomationsContext } from "../../../contexts/AutomationsContext.js";
 import { useScheduledEmailDialogContext } from "../../../contexts/ScheduledEmailDialogContext.js";
-import { shouldStoreExportParameters } from "../../../shared/automationFilters/automationParameters.js";
 import { getDefaultSelectedFiltersFromFiltersByTab } from "../../../shared/automationFilters/useAutomationFiltersSelect.js";
 import {
     getAppliedDashboardFilters,
@@ -39,23 +34,11 @@ import {
     getVisibleFiltersByFilters,
     getVisibleFiltersByFiltersByTab,
 } from "../../../shared/automationFilters/utils.js";
-import {
-    convertCurrentUserToAutomationRecipient,
-    convertCurrentUserToWorkspaceUser,
-    convertExternalRecipientToAutomationRecipient,
-} from "../../../shared/utils/automationUtils.js";
-import {
-    toModifiedISOStringToTimezone,
-    toNormalizedFirstRunAndCron,
-    toNormalizedStartDate,
-} from "../../utils/date.js";
-import { getUserTimezone } from "../../utils/timezone.js";
-import {
-    newDashboardExportDefinitionMetadataObjectDefinition,
-    newWidgetExportDefinitionMetadataObjectDefinition,
-} from "../utils/exportDefinitions.js";
+import { toNormalizedStartDate } from "../../utils/date.js";
 
+import { useScheduledEmailEffectiveFilters } from "./useScheduledEmailEffectiveFilters.js";
 import { useScheduledEmailExportSettings } from "./useScheduledEmailExportSettings.js";
+import { useScheduledEmailFormState } from "./useScheduledEmailFormState.js";
 import { useScheduledEmailFormValidity } from "./useScheduledEmailFormValidity.js";
 
 export interface IUseEditScheduledEmailProps {
@@ -115,8 +98,6 @@ export function useEditScheduledEmail({
 }: IUseEditScheduledEmailProps) {
     const {
         settings,
-        timezone,
-        currentUser,
         features: { enableAutomationEvaluationMode },
     } = useAutomationsContext();
     const {
@@ -125,12 +106,7 @@ export function useEditScheduledEmail({
         hiddenFilters: dashboardHiddenFilters,
         commonDateFilterId,
         widgetLocalIdToTabIdMap: widgetTabMap,
-        exportParametersByTab: effectiveExportParametersByTab,
     } = useScheduledEmailDialogContext();
-    const [isCronValid, setIsCronValid] = useState(true);
-    const [isTitleValid, setIsTitleValid] = useState(true);
-    const [isSubjectValid, setIsSubjectValid] = useState(true);
-    const [isOnMessageValid, setIsOnMessageValid] = useState(true);
     const isWidget = !!widget && !!insight;
 
     // Dashboard
@@ -138,129 +114,64 @@ export function useEditScheduledEmail({
 
     const areDashboardFiltersChanged = !!dashboardFilters;
 
-    const defaultUser = convertCurrentUserToWorkspaceUser(users ?? [], currentUser);
-
-    const defaultRecipient = externalRecipientOverride
-        ? convertExternalRecipientToAutomationRecipient(externalRecipientOverride)
-        : convertCurrentUserToAutomationRecipient(users ?? [], currentUser);
-
-    const firstChannel = notificationChannels[0]?.id;
-
     // Determine target tab ID if widget is present
     const targetTabId = widget?.localIdentifier ? widgetTabMap[widget.localIdentifier] : undefined;
 
-    const effectiveWidgetFilters = getAppliedWidgetFilters(
-        editedAutomationFilters ?? [],
-        dashboardHiddenFilters,
+    const {
+        effectiveWidgetFilters,
+        effectiveWidgetFiltersWithInsight,
+        effectiveVisibleWidgetFilters,
+        effectiveDashboardFilters,
+        effectiveDashboardFiltersByTab,
+        effectiveVisibleDashboardFilters,
+        effectiveVisibleDashboardFiltersByTab,
+        parametersByTabForNewAutomation,
+    } = useScheduledEmailEffectiveFilters({
         widget,
         insight,
-        commonDateFilterId,
-        false,
-    );
-
-    const effectiveWidgetFiltersWithInsight = getAppliedWidgetFilters(
-        editedAutomationFilters ?? [],
-        dashboardHiddenFilters,
-        widget,
-        insight,
-        commonDateFilterId,
-        true,
-    );
-
-    const effectiveVisibleWidgetFilters = getVisibleFiltersByFilters(
         editedAutomationFilters,
-        availableFiltersAsVisibleFilters,
-        true,
-    );
-
-    const effectiveDashboardFilters = getAppliedDashboardFilters(
-        editedAutomationFilters ?? [],
-        dashboardHiddenFilters,
-        isWidget ? true : storeFilters,
-    );
-
-    // Process filters per tab if provided (for dashboard automations with tabs enabled)
-    const effectiveDashboardFiltersByTab = useMemo((): Record<string, FilterContextItem[]> | undefined => {
-        if (!editedAutomationFiltersByTab || !storeFilters) {
-            return undefined;
-        }
-        // Apply the same processing as effectiveDashboardFilters to each tab's filters
-        return Object.entries(editedAutomationFiltersByTab).reduce<Record<string, FilterContextItem[]>>(
-            (acc, [tabId, filters]) => {
-                const tabHiddenFilters =
-                    filtersDataByTab?.find((tab) => tab.tabId === tabId)?.hiddenFilters ?? [];
-                const appliedFilters = getAppliedDashboardFilters(
-                    filters ?? [],
-                    tabHiddenFilters,
-                    storeFilters,
-                );
-                // Only add if we got filters back (storeFilters is true)
-                if (appliedFilters) {
-                    acc[tabId] = appliedFilters;
-                }
-                return acc;
-            },
-            {},
-        );
-    }, [editedAutomationFiltersByTab, filtersDataByTab, storeFilters]);
-
-    const effectiveVisibleDashboardFilters = getVisibleFiltersByFilters(
-        editedAutomationFilters ?? [],
-        availableFiltersAsVisibleFilters,
-        storeFilters,
-    );
-
-    const effectiveVisibleDashboardFiltersByTab = getVisibleFiltersByFiltersByTab(
         editedAutomationFiltersByTab,
+        availableFiltersAsVisibleFilters,
         availableFiltersAsVisibleFiltersByTab,
+        filtersDataByTab,
         storeFilters,
-    );
+    });
 
-    // Mirrors the filters seed above, for parameters.
-    const parametersByTabForNewAutomation =
-        shouldStoreExportParameters(isWidget, storeFilters) &&
-        Object.keys(effectiveExportParametersByTab).length > 0
-            ? effectiveExportParametersByTab
-            : undefined;
-
-    const [editedAutomation, setEditedAutomation] = useState<IAutomationMetadataObjectDefinition>(
-        scheduledExportToEdit ??
-            newAutomationMetadataObjectDefinition(
-                isWidget
-                    ? {
-                          timezone,
-                          dashboardId: dashboardId!,
-                          notificationChannel: firstChannel,
-                          insight,
-                          widget,
-                          recipient: defaultRecipient,
-                          widgetFilters: effectiveWidgetFilters,
-                          widgetFiltersWithInsight: effectiveWidgetFiltersWithInsight,
-                          dashboardFilters: effectiveDashboardFilters,
-                          visibleFiltersMetadata: effectiveVisibleWidgetFilters,
-                          defaultPdfPageSize,
-                          evaluationMode: "PER_RECIPIENT",
-                          targetTabId,
-                          parametersByTab: parametersByTabForNewAutomation,
-                      }
-                    : {
-                          timezone,
-                          dashboardId: dashboardId!,
-                          notificationChannel: firstChannel,
-                          title: dashboardTitle,
-                          recipient: defaultRecipient,
-                          dashboardFilters: effectiveDashboardFilters,
-                          filtersByTab: effectiveDashboardFiltersByTab,
-                          visibleFiltersMetadata: effectiveVisibleDashboardFilters,
-                          visibleFiltersByTab: effectiveVisibleDashboardFiltersByTab,
-                          defaultPdfPageSize,
-                          evaluationMode: "PER_RECIPIENT",
-                          parametersByTab: parametersByTabForNewAutomation,
-                      },
-            ),
-    );
-
-    const [originalAutomation] = useState(editedAutomation);
+    const {
+        editedAutomation,
+        setEditedAutomation,
+        originalAutomation,
+        defaultRecipient,
+        defaultUser,
+        onTitleChange,
+        onRecurrenceChange,
+        onEvaluationModeChange,
+        onDestinationChange,
+        onRecipientsChange,
+        onSubjectChange,
+        onMessageChange,
+        isCronValid,
+        isTitleValid,
+        isSubjectValid,
+        isOnMessageValid,
+    } = useScheduledEmailFormState({
+        scheduledExportToEdit,
+        widget,
+        insight,
+        notificationChannels,
+        users,
+        externalRecipientOverride,
+        effectiveWidgetFilters,
+        effectiveWidgetFiltersWithInsight,
+        effectiveVisibleWidgetFilters,
+        effectiveDashboardFilters,
+        effectiveDashboardFiltersByTab,
+        effectiveVisibleDashboardFilters,
+        effectiveVisibleDashboardFiltersByTab,
+        parametersByTabForNewAutomation,
+        defaultPdfPageSize,
+        targetTabId,
+    });
 
     // Holds the wire outside the automation so it survives a rebuild from zero export definitions —
     // with no definitions `setExportParametersByTab` has nowhere to store it.
@@ -272,70 +183,47 @@ export function useEditScheduledEmail({
     // The user-edit path into `content.parametersByTab`: re-encoded wire in, every export definition
     // patched. Handed to `useAutomationExportParameters`, which owns when to call it. Definition
     // rebuilds preserve the wire separately via `withRebuiltExportDefinitions`.
-    const setParametersWire = useCallback((wire: Record<string, IDashboardExportParameter[]> | undefined) => {
-        latestParametersWireRef.current = wire;
-        setEditedAutomation((automation) => setExportParametersByTab(automation, wire));
-    }, []);
+    const setParametersWire = useCallback(
+        (wire: Record<string, IDashboardExportParameter[]> | undefined) => {
+            latestParametersWireRef.current = wire;
+            setEditedAutomation((automation) => setExportParametersByTab(automation, wire));
+        },
+        [setEditedAutomation],
+    );
 
-    const onTitleChange = (value: string, isValid: boolean) => {
-        setIsTitleValid(isValid);
-        setEditedAutomation((s) => ({ ...s, title: value }));
-    };
-
-    const onRecurrenceChange = (cronExpression: string, startDate: Date | null, isValid: boolean) => {
-        setIsCronValid(isValid);
-        setEditedAutomation((s) => ({
-            ...s,
-            schedule: {
-                ...s.schedule,
-                cron: cronExpression,
-                firstRun: toModifiedISOStringToTimezone(startDate ?? new Date(), timezone).iso,
-            },
-        }));
-    };
-
-    const onEvaluationModeChange = (isShared: boolean) => {
-        setEditedAutomation((s) => ({
-            ...s,
-            evaluationMode: isShared ? "SHARED" : "PER_RECIPIENT",
-        }));
-    };
-
-    const onDestinationChange = (notificationChannelId: string): void => {
-        setEditedAutomation((s) => ({
-            ...s,
-            notificationChannel: notificationChannelId,
-        }));
-    };
-
-    const onRecipientsChange = (updatedRecipients: IAutomationRecipient[]): void => {
-        setEditedAutomation((s) => ({
-            ...s,
-            recipients: updatedRecipients,
-        }));
-    };
-
-    const onSubjectChange = (value: string | number, isValid: boolean): void => {
-        setIsSubjectValid(isValid);
-        setEditedAutomation((s) => ({
-            ...s,
-            details: {
-                ...s.details,
-                subject: value as string,
-            },
-        }));
-    };
-
-    const onMessageChange = (value: string, isValid: boolean): void => {
-        setIsOnMessageValid(isValid);
-        setEditedAutomation((s) => ({
-            ...s,
-            details: {
-                ...s.details,
-                message: value,
-            },
-        }));
-    };
+    const {
+        selectedAttachments,
+        isDashboardExportSelected,
+        isCsvExportSelected,
+        isXlsxExportSelected,
+        xlsxSettings,
+        pdfSettings,
+        csvSettings,
+        csvRawSettings,
+        slidesTemplateIds,
+        onDashboardAttachmentsChange,
+        onWidgetAttachmentsChange,
+        onXlsxSettingsChange,
+        onPdfSettingsChange,
+        onCsvSettingsChange,
+        onCsvRawSettingsChange,
+        onSlidesTemplateIdChange,
+    } = useScheduledEmailExportSettings({
+        editedAutomation,
+        setEditedAutomation,
+        insight,
+        widget,
+        dashboardId,
+        dashboardTitle,
+        storeFilters,
+        effectiveDashboardFilters,
+        effectiveDashboardFiltersByTab,
+        effectiveWidgetFilters,
+        effectiveWidgetFiltersWithInsight,
+        defaultPdfPageSize,
+        resolvedDefaultCsvDelimiter,
+        latestParametersWireRef,
+    });
 
     const onFiltersChange = useCallback(
         (filters: FilterContextItem[], storeFiltersParam?: boolean) => {
@@ -569,40 +457,6 @@ export function useEditScheduledEmail({
         [onFiltersChange, onFiltersByTabChange, setStoreFilters],
     );
 
-    const {
-        selectedAttachments,
-        isDashboardExportSelected,
-        isCsvExportSelected,
-        isXlsxExportSelected,
-        xlsxSettings,
-        pdfSettings,
-        csvSettings,
-        csvRawSettings,
-        slidesTemplateIds,
-        onDashboardAttachmentsChange,
-        onWidgetAttachmentsChange,
-        onXlsxSettingsChange,
-        onPdfSettingsChange,
-        onCsvSettingsChange,
-        onCsvRawSettingsChange,
-        onSlidesTemplateIdChange,
-    } = useScheduledEmailExportSettings({
-        editedAutomation,
-        setEditedAutomation,
-        insight,
-        widget,
-        dashboardId,
-        dashboardTitle,
-        storeFilters,
-        effectiveDashboardFilters,
-        effectiveDashboardFiltersByTab,
-        effectiveWidgetFilters,
-        effectiveWidgetFiltersWithInsight,
-        defaultPdfPageSize,
-        resolvedDefaultCsvDelimiter,
-        latestParametersWireRef,
-    });
-
     const startDate = toNormalizedStartDate(
         editedAutomation.schedule?.firstRun,
         editedAutomation.schedule?.timezone,
@@ -671,107 +525,4 @@ export function useEditScheduledEmail({
         setParametersWire,
         enableAutomationEvaluationMode,
     };
-}
-
-function newAutomationMetadataObjectDefinition({
-    timezone,
-    dashboardId,
-    notificationChannel,
-    title,
-    insight,
-    widget,
-    recipient,
-    dashboardFilters,
-    filtersByTab,
-    widgetFilters,
-    widgetFiltersWithInsight,
-    visibleFiltersMetadata,
-    visibleFiltersByTab,
-    defaultPdfPageSize,
-    evaluationMode,
-    targetTabId,
-    parametersByTab,
-}: {
-    timezone?: string;
-    dashboardId: string;
-    notificationChannel: string;
-    title?: string;
-    insight?: IInsight;
-    widget?: IWidget;
-    recipient: IAutomationRecipient;
-    dashboardFilters?: FilterContextItem[];
-    filtersByTab?: Record<string, FilterContextItem[]>;
-    widgetFilters?: IFilter[];
-    widgetFiltersWithInsight?: IFilter[];
-    visibleFiltersMetadata?: IAutomationVisibleFilter[];
-    visibleFiltersByTab?: Record<string, IAutomationVisibleFilter[]>;
-    defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
-    evaluationMode: AutomationEvaluationMode;
-    targetTabId?: string;
-    parametersByTab?: Record<string, IDashboardExportParameter[]>;
-}): IAutomationMetadataObjectDefinition {
-    const { firstRun, cron } = toNormalizedFirstRunAndCron(timezone);
-    const exportDefinition =
-        widget && insight
-            ? newWidgetExportDefinitionMetadataObjectDefinition({
-                  insight,
-                  widget,
-                  dashboardId,
-                  format: "PNG",
-                  widgetFilters,
-                  widgetFiltersWithInsight,
-                  dashboardFilters,
-                  defaultPdfPageSize,
-              })
-            : newDashboardExportDefinitionMetadataObjectDefinition({
-                  dashboardId,
-                  dashboardTitle: title ?? "",
-                  dashboardFilters,
-                  filtersByTab,
-                  format: "PDF",
-              });
-
-    let metadataObj: { metadata?: IAutomationMetadataObjectBase["metadata"] } =
-        visibleFiltersMetadata || visibleFiltersByTab
-            ? {
-                  metadata: {
-                      ...(visibleFiltersMetadata ? { visibleFilters: visibleFiltersMetadata } : {}),
-                      ...(visibleFiltersByTab ? { visibleFiltersByTab } : {}),
-                  },
-              }
-            : {};
-
-    if (targetTabId) {
-        metadataObj = {
-            ...metadataObj,
-            metadata: {
-                ...metadataObj.metadata,
-                targetTabIdentifier: targetTabId,
-            },
-        };
-    }
-
-    const automation: IAutomationMetadataObjectDefinition = {
-        type: "automation",
-        title: undefined,
-        description: undefined,
-        tags: [],
-        schedule: {
-            timezone: timezone ?? getUserTimezone().identifier,
-            firstRun,
-            cron,
-        },
-        details: {
-            message: "",
-            subject: "",
-        },
-        exportDefinitions: [{ ...exportDefinition }],
-        recipients: [recipient],
-        evaluationMode,
-        notificationChannel,
-        dashboard: dashboardId ? { id: dashboardId } : undefined,
-        ...metadataObj,
-    };
-
-    return parametersByTab ? setExportParametersByTab(automation, parametersByTab) : automation;
 }

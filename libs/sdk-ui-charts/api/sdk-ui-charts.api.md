@@ -360,6 +360,7 @@ export interface IChartConfig {
     enableChartSorting?: boolean;
     enableCompactSize?: boolean;
     enableContrastSafeDerivedColors?: boolean;
+    enableDonutDataLabels?: boolean;
     // @internal
     enableExecutionCancelling?: boolean;
     // @internal
@@ -545,6 +546,7 @@ export { ICustomTooltipConfig }
 // @public (undocumented)
 export interface IDataLabelsConfig {
     percentsVisible?: boolean;
+    position?: "auto" | "inside" | "outside";
     style?: "auto" | "backplate";
     // (undocumented)
     totalsVisible?: IDataLabelsVisible;

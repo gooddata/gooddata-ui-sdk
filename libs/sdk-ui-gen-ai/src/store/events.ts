@@ -1,6 +1,10 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { type IChatConversation } from "@gooddata/sdk-backend-spi";
+import {
+    type IChatConversation,
+    type IChatConversationVisualisationContent,
+} from "@gooddata/sdk-backend-spi";
+import { type IDashboard } from "@gooddata/sdk-model";
 import { type SdkErrorType } from "@gooddata/sdk-ui";
 
 import { type IChatConversationLocal, type TextContentObject } from "../model.js";
@@ -377,6 +381,28 @@ export const isChatConversationChangedEvent = (event: ChatEvent): event is ChatC
 };
 
 /**
+ * A chat definition received event.
+ * @public
+ */
+export type ChatDefinitionReceivedEvent = BaseEvent & {
+    type: "onDefinitionReceived";
+    definitionType: "dashboard" | "visualization";
+    itemId: string;
+    conversationId: string;
+    interactionId?: string;
+    dashboard?: IDashboard;
+    visualization?: NonNullable<IChatConversationVisualisationContent["visualization"]>;
+};
+
+/**
+ * Type guard for the ChatDefinitionReceivedEvent.
+ * @public
+ */
+export const isChatDefinitionReceivedEvent = (event: ChatEvent): event is ChatDefinitionReceivedEvent => {
+    return event.type === "onDefinitionReceived";
+};
+
+/**
  * A union type for all chat events.
  * @public
  */
@@ -400,7 +426,8 @@ export type ChatEvent =
     | ChatVisualizationErrorEvent
     | ChatSaveVisualizationErrorEvent
     | ChatSaveVisualizationSuccessEvent
-    | ChatConversationChangedEvent;
+    | ChatConversationChangedEvent
+    | ChatDefinitionReceivedEvent;
 
 /**
  * An event handler for the Chat component.

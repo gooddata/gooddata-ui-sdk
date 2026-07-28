@@ -68,6 +68,7 @@ export {
     type ChatConversationRenamedSuccessEvent,
     type ChatConversationRenamedErrorEvent,
     type ChatConversationChangedEvent,
+    type ChatDefinitionReceivedEvent,
     isChatAssistantMessageEvent,
     isChatUserMessageEvent,
     isChatClosedEvent,
@@ -88,6 +89,7 @@ export {
     isChatConversationRenamedSuccessEvent,
     isChatConversationRenamedErrorEvent,
     isChatConversationChangedEvent,
+    isChatDefinitionReceivedEvent,
 } from "./store/events.js";
 
 export {

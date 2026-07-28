@@ -57,6 +57,7 @@ import {
 
 import { processContents } from "./converters/interactionsToMessages.js";
 import { convertToLocalContent } from "./converters/toLocalContent.js";
+import { notifyDefinitionReceived } from "./onDefinitionReceivedTrigger.js";
 import { convertMessageToChatConversation, extractError } from "./utils.js";
 
 /**
@@ -246,12 +247,22 @@ function* evaluateUserMessage(message: AssistantMessage, preparedChatThread: ICh
                 }
 
                 // Dispatch streaming content to current message
+                const contents = processContents(value, true, { showReasoning });
                 yield put(
                     evaluateMessageStreamingAction({
                         assistantMessageId: currentAssistantMessage.localId,
                         interactionId: chunkInteractionId,
-                        contents: processContents(value, true, { showReasoning }),
+                        contents,
                     }),
+                );
+                yield call(
+                    notifyDefinitionReceived,
+                    {
+                        ...currentAssistantMessage,
+                        content: contents,
+                        id: chunkInteractionId,
+                    },
+                    "",
                 );
             }
         }
@@ -606,14 +617,24 @@ function* evaluateUserConversationMessage(
                     }
 
                     // Dispatch streaming content to current message
+                    const localContent = convertToLocalContent(value.content);
                     yield put(
                         evaluateMessageStreamingAction({
-                            content: convertToLocalContent(value.content),
+                            content: localContent,
                             assistantMessageId: currentAssistantMessage.localId,
                             conversationId: conversation.localId,
                             interactionId: chunkInteractionId,
                             item: value,
                         }),
+                    );
+                    yield call(
+                        notifyDefinitionReceived,
+                        {
+                            ...currentAssistantMessage,
+                            content: localContent,
+                            id: chunkInteractionId,
+                        },
+                        conversation.localId,
                     );
                 }
                 if (isChatConversationError(value)) {

@@ -3,11 +3,16 @@
 import { useIntl } from "react-intl";
 
 import { messages } from "../../../locales.js";
-import { dataLabelStyleDropdownItems, dataLabelsDropdownItems } from "../../constants/dropdowns.js";
+import {
+    dataLabelPositionDropdownItems,
+    dataLabelStyleDropdownItems,
+    dataLabelsDropdownItems,
+} from "../../constants/dropdowns.js";
 import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { getTranslatedDropdownItems } from "../../utils/translations.js";
 import { CheckboxControl } from "../configurationControls/CheckboxControl.js";
 
+import { ConfigSubsection } from "./ConfigSubsection.js";
 import { DropdownControl } from "./DropdownControl.js";
 
 export interface IDataLabelsControlProps {
@@ -20,6 +25,7 @@ export interface IDataLabelsControlProps {
     enableSeparateTotalLabels?: boolean;
     enablePercentLabels?: boolean;
     enableStyleSelector?: boolean;
+    enablePositionSelector?: boolean;
 }
 
 export function DataLabelsControl({
@@ -32,11 +38,13 @@ export function DataLabelsControl({
     enableSeparateTotalLabels = false,
     enablePercentLabels,
     enableStyleSelector = true,
+    enablePositionSelector = false,
 }: IDataLabelsControlProps) {
     const intl = useIntl();
     const dataLabels = properties?.controls?.["dataLabels"]?.visible ?? defaultValue;
     const totalLabels = properties?.controls?.["dataLabels"]?.totalsVisible ?? defaultValue;
     const dataLabelStyle = properties?.controls?.["dataLabels"]?.style ?? "auto";
+    const dataLabelPosition = properties?.controls?.["dataLabels"]?.position ?? "auto";
     const percentLabels = properties?.controls?.["dataLabels"]?.percentsVisible ?? true;
     const percentLabelsDisabled = isDisabled || !dataLabels;
 
@@ -52,52 +60,66 @@ export function DataLabelsControl({
 
     return (
         <div className="s-data-labels-config">
-            <DropdownControl
-                value={dataLabels}
-                valuePath="dataLabels.visible"
-                labelText={messages["dataLabels"].id}
-                disabled={isDisabled}
-                properties={properties}
-                pushData={pushData}
-                items={getTranslatedDropdownItems(dataLabelsDropdownItems, intl)}
-                showDisabledMessage={showDisabledMessage}
-            />
-            {enableSeparateTotalLabels ? (
+            <ConfigSubsection title={messages["labelsSubsectionTitle"].id}>
                 <DropdownControl
-                    value={totalLabels}
-                    valuePath="dataLabels.totalsVisible"
-                    labelText={messages["totalLabels"].id}
-                    disabled={isTotalsDisabled}
-                    properties={properties}
-                    pushData={pushData}
-                    items={getTranslatedDropdownItems(dataLabelsDropdownItems, intl)}
-                    showDisabledMessage={isTotalsDisabled}
-                />
-            ) : null}
-            {enableStyleSelector ? (
-                <DropdownControl
-                    value={dataLabelStyle}
-                    valuePath="dataLabels.style"
-                    labelText={messages["dataLabelStyle"].id}
+                    value={dataLabels}
+                    valuePath="dataLabels.visible"
+                    labelText={messages["dataLabelDisplay"].id}
                     disabled={isDisabled}
                     properties={properties}
                     pushData={pushData}
-                    items={getTranslatedDropdownItems(dataLabelStyleDropdownItems, intl)}
+                    items={getTranslatedDropdownItems(dataLabelsDropdownItems, intl)}
                     showDisabledMessage={showDisabledMessage}
                 />
-            ) : null}
-            {enablePercentLabels ? (
-                <CheckboxControl
-                    valuePath="dataLabels.percentsVisible"
-                    labelText={messages["canvasLabelsPercentages"].id}
-                    properties={properties}
-                    checked={percentLabels}
-                    disabled={percentLabelsDisabled}
-                    disabledMessageId={percentLabelsMessageId}
-                    showDisabledMessage={!!percentLabelsMessageId}
-                    pushData={pushData}
-                />
-            ) : null}
+                {enableSeparateTotalLabels ? (
+                    <DropdownControl
+                        value={totalLabels}
+                        valuePath="dataLabels.totalsVisible"
+                        labelText={messages["totalLabels"].id}
+                        disabled={isTotalsDisabled}
+                        properties={properties}
+                        pushData={pushData}
+                        items={getTranslatedDropdownItems(dataLabelsDropdownItems, intl)}
+                        showDisabledMessage={isTotalsDisabled}
+                    />
+                ) : null}
+                {enableStyleSelector ? (
+                    <DropdownControl
+                        value={dataLabelStyle}
+                        valuePath="dataLabels.style"
+                        labelText={messages["dataLabelStyle"].id}
+                        disabled={isDisabled}
+                        properties={properties}
+                        pushData={pushData}
+                        items={getTranslatedDropdownItems(dataLabelStyleDropdownItems, intl)}
+                        showDisabledMessage={showDisabledMessage}
+                    />
+                ) : null}
+                {enablePositionSelector ? (
+                    <DropdownControl
+                        value={dataLabelPosition}
+                        valuePath="dataLabels.position"
+                        labelText={messages["dataLabelPosition"].id}
+                        disabled={isDisabled}
+                        properties={properties}
+                        pushData={pushData}
+                        items={getTranslatedDropdownItems(dataLabelPositionDropdownItems, intl)}
+                        showDisabledMessage={showDisabledMessage}
+                    />
+                ) : null}
+                {enablePercentLabels ? (
+                    <CheckboxControl
+                        valuePath="dataLabels.percentsVisible"
+                        labelText={messages["canvasLabelsPercentages"].id}
+                        properties={properties}
+                        checked={percentLabels}
+                        disabled={percentLabelsDisabled}
+                        disabledMessageId={percentLabelsMessageId}
+                        showDisabledMessage={!!percentLabelsMessageId}
+                        pushData={pushData}
+                    />
+                ) : null}
+            </ConfigSubsection>
         </div>
     );
 }

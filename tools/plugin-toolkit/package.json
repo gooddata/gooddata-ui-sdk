@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/plugin-toolkit",
-    "version": "11.50.0-alpha.1",
+    "version": "11.50.0-alpha.2",
     "description": "GoodData Set of Tools for working with Plugins",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData",
@@ -51,7 +51,7 @@
         "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-backend-tiger": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",
-        "axios": "1.16.1",
+        "axios": "1.18.1",
         "chalk": "5.3.0",
         "columnify": "^1.5.4",
         "commander": "8.3.0",

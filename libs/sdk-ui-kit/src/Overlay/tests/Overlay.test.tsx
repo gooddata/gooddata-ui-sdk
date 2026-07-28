@@ -7,6 +7,7 @@ import { flushSync } from "react-dom";
 import { type Root, createRoot } from "react-dom/client";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
+import { registerFloatingAnchor } from "../../@ui/hooks/useCloseOnOutsideClick.js";
 import { Overlay } from "../Overlay.js";
 
 /**
@@ -303,6 +304,68 @@ describe("Overlay", () => {
                 clickedElement.remove();
 
                 expect(props.overlay.onClose).toHaveBeenCalledTimes(0);
+            });
+
+            it("should not call onClose when pressing inside a nested floating panel anchored within the overlay", async () => {
+                const props = {
+                    overlay: { closeOnOutsideClick: true, onClose: vi.fn() },
+                    content: { className: "overlay-inner-content" },
+                };
+
+                const overlay: any = renderOverlaySetup(div, props).current;
+                await act(async () => {
+                    overlay.align();
+                    await new Promise((resolve) => setTimeout(resolve, 20));
+                });
+
+                // A new-generation floating panel (e.g. UiDropdown menu) portals to <body>
+                // but its anchor (the trigger) lives inside our overlay content.
+                const anchorInsideOverlay = document.querySelector(".overlay-inner-content")!;
+                const panel = document.createElement("div");
+                panel.setAttribute("data-gd-floating-element", "true");
+                const menuItem = document.createElement("div");
+                panel.appendChild(menuItem);
+                document.body.appendChild(panel);
+                registerFloatingAnchor(panel, anchorInsideOverlay);
+
+                overlay.onDocumentMouseDown(createEvent({ target: menuItem }));
+                overlay.closeOnOutsideClick(createEvent({ target: menuItem }));
+
+                panel.remove();
+
+                expect(props.overlay.onClose).not.toHaveBeenCalled();
+            });
+
+            it("should call onClose when pressing inside an unrelated floating panel anchored elsewhere", async () => {
+                const props = {
+                    overlay: { closeOnOutsideClick: true, onClose: vi.fn() },
+                    content: { className: "overlay-inner-content" },
+                };
+
+                const overlay: any = renderOverlaySetup(div, props).current;
+                await act(async () => {
+                    overlay.align();
+                    await new Promise((resolve) => setTimeout(resolve, 20));
+                });
+
+                // Same marker, but the panel is anchored outside our overlay — a genuine
+                // outside click that should still close us.
+                const anchorOutsideOverlay = document.createElement("div");
+                document.body.appendChild(anchorOutsideOverlay);
+                const panel = document.createElement("div");
+                panel.setAttribute("data-gd-floating-element", "true");
+                const menuItem = document.createElement("div");
+                panel.appendChild(menuItem);
+                document.body.appendChild(panel);
+                registerFloatingAnchor(panel, anchorOutsideOverlay);
+
+                overlay.onDocumentMouseDown(createEvent({ target: menuItem }));
+                overlay.closeOnOutsideClick(createEvent({ target: menuItem }));
+
+                panel.remove();
+                anchorOutsideOverlay.remove();
+
+                expect(props.overlay.onClose).toHaveBeenCalledTimes(1);
             });
 
             it("should call onClose when ESC key pressed", () => {

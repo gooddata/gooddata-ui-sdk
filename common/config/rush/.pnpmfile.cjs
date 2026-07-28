@@ -3,10 +3,10 @@
 "use strict";
 
 // baseline-browser-mapping needs to be updated to the latest version every 14 days
-const baselineBrowserMappingVersion = "2.10.43";
+const baselineBrowserMappingVersion = "2.11.4";
 
 // browserslist needs to be updated every 6 months
-const browserslistVersion = "4.28.6";
+const browserslistVersion = "4.28.7";
 
 /**
  * When using the PNPM package manager, you can use pnpmfile.js to workaround

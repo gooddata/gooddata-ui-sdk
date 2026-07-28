@@ -8,7 +8,9 @@ import {
     type GenAIObjectType,
     type IAllowedRelationshipType,
     type IColorPalette,
+    type IDashboard,
     type IGenAIUserContext,
+    type IInsight,
 } from "@gooddata/sdk-model";
 import type { IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
 
@@ -213,6 +215,17 @@ const chatWindowSlice = createSlice({
         setIsPreviewAction: (state, { payload: { isPreview } }: PayloadAction<{ isPreview?: boolean }>) => {
             state.isPreview = isPreview;
         },
+        onDefinitionReceivedAction: (
+            state,
+            _action: PayloadAction<{
+                definitionType: "dashboard" | "visualization";
+                conversationId: string;
+                itemId: string;
+                interactionId?: string;
+                dashboard?: IDashboard;
+                visualization?: IInsight;
+            }>,
+        ) => state,
         copyToClipboardAction: (state, _action: PayloadAction<{ content: string }>) => state,
     },
 });
@@ -231,6 +244,7 @@ export const {
     setTagsAction,
     setCatalogItemsActions,
     setAllowedRelationshipTypesAction,
+    onDefinitionReceivedAction,
     addContextReferenceAction,
     removeContextReferenceAction,
     setIsPreviewAction,

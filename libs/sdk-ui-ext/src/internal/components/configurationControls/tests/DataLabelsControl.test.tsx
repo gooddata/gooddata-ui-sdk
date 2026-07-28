@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
@@ -46,7 +46,7 @@ describe("DataLabelsControl", () => {
     describe("Rendering", () => {
         it("should render data labels control", () => {
             createComponent();
-            expect(screen.getByText("Data Labels")).toBeInTheDocument();
+            expect(screen.getByText("Display")).toBeInTheDocument();
         });
 
         it("should render dropdown as disabled when disabled", () => {
@@ -127,6 +127,21 @@ describe("DataLabelsControl", () => {
             await waitFor(() => {
                 expect(screen.getByText(DISABLED_TOOLTIP)).toBeInTheDocument();
             });
+        });
+
+        it("should not render Position dropdown by default", () => {
+            createComponent();
+            expect(screen.queryByText("Position")).not.toBeInTheDocument();
+        });
+
+        it("should render Position dropdown with inside/outside options when enablePositionSelector is true", () => {
+            createComponent({ enablePositionSelector: true });
+            expect(screen.getByText("Position")).toBeInTheDocument();
+            // Open the Position dropdown (last combobox after Display and Style) and verify options
+            const combos = screen.getAllByRole("combobox");
+            fireEvent.click(combos[combos.length - 1]);
+            expect(screen.getByText("inside")).toBeInTheDocument();
+            expect(screen.getByText("outside")).toBeInTheDocument();
         });
     });
 });

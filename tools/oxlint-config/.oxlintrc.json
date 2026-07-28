@@ -1,4 +1,7 @@
 {
     "$schema": "./node_modules/oxlint/configuration_schema.json",
-    "extends": ["dist/esm.json"]
+    "extends": ["dist/esm.json"],
+    "options": {
+        "typeAware": true
+    }
 }

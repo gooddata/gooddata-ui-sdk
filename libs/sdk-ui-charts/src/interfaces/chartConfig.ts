@@ -251,6 +251,12 @@ export interface IChartConfig {
     enableSeparateTotalLabels?: boolean;
 
     /**
+     * Enables the new pie/donut data label styles (inside/outside) and adaptive auto mode.
+     * When off, only the legacy auto/backplate styles are available.
+     */
+    enableDonutDataLabels?: boolean;
+
+    /**
      * Enables accessible tooltip for the chart.
      */
     enableAccessibleTooltip?: boolean;
@@ -836,11 +842,19 @@ export interface IDataLabelsConfig {
      */
     percentsVisible?: boolean;
     /**
-     * Style of data labels rendering.
-     * - "auto": default label style depending on chart type and context
-     * - "backplate": render labels with a backplate behind text for better contrast
+     * Visual style of data labels. Shared across all chart types.
+     * - "auto" (default): plain label text with automatic contrast color
+     * - "backplate": solid background rectangle behind label text; composes with any position
      */
     style?: "auto" | "backplate";
+    /**
+     * Placement of data labels. Applies to pie and donut charts only.
+     * - "auto" (default): whole-chart adaptive — outside (callouts with leader lines) when the smallest
+     *   visible slice is ≤ 5%, inside otherwise. A chart never mixes inside and outside.
+     * - "inside": force every label inside its slice; labels that don't fit are omitted
+     * - "outside": place every label outside with a leader line
+     */
+    position?: "auto" | "inside" | "outside";
 }
 
 /**

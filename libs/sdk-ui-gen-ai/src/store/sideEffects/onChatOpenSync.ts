@@ -28,6 +28,7 @@ import {
 } from "../messages/messagesSlice.js";
 
 import { convertToLocalContent } from "./converters/toLocalContent.js";
+import { notifyDefinitionReceived } from "./onDefinitionReceivedTrigger.js";
 
 /**
  * Re-sync the active conversation with the backend whenever the chat window is opened.
@@ -85,7 +86,7 @@ export function* onChatOpenSync({ payload: { isOpen } }: PayloadAction<{ isOpen:
     }
 
     try {
-        const latest: IChatConversationLocal | undefined = yield call(fetchLatestConversation);
+        const latest: IChatConversationLocal | undefined = yield call(fetchLatestConversation, current);
 
         // Empty (or transient) backend result - most likely a flaky list fetch. Keep the current UI
         // (list + thread) untouched rather than half-clearing it. fetchLatestConversation already
@@ -136,6 +137,7 @@ export function* onChatOpenSync({ payload: { isOpen } }: PayloadAction<{ isOpen:
             yield put(setCurrentConversationAction({ conversation: latest }));
         }
         yield put(setMessagesAction({ items }));
+        yield call(notifyDefinitionReceived, items, latest.localId);
     } catch {
         // Fail silently - keep showing whatever is currently loaded.
     }
@@ -149,7 +151,7 @@ export function* onChatOpenSync({ payload: { isOpen } }: PayloadAction<{ isOpen:
  * chat still shows a thread (which would be an inconsistent half-cleared state).
  * @internal
  */
-function* fetchLatestConversation() {
+function* fetchLatestConversation(current: IChatConversationLocal | undefined): Generator<any, any, any> {
     const backend: IAnalyticalBackend = yield getContext("backend");
     const workspace: string = yield getContext("workspace");
     const isPreview: boolean | undefined = yield getContext("isPreview");
@@ -169,9 +171,12 @@ function* fetchLatestConversation() {
     // Refresh the stored list so the history panel reflects the latest state too.
     yield put(loadConversationsSuccessAction({ conversations }));
 
-    return conversations
+    const active = conversations.find((c) => c.localId === current?.localId);
+    const latest = conversations
         .slice()
         .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())[0];
+
+    return active ?? latest;
 }
 
 /**

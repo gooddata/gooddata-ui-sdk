@@ -163,6 +163,9 @@ type AttributeCacheEntry = {
     connectedAttributes: LRUCache<string, Promise<ObjRef[]>>;
     attributeElementResults?: LRUCache<string, Promise<IElementsQueryResult>>;
     dataSetsMeta: LRUCache<string, Promise<IMetadataObject>>;
+    // keyed by display-form identifier; holds in-flight/settled getAttributesWithReferences results so
+    // concurrent callers for the same display form share a single underlying bulk request (in-flight dedupe)
+    attributesWithReferences: LRUCache<string, Promise<IAttributeWithReferences | undefined>>;
 };
 
 type AutomationCacheEntry = {
@@ -1114,6 +1117,9 @@ function getOrCreateAttributeCache(ctx: CachingContext, workspace: string): Attr
             connectedAttributes: new LRUCache<string, Promise<ObjRef[]>>({
                 max: (ctx.config.maxConnectedAttributesPerWorkspace ?? ctx.config.maxAttributesPerWorkspace)!,
             }),
+            attributesWithReferences: new LRUCache<string, Promise<IAttributeWithReferences | undefined>>({
+                max: ctx.config.maxAttributesPerWorkspace!,
+            }),
             attributeElementResults: cachingEnabled(ctx.config.maxAttributeElementResultsPerWorkspace)
                 ? new LRUCache<string, Promise<IElementsQueryResult>>({
                       max: ctx.config.maxAttributeElementResultsPerWorkspace!,
@@ -1630,73 +1636,124 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
     }
 
     public override async getAttributesWithReferences(refs: ObjRef[]): Promise<IAttributeWithReferences[]> {
+        const attributesCache = getOrCreateAttributeCache(this.ctx, this.workspace).attributesWithReferences;
         const attributeByDfCache = getOrCreateAttributeCache(
             this.ctx,
             this.workspace,
         ).attributesByDisplayForms;
         const dataSetByAttributeCache = getOrCreateAttributeCache(this.ctx, this.workspace).dataSetsMeta;
 
-        // grab a reference to the cache results as soon as possible in case they would get evicted while loading the ones with missing data in cache
-        // then would might not be able to call cache.get again and be guaranteed to get the data
-        const refsWithCacheResults: { ref: ObjRef; cacheHit?: Promise<IAttributeWithReferences> }[] = [];
+        // grab a reference to the cache results as soon as possible in case they would get evicted while
+        // loading the ones with missing data in cache; then we might not be able to call cache.get again
+        // and be guaranteed to get the data
+        const refsWithCacheResults: {
+            ref: ObjRef;
+            cacheKey: string | undefined;
+            cacheHit: Promise<IAttributeWithReferences | undefined> | undefined;
+        }[] = [];
 
         for (const ref of refs) {
-            // First, get attribute cached by display form if available
-            const attrCacheKey = isIdentifierRef(ref) ? ref.identifier : undefined;
-            const attrCacheHit = attrCacheKey ? attributeByDfCache.get(attrCacheKey) : undefined;
-            const attributeFromCache = attrCacheHit ? await attrCacheHit : undefined;
+            const cacheKey = isIdentifierRef(ref) ? ref.identifier : undefined;
 
-            // If attribute was cached, try to get dataSet by attribute from cache
-            const dataSetCacheKey =
-                attributeFromCache && isIdentifierRef(attributeFromCache.ref)
-                    ? attributeFromCache.ref.identifier
+            // First, reuse an in-flight/settled result registered for this exact display form so that N
+            // concurrent callers for the same ref share a single underlying bulk request (in-flight dedupe).
+            let cacheHit = cacheKey ? attributesCache.get(cacheKey) : undefined;
+
+            // Otherwise fall back to the display-form-keyed secondary caches (as on master): once an
+            // attribute has been loaded for ANY of its display forms, attributesByDisplayForms holds every
+            // display form of that attribute, so a request for a sibling display form is still a cache hit
+            // and no request is fired. This keeps the outgoing request set identical to master.
+            if (!cacheHit) {
+                const attrCacheHit = cacheKey ? attributeByDfCache.get(cacheKey) : undefined;
+                const attributeFromCache = attrCacheHit ? await attrCacheHit : undefined;
+
+                const dataSetCacheKey =
+                    attributeFromCache && isIdentifierRef(attributeFromCache.ref)
+                        ? attributeFromCache.ref.identifier
+                        : undefined;
+                const dataSetCacheHit = dataSetCacheKey
+                    ? dataSetByAttributeCache.get(dataSetCacheKey)
                     : undefined;
-            const dataSetCacheHit = dataSetCacheKey
-                ? dataSetByAttributeCache.get(dataSetCacheKey)
-                : undefined;
-            const dataSetFromCache = dataSetCacheHit ? await dataSetCacheHit : undefined;
+                const dataSetFromCache = dataSetCacheHit ? await dataSetCacheHit : undefined;
 
-            // If both attribute and dataSet were cached, consider it as a cacheHit of attribute with references
-            const cacheHit =
-                attributeFromCache && dataSetFromCache
-                    ? Promise.resolve({
-                          attribute: attributeFromCache,
-                          dataSet: dataSetFromCache,
-                      } as IAttributeWithReferences)
-                    : undefined;
+                cacheHit =
+                    attributeFromCache && dataSetFromCache
+                        ? Promise.resolve({
+                              attribute: attributeFromCache,
+                              dataSet: dataSetFromCache,
+                          } as IAttributeWithReferences)
+                        : undefined;
+            }
 
-            refsWithCacheResults.push({ ref, cacheHit });
+            refsWithCacheResults.push({ ref, cacheKey, cacheHit });
         }
 
-        const [withCacheHits, withoutCacheHits] = partition(
-            refsWithCacheResults,
-            ({ cacheHit }) => !!cacheHit,
-        );
+        const refsToLoad = refsWithCacheResults.filter((item) => !item.cacheHit).map((item) => item.ref);
 
-        const refsToLoad = withoutCacheHits.map((item) => item.ref);
-
-        const [alreadyInCache, loadedFromServer] = await Promise.all([
-            // await the stuff from cache, we need the data available (we cannot just return the promises)
-            Promise.all(withCacheHits.map((item) => item.cacheHit!)),
-            // load items not in cache using the bulk operation
+        // fire a SINGLE bulk request for the misses
+        const loadPromise: Promise<IAttributeWithReferences[]> =
             refsToLoad.length > 0
                 ? this.decorated.getAttributesWithReferences(refsToLoad)
-                : Promise.resolve([]),
-        ]);
+                : Promise.resolve([]);
 
-        // save newly loaded to cache for future reference
+        // Synchronously (before awaiting) derive a per-ref promise from the single bulk request and register
+        // it in the cache, so concurrent callers for the same display form share this in-flight request
+        // instead of firing their own. Keep input ordering.
+        const entries = refsWithCacheResults.map((item) => {
+            if (item.cacheHit) {
+                return { ref: item.ref, cacheKey: item.cacheKey, promise: item.cacheHit };
+            }
+
+            const { cacheKey } = item;
+            const promise = loadPromise
+                .then((loaded) => {
+                    const match = loaded.find((awr) =>
+                        awr.attribute.displayForms.some((df) => areObjRefsEqual(item.ref, df.ref)),
+                    );
+                    if (!match && cacheKey) {
+                        // The server omitted this ref (inconsistent relations); evict so a later call can
+                        // retry it and so a concurrent caller does not observe a cached resolved-undefined.
+                        attributesCache.delete(cacheKey);
+                    }
+                    return match;
+                })
+                .catch((e) => {
+                    if (cacheKey) {
+                        attributesCache.delete(cacheKey);
+                    }
+                    throw e;
+                });
+
+            if (cacheKey) {
+                attributesCache.set(cacheKey, promise);
+            }
+
+            return { ref: item.ref, cacheKey, promise };
+        });
+
+        // await every promise (also marks in-flight rejections as handled -> no unhandled rejections);
+        // resolved is aligned with the input refs ordering, entries may be undefined for omitted refs
+        const resolved = await Promise.all(entries.map((entry) => entry.promise));
+
+        // keep populating the secondary caches for the loaded items: attribute-by-display-form for EVERY
+        // display form and dataset-by-attribute, so subsequent reads for the same attribute - including a
+        // sibling display form or a scalar read - are served from cache, exactly as on master
+        const loadedFromServer = await loadPromise;
         loadedFromServer.forEach((loaded) => {
-            // Cache attribute by display form refs
             loaded.attribute.displayForms.forEach((displayForm) => {
                 void this.cacheAttributeByDisplayForm(displayForm.ref, loaded.attribute);
             });
 
-            // Cache dataSet by attribute ref
             if (loaded.dataSet) {
                 void this.cacheAttributeDataSetMeta(loaded.attribute.ref, loaded.dataSet);
             }
         });
 
+        // candidates are the values that actually resolved (per-ref, aligned with the input refs)
+        const candidates = resolved.filter((item): item is IAttributeWithReferences => item !== undefined);
+
+        // mirror the previous capability branch: with inconsistent relations we drop server-omitted refs
+        // (skipMissingReferences), otherwise every requested ref must resolve and a match miss throws below
         const loadedRefs = loadedFromServer.flatMap((item) =>
             item.attribute.displayForms.map((df) => df.ref),
         );
@@ -1704,17 +1761,22 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
             ? skipMissingReferences(refs, refsToLoad, loadedRefs)
             : refs;
 
-        // reconstruct the original ordering
-        const candidates = [...loadedFromServer, ...alreadyInCache];
-
-        return outputRefs.map((ref) => {
-            const match = candidates.find((item) =>
-                item.attribute.displayForms.some((df) => areObjRefsEqual(ref, df.ref)),
-            );
-            // if this bombs, some data got lost in the process
-            invariant(match);
-            return match;
-        });
+        // reconstruct the output preserving input ordering
+        return outputRefs
+            .map((ref) =>
+                candidates.find((item) =>
+                    item.attribute.displayForms.some((df) => areObjRefsEqual(ref, df.ref)),
+                ),
+            )
+            .filter((match): match is IAttributeWithReferences => {
+                // When the backend guarantees consistent relations, every requested ref must resolve;
+                // surface (rather than silently drop) any per-ref match miss.
+                if (!match) {
+                    invariant(this.ctx.capabilities.allowsInconsistentRelations);
+                    return false;
+                }
+                return true;
+            });
     }
 
     private cacheAttributeByDisplayForm = (displayFormRef: ObjRef, attribute: IAttributeMetadataObject) => {
