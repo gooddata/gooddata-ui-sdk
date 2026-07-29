@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-gen-ai: fix chat object references being corrupted by Markdown emphasis parsing when an id contains an underscore-word-underscore pattern",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "jan.kadlec@gooddata.com"
+}

@@ -145,6 +145,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableAnalyticalCatalogVisualizationEditor,
+            "enableAnalyticalCatalogVisualizationEditor",
+            "BOOLEAN",
+            FeatureFlagsValues.enableAnalyticalCatalogVisualizationEditor,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableStringParameters,
             "enableStringParameters",
             "BOOLEAN",
@@ -786,6 +793,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableNullableJoins",
             "BOOLEAN",
             FeatureFlagsValues.enableNullableJoins,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableLogicalModelExtensionsFromParentsCall,
+            "enableLogicalModelExtensionsFromParentsCall",
+            "BOOLEAN",
+            FeatureFlagsValues.enableLogicalModelExtensionsFromParentsCall,
         ),
         ...loadFeature(
             features,

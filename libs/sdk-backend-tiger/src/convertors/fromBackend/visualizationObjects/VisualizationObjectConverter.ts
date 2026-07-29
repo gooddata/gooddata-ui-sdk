@@ -25,3 +25,35 @@ export const convertVisualizationObject = (
 
     invariant(false, "Unknown visualization object version");
 };
+
+/**
+ * The title, description and tags of a visualization object — the attributes stored alongside its
+ * free-form `content`, not derivable from the content itself.
+ *
+ * @internal
+ */
+export interface IVisualizationObjectMetadata {
+    title: string;
+    description: string;
+    tags?: string[];
+}
+
+/**
+ * Converts the free-form `content` of a stored visualization object into a platform-agnostic insight
+ * definition, pairing it with the object's `metadata`. `content` is typed as `object` because that is the
+ * visualization object's free-form content field type; internally it must be a V1 or V2 body.
+ *
+ * @internal
+ */
+export const convertVisualizationContentToInsight = (
+    content: object,
+    metadata: IVisualizationObjectMetadata,
+): IInsightDefinition =>
+    convertVisualizationObject(
+        content as
+            | VisualizationObjectModelV1.IVisualizationObject
+            | VisualizationObjectModelV2.IVisualizationObject,
+        metadata.title,
+        metadata.description,
+        metadata.tags,
+    );

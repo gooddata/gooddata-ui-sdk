@@ -7,7 +7,7 @@ import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import type { ICatalogItem } from "../catalogItem/types.js";
 
 import { AsCodeDialog } from "./AsCodeDialog.js";
-import type { IAsCodeDefinition, IAsCodeDescriptor } from "./descriptor.js";
+import type { IAsCodeDescriptor } from "./descriptor.js";
 import { useAsCodeBase } from "./useAsCodeBase.js";
 
 type Props = {
@@ -15,28 +15,17 @@ type Props = {
     item: ICatalogItem;
     onClose: () => void;
     onSaved?: (item: ICatalogItem) => void;
-    // Emits the current unsaved edits, as a definition, for the host's create dialog to copy from.
-    // Omitted when duplication is not offered.
-    onDuplicate?: (source: IAsCodeDefinition) => void;
+    // Emits the current unsaved edits (reconciled) for the create dialog to copy from.
+    onDuplicate?: (source: unknown) => void;
 };
 
-/**
- * Edits an existing as-code object. Its editable definition is resolved by {@link useAsCodeBase} —
- * fetched for a type with `port.load` (a metric's MAQL), or mapped from the item for one without.
- * Generic over the entity type via its descriptor.
- * @internal
- */
+/** @internal */
 export function AsCodeEditDialog({ descriptor, item, onClose, onSaved, onDuplicate }: Props) {
-    const { addSuccess, addError } = useToastMessage();
-    const { base, isLoading, port } = useAsCodeBase(descriptor, item, () => {
-        if (descriptor.messages.loadError) {
-            addError(descriptor.messages.loadError);
-        }
-        onClose();
-    });
+    const { addSuccess } = useToastMessage();
+    const { base, isLoading, port } = useAsCodeBase(descriptor, item, onClose);
 
     const handleSubmit = useCallback(
-        async (definition: IAsCodeDefinition) => {
+        async (definition: unknown) => {
             if (base === undefined) {
                 return;
             }
@@ -48,17 +37,6 @@ export function AsCodeEditDialog({ descriptor, item, onClose, onSaved, onDuplica
         [addSuccess, base, descriptor, onClose, onSaved, port],
     );
 
-    const handleDuplicate = useCallback(
-        (edited: IAsCodeDefinition) => {
-            if (base === undefined || !onDuplicate) {
-                return;
-            }
-            // Overlay the edits onto the loaded base so the copy keeps fields the YAML can't express.
-            onDuplicate(descriptor.applyYamlEdits ? descriptor.applyYamlEdits(base, edited) : edited);
-        },
-        [base, descriptor, onDuplicate],
-    );
-
     return (
         <AsCodeDialog
             descriptor={descriptor}
@@ -68,7 +46,7 @@ export function AsCodeEditDialog({ descriptor, item, onClose, onSaved, onDuplica
             fixedIdentifier={item.identifier}
             onClose={onClose}
             onSubmit={handleSubmit}
-            onDuplicate={onDuplicate ? handleDuplicate : undefined}
+            onDuplicate={onDuplicate}
         />
     );
 }

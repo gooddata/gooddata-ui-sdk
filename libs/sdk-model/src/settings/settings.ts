@@ -998,6 +998,13 @@ export interface IFeatureFlags {
     enableNullableJoins?: boolean;
 
     /**
+     * Enable reading logical model dataset extensions (WDF references) directly from the
+     * includeParents=true /logicalModel response, instead of collecting them via additional
+     * recursive includeParents=false calls up the parent-workspace chain.
+     */
+    enableLogicalModelExtensionsFromParentsCall?: boolean;
+
+    /**
      * Enable dashboard density setting.
      *
      * When enabled, users can switch between "comfortable" and "compact" information density
@@ -1060,6 +1067,12 @@ export interface IFeatureFlags {
      * When off, creating or editing a metric from the catalog redirects to the standalone metric editor.
      */
     enableAnalyticalCatalogMetricEditor?: boolean;
+
+    /**
+     * Enable inline as-code visualization editing in the analytics catalog.
+     * When off, creating or opening a visualization from the catalog redirects to Analytical Designer.
+     */
+    enableAnalyticalCatalogVisualizationEditor?: boolean;
 
     /**
      * Enable authoring of string (textual) what-if parameters.

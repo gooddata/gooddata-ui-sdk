@@ -361,6 +361,8 @@ export { generateFileName, resolveIdFromFileName, type FileNamesUsed } from "./u
 export { assertUnreachable, type FilePath, type FullFields } from "./utils/sharedUtils.js";
 export { convertBucketToTitle } from "./utils/convertBucketToTitle.js";
 export { createIdentifier, getIdentifier } from "./utils/yamlUtils.js";
+export { parseGranularity } from "./utils/granularityUtils.js";
+export { yamlVisTypeToVisualizationUrl } from "./utils/visualisationTypeMap.js";
 export {
     type IErrorContext,
     type ICoreError,

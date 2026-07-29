@@ -11,6 +11,7 @@ import { AsCodeDetailActions } from "../asCode/AsCodeDetailActions.js";
 import { getAsCodeDescriptor, useIsAsCodeTypeEditable } from "../asCodeRegistry.js";
 import type { ICatalogItem, ICatalogItemRef } from "../catalogItem/types.js";
 
+import { toOpenHandlerEvent } from "./openHandlerEvent.js";
 import { useCatalogItemShareActions } from "./share/CatalogItemShareProvider.js";
 import { ShareButton } from "./share/ShareButton.js";
 import type { OpenHandlerEvent } from "./types.js";
@@ -83,12 +84,7 @@ export function CatalogDetailActions({
                 variant="primary"
                 accessibilityConfig={{ role: "link" }}
                 onClick={(event) => {
-                    onOpen?.(event, {
-                        item,
-                        workspaceId,
-                        newTab: event.metaKey || event.ctrlKey,
-                        preventDefault: event.preventDefault.bind(event),
-                    });
+                    onOpen?.(event, toOpenHandlerEvent(event, item, workspaceId));
                 }}
             />
         </div>

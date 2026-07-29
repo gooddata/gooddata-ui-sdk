@@ -49,7 +49,7 @@ function LandingScreenComponent({
     const intl = useIntl();
 
     return (
-        <div className="gd-gen-ai-chat__messages__empty">
+        <div className="gd-gen-ai-chat__messages__empty" data-testid="gen-ai-chat-landing-screen">
             {LandingScreen ? (
                 <LandingScreen />
             ) : (

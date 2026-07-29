@@ -27,6 +27,7 @@ import { type AgGridRowData } from "../../types/internal.js";
 
 import {
     evaluateConditionalFormatting,
+    resolveConditionalFormattingDateBounds,
     resolveConditionalFormattingTriggers,
 } from "./conditionalFormatting.js";
 
@@ -517,6 +518,40 @@ describe("numeric range and boundary semantics", () => {
     });
 });
 
+describe("raw-value contract — text operators", () => {
+    const textOnMeasure = (operator: ConditionalFormattingOperator): IConditionalFormatting => ({
+        enabled: true,
+        rules: [
+            {
+                id: "r",
+                target: { kind: "measure", measureIdentifier: VARIANCE_MEASURE_ID },
+                conditions: [
+                    {
+                        id: "c",
+                        operator,
+                        value: { kind: "literal", value: "5" },
+                        format: { backgroundColor: RED, scope: "cell" },
+                    },
+                ],
+            },
+        ],
+    });
+
+    it("text operators on a measure target match nothing (formatted-string matching is unportable)", () => {
+        // The cell's DISPLAY string ("5%") contains "5" — must still not paint.
+        const paints = (operator: ConditionalFormattingOperator): boolean =>
+            evaluateConditionalFormatting(
+                textOnMeasure(operator),
+                triggersFor(textOnMeasure(operator)),
+                buildRow({ status: "x", variance: 5 }),
+                VARIANCE_COL_ID,
+            ) !== undefined;
+        expect(paints("CONTAINS")).toBe(false);
+        // NOT_* variants are gated at the operator level too — not evaluated-and-inverted.
+        expect(paints("NOT_CONTAINS")).toBe(false);
+    });
+});
+
 describe("evaluateConditionalFormatting — review-fix regressions", () => {
     // #1 — IS_EMPTY/IS_NOT_EMPTY on an attribute column (was inverted: isEmptyCell excluded attributes).
     it("IS_EMPTY matches an empty attribute cell; IS_NOT_EMPTY does not", () => {
@@ -696,6 +731,251 @@ describe("evaluateConditionalFormatting — review-fix regressions", () => {
         expect(
             evaluateConditionalFormatting(config, triggersFor(config), row, STATUS_COL_ID),
         ).toBeUndefined();
+    });
+});
+
+describe("date conditions (attribute wire labels)", () => {
+    const DATE_COL_ID = "orderdate";
+    const DATE_ATTR_ID = "orderdate";
+    const dateColumnDefinitions = [buildDateAttributeColumnDefinition()];
+    const dateTriggers = [[DATE_COL_ID]];
+
+    const dateConfig = (
+        operator: ConditionalFormattingOperator,
+        value: ConditionalFormattingValue,
+    ): IConditionalFormatting => ({
+        enabled: true,
+        rules: [
+            {
+                id: "r-date",
+                target: { kind: "attribute", attributeIdentifier: DATE_ATTR_ID },
+                conditions: [
+                    {
+                        id: "c-date",
+                        operator,
+                        value,
+                        format: { backgroundColor: RED, scope: "cell" },
+                    },
+                ],
+            },
+        ],
+    });
+
+    // Wire label (attributeHeaderItem.name) and display value deliberately differ, proving the
+    // engine compares the raw label — not the formatted "Dec 2023"-style display string.
+    const dateRow = (wireLabel: string | null): AgGridRowData => ({
+        cellDataByColId: { [DATE_COL_ID]: buildDateAttributeCell(wireLabel) },
+        allRowData: [wireLabel],
+    });
+
+    const paintsCell = (config: IConditionalFormatting, wireLabel: string | null): boolean =>
+        evaluateConditionalFormatting(
+            config,
+            dateTriggers,
+            dateRow(wireLabel),
+            DATE_COL_ID,
+            resolveConditionalFormattingDateBounds(config, dateColumnDefinitions, {
+                anchor: new Date(2023, 11, 15, 12),
+            }),
+        ) !== undefined;
+
+    it("Is on (EQUAL_TO) an absolute period paints cells inside it, on the raw label", () => {
+        const config = dateConfig("EQUAL_TO", {
+            kind: "absoluteDate",
+            from: "2023-12-01",
+            to: "2023-12-31",
+        });
+        const bounds = resolveConditionalFormattingDateBounds(config, dateColumnDefinitions);
+        expect(bounds["0:c-date"]).toEqual({ fromLabel: "2023-12", toLabel: "2023-12" });
+
+        expect(paintsCell(config, "2023-12")).toBe(true);
+        expect(paintsCell(config, "2023-11")).toBe(false);
+        expect(paintsCell(config, "2024-01")).toBe(false);
+    });
+
+    it("text operators on a date attribute compare the raw wire label, never the display string", () => {
+        // Display is "Formatted 2023-12"; wire label is "2023-12" — only the label matches.
+        expect(paintsCell(dateConfig("CONTAINS", { kind: "literal", value: "formatted" }), "2023-12")).toBe(
+            false,
+        );
+        expect(paintsCell(dateConfig("CONTAINS", { kind: "literal", value: "2023" }), "2023-12")).toBe(true);
+        expect(paintsCell(dateConfig("EQUAL_TO", { kind: "literal", value: "2023-12" }), "2023-12")).toBe(
+            true,
+        );
+    });
+
+    it("Is before / Is after compare against the period's start and end respectively", () => {
+        const value: ConditionalFormattingValue = {
+            kind: "absoluteDate",
+            from: "2023-10-01",
+            to: "2023-12-31",
+        };
+        const before = dateConfig("LESS_THAN", value);
+        expect(paintsCell(before, "2023-09")).toBe(true);
+        expect(paintsCell(before, "2023-10")).toBe(false);
+        expect(paintsCell(before, "2024-01")).toBe(false);
+
+        const after = dateConfig("GREATER_THAN", value);
+        expect(paintsCell(after, "2024-01")).toBe(true);
+        expect(paintsCell(after, "2023-12")).toBe(false);
+        expect(paintsCell(after, "2023-09")).toBe(false);
+    });
+
+    it("Is not on (NOT_EQUAL_TO) paints only cells outside the period", () => {
+        const config = dateConfig("NOT_EQUAL_TO", {
+            kind: "absoluteDate",
+            from: "2023-12-01",
+            to: "2023-12-31",
+        });
+        expect(paintsCell(config, "2023-12")).toBe(false);
+        expect(paintsCell(config, "2023-11")).toBe(true);
+    });
+
+    it("a relative period resolves against the anchor and the column's granularity", () => {
+        // Anchor mid-December 2023; last month .. this month = Nov + Dec.
+        const config = dateConfig("EQUAL_TO", {
+            kind: "relativeDate",
+            granularity: "GDC.time.month",
+            from: -1,
+            to: 0,
+        });
+        expect(paintsCell(config, "2023-11")).toBe(true);
+        expect(paintsCell(config, "2023-12")).toBe(true);
+        expect(paintsCell(config, "2023-10")).toBe(false);
+    });
+
+    it("empty date cells match only IS_EMPTY; ALL and real comparisons skip them", () => {
+        // "All time" = the catch-all for DATED cells; the emptiness gate precedes the ALL check.
+        const all = dateConfig("ALL", { kind: "none" });
+        expect(paintsCell(all, "2023-12")).toBe(true);
+        expect(paintsCell(all, null)).toBe(false);
+
+        // A real comparison never matches a dateless cell.
+        const equal = dateConfig("EQUAL_TO", {
+            kind: "absoluteDate",
+            from: "2023-12-01",
+            to: "2023-12-31",
+        });
+        expect(paintsCell(equal, null)).toBe(false);
+
+        // IS_EMPTY is the one doorway to empties on date columns — same operator attributes use.
+        const isEmpty = dateConfig("IS_EMPTY", { kind: "none" });
+        expect(paintsCell(isEmpty, null)).toBe(true);
+        expect(paintsCell(isEmpty, "2023-12")).toBe(false);
+    });
+
+    it("a partially overlapping period matches 'Is on', and 'Is not on' is its exact complement", () => {
+        // Dec 2–31 is a partial month: it TOUCHES December, so the month cell paints.
+        const partial: ConditionalFormattingValue = {
+            kind: "absoluteDate",
+            from: "2023-12-02",
+            to: "2023-12-31",
+        };
+        const on = dateConfig("EQUAL_TO", partial);
+        expect(paintsCell(on, "2023-12")).toBe(true);
+        expect(paintsCell(on, "2023-11")).toBe(false);
+
+        // Complement semantics: the touched month does NOT paint under the negation.
+        const notOn = dateConfig("NOT_EQUAL_TO", partial);
+        expect(paintsCell(notOn, "2023-12")).toBe(false);
+        expect(paintsCell(notOn, "2023-11")).toBe(true);
+
+        // Strict ordering excludes the straddling period: December touches the value, so it is
+        // neither strictly after nor strictly before it.
+        const straddling: ConditionalFormattingValue = {
+            kind: "absoluteDate",
+            from: "2023-11-15",
+            to: "2023-12-02",
+        };
+        expect(paintsCell(dateConfig("GREATER_THAN", straddling), "2023-12")).toBe(false);
+        expect(paintsCell(dateConfig("GREATER_THAN", straddling), "2024-01")).toBe(true);
+        expect(paintsCell(dateConfig("LESS_THAN", straddling), "2023-11")).toBe(false);
+        expect(paintsCell(dateConfig("LESS_THAN", straddling), "2023-10")).toBe(true);
+    });
+
+    it("malformed values never match", () => {
+        const config = dateConfig("EQUAL_TO", {
+            kind: "absoluteDate",
+            from: "12/24/2026",
+            to: "12/26/2026",
+        });
+        expect(resolveConditionalFormattingDateBounds(config, dateColumnDefinitions)["0:c-date"]).toBeNull();
+        expect(paintsCell(config, "2023-12")).toBe(false);
+        expect(paintsCell(config, null)).toBe(false);
+    });
+
+    it("resolves bounds per rule, so condition ids reused across rules cannot collide", () => {
+        // Hand-authored AAC files only guarantee condition-id uniqueness WITHIN a rule.
+        const config: IConditionalFormatting = {
+            enabled: true,
+            rules: [
+                {
+                    id: "r-a",
+                    target: { kind: "attribute", attributeIdentifier: DATE_ATTR_ID },
+                    conditions: [
+                        {
+                            id: "c-dup",
+                            operator: "EQUAL_TO",
+                            value: { kind: "absoluteDate", from: "2023-11-01", to: "2023-11-30" },
+                            format: { backgroundColor: GREEN, scope: "cell" },
+                        },
+                    ],
+                },
+                {
+                    id: "r-b",
+                    target: { kind: "attribute", attributeIdentifier: DATE_ATTR_ID },
+                    conditions: [
+                        {
+                            id: "c-dup",
+                            operator: "EQUAL_TO",
+                            value: { kind: "absoluteDate", from: "2023-12-01", to: "2023-12-31" },
+                            format: { backgroundColor: RED, scope: "cell" },
+                        },
+                    ],
+                },
+            ],
+        };
+        const bounds = resolveConditionalFormattingDateBounds(config, dateColumnDefinitions);
+        expect(bounds["0:c-dup"]).toEqual({ fromLabel: "2023-11", toLabel: "2023-11" });
+        expect(bounds["1:c-dup"]).toEqual({ fromLabel: "2023-12", toLabel: "2023-12" });
+
+        const triggers = [[DATE_COL_ID], [DATE_COL_ID]];
+        // November matches rule A (green), December matches rule B (red) — no bounds bleed-over.
+        expect(
+            evaluateConditionalFormatting(config, triggers, dateRow("2023-11"), DATE_COL_ID, bounds),
+        ).toEqual({ backgroundColor: GREEN });
+        expect(
+            evaluateConditionalFormatting(config, triggers, dateRow("2023-12"), DATE_COL_ID, bounds),
+        ).toEqual({ backgroundColor: RED });
+    });
+
+    it("resolveConditionalFormattingDateBounds keys date conditions only; measure targets resolve to null", () => {
+        const mixed: IConditionalFormatting = {
+            enabled: true,
+            rules: [
+                {
+                    id: "r-measure",
+                    target: { kind: "measure", measureIdentifier: VARIANCE_MEASURE_ID },
+                    conditions: [
+                        {
+                            id: "c-literal",
+                            operator: "LESS_THAN",
+                            value: { kind: "literal", value: 0 },
+                            format: { backgroundColor: RED, scope: "cell" },
+                        },
+                        {
+                            id: "c-date-on-measure",
+                            operator: "EQUAL_TO",
+                            value: { kind: "absoluteDate", from: "2023-12-01", to: "2023-12-31" },
+                            format: { backgroundColor: RED, scope: "cell" },
+                        },
+                    ],
+                },
+            ],
+        };
+        const bounds = resolveConditionalFormattingDateBounds(mixed, dateColumnDefinitions);
+        expect(bounds["0:c-literal"]).toBeUndefined();
+        expect(bounds["0:c-date-on-measure"]).toBeNull();
     });
 });
 
@@ -931,6 +1211,51 @@ function buildAttributeDescriptor(): IAttributeDescriptor {
             },
             primaryLabel: idRef(`${STATUS_ATTR_ID}.id`),
         },
+    };
+}
+
+function buildDateAttributeColumnDefinition(): ITableAttributeColumnDefinition {
+    return {
+        type: "attribute",
+        columnIndex: 0,
+        rowHeaderIndex: 0,
+        attributeDescriptor: {
+            attributeHeader: {
+                uri: "/gdc/md/demo/obj/orderdate",
+                identifier: "orderdate.month",
+                localIdentifier: "orderdate",
+                ref: idRef("orderdate.month"),
+                name: "Order date - Month/Year",
+                granularity: "GDC.time.month",
+                format: { locale: "en-US", pattern: "MMM y", timezone: "Europe/Prague" },
+                formOf: {
+                    ref: idRef("attr.orderdate"),
+                    uri: "/gdc/md/demo/obj/attr.orderdate",
+                    identifier: "attr.orderdate",
+                    name: "Order date",
+                },
+                primaryLabel: idRef("orderdate.month"),
+            },
+        },
+    };
+}
+
+// A date cell: `name` is the raw wire label ("2023-12"), formattedValue the display string. A null
+// label models an empty date value (formattedValue "" — the emptiness the engine keys on).
+function buildDateAttributeCell(wireLabel: string | null): ITableAttributeHeaderValue {
+    return {
+        type: "attributeHeader",
+        formattedValue: wireLabel === null ? "" : `Formatted ${wireLabel}`,
+        value: {
+            attributeHeaderItem: {
+                name: wireLabel ?? "",
+                uri: "/gdc/md/demo/obj/orderdate/elements?id=1",
+            },
+        },
+        rowIndex: 0,
+        columnIndex: 0,
+        rowDefinition: { type: "value", rowIndex: 0, rowScope: [] },
+        columnDefinition: buildDateAttributeColumnDefinition(),
     };
 }
 

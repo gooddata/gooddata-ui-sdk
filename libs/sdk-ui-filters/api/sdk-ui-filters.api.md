@@ -28,6 +28,7 @@ import { IAttributeMetadataObject } from '@gooddata/sdk-model';
 import { IDashboardDateFilter } from '@gooddata/sdk-model';
 import { IDataSetMetadataObject } from '@gooddata/sdk-model';
 import { IDateFilter } from '@gooddata/sdk-model';
+import { IDateFilterConfig } from '@gooddata/sdk-model';
 import { IDropdownButtonRenderProps } from '@gooddata/sdk-ui-kit';
 import { IElementsQueryAttributeFilter } from '@gooddata/sdk-backend-spi';
 import { IEmptyValuesDateFilterOption } from '@gooddata/sdk-model';
@@ -220,6 +221,9 @@ export type CommonFilterControllerData = {
     isWorkingSelectionChanged?: boolean;
 };
 
+// @alpha
+export function convertDateFilterConfigToDateFilterOptions(config: IDateFilterConfig): IDateFilterOptionsByType;
+
 // @public (undocumented)
 export type Correlation = string;
 
@@ -285,6 +289,15 @@ export type DateFilterRelativeOptionGroup = {
 // @internal (undocumented)
 export type DateRangePosition = "from" | "to";
 
+// @alpha
+export const DEFAULT_DATE_FILTER_PRESET = "THIS_MONTH";
+
+// @alpha
+export const DEFAULT_FISCAL_DATE_FILTER_PRESET = "THIS_FISCAL_MONTH";
+
+// @alpha
+export const defaultDateFilterConfig: IDateFilterConfig;
+
 // @public
 export const defaultDateFilterOptions: IDateFilterOptionsByType;
 
@@ -334,6 +347,15 @@ export function EmptyElementsSearchBar(_props: IAttributeFilterElementsSearchBar
 export function ensureCompatibleGranularity<T extends IUiRelativeDateFilterFormLike>(filterOption: T, availableGranularities: DateFilterGranularity[], fiscalFirst: boolean): T;
 
 // @alpha
+export const excludeCurrentPeriodFromRange: (range: {
+    from: number;
+    to: number;
+}, excludeCurrentPeriod: boolean) => {
+    from: number;
+    to: number;
+};
+
+// @alpha
 export function FilterButtonCustomIcon(input: IFilterButtonCustomIconProps): JSX.Element | null;
 
 // @internal
@@ -362,6 +384,12 @@ export function filterStandardPresets(presets: DateFilterRelativeOptionGroup): D
 
 // @public
 export function filterVisibleDateFilterOptions(dateFilterOptions: IDateFilterOptionsByType): IDateFilterOptionsByType;
+
+// @alpha
+export function findDateFilterOptionByValue(dateFilter: IDashboardDateFilter, dateFilterOptions: IDateFilterOptionsByType): DateFilterOption | undefined;
+
+// @alpha
+export function flattenDateFilterOptions(dateFilterOptions: IDateFilterOptionsByType): DateFilterOption[];
 
 // @internal (undocumented)
 export function getAttributeFilterSubtitle(isCommittedSelectionInverted: boolean, committedSelectionElements: IAttributeElement[], intl: IntlShape): string;
@@ -959,6 +987,14 @@ export interface IDateFilterCallbackProps {
     onOpen?: () => void;
     // (undocumented)
     onSelect?: (dateFilterOption: DateFilterOption, excludeCurrentPeriod: boolean) => void;
+}
+
+// @alpha
+export interface IDateFilterOptionInfo {
+    // (undocumented)
+    dateFilterOption: DateFilterOption;
+    // (undocumented)
+    excludeCurrentPeriod: boolean;
 }
 
 // @public
@@ -1621,6 +1657,12 @@ export type IWarningMessage = {
 // @alpha
 export function mapAvailableSelectionTypesToInternal(selectionTypes: AttributeFilterAvailableSelectionType[] | undefined): AttributeFilterSelectionType[];
 
+// @alpha
+export function matchDateFilterToDateFilterOption(dateFilter: IDashboardDateFilter | undefined, availableOptions: IDateFilterOptionsByType): IDateFilterOptionInfo;
+
+// @alpha
+export function matchDateFilterToDateFilterOptionWithPreference(dateFilter: IDashboardDateFilter | undefined, availableOptions: IDateFilterOptionsByType, preferredOptionId: string | undefined): IDateFilterOptionInfo;
+
 // @beta (undocumented)
 export const MeasureValueFilter: NamedExoticComponent<IMeasureValueFilterProps>;
 
@@ -1778,6 +1820,15 @@ export type RelativeDateFilterOption = IUiRelativeDateFilterForm | IRelativeDate
 
 // @beta
 export type RenderMeasureDropdownBody = (props: IRankingMeasureDropdownBodyRenderProps) => ReactNode;
+
+// @alpha
+export const revertExcludedCurrentPeriodRange: (range: {
+    from: number;
+    to: number;
+}) => {
+    from: number;
+    to: number;
+} | undefined;
 
 // @public
 export type SelectionTypeControllerCallbacks = {

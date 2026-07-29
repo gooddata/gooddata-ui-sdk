@@ -255,13 +255,15 @@ export const createServerSideDataSource = ({
                     cachedGrandTotalCount,
                 );
 
-                const nextDataView = isFirstRequest
-                    ? initialDataView
-                    : await loadDataView({
-                          executionResult,
-                          startRow: backendStartRow,
-                          endRow: backendEndRow,
-                      });
+                // The pre-loaded first page is only valid while the execution it was loaded from is still current.
+                const nextDataView =
+                    isFirstRequest && executionResult === initialExecutionResult
+                        ? initialDataView
+                        : await loadDataView({
+                              executionResult,
+                              startRow: backendStartRow,
+                              endRow: backendEndRow,
+                          });
 
                 // Determine if this is the first or last page for non-pinned grand totals
                 const { isFirstPage, isLastPage } = getPageFlags(

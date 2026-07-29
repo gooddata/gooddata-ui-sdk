@@ -70,6 +70,7 @@ export function DashboardInsightMenuBubble({
             onClose={onClose}
             overlayClassName="gd-configuration-bubble-wrapper sdk-edit-mode-on"
             ignoreClicksOnByClass={[`.${IGNORED_CONFIGURATION_MENU_CLICK_CLASS}`]}
+            ensureVisibility
         >
             {children}
         </Bubble>

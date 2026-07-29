@@ -1,5 +1,7 @@
 // (C) 2024-2026 GoodData Corporation
 
+import { useMemo } from "react";
+
 import Markdown, { type Components } from "react-markdown";
 import remarkEmoji from "remark-emoji";
 import remarkGfm from "remark-gfm";
@@ -7,6 +9,7 @@ import remarkGfm from "remark-gfm";
 import { Typography } from "@gooddata/sdk-ui-kit";
 
 import { type TextContentObject } from "../../../model.js";
+import { extractReferences } from "../../completion/plugins/reference-placeholder.js";
 import { rehypeReferences } from "../../completion/plugins/rehype-references.js";
 import { remarkReferences } from "../../completion/plugins/remark-references.js";
 
@@ -36,15 +39,17 @@ type MarkdownComponentProps = {
 };
 
 export function MarkdownComponent({ children, references, allowMarkdown = false }: MarkdownComponentProps) {
+    const { text, tokens } = useMemo(() => extractReferences(children), [children]);
+
     if (allowMarkdown) {
         return (
             <Markdown
                 remarkPlugins={[remarkEmoji, remarkGfm, remarkReferences()]}
-                rehypePlugins={[rehypeReferences(references ?? [])]}
+                rehypePlugins={[rehypeReferences(references ?? [], tokens)]}
                 components={componentMap}
                 urlTransform={customUrlTransform}
             >
-                {children}
+                {text}
             </Markdown>
         );
     }

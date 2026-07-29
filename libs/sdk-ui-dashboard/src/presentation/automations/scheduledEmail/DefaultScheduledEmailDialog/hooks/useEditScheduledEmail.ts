@@ -15,9 +15,6 @@ import {
     type INotificationChannelMetadataObject,
     type IWidget,
     type IWorkspaceUser,
-    isExportDefinitionDashboardRequestPayload,
-    isExportDefinitionVisualizationObjectRequestPayload,
-    isInsightWidget,
 } from "@gooddata/sdk-model";
 
 import {
@@ -27,17 +24,11 @@ import {
 import type { IAutomationFiltersTab } from "../../../../../model/store/filtering/types.js";
 import { useAutomationsContext } from "../../../contexts/AutomationsContext.js";
 import { useScheduledEmailDialogContext } from "../../../contexts/ScheduledEmailDialogContext.js";
-import { getDefaultSelectedFiltersFromFiltersByTab } from "../../../shared/automationFilters/useAutomationFiltersSelect.js";
-import {
-    getAppliedDashboardFilters,
-    getAppliedWidgetFilters,
-    getVisibleFiltersByFilters,
-    getVisibleFiltersByFiltersByTab,
-} from "../../../shared/automationFilters/utils.js";
 import { toNormalizedStartDate } from "../../utils/date.js";
 
 import { useScheduledEmailEffectiveFilters } from "./useScheduledEmailEffectiveFilters.js";
 import { useScheduledEmailExportSettings } from "./useScheduledEmailExportSettings.js";
+import { useScheduledEmailFilters } from "./useScheduledEmailFilters.js";
 import { useScheduledEmailFormState } from "./useScheduledEmailFormState.js";
 import { useScheduledEmailFormValidity } from "./useScheduledEmailFormValidity.js";
 
@@ -103,11 +94,8 @@ export function useEditScheduledEmail({
     const {
         dashboardId,
         dashboardTitle,
-        hiddenFilters: dashboardHiddenFilters,
-        commonDateFilterId,
         widgetLocalIdToTabIdMap: widgetTabMap,
     } = useScheduledEmailDialogContext();
-    const isWidget = !!widget && !!insight;
 
     // Dashboard
     const resolvedDefaultCsvDelimiter = settings?.exportCsvCustomDelimiter ?? DEFAULT_CSV_DELIMITER;
@@ -225,237 +213,20 @@ export function useEditScheduledEmail({
         latestParametersWireRef,
     });
 
-    const onFiltersChange = useCallback(
-        (filters: FilterContextItem[], storeFiltersParam?: boolean) => {
-            setEditedAutomationFilters(filters);
-            const shouldStoreFilters = storeFiltersParam ?? storeFilters;
-
-            if (isWidget) {
-                if (!isInsightWidget(widget)) {
-                    return;
-                }
-
-                setEditedAutomation((s) => {
-                    const appliedDashboardFilters = getAppliedDashboardFilters(
-                        filters,
-                        dashboardHiddenFilters,
-                        true,
-                    );
-                    const appliedWidgetFiltersWithInsight = getAppliedWidgetFilters(
-                        filters,
-                        dashboardHiddenFilters,
-                        widget,
-                        insight,
-                        commonDateFilterId,
-                        true,
-                    );
-
-                    const appliedWidgetFiltersWithoutInsight = getAppliedWidgetFilters(
-                        filters,
-                        dashboardHiddenFilters,
-                        widget,
-                        insight,
-                        commonDateFilterId,
-                        false,
-                    );
-                    const visibleFilters = getVisibleFiltersByFilters(
-                        filters,
-                        availableFiltersAsVisibleFilters,
-                        true,
-                    );
-
-                    return {
-                        ...s,
-                        exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
-                            if (
-                                isExportDefinitionVisualizationObjectRequestPayload(
-                                    exportDefinition.requestPayload,
-                                )
-                            ) {
-                                const format = exportDefinition.requestPayload.format;
-                                const shouldUseWidgetFiltersWithInsight = format === "CSV";
-                                const shouldUseWidgetFiltersWithoutInsight = format === "CSV_RAW";
-                                const appliedFilters = shouldUseWidgetFiltersWithInsight
-                                    ? appliedWidgetFiltersWithInsight
-                                    : shouldUseWidgetFiltersWithoutInsight
-                                      ? appliedWidgetFiltersWithoutInsight
-                                      : appliedDashboardFilters;
-                                return {
-                                    ...exportDefinition,
-                                    requestPayload: {
-                                        ...exportDefinition.requestPayload,
-                                        content: {
-                                            ...exportDefinition.requestPayload.content,
-                                            filters: appliedFilters,
-                                        },
-                                    },
-                                };
-                            } else {
-                                return exportDefinition;
-                            }
-                        }),
-                        metadata: {
-                            ...s.metadata,
-                            visibleFilters,
-                        },
-                    };
-                });
-            } else {
-                setEditedAutomation((s) => {
-                    const appliedFilters = getAppliedDashboardFilters(
-                        filters,
-                        dashboardHiddenFilters,
-                        shouldStoreFilters,
-                    );
-                    const visibleFilters = getVisibleFiltersByFilters(
-                        filters,
-                        availableFiltersAsVisibleFilters,
-                        shouldStoreFilters,
-                    );
-
-                    return {
-                        ...s,
-                        exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
-                            if (isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload)) {
-                                return {
-                                    ...exportDefinition,
-                                    requestPayload: {
-                                        ...exportDefinition.requestPayload,
-                                        content: {
-                                            ...exportDefinition.requestPayload.content,
-                                            filters: appliedFilters,
-                                        },
-                                    },
-                                };
-                            } else {
-                                return exportDefinition;
-                            }
-                        }),
-                        metadata: {
-                            ...s.metadata,
-                            visibleFilters,
-                        },
-                    };
-                });
-            }
-        },
-        [
-            setEditedAutomationFilters,
+    const { onFiltersChange, onFiltersByTabChange, onApplyCurrentFilters, onStoreFiltersChange } =
+        useScheduledEmailFilters({
             setEditedAutomation,
-            dashboardHiddenFilters,
-            availableFiltersAsVisibleFilters,
-            storeFilters,
             widget,
             insight,
-            isWidget,
-            commonDateFilterId,
-        ],
-    );
-
-    // Callback for per-tab filter changes - updates state AND syncs to export definitions
-    const onFiltersByTabChange = useCallback(
-        (newFiltersByTab: Record<string, FilterContextItem[]>, storeFiltersParam?: boolean) => {
-            // Update the editedFiltersByTab state
-            setEditedAutomationFiltersByTab?.(newFiltersByTab);
-            const shouldStoreFilters = storeFiltersParam ?? storeFilters;
-
-            const newEffectiveFiltersByTab = shouldStoreFilters
-                ? Object.entries(newFiltersByTab).reduce<Record<string, FilterContextItem[]>>(
-                      (acc, [tabId, filters]) => {
-                          const tabHiddenFilters =
-                              filtersDataByTab?.find((tab) => tab.tabId === tabId)?.hiddenFilters ?? [];
-                          const appliedFilters = getAppliedDashboardFilters(
-                              filters ?? [],
-                              tabHiddenFilters,
-                              true,
-                          );
-                          if (appliedFilters) {
-                              acc[tabId] = appliedFilters;
-                          }
-                          return acc;
-                      },
-                      {},
-                  )
-                : undefined;
-
-            const newVisibleFiltersByTab = getVisibleFiltersByFiltersByTab(
-                newFiltersByTab,
-                availableFiltersAsVisibleFiltersByTab,
-                shouldStoreFilters,
-            );
-
-            // Sync to export definitions AND metadata
-            setEditedAutomation((s) => ({
-                ...s,
-                exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
-                    if (isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload)) {
-                        return {
-                            ...exportDefinition,
-                            requestPayload: {
-                                ...exportDefinition.requestPayload,
-                                content: {
-                                    ...exportDefinition.requestPayload.content,
-                                    filtersByTab: newEffectiveFiltersByTab,
-                                },
-                            },
-                        };
-                    }
-                    return exportDefinition;
-                }),
-                metadata: {
-                    ...s.metadata,
-                    visibleFiltersByTab: newVisibleFiltersByTab,
-                },
-            }));
-        },
-        [
+            setEditedAutomationFilters,
             setEditedAutomationFiltersByTab,
-            storeFilters,
-            setEditedAutomation,
+            availableFiltersAsVisibleFilters,
             availableFiltersAsVisibleFiltersByTab,
             filtersDataByTab,
-        ],
-    );
-
-    const onApplyCurrentFilters = useCallback(() => {
-        // Widget schedules should never use per-tab filters, only dashboard schedules can have tabs
-        const filtersByTabForNewAutomation = widget
-            ? undefined
-            : getDefaultSelectedFiltersFromFiltersByTab(filtersDataByTab);
-        if (filtersByTabForNewAutomation) {
-            onFiltersByTabChange(filtersByTabForNewAutomation);
-        } else {
-            onFiltersChange(filtersForNewAutomation ?? [], widget ? true : storeFilters);
-        }
-    }, [
-        filtersForNewAutomation,
-        storeFilters,
-        onFiltersChange,
-        onFiltersByTabChange,
-        widget,
-        filtersDataByTab,
-    ]);
-
-    const onStoreFiltersChange = useCallback(
-        (
-            value: boolean,
-            filters?: FilterContextItem[],
-            filtersByTabParam?: Record<string, FilterContextItem[]>,
-        ) => {
-            setStoreFilters(value);
-
-            // If filtersByTab is provided, use onFiltersByTabChange, otherwise use onFiltersChange
-            if (filtersByTabParam) {
-                // Trigger filtersByTab change which handles the sync
-                onFiltersByTabChange(filtersByTabParam, value);
-            }
-            if (filters) {
-                // Use regular filters change
-                onFiltersChange(filters, value);
-            }
-        },
-        [onFiltersChange, onFiltersByTabChange, setStoreFilters],
-    );
+            storeFilters,
+            setStoreFilters,
+            filtersForNewAutomation,
+        });
 
     const startDate = toNormalizedStartDate(
         editedAutomation.schedule?.firstRun,

@@ -12,6 +12,7 @@ import {
     type ISettings,
     type PlatformEdition,
     type WeekStart,
+    resolveWeekStart,
 } from "@gooddata/sdk-model";
 import { type ILocale } from "@gooddata/sdk-ui";
 import { type AttributeFilterAvailableSelectionType } from "@gooddata/sdk-ui-filters";
@@ -164,15 +165,9 @@ export const selectMaxZoomLevel: DashboardSelector<number | null | undefined> = 
  *
  * @internal
  */
-export const selectWeekStart: DashboardSelector<WeekStart> = createSelector(selectConfig, (state) => {
-    if (state.settings == null) {
-        return "Sunday" as const;
-    }
-    if (state.settings["enableNewUIWeekStartChange"] && state.settings["weekStartOnMondayEnabled"]) {
-        return "Monday" as const;
-    }
-    return state.settings?.weekStart ?? ("Sunday" as const);
-});
+export const selectWeekStart: DashboardSelector<WeekStart> = createSelector(selectConfig, (state) =>
+    resolveWeekStart(state.settings),
+);
 
 /**
  * Returns whether the Dashboard is executed in read-only mode.

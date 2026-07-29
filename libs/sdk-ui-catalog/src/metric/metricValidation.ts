@@ -38,12 +38,15 @@ export function validateMetricYaml(
     const result = validateYaml(value, {
         schema: metricSchema,
         fixedIdentifier: options.fixedIdentifier,
-        classifyError: classifyMetricError,
     });
 
-    return result.ok
-        ? { isValid: true, measure: metricYamlToDefinition(result.data) }
-        : { isValid: false, errorCode: result.errorCode };
+    if (result.ok) {
+        return { isValid: true, measure: metricYamlToDefinition(result.data) };
+    }
+    return {
+        isValid: false,
+        errorCode: result.kind === "schema" ? classifyMetricError(result.error, result.parsed) : result.kind,
+    };
 }
 
 function classifyMetricError(

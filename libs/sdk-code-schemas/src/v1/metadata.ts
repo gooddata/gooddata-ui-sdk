@@ -3310,7 +3310,7 @@ export interface VisualisationConfig {
                     | "is_empty"
                     | "is_not_empty";
                 /**
-                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 * Literal (number or string); a \{from,to\} range for between/not_between; an \{absolute\} period or \{relative\} period for date-attribute conditions; omitted for all/is_empty/is_not_empty.
                  */
                 value?:
                     | number
@@ -3318,6 +3318,25 @@ export interface VisualisationConfig {
                     | {
                           from: number;
                           to: number;
+                      }
+                    | {
+                          /**
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           */
+                          absolute: {
+                              from: string;
+                              to: string;
+                          };
+                      }
+                    | {
+                          /**
+                           * Relative period re-resolved on every render/export: integer period offsets where 0 = the current period, negative = past. Granularity must be coarser than or equal to (and aligned with) the target date attribute's granularity.
+                           */
+                          relative: {
+                              granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                              from: number;
+                              to: number;
+                          };
                       };
                 format: {
                     /**
@@ -3749,7 +3768,7 @@ export interface VisualisationConfig1 {
                     | "is_empty"
                     | "is_not_empty";
                 /**
-                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 * Literal (number or string); a \{from,to\} range for between/not_between; an \{absolute\} period or \{relative\} period for date-attribute conditions; omitted for all/is_empty/is_not_empty.
                  */
                 value?:
                     | number
@@ -3757,6 +3776,25 @@ export interface VisualisationConfig1 {
                     | {
                           from: number;
                           to: number;
+                      }
+                    | {
+                          /**
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           */
+                          absolute: {
+                              from: string;
+                              to: string;
+                          };
+                      }
+                    | {
+                          /**
+                           * Relative period re-resolved on every render/export: integer period offsets where 0 = the current period, negative = past. Granularity must be coarser than or equal to (and aligned with) the target date attribute's granularity.
+                           */
+                          relative: {
+                              granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                              from: number;
+                              to: number;
+                          };
                       };
                 format: {
                     /**
@@ -4109,7 +4147,7 @@ export interface VisualisationConfig2 {
                     | "is_empty"
                     | "is_not_empty";
                 /**
-                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 * Literal (number or string); a \{from,to\} range for between/not_between; an \{absolute\} period or \{relative\} period for date-attribute conditions; omitted for all/is_empty/is_not_empty.
                  */
                 value?:
                     | number
@@ -4117,6 +4155,25 @@ export interface VisualisationConfig2 {
                     | {
                           from: number;
                           to: number;
+                      }
+                    | {
+                          /**
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           */
+                          absolute: {
+                              from: string;
+                              to: string;
+                          };
+                      }
+                    | {
+                          /**
+                           * Relative period re-resolved on every render/export: integer period offsets where 0 = the current period, negative = past. Granularity must be coarser than or equal to (and aligned with) the target date attribute's granularity.
+                           */
+                          relative: {
+                              granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                              from: number;
+                              to: number;
+                          };
                       };
                 format: {
                     /**
@@ -4469,7 +4526,7 @@ export interface VisualisationConfig3 {
                     | "is_empty"
                     | "is_not_empty";
                 /**
-                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 * Literal (number or string); a \{from,to\} range for between/not_between; an \{absolute\} period or \{relative\} period for date-attribute conditions; omitted for all/is_empty/is_not_empty.
                  */
                 value?:
                     | number
@@ -4477,6 +4534,25 @@ export interface VisualisationConfig3 {
                     | {
                           from: number;
                           to: number;
+                      }
+                    | {
+                          /**
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           */
+                          absolute: {
+                              from: string;
+                              to: string;
+                          };
+                      }
+                    | {
+                          /**
+                           * Relative period re-resolved on every render/export: integer period offsets where 0 = the current period, negative = past. Granularity must be coarser than or equal to (and aligned with) the target date attribute's granularity.
+                           */
+                          relative: {
+                              granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                              from: number;
+                              to: number;
+                          };
                       };
                 format: {
                     /**
@@ -4829,7 +4905,7 @@ export interface VisualisationConfig4 {
                     | "is_empty"
                     | "is_not_empty";
                 /**
-                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 * Literal (number or string); a \{from,to\} range for between/not_between; an \{absolute\} period or \{relative\} period for date-attribute conditions; omitted for all/is_empty/is_not_empty.
                  */
                 value?:
                     | number
@@ -4837,6 +4913,25 @@ export interface VisualisationConfig4 {
                     | {
                           from: number;
                           to: number;
+                      }
+                    | {
+                          /**
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           */
+                          absolute: {
+                              from: string;
+                              to: string;
+                          };
+                      }
+                    | {
+                          /**
+                           * Relative period re-resolved on every render/export: integer period offsets where 0 = the current period, negative = past. Granularity must be coarser than or equal to (and aligned with) the target date attribute's granularity.
+                           */
+                          relative: {
+                              granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                              from: number;
+                              to: number;
+                          };
                       };
                 format: {
                     /**
@@ -5189,7 +5284,7 @@ export interface VisualisationConfig5 {
                     | "is_empty"
                     | "is_not_empty";
                 /**
-                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 * Literal (number or string); a \{from,to\} range for between/not_between; an \{absolute\} period or \{relative\} period for date-attribute conditions; omitted for all/is_empty/is_not_empty.
                  */
                 value?:
                     | number
@@ -5197,6 +5292,25 @@ export interface VisualisationConfig5 {
                     | {
                           from: number;
                           to: number;
+                      }
+                    | {
+                          /**
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           */
+                          absolute: {
+                              from: string;
+                              to: string;
+                          };
+                      }
+                    | {
+                          /**
+                           * Relative period re-resolved on every render/export: integer period offsets where 0 = the current period, negative = past. Granularity must be coarser than or equal to (and aligned with) the target date attribute's granularity.
+                           */
+                          relative: {
+                              granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                              from: number;
+                              to: number;
+                          };
                       };
                 format: {
                     /**
@@ -5549,7 +5663,7 @@ export interface VisualisationConfig6 {
                     | "is_empty"
                     | "is_not_empty";
                 /**
-                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 * Literal (number or string); a \{from,to\} range for between/not_between; an \{absolute\} period or \{relative\} period for date-attribute conditions; omitted for all/is_empty/is_not_empty.
                  */
                 value?:
                     | number
@@ -5557,6 +5671,25 @@ export interface VisualisationConfig6 {
                     | {
                           from: number;
                           to: number;
+                      }
+                    | {
+                          /**
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           */
+                          absolute: {
+                              from: string;
+                              to: string;
+                          };
+                      }
+                    | {
+                          /**
+                           * Relative period re-resolved on every render/export: integer period offsets where 0 = the current period, negative = past. Granularity must be coarser than or equal to (and aligned with) the target date attribute's granularity.
+                           */
+                          relative: {
+                              granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                              from: number;
+                              to: number;
+                          };
                       };
                 format: {
                     /**
@@ -5905,7 +6038,7 @@ export interface VisualisationConfig7 {
                     | "is_empty"
                     | "is_not_empty";
                 /**
-                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 * Literal (number or string); a \{from,to\} range for between/not_between; an \{absolute\} period or \{relative\} period for date-attribute conditions; omitted for all/is_empty/is_not_empty.
                  */
                 value?:
                     | number
@@ -5913,6 +6046,25 @@ export interface VisualisationConfig7 {
                     | {
                           from: number;
                           to: number;
+                      }
+                    | {
+                          /**
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           */
+                          absolute: {
+                              from: string;
+                              to: string;
+                          };
+                      }
+                    | {
+                          /**
+                           * Relative period re-resolved on every render/export: integer period offsets where 0 = the current period, negative = past. Granularity must be coarser than or equal to (and aligned with) the target date attribute's granularity.
+                           */
+                          relative: {
+                              granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                              from: number;
+                              to: number;
+                          };
                       };
                 format: {
                     /**
@@ -6261,7 +6413,7 @@ export interface VisualisationConfig8 {
                     | "is_empty"
                     | "is_not_empty";
                 /**
-                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 * Literal (number or string); a \{from,to\} range for between/not_between; an \{absolute\} period or \{relative\} period for date-attribute conditions; omitted for all/is_empty/is_not_empty.
                  */
                 value?:
                     | number
@@ -6269,6 +6421,25 @@ export interface VisualisationConfig8 {
                     | {
                           from: number;
                           to: number;
+                      }
+                    | {
+                          /**
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           */
+                          absolute: {
+                              from: string;
+                              to: string;
+                          };
+                      }
+                    | {
+                          /**
+                           * Relative period re-resolved on every render/export: integer period offsets where 0 = the current period, negative = past. Granularity must be coarser than or equal to (and aligned with) the target date attribute's granularity.
+                           */
+                          relative: {
+                              granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                              from: number;
+                              to: number;
+                          };
                       };
                 format: {
                     /**
@@ -6617,7 +6788,7 @@ export interface VisualisationConfig9 {
                     | "is_empty"
                     | "is_not_empty";
                 /**
-                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 * Literal (number or string); a \{from,to\} range for between/not_between; an \{absolute\} period or \{relative\} period for date-attribute conditions; omitted for all/is_empty/is_not_empty.
                  */
                 value?:
                     | number
@@ -6625,6 +6796,25 @@ export interface VisualisationConfig9 {
                     | {
                           from: number;
                           to: number;
+                      }
+                    | {
+                          /**
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           */
+                          absolute: {
+                              from: string;
+                              to: string;
+                          };
+                      }
+                    | {
+                          /**
+                           * Relative period re-resolved on every render/export: integer period offsets where 0 = the current period, negative = past. Granularity must be coarser than or equal to (and aligned with) the target date attribute's granularity.
+                           */
+                          relative: {
+                              granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                              from: number;
+                              to: number;
+                          };
                       };
                 format: {
                     /**
@@ -6973,7 +7163,7 @@ export interface VisualisationConfig10 {
                     | "is_empty"
                     | "is_not_empty";
                 /**
-                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 * Literal (number or string); a \{from,to\} range for between/not_between; an \{absolute\} period or \{relative\} period for date-attribute conditions; omitted for all/is_empty/is_not_empty.
                  */
                 value?:
                     | number
@@ -6981,6 +7171,25 @@ export interface VisualisationConfig10 {
                     | {
                           from: number;
                           to: number;
+                      }
+                    | {
+                          /**
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           */
+                          absolute: {
+                              from: string;
+                              to: string;
+                          };
+                      }
+                    | {
+                          /**
+                           * Relative period re-resolved on every render/export: integer period offsets where 0 = the current period, negative = past. Granularity must be coarser than or equal to (and aligned with) the target date attribute's granularity.
+                           */
+                          relative: {
+                              granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                              from: number;
+                              to: number;
+                          };
                       };
                 format: {
                     /**
@@ -7329,7 +7538,7 @@ export interface VisualisationConfig11 {
                     | "is_empty"
                     | "is_not_empty";
                 /**
-                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 * Literal (number or string); a \{from,to\} range for between/not_between; an \{absolute\} period or \{relative\} period for date-attribute conditions; omitted for all/is_empty/is_not_empty.
                  */
                 value?:
                     | number
@@ -7337,6 +7546,25 @@ export interface VisualisationConfig11 {
                     | {
                           from: number;
                           to: number;
+                      }
+                    | {
+                          /**
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           */
+                          absolute: {
+                              from: string;
+                              to: string;
+                          };
+                      }
+                    | {
+                          /**
+                           * Relative period re-resolved on every render/export: integer period offsets where 0 = the current period, negative = past. Granularity must be coarser than or equal to (and aligned with) the target date attribute's granularity.
+                           */
+                          relative: {
+                              granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                              from: number;
+                              to: number;
+                          };
                       };
                 format: {
                     /**
@@ -7693,7 +7921,7 @@ export interface VisualisationConfig12 {
                     | "is_empty"
                     | "is_not_empty";
                 /**
-                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 * Literal (number or string); a \{from,to\} range for between/not_between; an \{absolute\} period or \{relative\} period for date-attribute conditions; omitted for all/is_empty/is_not_empty.
                  */
                 value?:
                     | number
@@ -7701,6 +7929,25 @@ export interface VisualisationConfig12 {
                     | {
                           from: number;
                           to: number;
+                      }
+                    | {
+                          /**
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           */
+                          absolute: {
+                              from: string;
+                              to: string;
+                          };
+                      }
+                    | {
+                          /**
+                           * Relative period re-resolved on every render/export: integer period offsets where 0 = the current period, negative = past. Granularity must be coarser than or equal to (and aligned with) the target date attribute's granularity.
+                           */
+                          relative: {
+                              granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                              from: number;
+                              to: number;
+                          };
                       };
                 format: {
                     /**
@@ -8049,7 +8296,7 @@ export interface VisualisationConfig13 {
                     | "is_empty"
                     | "is_not_empty";
                 /**
-                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 * Literal (number or string); a \{from,to\} range for between/not_between; an \{absolute\} period or \{relative\} period for date-attribute conditions; omitted for all/is_empty/is_not_empty.
                  */
                 value?:
                     | number
@@ -8057,6 +8304,25 @@ export interface VisualisationConfig13 {
                     | {
                           from: number;
                           to: number;
+                      }
+                    | {
+                          /**
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           */
+                          absolute: {
+                              from: string;
+                              to: string;
+                          };
+                      }
+                    | {
+                          /**
+                           * Relative period re-resolved on every render/export: integer period offsets where 0 = the current period, negative = past. Granularity must be coarser than or equal to (and aligned with) the target date attribute's granularity.
+                           */
+                          relative: {
+                              granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                              from: number;
+                              to: number;
+                          };
                       };
                 format: {
                     /**
@@ -8405,7 +8671,7 @@ export interface VisualisationConfig14 {
                     | "is_empty"
                     | "is_not_empty";
                 /**
-                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 * Literal (number or string); a \{from,to\} range for between/not_between; an \{absolute\} period or \{relative\} period for date-attribute conditions; omitted for all/is_empty/is_not_empty.
                  */
                 value?:
                     | number
@@ -8413,6 +8679,25 @@ export interface VisualisationConfig14 {
                     | {
                           from: number;
                           to: number;
+                      }
+                    | {
+                          /**
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           */
+                          absolute: {
+                              from: string;
+                              to: string;
+                          };
+                      }
+                    | {
+                          /**
+                           * Relative period re-resolved on every render/export: integer period offsets where 0 = the current period, negative = past. Granularity must be coarser than or equal to (and aligned with) the target date attribute's granularity.
+                           */
+                          relative: {
+                              granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                              from: number;
+                              to: number;
+                          };
                       };
                 format: {
                     /**
@@ -8763,7 +9048,7 @@ export interface VisualisationConfig15 {
                     | "is_empty"
                     | "is_not_empty";
                 /**
-                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 * Literal (number or string); a \{from,to\} range for between/not_between; an \{absolute\} period or \{relative\} period for date-attribute conditions; omitted for all/is_empty/is_not_empty.
                  */
                 value?:
                     | number
@@ -8771,6 +9056,25 @@ export interface VisualisationConfig15 {
                     | {
                           from: number;
                           to: number;
+                      }
+                    | {
+                          /**
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           */
+                          absolute: {
+                              from: string;
+                              to: string;
+                          };
+                      }
+                    | {
+                          /**
+                           * Relative period re-resolved on every render/export: integer period offsets where 0 = the current period, negative = past. Granularity must be coarser than or equal to (and aligned with) the target date attribute's granularity.
+                           */
+                          relative: {
+                              granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                              from: number;
+                              to: number;
+                          };
                       };
                 format: {
                     /**
@@ -9121,7 +9425,7 @@ export interface VisualisationConfig16 {
                     | "is_empty"
                     | "is_not_empty";
                 /**
-                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 * Literal (number or string); a \{from,to\} range for between/not_between; an \{absolute\} period or \{relative\} period for date-attribute conditions; omitted for all/is_empty/is_not_empty.
                  */
                 value?:
                     | number
@@ -9129,6 +9433,25 @@ export interface VisualisationConfig16 {
                     | {
                           from: number;
                           to: number;
+                      }
+                    | {
+                          /**
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           */
+                          absolute: {
+                              from: string;
+                              to: string;
+                          };
+                      }
+                    | {
+                          /**
+                           * Relative period re-resolved on every render/export: integer period offsets where 0 = the current period, negative = past. Granularity must be coarser than or equal to (and aligned with) the target date attribute's granularity.
+                           */
+                          relative: {
+                              granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                              from: number;
+                              to: number;
+                          };
                       };
                 format: {
                     /**
@@ -9477,7 +9800,7 @@ export interface VisualisationConfig17 {
                     | "is_empty"
                     | "is_not_empty";
                 /**
-                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 * Literal (number or string); a \{from,to\} range for between/not_between; an \{absolute\} period or \{relative\} period for date-attribute conditions; omitted for all/is_empty/is_not_empty.
                  */
                 value?:
                     | number
@@ -9485,6 +9808,25 @@ export interface VisualisationConfig17 {
                     | {
                           from: number;
                           to: number;
+                      }
+                    | {
+                          /**
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           */
+                          absolute: {
+                              from: string;
+                              to: string;
+                          };
+                      }
+                    | {
+                          /**
+                           * Relative period re-resolved on every render/export: integer period offsets where 0 = the current period, negative = past. Granularity must be coarser than or equal to (and aligned with) the target date attribute's granularity.
+                           */
+                          relative: {
+                              granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                              from: number;
+                              to: number;
+                          };
                       };
                 format: {
                     /**
@@ -9833,7 +10175,7 @@ export interface VisualisationConfig18 {
                     | "is_empty"
                     | "is_not_empty";
                 /**
-                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 * Literal (number or string); a \{from,to\} range for between/not_between; an \{absolute\} period or \{relative\} period for date-attribute conditions; omitted for all/is_empty/is_not_empty.
                  */
                 value?:
                     | number
@@ -9841,6 +10183,25 @@ export interface VisualisationConfig18 {
                     | {
                           from: number;
                           to: number;
+                      }
+                    | {
+                          /**
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           */
+                          absolute: {
+                              from: string;
+                              to: string;
+                          };
+                      }
+                    | {
+                          /**
+                           * Relative period re-resolved on every render/export: integer period offsets where 0 = the current period, negative = past. Granularity must be coarser than or equal to (and aligned with) the target date attribute's granularity.
+                           */
+                          relative: {
+                              granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                              from: number;
+                              to: number;
+                          };
                       };
                 format: {
                     /**
@@ -10193,7 +10554,7 @@ export interface VisualisationConfig19 {
                     | "is_empty"
                     | "is_not_empty";
                 /**
-                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 * Literal (number or string); a \{from,to\} range for between/not_between; an \{absolute\} period or \{relative\} period for date-attribute conditions; omitted for all/is_empty/is_not_empty.
                  */
                 value?:
                     | number
@@ -10201,6 +10562,25 @@ export interface VisualisationConfig19 {
                     | {
                           from: number;
                           to: number;
+                      }
+                    | {
+                          /**
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           */
+                          absolute: {
+                              from: string;
+                              to: string;
+                          };
+                      }
+                    | {
+                          /**
+                           * Relative period re-resolved on every render/export: integer period offsets where 0 = the current period, negative = past. Granularity must be coarser than or equal to (and aligned with) the target date attribute's granularity.
+                           */
+                          relative: {
+                              granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                              from: number;
+                              to: number;
+                          };
                       };
                 format: {
                     /**
@@ -10526,7 +10906,7 @@ export interface VisualisationConfig20 {
                     | "is_empty"
                     | "is_not_empty";
                 /**
-                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 * Literal (number or string); a \{from,to\} range for between/not_between; an \{absolute\} period or \{relative\} period for date-attribute conditions; omitted for all/is_empty/is_not_empty.
                  */
                 value?:
                     | number
@@ -10534,6 +10914,25 @@ export interface VisualisationConfig20 {
                     | {
                           from: number;
                           to: number;
+                      }
+                    | {
+                          /**
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           */
+                          absolute: {
+                              from: string;
+                              to: string;
+                          };
+                      }
+                    | {
+                          /**
+                           * Relative period re-resolved on every render/export: integer period offsets where 0 = the current period, negative = past. Granularity must be coarser than or equal to (and aligned with) the target date attribute's granularity.
+                           */
+                          relative: {
+                              granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                              from: number;
+                              to: number;
+                          };
                       };
                 format: {
                     /**
@@ -10886,7 +11285,7 @@ export interface VisualisationConfig21 {
                     | "is_empty"
                     | "is_not_empty";
                 /**
-                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 * Literal (number or string); a \{from,to\} range for between/not_between; an \{absolute\} period or \{relative\} period for date-attribute conditions; omitted for all/is_empty/is_not_empty.
                  */
                 value?:
                     | number
@@ -10894,6 +11293,25 @@ export interface VisualisationConfig21 {
                     | {
                           from: number;
                           to: number;
+                      }
+                    | {
+                          /**
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           */
+                          absolute: {
+                              from: string;
+                              to: string;
+                          };
+                      }
+                    | {
+                          /**
+                           * Relative period re-resolved on every render/export: integer period offsets where 0 = the current period, negative = past. Granularity must be coarser than or equal to (and aligned with) the target date attribute's granularity.
+                           */
+                          relative: {
+                              granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                              from: number;
+                              to: number;
+                          };
                       };
                 format: {
                     /**
@@ -11250,7 +11668,7 @@ export interface VisualisationConfig22 {
                     | "is_empty"
                     | "is_not_empty";
                 /**
-                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 * Literal (number or string); a \{from,to\} range for between/not_between; an \{absolute\} period or \{relative\} period for date-attribute conditions; omitted for all/is_empty/is_not_empty.
                  */
                 value?:
                     | number
@@ -11258,6 +11676,25 @@ export interface VisualisationConfig22 {
                     | {
                           from: number;
                           to: number;
+                      }
+                    | {
+                          /**
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           */
+                          absolute: {
+                              from: string;
+                              to: string;
+                          };
+                      }
+                    | {
+                          /**
+                           * Relative period re-resolved on every render/export: integer period offsets where 0 = the current period, negative = past. Granularity must be coarser than or equal to (and aligned with) the target date attribute's granularity.
+                           */
+                          relative: {
+                              granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                              from: number;
+                              to: number;
+                          };
                       };
                 format: {
                     /**
@@ -11606,7 +12043,7 @@ export interface VisualisationConfig23 {
                     | "is_empty"
                     | "is_not_empty";
                 /**
-                 * Literal (number or string); a \{from,to\} range for between/not_between; omitted for all/is_empty/is_not_empty.
+                 * Literal (number or string); a \{from,to\} range for between/not_between; an \{absolute\} period or \{relative\} period for date-attribute conditions; omitted for all/is_empty/is_not_empty.
                  */
                 value?:
                     | number
@@ -11614,6 +12051,25 @@ export interface VisualisationConfig23 {
                     | {
                           from: number;
                           to: number;
+                      }
+                    | {
+                          /**
+                           * Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.
+                           */
+                          absolute: {
+                              from: string;
+                              to: string;
+                          };
+                      }
+                    | {
+                          /**
+                           * Relative period re-resolved on every render/export: integer period offsets where 0 = the current period, negative = past. Granularity must be coarser than or equal to (and aligned with) the target date attribute's granularity.
+                           */
+                          relative: {
+                              granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                              from: number;
+                              to: number;
+                          };
                       };
                 format: {
                     /**

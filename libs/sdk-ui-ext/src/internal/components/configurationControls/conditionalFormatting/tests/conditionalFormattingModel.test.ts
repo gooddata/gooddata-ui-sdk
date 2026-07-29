@@ -18,6 +18,7 @@ import {
 } from "@gooddata/sdk-ui-pivot/next";
 
 import {
+    type ICfDateMeta,
     type ITargetOption,
     buildCfTargetData,
     buildTargetOptions,
@@ -26,12 +27,13 @@ import {
     isRuleComplete,
     operatorArity,
     operatorIcon,
-    operatorsForKind,
+    operatorsForTarget,
     rawToDisplayNumber,
     ruleWithTarget,
     sanitizeRuleForEditing,
     validateCondition,
     valueEditorKind,
+    valueForOperator,
 } from "../conditionalFormattingModel.js";
 
 const condition = (
@@ -221,43 +223,68 @@ describe("valueEditorKind", () => {
         condition(operator, { kind: "literal", value: "" });
 
     it("picks no editor for no-operand operators", () => {
-        expect(valueEditorKind(condition("ALL", { kind: "none" }), "measure", false)).toBe("none");
+        expect(valueEditorKind(condition("ALL", { kind: "none" }), "measure", false, false)).toBe("none");
     });
 
     it("picks the range editor for range operators", () => {
         expect(
-            valueEditorKind(condition("BETWEEN", { kind: "literalRange", from: 1, to: 5 }), "measure", false),
+            valueEditorKind(
+                condition("BETWEEN", { kind: "literalRange", from: 1, to: 5 }),
+                "measure",
+                false,
+                false,
+            ),
         ).toBe("range");
     });
 
     it("picks the number editor for measure single-value operators regardless of suggestions", () => {
-        expect(valueEditorKind(literal("GREATER_THAN"), "measure", false)).toBe("number");
-        expect(valueEditorKind(literal("EQUAL_TO"), "measure", true)).toBe("number");
+        expect(valueEditorKind(literal("GREATER_THAN"), "measure", false, false)).toBe("number");
+        expect(valueEditorKind(literal("EQUAL_TO"), "measure", true, false)).toBe("number");
     });
 
     it("picks the combobox for attribute Is / Is not only when suggestions exist", () => {
-        expect(valueEditorKind(literal("EQUAL_TO"), "attribute", true)).toBe("combobox");
-        expect(valueEditorKind(literal("NOT_EQUAL_TO"), "attribute", true)).toBe("combobox");
-        expect(valueEditorKind(literal("EQUAL_TO"), "attribute", false)).toBe("text");
+        expect(valueEditorKind(literal("EQUAL_TO"), "attribute", true, false)).toBe("combobox");
+        expect(valueEditorKind(literal("NOT_EQUAL_TO"), "attribute", true, false)).toBe("combobox");
+        expect(valueEditorKind(literal("EQUAL_TO"), "attribute", false, false)).toBe("text");
     });
 
     it("keeps the plain text editor for attribute substring operators even with suggestions", () => {
-        expect(valueEditorKind(literal("CONTAINS"), "attribute", true)).toBe("text");
-        expect(valueEditorKind(literal("STARTS_WITH"), "attribute", true)).toBe("text");
+        expect(valueEditorKind(literal("CONTAINS"), "attribute", true, false)).toBe("text");
+        expect(valueEditorKind(literal("STARTS_WITH"), "attribute", true, false)).toBe("text");
+    });
+
+    it("picks the date picker for a date target's single-operand operators, suggestions or not", () => {
+        expect(valueEditorKind(literal("EQUAL_TO"), "attribute", true, true)).toBe("date");
+        expect(valueEditorKind(literal("GREATER_THAN"), "attribute", false, true)).toBe("date");
+        expect(valueEditorKind(condition("ALL", { kind: "none" }), "attribute", false, true)).toBe("none");
     });
 });
 
-describe("operatorsForKind", () => {
+describe("operatorsForTarget", () => {
     it("offers numeric range operators to measures, not text operators", () => {
-        const operators = operatorsForKind("measure");
+        const operators = operatorsForTarget("measure", false);
         expect(operators).toContain("BETWEEN");
         expect(operators).not.toContain("CONTAINS");
     });
 
     it("offers text operators to attributes, not numeric range operators", () => {
-        const operators = operatorsForKind("attribute");
+        const operators = operatorsForTarget("attribute", false);
         expect(operators).toContain("CONTAINS");
         expect(operators).not.toContain("BETWEEN");
+    });
+
+    it("offers date attributes the date condition set (comparisons, inclusive pair, IS_EMPTY)", () => {
+        // No IS_NOT_EMPTY on dates: it means "has any date", which is exactly "All time".
+        expect(operatorsForTarget("attribute", true)).toEqual([
+            "ALL",
+            "EQUAL_TO",
+            "NOT_EQUAL_TO",
+            "GREATER_THAN",
+            "GREATER_THAN_OR_EQUAL_TO",
+            "LESS_THAN",
+            "LESS_THAN_OR_EQUAL_TO",
+            "IS_EMPTY",
+        ]);
     });
 });
 
@@ -428,5 +455,224 @@ describe("sanitizeRuleForEditing", () => {
         expect(sanitizeRuleForEditing(numeric)).toEqual(numeric);
         const attribute = attributeRule([condition("CONTAINS", { kind: "literal", value: "abc" })]);
         expect(sanitizeRuleForEditing(attribute)).toEqual(attribute);
+    });
+
+    it("coerces AAC-authored text conditions on a date target into unpicked date conditions", () => {
+        // The engine evaluates a stored CONTAINS on a date attribute, but the date editor has no
+        // controls for it — it opens as an unpicked "Is on" with id and format preserved.
+        const textOnDate = attributeRule([
+            condition("CONTAINS", { kind: "literal", value: "2023" }),
+            condition("ALL", { kind: "literal", value: "stray" }),
+        ]);
+        const sanitized = sanitizeRuleForEditing(textOnDate, true);
+        expect(sanitized.conditions[0].operator).toBe("EQUAL_TO");
+        expect(sanitized.conditions[0].value).toEqual({ kind: "none" });
+        expect(sanitized.conditions[0].id).toBe(textOnDate.conditions[0].id);
+        expect(sanitized.conditions[0].format).toEqual(textOnDate.conditions[0].format);
+        // A date-set operator with a stray value keeps its operator, only the value clears.
+        expect(sanitized.conditions[1].operator).toBe("ALL");
+        expect(sanitized.conditions[1].value).toEqual({ kind: "none" });
+    });
+
+    it("clears a stray period off a no-operand date operator (hand-authored IS_EMPTY + period)", () => {
+        const emptyWithPeriod = attributeRule([
+            condition("IS_EMPTY", { kind: "absoluteDate", from: "2023-12-01", to: "2023-12-31" }),
+        ]);
+        const sanitized = sanitizeRuleForEditing(emptyWithPeriod, true);
+        expect(sanitized.conditions[0].operator).toBe("IS_EMPTY");
+        expect(sanitized.conditions[0].value).toEqual({ kind: "none" });
+        expect(sanitized.conditions[0].id).toBe(emptyWithPeriod.conditions[0].id);
+    });
+
+    it("leaves valid date conditions untouched when sanitizing a date rule", () => {
+        const valid = attributeRule([
+            condition("EQUAL_TO", { kind: "absoluteDate", from: "2023-12-01", to: "2023-12-31" }),
+        ]);
+        expect(sanitizeRuleForEditing(valid, true)).toEqual(valid);
+    });
+});
+
+describe("valueForOperator", () => {
+    it("keeps an operand across operator changes of the same shape, resets across shapes", () => {
+        const literal: ConditionalFormattingValue = { kind: "literal", value: 5 };
+        expect(valueForOperator("GREATER_THAN_OR_EQUAL_TO", literal, false)).toBe(literal);
+        expect(valueForOperator("BETWEEN", literal, false)).toEqual({
+            kind: "literalRange",
+            from: NaN,
+            to: NaN,
+        });
+        expect(valueForOperator("ALL", literal, false)).toEqual({ kind: "none" });
+    });
+
+    it("keeps a picked date period across the single-operand date operators, drops it for no-operand ones", () => {
+        const period: ConditionalFormattingValue = {
+            kind: "absoluteDate",
+            from: "2023-12-01",
+            to: "2023-12-31",
+        };
+        expect(valueForOperator("GREATER_THAN", period, true)).toBe(period);
+        expect(valueForOperator("NOT_EQUAL_TO", period, true)).toBe(period);
+        expect(valueForOperator("ALL", period, true)).toEqual({ kind: "none" });
+        // A hidden period on IS_EMPTY would be uneditable AND drift-killable (the engine's
+        // unresolvable-guard precedes the emptiness check) — it must clear like ALL does.
+        expect(valueForOperator("IS_EMPTY", period, true)).toEqual({ kind: "none" });
+    });
+});
+
+describe("date conditions (model)", () => {
+    const MONTH_META: ICfDateMeta = { granularity: "GDC.time.month", timezone: "Europe/Prague" };
+    const dateOption = (granularity: ICfDateMeta["granularity"], id = "orderdate"): ITargetOption => ({
+        value: `attribute:${id}`,
+        title: "Order date",
+        target: { kind: "attribute", attributeIdentifier: id },
+        date: { granularity },
+    });
+    const plainAttributeOption: ITargetOption = {
+        value: "attribute:status",
+        title: "Status",
+        target: { kind: "attribute", attributeIdentifier: "status" },
+    };
+    const decemberValue: ConditionalFormattingValue = {
+        kind: "absoluteDate",
+        from: "2023-12-01",
+        to: "2023-12-31",
+    };
+
+    it("validateCondition: unpicked period is missing; any resolvable period passes; malformed errors", () => {
+        expect(validateCondition(condition("EQUAL_TO", { kind: "none" }), "attribute", MONTH_META)).toEqual({
+            missing: true,
+            errors: {},
+        });
+        expect(validateCondition(condition("EQUAL_TO", decemberValue), "attribute", MONTH_META)).toEqual({
+            missing: false,
+            errors: {},
+        });
+        // Partial-month bounds resolve by overlap — no longer a drift error.
+        expect(
+            validateCondition(
+                condition("EQUAL_TO", { kind: "absoluteDate", from: "2023-12-02", to: "2023-12-31" }),
+                "attribute",
+                MONTH_META,
+            ),
+        ).toEqual({ missing: false, errors: {} });
+        // A genuinely malformed value is the remaining inline-error case.
+        expect(
+            validateCondition(
+                condition("EQUAL_TO", { kind: "absoluteDate", from: "12/24/2026", to: "12/26/2026" }),
+                "attribute",
+                MONTH_META,
+            ),
+        ).toEqual({ missing: false, errors: { date: "dateUnresolvable" } });
+    });
+
+    it("validateCondition: relative values of any linear granularity resolve; fiscal errors", () => {
+        expect(
+            validateCondition(
+                condition("EQUAL_TO", {
+                    kind: "relativeDate",
+                    granularity: "GDC.time.month",
+                    from: -1,
+                    to: 0,
+                }),
+                "attribute",
+                MONTH_META,
+            ),
+        ).toEqual({ missing: false, errors: {} });
+        // A day-granularity value on a month column resolves by overlap.
+        expect(
+            validateCondition(
+                condition("EQUAL_TO", { kind: "relativeDate", granularity: "GDC.time.date", from: 0, to: 0 }),
+                "attribute",
+                MONTH_META,
+            ),
+        ).toEqual({ missing: false, errors: {} });
+        // Fiscal stays unresolvable until its labeling convention is verified.
+        expect(
+            validateCondition(
+                condition("EQUAL_TO", {
+                    kind: "relativeDate",
+                    granularity: "GDC.time.fiscal_quarter",
+                    from: 0,
+                    to: 0,
+                }),
+                "attribute",
+                MONTH_META,
+            ),
+        ).toEqual({ missing: false, errors: { date: "dateUnresolvable" } });
+    });
+
+    it("isRuleComplete gates Save on the date operand", () => {
+        expect(isRuleComplete(attributeRule([condition("EQUAL_TO", { kind: "none" })]), MONTH_META)).toBe(
+            false,
+        );
+        expect(isRuleComplete(attributeRule([condition("EQUAL_TO", decemberValue)]), MONTH_META)).toBe(true);
+        // "All time" needs no operand.
+        expect(isRuleComplete(attributeRule([condition("ALL", { kind: "none" })]), MONTH_META)).toBe(true);
+    });
+
+    it("ruleWithTarget coerces conditions when crossing the date/plain boundary (both directions)", () => {
+        const plainRule = attributeRule([condition("CONTAINS", { kind: "literal", value: "x" })]);
+        const toDate = ruleWithTarget(plainRule, dateOption("GDC.time.month"), plainAttributeOption);
+        expect(toDate.conditions).toHaveLength(1);
+        // CONTAINS has no date counterpart -> the date default "Is on"; values always clear.
+        expect(toDate.conditions[0].operator).toBe("EQUAL_TO");
+        expect(toDate.conditions[0].value).toEqual({ kind: "none" });
+        // The visual choices are family-independent and survive the crossing.
+        expect(toDate.conditions[0].id).toBe(plainRule.conditions[0].id);
+        expect(toDate.conditions[0].format).toEqual(plainRule.conditions[0].format);
+
+        const dateRule = attributeRule([condition("EQUAL_TO", decemberValue)]);
+        const toPlain = ruleWithTarget(dateRule, plainAttributeOption, dateOption("GDC.time.month"));
+        expect(toPlain.conditions).toHaveLength(1);
+        // "Is on" maps onto the attribute "Is" — the operator survives, the date value cannot.
+        expect(toPlain.conditions[0].operator).toBe("EQUAL_TO");
+        expect(toPlain.conditions[0].value).toEqual({ kind: "literal", value: "" });
+    });
+
+    it("ruleWithTarget infers date-ness from the conditions when the previous target is gone (invalid rule)", () => {
+        // The old date target left the insight, so `previous` is undefined; retargeting to a plain
+        // attribute must still coerce — stale date values would otherwise leak onto a target whose
+        // editor can neither show nor clear them.
+        const orphanedDateRule = attributeRule([condition("EQUAL_TO", decemberValue)]);
+        const toPlain = ruleWithTarget(orphanedDateRule, plainAttributeOption, undefined);
+        expect(toPlain.conditions).toHaveLength(1);
+        expect(toPlain.conditions[0].operator).toBe("EQUAL_TO");
+        expect(toPlain.conditions[0].value).toEqual({ kind: "literal", value: "" });
+
+        // Retargeting the same orphaned date rule to another DATE target keeps operators and only
+        // clears values (a granularity change against an unknown previous granularity).
+        const toDate = ruleWithTarget(orphanedDateRule, dateOption("GDC.time.month"), undefined);
+        expect(toDate.conditions[0].operator).toBe("EQUAL_TO");
+        expect(toDate.conditions[0].value).toEqual({ kind: "none" });
+
+        // Shapes the inference cannot classify (ALL-only, IS_EMPTY-only — valid in both families):
+        // whichever way they route, the coercion must be an identity — an orphaned date rule
+        // retargeted to another date attribute keeps its operator and color/format.
+        const ambiguous = attributeRule([
+            { ...condition("IS_EMPTY", { kind: "none" }), format: { color: "#123456", scope: "row" } },
+        ]);
+        const ambiguousToDate = ruleWithTarget(ambiguous, dateOption("GDC.time.month"), undefined);
+        expect(ambiguousToDate.conditions[0].id).toBe(ambiguous.conditions[0].id);
+        expect(ambiguousToDate.conditions[0].operator).toBe("IS_EMPTY");
+        expect(ambiguousToDate.conditions[0].value).toEqual({ kind: "none" });
+        expect(ambiguousToDate.conditions[0].format).toEqual({ color: "#123456", scope: "row" });
+    });
+
+    it("ruleWithTarget keeps operators but clears values on a granularity change; keeps all else equal", () => {
+        const dateRule = attributeRule([condition("GREATER_THAN", decemberValue)]);
+        const changed = ruleWithTarget(
+            dateRule,
+            dateOption("GDC.time.date", "orderday"),
+            dateOption("GDC.time.month"),
+        );
+        expect(changed.conditions[0].operator).toBe("GREATER_THAN");
+        expect(changed.conditions[0].value).toEqual({ kind: "none" });
+
+        const kept = ruleWithTarget(
+            dateRule,
+            dateOption("GDC.time.month", "otherdate"),
+            dateOption("GDC.time.month"),
+        );
+        expect(kept.conditions).toEqual(dateRule.conditions);
     });
 });

@@ -56,6 +56,23 @@ export type {
 } from "./DateFilter/utils/Translations/Translators.js";
 export { filterVisibleDateFilterOptions } from "./DateFilter/utils/OptionUtils.js";
 export { getLocalizedIcuDateFormatPattern } from "./DateFilter/utils/FormattingUtils.js";
+export { convertDateFilterConfigToDateFilterOptions } from "./DateFilter/utils/DateFilterConfigConversions.js";
+export {
+    DEFAULT_DATE_FILTER_PRESET,
+    DEFAULT_FISCAL_DATE_FILTER_PRESET,
+    defaultDateFilterConfig,
+} from "./DateFilter/utils/DefaultDateFilterConfig.js";
+export {
+    excludeCurrentPeriodFromRange,
+    revertExcludedCurrentPeriodRange,
+} from "./DateFilter/utils/PeriodExclusion.js";
+export {
+    type IDateFilterOptionInfo,
+    findDateFilterOptionByValue,
+    flattenDateFilterOptions,
+    matchDateFilterToDateFilterOption,
+    matchDateFilterToDateFilterOptionWithPreference,
+} from "./DateFilter/utils/DateFilterOptionMapping.js";
 export {
     type CalendarTabType,
     type IFiscalTabsConfig,

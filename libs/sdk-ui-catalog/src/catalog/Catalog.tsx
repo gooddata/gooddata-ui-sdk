@@ -8,8 +8,6 @@ import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { ErrorComponent } from "@gooddata/sdk-ui";
 import { LoadingMask } from "@gooddata/sdk-ui-kit";
 
-import { AsCodeMutationProvider } from "../asCode/AsCodeMutationContext.js";
-import { asCodeDescriptors } from "../asCodeRegistry.js";
 import type { OpenHandlerEvent } from "../catalogDetail/types.js";
 import { CatalogFeedProvider } from "../catalogItem/CatalogFeedContext.js";
 import { type ICatalogItemRef } from "../catalogItem/types.js";
@@ -17,9 +15,7 @@ import { CreateObjectButton } from "../header/CreateObjectButton.js";
 import { Header } from "../header/Header.js";
 import { useCatalogItemOpen } from "../main/hooks/useCatalogItemOpen.js";
 import { Main } from "../main/Main.js";
-import { useCanManageMetric } from "../metric/gate.js";
 import type { CatalogCreateObjectType } from "../objectType/types.js";
-import { useCanManageParameter } from "../parameter/gate.js";
 import { PermissionsGate } from "../permission/PermissionsGate.js";
 import { useIsCatalogQualityEnabled } from "../quality/gate.js";
 import { QualityScoreCard } from "../quality/QualityScoreCard.js";
@@ -51,8 +47,6 @@ export function Catalog({
     onCreateObject,
 }: Props) {
     const intl = useIntl();
-    const showParameter = useCanManageParameter();
-    const showMetricEditor = useCanManageMetric();
     const isTrendingEnabled = useIsCatalogTrendingObjectsEnabled();
     const isQualityEnabled = useIsCatalogQualityEnabled();
 
@@ -85,36 +79,28 @@ export function Catalog({
                 }
             >
                 <CatalogFeedProvider backend={backend} workspace={workspace}>
-                    <AsCodeMutationProvider descriptors={asCodeDescriptors}>
-                        <Header
-                            searchNode={<FullTextSearchInput />}
-                            createNode={
-                                onCreateObject ? (
-                                    <CreateObjectButton
-                                        onCreateObject={onCreateObject}
-                                        showParameter={showParameter}
-                                        showMetricEditor={showMetricEditor}
-                                    />
-                                ) : null
-                            }
-                        />
-                        {isTrendingEnabled ? (
-                            <CatalogTabs onItemClick={onOpenDetail} />
-                        ) : isQualityEnabled ? (
-                            <QualityScoreCard />
-                        ) : null}
-                        <Main
-                            workspace={workspace}
-                            backend={backend}
-                            open={open}
-                            openedItem={openedItem}
-                            setItemOpened={setItemOpened}
-                            onOpenDetail={onOpenDetail}
-                            onCloseDetail={onCloseDetail}
-                            onOpenClick={onOpenClick}
-                            onCatalogItemNavigation={onCatalogItemNavigation}
-                        />
-                    </AsCodeMutationProvider>
+                    <Header
+                        searchNode={<FullTextSearchInput />}
+                        createNode={
+                            onCreateObject ? <CreateObjectButton onCreateObject={onCreateObject} /> : null
+                        }
+                    />
+                    {isTrendingEnabled ? (
+                        <CatalogTabs onItemClick={onOpenDetail} />
+                    ) : isQualityEnabled ? (
+                        <QualityScoreCard />
+                    ) : null}
+                    <Main
+                        workspace={workspace}
+                        backend={backend}
+                        open={open}
+                        openedItem={openedItem}
+                        setItemOpened={setItemOpened}
+                        onOpenDetail={onOpenDetail}
+                        onCloseDetail={onCloseDetail}
+                        onOpenClick={onOpenClick}
+                        onCatalogItemNavigation={onCatalogItemNavigation}
+                    />
                 </CatalogFeedProvider>
             </PermissionsGate>
         </Layout>

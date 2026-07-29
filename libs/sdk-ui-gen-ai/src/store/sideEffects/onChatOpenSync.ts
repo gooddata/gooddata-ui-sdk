@@ -18,6 +18,7 @@ import {
 import { settingsSelector } from "../chatWindow/chatWindowSelectors.js";
 import {
     asyncProcessSelector,
+    conversationMessagesSelector,
     conversationSelector,
     conversationsLoadedSelector,
 } from "../messages/messagesSelectors.js";
@@ -80,6 +81,7 @@ export function* onChatOpenSync({ payload: { isOpen } }: PayloadAction<{ isOpen:
     }
 
     const current: IChatConversationLocal | undefined = yield select(conversationSelector);
+    const currentItems: IChatConversationLocalItem[] = yield select(conversationMessagesSelector);
     // Keep a brand-new, not-yet-persisted draft conversation as-is.
     if (current && !current.id) {
         return;
@@ -133,11 +135,23 @@ export function* onChatOpenSync({ payload: { isOpen } }: PayloadAction<{ isOpen:
         // writes into whatever currentConversation points at, so the switch must come first - and
         // both puts are dispatched synchronously (no yield between them) so the UI never observes the
         // intermediate empty/unloaded state.
-        if (latest.id !== currentNow?.id) {
+        const isDifferentConversation = latest.id !== currentNow?.id;
+        if (isDifferentConversation) {
             yield put(setCurrentConversationAction({ conversation: latest }));
         }
-        yield put(setMessagesAction({ items }));
-        yield call(notifyDefinitionReceived, items, latest.localId);
+
+        // Check if new items are different from the current ones. If so, replace the whole list.
+        // If the conversation was just switched above, we always replace because the currentItems
+        // we have in hand belong to the previous conversation.
+        const sameItems =
+            !isDifferentConversation &&
+            items.length === currentItems.length &&
+            items.every((item, i) => item.id === currentItems[i]?.id);
+
+        if (!sameItems) {
+            yield put(setMessagesAction({ items }));
+            yield call(notifyDefinitionReceived, items, latest.localId);
+        }
     } catch {
         // Fail silently - keep showing whatever is currently loaded.
     }

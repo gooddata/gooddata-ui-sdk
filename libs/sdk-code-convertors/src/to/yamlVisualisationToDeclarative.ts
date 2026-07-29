@@ -100,6 +100,7 @@ import {
     isRelativeDateFilter,
     parseReferenceObject,
 } from "../utils/typeGuards.js";
+import { yamlVisTypeToVisualizationUrl } from "../utils/visualisationTypeMap.js";
 import { createIdentifier, createLocalIdentifier } from "../utils/yamlUtils.js";
 
 /** @internal */
@@ -171,54 +172,7 @@ export function yamlVisualisationToMetadataObject(
 }
 
 function yamlVisTypeToDeclarative(def: Visualisation): string {
-    switch (def.type) {
-        case "table":
-            return "local:table";
-        case "bar_chart":
-            return "local:bar";
-        case "column_chart":
-            return "local:column";
-        case "line_chart":
-            return "local:line";
-        case "area_chart":
-            return "local:area";
-        case "scatter_chart":
-            return "local:scatter";
-        case "bubble_chart":
-            return "local:bubble";
-        case "pie_chart":
-            return "local:pie";
-        case "donut_chart":
-            return "local:donut";
-        case "treemap_chart":
-            return "local:treemap";
-        case "pyramid_chart":
-            return "local:pyramid";
-        case "funnel_chart":
-            return "local:funnel";
-        case "heatmap_chart":
-            return "local:heatmap";
-        case "bullet_chart":
-            return "local:bullet";
-        case "waterfall_chart":
-            return "local:waterfall";
-        case "dependency_wheel_chart":
-            return "local:dependencywheel";
-        case "sankey_chart":
-            return "local:sankey";
-        case "headline_chart":
-            return "local:headline";
-        case "combo_chart":
-            return "local:combo2";
-        case "geo_chart":
-            return "local:pushpin";
-        case "geo_area_chart":
-            return "local:choropleth";
-        case "repeater_chart":
-            return "local:repeater";
-        case "radar_chart":
-            return "local:radar";
-    }
+    return yamlVisTypeToVisualizationUrl[def.type];
 }
 
 function yamlConfigToDeclarative(

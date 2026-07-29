@@ -5,16 +5,22 @@ import { type PropsWithChildren } from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { type Mock, describe, expect, it, vi } from "vitest";
 
-import { type IAnalyticalBackend, UnexpectedResponseError } from "@gooddata/sdk-backend-spi";
+import {
+    type IAnalyticalBackend,
+    type IUserWorkspaceSettings,
+    UnexpectedResponseError,
+} from "@gooddata/sdk-backend-spi";
+import type { IWorkspacePermissions } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 
-import { AsCodeMutationProvider } from "../../asCode/AsCodeMutationContext.js";
-import { asCodeDescriptors } from "../../asCodeRegistry.js";
 import { CatalogFeedProvider } from "../../catalogItem/CatalogFeedContext.js";
 import { TestIntlProvider } from "../../localization/TestIntlProvider.js";
 import type { CatalogCreateObjectType } from "../../objectType/types.js";
-import { TestPermissionsProvider } from "../../permission/TestPermissionsProvider.js";
+import {
+    TestPermissionsProvider,
+    defaultPermissionsResult,
+} from "../../permission/TestPermissionsProvider.js";
 import { CreateObjectButton } from "../CreateObjectButton.js";
 
 vi.mock("../../catalogItem/useCatalogItemFeed.js");
@@ -29,7 +35,11 @@ function createBackend(createParameter: Mock = vi.fn().mockResolvedValue({})) {
     } as unknown as IAnalyticalBackend;
 }
 
-function wrapper({ children, createParameter }: PropsWithChildren<{ createParameter?: Mock }>) {
+function wrapper({
+    children,
+    createParameter,
+    parameterEnabled,
+}: PropsWithChildren<{ createParameter?: Mock; parameterEnabled?: boolean }>) {
     const backend = createBackend(createParameter);
 
     return (
@@ -37,10 +47,16 @@ function wrapper({ children, createParameter }: PropsWithChildren<{ createParame
             <BackendProvider backend={backend}>
                 <WorkspaceProvider workspace="test-workspace">
                     <CatalogFeedProvider backend={backend} workspace="test-workspace">
-                        <TestPermissionsProvider>
-                            <AsCodeMutationProvider descriptors={asCodeDescriptors}>
-                                <ToastsCenterContextProvider>{children}</ToastsCenterContextProvider>
-                            </AsCodeMutationProvider>
+                        <TestPermissionsProvider
+                            result={{
+                                ...defaultPermissionsResult,
+                                permissions: { canManageProject: true } as IWorkspacePermissions,
+                                settings: (parameterEnabled
+                                    ? { enableParameters: true }
+                                    : {}) as IUserWorkspaceSettings,
+                            }}
+                        >
+                            <ToastsCenterContextProvider>{children}</ToastsCenterContextProvider>
                         </TestPermissionsProvider>
                     </CatalogFeedProvider>
                 </WorkspaceProvider>
@@ -48,6 +64,8 @@ function wrapper({ children, createParameter }: PropsWithChildren<{ createParame
         </TestIntlProvider>
     );
 }
+
+const parameterWrapper = ({ children }: PropsWithChildren) => wrapper({ children, parameterEnabled: true });
 
 describe("CreateObjectButton", () => {
     it("renders the Create button", () => {
@@ -68,7 +86,7 @@ describe("CreateObjectButton", () => {
         expect(screen.getByText("Metric")).toBeInTheDocument();
     });
 
-    it("does not show Parameter item when showParameter is off", () => {
+    it("does not show the Parameter item when the parameter flag is off", () => {
         const onCreateObject = vi.fn();
         render(<CreateObjectButton onCreateObject={onCreateObject} />, { wrapper });
 
@@ -77,9 +95,9 @@ describe("CreateObjectButton", () => {
         expect(screen.queryByText("Parameter")).not.toBeInTheDocument();
     });
 
-    it("shows Parameter item when showParameter is on", () => {
+    it("shows the Parameter item when the parameter flag is on", () => {
         const onCreateObject = vi.fn();
-        render(<CreateObjectButton onCreateObject={onCreateObject} showParameter />, { wrapper });
+        render(<CreateObjectButton onCreateObject={onCreateObject} />, { wrapper: parameterWrapper });
 
         fireEvent.click(screen.getByText("Create"));
 
@@ -104,7 +122,7 @@ describe("CreateObjectButton", () => {
     it("does not call onCreateObject when clicking Parameter item", () => {
         const onCreateObject = vi.fn();
 
-        render(<CreateObjectButton onCreateObject={onCreateObject} showParameter />, { wrapper });
+        render(<CreateObjectButton onCreateObject={onCreateObject} />, { wrapper: parameterWrapper });
 
         fireEvent.click(screen.getByText("Create"));
         fireEvent.click(screen.getByText("Parameter"));
@@ -115,8 +133,8 @@ describe("CreateObjectButton", () => {
     it("creates a parameter via backend and shows success", async () => {
         const createParameter = vi.fn().mockResolvedValue({});
 
-        render(<CreateObjectButton onCreateObject={vi.fn()} showParameter />, {
-            wrapper: ({ children }) => wrapper({ children, createParameter }),
+        render(<CreateObjectButton onCreateObject={vi.fn()} />, {
+            wrapper: ({ children }) => wrapper({ children, createParameter, parameterEnabled: true }),
         });
 
         fireEvent.click(screen.getByText("Create"));
@@ -147,8 +165,8 @@ describe("CreateObjectButton", () => {
             }),
         );
 
-        render(<CreateObjectButton onCreateObject={vi.fn()} showParameter />, {
-            wrapper: ({ children }) => wrapper({ children, createParameter }),
+        render(<CreateObjectButton onCreateObject={vi.fn()} />, {
+            wrapper: ({ children }) => wrapper({ children, createParameter, parameterEnabled: true }),
         });
 
         fireEvent.click(screen.getByText("Create"));

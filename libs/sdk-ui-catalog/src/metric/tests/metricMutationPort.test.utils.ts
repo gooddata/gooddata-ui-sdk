@@ -20,10 +20,7 @@ const defaultSavedItem: ICatalogItemMeasure = {
     format: "#,##0.00",
 };
 
-/**
- * Test utility. Returns a metric mutation port with vi.fn() stubs.
- * @internal
- */
+/** @internal */
 export function createTestMetricMutationPort(
     overrides: Partial<IMetricMutationPort> = {},
 ): IMetricMutationPort {
@@ -31,21 +28,6 @@ export function createTestMetricMutationPort(
         create: vi.fn().mockResolvedValue(defaultSavedItem),
         update: vi.fn().mockResolvedValue(defaultSavedItem),
         delete: vi.fn().mockResolvedValue(undefined),
-        load: vi.fn().mockResolvedValue({
-            id: "test-metric",
-            uri: "test-metric",
-            ref: { identifier: "test-metric", type: "measure" },
-            type: "measure",
-            title: "Test Metric",
-            description: "",
-            tags: [],
-            production: true,
-            deprecated: false,
-            unlisted: false,
-            expression: "SELECT 1",
-            format: "#,##0.00",
-        }),
-        getReferencingObjectsCount: vi.fn().mockResolvedValue(0),
         ...overrides,
     };
 }

@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 import type { Visualisation } from "@gooddata/sdk-code-schemas/v1";
 import type { IRankingFilterBody } from "@gooddata/sdk-model";
 
+import { type TableConfigProperties } from "../configs/table.js";
 import {
     declarativeRankingFilterToYaml,
     declarativeVisualisationToYaml,
@@ -19,6 +20,32 @@ import type { ExportEntities, FromEntities } from "../types.js";
 
 const emptyEntities: ExportEntities = [];
 const emptyFromEntities: FromEntities = [];
+
+type YamlTableVisualisation = Extract<Visualisation, { type: "table" }>;
+type YamlConditionalFormatting = NonNullable<
+    NonNullable<YamlTableVisualisation["config"]>["conditional_formatting"]
+>;
+type StoredConditionalFormatting = TableConfigProperties["conditionalFormatting"];
+
+// The generated client types insight `content` as free-form `object | null`; this helper is the one
+// typed view of the stored conditional-formatting controls shared by the round-trip assertions.
+function storedConditionalFormatting(declarative: {
+    content: object | null;
+}): StoredConditionalFormatting | undefined {
+    const content: unknown = declarative.content;
+    if (!content || typeof content !== "object" || !("properties" in content)) {
+        return undefined;
+    }
+    const { properties } = content;
+    if (!properties || typeof properties !== "object" || !("controls" in properties)) {
+        return undefined;
+    }
+    const { controls } = properties;
+    if (!controls || typeof controls !== "object" || !("conditionalFormatting" in controls)) {
+        return undefined;
+    }
+    return controls.conditionalFormatting as StoredConditionalFormatting;
+}
 const configBackedChartTypes: Array<Visualisation["type"]> = [
     "table",
     "bar_chart",
@@ -919,6 +946,106 @@ describe("visualisation conversion", () => {
 
             const { json } = declarativeVisualisationToYaml(emptyFromEntities, declarative);
             expect(json!.config!["conditional_formatting"]).toEqual(conditionalFormatting);
+        });
+
+        it("round-trips date-attribute conditions (absolute + relative values, is_empty)", () => {
+            const conditionalFormatting: YamlConditionalFormatting = {
+                enabled: true,
+                rules: [
+                    {
+                        id: "due_date_rule",
+                        target: { attribute: "d1" },
+                        conditions: [
+                            {
+                                id: "overdue",
+                                operator: "less_than",
+                                value: { relative: { granularity: "day", from: 0, to: 0 } },
+                                format: { fill: "#E54D40", scope: "row" },
+                            },
+                            {
+                                id: "amber_window",
+                                operator: "equal_to",
+                                value: { absolute: { from: "2026-07-01", to: "2026-09-30" } },
+                                format: { fill: "#FFF3BF", scope: "cell" },
+                            },
+                            {
+                                id: "missing_date",
+                                operator: "is_empty",
+                                format: { fill: "#00C18D", scope: "cell" },
+                            },
+                        ],
+                    },
+                ],
+            };
+            const input: Visualisation = {
+                type: "table",
+                id: "cf_dates",
+                query: { fields: { m1: { using: "metric/revenue" }, d1: { using: "label/date.month" } } },
+                metrics: [{ field: "m1" }],
+                view_by: [{ field: "d1" }],
+                config: { conditional_formatting: conditionalFormatting },
+            };
+
+            // YAML -> internal (save): granularity names expand to GDC constants, operators upcase.
+            const declarative = yamlVisualisationToDeclarative(emptyEntities, input);
+            const cf = storedConditionalFormatting(declarative);
+            expect(cf?.rules[0].conditions[0].value).toEqual({
+                kind: "relativeDate",
+                granularity: "GDC.time.date",
+                from: 0,
+                to: 0,
+            });
+            expect(cf?.rules[0].conditions[1].value).toEqual({
+                kind: "absoluteDate",
+                from: "2026-07-01",
+                to: "2026-09-30",
+            });
+            // Emptiness on date columns = the same is_empty operator all target kinds use.
+            expect(cf?.rules[0].conditions[2].operator).toBe("IS_EMPTY");
+            expect(cf?.rules[0].conditions[2].value).toEqual({ kind: "none" });
+
+            // internal -> YAML (load): must come back byte-identical.
+            const { json } = declarativeVisualisationToYaml(emptyFromEntities, declarative);
+            expect(json?.config?.["conditional_formatting"]).toEqual(conditionalFormatting);
+        });
+
+        it("round-trips granularity names bijectively (week maps to week_us; fiscal is not in the schema)", () => {
+            const conditionalFormatting: YamlConditionalFormatting = {
+                enabled: true,
+                rules: [
+                    {
+                        id: "weekly",
+                        target: { attribute: "d1" },
+                        conditions: [
+                            {
+                                id: "this_week",
+                                operator: "equal_to",
+                                value: { relative: { granularity: "week", from: 0, to: 0 } },
+                                format: { fill: "#E54D40", scope: "cell" },
+                            },
+                        ],
+                    },
+                ],
+            };
+            const input: Visualisation = {
+                type: "table",
+                id: "cf_gran",
+                query: { fields: { d1: { using: "label/date.week" } } },
+                view_by: [{ field: "d1" }],
+                config: { conditional_formatting: conditionalFormatting },
+            };
+
+            const declarative = yamlVisualisationToDeclarative(emptyEntities, input);
+            const cf = storedConditionalFormatting(declarative);
+            expect(cf?.rules[0].conditions[0].value).toEqual({
+                kind: "relativeDate",
+                granularity: "GDC.time.week_us",
+                from: 0,
+                to: 0,
+            });
+
+            const { json } = declarativeVisualisationToYaml(emptyFromEntities, declarative);
+            expect(json?.config?.["conditional_formatting"]).toEqual(conditionalFormatting);
         });
 
         it("omits conditional_formatting when there are no rules", () => {

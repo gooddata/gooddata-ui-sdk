@@ -77,11 +77,6 @@ export type IInsight = IInsightDefinition & {
         isLocked?: boolean;
 
         /**
-         * Whether the insight is hidden
-         */
-        isHidden?: boolean;
-
-        /**
          * Certification metadata.
          * @internal
          */
@@ -203,6 +198,9 @@ export type IInsightDefinition = {
          * @alpha
          */
         layers?: IInsightLayerDefinition[];
+
+        /** Whether the insight is hidden; author-owned, so it can be set before the insight is created. */
+        isHidden?: boolean;
     };
 };
 
@@ -869,7 +867,7 @@ export function insightIsLocked(insight: IInsight): boolean {
  * @returns boolean
  * @alpha
  */
-export function insightIsHidden(insight: IInsight): boolean {
+export function insightIsHidden(insight: IInsightDefinition): boolean {
     invariant(insight, "insight must be specified");
 
     return insight.insight.isHidden || false;

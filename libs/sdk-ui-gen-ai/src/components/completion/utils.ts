@@ -87,10 +87,7 @@ const SupportedReferenceTypes = [
 ] as const;
 
 // Utility: Get regex for references
-export function getReferenceRegex(split?: boolean) {
-    if (split) {
-        return new RegExp(`(\\{(?:${SupportedReferenceTypes.join("|")})\\/[.A-Za-z0-9_-]{1,255}\\})`, "g");
-    }
+export function getReferenceRegex() {
     return new RegExp(`\\{((?:${SupportedReferenceTypes.join("|")})\\/(?!\\.)[.A-Za-z0-9_-]{1,255})\\}`, "g");
 }
 

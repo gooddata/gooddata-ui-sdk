@@ -41,7 +41,8 @@ function CfListItem({
                     if (typeof ic !== "string" || !ic) {
                         return null;
                     }
-                    const isTypeIcon = ic === "gd-icon-attribute" || ic === "gd-icon-metric";
+                    const isTypeIcon =
+                        ic === "gd-icon-attribute" || ic === "gd-icon-metric" || ic === "gd-icon-date";
                     return (
                         <span
                             aria-hidden="true"

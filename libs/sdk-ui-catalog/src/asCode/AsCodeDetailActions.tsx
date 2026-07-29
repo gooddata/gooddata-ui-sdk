@@ -8,6 +8,7 @@ import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import { catalogDetailActionDelete, catalogDetailActionDuplicate } from "../automation/testIds.js";
 import { CatalogDetailActionBar } from "../catalogDetail/CatalogDetailActionBar.js";
+import { toOpenHandlerEvent } from "../catalogDetail/openHandlerEvent.js";
 import { ShareButton } from "../catalogDetail/share/ShareButton.js";
 import type { ICatalogDetailAction, OpenHandlerEvent } from "../catalogDetail/types.js";
 import type { ICatalogItem, ICatalogItemRef } from "../catalogItem/types.js";
@@ -15,26 +16,20 @@ import type { ICatalogItem, ICatalogItemRef } from "../catalogItem/types.js";
 import { AsCodeCreateDialog } from "./AsCodeCreateDialog.js";
 import { AsCodeDeleteDialog } from "./AsCodeDeleteDialog.js";
 import { AsCodeEditDialog } from "./AsCodeEditDialog.js";
-import type { IAsCodeDefinition, IAsCodeDescriptor } from "./descriptor.js";
+import type { IAsCodeDescriptor } from "./descriptor.js";
 
 const OPEN_ACTION_ID = "open";
 
-// edit/delete freeze the item selected when the action started, so a later change to the live `item`
-// prop can't retarget the operation. A duplicate seeds either from an existing item (loaded by the
-// create dialog) or from the edit dialog's current unsaved edits.
+// Freezes the item selected when the action started, so a later `item` prop change can't retarget it.
 type DialogState =
     | { kind: "edit"; item: ICatalogItem }
     | { kind: "delete"; item: ICatalogItem }
-    | { kind: "duplicate"; duplicateOf?: ICatalogItem; duplicateSource?: IAsCodeDefinition };
+    | { kind: "duplicate"; duplicateOf?: ICatalogItem; duplicateSource?: unknown };
 
-/**
- * @internal
- */
+/** @internal */
 export interface IAsCodeDetailActionsProps {
     descriptor: IAsCodeDescriptor;
     item: ICatalogItem;
-    /** When provided and the descriptor declares an `openAction` (e.g. "Open in metric editor"), that
-     *  action opens the standalone editor through this handler; omitted, it is not offered. */
     onOpen?: (event: MouseEvent, openEvent: OpenHandlerEvent) => void;
     canShare?: boolean;
     onShare?: () => void;
@@ -43,12 +38,7 @@ export interface IAsCodeDetailActionsProps {
     onCatalogItemDelete?: (ref: ICatalogItemRef) => void;
 }
 
-/**
- * Detail-panel actions for an as-code object: inline edit, duplicate, and delete via the shared
- * dialogs, plus the Share button and the descriptor's open action if it declares one. Generic over the
- * entity type via its descriptor.
- * @internal
- */
+/** @internal */
 export function AsCodeDetailActions({
     descriptor,
     item,
@@ -61,20 +51,23 @@ export function AsCodeDetailActions({
 }: IAsCodeDetailActionsProps) {
     const intl = useIntl();
     const workspaceId = useWorkspaceStrict();
+    // When false, edit and duplicate are withheld (both need the codec); delete, share, and open remain.
+    const canEditAsCode = descriptor.useIsItemEditable?.(item) ?? true;
     const [dialog, setDialog] = useState<DialogState | undefined>(undefined);
 
     const actionGroups = useMemo<ICatalogDetailAction[][]>(() => {
         const mainGroup: ICatalogDetailAction[] = [];
-        // The open action reaches the standalone editor via onOpen, so it is offered only when the host
-        // provides that handler and the descriptor declares one; the menu then never shows a dead item.
         if (onOpen && descriptor.openAction) {
             mainGroup.push({ id: OPEN_ACTION_ID, label: intl.formatMessage(descriptor.openAction) });
         }
-        mainGroup.push({
-            id: "duplicate",
-            label: intl.formatMessage(descriptor.messages.duplicate),
-            dataTestId: catalogDetailActionDuplicate,
-        });
+        if (canEditAsCode) {
+            mainGroup.push({
+                id: "duplicate",
+                label: intl.formatMessage(descriptor.messages.duplicate),
+                dataTestId: catalogDetailActionDuplicate,
+            });
+        }
+        // Drop an empty main group so the menu opens without a stray leading divider.
         return [
             mainGroup,
             [
@@ -85,8 +78,8 @@ export function AsCodeDetailActions({
                     dataTestId: catalogDetailActionDelete,
                 },
             ],
-        ];
-    }, [descriptor, intl, onOpen]);
+        ].filter((group) => group.length > 0);
+    }, [canEditAsCode, descriptor, intl, onOpen]);
 
     const closeDialog = useCallback(() => setDialog(undefined), []);
 
@@ -95,12 +88,7 @@ export function AsCodeDetailActions({
     const handleActionsMenuSelect = useCallback(
         (actionId: string, event: MouseEvent | KeyboardEvent) => {
             if (actionId === OPEN_ACTION_ID) {
-                onOpen?.(event as MouseEvent, {
-                    item,
-                    workspaceId,
-                    newTab: event.metaKey || event.ctrlKey,
-                    preventDefault: event.preventDefault.bind(event),
-                });
+                onOpen?.(event as MouseEvent, toOpenHandlerEvent(event as MouseEvent, item, workspaceId));
                 return;
             }
             if (actionId === "delete") {
@@ -114,7 +102,7 @@ export function AsCodeDetailActions({
         [item, onOpen, workspaceId],
     );
 
-    const handleEditDuplicate = useCallback((source: IAsCodeDefinition) => {
+    const handleEditDuplicate = useCallback((source: unknown) => {
         setDialog({ kind: "duplicate", duplicateSource: source });
     }, []);
 
@@ -125,7 +113,7 @@ export function AsCodeDetailActions({
                 workspaceId={workspaceId}
                 actionGroups={actionGroups}
                 leadingActions={canShare && onShare ? <ShareButton onClick={onShare} /> : null}
-                onEditClick={handleEditOpen}
+                onEditClick={canEditAsCode ? handleEditOpen : undefined}
                 onActionsMenuSelect={handleActionsMenuSelect}
             />
             {dialog?.kind === "edit" ? (

@@ -1,7 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import type { v1 } from "@gooddata/sdk-code-schemas";
-import type { IMeasureMetadataObject, IMeasureMetadataObjectDefinition } from "@gooddata/sdk-model";
+import type { IMeasureMetadataObjectDefinition } from "@gooddata/sdk-model";
 
 import type { MetricSchema } from "./metricSchema.js";
 
@@ -91,41 +91,23 @@ function pickMetricYamlFields(
 }
 
 /**
- * Overlays the fields the as-code YAML owns onto a base measure, keeping the base's identity and the
- * fields the YAML cannot express (`metricType`, `isHiddenFromKda`, ...).
+ * The metric's `reconcile`: layers the author's parsed YAML edits over the base definition — the
+ * loaded measure on an edit, the copy source on a duplicate.
  *
- * Used wherever YAML edits are committed onto an existing measure: the update flow overlays onto the
- * loaded metric, and duplicating from the edit dialog seeds the copy from the metric being edited.
- * Duplicating from the detail panel instead needs YAML-authoritative identity — see
- * {@link mergeCopiedMetricDefinition}.
- */
-export function overlayMetricYamlFields(
-    base: IMeasureMetadataObject,
-    yamlDefinition: IMeasureMetadataObjectDefinition,
-): IMeasureMetadataObject {
-    return {
-        ...base,
-        ...pickMetricYamlFields(yamlDefinition),
-    };
-}
-
-/**
- * Builds the definition to persist when duplicating a metric, layering the author's YAML edits over
- * the copied source.
- *
- * The source carries fields the YAML cannot express (`metricType`, `isHiddenFromKda`), which survive
+ * The base carries fields the YAML cannot express (`metricType`, `isHiddenFromKda`), which survive
  * because only the YAML-owned fields are overlaid on top. Identity stays YAML-authoritative: the
- * parsed `id` wins, and its absence lets the server derive a fresh one, so the copied source's id is
- * intentionally dropped from the base first.
+ * parsed `id` wins, and its absence lets the server derive a fresh one, so the base's id is
+ * intentionally dropped first. (On an edit this is moot — validation pins the parsed id to the loaded
+ * object's — but on a duplicate it is what frees the copy from the source's identity.)
  */
-export function mergeCopiedMetricDefinition(
-    copiedMetric: IMeasureMetadataObjectDefinition,
-    yamlDefinition: IMeasureMetadataObjectDefinition,
+export function reconcileMetricDefinition(
+    base: IMeasureMetadataObjectDefinition,
+    edited: IMeasureMetadataObjectDefinition,
 ): IMeasureMetadataObjectDefinition {
-    const { id: _copiedId, ...carriedOver } = copiedMetric;
+    const { id: _baseId, ...carriedOver } = base;
     return {
         ...carriedOver,
-        ...pickMetricYamlFields(yamlDefinition),
-        ...(yamlDefinition.id === undefined ? {} : { id: yamlDefinition.id }),
+        ...pickMetricYamlFields(edited),
+        ...(edited.id === undefined ? {} : { id: edited.id }),
     };
 }

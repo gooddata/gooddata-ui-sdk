@@ -7,6 +7,7 @@ import { type IChatConversationLocal } from "../../model.js";
 import { settingsSelector } from "../chatWindow/chatWindowSelectors.js";
 import {
     asyncProcessSelector,
+    conversationMessagesSelector,
     conversationSelector,
     conversationsLoadedSelector,
 } from "../messages/messagesSelectors.js";
@@ -48,7 +49,12 @@ function runOnChatOpenSync({
             }
             next = gen.next(queue.shift());
         } else if (effect.type === "CALL") {
-            next = gen.next(callResults[callIndex++]);
+            const result = callResults[callIndex++];
+            if (result instanceof Error) {
+                next = gen.throw(result);
+            } else {
+                next = gen.next(result);
+            }
         } else if (effect.type === "PUT") {
             puts.push(effect.payload.action);
             next = gen.next();
@@ -69,7 +75,7 @@ describe("onChatOpenSync", () => {
         const latest = conv("conv-c");
         const puts = runOnChatOpenSync({
             isOpen: true,
-            callResults: [latest, [{ localId: "i1" }]],
+            callResults: [latest, [{ id: "i1", localId: "i1" }], undefined],
             selects: new Map<unknown, unknown[]>([
                 [settingsSelector, [AGENTIC_SETTINGS]],
                 [conversationsLoadedSelector, [true]],
@@ -77,6 +83,7 @@ describe("onChatOpenSync", () => {
                 [asyncProcessSelector, [undefined, undefined]],
                 // current (pre-fetch) then currentNow (post-fetch) — both the persisted conv-a
                 [conversationSelector, [conv("conv-a"), conv("conv-a")]],
+                [conversationMessagesSelector, [[]]],
             ]),
         });
 
@@ -96,6 +103,7 @@ describe("onChatOpenSync", () => {
                 [asyncProcessSelector, [undefined, undefined]],
                 // pre-fetch: previous persisted conversation; post-fetch: a fresh unsent draft (no id)
                 [conversationSelector, [conv("conv-b"), conv("", "draft-1")]],
+                [conversationMessagesSelector, [[]]],
             ]),
         });
 
@@ -104,20 +112,127 @@ describe("onChatOpenSync", () => {
         expect(types).not.toContain(setMessagesAction.type);
     });
 
-    it("does NOT switch when a clear/evaluate is in progress after the fetch (LX-2577)", () => {
-        const latest = conv("conv-c");
+    it("updates messages when conversation is the same but items changed", () => {
+        const current = conv("conv-a");
+        const items = [
+            { id: "i1", localId: "i1" },
+            { id: "i2", localId: "i2" },
+        ];
         const puts = runOnChatOpenSync({
             isOpen: true,
-            callResults: [latest, [{ localId: "i1" }]],
+            callResults: [current, items, undefined],
             selects: new Map<unknown, unknown[]>([
                 [settingsSelector, [AGENTIC_SETTINGS]],
                 [conversationsLoadedSelector, [true]],
-                // pre-fetch idle, post-fetch the seed's thread-clear is in flight
-                [asyncProcessSelector, [undefined, "clearing"]],
-                [conversationSelector, [conv("conv-a"), conv("conv-a")]],
+                [asyncProcessSelector, [undefined, undefined]],
+                [conversationSelector, [current, current]],
+                [conversationMessagesSelector, [[{ id: "i1", localId: "i1" }]]],
             ]),
         });
 
-        expect(puts.map((a) => a.type)).not.toContain(setCurrentConversationAction.type);
+        const types = puts.map((a) => a.type);
+        expect(types).not.toContain(setCurrentConversationAction.type);
+        expect(types).toContain(setMessagesAction.type);
+    });
+
+    it("does NOT update messages when conversation and items are the same", () => {
+        const current = conv("conv-a");
+        const items = [{ id: "i1", localId: "i1" }];
+        const puts = runOnChatOpenSync({
+            isOpen: true,
+            callResults: [current, items],
+            selects: new Map<unknown, unknown[]>([
+                [settingsSelector, [AGENTIC_SETTINGS]],
+                [conversationsLoadedSelector, [true]],
+                [asyncProcessSelector, [undefined, undefined]],
+                [conversationSelector, [current, current]],
+                [conversationMessagesSelector, [[{ id: "i1", localId: "i1" }]]],
+            ]),
+        });
+
+        const types = puts.map((a) => a.type);
+        expect(types).not.toContain(setCurrentConversationAction.type);
+        expect(types).not.toContain(setMessagesAction.type);
+    });
+
+    it("does NOT switch or update when chat is opened but another process starts during fetch (LX-2577)", () => {
+        const latest = conv("conv-b");
+        const puts = runOnChatOpenSync({
+            isOpen: true,
+            callResults: [latest, [{ id: "i1", localId: "i1" }]],
+            selects: new Map<unknown, unknown[]>([
+                [settingsSelector, [AGENTIC_SETTINGS]],
+                [conversationsLoadedSelector, [true]],
+                [asyncProcessSelector, [undefined, "evaluating"]], // process started during fetch
+                [conversationSelector, [conv("conv-a"), conv("conv-a")]],
+                [conversationMessagesSelector, [[]]],
+            ]),
+        });
+
+        expect(puts).toHaveLength(0);
+    });
+
+    it("fails silently when backend call fails", () => {
+        const puts = runOnChatOpenSync({
+            isOpen: true,
+            callResults: [new Error("Failed to fetch")],
+            selects: new Map<unknown, unknown[]>([
+                [settingsSelector, [AGENTIC_SETTINGS]],
+                [conversationsLoadedSelector, [true]],
+                [asyncProcessSelector, [undefined, undefined]],
+                [conversationSelector, [conv("conv-a"), conv("conv-a")]],
+                [conversationMessagesSelector, [[]]],
+            ]),
+        });
+
+        expect(puts).toHaveLength(0);
+    });
+
+    it("updates messages when backend returns FEWER items than cached", () => {
+        const current = conv("conv-a");
+        const items = [{ id: "i1", localId: "i1" }];
+        const puts = runOnChatOpenSync({
+            isOpen: true,
+            callResults: [current, items, undefined],
+            selects: new Map<unknown, unknown[]>([
+                [settingsSelector, [AGENTIC_SETTINGS]],
+                [conversationsLoadedSelector, [true]],
+                [asyncProcessSelector, [undefined, undefined]],
+                [conversationSelector, [current, current]],
+                [
+                    conversationMessagesSelector,
+                    [
+                        [
+                            { id: "i1", localId: "i1" },
+                            { id: "i2", localId: "i2" },
+                        ],
+                    ],
+                ],
+            ]),
+        });
+
+        const types = puts.map((a) => a.type);
+        expect(types).toContain(setMessagesAction.type);
+    });
+
+    it("updates messages when conversation switches even if item IDs match", () => {
+        const current = conv("conv-a");
+        const latest = conv("conv-b");
+        const items = [{ id: "i1", localId: "i1" }];
+        const puts = runOnChatOpenSync({
+            isOpen: true,
+            callResults: [latest, items, undefined],
+            selects: new Map<unknown, unknown[]>([
+                [settingsSelector, [AGENTIC_SETTINGS]],
+                [conversationsLoadedSelector, [true]],
+                [asyncProcessSelector, [undefined, undefined]],
+                [conversationSelector, [current, current]],
+                [conversationMessagesSelector, [[{ id: "i1", localId: "i1" }]]],
+            ]),
+        });
+
+        const types = puts.map((a) => a.type);
+        expect(types).toContain(setCurrentConversationAction.type);
+        expect(types).toContain(setMessagesAction.type);
     });
 });

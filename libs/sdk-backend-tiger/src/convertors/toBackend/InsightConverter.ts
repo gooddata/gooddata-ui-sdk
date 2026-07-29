@@ -112,3 +112,13 @@ export const convertInsight = (
         ...parametersProp,
     };
 };
+
+/**
+ * Converts a platform-agnostic insight definition into the free-form `content` of a stored visualization
+ * object (a V2 body). Returned as `object` because that is the visualization object's free-form content
+ * field type. Inverse of `convertVisualizationContentToInsight`.
+ *
+ * @internal
+ */
+export const convertInsightToVisualizationContent = (insight: IInsightDefinition): object =>
+    convertInsight(insight);

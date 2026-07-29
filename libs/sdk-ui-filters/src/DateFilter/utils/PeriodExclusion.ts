@@ -32,15 +32,16 @@ export const applyExcludeCurrentPeriod = (
         return dateFilterOption;
     } else if (isRelativeDateFilterPreset(dateFilterOption)) {
         const { from, to } = dateFilterOption;
-        const shouldExcludeCurrent = to === 0 && from < to;
+        const excluded = excludeCurrentPeriodFromRange({ from, to }, true);
+        const shouldExcludeCurrent = excluded.from !== from || excluded.to !== to;
 
         return {
             ...dateFilterOption,
             // When exclusion is applied, the selection no longer matches the original preset interval,
             // so the title should be computed from the adjusted interval instead of reusing preset's name.
             name: shouldExcludeCurrent ? "" : dateFilterOption.name,
-            from: shouldExcludeCurrent ? dateFilterOption.from - 1 : dateFilterOption.from,
-            to: shouldExcludeCurrent ? -1 : to,
+            from: excluded.from,
+            to: excluded.to,
         };
     } else {
         throw new Error("Unknown date filter value type");
@@ -56,3 +57,31 @@ export const canExcludeCurrentPeriod = (dateFilterOption: DateFilterOption): boo
     }
     return false;
 };
+
+/**
+ * The numeric core of exclude-current-period: a current-period-ending range shifts back by one
+ * period; anything else is returned unchanged (exclusion does not apply). This is what the filter
+ * bar persists — no flag, just the shifted offsets.
+ *
+ * @alpha
+ */
+export const excludeCurrentPeriodFromRange = (
+    range: { from: number; to: number },
+    excludeCurrentPeriod: boolean,
+): { from: number; to: number } =>
+    excludeCurrentPeriod && range.to === 0 && range.from < range.to
+        ? { from: range.from - 1, to: -1 }
+        : range;
+
+/**
+ * Inverse of {@link excludeCurrentPeriodFromRange}: the current-period-ending range that would have
+ * produced the stored offsets via exclusion, or undefined when the stored range cannot be an
+ * exclusion result. Lets stored offsets be matched back to "preset + checked toggle".
+ *
+ * @alpha
+ */
+export const revertExcludedCurrentPeriodRange = (range: {
+    from: number;
+    to: number;
+}): { from: number; to: number } | undefined =>
+    range.to === -1 && range.from < range.to ? { from: range.from + 1, to: 0 } : undefined;

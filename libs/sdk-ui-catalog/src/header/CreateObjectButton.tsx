@@ -15,7 +15,7 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import { AsCodeCreateDialog } from "../asCode/AsCodeCreateDialog.js";
-import { getAsCodeDescriptor } from "../asCodeRegistry.js";
+import { getAsCodeDescriptor, useCreatableObjectTypes } from "../asCodeRegistry.js";
 import { useCatalogFeedActions } from "../catalogItem/CatalogFeedContext.js";
 import { ObjectTypes } from "../objectType/constants.js";
 import { getObjectTypeLabel } from "../objectType/labels.js";
@@ -34,28 +34,15 @@ const icons: Record<CatalogCreateObjectType, IconType> = {
 
 type Props = {
     onCreateObject: (objectType: CatalogCreateObjectType) => void;
-    showParameter?: boolean;
-    showMetricEditor?: boolean;
 };
 
-export function CreateObjectButton({ onCreateObject, showParameter, showMetricEditor }: Props) {
+export function CreateObjectButton({ onCreateObject }: Props) {
     const intl = useIntl();
     const { refetchObjectType } = useCatalogFeedActions();
-    // The type whose create dialog is open, or undefined when none is. One state for every as-code
-    // type, since they all open the same generic dialog.
     const [openType, setOpenType] = useState<CatalogCreateObjectType | undefined>(undefined);
 
-    // The types created inline in a catalog dialog (the rest redirect to a standalone editor).
-    const inCatalogTypes = useMemo(() => {
-        const types = new Set<CatalogCreateObjectType>();
-        if (showMetricEditor) {
-            types.add(ObjectTypes.METRIC);
-        }
-        if (showParameter) {
-            types.add(ObjectTypes.PARAMETER);
-        }
-        return types;
-    }, [showMetricEditor, showParameter]);
+    // Widened to the full create-menu vocabulary so redirect-only types can be membership-tested.
+    const inCatalogTypes: ReadonlySet<CatalogCreateObjectType> = useCreatableObjectTypes();
 
     const items = useMemo<IUiMenuItem<CreateItemData>[]>(() => {
         const externalLinkIcon = <MenuItemIcon type="externalLink" />;
@@ -67,22 +54,21 @@ export function CreateObjectButton({ onCreateObject, showParameter, showMetricEd
             id: type,
             stringTitle: getObjectTypeLabel(intl, type),
             iconLeft: <MenuItemIcon type={icons[type]} />,
-            // A redirect create leaves the catalog for the standalone editor; an in-catalog create
-            // opens a dialog and needs no external-link affordance.
             iconRight: redirects ? externalLinkIcon : undefined,
             data: type,
         });
 
-        // A separator divides creates that redirect to a standalone editor from those handled inline
-        // in a catalog dialog. Metric switches sides: it redirects unless its in-catalog editor is on.
+        // Metric and visualization redirect to a standalone editor unless their in-catalog editor is on.
         return [
             interactiveItem(ObjectTypes.DASHBOARD, true),
-            interactiveItem(ObjectTypes.VISUALIZATION, true),
-            ...(showMetricEditor ? [] : [interactiveItem(ObjectTypes.METRIC, true)]),
+            ...(inCatalogTypes.has(ObjectTypes.VISUALIZATION)
+                ? []
+                : [interactiveItem(ObjectTypes.VISUALIZATION, true)]),
+            ...(inCatalogTypes.has(ObjectTypes.METRIC) ? [] : [interactiveItem(ObjectTypes.METRIC, true)]),
             { type: "separator" },
             ...[...inCatalogTypes].map((type) => interactiveItem(type, false)),
         ];
-    }, [intl, inCatalogTypes, showMetricEditor]);
+    }, [intl, inCatalogTypes]);
 
     const handleSelect = useCallback(
         (item: IUiMenuInteractiveItem<CreateItemData>, _event: MouseEvent | KeyboardEvent) => {

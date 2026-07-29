@@ -16,13 +16,39 @@ import { createTestMetricMutationPort } from "../../metric/tests/metricMutationP
 import { ObjectTypes } from "../../objectType/constants.js";
 import { createTestParameterMutationPort } from "../../parameter/tests/parameterMutationPort.test.utils.js";
 import { AsCodeDeleteDialog } from "../AsCodeDeleteDialog.js";
-import { AsCodeMutationProvider } from "../AsCodeMutationContext.js";
+import type { IAsCodeDescriptor } from "../descriptor.js";
 
-const metricDescriptor = getAsCodeDescriptor(ObjectTypes.METRIC)!;
-const parameterDescriptor = getAsCodeDescriptor(ObjectTypes.PARAMETER)!;
+import { withMutationPort } from "./withMutationPort.js";
 
-// The injected port means the backend is never called, so a bare stub satisfies the provider.
+const metricDescriptor = withMutationPort(
+    getAsCodeDescriptor(ObjectTypes.METRIC)!,
+    createTestMetricMutationPort(),
+);
+const parameterDescriptor = withMutationPort(
+    getAsCodeDescriptor(ObjectTypes.PARAMETER)!,
+    createTestParameterMutationPort(),
+);
+
+function metricDescriptorWithCount(count: () => Promise<number>): IAsCodeDescriptor {
+    return {
+        ...metricDescriptor,
+        referenceCounted: { ...metricDescriptor.referenceCounted!, count },
+    };
+}
+
 const stubBackend = {} as unknown as IAnalyticalBackend;
+
+function Wrapper({ children }: PropsWithChildren) {
+    return (
+        <TestIntlProvider>
+            <BackendProvider backend={stubBackend}>
+                <WorkspaceProvider workspace="test-workspace">
+                    <ToastsCenterContextProvider>{children}</ToastsCenterContextProvider>
+                </WorkspaceProvider>
+            </BackendProvider>
+        </TestIntlProvider>
+    );
+}
 
 const measureItem: ICatalogItemMeasure = {
     identifier: "metric.id",
@@ -54,37 +80,16 @@ const parameterItem: ICatalogItemParameter = {
     definition: { type: "NUMBER", defaultValue: 0 },
 };
 
-// ConfirmDialog may nest the submit label in a span and marks the button disabled via `aria-disabled`
-// rather than the native `disabled` property, so it is located by label text and its disabled state is
-// asserted from that attribute.
+// ConfirmDialog marks disabled via `aria-disabled` (not the native prop) and may nest the label in a span.
 function getDeleteButton(): HTMLButtonElement {
     return screen.getByText("Delete", { selector: "button span, button" }).closest("button")!;
 }
 
 describe("AsCodeDeleteDialog with a referencing-count lookup (metric)", () => {
-    function renderMetric(port = createTestMetricMutationPort()) {
-        function Wrapper({ children }: PropsWithChildren) {
-            return (
-                <TestIntlProvider>
-                    <BackendProvider backend={stubBackend}>
-                        <WorkspaceProvider workspace="test-workspace">
-                            <ToastsCenterContextProvider>
-                                <AsCodeMutationProvider
-                                    ports={{
-                                        [ObjectTypes.METRIC]: port,
-                                    }}
-                                >
-                                    {children}
-                                </AsCodeMutationProvider>
-                            </ToastsCenterContextProvider>
-                        </WorkspaceProvider>
-                    </BackendProvider>
-                </TestIntlProvider>
-            );
-        }
+    function renderMetric(descriptor: IAsCodeDescriptor) {
         return render(
             <AsCodeDeleteDialog
-                descriptor={metricDescriptor}
+                descriptor={descriptor}
                 item={measureItem}
                 onClose={vi.fn()}
                 onDeleted={vi.fn()}
@@ -96,13 +101,12 @@ describe("AsCodeDeleteDialog with a referencing-count lookup (metric)", () => {
     it("keeps the delete action disabled until the usage lookup resolves", async () => {
         let resolveLookup: (count: number) => void = () => {};
         renderMetric(
-            createTestMetricMutationPort({
-                getReferencingObjectsCount: vi.fn().mockReturnValue(
+            metricDescriptorWithCount(
+                () =>
                     new Promise<number>((resolve) => {
                         resolveLookup = resolve;
                     }),
-                ),
-            }),
+            ),
         );
 
         expect(getDeleteButton()).toHaveAttribute("aria-disabled", "true");
@@ -111,20 +115,14 @@ describe("AsCodeDeleteDialog with a referencing-count lookup (metric)", () => {
     });
 
     it("surfaces the dependent-object warning once the usage lookup resolves", async () => {
-        renderMetric(
-            createTestMetricMutationPort({ getReferencingObjectsCount: vi.fn().mockResolvedValue(3) }),
-        );
+        renderMetric(metricDescriptorWithCount(vi.fn().mockResolvedValue(3)));
 
         expect(await screen.findByText(/used by 3 objects/)).toBeInTheDocument();
         expect(getDeleteButton()).toHaveAttribute("aria-disabled", "false");
     });
 
     it("re-enables the delete action when the usage lookup fails so a failed lookup never traps the user", async () => {
-        renderMetric(
-            createTestMetricMutationPort({
-                getReferencingObjectsCount: vi.fn().mockRejectedValue(new Error("lookup failed")),
-            }),
-        );
+        renderMetric(metricDescriptorWithCount(vi.fn().mockRejectedValue(new Error("lookup failed"))));
 
         await waitFor(() => expect(getDeleteButton()).toHaveAttribute("aria-disabled", "false"));
     });
@@ -132,25 +130,6 @@ describe("AsCodeDeleteDialog with a referencing-count lookup (metric)", () => {
 
 describe("AsCodeDeleteDialog without a referencing-count lookup (parameter)", () => {
     it("enables the delete action immediately and shows no usage warning", () => {
-        function Wrapper({ children }: PropsWithChildren) {
-            return (
-                <TestIntlProvider>
-                    <BackendProvider backend={stubBackend}>
-                        <WorkspaceProvider workspace="test-workspace">
-                            <ToastsCenterContextProvider>
-                                <AsCodeMutationProvider
-                                    ports={{
-                                        [ObjectTypes.PARAMETER]: createTestParameterMutationPort(),
-                                    }}
-                                >
-                                    {children}
-                                </AsCodeMutationProvider>
-                            </ToastsCenterContextProvider>
-                        </WorkspaceProvider>
-                    </BackendProvider>
-                </TestIntlProvider>
-            );
-        }
         render(
             <AsCodeDeleteDialog
                 descriptor={parameterDescriptor}
@@ -161,7 +140,6 @@ describe("AsCodeDeleteDialog without a referencing-count lookup (parameter)", ()
             { wrapper: Wrapper },
         );
 
-        // A type with no usage lookup is never withheld, and offers no dependent-object warning.
         expect(getDeleteButton()).toHaveAttribute("aria-disabled", "false");
         expect(screen.queryByText(/used by/)).toBeNull();
     });

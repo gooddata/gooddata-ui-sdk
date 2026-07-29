@@ -1,9 +1,10 @@
 // (C) 2026 GoodData Corporation
 
-import { parse as parseYaml } from "yaml";
 import type * as z from "zod/mini";
 
 import type { ParameterType } from "@gooddata/sdk-model";
+
+import { validateYaml } from "../asCode/validateYaml.js";
 
 import { type ParameterSchema, buildParameterSchema } from "./parameterSchema.js";
 
@@ -38,36 +39,25 @@ export function validateParameterYaml(
     value: string,
     options: ValidateParameterYamlOptions,
 ): ParameterValidationResult {
-    if (value.trim() === "") {
-        return invalid("empty");
-    }
+    const result = validateYaml(value, {
+        schema: buildParameterSchema(options.enabledTypes),
+        fixedIdentifier: options.fixedIdentifier,
+    });
 
-    let parsed: unknown;
-    try {
-        parsed = parseYaml(value, { strict: true });
-    } catch {
-        return invalid("syntax");
+    if (result.ok) {
+        return { isValid: true, parameter: result.data };
     }
-
-    const result = buildParameterSchema(options.enabledTypes).safeParse(parsed);
-    if (!result.success) {
-        return classifySchemaError(result.error, readDeclaredType(parsed));
-    }
-
-    if (options.fixedIdentifier !== undefined && result.data.id !== options.fixedIdentifier) {
-        return invalid("idImmutable");
-    }
-
-    return {
-        isValid: true,
-        parameter: result.data,
-    };
+    return result.kind === "schema"
+        ? classifySchemaError(result.error, readDeclaredType(result.parsed))
+        : invalid(result.kind);
 }
+
+type ParameterValidationFailure = Extract<ParameterValidationResult, { isValid: false }>;
 
 function classifySchemaError(
     error: z.core.$ZodError,
     declaredType: ParameterType | undefined,
-): ParameterValidationResult {
+): ParameterValidationFailure {
     for (const issue of error.issues) {
         const path = issue.path.map(String).join(".");
 
@@ -93,7 +83,6 @@ function classifySchemaError(
     return invalid("invalidStructure");
 }
 
-/** The declared `definition.type`, when it names a known model type; drives the type-specific error copy. */
 function readDeclaredType(parsed: unknown): ParameterType | undefined {
     if (!parsed || typeof parsed !== "object") {
         return undefined;
@@ -106,7 +95,7 @@ function readDeclaredType(parsed: unknown): ParameterType | undefined {
     return type === "NUMBER" || type === "STRING" ? type : undefined;
 }
 
-function invalid(code: ParameterValidationErrorCode, type?: ParameterType): ParameterValidationResult {
+function invalid(code: ParameterValidationErrorCode, type?: ParameterType): ParameterValidationFailure {
     return {
         isValid: false,
         errorCode: code,

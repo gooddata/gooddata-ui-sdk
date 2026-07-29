@@ -388,7 +388,7 @@
                                             ]
                                         },
                                         "value": {
-                                            "description": "Literal (number or string); a {from,to} range for between/not_between; omitted for all/is_empty/is_not_empty.",
+                                            "description": "Literal (number or string); a {from,to} range for between/not_between; an {absolute} period or {relative} period for date-attribute conditions; omitted for all/is_empty/is_not_empty.",
                                             "oneOf": [
                                                 { "type": "number" },
                                                 { "type": "string" },
@@ -399,6 +399,52 @@
                                                     "properties": {
                                                         "from": { "type": "number" },
                                                         "to": { "type": "number" }
+                                                    }
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "additionalProperties": false,
+                                                    "required": ["absolute"],
+                                                    "properties": {
+                                                        "absolute": {
+                                                            "type": "object",
+                                                            "description": "Static period, snapped to the target date attribute's granularity: from = period start, to = inclusive period end. Platform date strings: \"YYYY-MM-DD\", or \"YYYY-MM-DD HH:mm\" for hour/minute granularities.",
+                                                            "additionalProperties": false,
+                                                            "required": ["from", "to"],
+                                                            "properties": {
+                                                                "from": { "type": "string" },
+                                                                "to": { "type": "string" }
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "additionalProperties": false,
+                                                    "required": ["relative"],
+                                                    "properties": {
+                                                        "relative": {
+                                                            "type": "object",
+                                                            "description": "Relative period re-resolved on every render/export: integer period offsets where 0 = the current period, negative = past. Granularity must be coarser than or equal to (and aligned with) the target date attribute's granularity.",
+                                                            "additionalProperties": false,
+                                                            "required": ["granularity", "from", "to"],
+                                                            "properties": {
+                                                                "granularity": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "minute",
+                                                                        "hour",
+                                                                        "day",
+                                                                        "week",
+                                                                        "month",
+                                                                        "quarter",
+                                                                        "year"
+                                                                    ]
+                                                                },
+                                                                "from": { "type": "integer" },
+                                                                "to": { "type": "integer" }
+                                                            }
+                                                        }
                                                     }
                                                 }
                                             ]

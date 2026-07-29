@@ -36,10 +36,11 @@ export const LegendSeries = forwardRef<HTMLElement, ILegendSeriesProps>(function
     const { formatMessage } = useIntl();
 
     // Create mapping of focusable items to their original indices
+    // Anomaly items render as passive (no option role), so they must not become the active descendant
     const focusableIndicesMap = useMemo(() => {
         const map: number[] = [];
         series.forEach((item, index) => {
-            if (isSeriesItemMetric(item)) {
+            if (isSeriesItemMetric(item) && !item.anomaly) {
                 map.push(index);
             }
         });
@@ -108,20 +109,21 @@ export const LegendSeries = forwardRef<HTMLElement, ILegendSeriesProps>(function
             <VisibilityContext.Provider value={visibilityContextValue}>
                 <div
                     className={cx("series-wrapper legend-series-wrapper", className)}
-                    role={"group"}
+                    role={"listbox"}
+                    aria-multiselectable
                     aria-activedescendant={makeItemId(series[focusedIndex])}
+                    aria-label={
+                        label
+                            ? formatMessage({ id: "properties.legend.series.named" }, { name: label })
+                            : formatMessage({ id: "properties.legend.series.unnamed" })
+                    }
                     tabIndex={0}
                     onKeyDown={handleKeyDown}
                     ref={viewportRefCallback}
                 >
                     <div
                         className={"series legend-series"}
-                        role={"list"}
-                        aria-label={
-                            label
-                                ? formatMessage({ id: "properties.legend.series.named" }, { name: label })
-                                : formatMessage({ id: "properties.legend.series.unnamed" })
-                        }
+                        role={"none"}
                         style={style}
                         ref={ref as MutableRefObject<HTMLDivElement>}
                     >

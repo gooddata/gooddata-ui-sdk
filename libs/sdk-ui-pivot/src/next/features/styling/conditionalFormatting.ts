@@ -1,5 +1,6 @@
 // (C) 2026 GoodData Corporation
 
+import { isResultAttributeHeader } from "@gooddata/sdk-model";
 import {
     type ITableColumnDefinition,
     type ITableDataHeaderScope,
@@ -11,6 +12,7 @@ import {
 } from "@gooddata/sdk-ui";
 
 import {
+    type ConditionalFormattingDateBounds,
     type ConditionalFormattingOperator,
     type ConditionalFormattingTarget,
     type ConditionalFormattingTriggerColIds,
@@ -18,12 +20,18 @@ import {
     type IConditionalFormatting,
     type IConditionalFormattingCondition,
     type IConditionalFormattingFormat,
+    type IDateConditionBounds,
 } from "../../types/conditionalFormatting.js";
 import { type AgGridRowData } from "../../types/internal.js";
 import { type ColumnHeadersPosition } from "../../types/transposition.js";
 import { columnDefinitionToColId } from "../columns/colId.js";
 
 import { isTotalCell } from "./cellClassification.js";
+import {
+    type IDateResolutionContext,
+    isDateConditionValue,
+    resolveDateConditionBounds,
+} from "./dateConditionResolution.js";
 
 /**
  * The colors a matched cell/row receives — a subset of ag-grid CellStyle, merged on top of the
@@ -98,6 +106,53 @@ export function resolveConditionalFormattingTriggers(
             .filter((columnDefinition) => columnHoldsTarget(columnDefinition, rule.target))
             .map((columnDefinition) => columnDefinitionToColId(columnDefinition, columnHeadersPosition)),
     );
+}
+
+const dateBoundsKey = (ruleIndex: number, conditionId: string): string => `${ruleIndex}:${conditionId}`;
+
+/**
+ * Resolves every date-valued condition to label-space bounds at its target column's granularity,
+ * once per render (bounds depend only on the config, the column descriptors, and the anchor).
+ * Keyed by `<ruleIndex>:<conditionId>`; `null` = unresolvable (never matches). Non-date conditions
+ * are absent.
+ *
+ * @internal
+ */
+export function resolveConditionalFormattingDateBounds(
+    config: IConditionalFormatting,
+    columnDefinitions: readonly ITableColumnDefinition[],
+    context?: IDateResolutionContext,
+): ConditionalFormattingDateBounds {
+    // Single anchor so every relative condition sees the same current period.
+    const resolutionContext: IDateResolutionContext = { anchor: context?.anchor ?? new Date() };
+    const bounds: Record<string, IDateConditionBounds | null> = {};
+    config.rules.forEach((rule, ruleIndex) => {
+        if (!rule.conditions.some((condition) => isDateConditionValue(condition.value))) {
+            return;
+        }
+        // Date conditions target attributes; the target's column carries granularity + timezone.
+        const attributeIdentifier =
+            rule.target.kind === "attribute" ? rule.target.attributeIdentifier : undefined;
+        const targetColumn = columnDefinitions.find(
+            (columnDefinition) =>
+                isAttributeColumnDefinition(columnDefinition) &&
+                columnDefinition.attributeDescriptor.attributeHeader.localIdentifier === attributeIdentifier,
+        );
+        const attributeHeader = isAttributeColumnDefinition(targetColumn)
+            ? targetColumn.attributeDescriptor.attributeHeader
+            : undefined;
+        for (const condition of rule.conditions) {
+            if (isDateConditionValue(condition.value)) {
+                bounds[dateBoundsKey(ruleIndex, condition.id)] = resolveDateConditionBounds(
+                    condition.value,
+                    attributeHeader?.granularity,
+                    attributeHeader?.format?.timezone,
+                    resolutionContext,
+                );
+            }
+        }
+    });
+    return bounds;
 }
 
 const TEXT_OPERATORS: ReadonlySet<ConditionalFormattingOperator> = new Set<ConditionalFormattingOperator>([
@@ -200,11 +255,50 @@ const isEmptyTriggerCell = (
     return cell.value === null || cell.value === undefined;
 };
 
+// Raw wire label ("2023-12"), never the localized formattedValue ("Dec 2023"): comparison must
+// stay portable to a server evaluator. Null when the cell carries no attribute header.
+const attributeWireLabel = (cell: ITableDataValue): string | null => {
+    if (!("value" in cell) || !isResultAttributeHeader(cell.value)) {
+        return null;
+    }
+    const name = cell.value.attributeHeaderItem.name;
+    return typeof name === "string" ? name : null;
+};
+
+// Labels are fixed-width and zero-padded, so period containment/ordering are plain string compares.
+const matchesDateLabel = (
+    operator: ConditionalFormattingOperator,
+    label: string,
+    bounds: IDateConditionBounds,
+): boolean => {
+    switch (operator) {
+        case "EQUAL_TO":
+            return label >= bounds.fromLabel && label <= bounds.toLabel;
+        case "NOT_EQUAL_TO":
+            return label < bounds.fromLabel || label > bounds.toLabel;
+        case "GREATER_THAN":
+            return label > bounds.toLabel;
+        case "GREATER_THAN_OR_EQUAL_TO":
+            return label >= bounds.fromLabel;
+        case "LESS_THAN":
+            return label < bounds.fromLabel;
+        case "LESS_THAN_OR_EQUAL_TO":
+            return label <= bounds.toLabel;
+        default:
+            return false;
+    }
+};
+
 const conditionMatches = (
     condition: IConditionalFormattingCondition,
     triggerCell: ITableDataValue,
     targetKind: ConditionalFormattingTarget["kind"],
+    dateBounds: IDateConditionBounds | null | undefined,
 ): boolean => {
+    if (isDateConditionValue(condition.value) && !dateBounds) {
+        return false;
+    }
+
     const empty = isEmptyTriggerCell(triggerCell, targetKind);
 
     if (condition.operator === "IS_EMPTY") {
@@ -221,9 +315,18 @@ const conditionMatches = (
         return true;
     }
 
-    const useText = targetKind === "attribute" || TEXT_OPERATORS.has(condition.operator);
-    if (useText) {
-        return matchesText(condition.operator, condition.value, triggerCell.formattedValue ?? "");
+    if (isDateConditionValue(condition.value) && dateBounds) {
+        const label = attributeWireLabel(triggerCell);
+        return label === null ? false : matchesDateLabel(condition.operator, label, dateBounds);
+    }
+
+    // Text operators are attribute-only — on a measure they'd match the locale-dependent formatted
+    // string, unportable to a server evaluator.
+    if (TEXT_OPERATORS.has(condition.operator) && targetKind !== "attribute") {
+        return false;
+    }
+    if (targetKind === "attribute") {
+        return matchesText(condition.operator, condition.value, attributeWireLabel(triggerCell) ?? "");
     }
 
     if (!("value" in triggerCell)) {
@@ -256,6 +359,7 @@ export function evaluateConditionalFormatting(
     triggerColIdsByRule: ConditionalFormattingTriggerColIds,
     rowData: AgGridRowData,
     currentColId: string,
+    dateBoundsByCondition?: ConditionalFormattingDateBounds,
 ): IConditionalFormattingStyle | undefined {
     if (!config.enabled) {
         return undefined;
@@ -281,7 +385,10 @@ export function evaluateConditionalFormatting(
             }
 
             for (const condition of rule.conditions) {
-                if (!conditionMatches(condition, triggerCell, rule.target.kind)) {
+                const dateBounds = isDateConditionValue(condition.value)
+                    ? dateBoundsByCondition?.[dateBoundsKey(i, condition.id)]
+                    : undefined;
+                if (!conditionMatches(condition, triggerCell, rule.target.kind, dateBounds)) {
                     continue;
                 }
                 // First match wins the rule: row-scope paints any cell, cell-scope only the trigger cell.

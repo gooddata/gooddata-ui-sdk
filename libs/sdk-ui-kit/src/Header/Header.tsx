@@ -16,16 +16,10 @@ import { Typography } from "../Typography/Typography.js";
 import { removeFromDom } from "../utils/domUtilities.js";
 
 import { addCssToStylesheet } from "./addCssToStylesheet.js";
-import {
-    getItemActiveColor,
-    getItemHoverColor,
-    getSeparatorColor,
-    getTextColor,
-    getWorkspacePickerHoverColor,
-} from "./colors.js";
 import { LOGOUT_MENU_ITEM_ID } from "./generateHeaderAccountMenuItems.js";
 import { HeaderAccount } from "./HeaderAccount.js";
 import { HeaderChatButton } from "./HeaderChatButton.js";
+import { createHeaderCssRules } from "./headerCss.js";
 import { HeaderHelp } from "./HeaderHelp.js";
 import { HeaderMenu } from "./HeaderMenu.js";
 import { HeaderSearchButton } from "./HeaderSearchButton.js";
@@ -197,28 +191,9 @@ export const AppHeader = withTheme(function AppHeader({
     const createStyles = useCallback(() => {
         const { guid } = state;
 
-        const textColor = getTextColor(headerTextColor ?? "", headerColor ?? "");
-        const itemActiveColor = getItemActiveColor(activeColor ?? "", headerColor ?? "");
-        const itemHoverColor = getItemHoverColor(headerColor ?? "", activeColor ?? "");
-        const separatorColor = getSeparatorColor(headerColor ?? "", activeColor ?? "");
-        const workspacesPickerHoverColor = getWorkspacePickerHoverColor(headerColor ?? "");
+        const css = createHeaderCssRules(guid, headerColor, headerTextColor, activeColor);
 
-        const css = [];
-        css.push(`.${guid} { color: ${textColor}; background: ${headerColor}}`);
-        css.push(`.${guid} .gd-header-menu-section { border-color: ${separatorColor}}`);
-        css.push(`.${guid} .gd-header-menu-item:hover { border-color: ${itemHoverColor}}`);
-        css.push(
-            `.${guid} .gd-header-menu-item.active { border-color: var(--gd-palette-primary-base-from-theme, ${itemActiveColor})}`,
-        );
-        css.push(`.${guid} .gd-header-project { border-color: ${separatorColor}}`);
-        css.push(
-            `.${guid} .gd-header-project:hover { background-color: ${workspacesPickerHoverColor}; color: ${textColor}}`,
-        );
-        css.push(`.${guid} .hamburger-icon:not(.is-open) i { border-color: ${textColor}}`);
-        css.push(`.${guid} .hamburger-icon:not(.is-open):after { border-color: ${textColor}}`);
-        css.push(`.${guid} .hamburger-icon:not(.is-open):before { border-color: ${textColor}}`);
-
-        stylesheetRef.current = addCssToStylesheet(`header-css-${guid}`, css.join("\n"), true);
+        stylesheetRef.current = addCssToStylesheet(`header-css-${guid}`, css, true);
     }, [state, activeColor, headerColor, headerTextColor]);
 
     useEffect(() => {

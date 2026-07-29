@@ -39,8 +39,20 @@ export type {
     ConditionalFormattingTarget,
     ConditionalFormattingOperator,
     ConditionalFormattingTextOperator,
+    ConditionalFormattingEmptinessOperator,
     ConditionalFormattingValue,
 } from "./types/conditionalFormatting.js";
+// Date-condition helpers shared with the authoring UI (sdk-ui-ext).
+export {
+    type ConditionalFormattingDateValue,
+    allowedValueGranularities,
+    isDateConditionValue,
+    normalizeDateConditionGranularity,
+    resolveDateConditionBounds,
+    snapPlatformRangeToPeriodBounds,
+    snapToPeriodBounds,
+    usesTimeResolution,
+} from "./features/styling/dateConditionResolution.js";
 
 // Pluggable Visualization
 export { CorePivotTableNext } from "./PivotTableNextPluggable.js";

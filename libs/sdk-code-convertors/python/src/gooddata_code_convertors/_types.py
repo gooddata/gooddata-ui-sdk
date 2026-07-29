@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 0264da25c488ece235d746a7c7fd59831f9a92e5c5bc184c0bb3043b813a0fad
+# schema-hash: 539cb0396bf007266ef615bc0afb002d3e891d865b1702e6314a204d76f154dd
 
 from __future__ import annotations
 
@@ -8,6 +8,7 @@ from typing import Any, Literal, TypeAlias, TypedDict, Union
 from typing_extensions import NotRequired
 
 __all__ = [
+    "Absolute",
     "AggregatedFact",
     "Attribute",
     "AttributeHierarchy",
@@ -174,6 +175,7 @@ __all__ = [
     "QueryTextFilter1",
     "QueryTextFilter2",
     "Reference",
+    "Relative",
     "Rule",
     "Section",
     "SimpleColorItem",
@@ -193,6 +195,8 @@ __all__ = [
     "Using3",
     "Using4",
     "Value",
+    "Value1",
+    "Value2",
     "Visualisation",
     "Visualisation1",
     "Visualisation10",
@@ -774,6 +778,33 @@ Value = TypedDict(
 )
 
 
+Absolute = TypedDict(
+    'Absolute',
+    {
+        'from': str,
+        'to': str,
+    },
+)
+
+
+class Value1(TypedDict):
+    absolute: Absolute
+
+
+Relative = TypedDict(
+    'Relative',
+    {
+        'granularity': Literal['minute', 'hour', 'day', 'week', 'month', 'quarter', 'year'],
+        'from': int,
+        'to': int,
+    },
+)
+
+
+class Value2(TypedDict):
+    relative: Relative
+
+
 class Format(TypedDict):
     text: NotRequired[str]
     fill: NotRequired[str]
@@ -783,7 +814,7 @@ class Format(TypedDict):
 class Condition(TypedDict):
     id: str
     operator: Literal['all', 'equal_to', 'not_equal_to', 'less_than', 'less_than_or_equal_to', 'greater_than', 'greater_than_or_equal_to', 'between', 'not_between', 'contains', 'not_contains', 'starts_with', 'not_starts_with', 'ends_with', 'not_ends_with', 'is_empty', 'is_not_empty']
-    value: NotRequired[float | str | Value]
+    value: NotRequired[float | str | Value | Value1 | Value2]
     format: Format
 
 

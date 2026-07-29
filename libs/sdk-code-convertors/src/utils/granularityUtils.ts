@@ -1,10 +1,62 @@
 // (C) 2023-2026 GoodData Corporation
 
 import { type DeclarativeDateDataset } from "@gooddata/api-client-tiger";
-import type { DateDataset } from "@gooddata/sdk-code-schemas/v1";
-import { type DateAttributeGranularity } from "@gooddata/sdk-model";
+import type { DateDataset, VisualisationConfig } from "@gooddata/sdk-code-schemas/v1";
+import { type DateAttributeGranularity, type DateFilterGranularity } from "@gooddata/sdk-model";
 
 import { assertUnreachable } from "./sharedUtils.js";
+
+// --- conditional-formatting date-condition granularities ---
+
+// The relative-period granularity union as the JSON Schema generates it — keying the map by it turns
+// schema drift into a compile error here instead of a silent unmapped pass-through.
+type SchemaCfGranularity = Extract<
+    NonNullable<
+        NonNullable<
+            NonNullable<VisualisationConfig["conditional_formatting"]>["rules"]
+        >[number]["conditions"][number]["value"]
+    >,
+    { relative: unknown }
+>["relative"]["granularity"];
+
+// Linear granularity vocabulary; its single week is GDC.time.week_us (Tiger buckets weeks as
+// week_us), so `week` is unambiguous. NOTE: differs from convertGranularity above, where wire WEEK
+// is the EU week.
+const CF_YAML_TO_GDC_GRANULARITY = {
+    minute: "GDC.time.minute",
+    hour: "GDC.time.hour",
+    day: "GDC.time.date",
+    week: "GDC.time.week_us",
+    month: "GDC.time.month",
+    quarter: "GDC.time.quarter",
+    year: "GDC.time.year",
+} as const satisfies Record<SchemaCfGranularity, DateFilterGranularity>;
+
+type CfYamlGranularityName = keyof typeof CF_YAML_TO_GDC_GRANULARITY;
+
+const isCfYamlGranularityName = (name: string): name is CfYamlGranularityName =>
+    Object.hasOwn(CF_YAML_TO_GDC_GRANULARITY, name);
+
+const CF_GDC_TO_YAML_GRANULARITY: Record<string, string> = Object.fromEntries(
+    Object.entries(CF_YAML_TO_GDC_GRANULARITY).map(([yaml, gdc]) => [gdc, yaml]),
+);
+
+/**
+ * YAML name -\> GDC constant for a conditional-formatting relative-period granularity. Unknown
+ * names pass through unchanged on purpose: they round-trip losslessly and the consuming engine
+ * treats them as unresolvable (the condition never matches) instead of the conversion guessing.
+ */
+export function cfGranularityFromYaml(name: string): string {
+    return isCfYamlGranularityName(name) ? CF_YAML_TO_GDC_GRANULARITY[name] : name;
+}
+
+/**
+ * GDC constant -\> YAML name for a conditional-formatting relative-period granularity; unknown
+ * values pass through (see {@link cfGranularityFromYaml}).
+ */
+export function cfGranularityToYaml(granularity: string): string {
+    return CF_GDC_TO_YAML_GRANULARITY[granularity] ?? granularity;
+}
 
 export function convertGranularity(
     gran: Required<DateDataset>["granularities"][number] | any,
@@ -66,6 +118,7 @@ export function convertGranularity(
     }
 }
 
+/** @public */
 export function parseGranularity(
     gran: DateAttributeGranularity | null,
 ): Required<DateDataset>["granularities"][number] | null {

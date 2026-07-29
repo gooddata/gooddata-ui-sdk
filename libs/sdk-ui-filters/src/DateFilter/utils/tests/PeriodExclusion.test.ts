@@ -5,7 +5,12 @@ import { describe, expect, it } from "vitest";
 import { type IRelativeDateFilterPreset } from "@gooddata/sdk-model";
 
 import { type DateFilterOption } from "../../interfaces/index.js";
-import { applyExcludeCurrentPeriod, canExcludeCurrentPeriod } from "../PeriodExclusion.js";
+import {
+    applyExcludeCurrentPeriod,
+    canExcludeCurrentPeriod,
+    excludeCurrentPeriodFromRange,
+    revertExcludedCurrentPeriodRange,
+} from "../PeriodExclusion.js";
 
 describe("canExcludeCurrentPeriod", () => {
     it.each([
@@ -273,4 +278,43 @@ describe("applyExcludeCurrentPeriod", () => {
             expect(actual).toEqual(expected);
         },
     );
+});
+
+describe("excludeCurrentPeriodFromRange", () => {
+    it("shifts a current-period-ending range back by one period", () => {
+        expect(excludeCurrentPeriodFromRange({ from: -29, to: 0 }, true)).toEqual({ from: -30, to: -1 });
+        expect(excludeCurrentPeriodFromRange({ from: -1, to: 0 }, true)).toEqual({ from: -2, to: -1 });
+    });
+
+    it("leaves the range untouched when exclusion is off or does not apply", () => {
+        // flag off
+        expect(excludeCurrentPeriodFromRange({ from: -29, to: 0 }, false)).toEqual({ from: -29, to: 0 });
+        // does not end in the current period (to !== 0)
+        expect(excludeCurrentPeriodFromRange({ from: -29, to: 10 }, true)).toEqual({ from: -29, to: 10 });
+        // single current period (from === to === 0) cannot exclude itself
+        expect(excludeCurrentPeriodFromRange({ from: 0, to: 0 }, true)).toEqual({ from: 0, to: 0 });
+    });
+});
+
+describe("revertExcludedCurrentPeriodRange", () => {
+    it("reconstructs the pre-exclusion range for a genuine exclusion output", () => {
+        expect(revertExcludedCurrentPeriodRange({ from: -30, to: -1 })).toEqual({ from: -29, to: 0 });
+        expect(revertExcludedCurrentPeriodRange({ from: -2, to: -1 })).toEqual({ from: -1, to: 0 });
+    });
+
+    it("returns undefined for ranges no exclusion could have produced", () => {
+        // to !== -1
+        expect(revertExcludedCurrentPeriodRange({ from: -29, to: 0 })).toBeUndefined();
+        // from === to: a plain "previous period" filter, NOT current+exclude (the reverse-match bug)
+        expect(revertExcludedCurrentPeriodRange({ from: -1, to: -1 })).toBeUndefined();
+        // degenerate/inverted (from >= to with to === -1)
+        expect(revertExcludedCurrentPeriodRange({ from: 0, to: -1 })).toBeUndefined();
+    });
+
+    it("is the exact inverse of excludeCurrentPeriodFromRange", () => {
+        for (const from of [-1, -2, -12, -29, -365]) {
+            const excluded = excludeCurrentPeriodFromRange({ from, to: 0 }, true);
+            expect(revertExcludedCurrentPeriodRange(excluded)).toEqual({ from, to: 0 });
+        }
+    });
 });

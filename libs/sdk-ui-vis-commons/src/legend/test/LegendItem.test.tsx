@@ -98,8 +98,8 @@ describe("LegendItem", () => {
         createComponent(props);
 
         const legendItem = screen.getByTestId("legend-item");
-        expect(legendItem).toHaveAttribute("role", "switch");
-        expect(legendItem).toHaveAttribute("aria-checked", "true");
+        expect(legendItem).toHaveAttribute("role", "option");
+        expect(legendItem).toHaveAttribute("aria-selected", "true");
         expect(legendItem).toHaveAttribute("id", "test-id-Foo");
     });
 

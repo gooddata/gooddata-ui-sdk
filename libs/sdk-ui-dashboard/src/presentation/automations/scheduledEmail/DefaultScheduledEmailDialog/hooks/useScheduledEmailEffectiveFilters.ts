@@ -34,16 +34,16 @@ export interface IUseScheduledEmailEffectiveFiltersProps {
 
 /**
  * Derives the effective-filters cluster consumed early by `useScheduledEmailFormState` (draft init) and
- * `useScheduledEmailExportSettings`, and later still by the (still-in-parent) filters handlers.
+ * `useScheduledEmailExportSettings`, and later still by the `useScheduledEmailFilters` handlers.
  *
  * Filters slice A of 2. Reads `hiddenFilters`/`commonDateFilterId`/`exportParametersByTab` from
- * {@link useScheduledEmailDialogContext} internally, same as the parent (`useEditScheduledEmail`) does
- * today. `isWidget` is re-derived internally (`!!widget && !!insight`) — if the parent still needs it for
- * the filters handlers, it keeps its own copy, a harmless identical re-derivation (mirrors the sibling
- * hooks).
+ * {@link useScheduledEmailDialogContext} internally, as does `useScheduledEmailFilters` — the parent
+ * (`useEditScheduledEmail`) no longer reads them itself. `isWidget` is re-derived internally
+ * (`!!widget && !!insight`) — `useScheduledEmailFilters` keeps its own copy, a harmless identical
+ * re-derivation (mirrors the sibling hooks).
  *
- * Slice B (`useScheduledEmailFilters`, next PR) will own the four filters handlers, which run after
- * `formState` (they need `setEditedAutomation`); this derivation cluster runs before it, hence the split.
+ * `useScheduledEmailFilters` (slice B) owns the four filters handlers, which run after `formState` (they
+ * need `setEditedAutomation`); this derivation cluster runs before it, hence the split.
  *
  * @internal
  */
