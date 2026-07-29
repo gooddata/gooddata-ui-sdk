@@ -25,6 +25,7 @@ export enum TigerFeaturesNames {
     EnableAnalyticalCatalog = "enableAnalyticalCatalog",
     EnableParameters = "enableParameters",
     EnableAnalyticalCatalogMetricEditor = "enableAnalyticalCatalogMetricEditor",
+    EnableAnalyticalCatalogVisualizationEditor = "enableAnalyticalCatalogVisualizationEditor",
     EnableStringParameters = "enableStringParameters",
     EnableCustomTooltip = "enableCustomTooltip",
     EnableMotherDuckDataSource = "enableMotherDuckDataSource",
@@ -110,6 +111,7 @@ export enum TigerFeaturesNames {
     EnableShellApplicationCatalog = "enableShellApplication_catalog",
     EnableShellApplicationDashboards = "enableShellApplication_dashboards",
     EnableNullableJoins = "enableNullableJoins",
+    EnableLogicalModelExtensionsFromParentsCall = "enableLogicalModelExtensionsFromParentsCall",
     EnableDashboardDensitySetting = "enableDashboardDensitySetting",
     EnableDashboardsSearch = "enableDashboardsSearch",
     EnableAiHub = "enableAiHub",
@@ -149,6 +151,7 @@ export type ITigerFeatureFlags = {
     enableAnalyticalCatalog: (typeof FeatureFlagsValues)["enableAnalyticalCatalog"][number];
     enableParameters: (typeof FeatureFlagsValues)["enableParameters"][number];
     enableAnalyticalCatalogMetricEditor: (typeof FeatureFlagsValues)["enableAnalyticalCatalogMetricEditor"][number];
+    enableAnalyticalCatalogVisualizationEditor: (typeof FeatureFlagsValues)["enableAnalyticalCatalogVisualizationEditor"][number];
     enableStringParameters: (typeof FeatureFlagsValues)["enableStringParameters"][number];
     enableLabsSmartFunctions: (typeof FeatureFlagsValues)["enableLabsSmartFunctions"][number];
     enableCustomTooltip: (typeof FeatureFlagsValues)["enableCustomTooltip"][number];
@@ -234,6 +237,7 @@ export type ITigerFeatureFlags = {
     enableShellApplication_catalog: (typeof FeatureFlagsValues)["enableShellApplication_catalog"][number];
     enableShellApplication_dashboards: (typeof FeatureFlagsValues)["enableShellApplication_dashboards"][number];
     enableNullableJoins: (typeof FeatureFlagsValues)["enableNullableJoins"][number];
+    enableLogicalModelExtensionsFromParentsCall: (typeof FeatureFlagsValues)["enableLogicalModelExtensionsFromParentsCall"][number];
     enableDashboardDensitySetting: (typeof FeatureFlagsValues)["enableDashboardDensitySetting"][number];
     enableDashboardsSearch: (typeof FeatureFlagsValues)["enableDashboardsSearch"][number];
     enableAiHub: (typeof FeatureFlagsValues)["enableAiHub"][number];
@@ -275,6 +279,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAnalyticalCatalog: false,
     enableParameters: true,
     enableAnalyticalCatalogMetricEditor: false,
+    enableAnalyticalCatalogVisualizationEditor: false,
     enableStringParameters: false,
     enableLabsSmartFunctions: false,
     enableCustomTooltip: true,
@@ -357,6 +362,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableShellApplication_catalog: false,
     enableShellApplication_dashboards: false,
     enableNullableJoins: false,
+    enableLogicalModelExtensionsFromParentsCall: false,
     enableDashboardDensitySetting: false,
     enableDashboardsSearch: false,
     enableAiHub: false,
@@ -398,6 +404,7 @@ export const FeatureFlagsValues = {
     enableAnalyticalCatalog: [true, false] as const,
     enableParameters: [true, false] as const,
     enableAnalyticalCatalogMetricEditor: [true, false] as const,
+    enableAnalyticalCatalogVisualizationEditor: [true, false] as const,
     enableStringParameters: [true, false] as const,
     enableLabsSmartFunctions: [true, false] as const,
     enableCustomTooltip: [true, false] as const,
@@ -480,6 +487,7 @@ export const FeatureFlagsValues = {
     enableShellApplication_catalog: [false, true] as const,
     enableShellApplication_dashboards: [false, true] as const,
     enableNullableJoins: [true, false] as const,
+    enableLogicalModelExtensionsFromParentsCall: [true, false] as const,
     enableDashboardDensitySetting: [true, false] as const,
     enableDashboardsSearch: [false, true] as const,
     enableAiHub: [true, false] as const,

@@ -49,7 +49,7 @@ const LegendListItem = memo(function LegendListItem({
     }
     if (isSeriesItemMetric(item)) {
         return (
-            <div style={{ display: "contents" }} role="listitem">
+            <div style={{ display: "contents" }} role="none">
                 <LegendItem
                     key={index}
                     index={index}

@@ -31,6 +31,7 @@ import { IAuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
 import { IdentifierDuplications } from '@gooddata/api-client-tiger';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
+import { IInsightDefinition } from '@gooddata/sdk-model';
 import { ImportCsvRequest } from '@gooddata/api-client-tiger';
 import { ImportCsvResponse } from '@gooddata/api-client-tiger';
 import { Invitation } from '@gooddata/api-client-tiger';
@@ -82,6 +83,12 @@ export class ContextDeferredAuthProvider extends TigerAuthProviderBase {
     // (undocumented)
     onNotAuthenticated: (context: IAuthenticationContext, error: NotAuthenticated) => void;
 }
+
+// @internal
+export const convertInsightToVisualizationContent: (insight: IInsightDefinition) => object;
+
+// @internal
+export const convertVisualizationContentToInsight: (content: object, metadata: IVisualizationObjectMetadata) => IInsightDefinition;
 
 // @public
 export function createRedirectToTigerAuthenticationWithParams(params: IRedirectToTigerAuthenticationParams): RedirectToTigerAuthenticationHandler;
@@ -388,6 +395,16 @@ export const isTigerType: (obj: unknown) => obj is TigerObjectType;
 export interface ITigerSpecificFunctionsProxyResult {
     readonly functions: TigerSpecificFunctions;
     updateImplementation(impl: TigerSpecificFunctions): void;
+}
+
+// @internal
+export interface IVisualizationObjectMetadata {
+    // (undocumented)
+    description: string;
+    // (undocumented)
+    tags?: string[];
+    // (undocumented)
+    title: string;
 }
 
 // @alpha

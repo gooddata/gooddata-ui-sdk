@@ -1016,6 +1016,7 @@ export {
     type IUserSettings,
     type IWorkspaceSettings,
     type IUserWorkspaceSettings,
+    resolveWeekStart,
 } from "./settings/index.js";
 
 export {

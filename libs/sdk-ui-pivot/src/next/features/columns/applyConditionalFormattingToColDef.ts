@@ -4,6 +4,7 @@ import { type CellClassParams, type CellStyle } from "ag-grid-enterprise";
 
 import { type AgGridColumnDef } from "../../types/agGrid.js";
 import {
+    type ConditionalFormattingDateBounds,
     type ConditionalFormattingTriggerColIds,
     type IConditionalFormatting,
 } from "../../types/conditionalFormatting.js";
@@ -21,7 +22,11 @@ import { evaluateConditionalFormatting } from "../styling/conditionalFormatting.
  * @internal
  */
 export const applyConditionalFormattingToColDef =
-    (config: IConditionalFormatting | undefined, triggers: ConditionalFormattingTriggerColIds) =>
+    (
+        config: IConditionalFormatting | undefined,
+        triggers: ConditionalFormattingTriggerColIds,
+        dateBounds: ConditionalFormattingDateBounds,
+    ) =>
     (colDef: AgGridColumnDef): AgGridColumnDef => {
         if (!config || !config.enabled || config.rules.length === 0) {
             return colDef;
@@ -41,7 +46,13 @@ export const applyConditionalFormattingToColDef =
                     return base;
                 }
 
-                const fragment = evaluateConditionalFormatting(config, triggers, params.data, colId);
+                const fragment = evaluateConditionalFormatting(
+                    config,
+                    triggers,
+                    params.data,
+                    colId,
+                    dateBounds,
+                );
                 if (!fragment) {
                     return base;
                 }

@@ -3,14 +3,13 @@
 import { describe, expect, it, vi } from "vitest";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import type { IMeasureMetadataObject } from "@gooddata/sdk-model";
+import type { IMeasureMetadataObject, IMeasureMetadataObjectDefinition } from "@gooddata/sdk-model";
 
 import type { ICatalogItemMeasure } from "../../catalogItem/types.js";
-import { createMetricMutationAdapter } from "../metricMutationPort.js";
+import { countMetricReferences, createMetricMutationAdapter } from "../metricMutationPort.js";
 
 import { createTestMetricMutationPort } from "./metricMutationPort.test.utils.js";
 
-// load / getReferencingObjectsCount only read the item's identifier, so a minimal ref-shaped item is enough.
 const measureItem = { identifier: "revenue.total", type: "measure" } as ICatalogItemMeasure;
 
 const savedMeasure: IMeasureMetadataObject = {
@@ -70,7 +69,7 @@ describe("metricMutationPort adapter", () => {
         expect(result).toMatchObject({ type: "measure", identifier: "revenue.total", format: "#,##0.00" });
     });
 
-    it("update overlays the YAML-owned fields onto the loaded measure", async () => {
+    it("update persists the definition's content with the loaded measure's identity", async () => {
         const { backend, updateMeasure } = createFakeBackend();
         const adapter = createMetricMutationAdapter(backend, "ws-1");
 
@@ -81,6 +80,9 @@ describe("metricMutationPort adapter", () => {
             tags: ["updated"],
             expression: "SELECT COUNT({fact/order_id})",
             format: "0.0",
+            metricType: "CURRENCY",
+            isHiddenFromKda: true,
+            isHidden: false,
         });
 
         expect(updateMeasure).toHaveBeenCalledWith(
@@ -91,21 +93,37 @@ describe("metricMutationPort adapter", () => {
                 title: "Renamed",
                 expression: "SELECT COUNT({fact/order_id})",
                 format: "0.0",
+                metricType: "CURRENCY",
+                isHiddenFromKda: true,
+                isHidden: false,
             }),
         );
     });
 
-    it("update preserves metric fields the YAML does not carry", async () => {
+    it("update keeps the loaded identity even when the definition carries a different id", async () => {
         const { backend, updateMeasure } = createFakeBackend();
         const adapter = createMetricMutationAdapter(backend, "ws-1");
 
-        const existing: IMeasureMetadataObject = {
-            ...savedMeasure,
-            metricType: "CURRENCY",
-            isHiddenFromKda: true,
-        };
+        await adapter.update(savedMeasure, {
+            type: "measure",
+            id: "some_other_id",
+            title: "X",
+            description: "",
+            tags: [],
+            expression: "SELECT 1",
+            format: "",
+        });
 
-        await adapter.update(existing, {
+        expect(updateMeasure).toHaveBeenCalledWith(
+            expect.objectContaining({ id: "revenue.total", ref: savedMeasure.ref, uri: savedMeasure.uri }),
+        );
+    });
+
+    it("update carries the base's fields the definition shape cannot hold (audit metadata)", async () => {
+        const { backend, updateMeasure } = createFakeBackend();
+        const adapter = createMetricMutationAdapter(backend, "ws-1");
+
+        await adapter.update(savedMeasure, {
             type: "measure",
             title: "Total Revenue",
             description: "Sum",
@@ -115,74 +133,31 @@ describe("metricMutationPort adapter", () => {
         });
 
         expect(updateMeasure).toHaveBeenCalledWith(
-            expect.objectContaining({ metricType: "CURRENCY", isHiddenFromKda: true }),
+            expect.objectContaining({ created: "2024-01-01", updated: "2024-01-02" }),
         );
     });
 
-    it("makes a previously hidden metric visible when the definition carries no isHidden", async () => {
-        const { backend, updateMeasure } = createFakeBackend();
+    it("update rejects a bare definition as base — it lacks the server-managed identity", async () => {
+        const { backend } = createFakeBackend();
         const adapter = createMetricMutationAdapter(backend, "ws-1");
-        const hiddenExisting: IMeasureMetadataObject = { ...savedMeasure, isHidden: true };
-
-        await adapter.update(hiddenExisting, {
+        const bareDefinition: IMeasureMetadataObjectDefinition = {
             type: "measure",
-            title: "Total Revenue",
-            description: "Sum",
-            tags: ["finance"],
-            expression: "SELECT SUM({fact/order_amount})",
-            format: "#,##0.00",
-        });
+            title: "X",
+            description: "",
+            tags: [],
+            expression: "SELECT 1",
+            format: "",
+        };
 
-        expect(updateMeasure).toHaveBeenCalledWith(expect.objectContaining({ isHidden: false }));
-    });
-
-    it("delete calls backend deleteMeasure with the measure ref", async () => {
-        const { backend, deleteMeasure } = createFakeBackend();
-        const adapter = createMetricMutationAdapter(backend, "ws-1");
-
-        await adapter.delete({ identifier: "revenue.total", type: "measure" });
-
-        expect(deleteMeasure).toHaveBeenCalledWith(
-            expect.objectContaining({ identifier: "revenue.total", type: "measure" }),
+        await expect(adapter.update(bareDefinition, bareDefinition)).rejects.toThrow(
+            /requires the loaded measure/,
         );
-    });
-
-    it("load fetches the full measure by ref", async () => {
-        const { backend, getMeasure } = createFakeBackend();
-        const adapter = createMetricMutationAdapter(backend, "ws-1");
-
-        const measure = await adapter.load(measureItem);
-
-        expect(getMeasure).toHaveBeenCalledWith(
-            expect.objectContaining({ identifier: "revenue.total", type: "measure" }),
-        );
-        expect(measure).toMatchObject({ id: "revenue.total", expression: "SELECT SUM({fact/order_amount})" });
-    });
-
-    it("getReferencingObjectsCount queries the backend and reports zero when unused", async () => {
-        const { backend, getMeasureReferencingObjects } = createFakeBackend();
-        const adapter = createMetricMutationAdapter(backend, "ws-1");
-
-        const count = await adapter.getReferencingObjectsCount(measureItem);
-
-        expect(getMeasureReferencingObjects).toHaveBeenCalled();
-        expect(count).toBe(0);
-    });
-
-    it("getReferencingObjectsCount sums the referencing insights and measures", async () => {
-        const { backend, getMeasureReferencingObjects } = createFakeBackend();
-        getMeasureReferencingObjects.mockResolvedValueOnce({ insights: [{}, {}], measures: [{}] });
-        const adapter = createMetricMutationAdapter(backend, "ws-1");
-
-        const count = await adapter.getReferencingObjectsCount(measureItem);
-
-        expect(count).toBe(3);
     });
 
     it("createTestMetricMutationPort returns vi.fn() stubs", async () => {
         const port = createTestMetricMutationPort();
         expect(vi.isMockFunction(port.create)).toBe(true);
-        expect(vi.isMockFunction(port.load)).toBe(true);
+        expect(vi.isMockFunction(port.update)).toBe(true);
         const created = await port.create({
             type: "measure",
             title: "New",
@@ -192,5 +167,23 @@ describe("metricMutationPort adapter", () => {
             format: "",
         });
         expect(created).toMatchObject({ type: "measure" });
+    });
+});
+
+describe("metric reference count", () => {
+    it("countMetricReferences sums the referencing insights and measures", async () => {
+        const { backend, getMeasureReferencingObjects } = createFakeBackend();
+        getMeasureReferencingObjects.mockResolvedValueOnce({ insights: [{}, {}], measures: [{}] });
+
+        const count = await countMetricReferences(backend, "ws-1", measureItem);
+
+        expect(count).toBe(3);
+    });
+
+    it("countMetricReferences reports zero when the response carries neither array", async () => {
+        const { backend, getMeasureReferencingObjects } = createFakeBackend();
+        getMeasureReferencingObjects.mockResolvedValueOnce({});
+
+        expect(await countMetricReferences(backend, "ws-1", measureItem)).toBe(0);
     });
 });

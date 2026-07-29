@@ -4599,6 +4599,58 @@ export const metadata_v1: {
                                                                 to: {
                                                                     type: string;
                                                                 };
+                                                                absolute?: undefined;
+                                                                relative?: undefined;
+                                                            };
+                                                        } | {
+                                                            type: string;
+                                                            additionalProperties: boolean;
+                                                            required: string[];
+                                                            properties: {
+                                                                from?: undefined;
+                                                                to?: undefined;
+                                                                absolute: {
+                                                                    type: string;
+                                                                    description: string;
+                                                                    additionalProperties: boolean;
+                                                                    required: string[];
+                                                                    properties: {
+                                                                        from: {
+                                                                            type: string;
+                                                                        };
+                                                                        to: {
+                                                                            type: string;
+                                                                        };
+                                                                    };
+                                                                };
+                                                                relative?: undefined;
+                                                            };
+                                                        } | {
+                                                            type: string;
+                                                            additionalProperties: boolean;
+                                                            required: string[];
+                                                            properties: {
+                                                                from?: undefined;
+                                                                to?: undefined;
+                                                                absolute?: undefined;
+                                                                relative: {
+                                                                    type: string;
+                                                                    description: string;
+                                                                    additionalProperties: boolean;
+                                                                    required: string[];
+                                                                    properties: {
+                                                                        granularity: {
+                                                                            type: string;
+                                                                            enum: string[];
+                                                                        };
+                                                                        from: {
+                                                                            type: string;
+                                                                        };
+                                                                        to: {
+                                                                            type: string;
+                                                                        };
+                                                                    };
+                                                                };
                                                             };
                                                         })[];
                                                     };
@@ -11071,6 +11123,17 @@ interface VisualisationConfig {
                 value?: number | string | {
                     from: number;
                     to: number;
+                } | {
+                    absolute: {
+                        from: string;
+                        to: string;
+                    };
+                } | {
+                    relative: {
+                        granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                        from: number;
+                        to: number;
+                    };
                 };
                 format: {
                     text?: string;
@@ -11362,6 +11425,17 @@ interface VisualisationConfig1 {
                 value?: number | string | {
                     from: number;
                     to: number;
+                } | {
+                    absolute: {
+                        from: string;
+                        to: string;
+                    };
+                } | {
+                    relative: {
+                        granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                        from: number;
+                        to: number;
+                    };
                 };
                 format: {
                     text?: string;
@@ -11653,6 +11727,17 @@ interface VisualisationConfig10 {
                 value?: number | string | {
                     from: number;
                     to: number;
+                } | {
+                    absolute: {
+                        from: string;
+                        to: string;
+                    };
+                } | {
+                    relative: {
+                        granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                        from: number;
+                        to: number;
+                    };
                 };
                 format: {
                     text?: string;
@@ -11944,6 +12029,17 @@ interface VisualisationConfig11 {
                 value?: number | string | {
                     from: number;
                     to: number;
+                } | {
+                    absolute: {
+                        from: string;
+                        to: string;
+                    };
+                } | {
+                    relative: {
+                        granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                        from: number;
+                        to: number;
+                    };
                 };
                 format: {
                     text?: string;
@@ -12235,6 +12331,17 @@ interface VisualisationConfig12 {
                 value?: number | string | {
                     from: number;
                     to: number;
+                } | {
+                    absolute: {
+                        from: string;
+                        to: string;
+                    };
+                } | {
+                    relative: {
+                        granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                        from: number;
+                        to: number;
+                    };
                 };
                 format: {
                     text?: string;
@@ -12526,6 +12633,17 @@ interface VisualisationConfig13 {
                 value?: number | string | {
                     from: number;
                     to: number;
+                } | {
+                    absolute: {
+                        from: string;
+                        to: string;
+                    };
+                } | {
+                    relative: {
+                        granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                        from: number;
+                        to: number;
+                    };
                 };
                 format: {
                     text?: string;
@@ -12817,6 +12935,17 @@ interface VisualisationConfig14 {
                 value?: number | string | {
                     from: number;
                     to: number;
+                } | {
+                    absolute: {
+                        from: string;
+                        to: string;
+                    };
+                } | {
+                    relative: {
+                        granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                        from: number;
+                        to: number;
+                    };
                 };
                 format: {
                     text?: string;
@@ -13108,6 +13237,17 @@ interface VisualisationConfig15 {
                 value?: number | string | {
                     from: number;
                     to: number;
+                } | {
+                    absolute: {
+                        from: string;
+                        to: string;
+                    };
+                } | {
+                    relative: {
+                        granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                        from: number;
+                        to: number;
+                    };
                 };
                 format: {
                     text?: string;
@@ -13399,6 +13539,17 @@ interface VisualisationConfig16 {
                 value?: number | string | {
                     from: number;
                     to: number;
+                } | {
+                    absolute: {
+                        from: string;
+                        to: string;
+                    };
+                } | {
+                    relative: {
+                        granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                        from: number;
+                        to: number;
+                    };
                 };
                 format: {
                     text?: string;
@@ -13690,6 +13841,17 @@ interface VisualisationConfig17 {
                 value?: number | string | {
                     from: number;
                     to: number;
+                } | {
+                    absolute: {
+                        from: string;
+                        to: string;
+                    };
+                } | {
+                    relative: {
+                        granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                        from: number;
+                        to: number;
+                    };
                 };
                 format: {
                     text?: string;
@@ -13981,6 +14143,17 @@ interface VisualisationConfig18 {
                 value?: number | string | {
                     from: number;
                     to: number;
+                } | {
+                    absolute: {
+                        from: string;
+                        to: string;
+                    };
+                } | {
+                    relative: {
+                        granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                        from: number;
+                        to: number;
+                    };
                 };
                 format: {
                     text?: string;
@@ -14272,6 +14445,17 @@ interface VisualisationConfig19 {
                 value?: number | string | {
                     from: number;
                     to: number;
+                } | {
+                    absolute: {
+                        from: string;
+                        to: string;
+                    };
+                } | {
+                    relative: {
+                        granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                        from: number;
+                        to: number;
+                    };
                 };
                 format: {
                     text?: string;
@@ -14563,6 +14747,17 @@ interface VisualisationConfig2 {
                 value?: number | string | {
                     from: number;
                     to: number;
+                } | {
+                    absolute: {
+                        from: string;
+                        to: string;
+                    };
+                } | {
+                    relative: {
+                        granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                        from: number;
+                        to: number;
+                    };
                 };
                 format: {
                     text?: string;
@@ -14854,6 +15049,17 @@ interface VisualisationConfig20 {
                 value?: number | string | {
                     from: number;
                     to: number;
+                } | {
+                    absolute: {
+                        from: string;
+                        to: string;
+                    };
+                } | {
+                    relative: {
+                        granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                        from: number;
+                        to: number;
+                    };
                 };
                 format: {
                     text?: string;
@@ -15145,6 +15351,17 @@ interface VisualisationConfig21 {
                 value?: number | string | {
                     from: number;
                     to: number;
+                } | {
+                    absolute: {
+                        from: string;
+                        to: string;
+                    };
+                } | {
+                    relative: {
+                        granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                        from: number;
+                        to: number;
+                    };
                 };
                 format: {
                     text?: string;
@@ -15436,6 +15653,17 @@ interface VisualisationConfig22 {
                 value?: number | string | {
                     from: number;
                     to: number;
+                } | {
+                    absolute: {
+                        from: string;
+                        to: string;
+                    };
+                } | {
+                    relative: {
+                        granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                        from: number;
+                        to: number;
+                    };
                 };
                 format: {
                     text?: string;
@@ -15727,6 +15955,17 @@ interface VisualisationConfig23 {
                 value?: number | string | {
                     from: number;
                     to: number;
+                } | {
+                    absolute: {
+                        from: string;
+                        to: string;
+                    };
+                } | {
+                    relative: {
+                        granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                        from: number;
+                        to: number;
+                    };
                 };
                 format: {
                     text?: string;
@@ -16018,6 +16257,17 @@ interface VisualisationConfig3 {
                 value?: number | string | {
                     from: number;
                     to: number;
+                } | {
+                    absolute: {
+                        from: string;
+                        to: string;
+                    };
+                } | {
+                    relative: {
+                        granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                        from: number;
+                        to: number;
+                    };
                 };
                 format: {
                     text?: string;
@@ -16309,6 +16559,17 @@ interface VisualisationConfig4 {
                 value?: number | string | {
                     from: number;
                     to: number;
+                } | {
+                    absolute: {
+                        from: string;
+                        to: string;
+                    };
+                } | {
+                    relative: {
+                        granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                        from: number;
+                        to: number;
+                    };
                 };
                 format: {
                     text?: string;
@@ -16600,6 +16861,17 @@ interface VisualisationConfig5 {
                 value?: number | string | {
                     from: number;
                     to: number;
+                } | {
+                    absolute: {
+                        from: string;
+                        to: string;
+                    };
+                } | {
+                    relative: {
+                        granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                        from: number;
+                        to: number;
+                    };
                 };
                 format: {
                     text?: string;
@@ -16891,6 +17163,17 @@ interface VisualisationConfig6 {
                 value?: number | string | {
                     from: number;
                     to: number;
+                } | {
+                    absolute: {
+                        from: string;
+                        to: string;
+                    };
+                } | {
+                    relative: {
+                        granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                        from: number;
+                        to: number;
+                    };
                 };
                 format: {
                     text?: string;
@@ -17182,6 +17465,17 @@ interface VisualisationConfig7 {
                 value?: number | string | {
                     from: number;
                     to: number;
+                } | {
+                    absolute: {
+                        from: string;
+                        to: string;
+                    };
+                } | {
+                    relative: {
+                        granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                        from: number;
+                        to: number;
+                    };
                 };
                 format: {
                     text?: string;
@@ -17473,6 +17767,17 @@ interface VisualisationConfig8 {
                 value?: number | string | {
                     from: number;
                     to: number;
+                } | {
+                    absolute: {
+                        from: string;
+                        to: string;
+                    };
+                } | {
+                    relative: {
+                        granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                        from: number;
+                        to: number;
+                    };
                 };
                 format: {
                     text?: string;
@@ -17764,6 +18069,17 @@ interface VisualisationConfig9 {
                 value?: number | string | {
                     from: number;
                     to: number;
+                } | {
+                    absolute: {
+                        from: string;
+                        to: string;
+                    };
+                } | {
+                    relative: {
+                        granularity: "minute" | "hour" | "day" | "week" | "month" | "quarter" | "year";
+                        from: number;
+                        to: number;
+                    };
                 };
                 format: {
                     text?: string;

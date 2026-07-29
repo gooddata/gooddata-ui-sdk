@@ -6,9 +6,8 @@ import type { IMeasureMetadataObject, IMeasureMetadataObjectDefinition } from "@
 
 import {
     definitionToMetricYaml,
-    mergeCopiedMetricDefinition,
     metricYamlToDefinition,
-    overlayMetricYamlFields,
+    reconcileMetricDefinition,
 } from "../metricConverter.js";
 import type { MetricSchema } from "../metricSchema.js";
 
@@ -135,8 +134,8 @@ describe("definitionToMetricYaml", () => {
     });
 });
 
-describe("overlayMetricYamlFields", () => {
-    it("overlays the YAML fields while keeping the base's non-YAML fields", () => {
+describe("reconcileMetricDefinition", () => {
+    it("overlays the YAML fields onto a loaded measure, keeping its non-YAML fields", () => {
         const base: IMeasureMetadataObject = {
             ...measure,
             metricType: "CURRENCY",
@@ -148,7 +147,7 @@ describe("overlayMetricYamlFields", () => {
             title: "Renamed",
             maql: "SELECT 2",
         });
-        const merged = overlayMetricYamlFields(base, yaml);
+        const merged = reconcileMetricDefinition(base, yaml);
         expect(merged).toMatchObject({
             title: "Renamed",
             expression: "SELECT 2",
@@ -157,21 +156,6 @@ describe("overlayMetricYamlFields", () => {
         });
     });
 
-    it("keeps the base identity even when the YAML carries a different id", () => {
-        const yaml = metricYamlToDefinition({
-            type: "metric",
-            id: "some_other_id",
-            title: "X",
-            maql: "SELECT 1",
-        });
-        expect(overlayMetricYamlFields(measure, yaml)).toMatchObject({
-            id: "revenue.total",
-            ref: measure.ref,
-        });
-    });
-});
-
-describe("mergeCopiedMetricDefinition", () => {
     // A copied source carrying fields the YAML cannot represent (metricType, isHiddenFromKda).
     const copied: IMeasureMetadataObjectDefinition = {
         type: "measure",
@@ -194,7 +178,7 @@ describe("mergeCopiedMetricDefinition", () => {
             maql: "SELECT SUM({fact/order_amount})",
             show_in_ai_results: false,
         });
-        const merged = mergeCopiedMetricDefinition(copied, yaml);
+        const merged = reconcileMetricDefinition(copied, yaml);
         expect(merged.metricType).toBe("CURRENCY");
         expect(merged.isHiddenFromKda).toBe(true);
     });
@@ -206,7 +190,7 @@ describe("mergeCopiedMetricDefinition", () => {
             title: "Renamed",
             maql: "SELECT 2",
         });
-        const merged = mergeCopiedMetricDefinition(copied, yaml);
+        const merged = reconcileMetricDefinition(copied, yaml);
         expect(merged).toMatchObject({ title: "Renamed", expression: "SELECT 2" });
     });
 
@@ -217,7 +201,7 @@ describe("mergeCopiedMetricDefinition", () => {
             title: "Copy",
             maql: "SELECT 1",
         });
-        expect(mergeCopiedMetricDefinition(copied, yaml).id).toBe("renamed_id");
+        expect(reconcileMetricDefinition(copied, yaml).id).toBe("renamed_id");
     });
 
     it("unhides the copy when the visibility line is removed from a hidden source", () => {
@@ -227,12 +211,12 @@ describe("mergeCopiedMetricDefinition", () => {
             title: "Copy",
             maql: "SELECT 1",
         });
-        expect(mergeCopiedMetricDefinition(copied, yaml).isHidden).toBe(false);
+        expect(reconcileMetricDefinition(copied, yaml).isHidden).toBe(false);
     });
 
     it("drops the id when removed from the YAML so the server derives one", () => {
         const yaml = metricYamlToDefinition({ type: "metric", title: "Copy", maql: "SELECT 1" });
-        const merged = mergeCopiedMetricDefinition(copied, yaml);
+        const merged = reconcileMetricDefinition(copied, yaml);
         expect(merged).not.toHaveProperty("id");
         // The non-YAML semantics still survive even without an id.
         expect(merged.metricType).toBe("CURRENCY");

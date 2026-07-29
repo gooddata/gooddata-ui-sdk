@@ -6,7 +6,12 @@ import { defineMessages, useIntl } from "react-intl";
 
 import type { IParameterMetadataObjectDefinition } from "@gooddata/sdk-model";
 
-import { type IAsCodeEditing, type IAsCodeMessages, defineAsCodeDescriptor } from "../asCode/descriptor.js";
+import {
+    type IAsCodeEditing,
+    type IAsCodeMessages,
+    defineAsCodeDescriptor,
+    fixedIdentifierOf,
+} from "../asCode/descriptor.js";
 import type { ICatalogItemParameter } from "../catalogItem/types.js";
 import { ObjectTypes } from "../objectType/constants.js";
 
@@ -59,8 +64,11 @@ function useParameterEditing(): IAsCodeEditing<IParameterMetadataObjectDefinitio
             syntaxErrorMessage: intl.formatMessage(errorMessages.syntax),
             // Parameter YAML round-trips 1:1 to its definition, so serialization is a plain stringify.
             serialize: (definition) => serializeParameterToYaml(definition),
-            validate: (value, options) => {
-                const result = validateParameterYaml(value, { enabledTypes, ...options });
+            validate: (value, context) => {
+                const result = validateParameterYaml(value, {
+                    enabledTypes,
+                    fixedIdentifier: fixedIdentifierOf(context),
+                });
                 return result.isValid
                     ? { isValid: true, definition: result.parameter }
                     : {
@@ -95,15 +103,21 @@ export const parameterDescriptor = defineAsCodeDescriptor<
         description: "",
         definition: { type: "NUMBER", defaultValue: 0 },
     }),
-    // No port.load: the catalog item maps field-for-field to a definition, so the editor seeds from it.
-    editSeed: (item) => ({
-        id: item.identifier,
-        type: "parameter",
-        title: item.title,
-        description: item.description,
-        tags: item.tags,
-        definition: item.definition,
-    }),
-    // Source is already a definition, so toCopy only re-derives identity; no applyYamlEdits (YAML round-trips 1:1).
+    // Item maps field-for-field to a definition, so no fetch is needed.
+    seed: {
+        editSeed: (item) => ({
+            id: item.identifier,
+            type: "parameter",
+            title: item.title,
+            description: item.description,
+            tags: item.tags,
+            definition: item.definition,
+        }),
+    },
+    // A copied parameter derives a human-readable id that can collide on create; identity lets the dialog retry without it.
+    identity: {
+        read: (definition) => definition.id,
+        strip: ({ id: _id, ...definition }) => definition,
+    },
     toCopy: createCopiedParameter,
 });

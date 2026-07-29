@@ -6,6 +6,7 @@ import { type IPlatformContext } from "@gooddata/sdk-pluggable-application-model
 import { debugLog } from "../debug.js";
 
 import { getLastVisitedApp, setLastVisitedApp } from "./lastVisitedApp.js";
+import { mapBareLegacyPathToApp } from "./legacyRedirect.js";
 import { getActiveInternalApplication, getApplicationHref } from "./routing.js";
 
 /**
@@ -26,6 +27,8 @@ export interface IResolveRedirectTargetOptions {
     apps: PluggableApplicationRegistryItem[];
     ctx: IPlatformContext;
     pathname: string;
+    /** Query string of the current URL (location.search, `?`-prefixed or empty). */
+    search?: string;
     /** Fetches the first workspace ID for the current user. */
     fetchFirstWorkspaceId: () => Promise<string | undefined>;
 }
@@ -127,6 +130,7 @@ export async function resolveRedirectTarget({
     apps,
     ctx,
     pathname,
+    search,
     fetchFirstWorkspaceId,
 }: IResolveRedirectTargetOptions): Promise<string | null> {
     const scope = ctx.currentApplicationScope;
@@ -135,6 +139,26 @@ export async function resolveRedirectTarget({
     debugLog(
         `[host-runtime/redirect] resolveRedirectTarget: scope=${scope ?? "(none)"} workspaceId=${workspaceId ?? "(none)"} pathname=${pathname} apps=${apps.length}`,
     );
+
+    // Bare legacy app landing (/dashboards, /analyze, /metrics, /modeler — no workspace in the
+    // hash; hash-bearing legacy URLs are rewritten synchronously before the host boots). The
+    // legacy standalone apps redirected these to the app in the user's first workspace, so
+    // preserve the app intent instead of falling through to the generic root redirect below
+    // (which would land on /organization or the preferred workspace app).
+    const legacyAppRouteBase = mapBareLegacyPathToApp(pathname);
+    if (legacyAppRouteBase) {
+        debugLog(`[host-runtime/redirect] bare legacy app path — fetching first workspace`);
+        const legacyWorkspaceId = await fetchFirstWorkspaceId();
+        if (!legacyWorkspaceId) {
+            debugLog("[host-runtime/redirect] no workspace available for user — throwing not-found");
+            throw new AppNotFoundError("No workspace is available for this user.");
+        }
+        // Keep the query string — the legacy bare flow preserved it through its hash replacement
+        // (e.g. /modeler?displayEditMode opened the modeler in edit mode).
+        const legacyHref = `/workspace/${legacyWorkspaceId}${legacyAppRouteBase}${search ?? ""}`;
+        debugLog(`[host-runtime/redirect] redirecting bare legacy app path → ${legacyHref}`);
+        return legacyHref;
+    }
 
     if (scope === "organization") {
         return resolveOrgScopeTarget(apps, ctx, pathname);

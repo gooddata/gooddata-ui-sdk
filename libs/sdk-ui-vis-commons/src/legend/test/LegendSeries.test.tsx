@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ComponentProps } from "react";
 
@@ -78,39 +78,37 @@ describe("LegendSeries", () => {
     it("should render with correct accessibility attributes", () => {
         renderComponent();
 
-        const wrapper = screen.getByRole("group");
+        const wrapper = screen.getByRole("listbox");
         expect(wrapper).toBeInTheDocument();
-
-        const list = screen.getByRole("list");
-        expect(list).toBeInTheDocument();
+        expect(wrapper).toHaveAttribute("aria-multiselectable", "true");
     });
 
     it("should use provided label", () => {
         renderComponent({ label: "Custom Label" });
 
-        const list = screen.getByRole("list");
-        expect(list).toHaveAttribute("aria-label", expect.stringContaining("Custom Label"));
+        const wrapper = screen.getByRole("listbox", { name: /Custom Label/ });
+        expect(wrapper).toBeInTheDocument();
     });
 
     it("should apply custom style", () => {
         const customStyle = { backgroundColor: "yellow" };
         renderComponent({ style: customStyle });
 
-        const list = screen.getByRole("list");
+        const list = screen.getByRole("listbox").querySelector(".series.legend-series");
         expect(list).toHaveStyle(customStyle);
     });
 
     it("should apply custom className", () => {
         renderComponent({ className: "custom-class" });
 
-        const wrapper = screen.getByRole("group");
+        const wrapper = screen.getByRole("listbox");
         expect(wrapper).toHaveClass("custom-class");
     });
 
     it("should handle keyboard navigation", () => {
         renderComponent();
 
-        const wrapper = screen.getByRole("group");
+        const wrapper = screen.getByRole("listbox");
 
         // Initial focus is on first item
         expect(wrapper).toHaveAttribute("aria-activedescendant");
@@ -142,7 +140,7 @@ describe("LegendSeries", () => {
     it("should handle circular navigation", () => {
         renderComponent();
 
-        const wrapper = screen.getByRole("group");
+        const wrapper = screen.getByRole("listbox");
 
         // Move to last item
         fireEvent.keyDown(wrapper, { code: "End" });
@@ -159,5 +157,18 @@ describe("LegendSeries", () => {
         fireEvent.keyDown(wrapper, { code: "ArrowUp" });
         fireEvent.keyDown(wrapper, { code: "Enter" });
         expect(onToggleItem).toHaveBeenCalledWith(series[2]);
+    });
+
+    it("should skip anomaly items during keyboard navigation", () => {
+        const seriesWithAnomaly: ISeriesItem[] = [series[0], { ...series[1], anomaly: true }, series[2]];
+        renderComponent({ series: seriesWithAnomaly });
+
+        const wrapper = screen.getByRole("listbox");
+
+        // Arrow down from item 0 should skip the anomaly item and land on item 2
+        fireEvent.keyDown(wrapper, { code: "ArrowDown" });
+        fireEvent.keyDown(wrapper, { code: "Enter" });
+        expect(onToggleItem).toHaveBeenCalledWith(seriesWithAnomaly[2]);
+        expect(onToggleItem).not.toHaveBeenCalledWith(seriesWithAnomaly[1]);
     });
 });

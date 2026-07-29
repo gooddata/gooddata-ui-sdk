@@ -78,3 +78,27 @@ export function mapLegacyUrlToHost(location: ILegacyLocation): string | null {
 
     return null;
 }
+
+// The host route base of each legacy standalone app, keyed by the path it was served under.
+// Legacy paths and host route bases happen to coincide today, but keep the mapping explicit —
+// the two are owned by different things (deployment paths vs. host registry routeBase).
+const BARE_LEGACY_APP_ROUTES: Record<string, string> = {
+    "/dashboards": "/dashboards",
+    "/analyze": "/analyze",
+    "/metrics": "/metrics",
+    "/modeler": "/modeler",
+};
+
+/**
+ * Detects a bare legacy app landing — /dashboards, /analyze, /metrics or /modeler with no
+ * workspace in the hash. (Hash-bearing legacy URLs never get this far: {@link mapLegacyUrlToHost}
+ * rewrites them synchronously before the host boots.) The legacy standalone apps redirected such
+ * landings to the app in the user's first workspace; the host preserves that by resolving the
+ * first workspace asynchronously, so this only maps the pathname to the target app's route base.
+ *
+ * @returns the host route base of the app, or `null` when the pathname is not a bare legacy app path
+ */
+export function mapBareLegacyPathToApp(pathname: string): string | null {
+    const normalized = pathname.endsWith("/") ? pathname.slice(0, -1) : pathname;
+    return BARE_LEGACY_APP_ROUTES[normalized] ?? null;
+}

@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 0264da25c488ece235d746a7c7fd59831f9a92e5c5bc184c0bb3043b813a0fad
+# schema-hash: 539cb0396bf007266ef615bc0afb002d3e891d865b1702e6314a204d76f154dd
 
 from __future__ import annotations
 
@@ -19,6 +19,7 @@ if not _pydantic_version_match or tuple(int(g) for g in _pydantic_version_match.
     )
 
 __all__ = [
+    "Absolute",
     "AggregatedAs",
     "AggregatedFact",
     "Aggregation",
@@ -154,6 +155,8 @@ __all__ = [
     "Granularity",
     "Granularity1",
     "Granularity2",
+    "Granularity3",
+    "Granularity4",
     "GridLineShape",
     "Identifier",
     "IgnoredDrillDown",
@@ -285,6 +288,7 @@ __all__ = [
     "QueryTextFilter1",
     "QueryTextFilter2",
     "Reference",
+    "Relative",
     "RenderAs",
     "RowHeight",
     "Rule",
@@ -402,6 +406,8 @@ __all__ = [
     "Using3",
     "Using4",
     "Value",
+    "Value1",
+    "Value2",
     "ValueType",
     "Version",
     "Viewport",
@@ -3209,6 +3215,53 @@ class Value(BaseModel):
     to: float
 
 
+class Absolute(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    from_: str = Field(..., alias='from')
+    to: str
+
+
+class Value1(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    absolute: Absolute = Field(
+        ...,
+        description='Static period, snapped to the target date attribute\'s granularity: from = period start, to = inclusive period end. Platform date strings: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for hour/minute granularities.',
+    )
+
+
+class Granularity3(Enum):
+    minute = 'minute'
+    hour = 'hour'
+    day = 'day'
+    week = 'week'
+    month = 'month'
+    quarter = 'quarter'
+    year = 'year'
+
+
+class Relative(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    granularity: Granularity3
+    from_: int = Field(..., alias='from')
+    to: int
+
+
+class Value2(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    relative: Relative = Field(
+        ...,
+        description="Relative period re-resolved on every render/export: integer period offsets where 0 = the current period, negative = past. Granularity must be coarser than or equal to (and aligned with) the target date attribute's granularity.",
+    )
+
+
 class Scope(Enum):
     cell = 'cell'
     row = 'row'
@@ -3231,9 +3284,9 @@ class Condition13(BaseModel):
     )
     id: str
     operator: Operator14
-    value: float | str | Value | None = Field(
+    value: float | str | Value | Value1 | Value2 | None = Field(
         None,
-        description='Literal (number or string); a {from,to} range for between/not_between; omitted for all/is_empty/is_not_empty.',
+        description='Literal (number or string); a {from,to} range for between/not_between; an {absolute} period or {relative} period for date-attribute conditions; omitted for all/is_empty/is_not_empty.',
     )
     format: Format
 
@@ -3662,6 +3715,34 @@ class DatasetType5(Enum):
 
 class Type96(Enum):
     date = 'date'
+
+
+class Granularity4(Enum):
+    MINUTE = 'MINUTE'
+    HOUR = 'HOUR'
+    DAY = 'DAY'
+    WEEK = 'WEEK'
+    WEEK_US = 'WEEK_US'
+    MONTH = 'MONTH'
+    QUARTER = 'QUARTER'
+    YEAR = 'YEAR'
+    MINUTE_OF_HOUR = 'MINUTE_OF_HOUR'
+    HOUR_OF_DAY = 'HOUR_OF_DAY'
+    DAY_OF_WEEK = 'DAY_OF_WEEK'
+    DAY_OF_WEEK_EU = 'DAY_OF_WEEK_EU'
+    DAY_OF_MONTH = 'DAY_OF_MONTH'
+    DAY_OF_YEAR = 'DAY_OF_YEAR'
+    DAY_OF_QUARTER = 'DAY_OF_QUARTER'
+    WEEK_OF_YEAR = 'WEEK_OF_YEAR'
+    WEEK_OF_YEAR_EU = 'WEEK_OF_YEAR_EU'
+    WEEK_OF_QUARTER_EU = 'WEEK_OF_QUARTER_EU'
+    WEEK_OF_QUARTER = 'WEEK_OF_QUARTER'
+    MONTH_OF_YEAR = 'MONTH_OF_YEAR'
+    MONTH_OF_QUARTER = 'MONTH_OF_QUARTER'
+    QUARTER_OF_YEAR = 'QUARTER_OF_YEAR'
+    FISCAL_YEAR = 'FISCAL_YEAR'
+    FISCAL_QUARTER = 'FISCAL_QUARTER'
+    FISCAL_MONTH = 'FISCAL_MONTH'
 
 
 class Description(RootModel[constr(max_length=10000)]):
@@ -5854,7 +5935,7 @@ class DateDataset(BaseModel):
     title_pattern: constr(max_length=255) | None = Field(
         None, description='A pattern for the title formatting'
     )
-    granularities: list[Granularity2] | None = None
+    granularities: list[Granularity4] | None = None
 
 
 class Metric(BaseModel):

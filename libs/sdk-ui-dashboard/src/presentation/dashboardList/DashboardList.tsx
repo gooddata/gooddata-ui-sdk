@@ -20,6 +20,12 @@ const alignPoints = [
     {
         align: "tl bl",
     },
+    {
+        align: "br tr",
+    },
+    {
+        align: "tr br",
+    },
 ];
 
 const ITEM_HEIGHT = 25;

@@ -17,7 +17,10 @@ import { applyAllFeaturesToColDef } from "../columns/applyAllFeaturesToColDef.js
 import { columnDefinitionToColId } from "../columns/colId.js";
 import { createColDef } from "../columns/createColDef.js";
 import { columnDefsToPivotGroups } from "../pivoting/columnDefsToPivotGroups.js";
-import { resolveConditionalFormattingTriggers } from "../styling/conditionalFormatting.js";
+import {
+    resolveConditionalFormattingDateBounds,
+    resolveConditionalFormattingTriggers,
+} from "../styling/conditionalFormatting.js";
 import { applyTextWrappingToGroupDef } from "../textWrapping/applyTextWrappingToGroupDef.js";
 
 import { getTableData } from "./valueFormatter.js";
@@ -69,6 +72,10 @@ export function dataViewToColDefs({
               columnHeadersPosition,
           )
         : [];
+    // Resolved once per render like the triggers; relative periods anchor to render time.
+    const conditionalFormattingDateBounds = conditionalFormatting?.enabled
+        ? resolveConditionalFormattingDateBounds(conditionalFormatting, tableData.columnDefinitions)
+        : {};
 
     const colDefs = tableData.columnDefinitions.map((columnDefinition) => {
         const colDef = createColDef(columnDefinition, columnHeadersPosition, intl, dataView);
@@ -80,6 +87,7 @@ export function dataViewToColDefs({
             dataViewFacade: dataView,
             conditionalFormatting,
             conditionalFormattingTriggers,
+            conditionalFormattingDateBounds,
         })(colDef);
     });
 

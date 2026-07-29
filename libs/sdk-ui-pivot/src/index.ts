@@ -38,6 +38,7 @@ export {
     type ConditionalFormattingTarget,
     type ConditionalFormattingOperator,
     type ConditionalFormattingTextOperator,
+    type ConditionalFormattingEmptinessOperator,
     type ConditionalFormattingValue,
     type ColumnResizedCallback as ColumnResizedCallbackNext,
     type IColumnSizing as IColumnSizingNext,

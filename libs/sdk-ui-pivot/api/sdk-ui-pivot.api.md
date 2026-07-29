@@ -7,6 +7,7 @@
 import { AttributesMeasuresOrPlaceholders } from '@gooddata/sdk-ui';
 import { AttributesOrPlaceholders } from '@gooddata/sdk-ui';
 import { ComparisonConditionOperator } from '@gooddata/sdk-model';
+import { DateFilterGranularity } from '@gooddata/sdk-model';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
@@ -60,7 +61,10 @@ export type ColumnWidthItemNext = IAttributeColumnWidthItemNext | IMeasureColumn
 export type ColumnWidthNext = IAbsoluteColumnWidthNext | IAutoColumnWidthNext;
 
 // @alpha
-export type ConditionalFormattingOperator = "ALL" | ComparisonConditionOperator | RangeConditionOperator | ConditionalFormattingTextOperator;
+export type ConditionalFormattingEmptinessOperator = "IS_EMPTY" | "IS_NOT_EMPTY";
+
+// @alpha
+export type ConditionalFormattingOperator = "ALL" | ComparisonConditionOperator | RangeConditionOperator | ConditionalFormattingTextOperator | ConditionalFormattingEmptinessOperator;
 
 // @alpha
 export type ConditionalFormattingTarget = {
@@ -72,7 +76,7 @@ export type ConditionalFormattingTarget = {
 };
 
 // @alpha
-export type ConditionalFormattingTextOperator = "CONTAINS" | "NOT_CONTAINS" | "STARTS_WITH" | "NOT_STARTS_WITH" | "ENDS_WITH" | "NOT_ENDS_WITH" | "IS_EMPTY" | "IS_NOT_EMPTY";
+export type ConditionalFormattingTextOperator = "CONTAINS" | "NOT_CONTAINS" | "STARTS_WITH" | "NOT_STARTS_WITH" | "ENDS_WITH" | "NOT_ENDS_WITH";
 
 // @alpha
 export type ConditionalFormattingValue = {
@@ -82,6 +86,15 @@ export type ConditionalFormattingValue = {
     value: string | number;
 } | {
     kind: "literalRange";
+    from: number;
+    to: number;
+} | {
+    kind: "absoluteDate";
+    from: string;
+    to: string;
+} | {
+    kind: "relativeDate";
+    granularity: DateFilterGranularity;
     from: number;
     to: number;
 };

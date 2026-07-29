@@ -332,6 +332,97 @@ describe("resolveRedirectTarget", () => {
         });
     });
 
+    describe("bare legacy app paths", () => {
+        it.each([
+            ["/dashboards", "/workspace/ws-fetched/dashboards"],
+            ["/analyze", "/workspace/ws-fetched/analyze"],
+            ["/metrics", "/workspace/ws-fetched/metrics"],
+            ["/modeler", "/workspace/ws-fetched/modeler"],
+            ["/modeler/", "/workspace/ws-fetched/modeler"],
+        ])("redirects %s to the app in the first workspace", async (pathname, expected) => {
+            const fetchFirstWorkspaceId = vi.fn().mockResolvedValue("ws-fetched");
+
+            const result = await resolveRedirectTarget({
+                apps: [],
+                ctx: context({
+                    currentApplicationScope: undefined,
+                    currentWorkspaceId: undefined,
+                }),
+                pathname,
+                fetchFirstWorkspaceId,
+            });
+
+            expect(fetchFirstWorkspaceId).toHaveBeenCalledOnce();
+            expect(result).toBe(expected);
+        });
+
+        it("preserves the query string (e.g. ?displayEditMode) through the redirect", async () => {
+            const fetchFirstWorkspaceId = vi.fn().mockResolvedValue("ws-fetched");
+
+            const result = await resolveRedirectTarget({
+                apps: [],
+                ctx: context({
+                    currentApplicationScope: undefined,
+                    currentWorkspaceId: undefined,
+                }),
+                pathname: "/modeler/",
+                search: "?displayEditMode",
+                fetchFirstWorkspaceId,
+            });
+
+            expect(result).toBe("/workspace/ws-fetched/modeler?displayEditMode");
+        });
+
+        it("preserves the app intent even for users with canManageOrganization", async () => {
+            const fetchFirstWorkspaceId = vi.fn().mockResolvedValue("ws-fetched");
+
+            const result = await resolveRedirectTarget({
+                apps: [],
+                ctx: context({
+                    currentApplicationScope: undefined,
+                    currentWorkspaceId: undefined,
+                    organizationPermissions: { canManageOrganization: true },
+                }),
+                pathname: "/modeler/",
+                fetchFirstWorkspaceId,
+            });
+
+            expect(result).toBe("/workspace/ws-fetched/modeler");
+        });
+
+        it("throws AppNotFoundError when the user has no workspace", async () => {
+            await expect(
+                resolveRedirectTarget({
+                    apps: [],
+                    ctx: context({
+                        currentApplicationScope: undefined,
+                        currentWorkspaceId: undefined,
+                    }),
+                    pathname: "/modeler/",
+                    fetchFirstWorkspaceId: vi.fn().mockResolvedValue(undefined),
+                }),
+            ).rejects.toThrow(AppNotFoundError);
+        });
+
+        it("does not treat deep unknown paths under a legacy prefix as a bare legacy landing", async () => {
+            const fetchFirstWorkspaceId = vi.fn().mockResolvedValue("ws-fetched");
+
+            const result = await resolveRedirectTarget({
+                apps: [],
+                ctx: context({
+                    currentApplicationScope: undefined,
+                    currentWorkspaceId: undefined,
+                    organizationPermissions: { canManageOrganization: false },
+                }),
+                pathname: "/modeler/deep/route",
+                fetchFirstWorkspaceId,
+            });
+
+            // Falls through to the generic root redirect (first hop → workspace root)
+            expect(result).toBe("/workspace/ws-fetched");
+        });
+    });
+
     describe("undefined scope (top-level app root)", () => {
         it("redirects to /organization when user has canManageOrganization permission", async () => {
             const result = await resolveRedirectTarget({

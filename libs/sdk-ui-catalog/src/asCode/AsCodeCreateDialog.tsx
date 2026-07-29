@@ -10,38 +10,23 @@ import type { ICatalogItem } from "../catalogItem/types.js";
 
 import { AsCodeDialog } from "./AsCodeDialog.js";
 import { isDuplicateIdError } from "./copy.js";
-import type { IAsCodeDefinition, IAsCodeDescriptor } from "./descriptor.js";
+import type { IAsCodeDescriptor } from "./descriptor.js";
 import { useAsCodeBase } from "./useAsCodeBase.js";
 
 type Props = {
     descriptor: IAsCodeDescriptor;
-    // Duplicate an existing item — loaded here (like the edit dialog) to seed the copy.
     duplicateOf?: ICatalogItem;
-    // Duplicate from an already-resolved definition (the edit dialog's current unsaved edits). At most
-    // one of duplicateOf / duplicateSource is set; neither means a blank create.
-    duplicateSource?: IAsCodeDefinition;
+    // At most one of duplicateOf/duplicateSource; neither means a blank create.
+    duplicateSource?: unknown;
     onClose: () => void;
     onCreated?: (item: ICatalogItem) => void;
 };
 
-/**
- * Creates an as-code object — blank, or seeded from a copy source when duplicating. Generic over the
- * entity type via its descriptor.
- * @internal
- */
+/** @internal */
 export function AsCodeCreateDialog({ descriptor, duplicateOf, duplicateSource, onClose, onCreated }: Props) {
     const intl = useIntl();
-    const { addSuccess, addError } = useToastMessage();
-    const {
-        base: loadedSource,
-        isLoading,
-        port,
-    } = useAsCodeBase(descriptor, duplicateOf, () => {
-        if (descriptor.messages.loadError) {
-            addError(descriptor.messages.loadError);
-        }
-        onClose();
-    });
+    const { addSuccess } = useToastMessage();
+    const { base: loadedSource, isLoading, port } = useAsCodeBase(descriptor, duplicateOf, onClose);
 
     const source = duplicateSource ?? loadedSource;
     const copied = useMemo(
@@ -53,23 +38,23 @@ export function AsCodeCreateDialog({ descriptor, duplicateOf, duplicateSource, o
             copied ?? descriptor.emptyDefinition(intl.formatMessage(descriptor.messages.createDefaultTitle)),
         [copied, descriptor, intl],
     );
-    const copiedId = copied?.id;
+    const identity = descriptor.identity;
+    const copiedId = copied === undefined ? undefined : identity?.read(copied);
 
     const handleSubmit = useCallback(
-        async (definition: IAsCodeDefinition) => {
-            // A duplicate re-applies the copied source's non-YAML fields; otherwise persist the parsed YAML.
-            const toPersist =
-                copied && descriptor.applyYamlEdits
-                    ? descriptor.applyYamlEdits(copied, definition)
-                    : definition;
+        async (definition: unknown) => {
             let created: ICatalogItem;
             try {
-                created = await port.create(toPersist);
+                created = await port.create(definition);
             } catch (error) {
-                // The copied identity collided; let the backend derive a fresh one by dropping the id.
-                if (copiedId !== undefined && toPersist.id === copiedId && isDuplicateIdError(error)) {
-                    const { id: _id, ...withoutId } = toPersist;
-                    created = await port.create(withoutId);
+                // The copied id collided; retry without it so the backend assigns a fresh one.
+                if (
+                    identity !== undefined &&
+                    copiedId !== undefined &&
+                    identity.read(definition) === copiedId &&
+                    isDuplicateIdError(error)
+                ) {
+                    created = await port.create(identity.strip(definition));
                 } else {
                     throw error;
                 }
@@ -78,7 +63,7 @@ export function AsCodeCreateDialog({ descriptor, duplicateOf, duplicateSource, o
             onClose();
             addSuccess(descriptor.messages.createSuccess);
         },
-        [addSuccess, copied, copiedId, descriptor, onClose, onCreated, port],
+        [addSuccess, copiedId, descriptor, identity, onClose, onCreated, port],
     );
 
     return (

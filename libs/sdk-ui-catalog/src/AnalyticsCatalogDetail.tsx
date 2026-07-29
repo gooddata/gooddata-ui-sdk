@@ -6,8 +6,6 @@ import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { BackendProvider, WorkspaceProvider, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 
-import { AsCodeMutationProvider } from "./asCode/AsCodeMutationContext.js";
-import { asCodeDescriptors } from "./asCodeRegistry.js";
 import { CatalogDetail, type ICatalogDetailProps } from "./catalogDetail/CatalogDetail.js";
 import {
     CatalogDetailContent,
@@ -133,9 +131,7 @@ function Providers(props: ProvidersProps) {
                             <PermissionsProvider permissionsState={permissionsState}>
                                 <QualityProvider backend={backend} workspace={workspace}>
                                     <CatalogResourceProvider backend={backend} workspace={workspace}>
-                                        <AsCodeMutationProvider descriptors={asCodeDescriptors}>
-                                            {props.children}
-                                        </AsCodeMutationProvider>
+                                        {props.children}
                                     </CatalogResourceProvider>
                                 </QualityProvider>
                             </PermissionsProvider>

@@ -194,8 +194,8 @@ export const LegendItem = withTheme(function LegendItem({
         <button
             ref={refCallback}
             data-testid={"legend-item"}
-            role={"switch"}
-            aria-checked={item.isVisible}
+            role={"option"}
+            aria-selected={item.isVisible}
             id={id}
             style={style}
             className={cx("series-item", { "series-item--isFocused": isFocused })}

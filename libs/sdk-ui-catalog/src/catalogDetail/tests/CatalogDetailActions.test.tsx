@@ -12,10 +12,13 @@ import {
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 
-import { AsCodeMutationProvider } from "../../asCode/AsCodeMutationContext.js";
-import type { ICatalogItemDashboard, ICatalogItemParameter } from "../../catalogItem/types.js";
+import type {
+    ICatalogItemDashboard,
+    ICatalogItemInsight,
+    ICatalogItemParameter,
+} from "../../catalogItem/types.js";
+import { InsightCodecProvider } from "../../insight/insightCodecContext.js";
 import { TestIntlProvider } from "../../localization/TestIntlProvider.js";
-import { ObjectTypes } from "../../objectType/constants.js";
 import type { IParameterMutationPort } from "../../parameter/parameterMutationPort.js";
 import { createTestParameterMutationPort } from "../../parameter/tests/parameterMutationPort.test.utils.js";
 import {
@@ -24,13 +27,21 @@ import {
 } from "../../permission/TestPermissionsProvider.js";
 import { CatalogDetailActions } from "../CatalogDetailActions.js";
 
-// The detail dispatch offers inline parameter editing only when the parameter feature is enabled.
+// The component resolves its descriptor from the registry, so the port is injected by faking the
+// adapter; `createWrapper` sets the port per test.
+const { portHolder } = vi.hoisted(() => ({
+    portHolder: { current: undefined as IParameterMutationPort | undefined },
+}));
+vi.mock("../../parameter/parameterMutationPort.js", async (importOriginal) => ({
+    ...(await importOriginal<Record<string, unknown>>()),
+    createParameterMutationAdapter: () => portHolder.current,
+}));
+
 const parametersEnabledResult = {
     ...defaultPermissionsResult,
     settings: { enableParameters: true } as IUserWorkspaceSettings,
 };
 
-// The injected port means the backend is never called, so a bare stub satisfies the provider.
 const stubBackend = {} as unknown as IAnalyticalBackend;
 
 vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
@@ -86,6 +97,7 @@ const parameterItem: ICatalogItemParameter = {
 };
 
 function createWrapper(port: IParameterMutationPort = createTestParameterMutationPort()) {
+    portHolder.current = port;
     function Wrapper({ children }: PropsWithChildren) {
         return (
             <TestIntlProvider>
@@ -93,9 +105,72 @@ function createWrapper(port: IParameterMutationPort = createTestParameterMutatio
                     <WorkspaceProvider workspace="test-workspace">
                         <ToastsCenterContextProvider>
                             <TestPermissionsProvider result={parametersEnabledResult}>
-                                <AsCodeMutationProvider ports={{ [ObjectTypes.PARAMETER]: port }}>
+                                {children}
+                            </TestPermissionsProvider>
+                        </ToastsCenterContextProvider>
+                    </WorkspaceProvider>
+                </BackendProvider>
+            </TestIntlProvider>
+        );
+    }
+    return Wrapper;
+}
+
+const visualizationEnabledResult = {
+    ...defaultPermissionsResult,
+    settings: { enableAnalyticalCatalogVisualizationEditor: true } as IUserWorkspaceSettings,
+};
+
+const insightItem = (visualizationType: ICatalogItemInsight["visualizationType"]): ICatalogItemInsight => ({
+    identifier: "viz.id",
+    type: "insight",
+    title: "My Visualization",
+    description: "",
+    tags: [],
+    createdBy: "user",
+    updatedBy: "user",
+    createdAt: null,
+    updatedAt: null,
+    isLocked: false,
+    isEditable: true,
+    visualizationType,
+});
+
+// Only "bar" is codec-representable here, so a "combo" item exercises the unsupported path.
+function createVisualizationWrapper() {
+    function Wrapper({ children }: PropsWithChildren) {
+        return (
+            <TestIntlProvider>
+                <BackendProvider backend={stubBackend}>
+                    <WorkspaceProvider workspace="test-workspace">
+                        <ToastsCenterContextProvider>
+                            <TestPermissionsProvider result={visualizationEnabledResult}>
+                                <InsightCodecProvider
+                                    requestLoad={vi.fn(async () => {})}
+                                    isVisualizationTypeEditable={(type) => type === "bar"}
+                                >
                                     {children}
-                                </AsCodeMutationProvider>
+                                </InsightCodecProvider>
+                            </TestPermissionsProvider>
+                        </ToastsCenterContextProvider>
+                    </WorkspaceProvider>
+                </BackendProvider>
+            </TestIntlProvider>
+        );
+    }
+    return Wrapper;
+}
+
+// No InsightCodecProvider — a host that did not inject the codec, so editing falls back to AD.
+function createNoCodecHostWrapper() {
+    function Wrapper({ children }: PropsWithChildren) {
+        return (
+            <TestIntlProvider>
+                <BackendProvider backend={stubBackend}>
+                    <WorkspaceProvider workspace="test-workspace">
+                        <ToastsCenterContextProvider>
+                            <TestPermissionsProvider result={visualizationEnabledResult}>
+                                {children}
                             </TestPermissionsProvider>
                         </ToastsCenterContextProvider>
                     </WorkspaceProvider>
@@ -147,8 +222,7 @@ definition:
             fireEvent.click(screen.getByText("Save", { selector: "button span, button" }));
 
             await waitFor(() => {
-                // The base is the editable definition (from editSeed), which carries `id`, not the
-                // catalog item's `identifier`.
+                // Base is the editSeed definition, which carries `id` (not the item's `identifier`).
                 expect(port.update).toHaveBeenCalledWith(
                     expect.objectContaining({ id: "param.id" }),
                     expect.objectContaining({ title: "Renamed Param" }),
@@ -401,6 +475,69 @@ definition:
 
             expect(screen.queryByRole("button")).not.toBeInTheDocument();
             expect(screen.queryByRole("link")).not.toBeInTheDocument();
+        });
+    });
+
+    describe("visualization items", () => {
+        it("offers inline Edit and Duplicate for a visualization whose type the codec can represent", () => {
+            render(
+                <CatalogDetailActions
+                    item={insightItem("bar")}
+                    canEdit
+                    onOpen={vi.fn()}
+                    onCatalogItemCreate={vi.fn()}
+                    onCatalogItemUpdate={vi.fn()}
+                    onCatalogItemDelete={vi.fn()}
+                />,
+                { wrapper: createVisualizationWrapper() },
+            );
+
+            expect(screen.getByRole("button", { name: /^edit$/i })).toBeInTheDocument();
+            fireEvent.click(screen.getByRole("button", { name: /actions for/i }));
+            expect(screen.getByText("Duplicate")).toBeInTheDocument();
+            expect(screen.getByText("Delete")).toBeInTheDocument();
+        });
+
+        it("withholds Edit and Duplicate but keeps Delete and the Analytical Designer action for a type the codec cannot represent", () => {
+            render(
+                <CatalogDetailActions
+                    item={insightItem("combo")}
+                    canEdit
+                    onOpen={vi.fn()}
+                    onCatalogItemCreate={vi.fn()}
+                    onCatalogItemUpdate={vi.fn()}
+                    onCatalogItemDelete={vi.fn()}
+                />,
+                { wrapper: createVisualizationWrapper() },
+            );
+
+            // Edit/Duplicate need the codec (withheld); Delete and Open remain.
+            expect(screen.queryByRole("button", { name: /^edit$/i })).not.toBeInTheDocument();
+            fireEvent.click(screen.getByRole("button", { name: /actions for/i }));
+            expect(screen.getByText("Open in Analytical Designer")).toBeInTheDocument();
+            expect(screen.getByText("Delete")).toBeInTheDocument();
+            expect(screen.queryByText("Duplicate")).not.toBeInTheDocument();
+        });
+
+        it("withholds Edit and Duplicate when no codec host is present, keeping Delete and the Analytical Designer action", () => {
+            render(
+                <CatalogDetailActions
+                    item={insightItem("bar")}
+                    canEdit
+                    onOpen={vi.fn()}
+                    onCatalogItemCreate={vi.fn()}
+                    onCatalogItemUpdate={vi.fn()}
+                    onCatalogItemDelete={vi.fn()}
+                />,
+                { wrapper: createNoCodecHostWrapper() },
+            );
+
+            // Even a representable chart type needs a host-injected codec to edit inline.
+            expect(screen.queryByRole("button", { name: /^edit$/i })).not.toBeInTheDocument();
+            fireEvent.click(screen.getByRole("button", { name: /actions for/i }));
+            expect(screen.getByText("Open in Analytical Designer")).toBeInTheDocument();
+            expect(screen.getByText("Delete")).toBeInTheDocument();
+            expect(screen.queryByText("Duplicate")).not.toBeInTheDocument();
         });
     });
 

@@ -4,10 +4,9 @@ import { useMemo } from "react";
 
 import type { ParameterType } from "@gooddata/sdk-model";
 
-import { useCanManageAsCode } from "../asCode/gate.js";
 import { useFeatureFlag } from "../permission/PermissionsContext.js";
 
-/** The flag gating catalog parameters. The single source of truth, referenced by the gates below and
+/** The flag gating catalog parameters, referenced by the gate below and
  *  `parameterDescriptor.featureFlag`. */
 export const PARAMETER_FEATURE_FLAG = "enableParameters";
 
@@ -16,13 +15,6 @@ export const PARAMETER_FEATURE_FLAG = "enableParameters";
  */
 export function useIsParametersEnabled(): boolean {
     return useFeatureFlag(PARAMETER_FEATURE_FLAG);
-}
-
-/**
- * Whether the current user can manage parameters in the catalog.
- */
-export function useCanManageParameter(): boolean {
-    return useCanManageAsCode(PARAMETER_FEATURE_FLAG);
 }
 
 /**

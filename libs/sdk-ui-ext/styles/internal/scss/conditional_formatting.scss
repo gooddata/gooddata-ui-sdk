@@ -374,6 +374,12 @@
     }
 }
 
+// The class sits on the trigger button element itself (DropdownButton's className), so the
+// element+class selector outranks the kit's single-class button styling without naming it.
+button.gd-cf-date-value--error {
+    border-color: var(--gd-palette-error-base);
+}
+
 .gd-cf-swatch {
     display: inline-block;
     width: 20px;

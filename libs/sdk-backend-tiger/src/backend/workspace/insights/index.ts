@@ -268,6 +268,9 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                             content: convertInsight(insight),
                             title: insightTitle(insight),
                             tags: insightTags(insight),
+                            ...(insight.insight.isHidden === undefined
+                                ? {}
+                                : { isHidden: insight.insight.isHidden }),
                         },
                     },
                 },

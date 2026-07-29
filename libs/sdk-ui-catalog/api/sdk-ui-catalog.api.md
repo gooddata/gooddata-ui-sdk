@@ -5,14 +5,17 @@
 ```ts
 
 import type { CertificationStatus } from '@gooddata/sdk-model';
+import type { CompletionSource } from '@codemirror/autocomplete';
 import type { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import type { IDataSetMetadataObject } from '@gooddata/sdk-model';
 import type { IdentifierRef } from '@gooddata/sdk-model';
+import type { IInsightDefinition } from '@gooddata/sdk-model';
 import type { IParameterDefinition } from '@gooddata/sdk-model';
 import { JSX } from 'react/jsx-runtime';
 import type { MetricType } from '@gooddata/sdk-model';
 import { MouseEvent as MouseEvent_2 } from 'react';
 import type { ObjectType as ObjectType_2 } from '@gooddata/sdk-model';
+import { PropsWithChildren } from 'react';
 import { ReactNode } from 'react';
 
 // @public (undocumented)
@@ -26,6 +29,25 @@ export function AnalyticsCatalogDetailContent(input: IAnalyticsCatalogDetailCont
 
 // @public
 export function AnalyticsCatalogFilter<T>(props: IAnalyticsCatalogFilterProps<T>): JSX.Element;
+
+// @internal (undocumented)
+export type AsCodeValidation<TDef> = {
+    isValid: true;
+    definition: TDef;
+} | {
+    isValid: false;
+    error: string;
+};
+
+// @internal
+export type AsCodeValidationContext = {
+    intent: "create";
+} | {
+    intent: "edit";
+    fixedIdentifier: string;
+} | {
+    intent: "duplicate";
+};
 
 // @public
 export type CatalogCreateObjectType = Extract<ObjectType, "analyticalDashboard" | "insight" | "measure" | "parameter">;
@@ -78,6 +100,19 @@ export interface IAnalyticsCatalogProps {
     onCreateObject?: (objectType: CatalogCreateObjectType) => void;
     openCatalogItemRef?: ICatalogItemRef;
     workspace?: string;
+}
+
+// @internal (undocumented)
+export interface IAsCodeEditing<TDef> {
+    // (undocumented)
+    completionSource: CompletionSource;
+    reconcile?(base: TDef, edited: TDef): TDef;
+    // (undocumented)
+    serialize(definition: TDef): string;
+    // (undocumented)
+    syntaxErrorMessage: string;
+    // (undocumented)
+    validate(value: string, context: AsCodeValidationContext): AsCodeValidation<TDef>;
 }
 
 // @public (undocumented)
@@ -202,6 +237,16 @@ export interface ICatalogItemRef extends IdentifierRef {
 }
 
 // @internal (undocumented)
+export type IInsightCodec = IAsCodeEditing<IInsightDefinition>;
+
+// @internal
+export function InsightCodecProvider(input: PropsWithChildren<{
+    codec?: IInsightCodec;
+    requestLoad: () => Promise<void>;
+    isVisualizationTypeEditable?: VisualizationTypePredicate;
+}>): JSX.Element;
+
+// @internal (undocumented)
 export function isCatalogItemAttribute(item: ICatalogItem | undefined | null): item is ICatalogItemAttribute;
 
 // @internal (undocumented)
@@ -235,6 +280,9 @@ export type OpenHandlerEvent = {
 
 // @public
 export type VisualizationType = "scatter" | "donut" | "area" | "table" | "headline" | "column" | "line" | "treemap" | "pyramid" | "funnel" | "heatmap" | "bubble" | "pie" | "bar" | "combo" | "bullet" | "waterfall" | "dependencywheel" | "sankey" | "pushpin" | "repeater";
+
+// @internal (undocumented)
+export type VisualizationTypePredicate = (visualizationType: string) => boolean;
 
 // (No @packageDocumentation comment for this package)
 

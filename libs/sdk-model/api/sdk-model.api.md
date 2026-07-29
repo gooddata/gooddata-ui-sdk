@@ -2747,6 +2747,7 @@ export interface IFeatureFlags {
     enableAmplitudeTracker?: boolean;
     enableAnalyticalCatalog?: boolean;
     enableAnalyticalCatalogMetricEditor?: boolean;
+    enableAnalyticalCatalogVisualizationEditor?: boolean;
     // @alpha
     enableAnalyticalDashboardVersion3?: boolean;
     enableAnomalyDetectionAlert?: boolean;
@@ -2808,6 +2809,7 @@ export interface IFeatureFlags {
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
     enableImprovedRankingFilter?: boolean;
     enableLineChartStyling?: boolean;
+    enableLogicalModelExtensionsFromParentsCall?: boolean;
     // (undocumented)
     enableMariaDbDataSource?: boolean;
     enableMatchFilterAD?: boolean;
@@ -3261,7 +3263,6 @@ export type IInsight = IInsightDefinition & {
         uri: string;
         ref: ObjRef;
         isLocked?: boolean;
-        isHidden?: boolean;
         certification?: IObjectCertification;
     };
 };
@@ -3280,6 +3281,7 @@ export type IInsightDefinition = {
         sorts: ISortItem[];
         properties: VisualizationProperties;
         layers?: IInsightLayerDefinition[];
+        isHidden?: boolean;
     };
 };
 
@@ -3988,7 +3990,7 @@ export function insightHasMeasures(insight: IInsightDefinition): boolean;
 export function insightId(insight: IInsight): string;
 
 // @alpha
-export function insightIsHidden(insight: IInsight): boolean;
+export function insightIsHidden(insight: IInsightDefinition): boolean;
 
 // @public
 export function insightIsLocked(insight: IInsight): boolean;
@@ -6918,6 +6920,9 @@ export type RequiredSettings = Condition<Partial<IPermanentSettings | IFeatureFl
 
 // @alpha
 export type RequiredWorkspacePermissions = Condition<Partial<IPluggableApplicationWorkspacePermissions>>;
+
+// @alpha
+export function resolveWeekStart(settings: ISettings | undefined): WeekStart;
 
 // @public
 export function resultHeaderName(header: IResultHeader): string | null;

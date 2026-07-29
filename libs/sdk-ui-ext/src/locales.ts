@@ -494,6 +494,7 @@ export const conditionalFormattingMessages = defineMessages({
     rulesLabel: { id: "properties.conditionalFormatting.rulesLabel" },
     addRule: { id: "properties.conditionalFormatting.addRule" },
     ruleInvalid: { id: "properties.conditionalFormatting.rule.invalid" },
+    ruleInvalidValue: { id: "properties.conditionalFormatting.rule.invalidValue" },
     ruleEdit: { id: "properties.conditionalFormatting.rule.edit" },
     ruleDelete: { id: "properties.conditionalFormatting.rule.delete" },
     dialogAddTitle: { id: "properties.conditionalFormatting.dialog.addTitle" },
@@ -516,6 +517,8 @@ export const conditionalFormattingMessages = defineMessages({
     dialogCancel: { id: "properties.conditionalFormatting.dialog.cancel" },
     dialogSave: { id: "properties.conditionalFormatting.dialog.save" },
     dialogErrorRangeOrder: { id: "properties.conditionalFormatting.dialog.error.rangeOrder" },
+    dialogSelectPeriod: { id: "properties.conditionalFormatting.dialog.selectPeriod" },
+    dialogErrorDateUnresolvable: { id: "properties.conditionalFormatting.dialog.error.dateUnresolvable" },
 });
 
 export const conditionalFormattingOperatorMessages: Record<ConditionalFormattingOperator, MessageDescriptor> =
@@ -538,3 +541,16 @@ export const conditionalFormattingOperatorMessages: Record<ConditionalFormatting
         IS_EMPTY: { id: "properties.conditionalFormatting.operator.isEmpty" },
         IS_NOT_EMPTY: { id: "properties.conditionalFormatting.operator.isNotEmpty" },
     });
+
+/** Date targets reuse the shared operator constants but relabel them (All time, Is on, Is after…). */
+export const conditionalFormattingDateOperatorMessages: Partial<
+    Record<ConditionalFormattingOperator, MessageDescriptor>
+> = defineMessages({
+    ALL: { id: "properties.conditionalFormatting.dateOperator.allTime" },
+    EQUAL_TO: { id: "properties.conditionalFormatting.dateOperator.isOn" },
+    NOT_EQUAL_TO: { id: "properties.conditionalFormatting.dateOperator.isNotOn" },
+    GREATER_THAN: { id: "properties.conditionalFormatting.dateOperator.isAfter" },
+    GREATER_THAN_OR_EQUAL_TO: { id: "properties.conditionalFormatting.dateOperator.isOnOrAfter" },
+    LESS_THAN: { id: "properties.conditionalFormatting.dateOperator.isBefore" },
+    LESS_THAN_OR_EQUAL_TO: { id: "properties.conditionalFormatting.dateOperator.isOnOrBefore" },
+});

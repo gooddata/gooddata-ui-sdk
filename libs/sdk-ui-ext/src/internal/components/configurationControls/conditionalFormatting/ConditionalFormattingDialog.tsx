@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 
+import { isEqual } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { type ISeparators } from "@gooddata/sdk-model";
+import { type IDateFilterOptionsByType } from "@gooddata/sdk-ui-filters";
 import { Button, type IAlignPoint, Overlay } from "@gooddata/sdk-ui-kit";
 import {
     type IConditionalFormattingCondition,
@@ -15,8 +17,10 @@ import { conditionalFormattingMessages } from "../../../../locales.js";
 
 import { CfSelect } from "./CfSelect.js";
 import {
+    type ICfDateSettings,
     type ITargetOption,
     findTargetOption,
+    isDateTarget,
     isRuleComplete,
     newCondition,
     ruleWithTarget,
@@ -39,6 +43,10 @@ export interface IConditionalFormattingDialogProps {
     targetOptions: ITargetOption[];
     /** Workspace number separators; measure value inputs validate and format with them. */
     separators?: ISeparators;
+    /** Workspace date-filter preset catalog; date value pickers offer it (undefined = static only). */
+    dateFilterOptions?: IDateFilterOptionsByType;
+    /** Workspace date-display settings (format, week start) for the date value pickers. */
+    dateSettings?: ICfDateSettings;
     /** CSS selector of a small, stable element the popover anchors to. */
     alignTo: string;
     onSave: (rule: IConditionalFormattingRule) => void;
@@ -50,12 +58,18 @@ export function ConditionalFormattingDialog({
     isNew,
     targetOptions,
     separators,
+    dateFilterOptions,
+    dateSettings,
     alignTo,
     onSave,
     onClose,
 }: IConditionalFormattingDialogProps) {
     const intl = useIntl();
-    const [rule, setRule] = useState(() => sanitizeRuleForEditing(initialRule));
+    const initial = sanitizeRuleForEditing(
+        initialRule,
+        isDateTarget(findTargetOption(targetOptions, initialRule.target)),
+    );
+    const [rule, setRule] = useState(initial);
 
     const updateCondition = (id: string, next: IConditionalFormattingCondition) =>
         setRule((current) => ({
@@ -70,7 +84,13 @@ export function ConditionalFormattingDialog({
         }));
 
     const addCondition = () =>
-        setRule((current) => ({ ...current, conditions: [...current.conditions, newCondition()] }));
+        setRule((current) => ({
+            ...current,
+            conditions: [
+                ...current.conditions,
+                newCondition(isDateTarget(findTargetOption(targetOptions, current.target))),
+            ],
+        }));
 
     const reorderConditions = (conditions: IConditionalFormattingCondition[]) =>
         setRule((current) => ({ ...current, conditions }));
@@ -88,7 +108,8 @@ export function ConditionalFormattingDialog({
     const selectedTarget = findTargetOption(targetOptions, rule.target);
     const isPercent = selectedTarget?.isPercent ?? false;
     const suggestions = selectedTarget?.elements ?? [];
-    const complete = isRuleComplete(rule);
+    const complete = isRuleComplete(rule, selectedTarget?.date);
+    const isDirty = isNew || !isEqual(rule, initial);
     const title = intl.formatMessage(
         isNew ? conditionalFormattingMessages.dialogAddTitle : conditionalFormattingMessages.dialogEditTitle,
     );
@@ -121,7 +142,7 @@ export function ConditionalFormattingDialog({
                         items={targetOptions.map((option) => ({
                             value: option.value,
                             title: option.title,
-                            icon: targetIcon(option.target.kind),
+                            icon: targetIcon(option.target.kind, isDateTarget(option)),
                         }))}
                         onSelect={changeTarget}
                         placeholder={intl.formatMessage(conditionalFormattingMessages.dialogSelectTarget)}
@@ -137,9 +158,11 @@ export function ConditionalFormattingDialog({
                                 isPercent={isPercent}
                                 separators={separators}
                                 suggestions={suggestions}
+                                date={selectedTarget?.date}
+                                dateFilterOptions={dateFilterOptions}
+                                dateSettings={dateSettings}
                                 removable={rule.conditions.length > 1}
                                 slot={slot}
-                                intl={intl}
                                 onChange={(next) => updateCondition(condition.id, next)}
                                 onRemove={() => removeCondition(condition.id)}
                             />
@@ -161,7 +184,7 @@ export function ConditionalFormattingDialog({
                     <Button
                         className="gd-button-action"
                         value={intl.formatMessage(conditionalFormattingMessages.dialogSave)}
-                        disabled={!complete}
+                        disabled={!complete || !isDirty}
                         onClick={() => onSave(rule)}
                     />
                 </div>

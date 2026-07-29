@@ -16,6 +16,18 @@ export {
 export { AnalyticsCatalogFilter, type IAnalyticsCatalogFilterProps } from "./AnalyticsCatalogFilter.js";
 
 /*
+ * Visualization as-code codec injection. The host supplies the Tiger-coupled AAC codec so this package
+ * stays backend-agnostic; without it, visualizations fall back to Analytical Designer.
+ */
+export {
+    InsightCodecProvider,
+    type IInsightCodec,
+    type VisualizationTypePredicate,
+} from "./insight/insightCodecContext.js";
+// Re-exported so the `IInsightCodec` rollup resolves.
+export type { IAsCodeEditing, AsCodeValidation, AsCodeValidationContext } from "./asCode/descriptor.js";
+
+/*
  * Supplementary API.
  */
 

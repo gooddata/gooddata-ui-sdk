@@ -7,6 +7,7 @@ import { type DataViewFacade, type ExplicitDrill } from "@gooddata/sdk-ui";
 
 import { type AgGridColumnDef } from "../../types/agGrid.js";
 import {
+    type ConditionalFormattingDateBounds,
     type ConditionalFormattingTriggerColIds,
     type IConditionalFormatting,
 } from "../../types/conditionalFormatting.js";
@@ -33,6 +34,7 @@ export const applyAllFeaturesToColDef =
         dataViewFacade,
         conditionalFormatting,
         conditionalFormattingTriggers,
+        conditionalFormattingDateBounds,
     }: {
         columnWidths: ColumnWidthItem[];
         sortBy: ISortItem[];
@@ -41,6 +43,7 @@ export const applyAllFeaturesToColDef =
         dataViewFacade?: DataViewFacade;
         conditionalFormatting?: IConditionalFormatting;
         conditionalFormattingTriggers: ConditionalFormattingTriggerColIds;
+        conditionalFormattingDateBounds: ConditionalFormattingDateBounds;
     }) =>
     (colDef: AgGridColumnDef): AgGridColumnDef => {
         return [
@@ -49,6 +52,10 @@ export const applyAllFeaturesToColDef =
             applyCellRenderingToColDef(drillableItemsRef, dataViewFacade),
             applyTextWrappingToColDef(textWrapping),
             // Conditional formatting is applied last so its colors win over format-string colors.
-            applyConditionalFormattingToColDef(conditionalFormatting, conditionalFormattingTriggers),
+            applyConditionalFormattingToColDef(
+                conditionalFormatting,
+                conditionalFormattingTriggers,
+                conditionalFormattingDateBounds,
+            ),
         ].reduce((acc, fn) => fn(acc), colDef);
     };

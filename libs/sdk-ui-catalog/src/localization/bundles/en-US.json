@@ -863,6 +863,78 @@
         "text": "Metric could not be deleted.",
         "crowdinContext": "Error toast shown when metric deletion fails."
     },
+    "analyticsCatalog.visualization.dialog.create.title": {
+        "text": "Create visualization",
+        "crowdinContext": "Title of the dialog for creating a new visualization as code."
+    },
+    "analyticsCatalog.visualization.dialog.edit.title": {
+        "text": "Edit visualization",
+        "crowdinContext": "Title of the dialog for editing a visualization as code."
+    },
+    "analyticsCatalog.visualization.dialog.sectionHeader": {
+        "text": "Visualization definition",
+        "crowdinContext": "Header above the as-code editor in the visualization dialog."
+    },
+    "analyticsCatalog.visualization.dialog.sectionHeader.tooltip": {
+        "text": "Define the visualization in YAML, including its type, query, and configuration.",
+        "crowdinContext": "Tooltip explaining the as-code visualization editor."
+    },
+    "analyticsCatalog.visualization.actions.openInAnalyticalDesigner": {
+        "text": "Open in Analytical Designer",
+        "crowdinContext": "Detail-panel menu action that opens the visualization in Analytical Designer (as opposed to the inline as-code editor)."
+    },
+    "analyticsCatalog.visualization.dialog.edit.duplicate": {
+        "text": "Duplicate",
+        "crowdinContext": "Button that duplicates the visualization being edited into a new visualization."
+    },
+    "analyticsCatalog.visualization.dialog.help": {
+        "text": "How to write a visualization",
+        "crowdinContext": "Help link in the visualization as-code dialog."
+    },
+    "analyticsCatalog.visualization.dialog.submit.error": {
+        "text": "The visualization could not be saved.",
+        "crowdinContext": "Generic error shown when saving a visualization fails."
+    },
+    "analyticsCatalog.visualization.create.defaultTitle": {
+        "text": "My visualization",
+        "crowdinContext": "Default placeholder title seeded into the new-visualization as-code editor before the user types their own."
+    },
+    "analyticsCatalog.visualization.create.success": {
+        "text": "Visualization created.",
+        "crowdinContext": "Toast shown after a visualization is created successfully from the Analytics Catalog."
+    },
+    "analyticsCatalog.visualization.update.success": {
+        "text": "Visualization saved.",
+        "crowdinContext": "Toast shown after a visualization is updated successfully from the Analytics Catalog."
+    },
+    "analyticsCatalog.visualization.load.error": {
+        "text": "The visualization could not be loaded.",
+        "crowdinContext": "Error toast shown when loading a visualization for editing or duplication fails."
+    },
+    "analyticsCatalog.visualization.dialog.delete.title": {
+        "text": "Delete visualization",
+        "crowdinContext": "Title of the confirmation dialog for deleting a visualization."
+    },
+    "analyticsCatalog.visualization.dialog.delete.body": {
+        "text": "Are you sure you want to delete <b>{name}</b>?",
+        "crowdinContext": "Body of the confirmation dialog for deleting a visualization. {name} is the visualization title."
+    },
+    "analyticsCatalog.visualization.dialog.delete.usageWarning": {
+        "text": "This visualization is used by {count, plural, one {# dashboard} other {# dashboards}}. Deleting it may break them.",
+        "crowdinContext": "Warning shown in the visualization delete dialog when the visualization is referenced by dashboards."
+    },
+    "analyticsCatalog.visualization.dialog.delete.submit": {
+        "text": "Delete",
+        "crowdinContext": "Submit button of the delete visualization confirmation dialog."
+    },
+    "analyticsCatalog.visualization.delete.success": {
+        "text": "Visualization deleted.",
+        "crowdinContext": "Toast shown after a visualization is deleted successfully from the Analytics Catalog."
+    },
+    "analyticsCatalog.visualization.delete.error": {
+        "text": "Visualization could not be deleted.",
+        "crowdinContext": "Error toast shown when visualization deletion fails."
+    },
     "analyticsCatalog.share.button": {
         "text": "Share",
         "crowdinContext": "Button label opening the share dialog from the catalog detail page."

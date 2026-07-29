@@ -17,6 +17,7 @@ import type { ContainerWidget } from '@gooddata/sdk-code-schemas/v1';
 import type { Dashboard } from '@gooddata/sdk-code-schemas/v1';
 import type { DashboardFilters } from '@gooddata/sdk-code-schemas/v1';
 import type { Dataset } from '@gooddata/sdk-code-schemas/v1';
+import { DateAttributeGranularity } from '@gooddata/sdk-model';
 import type { DateDataset } from '@gooddata/sdk-code-schemas/v1';
 import { DeclarativeAnalyticalDashboard } from '@gooddata/api-client-tiger';
 import { DeclarativeAttribute } from '@gooddata/api-client-tiger';
@@ -2873,6 +2874,9 @@ export type OverrideDashboardDefinition = Omit<IDashboardDefinition, "filterCont
     activeTabLocalIdentifier?: string;
 };
 
+// @public (undocumented)
+export function parseGranularity(gran: DateAttributeGranularity | null): Required<DateDataset>["granularities"][number] | null;
+
 // @internal (undocumented)
 export type PatternFillName = "diagonal_grid_small" | "vertical_lines_small" | "grid_small" | "horizontal_lines_small" | "circle_small" | "flag_small" | "waffle_small" | "dot_small" | "pyramid_small" | "needle_small" | "diamond_small" | "pizza_small" | "diagonal_grid_medium" | "vertical_lines_medium" | "grid_large" | "horizontal_lines_medium" | "circle_medium" | "flag_medium" | "waffle_medium" | "dot_medium" | "pyramid_medium" | "needle_medium" | "diamond_medium" | "pizza_medium";
 
@@ -3676,6 +3680,15 @@ export type TableConfigProperties = {
                     kind: "literalRange";
                     from: number;
                     to: number;
+                } | {
+                    kind: "absoluteDate";
+                    from: string;
+                    to: string;
+                } | {
+                    kind: "relativeDate";
+                    granularity: string;
+                    from: number;
+                    to: number;
                 };
                 format: {
                     color?: string;
@@ -3784,6 +3797,15 @@ export function tableSave(fields: Visualisation["query"]["fields"] | undefined, 
                     value: string | number;
                 } | {
                     kind: "literalRange";
+                    from: number;
+                    to: number;
+                } | {
+                    kind: "absoluteDate";
+                    from: string;
+                    to: string;
+                } | {
+                    kind: "relativeDate";
+                    granularity: string;
                     from: number;
                     to: number;
                 };
@@ -4217,6 +4239,9 @@ export type YamlSorts = {
 
 // @internal (undocumented)
 export function yamlSortsToDeclarative(sort_by: Sorts | undefined, fields: Visualisation["query"]["fields"]): ISortItem[];
+
+// @internal
+export const yamlVisTypeToVisualizationUrl: Record<Visualisation["type"], string>;
 
 // @public (undocumented)
 export function yamlVisualisationToDeclarative(entities: ExportEntities, input: Visualisation): DeclarativeVisualizationObject;

@@ -5,21 +5,44 @@ import type { PropsWithChildren } from "react";
 import { describe, expect, it, vi } from "vitest";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import type { IMeasureMetadataObjectDefinition } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 
-import { getAsCodeDescriptor } from "../../asCodeRegistry.js";
 import type { ICatalogItemMeasure } from "../../catalogItem/types.js";
 import { TestIntlProvider } from "../../localization/TestIntlProvider.js";
-import type { IMetricMutationPort } from "../../metric/metricMutationPort.js";
+import { metricDescriptor as typedMetricDescriptor } from "../../metric/metricDescriptor.js";
 import { createTestMetricMutationPort } from "../../metric/tests/metricMutationPort.test.utils.js";
-import { ObjectTypes } from "../../objectType/constants.js";
 import { AsCodeDetailActions } from "../AsCodeDetailActions.js";
-import { AsCodeMutationProvider } from "../AsCodeMutationContext.js";
+import { type IAsCodeDescriptor, isLoadSeed } from "../descriptor.js";
 
-// A metric is the as-code type that exercises every AsCodeDetailActions capability: the standalone
-// "open" extra action, a load-backed edit/duplicate, and delete with a referencing-count warning.
-const metricDescriptor = getAsCodeDescriptor(ObjectTypes.METRIC)!;
+import { withMutationPort } from "./withMutationPort.js";
+
+// Built from the typed metric descriptor so the stubbed capabilities stay shape-checked.
+const metricSeed = typedMetricDescriptor.seed;
+if (!isLoadSeed(metricSeed)) {
+    throw new Error("a metric seeds via a fetch");
+}
+const loadedMeasure: IMeasureMetadataObjectDefinition = {
+    id: "revenue.total",
+    type: "measure",
+    title: "Total Revenue",
+    description: "",
+    tags: [],
+    expression: "SELECT 1",
+    format: "",
+};
+const metricDescriptor: IAsCodeDescriptor = withMutationPort(
+    {
+        ...typedMetricDescriptor,
+        seed: { load: async () => loadedMeasure, loadError: metricSeed.loadError },
+        referenceCounted: {
+            ...typedMetricDescriptor.referenceCounted!,
+            count: async () => 0,
+        },
+    },
+    createTestMetricMutationPort(),
+);
 
 vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
     const original = await importOriginal<Record<string, unknown>>();
@@ -56,31 +79,23 @@ const measureItem: ICatalogItemMeasure = {
     format: "",
 };
 
-// The injected port means the backend is never called, so a bare stub satisfies the provider.
 const stubBackend = {} as unknown as IAnalyticalBackend;
 
-function createWrapper(port: IMetricMutationPort = createTestMetricMutationPort()) {
-    function Wrapper({ children }: PropsWithChildren) {
-        return (
-            <TestIntlProvider>
-                <BackendProvider backend={stubBackend}>
-                    <WorkspaceProvider workspace="test-workspace">
-                        <ToastsCenterContextProvider>
-                            <AsCodeMutationProvider ports={{ [ObjectTypes.METRIC]: port }}>
-                                {children}
-                            </AsCodeMutationProvider>
-                        </ToastsCenterContextProvider>
-                    </WorkspaceProvider>
-                </BackendProvider>
-            </TestIntlProvider>
-        );
-    }
-    return Wrapper;
+function Wrapper({ children }: PropsWithChildren) {
+    return (
+        <TestIntlProvider>
+            <BackendProvider backend={stubBackend}>
+                <WorkspaceProvider workspace="test-workspace">
+                    <ToastsCenterContextProvider>{children}</ToastsCenterContextProvider>
+                </WorkspaceProvider>
+            </BackendProvider>
+        </TestIntlProvider>
+    );
 }
 
 function renderActions(props: Partial<Parameters<typeof AsCodeDetailActions>[0]> = {}) {
     return render(<AsCodeDetailActions descriptor={metricDescriptor} item={measureItem} {...props} />, {
-        wrapper: createWrapper(),
+        wrapper: Wrapper,
     });
 }
 
@@ -117,7 +132,6 @@ describe("AsCodeDetailActions (metric)", () => {
 
         fireEvent.click(screen.getByRole("button", { name: /actions for/i }));
         expect(screen.queryByText("Open in metric editor")).toBeNull();
-        // The rest of the menu is still present.
         expect(screen.getByText("Duplicate")).toBeInTheDocument();
     });
 
@@ -136,5 +150,18 @@ describe("AsCodeDetailActions (metric)", () => {
         fireEvent.click(screen.getByText("Delete"));
 
         expect(await screen.findByText("Delete metric")).toBeInTheDocument();
+    });
+
+    it("withholds edit and duplicate when the descriptor vetoes the item, keeping delete and open", () => {
+        const vetoingDescriptor: IAsCodeDescriptor = { ...metricDescriptor, useIsItemEditable: () => false };
+        render(<AsCodeDetailActions descriptor={vetoingDescriptor} item={measureItem} onOpen={vi.fn()} />, {
+            wrapper: Wrapper,
+        });
+
+        expect(screen.queryByRole("button", { name: /^edit$/i })).toBeNull();
+        fireEvent.click(screen.getByRole("button", { name: /actions for/i }));
+        expect(screen.queryByText("Duplicate")).toBeNull();
+        expect(screen.getByText("Delete")).toBeInTheDocument();
+        expect(screen.getByText("Open in metric editor")).toBeInTheDocument();
     });
 });

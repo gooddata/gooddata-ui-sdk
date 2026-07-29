@@ -23,6 +23,7 @@ export function useRedirectTarget(
     apps: PluggableApplicationRegistryItem[],
     ctx: IPlatformContext,
     pathname: string,
+    search?: string,
 ): RedirectTargetState {
     const [redirectState, setRedirectState] = useState<RedirectTargetState>({ state: "loading" });
 
@@ -45,6 +46,7 @@ export function useRedirectTarget(
             apps,
             ctx: ctx,
             pathname,
+            search,
             fetchFirstWorkspaceId,
         })
             .then((url) => {
@@ -79,7 +81,7 @@ export function useRedirectTarget(
         return () => {
             cancelled = true;
         };
-    }, [apps, pathname, ctx]);
+    }, [apps, pathname, search, ctx]);
 
     return redirectState;
 }

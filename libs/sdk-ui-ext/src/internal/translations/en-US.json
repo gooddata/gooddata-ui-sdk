@@ -2567,6 +2567,10 @@
         "text": "Column not found",
         "crowdinContext": "Badge on a rule whose target column is no longer present on the insight."
     },
+    "properties.conditionalFormatting.rule.invalidValue": {
+        "text": "Invalid value",
+        "crowdinContext": "Badge on a rule whose stored conditions no longer validate against the target — e.g. a date period that stopped aligning after the attribute's granularity changed."
+    },
     "properties.conditionalFormatting.rule.edit": {
         "text": "Edit rule",
         "crowdinContext": "Accessible label for the button that edits a conditional-formatting rule."
@@ -2654,6 +2658,42 @@
     "properties.conditionalFormatting.dialog.error.rangeOrder": {
         "text": "“From” must be less than or equal to “To”.",
         "crowdinContext": "Inline validation error shown when the lower bound of a between/not-between condition is greater than the upper bound."
+    },
+    "properties.conditionalFormatting.dialog.selectPeriod": {
+        "text": "Select period",
+        "crowdinContext": "Placeholder of the date-period picker before a period is chosen in a date condition."
+    },
+    "properties.conditionalFormatting.dialog.error.dateUnresolvable": {
+        "text": "The value cannot be resolved. Select it again.",
+        "crowdinContext": "Inline validation error shown when a date condition's stored period cannot be resolved (malformed value or unsupported granularity)."
+    },
+    "properties.conditionalFormatting.dateOperator.allTime": {
+        "text": "All time",
+        "crowdinContext": "Date condition that matches any cell with a date value (empty cells are covered by the separate Is empty condition)."
+    },
+    "properties.conditionalFormatting.dateOperator.isOn": {
+        "text": "Is on",
+        "crowdinContext": "Date condition matching cells whose date lies within the selected period."
+    },
+    "properties.conditionalFormatting.dateOperator.isNotOn": {
+        "text": "Is not on",
+        "crowdinContext": "Date condition matching cells whose date lies outside the selected period."
+    },
+    "properties.conditionalFormatting.dateOperator.isAfter": {
+        "text": "Is after",
+        "crowdinContext": "Date condition matching cells whose date is after the selected period ends."
+    },
+    "properties.conditionalFormatting.dateOperator.isOnOrAfter": {
+        "text": "Is on or after",
+        "crowdinContext": "Date condition matching cells whose date lies within the selected period or after it."
+    },
+    "properties.conditionalFormatting.dateOperator.isBefore": {
+        "text": "Is before",
+        "crowdinContext": "Date condition matching cells whose date is before the selected period starts."
+    },
+    "properties.conditionalFormatting.dateOperator.isOnOrBefore": {
+        "text": "Is on or before",
+        "crowdinContext": "Date condition matching cells whose date lies within the selected period or before it."
     },
     "properties.conditionalFormatting.operator.all": {
         "text": "All values",

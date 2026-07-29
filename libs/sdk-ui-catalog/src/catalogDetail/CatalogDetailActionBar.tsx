@@ -9,6 +9,7 @@ import { Dropdown, type IUiMenuItem, UiButton, UiIconButton, UiMenu } from "@goo
 import { catalogDetailActionsTrigger } from "../automation/testIds.js";
 import type { ICatalogItem } from "../catalogItem/types.js";
 
+import { toOpenHandlerEvent } from "./openHandlerEvent.js";
 import type { EditHandlerEvent, ICatalogDetailAction } from "./types.js";
 
 const messages = defineMessages({
@@ -63,19 +64,18 @@ export function CatalogDetailActionBar({
     return (
         <div className="gd-analytics-catalog-detail__detail-actions">
             {leadingActions}
-            <UiButton
-                label={intl.formatMessage({ id: "analyticsCatalog.edit" })}
-                variant="primary"
-                size="medium"
-                onClick={(event) => {
-                    onEditClick?.(event, {
-                        item,
-                        workspaceId,
-                        newTab: event.metaKey || event.ctrlKey,
-                        preventDefault: event.preventDefault.bind(event),
-                    });
-                }}
-            />
+            {/* The primary Edit button appears only when editing is offered; an item that is not
+                editable (e.g. a visualization the codec cannot represent) shows the actions menu alone. */}
+            {onEditClick ? (
+                <UiButton
+                    label={intl.formatMessage({ id: "analyticsCatalog.edit" })}
+                    variant="primary"
+                    size="medium"
+                    onClick={(event) => {
+                        onEditClick(event, toOpenHandlerEvent(event, item, workspaceId));
+                    }}
+                />
+            ) : null}
             <Dropdown
                 alignPoints={[{ align: "br tr" }]}
                 renderButton={({ toggleDropdown, buttonRef, ariaAttributes, accessibilityConfig }) => (

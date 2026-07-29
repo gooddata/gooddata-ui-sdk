@@ -2,7 +2,11 @@
 
 import { cloneDeep, isEmpty, isEqual } from "lodash-es";
 
-import { type IBackendCapabilities, type IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import {
+    type IAnalyticalBackend,
+    type IBackendCapabilities,
+    type IExecutionFactory,
+} from "@gooddata/sdk-backend-spi";
 import {
     type IDimension,
     type IInsight,
@@ -18,6 +22,7 @@ import {
     insightProperties,
     insightSanitize,
     insightSorts,
+    resolveWeekStart,
 } from "@gooddata/sdk-model";
 import {
     BucketNames,
@@ -82,6 +87,7 @@ import {
     setPivotTableNextUiConfig,
 } from "../../../utils/uiConfigHelpers/pivotTableNextUiConfigHelper.js";
 import {
+    type ICfDateSettings,
     type ICfTargetData,
     buildCfTargetData,
 } from "../../configurationControls/conditionalFormatting/conditionalFormattingModel.js";
@@ -140,6 +146,10 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
     private unmountFun: UnmountFunction;
     private readonly settings: ISettings;
     private backendCapabilities: IBackendCapabilities;
+    // Conditional formatting's date conditions fetch the workspace date-filter preset catalog.
+    private cfBackend: IAnalyticalBackend;
+    private cfWorkspace: string;
+    private cfDateSettings: ICfDateSettings;
     private environment: VisualizationEnvironment | undefined;
     // Populated on data view; the config panel re-renders on load completion and reads it.
     private cfTargetData: ICfTargetData = {};
@@ -157,6 +167,14 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
         this.propertiesAffectingReferencePoint = PROPERTIES_AFFECTING_REFERENCE_POINT;
         this.initializeProperties(props.visualizationProperties);
         this.backendCapabilities = props.backend.capabilities;
+        this.cfBackend = props.backend;
+        this.cfWorkspace = props.projectId;
+        // Shares the dashboard's week-start derivation (resolveWeekStart); dateFormat mirrors
+        // selectDateFormat, which is just the raw setting.
+        this.cfDateSettings = {
+            dateFormat: this.settings.responsiveUiDateFormat,
+            weekStart: resolveWeekStart(this.settings),
+        };
     }
 
     public unmount(): void {
@@ -499,6 +517,9 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
                     propertiesMeta={this.propertiesMeta}
                     insight={insight}
                     cfTargetData={this.cfTargetData}
+                    cfBackend={this.cfBackend}
+                    cfWorkspace={this.cfWorkspace}
+                    cfDateSettings={this.cfDateSettings}
                     separators={options.config?.separators}
                     pushData={this.handlePushData}
                     isError={this.getIsError()}

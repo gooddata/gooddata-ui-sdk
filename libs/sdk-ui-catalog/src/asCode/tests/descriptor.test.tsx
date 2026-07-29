@@ -1,13 +1,27 @@
 // (C) 2026 GoodData Corporation
 
+import { renderHook } from "@testing-library/react";
+import type { PropsWithChildren } from "react";
 import { describe, expect, it } from "vitest";
 
 import type { IMeasureMetadataObject, IMeasureMetadataObjectDefinition } from "@gooddata/sdk-model";
 
 import { getAsCodeDescriptor } from "../../asCodeRegistry.js";
+import { TestIntlProvider } from "../../localization/TestIntlProvider.js";
 import { metricDescriptor } from "../../metric/metricDescriptor.js";
 import { ObjectTypes } from "../../objectType/constants.js";
 import { parameterDescriptor } from "../../parameter/parameterDescriptor.js";
+import { TestPermissionsProvider } from "../../permission/TestPermissionsProvider.js";
+import { isLoadSeed } from "../descriptor.js";
+
+// The editing hooks read their own runtime context (intl; a parameter's enabled types via flags).
+function EditingWrapper({ children }: PropsWithChildren) {
+    return (
+        <TestIntlProvider>
+            <TestPermissionsProvider>{children}</TestPermissionsProvider>
+        </TestIntlProvider>
+    );
+}
 
 describe("registry", () => {
     it("resolves the descriptor for each as-code type", () => {
@@ -52,35 +66,33 @@ describe("metricDescriptor", () => {
         });
     });
 
-    it("applyYamlEdits overlays the parsed YAML onto the full definition, keeping non-YAML fields", () => {
-        const full = {
+    it("reconcile overlays the parsed YAML onto the base definition, keeping non-YAML fields", () => {
+        const base: IMeasureMetadataObjectDefinition = {
             id: "revenue",
             type: "measure",
             title: "Original",
+            description: "",
+            tags: [],
             expression: "SELECT 1",
             format: "",
             metricType: "CURRENCY",
-        } as IMeasureMetadataObjectDefinition;
-        const parsed = {
+        };
+        const parsed: IMeasureMetadataObjectDefinition = {
             id: "revenue",
             type: "measure",
             title: "Edited",
+            description: "",
+            tags: [],
             expression: "SELECT 2",
             format: "",
-        } as IMeasureMetadataObjectDefinition;
-        expect(metricDescriptor.applyYamlEdits!(full, parsed)).toMatchObject({
+        };
+        const { result } = renderHook(() => metricDescriptor.useEditing(), { wrapper: EditingWrapper });
+        expect(result.current?.reconcile?.(base, parsed)).toMatchObject({
             id: "revenue",
             title: "Edited",
             expression: "SELECT 2",
             metricType: "CURRENCY",
         });
-    });
-
-    it("declares the metric-only capabilities: applyYamlEdits, an open action, and a fetching port", () => {
-        expect(metricDescriptor.applyYamlEdits).toBeTypeOf("function");
-        expect(metricDescriptor.openAction).toBeDefined();
-        // A metric fetches its full measure, so it seeds via port.load rather than a sync editSeed.
-        expect(metricDescriptor.editSeed).toBeUndefined();
     });
 });
 
@@ -118,7 +130,11 @@ describe("parameterDescriptor", () => {
             isEditable: true,
             definition: { type: "NUMBER" as const, defaultValue: 5 },
         };
-        expect(parameterDescriptor.editSeed!(item)).toMatchObject({
+        const seed = parameterDescriptor.seed;
+        if (isLoadSeed(seed)) {
+            throw new Error("a parameter seeds synchronously from the catalog item");
+        }
+        expect(seed.editSeed(item)).toMatchObject({
             id: "param.id",
             type: "parameter",
             title: "My Param",
@@ -131,10 +147,5 @@ describe("parameterDescriptor", () => {
             title: "My Param (2)",
             definition: { type: "NUMBER", defaultValue: 5 },
         });
-    });
-
-    it("declares no applyYamlEdits or open action (its YAML round-trips 1:1, no standalone editor)", () => {
-        expect(parameterDescriptor.applyYamlEdits).toBeUndefined();
-        expect(parameterDescriptor.openAction).toBeUndefined();
     });
 });

@@ -135,6 +135,11 @@ export {
 } from "./types/refTypeMapping.js";
 export { type IOriginInfoWithId, getIdOrigin } from "./convertors/fromBackend/ObjectInheritance.js";
 export { toAfmExecution } from "./convertors/toBackend/afm/toAfmResultSpec.js";
+export {
+    type IVisualizationObjectMetadata,
+    convertVisualizationContentToInsight,
+} from "./convertors/fromBackend/visualizationObjects/VisualizationObjectConverter.js";
+export { convertInsightToVisualizationContent } from "./convertors/toBackend/InsightConverter.js";
 
 /**
  * @deprecated This will be removed in the next major release, please use the named export "tigerFactory" instead

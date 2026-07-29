@@ -36,6 +36,8 @@ export const defaultAlignPoints: IAlignPoint[] = [
     { align: "bl br" },
     { align: "tr tr" },
     { align: "br br" },
+    { align: "tr bl" },
+    { align: "tl br" },
 ];
 
 export const defaultFlexibleArrowOffsets: ArrowOffsets = {

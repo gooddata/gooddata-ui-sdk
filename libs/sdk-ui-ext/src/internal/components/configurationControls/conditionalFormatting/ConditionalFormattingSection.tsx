@@ -6,6 +6,7 @@ import cx from "classnames";
 import { cloneDeep, set } from "lodash-es";
 import { useIntl } from "react-intl";
 
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { type IInsightDefinition, type ISeparators } from "@gooddata/sdk-model";
 import { Button, UiIconButton } from "@gooddata/sdk-ui-kit";
 import { type IConditionalFormatting, type IConditionalFormattingRule } from "@gooddata/sdk-ui-pivot/next";
@@ -16,15 +17,19 @@ import { ConfigSection } from "../ConfigSection.js";
 
 import { ConditionalFormattingDialog } from "./ConditionalFormattingDialog.js";
 import {
+    type ICfDateSettings,
     type ICfTargetData,
     type ITargetOption,
     buildTargetOptions,
     findTargetOption,
+    isDateTarget,
+    isRuleComplete,
     newRule,
     targetIcon,
     targetLocalId,
 } from "./conditionalFormattingModel.js";
 import { type IReorderSlot, ReorderList } from "./ReorderList.js";
+import { useCfDateFilterOptions } from "./useCfDateFilterOptions.js";
 
 const SECTION_ID = "conditionalFormatting_section";
 
@@ -38,6 +43,10 @@ export interface IConditionalFormattingSectionProps {
     propertiesMeta?: Record<string, unknown>;
     insight?: IInsightDefinition;
     targetData?: ICfTargetData;
+    /** Backend + workspace for fetching the date-filter preset catalog (date conditions). */
+    backend?: IAnalyticalBackend;
+    workspace?: string;
+    dateSettings?: ICfDateSettings;
     separators?: ISeparators;
     isLoading?: boolean;
     pushData?: (data: unknown) => void;
@@ -46,8 +55,12 @@ export interface IConditionalFormattingSectionProps {
 interface IRuleChipProps {
     rule: IConditionalFormattingRule;
     option: ITargetOption | undefined;
+    invalid: boolean;
+    /** False until execution-resolved target metadata arrives (editing needs it). */
+    editable: boolean;
     labels: {
         invalid: string;
+        invalidValue: string;
         edit: string;
         delete: string;
     };
@@ -57,16 +70,29 @@ interface IRuleChipProps {
 }
 
 // Array order = evaluation order (first-match-wins).
-function RuleChip({ rule, option, labels, slot, onEdit, onDelete }: IRuleChipProps) {
+function RuleChip({ rule, option, invalid, editable, labels, slot, onEdit, onDelete }: IRuleChipProps) {
     return (
         <div className={cx("gd-cf-rule", slot.className)} {...slot.rootProps}>
             {slot.handle}
-            <button type="button" className="gd-cf-rule__body" onClick={onEdit} title={labels.edit}>
-                <span className={`gd-cf-type-icon ${targetIcon(rule.target.kind)}`} aria-hidden="true" />
+            <button
+                type="button"
+                className="gd-cf-rule__body"
+                onClick={onEdit}
+                title={labels.edit}
+                disabled={!editable}
+            >
+                <span
+                    className={`gd-cf-type-icon ${targetIcon(rule.target.kind, isDateTarget(option))}`}
+                    aria-hidden="true"
+                />
                 <span className="gd-cf-rule__title">
                     {option ? option.title : targetLocalId(rule.target)}
                 </span>
-                {option ? null : <span className="gd-cf-rule__invalid">{labels.invalid}</span>}
+                {invalid ? (
+                    <span className="gd-cf-rule__invalid">
+                        {option ? labels.invalidValue : labels.invalid}
+                    </span>
+                ) : null}
             </button>
             <span className="gd-cf-rule__delete">
                 <UiIconButton
@@ -87,6 +113,9 @@ export function ConditionalFormattingSection({
     propertiesMeta,
     insight,
     targetData,
+    backend,
+    workspace,
+    dateSettings,
     separators,
     isLoading,
     pushData,
@@ -98,7 +127,12 @@ export function ConditionalFormattingSection({
     const rules = config?.rules ?? [];
     const enabled = config?.enabled ?? false;
     const targetOptions = insight ? buildTargetOptions(insight, targetData) : [];
-    const canAddRule = !isLoading && targetOptions.length > 0;
+    // Only date pickers consume the catalog — skip the backend query when no target is date-eligible.
+    const dateFilterOptions = useCfDateFilterOptions(backend, workspace, targetOptions.some(isDateTarget));
+    // Completeness and authoring both need execution-resolved date metadata; before the first data view
+    // it's unknown — don't flash a false "Invalid" badge, don't author a plain-text rule on a date attr.
+    const targetDataReady = targetData?.dates !== undefined;
+    const canAddRule = !isLoading && targetOptions.length > 0 && targetDataReady;
 
     const commit = (rulesNext: readonly IConditionalFormattingRule[], enabledNext: boolean) => {
         // Spread the existing config so version (and any future cross-stack fields) survive an edit.
@@ -126,6 +160,7 @@ export function ConditionalFormattingSection({
 
     const chipLabels = {
         invalid: intl.formatMessage(conditionalFormattingMessages.ruleInvalid),
+        invalidValue: intl.formatMessage(conditionalFormattingMessages.ruleInvalidValue),
         edit: intl.formatMessage(conditionalFormattingMessages.ruleEdit),
         delete: intl.formatMessage(conditionalFormattingMessages.ruleDelete),
     };
@@ -157,7 +192,7 @@ export function ConditionalFormattingSection({
                     iconLeft="gd-icon-plus"
                     value={intl.formatMessage(conditionalFormattingMessages.addRule)}
                     disabled={!canAddRule}
-                    onClick={() => setDialog({ rule: newRule(targetOptions[0].target), isNew: true })}
+                    onClick={() => setDialog({ rule: newRule(targetOptions[0]), isNew: true })}
                 />
             </div>
             {rules.length === 0 ? (
@@ -170,16 +205,24 @@ export function ConditionalFormattingSection({
                         items={rules}
                         getKey={(rule) => rule.id}
                         onReorder={(next) => commit(next, enabled)}
-                        renderItem={(rule, slot) => (
-                            <RuleChip
-                                rule={rule}
-                                option={findTargetOption(targetOptions, rule.target)}
-                                labels={chipLabels}
-                                slot={slot}
-                                onEdit={() => setDialog({ rule, isNew: false })}
-                                onDelete={() => deleteRule(rule.id)}
-                            />
-                        )}
+                        renderItem={(rule, slot) => {
+                            const option = findTargetOption(targetOptions, rule.target);
+                            // A missing target flags immediately; value validation waits for date metadata.
+                            const invalid =
+                                !option || (targetDataReady && !isRuleComplete(rule, option.date));
+                            return (
+                                <RuleChip
+                                    rule={rule}
+                                    option={option}
+                                    invalid={invalid}
+                                    editable={targetDataReady}
+                                    labels={chipLabels}
+                                    slot={slot}
+                                    onEdit={() => setDialog({ rule, isNew: false })}
+                                    onDelete={() => deleteRule(rule.id)}
+                                />
+                            );
+                        }}
                     />
                 </div>
             )}
@@ -191,6 +234,8 @@ export function ConditionalFormattingSection({
                     isNew={dialog.isNew}
                     targetOptions={targetOptions}
                     separators={separators}
+                    dateFilterOptions={dateFilterOptions}
+                    dateSettings={dateSettings}
                     alignTo=".s-cf-popover-anchor"
                     onSave={(rule) => saveRule(rule, dialog.isNew)}
                     onClose={() => setDialog(null)}

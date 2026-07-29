@@ -95,6 +95,7 @@ import { matchConditionToYaml, parseDateValues } from "../utils/filterUtils.js";
 import { parseGranularity } from "../utils/granularityUtils.js";
 import { remapLocationAttribute } from "../utils/locationUtils.js";
 import { VISUALISATION_COMMENT } from "../utils/texts.js";
+import { visualizationUrlToYamlVisType } from "../utils/visualisationTypeMap.js";
 import {
     cleanUpItems,
     createFilterItemKeyName,
@@ -370,56 +371,7 @@ export function declarativeFiltersConfigToYaml(
 
 /** @internal */
 export function declarativeVisTypeToYaml(def: IInsightDefinition["insight"]): string | null {
-    switch (def.visualizationUrl) {
-        case "local:table":
-            return "table";
-        case "local:bar":
-            return "bar_chart";
-        case "local:column":
-            return "column_chart";
-        case "local:line":
-            return "line_chart";
-        case "local:area":
-            return "area_chart";
-        case "local:scatter":
-            return "scatter_chart";
-        case "local:bubble":
-            return "bubble_chart";
-        case "local:pie":
-            return "pie_chart";
-        case "local:donut":
-            return "donut_chart";
-        case "local:treemap":
-            return "treemap_chart";
-        case "local:pyramid":
-            return "pyramid_chart";
-        case "local:funnel":
-            return "funnel_chart";
-        case "local:heatmap":
-            return "heatmap_chart";
-        case "local:bullet":
-            return "bullet_chart";
-        case "local:waterfall":
-            return "waterfall_chart";
-        case "local:dependencywheel":
-            return "dependency_wheel_chart";
-        case "local:sankey":
-            return "sankey_chart";
-        case "local:headline":
-            return "headline_chart";
-        case "local:combo2":
-            return "combo_chart";
-        case "local:pushpin":
-            return "geo_chart";
-        case "local:choropleth":
-            return "geo_area_chart";
-        case "local:repeater":
-            return "repeater_chart";
-        case "local:radar":
-            return "radar_chart";
-        default:
-            return null;
-    }
+    return visualizationUrlToYamlVisType.get(def.visualizationUrl) ?? null;
 }
 
 function declarativeVisToYaml(

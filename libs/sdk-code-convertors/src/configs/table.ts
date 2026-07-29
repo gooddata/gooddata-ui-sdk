@@ -3,6 +3,7 @@
 import type { Visualisation } from "@gooddata/sdk-code-schemas/v1";
 
 import { loadColumnsWidth, loadDisableKda, saveColumnWidths } from "../utils/configUtils.js";
+import { cfGranularityFromYaml, cfGranularityToYaml } from "../utils/granularityUtils.js";
 
 import { type ColumnLocator, type ColumnWidthItem } from "./types.js";
 import {
@@ -53,7 +54,9 @@ export type TableConfigProperties = {
                 value:
                     | { kind: "none" }
                     | { kind: "literal"; value: string | number }
-                    | { kind: "literalRange"; from: number; to: number };
+                    | { kind: "literalRange"; from: number; to: number }
+                    | { kind: "absoluteDate"; from: string; to: string }
+                    | { kind: "relativeDate"; granularity: string; from: number; to: number };
                 format: { color?: string; backgroundColor?: string; scope: "cell" | "row" };
             }>;
         }>;
@@ -175,6 +178,10 @@ function saveTextWrapping(value: YamlTextWrapping | undefined): TextWrapping | u
     };
 }
 
+type YamlDateValue =
+    | { absolute: { from: string; to: string } }
+    | { relative: { granularity: string; from: number; to: number } };
+
 type YamlConditionalFormatting = {
     version?: string;
     enabled?: boolean;
@@ -184,7 +191,7 @@ type YamlConditionalFormatting = {
         conditions: Array<{
             id: string;
             operator: string;
-            value?: number | string | { from: number; to: number } | null;
+            value?: number | string | { from: number; to: number } | YamlDateValue | null;
             format: { text?: string; fill?: string; scope: "cell" | "row" };
         }>;
     }>;
@@ -198,6 +205,20 @@ function loadConditionalFormattingValue(value: ConditionalFormattingValue): obje
     }
     if (value.kind === "literalRange") {
         return { value: { from: value.from, to: value.to } };
+    }
+    if (value.kind === "absoluteDate") {
+        return { value: { absolute: { from: value.from, to: value.to } } };
+    }
+    if (value.kind === "relativeDate") {
+        return {
+            value: {
+                relative: {
+                    granularity: cfGranularityToYaml(value.granularity),
+                    from: value.from,
+                    to: value.to,
+                },
+            },
+        };
     }
     return {};
 }
@@ -240,14 +261,28 @@ function loadConditionalFormatting(value: ConditionalFormatting | undefined): ob
 // YAML -> internal
 
 function saveConditionalFormattingValue(
-    value: number | string | { from: number; to: number } | null | undefined,
+    value: number | string | { from: number; to: number } | YamlDateValue | null | undefined,
 ): ConditionalFormattingValue {
     if (value === null || value === undefined) {
         return { kind: "none" };
     }
-    // Only a {from,to} object is a range; guard "from" so a stray object can't crash the conversion.
-    if (typeof value === "object" && "from" in value) {
-        return { kind: "literalRange", from: value.from, to: value.to };
+    if (typeof value === "object") {
+        if ("absolute" in value) {
+            return { kind: "absoluteDate", from: value.absolute.from, to: value.absolute.to };
+        }
+        if ("relative" in value) {
+            return {
+                kind: "relativeDate",
+                granularity: cfGranularityFromYaml(value.relative.granularity),
+                from: value.relative.from,
+                to: value.relative.to,
+            };
+        }
+        // Only a {from,to} object is a range; guard "from" so a stray object can't crash the conversion.
+        if ("from" in value) {
+            return { kind: "literalRange", from: value.from, to: value.to };
+        }
+        return { kind: "none" };
     }
     return { kind: "literal", value };
 }

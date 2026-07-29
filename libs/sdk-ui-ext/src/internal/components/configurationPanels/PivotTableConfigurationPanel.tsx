@@ -5,6 +5,7 @@ import { type ReactNode } from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     type ISeparators,
     insightHasAttributes,
@@ -23,7 +24,10 @@ import {
 import { isSetColumnHeadersPositionToLeftAllowed } from "../../utils/controlsHelper.js";
 import { CellsControl } from "../configurationControls/CellsControl.js";
 import { ColumnHeadersPositionControl } from "../configurationControls/ColumnHeadersPositionControl.js";
-import { type ICfTargetData } from "../configurationControls/conditionalFormatting/conditionalFormattingModel.js";
+import {
+    type ICfDateSettings,
+    type ICfTargetData,
+} from "../configurationControls/conditionalFormatting/conditionalFormattingModel.js";
 import { ConditionalFormattingSection } from "../configurationControls/conditionalFormatting/ConditionalFormattingSection.js";
 import { ConfigDummySection } from "../configurationControls/ConfigDummySection.js";
 import { ConfigSection } from "../configurationControls/ConfigSection.js";
@@ -40,6 +44,10 @@ import { type SectionName } from "./sectionName.js";
 // Conditional-formatting metadata from the pivot pluggable; kept off the shared panel props.
 interface IPivotTableConfigurationPanelProps extends IConfigurationPanelContentProps {
     cfTargetData?: ICfTargetData;
+    /** Backend + workspace let the CF section fetch the workspace date-filter preset catalog. */
+    cfBackend?: IAnalyticalBackend;
+    cfWorkspace?: string;
+    cfDateSettings?: ICfDateSettings;
     separators?: ISeparators;
 }
 
@@ -173,8 +181,18 @@ export class PivotTableConfigurationPanel extends ConfigurationPanelContent<IPiv
     }
 
     private renderConditionalFormattingSection() {
-        const { properties, propertiesMeta, insight, cfTargetData, separators, pushData, isLoading } =
-            this.props;
+        const {
+            properties,
+            propertiesMeta,
+            insight,
+            cfTargetData,
+            cfBackend,
+            cfWorkspace,
+            cfDateSettings,
+            separators,
+            pushData,
+            isLoading,
+        } = this.props;
 
         return (
             <ConditionalFormattingSection
@@ -182,6 +200,9 @@ export class PivotTableConfigurationPanel extends ConfigurationPanelContent<IPiv
                 propertiesMeta={propertiesMeta}
                 insight={insight}
                 targetData={cfTargetData}
+                backend={cfBackend}
+                workspace={cfWorkspace}
+                dateSettings={cfDateSettings}
                 separators={separators}
                 pushData={pushData}
                 isLoading={isLoading}

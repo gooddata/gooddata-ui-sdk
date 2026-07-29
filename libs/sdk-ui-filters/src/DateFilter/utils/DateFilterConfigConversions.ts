@@ -1,0 +1,154 @@
+// (C) 2019-2026 GoodData Corporation
+
+import { endOfDay, format, startOfDay, subMonths } from "date-fns";
+import { groupBy, max, min } from "lodash-es";
+
+import {
+    type IAbsoluteDateFilterForm,
+    type IAbsoluteDateFilterPreset,
+    type IAllTimeDateFilterOption,
+    type IDateFilterConfig,
+    type IEmptyValuesDateFilterOption,
+    type IRelativeDateFilterForm,
+    type IRelativeDateFilterPreset,
+} from "@gooddata/sdk-model";
+
+import {
+    type AbsoluteDateFilterOption,
+    type DateFilterRelativeOptionGroup,
+    type IDateFilterOptionsByType,
+    type IUiAbsoluteDateFilterForm,
+    type IUiRelativeDateFilterForm,
+    type RelativeDateFilterOption,
+} from "../interfaces/index.js";
+
+import { removeEmptyKeysFromDateFilterOptions } from "./OptionUtils.js";
+
+// date-fns tokens of the platform date-time format (Platform.ts holds the moment spelling).
+const PLATFORM_DATE_FORMAT = "yyyy-MM-dd HH:mm";
+
+/**
+ * Converts a workspace date filter config — as stored on the backend — into the date filter options
+ * the {@link DateFilter} component consumes (its `filterOptions` prop).
+ *
+ * @remarks
+ * Extracted from sdk-ui-dashboard so non-dashboard hosts (e.g. conditional formatting's date
+ * condition picker) consume the same workspace preset catalog; dashboards re-export it.
+ *
+ * @param config - date filter config from backend
+ * @alpha
+ */
+export function convertDateFilterConfigToDateFilterOptions(
+    config: IDateFilterConfig,
+): IDateFilterOptionsByType {
+    const allTime = convertAllTime(config.allTime);
+    const emptyValues = convertEmptyValues(config.emptyValues);
+    const absoluteForm = convertAbsoluteForm(config.absoluteForm);
+    const relativeForm = convertRelativeForm(config.relativeForm);
+    const absolutePreset = convertAbsolutePresets(config.absolutePresets);
+    const relativePreset = convertRelativePresets(config.relativePresets);
+
+    return removeEmptyKeysFromDateFilterOptions({
+        allTime,
+        emptyValues,
+        absoluteForm,
+        absolutePreset,
+        relativeForm,
+        relativePreset,
+    });
+}
+
+function convertAllTime(filter: IAllTimeDateFilterOption | undefined): IAllTimeDateFilterOption | undefined {
+    return (
+        filter && {
+            ...filter,
+            type: "allTime",
+        }
+    );
+}
+
+function convertEmptyValues(
+    filter: IEmptyValuesDateFilterOption | undefined,
+): IEmptyValuesDateFilterOption | undefined {
+    return (
+        filter && {
+            ...filter,
+            type: "emptyValues",
+        }
+    );
+}
+
+function convertAbsoluteForm(
+    filter: IAbsoluteDateFilterForm | undefined,
+): IUiAbsoluteDateFilterForm | undefined {
+    const now = new Date();
+    return (
+        filter && {
+            ...filter,
+            from: format(startOfDay(subMonths(now, 1)), PLATFORM_DATE_FORMAT),
+            to: format(endOfDay(now), PLATFORM_DATE_FORMAT),
+            type: "absoluteForm",
+        }
+    );
+}
+
+function convertRelativeForm(
+    filter: IRelativeDateFilterForm | undefined,
+): IUiRelativeDateFilterForm | undefined {
+    return (
+        filter && {
+            from: undefined,
+            // we order the granularities anyway, this lets the user to config the default
+            granularity: filter.availableGranularities[0],
+            localIdentifier: filter.localIdentifier,
+            name: filter.name,
+            to: undefined,
+            type: "relativeForm",
+            visible: filter.visible,
+        }
+    );
+}
+
+function convertAbsolutePresets(
+    filters: IAbsoluteDateFilterPreset[] | undefined,
+): IAbsoluteDateFilterPreset[] | undefined {
+    return filters?.map(
+        (preset): IAbsoluteDateFilterPreset =>
+            sanitizeDateFilterOption({
+                ...preset,
+                type: "absolutePreset",
+            }),
+    );
+}
+
+function convertRelativePresets(
+    filters: IRelativeDateFilterPreset[] | undefined,
+): DateFilterRelativeOptionGroup | undefined {
+    return (
+        filters &&
+        groupBy(
+            filters.map(
+                (preset): IRelativeDateFilterPreset =>
+                    sanitizeDateFilterOption({
+                        ...preset,
+                        type: "relativePreset",
+                    }),
+            ),
+            (preset) => preset.granularity,
+        )
+    );
+}
+
+function sanitizeDateFilterOption<
+    T extends
+        | RelativeDateFilterOption
+        | AbsoluteDateFilterOption
+        | IAbsoluteDateFilterPreset
+        | IRelativeDateFilterPreset,
+>(option: T): T {
+    return {
+        ...option,
+        from: min([option.from, option.to]),
+        to: max([option.from, option.to]),
+    };
+}

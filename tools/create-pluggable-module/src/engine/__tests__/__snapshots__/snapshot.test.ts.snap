@@ -470,7 +470,7 @@ export default defineConfig(({ mode }): UserConfig => {
             outDir: "dist",
             sourcemap: !isProduction,
             target: "es2022",
-            chunkSizeWarningLimit: 10000,
+            chunkSizeWarningLimit: 15000,
             rolldownOptions: {
                 input: resolve(__dirname, "index.html"),
             },

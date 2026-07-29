@@ -1,6 +1,10 @@
 // (C) 2026 GoodData Corporation
 
-import { type ComparisonConditionOperator, type RangeConditionOperator } from "@gooddata/sdk-model";
+import {
+    type ComparisonConditionOperator,
+    type DateFilterGranularity,
+    type RangeConditionOperator,
+} from "@gooddata/sdk-model";
 
 /**
  * Identifies the measure or attribute a conditional-formatting rule targets. Layout-neutral on
@@ -14,7 +18,7 @@ export type ConditionalFormattingTarget =
     | { kind: "measure"; measureIdentifier: string };
 
 /**
- * Text and empty operators specific to conditional formatting. No existing SDK enum covers text
+ * Substring operators specific to conditional formatting. No existing SDK enum covers text
  * matching (attribute filters are element-based IN/NOT_IN), so these are CF-specific.
  *
  * @alpha
@@ -25,15 +29,24 @@ export type ConditionalFormattingTextOperator =
     | "STARTS_WITH"
     | "NOT_STARTS_WITH"
     | "ENDS_WITH"
-    | "NOT_ENDS_WITH"
-    | "IS_EMPTY"
-    | "IS_NOT_EMPTY";
+    | "NOT_ENDS_WITH";
 
 /**
- * Every operator a condition may use. Numeric and range operators reuse the SDK
- * measure-value-filter vocabulary (`ComparisonConditionOperator`, `RangeConditionOperator` from
- * `@gooddata/sdk-model`); `"ALL"` always matches; text/empty operators are
- * {@link ConditionalFormattingTextOperator}.
+ * Emptiness operators — target-agnostic: an empty cell (null measure value, valueless attribute
+ * element) is matched only by these, on any target kind.
+ *
+ * @alpha
+ */
+export type ConditionalFormattingEmptinessOperator = "IS_EMPTY" | "IS_NOT_EMPTY";
+
+/**
+ * Every operator a stored condition may carry. One shared, shape-grouped vocabulary: numeric and
+ * range operators reuse the SDK measure-value-filter enums (`ComparisonConditionOperator`,
+ * `RangeConditionOperator` from `@gooddata/sdk-model`); `"ALL"` always matches non-empty cells;
+ * substring operators are {@link ConditionalFormattingTextOperator}; emptiness operators are
+ * {@link ConditionalFormattingEmptinessOperator}. Which subset a target kind AUTHORS is editor
+ * policy (see `operatorsForTarget` in sdk-ui-ext); the evaluation engine accepts any combination
+ * and treats inapplicable ones as never matching.
  *
  * @alpha
  */
@@ -41,18 +54,52 @@ export type ConditionalFormattingOperator =
     | "ALL"
     | ComparisonConditionOperator
     | RangeConditionOperator
-    | ConditionalFormattingTextOperator;
+    | ConditionalFormattingTextOperator
+    | ConditionalFormattingEmptinessOperator;
 
 /**
- * The operand a condition compares against. Discriminated so range / no-operand / (future
+ * The operand a condition compares against. Discriminated so range / no-operand / date / (future
  * column-reference) shapes stay valid by construction.
+ *
+ * Date values target date attributes and express a period; a single date is a period whose bounds
+ * coincide. "Is on" (EQUAL_TO) means the cell's period lies within the value period; "Is after"
+ * (GREATER_THAN) means after the period ends; "Is before" (LESS_THAN) before it starts.
  *
  * @alpha
  */
 export type ConditionalFormattingValue =
     | { kind: "none" }
     | { kind: "literal"; value: string | number }
-    | { kind: "literalRange"; from: number; to: number };
+    | { kind: "literalRange"; from: number; to: number }
+    | {
+          kind: "absoluteDate";
+          /**
+           * Period start as a platform date string: "YYYY-MM-DD", or "YYYY-MM-DD HH:mm" for
+           * hour/minute-granularity targets. Snapped to the period start at save time.
+           */
+          from: string;
+          /**
+           * Inclusive period end — the last day (or minute) of the period, mirroring how absolute
+           * date filters store their `to` bound.
+           */
+          to: string;
+      }
+    | {
+          kind: "relativeDate";
+          /**
+           * Granularity the offsets count in (linear granularities only).
+           */
+          granularity: DateFilterGranularity;
+          /**
+           * Integer period offset of the range start; 0 = the period containing the anchor,
+           * negative = past, positive = future.
+           */
+          from: number;
+          /**
+           * Integer period offset of the range end (inclusive), \>= `from`.
+           */
+          to: number;
+      };
 
 /**
  * The visual format applied to a matched cell or row.
@@ -124,6 +171,28 @@ export interface IConditionalFormatting {
  * @internal
  */
 export type ConditionalFormattingTriggerColIds = readonly (readonly string[])[];
+
+/**
+ * Label-space bounds of one resolved date condition: the first and last wire label (at the target
+ * column's granularity) of the value period. Labels are fixed-width and zero-padded, so containment
+ * and ordering reduce to plain string comparison.
+ *
+ * @internal
+ */
+export interface IDateConditionBounds {
+    fromLabel: string;
+    toLabel: string;
+}
+
+/**
+ * Resolved date bounds keyed by `<ruleIndex>:<conditionId>` (ids in hand-authored config are only
+ * trustworthy within a rule; position is collision-proof) — computed once per render alongside
+ * trigger resolution. `null` marks an unresolvable condition (malformed value, fiscal or unknown
+ * granularity, non-date target): it never matches. Conditions without a date value are absent.
+ *
+ * @internal
+ */
+export type ConditionalFormattingDateBounds = Record<string, IDateConditionBounds | null>;
 
 /**
  * Config slot intersected into {@link PivotTableNextConfig} so conditional formatting can be passed

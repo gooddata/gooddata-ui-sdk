@@ -3,9 +3,10 @@
 import { useId } from "react";
 
 import cx from "classnames";
-import { type IntlShape, type MessageDescriptor } from "react-intl";
+import { type MessageDescriptor, useIntl } from "react-intl";
 
 import { type IColor, type ISeparators } from "@gooddata/sdk-model";
+import { type IDateFilterOptionsByType } from "@gooddata/sdk-ui-filters";
 import {
     Button,
     Dropdown,
@@ -23,64 +24,44 @@ import {
     UiComboboxPopup,
 } from "@gooddata/sdk-ui-kit";
 import {
-    type ConditionalFormattingOperator,
     type ConditionalFormattingTarget,
     type ConditionalFormattingValue,
     type IConditionalFormattingCondition,
     type IConditionalFormattingFormat,
 } from "@gooddata/sdk-ui-pivot/next";
 
-import { conditionalFormattingMessages, conditionalFormattingOperatorMessages } from "../../../../locales.js";
+import {
+    conditionalFormattingDateOperatorMessages,
+    conditionalFormattingMessages,
+    conditionalFormattingOperatorMessages,
+} from "../../../../locales.js";
 import { ColorDropdown } from "../colors/colorDropdown/ColorDropdown.js";
 
+import { CfDateValueDropdown } from "./CfDateValueDropdown.js";
 import { CfSelect } from "./CfSelect.js";
 import { CF_COLOR_PALETTE, colorToHex, hexToColor } from "./conditionalFormattingColors.js";
 import {
     type ConditionalFormattingFieldError,
+    type ICfDateMeta,
+    type ICfDateSettings,
     displayToRawNumber,
-    emptyValueForOperator,
+    literalRaw,
+    literalText,
     operatorIcon,
-    operatorsForKind,
+    operatorsForTarget,
+    rangeRaw,
     rawToDisplayNumber,
     validateCondition,
     valueEditorKind,
+    valueForOperator,
 } from "./conditionalFormattingModel.js";
 import { type IReorderSlot } from "./ReorderList.js";
-
-// An entered operand survives operator changes within the same shape (e.g. > to >=).
-const valueForOperator = (
-    operator: ConditionalFormattingOperator,
-    previous: ConditionalFormattingValue,
-): ConditionalFormattingValue => {
-    const empty = emptyValueForOperator(operator);
-    return previous.kind === empty.kind ? previous : empty;
-};
-
-const literalText = (value: ConditionalFormattingValue): string =>
-    value.kind === "literal" ? String(value.value) : "";
-
-const literalRaw = (value: ConditionalFormattingValue): number | null => {
-    if (value.kind !== "literal" || String(value.value).trim() === "") {
-        return null;
-    }
-    const n = Number(value.value);
-    return Number.isFinite(n) ? n : null;
-};
-
-const rangeRaw = (value: ConditionalFormattingValue, bound: "from" | "to"): number | null => {
-    if (value.kind !== "literalRange") {
-        return null;
-    }
-    const n = value[bound];
-    return Number.isFinite(n) ? n : null;
-};
 
 interface ICfMeasureValueInputProps extends Pick<IInputPureProps, "hasError" | "accessibilityConfig"> {
     raw: number | null;
     isPercent: boolean;
     separators: ISeparators | undefined;
     placeholder: string;
-    intl: IntlShape;
     onChangeRaw: (raw: number | null) => void;
 }
 
@@ -89,11 +70,11 @@ function CfMeasureValueInput({
     isPercent,
     separators,
     placeholder,
-    intl,
     onChangeRaw,
     hasError,
     accessibilityConfig,
 }: ICfMeasureValueInputProps) {
+    const intl = useIntl();
     return (
         <InputWithNumberFormat
             value={raw === null ? undefined : rawToDisplayNumber(raw, isPercent)}
@@ -152,17 +133,11 @@ function CfValueCombobox({ value, suggestions, placeholder, onChangeText }: ICfV
 
 const FIELD_ERROR_MESSAGE: Record<ConditionalFormattingFieldError, MessageDescriptor> = {
     rangeOrder: conditionalFormattingMessages.dialogErrorRangeOrder,
+    dateUnresolvable: conditionalFormattingMessages.dialogErrorDateUnresolvable,
 };
 
-function CfFieldError({
-    id,
-    error,
-    intl,
-}: {
-    id: string;
-    error: ConditionalFormattingFieldError | undefined;
-    intl: IntlShape;
-}) {
+function CfFieldError({ id, error }: { id: string; error: ConditionalFormattingFieldError | undefined }) {
+    const intl = useIntl();
     if (!error) {
         return null;
     }
@@ -179,7 +154,9 @@ interface IConditionValueInputProps {
     isPercent: boolean;
     separators: ISeparators | undefined;
     suggestions: readonly string[];
-    intl: IntlShape;
+    date: ICfDateMeta | undefined;
+    dateFilterOptions: IDateFilterOptionsByType | undefined;
+    dateSettings: ICfDateSettings | undefined;
     onChange: (condition: IConditionalFormattingCondition) => void;
 }
 
@@ -189,15 +166,37 @@ function ConditionValueInput({
     isPercent,
     separators,
     suggestions,
-    intl,
+    date,
+    dateFilterOptions,
+    dateSettings,
     onChange,
 }: IConditionValueInputProps) {
+    const intl = useIntl();
     const errorId = useId();
     const setValue = (value: ConditionalFormattingValue) => onChange({ ...condition, value });
 
-    switch (valueEditorKind(condition, kind, suggestions.length > 0)) {
+    switch (valueEditorKind(condition, kind, suggestions.length > 0, date !== undefined)) {
         case "none":
             return null;
+        case "date": {
+            if (!date) {
+                return null;
+            }
+            const { errors } = validateCondition(condition, kind, date);
+            return (
+                <>
+                    <CfDateValueDropdown
+                        value={condition.value}
+                        date={date}
+                        catalogOptions={dateFilterOptions}
+                        dateSettings={dateSettings}
+                        errorId={errors.date ? errorId : undefined}
+                        onChange={setValue}
+                    />
+                    <CfFieldError id={errorId} error={errors.date} />
+                </>
+            );
+        }
         case "number":
             return (
                 <CfMeasureValueInput
@@ -205,7 +204,6 @@ function ConditionValueInput({
                     isPercent={isPercent}
                     separators={separators}
                     placeholder={intl.formatMessage(conditionalFormattingMessages.dialogValuePlaceholder)}
-                    intl={intl}
                     onChangeRaw={(raw) => setValue({ kind: "literal", value: raw ?? "" })}
                 />
             );
@@ -245,7 +243,6 @@ function ConditionValueInput({
                             placeholder={intl.formatMessage(
                                 conditionalFormattingMessages.dialogFromPlaceholder,
                             )}
-                            intl={intl}
                             onChangeRaw={(raw) => setRange(raw ?? NaN, range.to)}
                             {...invalidInputProps(errors.range)}
                         />
@@ -256,12 +253,11 @@ function ConditionValueInput({
                             placeholder={intl.formatMessage(
                                 conditionalFormattingMessages.dialogToPlaceholder,
                             )}
-                            intl={intl}
                             onChangeRaw={(raw) => setRange(range.from, raw ?? NaN)}
                             {...invalidInputProps(errors.range)}
                         />
                     </div>
-                    <CfFieldError id={errorId} error={errors.range} intl={intl} />
+                    <CfFieldError id={errorId} error={errors.range} />
                 </>
             );
         }
@@ -309,11 +305,11 @@ const ROW_PREVIEW_SAMPLE = ["Abc", "123"];
 
 interface IFormatEditorProps {
     format: IConditionalFormattingFormat;
-    intl: IntlShape;
     onChange: (format: IConditionalFormattingFormat) => void;
 }
 
-function FormatEditor({ format, intl, onChange }: IFormatEditorProps) {
+function FormatEditor({ format, onChange }: IFormatEditorProps) {
+    const intl = useIntl();
     return (
         <Dropdown
             closeOnParentScroll
@@ -375,9 +371,11 @@ export interface IConditionEditorProps {
     isPercent: boolean;
     separators: ISeparators | undefined;
     suggestions: readonly string[];
+    date: ICfDateMeta | undefined;
+    dateFilterOptions: IDateFilterOptionsByType | undefined;
+    dateSettings: ICfDateSettings | undefined;
     removable: boolean;
     slot: IReorderSlot;
-    intl: IntlShape;
     onChange: (condition: IConditionalFormattingCondition) => void;
     onRemove: () => void;
 }
@@ -388,16 +386,24 @@ export function ConditionEditor({
     isPercent,
     separators,
     suggestions,
+    date,
+    dateFilterOptions,
+    dateSettings,
     removable,
     slot,
-    intl,
     onChange,
     onRemove,
 }: IConditionEditorProps) {
-    const operatorItems = operatorsForKind(kind).map((operator) => ({
+    const intl = useIntl();
+    const isDate = date !== undefined;
+    // Date operators render label-only (per design), so no icon lookup on that path.
+    const operatorItems = operatorsForTarget(kind, isDate).map((operator) => ({
         value: operator,
-        title: intl.formatMessage(conditionalFormattingOperatorMessages[operator]),
-        icon: operatorIcon(operator),
+        title: intl.formatMessage(
+            (isDate ? conditionalFormattingDateOperatorMessages[operator] : undefined) ??
+                conditionalFormattingOperatorMessages[operator],
+        ),
+        icon: isDate ? undefined : operatorIcon(operator),
     }));
     const setFormat = (format: IConditionalFormattingFormat) => onChange({ ...condition, format });
 
@@ -429,7 +435,11 @@ export function ConditionEditor({
                 value={condition.operator}
                 items={operatorItems}
                 onSelect={(operator) =>
-                    onChange({ ...condition, operator, value: valueForOperator(operator, condition.value) })
+                    onChange({
+                        ...condition,
+                        operator,
+                        value: valueForOperator(operator, condition.value, isDate),
+                    })
                 }
             />
             <ConditionValueInput
@@ -438,7 +448,9 @@ export function ConditionEditor({
                 isPercent={isPercent}
                 separators={separators}
                 suggestions={suggestions}
-                intl={intl}
+                date={date}
+                dateFilterOptions={dateFilterOptions}
+                dateSettings={dateSettings}
                 onChange={onChange}
             />
             <div className="gd-cf-condition__format-row">
@@ -458,7 +470,7 @@ export function ConditionEditor({
                         </span>
                     )}
                 </div>
-                <FormatEditor format={condition.format} intl={intl} onChange={setFormat} />
+                <FormatEditor format={condition.format} onChange={setFormat} />
             </div>
         </div>
     );

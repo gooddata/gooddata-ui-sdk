@@ -54,7 +54,7 @@ function filterVisibleRelativePresets(
     ) as DateFilterRelativeOptionGroup;
 }
 
-function removeEmptyKeysFromDateFilterOptions({
+export function removeEmptyKeysFromDateFilterOptions({
     absoluteForm,
     absolutePreset,
     allTime,

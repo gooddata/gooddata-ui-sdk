@@ -22,6 +22,20 @@ const DROPDOWN_ALIGN_POINTS = [
             y: -4,
         },
     },
+    {
+        align: "br tr",
+        offset: {
+            x: 0,
+            y: 4,
+        },
+    },
+    {
+        align: "tr br",
+        offset: {
+            x: 0,
+            y: -4,
+        },
+    },
 ];
 
 function getButtonValue(title: string, intl: IntlShape, ref?: ObjRef) {

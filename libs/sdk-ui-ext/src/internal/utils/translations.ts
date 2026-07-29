@@ -76,7 +76,8 @@ const asyncSdkUiExtTranslations: { [locale: string]: () => Promise<ITranslations
 
 /**
  * Asynchronously loads translations for the specified locale, merging sdk-ui-ext translations
- * with sdk-ui translations.
+ * with sdk-ui translations. en-US is layered underneath so freshly authored ids (present only in
+ * en-US until Crowdin delivers) don't render as raw ids on other locales.
  *
  * @param locale - The locale to load translations for
  * @returns Promise resolving to merged translations object

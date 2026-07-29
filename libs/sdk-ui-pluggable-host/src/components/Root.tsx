@@ -62,10 +62,10 @@ function ReadyRoot({ ctx, callbacks }: { ctx: IPlatformContext; callbacks?: IRoo
         callbacks?.onReady?.(ctx);
     }, []); // eslint-disable-line react-hooks/exhaustive-deps -- run once on mount
 
-    const { pathname } = useLocation();
+    const { pathname, search } = useLocation();
     const routerNavigate = useNavigate();
     const apps = usePluggableApplications(ctx);
-    const redirect = useRedirectTarget(apps, ctx, pathname);
+    const redirect = useRedirectTarget(apps, ctx, pathname, search);
     useRedirectNavigation(redirect, routerNavigate);
 
     useEffect(() => {

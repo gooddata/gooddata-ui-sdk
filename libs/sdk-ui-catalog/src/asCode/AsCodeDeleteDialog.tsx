@@ -4,13 +4,13 @@ import { useCallback, useState } from "react";
 
 import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 
-import { useCancelablePromise } from "@gooddata/sdk-ui";
+import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { ConfirmDialog, useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import type { ICatalogItem } from "../catalogItem/types.js";
 
-import { useAsCodePort } from "./AsCodeMutationContext.js";
 import type { IAsCodeDescriptor } from "./descriptor.js";
+import { useMutationPort } from "./useMutationPort.js";
 
 const messages = defineMessages({
     cancel: { id: "analyticsCatalog.asCode.dialog.cancel" },
@@ -23,28 +23,22 @@ type Props = {
     onDeleted: () => void;
 };
 
-/**
- * Confirms deletion of an as-code object. A type that reports a referencing count (see
- * `port.getReferencingObjectsCount`) withholds the confirm until the lookup resolves and warns when
- * the object is in use; a type without one deletes straight away. Generic over the descriptor.
- * @internal
- */
+/** @internal */
 export function AsCodeDeleteDialog({ descriptor, item, onClose, onDeleted }: Props) {
     const intl = useIntl();
     const { addSuccess, addError } = useToastMessage();
-    const port = useAsCodePort(descriptor.objectType);
-    const { messages: msg } = descriptor;
+    const backend = useBackendStrict();
+    const workspace = useWorkspaceStrict();
+    const port = useMutationPort(descriptor);
+    const { messages: msg, referenceCounted } = descriptor;
     const [isDeleting, setIsDeleting] = useState(false);
 
-    // For a type with a usage lookup, withhold deletion until it resolves so the dependent-object
-    // warning can surface first; a type without one has nothing to wait for, so starts unblocked.
-    const lookup = port.getReferencingObjectsCount;
-    const { result, status } = useCancelablePromise({ promise: lookup ? () => lookup(item) : undefined }, [
-        item,
-        port,
-    ]);
-    // The lookup is advisory: no lookup or a failed one means no warning and nothing to wait for.
-    const referencingCount = !lookup || status === "error" ? 0 : result;
+    // Block deletion until the usage lookup resolves, so the dependent-object warning surfaces first.
+    const { result, status } = useCancelablePromise(
+        { promise: referenceCounted ? () => referenceCounted.count(backend, workspace, item) : undefined },
+        [item, backend, workspace],
+    );
+    const referencingCount = !referenceCounted || status === "error" ? 0 : result;
 
     const displayName = item.title || item.identifier;
 
@@ -88,9 +82,12 @@ export function AsCodeDeleteDialog({ descriptor, item, onClose, onDeleted }: Pro
                     b: (chunks) => <b>{chunks}</b>,
                 }}
             />
-            {referencingCount && msg.deleteUsageWarning ? (
+            {referencingCount && referenceCounted ? (
                 <div>
-                    <FormattedMessage {...msg.deleteUsageWarning} values={{ count: referencingCount }} />
+                    <FormattedMessage
+                        {...referenceCounted.usageWarning}
+                        values={{ count: referencingCount }}
+                    />
                 </div>
             ) : null}
         </ConfirmDialog>

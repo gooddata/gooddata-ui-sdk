@@ -6,7 +6,12 @@ import { defineMessages, useIntl } from "react-intl";
 
 import type { IMeasureMetadataObjectDefinition } from "@gooddata/sdk-model";
 
-import { type IAsCodeEditing, type IAsCodeMessages, defineAsCodeDescriptor } from "../asCode/descriptor.js";
+import {
+    type IAsCodeEditing,
+    type IAsCodeMessages,
+    defineAsCodeDescriptor,
+    fixedIdentifierOf,
+} from "../asCode/descriptor.js";
 import type { ICatalogItemMeasure } from "../catalogItem/types.js";
 import { ObjectTypes } from "../objectType/constants.js";
 
@@ -14,11 +19,11 @@ import { METRIC_EDITOR_FEATURE_FLAG } from "./gate.js";
 import { metricCompletions } from "./metricCompletions.js";
 import {
     definitionToMetricYaml,
-    mergeCopiedMetricDefinition,
     metricYamlToDefinition,
+    reconcileMetricDefinition,
 } from "./metricConverter.js";
 import { createCopiedMetric } from "./metricCopy.js";
-import { createMetricMutationAdapter } from "./metricMutationPort.js";
+import { countMetricReferences, createMetricMutationAdapter, loadMetric } from "./metricMutationPort.js";
 import { serializeMetricToYaml } from "./metricSerialization.js";
 import { validateMetricYaml } from "./metricValidation.js";
 
@@ -35,14 +40,17 @@ const messages = defineMessages({
     sectionHeaderTooltip: { id: "analyticsCatalog.metric.dialog.sectionHeader.tooltip" },
     help: { id: "analyticsCatalog.metric.dialog.help" },
     submitError: { id: "analyticsCatalog.metric.dialog.submit.error" },
-    loadError: { id: "analyticsCatalog.metric.load.error" },
     deleteTitle: { id: "analyticsCatalog.metric.dialog.delete.title" },
     deleteBody: { id: "analyticsCatalog.metric.dialog.delete.body" },
     deleteSubmit: { id: "analyticsCatalog.metric.dialog.delete.submit" },
     deleteSuccess: { id: "analyticsCatalog.metric.delete.success" },
     deleteError: { id: "analyticsCatalog.metric.delete.error" },
-    deleteUsageWarning: { id: "analyticsCatalog.metric.dialog.delete.usageWarning" },
 }) satisfies IAsCodeMessages;
+
+const capabilityMessages = defineMessages({
+    loadError: { id: "analyticsCatalog.metric.load.error" },
+    deleteUsageWarning: { id: "analyticsCatalog.metric.dialog.delete.usageWarning" },
+});
 
 const actionMessages = defineMessages({
     openInEditor: { id: "analyticsCatalog.metric.actions.openInEditor" },
@@ -65,12 +73,13 @@ function useMetricEditing(): IAsCodeEditing<IMeasureMetadataObjectDefinition> {
             syntaxErrorMessage: intl.formatMessage(errorMessages.syntax),
             // The editor works in the YAML shape, a lossy projection of the measure definition.
             serialize: (definition) => serializeMetricToYaml(definitionToMetricYaml(definition)),
-            validate: (value, options) => {
-                const result = validateMetricYaml(value, options);
+            validate: (value, context) => {
+                const result = validateMetricYaml(value, { fixedIdentifier: fixedIdentifierOf(context) });
                 return result.isValid
                     ? { isValid: true, definition: result.measure }
                     : { isValid: false, error: intl.formatMessage(errorMessages[result.errorCode]) };
             },
+            reconcile: reconcileMetricDefinition,
         }),
         [intl],
     );
@@ -89,9 +98,17 @@ export const metricDescriptor = defineAsCodeDescriptor<IMeasureMetadataObjectDef
         createMutationPort: createMetricMutationAdapter,
         emptyDefinition: (defaultTitle) =>
             metricYamlToDefinition({ type: "metric", title: defaultTitle, maql: "SELECT 1" }),
-        // No editSeed: the full measure is loaded via port.load (the item carries no MAQL).
+        seed: { load: loadMetric, loadError: capabilityMessages.loadError },
+        referenceCounted: {
+            count: countMetricReferences,
+            usageWarning: capabilityMessages.deleteUsageWarning,
+        },
+        // A copied metric derives a human-readable id that can collide on create; identity lets the dialog retry without it.
+        identity: {
+            read: (definition) => definition.id,
+            strip: ({ id: _id, ...definition }) => definition,
+        },
         toCopy: createCopiedMetric,
-        applyYamlEdits: mergeCopiedMetricDefinition,
         openAction: actionMessages.openInEditor,
     },
 );
