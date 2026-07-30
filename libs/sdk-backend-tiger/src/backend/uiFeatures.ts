@@ -102,10 +102,6 @@ export enum TigerFeaturesNames {
     EnableAlertOncePerInterval = "enableAlertOncePerInterval",
     EnableFiscalCalendars = "enableFiscalCalendars",
     EnableDashboardFilterGroups = "enableDashboardFilterGroups",
-    EnableMatchFilterAD = "enableMatchFilterAD",
-    EnableArbitraryFilterAD = "enableArbitraryFilterAD",
-    EnableMatchFilterKD = "enableMatchFilterKD",
-    EnableArbitraryFilterKD = "enableArbitraryFilterKD",
     EnableMeasureValueFilterKD = "enableMeasureValueFilterKD",
     EnableShellApplication = "enableShellApplication",
     EnableShellApplicationCatalog = "enableShellApplication_catalog",
@@ -228,10 +224,7 @@ export type ITigerFeatureFlags = {
     enableAlertOncePerInterval: (typeof FeatureFlagsValues)["enableAlertOncePerInterval"][number];
     enableFiscalCalendars: (typeof FeatureFlagsValues)["enableFiscalCalendars"][number];
     enableDashboardFilterGroups: (typeof FeatureFlagsValues)["enableDashboardFilterGroups"][number];
-    enableMatchFilterAD: (typeof FeatureFlagsValues)["enableMatchFilterAD"][number];
-    enableArbitraryFilterAD: (typeof FeatureFlagsValues)["enableArbitraryFilterAD"][number];
-    enableMatchFilterKD: (typeof FeatureFlagsValues)["enableMatchFilterKD"][number];
-    enableArbitraryFilterKD: (typeof FeatureFlagsValues)["enableArbitraryFilterKD"][number];
+
     enableMeasureValueFilterKD: (typeof FeatureFlagsValues)["enableMeasureValueFilterKD"][number];
     enableShellApplication: (typeof FeatureFlagsValues)["enableShellApplication"][number];
     enableShellApplication_catalog: (typeof FeatureFlagsValues)["enableShellApplication_catalog"][number];
@@ -353,10 +346,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAlertOncePerInterval: false,
     enableFiscalCalendars: true,
     enableDashboardFilterGroups: true,
-    enableMatchFilterAD: true,
-    enableArbitraryFilterAD: true,
-    enableMatchFilterKD: true,
-    enableArbitraryFilterKD: true,
+
     enableMeasureValueFilterKD: true,
     enableShellApplication: true,
     enableShellApplication_catalog: false,
@@ -478,10 +468,7 @@ export const FeatureFlagsValues = {
     enableAlertOncePerInterval: [true, false] as const,
     enableFiscalCalendars: [true, false] as const,
     enableDashboardFilterGroups: [true, false] as const,
-    enableMatchFilterAD: [true, false] as const,
-    enableArbitraryFilterAD: [true, false] as const,
-    enableMatchFilterKD: [true, false] as const,
-    enableArbitraryFilterKD: [true, false] as const,
+
     enableMeasureValueFilterKD: [false, true] as const,
     enableShellApplication: [true, false] as const,
     enableShellApplication_catalog: [false, true] as const,

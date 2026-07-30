@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type JsonApiExportDefinitionOutMeta } from "@gooddata/api-client-tiger";
+import { type JsonApiAggregatedFactOutMeta } from "@gooddata/api-client-tiger";
 import {
     type IExportTemplate,
     type IExportTemplateDashboardSlides,
@@ -20,7 +20,7 @@ import { isInheritedObject } from "./ObjectInheritance.js";
 interface IExportTemplateOutEntity {
     id: string;
     type: string;
-    meta?: JsonApiExportDefinitionOutMeta;
+    meta?: JsonApiAggregatedFactOutMeta;
     attributes: {
         name: string;
         dashboardSlidesTemplate?: IExportTemplateDashboardSlides | null;

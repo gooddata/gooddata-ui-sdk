@@ -6,7 +6,7 @@ import {
     type AfmMemoryItemCreatedByUsers,
     type AfmMemoryItemUser,
     type JsonApiAgentOutRelationshipsCreatedBy,
-    type JsonApiExportDefinitionOutMeta,
+    type JsonApiAggregatedFactOutMeta,
     type JsonApiUserIdentifierOutWithLinks,
 } from "@gooddata/api-client-tiger";
 import { type IMemoryCreatedByUsers } from "@gooddata/sdk-backend-spi";
@@ -31,7 +31,7 @@ import { type IIncludedWithUserIdentifier, convertUserIdentifier } from "./Users
 export interface IConvertibleMemoryItem {
     id: string;
     type: string;
-    meta?: JsonApiExportDefinitionOutMeta;
+    meta?: JsonApiAggregatedFactOutMeta;
     relationships?: {
         createdBy?: JsonApiAgentOutRelationshipsCreatedBy;
     };

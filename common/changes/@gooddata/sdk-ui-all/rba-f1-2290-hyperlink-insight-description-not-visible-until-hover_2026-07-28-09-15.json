@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-kit: fix hyperlinks in insight/widget description tooltips being invisible (white-on-white) on the light bubble skin until hovered",
+            "type": "patch",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

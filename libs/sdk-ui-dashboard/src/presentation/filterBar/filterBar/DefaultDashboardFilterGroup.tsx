@@ -32,11 +32,7 @@ import {
     selectBackendCapabilities,
     selectSupportsElementUris,
 } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
-import {
-    selectEnableArbitraryFilterKD,
-    selectEnableMatchFilterKD,
-    selectIsApplyFiltersAllAtOnceEnabledAndSet,
-} from "../../../model/store/config/configSelectors.js";
+import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../../model/store/config/configSelectors.js";
 import {
     selectAttributeFilterConfigsDisplayAsLabelMap,
     selectEffectiveAttributeFiltersModeMap,
@@ -78,8 +74,6 @@ export function DefaultDashboardFilterGroup(props: IDashboardFilterGroupProps): 
     );
     const attributeFiltersModeMap = useDashboardSelector(selectEffectiveAttributeFiltersModeMap);
     const measureValueFiltersModeMap = useDashboardSelector(selectEffectiveMeasureValueFiltersModeMap);
-    const enableArbitraryFilter = useDashboardSelector(selectEnableArbitraryFilterKD);
-    const enableMatchFilter = useDashboardSelector(selectEnableMatchFilterKD);
 
     const getFilterIdentifier = useCallback((filter: FilterBarGroupFilterIndexed) => {
         if (isFilterBarAttributeFilter(filter)) {
@@ -212,24 +206,12 @@ export function DefaultDashboardFilterGroup(props: IDashboardFilterGroupProps): 
                 return (
                     attributeFiltersModeMap.get(localId!) !== DashboardAttributeFilterConfigModeValues.HIDDEN
                 );
-            })
-            .filter((filter) => {
-                // Gate text filter types by feature flags
-                if (isDashboardArbitraryAttributeFilter(filter.filter)) {
-                    return enableArbitraryFilter;
-                }
-                if (isDashboardMatchAttributeFilter(filter.filter)) {
-                    return enableMatchFilter;
-                }
-                return true;
             });
     }, [
         groupItem.filters,
         supportElementUris,
         attributeFiltersModeMap,
         measureValueFiltersModeMap,
-        enableArbitraryFilter,
-        enableMatchFilter,
         onMeasureValueFilterChanged,
     ]);
 

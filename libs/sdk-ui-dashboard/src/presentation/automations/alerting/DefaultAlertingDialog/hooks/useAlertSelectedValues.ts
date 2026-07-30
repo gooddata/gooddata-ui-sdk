@@ -30,12 +30,12 @@ export interface IUseAlertSelectedValuesProps {
 }
 
 /**
- * Pure selector hook that derives the currently-selected values from the edited automation draft.
+ * Derives the currently-selected form values from the edited alert draft.
  *
- * No memoization is intentionally added — values are recomputed on every render to preserve the
- * referential behaviour of the original inline code in `useEditAlert` (the returned objects flow
- * into `useCallback` dep arrays and `useThresholdValue` args; memoizing them would be a behaviour
- * change, not an optimisation).  The hook therefore contains no internal React hooks.
+ * Deliberately unmemoized. The returned objects flow into `useCallback` dependency arrays and
+ * `useThresholdValue` arguments, so recomputing them every render is what keeps those consumers
+ * behaving correctly — memoizing here would be a behaviour change, not an optimisation. The hook
+ * therefore calls no React hooks of its own.
  *
  * @internal
  */

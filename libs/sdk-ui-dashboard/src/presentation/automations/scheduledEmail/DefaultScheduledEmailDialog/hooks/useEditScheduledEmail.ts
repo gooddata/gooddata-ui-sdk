@@ -1,13 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { useCallback, useRef } from "react";
-
 import {
-    DEFAULT_CSV_DELIMITER,
     type FilterContextItem,
     type IAutomationMetadataObject,
     type IAutomationVisibleFilter,
-    type IDashboardExportParameter,
     type IExportDefinitionVisualizationObjectSettings,
     type IFilter,
     type IInsight,
@@ -17,14 +13,8 @@ import {
     type IWorkspaceUser,
 } from "@gooddata/sdk-model";
 
-import {
-    getAutomationExportParametersByTab,
-    setExportParametersByTab,
-} from "../../../../../_staging/automation/index.js";
 import type { IAutomationFiltersTab } from "../../../../../model/store/filtering/types.js";
 import { useAutomationsContext } from "../../../contexts/AutomationsContext.js";
-import { useScheduledEmailDialogContext } from "../../../contexts/ScheduledEmailDialogContext.js";
-import { toNormalizedStartDate } from "../../utils/date.js";
 
 import { useScheduledEmailEffectiveFilters } from "./useScheduledEmailEffectiveFilters.js";
 import { useScheduledEmailExportSettings } from "./useScheduledEmailExportSettings.js";
@@ -88,22 +78,10 @@ export function useEditScheduledEmail({
     availableFiltersAsVisibleFiltersByTab,
 }: IUseEditScheduledEmailProps) {
     const {
-        settings,
         features: { enableAutomationEvaluationMode },
     } = useAutomationsContext();
-    const {
-        dashboardId,
-        dashboardTitle,
-        widgetLocalIdToTabIdMap: widgetTabMap,
-    } = useScheduledEmailDialogContext();
-
-    // Dashboard
-    const resolvedDefaultCsvDelimiter = settings?.exportCsvCustomDelimiter ?? DEFAULT_CSV_DELIMITER;
 
     const areDashboardFiltersChanged = !!dashboardFilters;
-
-    // Determine target tab ID if widget is present
-    const targetTabId = widget?.localIdentifier ? widgetTabMap[widget.localIdentifier] : undefined;
 
     const {
         effectiveWidgetFilters,
@@ -142,6 +120,7 @@ export function useEditScheduledEmail({
         isTitleValid,
         isSubjectValid,
         isOnMessageValid,
+        startDate,
     } = useScheduledEmailFormState({
         scheduledExportToEdit,
         widget,
@@ -158,26 +137,7 @@ export function useEditScheduledEmail({
         effectiveVisibleDashboardFiltersByTab,
         parametersByTabForNewAutomation,
         defaultPdfPageSize,
-        targetTabId,
     });
-
-    // Holds the wire outside the automation so it survives a rebuild from zero export definitions —
-    // with no definitions `setExportParametersByTab` has nowhere to store it.
-    // Seeded from the stored wire.
-    const latestParametersWireRef = useRef<Record<string, IDashboardExportParameter[]> | undefined>(
-        getAutomationExportParametersByTab(editedAutomation),
-    );
-
-    // The user-edit path into `content.parametersByTab`: re-encoded wire in, every export definition
-    // patched. Handed to `useAutomationExportParameters`, which owns when to call it. Definition
-    // rebuilds preserve the wire separately via `withRebuiltExportDefinitions`.
-    const setParametersWire = useCallback(
-        (wire: Record<string, IDashboardExportParameter[]> | undefined) => {
-            latestParametersWireRef.current = wire;
-            setEditedAutomation((automation) => setExportParametersByTab(automation, wire));
-        },
-        [setEditedAutomation],
-    );
 
     const {
         selectedAttachments,
@@ -196,21 +156,18 @@ export function useEditScheduledEmail({
         onCsvSettingsChange,
         onCsvRawSettingsChange,
         onSlidesTemplateIdChange,
+        setParametersWire,
     } = useScheduledEmailExportSettings({
         editedAutomation,
         setEditedAutomation,
         insight,
         widget,
-        dashboardId,
-        dashboardTitle,
         storeFilters,
         effectiveDashboardFilters,
         effectiveDashboardFiltersByTab,
         effectiveWidgetFilters,
         effectiveWidgetFiltersWithInsight,
         defaultPdfPageSize,
-        resolvedDefaultCsvDelimiter,
-        latestParametersWireRef,
     });
 
     const { onFiltersChange, onFiltersByTabChange, onApplyCurrentFilters, onStoreFiltersChange } =
@@ -227,11 +184,6 @@ export function useEditScheduledEmail({
             setStoreFilters,
             filtersForNewAutomation,
         });
-
-    const startDate = toNormalizedStartDate(
-        editedAutomation.schedule?.firstRun,
-        editedAutomation.schedule?.timezone,
-    );
 
     const {
         isSubmitDisabled,

@@ -1,9 +1,9 @@
 // (C) 2026 GoodData Corporation
 
 import type {
-    JsonApiParameterOutAttributesDefinition,
+    JsonApiParameterInAttributes,
+    JsonApiParameterInAttributesDefinition,
     JsonApiParameterPatchAttributes,
-    JsonApiParameterPostOptionalIdAttributes,
 } from "@gooddata/api-client-tiger";
 import {
     type IParameterDefinition,
@@ -13,7 +13,7 @@ import {
 
 function convertParameterDefinitionToBackend(
     definition: IParameterDefinition,
-): JsonApiParameterOutAttributesDefinition {
+): JsonApiParameterInAttributesDefinition {
     const { type } = definition;
     switch (type) {
         case "NUMBER":
@@ -35,7 +35,7 @@ function convertParameterDefinitionToBackend(
 
 export function convertParameterToBackendCreate(
     parameter: IParameterMetadataObjectDefinition,
-): JsonApiParameterPostOptionalIdAttributes {
+): JsonApiParameterInAttributes {
     return {
         title: parameter.title,
         description: parameter.description,

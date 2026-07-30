@@ -59,8 +59,6 @@ import {
 } from "../../store/automations/automationsSelectors.js";
 import { automationsActions } from "../../store/automations/index.js";
 import {
-    selectEnableArbitraryFilterKD,
-    selectEnableMatchFilterKD,
     selectEnableNotificationChannelIdentifiers,
     selectEnableParameters,
     selectEnableStringParameters,
@@ -106,11 +104,6 @@ export function* initializeAutomationsHandler(
     const user: ReturnType<typeof selectCurrentUser> = yield select(selectCurrentUser);
     const canManageAutomations: ReturnType<typeof selectCanManageWorkspace> =
         yield select(selectCanManageWorkspace);
-    const enableArbitraryFilterKD: ReturnType<typeof selectEnableArbitraryFilterKD> = yield select(
-        selectEnableArbitraryFilterKD,
-    );
-    const enableMatchFilterKD: ReturnType<typeof selectEnableMatchFilterKD> =
-        yield select(selectEnableMatchFilterKD);
     const enableNotificationChannelIdentifiers: ReturnType<
         typeof selectEnableNotificationChannelIdentifiers
     > = yield select(selectEnableNotificationChannelIdentifiers);
@@ -235,8 +228,6 @@ export function* initializeAutomationsHandler(
                     isFilterContextItemCompatibleWithSelectionType(
                         filter,
                         effectiveActiveTabSelectionTypeMap,
-                        enableArbitraryFilterKD,
-                        enableMatchFilterKD,
                         filterContextFilters,
                     ),
                 );
@@ -291,8 +282,6 @@ export function* initializeAutomationsHandler(
                             isFilterContextItemCompatibleWithSelectionType(
                                 filter,
                                 tabSelectionTypeMap,
-                                enableArbitraryFilterKD,
-                                enableMatchFilterKD,
                                 tabCurrentFilters,
                             ),
                         );
@@ -327,8 +316,6 @@ export function* initializeAutomationsHandler(
                         isFilterContextItemCompatibleWithSelectionType(
                             filter,
                             effectiveActiveTabSelectionTypeMap,
-                            enableArbitraryFilterKD,
-                            enableMatchFilterKD,
                             filterContextFilters,
                         ),
                     );
@@ -653,14 +640,8 @@ function removeDateFiltersIfDateFilterIsIgnored(filters: IFilter[], widget: IIns
 function isFilterContextItemCompatibleWithSelectionType(
     filter: FilterContextItem,
     selectionTypeMap?: Map<string, DashboardAttributeFilterSelectionType | undefined>,
-    enableArbitraryFilterKD?: boolean,
-    enableMatchFilterKD?: boolean,
     dashboardFilters?: FilterContextItem[],
 ): boolean {
-    if (!enableArbitraryFilterKD && !enableMatchFilterKD) {
-        return true;
-    }
-
     if (!isDashboardAttributeFilterItem(filter)) {
         return true;
     }

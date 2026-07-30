@@ -168,6 +168,7 @@ const DEFAULT_AUTOMATIONS_CONTEXT_VALUE = {
 const DEFAULT_SCHEDULED_EMAIL_DIALOG_CONTEXT_VALUE = {
     dashboardId: SENTINEL_DASHBOARD_ID,
     dashboardTitle: SENTINEL_DASHBOARD_TITLE,
+    widgetLocalIdToTabIdMap: {},
 };
 
 // Fully typed IWidget/IInsight fixtures (mirrors useScheduledEmailExportSettings.test.tsx).
@@ -269,9 +270,13 @@ beforeEach(() => {
     mockUseAutomationsContext.mockReturnValue(DEFAULT_AUTOMATIONS_CONTEXT_VALUE);
     mockUseScheduledEmailDialogContext.mockReturnValue(DEFAULT_SCHEDULED_EMAIL_DIALOG_CONTEXT_VALUE);
 
+    // `.iso` must stay a real ISO string (not just a distinguishable stub) because `startDate` is now
+    // a per-render derivation of `editedAutomation.schedule?.firstRun` via the real (unmocked)
+    // toNormalizedStartDate — a bogus, unparsable value here would blow up on the render after
+    // onRecurrenceChange runs.
     toModifiedISOStringToTimezoneSpy.mockImplementation((date: Date) => ({
         date,
-        iso: `iso(${date.toISOString()})`,
+        iso: date.toISOString(),
     }));
     toNormalizedFirstRunAndCronSpy.mockReturnValue({
         normalizedFirstRun: new Date(SENTINEL_FIRST_RUN),
@@ -310,7 +315,6 @@ const BASE_PROPS: IUseScheduledEmailFormStateProps = {
     effectiveVisibleDashboardFiltersByTab: undefined,
     parametersByTabForNewAutomation: undefined,
     defaultPdfPageSize: undefined,
-    targetTabId: undefined,
 };
 
 function renderFormStateHook(props: Partial<IUseScheduledEmailFormStateProps> = {}) {
@@ -415,7 +419,7 @@ describe("useScheduledEmailFormState — field/message handler patches", () => {
         rerender();
 
         expect(result.current.editedAutomation.schedule?.cron).toBe("0 12 * * *");
-        expect(result.current.editedAutomation.schedule?.firstRun).toBe(`iso(${startDate.toISOString()})`);
+        expect(result.current.editedAutomation.schedule?.firstRun).toBe(startDate.toISOString());
     });
 });
 
@@ -519,6 +523,41 @@ describe("useScheduledEmailFormState — onRecurrenceChange firstRun computation
 });
 
 // ---------------------------------------------------------------------------
+// New: startDate — a normalized view of the hook's own editedAutomation.schedule state.
+// toNormalizedStartDate itself is not mocked here (only toModifiedISOStringToTimezone and
+// toNormalizedFirstRunAndCron are), so these assert against the real normalization function.
+// ---------------------------------------------------------------------------
+
+describe("useScheduledEmailFormState — startDate normalization", () => {
+    it("normalizes startDate from schedule.firstRun and schedule.timezone", () => {
+        const scheduledExportToEdit = makeAutomation({
+            schedule: { cron: "0 0 * * *", firstRun: "2026-05-01T12:00:00Z", timezone: "Europe/Prague" },
+        });
+
+        const { result } = renderFormStateHook({ scheduledExportToEdit });
+
+        expect(result.current.startDate).toEqual(
+            dateModule.toNormalizedStartDate("2026-05-01T12:00:00Z", "Europe/Prague"),
+        );
+    });
+
+    it("falls back to the current-time normalization when firstRun/timezone are undefined", () => {
+        const fixedNow = new Date("2026-06-01T00:00:00Z");
+        vi.useFakeTimers();
+        vi.setSystemTime(fixedNow);
+
+        try {
+            const scheduledExportToEdit = makeAutomation({ schedule: { cron: "0 0 * * *" } });
+            const { result } = renderFormStateHook({ scheduledExportToEdit });
+
+            expect(result.current.startDate).toEqual(dateModule.toNormalizedStartDate(undefined, undefined));
+        } finally {
+            vi.useRealTimers();
+        }
+    });
+});
+
+// ---------------------------------------------------------------------------
 // New (part 2): draft init — new-automation path, dashboard branch
 // ---------------------------------------------------------------------------
 
@@ -578,6 +617,11 @@ describe("useScheduledEmailFormState — new-automation init (widget branch)", (
         const effectiveVisibleWidgetFilters: IAutomationVisibleFilter[] = [fakeVisibleFilter("wf1")];
         const effectiveDashboardFilters: FilterContextItem[] = [fakeFilterContextItem("df1")];
 
+        mockUseScheduledEmailDialogContext.mockReturnValue({
+            ...DEFAULT_SCHEDULED_EMAIL_DIALOG_CONTEXT_VALUE,
+            widgetLocalIdToTabIdMap: { w1: "tab-1" },
+        });
+
         const { result } = renderFormStateHook({
             widget: SENTINEL_WIDGET,
             insight: SENTINEL_INSIGHT,
@@ -586,7 +630,6 @@ describe("useScheduledEmailFormState — new-automation init (widget branch)", (
             effectiveVisibleWidgetFilters,
             effectiveDashboardFilters,
             defaultPdfPageSize: "A4",
-            targetTabId: "tab-1",
         });
 
         expect(newWidgetExportDefinitionMetadataObjectDefinitionSpy).toHaveBeenCalledWith({
@@ -605,6 +648,46 @@ describe("useScheduledEmailFormState — new-automation init (widget branch)", (
         expect(automation.metadata?.visibleFilters).toBe(effectiveVisibleWidgetFilters);
         expect(automation.metadata?.targetTabIdentifier).toBe("tab-1");
         expect(automation.exportDefinitions).toEqual([{ ...SENTINEL_WIDGET_EXPORT_DEFINITION }]);
+    });
+});
+
+// ---------------------------------------------------------------------------
+// New: targetTabId resolution — read from widgetLocalIdToTabIdMap (ScheduledEmailDialogContext)
+// directly in this hook now, keyed off the widget's localIdentifier.
+// ---------------------------------------------------------------------------
+
+describe("useScheduledEmailFormState — targetTabId resolution", () => {
+    it("resolves targetTabId from widgetLocalIdToTabIdMap when the widget's tab is mapped", () => {
+        mockUseScheduledEmailDialogContext.mockReturnValue({
+            ...DEFAULT_SCHEDULED_EMAIL_DIALOG_CONTEXT_VALUE,
+            widgetLocalIdToTabIdMap: { w1: "tab-mapped" },
+        });
+
+        const { result } = renderFormStateHook({ widget: SENTINEL_WIDGET, insight: SENTINEL_INSIGHT });
+
+        expect(result.current.editedAutomation.metadata?.targetTabIdentifier).toBe("tab-mapped");
+    });
+
+    it("leaves targetTabId undefined when the widget's tab is not in the map", () => {
+        mockUseScheduledEmailDialogContext.mockReturnValue({
+            ...DEFAULT_SCHEDULED_EMAIL_DIALOG_CONTEXT_VALUE,
+            widgetLocalIdToTabIdMap: { "some-other-widget": "tab-x" },
+        });
+
+        const { result } = renderFormStateHook({ widget: SENTINEL_WIDGET, insight: SENTINEL_INSIGHT });
+
+        expect(result.current.editedAutomation.metadata?.targetTabIdentifier).toBeUndefined();
+    });
+
+    it("leaves targetTabId undefined when there is no widget", () => {
+        mockUseScheduledEmailDialogContext.mockReturnValue({
+            ...DEFAULT_SCHEDULED_EMAIL_DIALOG_CONTEXT_VALUE,
+            widgetLocalIdToTabIdMap: { w1: "tab-mapped" },
+        });
+
+        const { result } = renderFormStateHook({ widget: undefined, insight: undefined });
+
+        expect(result.current.editedAutomation.metadata?.targetTabIdentifier).toBeUndefined();
     });
 });
 

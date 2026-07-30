@@ -29,25 +29,25 @@ export interface ExportAFM {
      */
     'attributes': Array<ExportAttributeItem>;
     /**
+     * Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.
+     */
+    'auxMeasures'?: Array<ExportMeasureItem>;
+    /**
      * Various filter types to filter the execution result.
      */
     'filters': Array<ExportFilterDefinition>;
+    /**
+     * (EXPERIMENTAL) Override definitions of catalog metrics for this request. Allows substituting a catalog metric\'s MAQL definition without modifying the stored definition.
+     */
+    'measureDefinitionOverrides'?: Array<ExportMetricDefinitionOverride>;
     /**
      * Metrics to be computed.
      */
     'measures': Array<ExportMeasureItem>;
     /**
-     * Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.
-     */
-    'auxMeasures'?: Array<ExportMeasureItem>;
-    /**
      * (EXPERIMENTAL) Parameter values to use for this execution.
      */
     'parameters'?: Array<ExportParameterItem>;
-    /**
-     * (EXPERIMENTAL) Override definitions of catalog metrics for this request. Allows substituting a catalog metric\'s MAQL definition without modifying the stored definition.
-     */
-    'measureDefinitionOverrides'?: Array<ExportMetricDefinitionOverride>;
 }
 
 /**
@@ -58,18 +58,50 @@ export interface ExportAbsoluteDateFilter {
 }
 
 export interface ExportAbsoluteDateFilterAbsoluteDateFilter {
-    'from': string;
-    'to': string;
-    'localIdentifier'?: string;
     'applyOnResult'?: boolean;
+    'dataset': ExportAfmObjectIdentifierDataset;
     /**
      * Specifies how rows with empty (null/missing) date values should be handled. INCLUDE includes empty dates in addition to the date range restriction, EXCLUDE removes rows with empty dates (default), ONLY keeps only rows with empty dates.
      */
     'emptyValueHandling'?: ExportAbsoluteDateFilterAbsoluteDateFilterEmptyValueHandlingEnum;
-    'dataset': ExportAfmObjectIdentifierDataset;
+    'from': string;
+    'localIdentifier'?: string;
+    'to': string;
 }
 
 export type ExportAbsoluteDateFilterAbsoluteDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
+
+/**
+ * An absolute date range filter defined at a specific granularity. The \'from\'/\'to\' literals must match the format of the chosen granularity (e.g. \'2020\' for YEAR, \'2012-05\' for MONTH, \'2012-3\' for QUARTER, \'1996-01\' for WEEK, \'2010-10-30\' for DAY, or a plain ordinal like \'6\' for periodical granularities such as MONTH_OF_YEAR). At least one of \'from\'/\'to\' must be provided; specifying only one yields an open-ended range.
+ */
+export interface ExportAbsoluteGranularityDateFilter {
+    'absoluteGranularityDateFilter': ExportAbsoluteGranularityDateFilterAbsoluteGranularityDateFilter;
+}
+
+export interface ExportAbsoluteGranularityDateFilterAbsoluteGranularityDateFilter {
+    'applyOnResult'?: boolean;
+    'dataset': ExportAfmObjectIdentifierDataset;
+    /**
+     * Specifies how rows with empty (null/missing) date values should be handled. INCLUDE includes empty dates in addition to the date range restriction, EXCLUDE removes rows with empty dates (default), ONLY keeps only rows with empty dates.
+     */
+    'emptyValueHandling'?: ExportAbsoluteGranularityDateFilterAbsoluteGranularityDateFilterEmptyValueHandlingEnum;
+    /**
+     * Start of the range (including), in the format matching \'granularity\'. If omitted, the range is unbounded at the start.
+     */
+    'from'?: string | null;
+    /**
+     * Granularity determining the filtered date attribute and the expected \'from\'/\'to\' format.
+     */
+    'granularity': ExportAbsoluteGranularityDateFilterAbsoluteGranularityDateFilterGranularityEnum;
+    'localIdentifier'?: string;
+    /**
+     * End of the range (including), in the format matching \'granularity\'. If omitted, the range is unbounded at the end.
+     */
+    'to'?: string | null;
+}
+
+export type ExportAbsoluteGranularityDateFilterAbsoluteGranularityDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
+export type ExportAbsoluteGranularityDateFilterAbsoluteGranularityDateFilterGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
 
 /**
  * @type ExportAbstractMeasureValueFilter
@@ -136,8 +168,8 @@ export interface ExportAfmObjectIdentifierDatasetIdentifier {
 export type ExportAfmObjectIdentifierDatasetIdentifierTypeEnum = 'dataset';
 
 export interface ExportAfmObjectIdentifierIdentifier {
-    'type': ExportAfmObjectIdentifierIdentifierTypeEnum;
     'id': string;
+    'type': ExportAfmObjectIdentifierIdentifierTypeEnum;
 }
 
 export type ExportAfmObjectIdentifierIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'prompt' | 'visualizationObject' | 'filterContext';
@@ -147,8 +179,8 @@ export interface ExportAfmObjectIdentifierLabel {
 }
 
 export interface ExportAfmObjectIdentifierLabelIdentifier {
-    'type': ExportAfmObjectIdentifierLabelIdentifierTypeEnum;
     'id': string;
+    'type': ExportAfmObjectIdentifierLabelIdentifierTypeEnum;
 }
 
 export type ExportAfmObjectIdentifierLabelIdentifierTypeEnum = 'label';
@@ -175,6 +207,8 @@ export interface ExportAllTimeDateFilter {
 }
 
 export interface ExportAllTimeDateFilterAllTimeDateFilter {
+    'applyOnResult'?: boolean;
+    'dataset': ExportAfmObjectIdentifierDataset;
     /**
      * Specifies how rows with empty (null/missing) date values should be handled. INCLUDE means no filtering effect (default), EXCLUDE removes rows with null dates, ONLY keeps only rows with null dates.
      */
@@ -184,12 +218,10 @@ export interface ExportAllTimeDateFilterAllTimeDateFilter {
      */
     'granularity'?: ExportAllTimeDateFilterAllTimeDateFilterGranularityEnum;
     'localIdentifier'?: string;
-    'applyOnResult'?: boolean;
-    'dataset': ExportAfmObjectIdentifierDataset;
 }
 
 export type ExportAllTimeDateFilterAllTimeDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
-export type ExportAllTimeDateFilterAllTimeDateFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
+export type ExportAllTimeDateFilterAllTimeDateFilterGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
 
 /**
  * Metric representing arithmetics between other metrics.
@@ -257,11 +289,11 @@ export interface ExportAttributeFilterParent {
 }
 
 export interface ExportAttributeItem {
+    'label': ExportAfmObjectIdentifierLabel;
     /**
      * Local identifier of the attribute. This can be used to reference the attribute in other parts of the execution definition.
      */
     'localIdentifier': string;
-    'label': ExportAfmObjectIdentifierLabel;
     /**
      * Indicates whether to show all values of given attribute even if the data bound to those values is not available.
      */
@@ -273,20 +305,20 @@ export interface ExportAttributeItem {
  */
 export interface ExportBoundedFilter {
     /**
-     * Date granularity specifying particular date attribute in given dimension.
-     */
-    'granularity': ExportBoundedFilterGranularityEnum;
-    /**
      * Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for \'2 days/weeks, ... ago\'). If null, then start of the range is unbounded.
      */
     'from'?: number | null;
+    /**
+     * Date granularity specifying particular date attribute in given dimension.
+     */
+    'granularity': ExportBoundedFilterGranularityEnum;
     /**
      * End of the filtering interval. Specified by number of periods (with respect to given granularity). Value \'O\' is representing current time-interval (current day, week, ...). If null, then end of the range is unbounded.
      */
     'to'?: number | null;
 }
 
-export type ExportBoundedFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
+export type ExportBoundedFilterGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
 
 /**
  * Condition that compares the metric value to a given constant value using a comparison operator.
@@ -310,19 +342,19 @@ export interface ExportComparisonMeasureValueFilter {
 }
 
 export interface ExportComparisonMeasureValueFilterComparisonMeasureValueFilter {
+    'applyOnResult'?: boolean;
     /**
      * References to the attributes to be used when filtering.
      */
     'dimensionality'?: Array<ExportAfmIdentifier>;
+    'localIdentifier'?: string;
+    'measure': ExportAfmIdentifier;
+    'operator': ExportComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum;
     /**
      * A value that will be substituted for null values in the metric for the comparisons.
      */
     'treatNullValuesAs'?: number;
-    'operator': ExportComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum;
     'value': number;
-    'localIdentifier'?: string;
-    'applyOnResult'?: boolean;
-    'measure': ExportAfmIdentifier;
 }
 
 export type ExportComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum = 'GREATER_THAN' | 'GREATER_THAN_OR_EQUAL_TO' | 'LESS_THAN' | 'LESS_THAN_OR_EQUAL_TO' | 'EQUAL_TO' | 'NOT_EQUAL_TO';
@@ -335,21 +367,21 @@ export interface ExportCompoundMeasureValueFilter {
 }
 
 export interface ExportCompoundMeasureValueFilterCompoundMeasureValueFilter {
-    /**
-     * References to the attributes to be used when filtering.
-     */
-    'dimensionality'?: Array<ExportAfmIdentifier>;
-    /**
-     * A value that will be substituted for null values in the metric for the comparisons.
-     */
-    'treatNullValuesAs'?: number;
+    'applyOnResult'?: boolean;
     /**
      * List of conditions to apply. Conditions are combined with OR logic. Each condition can be either a comparison (e.g., > 100) or a range (e.g., BETWEEN 10 AND 50). If empty, no filtering is applied and all rows are returned.
      */
     'conditions': Array<ExportMeasureValueCondition>;
+    /**
+     * References to the attributes to be used when filtering.
+     */
+    'dimensionality'?: Array<ExportAfmIdentifier>;
     'localIdentifier'?: string;
-    'applyOnResult'?: boolean;
     'measure': ExportAfmIdentifier;
+    /**
+     * A value that will be substituted for null values in the metric for the comparisons.
+     */
+    'treatNullValuesAs'?: number;
 }
 
 /**
@@ -367,13 +399,13 @@ export interface ExportCustomLabel {
  */
 export interface ExportCustomMetric {
     /**
-     * Metric title override.
-     */
-    'title': string;
-    /**
      * Format override.
      */
     'format': string;
+    /**
+     * Metric title override.
+     */
+    'title': string;
 }
 
 /**
@@ -396,13 +428,13 @@ export interface ExportDashboardArbitraryAttributeFilter {
 
 export interface ExportDashboardArbitraryAttributeFilterArbitraryAttributeFilter {
     'displayForm': ExportIdentifierRef;
-    'values': Array<string>;
-    'negativeSelection': boolean;
     'filterElementsBy'?: Array<ExportAttributeFilterParent>;
     'filterElementsByDate'?: Array<ExportAttributeFilterByDate>;
-    'validateElementsBy'?: Array<ExportIdentifierRef>;
-    'title'?: string;
     'localIdentifier'?: string;
+    'negativeSelection': boolean;
+    'title'?: string;
+    'validateElementsBy'?: Array<ExportIdentifierRef>;
+    'values': Array<string>;
 }
 
 export interface ExportDashboardAttributeFilter {
@@ -410,15 +442,15 @@ export interface ExportDashboardAttributeFilter {
 }
 
 export interface ExportDashboardAttributeFilterAttributeFilter {
-    'displayForm': ExportIdentifierRef;
-    'negativeSelection': boolean;
     'attributeElements': ExportAttributeElements;
+    'displayForm': ExportIdentifierRef;
     'filterElementsBy'?: Array<ExportAttributeFilterParent>;
     'filterElementsByDate'?: Array<ExportAttributeFilterByDate>;
-    'validateElementsBy'?: Array<ExportIdentifierRef>;
-    'title'?: string;
-    'selectionMode'?: ExportDashboardAttributeFilterAttributeFilterSelectionModeEnum;
     'localIdentifier'?: string;
+    'negativeSelection': boolean;
+    'selectionMode'?: ExportDashboardAttributeFilterAttributeFilterSelectionModeEnum;
+    'title'?: string;
+    'validateElementsBy'?: Array<ExportIdentifierRef>;
 }
 
 export type ExportDashboardAttributeFilterAttributeFilterSelectionModeEnum = 'single' | 'multi';
@@ -429,8 +461,8 @@ export interface ExportDashboardCompoundComparisonCondition {
 
 export interface ExportDashboardCompoundComparisonConditionComparison {
     'operator': ExportDashboardCompoundComparisonConditionComparisonOperatorEnum;
-    'value': number;
     'treatNullValuesAs'?: number;
+    'value': number;
 }
 
 export type ExportDashboardCompoundComparisonConditionComparisonOperatorEnum = 'GREATER_THAN' | 'GREATER_THAN_OR_EQUAL_TO' | 'LESS_THAN' | 'LESS_THAN_OR_EQUAL_TO' | 'EQUAL_TO' | 'NOT_EQUAL_TO';
@@ -445,8 +477,8 @@ export interface ExportDashboardCompoundRangeCondition {
 }
 
 export interface ExportDashboardCompoundRangeConditionRange {
-    'operator': ExportDashboardCompoundRangeConditionRangeOperatorEnum;
     'from': number;
+    'operator': ExportDashboardCompoundRangeConditionRangeOperatorEnum;
     'to': number;
     'treatNullValuesAs'?: number;
 }
@@ -458,25 +490,30 @@ export interface ExportDashboardDateFilter {
 }
 
 export interface ExportDashboardDateFilterDateFilter {
-    'type': ExportDashboardDateFilterDateFilterTypeEnum;
-    'granularity': ExportDashboardDateFilterDateFilterGranularityEnum;
-    'from'?: ExportDashboardDateFilterDateFilterFrom;
-    'to'?: ExportDashboardDateFilterDateFilterFrom;
-    'dataSet'?: ExportIdentifierRef;
     'attribute'?: ExportIdentifierRef;
     'boundedFilter'?: ExportRelativeBoundedDateFilter;
+    'dataSet'?: ExportIdentifierRef;
     'emptyValueHandling'?: ExportDashboardDateFilterDateFilterEmptyValueHandlingEnum;
+    'from'?: ExportDashboardDateFilterDateFilterFrom;
+    'granularity': ExportDashboardDateFilterDateFilterGranularityEnum;
     'localIdentifier'?: string;
+    'to'?: ExportDashboardDateFilterDateFilterTo;
+    'type': ExportDashboardDateFilterDateFilterTypeEnum;
 }
 
-export type ExportDashboardDateFilterDateFilterTypeEnum = 'relative' | 'absolute';
-export type ExportDashboardDateFilterDateFilterGranularityEnum = 'ALL_TIME_GRANULARITY' | 'GDC.time.year' | 'GDC.time.week_us' | 'GDC.time.week_in_year' | 'GDC.time.week_in_quarter' | 'GDC.time.week' | 'GDC.time.euweek_in_year' | 'GDC.time.euweek_in_quarter' | 'GDC.time.quarter' | 'GDC.time.quarter_in_year' | 'GDC.time.month' | 'GDC.time.month_in_quarter' | 'GDC.time.month_in_year' | 'GDC.time.day_in_year' | 'GDC.time.day_in_quarter' | 'GDC.time.day_in_month' | 'GDC.time.day_in_week' | 'GDC.time.day_in_euweek' | 'GDC.time.date' | 'GDC.time.hour' | 'GDC.time.hour_in_day' | 'GDC.time.minute' | 'GDC.time.minute_in_hour' | 'GDC.time.fiscal_month' | 'GDC.time.fiscal_quarter' | 'GDC.time.fiscal_year';
 export type ExportDashboardDateFilterDateFilterEmptyValueHandlingEnum = 'include' | 'exclude' | 'only';
+export type ExportDashboardDateFilterDateFilterGranularityEnum = 'ALL_TIME_GRANULARITY' | 'GDC.time.year' | 'GDC.time.week_us' | 'GDC.time.week_in_year' | 'GDC.time.week_in_quarter' | 'GDC.time.week' | 'GDC.time.euweek_in_year' | 'GDC.time.euweek_in_quarter' | 'GDC.time.quarter' | 'GDC.time.quarter_in_year' | 'GDC.time.month' | 'GDC.time.month_in_quarter' | 'GDC.time.month_in_year' | 'GDC.time.day_in_year' | 'GDC.time.day_in_quarter' | 'GDC.time.day_in_month' | 'GDC.time.day_in_week' | 'GDC.time.day_in_euweek' | 'GDC.time.date' | 'GDC.time.hour' | 'GDC.time.hour_in_day' | 'GDC.time.minute' | 'GDC.time.minute_in_hour' | 'GDC.time.minute_in_day' | 'GDC.time.second' | 'GDC.time.second_in_minute' | 'GDC.time.second_in_day' | 'GDC.time.fiscal_week' | 'GDC.time.fiscal_month' | 'GDC.time.fiscal_quarter' | 'GDC.time.fiscal_semester' | 'GDC.time.fiscal_year' | 'GDC.time.fiscal_day_in_fiscal_week' | 'GDC.time.fiscal_day_in_fiscal_month' | 'GDC.time.fiscal_day_in_fiscal_quarter' | 'GDC.time.fiscal_day_in_fiscal_semester' | 'GDC.time.fiscal_day_in_fiscal_year' | 'GDC.time.fiscal_week_in_fiscal_month' | 'GDC.time.fiscal_week_in_fiscal_quarter' | 'GDC.time.fiscal_week_in_fiscal_semester' | 'GDC.time.fiscal_week_in_fiscal_year' | 'GDC.time.fiscal_month_in_fiscal_quarter' | 'GDC.time.fiscal_month_in_fiscal_semester' | 'GDC.time.fiscal_month_in_fiscal_year' | 'GDC.time.fiscal_quarter_in_fiscal_semester' | 'GDC.time.fiscal_quarter_in_fiscal_year' | 'GDC.time.fiscal_semester_in_fiscal_year';
+export type ExportDashboardDateFilterDateFilterTypeEnum = 'relative' | 'absolute';
 
 /**
  * @type ExportDashboardDateFilterDateFilterFrom
  */
 export type ExportDashboardDateFilterDateFilterFrom = number | string;
+
+/**
+ * @type ExportDashboardDateFilterDateFilterTo
+ */
+export type ExportDashboardDateFilterDateFilterTo = number | string;
 
 /**
  * Additional settings.
@@ -491,17 +528,17 @@ export interface ExportDashboardExportSettings {
      */
     'mergeHeaders'?: boolean;
     /**
-     * Set page size. (PDF)
-     */
-    'pageSize'?: ExportDashboardExportSettingsPageSizeEnum;
-    /**
      * Set page orientation. (PDF)
      */
     'pageOrientation'?: ExportDashboardExportSettingsPageOrientationEnum;
+    /**
+     * Set page size. (PDF)
+     */
+    'pageSize'?: ExportDashboardExportSettingsPageSizeEnum;
 }
 
-export type ExportDashboardExportSettingsPageSizeEnum = 'A3' | 'A4' | 'LETTER';
 export type ExportDashboardExportSettingsPageOrientationEnum = 'PORTRAIT' | 'LANDSCAPE';
+export type ExportDashboardExportSettingsPageSizeEnum = 'A3' | 'A4' | 'LETTER';
 
 /**
  * @type ExportDashboardFilter
@@ -513,13 +550,13 @@ export interface ExportDashboardMatchAttributeFilter {
 }
 
 export interface ExportDashboardMatchAttributeFilterMatchAttributeFilter {
-    'displayForm': ExportIdentifierRef;
-    'operator': ExportDashboardMatchAttributeFilterMatchAttributeFilterOperatorEnum;
-    'literal': string;
-    'negativeSelection': boolean;
     'caseSensitive': boolean;
-    'title'?: string;
+    'displayForm': ExportIdentifierRef;
+    'literal': string;
     'localIdentifier'?: string;
+    'negativeSelection': boolean;
+    'operator': ExportDashboardMatchAttributeFilterMatchAttributeFilterOperatorEnum;
+    'title'?: string;
 }
 
 export type ExportDashboardMatchAttributeFilterMatchAttributeFilterOperatorEnum = 'contains' | 'startsWith' | 'endsWith';
@@ -529,11 +566,11 @@ export interface ExportDashboardMeasureValueFilter {
 }
 
 export interface ExportDashboardMeasureValueFilterDashboardMeasureValueFilter {
-    'measure': ExportIdentifierRef;
     'conditions': Array<ExportDashboardCompoundConditionItem>;
     'dimensionality'?: Array<ExportIdentifierRef>;
-    'title'?: string;
     'localIdentifier'?: string;
+    'measure': ExportIdentifierRef;
+    'title'?: string;
 }
 
 /**
@@ -541,34 +578,34 @@ export interface ExportDashboardMeasureValueFilterDashboardMeasureValueFilter {
  */
 export interface ExportDashboardTabularExportRequest {
     /**
-     * Requested tabular export type.
-     */
-    'format': ExportDashboardTabularExportRequestFormatEnum;
-    /**
-     * Filename of downloaded file without extension.
-     */
-    'fileName': string;
-    /**
      * List of filters that will be used instead of the default dashboard filters.
      */
     'dashboardFiltersOverride'?: Array<ExportDashboardFilter>;
-    /**
-     * Map of tab-specific filter overrides. Key is tabId, value is list of filters for that tab.
-     */
-    'dashboardTabsFiltersOverrides'?: { [key: string]: Array<ExportDashboardFilter>; };
-    /**
-     * List of widget identifiers to be exported. Note that only one widget is currently supported.
-     */
-    'widgetIds'?: Array<string>;
-    'settings'?: ExportDashboardExportSettings;
     /**
      * Parameter value overrides applied to the export\'s executions. Each entry carries the parameter id (used as an AFM execution override) plus the FE-supplied title for the info sheet. Applied uniformly across all tabs; use dashboardTabsParametersOverrides for tab-scoped overrides.
      */
     'dashboardParametersOverride'?: Array<ExportParameterValue>;
     /**
+     * Map of tab-specific filter overrides. Key is tabId, value is list of filters for that tab.
+     */
+    'dashboardTabsFiltersOverrides'?: { [key: string]: Array<ExportDashboardFilter>; };
+    /**
      * Map of tab-specific parameter overrides. Key is tabId, value is a list of (id, value, title) entries that override the dashboard-level parameters for that tab only. Mirrors dashboardTabsFiltersOverrides. When a tab is present in this map, its entries take precedence over dashboardParametersOverride for that tab\'s executions and info-sheet display.
      */
     'dashboardTabsParametersOverrides'?: { [key: string]: Array<ExportParameterValue>; };
+    /**
+     * Filename of downloaded file without extension.
+     */
+    'fileName': string;
+    /**
+     * Requested tabular export type.
+     */
+    'format': ExportDashboardTabularExportRequestFormatEnum;
+    'settings'?: ExportDashboardExportSettings;
+    /**
+     * List of widget identifiers to be exported. Note that only one widget is currently supported.
+     */
+    'widgetIds'?: Array<string>;
 }
 
 export type ExportDashboardTabularExportRequestFormatEnum = 'XLSX' | 'PDF';
@@ -577,7 +614,7 @@ export type ExportDashboardTabularExportRequestFormatEnum = 'XLSX' | 'PDF';
  * @type ExportDateFilter
  * Abstract filter definition type for dates.
  */
-export type ExportDateFilter = ExportAbsoluteDateFilter | ExportAllTimeDateFilter | ExportRelativeDateFilter;
+export type ExportDateFilter = ExportAbsoluteDateFilter | ExportAbsoluteGranularityDateFilter | ExportAllTimeDateFilter | ExportRelativeDateFilter;
 
 export interface ExportDateValue {
     'value': string;
@@ -595,6 +632,10 @@ export interface ExportExecutionSettings {
      * Specifies the timestamp of the execution from which relative filters are resolved. If not set, the current time is used.
      */
     'timestamp'?: string;
+    /**
+     * Specifies the time zone used to resolve relative date filters and to convert time-zone-aware date/time values in the result. Expects an IANA time zone id (e.g. \"Europe/Prague\") or a fixed GMT offset (e.g. \"GMT+02:00\"). If not set, the time zone from the workspace/user settings is used.
+     */
+    'timezone'?: string;
 }
 
 export interface ExportExportResponse {
@@ -605,7 +646,7 @@ export interface ExportExportResponse {
  * @type ExportFilterDefinition
  * Abstract filter definition type
  */
-export type ExportFilterDefinition = ExportAbsoluteDateFilter | ExportAllTimeDateFilter | ExportComparisonMeasureValueFilter | ExportCompoundMeasureValueFilter | ExportInlineFilterDefinition | ExportMatchAttributeFilter | ExportNegativeAttributeFilter | ExportPositiveAttributeFilter | ExportRangeMeasureValueFilter | ExportRankingFilter | ExportRelativeDateFilter;
+export type ExportFilterDefinition = ExportAbsoluteDateFilter | ExportAbsoluteGranularityDateFilter | ExportAllTimeDateFilter | ExportComparisonMeasureValueFilter | ExportCompoundMeasureValueFilter | ExportInlineFilterDefinition | ExportMatchAttributeFilter | ExportNegativeAttributeFilter | ExportPositiveAttributeFilter | ExportRangeMeasureValueFilter | ExportRankingFilter | ExportRelativeDateFilter;
 
 /**
  * @type ExportFilterDefinitionForSimpleMeasure
@@ -613,15 +654,37 @@ export type ExportFilterDefinition = ExportAbsoluteDateFilter | ExportAllTimeDat
  */
 export type ExportFilterDefinitionForSimpleMeasure = ExportAttributeFilter | ExportDateFilter;
 
-export interface ExportGetSlidesExport202ResponseInner {
-    'short'?: number;
+export interface ExportGetImageExport202ResponseInner {
     'char'?: string;
+    'direct'?: boolean;
+    'double'?: number;
+    'float'?: number;
     'int'?: number;
     'long'?: number;
-    'float'?: number;
-    'double'?: number;
-    'direct'?: boolean;
     'readOnly'?: boolean;
+    'short'?: number;
+}
+
+export interface ExportGetSlidesExport202ResponseInner {
+    'char'?: string;
+    'direct'?: boolean;
+    'double'?: number;
+    'float'?: number;
+    'int'?: number;
+    'long'?: number;
+    'readOnly'?: boolean;
+    'short'?: number;
+}
+
+export interface ExportGetSlidesExport202ResponseInner1 {
+    'char'?: string;
+    'direct'?: boolean;
+    'double'?: number;
+    'float'?: number;
+    'int'?: number;
+    'long'?: number;
+    'readOnly'?: boolean;
+    'short'?: number;
 }
 
 export interface ExportIdentifierRef {
@@ -633,32 +696,32 @@ export interface ExportIdentifierRefIdentifier {
     'type': ExportIdentifierRefIdentifierTypeEnum;
 }
 
-export type ExportIdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'workspaceExportTemplate';
+export type ExportIdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'workspaceExportTemplate' | 'workspaceTheme' | 'workspaceColorPalette' | 'fiscalCalendar' | 'fiscalCalendarGranularity';
 
 /**
  * Export request object describing the export properties and metadata for image exports.
  */
 export interface ExportImageExportRequest {
     /**
-     * Requested resulting file type.
+     * Dashboard identifier
      */
-    'format': ExportImageExportRequestFormatEnum;
+    'dashboardId': string;
     /**
      * File name to be used for retrieving the image document.
      */
     'fileName': string;
     /**
-     * Dashboard identifier
+     * Requested resulting file type.
      */
-    'dashboardId': string;
-    /**
-     * List of widget identifiers to be exported. Note that only one widget is currently supported.
-     */
-    'widgetIds': Array<string>;
+    'format': ExportImageExportRequestFormatEnum;
     /**
      * Metadata definition in free-form JSON format.
      */
     'metadata'?: object | null;
+    /**
+     * List of widget identifiers to be exported. Note that only one widget is currently supported.
+     */
+    'widgetIds': Array<string>;
 }
 
 export type ExportImageExportRequestFormatEnum = 'PNG';
@@ -671,12 +734,12 @@ export interface ExportInlineFilterDefinition {
 }
 
 export interface ExportInlineFilterDefinitionInline {
+    'applyOnResult'?: boolean;
     /**
      * MAQL query representing the filter.
      */
     'filter': string;
     'localIdentifier'?: string;
-    'applyOnResult'?: boolean;
 }
 
 /**
@@ -701,10 +764,17 @@ export interface ExportMatchAttributeFilter {
 }
 
 export interface ExportMatchAttributeFilterMatchAttributeFilter {
+    'applyOnResult'?: boolean;
+    /**
+     * Indicates whether the filter match is evaluated in case-sensitive mode or not.
+     */
+    'caseSensitive'?: boolean;
+    'label': ExportAfmIdentifier;
     /**
      * Literal used to limit label values.
      */
     'literal': string;
+    'localIdentifier'?: string;
     /**
      * Requested match type.
      */
@@ -713,13 +783,6 @@ export interface ExportMatchAttributeFilterMatchAttributeFilter {
      * Indicates whether the filter should negate the match.
      */
     'negate'?: boolean;
-    /**
-     * Indicates whether the filter match is evaluated in case-sensitive mode or not.
-     */
-    'caseSensitive'?: boolean;
-    'localIdentifier'?: string;
-    'applyOnResult'?: boolean;
-    'label': ExportAfmIdentifier;
 }
 
 export type ExportMatchAttributeFilterMatchAttributeFilterMatchTypeEnum = 'STARTS_WITH' | 'ENDS_WITH' | 'CONTAINS';
@@ -734,11 +797,11 @@ export type ExportMeasureDefinition = ExportArithmeticMeasureDefinition | Export
  * Metric is a quantity that is calculated from the data.
  */
 export interface ExportMeasureItem {
+    'definition': ExportMeasureDefinition;
     /**
      * Local identifier of the metric. This can be used to reference the metric in other parts of the execution definition.
      */
     'localIdentifier': string;
-    'definition': ExportMeasureDefinition;
 }
 
 /**
@@ -757,8 +820,8 @@ export type ExportMeasureValueFilter = ExportComparisonMeasureValueFilter | Expo
  * (EXPERIMENTAL) Override for a catalog metric definition.
  */
 export interface ExportMetricDefinitionOverride {
-    'item': ExportAfmObjectIdentifierCore;
     'definition': ExportInlineMeasureDefinition;
+    'item': ExportAfmObjectIdentifierCore;
 }
 
 /**
@@ -769,14 +832,14 @@ export interface ExportNegativeAttributeFilter {
 }
 
 export interface ExportNegativeAttributeFilterNegativeAttributeFilter {
-    'notIn': ExportAttributeFilterElements;
-    'localIdentifier'?: string;
     'applyOnResult'?: boolean;
+    'label': ExportAfmIdentifier;
+    'localIdentifier'?: string;
+    'notIn': ExportAttributeFilterElements;
     /**
      * If true, indicates that the values in notInElements were filled free-form, otherwise they have been picked from existing elements.
      */
     'usesArbitraryValues'?: boolean;
-    'label': ExportAfmIdentifier;
 }
 
 export interface ExportOver {
@@ -787,6 +850,8 @@ export interface ExportOver {
  * (EXPERIMENTAL) Parameter value for this execution.
  */
 export interface ExportParameterItem {
+    [key: string]: any;
+
     'parameter': ExportAfmObjectIdentifierParameter;
     /**
      * Value to use for this parameter instead of its default.
@@ -798,18 +863,20 @@ export interface ExportParameterItem {
  * Parameter value override applied to the export. The (id, value) pair drives the execution; the title is FE-supplied for info-sheet display.
  */
 export interface ExportParameterValue {
+    [key: string]: any;
+
     /**
      * Identifier of the workspace parameter (matches the parameter entity id).
      */
     'id': string;
     /**
-     * Value to use for this parameter when executing the export.
-     */
-    'value': string;
-    /**
      * Display title of the parameter as the client wants it rendered on the info sheet.
      */
     'title': string;
+    /**
+     * Value to use for this parameter when executing the export.
+     */
+    'value': string;
 }
 
 /**
@@ -817,13 +884,13 @@ export interface ExportParameterValue {
  */
 export interface ExportPdfTableStyle {
     /**
-     * CSS selector where to apply given properties.
-     */
-    'selector': string;
-    /**
      * List of CSS properties.
      */
     'properties'?: Array<ExportPdfTableStyleProperty>;
+    /**
+     * CSS selector where to apply given properties.
+     */
+    'selector': string;
 }
 
 /**
@@ -859,11 +926,11 @@ export interface ExportPopDatasetMeasureDefinition {
 }
 
 export interface ExportPopDatasetMeasureDefinitionPreviousPeriodMeasure {
-    'measureIdentifier': ExportAfmLocalIdentifier;
     /**
      * Specification of which date data sets to use for determining the period to calculate the previous period for.
      */
     'dateDatasets': Array<ExportPopDataset>;
+    'measureIdentifier': ExportAfmLocalIdentifier;
 }
 
 /**
@@ -885,11 +952,11 @@ export interface ExportPopDateMeasureDefinition {
 }
 
 export interface ExportPopDateMeasureDefinitionOverPeriodMeasure {
-    'measureIdentifier': ExportAfmLocalIdentifier;
     /**
      * Attributes to use for determining the period to calculate the PoP for.
      */
     'dateAttributes': Array<ExportPopDate>;
+    'measureIdentifier': ExportAfmLocalIdentifier;
 }
 
 /**
@@ -905,14 +972,14 @@ export interface ExportPositiveAttributeFilter {
 }
 
 export interface ExportPositiveAttributeFilterPositiveAttributeFilter {
-    'in': ExportAttributeFilterElements;
-    'localIdentifier'?: string;
     'applyOnResult'?: boolean;
+    'in': ExportAttributeFilterElements;
+    'label': ExportAfmIdentifier;
+    'localIdentifier'?: string;
     /**
      * If true, indicates that the values in inElements were filled free-form, otherwise they have been picked from existing elements.
      */
     'usesArbitraryValues'?: boolean;
-    'label': ExportAfmIdentifier;
 }
 
 /**
@@ -923,8 +990,8 @@ export interface ExportRangeCondition {
 }
 
 export interface ExportRangeConditionRange {
-    'operator': ExportRangeConditionRangeOperatorEnum;
     'from': number;
+    'operator': ExportRangeConditionRangeOperatorEnum;
     'to': number;
 }
 
@@ -938,20 +1005,20 @@ export interface ExportRangeMeasureValueFilter {
 }
 
 export interface ExportRangeMeasureValueFilterRangeMeasureValueFilter {
+    'applyOnResult'?: boolean;
     /**
      * References to the attributes to be used when filtering.
      */
     'dimensionality'?: Array<ExportAfmIdentifier>;
+    'from': number;
+    'localIdentifier'?: string;
+    'measure': ExportAfmIdentifier;
+    'operator': ExportRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum;
+    'to': number;
     /**
      * A value that will be substituted for null values in the metric for the comparisons.
      */
     'treatNullValuesAs'?: number;
-    'operator': ExportRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum;
-    'from': number;
-    'to': number;
-    'localIdentifier'?: string;
-    'applyOnResult'?: boolean;
-    'measure': ExportAfmIdentifier;
 }
 
 export type ExportRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum = 'BETWEEN' | 'NOT_BETWEEN';
@@ -964,10 +1031,12 @@ export interface ExportRankingFilter {
 }
 
 export interface ExportRankingFilterRankingFilter {
+    'applyOnResult'?: boolean;
     /**
      * References to the attributes to be used when filtering.
      */
     'dimensionality'?: Array<ExportAfmIdentifier>;
+    'localIdentifier'?: string;
     /**
      * References to the metrics to be used when filtering.
      */
@@ -977,15 +1046,13 @@ export interface ExportRankingFilterRankingFilter {
      */
     'operator': ExportRankingFilterRankingFilterOperatorEnum;
     /**
-     * Number of top/bottom values to filter.
-     */
-    'value': number;
-    /**
      * When true, filter returns requested number of rows at most. Default is false.
      */
     'strictLimitOfRows'?: boolean;
-    'localIdentifier'?: string;
-    'applyOnResult'?: boolean;
+    /**
+     * Number of top/bottom values to filter.
+     */
+    'value': number;
 }
 
 export type ExportRankingFilterRankingFilterOperatorEnum = 'TOP' | 'BOTTOM';
@@ -1028,32 +1095,32 @@ export interface ExportRawCustomOverride {
  * Export request object describing the export properties and overrides for raw exports.
  */
 export interface ExportRawExportRequest {
-    /**
-     * Requested resulting file type.
-     */
-    'format': ExportRawExportRequestFormatEnum;
-    'execution': ExportAFM;
-    /**
-     * Filename of downloaded file without extension.
-     */
-    'fileName': string;
     'customOverride'?: ExportRawCustomOverride;
-    'executionSettings'?: ExportExecutionSettings;
     /**
      * Set column delimiter. (CSV)
      */
     'delimiter'?: string;
+    'execution': ExportAFM;
+    'executionSettings'?: ExportExecutionSettings;
+    /**
+     * Filename of downloaded file without extension.
+     */
+    'fileName': string;
+    /**
+     * Requested resulting file type.
+     */
+    'format': ExportRawExportRequestFormatEnum;
 }
 
 export type ExportRawExportRequestFormatEnum = 'ARROW_FILE' | 'ARROW_STREAM' | 'CSV';
 
 export interface ExportRelativeBoundedDateFilter {
-    'granularity': ExportRelativeBoundedDateFilterGranularityEnum;
     'from'?: number;
+    'granularity': ExportRelativeBoundedDateFilterGranularityEnum;
     'to'?: number;
 }
 
-export type ExportRelativeBoundedDateFilterGranularityEnum = 'ALL_TIME_GRANULARITY' | 'GDC.time.year' | 'GDC.time.week_us' | 'GDC.time.week_in_year' | 'GDC.time.week_in_quarter' | 'GDC.time.week' | 'GDC.time.euweek_in_year' | 'GDC.time.euweek_in_quarter' | 'GDC.time.quarter' | 'GDC.time.quarter_in_year' | 'GDC.time.month' | 'GDC.time.month_in_quarter' | 'GDC.time.month_in_year' | 'GDC.time.day_in_year' | 'GDC.time.day_in_quarter' | 'GDC.time.day_in_month' | 'GDC.time.day_in_week' | 'GDC.time.day_in_euweek' | 'GDC.time.date' | 'GDC.time.hour' | 'GDC.time.hour_in_day' | 'GDC.time.minute' | 'GDC.time.minute_in_hour' | 'GDC.time.fiscal_month' | 'GDC.time.fiscal_quarter' | 'GDC.time.fiscal_year';
+export type ExportRelativeBoundedDateFilterGranularityEnum = 'ALL_TIME_GRANULARITY' | 'GDC.time.year' | 'GDC.time.week_us' | 'GDC.time.week_in_year' | 'GDC.time.week_in_quarter' | 'GDC.time.week' | 'GDC.time.euweek_in_year' | 'GDC.time.euweek_in_quarter' | 'GDC.time.quarter' | 'GDC.time.quarter_in_year' | 'GDC.time.month' | 'GDC.time.month_in_quarter' | 'GDC.time.month_in_year' | 'GDC.time.day_in_year' | 'GDC.time.day_in_quarter' | 'GDC.time.day_in_month' | 'GDC.time.day_in_week' | 'GDC.time.day_in_euweek' | 'GDC.time.date' | 'GDC.time.hour' | 'GDC.time.hour_in_day' | 'GDC.time.minute' | 'GDC.time.minute_in_hour' | 'GDC.time.minute_in_day' | 'GDC.time.second' | 'GDC.time.second_in_minute' | 'GDC.time.second_in_day' | 'GDC.time.fiscal_week' | 'GDC.time.fiscal_month' | 'GDC.time.fiscal_quarter' | 'GDC.time.fiscal_semester' | 'GDC.time.fiscal_year' | 'GDC.time.fiscal_day_in_fiscal_week' | 'GDC.time.fiscal_day_in_fiscal_month' | 'GDC.time.fiscal_day_in_fiscal_quarter' | 'GDC.time.fiscal_day_in_fiscal_semester' | 'GDC.time.fiscal_day_in_fiscal_year' | 'GDC.time.fiscal_week_in_fiscal_month' | 'GDC.time.fiscal_week_in_fiscal_quarter' | 'GDC.time.fiscal_week_in_fiscal_semester' | 'GDC.time.fiscal_week_in_fiscal_year' | 'GDC.time.fiscal_month_in_fiscal_quarter' | 'GDC.time.fiscal_month_in_fiscal_semester' | 'GDC.time.fiscal_month_in_fiscal_year' | 'GDC.time.fiscal_quarter_in_fiscal_semester' | 'GDC.time.fiscal_quarter_in_fiscal_year' | 'GDC.time.fiscal_semester_in_fiscal_year';
 
 /**
  * A date filter specifying a time interval that is relative to the current date. For example, last week, next month, and so on. Field dataset is representing qualifier of date dimension. The \'from\' and \'to\' properties mark the boundaries of the interval. If \'from\' is omitted, all values earlier than \'to\' are included. If \'to\' is omitted, all values later than \'from\' are included. It is not allowed to omit both.
@@ -1063,48 +1130,59 @@ export interface ExportRelativeDateFilter {
 }
 
 export interface ExportRelativeDateFilterRelativeDateFilter {
+    'applyOnResult'?: boolean;
+    'boundedFilter'?: ExportBoundedFilter;
+    'dataset': ExportAfmObjectIdentifierDataset;
     /**
-     * Date granularity specifying particular date attribute in given dimension.
+     * Specifies how rows with empty (null/missing) date values should be handled. INCLUDE includes empty dates in addition to the date range restriction, EXCLUDE removes rows with empty dates (default), ONLY keeps only rows with empty dates.
      */
-    'granularity': ExportRelativeDateFilterRelativeDateFilterGranularityEnum;
+    'emptyValueHandling'?: ExportRelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum;
     /**
      * Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for \'2 days/weeks, ... ago\').
      */
     'from': number;
     /**
+     * Date granularity specifying particular date attribute in given dimension.
+     */
+    'granularity': ExportRelativeDateFilterRelativeDateFilterGranularityEnum;
+    'localIdentifier'?: string;
+    /**
      * End of the filtering interval. Specified by number of periods (with respect to given granularity). Value \'O\' is representing current time-interval (current day, week, ...).
      */
     'to': number;
-    'localIdentifier'?: string;
-    'applyOnResult'?: boolean;
-    'boundedFilter'?: ExportBoundedFilter;
-    /**
-     * Specifies how rows with empty (null/missing) date values should be handled. INCLUDE includes empty dates in addition to the date range restriction, EXCLUDE removes rows with empty dates (default), ONLY keeps only rows with empty dates.
-     */
-    'emptyValueHandling'?: ExportRelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum;
-    'dataset': ExportAfmObjectIdentifierDataset;
 }
 
-export type ExportRelativeDateFilterRelativeDateFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
 export type ExportRelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
+export type ExportRelativeDateFilterRelativeDateFilterGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
 
 /**
  * Additional settings.
  */
 export interface ExportSettings {
     /**
+     * Set column delimiter. (CSV)
+     */
+    'delimiter'?: string;
+    /**
      * If true, the export will contain the information about the export – exported date, filters, etc. Works only with `visualizationObject`. (XLSX, PDF)
      */
     'exportInfo'?: boolean;
+    /**
+     * Grand totals position. Takes precedence over position specified in visualization.
+     */
+    'grandTotalsPosition'?: ExportSettingsGrandTotalsPositionEnum;
     /**
      * Merge equal headers in neighbouring cells. (XLSX)
      */
     'mergeHeaders'?: boolean;
     /**
-     * Print applied filters on top of the document. (PDF/HTML when visualizationObject is given)
-     * @deprecated
+     * Set page orientation. (PDF)
      */
-    'showFilters'?: boolean;
+    'pageOrientation'?: ExportSettingsPageOrientationEnum;
+    /**
+     * Set page size. (PDF)
+     */
+    'pageSize'?: ExportSettingsPageSizeEnum;
     /**
      * Page size and orientation. (PDF)
      * @deprecated
@@ -1126,26 +1204,15 @@ export interface ExportSettings {
      */
     'pdfTopRightContent'?: string;
     /**
-     * Set page size. (PDF)
+     * Print applied filters on top of the document. (PDF/HTML when visualizationObject is given)
+     * @deprecated
      */
-    'pageSize'?: ExportSettingsPageSizeEnum;
-    /**
-     * Set page orientation. (PDF)
-     */
-    'pageOrientation'?: ExportSettingsPageOrientationEnum;
-    /**
-     * Set column delimiter. (CSV)
-     */
-    'delimiter'?: string;
-    /**
-     * Grand totals position. Takes precedence over position specified in visualization.
-     */
-    'grandTotalsPosition'?: ExportSettingsGrandTotalsPositionEnum;
+    'showFilters'?: boolean;
 }
 
-export type ExportSettingsPageSizeEnum = 'A3' | 'A4' | 'LETTER';
-export type ExportSettingsPageOrientationEnum = 'PORTRAIT' | 'LANDSCAPE';
 export type ExportSettingsGrandTotalsPositionEnum = 'pinnedBottom' | 'pinnedTop' | 'bottom' | 'top';
+export type ExportSettingsPageOrientationEnum = 'PORTRAIT' | 'LANDSCAPE';
+export type ExportSettingsPageSizeEnum = 'A3' | 'A4' | 'LETTER';
 
 /**
  * Metric defined by referencing a MAQL metric or an LDM fact object with aggregation.
@@ -1155,7 +1222,6 @@ export interface ExportSimpleMeasureDefinition {
 }
 
 export interface ExportSimpleMeasureDefinitionMeasure {
-    'item': ExportAfmObjectIdentifierCore;
     /**
      * Definition of aggregation type of the metric.
      */
@@ -1168,6 +1234,7 @@ export interface ExportSimpleMeasureDefinitionMeasure {
      * Metrics can be filtered by attribute filters with the same interface as ones for global AFM. Note that only one DateFilter is allowed.
      */
     'filters'?: Array<ExportFilterDefinitionForSimpleMeasure>;
+    'item': ExportAfmObjectIdentifierCore;
 }
 
 export type ExportSimpleMeasureDefinitionMeasureAggregationEnum = 'SUM' | 'COUNT' | 'AVG' | 'MIN' | 'MAX' | 'MEDIAN' | 'RUNSUM' | 'APPROXIMATE_COUNT';
@@ -1177,25 +1244,17 @@ export type ExportSimpleMeasureDefinitionMeasureAggregationEnum = 'SUM' | 'COUNT
  */
 export interface ExportSlidesExportRequest {
     /**
-     * Requested resulting file type.
+     * Dashboard identifier
      */
-    'format': ExportSlidesExportRequestFormatEnum;
+    'dashboardId'?: string;
     /**
      * File name to be used for retrieving the pdf document.
      */
     'fileName': string;
     /**
-     * Dashboard identifier
+     * Requested resulting file type.
      */
-    'dashboardId'?: string;
-    /**
-     * List of widget identifiers to be exported. Note that only one widget is currently supported.
-     */
-    'widgetIds'?: Array<string>;
-    /**
-     * List of visualization ids to be exported. Note that only one visualization is currently supported.
-     */
-    'visualizationIds'?: Array<string>;
+    'format': ExportSlidesExportRequestFormatEnum;
     /**
      * Metadata definition in free-form JSON format.
      */
@@ -1204,6 +1263,14 @@ export interface ExportSlidesExportRequest {
      * Export template identifier.
      */
     'templateId'?: string | null;
+    /**
+     * List of visualization ids to be exported. Note that only one visualization is currently supported.
+     */
+    'visualizationIds'?: Array<string>;
+    /**
+     * List of widget identifiers to be exported. Note that only one widget is currently supported.
+     */
+    'widgetIds'?: Array<string>;
 }
 
 export type ExportSlidesExportRequestFormatEnum = 'PDF' | 'PPTX';
@@ -1212,6 +1279,7 @@ export type ExportSlidesExportRequestFormatEnum = 'PDF' | 'PPTX';
  * A single pre-executed layer in a multi-layer tabular export.
  */
 export interface ExportTabularExportExecution {
+    'customOverride'?: ExportCustomOverride;
     /**
      * Execution result identifier for this layer.
      */
@@ -1220,27 +1288,38 @@ export interface ExportTabularExportExecution {
      * Layer title used for the exported sheet or file name.
      */
     'title'?: string;
-    'customOverride'?: ExportCustomOverride;
 }
 
 /**
  * Export request object describing the export properties and overrides for tabular exports.
  */
 export interface ExportTabularExportRequest {
-    /**
-     * Expected file format.
-     */
-    'format': ExportTabularExportRequestFormatEnum;
+    'customOverride'?: ExportCustomOverride;
     /**
      * Execution result identifier.
      */
     'executionResult'?: string;
     /**
+     * Pre-executed layers for multi-layer geo visualizations. When provided, this is the canonical source of the exported layers and takes precedence over the top-level executionResult and customOverride, which are ignored. Index 0 is the main layer; each layer carries its own executionResult and customOverride.
+     */
+    'executions'?: Array<ExportTabularExportExecution>;
+    /**
      * Filename of downloaded file without extension.
      */
     'fileName': string;
+    /**
+     * Expected file format.
+     */
+    'format': ExportTabularExportRequestFormatEnum;
+    /**
+     * Metadata definition in free-form JSON format.
+     */
+    'metadata'?: object | null;
+    /**
+     * Analytical dashboard identifier. Optional identifier, which informs the system that the export is related to a specific dashboard.
+     */
+    'relatedDashboardId'?: string;
     'settings'?: ExportSettings;
-    'customOverride'?: ExportCustomOverride;
     /**
      * Visualization object identifier. Alternative to executionResult property.
      */
@@ -1253,18 +1332,6 @@ export interface ExportTabularExportRequest {
      * Optional custom parameters to be applied when visualizationObject is given. Those parameters override the original parameters defined in the visualization.
      */
     'visualizationObjectCustomParameters'?: Array<ExportParameterValue>;
-    /**
-     * Analytical dashboard identifier. Optional identifier, which informs the system that the export is related to a specific dashboard.
-     */
-    'relatedDashboardId'?: string;
-    /**
-     * Metadata definition in free-form JSON format.
-     */
-    'metadata'?: object | null;
-    /**
-     * Pre-executed layers for multi-layer geo visualizations. When provided, this is the canonical source of the exported layers and takes precedence over the top-level executionResult and customOverride, which are ignored. Index 0 is the main layer; each layer carries its own executionResult and customOverride.
-     */
-    'executions'?: Array<ExportTabularExportExecution>;
 }
 
 export type ExportTabularExportRequestFormatEnum = 'CSV' | 'XLSX' | 'HTML' | 'PDF';
@@ -1274,13 +1341,13 @@ export type ExportTabularExportRequestFormatEnum = 'CSV' | 'XLSX' | 'HTML' | 'PD
  */
 export interface ExportVisualExportRequest {
     /**
-     * File name to be used for retrieving the pdf document.
-     */
-    'fileName': string;
-    /**
      * Dashboard identifier
      */
     'dashboardId': string;
+    /**
+     * File name to be used for retrieving the pdf document.
+     */
+    'fileName': string;
     /**
      * Metadata definition in free-form JSON format.
      */

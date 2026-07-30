@@ -8570,6 +8570,7 @@ export function NoData(input: INoDataProps): JSX.Element;
 export function NonContextToastsInterop(props: {
     messages: IMessage[];
     onDismissMessage?: (id: IMessage["id"]) => void;
+    containerClassName?: string;
 }): JSX.Element;
 
 // @internal
@@ -8974,7 +8975,9 @@ export function ToastMessageList(input: {
 }): JSX.Element;
 
 // @internal
-export function ToastsCenter(): JSX.Element | null;
+export function ToastsCenter(input: {
+    containerClassName?: string;
+}): JSX.Element | null;
 
 // @internal (undocumented)
 export const ToastsCenterContext: IContextStore<IToastsCenterContext>;
@@ -8982,6 +8985,7 @@ export const ToastsCenterContext: IContextStore<IToastsCenterContext>;
 // @internal
 export function ToastsCenterContextProvider(input: {
     skipAutomaticMessageRendering?: boolean;
+    containerClassName?: string;
     children: ReactNode;
 }): JSX.Element;
 

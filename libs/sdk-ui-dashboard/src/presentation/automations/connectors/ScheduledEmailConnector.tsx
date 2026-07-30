@@ -47,10 +47,10 @@ export function ScheduledEmailAutomationsProvider({ children }: { children: Reac
  * Connector component that reads from the dashboard Redux store and wires up
  * the scheduled-email dialog tree (create/edit and management) via context providers.
  *
- * This is the primary bridge between dashboard store state and the scheduled-email
- * dialog tree. The dialog still reads the store directly at this point —
- * contexts are provided but not yet consumed. Store reads migrate off the dialog
- * in subsequent Phase 2 tasks (A2/A3).
+ * This is the primary bridge between dashboard store state and the scheduled-email dialog tree, with one
+ * exception: the shared `automationFilters` hooks (`useAutomationFiltersSelect`,
+ * `useAutomationExportParameters`, `useValidateExistingAutomationFilters`) read the store directly via
+ * `useDashboardSelector`.
  *
  * AutomationsContext is provided by ScheduledEmailAutomationsProvider, which wraps this
  * connector (see ScheduledEmailAutomationsProvider in DashboardHeader).

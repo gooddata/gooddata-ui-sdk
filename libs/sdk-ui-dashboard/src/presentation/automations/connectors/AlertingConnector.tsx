@@ -36,13 +36,11 @@ export function AlertingAutomationsProvider({ children }: { children: ReactNode 
  * Connector component that reads from the dashboard Redux store and wires up
  * the alerting dialog tree (create/edit and management) via context providers.
  *
- * This is the primary bridge between dashboard store state and the alerting
- * dialog tree. One transitive exception remains: useAutomationAlertParameters
- * (in shared/automationFilters) still reads the store via useDashboardSelector,
- * so alerting is not yet fully decoupled. That coupling is an explicit
- * carve-out frozen in the `automationFilters` allowlist of .dependency-cruiser.js
- * (see the GDP-3167 note there) and is tracked for a Phase 3 move behind this
- * connector.
+ * This is the primary bridge between dashboard store state and the alerting dialog tree. One
+ * transitive exception remains: `useAutomationAlertParameters` (in `shared/automationFilters`) still
+ * reads the store via `useDashboardSelector`, so alerting is not yet fully decoupled. That coupling is
+ * an explicit carve-out frozen in the `automationFilters` allowlist of `.dependency-cruiser.js` (see
+ * the note there); moving it behind this connector is tracked on GDP-3167.
  *
  * AutomationsContext is provided by AlertingAutomationsProvider, which wraps this
  * connector (see AlertingDialogProvider).

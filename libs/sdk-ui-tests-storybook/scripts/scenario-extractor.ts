@@ -20,7 +20,7 @@ const server = await createServer({
 
 try {
     // Import your existing toBackstopJson function via Vite's SSR loader
-    const modulePath = resolve(__dirname, "../stories/_infra/toBackstop.ts");
+    const modulePath = resolve(import.meta.dirname, "../stories/_infra/toBackstop.ts");
     const toBackstop = await server.ssrLoadModule(modulePath);
 
     // Call the function exactly as before

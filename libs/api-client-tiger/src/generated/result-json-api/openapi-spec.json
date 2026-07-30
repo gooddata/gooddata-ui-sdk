@@ -634,19 +634,6 @@
     },
     "components": {
         "schemas": {
-            "UploadFileResponse": {
-                "required": [
-                    "location"
-                ],
-                "type": "object",
-                "properties": {
-                    "location": {
-                        "type": "string",
-                        "description": "Location to use when referencing the uploaded file in subsequent requests."
-                    }
-                },
-                "description": "Information related to the file uploaded to the staging area."
-            },
             "AnalyzeCsvRequest": {
                 "required": [
                     "analyzeRequests"
@@ -669,12 +656,12 @@
                 ],
                 "type": "object",
                 "properties": {
+                    "config": {
+                        "$ref": "#/components/schemas/AnalyzeCsvRequestItemConfig"
+                    },
                     "location": {
                         "type": "string",
                         "description": "Location of the CSV file to analyze."
-                    },
-                    "config": {
-                        "$ref": "#/components/schemas/AnalyzeCsvRequestItemConfig"
                     }
                 },
                 "description": "CSV analysis request."
@@ -682,10 +669,13 @@
             "AnalyzeCsvRequestItemConfig": {
                 "type": "object",
                 "properties": {
-                    "resultRows": {
-                        "type": "integer",
-                        "description": "Number of rows to return in the flight that represents analysis result. If 0, no rows are returned, if less than 0, all rows that were in the sample are returned.",
-                        "format": "int32"
+                    "delimiters": {
+                        "type": "array",
+                        "description": "Possible column delimiters.",
+                        "items": {
+                            "type": "string",
+                            "description": "Possible column delimiters."
+                        }
                     },
                     "headerDetectMaxRows": {
                         "type": "integer",
@@ -697,13 +687,10 @@
                         "description": "Number of rows to consider as header, if null, header will be detected.",
                         "format": "int32"
                     },
-                    "delimiters": {
-                        "type": "array",
-                        "description": "Possible column delimiters.",
-                        "items": {
-                            "type": "string",
-                            "description": "Possible column delimiters."
-                        }
+                    "resultRows": {
+                        "type": "integer",
+                        "description": "Number of rows to return in the flight that represents analysis result. If 0, no rows are returned, if less than 0, all rows that were in the sample are returned.",
+                        "format": "int32"
                     }
                 },
                 "description": "CSV analysis request config."
@@ -716,16 +703,19 @@
                 ],
                 "type": "object",
                 "properties": {
-                    "location": {
-                        "type": "string",
-                        "description": "Location of the analyzed file in the source data source."
-                    },
                     "columns": {
                         "type": "array",
                         "description": "List of column metadata.",
                         "items": {
                             "$ref": "#/components/schemas/AnalyzeCsvResponseColumn"
                         }
+                    },
+                    "config": {
+                        "$ref": "#/components/schemas/AnalyzeCsvResponseConfig"
+                    },
+                    "location": {
+                        "type": "string",
+                        "description": "Location of the analyzed file in the source data source."
                     },
                     "previewData": {
                         "type": "array",
@@ -738,9 +728,6 @@
                                 "description": "Preview of the first N rows of the file."
                             }
                         }
-                    },
-                    "config": {
-                        "$ref": "#/components/schemas/AnalyzeCsvResponseConfig"
                     }
                 },
                 "description": "Describes the results of a CSV analysis of a single file."
@@ -752,14 +739,6 @@
                 ],
                 "type": "object",
                 "properties": {
-                    "name": {
-                        "type": "string",
-                        "description": "Name of the column as specified in the file (or autogenerated one if the file has no header)."
-                    },
-                    "type": {
-                        "type": "string",
-                        "description": "Type of the column (e.g. string, bool, etc.)."
-                    },
                     "detectedDateFormats": {
                         "type": "array",
                         "description": "List of date formats that can be used to parse this column as date. Null if there are none.",
@@ -767,6 +746,14 @@
                             "type": "string",
                             "description": "List of date formats that can be used to parse this column as date. Null if there are none."
                         }
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the column as specified in the file (or autogenerated one if the file has no header)."
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Type of the column (e.g. string, bool, etc.)."
                     }
                 },
                 "description": "Describes the result column."
@@ -774,21 +761,102 @@
             "AnalyzeCsvResponseConfig": {
                 "type": "object",
                 "properties": {
-                    "readOptions": {
-                        "$ref": "#/components/schemas/CsvReadOptions"
+                    "convertOptions": {
+                        "$ref": "#/components/schemas/CsvConvertOptions"
                     },
                     "parseOptions": {
                         "$ref": "#/components/schemas/CsvParseOptions"
                     },
-                    "convertOptions": {
-                        "$ref": "#/components/schemas/CsvConvertOptions"
+                    "readOptions": {
+                        "$ref": "#/components/schemas/CsvReadOptions"
                     }
                 },
                 "description": "Config used to process the CSV file."
             },
+            "CacheRemovalInterval": {
+                "required": [
+                    "from",
+                    "removed",
+                    "to"
+                ],
+                "type": "object",
+                "properties": {
+                    "from": {
+                        "type": "string",
+                        "description": "Start timestamp of the removal interval.",
+                        "format": "date-time"
+                    },
+                    "removed": {
+                        "type": "integer",
+                        "description": "Bytes removed during this interval.",
+                        "format": "int64"
+                    },
+                    "to": {
+                        "type": "string",
+                        "description": "End timestamp of the removal interval.",
+                        "format": "date-time"
+                    }
+                },
+                "description": "Information about a period in time and how much cached data was removed."
+            },
+            "CacheUsageData": {
+                "required": [
+                    "organizationCacheUsage",
+                    "workspaceCacheUsages"
+                ],
+                "type": "object",
+                "properties": {
+                    "organizationCacheUsage": {
+                        "$ref": "#/components/schemas/OrganizationCacheUsage"
+                    },
+                    "workspaceCacheUsages": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/components/schemas/WorkspaceCacheUsage"
+                        },
+                        "description": "Map of data about the cache usage of the individual workspaces."
+                    }
+                },
+                "description": "Result of scan of data source physical model."
+            },
+            "ConvertGeoFileRequest": {
+                "required": [
+                    "location"
+                ],
+                "type": "object",
+                "properties": {
+                    "location": {
+                        "type": "string",
+                        "description": "Location of the file in the staging area to convert."
+                    }
+                },
+                "description": "Request to convert a geo file to GeoParquet format."
+            },
+            "ConvertGeoFileResponse": {
+                "required": [
+                    "location"
+                ],
+                "type": "object",
+                "properties": {
+                    "location": {
+                        "type": "string",
+                        "description": "Location of the converted GeoParquet file in the staging area."
+                    }
+                },
+                "description": "Response after successfully converting a geo file."
+            },
             "CsvConvertOptions": {
                 "type": "object",
                 "properties": {
+                    "autoDictEncode": {
+                        "type": "boolean",
+                        "description": "Whether to try to automatically dict-encode string / binary data."
+                    },
+                    "autoDictMaxCardinality": {
+                        "type": "integer",
+                        "description": "The maximum dictionary cardinality for autoDictEncode.",
+                        "format": "int32"
+                    },
                     "checkUtf8": {
                         "type": "boolean",
                         "description": "Whether to check UTF8 validity of string columns."
@@ -800,21 +868,9 @@
                             "$ref": "#/components/schemas/CsvConvertOptionsColumnType"
                         }
                     },
-                    "nullValues": {
-                        "type": "array",
-                        "description": "Sequence of strings that denote nulls in the data.",
-                        "items": {
-                            "type": "string",
-                            "description": "Sequence of strings that denote nulls in the data."
-                        }
-                    },
-                    "trueValues": {
-                        "type": "array",
-                        "description": "Sequence of strings that denote true Booleans in the data.",
-                        "items": {
-                            "type": "string",
-                            "description": "Sequence of strings that denote true Booleans in the data."
-                        }
+                    "decimalPoint": {
+                        "type": "string",
+                        "description": "The character used as decimal point in floating-point and decimal data."
                     },
                     "falseValues": {
                         "type": "array",
@@ -823,18 +879,6 @@
                             "type": "string",
                             "description": "Sequence of strings that denote false Booleans in the data."
                         }
-                    },
-                    "decimalPoint": {
-                        "type": "string",
-                        "description": "The character used as decimal point in floating-point and decimal data."
-                    },
-                    "stringsCanBeNull": {
-                        "type": "boolean",
-                        "description": "Whether string / binary columns can have null values."
-                    },
-                    "quotedStringsCanBeNull": {
-                        "type": "boolean",
-                        "description": "Whether quoted values can be null."
                     },
                     "includeColumns": {
                         "type": "array",
@@ -848,14 +892,21 @@
                         "type": "boolean",
                         "description": "If false, columns in includeColumns but not in the CSV file will error out."
                     },
-                    "autoDictEncode": {
-                        "type": "boolean",
-                        "description": "Whether to try to automatically dict-encode string / binary data."
+                    "nullValues": {
+                        "type": "array",
+                        "description": "Sequence of strings that denote nulls in the data.",
+                        "items": {
+                            "type": "string",
+                            "description": "Sequence of strings that denote nulls in the data."
+                        }
                     },
-                    "autoDictMaxCardinality": {
-                        "type": "integer",
-                        "description": "The maximum dictionary cardinality for autoDictEncode.",
-                        "format": "int32"
+                    "quotedStringsCanBeNull": {
+                        "type": "boolean",
+                        "description": "Whether quoted values can be null."
+                    },
+                    "stringsCanBeNull": {
+                        "type": "boolean",
+                        "description": "Whether string / binary columns can have null values."
                     },
                     "timestampParsers": {
                         "type": "array",
@@ -863,6 +914,14 @@
                         "items": {
                             "type": "string",
                             "description": "Sequence of strptime()-compatible format strings, tried in order when attempting to infer or convert timestamp values."
+                        }
+                    },
+                    "trueValues": {
+                        "type": "array",
+                        "description": "Sequence of strings that denote true Booleans in the data.",
+                        "items": {
+                            "type": "string",
+                            "description": "Sequence of strings that denote true Booleans in the data."
                         }
                     }
                 },
@@ -875,16 +934,43 @@
                         "type": "string",
                         "description": "The column name."
                     },
-                    "type": {
-                        "type": "string",
-                        "description": "The column type."
-                    },
                     "nullable": {
                         "type": "boolean",
                         "description": "Whether the data in the given column can be null."
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "The column type."
                     }
                 },
                 "description": "Information about a certain column in the table."
+            },
+            "CsvManifestBody": {
+                "type": "object",
+                "properties": {
+                    "column_date_formats": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string",
+                            "description": "Map of column names to date formats to use when parsing them as dates."
+                        },
+                        "description": "Map of column names to date formats to use when parsing them as dates."
+                    },
+                    "convert": {
+                        "$ref": "#/components/schemas/CsvConvertOptions"
+                    },
+                    "parse": {
+                        "$ref": "#/components/schemas/CsvParseOptions"
+                    },
+                    "read": {
+                        "$ref": "#/components/schemas/CsvReadOptions"
+                    },
+                    "read_method": {
+                        "type": "string",
+                        "description": "Method used to read the CSV file."
+                    }
+                },
+                "description": "Body of the CSV manifest."
             },
             "CsvParseOptions": {
                 "type": "object",
@@ -892,10 +978,6 @@
                     "delimiter": {
                         "type": "string",
                         "description": "The character delimiting individual cells in the CSV data."
-                    },
-                    "quoteChar": {
-                        "type": "object",
-                        "description": "The character used optionally for quoting CSV values or false to disable quoting."
                     },
                     "doubleQuote": {
                         "type": "boolean",
@@ -905,13 +987,17 @@
                         "type": "object",
                         "description": "The character used optionally for escaping special characters or false to disable escaping."
                     },
+                    "ignoreEmptyLines": {
+                        "type": "boolean",
+                        "description": "Whether empty lines are ignored in CSV input."
+                    },
                     "newlinesInValues": {
                         "type": "boolean",
                         "description": "Whether newline characters are allowed in CSV values."
                     },
-                    "ignoreEmptyLines": {
-                        "type": "boolean",
-                        "description": "Whether empty lines are ignored in CSV input."
+                    "quoteChar": {
+                        "type": "object",
+                        "description": "The character used optionally for quoting CSV values or false to disable quoting."
                     }
                 },
                 "description": "Options for parsing CSV files."
@@ -919,14 +1005,26 @@
             "CsvReadOptions": {
                 "type": "object",
                 "properties": {
-                    "useThreads": {
+                    "autoGenerateColumnNames": {
                         "type": "boolean",
-                        "description": "Whether to use multiple threads to accelerate reading."
+                        "description": "Whether to autogenerate column names if columnNames is empty."
                     },
                     "blockSize": {
                         "type": "integer",
                         "description": "How many bytes to process at a time from the input stream.",
                         "format": "int32"
+                    },
+                    "columnNames": {
+                        "type": "array",
+                        "description": "The column names of the target table.",
+                        "items": {
+                            "type": "string",
+                            "description": "The column names of the target table."
+                        }
+                    },
+                    "encoding": {
+                        "type": "string",
+                        "description": "The character encoding of the CSV data."
                     },
                     "skipRows": {
                         "type": "integer",
@@ -938,108 +1036,29 @@
                         "description": "The number of rows to skip after the column names.",
                         "format": "int32"
                     },
-                    "columnNames": {
-                        "type": "array",
-                        "description": "The column names of the target table.",
-                        "items": {
-                            "type": "string",
-                            "description": "The column names of the target table."
-                        }
-                    },
-                    "autoGenerateColumnNames": {
+                    "useThreads": {
                         "type": "boolean",
-                        "description": "Whether to autogenerate column names if columnNames is empty."
-                    },
-                    "encoding": {
-                        "type": "string",
-                        "description": "The character encoding of the CSV data."
+                        "description": "Whether to use multiple threads to accelerate reading."
                     }
                 },
                 "description": "Options for reading CSV files."
             },
-            "ReadCsvFileManifestsRequest": {
+            "DeleteFilesRequest": {
                 "required": [
-                    "manifestRequests"
+                    "fileNames"
                 ],
                 "type": "object",
                 "properties": {
-                    "manifestRequests": {
+                    "fileNames": {
                         "type": "array",
-                        "description": "Files to read the manifests for.",
+                        "description": "Names of the files to delete.",
                         "items": {
-                            "$ref": "#/components/schemas/ReadCsvFileManifestsRequestItem"
+                            "type": "string",
+                            "description": "Names of the files to delete."
                         }
                     }
                 },
-                "description": "Request to read the manifests of the specified CSV files."
-            },
-            "ReadCsvFileManifestsRequestItem": {
-                "required": [
-                    "fileName"
-                ],
-                "type": "object",
-                "properties": {
-                    "fileName": {
-                        "type": "string",
-                        "description": "Name of the CSV file to read the manifest for."
-                    },
-                    "version": {
-                        "type": "integer",
-                        "description": "Optional version of the file to read the manifest for. If null or not specified, the latest version is read.",
-                        "format": "int32"
-                    }
-                },
-                "description": "Request to read the manifest of a single CSV file."
-            },
-            "CsvManifestBody": {
-                "type": "object",
-                "properties": {
-                    "read": {
-                        "$ref": "#/components/schemas/CsvReadOptions"
-                    },
-                    "parse": {
-                        "$ref": "#/components/schemas/CsvParseOptions"
-                    },
-                    "convert": {
-                        "$ref": "#/components/schemas/CsvConvertOptions"
-                    },
-                    "column_date_formats": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "type": "string",
-                            "description": "Map of column names to date formats to use when parsing them as dates."
-                        },
-                        "description": "Map of column names to date formats to use when parsing them as dates."
-                    },
-                    "read_method": {
-                        "type": "string",
-                        "description": "Method used to read the CSV file."
-                    }
-                },
-                "description": "Body of the CSV manifest."
-            },
-            "ReadCsvFileManifestsResponse": {
-                "required": [
-                    "manifest",
-                    "name",
-                    "version"
-                ],
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string",
-                        "description": "Name of the file in the source data source."
-                    },
-                    "version": {
-                        "type": "integer",
-                        "description": "Version of the file in the source data source.",
-                        "format": "int32"
-                    },
-                    "manifest": {
-                        "$ref": "#/components/schemas/CsvManifestBody"
-                    }
-                },
-                "description": "Describes the results of a CSV manifest read of a single file."
+                "description": "Request to delete files from the storage."
             },
             "GdStorageFile": {
                 "required": [
@@ -1050,6 +1069,11 @@
                 ],
                 "type": "object",
                 "properties": {
+                    "modifiedAt": {
+                        "type": "string",
+                        "description": "Last modification timestamp of the file.",
+                        "format": "date-time"
+                    },
                     "name": {
                         "type": "string",
                         "description": "Name of the file."
@@ -1058,11 +1082,6 @@
                         "type": "integer",
                         "description": "Size of the file in bytes.",
                         "format": "int64"
-                    },
-                    "modifiedAt": {
-                        "type": "string",
-                        "description": "Last modification timestamp of the file.",
-                        "format": "date-time"
                     },
                     "type": {
                         "type": "string",
@@ -1073,6 +1092,73 @@
                     }
                 },
                 "description": "File stored in GD Storage."
+            },
+            "GeoJsonFeature": {
+                "required": [
+                    "properties",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "geometry": {
+                        "$ref": "#/components/schemas/GeoJsonGeometry"
+                    },
+                    "id": {
+                        "type": "object"
+                    },
+                    "properties": {
+                        "additionalProperties": {
+                            "type": "object"
+                        },
+                        "type": "object"
+                    },
+                    "type": {
+                        "type": "string"
+                    }
+                },
+                "description": "GeoJSON Feature"
+            },
+            "GeoJsonFeatureCollection": {
+                "required": [
+                    "features",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "bbox": {
+                        "type": "array",
+                        "items": {
+                            "type": "number",
+                            "format": "double"
+                        }
+                    },
+                    "features": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/GeoJsonFeature"
+                        }
+                    },
+                    "type": {
+                        "type": "string"
+                    }
+                },
+                "description": "GeoJSON FeatureCollection"
+            },
+            "GeoJsonGeometry": {
+                "required": [
+                    "coordinates",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "coordinates": {
+                        "type": "object"
+                    },
+                    "type": {
+                        "type": "string"
+                    }
+                },
+                "description": "GeoJSON Geometry"
             },
             "ImportCsvRequest": {
                 "required": [
@@ -1114,12 +1200,12 @@
                 ],
                 "type": "object",
                 "properties": {
+                    "config": {
+                        "$ref": "#/components/schemas/ImportCsvRequestTableSourceConfig"
+                    },
                     "location": {
                         "type": "string",
                         "description": "Location of the data in the staging area."
-                    },
-                    "config": {
-                        "$ref": "#/components/schemas/ImportCsvRequestTableSourceConfig"
                     }
                 },
                 "description": "Information about source data for a particular table."
@@ -1127,15 +1213,6 @@
             "ImportCsvRequestTableSourceConfig": {
                 "type": "object",
                 "properties": {
-                    "readOptions": {
-                        "$ref": "#/components/schemas/CsvReadOptions"
-                    },
-                    "parseOptions": {
-                        "$ref": "#/components/schemas/CsvParseOptions"
-                    },
-                    "convertOptions": {
-                        "$ref": "#/components/schemas/CsvConvertOptions"
-                    },
                     "columnDateFormats": {
                         "type": "object",
                         "additionalProperties": {
@@ -1143,6 +1220,15 @@
                             "description": "Date formats to use to use to read the given columns."
                         },
                         "description": "Date formats to use to use to read the given columns."
+                    },
+                    "convertOptions": {
+                        "$ref": "#/components/schemas/CsvConvertOptions"
+                    },
+                    "parseOptions": {
+                        "$ref": "#/components/schemas/CsvParseOptions"
+                    },
+                    "readOptions": {
+                        "$ref": "#/components/schemas/CsvReadOptions"
                     }
                 },
                 "description": "Config to use when accessing the data for executions, etc."
@@ -1165,23 +1251,6 @@
                     }
                 },
                 "description": "Response containing the information about the imported CSV file."
-            },
-            "DeleteFilesRequest": {
-                "required": [
-                    "fileNames"
-                ],
-                "type": "object",
-                "properties": {
-                    "fileNames": {
-                        "type": "array",
-                        "description": "Names of the files to delete.",
-                        "items": {
-                            "type": "string",
-                            "description": "Names of the files to delete."
-                        }
-                    }
-                },
-                "description": "Request to delete files from the storage."
             },
             "ImportGeoCollectionRequest": {
                 "required": [
@@ -1210,158 +1279,6 @@
                 },
                 "description": "Response after successfully importing a geo collection."
             },
-            "UploadGeoCollectionFileResponse": {
-                "required": [
-                    "location"
-                ],
-                "type": "object",
-                "properties": {
-                    "location": {
-                        "type": "string",
-                        "description": "Location to use when referencing the uploaded file in subsequent requests."
-                    }
-                },
-                "description": "Information related to the geo collection file uploaded to the staging area."
-            },
-            "ConvertGeoFileRequest": {
-                "required": [
-                    "location"
-                ],
-                "type": "object",
-                "properties": {
-                    "location": {
-                        "type": "string",
-                        "description": "Location of the file in the staging area to convert."
-                    }
-                },
-                "description": "Request to convert a geo file to GeoParquet format."
-            },
-            "ConvertGeoFileResponse": {
-                "required": [
-                    "location"
-                ],
-                "type": "object",
-                "properties": {
-                    "location": {
-                        "type": "string",
-                        "description": "Location of the converted GeoParquet file in the staging area."
-                    }
-                },
-                "description": "Response after successfully converting a geo file."
-            },
-            "GeoJsonFeature": {
-                "required": [
-                    "properties",
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string"
-                    },
-                    "id": {
-                        "type": "object"
-                    },
-                    "geometry": {
-                        "$ref": "#/components/schemas/GeoJsonGeometry"
-                    },
-                    "properties": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "type": "object"
-                        }
-                    }
-                },
-                "description": "GeoJSON Feature"
-            },
-            "GeoJsonFeatureCollection": {
-                "required": [
-                    "features",
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string"
-                    },
-                    "features": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/GeoJsonFeature"
-                        }
-                    },
-                    "bbox": {
-                        "type": "array",
-                        "items": {
-                            "type": "number",
-                            "format": "double"
-                        }
-                    }
-                },
-                "description": "GeoJSON FeatureCollection"
-            },
-            "GeoJsonGeometry": {
-                "required": [
-                    "coordinates",
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string"
-                    },
-                    "coordinates": {
-                        "type": "object"
-                    }
-                },
-                "description": "GeoJSON Geometry"
-            },
-            "CacheRemovalInterval": {
-                "required": [
-                    "from",
-                    "removed",
-                    "to"
-                ],
-                "type": "object",
-                "properties": {
-                    "from": {
-                        "type": "string",
-                        "description": "Start timestamp of the removal interval.",
-                        "format": "date-time"
-                    },
-                    "to": {
-                        "type": "string",
-                        "description": "End timestamp of the removal interval.",
-                        "format": "date-time"
-                    },
-                    "removed": {
-                        "type": "integer",
-                        "description": "Bytes removed during this interval.",
-                        "format": "int64"
-                    }
-                },
-                "description": "Information about a period in time and how much cached data was removed."
-            },
-            "CacheUsageData": {
-                "required": [
-                    "organizationCacheUsage",
-                    "workspaceCacheUsages"
-                ],
-                "type": "object",
-                "properties": {
-                    "organizationCacheUsage": {
-                        "$ref": "#/components/schemas/OrganizationCacheUsage"
-                    },
-                    "workspaceCacheUsages": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "$ref": "#/components/schemas/WorkspaceCacheUsage"
-                        },
-                        "description": "Map of data about the cache usage of the individual workspaces."
-                    }
-                },
-                "description": "Result of scan of data source physical model."
-            },
             "OrganizationCacheSettings": {
                 "required": [
                     "extraCacheBudget"
@@ -1384,9 +1301,6 @@
                 ],
                 "type": "object",
                 "properties": {
-                    "settings": {
-                        "$ref": "#/components/schemas/OrganizationCacheSettings"
-                    },
                     "current": {
                         "$ref": "#/components/schemas/OrganizationCurrentCacheUsage"
                     },
@@ -1396,6 +1310,9 @@
                         "items": {
                             "$ref": "#/components/schemas/CacheRemovalInterval"
                         }
+                    },
+                    "settings": {
+                        "$ref": "#/components/schemas/OrganizationCacheSettings"
                     }
                 },
                 "description": "Data about the whole organization's cache usage."
@@ -1425,6 +1342,89 @@
                 },
                 "description": "Current cache usage of the organization."
             },
+            "ReadCsvFileManifestsRequest": {
+                "required": [
+                    "manifestRequests"
+                ],
+                "type": "object",
+                "properties": {
+                    "manifestRequests": {
+                        "type": "array",
+                        "description": "Files to read the manifests for.",
+                        "items": {
+                            "$ref": "#/components/schemas/ReadCsvFileManifestsRequestItem"
+                        }
+                    }
+                },
+                "description": "Request to read the manifests of the specified CSV files."
+            },
+            "ReadCsvFileManifestsRequestItem": {
+                "required": [
+                    "fileName"
+                ],
+                "type": "object",
+                "properties": {
+                    "fileName": {
+                        "type": "string",
+                        "description": "Name of the CSV file to read the manifest for."
+                    },
+                    "version": {
+                        "type": "integer",
+                        "description": "Optional version of the file to read the manifest for. If null or not specified, the latest version is read.",
+                        "format": "int32"
+                    }
+                },
+                "description": "Request to read the manifest of a single CSV file."
+            },
+            "ReadCsvFileManifestsResponse": {
+                "required": [
+                    "manifest",
+                    "name",
+                    "version"
+                ],
+                "type": "object",
+                "properties": {
+                    "manifest": {
+                        "$ref": "#/components/schemas/CsvManifestBody"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the file in the source data source."
+                    },
+                    "version": {
+                        "type": "integer",
+                        "description": "Version of the file in the source data source.",
+                        "format": "int32"
+                    }
+                },
+                "description": "Describes the results of a CSV manifest read of a single file."
+            },
+            "UploadFileResponse": {
+                "required": [
+                    "location"
+                ],
+                "type": "object",
+                "properties": {
+                    "location": {
+                        "type": "string",
+                        "description": "Location to use when referencing the uploaded file in subsequent requests."
+                    }
+                },
+                "description": "Information related to the file uploaded to the staging area."
+            },
+            "UploadGeoCollectionFileResponse": {
+                "required": [
+                    "location"
+                ],
+                "type": "object",
+                "properties": {
+                    "location": {
+                        "type": "string",
+                        "description": "Location to use when referencing the uploaded file in subsequent requests."
+                    }
+                },
+                "description": "Information related to the geo collection file uploaded to the staging area."
+            },
             "WorkspaceCacheSettings": {
                 "required": [
                     "extraCache"
@@ -1447,9 +1447,6 @@
                 ],
                 "type": "object",
                 "properties": {
-                    "settings": {
-                        "$ref": "#/components/schemas/WorkspaceCacheSettings"
-                    },
                     "current": {
                         "$ref": "#/components/schemas/WorkspaceCurrentCacheUsage"
                     },
@@ -1459,6 +1456,9 @@
                         "items": {
                             "$ref": "#/components/schemas/CacheRemovalInterval"
                         }
+                    },
+                    "settings": {
+                        "$ref": "#/components/schemas/WorkspaceCacheSettings"
                     }
                 },
                 "description": "Data about a particular workspace cache usage."
@@ -1472,14 +1472,14 @@
                 ],
                 "type": "object",
                 "properties": {
-                    "cacheUsed": {
-                        "type": "integer",
-                        "description": "Cache used by the workspace.",
-                        "format": "int64"
-                    },
                     "cacheAvailable": {
                         "type": "integer",
                         "description": "Cache available for the workspace.",
+                        "format": "int64"
+                    },
+                    "cacheUsed": {
+                        "type": "integer",
+                        "description": "Cache used by the workspace.",
                         "format": "int64"
                     },
                     "removalPeriodStart": {

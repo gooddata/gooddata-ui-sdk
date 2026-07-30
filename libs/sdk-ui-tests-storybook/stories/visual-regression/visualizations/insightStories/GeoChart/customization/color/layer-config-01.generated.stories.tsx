@@ -375,7 +375,6 @@ export const PushpinLayerLevelSegmentMappingOverridesChartLevel = () =>
                             sources: {},
                             version: 8,
                         },
-                        tooltipText: "f_city.id.cityname",
                         viewport: {
                             area: "continent_na",
                         },
@@ -485,7 +484,6 @@ export const PushpinLayerLevelGradientPaletteOverridesChartLevel = () =>
                             sources: {},
                             version: 8,
                         },
-                        tooltipText: "f_city.id.cityname",
                         viewport: {
                             area: "continent_na",
                         },

@@ -107,6 +107,79 @@ const specs = [
     },
 ];
 
+const sortKeys = (obj) =>
+    Object.fromEntries(
+        Object.keys(obj)
+            .sort()
+            .map((key) => [key, obj[key]]),
+    );
+
+/**
+ * The backend serves `components.schemas` and the `properties` maps inside schemas in an unstable
+ * order that varies between deployments. This makes the generated code non-deterministic twice
+ * over: openapi-generator names deduplicated inline schemas (the JSON:API In/Out/Patch
+ * `attributes`/`relationships` objects) after the first structurally identical parent it
+ * encounters in schema order, and generated interface members follow the spec's property order.
+ * Sorting both makes the generated output deterministic.
+ *
+ * `paths` must NOT be sorted: alphabetical order changes the order in which openapi-generator's
+ * normalizer first visits schemas and triggers an order-sensitivity bug in openapi-generator
+ * 7.15.0 — `anyOf: [X, null]` stops being simplified to a nullable X, which drops const/enum
+ * types and adds spurious `[key: string]: any` index signatures (worst in the gen-ai spec).
+ * Backend paths order is not stable either (deployments reshuffle it), so `pinPathsOrder`
+ * below keeps the order of the previously committed spec instead.
+ *
+ * @param schema the downloaded OpenAPI spec
+ * @returns the spec with schema and property keys sorted alphabetically, paths untouched
+ */
+const stabilizeSpecOrder = (schema) => {
+    if (schema.components?.schemas) {
+        schema.components.schemas = sortKeys(schema.components.schemas);
+    }
+    const sortPropertiesDeep = (value) => {
+        if (Array.isArray(value)) {
+            value.forEach(sortPropertiesDeep);
+            return value;
+        }
+        if (value !== null && typeof value === "object") {
+            for (const key of Object.keys(value)) {
+                sortPropertiesDeep(value[key]);
+            }
+            if (
+                value.properties &&
+                typeof value.properties === "object" &&
+                !Array.isArray(value.properties)
+            ) {
+                value.properties = sortKeys(value.properties);
+            }
+        }
+        return value;
+    };
+    return sortPropertiesDeep(schema);
+};
+
+/**
+ * The backend serves `paths` in an order that reshuffles between deployments, which produces
+ * thousands-of-lines cosmetic diffs in the committed spec. Since paths cannot be sorted (see
+ * stabilizeSpecOrder), reorder them to match the previously committed spec instead: existing
+ * paths keep their committed order, new paths are appended in the order the backend sent them,
+ * removed paths drop out. The committed order is one that provably produced good generator
+ * output, so pinning to it also minimizes generator input churn.
+ *
+ * @param schema the downloaded OpenAPI spec
+ * @param previousSpec the previously committed spec, or undefined on first generation
+ * @returns the spec with paths reordered to follow the previous spec's order
+ */
+const pinPathsOrder = (schema, previousSpec) => {
+    if (!schema.paths || !previousSpec?.paths) {
+        return schema;
+    }
+    const previousOrder = Object.keys(previousSpec.paths).filter((key) => key in schema.paths);
+    const newKeys = Object.keys(schema.paths).filter((key) => !(key in previousSpec.paths));
+    schema.paths = Object.fromEntries([...previousOrder, ...newKeys].map((key) => [key, schema.paths[key]]));
+    return schema;
+};
+
 const downloadSpec = async (specMeta, outputDir, outputFile) => {
     let data = (await axios.get(specMeta.path)).data;
 
@@ -114,7 +187,15 @@ const downloadSpec = async (specMeta, outputDir, outputFile) => {
         data = specMeta.schemaOverrides(data);
     }
 
+    data = stabilizeSpecOrder(data);
+
     const resultPath = path.resolve(outputDir, specMeta.name, outputFile);
+
+    const previousSpec = await fs
+        .readFile(resultPath, "utf8")
+        .then(JSON.parse)
+        .catch(() => undefined);
+    data = pinPathsOrder(data, previousSpec);
 
     await mkdirp(path.dirname(resultPath));
 
@@ -139,8 +220,15 @@ const generate = async (specMeta, outputDir, outputFile) => {
      *
      * force use of a single request parameter for everything instead of using separate parameters (that would make the functions hard to use, they have many params).
      * useSingleRequestParameter=true
+     *
+     * do not reuse a structurally identical inline schema of another parent (the JSON:API In/Out/Patch
+     * attributes/relationships objects are often identical) — every parent gets its own model named
+     * after itself. Without this, the shared model is named after whichever parent the generator
+     * processes first, so names flip (JsonApiXInAttributes <-> JsonApiXOutAttributes) whenever schema
+     * order or structural identity between the variants changes.
+     * --inline-schema-options SKIP_SCHEMA_REUSE=true
      */
-    let command = `openapi-generator-cli generate -i ${inputPath} -g typescript-axios -o ${outputPath} -t openapi-generator -p withInterfaces=true --reserved-words-mappings in=in,function=function --type-mappings=set=Array --additional-properties=enumPropertyNaming=UPPERCASE,useSingleRequestParameter=true --global-property=apiDocs=false --global-property=modelDocs=false`;
+    let command = `openapi-generator-cli generate -i ${inputPath} -g typescript-axios -o ${outputPath} -t openapi-generator -p withInterfaces=true --reserved-words-mappings in=in,function=function --type-mappings=set=Array --additional-properties=enumPropertyNaming=UPPERCASE,useSingleRequestParameter=true --inline-schema-options SKIP_SCHEMA_REUSE=true --global-property=apiDocs=false --global-property=modelDocs=false`;
 
     if (specMeta.modelNamePrefix) {
         command += ` --model-name-prefix=${specMeta.modelNamePrefix}`;

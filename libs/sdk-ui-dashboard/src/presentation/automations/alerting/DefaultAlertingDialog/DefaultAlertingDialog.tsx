@@ -91,6 +91,8 @@ export function AlertingDialogRenderer({
         isWhiteLabeled,
         isSecondaryTitleVisible,
         externalRecipient: externalRecipientOverride,
+        maxAutomationsRecipients,
+        isExecutionTimestampMode,
         features: {
             enableAlertOncePerInterval,
             enableAnomalyDetectionAlert,
@@ -105,8 +107,6 @@ export function AlertingDialogRenderer({
         onDeleteSuccess?.(alert);
         setAlertToDelete(null);
     };
-
-    const { maxAutomationsRecipients, isExecutionTimestampMode } = useDefaultAlertingDialogData();
 
     const {
         editedAutomationFilters,
@@ -652,9 +652,8 @@ export function AlertingDialogRenderer({
  * wholesale slot replacement, inherit the contexts automatically and require no extra wiring.
  *
  * The providers are intentionally hoisted above the slot rather than built inside this component:
- * that is what lets a wholesale replacement receive the same contexts (see the Phase-2 boundary in
- * `docs/tasks/26Q1 - Automation Dialog Separation.md`). Rendering this component outside those
- * providers throws at runtime.
+ * that is what lets a wholesale replacement receive the same contexts. Rendering this component
+ * outside those providers throws at runtime.
  *
  * @alpha
  */
@@ -671,15 +670,6 @@ export function DefaultAlertingDialog(props: IAlertingDialogProps) {
             <AlertingDialogRenderer {...props} />
         </IntlWrapper>
     );
-}
-
-function useDefaultAlertingDialogData() {
-    const { maxAutomationsRecipients, isExecutionTimestampMode } = useAutomationsContext();
-
-    return {
-        maxAutomationsRecipients,
-        isExecutionTimestampMode,
-    };
 }
 
 interface IAlertingDialogFooterProps {

@@ -28,7 +28,11 @@ import {
     convertCurrentUserToWorkspaceUser,
     convertExternalRecipientToAutomationRecipient,
 } from "../../../shared/utils/automationUtils.js";
-import { toModifiedISOStringToTimezone, toNormalizedFirstRunAndCron } from "../../utils/date.js";
+import {
+    toModifiedISOStringToTimezone,
+    toNormalizedFirstRunAndCron,
+    toNormalizedStartDate,
+} from "../../utils/date.js";
 import { getUserTimezone } from "../../utils/timezone.js";
 import {
     newDashboardExportDefinitionMetadataObjectDefinition,
@@ -52,7 +56,6 @@ export interface IUseScheduledEmailFormStateProps {
     effectiveVisibleDashboardFiltersByTab: Record<string, IAutomationVisibleFilter[]> | undefined;
     parametersByTabForNewAutomation: Record<string, IDashboardExportParameter[]> | undefined;
     defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
-    targetTabId?: string;
 }
 
 /**
@@ -61,13 +64,10 @@ export interface IUseScheduledEmailFormStateProps {
  * baseline, the derived defaults (`defaultRecipient`, `defaultUser`), and the form's field/message
  * change handlers and their validity UI state.
  *
- * `timezone` (already part 1) and `currentUser` are read from {@link useAutomationsContext};
- * `dashboardId`/`dashboardTitle` from {@link useScheduledEmailDialogContext}. The effective-filters
- * derivations, `parametersByTabForNewAutomation`, `defaultPdfPageSize`, and `targetTabId` stay owned
- * by the parent (`useEditScheduledEmail`) — shared with other consumers — and are passed in as params.
- *
- * Part 2 of 2 (mirrors the alerting `useAlertFormState` part 2): completes the hook by folding in the
- * draft init that part 1 left in the parent.
+ * Values only this hook needs — `timezone` and `currentUser` from {@link useAutomationsContext},
+ * `dashboardId`/`dashboardTitle`/`widgetLocalIdToTabIdMap` from {@link useScheduledEmailDialogContext} —
+ * are read here directly. The effective-filters derivations, `parametersByTabForNewAutomation`, and
+ * `defaultPdfPageSize` arrive as params instead, because the parent shares them with other consumers.
  *
  * @internal
  */
@@ -87,12 +87,18 @@ export function useScheduledEmailFormState({
     effectiveVisibleDashboardFiltersByTab,
     parametersByTabForNewAutomation,
     defaultPdfPageSize,
-    targetTabId,
 }: IUseScheduledEmailFormStateProps) {
     const { timezone, currentUser } = useAutomationsContext();
-    const { dashboardId, dashboardTitle } = useScheduledEmailDialogContext();
+    const {
+        dashboardId,
+        dashboardTitle,
+        widgetLocalIdToTabIdMap: widgetTabMap,
+    } = useScheduledEmailDialogContext();
 
     const isWidget = !!widget && !!insight;
+
+    // Determine target tab ID if widget is present
+    const targetTabId = widget?.localIdentifier ? widgetTabMap[widget.localIdentifier] : undefined;
 
     const defaultUser = convertCurrentUserToWorkspaceUser(users ?? [], currentUser);
 
@@ -140,6 +146,11 @@ export function useScheduledEmailFormState({
     );
 
     const [originalAutomation] = useState(editedAutomation);
+
+    const startDate = toNormalizedStartDate(
+        editedAutomation.schedule?.firstRun,
+        editedAutomation.schedule?.timezone,
+    );
 
     const [isCronValid, setIsCronValid] = useState(true);
     const [isTitleValid, setIsTitleValid] = useState(true);
@@ -223,6 +234,7 @@ export function useScheduledEmailFormState({
         isTitleValid,
         isSubjectValid,
         isOnMessageValid,
+        startDate,
     };
 }
 

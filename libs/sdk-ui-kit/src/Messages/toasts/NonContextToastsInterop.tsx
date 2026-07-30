@@ -18,6 +18,12 @@ import { ToastsCenterContextProvider } from "./ToastsCenter.js";
 export function NonContextToastsInterop(props: {
     messages: IMessage[];
     onDismissMessage?: (id: IMessage["id"]) => void;
+    /**
+     * Extra class(es) for the toasts overlay container. Only effective when this component
+     * creates its own toasts context — with an existing parent context the topmost provider
+     * renders the toasts and this prop has no effect.
+     */
+    containerClassName?: string;
 }) {
     const hasContext = ToastsCenterContext.useContextStoreOptional(() => true);
 
@@ -26,7 +32,7 @@ export function NonContextToastsInterop(props: {
     }
 
     return (
-        <ToastsCenterContextProvider>
+        <ToastsCenterContextProvider containerClassName={props.containerClassName}>
             <NonContextToastsInteropInner {...props} />
         </ToastsCenterContextProvider>
     );

@@ -2752,8 +2752,6 @@ export interface IFeatureFlags {
     enableAnalyticalDashboardVersion3?: boolean;
     enableAnomalyDetectionAlert?: boolean;
     enableAnomalyDetectionVisualization?: boolean;
-    enableArbitraryFilterAD?: boolean;
-    enableArbitraryFilterKD?: boolean;
     enableAutomationTrigger?: boolean;
     enableCatalogSmartSearchResults?: boolean;
     enableCatalogTrendingObjects?: boolean;
@@ -2812,8 +2810,6 @@ export interface IFeatureFlags {
     enableLogicalModelExtensionsFromParentsCall?: boolean;
     // (undocumented)
     enableMariaDbDataSource?: boolean;
-    enableMatchFilterAD?: boolean;
-    enableMatchFilterKD?: boolean;
     enableMeasureValueFilterKD?: boolean;
     enableMekkoChart?: boolean;
     enableMetricFormatOverrides?: boolean;

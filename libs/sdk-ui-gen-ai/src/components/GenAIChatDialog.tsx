@@ -34,6 +34,11 @@ export type GenAIChatDialogProps = Omit<GenAiStoreProps, "children"> & {
     returnFocusTo?: RefObject<HTMLElement | null> | string;
     onLinkClick?: (linkClickEvent: LinkHandlerEvent) => string | undefined;
     LandingScreenComponentProvider?: () => ComponentType;
+    /**
+     * Set to false while the host renders its own overlay above the chat, so that Escape aimed at
+     * that overlay does not also close the chat (see GenAIChatOverlayExternalProps.closeOnEscape).
+     */
+    closeOnEscape?: boolean;
 };
 
 // Default z-index:
@@ -68,6 +73,7 @@ export function GenAIChatDialog({
     onLinkClick,
     onDispatcher,
     LandingScreenComponentProvider,
+    closeOnEscape,
 }: GenAIChatDialogProps) {
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
@@ -100,6 +106,7 @@ export function GenAIChatDialog({
                         onOpen={onOpen}
                         onClose={onClose}
                         returnFocusTo={returnFocusTo}
+                        closeOnEscape={closeOnEscape}
                         allowNativeLinks={allowNativeLinks}
                         onLinkClick={onLinkClick}
                         catalogItems={catalogItems}
@@ -132,6 +139,7 @@ type GenAIChatDialogContentProps = {
     canAnalyze: boolean;
     canFullControl: boolean;
     LandingScreenComponentProvider?: () => ComponentType;
+    closeOnEscape?: boolean;
 };
 
 function GenAIChatDialogContent({
@@ -152,6 +160,7 @@ function GenAIChatDialogContent({
     canAnalyze,
     canFullControl,
     LandingScreenComponentProvider,
+    closeOnEscape,
 }: GenAIChatDialogContentProps) {
     const open = useRef(onOpen);
     open.current = onOpen;
@@ -223,6 +232,7 @@ function GenAIChatDialogContent({
                                     className={className}
                                     dialogPosition={dialogPosition}
                                     returnFocusTo={returnFocusTo}
+                                    closeOnEscape={closeOnEscape}
                                     onClose={onCloseHandler}
                                 />
                             </CustomizationProvider>

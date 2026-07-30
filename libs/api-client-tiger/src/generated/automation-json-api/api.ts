@@ -29,25 +29,25 @@ export interface AutomationAFM {
      */
     'attributes': Array<AutomationAttributeItem>;
     /**
+     * Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.
+     */
+    'auxMeasures'?: Array<AutomationMeasureItem>;
+    /**
      * Various filter types to filter the execution result.
      */
     'filters': Array<AutomationAFMFiltersInner>;
+    /**
+     * (EXPERIMENTAL) Override definitions of catalog metrics for this request. Allows substituting a catalog metric\'s MAQL definition without modifying the stored definition.
+     */
+    'measureDefinitionOverrides'?: Array<AutomationMetricDefinitionOverride>;
     /**
      * Metrics to be computed.
      */
     'measures': Array<AutomationMeasureItem>;
     /**
-     * Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.
-     */
-    'auxMeasures'?: Array<AutomationMeasureItem>;
-    /**
      * (EXPERIMENTAL) Parameter values to use for this execution.
      */
     'parameters'?: Array<AutomationParameterItem>;
-    /**
-     * (EXPERIMENTAL) Override definitions of catalog metrics for this request. Allows substituting a catalog metric\'s MAQL definition without modifying the stored definition.
-     */
-    'measureDefinitionOverrides'?: Array<AutomationMetricDefinitionOverride>;
 }
 
 /**
@@ -63,18 +63,50 @@ export interface AutomationAbsoluteDateFilter {
 }
 
 export interface AutomationAbsoluteDateFilterAbsoluteDateFilter {
-    'from': string;
-    'to': string;
-    'localIdentifier'?: string;
     'applyOnResult'?: boolean;
+    'dataset': AutomationAfmObjectIdentifierDataset;
     /**
      * Specifies how rows with empty (null/missing) date values should be handled. INCLUDE includes empty dates in addition to the date range restriction, EXCLUDE removes rows with empty dates (default), ONLY keeps only rows with empty dates.
      */
     'emptyValueHandling'?: AutomationAbsoluteDateFilterAbsoluteDateFilterEmptyValueHandlingEnum;
-    'dataset': AutomationAfmObjectIdentifierDataset;
+    'from': string;
+    'localIdentifier'?: string;
+    'to': string;
 }
 
 export type AutomationAbsoluteDateFilterAbsoluteDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
+
+/**
+ * An absolute date range filter defined at a specific granularity. The \'from\'/\'to\' literals must match the format of the chosen granularity (e.g. \'2020\' for YEAR, \'2012-05\' for MONTH, \'2012-3\' for QUARTER, \'1996-01\' for WEEK, \'2010-10-30\' for DAY, or a plain ordinal like \'6\' for periodical granularities such as MONTH_OF_YEAR). At least one of \'from\'/\'to\' must be provided; specifying only one yields an open-ended range.
+ */
+export interface AutomationAbsoluteGranularityDateFilter {
+    'absoluteGranularityDateFilter': AutomationAbsoluteGranularityDateFilterAbsoluteGranularityDateFilter;
+}
+
+export interface AutomationAbsoluteGranularityDateFilterAbsoluteGranularityDateFilter {
+    'applyOnResult'?: boolean;
+    'dataset': AutomationAfmObjectIdentifierDataset;
+    /**
+     * Specifies how rows with empty (null/missing) date values should be handled. INCLUDE includes empty dates in addition to the date range restriction, EXCLUDE removes rows with empty dates (default), ONLY keeps only rows with empty dates.
+     */
+    'emptyValueHandling'?: AutomationAbsoluteGranularityDateFilterAbsoluteGranularityDateFilterEmptyValueHandlingEnum;
+    /**
+     * Start of the range (including), in the format matching \'granularity\'. If omitted, the range is unbounded at the start.
+     */
+    'from'?: string | null;
+    /**
+     * Granularity determining the filtered date attribute and the expected \'from\'/\'to\' format.
+     */
+    'granularity': AutomationAbsoluteGranularityDateFilterAbsoluteGranularityDateFilterGranularityEnum;
+    'localIdentifier'?: string;
+    /**
+     * End of the range (including), in the format matching \'granularity\'. If omitted, the range is unbounded at the end.
+     */
+    'to'?: string | null;
+}
+
+export type AutomationAbsoluteGranularityDateFilterAbsoluteGranularityDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
+export type AutomationAbsoluteGranularityDateFilterAbsoluteGranularityDateFilterGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
 
 /**
  * @type AutomationAbstractMeasureValueFilter
@@ -82,31 +114,31 @@ export type AutomationAbsoluteDateFilterAbsoluteDateFilterEmptyValueHandlingEnum
 export type AutomationAbstractMeasureValueFilter = AutomationComparisonMeasureValueFilter | AutomationCompoundMeasureValueFilter | AutomationRangeMeasureValueFilter | AutomationRankingFilter;
 
 export interface AutomationAdHocAutomation {
-    'title'?: string;
+    'alert'?: AutomationAutomationAlert;
+    'analyticalDashboard'?: AutomationDeclarativeAnalyticalDashboardIdentifier;
+    'dashboardTabularExports'?: Array<AutomationAutomationDashboardTabularExport>;
     'description'?: string;
-    /**
-     * A list of tags.
-     */
-    'tags'?: Array<string>;
     /**
      * Additional details to be included in the automated message.
      */
     'details'?: { [key: string]: string; };
-    'metadata'?: AutomationAutomationMetadata | null;
-    'alert'?: AutomationAutomationAlert;
-    'tabularExports'?: Array<AutomationAutomationTabularExport>;
-    'visualExports'?: Array<AutomationAutomationVisualExport>;
-    'imageExports'?: Array<AutomationAutomationImageExport>;
-    'rawExports'?: Array<AutomationAutomationRawExport>;
-    'slidesExports'?: Array<AutomationAutomationSlidesExport>;
-    'dashboardTabularExports'?: Array<AutomationAutomationDashboardTabularExport>;
     /**
      * External recipients of the automation action results.
      */
     'externalRecipients'?: Array<AutomationAutomationExternalRecipient>;
+    'imageExports'?: Array<AutomationAutomationImageExport>;
+    'metadata'?: AutomationAutomationMetadata | null;
     'notificationChannel'?: AutomationDeclarativeNotificationChannelIdentifier;
+    'rawExports'?: Array<AutomationAutomationRawExport>;
     'recipients'?: Array<AutomationDeclarativeUserIdentifier>;
-    'analyticalDashboard'?: AutomationDeclarativeAnalyticalDashboardIdentifier;
+    'slidesExports'?: Array<AutomationAutomationSlidesExport>;
+    'tabularExports'?: Array<AutomationAutomationTabularExport>;
+    /**
+     * A list of tags.
+     */
+    'tags'?: Array<string>;
+    'title'?: string;
+    'visualExports'?: Array<AutomationAutomationVisualExport>;
 }
 
 /**
@@ -169,8 +201,8 @@ export interface AutomationAfmObjectIdentifierDatasetIdentifier {
 export type AutomationAfmObjectIdentifierDatasetIdentifierTypeEnum = 'dataset';
 
 export interface AutomationAfmObjectIdentifierIdentifier {
-    'type': AutomationAfmObjectIdentifierIdentifierTypeEnum;
     'id': string;
+    'type': AutomationAfmObjectIdentifierIdentifierTypeEnum;
 }
 
 export type AutomationAfmObjectIdentifierIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'prompt' | 'visualizationObject' | 'filterContext';
@@ -180,8 +212,8 @@ export interface AutomationAfmObjectIdentifierLabel {
 }
 
 export interface AutomationAfmObjectIdentifierLabelIdentifier {
-    'type': AutomationAfmObjectIdentifierLabelIdentifierTypeEnum;
     'id': string;
+    'type': AutomationAfmObjectIdentifierLabelIdentifierTypeEnum;
 }
 
 export type AutomationAfmObjectIdentifierLabelIdentifierTypeEnum = 'label';
@@ -206,6 +238,10 @@ export interface AutomationAlertAfm {
      */
     'attributes'?: Array<AutomationAttributeItem>;
     /**
+     * Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.
+     */
+    'auxMeasures'?: Array<AutomationMeasureItem>;
+    /**
      * Various filter types to filter execution result. For anomaly detection, exactly one dataset is specified in the condition. The AFM may contain multiple date filters for different datasets, but only the date filter matching the dataset from the condition is used for anomaly detection.
      */
     'filters': Array<AutomationFilterDefinition>;
@@ -213,10 +249,6 @@ export interface AutomationAlertAfm {
      * Metrics to be computed. One metric if the alert condition is evaluated to a scalar. Two metrics when they should be evaluated to each other.
      */
     'measures': Array<AutomationMeasureItem>;
-    /**
-     * Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.
-     */
-    'auxMeasures'?: Array<AutomationMeasureItem>;
     /**
      * Parameters to be used in the computation.
      */
@@ -236,30 +268,30 @@ export type AutomationAlertCondition = AutomationAnomalyDetectionWrapper | Autom
 export type AutomationAlertConditionOperand = AutomationLocalIdentifier | AutomationValue;
 
 export interface AutomationAlertDescription {
-    'metric': string;
+    'attribute'?: string;
     'condition': string;
     'currentValues'?: Array<AutomationAlertEvaluationRow>;
-    'attribute'?: string;
-    'totalValueCount'?: number;
-    'triggeredCount'?: number;
-    'triggeredAt'?: string;
-    'threshold'?: number;
+    'errorMessage'?: string;
     'formattedThreshold'?: string;
     'lowerThreshold'?: number;
-    'upperThreshold'?: number;
+    'metric': string;
     'remainingAlertEvaluationCount'?: number;
     'status'?: AutomationAlertDescriptionStatusEnum;
-    'errorMessage'?: string;
+    'threshold'?: number;
+    'totalValueCount'?: number;
     'traceId'?: string;
+    'triggeredAt'?: string;
+    'triggeredCount'?: number;
+    'upperThreshold'?: number;
 }
 
 export type AutomationAlertDescriptionStatusEnum = 'SUCCESS' | 'ERROR' | 'INTERNAL_ERROR' | 'TIMEOUT';
 
 export interface AutomationAlertEvaluationRow {
-    'primaryMetric'?: AutomationMetricRecord;
-    'secondaryMetric'?: AutomationMetricRecord;
     'computedMetric'?: AutomationMetricRecord;
     'labelValue'?: string;
+    'primaryMetric'?: AutomationMetricRecord;
+    'secondaryMetric'?: AutomationMetricRecord;
 }
 
 /**
@@ -270,6 +302,8 @@ export interface AutomationAllTimeDateFilter {
 }
 
 export interface AutomationAllTimeDateFilterAllTimeDateFilter {
+    'applyOnResult'?: boolean;
+    'dataset': AutomationAfmObjectIdentifierDataset;
     /**
      * Specifies how rows with empty (null/missing) date values should be handled. INCLUDE means no filtering effect (default), EXCLUDE removes rows with null dates, ONLY keeps only rows with null dates.
      */
@@ -279,39 +313,37 @@ export interface AutomationAllTimeDateFilterAllTimeDateFilter {
      */
     'granularity'?: AutomationAllTimeDateFilterAllTimeDateFilterGranularityEnum;
     'localIdentifier'?: string;
-    'applyOnResult'?: boolean;
-    'dataset': AutomationAfmObjectIdentifierDataset;
 }
 
 export type AutomationAllTimeDateFilterAllTimeDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
-export type AutomationAllTimeDateFilterAllTimeDateFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
+export type AutomationAllTimeDateFilterAllTimeDateFilterGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
 
 export interface AutomationAnomalyDetection {
+    'dataset': AutomationAfmObjectIdentifierDataset;
+    /**
+     * Date granularity for anomaly detection. Only time-based granularities are supported (HOUR, DAY, WEEK, MONTH, QUARTER, YEAR).
+     */
+    'granularity': AutomationAnomalyDetectionGranularityEnum;
     'measure': AutomationLocalIdentifier;
     /**
      * Sensitivity level for anomaly detection
      */
     'sensitivity': AutomationAnomalyDetectionSensitivityEnum;
-    /**
-     * Date granularity for anomaly detection. Only time-based granularities are supported (HOUR, DAY, WEEK, MONTH, QUARTER, YEAR).
-     */
-    'granularity': AutomationAnomalyDetectionGranularityEnum;
-    'dataset': AutomationAfmObjectIdentifierDataset;
 }
 
-export type AutomationAnomalyDetectionSensitivityEnum = 'LOW' | 'MEDIUM' | 'HIGH';
 export type AutomationAnomalyDetectionGranularityEnum = 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR';
+export type AutomationAnomalyDetectionSensitivityEnum = 'LOW' | 'MEDIUM' | 'HIGH';
 
 export interface AutomationAnomalyDetectionWrapper {
     'anomaly': AutomationAnomalyDetection;
 }
 
 export interface AutomationArithmeticMeasure {
+    'left': AutomationLocalIdentifier;
     /**
      * Arithmetic operator. DIFFERENCE - m₁−m₂ - the difference between two metrics. CHANGE - (m₁−m₂)÷m₂ - the relative difference between two metrics. 
      */
     'operator': AutomationArithmeticMeasureOperatorEnum;
-    'left': AutomationLocalIdentifier;
     'right': AutomationLocalIdentifier;
 }
 
@@ -383,11 +415,11 @@ export interface AutomationAttributeFilterParent {
 }
 
 export interface AutomationAttributeItem {
+    'label': AutomationAfmObjectIdentifierLabel;
     /**
      * Local identifier of the attribute. This can be used to reference the attribute in other parts of the execution definition.
      */
     'localIdentifier': string;
-    'label': AutomationAfmObjectIdentifierLabel;
     /**
      * Indicates whether to show all values of given attribute even if the data bound to those values is not available.
      */
@@ -395,20 +427,20 @@ export interface AutomationAttributeItem {
 }
 
 export interface AutomationAutomationAlert {
-    'execution': AutomationAlertAfm;
     'condition': AutomationAutomationAlertCondition;
-    /**
-     * Trigger behavior for the alert. ALWAYS - alert is triggered every time the condition is met. ONCE - alert is triggered only once when the condition is met. ONCE_PER_INTERVAL - alert is triggered when the condition is met, then suppressed for the interval. If no interval is specified, it behaves as ALWAYS. 
-     */
-    'trigger'?: AutomationAutomationAlertTriggerEnum;
+    'execution': AutomationAlertAfm;
     /**
      * Date granularity for the interval of ONCE_PER_INTERVAL trigger. Supported granularities: DAY, WEEK, MONTH, QUARTER, YEAR.
      */
     'interval'?: AutomationAutomationAlertIntervalEnum;
+    /**
+     * Trigger behavior for the alert. ALWAYS - alert is triggered every time the condition is met. ONCE - alert is triggered only once when the condition is met. ONCE_PER_INTERVAL - alert is triggered when the condition is met, then suppressed for the interval. If no interval is specified, it behaves as ALWAYS. 
+     */
+    'trigger'?: AutomationAutomationAlertTriggerEnum;
 }
 
-export type AutomationAutomationAlertTriggerEnum = 'ALWAYS' | 'ONCE' | 'ONCE_PER_INTERVAL';
 export type AutomationAutomationAlertIntervalEnum = 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR';
+export type AutomationAutomationAlertTriggerEnum = 'ALWAYS' | 'ONCE' | 'ONCE_PER_INTERVAL';
 
 /**
  * @type AutomationAutomationAlertCondition
@@ -436,8 +468,8 @@ export interface AutomationAutomationImageExport {
 export interface AutomationAutomationMetadata {
     [key: string]: any;
 
-    'widget'?: string;
     'visibleFilters'?: Array<AutomationVisibleFilter>;
+    'widget'?: string;
 }
 
 export interface AutomationAutomationNotification extends AutomationNotificationContent {
@@ -465,24 +497,24 @@ export interface AutomationAutomationVisualExport {
  */
 export interface AutomationBoundedFilter {
     /**
-     * Date granularity specifying particular date attribute in given dimension.
-     */
-    'granularity': AutomationBoundedFilterGranularityEnum;
-    /**
      * Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for \'2 days/weeks, ... ago\'). If null, then start of the range is unbounded.
      */
     'from'?: number | null;
+    /**
+     * Date granularity specifying particular date attribute in given dimension.
+     */
+    'granularity': AutomationBoundedFilterGranularityEnum;
     /**
      * End of the filtering interval. Specified by number of periods (with respect to given granularity). Value \'O\' is representing current time-interval (current day, week, ...). If null, then end of the range is unbounded.
      */
     'to'?: number | null;
 }
 
-export type AutomationBoundedFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
+export type AutomationBoundedFilterGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
 
 export interface AutomationComparison {
-    'operator': AutomationComparisonOperatorEnum;
     'left': AutomationLocalIdentifier;
+    'operator': AutomationComparisonOperatorEnum;
     'right': AutomationAlertConditionOperand;
 }
 
@@ -510,19 +542,19 @@ export interface AutomationComparisonMeasureValueFilter {
 }
 
 export interface AutomationComparisonMeasureValueFilterComparisonMeasureValueFilter {
+    'applyOnResult'?: boolean;
     /**
      * References to the attributes to be used when filtering.
      */
     'dimensionality'?: Array<AutomationAfmIdentifier>;
+    'localIdentifier'?: string;
+    'measure': AutomationAfmIdentifier;
+    'operator': AutomationComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum;
     /**
      * A value that will be substituted for null values in the metric for the comparisons.
      */
     'treatNullValuesAs'?: number;
-    'operator': AutomationComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum;
     'value': number;
-    'localIdentifier'?: string;
-    'applyOnResult'?: boolean;
-    'measure': AutomationAfmIdentifier;
 }
 
 export type AutomationComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum = 'GREATER_THAN' | 'GREATER_THAN_OR_EQUAL_TO' | 'LESS_THAN' | 'LESS_THAN_OR_EQUAL_TO' | 'EQUAL_TO' | 'NOT_EQUAL_TO';
@@ -539,21 +571,21 @@ export interface AutomationCompoundMeasureValueFilter {
 }
 
 export interface AutomationCompoundMeasureValueFilterCompoundMeasureValueFilter {
-    /**
-     * References to the attributes to be used when filtering.
-     */
-    'dimensionality'?: Array<AutomationAfmIdentifier>;
-    /**
-     * A value that will be substituted for null values in the metric for the comparisons.
-     */
-    'treatNullValuesAs'?: number;
+    'applyOnResult'?: boolean;
     /**
      * List of conditions to apply. Conditions are combined with OR logic. Each condition can be either a comparison (e.g., > 100) or a range (e.g., BETWEEN 10 AND 50). If empty, no filtering is applied and all rows are returned.
      */
     'conditions': Array<AutomationMeasureValueCondition>;
+    /**
+     * References to the attributes to be used when filtering.
+     */
+    'dimensionality'?: Array<AutomationAfmIdentifier>;
     'localIdentifier'?: string;
-    'applyOnResult'?: boolean;
     'measure': AutomationAfmIdentifier;
+    /**
+     * A value that will be substituted for null values in the metric for the comparisons.
+     */
+    'treatNullValuesAs'?: number;
 }
 
 /**
@@ -571,13 +603,13 @@ export interface AutomationCustomLabel {
  */
 export interface AutomationCustomMetric {
     /**
-     * Metric title override.
-     */
-    'title': string;
-    /**
      * Format override.
      */
     'format': string;
+    /**
+     * Metric title override.
+     */
+    'title': string;
 }
 
 /**
@@ -600,13 +632,13 @@ export interface AutomationDashboardArbitraryAttributeFilter {
 
 export interface AutomationDashboardArbitraryAttributeFilterArbitraryAttributeFilter {
     'displayForm': AutomationIdentifierRef;
-    'values': Array<string>;
-    'negativeSelection': boolean;
     'filterElementsBy'?: Array<AutomationAttributeFilterParent>;
     'filterElementsByDate'?: Array<AutomationAttributeFilterByDate>;
-    'validateElementsBy'?: Array<AutomationIdentifierRef>;
-    'title'?: string;
     'localIdentifier'?: string;
+    'negativeSelection': boolean;
+    'title'?: string;
+    'validateElementsBy'?: Array<AutomationIdentifierRef>;
+    'values': Array<string>;
 }
 
 export interface AutomationDashboardAttributeFilter {
@@ -614,15 +646,15 @@ export interface AutomationDashboardAttributeFilter {
 }
 
 export interface AutomationDashboardAttributeFilterAttributeFilter {
-    'displayForm': AutomationIdentifierRef;
-    'negativeSelection': boolean;
     'attributeElements': AutomationAttributeElements;
+    'displayForm': AutomationIdentifierRef;
     'filterElementsBy'?: Array<AutomationAttributeFilterParent>;
     'filterElementsByDate'?: Array<AutomationAttributeFilterByDate>;
-    'validateElementsBy'?: Array<AutomationIdentifierRef>;
-    'title'?: string;
-    'selectionMode'?: AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum;
     'localIdentifier'?: string;
+    'negativeSelection': boolean;
+    'selectionMode'?: AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum;
+    'title'?: string;
+    'validateElementsBy'?: Array<AutomationIdentifierRef>;
 }
 
 export type AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum = 'single' | 'multi';
@@ -633,8 +665,8 @@ export interface AutomationDashboardCompoundComparisonCondition {
 
 export interface AutomationDashboardCompoundComparisonConditionComparison {
     'operator': AutomationDashboardCompoundComparisonConditionComparisonOperatorEnum;
-    'value': number;
     'treatNullValuesAs'?: number;
+    'value': number;
 }
 
 export type AutomationDashboardCompoundComparisonConditionComparisonOperatorEnum = 'GREATER_THAN' | 'GREATER_THAN_OR_EQUAL_TO' | 'LESS_THAN' | 'LESS_THAN_OR_EQUAL_TO' | 'EQUAL_TO' | 'NOT_EQUAL_TO';
@@ -649,8 +681,8 @@ export interface AutomationDashboardCompoundRangeCondition {
 }
 
 export interface AutomationDashboardCompoundRangeConditionRange {
-    'operator': AutomationDashboardCompoundRangeConditionRangeOperatorEnum;
     'from': number;
+    'operator': AutomationDashboardCompoundRangeConditionRangeOperatorEnum;
     'to': number;
     'treatNullValuesAs'?: number;
 }
@@ -662,25 +694,30 @@ export interface AutomationDashboardDateFilter {
 }
 
 export interface AutomationDashboardDateFilterDateFilter {
-    'type': AutomationDashboardDateFilterDateFilterTypeEnum;
-    'granularity': AutomationDashboardDateFilterDateFilterGranularityEnum;
-    'from'?: AutomationDashboardDateFilterDateFilterFrom;
-    'to'?: AutomationDashboardDateFilterDateFilterFrom;
-    'dataSet'?: AutomationIdentifierRef;
     'attribute'?: AutomationIdentifierRef;
     'boundedFilter'?: AutomationRelativeBoundedDateFilter;
+    'dataSet'?: AutomationIdentifierRef;
     'emptyValueHandling'?: AutomationDashboardDateFilterDateFilterEmptyValueHandlingEnum;
+    'from'?: AutomationDashboardDateFilterDateFilterFrom;
+    'granularity': AutomationDashboardDateFilterDateFilterGranularityEnum;
     'localIdentifier'?: string;
+    'to'?: AutomationDashboardDateFilterDateFilterTo;
+    'type': AutomationDashboardDateFilterDateFilterTypeEnum;
 }
 
-export type AutomationDashboardDateFilterDateFilterTypeEnum = 'relative' | 'absolute';
-export type AutomationDashboardDateFilterDateFilterGranularityEnum = 'ALL_TIME_GRANULARITY' | 'GDC.time.year' | 'GDC.time.week_us' | 'GDC.time.week_in_year' | 'GDC.time.week_in_quarter' | 'GDC.time.week' | 'GDC.time.euweek_in_year' | 'GDC.time.euweek_in_quarter' | 'GDC.time.quarter' | 'GDC.time.quarter_in_year' | 'GDC.time.month' | 'GDC.time.month_in_quarter' | 'GDC.time.month_in_year' | 'GDC.time.day_in_year' | 'GDC.time.day_in_quarter' | 'GDC.time.day_in_month' | 'GDC.time.day_in_week' | 'GDC.time.day_in_euweek' | 'GDC.time.date' | 'GDC.time.hour' | 'GDC.time.hour_in_day' | 'GDC.time.minute' | 'GDC.time.minute_in_hour' | 'GDC.time.fiscal_month' | 'GDC.time.fiscal_quarter' | 'GDC.time.fiscal_year';
 export type AutomationDashboardDateFilterDateFilterEmptyValueHandlingEnum = 'include' | 'exclude' | 'only';
+export type AutomationDashboardDateFilterDateFilterGranularityEnum = 'ALL_TIME_GRANULARITY' | 'GDC.time.year' | 'GDC.time.week_us' | 'GDC.time.week_in_year' | 'GDC.time.week_in_quarter' | 'GDC.time.week' | 'GDC.time.euweek_in_year' | 'GDC.time.euweek_in_quarter' | 'GDC.time.quarter' | 'GDC.time.quarter_in_year' | 'GDC.time.month' | 'GDC.time.month_in_quarter' | 'GDC.time.month_in_year' | 'GDC.time.day_in_year' | 'GDC.time.day_in_quarter' | 'GDC.time.day_in_month' | 'GDC.time.day_in_week' | 'GDC.time.day_in_euweek' | 'GDC.time.date' | 'GDC.time.hour' | 'GDC.time.hour_in_day' | 'GDC.time.minute' | 'GDC.time.minute_in_hour' | 'GDC.time.minute_in_day' | 'GDC.time.second' | 'GDC.time.second_in_minute' | 'GDC.time.second_in_day' | 'GDC.time.fiscal_week' | 'GDC.time.fiscal_month' | 'GDC.time.fiscal_quarter' | 'GDC.time.fiscal_semester' | 'GDC.time.fiscal_year' | 'GDC.time.fiscal_day_in_fiscal_week' | 'GDC.time.fiscal_day_in_fiscal_month' | 'GDC.time.fiscal_day_in_fiscal_quarter' | 'GDC.time.fiscal_day_in_fiscal_semester' | 'GDC.time.fiscal_day_in_fiscal_year' | 'GDC.time.fiscal_week_in_fiscal_month' | 'GDC.time.fiscal_week_in_fiscal_quarter' | 'GDC.time.fiscal_week_in_fiscal_semester' | 'GDC.time.fiscal_week_in_fiscal_year' | 'GDC.time.fiscal_month_in_fiscal_quarter' | 'GDC.time.fiscal_month_in_fiscal_semester' | 'GDC.time.fiscal_month_in_fiscal_year' | 'GDC.time.fiscal_quarter_in_fiscal_semester' | 'GDC.time.fiscal_quarter_in_fiscal_year' | 'GDC.time.fiscal_semester_in_fiscal_year';
+export type AutomationDashboardDateFilterDateFilterTypeEnum = 'relative' | 'absolute';
 
 /**
  * @type AutomationDashboardDateFilterDateFilterFrom
  */
 export type AutomationDashboardDateFilterDateFilterFrom = number | string;
+
+/**
+ * @type AutomationDashboardDateFilterDateFilterTo
+ */
+export type AutomationDashboardDateFilterDateFilterTo = number | string;
 
 /**
  * Additional settings.
@@ -695,17 +732,17 @@ export interface AutomationDashboardExportSettings {
      */
     'mergeHeaders'?: boolean;
     /**
-     * Set page size. (PDF)
-     */
-    'pageSize'?: AutomationDashboardExportSettingsPageSizeEnum;
-    /**
      * Set page orientation. (PDF)
      */
     'pageOrientation'?: AutomationDashboardExportSettingsPageOrientationEnum;
+    /**
+     * Set page size. (PDF)
+     */
+    'pageSize'?: AutomationDashboardExportSettingsPageSizeEnum;
 }
 
-export type AutomationDashboardExportSettingsPageSizeEnum = 'A3' | 'A4' | 'LETTER';
 export type AutomationDashboardExportSettingsPageOrientationEnum = 'PORTRAIT' | 'LANDSCAPE';
+export type AutomationDashboardExportSettingsPageSizeEnum = 'A3' | 'A4' | 'LETTER';
 
 /**
  * @type AutomationDashboardFilter
@@ -717,13 +754,13 @@ export interface AutomationDashboardMatchAttributeFilter {
 }
 
 export interface AutomationDashboardMatchAttributeFilterMatchAttributeFilter {
-    'displayForm': AutomationIdentifierRef;
-    'operator': AutomationDashboardMatchAttributeFilterMatchAttributeFilterOperatorEnum;
-    'literal': string;
-    'negativeSelection': boolean;
     'caseSensitive': boolean;
-    'title'?: string;
+    'displayForm': AutomationIdentifierRef;
+    'literal': string;
     'localIdentifier'?: string;
+    'negativeSelection': boolean;
+    'operator': AutomationDashboardMatchAttributeFilterMatchAttributeFilterOperatorEnum;
+    'title'?: string;
 }
 
 export type AutomationDashboardMatchAttributeFilterMatchAttributeFilterOperatorEnum = 'contains' | 'startsWith' | 'endsWith';
@@ -733,11 +770,11 @@ export interface AutomationDashboardMeasureValueFilter {
 }
 
 export interface AutomationDashboardMeasureValueFilterDashboardMeasureValueFilter {
-    'measure': AutomationIdentifierRef;
     'conditions': Array<AutomationDashboardCompoundConditionItem>;
     'dimensionality'?: Array<AutomationIdentifierRef>;
-    'title'?: string;
     'localIdentifier'?: string;
+    'measure': AutomationIdentifierRef;
+    'title'?: string;
 }
 
 /**
@@ -745,38 +782,38 @@ export interface AutomationDashboardMeasureValueFilterDashboardMeasureValueFilte
  */
 export interface AutomationDashboardTabularExportRequestV2 {
     /**
-     * Requested tabular export type.
-     */
-    'format': AutomationDashboardTabularExportRequestV2FormatEnum;
-    /**
-     * Filename of downloaded file without extension.
-     */
-    'fileName': string;
-    /**
      * List of filters that will be used instead of the default dashboard filters.
      */
     'dashboardFiltersOverride'?: Array<AutomationDashboardFilter>;
-    /**
-     * Map of tab-specific filter overrides. Key is tabId, value is list of filters for that tab.
-     */
-    'dashboardTabsFiltersOverrides'?: { [key: string]: Array<AutomationDashboardFilter>; };
     /**
      * Dashboard identifier
      */
     'dashboardId': string;
     /**
-     * List of widget identifiers to be exported. Note that only one widget is currently supported.
-     */
-    'widgetIds'?: Array<string>;
-    'settings'?: AutomationDashboardExportSettings;
-    /**
      * Parameter value overrides applied to the export\'s executions. Each entry carries the parameter id (used as an AFM execution override) plus the FE-supplied title for the info sheet. Applied uniformly across all tabs; use dashboardTabsParametersOverrides for tab-scoped overrides.
      */
     'dashboardParametersOverride'?: Array<AutomationParameterValue>;
     /**
+     * Map of tab-specific filter overrides. Key is tabId, value is list of filters for that tab.
+     */
+    'dashboardTabsFiltersOverrides'?: { [key: string]: Array<AutomationDashboardFilter>; };
+    /**
      * Map of tab-specific parameter overrides. Key is tabId, value is a list of (id, value, title) entries that override the dashboard-level parameters for that tab only. Mirrors dashboardTabsFiltersOverrides. When a tab is present in this map, its entries take precedence over dashboardParametersOverride for that tab\'s executions and info-sheet display.
      */
     'dashboardTabsParametersOverrides'?: { [key: string]: Array<AutomationParameterValue>; };
+    /**
+     * Filename of downloaded file without extension.
+     */
+    'fileName': string;
+    /**
+     * Requested tabular export type.
+     */
+    'format': AutomationDashboardTabularExportRequestV2FormatEnum;
+    'settings'?: AutomationDashboardExportSettings;
+    /**
+     * List of widget identifiers to be exported. Note that only one widget is currently supported.
+     */
+    'widgetIds'?: Array<string>;
 }
 
 export type AutomationDashboardTabularExportRequestV2FormatEnum = 'XLSX' | 'PDF';
@@ -785,7 +822,7 @@ export type AutomationDashboardTabularExportRequestV2FormatEnum = 'XLSX' | 'PDF'
  * @type AutomationDateFilter
  * Abstract filter definition type for dates.
  */
-export type AutomationDateFilter = AutomationAbsoluteDateFilter | AutomationAllTimeDateFilter | AutomationRelativeDateFilter;
+export type AutomationDateFilter = AutomationAbsoluteDateFilter | AutomationAbsoluteGranularityDateFilter | AutomationAllTimeDateFilter | AutomationRelativeDateFilter;
 
 export interface AutomationDateValue {
     'value': string;
@@ -871,19 +908,23 @@ export interface AutomationExecutionSettings {
      * Specifies the timestamp of the execution from which relative filters are resolved. If not set, the current time is used.
      */
     'timestamp'?: string;
+    /**
+     * Specifies the time zone used to resolve relative date filters and to convert time-zone-aware date/time values in the result. Expects an IANA time zone id (e.g. \"Europe/Prague\") or a fixed GMT offset (e.g. \"GMT+02:00\"). If not set, the time zone from the workspace/user settings is used.
+     */
+    'timezone'?: string;
 }
 
 export interface AutomationExportResult {
-    'fileName': string;
-    'exportId': string;
-    'status': AutomationExportResultStatusEnum;
-    'fileUri'?: string;
-    'expiresAt'?: string;
-    'fileSize'?: number;
     'errorMessage'?: string;
+    'expiresAt'?: string;
+    'exportId': string;
+    'fileName': string;
+    'fileSize'?: number;
+    'fileUri'?: string;
+    'finishedAt'?: string;
+    'status': AutomationExportResultStatusEnum;
     'traceId'?: string;
     'triggeredAt'?: string;
-    'finishedAt'?: string;
 }
 
 export type AutomationExportResultStatusEnum = 'SUCCESS' | 'ERROR' | 'INTERNAL_ERROR' | 'TIMEOUT';
@@ -892,7 +933,7 @@ export type AutomationExportResultStatusEnum = 'SUCCESS' | 'ERROR' | 'INTERNAL_E
  * @type AutomationFilterDefinition
  * Abstract filter definition type
  */
-export type AutomationFilterDefinition = AutomationAbsoluteDateFilter | AutomationAllTimeDateFilter | AutomationComparisonMeasureValueFilter | AutomationCompoundMeasureValueFilter | AutomationInlineFilterDefinition | AutomationMatchAttributeFilter | AutomationNegativeAttributeFilter | AutomationPositiveAttributeFilter | AutomationRangeMeasureValueFilter | AutomationRankingFilter | AutomationRelativeDateFilter;
+export type AutomationFilterDefinition = AutomationAbsoluteDateFilter | AutomationAbsoluteGranularityDateFilter | AutomationAllTimeDateFilter | AutomationComparisonMeasureValueFilter | AutomationCompoundMeasureValueFilter | AutomationInlineFilterDefinition | AutomationMatchAttributeFilter | AutomationNegativeAttributeFilter | AutomationPositiveAttributeFilter | AutomationRangeMeasureValueFilter | AutomationRankingFilter | AutomationRelativeDateFilter;
 
 /**
  * @type AutomationFilterDefinitionForSimpleMeasure
@@ -909,32 +950,32 @@ export interface AutomationIdentifierRefIdentifier {
     'type': AutomationIdentifierRefIdentifierTypeEnum;
 }
 
-export type AutomationIdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'workspaceExportTemplate';
+export type AutomationIdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'workspaceExportTemplate' | 'workspaceTheme' | 'workspaceColorPalette' | 'fiscalCalendar' | 'fiscalCalendarGranularity';
 
 /**
  * Export request object describing the export properties and metadata for image exports.
  */
 export interface AutomationImageExportRequest {
     /**
-     * Requested resulting file type.
+     * Dashboard identifier
      */
-    'format': AutomationImageExportRequestFormatEnum;
+    'dashboardId': string;
     /**
      * File name to be used for retrieving the image document.
      */
     'fileName': string;
     /**
-     * Dashboard identifier
+     * Requested resulting file type.
      */
-    'dashboardId': string;
-    /**
-     * List of widget identifiers to be exported. Note that only one widget is currently supported.
-     */
-    'widgetIds': Array<string>;
+    'format': AutomationImageExportRequestFormatEnum;
     /**
      * Metadata definition in free-form JSON format.
      */
     'metadata'?: object | null;
+    /**
+     * List of widget identifiers to be exported. Note that only one widget is currently supported.
+     */
+    'widgetIds': Array<string>;
 }
 
 export type AutomationImageExportRequestFormatEnum = 'PNG';
@@ -959,12 +1000,12 @@ export interface AutomationInlineFilterDefinition {
 }
 
 export interface AutomationInlineFilterDefinitionInline {
+    'applyOnResult'?: boolean;
     /**
      * MAQL query representing the filter.
      */
     'filter': string;
     'localIdentifier'?: string;
-    'applyOnResult'?: boolean;
 }
 
 /**
@@ -983,13 +1024,13 @@ export interface AutomationInlineMeasureDefinitionInline {
 
 export interface AutomationLocalIdentifier {
     /**
-     * Local identifier of the metric to be compared.
-     */
-    'localIdentifier': string;
-    /**
      * Metric format.
      */
     'format'?: string | null;
+    /**
+     * Local identifier of the metric to be compared.
+     */
+    'localIdentifier': string;
     /**
      * Metric title.
      */
@@ -1004,10 +1045,17 @@ export interface AutomationMatchAttributeFilter {
 }
 
 export interface AutomationMatchAttributeFilterMatchAttributeFilter {
+    'applyOnResult'?: boolean;
+    /**
+     * Indicates whether the filter match is evaluated in case-sensitive mode or not.
+     */
+    'caseSensitive'?: boolean;
+    'label': AutomationAfmIdentifier;
     /**
      * Literal used to limit label values.
      */
     'literal': string;
+    'localIdentifier'?: string;
     /**
      * Requested match type.
      */
@@ -1016,13 +1064,6 @@ export interface AutomationMatchAttributeFilterMatchAttributeFilter {
      * Indicates whether the filter should negate the match.
      */
     'negate'?: boolean;
-    /**
-     * Indicates whether the filter match is evaluated in case-sensitive mode or not.
-     */
-    'caseSensitive'?: boolean;
-    'localIdentifier'?: string;
-    'applyOnResult'?: boolean;
-    'label': AutomationAfmIdentifier;
 }
 
 export type AutomationMatchAttributeFilterMatchAttributeFilterMatchTypeEnum = 'STARTS_WITH' | 'ENDS_WITH' | 'CONTAINS';
@@ -1037,11 +1078,11 @@ export type AutomationMeasureDefinition = AutomationArithmeticMeasureDefinition 
  * Metric is a quantity that is calculated from the data.
  */
 export interface AutomationMeasureItem {
+    'definition': AutomationMeasureItemDefinition;
     /**
      * Local identifier of the metric. This can be used to reference the metric in other parts of the execution definition.
      */
     'localIdentifier': string;
-    'definition': AutomationMeasureItemDefinition;
 }
 
 /**
@@ -1065,13 +1106,13 @@ export type AutomationMeasureValueFilter = AutomationComparisonMeasureValueFilte
  * (EXPERIMENTAL) Override for a catalog metric definition.
  */
 export interface AutomationMetricDefinitionOverride {
-    'item': AutomationAfmObjectIdentifierCore;
     'definition': AutomationInlineMeasureDefinition;
+    'item': AutomationAfmObjectIdentifierCore;
 }
 
 export interface AutomationMetricRecord {
-    'value': number;
     'formattedValue'?: string;
+    'value': number;
 }
 
 /**
@@ -1082,23 +1123,23 @@ export interface AutomationNegativeAttributeFilter {
 }
 
 export interface AutomationNegativeAttributeFilterNegativeAttributeFilter {
-    'notIn': AutomationAttributeFilterElements;
-    'localIdentifier'?: string;
     'applyOnResult'?: boolean;
+    'label': AutomationAfmIdentifier;
+    'localIdentifier'?: string;
+    'notIn': AutomationAttributeFilterElements;
     /**
      * If true, indicates that the values in notInElements were filled free-form, otherwise they have been picked from existing elements.
      */
     'usesArbitraryValues'?: boolean;
-    'label': AutomationAfmIdentifier;
 }
 
 export interface AutomationNotification {
-    'id': string;
-    'workspaceId'?: string;
     'automationId'?: string;
-    'data': AutomationNotificationData;
-    'isRead': boolean;
     'createdAt': string;
+    'data': AutomationNotificationData;
+    'id': string;
+    'isRead': boolean;
+    'workspaceId'?: string;
 }
 
 /**
@@ -1116,8 +1157,8 @@ export interface AutomationNotificationContent {
 export type AutomationNotificationData = AutomationAutomationNotification | AutomationTestNotification;
 
 export interface AutomationNotificationFilter {
-    'title': string;
     'filter': string;
+    'title': string;
 }
 
 export interface AutomationNotifications {
@@ -1130,8 +1171,8 @@ export interface AutomationNotificationsMeta {
 }
 
 export interface AutomationNotificationsMetaTotal {
-    'unread': number;
     'all': number;
+    'unread': number;
 }
 
 export interface AutomationOver {
@@ -1142,6 +1183,8 @@ export interface AutomationOver {
  * (EXPERIMENTAL) Parameter value for this execution.
  */
 export interface AutomationParameterItem {
+    [key: string]: any;
+
     'parameter': AutomationAfmObjectIdentifierParameter;
     /**
      * Value to use for this parameter instead of its default.
@@ -1153,18 +1196,20 @@ export interface AutomationParameterItem {
  * Parameter value override applied to the export. The (id, value) pair drives the execution; the title is FE-supplied for info-sheet display.
  */
 export interface AutomationParameterValue {
+    [key: string]: any;
+
     /**
      * Identifier of the workspace parameter (matches the parameter entity id).
      */
     'id': string;
     /**
-     * Value to use for this parameter when executing the export.
-     */
-    'value': string;
-    /**
      * Display title of the parameter as the client wants it rendered on the info sheet.
      */
     'title': string;
+    /**
+     * Value to use for this parameter when executing the export.
+     */
+    'value': string;
 }
 
 /**
@@ -1172,13 +1217,13 @@ export interface AutomationParameterValue {
  */
 export interface AutomationPdfTableStyle {
     /**
-     * CSS selector where to apply given properties.
-     */
-    'selector': string;
-    /**
      * List of CSS properties.
      */
     'properties'?: Array<AutomationPdfTableStyleProperty>;
+    /**
+     * CSS selector where to apply given properties.
+     */
+    'selector': string;
 }
 
 /**
@@ -1214,11 +1259,11 @@ export interface AutomationPopDatasetMeasureDefinition {
 }
 
 export interface AutomationPopDatasetMeasureDefinitionPreviousPeriodMeasure {
-    'measureIdentifier': AutomationAfmLocalIdentifier;
     /**
      * Specification of which date data sets to use for determining the period to calculate the previous period for.
      */
     'dateDatasets': Array<AutomationPopDataset>;
+    'measureIdentifier': AutomationAfmLocalIdentifier;
 }
 
 /**
@@ -1240,11 +1285,11 @@ export interface AutomationPopDateMeasureDefinition {
 }
 
 export interface AutomationPopDateMeasureDefinitionOverPeriodMeasure {
-    'measureIdentifier': AutomationAfmLocalIdentifier;
     /**
      * Attributes to use for determining the period to calculate the PoP for.
      */
     'dateAttributes': Array<AutomationPopDate>;
+    'measureIdentifier': AutomationAfmLocalIdentifier;
 }
 
 /**
@@ -1260,20 +1305,20 @@ export interface AutomationPositiveAttributeFilter {
 }
 
 export interface AutomationPositiveAttributeFilterPositiveAttributeFilter {
-    'in': AutomationAttributeFilterElements;
-    'localIdentifier'?: string;
     'applyOnResult'?: boolean;
+    'in': AutomationAttributeFilterElements;
+    'label': AutomationAfmIdentifier;
+    'localIdentifier'?: string;
     /**
      * If true, indicates that the values in inElements were filled free-form, otherwise they have been picked from existing elements.
      */
     'usesArbitraryValues'?: boolean;
-    'label': AutomationAfmIdentifier;
 }
 
 export interface AutomationRange {
-    'operator': AutomationRangeOperatorEnum;
-    'measure': AutomationLocalIdentifier;
     'from': AutomationValue;
+    'measure': AutomationLocalIdentifier;
+    'operator': AutomationRangeOperatorEnum;
     'to': AutomationValue;
 }
 
@@ -1287,8 +1332,8 @@ export interface AutomationRangeCondition {
 }
 
 export interface AutomationRangeConditionRange {
-    'operator': AutomationRangeConditionRangeOperatorEnum;
     'from': number;
+    'operator': AutomationRangeConditionRangeOperatorEnum;
     'to': number;
 }
 
@@ -1302,20 +1347,20 @@ export interface AutomationRangeMeasureValueFilter {
 }
 
 export interface AutomationRangeMeasureValueFilterRangeMeasureValueFilter {
+    'applyOnResult'?: boolean;
     /**
      * References to the attributes to be used when filtering.
      */
     'dimensionality'?: Array<AutomationAfmIdentifier>;
+    'from': number;
+    'localIdentifier'?: string;
+    'measure': AutomationAfmIdentifier;
+    'operator': AutomationRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum;
+    'to': number;
     /**
      * A value that will be substituted for null values in the metric for the comparisons.
      */
     'treatNullValuesAs'?: number;
-    'operator': AutomationRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum;
-    'from': number;
-    'to': number;
-    'localIdentifier'?: string;
-    'applyOnResult'?: boolean;
-    'measure': AutomationAfmIdentifier;
 }
 
 export type AutomationRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum = 'BETWEEN' | 'NOT_BETWEEN';
@@ -1332,10 +1377,12 @@ export interface AutomationRankingFilter {
 }
 
 export interface AutomationRankingFilterRankingFilter {
+    'applyOnResult'?: boolean;
     /**
      * References to the attributes to be used when filtering.
      */
     'dimensionality'?: Array<AutomationAfmIdentifier>;
+    'localIdentifier'?: string;
     /**
      * References to the metrics to be used when filtering.
      */
@@ -1345,15 +1392,13 @@ export interface AutomationRankingFilterRankingFilter {
      */
     'operator': AutomationRankingFilterRankingFilterOperatorEnum;
     /**
-     * Number of top/bottom values to filter.
-     */
-    'value': number;
-    /**
      * When true, filter returns requested number of rows at most. Default is false.
      */
     'strictLimitOfRows'?: boolean;
-    'localIdentifier'?: string;
-    'applyOnResult'?: boolean;
+    /**
+     * Number of top/bottom values to filter.
+     */
+    'value': number;
 }
 
 export type AutomationRankingFilterRankingFilterOperatorEnum = 'TOP' | 'BOTTOM';
@@ -1396,21 +1441,21 @@ export interface AutomationRawCustomOverride {
  * Export request object describing the export properties and overrides for raw exports.
  */
 export interface AutomationRawExportAutomationRequest {
-    /**
-     * Requested resulting file type.
-     */
-    'format': AutomationRawExportAutomationRequestFormatEnum;
-    'execution': AutomationAFM;
-    /**
-     * Filename of downloaded file without extension.
-     */
-    'fileName': string;
     'customOverride'?: AutomationRawCustomOverride;
-    'executionSettings'?: AutomationExecutionSettings;
     /**
      * Set column delimiter. (CSV)
      */
     'delimiter'?: string;
+    'execution': AutomationAFM;
+    'executionSettings'?: AutomationExecutionSettings;
+    /**
+     * Filename of downloaded file without extension.
+     */
+    'fileName': string;
+    /**
+     * Requested resulting file type.
+     */
+    'format': AutomationRawExportAutomationRequestFormatEnum;
     /**
      * Metadata definition in free-form JSON format.
      */
@@ -1420,23 +1465,23 @@ export interface AutomationRawExportAutomationRequest {
 export type AutomationRawExportAutomationRequestFormatEnum = 'ARROW_FILE' | 'ARROW_STREAM' | 'CSV';
 
 export interface AutomationRelative {
+    'measure': AutomationArithmeticMeasure;
     /**
      * Relative condition operator. INCREASES_BY - the metric increases by the specified value. DECREASES_BY - the metric decreases by the specified value. CHANGES_BY - the metric increases or decreases by the specified value. 
      */
     'operator': AutomationRelativeOperatorEnum;
-    'measure': AutomationArithmeticMeasure;
     'threshold': AutomationValue;
 }
 
 export type AutomationRelativeOperatorEnum = 'INCREASES_BY' | 'DECREASES_BY' | 'CHANGES_BY';
 
 export interface AutomationRelativeBoundedDateFilter {
-    'granularity': AutomationRelativeBoundedDateFilterGranularityEnum;
     'from'?: number;
+    'granularity': AutomationRelativeBoundedDateFilterGranularityEnum;
     'to'?: number;
 }
 
-export type AutomationRelativeBoundedDateFilterGranularityEnum = 'ALL_TIME_GRANULARITY' | 'GDC.time.year' | 'GDC.time.week_us' | 'GDC.time.week_in_year' | 'GDC.time.week_in_quarter' | 'GDC.time.week' | 'GDC.time.euweek_in_year' | 'GDC.time.euweek_in_quarter' | 'GDC.time.quarter' | 'GDC.time.quarter_in_year' | 'GDC.time.month' | 'GDC.time.month_in_quarter' | 'GDC.time.month_in_year' | 'GDC.time.day_in_year' | 'GDC.time.day_in_quarter' | 'GDC.time.day_in_month' | 'GDC.time.day_in_week' | 'GDC.time.day_in_euweek' | 'GDC.time.date' | 'GDC.time.hour' | 'GDC.time.hour_in_day' | 'GDC.time.minute' | 'GDC.time.minute_in_hour' | 'GDC.time.fiscal_month' | 'GDC.time.fiscal_quarter' | 'GDC.time.fiscal_year';
+export type AutomationRelativeBoundedDateFilterGranularityEnum = 'ALL_TIME_GRANULARITY' | 'GDC.time.year' | 'GDC.time.week_us' | 'GDC.time.week_in_year' | 'GDC.time.week_in_quarter' | 'GDC.time.week' | 'GDC.time.euweek_in_year' | 'GDC.time.euweek_in_quarter' | 'GDC.time.quarter' | 'GDC.time.quarter_in_year' | 'GDC.time.month' | 'GDC.time.month_in_quarter' | 'GDC.time.month_in_year' | 'GDC.time.day_in_year' | 'GDC.time.day_in_quarter' | 'GDC.time.day_in_month' | 'GDC.time.day_in_week' | 'GDC.time.day_in_euweek' | 'GDC.time.date' | 'GDC.time.hour' | 'GDC.time.hour_in_day' | 'GDC.time.minute' | 'GDC.time.minute_in_hour' | 'GDC.time.minute_in_day' | 'GDC.time.second' | 'GDC.time.second_in_minute' | 'GDC.time.second_in_day' | 'GDC.time.fiscal_week' | 'GDC.time.fiscal_month' | 'GDC.time.fiscal_quarter' | 'GDC.time.fiscal_semester' | 'GDC.time.fiscal_year' | 'GDC.time.fiscal_day_in_fiscal_week' | 'GDC.time.fiscal_day_in_fiscal_month' | 'GDC.time.fiscal_day_in_fiscal_quarter' | 'GDC.time.fiscal_day_in_fiscal_semester' | 'GDC.time.fiscal_day_in_fiscal_year' | 'GDC.time.fiscal_week_in_fiscal_month' | 'GDC.time.fiscal_week_in_fiscal_quarter' | 'GDC.time.fiscal_week_in_fiscal_semester' | 'GDC.time.fiscal_week_in_fiscal_year' | 'GDC.time.fiscal_month_in_fiscal_quarter' | 'GDC.time.fiscal_month_in_fiscal_semester' | 'GDC.time.fiscal_month_in_fiscal_year' | 'GDC.time.fiscal_quarter_in_fiscal_semester' | 'GDC.time.fiscal_quarter_in_fiscal_year' | 'GDC.time.fiscal_semester_in_fiscal_year';
 
 /**
  * A date filter specifying a time interval that is relative to the current date. For example, last week, next month, and so on. Field dataset is representing qualifier of date dimension. The \'from\' and \'to\' properties mark the boundaries of the interval. If \'from\' is omitted, all values earlier than \'to\' are included. If \'to\' is omitted, all values later than \'from\' are included. It is not allowed to omit both.
@@ -1446,30 +1491,30 @@ export interface AutomationRelativeDateFilter {
 }
 
 export interface AutomationRelativeDateFilterRelativeDateFilter {
+    'applyOnResult'?: boolean;
+    'boundedFilter'?: AutomationBoundedFilter;
+    'dataset': AutomationAfmObjectIdentifierDataset;
     /**
-     * Date granularity specifying particular date attribute in given dimension.
+     * Specifies how rows with empty (null/missing) date values should be handled. INCLUDE includes empty dates in addition to the date range restriction, EXCLUDE removes rows with empty dates (default), ONLY keeps only rows with empty dates.
      */
-    'granularity': AutomationRelativeDateFilterRelativeDateFilterGranularityEnum;
+    'emptyValueHandling'?: AutomationRelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum;
     /**
      * Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for \'2 days/weeks, ... ago\').
      */
     'from': number;
     /**
+     * Date granularity specifying particular date attribute in given dimension.
+     */
+    'granularity': AutomationRelativeDateFilterRelativeDateFilterGranularityEnum;
+    'localIdentifier'?: string;
+    /**
      * End of the filtering interval. Specified by number of periods (with respect to given granularity). Value \'O\' is representing current time-interval (current day, week, ...).
      */
     'to': number;
-    'localIdentifier'?: string;
-    'applyOnResult'?: boolean;
-    'boundedFilter'?: AutomationBoundedFilter;
-    /**
-     * Specifies how rows with empty (null/missing) date values should be handled. INCLUDE includes empty dates in addition to the date range restriction, EXCLUDE removes rows with empty dates (default), ONLY keeps only rows with empty dates.
-     */
-    'emptyValueHandling'?: AutomationRelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum;
-    'dataset': AutomationAfmObjectIdentifierDataset;
 }
 
-export type AutomationRelativeDateFilterRelativeDateFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
 export type AutomationRelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
+export type AutomationRelativeDateFilterRelativeDateFilterGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
 
 export interface AutomationRelativeWrapper {
     'relative': AutomationRelative;
@@ -1480,18 +1525,29 @@ export interface AutomationRelativeWrapper {
  */
 export interface AutomationSettings {
     /**
+     * Set column delimiter. (CSV)
+     */
+    'delimiter'?: string;
+    /**
      * If true, the export will contain the information about the export – exported date, filters, etc. Works only with `visualizationObject`. (XLSX, PDF)
      */
     'exportInfo'?: boolean;
+    /**
+     * Grand totals position. Takes precedence over position specified in visualization.
+     */
+    'grandTotalsPosition'?: AutomationSettingsGrandTotalsPositionEnum;
     /**
      * Merge equal headers in neighbouring cells. (XLSX)
      */
     'mergeHeaders'?: boolean;
     /**
-     * Print applied filters on top of the document. (PDF/HTML when visualizationObject is given)
-     * @deprecated
+     * Set page orientation. (PDF)
      */
-    'showFilters'?: boolean;
+    'pageOrientation'?: AutomationSettingsPageOrientationEnum;
+    /**
+     * Set page size. (PDF)
+     */
+    'pageSize'?: AutomationSettingsPageSizeEnum;
     /**
      * Page size and orientation. (PDF)
      * @deprecated
@@ -1513,26 +1569,15 @@ export interface AutomationSettings {
      */
     'pdfTopRightContent'?: string;
     /**
-     * Set page size. (PDF)
+     * Print applied filters on top of the document. (PDF/HTML when visualizationObject is given)
+     * @deprecated
      */
-    'pageSize'?: AutomationSettingsPageSizeEnum;
-    /**
-     * Set page orientation. (PDF)
-     */
-    'pageOrientation'?: AutomationSettingsPageOrientationEnum;
-    /**
-     * Set column delimiter. (CSV)
-     */
-    'delimiter'?: string;
-    /**
-     * Grand totals position. Takes precedence over position specified in visualization.
-     */
-    'grandTotalsPosition'?: AutomationSettingsGrandTotalsPositionEnum;
+    'showFilters'?: boolean;
 }
 
-export type AutomationSettingsPageSizeEnum = 'A3' | 'A4' | 'LETTER';
-export type AutomationSettingsPageOrientationEnum = 'PORTRAIT' | 'LANDSCAPE';
 export type AutomationSettingsGrandTotalsPositionEnum = 'pinnedBottom' | 'pinnedTop' | 'bottom' | 'top';
+export type AutomationSettingsPageOrientationEnum = 'PORTRAIT' | 'LANDSCAPE';
+export type AutomationSettingsPageSizeEnum = 'A3' | 'A4' | 'LETTER';
 
 /**
  * Metric defined by referencing a MAQL metric or an LDM fact object with aggregation.
@@ -1542,7 +1587,6 @@ export interface AutomationSimpleMeasureDefinition {
 }
 
 export interface AutomationSimpleMeasureDefinitionMeasure {
-    'item': AutomationAfmObjectIdentifierCore;
     /**
      * Definition of aggregation type of the metric.
      */
@@ -1555,6 +1599,7 @@ export interface AutomationSimpleMeasureDefinitionMeasure {
      * Metrics can be filtered by attribute filters with the same interface as ones for global AFM. Note that only one DateFilter is allowed.
      */
     'filters'?: Array<AutomationFilterDefinitionForSimpleMeasure>;
+    'item': AutomationAfmObjectIdentifierCore;
 }
 
 export type AutomationSimpleMeasureDefinitionMeasureAggregationEnum = 'SUM' | 'COUNT' | 'AVG' | 'MIN' | 'MAX' | 'MEDIAN' | 'RUNSUM' | 'APPROXIMATE_COUNT';
@@ -1564,25 +1609,17 @@ export type AutomationSimpleMeasureDefinitionMeasureAggregationEnum = 'SUM' | 'C
  */
 export interface AutomationSlidesExportRequest {
     /**
-     * Requested resulting file type.
+     * Dashboard identifier
      */
-    'format': AutomationSlidesExportRequestFormatEnum;
+    'dashboardId'?: string;
     /**
      * File name to be used for retrieving the pdf document.
      */
     'fileName': string;
     /**
-     * Dashboard identifier
+     * Requested resulting file type.
      */
-    'dashboardId'?: string;
-    /**
-     * List of widget identifiers to be exported. Note that only one widget is currently supported.
-     */
-    'widgetIds'?: Array<string>;
-    /**
-     * List of visualization ids to be exported. Note that only one visualization is currently supported.
-     */
-    'visualizationIds'?: Array<string>;
+    'format': AutomationSlidesExportRequestFormatEnum;
     /**
      * Metadata definition in free-form JSON format.
      */
@@ -1591,6 +1628,14 @@ export interface AutomationSlidesExportRequest {
      * Export template identifier.
      */
     'templateId'?: string | null;
+    /**
+     * List of visualization ids to be exported. Note that only one visualization is currently supported.
+     */
+    'visualizationIds'?: Array<string>;
+    /**
+     * List of widget identifiers to be exported. Note that only one widget is currently supported.
+     */
+    'widgetIds'?: Array<string>;
 }
 
 export type AutomationSlidesExportRequestFormatEnum = 'PDF' | 'PPTX';
@@ -1612,21 +1657,21 @@ export interface AutomationSmtp {
      */
     'host'?: string;
     /**
-     * The SMTP server port.
-     */
-    'port'?: AutomationSmtpPortEnum;
-    /**
-     * The SMTP server username.
-     */
-    'username'?: string;
-    /**
      * The SMTP server password.
      */
     'password'?: string;
     /**
+     * The SMTP server port.
+     */
+    'port'?: AutomationSmtpPortEnum;
+    /**
      * The destination type.
      */
     'type': AutomationSmtpTypeEnum;
+    /**
+     * The SMTP server username.
+     */
+    'username'?: string;
 }
 
 export type AutomationSmtpPortEnum = 25 | 465 | 587 | 2525;
@@ -1636,6 +1681,7 @@ export type AutomationSmtpTypeEnum = 'SMTP';
  * A single pre-executed layer in a multi-layer tabular export.
  */
 export interface AutomationTabularExportExecution {
+    'customOverride'?: AutomationCustomOverride;
     /**
      * Execution result identifier for this layer.
      */
@@ -1644,27 +1690,38 @@ export interface AutomationTabularExportExecution {
      * Layer title used for the exported sheet or file name.
      */
     'title'?: string;
-    'customOverride'?: AutomationCustomOverride;
 }
 
 /**
  * Export request object describing the export properties and overrides for tabular exports.
  */
 export interface AutomationTabularExportRequest {
-    /**
-     * Expected file format.
-     */
-    'format': AutomationTabularExportRequestFormatEnum;
+    'customOverride'?: AutomationCustomOverride;
     /**
      * Execution result identifier.
      */
     'executionResult'?: string;
     /**
+     * Pre-executed layers for multi-layer geo visualizations. When provided, this is the canonical source of the exported layers and takes precedence over the top-level executionResult and customOverride, which are ignored. Index 0 is the main layer; each layer carries its own executionResult and customOverride.
+     */
+    'executions'?: Array<AutomationTabularExportExecution>;
+    /**
      * Filename of downloaded file without extension.
      */
     'fileName': string;
+    /**
+     * Expected file format.
+     */
+    'format': AutomationTabularExportRequestFormatEnum;
+    /**
+     * Metadata definition in free-form JSON format.
+     */
+    'metadata'?: object | null;
+    /**
+     * Analytical dashboard identifier. Optional identifier, which informs the system that the export is related to a specific dashboard.
+     */
+    'relatedDashboardId'?: string;
     'settings'?: AutomationSettings;
-    'customOverride'?: AutomationCustomOverride;
     /**
      * Visualization object identifier. Alternative to executionResult property.
      */
@@ -1677,18 +1734,6 @@ export interface AutomationTabularExportRequest {
      * Optional custom parameters to be applied when visualizationObject is given. Those parameters override the original parameters defined in the visualization.
      */
     'visualizationObjectCustomParameters'?: Array<AutomationParameterValue>;
-    /**
-     * Analytical dashboard identifier. Optional identifier, which informs the system that the export is related to a specific dashboard.
-     */
-    'relatedDashboardId'?: string;
-    /**
-     * Metadata definition in free-form JSON format.
-     */
-    'metadata'?: object | null;
-    /**
-     * Pre-executed layers for multi-layer geo visualizations. When provided, this is the canonical source of the exported layers and takes precedence over the top-level executionResult and customOverride, which are ignored. Index 0 is the main layer; each layer carries its own executionResult and customOverride.
-     */
-    'executions'?: Array<AutomationTabularExportExecution>;
 }
 
 export type AutomationTabularExportRequestFormatEnum = 'CSV' | 'XLSX' | 'HTML' | 'PDF';
@@ -1718,13 +1763,13 @@ export interface AutomationTestNotification extends AutomationNotificationConten
  */
 export interface AutomationTestResponse {
     /**
-     * A flag indicating whether test passed or not.
-     */
-    'successful': boolean;
-    /**
      * Field containing more details in case of a failure. Details are available to a privileged user only.
      */
     'error'?: string;
+    /**
+     * A flag indicating whether test passed or not.
+     */
+    'successful': boolean;
 }
 
 export interface AutomationTriggerAutomationRequest {
@@ -1739,12 +1784,12 @@ export interface AutomationValue {
 }
 
 export interface AutomationVisibleFilter {
-    'localIdentifier'?: string;
-    'title'?: string;
     /**
      * Indicates if the filter is an all-time date filter. Such a filter is not included in report computation, so there is no filter with the same \'localIdentifier\' to be found. In such cases, this flag is used to inform the server to not search for the filter in the definitions and include it anyways.
      */
     'isAllTimeDateFilter'?: boolean;
+    'localIdentifier'?: string;
+    'title'?: string;
 }
 
 /**
@@ -1752,13 +1797,13 @@ export interface AutomationVisibleFilter {
  */
 export interface AutomationVisualExportRequest {
     /**
-     * File name to be used for retrieving the pdf document.
-     */
-    'fileName': string;
-    /**
      * Dashboard identifier
      */
     'dashboardId': string;
+    /**
+     * File name to be used for retrieving the pdf document.
+     */
+    'fileName': string;
     /**
      * Metadata definition in free-form JSON format.
      */
@@ -1770,13 +1815,9 @@ export interface AutomationVisualExportRequest {
  */
 export interface AutomationWebhook {
     /**
-     * The webhook URL.
+     * Flag indicating if webhook has a hmac secret key.
      */
-    'url'?: string;
-    /**
-     * Bearer token for the webhook.
-     */
-    'token'?: string | null;
+    'hasSecretKey'?: boolean | null;
     /**
      * Flag indicating if webhook has a token.
      */
@@ -1786,52 +1827,56 @@ export interface AutomationWebhook {
      */
     'secretKey'?: string | null;
     /**
-     * Flag indicating if webhook has a hmac secret key.
+     * Bearer token for the webhook.
      */
-    'hasSecretKey'?: boolean | null;
+    'token'?: string | null;
     /**
      * The destination type.
      */
     'type': AutomationWebhookTypeEnum;
+    /**
+     * The webhook URL.
+     */
+    'url'?: string;
 }
 
 export type AutomationWebhookTypeEnum = 'WEBHOOK';
 
 export interface AutomationWebhookAutomationInfo {
-    'id': string;
-    'title'?: string;
     'dashboardTitle'?: string;
     'dashboardURL': string;
+    'id': string;
     'isCustomDashboardURL': boolean;
+    'title'?: string;
 }
 
 export interface AutomationWebhookMessage {
-    'timestamp': string;
     'data': AutomationWebhookMessageData;
+    'timestamp': string;
     'type': AutomationWebhookMessageTypeEnum;
 }
 
 export type AutomationWebhookMessageTypeEnum = 'automation-task.completed' | 'automation-task.limit-exceeded';
 
 export interface AutomationWebhookMessageData {
+    'alert'?: AutomationAlertDescription;
     'automation': AutomationWebhookAutomationInfo;
-    'recipients'?: Array<AutomationWebhookRecipient>;
+    'dashboardTabularExports'?: Array<AutomationExportResult>;
     'details'?: { [key: string]: string; };
+    'filters'?: Array<AutomationNotificationFilter>;
+    'imageExports'?: Array<AutomationExportResult>;
+    'notificationSource'?: string;
+    'rawExports'?: Array<AutomationExportResult>;
+    'recipients'?: Array<AutomationWebhookRecipient>;
     'remainingActionCount'?: number;
+    'slidesExports'?: Array<AutomationExportResult>;
     'tabularExports'?: Array<AutomationExportResult>;
     'visualExports'?: Array<AutomationExportResult>;
-    'imageExports'?: Array<AutomationExportResult>;
-    'rawExports'?: Array<AutomationExportResult>;
-    'slidesExports'?: Array<AutomationExportResult>;
-    'dashboardTabularExports'?: Array<AutomationExportResult>;
-    'alert'?: AutomationAlertDescription;
-    'filters'?: Array<AutomationNotificationFilter>;
-    'notificationSource'?: string;
 }
 
 export interface AutomationWebhookRecipient {
-    'id': string;
     'email': string;
+    'id': string;
 }
 
 

@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { type FC, type RefObject, useCallback, useMemo } from "react";
+import { type FC, type RefObject, useCallback, useEffect, useMemo } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -18,6 +18,7 @@ import { setHistoryAction } from "../store/chatWindow/chatWindowSlice.js";
 import { setCurrentConversationAction } from "../store/messages/messagesSlice.js";
 import { type RootState } from "../store/types.js";
 
+import { isChatWindowCovered } from "./chatOverlayEscapeGuard.js";
 import { GenAIChatConversations } from "./GenAIChatConversations.js";
 import { GenAIChatHeader } from "./GenAIChatHeader.js";
 import { GenAIChatWrapper } from "./GenAIChatWrapper.js";
@@ -37,6 +38,13 @@ export type GenAIChatOverlayExternalProps = {
     returnFocusTo?: RefObject<HTMLElement | null> | string;
     className?: string;
     dialogPosition?: "left" | "right";
+    /**
+     * Host-side gate for Escape-to-close, on top of the built-in guard that already keeps the
+     * chat open while it is visually covered by another overlay (see chatOverlayEscapeGuard).
+     * Set to false to suppress Escape-to-close entirely, e.g. while the host runs UI whose
+     * Escape handling must win even though it does not cover the chat window.
+     */
+    closeOnEscape?: boolean;
     onClose: () => void;
 };
 
@@ -53,6 +61,7 @@ function GenAIChatOverlayComponent({
     keyDriverAnalysis,
     keyDriverAnalysisMinimized,
     className,
+    closeOnEscape: closeOnEscapeProp = true,
 }: GenAIChatOverlayProps) {
     const intl = useIntl();
     const { isFullscreen } = useFullscreenCheck();
@@ -85,7 +94,25 @@ function GenAIChatOverlayComponent({
         return "br br";
     }, [dialogPosition, isFullscreen]);
 
-    const closeOnEscape = !keyDriverAnalysis || keyDriverAnalysisMinimized;
+    const closeOnEscape = closeOnEscapeProp && (!keyDriverAnalysis || keyDriverAnalysisMinimized);
+
+    // Escape handling is ours, not the Dialog's: its closeOnEscape listens on window with no
+    // overlay stack awareness, so an Escape aimed at an overlay covering the chat (e.g.
+    // Dashboards' insight editing overlay) would close the chat with the very same press. Close
+    // only when the chat window is not covered — Escape then peels one layer per press, the
+    // covering layer closing itself through its own listener.
+    useEffect(() => {
+        if (!closeOnEscape) {
+            return undefined;
+        }
+        const onKeyDown = (e: KeyboardEvent) => {
+            if (e.key === "Escape" && !isChatWindowCovered()) {
+                onClose();
+            }
+        };
+        window.addEventListener("keydown", onKeyDown);
+        return () => window.removeEventListener("keydown", onKeyDown);
+    }, [closeOnEscape, onClose]);
 
     return (
         <Dialog
@@ -93,7 +120,7 @@ function GenAIChatOverlayComponent({
             returnFocusTo={returnFocusTo}
             returnFocusAfterClose={!!returnFocusTo}
             alignPoints={[{ align: position }]}
-            closeOnEscape={closeOnEscape}
+            closeOnEscape={false}
             submitOnEnterKey={false}
             closeOnParentScroll={false}
             closeOnMouseDrag={false}

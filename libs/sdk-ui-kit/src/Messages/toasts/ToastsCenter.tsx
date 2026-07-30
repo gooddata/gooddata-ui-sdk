@@ -16,7 +16,12 @@ import { ToastMessageList } from "./ToastsCenterMessage.js";
  *
  * @internal
  */
-export function ToastsCenter() {
+export function ToastsCenter({
+    containerClassName,
+}: {
+    /** Extra class(es) added to the toasts overlay container besides "ad-messages-overlay". */
+    containerClassName?: string;
+}) {
     const { messages, removeMessage, hasParentContext } = ToastsCenterContext.useContextStoreValues([
         "messages",
         "removeMessage",
@@ -35,7 +40,7 @@ export function ToastsCenter() {
         <>
             <ScreenReaderToast />
 
-            <Overlay>
+            <Overlay containerClassName={containerClassName}>
                 <div className="gd-messages" role={"region"} aria-label={label}>
                     <ToastMessageList messages={sortedMessages} onRemoveMessage={removeMessage} />
                 </div>
@@ -153,14 +158,17 @@ function useMessagesLabel(messages: IMessage[]) {
  */
 export function ToastsCenterContextProvider({
     skipAutomaticMessageRendering,
+    containerClassName,
     children,
 }: {
     skipAutomaticMessageRendering?: boolean;
+    /** Extra class(es) for the container of the automatically rendered toasts overlay. */
+    containerClassName?: string;
     children: ReactNode;
 }) {
     return (
         <ToastsCenterContext value={useToastsCenterValue()}>
-            {skipAutomaticMessageRendering ? null : <ToastsCenter />}
+            {skipAutomaticMessageRendering ? null : <ToastsCenter containerClassName={containerClassName} />}
 
             {children}
         </ToastsCenterContext>

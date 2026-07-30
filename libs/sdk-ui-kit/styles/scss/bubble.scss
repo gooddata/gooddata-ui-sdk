@@ -74,14 +74,11 @@
             pointer-events: auto;
 
             a:not(.gd-ui-kit-link) {
-                color: variables.$gd-color-text-light;
                 opacity: 0.8;
                 text-decoration: underline;
 
                 @include mixins.transition(all, 0.25s, ease-in-out);
 
-                // refactor
-                // stylelint-disable-next-line max-nesting-depth
                 &:hover {
                     opacity: 1;
                 }
@@ -101,6 +98,10 @@
                 margin-top: 0.5em;
             }
         }
+    }
+
+    .content a:not(.gd-ui-kit-link) {
+        color: inherit;
     }
 
     @each $skin in bubble-variables.$bubble-skins {
