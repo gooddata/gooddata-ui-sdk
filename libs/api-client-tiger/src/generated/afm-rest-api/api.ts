@@ -29,25 +29,25 @@ export interface AFM {
      */
     'attributes': Array<AttributeItem>;
     /**
+     * Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.
+     */
+    'auxMeasures'?: Array<MeasureItem>;
+    /**
      * Various filter types to filter the execution result.
      */
     'filters': Array<FilterDefinition>;
+    /**
+     * (EXPERIMENTAL) Override definitions of catalog metrics for this request. Allows substituting a catalog metric\'s MAQL definition without modifying the stored definition.
+     */
+    'measureDefinitionOverrides'?: Array<MetricDefinitionOverride>;
     /**
      * Metrics to be computed.
      */
     'measures': Array<MeasureItem>;
     /**
-     * Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.
-     */
-    'auxMeasures'?: Array<MeasureItem>;
-    /**
      * (EXPERIMENTAL) Parameter values to use for this execution.
      */
     'parameters'?: Array<ParameterItem>;
-    /**
-     * (EXPERIMENTAL) Override definitions of catalog metrics for this request. Allows substituting a catalog metric\'s MAQL definition without modifying the stored definition.
-     */
-    'measureDefinitionOverrides'?: Array<MetricDefinitionOverride>;
 }
 
 /**
@@ -58,18 +58,50 @@ export interface AbsoluteDateFilter {
 }
 
 export interface AbsoluteDateFilterAbsoluteDateFilter {
-    'from': string;
-    'to': string;
-    'localIdentifier'?: string;
     'applyOnResult'?: boolean;
+    'dataset': AfmObjectIdentifierDataset;
     /**
      * Specifies how rows with empty (null/missing) date values should be handled. INCLUDE includes empty dates in addition to the date range restriction, EXCLUDE removes rows with empty dates (default), ONLY keeps only rows with empty dates.
      */
     'emptyValueHandling'?: AbsoluteDateFilterAbsoluteDateFilterEmptyValueHandlingEnum;
-    'dataset': AfmObjectIdentifierDataset;
+    'from': string;
+    'localIdentifier'?: string;
+    'to': string;
 }
 
 export type AbsoluteDateFilterAbsoluteDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
+
+/**
+ * An absolute date range filter defined at a specific granularity. The \'from\'/\'to\' literals must match the format of the chosen granularity (e.g. \'2020\' for YEAR, \'2012-05\' for MONTH, \'2012-3\' for QUARTER, \'1996-01\' for WEEK, \'2010-10-30\' for DAY, or a plain ordinal like \'6\' for periodical granularities such as MONTH_OF_YEAR). At least one of \'from\'/\'to\' must be provided; specifying only one yields an open-ended range.
+ */
+export interface AbsoluteGranularityDateFilter {
+    'absoluteGranularityDateFilter': AbsoluteGranularityDateFilterAbsoluteGranularityDateFilter;
+}
+
+export interface AbsoluteGranularityDateFilterAbsoluteGranularityDateFilter {
+    'applyOnResult'?: boolean;
+    'dataset': AfmObjectIdentifierDataset;
+    /**
+     * Specifies how rows with empty (null/missing) date values should be handled. INCLUDE includes empty dates in addition to the date range restriction, EXCLUDE removes rows with empty dates (default), ONLY keeps only rows with empty dates.
+     */
+    'emptyValueHandling'?: AbsoluteGranularityDateFilterAbsoluteGranularityDateFilterEmptyValueHandlingEnum;
+    /**
+     * Start of the range (including), in the format matching \'granularity\'. If omitted, the range is unbounded at the start.
+     */
+    'from'?: string | null;
+    /**
+     * Granularity determining the filtered date attribute and the expected \'from\'/\'to\' format.
+     */
+    'granularity': AbsoluteGranularityDateFilterAbsoluteGranularityDateFilterGranularityEnum;
+    'localIdentifier'?: string;
+    /**
+     * End of the range (including), in the format matching \'granularity\'. If omitted, the range is unbounded at the end.
+     */
+    'to'?: string | null;
+}
+
+export type AbsoluteGranularityDateFilterAbsoluteGranularityDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
+export type AbsoluteGranularityDateFilterAbsoluteGranularityDateFilterGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
 
 /**
  * @type AbstractMeasureValueFilter
@@ -198,8 +230,8 @@ export interface AfmObjectIdentifierDatasetIdentifier {
 export type AfmObjectIdentifierDatasetIdentifierTypeEnum = 'dataset';
 
 export interface AfmObjectIdentifierIdentifier {
-    'type': AfmObjectIdentifierIdentifierTypeEnum;
     'id': string;
+    'type': AfmObjectIdentifierIdentifierTypeEnum;
 }
 
 export type AfmObjectIdentifierIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'prompt' | 'visualizationObject' | 'filterContext';
@@ -209,8 +241,8 @@ export interface AfmObjectIdentifierLabel {
 }
 
 export interface AfmObjectIdentifierLabelIdentifier {
-    'type': AfmObjectIdentifierLabelIdentifierTypeEnum;
     'id': string;
+    'type': AfmObjectIdentifierLabelIdentifierTypeEnum;
 }
 
 export type AfmObjectIdentifierLabelIdentifierTypeEnum = 'label';
@@ -253,8 +285,8 @@ export interface AfmValidDescendantsResponse {
  * Entity holding AFM and list of object types whose validity should be computed.
  */
 export interface AfmValidObjectsQuery {
-    'types': Array<AfmValidObjectsQueryTypesEnum>;
     'afm': AFM;
+    'types': Array<AfmValidObjectsQueryTypesEnum>;
 }
 
 export type AfmValidObjectsQueryTypesEnum = 'facts' | 'attributes' | 'measures';
@@ -302,6 +334,8 @@ export interface AllTimeDateFilter {
 }
 
 export interface AllTimeDateFilterAllTimeDateFilter {
+    'applyOnResult'?: boolean;
+    'dataset': AfmObjectIdentifierDataset;
     /**
      * Specifies how rows with empty (null/missing) date values should be handled. INCLUDE means no filtering effect (default), EXCLUDE removes rows with null dates, ONLY keeps only rows with null dates.
      */
@@ -311,17 +345,19 @@ export interface AllTimeDateFilterAllTimeDateFilter {
      */
     'granularity'?: AllTimeDateFilterAllTimeDateFilterGranularityEnum;
     'localIdentifier'?: string;
-    'applyOnResult'?: boolean;
-    'dataset': AfmObjectIdentifierDataset;
 }
 
 export type AllTimeDateFilterAllTimeDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
-export type AllTimeDateFilterAllTimeDateFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
+export type AllTimeDateFilterAllTimeDateFilterGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
 
 /**
  * Allowed relationship type combination.
  */
 export interface AllowedRelationshipType {
+    /**
+     * If true, allows target objects that are not part of any relationship (orphans) to be included in results. If false, orphan target objects will be excluded even if they directly match the search query. Default is true (orphans are allowed).
+     */
+    'allowOrphans'?: boolean;
     /**
      * Source object type (e.g., \'dashboard\', \'visualization\', \'metric\').
      */
@@ -330,10 +366,6 @@ export interface AllowedRelationshipType {
      * Target object type (e.g., \'visualization\', \'metric\', \'attribute\').
      */
     'targetType': AllowedRelationshipTypeTargetTypeEnum;
-    /**
-     * If true, allows target objects that are not part of any relationship (orphans) to be included in results. If false, orphan target objects will be excluded even if they directly match the search query. Default is true (orphans are allowed).
-     */
-    'allowOrphans'?: boolean;
 }
 
 export type AllowedRelationshipTypeSourceTypeEnum = 'attribute' | 'metric' | 'fact' | 'label' | 'date' | 'dataset' | 'visualization' | 'dashboard';
@@ -369,9 +401,9 @@ export interface AnomalyDetectionRequest {
 }
 
 export interface AnomalyDetectionResult {
+    'anomalyFlag': Array<boolean | null>;
     'attribute': Array<string>;
     'values': Array<number | null>;
-    'anomalyFlag': Array<boolean | null>;
 }
 
 export interface AnthropicApiKeyAuth {
@@ -391,11 +423,11 @@ export type AnthropicApiKeyAuthTypeEnum = 'API_KEY';
  * Configuration for Anthropic provider.
  */
 export interface AnthropicProviderConfig {
+    'auth': AnthropicApiKeyAuth;
     /**
      * Custom base URL for the Anthropic API. Defaults to the official endpoint; override only for enterprise proxies or compatible gateways.
      */
     'baseUrl'?: string;
-    'auth': AnthropicApiKeyAuth;
     /**
      * Provider type.
      */
@@ -467,42 +499,42 @@ export interface AttributeHeader {
 }
 
 export interface AttributeHeaderAttributeHeader {
-    /**
-     * Local identifier of the attribute this header relates to.
-     */
-    'localIdentifier': string;
-    'label': RestApiIdentifier;
-    /**
-     * Label name.
-     */
-    'labelName': string;
     'attribute': RestApiIdentifier;
     /**
      * Attribute name.
      */
     'attributeName': string;
+    'format'?: AttributeFormat;
+    'geoAreaConfig'?: GeoAreaConfig;
     /**
      * Date granularity of the attribute, only filled for date attributes.
      */
     'granularity'?: AttributeHeaderAttributeHeaderGranularityEnum;
+    'label': RestApiIdentifier;
+    /**
+     * Label name.
+     */
+    'labelName': string;
+    /**
+     * Local identifier of the attribute this header relates to.
+     */
+    'localIdentifier': string;
     'primaryLabel': RestApiIdentifier;
-    'format'?: AttributeFormat;
     /**
      * Attribute value type.
      */
     'valueType'?: AttributeHeaderAttributeHeaderValueTypeEnum;
-    'geoAreaConfig'?: GeoAreaConfig;
 }
 
-export type AttributeHeaderAttributeHeaderGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
+export type AttributeHeaderAttributeHeaderGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
 export type AttributeHeaderAttributeHeaderValueTypeEnum = 'TEXT' | 'HYPERLINK' | 'GEO' | 'GEO_LONGITUDE' | 'GEO_LATITUDE' | 'GEO_AREA' | 'GEO_ICON' | 'IMAGE' | 'HYPERLOGLOG';
 
 export interface AttributeItem {
+    'label': AfmObjectIdentifierLabel;
     /**
      * Local identifier of the attribute. This can be used to reference the attribute in other parts of the execution definition.
      */
     'localIdentifier': string;
-    'label': AfmObjectIdentifierLabel;
     /**
      * Indicates whether to show all values of given attribute even if the data bound to those values is not available.
      */
@@ -510,13 +542,13 @@ export interface AttributeItem {
 }
 
 export interface AttributeNegativeFilter {
-    'using': string;
     'exclude': Array<string>;
+    'using': string;
 }
 
 export interface AttributePositiveFilter {
-    'using': string;
     'include': Array<string>;
+    'using': string;
 }
 
 /**
@@ -558,11 +590,11 @@ export type AwsBedrockAccessKeyAuthTypeEnum = 'ACCESS_KEY';
  * Configuration for AWS Bedrock provider.
  */
 export interface AwsBedrockProviderConfig {
+    'auth': AwsBedrockAccessKeyAuth;
     /**
      * AWS region for Bedrock.
      */
     'region': string;
-    'auth': AwsBedrockAccessKeyAuth;
     /**
      * Provider type.
      */
@@ -588,11 +620,11 @@ export type AzureFoundryApiKeyAuthTypeEnum = 'API_KEY';
  * Configuration for Azure Foundry provider.
  */
 export interface AzureFoundryProviderConfig {
+    'auth': AzureFoundryApiKeyAuth;
     /**
      * Azure OpenAI endpoint URL.
      */
     'endpoint': string;
-    'auth': AzureFoundryApiKeyAuth;
     /**
      * Provider type.
      */
@@ -606,49 +638,39 @@ export type AzureFoundryProviderConfigTypeEnum = 'AZURE_FOUNDRY';
  */
 export interface BoundedFilter {
     /**
-     * Date granularity specifying particular date attribute in given dimension.
-     */
-    'granularity': BoundedFilterGranularityEnum;
-    /**
      * Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for \'2 days/weeks, ... ago\'). If null, then start of the range is unbounded.
      */
     'from'?: number | null;
+    /**
+     * Date granularity specifying particular date attribute in given dimension.
+     */
+    'granularity': BoundedFilterGranularityEnum;
     /**
      * End of the filtering interval. Specified by number of periods (with respect to given granularity). Value \'O\' is representing current time-interval (current day, week, ...). If null, then end of the range is unbounded.
      */
     'to'?: number | null;
 }
 
-export type BoundedFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
+export type BoundedFilterGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
 
 /**
  * Certification state of the object. Who certified and when are never exposed here.
  */
 export interface CertificationInfo {
     /**
-     * Certification status, e.g. CERTIFIED.
-     */
-    'status': string;
-    /**
      * Optional message describing the certification.
      */
     'certificationMessage'?: string;
+    /**
+     * Certification status, e.g. CERTIFIED.
+     */
+    'status': string;
 }
 
 /**
  * Change analysis specification.
  */
 export interface ChangeAnalysisParams {
-    'measure': MeasureItem;
-    /**
-     * The title of the measure being analyzed
-     */
-    'measureTitle': string;
-    'dateAttribute': AttributeItem;
-    /**
-     * The reference time period
-     */
-    'referencePeriod': string;
     /**
      * The analyzed time period
      */
@@ -657,10 +679,20 @@ export interface ChangeAnalysisParams {
      * Attributes to analyze for significant changes
      */
     'attributes': Array<AttributeItem>;
+    'dateAttribute': AttributeItem;
     /**
      * Optional filters to apply
      */
-    'filters': Array<OutlierDetectionRequestFiltersInner>;
+    'filters': Array<ChangeAnalysisParamsFiltersInner>;
+    'measure': MeasureItem;
+    /**
+     * The title of the measure being analyzed
+     */
+    'measureTitle': string;
+    /**
+     * The reference time period
+     */
+    'referencePeriod': string;
     /**
      * Whether to use smart attribute selection
      */
@@ -668,15 +700,14 @@ export interface ChangeAnalysisParams {
 }
 
 /**
+ * @type ChangeAnalysisParamsFiltersInner
+ */
+export type ChangeAnalysisParamsFiltersInner = AbstractMeasureValueFilter | FilterDefinitionForSimpleMeasure | InlineFilterDefinition;
+
+/**
  * Request for change analysis computation
  */
 export interface ChangeAnalysisRequest {
-    'measure': MeasureItem;
-    'dateAttribute': AttributeItem;
-    /**
-     * The reference time period (e.g., \'2025-01\')
-     */
-    'referencePeriod': string;
     /**
      * The analyzed time period (e.g., \'2025-02\')
      */
@@ -686,26 +717,37 @@ export interface ChangeAnalysisRequest {
      */
     'attributes'?: Array<AttributeItem>;
     /**
-     * Optional filters to apply.
-     */
-    'filters'?: Array<OutlierDetectionRequestFiltersInner>;
-    /**
      * Auxiliary measures
      */
     'auxMeasures'?: Array<MeasureItem>;
-    /**
-     * Whether to use smart attribute selection (LLM-based) instead of discovering all valid attributes. If true, GenAI will intelligently select the most relevant attributes for change analysis. If false or not set, all valid attributes will be discovered using Calcique. Smart attribute selection applies only when no attributes are provided.
-     */
-    'useSmartAttributeSelection'?: boolean;
-    /**
-     * Only include attributes with at least one of these tags. If empty, no inclusion filter is applied. This filter applies to both auto-discovered and explicitly provided attributes.
-     */
-    'includeTags'?: Array<string>;
+    'dateAttribute': AttributeItem;
     /**
      * Exclude attributes with any of these tags. This filter applies to both auto-discovered and explicitly provided attributes.
      */
     'excludeTags'?: Array<string>;
+    /**
+     * Optional filters to apply.
+     */
+    'filters'?: Array<ChangeAnalysisRequestFiltersInner>;
+    /**
+     * Only include attributes with at least one of these tags. If empty, no inclusion filter is applied. This filter applies to both auto-discovered and explicitly provided attributes.
+     */
+    'includeTags'?: Array<string>;
+    'measure': MeasureItem;
+    /**
+     * The reference time period (e.g., \'2025-01\')
+     */
+    'referencePeriod': string;
+    /**
+     * Whether to use smart attribute selection (LLM-based) instead of discovering all valid attributes. If true, GenAI will intelligently select the most relevant attributes for change analysis. If false or not set, all valid attributes will be discovered using Calcique. Smart attribute selection applies only when no attributes are provided.
+     */
+    'useSmartAttributeSelection'?: boolean;
 }
+
+/**
+ * @type ChangeAnalysisRequestFiltersInner
+ */
+export type ChangeAnalysisRequestFiltersInner = AbstractMeasureValueFilter | FilterDefinitionForSimpleMeasure | InlineFilterDefinition;
 
 /**
  * Response for change analysis computation
@@ -728,49 +770,45 @@ export interface ChangeAnalysisResult {
  * List of chat history interactions.
  */
 export interface ChatHistoryInteraction {
-    /**
-     * User question
-     */
-    'question': string;
-    /**
-     * Chat History thread suffix appended to ID generated by backend. Enables more chat windows.
-     */
-    'threadIdSuffix'?: string;
+    'changeAnalysisParams'?: ChangeAnalysisParams;
     /**
      * Chat History interaction ID. Unique ID for each interaction.
      */
     'chatHistoryInteractionId': string;
-    /**
-     * Has the interaction already finished? Can be used for polling when interaction is in progress.
-     */
-    'interactionFinished': boolean;
-    'routing': RouteResult;
-    /**
-     * Text response for general questions.
-     */
-    'textResponse'?: string;
+    'createdVisualizations'?: CreatedVisualizations;
     /**
      * Error response in anything fails.
      */
     'errorResponse'?: string;
     'foundObjects'?: FoundObjects;
+    /**
+     * Has the interaction already finished? Can be used for polling when interaction is in progress.
+     */
+    'interactionFinished': boolean;
+    /**
+     * User question
+     */
+    'question': string;
+    'reasoning'?: Reasoning;
+    'routing': RouteResult;
     'semanticSearch'?: SearchResult;
-    'createdVisualizations'?: CreatedVisualizations;
-    'changeAnalysisParams'?: ChangeAnalysisParams;
+    /**
+     * Text response for general questions.
+     */
+    'textResponse'?: string;
+    /**
+     * Chat History thread suffix appended to ID generated by backend. Enables more chat windows.
+     */
+    'threadIdSuffix'?: string;
     /**
      * User feedback.
      */
     'userFeedback'?: ChatHistoryInteractionUserFeedbackEnum;
-    'reasoning'?: Reasoning;
 }
 
 export type ChatHistoryInteractionUserFeedbackEnum = 'POSITIVE' | 'NEGATIVE' | 'NONE';
 
 export interface ChatHistoryRequest {
-    /**
-     * Chat History thread suffix appended to ID generated by backend. Enables more chat windows.
-     */
-    'threadIdSuffix'?: string;
     /**
      * Return chat history records only after this interaction ID. If empty, complete chat history is returned.
      */
@@ -778,24 +816,28 @@ export interface ChatHistoryRequest {
     /**
      * User feedback.
      */
-    'userFeedback'?: ChatHistoryRequestUserFeedbackEnum;
-    /**
-     * User feedback.
-     */
     'reset'?: boolean;
-    'savedVisualization'?: SavedVisualization;
     /**
      * Response state indicating the outcome of the AI interaction.
      */
     'responseState'?: ChatHistoryRequestResponseStateEnum;
+    'savedVisualization'?: SavedVisualization;
+    /**
+     * Chat History thread suffix appended to ID generated by backend. Enables more chat windows.
+     */
+    'threadIdSuffix'?: string;
+    /**
+     * User feedback.
+     */
+    'userFeedback'?: ChatHistoryRequestUserFeedbackEnum;
     /**
      * User text feedback for the interaction.
      */
     'userTextFeedback'?: string;
 }
 
-export type ChatHistoryRequestUserFeedbackEnum = 'POSITIVE' | 'NEGATIVE' | 'NONE';
 export type ChatHistoryRequestResponseStateEnum = 'SUCCESSFUL' | 'UNEXPECTED_ERROR' | 'NOT_FOUND_ATTRIBUTES' | 'TOO_MANY_DATA_POINTS' | 'NO_DATA' | 'NO_RESULTS' | 'OUT_OF_TOPIC';
+export type ChatHistoryRequestUserFeedbackEnum = 'POSITIVE' | 'NEGATIVE' | 'NONE';
 
 export interface ChatHistoryResult {
     /**
@@ -810,77 +852,77 @@ export interface ChatHistoryResult {
 
 export interface ChatRequest {
     /**
-     * User question
+     * Filter relationships and search results based on allowed relationship type combinations. When specified, only relationships matching the allowed types are returned (e.g. for view-only users).
      */
-    'question': string;
-    /**
-     * Maximum number of search results.
-     */
-    'limitSearch'?: number;
-    /**
-     * Maximum number of relevant objects included into context for LLM (for each object type).
-     */
-    'limitCreateContext'?: number;
-    /**
-     * Maximum number of created results.
-     */
-    'limitCreate'?: number;
-    /**
-     * Chat History thread suffix appended to ID generated by backend. Enables more chat windows.
-     */
-    'threadIdSuffix'?: string;
-    'userContext'?: UserContext;
-    /**
-     * Temporary for experiments. Ratio of title score to descriptor score.
-     */
-    'titleToDescriptorRatio'?: number;
-    /**
-     * Score, above which we return found object(s) and don\'t call LLM to create new objects.
-     */
-    'searchScoreThreshold'?: number;
-    /**
-     * Score, above which we return found objects. Below this score objects are not relevant.
-     */
-    'relevantScoreThreshold'?: number;
+    'allowedRelationshipTypes'?: Array<AllowedRelationshipType>;
     /**
      * If true, includes hidden objects in search and visualization building. If false (default), excludes objects where isHidden=true.
      */
     'includeHidden'?: boolean;
     /**
+     * Maximum number of created results.
+     */
+    'limitCreate'?: number;
+    /**
+     * Maximum number of relevant objects included into context for LLM (for each object type).
+     */
+    'limitCreateContext'?: number;
+    /**
+     * Maximum number of search results.
+     */
+    'limitSearch'?: number;
+    /**
      * List of object types to filter the search and visualization building. If empty or null, all object types are considered.
      */
     'objectTypes'?: Array<ChatRequestObjectTypesEnum>;
     /**
-     * Filter relationships and search results based on allowed relationship type combinations. When specified, only relationships matching the allowed types are returned (e.g. for view-only users).
+     * User question
      */
-    'allowedRelationshipTypes'?: Array<AllowedRelationshipType>;
-}
-
-export type ChatRequestObjectTypesEnum = 'attribute' | 'metric' | 'fact' | 'label' | 'date' | 'dataset' | 'visualization' | 'dashboard';
-
-export interface ChatResult {
-    'routing'?: RouteResult;
+    'question': string;
     /**
-     * Text response for general questions.
+     * Score, above which we return found objects. Below this score objects are not relevant.
      */
-    'textResponse'?: string;
+    'relevantScoreThreshold'?: number;
     /**
-     * Error response in anything fails.
+     * Score, above which we return found object(s) and don\'t call LLM to create new objects.
      */
-    'errorResponse'?: string;
-    'foundObjects'?: FoundObjects;
-    'createdVisualizations'?: CreatedVisualizations;
-    'changeAnalysisParams'?: ChangeAnalysisParams;
-    'semanticSearch'?: SearchResult;
+    'searchScoreThreshold'?: number;
     /**
      * Chat History thread suffix appended to ID generated by backend. Enables more chat windows.
      */
     'threadIdSuffix'?: string;
     /**
+     * Temporary for experiments. Ratio of title score to descriptor score.
+     */
+    'titleToDescriptorRatio'?: number;
+    'userContext'?: UserContext;
+}
+
+export type ChatRequestObjectTypesEnum = 'attribute' | 'metric' | 'fact' | 'label' | 'date' | 'dataset' | 'visualization' | 'dashboard';
+
+export interface ChatResult {
+    'changeAnalysisParams'?: ChangeAnalysisParams;
+    /**
      * Chat History interaction ID. Unique ID for each interaction.
      */
     'chatHistoryInteractionId'?: string;
+    'createdVisualizations'?: CreatedVisualizations;
+    /**
+     * Error response in anything fails.
+     */
+    'errorResponse'?: string;
+    'foundObjects'?: FoundObjects;
     'reasoning'?: Reasoning;
+    'routing'?: RouteResult;
+    'semanticSearch'?: SearchResult;
+    /**
+     * Text response for general questions.
+     */
+    'textResponse'?: string;
+    /**
+     * Chat History thread suffix appended to ID generated by backend. Enables more chat windows.
+     */
+    'threadIdSuffix'?: string;
     /**
      * AI usage metadata returned after the interaction (e.g. current query count vs. entitlement limit).
      */
@@ -929,10 +971,10 @@ export interface ClusteringRequest {
 
 export interface ClusteringResult {
     'attribute': Array<object>;
-    'xCoord'?: Array<number | null>;
-    'yCoord'?: Array<number | null>;
     'clusters': Array<number | null>;
+    'xCoord'?: Array<number | null>;
     'xcoord': Array<number>;
+    'yCoord'?: Array<number | null>;
     'ycoord': Array<number>;
 }
 
@@ -941,13 +983,13 @@ export interface ClusteringResult {
  */
 export interface ColumnExpression {
     /**
-     * StarRocks transform applied to a source column when projecting it through the generated CREATE PIPE ... AS INSERT statement.
-     */
-    'function': ColumnExpressionFunctionEnum;
-    /**
      * Source column produced by parquet schema inference (after columnOverrides).
      */
     'column': string;
+    /**
+     * StarRocks transform applied to a source column when projecting it through the generated CREATE PIPE ... AS INSERT statement.
+     */
+    'function': ColumnExpressionFunctionEnum;
 }
 
 export type ColumnExpressionFunctionEnum = 'HLL_HASH' | 'BITMAP_HASH' | 'BITMAP_HASH64' | 'TO_BITMAP';
@@ -998,19 +1040,19 @@ export interface ComparisonMeasureValueFilter {
 }
 
 export interface ComparisonMeasureValueFilterComparisonMeasureValueFilter {
+    'applyOnResult'?: boolean;
     /**
      * References to the attributes to be used when filtering.
      */
     'dimensionality'?: Array<AfmIdentifier>;
+    'localIdentifier'?: string;
+    'measure': AfmIdentifier;
+    'operator': ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum;
     /**
      * A value that will be substituted for null values in the metric for the comparisons.
      */
     'treatNullValuesAs'?: number;
-    'operator': ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum;
     'value': number;
-    'localIdentifier'?: string;
-    'applyOnResult'?: boolean;
-    'measure': AfmIdentifier;
 }
 
 export type ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum = 'GREATER_THAN' | 'GREATER_THAN_OR_EQUAL_TO' | 'LESS_THAN' | 'LESS_THAN_OR_EQUAL_TO' | 'EQUAL_TO' | 'NOT_EQUAL_TO';
@@ -1023,54 +1065,27 @@ export interface CompoundMeasureValueFilter {
 }
 
 export interface CompoundMeasureValueFilterCompoundMeasureValueFilter {
-    /**
-     * References to the attributes to be used when filtering.
-     */
-    'dimensionality'?: Array<AfmIdentifier>;
-    /**
-     * A value that will be substituted for null values in the metric for the comparisons.
-     */
-    'treatNullValuesAs'?: number;
+    'applyOnResult'?: boolean;
     /**
      * List of conditions to apply. Conditions are combined with OR logic. Each condition can be either a comparison (e.g., > 100) or a range (e.g., BETWEEN 10 AND 50). If empty, no filtering is applied and all rows are returned.
      */
     'conditions': Array<MeasureValueCondition>;
+    /**
+     * References to the attributes to be used when filtering.
+     */
+    'dimensionality'?: Array<AfmIdentifier>;
     'localIdentifier'?: string;
-    'applyOnResult'?: boolean;
     'measure': AfmIdentifier;
+    /**
+     * A value that will be substituted for null values in the metric for the comparisons.
+     */
+    'treatNullValuesAs'?: number;
 }
 
 /**
  * Request to create a new pipe-backed OLAP table in the AI Lake
  */
 export interface CreatePipeTableRequest {
-    /**
-     * Name of the OLAP table to create. Must match ^[a-z][a-z0-9_-]{0,62}$
-     */
-    'tableName': string;
-    /**
-     * Name of the pre-configured S3/MinIO ObjectStorage source
-     */
-    'sourceStorageName': string;
-    /**
-     * Path prefix to the parquet files (e.g. \'my-dataset/year=2024/\'). All parquet files must be at a uniform depth under the prefix — either all directly under the prefix, or all under a consistent Hive partition hierarchy (e.g. year=2024/month=01/). Mixed layouts (files at multiple depths) are not supported.
-     */
-    'pathPrefix': string;
-    'keyConfig'?: KeyConfig;
-    'distributionConfig'?: DistributionConfig;
-    'partitionConfig'?: PartitionConfig;
-    /**
-     * CREATE TABLE PROPERTIES key-value pairs. Defaults to {\"replication_num\": \"1\"}.
-     */
-    'tableProperties'?: { [key: string]: string; };
-    /**
-     * Cap VARCHAR(N) to this length when N exceeds it. 0 = no cap.
-     */
-    'maxVarcharLength'?: number;
-    /**
-     * Override inferred column types. Maps column names to SQL type strings (e.g. {\"year\": \"INT\", \"event_date\": \"DATE\"}). Applied after parquet schema inference.
-     */
-    'columnOverrides'?: { [key: string]: string; };
     /**
      * Maps non-key column names to their StarRocks aggregation function (SUM, MIN, MAX, REPLACE, REPLACE_IF_NOT_NULL, HLL_UNION, BITMAP_UNION, PERCENTILE_UNION). Required for every non-key column when keyConfig type is \'aggregate\'. Ignored for other key types.
      */
@@ -1080,31 +1095,43 @@ export interface CreatePipeTableRequest {
      */
     'columnExpressions'?: { [key: string]: ColumnExpression; };
     /**
+     * Override inferred column types. Maps column names to SQL type strings (e.g. {\"year\": \"INT\", \"event_date\": \"DATE\"}). Applied after parquet schema inference.
+     */
+    'columnOverrides'?: { [key: string]: string; };
+    'distributionConfig'?: DistributionConfig;
+    'keyConfig'?: KeyConfig;
+    /**
+     * Cap VARCHAR(N) to this length when N exceeds it. 0 = no cap.
+     */
+    'maxVarcharLength'?: number;
+    'partitionConfig'?: PartitionConfig;
+    /**
+     * Path prefix to the parquet files (e.g. \'my-dataset/year=2024/\'). All parquet files must be at a uniform depth under the prefix — either all directly under the prefix, or all under a consistent Hive partition hierarchy (e.g. year=2024/month=01/). Mixed layouts (files at multiple depths) are not supported.
+     */
+    'pathPrefix': string;
+    /**
      * How often (in seconds) the pipe polls for new files. 0 or null = use server default.
      */
     'pollingIntervalSeconds'?: number;
+    /**
+     * Name of the pre-configured S3/MinIO ObjectStorage source
+     */
+    'sourceStorageName': string;
+    /**
+     * Name of the OLAP table to create. Must match ^[a-z][a-z0-9_-]{0,62}$
+     */
+    'tableName': string;
+    /**
+     * CREATE TABLE PROPERTIES key-value pairs. Defaults to {\"replication_num\": \"1\"}.
+     */
+    'tableProperties'?: { [key: string]: string; };
 }
 
 /**
  * List of created visualization objects
  */
 export interface CreatedVisualization {
-    /**
-     * Proposed ID of the new visualization
-     */
-    'id': string;
-    /**
-     * Proposed title of the new visualization
-     */
-    'title': string;
-    /**
-     * Visualization type requested in question
-     */
-    'visualizationType': CreatedVisualizationVisualizationTypeEnum;
-    /**
-     * List of metrics to be used in the new visualization
-     */
-    'metrics': Array<Metric>;
+    'config'?: VisualizationConfig;
     /**
      * List of attributes representing the dimensionality of the new visualization
      */
@@ -1114,14 +1141,29 @@ export interface CreatedVisualization {
      */
     'filters': Array<CreatedVisualizationFiltersInner>;
     /**
-     * Suggestions for next steps
+     * Proposed ID of the new visualization
      */
-    'suggestions': Array<Suggestion>;
+    'id': string;
+    /**
+     * List of metrics to be used in the new visualization
+     */
+    'metrics': Array<Metric>;
     /**
      * Saved visualization ID.
      */
     'savedVisualizationId'?: string;
-    'config'?: VisualizationConfig;
+    /**
+     * Suggestions for next steps
+     */
+    'suggestions': Array<Suggestion>;
+    /**
+     * Proposed title of the new visualization
+     */
+    'title': string;
+    /**
+     * Visualization type requested in question
+     */
+    'visualizationType': CreatedVisualizationVisualizationTypeEnum;
 }
 
 export type CreatedVisualizationVisualizationTypeEnum = 'TABLE' | 'HEADLINE' | 'BAR' | 'LINE' | 'PIE' | 'COLUMN' | 'SCATTER';
@@ -1164,21 +1206,21 @@ export interface DashboardContext {
 }
 
 export interface DashboardSummaryRequestDto {
-    'dashboardId': string;
+    'aiModel'?: string;
     'customUserPrompt'?: string;
+    'dashboardId': string;
+    'dryRun'?: boolean;
     'gooddataHost'?: string;
     'gooddataToken'?: string;
     'keyMetricIds'?: Array<string>;
     'referenceQuarter'?: string;
-    'dryRun'?: boolean;
     'temperature'?: number;
-    'aiModel'?: string;
 }
 
 export interface DashboardSummaryResponseDto {
+    'message': string;
     'runId': string;
     'status': string;
-    'message': string;
 }
 
 /**
@@ -1206,10 +1248,6 @@ export interface DataColumnLocators {
  */
 export interface DataSourceInfo {
     /**
-     * Id of the data source association record.
-     */
-    'id': string;
-    /**
      * Identifier of the data source in metadata-api.
      */
     'dataSourceId': string;
@@ -1217,12 +1255,20 @@ export interface DataSourceInfo {
      * Display name of the data source in metadata-api.
      */
     'dataSourceName': string;
+    /**
+     * Id of the data source association record.
+     */
+    'id': string;
 }
 
 /**
  * A single AI Lake Database instance
  */
 export interface DatabaseInstance {
+    /**
+     * All data source associations for this database instance.
+     */
+    'dataSources': Array<DataSourceInfo>;
     /**
      * Id of the AI Lake Database instance
      */
@@ -1235,32 +1281,28 @@ export interface DatabaseInstance {
      * Set of ids of the storage instances this database instance should access.
      */
     'storageIds': Array<string>;
-    /**
-     * All data source associations for this database instance.
-     */
-    'dataSources': Array<DataSourceInfo>;
 }
 
 export interface DateAbsoluteFilter {
-    'using': string;
     'from': string;
     'to': string;
+    'using': string;
 }
 
 /**
  * @type DateFilter
  * Abstract filter definition type for dates.
  */
-export type DateFilter = AbsoluteDateFilter | AllTimeDateFilter | RelativeDateFilter;
+export type DateFilter = AbsoluteDateFilter | AbsoluteGranularityDateFilter | AllTimeDateFilter | RelativeDateFilter;
 
 export interface DateRelativeFilter {
-    'using': string;
-    'granularity': DateRelativeFilterGranularityEnum;
     'from': number;
+    'granularity': DateRelativeFilterGranularityEnum;
     'to': number;
+    'using': string;
 }
 
-export type DateRelativeFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
+export type DateRelativeFilterGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
 
 /**
  * Partition by date_trunc() expression.
@@ -1283,6 +1325,10 @@ export type DateTruncPartitionConfigUnitEnum = 'year' | 'quarter' | 'month' | 'w
  */
 export interface DependsOn {
     /**
+     * Inverse filtering mode.
+     */
+    'complementFilter'?: boolean;
+    /**
      * Specifies on which label the filter depends on.
      */
     'label': string;
@@ -1290,10 +1336,6 @@ export interface DependsOn {
      * Specifies values of the label for element filtering.
      */
     'values': Array<string | null>;
-    /**
-     * Inverse filtering mode.
-     */
-    'complementFilter'?: boolean;
 }
 
 /**
@@ -1319,13 +1361,13 @@ export interface DimAttribute {
      */
     'id': string;
     /**
-     * Object type
-     */
-    'type': DimAttributeTypeEnum;
-    /**
      * Title of attribute.
      */
     'title': string;
+    /**
+     * Object type
+     */
+    'type': DimAttributeTypeEnum;
 }
 
 export type DimAttributeTypeEnum = 'attribute';
@@ -1335,13 +1377,13 @@ export type DimAttributeTypeEnum = 'attribute';
  */
 export interface Dimension {
     /**
-     * Dimension identification within requests. Other entities can reference this dimension by this value.
-     */
-    'localIdentifier'?: string;
-    /**
      * List of items in current dimension. Can reference \'localIdentifier\' from \'AttributeItem\', or special pseudo attribute \"measureGroup\" representing list of metrics.
      */
     'itemIdentifiers': Array<string>;
+    /**
+     * Dimension identification within requests. Other entities can reference this dimension by this value.
+     */
+    'localIdentifier'?: string;
     /**
      * List of sorting rules. From most relevant to least relevant (less relevant rule is applied, when more relevant rule compares items as equal).
      */
@@ -1380,58 +1422,62 @@ export interface DuplicateKeyConfig {
  */
 export interface Element {
     /**
-     * Title of requested label.
-     */
-    'title': string | null;
-    /**
      * Title of primary label of attribute owning requested label, null if the title is null or the primary label is excluded
      */
     'primaryTitle': string | null;
+    /**
+     * Title of requested label.
+     */
+    'title': string | null;
 }
 
 export interface ElementsRequest {
     /**
-     * Requested label.
+     * If specified, the element data will be taken from the result with the same cacheId if it is available.
      */
-    'label': string;
-    /**
-     * Excludes items from the result that differ only by primary label * ```false``` - return items with distinct primary label * ```true``` - return items with distinct requested label
-     */
-    'excludePrimaryLabel'?: boolean;
-    'filterBy'?: FilterBy;
-    /**
-     * Sort order of returned items. Items are sorted by ```label``` title. If no sort order is specified then attribute\'s ```sortDirection``` is used, which is ASC by default
-     */
-    'sortOrder'?: ElementsRequestSortOrderEnum;
+    'cacheId'?: string;
     /**
      * Inverse filters: * ```false``` - return items matching ```patternFilter``` and ```exactFilter``` * ```true``` - return items not matching ```patternFilter``` and ```exactFilter```
      */
     'complementFilter'?: boolean;
-    /**
-     * Return only items, whose ```label``` title case insensitively contains ```filter``` as substring.
-     */
-    'patternFilter'?: string;
-    /**
-     * Return only items, whose ```label``` title exactly matches one of ```filter```.
-     */
-    'exactFilter'?: Array<string | null>;
-    /**
-     * Return only items that are not filtered-out by the parent filters.
-     */
-    'dependsOn'?: Array<ElementsRequestDependsOnInner>;
-    /**
-     * Return only items that are computable on metric.
-     */
-    'validateBy'?: Array<ValidateByItem>;
     /**
      * Specifies percentage of source table data scanned during the computation. This field is deprecated and is no longer used during the elements computation.
      * @deprecated
      */
     'dataSamplingPercentage'?: number;
     /**
-     * If specified, the element data will be taken from the result with the same cacheId if it is available.
+     * Return only items that are not filtered-out by the parent filters.
      */
-    'cacheId'?: string;
+    'dependsOn'?: Array<ElementsRequestDependsOnInner>;
+    /**
+     * Return only items, whose ```label``` title exactly matches one of ```filter```.
+     */
+    'exactFilter'?: Array<string | null>;
+    /**
+     * Excludes items from the result that differ only by primary label * ```false``` - return items with distinct primary label * ```true``` - return items with distinct requested label
+     */
+    'excludePrimaryLabel'?: boolean;
+    'filterBy'?: FilterBy;
+    /**
+     * Requested label.
+     */
+    'label': string;
+    /**
+     * Return only items, whose ```label``` title case insensitively contains ```filter``` as substring.
+     */
+    'patternFilter'?: string;
+    /**
+     * Sort order of returned items. Items are sorted by ```label``` title. If no sort order is specified then attribute\'s ```sortDirection``` is used, which is ASC by default
+     */
+    'sortOrder'?: ElementsRequestSortOrderEnum;
+    /**
+     * Time zone (IANA id, e.g. \"Europe/Prague\") used to resolve relative date filters in ```dependsOn```. If set it takes precedence over the workspace/user time zone setting; if not set the setting is used.
+     */
+    'timezone'?: string;
+    /**
+     * Return only items that are computable on metric.
+     */
+    'validateBy'?: Array<ValidateByItem>;
 }
 
 export type ElementsRequestSortOrderEnum = 'ASC' | 'DESC';
@@ -1445,37 +1491,37 @@ export type ElementsRequestDependsOnInner = DependsOn | DependsOnDateFilter | De
  * Entity holding list of sorted & filtered label elements, related primary label of attribute owning requested label and paging.
  */
 export interface ElementsResponse {
-    'primaryLabel': RestApiIdentifier;
-    /**
-     * List of returned elements.
-     */
-    'elements': Array<Element>;
-    'paging': Paging;
-    /**
-     * Granularity of requested label in case of date attribute
-     */
-    'granularity'?: ElementsResponseGranularityEnum;
-    'format'?: AttributeFormat;
     /**
      * The client can use this in subsequent requests (like paging or search) to get results from the same point in time as the previous request. This is useful when the underlying data source has caches disabled and the client wants to avoid seeing inconsistent results and to also avoid excessive queries to the database itself.
      */
     'cacheId'?: string;
+    /**
+     * List of returned elements.
+     */
+    'elements': Array<Element>;
+    'format'?: AttributeFormat;
+    /**
+     * Granularity of requested label in case of date attribute
+     */
+    'granularity'?: ElementsResponseGranularityEnum;
+    'paging': Paging;
+    'primaryLabel': RestApiIdentifier;
 }
 
-export type ElementsResponseGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
+export type ElementsResponseGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
 
 /**
  * Structured error, present when the search could not run (e.g. metadata sync in progress). Absent on success.
  */
 export interface ErrorInfo {
     /**
-     * HTTP-like semantic status (e.g. 503 when the workspace is still syncing).
-     */
-    'statusCode': number;
-    /**
      * Stable machine-readable error code. Switch on this for localized client messages.
      */
     'reason': string;
+    /**
+     * HTTP-like semantic status (e.g. 503 when the workspace is still syncing).
+     */
+    'statusCode': number;
 }
 
 /**
@@ -1512,8 +1558,8 @@ export interface ExecutionResult {
      */
     'dimensionHeaders': Array<DimensionHeader>;
     'grandTotals': Array<ExecutionResultGrandTotal>;
-    'paging': ExecutionResultPaging;
     'metadata': ExecutionResultMetadata;
+    'paging': ExecutionResultPaging;
 }
 
 /**
@@ -1525,6 +1571,10 @@ export interface ExecutionResultDataSourceMessage {
      */
     'correlationId': string;
     /**
+     * Data of this particular supplementary info item: a free-form JSON specific to the particular supplementary info item type.
+     */
+    'data'?: object;
+    /**
      * Information about what part of the system created this piece of supplementary info.
      */
     'source': string;
@@ -1532,10 +1582,6 @@ export interface ExecutionResultDataSourceMessage {
      * Type of the supplementary info instance. There are currently no well-known values for this, but there might be some in the future.
      */
     'type': string;
-    /**
-     * Data of this particular supplementary info item: a free-form JSON specific to the particular supplementary info item type.
-     */
-    'data'?: object;
 }
 
 /**
@@ -1567,13 +1613,13 @@ export type ExecutionResultHeader = AttributeExecutionResultHeader | MeasureExec
  */
 export interface ExecutionResultLimitBreak {
     /**
-     * Type of the limit that was broken, e.g. \"rowCount\".
-     */
-    'limitType': string;
-    /**
      * The configured threshold value.
      */
     'limit': number;
+    /**
+     * Type of the limit that was broken, e.g. \"rowCount\".
+     */
+    'limitType': string;
     /**
      * The actual value that triggered the limit; null when it cannot be determined exactly.
      */
@@ -1624,6 +1670,10 @@ export interface ExecutionSettings {
      * Specifies the timestamp of the execution from which relative filters are resolved. If not set, the current time is used.
      */
     'timestamp'?: string;
+    /**
+     * Specifies the time zone used to resolve relative date filters and to convert time-zone-aware date/time values in the result. Expects an IANA time zone id (e.g. \"Europe/Prague\") or a fixed GMT offset (e.g. \"GMT+02:00\"). If not set, the time zone from the workspace/user settings is used.
+     */
+    'timezone'?: string;
 }
 
 /**
@@ -1656,7 +1706,7 @@ export type FilterByLabelTypeEnum = 'PRIMARY' | 'REQUESTED';
  * @type FilterDefinition
  * Abstract filter definition type
  */
-export type FilterDefinition = AbsoluteDateFilter | AllTimeDateFilter | ComparisonMeasureValueFilter | CompoundMeasureValueFilter | InlineFilterDefinition | MatchAttributeFilter | NegativeAttributeFilter | PositiveAttributeFilter | RangeMeasureValueFilter | RankingFilter | RelativeDateFilter;
+export type FilterDefinition = AbsoluteDateFilter | AbsoluteGranularityDateFilter | AllTimeDateFilter | ComparisonMeasureValueFilter | CompoundMeasureValueFilter | InlineFilterDefinition | MatchAttributeFilter | NegativeAttributeFilter | PositiveAttributeFilter | RangeMeasureValueFilter | RankingFilter | RelativeDateFilter;
 
 /**
  * @type FilterDefinitionForSimpleMeasure
@@ -1669,13 +1719,13 @@ export type FilterDefinitionForSimpleMeasure = AttributeFilter | DateFilter;
  */
 export interface ForecastConfig {
     /**
-     * Number of future periods that should be forecasted
-     */
-    'forecastPeriod': number;
-    /**
      * Confidence interval boundary value.
      */
     'confidenceLevel': number;
+    /**
+     * Number of future periods that should be forecasted
+     */
+    'forecastPeriod': number;
     /**
      * Whether the input data is seasonal
      */
@@ -1684,13 +1734,13 @@ export interface ForecastConfig {
 
 export interface ForecastRequest {
     /**
-     * Number of future periods that should be forecasted
-     */
-    'forecastPeriod': number;
-    /**
      * Confidence interval boundary value.
      */
     'confidenceLevel'?: number;
+    /**
+     * Number of future periods that should be forecasted
+     */
+    'forecastPeriod': number;
     /**
      * Whether the input data is seasonal
      */
@@ -1699,9 +1749,9 @@ export interface ForecastRequest {
 
 export interface ForecastResult {
     'attribute': Array<string>;
+    'lowerBound': Array<number | null>;
     'origin': Array<number | null>;
     'prediction': Array<number | null>;
-    'lowerBound': Array<number | null>;
     'upperBound': Array<number | null>;
 }
 
@@ -1721,13 +1771,13 @@ export interface FoundObjects {
 
 export interface GenerateDescriptionRequest {
     /**
-     * Type of the object to describe. One of: visualization, dashboard, metric, fact, attribute
-     */
-    'objectType': GenerateDescriptionRequestObjectTypeEnum;
-    /**
      * Identifier of the object to describe
      */
     'objectId': string;
+    /**
+     * Type of the object to describe. One of: visualization, dashboard, metric, fact, attribute
+     */
+    'objectType': GenerateDescriptionRequestObjectTypeEnum;
 }
 
 export type GenerateDescriptionRequestObjectTypeEnum = 'Visualization' | 'Dashboard' | 'Metric' | 'Fact' | 'Attribute';
@@ -1745,26 +1795,26 @@ export interface GenerateDescriptionResponse {
 
 export interface GenerateTitleRequest {
     /**
-     * Type of the object to title. Matches chat-search object types.
-     */
-    'objectType': GenerateTitleRequestObjectTypeEnum;
-    /**
      * Identifier of the object to title
      */
     'objectId': string;
+    /**
+     * Type of the object to title. Matches chat-search object types.
+     */
+    'objectType': GenerateTitleRequestObjectTypeEnum;
 }
 
 export type GenerateTitleRequestObjectTypeEnum = 'Visualization' | 'Dashboard' | 'Metric' | 'Fact' | 'Attribute';
 
 export interface GenerateTitleResponse {
     /**
-     * Generated title of the requested object
-     */
-    'title'?: string;
-    /**
      * Additional note with details in case generation was not performed
      */
     'note'?: string;
+    /**
+     * Generated title of the requested object
+     */
+    'title'?: string;
 }
 
 /**
@@ -1798,13 +1848,13 @@ export interface GetQualityIssuesResponse {
      */
     'issues': Array<QualityIssue>;
     /**
-     * Timestamp when the quality issues were last updated (ISO format)
-     */
-    'updatedAt'?: string;
-    /**
      * Status of the latest triggered quality check process
      */
     'status': GetQualityIssuesResponseStatusEnum;
+    /**
+     * Timestamp when the quality issues were last updated (ISO format)
+     */
+    'updatedAt'?: string;
 }
 
 export type GetQualityIssuesResponseStatusEnum = 'RUNNING' | 'SYNCING' | 'COMPLETED' | 'FAILED' | 'CANCELLED' | 'NOT_FOUND' | 'DISABLED';
@@ -1824,13 +1874,13 @@ export interface GetServiceStatusResponse {
  */
 export interface HashDistributionConfig {
     /**
-     * Columns to distribute by. Defaults to first column.
-     */
-    'columns'?: Array<string>;
-    /**
      * Number of hash buckets. Defaults to 1.
      */
     'buckets'?: number;
+    /**
+     * Columns to distribute by. Defaults to first column.
+     */
+    'columns'?: Array<string>;
 }
 
 /**
@@ -1851,12 +1901,12 @@ export interface InlineFilterDefinition {
 }
 
 export interface InlineFilterDefinitionInline {
+    'applyOnResult'?: boolean;
     /**
      * MAQL query representing the filter.
      */
     'filter': string;
     'localIdentifier'?: string;
-    'applyOnResult'?: boolean;
 }
 
 /**
@@ -1878,14 +1928,6 @@ export interface InlineMeasureDefinitionInline {
  */
 export interface InsightWidgetDescriptor {
     /**
-     * Widget object ID.
-     */
-    'widgetId': string;
-    /**
-     * Widget title as displayed on the dashboard.
-     */
-    'title': string;
-    /**
      * Filters currently applied to the dashboard.
      */
     'filters'?: Array<FilterDefinition>;
@@ -1894,9 +1936,17 @@ export interface InsightWidgetDescriptor {
      */
     'resultId'?: string;
     /**
+     * Widget title as displayed on the dashboard.
+     */
+    'title': string;
+    /**
      * Visualization object ID referenced by this insight widget.
      */
     'visualizationId': string;
+    /**
+     * Widget object ID.
+     */
+    'widgetId': string;
 }
 
 /**
@@ -1919,6 +1969,7 @@ export interface JsonApiDocumentPipeTable {
  * A single JSON:API resource item
  */
 export interface JsonApiItemDataSourceInfo {
+    'attributes': DataSourceInfo;
     /**
      * Resource identifier
      */
@@ -1927,13 +1978,13 @@ export interface JsonApiItemDataSourceInfo {
      * Resource type
      */
     'type': string;
-    'attributes': DataSourceInfo;
 }
 
 /**
  * A single JSON:API resource item
  */
 export interface JsonApiItemDatabaseInstance {
+    'attributes': DatabaseInstance;
     /**
      * Resource identifier
      */
@@ -1942,13 +1993,13 @@ export interface JsonApiItemDatabaseInstance {
      * Resource type
      */
     'type': string;
-    'attributes': DatabaseInstance;
 }
 
 /**
  * A single JSON:API resource item
  */
 export interface JsonApiItemObjectStorageInfo {
+    'attributes': ObjectStorageInfo;
     /**
      * Resource identifier
      */
@@ -1957,13 +2008,13 @@ export interface JsonApiItemObjectStorageInfo {
      * Resource type
      */
     'type': string;
-    'attributes': ObjectStorageInfo;
 }
 
 /**
  * A single JSON:API resource item
  */
 export interface JsonApiItemPipeTable {
+    'attributes': PipeTable;
     /**
      * Resource identifier
      */
@@ -1972,13 +2023,13 @@ export interface JsonApiItemPipeTable {
      * Resource type
      */
     'type': string;
-    'attributes': PipeTable;
 }
 
 /**
  * A single JSON:API resource item
  */
 export interface JsonApiItemPipeTableSummary {
+    'attributes': PipeTableSummary;
     /**
      * Resource identifier
      */
@@ -1987,13 +2038,13 @@ export interface JsonApiItemPipeTableSummary {
      * Resource type
      */
     'type': string;
-    'attributes': PipeTableSummary;
 }
 
 /**
  * A single JSON:API resource item
  */
 export interface JsonApiItemServiceInfo {
+    'attributes': ServiceInfo;
     /**
      * Resource identifier
      */
@@ -2002,7 +2053,6 @@ export interface JsonApiItemServiceInfo {
      * Resource type
      */
     'type': string;
-    'attributes': ServiceInfo;
 }
 
 /**
@@ -2112,24 +2162,24 @@ export interface KeyConfig {
 }
 
 export interface KeyDriversDimension {
-    'label': RestApiIdentifier;
-    'labelName': string;
     'attribute': RestApiIdentifier;
     'attributeName': string;
-    'granularity'?: KeyDriversDimensionGranularityEnum;
     'format'?: AttributeFormat;
+    'granularity'?: KeyDriversDimensionGranularityEnum;
+    'label': RestApiIdentifier;
+    'labelName': string;
     'valueType'?: KeyDriversDimensionValueTypeEnum;
 }
 
-export type KeyDriversDimensionGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
+export type KeyDriversDimensionGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
 export type KeyDriversDimensionValueTypeEnum = 'TEXT' | 'HYPERLINK' | 'GEO' | 'GEO_LONGITUDE' | 'GEO_LATITUDE' | 'GEO_AREA' | 'GEO_ICON' | 'IMAGE' | 'HYPERLOGLOG';
 
 export interface KeyDriversRequest {
-    'metric': MeasureItem;
     /**
      * Additional metrics to be included in the computation, but excluded from the analysis.
      */
     'auxMetrics'?: Array<MeasureItem>;
+    'metric': MeasureItem;
     /**
      * Sorting elements - ascending/descending order.
      */
@@ -2148,42 +2198,43 @@ export interface KeyDriversResult {
 }
 
 export interface KnowledgeRecommendationsRequestDto {
-    'metricId': string;
-    'direction'?: KnowledgeRecommendationsRequestDtoDirectionEnum;
-    'comparisonType': KnowledgeRecommendationsRequestDtoComparisonTypeEnum;
-    'limit'?: number;
-    'minScore'?: number;
     'aiModel'?: string;
-    'temperature'?: number;
-    'maxTokens'?: number;
+    'analyticalDashboardId'?: string;
+    'analyzedValue'?: number;
+    'comparisonType': KnowledgeRecommendationsRequestDtoComparisonTypeEnum;
+    'direction'?: KnowledgeRecommendationsRequestDtoDirectionEnum;
+    'dryRun'?: boolean;
     'gooddataHost'?: string;
     'gooddataToken'?: string;
-    'analyticalDashboardId'?: string;
+    'limit'?: number;
+    'maxTokens'?: number;
+    'metricId': string;
+    'minScore'?: number;
+    'referenceValue'?: number;
+    'temperature'?: number;
     'widgetId'?: string;
     'widgetName'?: string;
-    'dryRun'?: boolean;
-    'referenceValue'?: number;
-    'analyzedValue'?: number;
 }
 
-export type KnowledgeRecommendationsRequestDtoDirectionEnum = 'INCREASED' | 'DECREASED';
 export type KnowledgeRecommendationsRequestDtoComparisonTypeEnum = 'MONTH' | 'QUARTER' | 'YEAR';
+export type KnowledgeRecommendationsRequestDtoDirectionEnum = 'INCREASED' | 'DECREASED';
 
 export interface KnowledgeRecommendationsResponseDto {
+    'message': string;
     'runId': string;
     'status': string;
-    'message': string;
 }
 
 export interface ListLlmProviderModelsRequest {
-    'providerConfig': TestLlmProviderByIdRequestProviderConfig;
+    'providerConfig': ListLlmProviderModelsRequestProviderConfig;
 }
 
+/**
+ * @type ListLlmProviderModelsRequestProviderConfig
+ */
+export type ListLlmProviderModelsRequestProviderConfig = AnthropicProviderConfig | AwsBedrockProviderConfig | AzureFoundryProviderConfig | OpenAIProviderConfig;
+
 export interface ListLlmProviderModelsResponse {
-    /**
-     * Whether the model listing succeeded.
-     */
-    'success': boolean;
     /**
      * Message about the listing result.
      */
@@ -2192,6 +2243,10 @@ export interface ListLlmProviderModelsResponse {
      * Available models on the provider.
      */
     'models': Array<LlmModel>;
+    /**
+     * Whether the model listing succeeded.
+     */
+    'success': boolean;
 }
 
 /**
@@ -2199,13 +2254,13 @@ export interface ListLlmProviderModelsResponse {
  */
 export interface LlmModel {
     /**
-     * Unique identifier of the model (e.g., gpt-5.3, claude-4.6).
-     */
-    'id': string;
-    /**
      * Family of LLM models.
      */
     'family': LlmModelFamilyEnum;
+    /**
+     * Unique identifier of the model (e.g., gpt-5.3, claude-4.6).
+     */
+    'id': string;
 }
 
 export type LlmModelFamilyEnum = 'OPENAI' | 'ANTHROPIC' | 'META' | 'MISTRAL' | 'AMAZON' | 'GOOGLE' | 'COHERE' | 'UNKNOWN';
@@ -2224,10 +2279,17 @@ export interface MatchAttributeFilter {
 }
 
 export interface MatchAttributeFilterMatchAttributeFilter {
+    'applyOnResult'?: boolean;
+    /**
+     * Indicates whether the filter match is evaluated in case-sensitive mode or not.
+     */
+    'caseSensitive'?: boolean;
+    'label': AfmIdentifier;
     /**
      * Literal used to limit label values.
      */
     'literal': string;
+    'localIdentifier'?: string;
     /**
      * Requested match type.
      */
@@ -2236,13 +2298,6 @@ export interface MatchAttributeFilterMatchAttributeFilter {
      * Indicates whether the filter should negate the match.
      */
     'negate'?: boolean;
-    /**
-     * Indicates whether the filter match is evaluated in case-sensitive mode or not.
-     */
-    'caseSensitive'?: boolean;
-    'localIdentifier'?: string;
-    'applyOnResult'?: boolean;
-    'label': AfmIdentifier;
 }
 
 export type MatchAttributeFilterMatchAttributeFilterMatchTypeEnum = 'STARTS_WITH' | 'ENDS_WITH' | 'CONTAINS';
@@ -2266,13 +2321,13 @@ export interface MeasureGroupHeaders {
 
 export interface MeasureHeader {
     /**
-     * Local identifier of the measure this header relates to.
-     */
-    'localIdentifier': string;
-    /**
      * Format to be used to format the measure data.
      */
     'format'?: string;
+    /**
+     * Local identifier of the measure this header relates to.
+     */
+    'localIdentifier': string;
     /**
      * Name of the measure.
      */
@@ -2283,11 +2338,11 @@ export interface MeasureHeader {
  * Metric is a quantity that is calculated from the data.
  */
 export interface MeasureItem {
+    'definition': MeasureDefinition;
     /**
      * Local identifier of the metric. This can be used to reference the metric in other parts of the execution definition.
      */
     'localIdentifier': string;
-    'definition': MeasureDefinition;
 }
 
 /**
@@ -2314,23 +2369,19 @@ export type MeasureValueFilter = ComparisonMeasureValueFilter | CompoundMeasureV
 
 export interface MemoryItemCreatedByUsers {
     /**
-     * Users who created memory item
-     */
-    'users': Array<MemoryItemUser>;
-    /**
      * Reasoning for error states
      */
     'reasoning': string;
+    /**
+     * Users who created memory item
+     */
+    'users': Array<MemoryItemUser>;
 }
 
 /**
  * Users who created memory item
  */
 export interface MemoryItemUser {
-    /**
-     * User ID of the user who created memory item
-     */
-    'userId': string;
     /**
      * First name of the user who created memory item
      */
@@ -2339,6 +2390,10 @@ export interface MemoryItemUser {
      * Last name of the user who created memory item
      */
     'lastname': string;
+    /**
+     * User ID of the user who created memory item
+     */
+    'userId': string;
 }
 
 /**
@@ -2346,32 +2401,32 @@ export interface MemoryItemUser {
  */
 export interface Metric {
     /**
+     * Agg function. Empty if a stored metric is used.
+     */
+    'aggFunction'?: MetricAggFunctionEnum;
+    /**
      * ID of the object
      */
     'id': string;
-    /**
-     * Object type
-     */
-    'type': MetricTypeEnum;
     /**
      * Title of metric.
      */
     'title': string;
     /**
-     * Agg function. Empty if a stored metric is used.
+     * Object type
      */
-    'aggFunction'?: MetricAggFunctionEnum;
+    'type': MetricTypeEnum;
 }
 
-export type MetricTypeEnum = 'metric' | 'fact' | 'attribute';
 export type MetricAggFunctionEnum = 'COUNT' | 'SUM' | 'MIN' | 'MAX' | 'AVG' | 'MEDIAN';
+export type MetricTypeEnum = 'metric' | 'fact' | 'attribute';
 
 /**
  * (EXPERIMENTAL) Override for a catalog metric definition.
  */
 export interface MetricDefinitionOverride {
-    'item': AfmObjectIdentifierCore;
     'definition': InlineMeasureDefinition;
+    'item': AfmObjectIdentifierCore;
 }
 
 /**
@@ -2387,22 +2442,6 @@ export interface MetricValueChange {
      */
     'attributeValue': string;
     /**
-     * The metric value in the analyzed period
-     */
-    'metricValueInAnalyzedPeriod': number;
-    /**
-     * The metric value in the reference period
-     */
-    'metricValueInReferencePeriod': number;
-    /**
-     * The delta between analyzed and reference periods
-     */
-    'metricValueDelta': number;
-    /**
-     * The absolute delta between analyzed and reference periods
-     */
-    'metricValueDeltaAbs': number;
-    /**
      * The mean of attribute value changes for the attribute being analyzed
      */
     'attributeValuesChangeMean': number;
@@ -2414,6 +2453,22 @@ export interface MetricValueChange {
      * Whether the change is statistically significant
      */
     'isSignificantChange': boolean;
+    /**
+     * The delta between analyzed and reference periods
+     */
+    'metricValueDelta': number;
+    /**
+     * The absolute delta between analyzed and reference periods
+     */
+    'metricValueDeltaAbs': number;
+    /**
+     * The metric value in the analyzed period
+     */
+    'metricValueInAnalyzedPeriod': number;
+    /**
+     * The metric value in the reference period
+     */
+    'metricValueInReferencePeriod': number;
     /**
      * The overall metric value in the analyzed period
      */
@@ -2429,6 +2484,10 @@ export interface MetricValueChange {
  */
 export interface ModelTestResult {
     /**
+     * Message about the model test result.
+     */
+    'message': string;
+    /**
      * The model ID that was tested.
      */
     'modelId': string;
@@ -2436,10 +2495,6 @@ export interface ModelTestResult {
      * Whether the model test was successful.
      */
     'successful': boolean;
-    /**
-     * Message about the model test result.
-     */
-    'message': string;
 }
 
 /**
@@ -2450,25 +2505,25 @@ export interface NegativeAttributeFilter {
 }
 
 export interface NegativeAttributeFilterNegativeAttributeFilter {
-    'notIn': AttributeFilterElements;
-    'localIdentifier'?: string;
     'applyOnResult'?: boolean;
+    'label': AfmIdentifier;
+    'localIdentifier'?: string;
+    'notIn': AttributeFilterElements;
     /**
      * If true, indicates that the values in notInElements were filled free-form, otherwise they have been picked from existing elements.
      */
     'usesArbitraryValues'?: boolean;
-    'label': AfmIdentifier;
 }
 
 export interface ObjectReference {
     /**
-     * Type of the referenced object.
-     */
-    'type': ObjectReferenceTypeEnum;
-    /**
      * Object identifier (e.g. widget ID, metric ID).
      */
     'id': string;
+    /**
+     * Type of the referenced object.
+     */
+    'type': ObjectReferenceTypeEnum;
 }
 
 export type ObjectReferenceTypeEnum = 'WIDGET' | 'METRIC' | 'ATTRIBUTE' | 'DASHBOARD';
@@ -2486,36 +2541,36 @@ export interface ObjectReferenceGroup {
  */
 export interface ObjectStorageInfo {
     /**
-     * Stable identifier of the storage configuration (UUID).
-     */
-    'storageId': string;
-    /**
      * Human-readable name. Use this as `sourceStorageName` in CreatePipeTable, or pass `storageId` to ProvisionDatabase.storageIds.
      */
     'name': string;
     /**
-     * Provider type.
-     */
-    'storageType': string;
-    /**
      * Provider-specific descriptors (e.g. bucket, region, endpoint, container). Credential references (any keys ending in `_env`) are stripped server-side.
      */
     'storageConfig': { [key: string]: string; };
+    /**
+     * Stable identifier of the storage configuration (UUID).
+     */
+    'storageId': string;
+    /**
+     * Provider type.
+     */
+    'storageType': string;
 }
 
 /**
  * Configuration for OpenAI provider.
  */
 export interface OpenAIProviderConfig {
-    /**
-     * OpenAI organization ID.
-     */
-    'organization'?: string | null;
+    'auth': OpenAiApiKeyAuth;
     /**
      * Custom base URL for OpenAI API.
      */
     'baseUrl'?: string;
-    'auth': OpenAiApiKeyAuth;
+    /**
+     * OpenAI organization ID.
+     */
+    'organization'?: string | null;
     /**
      * Provider type.
      */
@@ -2578,26 +2633,26 @@ export interface OutlierDetectionRequest {
      */
     'attributes': Array<AttributeItem>;
     /**
-     * Various filter types to filter the execution result.
-     */
-    'filters': Array<OutlierDetectionRequestFiltersInner>;
-    'measures': Array<MeasureItem>;
-    /**
      * Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.
      */
     'auxMeasures'?: Array<MeasureItem>;
     /**
-     * Sensitivity level for outlier detection
+     * Various filter types to filter the execution result.
      */
-    'sensitivity': OutlierDetectionRequestSensitivityEnum;
+    'filters': Array<OutlierDetectionRequestFiltersInner>;
     /**
      * Date granularity for anomaly detection. Only time-based granularities are supported (HOUR, DAY, WEEK, MONTH, QUARTER, YEAR).
      */
     'granularity': OutlierDetectionRequestGranularityEnum;
+    'measures': Array<MeasureItem>;
+    /**
+     * Sensitivity level for outlier detection
+     */
+    'sensitivity': OutlierDetectionRequestSensitivityEnum;
 }
 
-export type OutlierDetectionRequestSensitivityEnum = 'LOW' | 'MEDIUM' | 'HIGH';
 export type OutlierDetectionRequestGranularityEnum = 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR';
+export type OutlierDetectionRequestSensitivityEnum = 'LOW' | 'MEDIUM' | 'HIGH';
 
 /**
  * @type OutlierDetectionRequestFiltersInner
@@ -2624,27 +2679,29 @@ export interface OutlierDetectionResult {
  */
 export interface Paging {
     /**
-     * Count of returnable items ignoring paging.
-     */
-    'total': number;
-    /**
      * Count of items in this page.
      */
     'count': number;
+    /**
+     * Link to next page, or null if this is last page.
+     */
+    'next'?: string;
     /**
      * Offset of this page.
      */
     'offset': number;
     /**
-     * Link to next page, or null if this is last page.
+     * Count of returnable items ignoring paging.
      */
-    'next'?: string;
+    'total': number;
 }
 
 /**
  * (EXPERIMENTAL) Parameter value for this execution.
  */
 export interface ParameterItem {
+    [key: string]: any;
+
     'parameter': AfmObjectIdentifierParameter;
     /**
      * Value to use for this parameter instead of its default.
@@ -2671,44 +2728,44 @@ export interface PendingOperation extends Operation {
  */
 export interface PipeTable {
     /**
-     * Internal UUID of the pipe table record
+     * Inferred column schema
      */
-    'pipeTableId': string;
-    /**
-     * OLAP table name
-     */
-    'tableName': string;
+    'columns': Array<ColumnInfo>;
     /**
      * Database name
      */
     'databaseName': string;
+    'distributionConfig': PipeTableDistributionConfig;
+    'keyConfig': PipeTableKeyConfig;
     /**
-     * Source ObjectStorage name
+     * Hive partition columns detected from the path structure
      */
-    'sourceStorageName': string;
+    'partitionColumns': Array<string>;
+    'partitionConfig'?: PipeTablePartitionConfig;
     /**
      * Path prefix to the parquet files
      */
     'pathPrefix': string;
     /**
-     * Hive partition columns detected from the path structure
+     * Internal UUID of the pipe table record
      */
-    'partitionColumns': Array<string>;
-    /**
-     * Inferred column schema
-     */
-    'columns': Array<ColumnInfo>;
-    'keyConfig': PipeTableKeyConfig;
-    'distributionConfig': PipeTableDistributionConfig;
-    'partitionConfig'?: PipeTablePartitionConfig;
-    /**
-     * CREATE TABLE PROPERTIES key-value pairs
-     */
-    'tableProperties': { [key: string]: string; };
+    'pipeTableId': string;
     /**
      * How often (in seconds) the pipe polls for new files. 0 = server default.
      */
     'pollingIntervalSeconds': number;
+    /**
+     * Source ObjectStorage name
+     */
+    'sourceStorageName': string;
+    /**
+     * OLAP table name
+     */
+    'tableName': string;
+    /**
+     * CREATE TABLE PROPERTIES key-value pairs
+     */
+    'tableProperties': { [key: string]: string; };
 }
 
 /**
@@ -2731,6 +2788,14 @@ export type PipeTablePartitionConfig = ColumnPartitionConfig | DateTruncPartitio
  */
 export interface PipeTableSummary {
     /**
+     * Inferred column schema
+     */
+    'columns': Array<ColumnInfo>;
+    /**
+     * Path prefix to the parquet files
+     */
+    'pathPrefix': string;
+    /**
      * Internal UUID of the pipe table record
      */
     'pipeTableId': string;
@@ -2738,14 +2803,6 @@ export interface PipeTableSummary {
      * OLAP table name
      */
     'tableName': string;
-    /**
-     * Path prefix to the parquet files
-     */
-    'pathPrefix': string;
-    /**
-     * Inferred column schema
-     */
-    'columns': Array<ColumnInfo>;
 }
 
 /**
@@ -2767,11 +2824,11 @@ export interface PopDatasetMeasureDefinition {
 }
 
 export interface PopDatasetMeasureDefinitionPreviousPeriodMeasure {
-    'measureIdentifier': AfmLocalIdentifier;
     /**
      * Specification of which date data sets to use for determining the period to calculate the previous period for.
      */
     'dateDatasets': Array<PopDataset>;
+    'measureIdentifier': AfmLocalIdentifier;
 }
 
 /**
@@ -2793,11 +2850,11 @@ export interface PopDateMeasureDefinition {
 }
 
 export interface PopDateMeasureDefinitionOverPeriodMeasure {
-    'measureIdentifier': AfmLocalIdentifier;
     /**
      * Attributes to use for determining the period to calculate the PoP for.
      */
     'dateAttributes': Array<PopDate>;
+    'measureIdentifier': AfmLocalIdentifier;
 }
 
 /**
@@ -2813,14 +2870,14 @@ export interface PositiveAttributeFilter {
 }
 
 export interface PositiveAttributeFilterPositiveAttributeFilter {
-    'in': AttributeFilterElements;
-    'localIdentifier'?: string;
     'applyOnResult'?: boolean;
+    'in': AttributeFilterElements;
+    'label': AfmIdentifier;
+    'localIdentifier'?: string;
     /**
      * If true, indicates that the values in inElements were filled free-form, otherwise they have been picked from existing elements.
      */
     'usesArbitraryValues'?: boolean;
-    'label': AfmIdentifier;
 }
 
 /**
@@ -2838,14 +2895,6 @@ export interface PrimaryKeyConfig {
  */
 export interface ProvisionDatabaseInstanceRequest {
     /**
-     * Name of the database instance
-     */
-    'name': string;
-    /**
-     * Set of ids of the storage instances this database instance should access.
-     */
-    'storageIds': Array<string>;
-    /**
      * Identifier for the data source created in metadata-api. Defaults to the database name.
      */
     'dataSourceId'?: string;
@@ -2853,12 +2902,28 @@ export interface ProvisionDatabaseInstanceRequest {
      * Display name for the data source created in metadata-api. Defaults to the database name.
      */
     'dataSourceName'?: string;
+    /**
+     * Name of the database instance
+     */
+    'name': string;
+    /**
+     * Set of ids of the storage instances this database instance should access.
+     */
+    'storageIds': Array<string>;
 }
 
 /**
  * List of quality issues (available when status is COMPLETED)
  */
 export interface QualityIssue {
+    /**
+     * Quality issue code
+     */
+    'code': string;
+    /**
+     * Detailed information about the quality issue
+     */
+    'detail': { [key: string]: object; };
     /**
      * Unique identifier for the quality issue
      */
@@ -2871,14 +2936,6 @@ export interface QualityIssue {
      * Severity level
      */
     'severity': QualityIssueSeverityEnum;
-    /**
-     * Quality issue code
-     */
-    'code': string;
-    /**
-     * Detailed information about the quality issue
-     */
-    'detail': { [key: string]: object; };
 }
 
 export type QualityIssueSeverityEnum = 'WARNING' | 'INFO';
@@ -2888,36 +2945,36 @@ export type QualityIssueSeverityEnum = 'WARNING' | 'INFO';
  */
 export interface QualityIssueObject {
     /**
-     * Object type
-     */
-    'type': string;
-    /**
      * Object ID
      */
     'id': string;
     /**
-     * Workspace ID where the object belongs
-     */
-    'workspaceId': string;
-    /**
      * Object title
      */
     'title': string;
+    /**
+     * Object type
+     */
+    'type': string;
+    /**
+     * Workspace ID where the object belongs
+     */
+    'workspaceId': string;
 }
 
 export interface QualityIssuesCalculationStatusResponse {
     /**
-     * Current status of the calculation
+     * Error message (available when status is FAILED or NOT_FOUND)
      */
-    'status': QualityIssuesCalculationStatusResponseStatusEnum;
+    'error'?: string;
     /**
      * List of quality issues (available when status is COMPLETED)
      */
     'issues'?: Array<QualityIssue>;
     /**
-     * Error message (available when status is FAILED or NOT_FOUND)
+     * Current status of the calculation
      */
-    'error'?: string;
+    'status': QualityIssuesCalculationStatusResponseStatusEnum;
 }
 
 export type QualityIssuesCalculationStatusResponseStatusEnum = 'RUNNING' | 'SYNCING' | 'COMPLETED' | 'FAILED' | 'CANCELLED' | 'NOT_FOUND' | 'DISABLED';
@@ -2940,8 +2997,8 @@ export interface RangeCondition {
 }
 
 export interface RangeConditionRange {
-    'operator': RangeConditionRangeOperatorEnum;
     'from': number;
+    'operator': RangeConditionRangeOperatorEnum;
     'to': number;
 }
 
@@ -2955,20 +3012,20 @@ export interface RangeMeasureValueFilter {
 }
 
 export interface RangeMeasureValueFilterRangeMeasureValueFilter {
+    'applyOnResult'?: boolean;
     /**
      * References to the attributes to be used when filtering.
      */
     'dimensionality'?: Array<AfmIdentifier>;
+    'from': number;
+    'localIdentifier'?: string;
+    'measure': AfmIdentifier;
+    'operator': RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum;
+    'to': number;
     /**
      * A value that will be substituted for null values in the metric for the comparisons.
      */
     'treatNullValuesAs'?: number;
-    'operator': RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum;
-    'from': number;
-    'to': number;
-    'localIdentifier'?: string;
-    'applyOnResult'?: boolean;
-    'measure': AfmIdentifier;
 }
 
 export type RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum = 'BETWEEN' | 'NOT_BETWEEN';
@@ -2981,10 +3038,12 @@ export interface RankingFilter {
 }
 
 export interface RankingFilterRankingFilter {
+    'applyOnResult'?: boolean;
     /**
      * References to the attributes to be used when filtering.
      */
     'dimensionality'?: Array<AfmIdentifier>;
+    'localIdentifier'?: string;
     /**
      * References to the metrics to be used when filtering.
      */
@@ -2994,15 +3053,13 @@ export interface RankingFilterRankingFilter {
      */
     'operator': RankingFilterRankingFilterOperatorEnum;
     /**
-     * Number of top/bottom values to filter.
-     */
-    'value': number;
-    /**
      * When true, filter returns requested number of rows at most. Default is false.
      */
     'strictLimitOfRows'?: boolean;
-    'localIdentifier'?: string;
-    'applyOnResult'?: boolean;
+    /**
+     * Number of top/bottom values to filter.
+     */
+    'value': number;
 }
 
 export type RankingFilterRankingFilterOperatorEnum = 'TOP' | 'BOTTOM';
@@ -3012,13 +3069,13 @@ export type RankingFilterRankingFilterOperatorEnum = 'TOP' | 'BOTTOM';
  */
 export interface Reasoning {
     /**
-     * Steps taken during processing, showing the AI\'s reasoning process.
-     */
-    'steps': Array<ReasoningStep>;
-    /**
      * Final answer/reasoning from the use case result.
      */
     'answer'?: string;
+    /**
+     * Steps taken during processing, showing the AI\'s reasoning process.
+     */
+    'steps': Array<ReasoningStep>;
 }
 
 /**
@@ -3026,13 +3083,13 @@ export interface Reasoning {
  */
 export interface ReasoningStep {
     /**
-     * Title describing this reasoning step.
-     */
-    'title': string;
-    /**
      * Detailed thoughts/messages within this step.
      */
     'thoughts': Array<Thought>;
+    /**
+     * Title describing this reasoning step.
+     */
+    'title': string;
 }
 
 /**
@@ -3053,30 +3110,30 @@ export interface RelativeDateFilter {
 }
 
 export interface RelativeDateFilterRelativeDateFilter {
+    'applyOnResult'?: boolean;
+    'boundedFilter'?: BoundedFilter;
+    'dataset': AfmObjectIdentifierDataset;
     /**
-     * Date granularity specifying particular date attribute in given dimension.
+     * Specifies how rows with empty (null/missing) date values should be handled. INCLUDE includes empty dates in addition to the date range restriction, EXCLUDE removes rows with empty dates (default), ONLY keeps only rows with empty dates.
      */
-    'granularity': RelativeDateFilterRelativeDateFilterGranularityEnum;
+    'emptyValueHandling'?: RelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum;
     /**
      * Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for \'2 days/weeks, ... ago\').
      */
     'from': number;
     /**
+     * Date granularity specifying particular date attribute in given dimension.
+     */
+    'granularity': RelativeDateFilterRelativeDateFilterGranularityEnum;
+    'localIdentifier'?: string;
+    /**
      * End of the filtering interval. Specified by number of periods (with respect to given granularity). Value \'O\' is representing current time-interval (current day, week, ...).
      */
     'to': number;
-    'localIdentifier'?: string;
-    'applyOnResult'?: boolean;
-    'boundedFilter'?: BoundedFilter;
-    /**
-     * Specifies how rows with empty (null/missing) date values should be handled. INCLUDE includes empty dates in addition to the date range restriction, EXCLUDE removes rows with empty dates (default), ONLY keeps only rows with empty dates.
-     */
-    'emptyValueHandling'?: RelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum;
-    'dataset': AfmObjectIdentifierDataset;
 }
 
-export type RelativeDateFilterRelativeDateFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
 export type RelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
+export type RelativeDateFilterRelativeDateFilterGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
 
 /**
  * Confirmation of data source removal from an AI Lake Database instance
@@ -3126,8 +3183,8 @@ export interface RestApiIdentifier {
 export interface ResultCacheMetadata {
     'afm': AFM;
     'executionResponse': ExecutionResponse;
-    'resultSpec': ResultSpec;
     'resultSize': number;
+    'resultSpec': ResultSpec;
 }
 
 /**
@@ -3160,21 +3217,21 @@ export interface ResultSpec {
  */
 export interface RichTextWidgetDescriptor {
     /**
-     * Widget object ID.
+     * Markdown/text content of the rich text widget.
      */
-    'widgetId': string;
-    /**
-     * Widget title as displayed on the dashboard.
-     */
-    'title': string;
+    'content'?: string;
     /**
      * Filters currently applied to the dashboard.
      */
     'filters'?: Array<FilterDefinition>;
     /**
-     * Markdown/text content of the rich text widget.
+     * Widget title as displayed on the dashboard.
      */
-    'content'?: string;
+    'title': string;
+    /**
+     * Widget object ID.
+     */
+    'widgetId': string;
 }
 
 /**
@@ -3182,13 +3239,13 @@ export interface RichTextWidgetDescriptor {
  */
 export interface RouteResult {
     /**
-     * Use case where LLM routed based on question.
-     */
-    'useCase': RouteResultUseCaseEnum;
-    /**
      * Explanation why LLM picked this use case.
      */
     'reasoning': string;
+    /**
+     * Use case where LLM routed based on question.
+     */
+    'useCase': RouteResultUseCaseEnum;
 }
 
 export type RouteResultUseCaseEnum = 'INVALID' | 'GENERAL' | 'SEARCH' | 'CREATE_VISUALIZATION' | 'EXTEND_VISUALIZATION' | 'HOWTO' | 'CHANGE_ANALYSIS' | 'ALERT';
@@ -3223,64 +3280,56 @@ export interface SavedVisualization {
 
 export interface SearchRelationshipObject {
     /**
-     * Source workspace ID. If relationship is dashboard->visualization, this is the workspace where the dashboard is located.
-     */
-    'sourceWorkspaceId': string;
-    /**
      * Source object ID.
      */
     'sourceObjectId': string;
-    /**
-     * Source object type, e.g. dashboard.
-     */
-    'sourceObjectType': string;
     /**
      * Source object title.
      */
     'sourceObjectTitle': string;
     /**
-     * Target workspace ID. If relationship is dashboard->visualization, this is the workspace where the visualization is located.
+     * Source object type, e.g. dashboard.
      */
-    'targetWorkspaceId': string;
+    'sourceObjectType': string;
+    /**
+     * Source workspace ID. If relationship is dashboard->visualization, this is the workspace where the dashboard is located.
+     */
+    'sourceWorkspaceId': string;
     /**
      * Target object ID.
      */
     'targetObjectId': string;
     /**
+     * Target object title.
+     */
+    'targetObjectTitle': string;
+    /**
      * Target object type, e.g. visualization.
      */
     'targetObjectType': string;
     /**
-     * Target object title.
+     * Target workspace ID. If relationship is dashboard->visualization, this is the workspace where the visualization is located.
      */
-    'targetObjectTitle': string;
+    'targetWorkspaceId': string;
 }
 
 export interface SearchRequest {
     /**
-     * Keyword/sentence is input for search.
+     * Filter relationships and results based on allowed relationship type combinations. When specified, only relationships matching the allowed types are returned, and results are filtered to include only direct matches or objects reachable via allowed relationships. When null or omitted, all relationships and results are returned (default behavior). Note: This filtering happens after the initial search, so the number of returned results may be lower than the requested limit if some results are filtered out.
      */
-    'question': string;
-    /**
-     * List of object types to search for.
-     */
-    'objectTypes'?: Array<SearchRequestObjectTypesEnum>;
+    'allowedRelationshipTypes'?: Array<AllowedRelationshipType>;
     /**
      * Turn on deep search. If true, content of complex objects will be searched as well, e.g. metrics in visualizations.
      */
     'deepSearch'?: boolean;
     /**
-     * Maximum number of results to return. There is a hard limit and the actual number of returned results may be lower than what is requested. This can happen when post-search filters are applied (e.g., reranker threshold filtering or allowedRelationshipTypes filtering), which may exclude some results after the initial search.
+     * If true, enables hybrid search combining vector similarity and keyword matching. This can improve search results by considering both semantic similarity and exact keyword matches.
      */
-    'limit'?: number;
+    'enableHybridSearch'?: boolean;
     /**
-     * Temporary for experiments. Ratio of title score to descriptor score.
+     * Exclude objects that contain any of the specified tags. This parameter only affects the search results. Objects with excluded tags are completely hidden from the results.
      */
-    'titleToDescriptorRatio'?: number;
-    /**
-     * Score, above which we return found objects. Below this score objects are not relevant.
-     */
-    'relevantScoreThreshold'?: number;
+    'excludeTags'?: Array<string>;
     /**
      * If true, includes hidden objects in search results. If false (default), excludes objects where isHidden=true.
      */
@@ -3290,73 +3339,65 @@ export interface SearchRequest {
      */
     'includeTags'?: Array<string>;
     /**
-     * Exclude objects that contain any of the specified tags. This parameter only affects the search results. Objects with excluded tags are completely hidden from the results.
+     * Maximum number of results to return. There is a hard limit and the actual number of returned results may be lower than what is requested. This can happen when post-search filters are applied (e.g., reranker threshold filtering or allowedRelationshipTypes filtering), which may exclude some results after the initial search.
      */
-    'excludeTags'?: Array<string>;
+    'limit'?: number;
     /**
-     * Filter relationships and results based on allowed relationship type combinations. When specified, only relationships matching the allowed types are returned, and results are filtered to include only direct matches or objects reachable via allowed relationships. When null or omitted, all relationships and results are returned (default behavior). Note: This filtering happens after the initial search, so the number of returned results may be lower than the requested limit if some results are filtered out.
+     * List of object types to search for.
      */
-    'allowedRelationshipTypes'?: Array<AllowedRelationshipType>;
+    'objectTypes'?: Array<SearchRequestObjectTypesEnum>;
     /**
-     * If true, enables hybrid search combining vector similarity and keyword matching. This can improve search results by considering both semantic similarity and exact keyword matches.
+     * Keyword/sentence is input for search.
      */
-    'enableHybridSearch'?: boolean;
+    'question': string;
+    /**
+     * Score, above which we return found objects. Below this score objects are not relevant.
+     */
+    'relevantScoreThreshold'?: number;
+    /**
+     * Temporary for experiments. Ratio of title score to descriptor score.
+     */
+    'titleToDescriptorRatio'?: number;
 }
 
 export type SearchRequestObjectTypesEnum = 'attribute' | 'metric' | 'fact' | 'label' | 'date' | 'dataset' | 'visualization' | 'dashboard';
 
 export interface SearchResult {
-    'results': Array<SearchResultObject>;
-    'relationships': Array<SearchRelationshipObject>;
+    'error'?: ErrorInfo;
     /**
      * DEPRECATED: Use top-level reasoning.steps instead. If something is not working properly this field will contain explanation.
      */
     'reasoning': string;
-    'error'?: ErrorInfo;
+    'relationships': Array<SearchRelationshipObject>;
+    'results': Array<SearchResultObject>;
 }
 
 export interface SearchResultObject {
-    /**
-     * Object ID.
-     */
-    'id': string;
-    /**
-     * Object type, e.g. dashboard.
-     */
-    'type': string;
-    /**
-     * Workspace ID.
-     */
-    'workspaceId': string;
-    /**
-     * Object title.
-     */
-    'title': string;
-    /**
-     * Object description.
-     */
-    'description'?: string;
-    'tags'?: Array<string>;
+    'certification'?: CertificationInfo;
     /**
      * Timestamp when object was created.
      */
     'createdAt'?: string;
     /**
+     * Object description.
+     */
+    'description'?: string;
+    /**
+     * Object ID.
+     */
+    'id': string;
+    /**
+     * If true, this object is hidden from AI search results by default.
+     */
+    'isHidden'?: boolean;
+    /**
      * Timestamp when object was last modified.
      */
     'modifiedAt'?: string;
     /**
-     * If the object is visualization, this field defines the type of visualization.
-     */
-    'visualizationUrl'?: string;
-    /**
      * Result score calculated by a similarity search algorithm (cosine_distance).
      */
     'score'?: number;
-    /**
-     * Result score for object title.
-     */
-    'scoreTitle'?: number;
     /**
      * Result score for descriptor containing(now) description and tags.
      */
@@ -3366,10 +3407,26 @@ export interface SearchResultObject {
      */
     'scoreExactMatch'?: number;
     /**
-     * If true, this object is hidden from AI search results by default.
+     * Result score for object title.
      */
-    'isHidden'?: boolean;
-    'certification'?: CertificationInfo;
+    'scoreTitle'?: number;
+    'tags'?: Array<string>;
+    /**
+     * Object title.
+     */
+    'title': string;
+    /**
+     * Object type, e.g. dashboard.
+     */
+    'type': string;
+    /**
+     * If the object is visualization, this field defines the type of visualization.
+     */
+    'visualizationUrl'?: string;
+    /**
+     * Workspace ID.
+     */
+    'workspaceId': string;
 }
 
 /**
@@ -3377,13 +3434,13 @@ export interface SearchResultObject {
  */
 export interface ServiceInfo {
     /**
-     * Internal identifier for the service configuration (UUID)
-     */
-    'serviceId': string;
-    /**
      * Human-readable name of the service
      */
     'name': string;
+    /**
+     * Internal identifier for the service configuration (UUID)
+     */
+    'serviceId': string;
 }
 
 /**
@@ -3394,7 +3451,6 @@ export interface SimpleMeasureDefinition {
 }
 
 export interface SimpleMeasureDefinitionMeasure {
-    'item': AfmObjectIdentifierCore;
     /**
      * Definition of aggregation type of the metric.
      */
@@ -3407,6 +3463,7 @@ export interface SimpleMeasureDefinitionMeasure {
      * Metrics can be filtered by attribute filters with the same interface as ones for global AFM. Note that only one DateFilter is allowed.
      */
     'filters'?: Array<FilterDefinitionForSimpleMeasure>;
+    'item': AfmObjectIdentifierCore;
 }
 
 export type SimpleMeasureDefinitionMeasureAggregationEnum = 'SUM' | 'COUNT' | 'AVG' | 'MIN' | 'MAX' | 'MEDIAN' | 'RUNSUM' | 'APPROXIMATE_COUNT';
@@ -3433,17 +3490,17 @@ export interface SortKeyAttributeAttribute {
      */
     'attributeIdentifier': string;
     /**
-     * Mechanism by which this attribute should be sorted. Available options are: - DEFAULT: sorting based on default rules (using sort column if defined, otherwise this label)  - LABEL: sorting by this label values  - ATTRIBUTE: sorting by values of this label\'s attribute (or rather the primary label)  - ATTRIBUTE: sorting by values of this label\'s attribute (or rather the primary label)- AREA: sorting by area (total or subtotal) corresponding to each attribute value. The area is computed by summing up all metric values in all other dimensions.
-     */
-    'sortType'?: SortKeyAttributeAttributeSortTypeEnum;
-    /**
      * Sorting elements - ascending/descending order.
      */
     'direction'?: SortKeyAttributeAttributeDirectionEnum;
+    /**
+     * Mechanism by which this attribute should be sorted. Available options are: - DEFAULT: sorting based on default rules (using sort column if defined, otherwise this label)  - LABEL: sorting by this label values  - ATTRIBUTE: sorting by values of this label\'s attribute (or rather the primary label)  - ATTRIBUTE: sorting by values of this label\'s attribute (or rather the primary label)- AREA: sorting by area (total or subtotal) corresponding to each attribute value. The area is computed by summing up all metric values in all other dimensions.
+     */
+    'sortType'?: SortKeyAttributeAttributeSortTypeEnum;
 }
 
-export type SortKeyAttributeAttributeSortTypeEnum = 'DEFAULT' | 'LABEL' | 'ATTRIBUTE' | 'AREA';
 export type SortKeyAttributeAttributeDirectionEnum = 'ASC' | 'DESC';
+export type SortKeyAttributeAttributeSortTypeEnum = 'DEFAULT' | 'LABEL' | 'ATTRIBUTE' | 'AREA';
 
 /**
  * Sorting rule for sorting by total value. DataColumnLocators are only required if there is ambiguity. Locator for measureGroup is taken from the metric of the total.
@@ -3453,15 +3510,15 @@ export interface SortKeyTotal {
 }
 
 export interface SortKeyTotalTotal {
-    /**
-     * Local identifier of the total to sort by.
-     */
-    'totalIdentifier': string;
     'dataColumnLocators'?: DataColumnLocators;
     /**
      * Sorting elements - ascending/descending order.
      */
     'direction'?: SortKeyTotalTotalDirectionEnum;
+    /**
+     * Local identifier of the total to sort by.
+     */
+    'totalIdentifier': string;
 }
 
 export type SortKeyTotalTotalDirectionEnum = 'ASC' | 'DESC';
@@ -3499,21 +3556,21 @@ export interface SucceededOperation extends Operation {
  */
 export interface Suggestion {
     /**
-     * Suggestion query
-     */
-    'query': string;
-    /**
      * Suggestion button label
      */
     'label': string;
+    /**
+     * Suggestion query
+     */
+    'query': string;
 }
 
 export interface TestLlmProviderByIdRequest {
-    'providerConfig'?: TestLlmProviderByIdRequestProviderConfig;
     /**
      * Models overrides.
      */
     'models'?: Array<LlmModel>;
+    'providerConfig'?: TestLlmProviderByIdRequestProviderConfig;
 }
 
 /**
@@ -3522,26 +3579,31 @@ export interface TestLlmProviderByIdRequest {
 export type TestLlmProviderByIdRequestProviderConfig = AnthropicProviderConfig | AwsBedrockProviderConfig | AzureFoundryProviderConfig | OpenAIProviderConfig;
 
 export interface TestLlmProviderDefinitionRequest {
-    'providerConfig': TestLlmProviderByIdRequestProviderConfig;
     /**
      * Models to test.
      */
     'models'?: Array<LlmModel>;
+    'providerConfig': TestLlmProviderDefinitionRequestProviderConfig;
 }
+
+/**
+ * @type TestLlmProviderDefinitionRequestProviderConfig
+ */
+export type TestLlmProviderDefinitionRequestProviderConfig = AnthropicProviderConfig | AwsBedrockProviderConfig | AzureFoundryProviderConfig | OpenAIProviderConfig;
 
 export interface TestLlmProviderResponse {
     /**
-     * Whether the LLM provider is reachable.
+     * Per-model test results.
      */
-    'providerReachable': boolean;
+    'modelResults': Array<ModelTestResult>;
     /**
      * Message about the provider connectivity test.
      */
     'providerMessage': string;
     /**
-     * Per-model test results.
+     * Whether the LLM provider is reachable.
      */
-    'modelResults': Array<ModelTestResult>;
+    'providerReachable': boolean;
 }
 
 /**
@@ -3563,13 +3625,13 @@ export interface TimeSlicePartitionConfig {
      */
     'column': string;
     /**
-     * Date/time unit for partition granularity
-     */
-    'unit': TimeSlicePartitionConfigUnitEnum;
-    /**
      * How many units per slice.
      */
     'slices': number;
+    /**
+     * Date/time unit for partition granularity
+     */
+    'unit': TimeSlicePartitionConfigUnitEnum;
 }
 
 export type TimeSlicePartitionConfigUnitEnum = 'year' | 'quarter' | 'month' | 'week' | 'day' | 'hour' | 'minute' | 'second' | 'millisecond' | 'microsecond';
@@ -3579,13 +3641,13 @@ export type TimeSlicePartitionConfigUnitEnum = 'year' | 'quarter' | 'month' | 'w
  */
 export interface Total {
     /**
-     * Total identification within this request. Used e.g. in sorting by a total.
-     */
-    'localIdentifier': string;
-    /**
      * Aggregation function to compute the total.
      */
     'function': TotalFunctionEnum;
+    /**
+     * Total identification within this request. Used e.g. in sorting by a total.
+     */
+    'localIdentifier': string;
     /**
      * The metric for which the total will be computed
      */
@@ -3625,42 +3687,33 @@ export interface TotalResultHeader {
  */
 export interface TrendingObjectItem {
     /**
-     * Object ID.
-     */
-    'id': string;
-    /**
-     * Object type, e.g. dashboard, visualization, metric.
-     */
-    'type': string;
-    /**
-     * Workspace ID the object belongs to.
-     */
-    'workspaceId': string;
-    /**
-     * Object title.
-     */
-    'title': string;
-    /**
-     * Object description.
-     */
-    'description'?: string;
-    'tags': Array<string>;
-    /**
      * Timestamp when object was created.
      */
     'createdAt'?: string;
-    /**
-     * Timestamp when object was last modified.
-     */
-    'modifiedAt'?: string;
     /**
      * ID of the user who created the object.
      */
     'createdBy'?: string;
     /**
-     * ID of the user who last modified the object.
+     * ID of the associated dataset, if applicable.
      */
-    'modifiedBy'?: string;
+    'datasetId'?: string;
+    /**
+     * Title of the associated dataset, if applicable.
+     */
+    'datasetTitle'?: string;
+    /**
+     * Type of the associated dataset, if applicable.
+     */
+    'datasetType'?: string;
+    /**
+     * Object description.
+     */
+    'description'?: string;
+    /**
+     * Object ID.
+     */
+    'id': string;
     /**
      * If true, this object is hidden from AI search results by default.
      */
@@ -3670,29 +3723,38 @@ export interface TrendingObjectItem {
      */
     'isHiddenFromKda'?: boolean;
     /**
-     * URL of the visualization, if applicable.
-     */
-    'visualizationUrl'?: string;
-    /**
      * Type of the metric (e.g. MAQL), if applicable.
      */
     'metricType'?: string;
     /**
-     * ID of the associated dataset, if applicable.
+     * Timestamp when object was last modified.
      */
-    'datasetId'?: string;
+    'modifiedAt'?: string;
     /**
-     * Type of the associated dataset, if applicable.
+     * ID of the user who last modified the object.
      */
-    'datasetType'?: string;
+    'modifiedBy'?: string;
+    'tags': Array<string>;
     /**
-     * Title of the associated dataset, if applicable.
+     * Object title.
      */
-    'datasetTitle'?: string;
+    'title': string;
+    /**
+     * Object type, e.g. dashboard, visualization, metric.
+     */
+    'type': string;
     /**
      * Number of times this object has been used/referenced.
      */
     'usageCount': number;
+    /**
+     * URL of the visualization, if applicable.
+     */
+    'visualizationUrl'?: string;
+    /**
+     * Workspace ID the object belongs to.
+     */
+    'workspaceId': string;
 }
 
 export interface TrendingObjectsResult {
@@ -3765,12 +3827,12 @@ export interface UpdateDatabaseDataSourceResponse {
  * User context with ambient UI state (view) and explicitly referenced objects.
  */
 export interface UserContext {
-    'view'?: UIContext;
+    'activeObject'?: ActiveObjectIdentification;
     /**
      * Groups of explicitly referenced objects, each optionally scoped by a context (e.g. a dashboard context with widget references).
      */
     'referencedObjects'?: Array<ObjectReferenceGroup>;
-    'activeObject'?: ActiveObjectIdentification;
+    'view'?: UIContext;
 }
 
 export interface ValidateByItem {
@@ -3788,9 +3850,9 @@ export interface ValidateByItem {
  * Visualization config for smart-function rendering.
  */
 export interface VisualizationConfig {
-    'forecast'?: ForecastConfig;
     'anomalyDetection'?: AnomalyDetectionConfig;
     'clustering'?: ClusteringConfig;
+    'forecast'?: ForecastConfig;
     'whatIf'?: WhatIfScenarioConfig;
 }
 
@@ -3807,13 +3869,9 @@ export interface VisualizationObjectExecution {
  */
 export interface VisualizationSwitcherWidgetDescriptor {
     /**
-     * Widget object ID.
+     * ID of the currently active visualization in the switcher.
      */
-    'widgetId': string;
-    /**
-     * Widget title as displayed on the dashboard.
-     */
-    'title': string;
+    'activeVisualizationId': string;
     /**
      * Filters currently applied to the dashboard.
      */
@@ -3823,13 +3881,17 @@ export interface VisualizationSwitcherWidgetDescriptor {
      */
     'resultId'?: string;
     /**
-     * ID of the currently active visualization in the switcher.
+     * Widget title as displayed on the dashboard.
      */
-    'activeVisualizationId': string;
+    'title': string;
     /**
      * IDs of all visualizations available in the switcher.
      */
     'visualizationIds': Array<string>;
+    /**
+     * Widget object ID.
+     */
+    'widgetId': string;
 }
 
 /**
@@ -3855,13 +3917,13 @@ export interface WhatIfMeasureAdjustmentConfig {
  */
 export interface WhatIfScenarioConfig {
     /**
-     * Scenarios with alternative measure calculations
-     */
-    'scenarios': Array<WhatIfScenarioItem>;
-    /**
      * Whether baseline (unmodified) values are included
      */
     'includeBaseline': boolean;
+    /**
+     * Scenarios with alternative measure calculations
+     */
+    'scenarios': Array<WhatIfScenarioItem>;
 }
 
 /**
@@ -3869,45 +3931,50 @@ export interface WhatIfScenarioConfig {
  */
 export interface WhatIfScenarioItem {
     /**
-     * Human-readable scenario label
-     */
-    'label': string;
-    /**
      * Measure adjustments for this scenario
      */
     'adjustments': Array<WhatIfMeasureAdjustmentConfig>;
+    /**
+     * Human-readable scenario label
+     */
+    'label': string;
 }
 
 /**
  * Descriptor for a widget on the dashboard.
  */
 export interface WidgetDescriptor {
-    'filters'?: Array<OutlierDetectionRequestFiltersInner>;
+    'filters'?: Array<WidgetDescriptorFiltersInner>;
     'title': string;
     'widgetId': string;
     'widgetType': string;
 }
 
+/**
+ * @type WidgetDescriptorFiltersInner
+ */
+export type WidgetDescriptorFiltersInner = AbstractMeasureValueFilter | FilterDefinitionForSimpleMeasure | InlineFilterDefinition;
+
 export interface WorkflowDashboardSummaryRequestDto {
+    'customUserPrompt'?: string;
     'dashboardId': string;
     'keyMetricIds'?: Array<string>;
     'referenceQuarter'?: string;
-    'customUserPrompt'?: string;
 }
 
 export interface WorkflowDashboardSummaryResponseDto {
+    'message': string;
     'runId': string;
     'status': string;
-    'message': string;
 }
 
 export interface WorkflowStatusResponseDto {
-    'runId': string;
-    'status': string;
+    'currentPhase'?: string;
+    'error'?: string;
     'message': string;
     'result'?: { [key: string]: object; };
-    'error'?: string;
-    'currentPhase'?: string;
+    'runId': string;
+    'status': string;
 }
 
 

@@ -35,6 +35,18 @@ export interface ColumnStatisticWarning {
 export interface ColumnStatisticsEntry {
     'columnName': string;
     /**
+     * Total data size of the column in bytes.
+     */
+    'dataSize'?: number;
+    /**
+     * Maximum value in the column (string-encoded).
+     */
+    'max'?: string;
+    /**
+     * Minimum value in the column (string-encoded).
+     */
+    'min'?: string;
+    /**
      * NDV (Number of Distinct Values) — approximate cardinality of the column.
      */
     'ndv'?: number;
@@ -42,29 +54,17 @@ export interface ColumnStatisticsEntry {
      * Number of NULL values in the column.
      */
     'nullCount'?: number;
-    /**
-     * Minimum value in the column (string-encoded).
-     */
-    'min'?: string;
-    /**
-     * Maximum value in the column (string-encoded).
-     */
-    'max'?: string;
-    /**
-     * Total data size of the column in bytes.
-     */
-    'dataSize'?: number;
 }
 
 /**
  * A request to retrieve statistics for a column.
  */
 export interface ColumnStatisticsRequest {
-    'from': ColumnStatisticsRequestFrom;
     'columnName': string;
-    'statistics'?: Array<ColumnStatisticsRequestStatisticsEnum>;
-    'histogram'?: HistogramProperties;
     'frequency'?: FrequencyProperties;
+    'from': ColumnStatisticsRequestFrom;
+    'histogram'?: HistogramProperties;
+    'statistics'?: Array<ColumnStatisticsRequestStatisticsEnum>;
 }
 
 export type ColumnStatisticsRequestStatisticsEnum = 'COUNT' | 'COUNT_NULL' | 'COUNT_UNIQUE' | 'AVG' | 'STDDEV' | 'MIN' | 'MAX' | 'PERCENTILE_25' | 'PERCENTILE_50' | 'PERCENTILE_75';
@@ -75,9 +75,9 @@ export type ColumnStatisticsRequestStatisticsEnum = 'COUNT' | 'COUNT_NULL' | 'CO
 export type ColumnStatisticsRequestFrom = SqlQuery | Table;
 
 export interface ColumnStatisticsResponse {
-    'statistics'?: Array<ColumnStatistic>;
-    'histogram'?: Histogram;
     'frequency'?: Frequency;
+    'histogram'?: Histogram;
+    'statistics'?: Array<ColumnStatistic>;
     'warnings'?: Array<ColumnStatisticWarning>;
 }
 
@@ -86,13 +86,13 @@ export interface ColumnStatisticsResponse {
  */
 export interface ColumnWarning {
     /**
-     * Column name.
-     */
-    'name': string;
-    /**
      * Warning message related to the column.
      */
     'message': string;
+    /**
+     * Column name.
+     */
+    'name': string;
 }
 
 /**
@@ -121,25 +121,9 @@ export interface DataSourceSchemata {
  */
 export interface DeclarativeColumn {
     /**
-     * Column name. Must not contain NUL (0x00) characters.
-     */
-    'name': string;
-    /**
      * Column type
      */
     'dataType': DeclarativeColumnDataTypeEnum;
-    /**
-     * Is column part of primary key?
-     */
-    'isPrimaryKey'?: boolean;
-    /**
-     * Referenced table (Foreign key)
-     */
-    'referencedTableId'?: string;
-    /**
-     * Referenced table (Foreign key)
-     */
-    'referencedTableColumn'?: string;
     /**
      * Column description/comment from database
      */
@@ -149,9 +133,25 @@ export interface DeclarativeColumn {
      */
     'isNullable'?: boolean;
     /**
+     * Is column part of primary key?
+     */
+    'isPrimaryKey'?: boolean;
+    /**
+     * Column name. Must not contain NUL (0x00) characters.
+     */
+    'name': string;
+    /**
      * Value used as sentinel for nullable columns
      */
     'nullValue'?: string;
+    /**
+     * Referenced table (Foreign key)
+     */
+    'referencedTableColumn'?: string;
+    /**
+     * Referenced table (Foreign key)
+     */
+    'referencedTableId'?: string;
 }
 
 export type DeclarativeColumnDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
@@ -161,9 +161,17 @@ export type DeclarativeColumnDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC
  */
 export interface DeclarativeTable {
     /**
+     * An array of physical columns
+     */
+    'columns': Array<DeclarativeColumn>;
+    /**
      * Table id.
      */
     'id': string;
+    /**
+     * Table or view name prefix used in scan. Will be stripped when generating LDM.
+     */
+    'namePrefix'?: string;
     /**
      * Path to table.
      */
@@ -172,14 +180,6 @@ export interface DeclarativeTable {
      * Table type: TABLE or VIEW.
      */
     'type': string;
-    /**
-     * Table or view name prefix used in scan. Will be stripped when generating LDM.
-     */
-    'namePrefix'?: string;
-    /**
-     * An array of physical columns
-     */
-    'columns': Array<DeclarativeColumn>;
 }
 
 /**
@@ -227,10 +227,6 @@ export interface HistogramProperties {
  */
 export interface ScanRequest {
     /**
-     * A separator between prefixes and the names.
-     */
-    'separator': string;
-    /**
      * A flag indicating whether the tables should be scanned.
      */
     'scanTables': boolean;
@@ -242,6 +238,10 @@ export interface ScanRequest {
      * What schemata will be scanned.
      */
     'schemata'?: Array<string>;
+    /**
+     * A separator between prefixes and the names.
+     */
+    'separator': string;
     /**
      * Tables starting with this prefix will be scanned. The prefix is then followed by the value of `separator` parameter. Given the table prefix is `out_table` and separator is `__`, the table with name like `out_table__customers` will be scanned.
      */
@@ -289,10 +289,6 @@ export interface ScanSqlResponse {
  */
 export interface SqlColumn {
     /**
-     * Column name
-     */
-    'name': string;
-    /**
      * Column type
      */
     'dataType': SqlColumnDataTypeEnum;
@@ -300,6 +296,10 @@ export interface SqlColumn {
      * Column description/comment from database
      */
     'description'?: string;
+    /**
+     * Column name
+     */
+    'name': string;
     /**
      * Value used as sentinel for null values in the column
      */
@@ -317,17 +317,17 @@ export interface Table {
 }
 
 export interface TableStatisticsEntry {
-    'schemaName': string;
-    'tableName': string;
-    /**
-     * Total number of rows in the table.
-     */
-    'rowCount'?: number;
+    'columns': Array<ColumnStatisticsEntry>;
     /**
      * Total data size of the table in bytes.
      */
     'dataSize'?: number;
-    'columns': Array<ColumnStatisticsEntry>;
+    /**
+     * Total number of rows in the table.
+     */
+    'rowCount'?: number;
+    'schemaName': string;
+    'tableName': string;
 }
 
 export interface TableStatisticsRequest {
@@ -341,29 +341,62 @@ export interface TableStatisticsResponse {
 }
 
 export interface TableStatisticsWarning {
-    'tableName'?: string;
     'message': string;
+    'tableName'?: string;
 }
 
 /**
  * Warnings related to single table.
  */
 export interface TableWarning {
-    /**
-     * Table name.
-     */
-    'name': string;
+    'columns': Array<ColumnWarning>;
     /**
      * Warning message related to the table.
      */
     'message'?: string;
-    'columns': Array<ColumnWarning>;
+    /**
+     * Table name.
+     */
+    'name': string;
 }
 
 /**
  * A request containing all information for testing data source definition.
  */
 export interface TestDefinitionRequest {
+    /**
+     * Type of authentication used to connect to the database. Determines how the supplied credentials are used (e.g. KEY_PAIR, OIDC_PASSTHROUGH).
+     */
+    'authenticationType'?: TestDefinitionRequestAuthenticationTypeEnum | null;
+    /**
+     * Id for client based authentication for data sources which supports it.
+     */
+    'clientId'?: string;
+    /**
+     * Secret for client based authentication for data sources which supports it.
+     */
+    'clientSecret'?: string;
+    'parameters'?: Array<DataSourceParameter>;
+    /**
+     * Database user password.
+     */
+    'password'?: string;
+    /**
+     * Private key for data sources which supports key-pair authentication.
+     */
+    'privateKey'?: string;
+    /**
+     * Passphrase for a encrypted version of a private key.
+     */
+    'privateKeyPassphrase'?: string;
+    /**
+     * Database schema.
+     */
+    'schema'?: string;
+    /**
+     * Secret for token based authentication for data sources which supports it.
+     */
+    'token'?: string;
     /**
      * Type of database, where test should connect to.
      */
@@ -373,59 +406,26 @@ export interface TestDefinitionRequest {
      */
     'url'?: string;
     /**
-     * Database schema.
-     */
-    'schema'?: string;
-    /**
      * Database user name.
      */
     'username'?: string;
-    /**
-     * Database user password.
-     */
-    'password'?: string;
-    /**
-     * Secret for token based authentication for data sources which supports it.
-     */
-    'token'?: string;
-    /**
-     * Private key for data sources which supports key-pair authentication.
-     */
-    'privateKey'?: string;
-    /**
-     * Passphrase for a encrypted version of a private key.
-     */
-    'privateKeyPassphrase'?: string;
-    /**
-     * Id for client based authentication for data sources which supports it.
-     */
-    'clientId'?: string;
-    /**
-     * Secret for client based authentication for data sources which supports it.
-     */
-    'clientSecret'?: string;
-    /**
-     * Type of authentication used to connect to the database. Determines how the supplied credentials are used (e.g. KEY_PAIR, OIDC_PASSTHROUGH).
-     */
-    'authenticationType'?: TestDefinitionRequestAuthenticationTypeEnum | null;
-    'parameters'?: Array<DataSourceParameter>;
 }
 
-export type TestDefinitionRequestTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'GREENPLUM' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
 export type TestDefinitionRequestAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'OIDC_PASSTHROUGH';
+export type TestDefinitionRequestTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'GREENPLUM' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
 
 /**
  * A structure containing duration of the test queries run on a data source. It is omitted if an error happens.
  */
 export interface TestQueryDuration {
     /**
-     * Field containing duration of a test select query on a data source. In milliseconds.
-     */
-    'simpleSelect': number;
-    /**
      * Field containing duration of a test \'create table as select\' query on a datasource. In milliseconds. The field is omitted if a data source doesn\'t support caching.
      */
     'createCacheTable'?: number;
+    /**
+     * Field containing duration of a test select query on a data source. In milliseconds.
+     */
+    'simpleSelect': number;
 }
 
 /**
@@ -433,25 +433,22 @@ export interface TestQueryDuration {
  */
 export interface TestRequest {
     /**
-     * URL to database in JDBC format, where test should connect to.
+     * Type of authentication used to connect to the database. Determines how the supplied credentials are used (e.g. KEY_PAIR, OIDC_PASSTHROUGH).
      */
-    'url'?: string;
+    'authenticationType'?: TestRequestAuthenticationTypeEnum | null;
     /**
-     * Database schema.
+     * Id for client based authentication for data sources which supports it.
      */
-    'schema'?: string;
+    'clientId'?: string;
     /**
-     * Database user name.
+     * Secret for client based authentication for data sources which supports it.
      */
-    'username'?: string;
+    'clientSecret'?: string;
+    'parameters'?: Array<DataSourceParameter>;
     /**
      * Database user password.
      */
     'password'?: string;
-    /**
-     * Secret for token based authentication for data sources which supports it.
-     */
-    'token'?: string;
     /**
      * Private key for data sources which supports key-pair authentication.
      */
@@ -461,18 +458,21 @@ export interface TestRequest {
      */
     'privateKeyPassphrase'?: string;
     /**
-     * Id for client based authentication for data sources which supports it.
+     * Database schema.
      */
-    'clientId'?: string;
+    'schema'?: string;
     /**
-     * Secret for client based authentication for data sources which supports it.
+     * Secret for token based authentication for data sources which supports it.
      */
-    'clientSecret'?: string;
+    'token'?: string;
     /**
-     * Type of authentication used to connect to the database. Determines how the supplied credentials are used (e.g. KEY_PAIR, OIDC_PASSTHROUGH).
+     * URL to database in JDBC format, where test should connect to.
      */
-    'authenticationType'?: TestRequestAuthenticationTypeEnum | null;
-    'parameters'?: Array<DataSourceParameter>;
+    'url'?: string;
+    /**
+     * Database user name.
+     */
+    'username'?: string;
 }
 
 export type TestRequestAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'OIDC_PASSTHROUGH';
@@ -482,14 +482,14 @@ export type TestRequestAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 
  */
 export interface TestResponse {
     /**
-     * A flag indicating whether test passed or not.
-     */
-    'successful': boolean;
-    /**
      * Field containing more details in case of a failure. Details are available to a privileged user only.
      */
     'error'?: string;
     'queryDurationMillis'?: TestQueryDuration;
+    /**
+     * A flag indicating whether test passed or not.
+     */
+    'successful': boolean;
 }
 
 

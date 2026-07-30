@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "remove enableArbitraryFilterAD/KD and enableMatchFilterAD/KD feature flags; arbitrary and match text attribute filters are now always enabled",
+            "type": "patch",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "ivan.nejezchleb@gooddata.com"
+}

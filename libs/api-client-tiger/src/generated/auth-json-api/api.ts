@@ -29,13 +29,13 @@ export interface AmplitudeService {
      */
     'aiProjectApiKey': string;
     /**
-     * API key for GoodData common project - used by backend.
-     */
-    'gdCommonApiKey': string;
-    /**
      * Amplitude endpoint URL.
      */
     'endpoint': string;
+    /**
+     * API key for GoodData common project - used by backend.
+     */
+    'gdCommonApiKey': string;
     /**
      * Optional reporting endpoint for proxying telemetry events.
      */
@@ -46,14 +46,14 @@ export interface AmplitudeService {
  * Defines entitlements for given organization.
  */
 export interface ApiEntitlement {
+    'expiry'?: string;
     'name': string;
     'value'?: string;
-    'expiry'?: string;
 }
 
 export interface FeatureFlagsContext {
-    'earlyAccessValues': Array<string>;
     'earlyAccess': string;
+    'earlyAccessValues': Array<string>;
 }
 
 /**
@@ -65,13 +65,13 @@ export interface Features {
 
 export interface Invitation {
     'email': string;
-    'userId': string;
     'firstName'?: string;
-    'lastName'?: string;
     /**
      * Force resend invitation email even if a pending invitation exists. Maximum 3 emails can be sent per invitation (1 initial + 2 resends)
      */
     'forceSend'?: boolean;
+    'lastName'?: string;
+    'userId': string;
 }
 
 export interface LiveFeatureFlagConfiguration {
@@ -100,13 +100,13 @@ export interface MatomoService {
      */
     'host': string;
     /**
-     * Site ID on telemetry server.
-     */
-    'siteId': number;
-    /**
      * Optional reporting endpoint for proxying telemetry events.
      */
     'reportingEndpoint'?: string;
+    /**
+     * Site ID on telemetry server.
+     */
+    'siteId': number;
 }
 
 /**
@@ -120,18 +120,18 @@ export interface OpenTelemetryService {
 }
 
 export interface Profile {
-    'organizationId': string;
-    'organizationName': string;
-    'name'?: string;
-    'userId': string;
-    'permissions': Array<ProfilePermissionsEnum>;
-    'telemetryConfig': TelemetryConfig;
-    'links': ProfileLinks;
-    'features': ProfileFeatures;
     /**
      * Defines entitlements for given organization.
      */
     'entitlements': Array<ApiEntitlement>;
+    'features': ProfileFeatures;
+    'links': ProfileLinks;
+    'name'?: string;
+    'organizationId': string;
+    'organizationName': string;
+    'permissions': Array<ProfilePermissionsEnum>;
+    'telemetryConfig': TelemetryConfig;
+    'userId': string;
 }
 
 export type ProfilePermissionsEnum = 'MANAGE' | 'SELF_CREATE_TOKEN' | 'BASE_UI_ACCESS';
@@ -142,8 +142,8 @@ export type ProfilePermissionsEnum = 'MANAGE' | 'SELF_CREATE_TOKEN' | 'BASE_UI_A
 export type ProfileFeatures = LiveFeatures | StaticFeatures;
 
 export interface ProfileLinks {
-    'self': string;
     'organization': string;
+    'self': string;
     'user': string;
 }
 
@@ -189,9 +189,9 @@ export interface TelemetryContext {
  * Available telemetry services.
  */
 export interface TelemetryServices {
+    'amplitude'?: AmplitudeService;
     'matomo'?: MatomoService;
     'openTelemetry'?: OpenTelemetryService;
-    'amplitude'?: AmplitudeService;
 }
 
 

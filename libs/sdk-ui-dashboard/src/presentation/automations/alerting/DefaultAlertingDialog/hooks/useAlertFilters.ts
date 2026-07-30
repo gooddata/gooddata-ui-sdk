@@ -44,11 +44,13 @@ export interface IUseAlertFiltersProps {
 }
 
 /**
- * Extracts the alerting dialog's filter-change reconciliation out of `useEditAlert` into a focused
- * hook. Pure refactor — scope is the mutation path only (`onFiltersChange` / `onApplyCurrentFilters`);
- * the filter *read* model (`useAutomationFiltersSelect` in the renderer) is intentionally unchanged.
+ * Owns the alerting dialog's filter changes: `onFiltersChange` and `onApplyCurrentFilters` update the
+ * edited filters and mirror the result into the alert draft.
  *
- * All inputs are params — the hook reads nothing from context.
+ * Mutation only. The matching read model lives elsewhere — the renderer derives it through
+ * `useAutomationFiltersSelect` — so the two directions are not yet unified behind a single hook.
+ *
+ * All inputs are params; this hook reads no context.
  *
  * @internal
  */

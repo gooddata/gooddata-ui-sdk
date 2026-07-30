@@ -273,7 +273,7 @@ export function ScheduledMailDialogRenderer({
     );
 
     const { isValid } = useValidateExistingAutomationFilters({
-        automationToEdit: scheduledExportToEdit!,
+        automationToEdit: scheduledExportToEdit,
         widget,
         insight,
     });

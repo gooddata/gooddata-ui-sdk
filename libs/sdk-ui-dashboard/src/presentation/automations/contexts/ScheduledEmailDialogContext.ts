@@ -16,8 +16,10 @@ import type {
 
 /**
  * Sub-context for the scheduled-email create/edit dialog.
- * Shape grows during Phase 2 migration as DefaultScheduledEmailDialog and its hooks are migrated.
- * The connector hydrates this from dashboard state and provides the CRUD callbacks.
+ *
+ * The connector hydrates this from dashboard state and provides the CRUD callbacks; the dialog and its
+ * hooks read it instead of reaching into the dashboard store. That direction is enforced by the
+ * `no-model-imports-in-clean-scheduled-email` rule in `.dependency-cruiser.js`.
  */
 export interface IScheduledEmailDialogContextValue {
     widget?: IWidget;

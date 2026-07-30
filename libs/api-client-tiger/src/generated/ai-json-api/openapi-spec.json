@@ -2021,19 +2021,6 @@
             },
             "AbsoluteDateFilterBody": {
                 "properties": {
-                    "dataset": {
-                        "$ref": "#/components/schemas/AfmObjectIdentifier"
-                    },
-                    "from": {
-                        "type": "string",
-                        "pattern": "^\\d{4}-\\d{1,2}-\\d{1,2}( \\d{1,2}:\\d{1,2})?$",
-                        "title": "From"
-                    },
-                    "to": {
-                        "type": "string",
-                        "pattern": "^\\d{4}-\\d{1,2}-\\d{1,2}( \\d{1,2}:\\d{1,2})?$",
-                        "title": "To"
-                    },
                     "applyOnResult": {
                         "anyOf": [
                             {
@@ -2045,6 +2032,9 @@
                         ],
                         "title": "Applyonresult"
                     },
+                    "dataset": {
+                        "$ref": "#/components/schemas/AfmObjectIdentifier"
+                    },
                     "emptyValueHandling": {
                         "anyOf": [
                             {
@@ -2054,6 +2044,11 @@
                                 "type": "null"
                             }
                         ]
+                    },
+                    "from": {
+                        "type": "string",
+                        "pattern": "^\\d{4}-\\d{1,2}-\\d{1,2}( \\d{1,2}:\\d{1,2})?$",
+                        "title": "From"
                     },
                     "localIdentifier": {
                         "anyOf": [
@@ -2065,6 +2060,11 @@
                             }
                         ],
                         "title": "Localidentifier"
+                    },
+                    "to": {
+                        "type": "string",
+                        "pattern": "^\\d{4}-\\d{1,2}-\\d{1,2}( \\d{1,2}:\\d{1,2})?$",
+                        "title": "To"
                     }
                 },
                 "additionalProperties": false,
@@ -2151,14 +2151,6 @@
             },
             "AgentListItemResponse": {
                 "properties": {
-                    "id": {
-                        "type": "string",
-                        "title": "Id"
-                    },
-                    "name": {
-                        "type": "string",
-                        "title": "Name"
-                    },
                     "description": {
                         "anyOf": [
                             {
@@ -2170,9 +2162,25 @@
                         ],
                         "title": "Description"
                     },
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    },
                     "isAvailableToAll": {
                         "type": "boolean",
                         "title": "Isavailabletoall"
+                    },
+                    "lastUsedAt": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Lastusedat"
                     },
                     "modifiedAt": {
                         "anyOf": [
@@ -2186,17 +2194,9 @@
                         ],
                         "title": "Modifiedat"
                     },
-                    "lastUsedAt": {
-                        "anyOf": [
-                            {
-                                "type": "string",
-                                "format": "date-time"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Lastusedat"
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
                     }
                 },
                 "type": "object",
@@ -2275,10 +2275,6 @@
             },
             "AlertDefinition": {
                 "properties": {
-                    "execution": {
-                        "$ref": "#/components/schemas/AlertExecution",
-                        "description": "Execution (AFM) definition of the alert."
-                    },
                     "condition": {
                         "oneOf": [
                             {
@@ -2297,10 +2293,9 @@
                         "title": "Condition",
                         "description": "Alert trigger condition."
                     },
-                    "trigger": {
-                        "$ref": "#/components/schemas/AlertTrigger",
-                        "description": "Trigger behavior.",
-                        "default": "ALWAYS"
+                    "execution": {
+                        "$ref": "#/components/schemas/AlertExecution",
+                        "description": "Execution (AFM) definition of the alert."
                     },
                     "interval": {
                         "anyOf": [
@@ -2312,6 +2307,11 @@
                             }
                         ],
                         "description": "Interval granularity for ONCE_PER_INTERVAL triggers."
+                    },
+                    "trigger": {
+                        "$ref": "#/components/schemas/AlertTrigger",
+                        "description": "Trigger behavior.",
+                        "default": "ALWAYS"
                     }
                 },
                 "additionalProperties": false,
@@ -2325,15 +2325,6 @@
             },
             "AlertExecution": {
                 "properties": {
-                    "measures": {
-                        "items": {
-                            "additionalProperties": true,
-                            "type": "object"
-                        },
-                        "type": "array",
-                        "title": "Measures",
-                        "description": "Metrics computed by the alert (1-2)."
-                    },
                     "attributes": {
                         "items": {
                             "additionalProperties": true,
@@ -2351,6 +2342,15 @@
                         "type": "array",
                         "title": "Filters",
                         "description": "Alert execution filters."
+                    },
+                    "measures": {
+                        "items": {
+                            "additionalProperties": true,
+                            "type": "object"
+                        },
+                        "type": "array",
+                        "title": "Measures",
+                        "description": "Metrics computed by the alert (1-2)."
                     }
                 },
                 "additionalProperties": false,
@@ -2360,18 +2360,38 @@
             },
             "AlertProposal": {
                 "properties": {
-                    "title": {
-                        "type": "string",
-                        "title": "Title",
-                        "description": "Alert title."
-                    },
                     "alert": {
                         "$ref": "#/components/schemas/AlertDefinition",
                         "description": "The alert definition (condition, execution, trigger)."
                     },
-                    "notificationChannel": {
-                        "$ref": "#/components/schemas/NotificationChannelRef",
-                        "description": "Notification channel for delivery."
+                    "automationId": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Automationid",
+                        "description": "Automation identifier proposed for creation."
+                    },
+                    "cta": {
+                        "type": "string",
+                        "title": "Cta",
+                        "description": "Confirmation call to action.",
+                        "default": "Should I create this alert?"
+                    },
+                    "dashboard": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/DashboardRef"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Dashboard the alert is bound to."
                     },
                     "description": {
                         "anyOf": [
@@ -2385,7 +2405,7 @@
                         "title": "Description",
                         "description": "Alert description."
                     },
-                    "automationId": {
+                    "forLabel": {
                         "anyOf": [
                             {
                                 "type": "string"
@@ -2394,8 +2414,24 @@
                                 "type": "null"
                             }
                         ],
-                        "title": "Automationid",
-                        "description": "Automation identifier proposed for creation."
+                        "title": "Forlabel",
+                        "description": "Human-readable 'For' summary."
+                    },
+                    "forMode": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Formode",
+                        "description": "Display mode for the monitored population."
+                    },
+                    "notificationChannel": {
+                        "$ref": "#/components/schemas/NotificationChannelRef",
+                        "description": "Notification channel for delivery."
                     },
                     "recipients": {
                         "items": {
@@ -2416,46 +2452,10 @@
                         ],
                         "description": "Optional cron schedule."
                     },
-                    "dashboard": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/DashboardRef"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Dashboard the alert is bound to."
-                    },
-                    "forMode": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Formode",
-                        "description": "Display mode for the monitored population."
-                    },
-                    "forLabel": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Forlabel",
-                        "description": "Human-readable 'For' summary."
-                    },
-                    "cta": {
+                    "title": {
                         "type": "string",
-                        "title": "Cta",
-                        "description": "Confirmation call to action.",
-                        "default": "Should I create this alert?"
+                        "title": "Title",
+                        "description": "Alert title."
                     }
                 },
                 "additionalProperties": false,
@@ -2470,13 +2470,6 @@
             },
             "AlertProposalPart": {
                 "properties": {
-                    "type": {
-                        "type": "string",
-                        "const": "alertProposal",
-                        "title": "Type",
-                        "description": "Type of multipart part.",
-                        "default": "alertProposal"
-                    },
                     "alertProposal": {
                         "anyOf": [
                             {
@@ -2487,6 +2480,13 @@
                             }
                         ],
                         "description": "Optional full alert proposal payload when available."
+                    },
+                    "type": {
+                        "type": "string",
+                        "const": "alertProposal",
+                        "title": "Type",
+                        "description": "Type of multipart part.",
+                        "default": "alertProposal"
                     }
                 },
                 "additionalProperties": false,
@@ -2495,10 +2495,17 @@
             },
             "AlertRecipient": {
                 "properties": {
-                    "label": {
-                        "type": "string",
-                        "title": "Label",
-                        "description": "Recipient display label."
+                    "email": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Email",
+                        "description": "External recipient email when available."
                     },
                     "id": {
                         "anyOf": [
@@ -2512,17 +2519,10 @@
                         "title": "Id",
                         "description": "Internal user identifier when available."
                     },
-                    "email": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Email",
-                        "description": "External recipient email when available."
+                    "label": {
+                        "type": "string",
+                        "title": "Label",
+                        "description": "Recipient display label."
                     }
                 },
                 "additionalProperties": false,
@@ -2601,19 +2601,6 @@
             },
             "AllTimeDateFilterBody-Input": {
                 "properties": {
-                    "dataset": {
-                        "$ref": "#/components/schemas/AfmObjectIdentifier"
-                    },
-                    "granularity": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/DateGranularity-Input"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ]
-                    },
                     "applyOnResult": {
                         "anyOf": [
                             {
@@ -2625,10 +2612,23 @@
                         ],
                         "title": "Applyonresult"
                     },
+                    "dataset": {
+                        "$ref": "#/components/schemas/AfmObjectIdentifier"
+                    },
                     "emptyValueHandling": {
                         "anyOf": [
                             {
                                 "$ref": "#/components/schemas/EmptyValueHandling"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "granularity": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/DateGranularity-Input"
                             },
                             {
                                 "type": "null"
@@ -2656,19 +2656,6 @@
             },
             "AllTimeDateFilterBody-Output": {
                 "properties": {
-                    "dataset": {
-                        "$ref": "#/components/schemas/AfmObjectIdentifier"
-                    },
-                    "granularity": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/app__application__dtos__afm__filter_definition__DateGranularity"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ]
-                    },
                     "applyOnResult": {
                         "anyOf": [
                             {
@@ -2680,10 +2667,23 @@
                         ],
                         "title": "Applyonresult"
                     },
+                    "dataset": {
+                        "$ref": "#/components/schemas/AfmObjectIdentifier"
+                    },
                     "emptyValueHandling": {
                         "anyOf": [
                             {
                                 "$ref": "#/components/schemas/EmptyValueHandling"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "granularity": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/app__application__dtos__afm__filter_definition__DateGranularity"
                             },
                             {
                                 "type": "null"
@@ -2711,6 +2711,11 @@
             },
             "AllowedRelationshipType": {
                 "properties": {
+                    "allowOrphans": {
+                        "type": "boolean",
+                        "title": "Alloworphans",
+                        "default": true
+                    },
                     "sourceType": {
                         "type": "string",
                         "title": "Sourcetype"
@@ -2718,11 +2723,6 @@
                     "targetType": {
                         "type": "string",
                         "title": "Targettype"
-                    },
-                    "allowOrphans": {
-                        "type": "boolean",
-                        "title": "Alloworphans",
-                        "default": true
                     }
                 },
                 "type": "object",
@@ -2748,20 +2748,20 @@
             },
             "AnomalyDetection": {
                 "properties": {
+                    "dataset": {
+                        "$ref": "#/components/schemas/AlertDatasetRef",
+                        "description": "Date dataset used for anomaly detection."
+                    },
+                    "granularity": {
+                        "$ref": "#/components/schemas/AnomalyDetectionGranularity",
+                        "description": "Time-based granularity of the analysis."
+                    },
                     "measure": {
                         "$ref": "#/components/schemas/MetricOperand",
                         "description": "Metric analyzed for anomalies."
                     },
                     "sensitivity": {
                         "$ref": "#/components/schemas/Sensitivity"
-                    },
-                    "granularity": {
-                        "$ref": "#/components/schemas/AnomalyDetectionGranularity",
-                        "description": "Time-based granularity of the analysis."
-                    },
-                    "dataset": {
-                        "$ref": "#/components/schemas/AlertDatasetRef",
-                        "description": "Date dataset used for anomaly detection."
                     }
                 },
                 "additionalProperties": false,
@@ -2789,13 +2789,13 @@
             },
             "ArithmeticMeasure": {
                 "properties": {
-                    "operator": {
-                        "$ref": "#/components/schemas/ArithmeticOperator",
-                        "description": "Arithmetic operator between the two metrics."
-                    },
                     "left": {
                         "$ref": "#/components/schemas/MetricOperand",
                         "description": "First metric."
+                    },
+                    "operator": {
+                        "$ref": "#/components/schemas/ArithmeticOperator",
+                        "description": "Arithmetic operator between the two metrics."
                     },
                     "right": {
                         "$ref": "#/components/schemas/MetricOperand",
@@ -2822,6 +2822,9 @@
             },
             "AttributeFilter": {
                 "properties": {
+                    "state": {
+                        "$ref": "#/components/schemas/AttributeFilterState"
+                    },
                     "type": {
                         "type": "string",
                         "const": "attribute_filter",
@@ -2830,9 +2833,6 @@
                     "using": {
                         "type": "string",
                         "title": "Using"
-                    },
-                    "state": {
-                        "$ref": "#/components/schemas/AttributeFilterState"
                     }
                 },
                 "additionalProperties": false,
@@ -2870,19 +2870,19 @@
             },
             "AttributeFilterState": {
                 "properties": {
-                    "include": {
-                        "items": {
-                            "type": "string"
-                        },
-                        "type": "array",
-                        "title": "Include"
-                    },
                     "exclude": {
                         "items": {
                             "type": "string"
                         },
                         "type": "array",
                         "title": "Exclude"
+                    },
+                    "include": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Include"
                     }
                 },
                 "additionalProperties": false,
@@ -2891,10 +2891,10 @@
             },
             "AttributeSortItem": {
                 "properties": {
-                    "type": {
+                    "aggregation": {
                         "type": "string",
-                        "const": "attribute_sort",
-                        "title": "Type"
+                        "const": "SUM",
+                        "title": "Aggregation"
                     },
                     "by": {
                         "type": "string",
@@ -2908,10 +2908,10 @@
                         ],
                         "title": "Direction"
                     },
-                    "aggregation": {
+                    "type": {
                         "type": "string",
-                        "const": "SUM",
-                        "title": "Aggregation"
+                        "const": "attribute_sort",
+                        "title": "Type"
                     }
                 },
                 "additionalProperties": false,
@@ -2930,17 +2930,6 @@
                         "format": "binary",
                         "title": "File"
                     },
-                    "title": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Title"
-                    },
                     "scopes": {
                         "anyOf": [
                             {
@@ -2954,6 +2943,17 @@
                             }
                         ],
                         "title": "Scopes"
+                    },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title"
                     }
                 },
                 "type": "object",
@@ -2969,17 +2969,6 @@
                         "format": "binary",
                         "title": "File"
                     },
-                    "title": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Title"
-                    },
                     "scopes": {
                         "anyOf": [
                             {
@@ -2993,6 +2982,17 @@
                             }
                         ],
                         "title": "Scopes"
+                    },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title"
                     }
                 },
                 "type": "object",
@@ -3008,17 +3008,6 @@
                         "format": "binary",
                         "title": "File"
                     },
-                    "title": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Title"
-                    },
                     "scopes": {
                         "anyOf": [
                             {
@@ -3032,6 +3021,17 @@
                             }
                         ],
                         "title": "Scopes"
+                    },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title"
                     }
                 },
                 "type": "object",
@@ -3047,17 +3047,6 @@
                         "format": "binary",
                         "title": "File"
                     },
-                    "title": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Title"
-                    },
                     "scopes": {
                         "anyOf": [
                             {
@@ -3071,6 +3060,17 @@
                             }
                         ],
                         "title": "Scopes"
+                    },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title"
                     }
                 },
                 "type": "object",
@@ -3081,9 +3081,6 @@
             },
             "BoundedFilter-Input": {
                 "properties": {
-                    "granularity": {
-                        "$ref": "#/components/schemas/DateGranularity-Input"
-                    },
                     "from": {
                         "anyOf": [
                             {
@@ -3094,6 +3091,9 @@
                             }
                         ],
                         "title": "From"
+                    },
+                    "granularity": {
+                        "$ref": "#/components/schemas/DateGranularity-Input"
                     },
                     "to": {
                         "anyOf": [
@@ -3116,9 +3116,6 @@
             },
             "BoundedFilter-Output": {
                 "properties": {
-                    "granularity": {
-                        "$ref": "#/components/schemas/app__application__dtos__afm__filter_definition__DateGranularity"
-                    },
                     "from": {
                         "anyOf": [
                             {
@@ -3129,6 +3126,9 @@
                             }
                         ],
                         "title": "From"
+                    },
+                    "granularity": {
+                        "$ref": "#/components/schemas/app__application__dtos__afm__filter_definition__DateGranularity"
                     },
                     "to": {
                         "anyOf": [
@@ -3165,13 +3165,13 @@
             },
             "Comparison": {
                 "properties": {
-                    "operator": {
-                        "$ref": "#/components/schemas/ComparisonConditionOperator",
-                        "description": "Comparison operator."
-                    },
                     "left": {
                         "$ref": "#/components/schemas/MetricOperand",
                         "description": "Metric being compared."
+                    },
+                    "operator": {
+                        "$ref": "#/components/schemas/ComparisonConditionOperator",
+                        "description": "Comparison operator."
                     },
                     "right": {
                         "oneOf": [
@@ -3237,34 +3237,16 @@
             },
             "ComparisonMeasureValueFilterBody": {
                 "properties": {
-                    "measure": {
+                    "applyOnResult": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/AfmObjectIdentifier"
-                            },
-                            {
-                                "$ref": "#/components/schemas/AfmLocalIdentifier"
-                            }
-                        ],
-                        "title": "Measure"
-                    },
-                    "operator": {
-                        "$ref": "#/components/schemas/ComparisonMeasureValueOperator"
-                    },
-                    "value": {
-                        "type": "number",
-                        "title": "Value"
-                    },
-                    "treatNullValuesAs": {
-                        "anyOf": [
-                            {
-                                "type": "number"
+                                "type": "boolean"
                             },
                             {
                                 "type": "null"
                             }
                         ],
-                        "title": "Treatnullvaluesas"
+                        "title": "Applyonresult"
                     },
                     "dimensionality": {
                         "anyOf": [
@@ -3287,17 +3269,6 @@
                         ],
                         "title": "Dimensionality"
                     },
-                    "applyOnResult": {
-                        "anyOf": [
-                            {
-                                "type": "boolean"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Applyonresult"
-                    },
                     "localIdentifier": {
                         "anyOf": [
                             {
@@ -3308,6 +3279,35 @@
                             }
                         ],
                         "title": "Localidentifier"
+                    },
+                    "measure": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/AfmObjectIdentifier"
+                            },
+                            {
+                                "$ref": "#/components/schemas/AfmLocalIdentifier"
+                            }
+                        ],
+                        "title": "Measure"
+                    },
+                    "operator": {
+                        "$ref": "#/components/schemas/ComparisonMeasureValueOperator"
+                    },
+                    "treatNullValuesAs": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Treatnullvaluesas"
+                    },
+                    "value": {
+                        "type": "number",
+                        "title": "Value"
                     }
                 },
                 "additionalProperties": false,
@@ -3346,16 +3346,16 @@
             },
             "CompoundMeasureValueFilterBody": {
                 "properties": {
-                    "measure": {
+                    "applyOnResult": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/AfmObjectIdentifier"
+                                "type": "boolean"
                             },
                             {
-                                "$ref": "#/components/schemas/AfmLocalIdentifier"
+                                "type": "null"
                             }
                         ],
-                        "title": "Measure"
+                        "title": "Applyonresult"
                     },
                     "conditions": {
                         "items": {
@@ -3370,17 +3370,6 @@
                         },
                         "type": "array",
                         "title": "Conditions"
-                    },
-                    "treatNullValuesAs": {
-                        "anyOf": [
-                            {
-                                "type": "number"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Treatnullvaluesas"
                     },
                     "dimensionality": {
                         "anyOf": [
@@ -3403,17 +3392,6 @@
                         ],
                         "title": "Dimensionality"
                     },
-                    "applyOnResult": {
-                        "anyOf": [
-                            {
-                                "type": "boolean"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Applyonresult"
-                    },
                     "localIdentifier": {
                         "anyOf": [
                             {
@@ -3424,6 +3402,28 @@
                             }
                         ],
                         "title": "Localidentifier"
+                    },
+                    "measure": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/AfmObjectIdentifier"
+                            },
+                            {
+                                "$ref": "#/components/schemas/AfmLocalIdentifier"
+                            }
+                        ],
+                        "title": "Measure"
+                    },
+                    "treatNullValuesAs": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Treatnullvaluesas"
                     }
                 },
                 "additionalProperties": false,
@@ -3436,11 +3436,6 @@
             },
             "ConversationFeedbackRequest": {
                 "properties": {
-                    "responseId": {
-                        "type": "string",
-                        "minLength": 1,
-                        "title": "Responseid"
-                    },
                     "feedback": {
                         "anyOf": [
                             {
@@ -3450,6 +3445,11 @@
                                 "type": "null"
                             }
                         ]
+                    },
+                    "responseId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "title": "Responseid"
                     }
                 },
                 "type": "object",
@@ -3480,36 +3480,29 @@
             },
             "ConversationItemResponse": {
                 "properties": {
-                    "itemId": {
-                        "type": "string",
-                        "title": "Itemid",
-                        "description": "Conversation item identifier."
-                    },
-                    "conversationId": {
-                        "type": "string",
-                        "title": "Conversationid",
-                        "description": "Parent conversation identifier."
-                    },
-                    "itemIndex": {
-                        "type": "integer",
-                        "title": "Itemindex",
-                        "description": "Zero-based item order within the response turn."
-                    },
-                    "createdAt": {
-                        "type": "string",
-                        "title": "Createdat",
-                        "description": "Item creation timestamp (ISO-8601 UTC)."
-                    },
-                    "role": {
-                        "type": "string",
-                        "enum": [
-                            "user",
-                            "assistant",
-                            "tool",
-                            "system"
+                    "actorUserId": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
                         ],
-                        "title": "Role",
-                        "description": "Author role of the item."
+                        "title": "Actoruserid",
+                        "description": "User who initiated the switch (marker rows only). NULL for drift-driven markers."
+                    },
+                    "agentId": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Agentid",
+                        "description": "Agent that processed this item. Populated on every persisted item once LX-2483 ships."
                     },
                     "content": {
                         "oneOf": [
@@ -3542,65 +3535,25 @@
                             }
                         }
                     },
-                    "responseId": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Responseid",
-                        "description": "Response/turn identifier grouping related items."
+                    "conversationId": {
+                        "type": "string",
+                        "title": "Conversationid",
+                        "description": "Parent conversation identifier."
                     },
-                    "replyTo": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Replyto",
-                        "description": "Optional parent item identifier."
+                    "createdAt": {
+                        "type": "string",
+                        "title": "Createdat",
+                        "description": "Item creation timestamp (ISO-8601 UTC)."
                     },
-                    "taskId": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Taskid",
-                        "description": "Task identifier grouping related work items."
+                    "itemId": {
+                        "type": "string",
+                        "title": "Itemid",
+                        "description": "Conversation item identifier."
                     },
-                    "agentId": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Agentid",
-                        "description": "Agent that processed this item. Populated on every persisted item once LX-2483 ships."
-                    },
-                    "oldAgentId": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Oldagentid",
-                        "description": "Agent ID before the switch (marker rows only)."
+                    "itemIndex": {
+                        "type": "integer",
+                        "title": "Itemindex",
+                        "description": "Zero-based item order within the response turn."
                     },
                     "newAgentId": {
                         "anyOf": [
@@ -3614,7 +3567,7 @@
                         "title": "Newagentid",
                         "description": "Agent ID after the switch (marker rows only)."
                     },
-                    "actorUserId": {
+                    "oldAgentId": {
                         "anyOf": [
                             {
                                 "type": "string"
@@ -3623,8 +3576,55 @@
                                 "type": "null"
                             }
                         ],
-                        "title": "Actoruserid",
-                        "description": "User who initiated the switch (marker rows only). NULL for drift-driven markers."
+                        "title": "Oldagentid",
+                        "description": "Agent ID before the switch (marker rows only)."
+                    },
+                    "replyTo": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Replyto",
+                        "description": "Optional parent item identifier."
+                    },
+                    "responseId": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Responseid",
+                        "description": "Response/turn identifier grouping related items."
+                    },
+                    "role": {
+                        "type": "string",
+                        "enum": [
+                            "user",
+                            "assistant",
+                            "tool",
+                            "system"
+                        ],
+                        "title": "Role",
+                        "description": "Author role of the item."
+                    },
+                    "taskId": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Taskid",
+                        "description": "Task identifier grouping related work items."
                     },
                     "trigger": {
                         "anyOf": [
@@ -3719,25 +3719,49 @@
             },
             "ConversationResponse": {
                 "properties": {
+                    "agentId": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Agentid",
+                        "description": "Identifier of the agent bound to this conversation (if any)."
+                    },
                     "conversationId": {
                         "type": "string",
                         "title": "Conversationid",
                         "description": "Conversation identifier."
                     },
-                    "workspaceId": {
+                    "createdAt": {
                         "type": "string",
-                        "title": "Workspaceid",
-                        "description": "Workspace identifier."
+                        "title": "Createdat",
+                        "description": "Conversation creation timestamp (ISO-8601 UTC)."
+                    },
+                    "isPreview": {
+                        "type": "boolean",
+                        "title": "Ispreview",
+                        "description": "Whether this is a preview conversation.",
+                        "default": false
+                    },
+                    "lastActivityAt": {
+                        "type": "string",
+                        "title": "Lastactivityat",
+                        "description": "Last activity timestamp (ISO-8601 UTC)."
                     },
                     "organizationId": {
                         "type": "string",
                         "title": "Organizationid",
                         "description": "Organization identifier."
                     },
-                    "userId": {
-                        "type": "string",
-                        "title": "Userid",
-                        "description": "Owner user identifier."
+                    "pinned": {
+                        "type": "boolean",
+                        "title": "Pinned",
+                        "description": "Whether this conversation is pinned by the user.",
+                        "default": false
                     },
                     "title": {
                         "anyOf": [
@@ -3752,39 +3776,15 @@
                         "title": "Title",
                         "description": "Conversation title."
                     },
-                    "isPreview": {
-                        "type": "boolean",
-                        "title": "Ispreview",
-                        "description": "Whether this is a preview conversation.",
-                        "default": false
-                    },
-                    "pinned": {
-                        "type": "boolean",
-                        "title": "Pinned",
-                        "description": "Whether this conversation is pinned by the user.",
-                        "default": false
-                    },
-                    "createdAt": {
+                    "userId": {
                         "type": "string",
-                        "title": "Createdat",
-                        "description": "Conversation creation timestamp (ISO-8601 UTC)."
+                        "title": "Userid",
+                        "description": "Owner user identifier."
                     },
-                    "lastActivityAt": {
+                    "workspaceId": {
                         "type": "string",
-                        "title": "Lastactivityat",
-                        "description": "Last activity timestamp (ISO-8601 UTC)."
-                    },
-                    "agentId": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Agentid",
-                        "description": "Identifier of the agent bound to this conversation (if any)."
+                        "title": "Workspaceid",
+                        "description": "Workspace identifier."
                     }
                 },
                 "additionalProperties": false,
@@ -3820,10 +3820,10 @@
             },
             "ConversationTurnResponse": {
                 "properties": {
-                    "responseId": {
+                    "createdAt": {
                         "type": "string",
-                        "title": "Responseid",
-                        "description": "Response identifier."
+                        "title": "Createdat",
+                        "description": "Response creation timestamp (ISO-8601 UTC)."
                     },
                     "feedback": {
                         "anyOf": [
@@ -3836,10 +3836,10 @@
                         ],
                         "description": "Optional user feedback."
                     },
-                    "createdAt": {
+                    "responseId": {
                         "type": "string",
-                        "title": "Createdat",
-                        "description": "Response creation timestamp (ISO-8601 UTC)."
+                        "title": "Responseid",
+                        "description": "Response identifier."
                     },
                     "updatedAt": {
                         "type": "string",
@@ -3858,6 +3858,17 @@
             },
             "ConversationUpdateRequest": {
                 "properties": {
+                    "pinned": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Pinned"
+                    },
                     "title": {
                         "anyOf": [
                             {
@@ -3869,17 +3880,6 @@
                             }
                         ],
                         "title": "Title"
-                    },
-                    "pinned": {
-                        "anyOf": [
-                            {
-                                "type": "boolean"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Pinned"
                     }
                 },
                 "type": "object",
@@ -3906,29 +3906,20 @@
             },
             "Dashboard": {
                 "properties": {
-                    "type": {
-                        "type": "string",
-                        "const": "dashboard",
-                        "title": "Type"
-                    },
-                    "id": {
-                        "type": "string",
-                        "title": "Id"
-                    },
-                    "title": {
-                        "type": "string",
-                        "title": "Title"
-                    },
                     "description": {
                         "type": "string",
                         "title": "Description"
                     },
-                    "tabs": {
-                        "items": {
-                            "$ref": "#/components/schemas/DashboardTab"
+                    "filters": {
+                        "additionalProperties": {
+                            "$ref": "#/components/schemas/DashboardDateFilter"
                         },
-                        "type": "array",
-                        "title": "Tabs"
+                        "type": "object",
+                        "title": "Filters"
+                    },
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
                     },
                     "sections": {
                         "items": {
@@ -3937,12 +3928,21 @@
                         "type": "array",
                         "title": "Sections"
                     },
-                    "filters": {
-                        "additionalProperties": {
-                            "$ref": "#/components/schemas/DashboardDateFilter"
+                    "tabs": {
+                        "items": {
+                            "$ref": "#/components/schemas/DashboardTab"
                         },
-                        "type": "object",
-                        "title": "Filters"
+                        "type": "array",
+                        "title": "Tabs"
+                    },
+                    "title": {
+                        "type": "string",
+                        "title": "Title"
+                    },
+                    "type": {
+                        "type": "string",
+                        "const": "dashboard",
+                        "title": "Type"
                     }
                 },
                 "additionalProperties": false,
@@ -3957,21 +3957,21 @@
             },
             "DashboardDateFilter": {
                 "properties": {
-                    "type": {
-                        "type": "string",
-                        "const": "date_filter",
-                        "title": "Type"
-                    },
-                    "granularity": {
-                        "$ref": "#/components/schemas/app__domain__conversations__visualization__DateGranularity"
-                    },
                     "from": {
                         "type": "integer",
                         "title": "From"
                     },
+                    "granularity": {
+                        "$ref": "#/components/schemas/app__domain__conversations__visualization__DateGranularity"
+                    },
                     "to": {
                         "type": "integer",
                         "title": "To"
+                    },
+                    "type": {
+                        "type": "string",
+                        "const": "date_filter",
+                        "title": "Type"
                     }
                 },
                 "additionalProperties": false,
@@ -3998,13 +3998,6 @@
             },
             "DashboardPart": {
                 "properties": {
-                    "type": {
-                        "type": "string",
-                        "const": "dashboard",
-                        "title": "Type",
-                        "description": "Type of multipart part.",
-                        "default": "dashboard"
-                    },
                     "dashboard": {
                         "anyOf": [
                             {
@@ -4027,6 +4020,13 @@
                         ],
                         "title": "Saveddashboardid",
                         "description": "Id of the persisted analyticalDashboard once the user has saved this draft; null while it is still an unsaved draft. Lets the client distinguish a saved dashboard from a draft (e.g. after reload) and update it in place on further edits."
+                    },
+                    "type": {
+                        "type": "string",
+                        "const": "dashboard",
+                        "title": "Type",
+                        "description": "Type of multipart part.",
+                        "default": "dashboard"
                     }
                 },
                 "additionalProperties": false,
@@ -4062,13 +4062,13 @@
             },
             "DashboardSection": {
                 "properties": {
-                    "title": {
-                        "type": "string",
-                        "title": "Title"
-                    },
                     "description": {
                         "type": "string",
                         "title": "Description"
+                    },
+                    "title": {
+                        "type": "string",
+                        "title": "Title"
                     },
                     "widgets": {
                         "items": {
@@ -4088,13 +4088,16 @@
             },
             "DashboardTab": {
                 "properties": {
+                    "filters": {
+                        "additionalProperties": {
+                            "$ref": "#/components/schemas/DashboardDateFilter"
+                        },
+                        "type": "object",
+                        "title": "Filters"
+                    },
                     "id": {
                         "type": "string",
                         "title": "Id"
-                    },
-                    "title": {
-                        "type": "string",
-                        "title": "Title"
                     },
                     "sections": {
                         "items": {
@@ -4103,12 +4106,9 @@
                         "type": "array",
                         "title": "Sections"
                     },
-                    "filters": {
-                        "additionalProperties": {
-                            "$ref": "#/components/schemas/DashboardDateFilter"
-                        },
-                        "type": "object",
-                        "title": "Filters"
+                    "title": {
+                        "type": "string",
+                        "title": "Title"
                     }
                 },
                 "additionalProperties": false,
@@ -4123,14 +4123,6 @@
             },
             "DashboardWidget": {
                 "properties": {
-                    "visualization": {
-                        "type": "string",
-                        "title": "Visualization"
-                    },
-                    "title": {
-                        "type": "string",
-                        "title": "Title"
-                    },
                     "columns": {
                         "type": "integer",
                         "title": "Columns"
@@ -4138,6 +4130,14 @@
                     "rows": {
                         "type": "number",
                         "title": "Rows"
+                    },
+                    "title": {
+                        "type": "string",
+                        "title": "Title"
+                    },
+                    "visualization": {
+                        "type": "string",
+                        "title": "Visualization"
                     }
                 },
                 "additionalProperties": false,
@@ -4150,6 +4150,14 @@
             },
             "DateFilterAbsolute": {
                 "properties": {
+                    "from": {
+                        "type": "string",
+                        "title": "From"
+                    },
+                    "to": {
+                        "type": "string",
+                        "title": "To"
+                    },
                     "type": {
                         "type": "string",
                         "const": "date_filter",
@@ -4158,14 +4166,6 @@
                     "using": {
                         "type": "string",
                         "title": "Using"
-                    },
-                    "from": {
-                        "type": "string",
-                        "title": "From"
-                    },
-                    "to": {
-                        "type": "string",
-                        "title": "To"
                     }
                 },
                 "additionalProperties": false,
@@ -4200,6 +4200,17 @@
             },
             "DateFilterRelative": {
                 "properties": {
+                    "from": {
+                        "type": "integer",
+                        "title": "From"
+                    },
+                    "granularity": {
+                        "$ref": "#/components/schemas/app__domain__conversations__visualization__DateGranularity"
+                    },
+                    "to": {
+                        "type": "integer",
+                        "title": "To"
+                    },
                     "type": {
                         "type": "string",
                         "const": "date_filter",
@@ -4208,17 +4219,6 @@
                     "using": {
                         "type": "string",
                         "title": "Using"
-                    },
-                    "granularity": {
-                        "$ref": "#/components/schemas/app__domain__conversations__visualization__DateGranularity"
-                    },
-                    "from": {
-                        "type": "integer",
-                        "title": "From"
-                    },
-                    "to": {
-                        "type": "integer",
-                        "title": "To"
                     }
                 },
                 "additionalProperties": false,
@@ -4259,13 +4259,13 @@
             },
             "DeleteDocumentResponse": {
                 "properties": {
-                    "success": {
-                        "type": "boolean",
-                        "title": "Success"
-                    },
                     "message": {
                         "type": "string",
                         "title": "Message"
+                    },
+                    "success": {
+                        "type": "boolean",
+                        "title": "Success"
                     }
                 },
                 "type": "object",
@@ -4278,33 +4278,36 @@
             },
             "DocumentMetadataResponse": {
                 "properties": {
-                    "id": {
-                        "type": "string",
-                        "title": "Id"
-                    },
-                    "filename": {
-                        "type": "string",
-                        "title": "Filename"
-                    },
-                    "numChunks": {
-                        "type": "integer",
-                        "title": "Numchunks"
-                    },
                     "createdAt": {
                         "type": "string",
                         "title": "Createdat"
-                    },
-                    "updatedAt": {
-                        "type": "string",
-                        "title": "Updatedat"
                     },
                     "createdBy": {
                         "type": "string",
                         "title": "Createdby"
                     },
-                    "updatedBy": {
+                    "filename": {
                         "type": "string",
-                        "title": "Updatedby"
+                        "title": "Filename"
+                    },
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    },
+                    "isDisabled": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Isdisabled"
+                    },
+                    "numChunks": {
+                        "type": "integer",
+                        "title": "Numchunks"
                     },
                     "scopes": {
                         "items": {
@@ -4312,17 +4315,6 @@
                         },
                         "type": "array",
                         "title": "Scopes"
-                    },
-                    "workspaceId": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Workspaceid"
                     },
                     "title": {
                         "anyOf": [
@@ -4335,16 +4327,24 @@
                         ],
                         "title": "Title"
                     },
-                    "isDisabled": {
+                    "updatedAt": {
+                        "type": "string",
+                        "title": "Updatedat"
+                    },
+                    "updatedBy": {
+                        "type": "string",
+                        "title": "Updatedby"
+                    },
+                    "workspaceId": {
                         "anyOf": [
                             {
-                                "type": "boolean"
+                                "type": "string"
                             },
                             {
                                 "type": "null"
                             }
                         ],
-                        "title": "Isdisabled"
+                        "title": "Workspaceid"
                     }
                 },
                 "type": "object",
@@ -4372,15 +4372,6 @@
             },
             "Feedback": {
                 "properties": {
-                    "type": {
-                        "type": "string",
-                        "enum": [
-                            "POSITIVE",
-                            "NEGATIVE"
-                        ],
-                        "title": "Type",
-                        "description": "Feedback type."
-                    },
                     "text": {
                         "anyOf": [
                             {
@@ -4392,6 +4383,15 @@
                         ],
                         "title": "Text",
                         "description": "Optional free-form feedback comment."
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "POSITIVE",
+                            "NEGATIVE"
+                        ],
+                        "title": "Type",
+                        "description": "Feedback type."
                     }
                 },
                 "additionalProperties": false,
@@ -4403,33 +4403,33 @@
             },
             "FunctionCallContent": {
                 "properties": {
-                    "type": {
-                        "type": "string",
-                        "const": "toolCall",
-                        "title": "Type",
-                        "description": "Type of item content.",
-                        "default": "toolCall"
-                    },
-                    "id": {
-                        "type": "string",
-                        "title": "Id",
-                        "description": "Function call item identifier from LLM."
+                    "arguments": {
+                        "additionalProperties": true,
+                        "type": "object",
+                        "title": "Arguments",
+                        "description": "Function/tool arguments payload."
                     },
                     "callId": {
                         "type": "string",
                         "title": "Callid",
                         "description": "Function call correlation identifier."
                     },
+                    "id": {
+                        "type": "string",
+                        "title": "Id",
+                        "description": "Function call item identifier from LLM."
+                    },
                     "name": {
                         "type": "string",
                         "title": "Name",
                         "description": "Function/tool name."
                     },
-                    "arguments": {
-                        "additionalProperties": true,
-                        "type": "object",
-                        "title": "Arguments",
-                        "description": "Function/tool arguments payload."
+                    "type": {
+                        "type": "string",
+                        "const": "toolCall",
+                        "title": "Type",
+                        "description": "Type of item content.",
+                        "default": "toolCall"
                     }
                 },
                 "additionalProperties": false,
@@ -4444,13 +4444,6 @@
             },
             "FunctionResultContent": {
                 "properties": {
-                    "type": {
-                        "type": "string",
-                        "const": "toolResult",
-                        "title": "Type",
-                        "description": "Type of item content.",
-                        "default": "toolResult"
-                    },
                     "callId": {
                         "type": "string",
                         "title": "Callid",
@@ -4460,6 +4453,13 @@
                         "type": "string",
                         "title": "Result",
                         "description": "Serialized function/tool execution result."
+                    },
+                    "type": {
+                        "type": "string",
+                        "const": "toolResult",
+                        "title": "Type",
+                        "description": "Type of item content.",
+                        "default": "toolResult"
                     }
                 },
                 "additionalProperties": false,
@@ -4498,10 +4498,6 @@
             },
             "InlineFilterDefinitionBody": {
                 "properties": {
-                    "filter": {
-                        "type": "string",
-                        "title": "Filter"
-                    },
                     "applyOnResult": {
                         "anyOf": [
                             {
@@ -4512,6 +4508,10 @@
                             }
                         ],
                         "title": "Applyonresult"
+                    },
+                    "filter": {
+                        "type": "string",
+                        "title": "Filter"
                     },
                     "localIdentifier": {
                         "anyOf": [
@@ -4546,24 +4546,15 @@
             },
             "KeyDriverAnalysis": {
                 "properties": {
-                    "measure": {
-                        "$ref": "#/components/schemas/KeyDriverAnalysisMeasure",
-                        "description": "Measure definition for key driver analysis."
-                    },
-                    "dateAttributeId": {
-                        "type": "string",
-                        "title": "Dateattributeid",
-                        "description": "Date attribute identifier used for period comparison."
-                    },
                     "analyzedPeriod": {
                         "type": "string",
                         "title": "Analyzedperiod",
                         "description": "Analyzed period identifier."
                     },
-                    "referencePeriod": {
+                    "dateAttributeId": {
                         "type": "string",
-                        "title": "Referenceperiod",
-                        "description": "Reference period identifier."
+                        "title": "Dateattributeid",
+                        "description": "Date attribute identifier used for period comparison."
                     },
                     "filters": {
                         "items": {
@@ -4573,6 +4564,15 @@
                         "type": "array",
                         "title": "Filters",
                         "description": "Filters applied to analysis."
+                    },
+                    "measure": {
+                        "$ref": "#/components/schemas/KeyDriverAnalysisMeasure",
+                        "description": "Measure definition for key driver analysis."
+                    },
+                    "referencePeriod": {
+                        "type": "string",
+                        "title": "Referenceperiod",
+                        "description": "Reference period identifier."
                     }
                 },
                 "additionalProperties": false,
@@ -4588,21 +4588,6 @@
             },
             "KeyDriverAnalysisMeasure": {
                 "properties": {
-                    "id": {
-                        "type": "string",
-                        "title": "Id",
-                        "description": "Measure object identifier."
-                    },
-                    "type": {
-                        "type": "string",
-                        "enum": [
-                            "metric",
-                            "fact",
-                            "attribute"
-                        ],
-                        "title": "Type",
-                        "description": "Measure object type."
-                    },
                     "aggregation": {
                         "anyOf": [
                             {
@@ -4622,6 +4607,21 @@
                         ],
                         "title": "Aggregation",
                         "description": "Optional aggregation function."
+                    },
+                    "id": {
+                        "type": "string",
+                        "title": "Id",
+                        "description": "Measure object identifier."
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "metric",
+                            "fact",
+                            "attribute"
+                        ],
+                        "title": "Type",
+                        "description": "Measure object type."
                     }
                 },
                 "additionalProperties": false,
@@ -4634,13 +4634,6 @@
             },
             "KeyDriverAnalysisPart": {
                 "properties": {
-                    "type": {
-                        "type": "string",
-                        "const": "kda",
-                        "title": "Type",
-                        "description": "Type of multipart part.",
-                        "default": "kda"
-                    },
                     "kda": {
                         "anyOf": [
                             {
@@ -4651,6 +4644,13 @@
                             }
                         ],
                         "description": "Optional full key driver analysis payload when available."
+                    },
+                    "type": {
+                        "type": "string",
+                        "const": "kda",
+                        "title": "Type",
+                        "description": "Type of multipart part.",
+                        "default": "kda"
                     }
                 },
                 "additionalProperties": false,
@@ -4666,17 +4666,6 @@
                         "type": "array",
                         "title": "Documents"
                     },
-                    "totalCount": {
-                        "anyOf": [
-                            {
-                                "type": "integer"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Totalcount"
-                    },
                     "nextPageToken": {
                         "anyOf": [
                             {
@@ -4687,6 +4676,17 @@
                             }
                         ],
                         "title": "Nextpagetoken"
+                    },
+                    "totalCount": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Totalcount"
                     }
                 },
                 "type": "object",
@@ -4711,6 +4711,22 @@
             },
             "MatchAttributeFilterBody": {
                 "properties": {
+                    "applyOnResult": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Applyonresult"
+                    },
+                    "caseSensitive": {
+                        "type": "boolean",
+                        "title": "Casesensitive",
+                        "default": false
+                    },
                     "label": {
                         "anyOf": [
                             {
@@ -4726,30 +4742,6 @@
                         "type": "string",
                         "title": "Literal"
                     },
-                    "matchType": {
-                        "$ref": "#/components/schemas/MatchType"
-                    },
-                    "caseSensitive": {
-                        "type": "boolean",
-                        "title": "Casesensitive",
-                        "default": false
-                    },
-                    "negate": {
-                        "type": "boolean",
-                        "title": "Negate",
-                        "default": false
-                    },
-                    "applyOnResult": {
-                        "anyOf": [
-                            {
-                                "type": "boolean"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Applyonresult"
-                    },
                     "localIdentifier": {
                         "anyOf": [
                             {
@@ -4760,6 +4752,14 @@
                             }
                         ],
                         "title": "Localidentifier"
+                    },
+                    "matchType": {
+                        "$ref": "#/components/schemas/MatchType"
+                    },
+                    "negate": {
+                        "type": "boolean",
+                        "title": "Negate",
+                        "default": false
                     }
                 },
                 "additionalProperties": false,
@@ -4810,11 +4810,6 @@
             },
             "MetricOperand": {
                 "properties": {
-                    "localIdentifier": {
-                        "type": "string",
-                        "title": "Localidentifier",
-                        "description": "Local identifier of the metric to be compared."
-                    },
                     "format": {
                         "anyOf": [
                             {
@@ -4826,6 +4821,11 @@
                         ],
                         "title": "Format",
                         "description": "Metric display format."
+                    },
+                    "localIdentifier": {
+                        "type": "string",
+                        "title": "Localidentifier",
+                        "description": "Local identifier of the metric to be compared."
                     },
                     "title": {
                         "anyOf": [
@@ -4850,11 +4850,6 @@
             },
             "MetricSortItem": {
                 "properties": {
-                    "type": {
-                        "type": "string",
-                        "const": "metric_sort",
-                        "title": "Type"
-                    },
                     "direction": {
                         "type": "string",
                         "enum": [
@@ -4876,6 +4871,11 @@
                         },
                         "type": "array",
                         "title": "Metrics"
+                    },
+                    "type": {
+                        "type": "string",
+                        "const": "metric_sort",
+                        "title": "Type"
                     }
                 },
                 "additionalProperties": false,
@@ -4911,9 +4911,6 @@
             },
             "MetricUsageResponse": {
                 "properties": {
-                    "type": {
-                        "$ref": "#/components/schemas/ObservabilityMetricType"
-                    },
                     "currentValue": {
                         "type": "integer",
                         "title": "Currentvalue"
@@ -4932,6 +4929,9 @@
                             }
                         ],
                         "title": "Total"
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/ObservabilityMetricType"
                     }
                 },
                 "type": "object",
@@ -4944,15 +4944,6 @@
             },
             "MetricValueComparisonFilter": {
                 "properties": {
-                    "type": {
-                        "type": "string",
-                        "const": "metric_value_filter",
-                        "title": "Type"
-                    },
-                    "using": {
-                        "type": "string",
-                        "title": "Using"
-                    },
                     "condition": {
                         "type": "string",
                         "enum": [
@@ -4965,6 +4956,19 @@
                         ],
                         "title": "Condition"
                     },
+                    "null_values_as_zero": {
+                        "type": "boolean",
+                        "title": "Null Values As Zero"
+                    },
+                    "type": {
+                        "type": "string",
+                        "const": "metric_value_filter",
+                        "title": "Type"
+                    },
+                    "using": {
+                        "type": "string",
+                        "title": "Using"
+                    },
                     "value": {
                         "anyOf": [
                             {
@@ -4975,10 +4979,6 @@
                             }
                         ],
                         "title": "Value"
-                    },
-                    "null_values_as_zero": {
-                        "type": "boolean",
-                        "title": "Null Values As Zero"
                     }
                 },
                 "additionalProperties": false,
@@ -5011,15 +5011,6 @@
             },
             "MetricValueRangeFilter": {
                 "properties": {
-                    "type": {
-                        "type": "string",
-                        "const": "metric_value_filter",
-                        "title": "Type"
-                    },
-                    "using": {
-                        "type": "string",
-                        "title": "Using"
-                    },
                     "condition": {
                         "type": "string",
                         "enum": [
@@ -5039,6 +5030,10 @@
                         ],
                         "title": "From"
                     },
+                    "null_values_as_zero": {
+                        "type": "boolean",
+                        "title": "Null Values As Zero"
+                    },
                     "to": {
                         "anyOf": [
                             {
@@ -5050,9 +5045,14 @@
                         ],
                         "title": "To"
                     },
-                    "null_values_as_zero": {
-                        "type": "boolean",
-                        "title": "Null Values As Zero"
+                    "type": {
+                        "type": "string",
+                        "const": "metric_value_filter",
+                        "title": "Type"
+                    },
+                    "using": {
+                        "type": "string",
+                        "title": "Using"
                     }
                 },
                 "additionalProperties": false,
@@ -5068,13 +5068,6 @@
             },
             "MultipartContent": {
                 "properties": {
-                    "type": {
-                        "type": "string",
-                        "const": "multipart",
-                        "title": "Type",
-                        "description": "Type of item content.",
-                        "default": "multipart"
-                    },
                     "parts": {
                         "items": {
                             "oneOf": [
@@ -5127,6 +5120,13 @@
                             }
                         ],
                         "description": "Optional follow-up suggestions for the user. Populated only on the terminal user-visible multipart of a turn."
+                    },
+                    "type": {
+                        "type": "string",
+                        "const": "multipart",
+                        "title": "Type",
+                        "description": "Type of item content.",
+                        "default": "multipart"
                     }
                 },
                 "additionalProperties": false,
@@ -5151,20 +5151,6 @@
             },
             "NegativeAttributeFilterBody": {
                 "properties": {
-                    "label": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/AfmObjectIdentifier"
-                            },
-                            {
-                                "$ref": "#/components/schemas/AfmLocalIdentifier"
-                            }
-                        ],
-                        "title": "Label"
-                    },
-                    "notIn": {
-                        "$ref": "#/components/schemas/AttributeFilterElements"
-                    },
                     "applyOnResult": {
                         "anyOf": [
                             {
@@ -5176,6 +5162,17 @@
                         ],
                         "title": "Applyonresult"
                     },
+                    "label": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/AfmObjectIdentifier"
+                            },
+                            {
+                                "$ref": "#/components/schemas/AfmLocalIdentifier"
+                            }
+                        ],
+                        "title": "Label"
+                    },
                     "localIdentifier": {
                         "anyOf": [
                             {
@@ -5186,6 +5183,9 @@
                             }
                         ],
                         "title": "Localidentifier"
+                    },
+                    "notIn": {
+                        "$ref": "#/components/schemas/AttributeFilterElements"
                     },
                     "usesArbitraryValues": {
                         "anyOf": [
@@ -5292,17 +5292,6 @@
                         ],
                         "title": "Isdisabled"
                     },
-                    "title": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Title"
-                    },
                     "scopes": {
                         "anyOf": [
                             {
@@ -5316,6 +5305,17 @@
                             }
                         ],
                         "title": "Scopes"
+                    },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title"
                     }
                 },
                 "type": "object",
@@ -5337,20 +5337,6 @@
             },
             "PositiveAttributeFilterBody": {
                 "properties": {
-                    "label": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/AfmObjectIdentifier"
-                            },
-                            {
-                                "$ref": "#/components/schemas/AfmLocalIdentifier"
-                            }
-                        ],
-                        "title": "Label"
-                    },
-                    "in": {
-                        "$ref": "#/components/schemas/AttributeFilterElements"
-                    },
                     "applyOnResult": {
                         "anyOf": [
                             {
@@ -5361,6 +5347,20 @@
                             }
                         ],
                         "title": "Applyonresult"
+                    },
+                    "in": {
+                        "$ref": "#/components/schemas/AttributeFilterElements"
+                    },
+                    "label": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/AfmObjectIdentifier"
+                            },
+                            {
+                                "$ref": "#/components/schemas/AfmLocalIdentifier"
+                            }
+                        ],
+                        "title": "Label"
                     },
                     "localIdentifier": {
                         "anyOf": [
@@ -5468,17 +5468,17 @@
             },
             "QueryFieldAttribute": {
                 "properties": {
-                    "using": {
-                        "type": "string",
-                        "title": "Using"
+                    "show_all_values": {
+                        "type": "boolean",
+                        "title": "Show All Values"
                     },
                     "title": {
                         "type": "string",
                         "title": "Title"
                     },
-                    "show_all_values": {
-                        "type": "boolean",
-                        "title": "Show All Values"
+                    "using": {
+                        "type": "string",
+                        "title": "Using"
                     }
                 },
                 "additionalProperties": false,
@@ -5490,10 +5490,6 @@
             },
             "QueryFieldMeasure": {
                 "properties": {
-                    "using": {
-                        "type": "string",
-                        "title": "Using"
-                    },
                     "aggregation": {
                         "type": "string",
                         "enum": [
@@ -5509,6 +5505,10 @@
                     "title": {
                         "type": "string",
                         "title": "Title"
+                    },
+                    "using": {
+                        "type": "string",
+                        "title": "Using"
                     }
                 },
                 "additionalProperties": false,
@@ -5521,17 +5521,17 @@
             },
             "Range": {
                 "properties": {
-                    "operator": {
-                        "$ref": "#/components/schemas/RangeConditionOperator",
-                        "description": "Range operator."
+                    "from": {
+                        "$ref": "#/components/schemas/ValueOperand",
+                        "description": "Range lower bound."
                     },
                     "measure": {
                         "$ref": "#/components/schemas/MetricOperand",
                         "description": "Metric being compared."
                     },
-                    "from": {
-                        "$ref": "#/components/schemas/ValueOperand",
-                        "description": "Range lower bound."
+                    "operator": {
+                        "$ref": "#/components/schemas/RangeConditionOperator",
+                        "description": "Range operator."
                     },
                     "to": {
                         "$ref": "#/components/schemas/ValueOperand",
@@ -5586,38 +5586,16 @@
             },
             "RangeMeasureValueFilterBody": {
                 "properties": {
-                    "measure": {
+                    "applyOnResult": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/AfmObjectIdentifier"
-                            },
-                            {
-                                "$ref": "#/components/schemas/AfmLocalIdentifier"
-                            }
-                        ],
-                        "title": "Measure"
-                    },
-                    "operator": {
-                        "$ref": "#/components/schemas/RangeMeasureValueOperator"
-                    },
-                    "from": {
-                        "type": "number",
-                        "title": "From"
-                    },
-                    "to": {
-                        "type": "number",
-                        "title": "To"
-                    },
-                    "treatNullValuesAs": {
-                        "anyOf": [
-                            {
-                                "type": "number"
+                                "type": "boolean"
                             },
                             {
                                 "type": "null"
                             }
                         ],
-                        "title": "Treatnullvaluesas"
+                        "title": "Applyonresult"
                     },
                     "dimensionality": {
                         "anyOf": [
@@ -5640,16 +5618,9 @@
                         ],
                         "title": "Dimensionality"
                     },
-                    "applyOnResult": {
-                        "anyOf": [
-                            {
-                                "type": "boolean"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Applyonresult"
+                    "from": {
+                        "type": "number",
+                        "title": "From"
                     },
                     "localIdentifier": {
                         "anyOf": [
@@ -5661,6 +5632,35 @@
                             }
                         ],
                         "title": "Localidentifier"
+                    },
+                    "measure": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/AfmObjectIdentifier"
+                            },
+                            {
+                                "$ref": "#/components/schemas/AfmLocalIdentifier"
+                            }
+                        ],
+                        "title": "Measure"
+                    },
+                    "operator": {
+                        "$ref": "#/components/schemas/RangeMeasureValueOperator"
+                    },
+                    "to": {
+                        "type": "number",
+                        "title": "To"
+                    },
+                    "treatNullValuesAs": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Treatnullvaluesas"
                     }
                 },
                 "additionalProperties": false,
@@ -5696,26 +5696,16 @@
             },
             "RankingFilterBody": {
                 "properties": {
-                    "measures": {
-                        "items": {
-                            "anyOf": [
-                                {
-                                    "$ref": "#/components/schemas/AfmObjectIdentifier"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/AfmLocalIdentifier"
-                                }
-                            ]
-                        },
-                        "type": "array",
-                        "title": "Measures"
-                    },
-                    "operator": {
-                        "$ref": "#/components/schemas/RankingOperator"
-                    },
-                    "value": {
-                        "type": "integer",
-                        "title": "Value"
+                    "applyOnResult": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Applyonresult"
                     },
                     "dimensionality": {
                         "anyOf": [
@@ -5738,17 +5728,6 @@
                         ],
                         "title": "Dimensionality"
                     },
-                    "applyOnResult": {
-                        "anyOf": [
-                            {
-                                "type": "boolean"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Applyonresult"
-                    },
                     "localIdentifier": {
                         "anyOf": [
                             {
@@ -5759,6 +5738,27 @@
                             }
                         ],
                         "title": "Localidentifier"
+                    },
+                    "measures": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/components/schemas/AfmObjectIdentifier"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/AfmLocalIdentifier"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Measures"
+                    },
+                    "operator": {
+                        "$ref": "#/components/schemas/RankingOperator"
+                    },
+                    "value": {
+                        "type": "integer",
+                        "title": "Value"
                     }
                 },
                 "additionalProperties": false,
@@ -5780,17 +5780,17 @@
             },
             "ReasoningContent": {
                 "properties": {
+                    "summary": {
+                        "type": "string",
+                        "title": "Summary",
+                        "description": "Reasoning summary intended for UI display."
+                    },
                     "type": {
                         "type": "string",
                         "const": "reasoning",
                         "title": "Type",
                         "description": "Type of item content.",
                         "default": "reasoning"
-                    },
-                    "summary": {
-                        "type": "string",
-                        "title": "Summary",
-                        "description": "Reasoning summary intended for UI display."
                     }
                 },
                 "additionalProperties": false,
@@ -5802,13 +5802,13 @@
             },
             "Relative": {
                 "properties": {
-                    "operator": {
-                        "$ref": "#/components/schemas/RelativeConditionOperator",
-                        "description": "Relative condition operator."
-                    },
                     "measure": {
                         "$ref": "#/components/schemas/ArithmeticMeasure",
                         "description": "Arithmetic combination of the two metrics."
+                    },
+                    "operator": {
+                        "$ref": "#/components/schemas/RelativeConditionOperator",
+                        "description": "Relative condition operator."
                     },
                     "threshold": {
                         "$ref": "#/components/schemas/ValueOperand",
@@ -5876,20 +5876,6 @@
             },
             "RelativeDateFilterBody-Input": {
                 "properties": {
-                    "dataset": {
-                        "$ref": "#/components/schemas/AfmObjectIdentifier"
-                    },
-                    "granularity": {
-                        "$ref": "#/components/schemas/DateGranularity-Input"
-                    },
-                    "from": {
-                        "type": "integer",
-                        "title": "From"
-                    },
-                    "to": {
-                        "type": "integer",
-                        "title": "To"
-                    },
                     "applyOnResult": {
                         "anyOf": [
                             {
@@ -5911,6 +5897,9 @@
                             }
                         ]
                     },
+                    "dataset": {
+                        "$ref": "#/components/schemas/AfmObjectIdentifier"
+                    },
                     "emptyValueHandling": {
                         "anyOf": [
                             {
@@ -5920,6 +5909,13 @@
                                 "type": "null"
                             }
                         ]
+                    },
+                    "from": {
+                        "type": "integer",
+                        "title": "From"
+                    },
+                    "granularity": {
+                        "$ref": "#/components/schemas/DateGranularity-Input"
                     },
                     "localIdentifier": {
                         "anyOf": [
@@ -5931,6 +5927,10 @@
                             }
                         ],
                         "title": "Localidentifier"
+                    },
+                    "to": {
+                        "type": "integer",
+                        "title": "To"
                     }
                 },
                 "additionalProperties": false,
@@ -5945,20 +5945,6 @@
             },
             "RelativeDateFilterBody-Output": {
                 "properties": {
-                    "dataset": {
-                        "$ref": "#/components/schemas/AfmObjectIdentifier"
-                    },
-                    "granularity": {
-                        "$ref": "#/components/schemas/app__application__dtos__afm__filter_definition__DateGranularity"
-                    },
-                    "from": {
-                        "type": "integer",
-                        "title": "From"
-                    },
-                    "to": {
-                        "type": "integer",
-                        "title": "To"
-                    },
                     "applyOnResult": {
                         "anyOf": [
                             {
@@ -5980,6 +5966,9 @@
                             }
                         ]
                     },
+                    "dataset": {
+                        "$ref": "#/components/schemas/AfmObjectIdentifier"
+                    },
                     "emptyValueHandling": {
                         "anyOf": [
                             {
@@ -5989,6 +5978,13 @@
                                 "type": "null"
                             }
                         ]
+                    },
+                    "from": {
+                        "type": "integer",
+                        "title": "From"
+                    },
+                    "granularity": {
+                        "$ref": "#/components/schemas/app__application__dtos__afm__filter_definition__DateGranularity"
                     },
                     "localIdentifier": {
                         "anyOf": [
@@ -6000,6 +5996,10 @@
                             }
                         ],
                         "title": "Localidentifier"
+                    },
+                    "to": {
+                        "type": "integer",
+                        "title": "To"
                     }
                 },
                 "additionalProperties": false,
@@ -6012,16 +6012,17 @@
                 ],
                 "title": "RelativeDateFilterBody"
             },
+            "RequestedReasoningEffort": {
+                "type": "string",
+                "enum": [
+                    "LOW",
+                    "MEDIUM",
+                    "HIGH"
+                ],
+                "title": "RequestedReasoningEffort"
+            },
             "ResponseFeedback": {
                 "properties": {
-                    "type": {
-                        "type": "string",
-                        "enum": [
-                            "POSITIVE",
-                            "NEGATIVE"
-                        ],
-                        "title": "Type"
-                    },
                     "text": {
                         "anyOf": [
                             {
@@ -6033,6 +6034,14 @@
                             }
                         ],
                         "title": "Text"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "POSITIVE",
+                            "NEGATIVE"
+                        ],
+                        "title": "Type"
                     }
                 },
                 "type": "object",
@@ -6083,142 +6092,6 @@
             },
             "SearchObject": {
                 "properties": {
-                    "id": {
-                        "type": "string",
-                        "title": "Id",
-                        "description": "Object identifier."
-                    },
-                    "type": {
-                        "type": "string",
-                        "title": "Type",
-                        "description": "Object type name."
-                    },
-                    "workspaceId": {
-                        "type": "string",
-                        "title": "Workspaceid",
-                        "description": "Workspace identifier."
-                    },
-                    "title": {
-                        "type": "string",
-                        "title": "Title",
-                        "description": "Object title."
-                    },
-                    "description": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Description",
-                        "description": "Object description."
-                    },
-                    "tags": {
-                        "anyOf": [
-                            {
-                                "items": {
-                                    "type": "string"
-                                },
-                                "type": "array"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Tags",
-                        "description": "Object tags."
-                    },
-                    "datasetId": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Datasetid",
-                        "description": "Parent dataset ID."
-                    },
-                    "datasetType": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Datasettype",
-                        "description": "Parent dataset type."
-                    },
-                    "datasetTitle": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Datasettitle",
-                        "description": "Parent dataset title."
-                    },
-                    "visualizationUrl": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Visualizationurl",
-                        "description": "Visualization URL when applicable."
-                    },
-                    "createdAt": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Createdat",
-                        "description": "Object creation timestamp."
-                    },
-                    "modifiedAt": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Modifiedat",
-                        "description": "Object modification timestamp."
-                    },
-                    "isHidden": {
-                        "anyOf": [
-                            {
-                                "type": "boolean"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Ishidden",
-                        "description": "Whether object is hidden."
-                    },
-                    "score": {
-                        "type": "number",
-                        "title": "Score",
-                        "description": "Search relevance score."
-                    },
                     "certification": {
                         "anyOf": [
                             {
@@ -6242,6 +6115,142 @@
                         ],
                         "title": "Certificationmessage",
                         "description": "Certification message."
+                    },
+                    "createdAt": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Createdat",
+                        "description": "Object creation timestamp."
+                    },
+                    "datasetId": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Datasetid",
+                        "description": "Parent dataset ID."
+                    },
+                    "datasetTitle": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Datasettitle",
+                        "description": "Parent dataset title."
+                    },
+                    "datasetType": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Datasettype",
+                        "description": "Parent dataset type."
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description",
+                        "description": "Object description."
+                    },
+                    "id": {
+                        "type": "string",
+                        "title": "Id",
+                        "description": "Object identifier."
+                    },
+                    "isHidden": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Ishidden",
+                        "description": "Whether object is hidden."
+                    },
+                    "modifiedAt": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Modifiedat",
+                        "description": "Object modification timestamp."
+                    },
+                    "score": {
+                        "type": "number",
+                        "title": "Score",
+                        "description": "Search relevance score."
+                    },
+                    "tags": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tags",
+                        "description": "Object tags."
+                    },
+                    "title": {
+                        "type": "string",
+                        "title": "Title",
+                        "description": "Object title."
+                    },
+                    "type": {
+                        "type": "string",
+                        "title": "Type",
+                        "description": "Object type name."
+                    },
+                    "visualizationUrl": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Visualizationurl",
+                        "description": "Visualization URL when applicable."
+                    },
+                    "workspaceId": {
+                        "type": "string",
+                        "title": "Workspaceid",
+                        "description": "Workspace identifier."
                     }
                 },
                 "additionalProperties": false,
@@ -6257,45 +6266,45 @@
             },
             "SearchRelationship": {
                 "properties": {
-                    "sourceWorkspaceId": {
-                        "type": "string",
-                        "title": "Sourceworkspaceid",
-                        "description": "Workspace ID of the source object."
-                    },
                     "sourceId": {
                         "type": "string",
                         "title": "Sourceid",
                         "description": "Source object identifier."
-                    },
-                    "sourceType": {
-                        "type": "string",
-                        "title": "Sourcetype",
-                        "description": "Source object type."
                     },
                     "sourceTitle": {
                         "type": "string",
                         "title": "Sourcetitle",
                         "description": "Source object title."
                     },
-                    "targetWorkspaceId": {
+                    "sourceType": {
                         "type": "string",
-                        "title": "Targetworkspaceid",
-                        "description": "Workspace ID of the target object."
+                        "title": "Sourcetype",
+                        "description": "Source object type."
+                    },
+                    "sourceWorkspaceId": {
+                        "type": "string",
+                        "title": "Sourceworkspaceid",
+                        "description": "Workspace ID of the source object."
                     },
                     "targetId": {
                         "type": "string",
                         "title": "Targetid",
                         "description": "Target object identifier."
                     },
+                    "targetTitle": {
+                        "type": "string",
+                        "title": "Targettitle",
+                        "description": "Target object title."
+                    },
                     "targetType": {
                         "type": "string",
                         "title": "Targettype",
                         "description": "Target object type."
                     },
-                    "targetTitle": {
+                    "targetWorkspaceId": {
                         "type": "string",
-                        "title": "Targettitle",
-                        "description": "Target object title."
+                        "title": "Targetworkspaceid",
+                        "description": "Workspace ID of the target object."
                     }
                 },
                 "additionalProperties": false,
@@ -6314,29 +6323,21 @@
             },
             "SearchResultItem": {
                 "properties": {
-                    "id": {
-                        "type": "string",
-                        "title": "Id"
-                    },
-                    "filename": {
-                        "type": "string",
-                        "title": "Filename"
+                    "chunkIndex": {
+                        "type": "integer",
+                        "title": "Chunkindex"
                     },
                     "content": {
                         "type": "string",
                         "title": "Content"
                     },
-                    "score": {
-                        "type": "number",
-                        "title": "Score"
+                    "filename": {
+                        "type": "string",
+                        "title": "Filename"
                     },
-                    "chunkIndex": {
-                        "type": "integer",
-                        "title": "Chunkindex"
-                    },
-                    "totalChunks": {
-                        "type": "integer",
-                        "title": "Totalchunks"
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
                     },
                     "pageNumbers": {
                         "items": {
@@ -6345,16 +6346,16 @@
                         "type": "array",
                         "title": "Pagenumbers"
                     },
-                    "workspaceId": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Workspaceid"
+                    "scopes": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Scopes"
+                    },
+                    "score": {
+                        "type": "number",
+                        "title": "Score"
                     },
                     "title": {
                         "anyOf": [
@@ -6367,12 +6368,20 @@
                         ],
                         "title": "Title"
                     },
-                    "scopes": {
-                        "items": {
-                            "type": "string"
-                        },
-                        "type": "array",
-                        "title": "Scopes"
+                    "totalChunks": {
+                        "type": "integer",
+                        "title": "Totalchunks"
+                    },
+                    "workspaceId": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Workspaceid"
                     }
                 },
                 "type": "object",
@@ -6391,21 +6400,6 @@
             },
             "SearchResults": {
                 "properties": {
-                    "type": {
-                        "type": "string",
-                        "const": "searchResults",
-                        "title": "Type",
-                        "description": "Type of multipart part.",
-                        "default": "searchResults"
-                    },
-                    "objects": {
-                        "items": {
-                            "$ref": "#/components/schemas/SearchObject"
-                        },
-                        "type": "array",
-                        "title": "Objects",
-                        "description": "Search result objects for widget rendering."
-                    },
                     "keywords": {
                         "items": {
                             "type": "string"
@@ -6414,17 +6408,13 @@
                         "title": "Keywords",
                         "description": "Keywords used in search query."
                     },
-                    "requestedObjectType": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Requestedobjecttype",
-                        "description": "Primary requested object type."
+                    "objects": {
+                        "items": {
+                            "$ref": "#/components/schemas/SearchObject"
+                        },
+                        "type": "array",
+                        "title": "Objects",
+                        "description": "Search result objects for widget rendering."
                     },
                     "relationships": {
                         "anyOf": [
@@ -6440,6 +6430,25 @@
                         ],
                         "title": "Relationships",
                         "description": "Parent-child relationships among returned objects."
+                    },
+                    "requestedObjectType": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Requestedobjecttype",
+                        "description": "Primary requested object type."
+                    },
+                    "type": {
+                        "type": "string",
+                        "const": "searchResults",
+                        "title": "Type",
+                        "description": "Type of multipart part.",
+                        "default": "searchResults"
                     }
                 },
                 "additionalProperties": false,
@@ -6452,13 +6461,13 @@
             },
             "SearchStatistics": {
                 "properties": {
-                    "totalResults": {
-                        "type": "integer",
-                        "title": "Totalresults"
-                    },
                     "averageSimilarityScore": {
                         "type": "number",
                         "title": "Averagesimilarityscore"
+                    },
+                    "totalResults": {
+                        "type": "integer",
+                        "title": "Totalresults"
                     }
                 },
                 "type": "object",
@@ -6471,14 +6480,14 @@
             },
             "SendMessageContent": {
                 "properties": {
+                    "text": {
+                        "type": "string",
+                        "title": "Text"
+                    },
                     "type": {
                         "type": "string",
                         "const": "text",
                         "title": "Type"
-                    },
-                    "text": {
-                        "type": "string",
-                        "title": "Text"
                     }
                 },
                 "type": "object",
@@ -6490,13 +6499,13 @@
             },
             "SendMessageItem": {
                 "properties": {
+                    "content": {
+                        "$ref": "#/components/schemas/SendMessageContent"
+                    },
                     "role": {
                         "type": "string",
                         "const": "user",
                         "title": "Role"
-                    },
-                    "content": {
-                        "$ref": "#/components/schemas/SendMessageContent"
                     }
                 },
                 "type": "object",
@@ -6508,6 +6517,17 @@
             },
             "SendMessageOptions": {
                 "properties": {
+                    "reasoningEffort": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/RequestedReasoningEffort"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "How much effort the LLM should spend reasoning about this single message. Not persisted — applies to this message only; every other message falls back to MEDIUM. Behind a feature flag: when disabled, any value here is ignored and MEDIUM is used.\n\nSupported uniformly by all providers (OpenAI, Azure Foundry, Anthropic, Bedrock). On Anthropic/Bedrock models with adaptive thinking, the value is passed as a hint (output_config.effort) rather than a hard token budget."
+                    },
                     "search": {
                         "anyOf": [
                             {
@@ -6557,6 +6577,48 @@
             },
             "SendMessageSearchOptions": {
                 "properties": {
+                    "allowedRelationshipTypes": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/AllowedRelationshipType"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Allowedrelationshiptypes"
+                    },
+                    "excludeTags": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Excludetags"
+                    },
+                    "includeTags": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Includetags"
+                    },
                     "objectTypes": {
                         "anyOf": [
                             {
@@ -6583,48 +6645,6 @@
                             }
                         ],
                         "title": "Searchlimit"
-                    },
-                    "includeTags": {
-                        "anyOf": [
-                            {
-                                "items": {
-                                    "type": "string"
-                                },
-                                "type": "array"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Includetags"
-                    },
-                    "excludeTags": {
-                        "anyOf": [
-                            {
-                                "items": {
-                                    "type": "string"
-                                },
-                                "type": "array"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Excludetags"
-                    },
-                    "allowedRelationshipTypes": {
-                        "anyOf": [
-                            {
-                                "items": {
-                                    "$ref": "#/components/schemas/AllowedRelationshipType"
-                                },
-                                "type": "array"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Allowedrelationshiptypes"
                     }
                 },
                 "type": "object",
@@ -6642,17 +6662,20 @@
             },
             "SkillResponse": {
                 "properties": {
-                    "name": {
-                        "type": "string",
-                        "title": "Name"
-                    },
-                    "title": {
-                        "type": "string",
-                        "title": "Title"
-                    },
                     "description": {
                         "type": "string",
                         "title": "Description"
+                    },
+                    "examples": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Examples"
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
                     },
                     "tags": {
                         "items": {
@@ -6661,12 +6684,9 @@
                         "type": "array",
                         "title": "Tags"
                     },
-                    "examples": {
-                        "items": {
-                            "type": "string"
-                        },
-                        "type": "array",
-                        "title": "Examples"
+                    "title": {
+                        "type": "string",
+                        "title": "Title"
                     }
                 },
                 "type": "object",
@@ -6704,11 +6724,6 @@
             },
             "Suggestions": {
                 "properties": {
-                    "followUpQuestion": {
-                        "type": "string",
-                        "title": "Followupquestion",
-                        "description": "Yes-answerable follow-up question recommending the next step."
-                    },
                     "actions": {
                         "items": {
                             "$ref": "#/components/schemas/SuggestedAction"
@@ -6716,6 +6731,11 @@
                         "type": "array",
                         "title": "Actions",
                         "description": "Quick-reply action buttons. The first action matches the follow-up question."
+                    },
+                    "followUpQuestion": {
+                        "type": "string",
+                        "title": "Followupquestion",
+                        "description": "Yes-answerable follow-up question recommending the next step."
                     }
                 },
                 "additionalProperties": false,
@@ -6729,20 +6749,10 @@
             },
             "SummarizeRequest": {
                 "properties": {
-                    "visualizations": {
-                        "anyOf": [
-                            {
-                                "items": {
-                                    "type": "string"
-                                },
-                                "type": "array",
-                                "minItems": 1
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Visualizations"
+                    "dashboardId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "title": "Dashboardid"
                     },
                     "filterContext": {
                         "anyOf": [
@@ -6793,10 +6803,16 @@
                         "title": "Filtercontext",
                         "description": "AFM filters in the same shape consumed by the AFM execute endpoint, merged on top of each visualization's stored filters using the type-aware merge rules. Omit or send `null` to fall back to the dashboard's saved filter context. Send `[]` to explicitly apply no request filters."
                     },
-                    "dashboardId": {
-                        "type": "string",
-                        "minLength": 1,
-                        "title": "Dashboardid"
+                    "formatHint": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Formathint"
                     },
                     "tabId": {
                         "anyOf": [
@@ -6810,16 +6826,20 @@
                         "title": "TabId",
                         "description": "Local identifier of the dashboard tab to summarize. When the dashboard has tabs and `tabId` is omitted, the first tab is used (matching the UI's default tab). A `tabId` that does not match any tab's `localIdentifier` returns 404. Supplying `tabId` for a dashboard without tabs returns 400. When `tabId` is combined with `visualizations`, every supplied visualization must belong to the selected tab; otherwise the request returns 400."
                     },
-                    "formatHint": {
+                    "visualizations": {
                         "anyOf": [
                             {
-                                "type": "string"
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array",
+                                "minItems": 1
                             },
                             {
                                 "type": "null"
                             }
                         ],
-                        "title": "Formathint"
+                        "title": "Visualizations"
                     }
                 },
                 "type": "object",
@@ -6830,10 +6850,6 @@
             },
             "SummarizeResponse": {
                 "properties": {
-                    "summary": {
-                        "type": "string",
-                        "title": "Summary"
-                    },
                     "filterContext": {
                         "items": {
                             "oneOf": [
@@ -6875,24 +6891,14 @@
                         "type": "array",
                         "title": "Filtercontext"
                     },
-                    "visualizationsIncluded": {
-                        "items": {
-                            "$ref": "#/components/schemas/VisualizationIncludedResponse"
-                        },
-                        "type": "array",
-                        "title": "Visualizationsincluded"
-                    },
-                    "visualizationsExcluded": {
-                        "items": {
-                            "$ref": "#/components/schemas/VisualizationExcludedResponse"
-                        },
-                        "type": "array",
-                        "title": "Visualizationsexcluded"
-                    },
                     "generatedAt": {
                         "type": "string",
                         "format": "date-time",
                         "title": "Generatedat"
+                    },
+                    "summary": {
+                        "type": "string",
+                        "title": "Summary"
                     },
                     "tabId": {
                         "anyOf": [
@@ -6904,6 +6910,20 @@
                             }
                         ],
                         "title": "TabId"
+                    },
+                    "visualizationsExcluded": {
+                        "items": {
+                            "$ref": "#/components/schemas/VisualizationExcludedResponse"
+                        },
+                        "type": "array",
+                        "title": "Visualizationsexcluded"
+                    },
+                    "visualizationsIncluded": {
+                        "items": {
+                            "$ref": "#/components/schemas/VisualizationIncludedResponse"
+                        },
+                        "type": "array",
+                        "title": "Visualizationsincluded"
                     }
                 },
                 "type": "object",
@@ -6932,14 +6952,9 @@
             },
             "TextFilterValue": {
                 "properties": {
-                    "type": {
-                        "type": "string",
-                        "const": "text_filter",
-                        "title": "Type"
-                    },
-                    "using": {
-                        "type": "string",
-                        "title": "Using"
+                    "case_sensitive": {
+                        "type": "boolean",
+                        "title": "Case Sensitive"
                     },
                     "condition": {
                         "type": "string",
@@ -6953,17 +6968,22 @@
                         ],
                         "title": "Condition"
                     },
-                    "value": {
-                        "type": "string",
-                        "title": "Value"
-                    },
-                    "case_sensitive": {
-                        "type": "boolean",
-                        "title": "Case Sensitive"
-                    },
                     "display_as": {
                         "type": "string",
                         "title": "Display As"
+                    },
+                    "type": {
+                        "type": "string",
+                        "const": "text_filter",
+                        "title": "Type"
+                    },
+                    "using": {
+                        "type": "string",
+                        "title": "Using"
+                    },
+                    "value": {
+                        "type": "string",
+                        "title": "Value"
                     }
                 },
                 "additionalProperties": false,
@@ -6978,14 +6998,9 @@
             },
             "TextFilterValues": {
                 "properties": {
-                    "type": {
-                        "type": "string",
-                        "const": "text_filter",
-                        "title": "Type"
-                    },
-                    "using": {
-                        "type": "string",
-                        "title": "Using"
+                    "case_sensitive": {
+                        "type": "boolean",
+                        "title": "Case Sensitive"
                     },
                     "condition": {
                         "type": "string",
@@ -6994,6 +7009,19 @@
                             "isNot"
                         ],
                         "title": "Condition"
+                    },
+                    "display_as": {
+                        "type": "string",
+                        "title": "Display As"
+                    },
+                    "type": {
+                        "type": "string",
+                        "const": "text_filter",
+                        "title": "Type"
+                    },
+                    "using": {
+                        "type": "string",
+                        "title": "Using"
                     },
                     "values": {
                         "items": {
@@ -7008,14 +7036,6 @@
                         },
                         "type": "array",
                         "title": "Values"
-                    },
-                    "case_sensitive": {
-                        "type": "boolean",
-                        "title": "Case Sensitive"
-                    },
-                    "display_as": {
-                        "type": "string",
-                        "title": "Display As"
                     }
                 },
                 "additionalProperties": false,
@@ -7030,17 +7050,17 @@
             },
             "TextMessageContent": {
                 "properties": {
+                    "text": {
+                        "type": "string",
+                        "title": "Text",
+                        "description": "Plain text message content."
+                    },
                     "type": {
                         "type": "string",
                         "const": "text",
                         "title": "Type",
                         "description": "Type of item content.",
                         "default": "text"
-                    },
-                    "text": {
-                        "type": "string",
-                        "title": "Text",
-                        "description": "Plain text message content."
                     }
                 },
                 "additionalProperties": false,
@@ -7052,17 +7072,17 @@
             },
             "TextPart": {
                 "properties": {
+                    "text": {
+                        "type": "string",
+                        "title": "Text",
+                        "description": "Text fragment."
+                    },
                     "type": {
                         "type": "string",
                         "const": "text",
                         "title": "Type",
                         "description": "Type of multipart part.",
                         "default": "text"
-                    },
-                    "text": {
-                        "type": "string",
-                        "title": "Text",
-                        "description": "Text fragment."
                     }
                 },
                 "additionalProperties": false,
@@ -7074,17 +7094,13 @@
             },
             "UploadDocumentResponse": {
                 "properties": {
-                    "id": {
-                        "type": "string",
-                        "title": "Id"
-                    },
                     "filename": {
                         "type": "string",
                         "title": "Filename"
                     },
-                    "success": {
-                        "type": "boolean",
-                        "title": "Success"
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
                     },
                     "message": {
                         "type": "string",
@@ -7093,6 +7109,10 @@
                     "numChunks": {
                         "type": "integer",
                         "title": "Numchunks"
+                    },
+                    "success": {
+                        "type": "boolean",
+                        "title": "Success"
                     }
                 },
                 "type": "object",
@@ -7108,10 +7128,10 @@
             },
             "UserContext": {
                 "properties": {
-                    "view": {
+                    "activeObject": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/UserContextView"
+                                "$ref": "#/components/schemas/ActiveObjectIdentification"
                             },
                             {
                                 "type": "null"
@@ -7132,10 +7152,10 @@
                         ],
                         "title": "Referencedobjects"
                     },
-                    "activeObject": {
+                    "view": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/ActiveObjectIdentification"
+                                "$ref": "#/components/schemas/UserContextView"
                             },
                             {
                                 "type": "null"
@@ -7148,6 +7168,20 @@
             },
             "UserContextDashboard": {
                 "properties": {
+                    "filters": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/VisualizationFilter"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Filters"
+                    },
                     "id": {
                         "type": "string",
                         "title": "Id"
@@ -7169,20 +7203,6 @@
                         },
                         "type": "array",
                         "title": "Widgets"
-                    },
-                    "filters": {
-                        "anyOf": [
-                            {
-                                "items": {
-                                    "$ref": "#/components/schemas/VisualizationFilter"
-                                },
-                                "type": "array"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Filters"
                     }
                 },
                 "type": "object",
@@ -7193,14 +7213,6 @@
             },
             "UserContextInsightWidgetDescriptor": {
                 "properties": {
-                    "widgetId": {
-                        "type": "string",
-                        "title": "Widgetid"
-                    },
-                    "title": {
-                        "type": "string",
-                        "title": "Title"
-                    },
                     "filters": {
                         "anyOf": [
                             {
@@ -7214,11 +7226,6 @@
                             }
                         ],
                         "title": "Filters"
-                    },
-                    "widgetType": {
-                        "type": "string",
-                        "const": "insight",
-                        "title": "Widgettype"
                     },
                     "resultId": {
                         "anyOf": [
@@ -7231,9 +7238,22 @@
                         ],
                         "title": "Resultid"
                     },
+                    "title": {
+                        "type": "string",
+                        "title": "Title"
+                    },
                     "visualizationId": {
                         "type": "string",
                         "title": "Visualizationid"
+                    },
+                    "widgetId": {
+                        "type": "string",
+                        "title": "Widgetid"
+                    },
+                    "widgetType": {
+                        "type": "string",
+                        "const": "insight",
+                        "title": "Widgettype"
                     }
                 },
                 "type": "object",
@@ -7247,6 +7267,21 @@
             },
             "UserContextObjectReference": {
                 "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title"
+                    },
                     "type": {
                         "type": "string",
                         "enum": [
@@ -7257,10 +7292,6 @@
                             "FACT"
                         ],
                         "title": "Type"
-                    },
-                    "id": {
-                        "type": "string",
-                        "title": "Id"
                     }
                 },
                 "type": "object",
@@ -7298,13 +7329,16 @@
             },
             "UserContextRichTextWidgetDescriptor": {
                 "properties": {
-                    "widgetId": {
-                        "type": "string",
-                        "title": "Widgetid"
-                    },
-                    "title": {
-                        "type": "string",
-                        "title": "Title"
+                    "content": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Content"
                     },
                     "filters": {
                         "anyOf": [
@@ -7320,21 +7354,18 @@
                         ],
                         "title": "Filters"
                     },
+                    "title": {
+                        "type": "string",
+                        "title": "Title"
+                    },
+                    "widgetId": {
+                        "type": "string",
+                        "title": "Widgetid"
+                    },
                     "widgetType": {
                         "type": "string",
                         "const": "richText",
                         "title": "Widgettype"
-                    },
-                    "content": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Content"
                     }
                 },
                 "type": "object",
@@ -7363,13 +7394,9 @@
             },
             "UserContextVisualizationSwitcherWidgetDescriptor": {
                 "properties": {
-                    "widgetId": {
+                    "activeVisualizationId": {
                         "type": "string",
-                        "title": "Widgetid"
-                    },
-                    "title": {
-                        "type": "string",
-                        "title": "Title"
+                        "title": "Activevisualizationid"
                     },
                     "filters": {
                         "anyOf": [
@@ -7385,11 +7412,6 @@
                         ],
                         "title": "Filters"
                     },
-                    "widgetType": {
-                        "type": "string",
-                        "const": "visualizationSwitcher",
-                        "title": "Widgettype"
-                    },
                     "resultId": {
                         "anyOf": [
                             {
@@ -7401,9 +7423,9 @@
                         ],
                         "title": "Resultid"
                     },
-                    "activeVisualizationId": {
+                    "title": {
                         "type": "string",
-                        "title": "Activevisualizationid"
+                        "title": "Title"
                     },
                     "visualizationIds": {
                         "items": {
@@ -7411,6 +7433,15 @@
                         },
                         "type": "array",
                         "title": "Visualizationids"
+                    },
+                    "widgetId": {
+                        "type": "string",
+                        "title": "Widgetid"
+                    },
+                    "widgetType": {
+                        "type": "string",
+                        "const": "visualizationSwitcher",
+                        "title": "Widgettype"
                     }
                 },
                 "type": "object",
@@ -7437,6 +7468,13 @@
             },
             "ValidationError": {
                 "properties": {
+                    "ctx": {
+                        "type": "object",
+                        "title": "Context"
+                    },
+                    "input": {
+                        "title": "Input"
+                    },
                     "loc": {
                         "items": {
                             "anyOf": [
@@ -7458,13 +7496,6 @@
                     "type": {
                         "type": "string",
                         "title": "Error Type"
-                    },
-                    "input": {
-                        "title": "Input"
-                    },
-                    "ctx": {
-                        "type": "object",
-                        "title": "Context"
                     }
                 },
                 "type": "object",
@@ -7503,29 +7534,12 @@
             },
             "Visualization": {
                 "properties": {
-                    "type": {
-                        "type": "string",
-                        "enum": [
-                            "table",
-                            "headline_chart",
-                            "bar_chart",
-                            "column_chart",
-                            "line_chart",
-                            "pie_chart",
-                            "scatter_chart"
-                        ],
-                        "title": "Type"
+                    "config": {
+                        "$ref": "#/components/schemas/VisualizationConfig"
                     },
                     "id": {
                         "type": "string",
                         "title": "Id"
-                    },
-                    "query": {
-                        "$ref": "#/components/schemas/Query"
-                    },
-                    "title": {
-                        "type": "string",
-                        "title": "Title"
                     },
                     "metrics": {
                         "items": {
@@ -7541,19 +7555,8 @@
                         "type": "array",
                         "title": "Metrics"
                     },
-                    "view_by": {
-                        "items": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/BucketRefObject"
-                                }
-                            ]
-                        },
-                        "type": "array",
-                        "title": "View By"
+                    "query": {
+                        "$ref": "#/components/schemas/Query"
                     },
                     "segment_by": {
                         "items": {
@@ -7569,8 +7572,36 @@
                         "type": "array",
                         "title": "Segment By"
                     },
-                    "config": {
-                        "$ref": "#/components/schemas/VisualizationConfig"
+                    "title": {
+                        "type": "string",
+                        "title": "Title"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "table",
+                            "headline_chart",
+                            "bar_chart",
+                            "column_chart",
+                            "line_chart",
+                            "pie_chart",
+                            "scatter_chart"
+                        ],
+                        "title": "Type"
+                    },
+                    "view_by": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/BucketRefObject"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "View By"
                     }
                 },
                 "additionalProperties": false,
@@ -7584,6 +7615,14 @@
             },
             "VisualizationAbsoluteDateFilter": {
                 "properties": {
+                    "from": {
+                        "type": "string",
+                        "title": "From"
+                    },
+                    "to": {
+                        "type": "string",
+                        "title": "To"
+                    },
                     "type": {
                         "type": "string",
                         "const": "date_filter",
@@ -7599,14 +7638,6 @@
                             }
                         ],
                         "title": "Using"
-                    },
-                    "from": {
-                        "type": "string",
-                        "title": "From"
-                    },
-                    "to": {
-                        "type": "string",
-                        "title": "To"
                     }
                 },
                 "additionalProperties": false,
@@ -7620,6 +7651,9 @@
             },
             "VisualizationAttributeFilter": {
                 "properties": {
+                    "state": {
+                        "$ref": "#/components/schemas/VisualizationAttributeFilterState"
+                    },
                     "type": {
                         "type": "string",
                         "const": "attribute_filter",
@@ -7628,9 +7662,6 @@
                     "using": {
                         "type": "string",
                         "title": "Using"
-                    },
-                    "state": {
-                        "$ref": "#/components/schemas/VisualizationAttributeFilterState"
                     }
                 },
                 "additionalProperties": false,
@@ -7644,20 +7675,6 @@
             },
             "VisualizationAttributeFilterState": {
                 "properties": {
-                    "include": {
-                        "anyOf": [
-                            {
-                                "items": {
-                                    "type": "string"
-                                },
-                                "type": "array"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Include"
-                    },
                     "exclude": {
                         "anyOf": [
                             {
@@ -7671,6 +7688,20 @@
                             }
                         ],
                         "title": "Exclude"
+                    },
+                    "include": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Include"
                     }
                 },
                 "additionalProperties": false,
@@ -7679,15 +7710,6 @@
             },
             "VisualizationBottomRankingFilter": {
                 "properties": {
-                    "type": {
-                        "type": "string",
-                        "const": "ranking_filter",
-                        "title": "Type"
-                    },
-                    "using": {
-                        "type": "string",
-                        "title": "Using"
-                    },
                     "attribute": {
                         "anyOf": [
                             {
@@ -7702,6 +7724,15 @@
                     "bottom": {
                         "type": "integer",
                         "title": "Bottom"
+                    },
+                    "type": {
+                        "type": "string",
+                        "const": "ranking_filter",
+                        "title": "Type"
+                    },
+                    "using": {
+                        "type": "string",
+                        "title": "Using"
                     }
                 },
                 "additionalProperties": false,
@@ -7715,47 +7746,9 @@
             },
             "VisualizationConfig": {
                 "properties": {
-                    "forecast_enabled": {
-                        "type": "boolean",
-                        "title": "Forecast Enabled"
-                    },
-                    "forecast_confidence": {
-                        "type": "number",
-                        "title": "Forecast Confidence"
-                    },
-                    "forecast_period": {
-                        "anyOf": [
-                            {
-                                "type": "integer"
-                            },
-                            {
-                                "type": "number"
-                            }
-                        ],
-                        "title": "Forecast Period"
-                    },
-                    "forecast_seasonal": {
-                        "type": "boolean",
-                        "title": "Forecast Seasonal"
-                    },
-                    "clustering_enabled": {
-                        "type": "boolean",
-                        "title": "Clustering Enabled"
-                    },
-                    "clustering_amount": {
-                        "anyOf": [
-                            {
-                                "type": "integer"
-                            },
-                            {
-                                "type": "number"
-                            }
-                        ],
-                        "title": "Clustering Amount"
-                    },
-                    "clustering_threshold": {
-                        "type": "number",
-                        "title": "Clustering Threshold"
+                    "anomaly_detection_color": {
+                        "type": "string",
+                        "title": "Anomaly Detection Color"
                     },
                     "anomaly_detection_enabled": {
                         "type": "boolean",
@@ -7779,9 +7772,24 @@
                         ],
                         "title": "Anomaly Detection Size"
                     },
-                    "anomaly_detection_color": {
-                        "type": "string",
-                        "title": "Anomaly Detection Color"
+                    "clustering_amount": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "number"
+                            }
+                        ],
+                        "title": "Clustering Amount"
+                    },
+                    "clustering_enabled": {
+                        "type": "boolean",
+                        "title": "Clustering Enabled"
+                    },
+                    "clustering_threshold": {
+                        "type": "number",
+                        "title": "Clustering Threshold"
                     },
                     "disable_key_drive_analysis": {
                         "additionalProperties": {
@@ -7789,6 +7797,29 @@
                         },
                         "type": "object",
                         "title": "Disable Key Drive Analysis"
+                    },
+                    "forecast_confidence": {
+                        "type": "number",
+                        "title": "Forecast Confidence"
+                    },
+                    "forecast_enabled": {
+                        "type": "boolean",
+                        "title": "Forecast Enabled"
+                    },
+                    "forecast_period": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "number"
+                            }
+                        ],
+                        "title": "Forecast Period"
+                    },
+                    "forecast_seasonal": {
+                        "type": "boolean",
+                        "title": "Forecast Seasonal"
                     }
                 },
                 "additionalProperties": false,
@@ -7797,10 +7828,6 @@
             },
             "VisualizationExcludedResponse": {
                 "properties": {
-                    "visualizationId": {
-                        "type": "string",
-                        "title": "Visualizationid"
-                    },
                     "reason": {
                         "type": "string",
                         "title": "Reason"
@@ -7815,6 +7842,10 @@
                             }
                         ],
                         "title": "Title"
+                    },
+                    "visualizationId": {
+                        "type": "string",
+                        "title": "Visualizationid"
                     }
                 },
                 "type": "object",
@@ -7866,10 +7897,6 @@
             },
             "VisualizationIncludedResponse": {
                 "properties": {
-                    "visualizationId": {
-                        "type": "string",
-                        "title": "Visualizationid"
-                    },
                     "title": {
                         "anyOf": [
                             {
@@ -7880,6 +7907,10 @@
                             }
                         ],
                         "title": "Title"
+                    },
+                    "visualizationId": {
+                        "type": "string",
+                        "title": "Visualizationid"
                     }
                 },
                 "type": "object",
@@ -7890,6 +7921,13 @@
             },
             "VisualizationMetricValueComparisonFilter": {
                 "properties": {
+                    "condition": {
+                        "$ref": "#/components/schemas/MetricValueFilterConditionComparison"
+                    },
+                    "nullValuesAsZero": {
+                        "type": "boolean",
+                        "title": "Nullvaluesaszero"
+                    },
                     "type": {
                         "type": "string",
                         "const": "metric_value_filter",
@@ -7898,9 +7936,6 @@
                     "using": {
                         "type": "string",
                         "title": "Using"
-                    },
-                    "condition": {
-                        "$ref": "#/components/schemas/MetricValueFilterConditionComparison"
                     },
                     "value": {
                         "anyOf": [
@@ -7912,10 +7947,6 @@
                             }
                         ],
                         "title": "Value"
-                    },
-                    "nullValuesAsZero": {
-                        "type": "boolean",
-                        "title": "Nullvaluesaszero"
                     }
                 },
                 "additionalProperties": false,
@@ -7931,15 +7962,6 @@
             },
             "VisualizationMetricValueRangeFilter": {
                 "properties": {
-                    "type": {
-                        "type": "string",
-                        "const": "metric_value_filter",
-                        "title": "Type"
-                    },
-                    "using": {
-                        "type": "string",
-                        "title": "Using"
-                    },
                     "condition": {
                         "$ref": "#/components/schemas/MetricValueFilterConditionRange"
                     },
@@ -7954,6 +7976,10 @@
                         ],
                         "title": "From"
                     },
+                    "nullValuesAsZero": {
+                        "type": "boolean",
+                        "title": "Nullvaluesaszero"
+                    },
                     "to": {
                         "anyOf": [
                             {
@@ -7965,9 +7991,14 @@
                         ],
                         "title": "To"
                     },
-                    "nullValuesAsZero": {
-                        "type": "boolean",
-                        "title": "Nullvaluesaszero"
+                    "type": {
+                        "type": "string",
+                        "const": "metric_value_filter",
+                        "title": "Type"
+                    },
+                    "using": {
+                        "type": "string",
+                        "title": "Using"
                     }
                 },
                 "additionalProperties": false,
@@ -8009,6 +8040,17 @@
             },
             "VisualizationRelativeDateFilter": {
                 "properties": {
+                    "from": {
+                        "type": "integer",
+                        "title": "From"
+                    },
+                    "granularity": {
+                        "$ref": "#/components/schemas/DateFilterGranularity"
+                    },
+                    "to": {
+                        "type": "integer",
+                        "title": "To"
+                    },
                     "type": {
                         "type": "string",
                         "const": "date_filter",
@@ -8024,17 +8066,6 @@
                             }
                         ],
                         "title": "Using"
-                    },
-                    "granularity": {
-                        "$ref": "#/components/schemas/DateFilterGranularity"
-                    },
-                    "from": {
-                        "type": "integer",
-                        "title": "From"
-                    },
-                    "to": {
-                        "type": "integer",
-                        "title": "To"
                     }
                 },
                 "additionalProperties": false,
@@ -8049,15 +8080,6 @@
             },
             "VisualizationTopRankingFilter": {
                 "properties": {
-                    "type": {
-                        "type": "string",
-                        "const": "ranking_filter",
-                        "title": "Type"
-                    },
-                    "using": {
-                        "type": "string",
-                        "title": "Using"
-                    },
                     "attribute": {
                         "anyOf": [
                             {
@@ -8072,6 +8094,15 @@
                     "top": {
                         "type": "integer",
                         "title": "Top"
+                    },
+                    "type": {
+                        "type": "string",
+                        "const": "ranking_filter",
+                        "title": "Type"
+                    },
+                    "using": {
+                        "type": "string",
+                        "title": "Using"
                     }
                 },
                 "additionalProperties": false,
@@ -8137,10 +8168,10 @@
             },
             "WhatIfScenario": {
                 "properties": {
-                    "visualizationRef": {
-                        "type": "string",
-                        "title": "Visualizationref",
-                        "description": "Base visualization reference used by scenario."
+                    "includeBaseline": {
+                        "type": "boolean",
+                        "title": "Includebaseline",
+                        "description": "Whether baseline values are included."
                     },
                     "scenarios": {
                         "items": {
@@ -8150,10 +8181,10 @@
                         "title": "Scenarios",
                         "description": "Defined what-if variants."
                     },
-                    "includeBaseline": {
-                        "type": "boolean",
-                        "title": "Includebaseline",
-                        "description": "Whether baseline values are included."
+                    "visualizationRef": {
+                        "type": "string",
+                        "title": "Visualizationref",
+                        "description": "Base visualization reference used by scenario."
                     }
                 },
                 "additionalProperties": false,
@@ -8167,11 +8198,6 @@
             },
             "WhatIfScenarioVariant": {
                 "properties": {
-                    "label": {
-                        "type": "string",
-                        "title": "Label",
-                        "description": "Scenario name."
-                    },
                     "adjustments": {
                         "items": {
                             "$ref": "#/components/schemas/WhatIfMeasureAdjustment"
@@ -8179,6 +8205,11 @@
                         "type": "array",
                         "title": "Adjustments",
                         "description": "Scenario adjustments."
+                    },
+                    "label": {
+                        "type": "string",
+                        "title": "Label",
+                        "description": "Scenario name."
                     }
                 },
                 "additionalProperties": false,
@@ -8209,12 +8240,12 @@
             },
             "_MeasureValueRangeInner": {
                 "properties": {
-                    "operator": {
-                        "$ref": "#/components/schemas/RangeMeasureValueOperator"
-                    },
                     "from": {
                         "type": "number",
                         "title": "From"
+                    },
+                    "operator": {
+                        "$ref": "#/components/schemas/RangeMeasureValueOperator"
                     },
                     "to": {
                         "type": "number",
@@ -8282,6 +8313,18 @@
             },
             "app__domain__conversations__visualization__RankingFilter": {
                 "properties": {
+                    "attribute": {
+                        "type": "string",
+                        "title": "Attribute"
+                    },
+                    "bottom": {
+                        "type": "integer",
+                        "title": "Bottom"
+                    },
+                    "top": {
+                        "type": "integer",
+                        "title": "Top"
+                    },
                     "type": {
                         "type": "string",
                         "const": "ranking_filter",
@@ -8290,18 +8333,6 @@
                     "using": {
                         "type": "string",
                         "title": "Using"
-                    },
-                    "attribute": {
-                        "type": "string",
-                        "title": "Attribute"
-                    },
-                    "top": {
-                        "type": "integer",
-                        "title": "Top"
-                    },
-                    "bottom": {
-                        "type": "integer",
-                        "title": "Bottom"
                     }
                 },
                 "additionalProperties": false,

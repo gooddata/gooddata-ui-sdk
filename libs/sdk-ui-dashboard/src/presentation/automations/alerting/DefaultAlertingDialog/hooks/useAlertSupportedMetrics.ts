@@ -23,12 +23,12 @@ export interface IUseAlertSupportedMetricsProps {
 }
 
 /**
- * Extracts the supported-metrics derivation cluster from useEditAlert into a focused hook.
+ * Derives which measures and attributes the alerting dialog may offer for the current widget: it
+ * resolves the effective insight and its execution result, then narrows the catalog down to the
+ * metrics alerting actually supports.
  *
- * Reads `locale`, `catalogDateDatasets`, `catalogAttributes` from `useAutomationsContext()`, and
- * `executionResultByRef` from `useAlertingDialogContext()`.
- *
- * `execResult` and `effectiveInsight` are internal — not returned.
+ * `execResult` and `effectiveInsight` stay internal — they are implementation detail rather than part
+ * of the returned contract.
  *
  * @internal
  */

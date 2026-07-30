@@ -15,10 +15,10 @@ import type {
 
 /**
  * Sub-context for the alerting create/edit dialog.
- * Shape grows during Phase 2 migration as DefaultAlertingDialog and its hooks are migrated.
  *
- * The connector hydrates this from dashboard state and provides the CRUD callbacks.
- * The dialog reads from this context instead of calling useDashboardSelector directly.
+ * The connector hydrates this from dashboard state and provides the CRUD callbacks; the dialog and its
+ * hooks read it instead of reaching into the dashboard store. That direction is enforced by the
+ * `no-model-imports-in-clean-alerting` rule in `.dependency-cruiser.js`.
  */
 export interface IAlertingDialogContextValue {
     mode: "create" | "edit";

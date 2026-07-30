@@ -29,25 +29,25 @@ export interface AFM {
      */
     'attributes': Array<AttributeItem>;
     /**
+     * Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.
+     */
+    'auxMeasures'?: Array<MeasureItem>;
+    /**
      * Various filter types to filter the execution result.
      */
     'filters': Array<FilterDefinition>;
+    /**
+     * (EXPERIMENTAL) Override definitions of catalog metrics for this request. Allows substituting a catalog metric\'s MAQL definition without modifying the stored definition.
+     */
+    'measureDefinitionOverrides'?: Array<MetricDefinitionOverride>;
     /**
      * Metrics to be computed.
      */
     'measures': Array<MeasureItem>;
     /**
-     * Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.
-     */
-    'auxMeasures'?: Array<MeasureItem>;
-    /**
      * (EXPERIMENTAL) Parameter values to use for this execution.
      */
     'parameters'?: Array<ParameterItem>;
-    /**
-     * (EXPERIMENTAL) Override definitions of catalog metrics for this request. Allows substituting a catalog metric\'s MAQL definition without modifying the stored definition.
-     */
-    'measureDefinitionOverrides'?: Array<MetricDefinitionOverride>;
 }
 
 /**
@@ -58,18 +58,50 @@ export interface AbsoluteDateFilter {
 }
 
 export interface AbsoluteDateFilterAbsoluteDateFilter {
-    'from': string;
-    'to': string;
-    'localIdentifier'?: string;
     'applyOnResult'?: boolean;
+    'dataset': AfmObjectIdentifierDataset;
     /**
      * Specifies how rows with empty (null/missing) date values should be handled. INCLUDE includes empty dates in addition to the date range restriction, EXCLUDE removes rows with empty dates (default), ONLY keeps only rows with empty dates.
      */
     'emptyValueHandling'?: AbsoluteDateFilterAbsoluteDateFilterEmptyValueHandlingEnum;
-    'dataset': AfmObjectIdentifierDataset;
+    'from': string;
+    'localIdentifier'?: string;
+    'to': string;
 }
 
 export type AbsoluteDateFilterAbsoluteDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
+
+/**
+ * An absolute date range filter defined at a specific granularity. The \'from\'/\'to\' literals must match the format of the chosen granularity (e.g. \'2020\' for YEAR, \'2012-05\' for MONTH, \'2012-3\' for QUARTER, \'1996-01\' for WEEK, \'2010-10-30\' for DAY, or a plain ordinal like \'6\' for periodical granularities such as MONTH_OF_YEAR). At least one of \'from\'/\'to\' must be provided; specifying only one yields an open-ended range.
+ */
+export interface AbsoluteGranularityDateFilter {
+    'absoluteGranularityDateFilter': AbsoluteGranularityDateFilterAbsoluteGranularityDateFilter;
+}
+
+export interface AbsoluteGranularityDateFilterAbsoluteGranularityDateFilter {
+    'applyOnResult'?: boolean;
+    'dataset': AfmObjectIdentifierDataset;
+    /**
+     * Specifies how rows with empty (null/missing) date values should be handled. INCLUDE includes empty dates in addition to the date range restriction, EXCLUDE removes rows with empty dates (default), ONLY keeps only rows with empty dates.
+     */
+    'emptyValueHandling'?: AbsoluteGranularityDateFilterAbsoluteGranularityDateFilterEmptyValueHandlingEnum;
+    /**
+     * Start of the range (including), in the format matching \'granularity\'. If omitted, the range is unbounded at the start.
+     */
+    'from'?: string | null;
+    /**
+     * Granularity determining the filtered date attribute and the expected \'from\'/\'to\' format.
+     */
+    'granularity': AbsoluteGranularityDateFilterAbsoluteGranularityDateFilterGranularityEnum;
+    'localIdentifier'?: string;
+    /**
+     * End of the range (including), in the format matching \'granularity\'. If omitted, the range is unbounded at the end.
+     */
+    'to'?: string | null;
+}
+
+export type AbsoluteGranularityDateFilterAbsoluteGranularityDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
+export type AbsoluteGranularityDateFilterAbsoluteGranularityDateFilterGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
 
 /**
  * @type AbstractMeasureValueFilter
@@ -136,8 +168,8 @@ export interface AfmObjectIdentifierDatasetIdentifier {
 export type AfmObjectIdentifierDatasetIdentifierTypeEnum = 'dataset';
 
 export interface AfmObjectIdentifierIdentifier {
-    'type': AfmObjectIdentifierIdentifierTypeEnum;
     'id': string;
+    'type': AfmObjectIdentifierIdentifierTypeEnum;
 }
 
 export type AfmObjectIdentifierIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'prompt' | 'visualizationObject' | 'filterContext';
@@ -147,8 +179,8 @@ export interface AfmObjectIdentifierLabel {
 }
 
 export interface AfmObjectIdentifierLabelIdentifier {
-    'type': AfmObjectIdentifierLabelIdentifierTypeEnum;
     'id': string;
+    'type': AfmObjectIdentifierLabelIdentifierTypeEnum;
 }
 
 export type AfmObjectIdentifierLabelIdentifierTypeEnum = 'label';
@@ -173,6 +205,10 @@ export interface AlertAfm {
      */
     'attributes'?: Array<AttributeItem>;
     /**
+     * Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.
+     */
+    'auxMeasures'?: Array<MeasureItem>;
+    /**
      * Various filter types to filter execution result. For anomaly detection, exactly one dataset is specified in the condition. The AFM may contain multiple date filters for different datasets, but only the date filter matching the dataset from the condition is used for anomaly detection.
      */
     'filters': Array<FilterDefinition>;
@@ -180,10 +216,6 @@ export interface AlertAfm {
      * Metrics to be computed. One metric if the alert condition is evaluated to a scalar. Two metrics when they should be evaluated to each other.
      */
     'measures': Array<MeasureItem>;
-    /**
-     * Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.
-     */
-    'auxMeasures'?: Array<MeasureItem>;
     /**
      * Parameters to be used in the computation.
      */
@@ -210,6 +242,8 @@ export interface AllTimeDateFilter {
 }
 
 export interface AllTimeDateFilterAllTimeDateFilter {
+    'applyOnResult'?: boolean;
+    'dataset': AfmObjectIdentifierDataset;
     /**
      * Specifies how rows with empty (null/missing) date values should be handled. INCLUDE means no filtering effect (default), EXCLUDE removes rows with null dates, ONLY keeps only rows with null dates.
      */
@@ -219,12 +253,15 @@ export interface AllTimeDateFilterAllTimeDateFilter {
      */
     'granularity'?: AllTimeDateFilterAllTimeDateFilterGranularityEnum;
     'localIdentifier'?: string;
-    'applyOnResult'?: boolean;
-    'dataset': AfmObjectIdentifierDataset;
 }
 
 export type AllTimeDateFilterAllTimeDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
-export type AllTimeDateFilterAllTimeDateFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
+export type AllTimeDateFilterAllTimeDateFilterGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
+
+export interface AllowedValue {
+    'title'?: string;
+    'value': string;
+}
 
 /**
  * Amplitude service.
@@ -235,13 +272,13 @@ export interface AmplitudeService {
      */
     'aiProjectApiKey': string;
     /**
-     * API key for GoodData common project - used by backend.
-     */
-    'gdCommonApiKey': string;
-    /**
      * Amplitude endpoint URL.
      */
     'endpoint': string;
+    /**
+     * API key for GoodData common project - used by backend.
+     */
+    'gdCommonApiKey': string;
     /**
      * Optional reporting endpoint for proxying telemetry events.
      */
@@ -253,13 +290,13 @@ export interface AmplitudeService {
  */
 export interface AnalyticsCatalogCreatedBy {
     /**
-     * Distinct users who have created at least one catalog object.
-     */
-    'users': Array<AnalyticsCatalogUser>;
-    /**
      * Reserved for future use. Always empty string in the current implementation.
      */
     'reasoning': string;
+    /**
+     * Distinct users who have created at least one catalog object.
+     */
+    'users': Array<AnalyticsCatalogUser>;
 }
 
 /**
@@ -277,10 +314,6 @@ export interface AnalyticsCatalogTags {
  */
 export interface AnalyticsCatalogUser {
     /**
-     * User identifier.
-     */
-    'userId': string;
-    /**
      * User first name.
      */
     'firstname': string;
@@ -288,23 +321,27 @@ export interface AnalyticsCatalogUser {
      * User last name.
      */
     'lastname': string;
+    /**
+     * User identifier.
+     */
+    'userId': string;
 }
 
 export interface AnomalyDetection {
+    'dataset': AfmObjectIdentifierDataset;
+    /**
+     * Date granularity for anomaly detection. Only time-based granularities are supported (HOUR, DAY, WEEK, MONTH, QUARTER, YEAR).
+     */
+    'granularity': AnomalyDetectionGranularityEnum;
     'measure': LocalIdentifier;
     /**
      * Sensitivity level for anomaly detection
      */
     'sensitivity': AnomalyDetectionSensitivityEnum;
-    /**
-     * Date granularity for anomaly detection. Only time-based granularities are supported (HOUR, DAY, WEEK, MONTH, QUARTER, YEAR).
-     */
-    'granularity': AnomalyDetectionGranularityEnum;
-    'dataset': AfmObjectIdentifierDataset;
 }
 
-export type AnomalyDetectionSensitivityEnum = 'LOW' | 'MEDIUM' | 'HIGH';
 export type AnomalyDetectionGranularityEnum = 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR';
+export type AnomalyDetectionSensitivityEnum = 'LOW' | 'MEDIUM' | 'HIGH';
 
 export interface AnomalyDetectionWrapper {
     'anomaly': AnomalyDetection;
@@ -327,11 +364,11 @@ export type AnthropicApiKeyAuthTypeEnum = 'API_KEY';
  * Configuration for Anthropic provider.
  */
 export interface AnthropicProviderConfig {
+    'auth': AnthropicApiKeyAuth;
     /**
      * Custom base URL for the Anthropic API. Defaults to the official endpoint; override only for enterprise proxies or compatible gateways.
      */
     'baseUrl'?: string;
-    'auth': AnthropicApiKeyAuth;
     /**
      * Provider type.
      */
@@ -341,19 +378,19 @@ export interface AnthropicProviderConfig {
 export type AnthropicProviderConfigTypeEnum = 'ANTHROPIC';
 
 export interface ApiEntitlement {
+    'expiry'?: string;
     'name': ApiEntitlementNameEnum;
     'value'?: string;
-    'expiry'?: string;
 }
 
 export type ApiEntitlementNameEnum = 'CacheStrategy' | 'Contract' | 'CustomTheming' | 'ExtraCache' | 'Hipaa' | 'PdfExports' | 'UiLocalization' | 'Tier' | 'UserCount' | 'ManagedIdpUserCount' | 'UnlimitedUsers' | 'UnlimitedWorkspaces' | 'WhiteLabeling' | 'WorkspaceCount' | 'UserTelemetryDisabled' | 'AutomationCount' | 'UnlimitedAutomations' | 'AutomationRecipientCount' | 'UnlimitedAutomationRecipients' | 'DailyScheduledActionCount' | 'UnlimitedDailyScheduledActions' | 'DailyAlertActionCount' | 'UnlimitedDailyAlertActions' | 'ScheduledActionMinimumRecurrenceMinutes' | 'FederatedIdentityManagement' | 'AuditLogging' | 'ControlledFeatureRollout' | 'AiLake' | 'AiModule' | 'AiQueryLimit' | 'AiKnowledgeStorageLimit' | 'AiAgentLimit' | 'AiWorkspaceLimit' | 'AiObservability';
 
 export interface ArithmeticMeasure {
+    'left': LocalIdentifier;
     /**
      * Arithmetic operator. DIFFERENCE - m₁−m₂ - the difference between two metrics. CHANGE - (m₁−m₂)÷m₂ - the relative difference between two metrics. 
      */
     'operator': ArithmeticMeasureOperatorEnum;
-    'left': LocalIdentifier;
     'right': LocalIdentifier;
 }
 
@@ -447,11 +484,11 @@ export interface AttributeFilterParent {
 }
 
 export interface AttributeItem {
+    'label': AfmObjectIdentifierLabel;
     /**
      * Local identifier of the attribute. This can be used to reference the attribute in other parts of the execution definition.
      */
     'localIdentifier': string;
-    'label': AfmObjectIdentifierLabel;
     /**
      * Indicates whether to show all values of given attribute even if the data bound to those values is not available.
      */
@@ -459,20 +496,20 @@ export interface AttributeItem {
 }
 
 export interface AutomationAlert {
-    'execution': AlertAfm;
     'condition': AutomationAlertCondition;
-    /**
-     * Trigger behavior for the alert. ALWAYS - alert is triggered every time the condition is met. ONCE - alert is triggered only once when the condition is met. ONCE_PER_INTERVAL - alert is triggered when the condition is met, then suppressed for the interval. If no interval is specified, it behaves as ALWAYS. 
-     */
-    'trigger'?: AutomationAlertTriggerEnum;
+    'execution': AlertAfm;
     /**
      * Date granularity for the interval of ONCE_PER_INTERVAL trigger. Supported granularities: DAY, WEEK, MONTH, QUARTER, YEAR.
      */
     'interval'?: AutomationAlertIntervalEnum;
+    /**
+     * Trigger behavior for the alert. ALWAYS - alert is triggered every time the condition is met. ONCE - alert is triggered only once when the condition is met. ONCE_PER_INTERVAL - alert is triggered when the condition is met, then suppressed for the interval. If no interval is specified, it behaves as ALWAYS. 
+     */
+    'trigger'?: AutomationAlertTriggerEnum;
 }
 
-export type AutomationAlertTriggerEnum = 'ALWAYS' | 'ONCE' | 'ONCE_PER_INTERVAL';
 export type AutomationAlertIntervalEnum = 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR';
+export type AutomationAlertTriggerEnum = 'ALWAYS' | 'ONCE' | 'ONCE_PER_INTERVAL';
 
 /**
  * @type AutomationAlertCondition
@@ -500,8 +537,8 @@ export interface AutomationImageExport {
 export interface AutomationMetadata {
     [key: string]: any;
 
-    'widget'?: string;
     'visibleFilters'?: Array<VisibleFilter>;
+    'widget'?: string;
 }
 
 export interface AutomationRawExport {
@@ -518,13 +555,13 @@ export interface AutomationSchedule {
      */
     'cronDescription'?: string;
     /**
-     * Timezone in which the schedule is defined.
-     */
-    'timezone': string;
-    /**
      * Timestamp of the first scheduled action. If not provided default to the next scheduled time.
      */
     'firstRun'?: string;
+    /**
+     * Timezone in which the schedule is defined.
+     */
+    'timezone': string;
 }
 
 export interface AutomationSlidesExport {
@@ -541,13 +578,13 @@ export interface AutomationVisualExport {
 
 export interface AvailableAssignees {
     /**
-     * List of users
-     */
-    'users': Array<UserAssignee>;
-    /**
      * List of user groups
      */
     'userGroups': Array<UserGroupAssignee>;
+    /**
+     * List of users
+     */
+    'users': Array<UserAssignee>;
 }
 
 export interface AwsBedrockAccessKeyAuth {
@@ -575,11 +612,11 @@ export type AwsBedrockAccessKeyAuthTypeEnum = 'ACCESS_KEY';
  * Configuration for AWS Bedrock provider.
  */
 export interface AwsBedrockProviderConfig {
+    'auth': AwsBedrockAccessKeyAuth;
     /**
      * AWS region for Bedrock.
      */
     'region': string;
-    'auth': AwsBedrockAccessKeyAuth;
     /**
      * Provider type.
      */
@@ -605,11 +642,11 @@ export type AzureFoundryApiKeyAuthTypeEnum = 'API_KEY';
  * Configuration for Azure Foundry provider.
  */
 export interface AzureFoundryProviderConfig {
+    'auth': AzureFoundryApiKeyAuth;
     /**
      * Azure OpenAI endpoint URL.
      */
     'endpoint': string;
-    'auth': AzureFoundryApiKeyAuth;
     /**
      * Provider type.
      */
@@ -623,48 +660,116 @@ export type AzureFoundryProviderConfigTypeEnum = 'AZURE_FOUNDRY';
  */
 export interface BoundedFilter {
     /**
-     * Date granularity specifying particular date attribute in given dimension.
-     */
-    'granularity': BoundedFilterGranularityEnum;
-    /**
      * Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for \'2 days/weeks, ... ago\'). If null, then start of the range is unbounded.
      */
     'from'?: number | null;
+    /**
+     * Date granularity specifying particular date attribute in given dimension.
+     */
+    'granularity': BoundedFilterGranularityEnum;
     /**
      * End of the filtering interval. Specified by number of periods (with respect to given granularity). Value \'O\' is representing current time-interval (current day, week, ...). If null, then end of the range is unbounded.
      */
     'to'?: number | null;
 }
 
-export type BoundedFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
+export type BoundedFilterGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
+
+/**
+ * @type CacheRetention
+ * Determines when the cached results coming from a particular data source expire. The shape is selected by the `type` property.
+ */
+export type CacheRetention = IndefiniteCacheRetention | ScheduleCacheRetention | ValidityPeriodCacheRetention;
+
+/**
+ * A schedule determining when the cached results of a data source expire.
+ */
+export interface CacheRetentionSchedule {
+    /**
+     * Cron expression determining when the cached results expire.
+     */
+    'cron': string;
+    /**
+     * Timezone the cron expression is evaluated in. Defaults to UTC when not set.
+     */
+    'timezone'?: string | null;
+}
+
+/**
+ * @type CalendarDefinition
+ * Fiscal calendar definition. The concrete shape is selected by the `type` discriminator.
+ */
+export type CalendarDefinition = { type: 'custom' } & CustomCalendarDefinition | { type: 'fiscalYear' } & FiscalYearCalendarDefinition;
+
+/**
+ * A fiscal granularity enabled in a calendar together with its title prefix.
+ */
+export interface CalendarGranularity {
+    /**
+     * Fiscal granularity available in the calendar. Corresponds to the calcique granularity name.
+     */
+    'granularity': CalendarGranularityGranularityEnum;
+    /**
+     * Prefix used to compose granularity titles. Can be localized via the metadata localization mechanism.
+     */
+    'prefix': string;
+}
+
+export type CalendarGranularityGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
+
+/**
+ * Reference to a custom fiscal calendar table in a data source.
+ */
+export interface CalendarTableReference {
+    /**
+     * Path to the fiscal calendar table.
+     */
+    'path': Array<string>;
+    /**
+     * Version of the fiscal calendar table structure.
+     */
+    'version': string;
+}
 
 /**
  * Table column override.
  */
 export interface ColumnOverride {
     /**
-     * Column name.
+     * Specifies the attribute\'s column to which this label is associated.
      */
-    'name': string;
-    /**
-     * Logical Data Model type for the column.
-     */
-    'ldmTypeOverride'?: ColumnOverrideLdmTypeOverrideEnum;
+    'labelTargetColumn'?: string;
     /**
      * Label type for the target attribute.
      */
     'labelType'?: ColumnOverrideLabelTypeEnum;
     /**
-     * Specifies the attribute\'s column to which this label is associated.
+     * Logical Data Model type for the column.
      */
-    'labelTargetColumn'?: string;
+    'ldmTypeOverride'?: ColumnOverrideLdmTypeOverrideEnum;
+    /**
+     * Column name.
+     */
+    'name': string;
 }
 
-export type ColumnOverrideLdmTypeOverrideEnum = 'FACT' | 'LABEL';
 export type ColumnOverrideLabelTypeEnum = 'TEXT' | 'HYPERLINK' | 'GEO' | 'GEO_LONGITUDE' | 'GEO_LATITUDE' | 'GEO_AREA' | 'GEO_ICON' | 'IMAGE' | 'HYPERLOGLOG';
+export type ColumnOverrideLdmTypeOverrideEnum = 'FACT' | 'LABEL';
 
 export interface ColumnStatisticsEntry {
     'columnName': string;
+    /**
+     * Total data size of the column in bytes.
+     */
+    'dataSize'?: number;
+    /**
+     * Maximum value in the column (string-encoded).
+     */
+    'max'?: string;
+    /**
+     * Minimum value in the column (string-encoded).
+     */
+    'min'?: string;
     /**
      * NDV (Number of Distinct Values) — approximate cardinality of the column.
      */
@@ -673,23 +778,11 @@ export interface ColumnStatisticsEntry {
      * Number of NULL values in the column.
      */
     'nullCount'?: number;
-    /**
-     * Minimum value in the column (string-encoded).
-     */
-    'min'?: string;
-    /**
-     * Maximum value in the column (string-encoded).
-     */
-    'max'?: string;
-    /**
-     * Total data size of the column in bytes.
-     */
-    'dataSize'?: number;
 }
 
 export interface Comparison {
-    'operator': ComparisonOperatorEnum;
     'left': LocalIdentifier;
+    'operator': ComparisonOperatorEnum;
     'right': AlertConditionOperand;
 }
 
@@ -717,19 +810,19 @@ export interface ComparisonMeasureValueFilter {
 }
 
 export interface ComparisonMeasureValueFilterComparisonMeasureValueFilter {
+    'applyOnResult'?: boolean;
     /**
      * References to the attributes to be used when filtering.
      */
     'dimensionality'?: Array<AfmIdentifier>;
+    'localIdentifier'?: string;
+    'measure': AfmIdentifier;
+    'operator': ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum;
     /**
      * A value that will be substituted for null values in the metric for the comparisons.
      */
     'treatNullValuesAs'?: number;
-    'operator': ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum;
     'value': number;
-    'localIdentifier'?: string;
-    'applyOnResult'?: boolean;
-    'measure': AfmIdentifier;
 }
 
 export type ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum = 'GREATER_THAN' | 'GREATER_THAN_OR_EQUAL_TO' | 'LESS_THAN' | 'LESS_THAN_OR_EQUAL_TO' | 'EQUAL_TO' | 'NOT_EQUAL_TO';
@@ -746,43 +839,53 @@ export interface CompoundMeasureValueFilter {
 }
 
 export interface CompoundMeasureValueFilterCompoundMeasureValueFilter {
-    /**
-     * References to the attributes to be used when filtering.
-     */
-    'dimensionality'?: Array<AfmIdentifier>;
-    /**
-     * A value that will be substituted for null values in the metric for the comparisons.
-     */
-    'treatNullValuesAs'?: number;
+    'applyOnResult'?: boolean;
     /**
      * List of conditions to apply. Conditions are combined with OR logic. Each condition can be either a comparison (e.g., > 100) or a range (e.g., BETWEEN 10 AND 50). If empty, no filtering is applied and all rows are returned.
      */
     'conditions': Array<MeasureValueCondition>;
+    /**
+     * References to the attributes to be used when filtering.
+     */
+    'dimensionality'?: Array<AfmIdentifier>;
     'localIdentifier'?: string;
-    'applyOnResult'?: boolean;
     'measure': AfmIdentifier;
+    /**
+     * A value that will be substituted for null values in the metric for the comparisons.
+     */
+    'treatNullValuesAs'?: number;
 }
 
 /**
  * Settings for content slide.
  */
 export interface ContentSlideTemplate {
-    'header'?: RunningSection | null;
-    'footer'?: RunningSection | null;
     'descriptionField'?: string | null;
+    'footer'?: RunningSection | null;
+    'header'?: RunningSection | null;
 }
 
 /**
  * Settings for cover slide.
  */
 export interface CoverSlideTemplate {
-    'header'?: RunningSection | null;
-    'footer'?: RunningSection | null;
-    'descriptionField'?: string | null;
     /**
      * Show background image on the slide.
      */
     'backgroundImage'?: boolean;
+    'descriptionField'?: string | null;
+    'footer'?: RunningSection | null;
+    'header'?: RunningSection | null;
+}
+
+/**
+ * Calendar backed by custom fiscal calendar tables defined per data source.
+ */
+export interface CustomCalendarDefinition {
+    /**
+     * Custom fiscal calendar table per data source ID.
+     */
+    'dataSourceTables': { [key: string]: CalendarTableReference; };
 }
 
 /**
@@ -800,13 +903,13 @@ export interface CustomLabel {
  */
 export interface CustomMetric {
     /**
-     * Metric title override.
-     */
-    'title': string;
-    /**
      * Format override.
      */
     'format': string;
+    /**
+     * Metric title override.
+     */
+    'title': string;
 }
 
 /**
@@ -829,13 +932,13 @@ export interface DashboardArbitraryAttributeFilter {
 
 export interface DashboardArbitraryAttributeFilterArbitraryAttributeFilter {
     'displayForm': IdentifierRef;
-    'values': Array<string | null>;
-    'negativeSelection': boolean;
     'filterElementsBy'?: Array<AttributeFilterParent>;
     'filterElementsByDate'?: Array<AttributeFilterByDate>;
-    'validateElementsBy'?: Array<IdentifierRef>;
-    'title'?: string;
     'localIdentifier'?: string;
+    'negativeSelection': boolean;
+    'title'?: string;
+    'validateElementsBy'?: Array<IdentifierRef>;
+    'values': Array<string | null>;
 }
 
 export interface DashboardAttributeFilter {
@@ -843,15 +946,15 @@ export interface DashboardAttributeFilter {
 }
 
 export interface DashboardAttributeFilterAttributeFilter {
-    'displayForm': IdentifierRef;
-    'negativeSelection': boolean;
     'attributeElements': AttributeElements;
+    'displayForm': IdentifierRef;
     'filterElementsBy'?: Array<AttributeFilterParent>;
     'filterElementsByDate'?: Array<AttributeFilterByDate>;
-    'validateElementsBy'?: Array<IdentifierRef>;
-    'title'?: string;
-    'selectionMode'?: DashboardAttributeFilterAttributeFilterSelectionModeEnum;
     'localIdentifier'?: string;
+    'negativeSelection': boolean;
+    'selectionMode'?: DashboardAttributeFilterAttributeFilterSelectionModeEnum;
+    'title'?: string;
+    'validateElementsBy'?: Array<IdentifierRef>;
 }
 
 export type DashboardAttributeFilterAttributeFilterSelectionModeEnum = 'single' | 'multi';
@@ -862,8 +965,8 @@ export interface DashboardCompoundComparisonCondition {
 
 export interface DashboardCompoundComparisonConditionComparison {
     'operator': DashboardCompoundComparisonConditionComparisonOperatorEnum;
-    'value': number;
     'treatNullValuesAs'?: number;
+    'value': number;
 }
 
 export type DashboardCompoundComparisonConditionComparisonOperatorEnum = 'GREATER_THAN' | 'GREATER_THAN_OR_EQUAL_TO' | 'LESS_THAN' | 'LESS_THAN_OR_EQUAL_TO' | 'EQUAL_TO' | 'NOT_EQUAL_TO';
@@ -878,8 +981,8 @@ export interface DashboardCompoundRangeCondition {
 }
 
 export interface DashboardCompoundRangeConditionRange {
-    'operator': DashboardCompoundRangeConditionRangeOperatorEnum;
     'from': number;
+    'operator': DashboardCompoundRangeConditionRangeOperatorEnum;
     'to': number;
     'treatNullValuesAs'?: number;
 }
@@ -891,25 +994,30 @@ export interface DashboardDateFilter {
 }
 
 export interface DashboardDateFilterDateFilter {
-    'type': DashboardDateFilterDateFilterTypeEnum;
-    'granularity': DashboardDateFilterDateFilterGranularityEnum;
-    'from'?: DashboardDateFilterDateFilterFrom;
-    'to'?: DashboardDateFilterDateFilterFrom;
-    'dataSet'?: IdentifierRef;
     'attribute'?: IdentifierRef;
     'boundedFilter'?: RelativeBoundedDateFilter;
+    'dataSet'?: IdentifierRef;
     'emptyValueHandling'?: DashboardDateFilterDateFilterEmptyValueHandlingEnum;
+    'from'?: DashboardDateFilterDateFilterFrom;
+    'granularity': DashboardDateFilterDateFilterGranularityEnum;
     'localIdentifier'?: string;
+    'to'?: DashboardDateFilterDateFilterTo;
+    'type': DashboardDateFilterDateFilterTypeEnum;
 }
 
-export type DashboardDateFilterDateFilterTypeEnum = 'relative' | 'absolute';
-export type DashboardDateFilterDateFilterGranularityEnum = 'ALL_TIME_GRANULARITY' | 'GDC.time.year' | 'GDC.time.week_us' | 'GDC.time.week_in_year' | 'GDC.time.week_in_quarter' | 'GDC.time.week' | 'GDC.time.euweek_in_year' | 'GDC.time.euweek_in_quarter' | 'GDC.time.quarter' | 'GDC.time.quarter_in_year' | 'GDC.time.month' | 'GDC.time.month_in_quarter' | 'GDC.time.month_in_year' | 'GDC.time.day_in_year' | 'GDC.time.day_in_quarter' | 'GDC.time.day_in_month' | 'GDC.time.day_in_week' | 'GDC.time.day_in_euweek' | 'GDC.time.date' | 'GDC.time.hour' | 'GDC.time.hour_in_day' | 'GDC.time.minute' | 'GDC.time.minute_in_hour' | 'GDC.time.fiscal_month' | 'GDC.time.fiscal_quarter' | 'GDC.time.fiscal_year';
 export type DashboardDateFilterDateFilterEmptyValueHandlingEnum = 'include' | 'exclude' | 'only';
+export type DashboardDateFilterDateFilterGranularityEnum = 'ALL_TIME_GRANULARITY' | 'GDC.time.year' | 'GDC.time.week_us' | 'GDC.time.week_in_year' | 'GDC.time.week_in_quarter' | 'GDC.time.week' | 'GDC.time.euweek_in_year' | 'GDC.time.euweek_in_quarter' | 'GDC.time.quarter' | 'GDC.time.quarter_in_year' | 'GDC.time.month' | 'GDC.time.month_in_quarter' | 'GDC.time.month_in_year' | 'GDC.time.day_in_year' | 'GDC.time.day_in_quarter' | 'GDC.time.day_in_month' | 'GDC.time.day_in_week' | 'GDC.time.day_in_euweek' | 'GDC.time.date' | 'GDC.time.hour' | 'GDC.time.hour_in_day' | 'GDC.time.minute' | 'GDC.time.minute_in_hour' | 'GDC.time.minute_in_day' | 'GDC.time.second' | 'GDC.time.second_in_minute' | 'GDC.time.second_in_day' | 'GDC.time.fiscal_week' | 'GDC.time.fiscal_month' | 'GDC.time.fiscal_quarter' | 'GDC.time.fiscal_semester' | 'GDC.time.fiscal_year' | 'GDC.time.fiscal_day_in_fiscal_week' | 'GDC.time.fiscal_day_in_fiscal_month' | 'GDC.time.fiscal_day_in_fiscal_quarter' | 'GDC.time.fiscal_day_in_fiscal_semester' | 'GDC.time.fiscal_day_in_fiscal_year' | 'GDC.time.fiscal_week_in_fiscal_month' | 'GDC.time.fiscal_week_in_fiscal_quarter' | 'GDC.time.fiscal_week_in_fiscal_semester' | 'GDC.time.fiscal_week_in_fiscal_year' | 'GDC.time.fiscal_month_in_fiscal_quarter' | 'GDC.time.fiscal_month_in_fiscal_semester' | 'GDC.time.fiscal_month_in_fiscal_year' | 'GDC.time.fiscal_quarter_in_fiscal_semester' | 'GDC.time.fiscal_quarter_in_fiscal_year' | 'GDC.time.fiscal_semester_in_fiscal_year';
+export type DashboardDateFilterDateFilterTypeEnum = 'relative' | 'absolute';
 
 /**
  * @type DashboardDateFilterDateFilterFrom
  */
 export type DashboardDateFilterDateFilterFrom = number | string;
+
+/**
+ * @type DashboardDateFilterDateFilterTo
+ */
+export type DashboardDateFilterDateFilterTo = number | string;
 
 /**
  * Additional settings.
@@ -924,17 +1032,17 @@ export interface DashboardExportSettings {
      */
     'mergeHeaders'?: boolean;
     /**
-     * Set page size. (PDF)
-     */
-    'pageSize'?: DashboardExportSettingsPageSizeEnum;
-    /**
      * Set page orientation. (PDF)
      */
     'pageOrientation'?: DashboardExportSettingsPageOrientationEnum;
+    /**
+     * Set page size. (PDF)
+     */
+    'pageSize'?: DashboardExportSettingsPageSizeEnum;
 }
 
-export type DashboardExportSettingsPageSizeEnum = 'A3' | 'A4' | 'LETTER';
 export type DashboardExportSettingsPageOrientationEnum = 'PORTRAIT' | 'LANDSCAPE';
+export type DashboardExportSettingsPageSizeEnum = 'A3' | 'A4' | 'LETTER';
 
 /**
  * @type DashboardFilter
@@ -946,13 +1054,13 @@ export interface DashboardMatchAttributeFilter {
 }
 
 export interface DashboardMatchAttributeFilterMatchAttributeFilter {
-    'displayForm': IdentifierRef;
-    'operator': DashboardMatchAttributeFilterMatchAttributeFilterOperatorEnum;
-    'literal': string;
-    'negativeSelection': boolean;
     'caseSensitive': boolean;
-    'title'?: string;
+    'displayForm': IdentifierRef;
+    'literal': string;
     'localIdentifier'?: string;
+    'negativeSelection': boolean;
+    'operator': DashboardMatchAttributeFilterMatchAttributeFilterOperatorEnum;
+    'title'?: string;
 }
 
 export type DashboardMatchAttributeFilterMatchAttributeFilterOperatorEnum = 'contains' | 'startsWith' | 'endsWith';
@@ -962,11 +1070,11 @@ export interface DashboardMeasureValueFilter {
 }
 
 export interface DashboardMeasureValueFilterDashboardMeasureValueFilter {
-    'measure': IdentifierRef;
     'conditions': Array<DashboardCompoundConditionItem>;
     'dimensionality'?: Array<IdentifierRef>;
-    'title'?: string;
     'localIdentifier'?: string;
+    'measure': IdentifierRef;
+    'title'?: string;
 }
 
 export interface DashboardPermissions {
@@ -975,13 +1083,13 @@ export interface DashboardPermissions {
      */
     'rules': Array<RulePermission>;
     /**
-     * List of users
-     */
-    'users': Array<UserPermission>;
-    /**
      * List of user groups
      */
     'userGroups': Array<UserGroupPermission>;
+    /**
+     * List of users
+     */
+    'users': Array<UserPermission>;
 }
 
 /**
@@ -1001,10 +1109,10 @@ export interface DashboardSlidesTemplate {
      * Export types this template applies to.
      */
     'appliedOn': Array<DashboardSlidesTemplateAppliedOnEnum>;
+    'contentSlide'?: ContentSlideTemplate | null;
     'coverSlide'?: CoverSlideTemplate | null;
     'introSlide'?: IntroSlideTemplate | null;
     'sectionSlide'?: SectionSlideTemplate | null;
-    'contentSlide'?: ContentSlideTemplate | null;
 }
 
 export type DashboardSlidesTemplateAppliedOnEnum = 'PDF' | 'PPTX';
@@ -1014,38 +1122,38 @@ export type DashboardSlidesTemplateAppliedOnEnum = 'PDF' | 'PPTX';
  */
 export interface DashboardTabularExportRequestV2 {
     /**
-     * Requested tabular export type.
-     */
-    'format': DashboardTabularExportRequestV2FormatEnum;
-    /**
-     * Filename of downloaded file without extension.
-     */
-    'fileName': string;
-    /**
      * List of filters that will be used instead of the default dashboard filters.
      */
     'dashboardFiltersOverride'?: Array<DashboardFilter>;
-    /**
-     * Map of tab-specific filter overrides. Key is tabId, value is list of filters for that tab.
-     */
-    'dashboardTabsFiltersOverrides'?: { [key: string]: Array<DashboardFilter>; };
     /**
      * Dashboard identifier
      */
     'dashboardId': string;
     /**
-     * List of widget identifiers to be exported. Note that only one widget is currently supported.
-     */
-    'widgetIds'?: Array<string>;
-    'settings'?: DashboardExportSettings;
-    /**
      * Parameter value overrides applied to the export\'s executions. Each entry carries the parameter id (used as an AFM execution override) plus the FE-supplied title for the info sheet. Applied uniformly across all tabs; use dashboardTabsParametersOverrides for tab-scoped overrides.
      */
     'dashboardParametersOverride'?: Array<ParameterValue>;
     /**
+     * Map of tab-specific filter overrides. Key is tabId, value is list of filters for that tab.
+     */
+    'dashboardTabsFiltersOverrides'?: { [key: string]: Array<DashboardFilter>; };
+    /**
      * Map of tab-specific parameter overrides. Key is tabId, value is a list of (id, value, title) entries that override the dashboard-level parameters for that tab only. Mirrors dashboardTabsFiltersOverrides. When a tab is present in this map, its entries take precedence over dashboardParametersOverride for that tab\'s executions and info-sheet display.
      */
     'dashboardTabsParametersOverrides'?: { [key: string]: Array<ParameterValue>; };
+    /**
+     * Filename of downloaded file without extension.
+     */
+    'fileName': string;
+    /**
+     * Requested tabular export type.
+     */
+    'format': DashboardTabularExportRequestV2FormatEnum;
+    'settings'?: DashboardExportSettings;
+    /**
+     * List of widget identifiers to be exported. Note that only one widget is currently supported.
+     */
+    'widgetIds'?: Array<string>;
 }
 
 export type DashboardTabularExportRequestV2FormatEnum = 'XLSX' | 'PDF';
@@ -1073,21 +1181,21 @@ export interface DataSourceStatisticsResponse {
  */
 export interface DataSourceTableIdentifier {
     /**
-     * ID of table.
-     */
-    'id': string;
-    /**
      * Data source ID.
      */
     'dataSourceId': string;
     /**
-     * Data source entity type.
+     * ID of table.
      */
-    'type': DataSourceTableIdentifierTypeEnum;
+    'id': string;
     /**
      * Path to table.
      */
     'path'?: Array<string> | null;
+    /**
+     * Data source entity type.
+     */
+    'type': DataSourceTableIdentifierTypeEnum;
 }
 
 export type DataSourceTableIdentifierTypeEnum = 'dataSource';
@@ -1126,7 +1234,7 @@ export type DatasetWorkspaceDataFilterIdentifierTypeEnum = 'workspaceDataFilter'
  * @type DateFilter
  * Abstract filter definition type for dates.
  */
-export type DateFilter = AbsoluteDateFilter | AllTimeDateFilter | RelativeDateFilter;
+export type DateFilter = AbsoluteDateFilter | AbsoluteGranularityDateFilter | AllTimeDateFilter | RelativeDateFilter;
 
 export interface DateValue {
     'value': string;
@@ -1137,21 +1245,43 @@ export interface DateValue {
  */
 export interface DeclarativeAgent {
     /**
-     * Identifier of an agent.
+     * Whether AI knowledge is enabled.
      */
-    'id': string;
+    'aiKnowledge'?: boolean;
+    /**
+     * Whether the agent is available to all users.
+     */
+    'availableToAll'?: boolean;
+    /**
+     * Time of the entity creation.
+     */
+    'createdAt'?: string | null;
+    'createdBy'?: DeclarativeUserIdentifier;
+    /**
+     * List of custom skills when skillsMode is CUSTOM.
+     */
+    'customSkills'?: Array<DeclarativeAgentCustomSkillsEnum>;
+    /**
+     * Description of the agent.
+     */
+    'description'?: string;
     /**
      * Whether the agent is enabled.
      */
     'enabled'?: boolean;
     /**
+     * Identifier of an agent.
+     */
+    'id': string;
+    /**
+     * Time of the last entity modification.
+     */
+    'modifiedAt'?: string | null;
+    'modifiedBy'?: DeclarativeUserIdentifier;
+    /**
      * Name of the agent.
      */
     'name'?: string;
-    /**
-     * Description of the agent.
-     */
-    'description'?: string;
     /**
      * Personality instructions for the agent.
      */
@@ -1161,35 +1291,13 @@ export interface DeclarativeAgent {
      */
     'skillsMode'?: DeclarativeAgentSkillsModeEnum;
     /**
-     * List of custom skills when skillsMode is CUSTOM.
-     */
-    'customSkills'?: Array<DeclarativeAgentCustomSkillsEnum>;
-    /**
-     * Whether AI knowledge is enabled.
-     */
-    'aiKnowledge'?: boolean;
-    /**
-     * Whether the agent is available to all users.
-     */
-    'availableToAll'?: boolean;
-    /**
      * User groups this agent is assigned to.
      */
     'userGroups'?: Array<DeclarativeUserGroupIdentifier>;
-    /**
-     * Time of the entity creation.
-     */
-    'createdAt'?: string | null;
-    'createdBy'?: DeclarativeUserIdentifier;
-    /**
-     * Time of the last entity modification.
-     */
-    'modifiedAt'?: string | null;
-    'modifiedBy'?: DeclarativeUserIdentifier;
 }
 
-export type DeclarativeAgentSkillsModeEnum = 'all' | 'custom';
 export type DeclarativeAgentCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge';
+export type DeclarativeAgentSkillsModeEnum = 'all' | 'custom';
 
 /**
  * AI agent configurations.
@@ -1203,26 +1311,13 @@ export interface DeclarativeAgents {
  */
 export interface DeclarativeAggregatedFact {
     /**
-     * Fact ID.
-     */
-    'id': string;
-    /**
      * Fact description.
      */
     'description'?: string;
     /**
-     * A name of the source column in the table.
+     * Fact ID.
      */
-    'sourceColumn'?: string;
-    /**
-     * A type of the source column
-     */
-    'sourceColumnDataType'?: DeclarativeAggregatedFactSourceColumnDataTypeEnum;
-    /**
-     * A list of tags.
-     */
-    'tags'?: Array<string>;
-    'sourceFactReference': DeclarativeSourceReference;
+    'id': string;
     /**
      * Flag indicating whether the associated source column allows null values.
      */
@@ -1231,62 +1326,75 @@ export interface DeclarativeAggregatedFact {
      * Value used in coalesce during joins instead of null.
      */
     'nullValue'?: string;
+    /**
+     * A name of the source column in the table.
+     */
+    'sourceColumn'?: string;
+    /**
+     * A type of the source column
+     */
+    'sourceColumnDataType'?: DeclarativeAggregatedFactSourceColumnDataTypeEnum;
+    'sourceFactReference': DeclarativeSourceReference;
+    /**
+     * A list of tags.
+     */
+    'tags'?: Array<string>;
 }
 
 export type DeclarativeAggregatedFactSourceColumnDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
 
 export interface DeclarativeAnalyticalDashboard {
     /**
-     * Analytical dashboard ID.
+     * Certification status of the entity.
      */
-    'id': string;
+    'certification'?: DeclarativeAnalyticalDashboardCertificationEnum;
     /**
-     * Analytical dashboard title.
+     * Optional message associated with the certification.
      */
-    'title': string;
+    'certificationMessage'?: string | null;
     /**
-     * Analytical dashboard description.
+     * Time when the certification was set.
      */
-    'description'?: string;
+    'certifiedAt'?: string | null;
+    'certifiedBy'?: DeclarativeUserIdentifier;
     /**
      * Free-form JSON object
      */
     'content': object | null;
     /**
-     * A list of tags.
+     * Time of the entity creation.
      */
-    'tags'?: Array<string>;
+    'createdAt'?: string | null;
+    'createdBy'?: DeclarativeUserIdentifier;
+    /**
+     * Analytical dashboard description.
+     */
+    'description'?: string;
+    /**
+     * Analytical dashboard ID.
+     */
+    'id': string;
+    /**
+     * Time of the last entity modification.
+     */
+    'modifiedAt'?: string | null;
+    'modifiedBy'?: DeclarativeUserIdentifier;
+    /**
+     * A list of permissions.
+     */
+    'permissions'?: Array<DeclarativeAnalyticalDashboardPermissionsInner>;
     /**
      * AI-generated summary of the dashboard content
      */
     'summary'?: string;
     /**
-     * A list of permissions.
+     * A list of tags.
      */
-    'permissions'?: Array<DeclarativeAnalyticalDashboardPermissionsInner>;
-    'createdBy'?: DeclarativeUserIdentifier;
-    'modifiedBy'?: DeclarativeUserIdentifier;
+    'tags'?: Array<string>;
     /**
-     * Time of the last entity modification.
+     * Analytical dashboard title.
      */
-    'modifiedAt'?: string | null;
-    /**
-     * Time of the entity creation.
-     */
-    'createdAt'?: string | null;
-    /**
-     * Certification status of the entity.
-     */
-    'certification'?: DeclarativeAnalyticalDashboardCertificationEnum;
-    'certifiedBy'?: DeclarativeUserIdentifier;
-    /**
-     * Time when the certification was set.
-     */
-    'certifiedAt'?: string | null;
-    /**
-     * Optional message associated with the certification.
-     */
-    'certificationMessage'?: string | null;
+    'title': string;
 }
 
 export type DeclarativeAnalyticalDashboardCertificationEnum = 'CERTIFIED';
@@ -1299,8 +1407,13 @@ export interface DeclarativeAnalyticalDashboardExtension {
     /**
      * A list of permissions.
      */
-    'permissions': Array<DeclarativeAnalyticalDashboardPermissionsInner>;
+    'permissions': Array<DeclarativeAnalyticalDashboardExtensionPermissionsInner>;
 }
+
+/**
+ * @type DeclarativeAnalyticalDashboardExtensionPermissionsInner
+ */
+export type DeclarativeAnalyticalDashboardExtensionPermissionsInner = DeclarativeAnalyticalDashboardPermissionForAssignee | DeclarativeAnalyticalDashboardPermissionForAssigneeRule;
 
 /**
  * An analytical dashboard identifier.
@@ -1370,71 +1483,80 @@ export interface DeclarativeAnalytics {
 
 export interface DeclarativeAnalyticsLayer {
     /**
-     * A list of analytical dashboards available in the model.
-     */
-    'analyticalDashboards'?: Array<DeclarativeAnalyticalDashboard>;
-    /**
-     * A list of filter contexts available in the model.
-     */
-    'filterContexts'?: Array<DeclarativeFilterContext>;
-    /**
-     * A list of metrics available in the model.
-     */
-    'metrics'?: Array<DeclarativeMetric>;
-    /**
-     * A list of visualization objects available in the model.
-     */
-    'visualizationObjects'?: Array<DeclarativeVisualizationObject>;
-    /**
-     * A list of dashboard plugins available in the model.
-     */
-    'dashboardPlugins'?: Array<DeclarativeDashboardPlugin>;
-    /**
      * A list of dashboard permissions assigned to a related dashboard.
      */
     'analyticalDashboardExtensions'?: Array<DeclarativeAnalyticalDashboardExtension>;
+    /**
+     * A list of analytical dashboards available in the model.
+     */
+    'analyticalDashboards'?: Array<DeclarativeAnalyticalDashboard>;
     /**
      * A list of attribute hierarchies.
      */
     'attributeHierarchies'?: Array<DeclarativeAttributeHierarchy>;
     /**
+     * A list of dashboard plugins available in the model.
+     */
+    'dashboardPlugins'?: Array<DeclarativeDashboardPlugin>;
+    /**
      * A list of export definitions.
      */
     'exportDefinitions'?: Array<DeclarativeExportDefinition>;
+    /**
+     * A list of filter contexts available in the model.
+     */
+    'filterContexts'?: Array<DeclarativeFilterContext>;
     /**
      * A list of AI memory items available in the workspace.
      */
     'memoryItems'?: Array<DeclarativeMemoryItem>;
     /**
+     * A list of metrics available in the model.
+     */
+    'metrics'?: Array<DeclarativeMetric>;
+    /**
      * A list of parameters available in the model.
      */
     'parameters'?: Array<DeclarativeParameter>;
+    /**
+     * A list of visualization objects available in the model.
+     */
+    'visualizationObjects'?: Array<DeclarativeVisualizationObject>;
 }
 
 /**
  * A dataset attribute.
  */
 export interface DeclarativeAttribute {
-    /**
-     * Attribute ID.
-     */
-    'id': string;
-    /**
-     * Attribute title.
-     */
-    'title': string;
+    'defaultView'?: LabelIdentifier;
     /**
      * Attribute description.
      */
     'description'?: string;
     /**
+     * Attribute ID.
+     */
+    'id': string;
+    /**
+     * If true, this attribute is hidden from AI search results.
+     */
+    'isHidden'?: boolean;
+    /**
+     * Flag indicating whether the associated source column allows null values.
+     */
+    'isNullable'?: boolean;
+    /**
      * An array of attribute labels.
      */
     'labels': Array<DeclarativeLabel>;
     /**
-     * A list of tags.
+     * Default locale for primary label.
      */
-    'tags'?: Array<string>;
+    'locale'?: string;
+    /**
+     * Value used in coalesce during joins instead of null.
+     */
+    'nullValue'?: string;
     /**
      * Attribute sort column.
      */
@@ -1443,7 +1565,6 @@ export interface DeclarativeAttribute {
      * Attribute sort direction.
      */
     'sortDirection'?: DeclarativeAttributeSortDirectionEnum;
-    'defaultView'?: LabelIdentifier;
     /**
      * A name of the source column that is the primary label
      */
@@ -1453,21 +1574,13 @@ export interface DeclarativeAttribute {
      */
     'sourceColumnDataType'?: DeclarativeAttributeSourceColumnDataTypeEnum;
     /**
-     * If true, this attribute is hidden from AI search results.
+     * A list of tags.
      */
-    'isHidden'?: boolean;
+    'tags'?: Array<string>;
     /**
-     * Default locale for primary label.
+     * Attribute title.
      */
-    'locale'?: string;
-    /**
-     * Flag indicating whether the associated source column allows null values.
-     */
-    'isNullable'?: boolean;
-    /**
-     * Value used in coalesce during joins instead of null.
-     */
-    'nullValue'?: string;
+    'title': string;
 }
 
 export type DeclarativeAttributeSortDirectionEnum = 'ASC' | 'DESC';
@@ -1475,96 +1588,120 @@ export type DeclarativeAttributeSourceColumnDataTypeEnum = 'INT' | 'STRING' | 'D
 
 export interface DeclarativeAttributeHierarchy {
     /**
-     * Attribute hierarchy object ID.
+     * Free-form JSON object
      */
-    'id': string;
+    'content': object | null;
     /**
-     * Attribute hierarchy object title.
+     * Time of the entity creation.
      */
-    'title': string;
+    'createdAt'?: string | null;
+    'createdBy'?: DeclarativeUserIdentifier;
     /**
      * Attribute hierarchy object description.
      */
     'description'?: string;
     /**
-     * Free-form JSON object
+     * Attribute hierarchy object ID.
      */
-    'content': object | null;
+    'id': string;
+    /**
+     * Time of the last entity modification.
+     */
+    'modifiedAt'?: string | null;
+    'modifiedBy'?: DeclarativeUserIdentifier;
     /**
      * A list of tags.
      */
     'tags'?: Array<string>;
-    'createdBy'?: DeclarativeUserIdentifier;
-    'modifiedBy'?: DeclarativeUserIdentifier;
     /**
-     * Time of the last entity modification.
+     * Attribute hierarchy object title.
      */
-    'modifiedAt'?: string | null;
+    'title': string;
+}
+
+export interface DeclarativeAutomation {
+    'alert'?: AutomationAlert;
+    'analyticalDashboard'?: DeclarativeAnalyticalDashboardIdentifier;
     /**
      * Time of the entity creation.
      */
     'createdAt'?: string | null;
-}
-
-export interface DeclarativeAutomation {
-    'id': string;
-    'title'?: string;
+    'createdBy'?: DeclarativeUserIdentifier;
+    'dashboardTabularExports'?: Array<AutomationDashboardTabularExport>;
     'description'?: string;
-    'tags'?: Array<string>;
     /**
      * TODO
      */
     'details'?: { [key: string]: string; };
-    'metadata'?: AutomationMetadata | null;
-    /**
-     * Current state of the automation.
-     */
-    'state'?: DeclarativeAutomationStateEnum;
     /**
      * Specify automation evaluation mode.
      */
     'evaluationMode'?: DeclarativeAutomationEvaluationModeEnum;
-    'schedule'?: AutomationSchedule;
-    'alert'?: AutomationAlert;
-    'tabularExports'?: Array<AutomationTabularExport>;
-    'visualExports'?: Array<AutomationVisualExport>;
-    'imageExports'?: Array<AutomationImageExport>;
-    'rawExports'?: Array<AutomationRawExport>;
-    'slidesExports'?: Array<AutomationSlidesExport>;
-    'dashboardTabularExports'?: Array<AutomationDashboardTabularExport>;
+    'exportDefinitions'?: Array<DeclarativeExportDefinitionIdentifier>;
     /**
      * External recipients of the automation action results.
      */
     'externalRecipients'?: Array<AutomationExternalRecipient>;
-    'notificationChannel'?: DeclarativeNotificationChannelIdentifier;
-    'exportDefinitions'?: Array<DeclarativeExportDefinitionIdentifier>;
-    'recipients'?: Array<DeclarativeUserIdentifier>;
-    'analyticalDashboard'?: DeclarativeAnalyticalDashboardIdentifier;
-    'createdBy'?: DeclarativeUserIdentifier;
-    'modifiedBy'?: DeclarativeUserIdentifier;
+    'id': string;
+    'imageExports'?: Array<AutomationImageExport>;
+    'metadata'?: AutomationMetadata | null;
     /**
      * Time of the last entity modification.
      */
     'modifiedAt'?: string | null;
+    'modifiedBy'?: DeclarativeUserIdentifier;
+    'notificationChannel'?: DeclarativeNotificationChannelIdentifier;
+    'rawExports'?: Array<AutomationRawExport>;
+    'recipients'?: Array<DeclarativeUserIdentifier>;
+    'schedule'?: AutomationSchedule;
+    'slidesExports'?: Array<AutomationSlidesExport>;
     /**
-     * Time of the entity creation.
+     * Current state of the automation.
      */
-    'createdAt'?: string | null;
+    'state'?: DeclarativeAutomationStateEnum;
+    'tabularExports'?: Array<AutomationTabularExport>;
+    'tags'?: Array<string>;
+    'title'?: string;
+    'visualExports'?: Array<AutomationVisualExport>;
 }
 
-export type DeclarativeAutomationStateEnum = 'ACTIVE' | 'PAUSED';
 export type DeclarativeAutomationEvaluationModeEnum = 'SHARED' | 'PER_RECIPIENT';
+export type DeclarativeAutomationStateEnum = 'ACTIVE' | 'PAUSED';
+
+/**
+ * A custom fiscal calendar definition.
+ */
+export interface DeclarativeCalendar {
+    'definition': DeclarativeCalendarDefinition;
+    /**
+     * Calendar description.
+     */
+    'description'?: string;
+    /**
+     * Granularities available in the calendar. Order defines the default drill-down order and mimics the granularity dependency hierarchy.
+     */
+    'enabledGranularities': Array<CalendarGranularity>;
+    /**
+     * Calendar title.
+     */
+    'name': string;
+}
+
+/**
+ * @type DeclarativeCalendarDefinition
+ */
+export type DeclarativeCalendarDefinition = CustomCalendarDefinition | FiscalYearCalendarDefinition;
 
 /**
  * Color palette and its properties.
  */
 export interface DeclarativeColorPalette {
-    'id': string;
-    'name': string;
     /**
      * Free-form JSON object
      */
     'content': object | null;
+    'id': string;
+    'name': string;
 }
 
 /**
@@ -1572,25 +1709,9 @@ export interface DeclarativeColorPalette {
  */
 export interface DeclarativeColumn {
     /**
-     * Column name. Must not contain NUL (0x00) characters.
-     */
-    'name': string;
-    /**
      * Column type
      */
     'dataType': DeclarativeColumnDataTypeEnum;
-    /**
-     * Is column part of primary key?
-     */
-    'isPrimaryKey'?: boolean;
-    /**
-     * Referenced table (Foreign key)
-     */
-    'referencedTableId'?: string;
-    /**
-     * Referenced table (Foreign key)
-     */
-    'referencedTableColumn'?: string;
     /**
      * Column description/comment from database
      */
@@ -1600,9 +1721,25 @@ export interface DeclarativeColumn {
      */
     'isNullable'?: boolean;
     /**
+     * Is column part of primary key?
+     */
+    'isPrimaryKey'?: boolean;
+    /**
+     * Column name. Must not contain NUL (0x00) characters.
+     */
+    'name': string;
+    /**
      * Value used as sentinel for nullable columns
      */
     'nullValue'?: string;
+    /**
+     * Referenced table (Foreign key)
+     */
+    'referencedTableColumn'?: string;
+    /**
+     * Referenced table (Foreign key)
+     */
+    'referencedTableId'?: string;
 }
 
 export type DeclarativeColumnDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
@@ -1617,23 +1754,27 @@ export interface DeclarativeCspDirective {
  */
 export interface DeclarativeCustomApplicationSetting {
     /**
-     * Custom Application Setting ID.
+     * The application id
      */
-    'id': string;
+    'applicationName': string;
     /**
      * Free-form JSON content. Maximum supported length is 250000 characters.
      */
     'content': object | null;
     /**
-     * The application id
+     * Custom Application Setting ID.
      */
-    'applicationName': string;
+    'id': string;
 }
 
 /**
  * A declarative form of custom geo collection.
  */
 export interface DeclarativeCustomGeoCollection {
+    /**
+     * Description of the custom geo collection.
+     */
+    'description'?: string;
     /**
      * Custom geo collection ID.
      */
@@ -1642,10 +1783,6 @@ export interface DeclarativeCustomGeoCollection {
      * Name of the custom geo collection.
      */
     'name'?: string;
-    /**
-     * Description of the custom geo collection.
-     */
-    'description'?: string;
 }
 
 /**
@@ -1657,41 +1794,67 @@ export interface DeclarativeCustomGeoCollections {
 
 export interface DeclarativeDashboardPlugin {
     /**
-     * Dashboard plugin object ID.
+     * Free-form JSON object
      */
-    'id': string;
+    'content': object | null;
     /**
-     * Dashboard plugin object title.
+     * Time of the entity creation.
      */
-    'title': string;
+    'createdAt'?: string | null;
+    'createdBy'?: DeclarativeUserIdentifier;
     /**
      * Dashboard plugin description.
      */
     'description'?: string;
     /**
-     * Free-form JSON object
+     * Dashboard plugin object ID.
      */
-    'content': object | null;
-    /**
-     * A list of tags.
-     */
-    'tags'?: Array<string>;
-    'createdBy'?: DeclarativeUserIdentifier;
-    'modifiedBy'?: DeclarativeUserIdentifier;
+    'id': string;
     /**
      * Time of the last entity modification.
      */
     'modifiedAt'?: string | null;
+    'modifiedBy'?: DeclarativeUserIdentifier;
     /**
-     * Time of the entity creation.
+     * A list of tags.
      */
-    'createdAt'?: string | null;
+    'tags'?: Array<string>;
+    /**
+     * Dashboard plugin object title.
+     */
+    'title': string;
 }
 
 /**
  * A data source and its properties.
  */
 export interface DeclarativeDataSource {
+    /**
+     * Alternative data source ID. It is a weak reference meaning data source does not have to exist. All the entities (e.g. tables) from the data source must be available also in the alternative data source. It must be present in the same organization as the data source.
+     */
+    'alternativeDataSourceId'?: string | null;
+    /**
+     * Type of authentication used to connect to the database.
+     */
+    'authenticationType'?: DeclarativeDataSourceAuthenticationTypeEnum | null;
+    'cacheRetention'?: DeclarativeDataSourceCacheRetention;
+    /**
+     * Determines how the results coming from a particular datasource should be cached. - ALWAYS: The results from the datasource should be cached normally (the default). - NEVER: The results from the datasource should never be cached.
+     */
+    'cacheStrategy'?: DeclarativeDataSourceCacheStrategyEnum;
+    /**
+     * Id of client with permission to connect to the data source.
+     */
+    'clientId'?: string;
+    /**
+     * The client secret to use to connect to the database providing the data for the data source.
+     */
+    'clientSecret'?: string;
+    /**
+     * Determines how datetime values are interpreted in data sources without native support for specifying this. - LOCAL: The values are assumed to be in local timezone and they are not converted to the user\'s timezone. - UTC: The values are assumed to be in UTC and they are converted to the user\'s timezone.
+     */
+    'dateTimeSemantics'?: DeclarativeDataSourceDateTimeSemanticsEnum | null;
+    'decodedParameters'?: Array<Parameter>;
     /**
      * Data source ID.
      */
@@ -1700,26 +1863,12 @@ export interface DeclarativeDataSource {
      * Name of the data source.
      */
     'name': string;
-    /**
-     * Type of database.
-     */
-    'type': DeclarativeDataSourceTypeEnum;
-    /**
-     * An connection string relevant to type of database.
-     */
-    'url'?: string;
-    /**
-     * A scheme/database with the data.
-     */
-    'schema': string;
-    /**
-     * User with permission connect the data source/database.
-     */
-    'username'?: string;
+    'parameters'?: Array<Parameter>;
     /**
      * Password for the data-source user, property is never returned back.
      */
     'password'?: string;
+    'permissions'?: Array<DeclarativeDataSourcePermission>;
     /**
      * The private key to use to connect to the database providing the data for the data source.
      */
@@ -1729,49 +1878,43 @@ export interface DeclarativeDataSource {
      */
     'privateKeyPassphrase'?: string | null;
     /**
+     * A scheme/database with the data.
+     */
+    'schema': string;
+    /**
      * Token as an alternative to username and password.
      */
     'token'?: string;
     /**
-     * Id of client with permission to connect to the data source.
+     * Type of database.
      */
-    'clientId'?: string;
+    'type': DeclarativeDataSourceTypeEnum;
     /**
-     * The client secret to use to connect to the database providing the data for the data source.
+     * An connection string relevant to type of database.
      */
-    'clientSecret'?: string;
-    'parameters'?: Array<Parameter>;
-    'decodedParameters'?: Array<Parameter>;
-    'permissions'?: Array<DeclarativeDataSourcePermission>;
+    'url'?: string;
     /**
-     * Determines how the results coming from a particular datasource should be cached. - ALWAYS: The results from the datasource should be cached normally (the default). - NEVER: The results from the datasource should never be cached.
+     * User with permission connect the data source/database.
      */
-    'cacheStrategy'?: DeclarativeDataSourceCacheStrategyEnum;
-    /**
-     * Type of authentication used to connect to the database.
-     */
-    'authenticationType'?: DeclarativeDataSourceAuthenticationTypeEnum | null;
-    /**
-     * Alternative data source ID. It is a weak reference meaning data source does not have to exist. All the entities (e.g. tables) from the data source must be available also in the alternative data source. It must be present in the same organization as the data source.
-     */
-    'alternativeDataSourceId'?: string | null;
-    /**
-     * Determines how datetime values are interpreted in data sources without native support for specifying this. - LOCAL: The values are assumed to be in local timezone and they are not converted to the user\'s timezone. - UTC: The values are assumed to be in UTC and they are converted to the user\'s timezone.
-     */
-    'dateTimeSemantics'?: DeclarativeDataSourceDateTimeSemanticsEnum | null;
+    'username'?: string;
 }
 
-export type DeclarativeDataSourceTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'GREENPLUM' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
-export type DeclarativeDataSourceCacheStrategyEnum = 'ALWAYS' | 'NEVER';
 export type DeclarativeDataSourceAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'OIDC_PASSTHROUGH';
+export type DeclarativeDataSourceCacheStrategyEnum = 'ALWAYS' | 'NEVER';
 export type DeclarativeDataSourceDateTimeSemanticsEnum = 'LOCAL' | 'UTC';
+export type DeclarativeDataSourceTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'GREENPLUM' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
+
+/**
+ * @type DeclarativeDataSourceCacheRetention
+ */
+export type DeclarativeDataSourceCacheRetention = IndefiniteCacheRetention | ScheduleCacheRetention | ValidityPeriodCacheRetention;
 
 export interface DeclarativeDataSourcePermission {
+    'assignee': AssigneeIdentifier;
     /**
      * Permission name.
      */
     'name': DeclarativeDataSourcePermissionNameEnum;
-    'assignee': AssigneeIdentifier;
 }
 
 export type DeclarativeDataSourcePermissionNameEnum = 'MANAGE' | 'USE';
@@ -1795,43 +1938,51 @@ export interface DeclarativeDataSources {
  */
 export interface DeclarativeDataset {
     /**
-     * The Dataset ID. This ID is further used to refer to this instance of dataset.
+     * An array of aggregated facts. Presence makes the dataset a pre-aggregation dataset, which requires `precedence > 0` and must NOT be set on AUXILIARY datasets.
      */
-    'id': string;
+    'aggregatedFacts'?: Array<DeclarativeAggregatedFact>;
     /**
-     * A dataset title.
+     * An array of attributes.
      */
-    'title': string;
+    'attributes'?: Array<DeclarativeAttribute>;
+    'dataSourceTableId'?: DataSourceTableIdentifier;
     /**
      * A dataset description.
      */
     'description'?: string;
     /**
-     * An array of grain identifiers.
-     */
-    'grain': Array<GrainIdentifier>;
-    /**
-     * An array of attributes.
-     */
-    'attributes'?: Array<DeclarativeAttribute>;
-    /**
      * An array of facts.
      */
     'facts'?: Array<DeclarativeFact>;
     /**
-     * An array of aggregated facts. Presence makes the dataset a pre-aggregation dataset, which requires `precedence > 0` and must NOT be set on AUXILIARY datasets.
+     * An array of grain identifiers.
      */
-    'aggregatedFacts'?: Array<DeclarativeAggregatedFact>;
+    'grain': Array<GrainIdentifier>;
+    /**
+     * The Dataset ID. This ID is further used to refer to this instance of dataset.
+     */
+    'id': string;
+    /**
+     * Precedence used in aggregate awareness. Pre-aggregation datasets (NORMAL with `aggregatedFacts`) MUST set `precedence > 0`; non-pre-aggregation datasets MUST leave it null. Must NOT be set on AUXILIARY datasets.
+     */
+    'precedence'?: number;
     /**
      * An array of references. The semantics of `sources` depends on the dataset shape: for NORMAL→NORMAL references, `sources` is a compound foreign key to the target dataset\'s grain (one source per grain component, dataType-matched). For pre-aggregation datasets (NORMAL with `aggregatedFacts`), `sources` is reinterpreted as independent column→attribute mappings — one entry per source — and targets are NOT required to be grain components.
      */
     'references': Array<DeclarativeReference>;
-    'dataSourceTableId'?: DataSourceTableIdentifier;
     'sql'?: DeclarativeDatasetSql;
     /**
      * A list of tags.
      */
     'tags'?: Array<string>;
+    /**
+     * A dataset title.
+     */
+    'title': string;
+    /**
+     * Dataset type. NORMAL is the standard fact/dim dataset. AUXILIARY denotes a synthetic dataset used as a reference target by pre-aggregation datasets (keystone of the aggregate-awareness design); AUX datasets must not carry `aggregatedFacts`, `sql`, `dataSourceTableId`, `workspaceDataFilterReferences` or `precedence`. Date datasets use a separate schema and are not represented by this enum.
+     */
+    'type'?: DeclarativeDatasetTypeEnum;
     /**
      * An array of columns which are available for match to implicit workspace data filters.
      */
@@ -1840,14 +1991,6 @@ export interface DeclarativeDataset {
      * An array of explicit workspace data filters. Must NOT be set on AUXILIARY datasets.
      */
     'workspaceDataFilterReferences'?: Array<DeclarativeWorkspaceDataFilterReferences>;
-    /**
-     * Precedence used in aggregate awareness. Pre-aggregation datasets (NORMAL with `aggregatedFacts`) MUST set `precedence > 0`; non-pre-aggregation datasets MUST leave it null. Must NOT be set on AUXILIARY datasets.
-     */
-    'precedence'?: number;
-    /**
-     * Dataset type. NORMAL is the standard fact/dim dataset. AUXILIARY denotes a synthetic dataset used as a reference target by pre-aggregation datasets (keystone of the aggregate-awareness design); AUX datasets must not carry `aggregatedFacts`, `sql`, `dataSourceTableId`, `workspaceDataFilterReferences` or `precedence`. Date datasets use a separate schema and are not represented by this enum.
-     */
-    'type'?: DeclarativeDatasetTypeEnum;
 }
 
 export type DeclarativeDatasetTypeEnum = 'NORMAL' | 'AUXILIARY';
@@ -1871,13 +2014,13 @@ export interface DeclarativeDatasetExtension {
  */
 export interface DeclarativeDatasetSql {
     /**
-     * SQL statement.
-     */
-    'statement': string;
-    /**
      * Data source ID.
      */
     'dataSourceId': string;
+    /**
+     * SQL statement.
+     */
+    'statement': string;
 }
 
 /**
@@ -1885,58 +2028,58 @@ export interface DeclarativeDatasetSql {
  */
 export interface DeclarativeDateDataset {
     /**
-     * Date dataset ID.
-     */
-    'id': string;
-    /**
-     * Date dataset title.
-     */
-    'title': string;
-    /**
      * Date dataset description.
      */
     'description'?: string;
-    'granularitiesFormatting': GranularitiesFormatting;
     /**
      * An array of date granularities. All listed granularities will be available for date dataset.
      */
     'granularities': Array<DeclarativeDateDatasetGranularitiesEnum>;
+    'granularitiesFormatting': GranularitiesFormatting;
+    /**
+     * Date dataset ID.
+     */
+    'id': string;
     /**
      * A list of tags.
      */
     'tags'?: Array<string>;
+    /**
+     * Date dataset title.
+     */
+    'title': string;
 }
 
-export type DeclarativeDateDatasetGranularitiesEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
+export type DeclarativeDateDatasetGranularitiesEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
 
 export interface DeclarativeExportDefinition {
     /**
-     * Export definition id.
+     * Time of the entity creation.
      */
-    'id': string;
-    /**
-     * Export definition object title.
-     */
-    'title': string;
+    'createdAt'?: string | null;
+    'createdBy'?: DeclarativeUserIdentifier;
     /**
      * Export definition object description.
      */
     'description'?: string;
     /**
-     * A list of tags.
+     * Export definition id.
      */
-    'tags'?: Array<string>;
-    'requestPayload'?: DeclarativeExportDefinitionRequestPayload;
-    'createdBy'?: DeclarativeUserIdentifier;
-    'modifiedBy'?: DeclarativeUserIdentifier;
+    'id': string;
     /**
      * Time of the last entity modification.
      */
     'modifiedAt'?: string | null;
+    'modifiedBy'?: DeclarativeUserIdentifier;
+    'requestPayload'?: DeclarativeExportDefinitionRequestPayload;
     /**
-     * Time of the entity creation.
+     * A list of tags.
      */
-    'createdAt'?: string | null;
+    'tags'?: Array<string>;
+    /**
+     * Export definition object title.
+     */
+    'title': string;
 }
 
 /**
@@ -1964,6 +2107,7 @@ export type DeclarativeExportDefinitionRequestPayload = TabularExportRequest | V
  * A declarative form of a particular export template.
  */
 export interface DeclarativeExportTemplate {
+    'dashboardSlidesTemplate'?: DashboardSlidesTemplate | null;
     /**
      * Identifier of an export template
      */
@@ -1972,7 +2116,6 @@ export interface DeclarativeExportTemplate {
      * Name of an export template.
      */
     'name': string;
-    'dashboardSlidesTemplate'?: DashboardSlidesTemplate | null;
     'widgetSlidesTemplate'?: WidgetSlidesTemplate | null;
 }
 
@@ -1988,17 +2131,25 @@ export interface DeclarativeExportTemplates {
  */
 export interface DeclarativeFact {
     /**
+     * Fact description.
+     */
+    'description'?: string;
+    /**
      * Fact ID.
      */
     'id': string;
     /**
-     * Fact title.
+     * If true, this fact is hidden from AI search results.
      */
-    'title': string;
+    'isHidden'?: boolean;
     /**
-     * Fact description.
+     * Flag indicating whether the associated source column allows null values.
      */
-    'description'?: string;
+    'isNullable'?: boolean;
+    /**
+     * Value used in coalesce during joins instead of null.
+     */
+    'nullValue'?: string;
     /**
      * A name of the source column in the table.
      */
@@ -2012,68 +2163,64 @@ export interface DeclarativeFact {
      */
     'tags'?: Array<string>;
     /**
-     * If true, this fact is hidden from AI search results.
+     * Fact title.
      */
-    'isHidden'?: boolean;
-    /**
-     * Flag indicating whether the associated source column allows null values.
-     */
-    'isNullable'?: boolean;
-    /**
-     * Value used in coalesce during joins instead of null.
-     */
-    'nullValue'?: string;
+    'title': string;
 }
 
 export type DeclarativeFactSourceColumnDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
 
 export interface DeclarativeFilterContext {
     /**
-     * Filter Context ID.
+     * Free-form JSON object
      */
-    'id': string;
-    /**
-     * Filter Context title.
-     */
-    'title': string;
+    'content': object | null;
     /**
      * Filter Context description.
      */
     'description'?: string;
     /**
-     * Free-form JSON object
+     * Filter Context ID.
      */
-    'content': object | null;
+    'id': string;
     /**
      * A list of tags.
      */
     'tags'?: Array<string>;
+    /**
+     * Filter Context title.
+     */
+    'title': string;
 }
 
 export interface DeclarativeFilterView {
-    /**
-     * FilterView object ID.
-     */
-    'id': string;
-    'title': string;
-    'description'?: string;
-    'tags'?: Array<string>;
-    /**
-     * Indicator whether the filter view should by applied by default.
-     */
-    'isDefault'?: boolean;
     'analyticalDashboard'?: DeclarativeAnalyticalDashboardIdentifier;
-    'user'?: DeclarativeUserIdentifier;
     /**
      * Free-form JSON object
      */
     'content'?: object | null;
+    'description'?: string;
+    /**
+     * FilterView object ID.
+     */
+    'id': string;
+    /**
+     * Indicator whether the filter view should by applied by default.
+     */
+    'isDefault'?: boolean;
+    'tags'?: Array<string>;
+    'title': string;
+    'user'?: DeclarativeUserIdentifier;
 }
 
 /**
  * Notification channels.
  */
 export interface DeclarativeIdentityProvider {
+    /**
+     * Map of custom claim overrides. To be used when your Idp does not provide default claims (sub, email, name, given_name, family_name, urn.gooddata.user_groups [optional]). Define the key pair for the claim you wish to override, where the key is the default name of the attribute and the value is your custom name for the given attribute.
+     */
+    'customClaimMapping'?: { [key: string]: string; };
     /**
      * FilterView object ID.
      */
@@ -2083,13 +2230,9 @@ export interface DeclarativeIdentityProvider {
      */
     'identifiers'?: Array<string>;
     /**
-     * Map of custom claim overrides. To be used when your Idp does not provide default claims (sub, email, name, given_name, family_name, urn.gooddata.user_groups [optional]). Define the key pair for the claim you wish to override, where the key is the default name of the attribute and the value is your custom name for the given attribute.
+     * Type of IdP for management purposes. MANAGED_IDP represents a GoodData managed IdP used in single OIDC setup, which is protected from altering/deletion. FIM_IDP represents a GoodData managed IdP used in federated identity management setup, which is protected from altering/deletion. CUSTOM_IDP represents customer\'s own IdP, protected from deletion if currently used by org for authentication, deletable otherwise.
      */
-    'customClaimMapping'?: { [key: string]: string; };
-    /**
-     * Base64 encoded xml document with SAML metadata. This document is issued by your SAML provider. It includes the issuer\'s name, expiration information, and keys that can be used to validate the response from the identity provider. This field is mandatory for SAML IdP.
-     */
-    'samlMetadata'?: string;
+    'idpType'?: DeclarativeIdentityProviderIdpTypeEnum;
     /**
      * The OAuth client id of your OIDC provider. This field is mandatory for OIDC IdP.
      */
@@ -2099,22 +2242,6 @@ export interface DeclarativeIdentityProvider {
      */
     'oauthClientSecret'?: string;
     /**
-     * The location of your OIDC provider. This field is mandatory for OIDC IdP.
-     */
-    'oauthIssuerLocation'?: string;
-    /**
-     * Any string identifying the OIDC provider. This value is used as suffix for OAuth2 callback (redirect) URL. If not defined, the standard callback URL is used. This value is valid only for external OIDC providers, not for the internal DEX provider.
-     */
-    'oauthIssuerId'?: string;
-    /**
-     * Any string identifying the claim in ID token, that should be used for user identification. The default value is \'sub\'.
-     */
-    'oauthSubjectIdClaim'?: string;
-    /**
-     * Type of IdP for management purposes. MANAGED_IDP represents a GoodData managed IdP used in single OIDC setup, which is protected from altering/deletion. FIM_IDP represents a GoodData managed IdP used in federated identity management setup, which is protected from altering/deletion. CUSTOM_IDP represents customer\'s own IdP, protected from deletion if currently used by org for authentication, deletable otherwise.
-     */
-    'idpType'?: DeclarativeIdentityProviderIdpTypeEnum;
-    /**
      * Map of additional authentication attributes that should be added to the OAuth2 authentication requests, where the key is the name of the attribute and the value is the value of the attribute.
      */
     'oauthCustomAuthAttributes'?: { [key: string]: string; };
@@ -2122,6 +2249,22 @@ export interface DeclarativeIdentityProvider {
      * List of additional OAuth scopes which may be required by other providers (e.g. Snowflake)
      */
     'oauthCustomScopes'?: Array<string> | null;
+    /**
+     * Any string identifying the OIDC provider. This value is used as suffix for OAuth2 callback (redirect) URL. If not defined, the standard callback URL is used. This value is valid only for external OIDC providers, not for the internal DEX provider.
+     */
+    'oauthIssuerId'?: string;
+    /**
+     * The location of your OIDC provider. This field is mandatory for OIDC IdP.
+     */
+    'oauthIssuerLocation'?: string;
+    /**
+     * Any string identifying the claim in ID token, that should be used for user identification. The default value is \'sub\'.
+     */
+    'oauthSubjectIdClaim'?: string;
+    /**
+     * Base64 encoded xml document with SAML metadata. This document is issued by your SAML provider. It includes the issuer\'s name, expiration information, and keys that can be used to validate the response from the identity provider. This field is mandatory for SAML IdP.
+     */
+    'samlMetadata'?: string;
 }
 
 export type DeclarativeIdentityProviderIdpTypeEnum = 'MANAGED_IDP' | 'FIM_IDP' | 'DEX_IDP' | 'CUSTOM_IDP';
@@ -2147,32 +2290,32 @@ export type DeclarativeIdentityProviderIdentifierTypeEnum = 'identityProvider';
  */
 export interface DeclarativeIpAllowlistPolicy {
     /**
-     * Identifier of an IP allowlist policy.
-     */
-    'id': string;
-    /**
      * Allowed source IPv4 addresses or CIDR ranges. Only IPv4 is supported; IPv6 are rejected. The /0 prefix is not allowed.
      */
     'allowedSources': Array<string>;
     /**
-     * Target users this policy applies to.
+     * Identifier of an IP allowlist policy.
      */
-    'users'?: Array<DeclarativeUserIdentifier>;
+    'id': string;
     /**
      * Target user groups this policy applies to.
      */
     'userGroups'?: Array<DeclarativeUserGroupIdentifier>;
+    /**
+     * Target users this policy applies to.
+     */
+    'users'?: Array<DeclarativeUserIdentifier>;
 }
 
 /**
  * A declarative form of the JWK.
  */
 export interface DeclarativeJwk {
+    'content': DeclarativeRsaSpecification;
     /**
      * JWK object ID.
      */
     'id': string;
-    'content': DeclarativeRsaSpecification;
 }
 
 /**
@@ -2180,17 +2323,30 @@ export interface DeclarativeJwk {
  */
 export interface DeclarativeLabel {
     /**
+     * Label description.
+     */
+    'description'?: string;
+    'geoAreaConfig'?: GeoAreaConfig;
+    /**
      * Label ID.
      */
     'id': string;
     /**
-     * Label title.
+     * Determines if the label is hidden from AI features.
      */
-    'title': string;
+    'isHidden'?: boolean;
     /**
-     * Label description.
+     * Flag indicating whether the associated source column allows null values.
      */
-    'description'?: string;
+    'isNullable'?: boolean;
+    /**
+     * Default label locale.
+     */
+    'locale'?: string;
+    /**
+     * Value used in coalesce during joins instead of null.
+     */
+    'nullValue'?: string;
     /**
      * A name of the source column in the table.
      */
@@ -2204,30 +2360,17 @@ export interface DeclarativeLabel {
      */
     'tags'?: Array<string>;
     /**
-     * Specific type of label
+     * Label title.
      */
-    'valueType'?: DeclarativeLabelValueTypeEnum;
-    /**
-     * Determines if the label is hidden from AI features.
-     */
-    'isHidden'?: boolean;
-    'geoAreaConfig'?: GeoAreaConfig;
-    /**
-     * Default label locale.
-     */
-    'locale'?: string;
+    'title': string;
     /**
      * Other translations.
      */
     'translations'?: Array<DeclarativeLabelTranslation>;
     /**
-     * Flag indicating whether the associated source column allows null values.
+     * Specific type of label
      */
-    'isNullable'?: boolean;
-    /**
-     * Value used in coalesce during joins instead of null.
-     */
-    'nullValue'?: string;
+    'valueType'?: DeclarativeLabelValueTypeEnum;
 }
 
 export type DeclarativeLabelSourceColumnDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
@@ -2252,6 +2395,14 @@ export interface DeclarativeLabelTranslation {
  */
 export interface DeclarativeLdm {
     /**
+     * Custom fiscal calendars keyed by calendar ID. Can be defined only in the root workspace.
+     */
+    'calendars'?: { [key: string]: DeclarativeCalendar; };
+    /**
+     * An array containing extensions for datasets defined in parent workspaces.
+     */
+    'datasetExtensions'?: Array<DeclarativeDatasetExtension>;
+    /**
      * An array containing datasets.
      */
     'datasets'?: Array<DeclarativeDataset>;
@@ -2259,111 +2410,107 @@ export interface DeclarativeLdm {
      * An array containing date-related datasets.
      */
     'dateInstances'?: Array<DeclarativeDateDataset>;
-    /**
-     * An array containing extensions for datasets defined in parent workspaces.
-     */
-    'datasetExtensions'?: Array<DeclarativeDatasetExtension>;
 }
 
 export interface DeclarativeMemoryItem {
     /**
-     * Memory item ID.
+     * Time of the entity creation.
      */
-    'id': string;
-    /**
-     * Memory item title.
-     */
-    'title': string;
+    'createdAt'?: string | null;
+    'createdBy'?: DeclarativeUserIdentifier;
     /**
      * Memory item description.
      */
     'description'?: string;
     /**
-     * A list of tags.
+     * Memory item ID.
      */
-    'tags'?: Array<string>;
-    /**
-     * Strategy defining when the memory item should be applied
-     */
-    'strategy': DeclarativeMemoryItemStrategyEnum;
+    'id': string;
     /**
      * The text that will be injected into the system prompt.
      */
     'instruction': string;
     /**
+     * Whether memory item is disabled.
+     */
+    'isDisabled'?: boolean;
+    /**
      * Set of unique strings used for semantic similarity filtering.
      */
     'keywords'?: Array<string>;
     /**
-     * Whether memory item is disabled.
-     */
-    'isDisabled'?: boolean;
-    'createdBy'?: DeclarativeUserIdentifier;
-    'modifiedBy'?: DeclarativeUserIdentifier;
-    /**
      * Time of the last entity modification.
      */
     'modifiedAt'?: string | null;
+    'modifiedBy'?: DeclarativeUserIdentifier;
     /**
-     * Time of the entity creation.
+     * Strategy defining when the memory item should be applied
      */
-    'createdAt'?: string | null;
+    'strategy': DeclarativeMemoryItemStrategyEnum;
+    /**
+     * A list of tags.
+     */
+    'tags'?: Array<string>;
+    /**
+     * Memory item title.
+     */
+    'title': string;
 }
 
 export type DeclarativeMemoryItemStrategyEnum = 'ALWAYS' | 'AUTO';
 
 export interface DeclarativeMetric {
     /**
-     * Metric ID.
+     * Certification status of the entity.
      */
-    'id': string;
+    'certification'?: DeclarativeMetricCertificationEnum;
     /**
-     * Metric title.
+     * Optional message associated with the certification.
      */
-    'title': string;
+    'certificationMessage'?: string | null;
     /**
-     * Metric description.
+     * Time when the certification was set.
      */
-    'description'?: string;
+    'certifiedAt'?: string | null;
+    'certifiedBy'?: DeclarativeUserIdentifier;
     /**
      * Free-form JSON object
      */
     'content': object | null;
     /**
-     * A list of tags.
-     */
-    'tags'?: Array<string>;
-    'createdBy'?: DeclarativeUserIdentifier;
-    'modifiedBy'?: DeclarativeUserIdentifier;
-    /**
-     * Time of the last entity modification.
-     */
-    'modifiedAt'?: string | null;
-    /**
      * Time of the entity creation.
      */
     'createdAt'?: string | null;
+    'createdBy'?: DeclarativeUserIdentifier;
     /**
-     * If true, this metric is hidden from key drive analysis.
+     * Metric description.
      */
-    'isHiddenFromKda'?: boolean;
+    'description'?: string;
+    /**
+     * Metric ID.
+     */
+    'id': string;
     /**
      * If true, this metric is hidden from AI search results.
      */
     'isHidden'?: boolean;
     /**
-     * Certification status of the entity.
+     * If true, this metric is hidden from key drive analysis.
      */
-    'certification'?: DeclarativeMetricCertificationEnum;
-    'certifiedBy'?: DeclarativeUserIdentifier;
+    'isHiddenFromKda'?: boolean;
     /**
-     * Time when the certification was set.
+     * Time of the last entity modification.
      */
-    'certifiedAt'?: string | null;
+    'modifiedAt'?: string | null;
+    'modifiedBy'?: DeclarativeUserIdentifier;
     /**
-     * Optional message associated with the certification.
+     * A list of tags.
      */
-    'certificationMessage'?: string | null;
+    'tags'?: Array<string>;
+    /**
+     * Metric title.
+     */
+    'title': string;
 }
 
 export type DeclarativeMetricCertificationEnum = 'CERTIFIED';
@@ -2380,19 +2527,9 @@ export interface DeclarativeModel {
  */
 export interface DeclarativeNotificationChannel {
     /**
-     * Identifier of a notification channel
+     * Allowed recipients of notifications from this channel. CREATOR - only the creator INTERNAL - all users within the organization EXTERNAL - all recipients including those outside the organization 
      */
-    'id': string;
-    /**
-     * Name of a notification channel.
-     */
-    'name'?: string;
-    /**
-     * Description of a notification channel.
-     */
-    'description'?: string;
-    'destination'?: DeclarativeNotificationChannelDestination;
-    'destinationType'?: DeclarativeNotificationChannelDestinationTypeEnum | null;
+    'allowedRecipients'?: DeclarativeNotificationChannelAllowedRecipientsEnum;
     /**
      * Custom dashboard url that is going to be used in the notification. If not specified it is going to be deduced based on the context. Allowed placeholders are: {workspaceId} {dashboardId} {automationId} {asOfDate} 
      */
@@ -2402,22 +2539,32 @@ export interface DeclarativeNotificationChannel {
      */
     'dashboardLinkVisibility'?: DeclarativeNotificationChannelDashboardLinkVisibilityEnum;
     /**
-     * Human-readable description of the source of the notification. If specified, this propertywill be included in the notifications to this channel.Allowed placeholders are: {{workspaceId}} {{workspaceName}} {{workspaceDescription}} {{dashboardId}} {{dashboardName}} {{dashboardDescription}} 
+     * Description of a notification channel.
      */
-    'notificationSource'?: string;
+    'description'?: string;
+    'destination'?: DeclarativeNotificationChannelDestination;
+    'destinationType'?: DeclarativeNotificationChannelDestinationTypeEnum | null;
     /**
-     * Allowed recipients of notifications from this channel. CREATOR - only the creator INTERNAL - all users within the organization EXTERNAL - all recipients including those outside the organization 
+     * Identifier of a notification channel
      */
-    'allowedRecipients'?: DeclarativeNotificationChannelAllowedRecipientsEnum;
+    'id': string;
     /**
      * In-platform notifications configuration. No effect if the destination type is IN_PLATFORM. DISABLED - in-platform notifications are not sent ENABLED - in-platform notifications are sent in addition to the regular notifications 
      */
     'inPlatformNotification'?: DeclarativeNotificationChannelInPlatformNotificationEnum;
+    /**
+     * Name of a notification channel.
+     */
+    'name'?: string;
+    /**
+     * Human-readable description of the source of the notification. If specified, this propertywill be included in the notifications to this channel.Allowed placeholders are: {{workspaceId}} {{workspaceName}} {{workspaceDescription}} {{dashboardId}} {{dashboardName}} {{dashboardDescription}} 
+     */
+    'notificationSource'?: string;
 }
 
-export type DeclarativeNotificationChannelDestinationTypeEnum = 'WEBHOOK' | 'SMTP' | 'DEFAULT_SMTP' | 'IN_PLATFORM';
-export type DeclarativeNotificationChannelDashboardLinkVisibilityEnum = 'HIDDEN' | 'INTERNAL_ONLY' | 'ALL';
 export type DeclarativeNotificationChannelAllowedRecipientsEnum = 'CREATOR' | 'INTERNAL' | 'EXTERNAL';
+export type DeclarativeNotificationChannelDashboardLinkVisibilityEnum = 'HIDDEN' | 'INTERNAL_ONLY' | 'ALL';
+export type DeclarativeNotificationChannelDestinationTypeEnum = 'WEBHOOK' | 'SMTP' | 'DEFAULT_SMTP' | 'IN_PLATFORM';
 export type DeclarativeNotificationChannelInPlatformNotificationEnum = 'DISABLED' | 'ENABLED';
 
 /**
@@ -2452,39 +2599,34 @@ export interface DeclarativeNotificationChannels {
  * Complete definition of an organization in a declarative form.
  */
 export interface DeclarativeOrganization {
-    'organization': DeclarativeOrganizationInfo;
-    'users'?: Array<DeclarativeUser>;
-    'userGroups'?: Array<DeclarativeUserGroup>;
-    'ipAllowlistPolicies'?: Array<DeclarativeIpAllowlistPolicy>;
-    'dataSources'?: Array<DeclarativeDataSource>;
-    'workspaces'?: Array<DeclarativeWorkspace>;
-    'workspaceDataFilters'?: Array<DeclarativeWorkspaceDataFilter>;
-    'jwks'?: Array<DeclarativeJwk>;
-    'identityProviders'?: Array<DeclarativeIdentityProvider>;
-    'notificationChannels'?: Array<DeclarativeNotificationChannel>;
-    'exportTemplates'?: Array<DeclarativeExportTemplate>;
-    'customGeoCollections'?: Array<DeclarativeCustomGeoCollection>;
     'agents'?: Array<DeclarativeAgent>;
+    'customGeoCollections'?: Array<DeclarativeCustomGeoCollection>;
+    'dataSources'?: Array<DeclarativeDataSource>;
+    'exportTemplates'?: Array<DeclarativeExportTemplate>;
+    'identityProviders'?: Array<DeclarativeIdentityProvider>;
+    'ipAllowlistPolicies'?: Array<DeclarativeIpAllowlistPolicy>;
+    'jwks'?: Array<DeclarativeJwk>;
+    'notificationChannels'?: Array<DeclarativeNotificationChannel>;
+    'organization': DeclarativeOrganizationInfo;
+    'userGroups'?: Array<DeclarativeUserGroup>;
+    'users'?: Array<DeclarativeUser>;
+    'workspaceDataFilters'?: Array<DeclarativeWorkspaceDataFilter>;
+    'workspaces'?: Array<DeclarativeWorkspace>;
 }
 
 /**
  * Information available about an organization.
  */
 export interface DeclarativeOrganizationInfo {
-    /**
-     * Identifier of the organization.
-     */
-    'id': string;
-    /**
-     * Formal name of the organization.
-     */
-    'name': string;
-    /**
-     * Formal hostname used in deployment.
-     */
-    'hostname': string;
     'allowedOrigins'?: Array<string>;
-    'permissions': Array<DeclarativeOrganizationPermission>;
+    /**
+     * A list of color palettes.
+     */
+    'colorPalettes'?: Array<DeclarativeColorPalette>;
+    /**
+     * A list of CSP directives.
+     */
+    'cspDirectives'?: Array<DeclarativeCspDirective>;
     /**
      * Early access defined on level Organization
      * @deprecated
@@ -2495,6 +2637,20 @@ export interface DeclarativeOrganizationInfo {
      */
     'earlyAccessValues'?: Array<string>;
     /**
+     * Formal hostname used in deployment.
+     */
+    'hostname': string;
+    /**
+     * Identifier of the organization.
+     */
+    'id': string;
+    'identityProvider'?: DeclarativeIdentityProviderIdentifier;
+    /**
+     * Formal name of the organization.
+     */
+    'name': string;
+    'permissions': Array<DeclarativeOrganizationPermission>;
+    /**
      * A list of organization settings.
      */
     'settings'?: Array<DeclarativeSetting>;
@@ -2502,58 +2658,49 @@ export interface DeclarativeOrganizationInfo {
      * A list of themes.
      */
     'themes'?: Array<DeclarativeTheme>;
-    /**
-     * A list of color palettes.
-     */
-    'colorPalettes'?: Array<DeclarativeColorPalette>;
-    /**
-     * A list of CSP directives.
-     */
-    'cspDirectives'?: Array<DeclarativeCspDirective>;
-    'identityProvider'?: DeclarativeIdentityProviderIdentifier;
 }
 
 /**
  * Definition of an organization permission assigned to a user/user-group.
  */
 export interface DeclarativeOrganizationPermission {
+    'assignee': AssigneeIdentifier;
     /**
      * Permission name.
      */
     'name': DeclarativeOrganizationPermissionNameEnum;
-    'assignee': AssigneeIdentifier;
 }
 
 export type DeclarativeOrganizationPermissionNameEnum = 'MANAGE' | 'SELF_CREATE_TOKEN' | 'BASE_UI_ACCESS';
 
 export interface DeclarativeParameter {
+    'content': DeclarativeParameterContent;
+    /**
+     * Time of the entity creation.
+     */
+    'createdAt'?: string | null;
+    'createdBy'?: DeclarativeUserIdentifier;
+    /**
+     * Parameter description.
+     */
+    'description'?: string;
     /**
      * Parameter ID.
      */
     'id': string;
     /**
-     * Parameter title.
+     * Time of the last entity modification.
      */
-    'title': string;
-    /**
-     * Parameter description.
-     */
-    'description'?: string;
-    'content': DeclarativeParameterContent;
+    'modifiedAt'?: string | null;
+    'modifiedBy'?: DeclarativeUserIdentifier;
     /**
      * A list of tags.
      */
     'tags'?: Array<string>;
-    'createdBy'?: DeclarativeUserIdentifier;
-    'modifiedBy'?: DeclarativeUserIdentifier;
     /**
-     * Time of the last entity modification.
+     * Parameter title.
      */
-    'modifiedAt'?: string | null;
-    /**
-     * Time of the entity creation.
-     */
-    'createdAt'?: string | null;
+    'title': string;
 }
 
 /**
@@ -2571,15 +2718,15 @@ export interface DeclarativeReference {
      */
     'multivalue': boolean;
     /**
-     * An array of source column names for a given reference. Deprecated, use \'sources\' instead.
-     * @deprecated
-     */
-    'sourceColumns'?: Array<string>;
-    /**
      * An array of source column data types for a given reference. Deprecated, use \'sources\' instead.
      * @deprecated
      */
     'sourceColumnDataTypes'?: Array<DeclarativeReferenceSourceColumnDataTypesEnum>;
+    /**
+     * An array of source column names for a given reference. Deprecated, use \'sources\' instead.
+     * @deprecated
+     */
+    'sourceColumns'?: Array<string>;
     /**
      * An array of source columns for a given reference.
      */
@@ -2600,7 +2747,6 @@ export interface DeclarativeReferenceSource {
      * A type of the source column.
      */
     'dataType'?: DeclarativeReferenceSourceDataTypeEnum;
-    'target': GrainIdentifier;
     /**
      * Flag indicating whether the associated source column allows null values.
      */
@@ -2609,6 +2755,7 @@ export interface DeclarativeReferenceSource {
      * Value used in coalesce during joins instead of null.
      */
     'nullValue'?: string;
+    'target': GrainIdentifier;
 }
 
 export type DeclarativeReferenceSourceDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
@@ -2618,25 +2765,9 @@ export type DeclarativeReferenceSourceDataTypeEnum = 'INT' | 'STRING' | 'DATE' |
  */
 export interface DeclarativeRsaSpecification {
     /**
-     * Key type parameter
-     */
-    'kty': DeclarativeRsaSpecificationKtyEnum;
-    /**
      * Algorithm intended for use with the key.
      */
     'alg': DeclarativeRsaSpecificationAlgEnum;
-    /**
-     * Parameter identifies the intended use of the public key.
-     */
-    'use': DeclarativeRsaSpecificationUseEnum;
-    /**
-     * Parameter contains a chain of one or more PKIX certificates.
-     */
-    'x5c'?: Array<string>;
-    /**
-     * Parameter contains the modulus value for the RSA public key.
-     */
-    'n': string;
     /**
      * parameter contains the exponent value for the RSA public key.
      */
@@ -2646,13 +2777,29 @@ export interface DeclarativeRsaSpecification {
      */
     'kid': string;
     /**
+     * Key type parameter
+     */
+    'kty': DeclarativeRsaSpecificationKtyEnum;
+    /**
+     * Parameter contains the modulus value for the RSA public key.
+     */
+    'n': string;
+    /**
+     * Parameter identifies the intended use of the public key.
+     */
+    'use': DeclarativeRsaSpecificationUseEnum;
+    /**
+     * Parameter contains a chain of one or more PKIX certificates.
+     */
+    'x5c'?: Array<string>;
+    /**
      * Parameter is a base64url-encoded SHA-1 thumbprint of the DER encoding of an X.509 certificate.
      */
     'x5t'?: string;
 }
 
-export type DeclarativeRsaSpecificationKtyEnum = 'RSA';
 export type DeclarativeRsaSpecificationAlgEnum = 'RS256' | 'RS384' | 'RS512';
+export type DeclarativeRsaSpecificationKtyEnum = 'RSA';
 export type DeclarativeRsaSpecificationUseEnum = 'sig';
 
 /**
@@ -2660,13 +2807,13 @@ export type DeclarativeRsaSpecificationUseEnum = 'sig';
  */
 export interface DeclarativeSetting {
     /**
-     * Setting ID.
-     */
-    'id': string;
-    /**
      * Free-form JSON object
      */
     'content'?: object | null;
+    /**
+     * Setting ID.
+     */
+    'id': string;
     /**
      * Type of the setting.
      */
@@ -2676,11 +2823,11 @@ export interface DeclarativeSetting {
 export type DeclarativeSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE';
 
 export interface DeclarativeSingleWorkspacePermission {
+    'assignee': AssigneeIdentifier;
     /**
      * Permission name.
      */
     'name': DeclarativeSingleWorkspacePermissionNameEnum;
-    'assignee': AssigneeIdentifier;
 }
 
 export type DeclarativeSingleWorkspacePermissionNameEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'VIEW';
@@ -2689,11 +2836,11 @@ export type DeclarativeSingleWorkspacePermissionNameEnum = 'MANAGE' | 'ANALYZE' 
  * Source object reference (attribute or fact) including aggregation operation.
  */
 export interface DeclarativeSourceReference {
-    'reference': SourceReferenceIdentifier;
     /**
      * Aggregation operation.
      */
     'operation': DeclarativeSourceReferenceOperationEnum;
+    'reference': SourceReferenceIdentifier;
 }
 
 export type DeclarativeSourceReferenceOperationEnum = 'SUM' | 'MIN' | 'MAX' | 'APPROXIMATE_COUNT';
@@ -2703,9 +2850,17 @@ export type DeclarativeSourceReferenceOperationEnum = 'SUM' | 'MIN' | 'MAX' | 'A
  */
 export interface DeclarativeTable {
     /**
+     * An array of physical columns
+     */
+    'columns': Array<DeclarativeColumn>;
+    /**
      * Table id.
      */
     'id': string;
+    /**
+     * Table or view name prefix used in scan. Will be stripped when generating LDM.
+     */
+    'namePrefix'?: string;
     /**
      * Path to table.
      */
@@ -2714,26 +2869,18 @@ export interface DeclarativeTable {
      * Table type: TABLE or VIEW.
      */
     'type': string;
-    /**
-     * Table or view name prefix used in scan. Will be stripped when generating LDM.
-     */
-    'namePrefix'?: string;
-    /**
-     * An array of physical columns
-     */
-    'columns': Array<DeclarativeColumn>;
 }
 
 /**
  * Theme and its properties.
  */
 export interface DeclarativeTheme {
-    'id': string;
-    'name': string;
     /**
      * Free-form JSON object
      */
     'content': object | null;
+    'id': string;
+    'name': string;
 }
 
 /**
@@ -2741,35 +2888,35 @@ export interface DeclarativeTheme {
  */
 export interface DeclarativeUser {
     /**
-     * User identifier.
-     */
-    'id': string;
-    /**
      * User identification in the authentication manager.
      */
     'authId'?: string;
-    'userGroups'?: Array<DeclarativeUserGroupIdentifier>;
     /**
-     * A list of user settings.
+     * User email address
      */
-    'settings'?: Array<DeclarativeSetting>;
+    'email'?: string;
     /**
      * User first name
      */
     'firstname'?: string;
     /**
+     * User identifier.
+     */
+    'id': string;
+    /**
      * User last name
      */
     'lastname'?: string;
-    /**
-     * User email address
-     */
-    'email'?: string;
     'permissions'?: Array<DeclarativeUserPermission>;
+    /**
+     * A list of user settings.
+     */
+    'settings'?: Array<DeclarativeSetting>;
     /**
      * Is user system account
      */
     'systemAccount'?: boolean;
+    'userGroups'?: Array<DeclarativeUserGroupIdentifier>;
 }
 
 /**
@@ -2777,27 +2924,27 @@ export interface DeclarativeUser {
  */
 export interface DeclarativeUserDataFilter {
     /**
-     * User Data Filters ID. This ID is further used to refer to this instance.
-     */
-    'id': string;
-    /**
-     * User Data Filters setting title.
-     */
-    'title': string;
-    /**
      * User Data Filters setting description.
      */
     'description'?: string;
     /**
+     * User Data Filters ID. This ID is further used to refer to this instance.
+     */
+    'id': string;
+    /**
      * Expression in MAQL specifying the User Data Filter
      */
     'maql': string;
-    'user'?: DeclarativeUserIdentifier;
-    'userGroup'?: DeclarativeUserGroupIdentifier;
     /**
      * A list of tags.
      */
     'tags'?: Array<string>;
+    /**
+     * User Data Filters setting title.
+     */
+    'title': string;
+    'user'?: DeclarativeUserIdentifier;
+    'userGroup'?: DeclarativeUserGroupIdentifier;
 }
 
 /**
@@ -2815,11 +2962,11 @@ export interface DeclarativeUserGroup {
      * UserGroup identifier.
      */
     'id': string;
-    'parents'?: Array<DeclarativeUserGroupIdentifier>;
     /**
      * Name of UserGroup
      */
     'name'?: string;
+    'parents'?: Array<DeclarativeUserGroupIdentifier>;
     'permissions'?: Array<DeclarativeUserGroupPermission>;
 }
 
@@ -2843,11 +2990,11 @@ export type DeclarativeUserGroupIdentifierTypeEnum = 'userGroup';
  * Definition of a user-group permission assigned to a user/user-group.
  */
 export interface DeclarativeUserGroupPermission {
+    'assignee': AssigneeIdentifier;
     /**
      * Permission name.
      */
     'name': DeclarativeUserGroupPermissionNameEnum;
-    'assignee': AssigneeIdentifier;
 }
 
 export type DeclarativeUserGroupPermissionNameEnum = 'SEE';
@@ -2886,11 +3033,11 @@ export type DeclarativeUserIdentifierTypeEnum = 'user';
  * Definition of a user permission assigned to a user/user-group.
  */
 export interface DeclarativeUserPermission {
+    'assignee': AssigneeIdentifier;
     /**
      * Permission name.
      */
     'name': DeclarativeUserPermissionNameEnum;
-    'assignee': AssigneeIdentifier;
 }
 
 export type DeclarativeUserPermissionNameEnum = 'SEE';
@@ -2913,58 +3060,58 @@ export interface DeclarativeUsers {
  * Declarative form of both users and user groups and theirs properties.
  */
 export interface DeclarativeUsersUserGroups {
-    'users': Array<DeclarativeUser>;
     'userGroups': Array<DeclarativeUserGroup>;
+    'users': Array<DeclarativeUser>;
 }
 
 export interface DeclarativeVisualizationObject {
     /**
-     * Visualization object ID.
+     * Certification status of the entity.
      */
-    'id': string;
+    'certification'?: DeclarativeVisualizationObjectCertificationEnum;
     /**
-     * Visualization object title.
+     * Optional message associated with the certification.
      */
-    'title': string;
+    'certificationMessage'?: string | null;
     /**
-     * Visualization object description.
+     * Time when the certification was set.
      */
-    'description'?: string;
+    'certifiedAt'?: string | null;
+    'certifiedBy'?: DeclarativeUserIdentifier;
     /**
      * Free-form JSON object
      */
     'content': object | null;
     /**
-     * A list of tags.
-     */
-    'tags'?: Array<string>;
-    'createdBy'?: DeclarativeUserIdentifier;
-    'modifiedBy'?: DeclarativeUserIdentifier;
-    /**
-     * Time of the last entity modification.
-     */
-    'modifiedAt'?: string | null;
-    /**
      * Time of the entity creation.
      */
     'createdAt'?: string | null;
+    'createdBy'?: DeclarativeUserIdentifier;
+    /**
+     * Visualization object description.
+     */
+    'description'?: string;
+    /**
+     * Visualization object ID.
+     */
+    'id': string;
     /**
      * If true, this visualization object is hidden from AI search results.
      */
     'isHidden'?: boolean;
     /**
-     * Certification status of the entity.
+     * Time of the last entity modification.
      */
-    'certification'?: DeclarativeVisualizationObjectCertificationEnum;
-    'certifiedBy'?: DeclarativeUserIdentifier;
+    'modifiedAt'?: string | null;
+    'modifiedBy'?: DeclarativeUserIdentifier;
     /**
-     * Time when the certification was set.
+     * A list of tags.
      */
-    'certifiedAt'?: string | null;
+    'tags'?: Array<string>;
     /**
-     * Optional message associated with the certification.
+     * Visualization object title.
      */
-    'certificationMessage'?: string | null;
+    'title': string;
 }
 
 export type DeclarativeVisualizationObjectCertificationEnum = 'CERTIFIED';
@@ -2973,18 +3120,24 @@ export type DeclarativeVisualizationObjectCertificationEnum = 'CERTIFIED';
  * A declarative form of a particular workspace.
  */
 export interface DeclarativeWorkspace {
+    'automations'?: Array<DeclarativeAutomation>;
     /**
-     * Identifier of a workspace
+     * Extra cache limit allocated to specific workspace. In case there is extra cache budget setup for organization, it can be split between multiple workspaces.
      */
-    'id': string;
+    'cacheExtraLimit'?: number;
     /**
-     * Name of a workspace to view.
+     * A list of workspace color palettes.
      */
-    'name': string;
-    'model'?: DeclarativeWorkspaceModel;
-    'parent'?: WorkspaceIdentifier;
-    'permissions'?: Array<DeclarativeSingleWorkspacePermission>;
-    'hierarchyPermissions'?: Array<DeclarativeWorkspaceHierarchyPermission>;
+    'colorPalettes'?: Array<DeclarativeWorkspaceColorPalette>;
+    /**
+     * A list of workspace custom settings.
+     */
+    'customApplicationSettings'?: Array<DeclarativeCustomApplicationSetting>;
+    'dataSource'?: WorkspaceDataSource;
+    /**
+     * Description of the workspace
+     */
+    'description'?: string;
     /**
      * Early access defined on level Workspace
      * @deprecated
@@ -2995,9 +3148,26 @@ export interface DeclarativeWorkspace {
      */
     'earlyAccessValues'?: Array<string>;
     /**
-     * Description of the workspace
+     * A list of workspace export templates.
      */
-    'description'?: string;
+    'exportTemplates'?: Array<DeclarativeWorkspaceExportTemplate>;
+    'filterViews'?: Array<DeclarativeFilterView>;
+    'hierarchyPermissions'?: Array<DeclarativeWorkspaceHierarchyPermission>;
+    /**
+     * Identifier of a workspace
+     */
+    'id': string;
+    /**
+     * Whether the workspace is platform-managed and read-only. Informational on export; ignored on import (the flag is server-controlled).
+     */
+    'managed'?: boolean;
+    'model'?: DeclarativeWorkspaceModel;
+    /**
+     * Name of a workspace to view.
+     */
+    'name': string;
+    'parent'?: WorkspaceIdentifier;
+    'permissions'?: Array<DeclarativeSingleWorkspacePermission>;
     /**
      * Custom prefix of entity identifiers in workspace
      */
@@ -3007,30 +3177,39 @@ export interface DeclarativeWorkspace {
      */
     'settings'?: Array<DeclarativeSetting>;
     /**
-     * A list of workspace custom settings.
+     * A list of workspace themes.
      */
-    'customApplicationSettings'?: Array<DeclarativeCustomApplicationSetting>;
+    'themes'?: Array<DeclarativeWorkspaceTheme>;
     /**
      * A list of workspace user data filters.
      */
     'userDataFilters'?: Array<DeclarativeUserDataFilter>;
+}
+
+/**
+ * Workspace color palette and its properties.
+ */
+export interface DeclarativeWorkspaceColorPalette {
     /**
-     * Extra cache limit allocated to specific workspace. In case there is extra cache budget setup for organization, it can be split between multiple workspaces.
+     * Free-form JSON object
      */
-    'cacheExtraLimit'?: number;
-    'dataSource'?: WorkspaceDataSource;
-    'automations'?: Array<DeclarativeAutomation>;
-    'filterViews'?: Array<DeclarativeFilterView>;
-    /**
-     * Whether the workspace is platform-managed and read-only. Informational on export; ignored on import (the flag is server-controlled).
-     */
-    'managed'?: boolean;
+    'content': object | null;
+    'id': string;
+    'name': string;
 }
 
 /**
  * Workspace Data Filters serving the filtering of what data users can see in workspaces.
  */
 export interface DeclarativeWorkspaceDataFilter {
+    /**
+     * Workspace Data Filters column name. Data are filtered using this physical column.
+     */
+    'columnName': string;
+    /**
+     * Workspace Data Filters description.
+     */
+    'description'?: string;
     /**
      * Workspace Data Filters ID. This ID is further used to refer to this instance.
      */
@@ -3039,36 +3218,27 @@ export interface DeclarativeWorkspaceDataFilter {
      * Workspace Data Filters title.
      */
     'title': string;
-    /**
-     * Workspace Data Filters description.
-     */
-    'description'?: string;
-    /**
-     * Workspace Data Filters column name. Data are filtered using this physical column.
-     */
-    'columnName': string;
+    'workspace': WorkspaceIdentifier;
     /**
      * Filter settings specifying values of filters valid for the workspace.
      */
     'workspaceDataFilterSettings': Array<DeclarativeWorkspaceDataFilterSetting>;
-    'workspace': WorkspaceIdentifier;
 }
 
 export interface DeclarativeWorkspaceDataFilterColumn {
     /**
-     * Name of the column
-     */
-    'name': string;
-    /**
      * Data type of the column
      */
     'dataType': DeclarativeWorkspaceDataFilterColumnDataTypeEnum;
+    /**
+     * Name of the column
+     */
+    'name': string;
 }
 
 export type DeclarativeWorkspaceDataFilterColumnDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
 
 export interface DeclarativeWorkspaceDataFilterReferences {
-    'filterId': DatasetWorkspaceDataFilterIdentifier;
     /**
      * Filter column name
      */
@@ -3077,6 +3247,7 @@ export interface DeclarativeWorkspaceDataFilterReferences {
      * Filter column data type
      */
     'filterColumnDataType': DeclarativeWorkspaceDataFilterReferencesFilterColumnDataTypeEnum;
+    'filterId': DatasetWorkspaceDataFilterIdentifier;
 }
 
 export type DeclarativeWorkspaceDataFilterReferencesFilterColumnDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
@@ -3086,14 +3257,6 @@ export type DeclarativeWorkspaceDataFilterReferencesFilterColumnDataTypeEnum = '
  */
 export interface DeclarativeWorkspaceDataFilterSetting {
     /**
-     * Workspace Data Filters ID. This ID is further used to refer to this instance.
-     */
-    'id': string;
-    /**
-     * Workspace Data Filters setting title.
-     */
-    'title': string;
-    /**
      * Workspace Data Filters setting description.
      */
     'description'?: string;
@@ -3101,6 +3264,14 @@ export interface DeclarativeWorkspaceDataFilterSetting {
      * Only those rows are returned, where columnName from filter matches those values.
      */
     'filterValues': Array<string>;
+    /**
+     * Workspace Data Filters ID. This ID is further used to refer to this instance.
+     */
+    'id': string;
+    /**
+     * Workspace Data Filters setting title.
+     */
+    'title': string;
     'workspace': WorkspaceIdentifier;
 }
 
@@ -3111,12 +3282,28 @@ export interface DeclarativeWorkspaceDataFilters {
     'workspaceDataFilters': Array<DeclarativeWorkspaceDataFilter>;
 }
 
+/**
+ * A declarative form of a workspace export template.
+ */
+export interface DeclarativeWorkspaceExportTemplate {
+    'dashboardSlidesTemplate'?: WorkspaceDashboardSlidesTemplate | null;
+    /**
+     * Identifier of a workspace export template
+     */
+    'id': string;
+    /**
+     * Name of a workspace export template.
+     */
+    'name': string;
+    'widgetSlidesTemplate'?: WorkspaceWidgetSlidesTemplate | null;
+}
+
 export interface DeclarativeWorkspaceHierarchyPermission {
+    'assignee': AssigneeIdentifier;
     /**
      * Permission name.
      */
     'name': DeclarativeWorkspaceHierarchyPermissionNameEnum;
-    'assignee': AssigneeIdentifier;
 }
 
 export type DeclarativeWorkspaceHierarchyPermissionNameEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'VIEW';
@@ -3125,24 +3312,36 @@ export type DeclarativeWorkspaceHierarchyPermissionNameEnum = 'MANAGE' | 'ANALYZ
  * A declarative form of a model and analytics for a workspace.
  */
 export interface DeclarativeWorkspaceModel {
-    'ldm'?: DeclarativeLdm;
     'analytics'?: DeclarativeAnalyticsLayer;
+    'ldm'?: DeclarativeLdm;
 }
 
 /**
  * Definition of permissions associated with a workspace.
  */
 export interface DeclarativeWorkspacePermissions {
-    'permissions'?: Array<DeclarativeSingleWorkspacePermission>;
     'hierarchyPermissions'?: Array<DeclarativeWorkspaceHierarchyPermission>;
+    'permissions'?: Array<DeclarativeSingleWorkspacePermission>;
+}
+
+/**
+ * Workspace theme and its properties.
+ */
+export interface DeclarativeWorkspaceTheme {
+    /**
+     * Free-form JSON object
+     */
+    'content': object | null;
+    'id': string;
+    'name': string;
 }
 
 /**
  * A declarative form of a all workspace layout.
  */
 export interface DeclarativeWorkspaces {
-    'workspaces': Array<DeclarativeWorkspace>;
     'workspaceDataFilters': Array<DeclarativeWorkspaceDataFilter>;
+    'workspaces': Array<DeclarativeWorkspace>;
 }
 
 /**
@@ -3166,17 +3365,17 @@ export interface DefaultSmtp {
 export type DefaultSmtpTypeEnum = 'DEFAULT_SMTP';
 
 export interface DependentEntitiesGraph {
-    'nodes': Array<DependentEntitiesNode>;
     'edges': Array<Array<EntityIdentifier>>;
+    'nodes': Array<DependentEntitiesNode>;
 }
 
 export interface DependentEntitiesNode {
     'id': string;
+    'title'?: string;
     /**
      * Object type in the graph.
      */
     'type': DependentEntitiesNodeTypeEnum;
-    'title'?: string;
 }
 
 export type DependentEntitiesNodeTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'userDataFilter' | 'parameter' | 'automation' | 'memoryItem' | 'knowledgeRecommendation' | 'visualizationObject' | 'filterContext' | 'filterView';
@@ -3222,11 +3421,6 @@ export interface EntitySearchBody {
      * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title==\'Some Title\';description==\'desc\'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty==\'Value 123\').
      */
     'filter'?: string | null;
-    'page'?: EntitySearchPage;
-    /**
-     * Sorting criteria (can specify multiple sort orders)
-     */
-    'sort'?: Array<EntitySearchSort> | null;
     /**
      * List of related entities to include in the response
      */
@@ -3235,6 +3429,11 @@ export interface EntitySearchBody {
      * Set of metadata fields to include in the response
      */
     'metaInclude'?: Array<string> | null;
+    'page'?: EntitySearchPage;
+    /**
+     * Sorting criteria (can specify multiple sort orders)
+     */
+    'sort'?: Array<EntitySearchSort> | null;
 }
 
 /**
@@ -3256,13 +3455,13 @@ export interface EntitySearchPage {
  */
 export interface EntitySearchSort {
     /**
-     * Property name to sort by
-     */
-    'property': string;
-    /**
      * Sort direction
      */
     'direction'?: EntitySearchSortDirectionEnum;
+    /**
+     * Property name to sort by
+     */
+    'property': string;
 }
 
 export type EntitySearchSortDirectionEnum = 'ASC' | 'DESC';
@@ -3279,6 +3478,10 @@ export interface ExecutionSettings {
      * Specifies the timestamp of the execution from which relative filters are resolved. If not set, the current time is used.
      */
     'timestamp'?: string;
+    /**
+     * Specifies the time zone used to resolve relative date filters and to convert time-zone-aware date/time values in the result. Expects an IANA time zone id (e.g. \"Europe/Prague\") or a fixed GMT offset (e.g. \"GMT+02:00\"). If not set, the time zone from the workspace/user settings is used.
+     */
+    'timezone'?: string;
 }
 
 /**
@@ -3288,8 +3491,8 @@ export interface ExecutionSettings {
 export type ExportRequest = TabularExportRequest | VisualExportRequest;
 
 export interface FeatureFlagsContext {
-    'earlyAccessValues': Array<string>;
     'earlyAccess': string;
+    'earlyAccessValues': Array<string>;
 }
 
 /**
@@ -3303,7 +3506,7 @@ export interface Features {
  * @type FilterDefinition
  * Abstract filter definition type
  */
-export type FilterDefinition = AbsoluteDateFilter | AllTimeDateFilter | ComparisonMeasureValueFilter | CompoundMeasureValueFilter | InlineFilterDefinition | MatchAttributeFilter | NegativeAttributeFilter | PositiveAttributeFilter | RangeMeasureValueFilter | RankingFilter | RelativeDateFilter;
+export type FilterDefinition = AbsoluteDateFilter | AbsoluteGranularityDateFilter | AllTimeDateFilter | ComparisonMeasureValueFilter | CompoundMeasureValueFilter | InlineFilterDefinition | MatchAttributeFilter | NegativeAttributeFilter | PositiveAttributeFilter | RangeMeasureValueFilter | RankingFilter | RelativeDateFilter;
 
 /**
  * @type FilterDefinitionForSimpleMeasure
@@ -3312,13 +3515,72 @@ export type FilterDefinition = AbsoluteDateFilter | AllTimeDateFilter | Comparis
 export type FilterDefinitionForSimpleMeasure = AttributeFilter | DateFilter;
 
 /**
+ * Algorithmic fiscal calendar derived by shifting the Gregorian year start.
+ */
+export interface FiscalYearCalendarDefinition {
+    /**
+     * Number of months the fiscal year start is shifted relative to the Gregorian year.
+     */
+    'monthOffset': number;
+}
+
+/**
  * A request containing all information needed for generation of logical model.
  */
 export interface GenerateLdmRequest {
     /**
+     * Columns starting with this prefix will be considered as aggregated facts. The prefix is then followed by the value of `separator` parameter. Given the aggregated fact prefix is `aggr` and separator is `__`, the columns with name like `aggr__sum__product__sold` will be considered as aggregated sold fact in the product table with SUM aggregate function.
+     */
+    'aggregatedFactPrefix'?: string;
+    /**
+     * Option to control date granularities for date datasets. Empty value enables common date granularities (DAY, WEEK, MONTH, QUARTER, YEAR). Default value is `all` which enables all available date granularities, including time granularities (like hours, minutes).
+     */
+    'dateGranularities'?: string;
+    /**
+     * Columns starting with this prefix will be considered as references to date dataset. The prefix is then followed by the value of `separator` parameter. Given the reference prefix is `d` and separator is `__`, the columns with name like `d__date` will be considered as reference to date dataset. There can be also second separator and granularity suffix, e.g. `d__date__day` to create attribute reference to exact date dataset and granularity.
+     */
+    'dateReferencePrefix'?: string;
+    /**
+     * Columns starting with this prefix will be considered as denormalization references. The prefix is then followed by the value of `separator` parameter. Given the denormalization reference prefix is `dr` and separator is `__`, the columns with name like `dr__customer_name` will be considered as denormalization references.
+     */
+    'denormPrefix'?: string;
+    /**
+     * Columns starting with this prefix will be considered as facts. The prefix is then followed by the value of `separator` parameter. Given the fact prefix is `f` and separator is `__`, the columns with name like `f__sold` will be considered as facts.
+     */
+    'factPrefix'?: string;
+    /**
      * A flag dictating how the attribute, fact and label ids are generated. By default their ids are derived only from the column name, unless there would be a conflict (e.g. category coming from two different tables). In that case a long id format of `<table>.<column>` is used. If the flag is set to true, then all ids will be generated in the long form.
      */
     'generateLongIds'?: boolean;
+    /**
+     * Columns starting with this prefix will be considered as grain multivalue references. The prefix is then followed by the value of `separator` parameter. Given the reference prefix is `grmr` and separator is `__`, the columns with name like `grmr__customer__customer_id` will be considered as grain multivalue references to customer_id in customer table.
+     */
+    'grainMultivalueReferencePrefix'?: string;
+    /**
+     * Columns starting with this prefix will be considered as grains. The prefix is then followed by the value of `separator` parameter. Given the grain prefix is `gr` and separator is `__`, the columns with name like `gr__name` will be considered as grains.
+     */
+    'grainPrefix'?: string;
+    /**
+     * Columns starting with this prefix will be considered as grain references. The prefix is then followed by the value of `separator` parameter. For composite references, the reference is multivalue if at least one column is multivalue. Given the reference prefix is `grr` and separator is `__`, the columns with name like `grr__customer__customer_id` will be considered as grain references to customer_id in customer table.
+     */
+    'grainReferencePrefix'?: string;
+    /**
+     * Columns starting with this prefix will be considered as multivalue references. The prefix is then followed by the value of `separator` parameter. For composite references, the reference is multivalue if at least one column is multivalue. Given the reference prefix is `mr` and separator is `__`, the columns with name like `mr__customer__customer_id` will be considered as multivalue references to customer_id in customer table.
+     */
+    'multivalueReferencePrefix'?: string;
+    'pdm'?: PdmLdmRequest;
+    /**
+     * Columns starting with this prefix will be considered as primary labels. The prefix is then followed by the value of `separator` parameter. Given the primary label prefix is `pl` and separator is `__`, the columns with name like `pl__country_id` will be considered as primary labels.
+     */
+    'primaryLabelPrefix'?: string;
+    /**
+     * Columns starting with this prefix will be considered as references. The prefix is then followed by the value of `separator` parameter. Given the reference prefix is `r` and separator is `__`, the columns with name like `r__customer__customer_id` will be considered as references to customer_id in customer table.
+     */
+    'referencePrefix'?: string;
+    /**
+     * Columns starting with this prefix will be considered as secondary labels. The prefix is then followed by the value of `separator` parameter. Given the secondary label prefix is `ls` and separator is `__`, the columns with name like `ls__country_id__country_name` will be considered as secondary labels.
+     */
+    'secondaryLabelPrefix'?: string;
     /**
      * A separator between prefixes and the names. Default is \"__\".
      */
@@ -3329,67 +3591,18 @@ export interface GenerateLdmRequest {
      */
     'tablePrefix'?: string;
     /**
+     * Columns starting with this prefix will be considered as secondary label translation. The prefix is then followed by the value of `separator` parameter. Given the translation prefix is `tr` and separator is `__`, the columns with name like `tr__attribute__label__en-US` will be considered as secondary label en-US translation to `label` label in `attribute` attribute.
+     */
+    'translationPrefix'?: string;
+    /**
      * Views starting with this prefix will be included. The prefix is then followed by the value of `separator` parameter. Given the view prefix is `out_view` and separator is `__`, the table with name like `out_view__us_customers` will be scanned.
      * @deprecated
      */
     'viewPrefix'?: string;
     /**
-     * Columns starting with this prefix will be considered as primary labels. The prefix is then followed by the value of `separator` parameter. Given the primary label prefix is `pl` and separator is `__`, the columns with name like `pl__country_id` will be considered as primary labels.
-     */
-    'primaryLabelPrefix'?: string;
-    /**
-     * Columns starting with this prefix will be considered as secondary labels. The prefix is then followed by the value of `separator` parameter. Given the secondary label prefix is `ls` and separator is `__`, the columns with name like `ls__country_id__country_name` will be considered as secondary labels.
-     */
-    'secondaryLabelPrefix'?: string;
-    /**
-     * Columns starting with this prefix will be considered as secondary label translation. The prefix is then followed by the value of `separator` parameter. Given the translation prefix is `tr` and separator is `__`, the columns with name like `tr__attribute__label__en-US` will be considered as secondary label en-US translation to `label` label in `attribute` attribute.
-     */
-    'translationPrefix'?: string;
-    /**
-     * Columns starting with this prefix will be considered as aggregated facts. The prefix is then followed by the value of `separator` parameter. Given the aggregated fact prefix is `aggr` and separator is `__`, the columns with name like `aggr__sum__product__sold` will be considered as aggregated sold fact in the product table with SUM aggregate function.
-     */
-    'aggregatedFactPrefix'?: string;
-    /**
-     * Columns starting with this prefix will be considered as facts. The prefix is then followed by the value of `separator` parameter. Given the fact prefix is `f` and separator is `__`, the columns with name like `f__sold` will be considered as facts.
-     */
-    'factPrefix'?: string;
-    /**
-     * Option to control date granularities for date datasets. Empty value enables common date granularities (DAY, WEEK, MONTH, QUARTER, YEAR). Default value is `all` which enables all available date granularities, including time granularities (like hours, minutes).
-     */
-    'dateGranularities'?: string;
-    /**
-     * Columns starting with this prefix will be considered as grains. The prefix is then followed by the value of `separator` parameter. Given the grain prefix is `gr` and separator is `__`, the columns with name like `gr__name` will be considered as grains.
-     */
-    'grainPrefix'?: string;
-    /**
-     * Columns starting with this prefix will be considered as references. The prefix is then followed by the value of `separator` parameter. Given the reference prefix is `r` and separator is `__`, the columns with name like `r__customer__customer_id` will be considered as references to customer_id in customer table.
-     */
-    'referencePrefix'?: string;
-    /**
-     * Columns starting with this prefix will be considered as references to date dataset. The prefix is then followed by the value of `separator` parameter. Given the reference prefix is `d` and separator is `__`, the columns with name like `d__date` will be considered as reference to date dataset. There can be also second separator and granularity suffix, e.g. `d__date__day` to create attribute reference to exact date dataset and granularity.
-     */
-    'dateReferencePrefix'?: string;
-    /**
-     * Columns starting with this prefix will be considered as grain references. The prefix is then followed by the value of `separator` parameter. For composite references, the reference is multivalue if at least one column is multivalue. Given the reference prefix is `grr` and separator is `__`, the columns with name like `grr__customer__customer_id` will be considered as grain references to customer_id in customer table.
-     */
-    'grainReferencePrefix'?: string;
-    /**
-     * Columns starting with this prefix will be considered as multivalue references. The prefix is then followed by the value of `separator` parameter. For composite references, the reference is multivalue if at least one column is multivalue. Given the reference prefix is `mr` and separator is `__`, the columns with name like `mr__customer__customer_id` will be considered as multivalue references to customer_id in customer table.
-     */
-    'multivalueReferencePrefix'?: string;
-    /**
-     * Columns starting with this prefix will be considered as grain multivalue references. The prefix is then followed by the value of `separator` parameter. Given the reference prefix is `grmr` and separator is `__`, the columns with name like `grmr__customer__customer_id` will be considered as grain multivalue references to customer_id in customer table.
-     */
-    'grainMultivalueReferencePrefix'?: string;
-    /**
-     * Columns starting with this prefix will be considered as denormalization references. The prefix is then followed by the value of `separator` parameter. Given the denormalization reference prefix is `dr` and separator is `__`, the columns with name like `dr__customer_name` will be considered as denormalization references.
-     */
-    'denormPrefix'?: string;
-    /**
      * Column serving as workspace data filter. No labels are auto generated for such columns.
      */
     'wdfPrefix'?: string;
-    'pdm'?: PdmLdmRequest;
     /**
      * Optional workspace id.
      */
@@ -3475,8 +3688,8 @@ export type HierarchyObjectIdentificationTypeEnum = 'analyticalDashboard' | 'att
  */
 export interface IdentifierDuplications {
     'id': string;
-    'type': IdentifierDuplicationsTypeEnum;
     'origins': Array<string>;
+    'type': IdentifierDuplicationsTypeEnum;
 }
 
 export type IdentifierDuplicationsTypeEnum = 'analyticalDashboard' | 'attribute' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceDataFilter' | 'workspaceDataFilterSettings';
@@ -3490,32 +3703,32 @@ export interface IdentifierRefIdentifier {
     'type': IdentifierRefIdentifierTypeEnum;
 }
 
-export type IdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'workspaceExportTemplate';
+export type IdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'workspaceExportTemplate' | 'workspaceTheme' | 'workspaceColorPalette' | 'fiscalCalendar' | 'fiscalCalendarGranularity';
 
 /**
  * Export request object describing the export properties and metadata for image exports.
  */
 export interface ImageExportRequest {
     /**
-     * Requested resulting file type.
+     * Dashboard identifier
      */
-    'format': ImageExportRequestFormatEnum;
+    'dashboardId': string;
     /**
      * File name to be used for retrieving the image document.
      */
     'fileName': string;
     /**
-     * Dashboard identifier
+     * Requested resulting file type.
      */
-    'dashboardId': string;
-    /**
-     * List of widget identifiers to be exported. Note that only one widget is currently supported.
-     */
-    'widgetIds': Array<string>;
+    'format': ImageExportRequestFormatEnum;
     /**
      * Free-form JSON object
      */
     'metadata'?: object | null;
+    /**
+     * List of widget identifiers to be exported. Note that only one widget is currently supported.
+     */
+    'widgetIds': Array<string>;
 }
 
 export type ImageExportRequestFormatEnum = 'PNG';
@@ -3533,6 +3746,18 @@ export interface InPlatform {
 export type InPlatformTypeEnum = 'IN_PLATFORM';
 
 /**
+ * The cache never expires on its own; it is kept per `cacheStrategy` and invalidated only explicitly. Equivalent to setting no policy at all.
+ */
+export interface IndefiniteCacheRetention {
+    /**
+     * The cache retention type.
+     */
+    'type': IndefiniteCacheRetentionTypeEnum;
+}
+
+export type IndefiniteCacheRetentionTypeEnum = 'INDEFINITE';
+
+/**
  * Filter in form of direct MAQL query.
  */
 export interface InlineFilterDefinition {
@@ -3540,12 +3765,12 @@ export interface InlineFilterDefinition {
 }
 
 export interface InlineFilterDefinitionInline {
+    'applyOnResult'?: boolean;
     /**
      * MAQL query representing the filter.
      */
     'filter': string;
     'localIdentifier'?: string;
-    'applyOnResult'?: boolean;
 }
 
 /**
@@ -3566,14 +3791,14 @@ export interface InlineMeasureDefinitionInline {
  * Settings for intro slide.
  */
 export interface IntroSlideTemplate {
-    'header'?: RunningSection | null;
-    'footer'?: RunningSection | null;
-    'titleField'?: string | null;
-    'descriptionField'?: string | null;
     /**
      * Show background image on the slide.
      */
     'backgroundImage'?: boolean;
+    'descriptionField'?: string | null;
+    'footer'?: RunningSection | null;
+    'header'?: RunningSection | null;
+    'titleField'?: string | null;
 }
 
 /**
@@ -3587,81 +3812,92 @@ export interface IpAllowlistPolicyTargets {
  * JSON:API representation of agent entity.
  */
 export interface JsonApiAgentIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiAgentInTypeEnum;
+    'attributes'?: JsonApiAgentInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiAgentInAttributes;
-    'relationships'?: JsonApiUserOutRelationships;
+    'relationships'?: JsonApiAgentInRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiAgentInTypeEnum;
 }
 
 export type JsonApiAgentInTypeEnum = 'agent';
 
 export interface JsonApiAgentInAttributes {
-    'enabled'?: boolean;
-    'name'?: string | null;
-    'description'?: string | null;
-    'personality'?: string | null;
-    'skillsMode'?: JsonApiAgentInAttributesSkillsModeEnum;
-    'customSkills'?: Array<JsonApiAgentInAttributesCustomSkillsEnum> | null;
     'aiKnowledge'?: boolean;
     'availableToAll'?: boolean;
+    'customSkills'?: Array<JsonApiAgentInAttributesCustomSkillsEnum> | null;
+    'description'?: string | null;
+    'enabled'?: boolean;
     'isPreview'?: boolean;
+    'name'?: string | null;
+    'personality'?: string | null;
+    'skillsMode'?: JsonApiAgentInAttributesSkillsModeEnum;
 }
 
-export type JsonApiAgentInAttributesSkillsModeEnum = 'all' | 'custom';
 export type JsonApiAgentInAttributesCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge';
+export type JsonApiAgentInAttributesSkillsModeEnum = 'all' | 'custom';
 
 export interface JsonApiAgentInDocument {
     'data': JsonApiAgentIn;
+}
+
+export interface JsonApiAgentInRelationships {
+    'userGroups'?: JsonApiAgentInRelationshipsUserGroups;
+}
+
+export interface JsonApiAgentInRelationshipsUserGroups {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiUserGroupLinkage>;
 }
 
 /**
  * JSON:API representation of agent entity.
  */
 export interface JsonApiAgentOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiAgentOutTypeEnum;
+    'attributes'?: JsonApiAgentOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiAgentOutAttributes;
     'relationships'?: JsonApiAgentOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiAgentOutTypeEnum;
 }
 
 export type JsonApiAgentOutTypeEnum = 'agent';
 
 export interface JsonApiAgentOutAttributes {
-    'enabled'?: boolean;
-    'name'?: string | null;
-    'description'?: string | null;
-    'personality'?: string | null;
-    'skillsMode'?: JsonApiAgentOutAttributesSkillsModeEnum;
-    'customSkills'?: Array<JsonApiAgentOutAttributesCustomSkillsEnum> | null;
     'aiKnowledge'?: boolean;
     'availableToAll'?: boolean;
-    'isPreview'?: boolean;
     'createdAt'?: string;
+    'customSkills'?: Array<JsonApiAgentOutAttributesCustomSkillsEnum> | null;
+    'description'?: string | null;
+    'enabled'?: boolean;
+    'isPreview'?: boolean;
     'modifiedAt'?: string;
+    'name'?: string | null;
+    'personality'?: string | null;
+    'skillsMode'?: JsonApiAgentOutAttributesSkillsModeEnum;
 }
 
-export type JsonApiAgentOutAttributesSkillsModeEnum = 'all' | 'custom';
 export type JsonApiAgentOutAttributesCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge';
+export type JsonApiAgentOutAttributesSkillsModeEnum = 'all' | 'custom';
 
 export interface JsonApiAgentOutDocument {
     'data': JsonApiAgentOut;
-    'links'?: ObjectLinks;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiAgentOutIncludes>;
+    'links'?: ObjectLinks;
 }
 
 /**
@@ -3674,12 +3910,12 @@ export type JsonApiAgentOutIncludes = JsonApiUserGroupOutWithLinks | JsonApiUser
  */
 export interface JsonApiAgentOutList {
     'data': Array<JsonApiAgentOutWithLinks>;
-    'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiAgentOutIncludes>;
+    'links'?: ListLinks;
+    'meta'?: JsonApiAgentOutListMeta;
 }
 
 export interface JsonApiAgentOutListMeta {
@@ -3688,25 +3924,36 @@ export interface JsonApiAgentOutListMeta {
 
 export interface JsonApiAgentOutRelationships {
     'createdBy'?: JsonApiAgentOutRelationshipsCreatedBy;
-    'modifiedBy'?: JsonApiAgentOutRelationshipsCreatedBy;
-    'userGroups'?: JsonApiUserOutRelationshipsUserGroups;
+    'modifiedBy'?: JsonApiAgentOutRelationshipsModifiedBy;
+    'userGroups'?: JsonApiAgentOutRelationshipsUserGroups;
 }
 
 export interface JsonApiAgentOutRelationshipsCreatedBy {
     'data': JsonApiUserIdentifierLinkage | null;
 }
 
-export interface JsonApiAgentOutWithLinks {
+export interface JsonApiAgentOutRelationshipsModifiedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+export interface JsonApiAgentOutRelationshipsUserGroups {
     /**
-     * Object type
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
      */
-    'type': JsonApiAgentOutWithLinksTypeEnum;
+    'data': Array<JsonApiUserGroupLinkage>;
+}
+
+export interface JsonApiAgentOutWithLinks {
+    'attributes'?: JsonApiAgentOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiAgentOutAttributes;
     'relationships'?: JsonApiAgentOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiAgentOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -3716,22 +3963,48 @@ export type JsonApiAgentOutWithLinksTypeEnum = 'agent';
  * JSON:API representation of patching agent entity.
  */
 export interface JsonApiAgentPatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiAgentPatchTypeEnum;
+    'attributes'?: JsonApiAgentPatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiAgentInAttributes;
-    'relationships'?: JsonApiUserOutRelationships;
+    'relationships'?: JsonApiAgentPatchRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiAgentPatchTypeEnum;
 }
 
 export type JsonApiAgentPatchTypeEnum = 'agent';
 
+export interface JsonApiAgentPatchAttributes {
+    'aiKnowledge'?: boolean;
+    'availableToAll'?: boolean;
+    'customSkills'?: Array<JsonApiAgentPatchAttributesCustomSkillsEnum> | null;
+    'description'?: string | null;
+    'enabled'?: boolean;
+    'isPreview'?: boolean;
+    'name'?: string | null;
+    'personality'?: string | null;
+    'skillsMode'?: JsonApiAgentPatchAttributesSkillsModeEnum;
+}
+
+export type JsonApiAgentPatchAttributesCustomSkillsEnum = 'alert' | 'anomaly_detection' | 'clustering' | 'forecasting' | 'key_driver_analysis' | 'metric' | 'schedule_export' | 'visualization' | 'visualization_summary' | 'dashboard_summary' | 'what_if_analysis' | 'knowledge';
+export type JsonApiAgentPatchAttributesSkillsModeEnum = 'all' | 'custom';
+
 export interface JsonApiAgentPatchDocument {
     'data': JsonApiAgentPatch;
+}
+
+export interface JsonApiAgentPatchRelationships {
+    'userGroups'?: JsonApiAgentPatchRelationshipsUserGroups;
+}
+
+export interface JsonApiAgentPatchRelationshipsUserGroups {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiUserGroupLinkage>;
 }
 
 /**
@@ -3748,42 +4021,42 @@ export type JsonApiAggregatedFactLinkageTypeEnum = 'aggregatedFact';
  * JSON:API representation of aggregatedFact entity.
  */
 export interface JsonApiAggregatedFactOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiAggregatedFactOutTypeEnum;
+    'attributes': JsonApiAggregatedFactOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes': JsonApiAggregatedFactOutAttributes;
+    'meta'?: JsonApiAggregatedFactOutMeta;
     'relationships'?: JsonApiAggregatedFactOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiAggregatedFactOutTypeEnum;
 }
 
 export type JsonApiAggregatedFactOutTypeEnum = 'aggregatedFact';
 
 export interface JsonApiAggregatedFactOutAttributes {
-    'description'?: string;
-    'tags'?: Array<string>;
-    'sourceColumn'?: string;
-    'sourceColumnDataType'?: JsonApiAggregatedFactOutAttributesSourceColumnDataTypeEnum;
     'areRelationsValid'?: boolean;
-    'operation': JsonApiAggregatedFactOutAttributesOperationEnum;
+    'description'?: string;
     'isNullable'?: boolean;
     'nullValue'?: string;
+    'operation': JsonApiAggregatedFactOutAttributesOperationEnum;
+    'sourceColumn'?: string;
+    'sourceColumnDataType'?: JsonApiAggregatedFactOutAttributesSourceColumnDataTypeEnum;
+    'tags'?: Array<string>;
 }
 
-export type JsonApiAggregatedFactOutAttributesSourceColumnDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
 export type JsonApiAggregatedFactOutAttributesOperationEnum = 'SUM' | 'MIN' | 'MAX' | 'APPROXIMATE_COUNT';
+export type JsonApiAggregatedFactOutAttributesSourceColumnDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
 
 export interface JsonApiAggregatedFactOutDocument {
     'data': JsonApiAggregatedFactOut;
-    'links'?: ObjectLinks;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiAggregatedFactOutIncludes>;
+    'links'?: ObjectLinks;
 }
 
 /**
@@ -3796,18 +4069,43 @@ export type JsonApiAggregatedFactOutIncludes = JsonApiAttributeOutWithLinks | Js
  */
 export interface JsonApiAggregatedFactOutList {
     'data': Array<JsonApiAggregatedFactOutWithLinks>;
-    'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiAggregatedFactOutIncludes>;
+    'links'?: ListLinks;
+    'meta'?: JsonApiAggregatedFactOutListMeta;
 }
 
+export interface JsonApiAggregatedFactOutListMeta {
+    'page'?: PageMetadata;
+}
+
+export interface JsonApiAggregatedFactOutMeta {
+    'origin'?: JsonApiAggregatedFactOutMetaOrigin;
+}
+
+export interface JsonApiAggregatedFactOutMetaOrigin {
+    /**
+     * defines id of the workspace where the entity comes from
+     */
+    'originId': string;
+    /**
+     * defines type of the origin of the entity
+     */
+    'originType': JsonApiAggregatedFactOutMetaOriginOriginTypeEnum;
+}
+
+export type JsonApiAggregatedFactOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
+
 export interface JsonApiAggregatedFactOutRelationships {
-    'dataset'?: JsonApiAttributeOutRelationshipsDataset;
-    'sourceFact'?: JsonApiAggregatedFactOutRelationshipsSourceFact;
+    'dataset'?: JsonApiAggregatedFactOutRelationshipsDataset;
     'sourceAttribute'?: JsonApiAggregatedFactOutRelationshipsSourceAttribute;
+    'sourceFact'?: JsonApiAggregatedFactOutRelationshipsSourceFact;
+}
+
+export interface JsonApiAggregatedFactOutRelationshipsDataset {
+    'data': JsonApiDatasetLinkage | null;
 }
 
 export interface JsonApiAggregatedFactOutRelationshipsSourceAttribute {
@@ -3819,17 +4117,17 @@ export interface JsonApiAggregatedFactOutRelationshipsSourceFact {
 }
 
 export interface JsonApiAggregatedFactOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiAggregatedFactOutWithLinksTypeEnum;
+    'attributes': JsonApiAggregatedFactOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes': JsonApiAggregatedFactOutAttributes;
+    'meta'?: JsonApiAggregatedFactOutMeta;
     'relationships'?: JsonApiAggregatedFactOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiAggregatedFactOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -3839,18 +4137,33 @@ export type JsonApiAggregatedFactOutWithLinksTypeEnum = 'aggregatedFact';
  * JSON:API representation of analyticalDashboard entity.
  */
 export interface JsonApiAnalyticalDashboardIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiAnalyticalDashboardInTypeEnum;
+    'attributes': JsonApiAnalyticalDashboardInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiAnalyticalDashboardPostOptionalIdAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiAnalyticalDashboardInTypeEnum;
 }
 
 export type JsonApiAnalyticalDashboardInTypeEnum = 'analyticalDashboard';
+
+export interface JsonApiAnalyticalDashboardInAttributes {
+    'areRelationsValid'?: boolean;
+    /**
+     * Free-form JSON content. Maximum supported length is 250000 characters.
+     */
+    'content': object;
+    'description'?: string;
+    /**
+     * AI-generated summary of the dashboard content
+     */
+    'summary'?: string;
+    'tags'?: Array<string>;
+    'title'?: string;
+}
 
 export interface JsonApiAnalyticalDashboardInDocument {
     'data': JsonApiAnalyticalDashboardIn;
@@ -3870,65 +4183,65 @@ export type JsonApiAnalyticalDashboardLinkageTypeEnum = 'analyticalDashboard';
  * JSON:API representation of analyticalDashboard entity.
  */
 export interface JsonApiAnalyticalDashboardOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiAnalyticalDashboardOutTypeEnum;
+    'attributes': JsonApiAnalyticalDashboardOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
     'meta'?: JsonApiAnalyticalDashboardOutMeta;
-    'attributes': JsonApiAnalyticalDashboardOutAttributes;
     'relationships'?: JsonApiAnalyticalDashboardOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiAnalyticalDashboardOutTypeEnum;
 }
 
 export type JsonApiAnalyticalDashboardOutTypeEnum = 'analyticalDashboard';
 
 export interface JsonApiAnalyticalDashboardOutAttributes {
-    'title'?: string;
-    'description'?: string;
-    'tags'?: Array<string>;
     'areRelationsValid'?: boolean;
-    /**
-     * Free-form JSON content. Maximum supported length is 250000 characters.
-     */
-    'content': object;
-    /**
-     * AI-generated summary of the dashboard content
-     */
-    'summary'?: string;
-    /**
-     * Time of the entity creation.
-     */
-    'createdAt'?: string | null;
-    /**
-     * Time of the last entity modification.
-     */
-    'modifiedAt'?: string | null;
     /**
      * Certification status of the entity.
      */
     'certification'?: JsonApiAnalyticalDashboardOutAttributesCertificationEnum;
     /**
+     * Optional message associated with the certification.
+     */
+    'certificationMessage'?: string | null;
+    /**
      * Time when the certification was set.
      */
     'certifiedAt'?: string | null;
     /**
-     * Optional message associated with the certification.
+     * Free-form JSON content. Maximum supported length is 250000 characters.
      */
-    'certificationMessage'?: string | null;
+    'content': object;
+    /**
+     * Time of the entity creation.
+     */
+    'createdAt'?: string | null;
+    'description'?: string;
+    /**
+     * Time of the last entity modification.
+     */
+    'modifiedAt'?: string | null;
+    /**
+     * AI-generated summary of the dashboard content
+     */
+    'summary'?: string;
+    'tags'?: Array<string>;
+    'title'?: string;
 }
 
 export type JsonApiAnalyticalDashboardOutAttributesCertificationEnum = 'CERTIFIED';
 
 export interface JsonApiAnalyticalDashboardOutDocument {
     'data': JsonApiAnalyticalDashboardOut;
-    'links'?: ObjectLinks;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiAnalyticalDashboardOutIncludes>;
+    'links'?: ObjectLinks;
 }
 
 /**
@@ -3941,21 +4254,25 @@ export type JsonApiAnalyticalDashboardOutIncludes = JsonApiAnalyticalDashboardOu
  */
 export interface JsonApiAnalyticalDashboardOutList {
     'data': Array<JsonApiAnalyticalDashboardOutWithLinks>;
-    'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiAnalyticalDashboardOutIncludes>;
+    'links'?: ListLinks;
+    'meta'?: JsonApiAnalyticalDashboardOutListMeta;
+}
+
+export interface JsonApiAnalyticalDashboardOutListMeta {
+    'page'?: PageMetadata;
 }
 
 export interface JsonApiAnalyticalDashboardOutMeta {
+    'accessInfo'?: JsonApiAnalyticalDashboardOutMetaAccessInfo;
+    'origin'?: JsonApiAnalyticalDashboardOutMetaOrigin;
     /**
      * List of valid permissions for a logged-in user.
      */
     'permissions'?: Array<JsonApiAnalyticalDashboardOutMetaPermissionsEnum>;
-    'origin'?: JsonApiAnalyticalDashboardOutMetaOrigin;
-    'accessInfo'?: JsonApiAnalyticalDashboardOutMetaAccessInfo;
 }
 
 export type JsonApiAnalyticalDashboardOutMetaPermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
@@ -3969,29 +4286,29 @@ export interface JsonApiAnalyticalDashboardOutMetaAccessInfo {
 
 export interface JsonApiAnalyticalDashboardOutMetaOrigin {
     /**
-     * defines type of the origin of the entity
-     */
-    'originType': JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum;
-    /**
      * defines id of the workspace where the entity comes from
      */
     'originId': string;
+    /**
+     * defines type of the origin of the entity
+     */
+    'originType': JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum;
 }
 
 export type JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
 
 export interface JsonApiAnalyticalDashboardOutRelationships {
-    'createdBy'?: JsonApiAgentOutRelationshipsCreatedBy;
-    'modifiedBy'?: JsonApiAgentOutRelationshipsCreatedBy;
-    'certifiedBy'?: JsonApiAgentOutRelationshipsCreatedBy;
-    'visualizationObjects'?: JsonApiAnalyticalDashboardOutRelationshipsVisualizationObjects;
     'analyticalDashboards'?: JsonApiAnalyticalDashboardOutRelationshipsAnalyticalDashboards;
-    'labels'?: JsonApiAnalyticalDashboardOutRelationshipsLabels;
-    'metrics'?: JsonApiAnalyticalDashboardOutRelationshipsMetrics;
-    'parameters'?: JsonApiAnalyticalDashboardOutRelationshipsParameters;
+    'certifiedBy'?: JsonApiAnalyticalDashboardOutRelationshipsCertifiedBy;
+    'createdBy'?: JsonApiAnalyticalDashboardOutRelationshipsCreatedBy;
+    'dashboardPlugins'?: JsonApiAnalyticalDashboardOutRelationshipsDashboardPlugins;
     'datasets'?: JsonApiAnalyticalDashboardOutRelationshipsDatasets;
     'filterContexts'?: JsonApiAnalyticalDashboardOutRelationshipsFilterContexts;
-    'dashboardPlugins'?: JsonApiAnalyticalDashboardOutRelationshipsDashboardPlugins;
+    'labels'?: JsonApiAnalyticalDashboardOutRelationshipsLabels;
+    'metrics'?: JsonApiAnalyticalDashboardOutRelationshipsMetrics;
+    'modifiedBy'?: JsonApiAnalyticalDashboardOutRelationshipsModifiedBy;
+    'parameters'?: JsonApiAnalyticalDashboardOutRelationshipsParameters;
+    'visualizationObjects'?: JsonApiAnalyticalDashboardOutRelationshipsVisualizationObjects;
 }
 
 export interface JsonApiAnalyticalDashboardOutRelationshipsAnalyticalDashboards {
@@ -3999,6 +4316,14 @@ export interface JsonApiAnalyticalDashboardOutRelationshipsAnalyticalDashboards 
      * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
      */
     'data': Array<JsonApiAnalyticalDashboardLinkage>;
+}
+
+export interface JsonApiAnalyticalDashboardOutRelationshipsCertifiedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+export interface JsonApiAnalyticalDashboardOutRelationshipsCreatedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
 }
 
 export interface JsonApiAnalyticalDashboardOutRelationshipsDashboardPlugins {
@@ -4036,6 +4361,10 @@ export interface JsonApiAnalyticalDashboardOutRelationshipsMetrics {
     'data': Array<JsonApiMetricLinkage>;
 }
 
+export interface JsonApiAnalyticalDashboardOutRelationshipsModifiedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
 export interface JsonApiAnalyticalDashboardOutRelationshipsParameters {
     /**
      * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
@@ -4051,17 +4380,17 @@ export interface JsonApiAnalyticalDashboardOutRelationshipsVisualizationObjects 
 }
 
 export interface JsonApiAnalyticalDashboardOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiAnalyticalDashboardOutWithLinksTypeEnum;
+    'attributes': JsonApiAnalyticalDashboardOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
     'meta'?: JsonApiAnalyticalDashboardOutMeta;
-    'attributes': JsonApiAnalyticalDashboardOutAttributes;
     'relationships'?: JsonApiAnalyticalDashboardOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiAnalyticalDashboardOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -4071,32 +4400,32 @@ export type JsonApiAnalyticalDashboardOutWithLinksTypeEnum = 'analyticalDashboar
  * JSON:API representation of patching analyticalDashboard entity.
  */
 export interface JsonApiAnalyticalDashboardPatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiAnalyticalDashboardPatchTypeEnum;
+    'attributes': JsonApiAnalyticalDashboardPatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiAnalyticalDashboardPatchAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiAnalyticalDashboardPatchTypeEnum;
 }
 
 export type JsonApiAnalyticalDashboardPatchTypeEnum = 'analyticalDashboard';
 
 export interface JsonApiAnalyticalDashboardPatchAttributes {
-    'title'?: string;
-    'description'?: string;
-    'tags'?: Array<string>;
     'areRelationsValid'?: boolean;
     /**
      * Free-form JSON content. Maximum supported length is 250000 characters.
      */
     'content'?: object;
+    'description'?: string;
     /**
      * AI-generated summary of the dashboard content
      */
     'summary'?: string;
+    'tags'?: Array<string>;
+    'title'?: string;
 }
 
 export interface JsonApiAnalyticalDashboardPatchDocument {
@@ -4107,32 +4436,32 @@ export interface JsonApiAnalyticalDashboardPatchDocument {
  * JSON:API representation of analyticalDashboard entity.
  */
 export interface JsonApiAnalyticalDashboardPostOptionalId {
-    /**
-     * Object type
-     */
-    'type': JsonApiAnalyticalDashboardPostOptionalIdTypeEnum;
+    'attributes': JsonApiAnalyticalDashboardPostOptionalIdAttributes;
     /**
      * API identifier of an object
      */
     'id'?: string;
-    'attributes': JsonApiAnalyticalDashboardPostOptionalIdAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiAnalyticalDashboardPostOptionalIdTypeEnum;
 }
 
 export type JsonApiAnalyticalDashboardPostOptionalIdTypeEnum = 'analyticalDashboard';
 
 export interface JsonApiAnalyticalDashboardPostOptionalIdAttributes {
-    'title'?: string;
-    'description'?: string;
-    'tags'?: Array<string>;
     'areRelationsValid'?: boolean;
     /**
      * Free-form JSON content. Maximum supported length is 250000 characters.
      */
     'content': object;
+    'description'?: string;
     /**
      * AI-generated summary of the dashboard content
      */
     'summary'?: string;
+    'tags'?: Array<string>;
+    'title'?: string;
 }
 
 export interface JsonApiAnalyticalDashboardPostOptionalIdDocument {
@@ -4144,13 +4473,13 @@ export interface JsonApiAnalyticalDashboardPostOptionalIdDocument {
  */
 export interface JsonApiApiTokenIn {
     /**
-     * Object type
-     */
-    'type': JsonApiApiTokenInTypeEnum;
-    /**
      * API identifier of an object
      */
     'id': string;
+    /**
+     * Object type
+     */
+    'type': JsonApiApiTokenInTypeEnum;
 }
 
 export type JsonApiApiTokenInTypeEnum = 'apiToken';
@@ -4163,15 +4492,15 @@ export interface JsonApiApiTokenInDocument {
  * JSON:API representation of apiToken entity.
  */
 export interface JsonApiApiTokenOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiApiTokenOutTypeEnum;
+    'attributes'?: JsonApiApiTokenOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiApiTokenOutAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiApiTokenOutTypeEnum;
 }
 
 export type JsonApiApiTokenOutTypeEnum = 'apiToken';
@@ -4194,19 +4523,23 @@ export interface JsonApiApiTokenOutDocument {
 export interface JsonApiApiTokenOutList {
     'data': Array<JsonApiApiTokenOutWithLinks>;
     'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
+    'meta'?: JsonApiApiTokenOutListMeta;
+}
+
+export interface JsonApiApiTokenOutListMeta {
+    'page'?: PageMetadata;
 }
 
 export interface JsonApiApiTokenOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiApiTokenOutWithLinksTypeEnum;
+    'attributes'?: JsonApiApiTokenOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiApiTokenOutAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiApiTokenOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -4216,28 +4549,28 @@ export type JsonApiApiTokenOutWithLinksTypeEnum = 'apiToken';
  * JSON:API representation of attributeHierarchy entity.
  */
 export interface JsonApiAttributeHierarchyIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiAttributeHierarchyInTypeEnum;
+    'attributes'?: JsonApiAttributeHierarchyInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiAttributeHierarchyInAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiAttributeHierarchyInTypeEnum;
 }
 
 export type JsonApiAttributeHierarchyInTypeEnum = 'attributeHierarchy';
 
 export interface JsonApiAttributeHierarchyInAttributes {
-    'title'?: string;
-    'description'?: string;
-    'tags'?: Array<string>;
     'areRelationsValid'?: boolean;
     /**
      * Free-form JSON content. Maximum supported length is 15000 characters.
      */
     'content'?: object;
+    'description'?: string;
+    'tags'?: Array<string>;
+    'title'?: string;
 }
 
 export interface JsonApiAttributeHierarchyInDocument {
@@ -4258,25 +4591,22 @@ export type JsonApiAttributeHierarchyLinkageTypeEnum = 'attributeHierarchy';
  * JSON:API representation of attributeHierarchy entity.
  */
 export interface JsonApiAttributeHierarchyOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiAttributeHierarchyOutTypeEnum;
+    'attributes'?: JsonApiAttributeHierarchyOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes'?: JsonApiAttributeHierarchyOutAttributes;
+    'meta'?: JsonApiAttributeHierarchyOutMeta;
     'relationships'?: JsonApiAttributeHierarchyOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiAttributeHierarchyOutTypeEnum;
 }
 
 export type JsonApiAttributeHierarchyOutTypeEnum = 'attributeHierarchy';
 
 export interface JsonApiAttributeHierarchyOutAttributes {
-    'title'?: string;
-    'description'?: string;
-    'tags'?: Array<string>;
     'areRelationsValid'?: boolean;
     /**
      * Free-form JSON content. Maximum supported length is 15000 characters.
@@ -4286,19 +4616,22 @@ export interface JsonApiAttributeHierarchyOutAttributes {
      * Time of the entity creation.
      */
     'createdAt'?: string | null;
+    'description'?: string;
     /**
      * Time of the last entity modification.
      */
     'modifiedAt'?: string | null;
+    'tags'?: Array<string>;
+    'title'?: string;
 }
 
 export interface JsonApiAttributeHierarchyOutDocument {
     'data': JsonApiAttributeHierarchyOut;
-    'links'?: ObjectLinks;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiAttributeHierarchyOutIncludes>;
+    'links'?: ObjectLinks;
 }
 
 /**
@@ -4311,32 +4644,68 @@ export type JsonApiAttributeHierarchyOutIncludes = JsonApiAttributeOutWithLinks 
  */
 export interface JsonApiAttributeHierarchyOutList {
     'data': Array<JsonApiAttributeHierarchyOutWithLinks>;
-    'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiAttributeHierarchyOutIncludes>;
+    'links'?: ListLinks;
+    'meta'?: JsonApiAttributeHierarchyOutListMeta;
 }
 
+export interface JsonApiAttributeHierarchyOutListMeta {
+    'page'?: PageMetadata;
+}
+
+export interface JsonApiAttributeHierarchyOutMeta {
+    'origin'?: JsonApiAttributeHierarchyOutMetaOrigin;
+}
+
+export interface JsonApiAttributeHierarchyOutMetaOrigin {
+    /**
+     * defines id of the workspace where the entity comes from
+     */
+    'originId': string;
+    /**
+     * defines type of the origin of the entity
+     */
+    'originType': JsonApiAttributeHierarchyOutMetaOriginOriginTypeEnum;
+}
+
+export type JsonApiAttributeHierarchyOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
+
 export interface JsonApiAttributeHierarchyOutRelationships {
-    'createdBy'?: JsonApiAgentOutRelationshipsCreatedBy;
-    'modifiedBy'?: JsonApiAgentOutRelationshipsCreatedBy;
-    'attributes'?: JsonApiDatasetOutRelationshipsAttributes;
+    'attributes'?: JsonApiAttributeHierarchyOutRelationshipsAttributes;
+    'createdBy'?: JsonApiAttributeHierarchyOutRelationshipsCreatedBy;
+    'modifiedBy'?: JsonApiAttributeHierarchyOutRelationshipsModifiedBy;
+}
+
+export interface JsonApiAttributeHierarchyOutRelationshipsAttributes {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiAttributeLinkage>;
+}
+
+export interface JsonApiAttributeHierarchyOutRelationshipsCreatedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+export interface JsonApiAttributeHierarchyOutRelationshipsModifiedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
 }
 
 export interface JsonApiAttributeHierarchyOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiAttributeHierarchyOutWithLinksTypeEnum;
+    'attributes'?: JsonApiAttributeHierarchyOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes'?: JsonApiAttributeHierarchyOutAttributes;
+    'meta'?: JsonApiAttributeHierarchyOutMeta;
     'relationships'?: JsonApiAttributeHierarchyOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiAttributeHierarchyOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -4346,18 +4715,29 @@ export type JsonApiAttributeHierarchyOutWithLinksTypeEnum = 'attributeHierarchy'
  * JSON:API representation of patching attributeHierarchy entity.
  */
 export interface JsonApiAttributeHierarchyPatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiAttributeHierarchyPatchTypeEnum;
+    'attributes'?: JsonApiAttributeHierarchyPatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiAttributeHierarchyInAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiAttributeHierarchyPatchTypeEnum;
 }
 
 export type JsonApiAttributeHierarchyPatchTypeEnum = 'attributeHierarchy';
+
+export interface JsonApiAttributeHierarchyPatchAttributes {
+    'areRelationsValid'?: boolean;
+    /**
+     * Free-form JSON content. Maximum supported length is 15000 characters.
+     */
+    'content'?: object;
+    'description'?: string;
+    'tags'?: Array<string>;
+    'title'?: string;
+}
 
 export interface JsonApiAttributeHierarchyPatchDocument {
     'data': JsonApiAttributeHierarchyPatch;
@@ -4377,48 +4757,48 @@ export type JsonApiAttributeLinkageTypeEnum = 'attribute';
  * JSON:API representation of attribute entity.
  */
 export interface JsonApiAttributeOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiAttributeOutTypeEnum;
+    'attributes'?: JsonApiAttributeOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes'?: JsonApiAttributeOutAttributes;
+    'meta'?: JsonApiAttributeOutMeta;
     'relationships'?: JsonApiAttributeOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiAttributeOutTypeEnum;
 }
 
 export type JsonApiAttributeOutTypeEnum = 'attribute';
 
 export interface JsonApiAttributeOutAttributes {
-    'title'?: string;
-    'description'?: string;
-    'tags'?: Array<string>;
-    'granularity'?: JsonApiAttributeOutAttributesGranularityEnum;
     'areRelationsValid'?: boolean;
+    'description'?: string;
+    'granularity'?: JsonApiAttributeOutAttributesGranularityEnum;
+    'isHidden'?: boolean;
+    'isNullable'?: boolean;
+    'locale'?: string;
+    'nullValue'?: string;
     'sortColumn'?: string;
     'sortDirection'?: JsonApiAttributeOutAttributesSortDirectionEnum;
     'sourceColumn'?: string;
     'sourceColumnDataType'?: JsonApiAttributeOutAttributesSourceColumnDataTypeEnum;
-    'isHidden'?: boolean;
-    'locale'?: string;
-    'isNullable'?: boolean;
-    'nullValue'?: string;
+    'tags'?: Array<string>;
+    'title'?: string;
 }
 
-export type JsonApiAttributeOutAttributesGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
+export type JsonApiAttributeOutAttributesGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
 export type JsonApiAttributeOutAttributesSortDirectionEnum = 'ASC' | 'DESC';
 export type JsonApiAttributeOutAttributesSourceColumnDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
 
 export interface JsonApiAttributeOutDocument {
     'data': JsonApiAttributeOut;
-    'links'?: ObjectLinks;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiAttributeOutIncludes>;
+    'links'?: ObjectLinks;
 }
 
 /**
@@ -4431,19 +4811,40 @@ export type JsonApiAttributeOutIncludes = JsonApiAttributeHierarchyOutWithLinks 
  */
 export interface JsonApiAttributeOutList {
     'data': Array<JsonApiAttributeOutWithLinks>;
-    'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiAttributeOutIncludes>;
+    'links'?: ListLinks;
+    'meta'?: JsonApiAttributeOutListMeta;
 }
 
+export interface JsonApiAttributeOutListMeta {
+    'page'?: PageMetadata;
+}
+
+export interface JsonApiAttributeOutMeta {
+    'origin'?: JsonApiAttributeOutMetaOrigin;
+}
+
+export interface JsonApiAttributeOutMetaOrigin {
+    /**
+     * defines id of the workspace where the entity comes from
+     */
+    'originId': string;
+    /**
+     * defines type of the origin of the entity
+     */
+    'originType': JsonApiAttributeOutMetaOriginOriginTypeEnum;
+}
+
+export type JsonApiAttributeOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
+
 export interface JsonApiAttributeOutRelationships {
+    'attributeHierarchies'?: JsonApiAttributeOutRelationshipsAttributeHierarchies;
     'dataset'?: JsonApiAttributeOutRelationshipsDataset;
     'defaultView'?: JsonApiAttributeOutRelationshipsDefaultView;
-    'labels'?: JsonApiAnalyticalDashboardOutRelationshipsLabels;
-    'attributeHierarchies'?: JsonApiAttributeOutRelationshipsAttributeHierarchies;
+    'labels'?: JsonApiAttributeOutRelationshipsLabels;
 }
 
 export interface JsonApiAttributeOutRelationshipsAttributeHierarchies {
@@ -4461,18 +4862,25 @@ export interface JsonApiAttributeOutRelationshipsDefaultView {
     'data': JsonApiLabelLinkage | null;
 }
 
-export interface JsonApiAttributeOutWithLinks {
+export interface JsonApiAttributeOutRelationshipsLabels {
     /**
-     * Object type
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
      */
-    'type': JsonApiAttributeOutWithLinksTypeEnum;
+    'data': Array<JsonApiLabelLinkage>;
+}
+
+export interface JsonApiAttributeOutWithLinks {
+    'attributes'?: JsonApiAttributeOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes'?: JsonApiAttributeOutAttributes;
+    'meta'?: JsonApiAttributeOutMeta;
     'relationships'?: JsonApiAttributeOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiAttributeOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -4482,24 +4890,24 @@ export type JsonApiAttributeOutWithLinksTypeEnum = 'attribute';
  * JSON:API representation of patching attribute entity.
  */
 export interface JsonApiAttributePatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiAttributePatchTypeEnum;
+    'attributes'?: JsonApiAttributePatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiAttributePatchAttributes;
     'relationships'?: JsonApiAttributePatchRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiAttributePatchTypeEnum;
 }
 
 export type JsonApiAttributePatchTypeEnum = 'attribute';
 
 export interface JsonApiAttributePatchAttributes {
-    'title'?: string;
     'description'?: string;
     'tags'?: Array<string>;
+    'title'?: string;
 }
 
 export interface JsonApiAttributePatchDocument {
@@ -4507,71 +4915,173 @@ export interface JsonApiAttributePatchDocument {
 }
 
 export interface JsonApiAttributePatchRelationships {
-    'defaultView'?: JsonApiAttributeOutRelationshipsDefaultView;
+    'defaultView'?: JsonApiAttributePatchRelationshipsDefaultView;
+}
+
+export interface JsonApiAttributePatchRelationshipsDefaultView {
+    'data': JsonApiLabelLinkage | null;
 }
 
 /**
  * JSON:API representation of automation entity.
  */
 export interface JsonApiAutomationIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiAutomationInTypeEnum;
+    'attributes'?: JsonApiAutomationInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiAutomationInAttributes;
     'relationships'?: JsonApiAutomationInRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiAutomationInTypeEnum;
 }
 
 export type JsonApiAutomationInTypeEnum = 'automation';
 
 export interface JsonApiAutomationInAttributes {
-    'title'?: string;
-    'description'?: string;
-    'tags'?: Array<string>;
+    'alert'?: JsonApiAutomationInAttributesAlert;
     'areRelationsValid'?: boolean;
+    'dashboardTabularExports'?: Array<JsonApiAutomationInAttributesDashboardTabularExportsInner>;
+    'description'?: string;
     /**
      * Additional details to be included in the automated message.
      */
     'details'?: object;
-    'metadata'?: JsonApiWorkspaceAutomationOutAttributesMetadata | null;
-    /**
-     * Current state of the automation.
-     */
-    'state'?: JsonApiAutomationInAttributesStateEnum;
     /**
      * Specify automation evaluation mode.
      */
     'evaluationMode'?: JsonApiAutomationInAttributesEvaluationModeEnum;
-    'schedule'?: JsonApiWorkspaceAutomationOutAttributesSchedule;
-    'alert'?: JsonApiWorkspaceAutomationOutAttributesAlert;
-    'tabularExports'?: Array<JsonApiWorkspaceAutomationOutAttributesTabularExportsInner>;
-    'visualExports'?: Array<JsonApiWorkspaceAutomationOutAttributesVisualExportsInner>;
-    'imageExports'?: Array<JsonApiWorkspaceAutomationOutAttributesImageExportsInner>;
-    'rawExports'?: Array<JsonApiWorkspaceAutomationOutAttributesRawExportsInner>;
-    'slidesExports'?: Array<JsonApiWorkspaceAutomationOutAttributesSlidesExportsInner>;
-    'dashboardTabularExports'?: Array<JsonApiWorkspaceAutomationOutAttributesDashboardTabularExportsInner>;
     /**
      * External recipients of the automation action results.
      */
-    'externalRecipients'?: Array<JsonApiWorkspaceAutomationOutAttributesExternalRecipientsInner>;
+    'externalRecipients'?: Array<JsonApiAutomationInAttributesExternalRecipientsInner>;
+    'imageExports'?: Array<JsonApiAutomationInAttributesImageExportsInner>;
+    'metadata'?: JsonApiAutomationInAttributesMetadata | null;
+    'rawExports'?: Array<JsonApiAutomationInAttributesRawExportsInner>;
+    'schedule'?: JsonApiAutomationInAttributesSchedule;
+    'slidesExports'?: Array<JsonApiAutomationInAttributesSlidesExportsInner>;
+    /**
+     * Current state of the automation.
+     */
+    'state'?: JsonApiAutomationInAttributesStateEnum;
+    'tabularExports'?: Array<JsonApiAutomationInAttributesTabularExportsInner>;
+    'tags'?: Array<string>;
+    'title'?: string;
+    'visualExports'?: Array<JsonApiAutomationInAttributesVisualExportsInner>;
 }
 
-export type JsonApiAutomationInAttributesStateEnum = 'ACTIVE' | 'PAUSED';
 export type JsonApiAutomationInAttributesEvaluationModeEnum = 'SHARED' | 'PER_RECIPIENT';
+export type JsonApiAutomationInAttributesStateEnum = 'ACTIVE' | 'PAUSED';
+
+export interface JsonApiAutomationInAttributesAlert {
+    'condition': AlertCondition;
+    'execution': AlertAfm;
+    /**
+     * Date granularity for the interval of ONCE_PER_INTERVAL trigger. Supported granularities: DAY, WEEK, MONTH, QUARTER, YEAR.
+     */
+    'interval'?: JsonApiAutomationInAttributesAlertIntervalEnum;
+    /**
+     * Trigger behavior for the alert. ALWAYS - alert is triggered every time the condition is met. ONCE - alert is triggered only once when the condition is met. ONCE_PER_INTERVAL - alert is triggered when the condition is met, then suppressed for the interval. If no interval is specified, it behaves as ALWAYS. 
+     */
+    'trigger'?: JsonApiAutomationInAttributesAlertTriggerEnum;
+}
+
+export type JsonApiAutomationInAttributesAlertIntervalEnum = 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR';
+export type JsonApiAutomationInAttributesAlertTriggerEnum = 'ALWAYS' | 'ONCE' | 'ONCE_PER_INTERVAL';
+
+export interface JsonApiAutomationInAttributesDashboardTabularExportsInner {
+    'requestPayload': DashboardTabularExportRequestV2;
+}
+
+export interface JsonApiAutomationInAttributesExternalRecipientsInner {
+    /**
+     * E-mail address to send notifications from.
+     */
+    'email': string;
+}
+
+export interface JsonApiAutomationInAttributesImageExportsInner {
+    'requestPayload': ImageExportRequest;
+}
+
+/**
+ * Additional information for the automation.
+ */
+export interface JsonApiAutomationInAttributesMetadata {
+    [key: string]: any;
+
+    'visibleFilters'?: Array<VisibleFilter>;
+    'widget'?: string;
+}
+
+export interface JsonApiAutomationInAttributesRawExportsInner {
+    'requestPayload': RawExportAutomationRequest;
+}
+
+export interface JsonApiAutomationInAttributesSchedule {
+    /**
+     * Cron expression defining the schedule of the automation. The format is SECOND MINUTE HOUR DAY-OF-MONTH MONTH DAY-OF-WEEK (YEAR). The example expression signifies an action every 30 minutes from 9:00 to 17:00 on workdays.
+     */
+    'cron': string;
+    /**
+     * Human-readable description of the cron expression.
+     */
+    'cronDescription'?: string;
+    /**
+     * Timestamp of the first scheduled action. If not provided default to the next scheduled time.
+     */
+    'firstRun'?: string;
+    /**
+     * Timezone in which the schedule is defined.
+     */
+    'timezone': string;
+}
+
+export interface JsonApiAutomationInAttributesSlidesExportsInner {
+    'requestPayload': SlidesExportRequest;
+}
+
+export interface JsonApiAutomationInAttributesTabularExportsInner {
+    'requestPayload': TabularExportRequest;
+}
+
+export interface JsonApiAutomationInAttributesVisualExportsInner {
+    'requestPayload': VisualExportRequest;
+}
 
 export interface JsonApiAutomationInDocument {
     'data': JsonApiAutomationIn;
 }
 
 export interface JsonApiAutomationInRelationships {
-    'notificationChannel'?: JsonApiWorkspaceAutomationOutRelationshipsNotificationChannel;
-    'analyticalDashboard'?: JsonApiExportDefinitionOutRelationshipsAnalyticalDashboard;
-    'exportDefinitions'?: JsonApiWorkspaceAutomationOutRelationshipsExportDefinitions;
-    'recipients'?: JsonApiIpAllowlistPolicyOutRelationshipsUsers;
+    'analyticalDashboard'?: JsonApiAutomationInRelationshipsAnalyticalDashboard;
+    'exportDefinitions'?: JsonApiAutomationInRelationshipsExportDefinitions;
+    'notificationChannel'?: JsonApiAutomationInRelationshipsNotificationChannel;
+    'recipients'?: JsonApiAutomationInRelationshipsRecipients;
+}
+
+export interface JsonApiAutomationInRelationshipsAnalyticalDashboard {
+    'data': JsonApiAnalyticalDashboardLinkage | null;
+}
+
+export interface JsonApiAutomationInRelationshipsExportDefinitions {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiExportDefinitionLinkage>;
+}
+
+export interface JsonApiAutomationInRelationshipsNotificationChannel {
+    'data': JsonApiNotificationChannelLinkage | null;
+}
+
+export interface JsonApiAutomationInRelationshipsRecipients {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiUserLinkage>;
 }
 
 /**
@@ -4588,71 +5098,147 @@ export type JsonApiAutomationLinkageTypeEnum = 'automation';
  * JSON:API representation of automation entity.
  */
 export interface JsonApiAutomationOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiAutomationOutTypeEnum;
+    'attributes'?: JsonApiAutomationOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes'?: JsonApiAutomationOutAttributes;
+    'meta'?: JsonApiAutomationOutMeta;
     'relationships'?: JsonApiAutomationOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiAutomationOutTypeEnum;
 }
 
 export type JsonApiAutomationOutTypeEnum = 'automation';
 
 export interface JsonApiAutomationOutAttributes {
-    'title'?: string;
-    'description'?: string;
-    'tags'?: Array<string>;
+    'alert'?: JsonApiAutomationOutAttributesAlert;
     'areRelationsValid'?: boolean;
-    /**
-     * Additional details to be included in the automated message.
-     */
-    'details'?: object;
-    'metadata'?: JsonApiWorkspaceAutomationOutAttributesMetadata | null;
-    /**
-     * Current state of the automation.
-     */
-    'state'?: JsonApiAutomationOutAttributesStateEnum;
-    /**
-     * Specify automation evaluation mode.
-     */
-    'evaluationMode'?: JsonApiAutomationOutAttributesEvaluationModeEnum;
-    'schedule'?: JsonApiWorkspaceAutomationOutAttributesSchedule;
-    'alert'?: JsonApiWorkspaceAutomationOutAttributesAlert;
-    'tabularExports'?: Array<JsonApiWorkspaceAutomationOutAttributesTabularExportsInner>;
-    'visualExports'?: Array<JsonApiWorkspaceAutomationOutAttributesVisualExportsInner>;
-    'imageExports'?: Array<JsonApiWorkspaceAutomationOutAttributesImageExportsInner>;
-    'rawExports'?: Array<JsonApiWorkspaceAutomationOutAttributesRawExportsInner>;
-    'slidesExports'?: Array<JsonApiWorkspaceAutomationOutAttributesSlidesExportsInner>;
-    'dashboardTabularExports'?: Array<JsonApiWorkspaceAutomationOutAttributesDashboardTabularExportsInner>;
-    /**
-     * External recipients of the automation action results.
-     */
-    'externalRecipients'?: Array<JsonApiWorkspaceAutomationOutAttributesExternalRecipientsInner>;
     /**
      * Time of the entity creation.
      */
     'createdAt'?: string | null;
+    'dashboardTabularExports'?: Array<JsonApiAutomationOutAttributesDashboardTabularExportsInner>;
+    'description'?: string;
+    /**
+     * Additional details to be included in the automated message.
+     */
+    'details'?: object;
+    /**
+     * Specify automation evaluation mode.
+     */
+    'evaluationMode'?: JsonApiAutomationOutAttributesEvaluationModeEnum;
+    /**
+     * External recipients of the automation action results.
+     */
+    'externalRecipients'?: Array<JsonApiAutomationOutAttributesExternalRecipientsInner>;
+    'imageExports'?: Array<JsonApiAutomationOutAttributesImageExportsInner>;
+    'metadata'?: JsonApiAutomationOutAttributesMetadata | null;
     /**
      * Time of the last entity modification.
      */
     'modifiedAt'?: string | null;
+    'rawExports'?: Array<JsonApiAutomationOutAttributesRawExportsInner>;
+    'schedule'?: JsonApiAutomationOutAttributesSchedule;
+    'slidesExports'?: Array<JsonApiAutomationOutAttributesSlidesExportsInner>;
+    /**
+     * Current state of the automation.
+     */
+    'state'?: JsonApiAutomationOutAttributesStateEnum;
+    'tabularExports'?: Array<JsonApiAutomationOutAttributesTabularExportsInner>;
+    'tags'?: Array<string>;
+    'title'?: string;
+    'visualExports'?: Array<JsonApiAutomationOutAttributesVisualExportsInner>;
 }
 
-export type JsonApiAutomationOutAttributesStateEnum = 'ACTIVE' | 'PAUSED';
 export type JsonApiAutomationOutAttributesEvaluationModeEnum = 'SHARED' | 'PER_RECIPIENT';
+export type JsonApiAutomationOutAttributesStateEnum = 'ACTIVE' | 'PAUSED';
+
+export interface JsonApiAutomationOutAttributesAlert {
+    'condition': AlertCondition;
+    'execution': AlertAfm;
+    /**
+     * Date granularity for the interval of ONCE_PER_INTERVAL trigger. Supported granularities: DAY, WEEK, MONTH, QUARTER, YEAR.
+     */
+    'interval'?: JsonApiAutomationOutAttributesAlertIntervalEnum;
+    /**
+     * Trigger behavior for the alert. ALWAYS - alert is triggered every time the condition is met. ONCE - alert is triggered only once when the condition is met. ONCE_PER_INTERVAL - alert is triggered when the condition is met, then suppressed for the interval. If no interval is specified, it behaves as ALWAYS. 
+     */
+    'trigger'?: JsonApiAutomationOutAttributesAlertTriggerEnum;
+}
+
+export type JsonApiAutomationOutAttributesAlertIntervalEnum = 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR';
+export type JsonApiAutomationOutAttributesAlertTriggerEnum = 'ALWAYS' | 'ONCE' | 'ONCE_PER_INTERVAL';
+
+export interface JsonApiAutomationOutAttributesDashboardTabularExportsInner {
+    'requestPayload': DashboardTabularExportRequestV2;
+}
+
+export interface JsonApiAutomationOutAttributesExternalRecipientsInner {
+    /**
+     * E-mail address to send notifications from.
+     */
+    'email': string;
+}
+
+export interface JsonApiAutomationOutAttributesImageExportsInner {
+    'requestPayload': ImageExportRequest;
+}
+
+/**
+ * Additional information for the automation.
+ */
+export interface JsonApiAutomationOutAttributesMetadata {
+    [key: string]: any;
+
+    'visibleFilters'?: Array<VisibleFilter>;
+    'widget'?: string;
+}
+
+export interface JsonApiAutomationOutAttributesRawExportsInner {
+    'requestPayload': RawExportAutomationRequest;
+}
+
+export interface JsonApiAutomationOutAttributesSchedule {
+    /**
+     * Cron expression defining the schedule of the automation. The format is SECOND MINUTE HOUR DAY-OF-MONTH MONTH DAY-OF-WEEK (YEAR). The example expression signifies an action every 30 minutes from 9:00 to 17:00 on workdays.
+     */
+    'cron': string;
+    /**
+     * Human-readable description of the cron expression.
+     */
+    'cronDescription'?: string;
+    /**
+     * Timestamp of the first scheduled action. If not provided default to the next scheduled time.
+     */
+    'firstRun'?: string;
+    /**
+     * Timezone in which the schedule is defined.
+     */
+    'timezone': string;
+}
+
+export interface JsonApiAutomationOutAttributesSlidesExportsInner {
+    'requestPayload': SlidesExportRequest;
+}
+
+export interface JsonApiAutomationOutAttributesTabularExportsInner {
+    'requestPayload': TabularExportRequest;
+}
+
+export interface JsonApiAutomationOutAttributesVisualExportsInner {
+    'requestPayload': VisualExportRequest;
+}
 
 export interface JsonApiAutomationOutDocument {
     'data': JsonApiAutomationOut;
-    'links'?: ObjectLinks;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiAutomationOutIncludes>;
+    'links'?: ObjectLinks;
 }
 
 /**
@@ -4665,36 +5251,94 @@ export type JsonApiAutomationOutIncludes = JsonApiAnalyticalDashboardOutWithLink
  */
 export interface JsonApiAutomationOutList {
     'data': Array<JsonApiAutomationOutWithLinks>;
-    'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiAutomationOutIncludes>;
+    'links'?: ListLinks;
+    'meta'?: JsonApiAutomationOutListMeta;
 }
 
+export interface JsonApiAutomationOutListMeta {
+    'page'?: PageMetadata;
+}
+
+export interface JsonApiAutomationOutMeta {
+    'origin'?: JsonApiAutomationOutMetaOrigin;
+}
+
+export interface JsonApiAutomationOutMetaOrigin {
+    /**
+     * defines id of the workspace where the entity comes from
+     */
+    'originId': string;
+    /**
+     * defines type of the origin of the entity
+     */
+    'originType': JsonApiAutomationOutMetaOriginOriginTypeEnum;
+}
+
+export type JsonApiAutomationOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
+
 export interface JsonApiAutomationOutRelationships {
-    'notificationChannel'?: JsonApiWorkspaceAutomationOutRelationshipsNotificationChannel;
-    'analyticalDashboard'?: JsonApiExportDefinitionOutRelationshipsAnalyticalDashboard;
-    'createdBy'?: JsonApiAgentOutRelationshipsCreatedBy;
-    'modifiedBy'?: JsonApiAgentOutRelationshipsCreatedBy;
-    'exportDefinitions'?: JsonApiWorkspaceAutomationOutRelationshipsExportDefinitions;
-    'recipients'?: JsonApiIpAllowlistPolicyOutRelationshipsUsers;
-    'automationResults'?: JsonApiWorkspaceAutomationOutRelationshipsAutomationResults;
+    'analyticalDashboard'?: JsonApiAutomationOutRelationshipsAnalyticalDashboard;
+    'automationResults'?: JsonApiAutomationOutRelationshipsAutomationResults;
+    'createdBy'?: JsonApiAutomationOutRelationshipsCreatedBy;
+    'exportDefinitions'?: JsonApiAutomationOutRelationshipsExportDefinitions;
+    'modifiedBy'?: JsonApiAutomationOutRelationshipsModifiedBy;
+    'notificationChannel'?: JsonApiAutomationOutRelationshipsNotificationChannel;
+    'recipients'?: JsonApiAutomationOutRelationshipsRecipients;
+}
+
+export interface JsonApiAutomationOutRelationshipsAnalyticalDashboard {
+    'data': JsonApiAnalyticalDashboardLinkage | null;
+}
+
+export interface JsonApiAutomationOutRelationshipsAutomationResults {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiAutomationResultLinkage>;
+}
+
+export interface JsonApiAutomationOutRelationshipsCreatedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+export interface JsonApiAutomationOutRelationshipsExportDefinitions {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiExportDefinitionLinkage>;
+}
+
+export interface JsonApiAutomationOutRelationshipsModifiedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+export interface JsonApiAutomationOutRelationshipsNotificationChannel {
+    'data': JsonApiNotificationChannelLinkage | null;
+}
+
+export interface JsonApiAutomationOutRelationshipsRecipients {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiUserLinkage>;
 }
 
 export interface JsonApiAutomationOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiAutomationOutWithLinksTypeEnum;
+    'attributes'?: JsonApiAutomationOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes'?: JsonApiAutomationOutAttributes;
+    'meta'?: JsonApiAutomationOutMeta;
     'relationships'?: JsonApiAutomationOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiAutomationOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -4704,22 +5348,162 @@ export type JsonApiAutomationOutWithLinksTypeEnum = 'automation';
  * JSON:API representation of patching automation entity.
  */
 export interface JsonApiAutomationPatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiAutomationPatchTypeEnum;
+    'attributes'?: JsonApiAutomationPatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiAutomationInAttributes;
-    'relationships'?: JsonApiAutomationInRelationships;
+    'relationships'?: JsonApiAutomationPatchRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiAutomationPatchTypeEnum;
 }
 
 export type JsonApiAutomationPatchTypeEnum = 'automation';
 
+export interface JsonApiAutomationPatchAttributes {
+    'alert'?: JsonApiAutomationPatchAttributesAlert;
+    'areRelationsValid'?: boolean;
+    'dashboardTabularExports'?: Array<JsonApiAutomationPatchAttributesDashboardTabularExportsInner>;
+    'description'?: string;
+    /**
+     * Additional details to be included in the automated message.
+     */
+    'details'?: object;
+    /**
+     * Specify automation evaluation mode.
+     */
+    'evaluationMode'?: JsonApiAutomationPatchAttributesEvaluationModeEnum;
+    /**
+     * External recipients of the automation action results.
+     */
+    'externalRecipients'?: Array<JsonApiAutomationPatchAttributesExternalRecipientsInner>;
+    'imageExports'?: Array<JsonApiAutomationPatchAttributesImageExportsInner>;
+    'metadata'?: JsonApiAutomationPatchAttributesMetadata | null;
+    'rawExports'?: Array<JsonApiAutomationPatchAttributesRawExportsInner>;
+    'schedule'?: JsonApiAutomationPatchAttributesSchedule;
+    'slidesExports'?: Array<JsonApiAutomationPatchAttributesSlidesExportsInner>;
+    /**
+     * Current state of the automation.
+     */
+    'state'?: JsonApiAutomationPatchAttributesStateEnum;
+    'tabularExports'?: Array<JsonApiAutomationPatchAttributesTabularExportsInner>;
+    'tags'?: Array<string>;
+    'title'?: string;
+    'visualExports'?: Array<JsonApiAutomationPatchAttributesVisualExportsInner>;
+}
+
+export type JsonApiAutomationPatchAttributesEvaluationModeEnum = 'SHARED' | 'PER_RECIPIENT';
+export type JsonApiAutomationPatchAttributesStateEnum = 'ACTIVE' | 'PAUSED';
+
+export interface JsonApiAutomationPatchAttributesAlert {
+    'condition': AlertCondition;
+    'execution': AlertAfm;
+    /**
+     * Date granularity for the interval of ONCE_PER_INTERVAL trigger. Supported granularities: DAY, WEEK, MONTH, QUARTER, YEAR.
+     */
+    'interval'?: JsonApiAutomationPatchAttributesAlertIntervalEnum;
+    /**
+     * Trigger behavior for the alert. ALWAYS - alert is triggered every time the condition is met. ONCE - alert is triggered only once when the condition is met. ONCE_PER_INTERVAL - alert is triggered when the condition is met, then suppressed for the interval. If no interval is specified, it behaves as ALWAYS. 
+     */
+    'trigger'?: JsonApiAutomationPatchAttributesAlertTriggerEnum;
+}
+
+export type JsonApiAutomationPatchAttributesAlertIntervalEnum = 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR';
+export type JsonApiAutomationPatchAttributesAlertTriggerEnum = 'ALWAYS' | 'ONCE' | 'ONCE_PER_INTERVAL';
+
+export interface JsonApiAutomationPatchAttributesDashboardTabularExportsInner {
+    'requestPayload': DashboardTabularExportRequestV2;
+}
+
+export interface JsonApiAutomationPatchAttributesExternalRecipientsInner {
+    /**
+     * E-mail address to send notifications from.
+     */
+    'email': string;
+}
+
+export interface JsonApiAutomationPatchAttributesImageExportsInner {
+    'requestPayload': ImageExportRequest;
+}
+
+/**
+ * Additional information for the automation.
+ */
+export interface JsonApiAutomationPatchAttributesMetadata {
+    [key: string]: any;
+
+    'visibleFilters'?: Array<VisibleFilter>;
+    'widget'?: string;
+}
+
+export interface JsonApiAutomationPatchAttributesRawExportsInner {
+    'requestPayload': RawExportAutomationRequest;
+}
+
+export interface JsonApiAutomationPatchAttributesSchedule {
+    /**
+     * Cron expression defining the schedule of the automation. The format is SECOND MINUTE HOUR DAY-OF-MONTH MONTH DAY-OF-WEEK (YEAR). The example expression signifies an action every 30 minutes from 9:00 to 17:00 on workdays.
+     */
+    'cron': string;
+    /**
+     * Human-readable description of the cron expression.
+     */
+    'cronDescription'?: string;
+    /**
+     * Timestamp of the first scheduled action. If not provided default to the next scheduled time.
+     */
+    'firstRun'?: string;
+    /**
+     * Timezone in which the schedule is defined.
+     */
+    'timezone': string;
+}
+
+export interface JsonApiAutomationPatchAttributesSlidesExportsInner {
+    'requestPayload': SlidesExportRequest;
+}
+
+export interface JsonApiAutomationPatchAttributesTabularExportsInner {
+    'requestPayload': TabularExportRequest;
+}
+
+export interface JsonApiAutomationPatchAttributesVisualExportsInner {
+    'requestPayload': VisualExportRequest;
+}
+
 export interface JsonApiAutomationPatchDocument {
     'data': JsonApiAutomationPatch;
+}
+
+export interface JsonApiAutomationPatchRelationships {
+    'analyticalDashboard'?: JsonApiAutomationPatchRelationshipsAnalyticalDashboard;
+    'exportDefinitions'?: JsonApiAutomationPatchRelationshipsExportDefinitions;
+    'notificationChannel'?: JsonApiAutomationPatchRelationshipsNotificationChannel;
+    'recipients'?: JsonApiAutomationPatchRelationshipsRecipients;
+}
+
+export interface JsonApiAutomationPatchRelationshipsAnalyticalDashboard {
+    'data': JsonApiAnalyticalDashboardLinkage | null;
+}
+
+export interface JsonApiAutomationPatchRelationshipsExportDefinitions {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiExportDefinitionLinkage>;
+}
+
+export interface JsonApiAutomationPatchRelationshipsNotificationChannel {
+    'data': JsonApiNotificationChannelLinkage | null;
+}
+
+export interface JsonApiAutomationPatchRelationshipsRecipients {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiUserLinkage>;
 }
 
 /**
@@ -4736,31 +5520,31 @@ export type JsonApiAutomationResultLinkageTypeEnum = 'automationResult';
  * JSON:API representation of automationResult entity.
  */
 export interface JsonApiAutomationResultOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiAutomationResultOutTypeEnum;
+    'attributes': JsonApiAutomationResultOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiAutomationResultOutAttributes;
     'relationships'?: JsonApiAutomationResultOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiAutomationResultOutTypeEnum;
 }
 
 export type JsonApiAutomationResultOutTypeEnum = 'automationResult';
 
 export interface JsonApiAutomationResultOutAttributes {
-    /**
-     * Status of the last automation run.
-     */
-    'status': JsonApiAutomationResultOutAttributesStatusEnum;
+    'errorMessage'?: string;
     /**
      * Timestamp of the last automation run.
      */
     'executedAt': string;
+    /**
+     * Status of the last automation run.
+     */
+    'status': JsonApiAutomationResultOutAttributesStatusEnum;
     'traceId'?: string;
-    'errorMessage'?: string;
 }
 
 export type JsonApiAutomationResultOutAttributesStatusEnum = 'SUCCESS' | 'FAILED';
@@ -4770,12 +5554,16 @@ export type JsonApiAutomationResultOutAttributesStatusEnum = 'SUCCESS' | 'FAILED
  */
 export interface JsonApiAutomationResultOutList {
     'data': Array<JsonApiAutomationResultOutWithLinks>;
-    'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiAutomationOutWithLinks>;
+    'links'?: ListLinks;
+    'meta'?: JsonApiAutomationResultOutListMeta;
+}
+
+export interface JsonApiAutomationResultOutListMeta {
+    'page'?: PageMetadata;
 }
 
 export interface JsonApiAutomationResultOutRelationships {
@@ -4787,16 +5575,16 @@ export interface JsonApiAutomationResultOutRelationshipsAutomation {
 }
 
 export interface JsonApiAutomationResultOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiAutomationResultOutWithLinksTypeEnum;
+    'attributes': JsonApiAutomationResultOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiAutomationResultOutAttributes;
     'relationships'?: JsonApiAutomationResultOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiAutomationResultOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -4806,25 +5594,25 @@ export type JsonApiAutomationResultOutWithLinksTypeEnum = 'automationResult';
  * JSON:API representation of colorPalette entity.
  */
 export interface JsonApiColorPaletteIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiColorPaletteInTypeEnum;
+    'attributes': JsonApiColorPaletteInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiColorPaletteInAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiColorPaletteInTypeEnum;
 }
 
 export type JsonApiColorPaletteInTypeEnum = 'colorPalette';
 
 export interface JsonApiColorPaletteInAttributes {
-    'name': string;
     /**
      * Free-form JSON content. Maximum supported length is 15000 characters.
      */
     'content': object;
+    'name': string;
 }
 
 export interface JsonApiColorPaletteInDocument {
@@ -4835,18 +5623,26 @@ export interface JsonApiColorPaletteInDocument {
  * JSON:API representation of colorPalette entity.
  */
 export interface JsonApiColorPaletteOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiColorPaletteOutTypeEnum;
+    'attributes': JsonApiColorPaletteOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiColorPaletteInAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiColorPaletteOutTypeEnum;
 }
 
 export type JsonApiColorPaletteOutTypeEnum = 'colorPalette';
+
+export interface JsonApiColorPaletteOutAttributes {
+    /**
+     * Free-form JSON content. Maximum supported length is 15000 characters.
+     */
+    'content': object;
+    'name': string;
+}
 
 export interface JsonApiColorPaletteOutDocument {
     'data': JsonApiColorPaletteOut;
@@ -4859,19 +5655,23 @@ export interface JsonApiColorPaletteOutDocument {
 export interface JsonApiColorPaletteOutList {
     'data': Array<JsonApiColorPaletteOutWithLinks>;
     'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
+}
+
+export interface JsonApiColorPaletteOutListMeta {
+    'page'?: PageMetadata;
 }
 
 export interface JsonApiColorPaletteOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiColorPaletteOutWithLinksTypeEnum;
+    'attributes': JsonApiColorPaletteOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiColorPaletteInAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiColorPaletteOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -4881,25 +5681,25 @@ export type JsonApiColorPaletteOutWithLinksTypeEnum = 'colorPalette';
  * JSON:API representation of patching colorPalette entity.
  */
 export interface JsonApiColorPalettePatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiColorPalettePatchTypeEnum;
+    'attributes': JsonApiColorPalettePatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiColorPalettePatchAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiColorPalettePatchTypeEnum;
 }
 
 export type JsonApiColorPalettePatchTypeEnum = 'colorPalette';
 
 export interface JsonApiColorPalettePatchAttributes {
-    'name'?: string;
     /**
      * Free-form JSON content. Maximum supported length is 15000 characters.
      */
     'content'?: object;
+    'name'?: string;
 }
 
 export interface JsonApiColorPalettePatchDocument {
@@ -4910,18 +5710,26 @@ export interface JsonApiColorPalettePatchDocument {
  * JSON:API representation of cookieSecurityConfiguration entity.
  */
 export interface JsonApiCookieSecurityConfigurationIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiCookieSecurityConfigurationInTypeEnum;
+    'attributes'?: JsonApiCookieSecurityConfigurationInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiCookieSecurityConfigurationPatchAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiCookieSecurityConfigurationInTypeEnum;
 }
 
 export type JsonApiCookieSecurityConfigurationInTypeEnum = 'cookieSecurityConfiguration';
+
+export interface JsonApiCookieSecurityConfigurationInAttributes {
+    'lastRotation'?: string;
+    /**
+     * Length of interval between automatic rotations expressed in format of ISO 8601 duration
+     */
+    'rotationInterval'?: string;
+}
 
 export interface JsonApiCookieSecurityConfigurationInDocument {
     'data': JsonApiCookieSecurityConfigurationIn;
@@ -4931,18 +5739,26 @@ export interface JsonApiCookieSecurityConfigurationInDocument {
  * JSON:API representation of cookieSecurityConfiguration entity.
  */
 export interface JsonApiCookieSecurityConfigurationOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiCookieSecurityConfigurationOutTypeEnum;
+    'attributes'?: JsonApiCookieSecurityConfigurationOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiCookieSecurityConfigurationPatchAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiCookieSecurityConfigurationOutTypeEnum;
 }
 
 export type JsonApiCookieSecurityConfigurationOutTypeEnum = 'cookieSecurityConfiguration';
+
+export interface JsonApiCookieSecurityConfigurationOutAttributes {
+    'lastRotation'?: string;
+    /**
+     * Length of interval between automatic rotations expressed in format of ISO 8601 duration
+     */
+    'rotationInterval'?: string;
+}
 
 export interface JsonApiCookieSecurityConfigurationOutDocument {
     'data': JsonApiCookieSecurityConfigurationOut;
@@ -4953,15 +5769,15 @@ export interface JsonApiCookieSecurityConfigurationOutDocument {
  * JSON:API representation of patching cookieSecurityConfiguration entity.
  */
 export interface JsonApiCookieSecurityConfigurationPatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiCookieSecurityConfigurationPatchTypeEnum;
+    'attributes'?: JsonApiCookieSecurityConfigurationPatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiCookieSecurityConfigurationPatchAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiCookieSecurityConfigurationPatchTypeEnum;
 }
 
 export type JsonApiCookieSecurityConfigurationPatchTypeEnum = 'cookieSecurityConfiguration';
@@ -4982,15 +5798,15 @@ export interface JsonApiCookieSecurityConfigurationPatchDocument {
  * JSON:API representation of cspDirective entity.
  */
 export interface JsonApiCspDirectiveIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiCspDirectiveInTypeEnum;
+    'attributes': JsonApiCspDirectiveInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiCspDirectiveInAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiCspDirectiveInTypeEnum;
 }
 
 export type JsonApiCspDirectiveInTypeEnum = 'cspDirective';
@@ -5007,18 +5823,22 @@ export interface JsonApiCspDirectiveInDocument {
  * JSON:API representation of cspDirective entity.
  */
 export interface JsonApiCspDirectiveOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiCspDirectiveOutTypeEnum;
+    'attributes': JsonApiCspDirectiveOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiCspDirectiveInAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiCspDirectiveOutTypeEnum;
 }
 
 export type JsonApiCspDirectiveOutTypeEnum = 'cspDirective';
+
+export interface JsonApiCspDirectiveOutAttributes {
+    'sources': Array<string>;
+}
 
 export interface JsonApiCspDirectiveOutDocument {
     'data': JsonApiCspDirectiveOut;
@@ -5031,19 +5851,23 @@ export interface JsonApiCspDirectiveOutDocument {
 export interface JsonApiCspDirectiveOutList {
     'data': Array<JsonApiCspDirectiveOutWithLinks>;
     'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
+    'meta'?: JsonApiCspDirectiveOutListMeta;
+}
+
+export interface JsonApiCspDirectiveOutListMeta {
+    'page'?: PageMetadata;
 }
 
 export interface JsonApiCspDirectiveOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiCspDirectiveOutWithLinksTypeEnum;
+    'attributes': JsonApiCspDirectiveOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiCspDirectiveInAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiCspDirectiveOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -5053,15 +5877,15 @@ export type JsonApiCspDirectiveOutWithLinksTypeEnum = 'cspDirective';
  * JSON:API representation of patching cspDirective entity.
  */
 export interface JsonApiCspDirectivePatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiCspDirectivePatchTypeEnum;
+    'attributes': JsonApiCspDirectivePatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiCspDirectivePatchAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiCspDirectivePatchTypeEnum;
 }
 
 export type JsonApiCspDirectivePatchTypeEnum = 'cspDirective';
@@ -5078,18 +5902,26 @@ export interface JsonApiCspDirectivePatchDocument {
  * JSON:API representation of customApplicationSetting entity.
  */
 export interface JsonApiCustomApplicationSettingIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiCustomApplicationSettingInTypeEnum;
+    'attributes': JsonApiCustomApplicationSettingInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiCustomApplicationSettingPostOptionalIdAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiCustomApplicationSettingInTypeEnum;
 }
 
 export type JsonApiCustomApplicationSettingInTypeEnum = 'customApplicationSetting';
+
+export interface JsonApiCustomApplicationSettingInAttributes {
+    'applicationName': string;
+    /**
+     * Free-form JSON content. Maximum supported length is 250000 characters.
+     */
+    'content': object;
+}
 
 export interface JsonApiCustomApplicationSettingInDocument {
     'data': JsonApiCustomApplicationSettingIn;
@@ -5099,19 +5931,27 @@ export interface JsonApiCustomApplicationSettingInDocument {
  * JSON:API representation of customApplicationSetting entity.
  */
 export interface JsonApiCustomApplicationSettingOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiCustomApplicationSettingOutTypeEnum;
+    'attributes': JsonApiCustomApplicationSettingOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes': JsonApiCustomApplicationSettingPostOptionalIdAttributes;
+    'meta'?: JsonApiCustomApplicationSettingOutMeta;
+    /**
+     * Object type
+     */
+    'type': JsonApiCustomApplicationSettingOutTypeEnum;
 }
 
 export type JsonApiCustomApplicationSettingOutTypeEnum = 'customApplicationSetting';
+
+export interface JsonApiCustomApplicationSettingOutAttributes {
+    'applicationName': string;
+    /**
+     * Free-form JSON content. Maximum supported length is 250000 characters.
+     */
+    'content': object;
+}
 
 export interface JsonApiCustomApplicationSettingOutDocument {
     'data': JsonApiCustomApplicationSettingOut;
@@ -5124,20 +5964,41 @@ export interface JsonApiCustomApplicationSettingOutDocument {
 export interface JsonApiCustomApplicationSettingOutList {
     'data': Array<JsonApiCustomApplicationSettingOutWithLinks>;
     'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
+    'meta'?: JsonApiCustomApplicationSettingOutListMeta;
 }
 
-export interface JsonApiCustomApplicationSettingOutWithLinks {
+export interface JsonApiCustomApplicationSettingOutListMeta {
+    'page'?: PageMetadata;
+}
+
+export interface JsonApiCustomApplicationSettingOutMeta {
+    'origin'?: JsonApiCustomApplicationSettingOutMetaOrigin;
+}
+
+export interface JsonApiCustomApplicationSettingOutMetaOrigin {
     /**
-     * Object type
+     * defines id of the workspace where the entity comes from
      */
-    'type': JsonApiCustomApplicationSettingOutWithLinksTypeEnum;
+    'originId': string;
+    /**
+     * defines type of the origin of the entity
+     */
+    'originType': JsonApiCustomApplicationSettingOutMetaOriginOriginTypeEnum;
+}
+
+export type JsonApiCustomApplicationSettingOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
+
+export interface JsonApiCustomApplicationSettingOutWithLinks {
+    'attributes': JsonApiCustomApplicationSettingOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes': JsonApiCustomApplicationSettingPostOptionalIdAttributes;
+    'meta'?: JsonApiCustomApplicationSettingOutMeta;
+    /**
+     * Object type
+     */
+    'type': JsonApiCustomApplicationSettingOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -5147,15 +6008,15 @@ export type JsonApiCustomApplicationSettingOutWithLinksTypeEnum = 'customApplica
  * JSON:API representation of patching customApplicationSetting entity.
  */
 export interface JsonApiCustomApplicationSettingPatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiCustomApplicationSettingPatchTypeEnum;
+    'attributes': JsonApiCustomApplicationSettingPatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiCustomApplicationSettingPatchAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiCustomApplicationSettingPatchTypeEnum;
 }
 
 export type JsonApiCustomApplicationSettingPatchTypeEnum = 'customApplicationSetting';
@@ -5176,15 +6037,15 @@ export interface JsonApiCustomApplicationSettingPatchDocument {
  * JSON:API representation of customApplicationSetting entity.
  */
 export interface JsonApiCustomApplicationSettingPostOptionalId {
-    /**
-     * Object type
-     */
-    'type': JsonApiCustomApplicationSettingPostOptionalIdTypeEnum;
+    'attributes': JsonApiCustomApplicationSettingPostOptionalIdAttributes;
     /**
      * API identifier of an object
      */
     'id'?: string;
-    'attributes': JsonApiCustomApplicationSettingPostOptionalIdAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiCustomApplicationSettingPostOptionalIdTypeEnum;
 }
 
 export type JsonApiCustomApplicationSettingPostOptionalIdTypeEnum = 'customApplicationSetting';
@@ -5205,22 +6066,22 @@ export interface JsonApiCustomApplicationSettingPostOptionalIdDocument {
  * JSON:API representation of customGeoCollection entity.
  */
 export interface JsonApiCustomGeoCollectionIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiCustomGeoCollectionInTypeEnum;
+    'attributes'?: JsonApiCustomGeoCollectionInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiCustomGeoCollectionInAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiCustomGeoCollectionInTypeEnum;
 }
 
 export type JsonApiCustomGeoCollectionInTypeEnum = 'customGeoCollection';
 
 export interface JsonApiCustomGeoCollectionInAttributes {
-    'name'?: string | null;
     'description'?: string | null;
+    'name'?: string | null;
 }
 
 export interface JsonApiCustomGeoCollectionInDocument {
@@ -5231,18 +6092,23 @@ export interface JsonApiCustomGeoCollectionInDocument {
  * JSON:API representation of customGeoCollection entity.
  */
 export interface JsonApiCustomGeoCollectionOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiCustomGeoCollectionOutTypeEnum;
+    'attributes'?: JsonApiCustomGeoCollectionOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiCustomGeoCollectionInAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiCustomGeoCollectionOutTypeEnum;
 }
 
 export type JsonApiCustomGeoCollectionOutTypeEnum = 'customGeoCollection';
+
+export interface JsonApiCustomGeoCollectionOutAttributes {
+    'description'?: string | null;
+    'name'?: string | null;
+}
 
 export interface JsonApiCustomGeoCollectionOutDocument {
     'data': JsonApiCustomGeoCollectionOut;
@@ -5255,19 +6121,23 @@ export interface JsonApiCustomGeoCollectionOutDocument {
 export interface JsonApiCustomGeoCollectionOutList {
     'data': Array<JsonApiCustomGeoCollectionOutWithLinks>;
     'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
+    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+}
+
+export interface JsonApiCustomGeoCollectionOutListMeta {
+    'page'?: PageMetadata;
 }
 
 export interface JsonApiCustomGeoCollectionOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiCustomGeoCollectionOutWithLinksTypeEnum;
+    'attributes'?: JsonApiCustomGeoCollectionOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiCustomGeoCollectionInAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiCustomGeoCollectionOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -5277,18 +6147,23 @@ export type JsonApiCustomGeoCollectionOutWithLinksTypeEnum = 'customGeoCollectio
  * JSON:API representation of patching customGeoCollection entity.
  */
 export interface JsonApiCustomGeoCollectionPatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiCustomGeoCollectionPatchTypeEnum;
+    'attributes'?: JsonApiCustomGeoCollectionPatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiCustomGeoCollectionInAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiCustomGeoCollectionPatchTypeEnum;
 }
 
 export type JsonApiCustomGeoCollectionPatchTypeEnum = 'customGeoCollection';
+
+export interface JsonApiCustomGeoCollectionPatchAttributes {
+    'description'?: string | null;
+    'name'?: string | null;
+}
 
 export interface JsonApiCustomGeoCollectionPatchDocument {
     'data': JsonApiCustomGeoCollectionPatch;
@@ -5298,18 +6173,30 @@ export interface JsonApiCustomGeoCollectionPatchDocument {
  * JSON:API representation of customUserApplicationSetting entity.
  */
 export interface JsonApiCustomUserApplicationSettingIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiCustomUserApplicationSettingInTypeEnum;
+    'attributes': JsonApiCustomUserApplicationSettingInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiCustomUserApplicationSettingPostOptionalIdAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiCustomUserApplicationSettingInTypeEnum;
 }
 
 export type JsonApiCustomUserApplicationSettingInTypeEnum = 'customUserApplicationSetting';
+
+export interface JsonApiCustomUserApplicationSettingInAttributes {
+    'applicationName': string;
+    /**
+     * Free-form JSON content. Maximum supported length is 250000 characters.
+     */
+    'content': object;
+    /**
+     * Workspace scope for this setting. Must reference an existing workspace the caller has at least VIEW access to. Null means user-level (no workspace scope).
+     */
+    'workspaceId'?: string | null;
+}
 
 export interface JsonApiCustomUserApplicationSettingInDocument {
     'data': JsonApiCustomUserApplicationSettingIn;
@@ -5319,18 +6206,30 @@ export interface JsonApiCustomUserApplicationSettingInDocument {
  * JSON:API representation of customUserApplicationSetting entity.
  */
 export interface JsonApiCustomUserApplicationSettingOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiCustomUserApplicationSettingOutTypeEnum;
+    'attributes': JsonApiCustomUserApplicationSettingOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiCustomUserApplicationSettingPostOptionalIdAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiCustomUserApplicationSettingOutTypeEnum;
 }
 
 export type JsonApiCustomUserApplicationSettingOutTypeEnum = 'customUserApplicationSetting';
+
+export interface JsonApiCustomUserApplicationSettingOutAttributes {
+    'applicationName': string;
+    /**
+     * Free-form JSON content. Maximum supported length is 250000 characters.
+     */
+    'content': object;
+    /**
+     * Workspace scope for this setting. Must reference an existing workspace the caller has at least VIEW access to. Null means user-level (no workspace scope).
+     */
+    'workspaceId'?: string | null;
+}
 
 export interface JsonApiCustomUserApplicationSettingOutDocument {
     'data': JsonApiCustomUserApplicationSettingOut;
@@ -5343,19 +6242,23 @@ export interface JsonApiCustomUserApplicationSettingOutDocument {
 export interface JsonApiCustomUserApplicationSettingOutList {
     'data': Array<JsonApiCustomUserApplicationSettingOutWithLinks>;
     'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
+    'meta'?: JsonApiCustomUserApplicationSettingOutListMeta;
+}
+
+export interface JsonApiCustomUserApplicationSettingOutListMeta {
+    'page'?: PageMetadata;
 }
 
 export interface JsonApiCustomUserApplicationSettingOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiCustomUserApplicationSettingOutWithLinksTypeEnum;
+    'attributes': JsonApiCustomUserApplicationSettingOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiCustomUserApplicationSettingPostOptionalIdAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiCustomUserApplicationSettingOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -5365,15 +6268,15 @@ export type JsonApiCustomUserApplicationSettingOutWithLinksTypeEnum = 'customUse
  * JSON:API representation of customUserApplicationSetting entity.
  */
 export interface JsonApiCustomUserApplicationSettingPostOptionalId {
-    /**
-     * Object type
-     */
-    'type': JsonApiCustomUserApplicationSettingPostOptionalIdTypeEnum;
+    'attributes': JsonApiCustomUserApplicationSettingPostOptionalIdAttributes;
     /**
      * API identifier of an object
      */
     'id'?: string;
-    'attributes': JsonApiCustomUserApplicationSettingPostOptionalIdAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiCustomUserApplicationSettingPostOptionalIdTypeEnum;
 }
 
 export type JsonApiCustomUserApplicationSettingPostOptionalIdTypeEnum = 'customUserApplicationSetting';
@@ -5398,18 +6301,29 @@ export interface JsonApiCustomUserApplicationSettingPostOptionalIdDocument {
  * JSON:API representation of dashboardPlugin entity.
  */
 export interface JsonApiDashboardPluginIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiDashboardPluginInTypeEnum;
+    'attributes'?: JsonApiDashboardPluginInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiDashboardPluginPostOptionalIdAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiDashboardPluginInTypeEnum;
 }
 
 export type JsonApiDashboardPluginInTypeEnum = 'dashboardPlugin';
+
+export interface JsonApiDashboardPluginInAttributes {
+    'areRelationsValid'?: boolean;
+    /**
+     * Free-form JSON content. Maximum supported length is 250000 characters.
+     */
+    'content'?: object;
+    'description'?: string;
+    'tags'?: Array<string>;
+    'title'?: string;
+}
 
 export interface JsonApiDashboardPluginInDocument {
     'data': JsonApiDashboardPluginIn;
@@ -5429,47 +6343,47 @@ export type JsonApiDashboardPluginLinkageTypeEnum = 'dashboardPlugin';
  * JSON:API representation of dashboardPlugin entity.
  */
 export interface JsonApiDashboardPluginOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiDashboardPluginOutTypeEnum;
+    'attributes'?: JsonApiDashboardPluginOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes'?: JsonApiDashboardPluginOutAttributes;
-    'relationships'?: JsonApiOrgMemoryItemOutRelationships;
+    'meta'?: JsonApiDashboardPluginOutMeta;
+    'relationships'?: JsonApiDashboardPluginOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiDashboardPluginOutTypeEnum;
 }
 
 export type JsonApiDashboardPluginOutTypeEnum = 'dashboardPlugin';
 
 export interface JsonApiDashboardPluginOutAttributes {
-    'title'?: string;
-    'description'?: string;
-    'tags'?: Array<string>;
     'areRelationsValid'?: boolean;
-    /**
-     * Time of the entity creation.
-     */
-    'createdAt'?: string | null;
-    /**
-     * Time of the last entity modification.
-     */
-    'modifiedAt'?: string | null;
     /**
      * Free-form JSON content. Maximum supported length is 250000 characters.
      */
     'content'?: object;
+    /**
+     * Time of the entity creation.
+     */
+    'createdAt'?: string | null;
+    'description'?: string;
+    /**
+     * Time of the last entity modification.
+     */
+    'modifiedAt'?: string | null;
+    'tags'?: Array<string>;
+    'title'?: string;
 }
 
 export interface JsonApiDashboardPluginOutDocument {
     'data': JsonApiDashboardPluginOut;
-    'links'?: ObjectLinks;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
+    'links'?: ObjectLinks;
 }
 
 /**
@@ -5477,26 +6391,60 @@ export interface JsonApiDashboardPluginOutDocument {
  */
 export interface JsonApiDashboardPluginOutList {
     'data': Array<JsonApiDashboardPluginOutWithLinks>;
-    'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
+    'links'?: ListLinks;
+    'meta'?: JsonApiDashboardPluginOutListMeta;
+}
+
+export interface JsonApiDashboardPluginOutListMeta {
+    'page'?: PageMetadata;
+}
+
+export interface JsonApiDashboardPluginOutMeta {
+    'origin'?: JsonApiDashboardPluginOutMetaOrigin;
+}
+
+export interface JsonApiDashboardPluginOutMetaOrigin {
+    /**
+     * defines id of the workspace where the entity comes from
+     */
+    'originId': string;
+    /**
+     * defines type of the origin of the entity
+     */
+    'originType': JsonApiDashboardPluginOutMetaOriginOriginTypeEnum;
+}
+
+export type JsonApiDashboardPluginOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
+
+export interface JsonApiDashboardPluginOutRelationships {
+    'createdBy'?: JsonApiDashboardPluginOutRelationshipsCreatedBy;
+    'modifiedBy'?: JsonApiDashboardPluginOutRelationshipsModifiedBy;
+}
+
+export interface JsonApiDashboardPluginOutRelationshipsCreatedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+export interface JsonApiDashboardPluginOutRelationshipsModifiedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
 }
 
 export interface JsonApiDashboardPluginOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiDashboardPluginOutWithLinksTypeEnum;
+    'attributes'?: JsonApiDashboardPluginOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes'?: JsonApiDashboardPluginOutAttributes;
-    'relationships'?: JsonApiOrgMemoryItemOutRelationships;
+    'meta'?: JsonApiDashboardPluginOutMeta;
+    'relationships'?: JsonApiDashboardPluginOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiDashboardPluginOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -5506,18 +6454,29 @@ export type JsonApiDashboardPluginOutWithLinksTypeEnum = 'dashboardPlugin';
  * JSON:API representation of patching dashboardPlugin entity.
  */
 export interface JsonApiDashboardPluginPatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiDashboardPluginPatchTypeEnum;
+    'attributes'?: JsonApiDashboardPluginPatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiDashboardPluginPostOptionalIdAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiDashboardPluginPatchTypeEnum;
 }
 
 export type JsonApiDashboardPluginPatchTypeEnum = 'dashboardPlugin';
+
+export interface JsonApiDashboardPluginPatchAttributes {
+    'areRelationsValid'?: boolean;
+    /**
+     * Free-form JSON content. Maximum supported length is 250000 characters.
+     */
+    'content'?: object;
+    'description'?: string;
+    'tags'?: Array<string>;
+    'title'?: string;
+}
 
 export interface JsonApiDashboardPluginPatchDocument {
     'data': JsonApiDashboardPluginPatch;
@@ -5527,28 +6486,28 @@ export interface JsonApiDashboardPluginPatchDocument {
  * JSON:API representation of dashboardPlugin entity.
  */
 export interface JsonApiDashboardPluginPostOptionalId {
-    /**
-     * Object type
-     */
-    'type': JsonApiDashboardPluginPostOptionalIdTypeEnum;
+    'attributes'?: JsonApiDashboardPluginPostOptionalIdAttributes;
     /**
      * API identifier of an object
      */
     'id'?: string;
-    'attributes'?: JsonApiDashboardPluginPostOptionalIdAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiDashboardPluginPostOptionalIdTypeEnum;
 }
 
 export type JsonApiDashboardPluginPostOptionalIdTypeEnum = 'dashboardPlugin';
 
 export interface JsonApiDashboardPluginPostOptionalIdAttributes {
-    'title'?: string;
-    'description'?: string;
-    'tags'?: Array<string>;
     'areRelationsValid'?: boolean;
     /**
      * Free-form JSON content. Maximum supported length is 250000 characters.
      */
     'content'?: object;
+    'description'?: string;
+    'tags'?: Array<string>;
+    'title'?: string;
 }
 
 export interface JsonApiDashboardPluginPostOptionalIdDocument {
@@ -5559,16 +6518,16 @@ export interface JsonApiDashboardPluginPostOptionalIdDocument {
  * JSON:API representation of dataSourceIdentifier entity.
  */
 export interface JsonApiDataSourceIdentifierOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiDataSourceIdentifierOutTypeEnum;
+    'attributes': JsonApiDataSourceIdentifierOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
     'meta'?: JsonApiDataSourceIdentifierOutMeta;
-    'attributes': JsonApiDataSourceIdentifierOutAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiDataSourceIdentifierOutTypeEnum;
 }
 
 export type JsonApiDataSourceIdentifierOutTypeEnum = 'dataSourceIdentifier';
@@ -5592,7 +6551,11 @@ export interface JsonApiDataSourceIdentifierOutDocument {
 export interface JsonApiDataSourceIdentifierOutList {
     'data': Array<JsonApiDataSourceIdentifierOutWithLinks>;
     'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
+    'meta'?: JsonApiDataSourceIdentifierOutListMeta;
+}
+
+export interface JsonApiDataSourceIdentifierOutListMeta {
+    'page'?: PageMetadata;
 }
 
 export interface JsonApiDataSourceIdentifierOutMeta {
@@ -5605,16 +6568,16 @@ export interface JsonApiDataSourceIdentifierOutMeta {
 export type JsonApiDataSourceIdentifierOutMetaPermissionsEnum = 'MANAGE' | 'USE';
 
 export interface JsonApiDataSourceIdentifierOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiDataSourceIdentifierOutWithLinksTypeEnum;
+    'attributes': JsonApiDataSourceIdentifierOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
     'meta'?: JsonApiDataSourceIdentifierOutMeta;
-    'attributes': JsonApiDataSourceIdentifierOutAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiDataSourceIdentifierOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -5624,40 +6587,53 @@ export type JsonApiDataSourceIdentifierOutWithLinksTypeEnum = 'dataSourceIdentif
  * JSON:API representation of dataSource entity.
  */
 export interface JsonApiDataSourceIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiDataSourceInTypeEnum;
+    'attributes': JsonApiDataSourceInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiDataSourceInAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiDataSourceInTypeEnum;
 }
 
 export type JsonApiDataSourceInTypeEnum = 'dataSource';
 
 export interface JsonApiDataSourceInAttributes {
     /**
+     * Alternative data source ID. It is a weak reference meaning data source does not have to exist. All the entities (e.g. tables) from the data source must be available also in the alternative data source. It must be present in the same organization as the data source.
+     */
+    'alternativeDataSourceId'?: string | null;
+    /**
+     * Type of authentication used to connect to the database.
+     */
+    'authenticationType'?: JsonApiDataSourceInAttributesAuthenticationTypeEnum | null;
+    'cacheRetention'?: JsonApiDataSourceInAttributesCacheRetention | null;
+    /**
+     * Determines how the results coming from a particular datasource should be cached.
+     */
+    'cacheStrategy'?: JsonApiDataSourceInAttributesCacheStrategyEnum | null;
+    /**
+     * The client id to use to connect to the database providing the data for the data source (for example a Databricks Service Account).
+     */
+    'clientId'?: string | null;
+    /**
+     * The client secret to use to connect to the database providing the data for the data source (for example a Databricks Service Account).
+     */
+    'clientSecret'?: string | null;
+    /**
+     * Determines how datetime values are interpreted in data sources without native support for specifying this. Only StarRocks and AI Lakehouse data sources currently support this.
+     */
+    'dateTimeSemantics'?: JsonApiDataSourceInAttributesDateTimeSemanticsEnum | null;
+    /**
      * User-facing name of the data source.
      */
     'name': string;
     /**
-     * Type of the database providing the data for the data source.
+     * Additional parameters to be used when connecting to the database providing the data for the data source.
      */
-    'type': JsonApiDataSourceInAttributesTypeEnum;
-    /**
-     * The URL of the database providing the data for the data source.
-     */
-    'url'?: string | null;
-    /**
-     * The schema to use as the root of the data for the data source.
-     */
-    'schema': string;
-    /**
-     * The username to use to connect to the database providing the data for the data source.
-     */
-    'username'?: string | null;
+    'parameters'?: Array<JsonApiDataSourceInAttributesParametersInner> | null;
     /**
      * The password to use to connect to the database providing the data for the data source.
      */
@@ -5671,43 +6647,42 @@ export interface JsonApiDataSourceInAttributes {
      */
     'privateKeyPassphrase'?: string | null;
     /**
+     * The schema to use as the root of the data for the data source.
+     */
+    'schema': string;
+    /**
      * The token to use to connect to the database providing the data for the data source (for example a BigQuery Service Account).
      */
     'token'?: string | null;
     /**
-     * The client id to use to connect to the database providing the data for the data source (for example a Databricks Service Account).
+     * Type of the database providing the data for the data source.
      */
-    'clientId'?: string | null;
+    'type': JsonApiDataSourceInAttributesTypeEnum;
     /**
-     * The client secret to use to connect to the database providing the data for the data source (for example a Databricks Service Account).
+     * The URL of the database providing the data for the data source.
      */
-    'clientSecret'?: string | null;
+    'url'?: string | null;
     /**
-     * Additional parameters to be used when connecting to the database providing the data for the data source.
+     * The username to use to connect to the database providing the data for the data source.
      */
-    'parameters'?: Array<JsonApiDataSourceOutAttributesParametersInner> | null;
-    /**
-     * Determines how the results coming from a particular datasource should be cached.
-     */
-    'cacheStrategy'?: JsonApiDataSourceInAttributesCacheStrategyEnum | null;
-    /**
-     * Type of authentication used to connect to the database.
-     */
-    'authenticationType'?: JsonApiDataSourceInAttributesAuthenticationTypeEnum | null;
-    /**
-     * Alternative data source ID. It is a weak reference meaning data source does not have to exist. All the entities (e.g. tables) from the data source must be available also in the alternative data source. It must be present in the same organization as the data source.
-     */
-    'alternativeDataSourceId'?: string | null;
-    /**
-     * Determines how datetime values are interpreted in data sources without native support for specifying this. Only StarRocks and AI Lakehouse data sources currently support this.
-     */
-    'dateTimeSemantics'?: JsonApiDataSourceInAttributesDateTimeSemanticsEnum | null;
+    'username'?: string | null;
 }
 
-export type JsonApiDataSourceInAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'GREENPLUM' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
-export type JsonApiDataSourceInAttributesCacheStrategyEnum = 'ALWAYS' | 'NEVER';
 export type JsonApiDataSourceInAttributesAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'OIDC_PASSTHROUGH';
+export type JsonApiDataSourceInAttributesCacheStrategyEnum = 'ALWAYS' | 'NEVER';
 export type JsonApiDataSourceInAttributesDateTimeSemanticsEnum = 'LOCAL' | 'UTC';
+export type JsonApiDataSourceInAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'GREENPLUM' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
+
+/**
+ * @type JsonApiDataSourceInAttributesCacheRetention
+ * Determines when the cached results coming from a particular data source expire. When unset, the cache is kept per cacheStrategy and invalidated only explicitly.
+ */
+export type JsonApiDataSourceInAttributesCacheRetention = IndefiniteCacheRetention | ScheduleCacheRetention | ValidityPeriodCacheRetention;
+
+export interface JsonApiDataSourceInAttributesParametersInner {
+    'name': string;
+    'value': string;
+}
 
 export interface JsonApiDataSourceInDocument {
     'data': JsonApiDataSourceIn;
@@ -5717,25 +6692,62 @@ export interface JsonApiDataSourceInDocument {
  * JSON:API representation of dataSource entity.
  */
 export interface JsonApiDataSourceOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiDataSourceOutTypeEnum;
+    'attributes': JsonApiDataSourceOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiDataSourceIdentifierOutMeta;
-    'attributes': JsonApiDataSourceOutAttributes;
+    'meta'?: JsonApiDataSourceOutMeta;
+    /**
+     * Object type
+     */
+    'type': JsonApiDataSourceOutTypeEnum;
 }
 
 export type JsonApiDataSourceOutTypeEnum = 'dataSource';
 
 export interface JsonApiDataSourceOutAttributes {
     /**
+     * Alternative data source ID. It is a weak reference meaning data source does not have to exist. All the entities (e.g. tables) from the data source must be available also in the alternative data source. It must be present in the same organization as the data source.
+     */
+    'alternativeDataSourceId'?: string | null;
+    /**
+     * Type of authentication used to connect to the database.
+     */
+    'authenticationType'?: JsonApiDataSourceOutAttributesAuthenticationTypeEnum | null;
+    'cacheRetention'?: JsonApiDataSourceOutAttributesCacheRetention | null;
+    /**
+     * Determines how the results coming from a particular datasource should be cached.
+     */
+    'cacheStrategy'?: JsonApiDataSourceOutAttributesCacheStrategyEnum | null;
+    /**
+     * The client id to use to connect to the database providing the data for the data source (for example a Databricks Service Account).
+     */
+    'clientId'?: string | null;
+    /**
+     * Determines how datetime values are interpreted in data sources without native support for specifying this. Only StarRocks and AI Lakehouse data sources currently support this.
+     */
+    'dateTimeSemantics'?: JsonApiDataSourceOutAttributesDateTimeSemanticsEnum | null;
+    /**
+     * Decoded parameters to be used when connecting to the database providing the data for the data source.
+     */
+    'decodedParameters'?: Array<JsonApiDataSourceOutAttributesDecodedParametersInner> | null;
+    /**
+     * Whether the object is platform-managed and read-only.
+     */
+    'managed'?: boolean;
+    /**
      * User-facing name of the data source.
      */
     'name': string;
+    /**
+     * Additional parameters to be used when connecting to the database providing the data for the data source.
+     */
+    'parameters'?: Array<JsonApiDataSourceOutAttributesParametersInner> | null;
+    /**
+     * The schema to use as the root of the data for the data source.
+     */
+    'schema': string;
     /**
      * Type of the database providing the data for the data source.
      */
@@ -5745,51 +6757,26 @@ export interface JsonApiDataSourceOutAttributes {
      */
     'url'?: string | null;
     /**
-     * The schema to use as the root of the data for the data source.
-     */
-    'schema': string;
-    /**
      * The username to use to connect to the database providing the data for the data source.
      */
     'username'?: string | null;
-    /**
-     * The client id to use to connect to the database providing the data for the data source (for example a Databricks Service Account).
-     */
-    'clientId'?: string | null;
-    /**
-     * Additional parameters to be used when connecting to the database providing the data for the data source.
-     */
-    'parameters'?: Array<JsonApiDataSourceOutAttributesParametersInner> | null;
-    /**
-     * Decoded parameters to be used when connecting to the database providing the data for the data source.
-     */
-    'decodedParameters'?: Array<JsonApiDataSourceOutAttributesParametersInner> | null;
-    /**
-     * Determines how the results coming from a particular datasource should be cached.
-     */
-    'cacheStrategy'?: JsonApiDataSourceOutAttributesCacheStrategyEnum | null;
-    /**
-     * Type of authentication used to connect to the database.
-     */
-    'authenticationType'?: JsonApiDataSourceOutAttributesAuthenticationTypeEnum | null;
-    /**
-     * Alternative data source ID. It is a weak reference meaning data source does not have to exist. All the entities (e.g. tables) from the data source must be available also in the alternative data source. It must be present in the same organization as the data source.
-     */
-    'alternativeDataSourceId'?: string | null;
-    /**
-     * Determines how datetime values are interpreted in data sources without native support for specifying this. Only StarRocks and AI Lakehouse data sources currently support this.
-     */
-    'dateTimeSemantics'?: JsonApiDataSourceOutAttributesDateTimeSemanticsEnum | null;
-    /**
-     * Whether the object is platform-managed and read-only.
-     */
-    'managed'?: boolean;
 }
 
-export type JsonApiDataSourceOutAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'GREENPLUM' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
-export type JsonApiDataSourceOutAttributesCacheStrategyEnum = 'ALWAYS' | 'NEVER';
 export type JsonApiDataSourceOutAttributesAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'OIDC_PASSTHROUGH';
+export type JsonApiDataSourceOutAttributesCacheStrategyEnum = 'ALWAYS' | 'NEVER';
 export type JsonApiDataSourceOutAttributesDateTimeSemanticsEnum = 'LOCAL' | 'UTC';
+export type JsonApiDataSourceOutAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'GREENPLUM' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
+
+/**
+ * @type JsonApiDataSourceOutAttributesCacheRetention
+ * Determines when the cached results coming from a particular data source expire. When unset, the cache is kept per cacheStrategy and invalidated only explicitly.
+ */
+export type JsonApiDataSourceOutAttributesCacheRetention = IndefiniteCacheRetention | ScheduleCacheRetention | ValidityPeriodCacheRetention;
+
+export interface JsonApiDataSourceOutAttributesDecodedParametersInner {
+    'name': string;
+    'value': string;
+}
 
 export interface JsonApiDataSourceOutAttributesParametersInner {
     'name': string;
@@ -5807,20 +6794,33 @@ export interface JsonApiDataSourceOutDocument {
 export interface JsonApiDataSourceOutList {
     'data': Array<JsonApiDataSourceOutWithLinks>;
     'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
+    'meta'?: JsonApiDataSourceOutListMeta;
 }
 
-export interface JsonApiDataSourceOutWithLinks {
+export interface JsonApiDataSourceOutListMeta {
+    'page'?: PageMetadata;
+}
+
+export interface JsonApiDataSourceOutMeta {
     /**
-     * Object type
+     * List of valid permissions for a logged-in user.
      */
-    'type': JsonApiDataSourceOutWithLinksTypeEnum;
+    'permissions'?: Array<JsonApiDataSourceOutMetaPermissionsEnum>;
+}
+
+export type JsonApiDataSourceOutMetaPermissionsEnum = 'MANAGE' | 'USE';
+
+export interface JsonApiDataSourceOutWithLinks {
+    'attributes': JsonApiDataSourceOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiDataSourceIdentifierOutMeta;
-    'attributes': JsonApiDataSourceOutAttributes;
+    'meta'?: JsonApiDataSourceOutMeta;
+    /**
+     * Object type
+     */
+    'type': JsonApiDataSourceOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -5830,40 +6830,53 @@ export type JsonApiDataSourceOutWithLinksTypeEnum = 'dataSource';
  * JSON:API representation of patching dataSource entity.
  */
 export interface JsonApiDataSourcePatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiDataSourcePatchTypeEnum;
+    'attributes': JsonApiDataSourcePatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiDataSourcePatchAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiDataSourcePatchTypeEnum;
 }
 
 export type JsonApiDataSourcePatchTypeEnum = 'dataSource';
 
 export interface JsonApiDataSourcePatchAttributes {
     /**
+     * Alternative data source ID. It is a weak reference meaning data source does not have to exist. All the entities (e.g. tables) from the data source must be available also in the alternative data source. It must be present in the same organization as the data source.
+     */
+    'alternativeDataSourceId'?: string | null;
+    /**
+     * Type of authentication used to connect to the database.
+     */
+    'authenticationType'?: JsonApiDataSourcePatchAttributesAuthenticationTypeEnum | null;
+    'cacheRetention'?: JsonApiDataSourcePatchAttributesCacheRetention | null;
+    /**
+     * Determines how the results coming from a particular datasource should be cached.
+     */
+    'cacheStrategy'?: JsonApiDataSourcePatchAttributesCacheStrategyEnum | null;
+    /**
+     * The client id to use to connect to the database providing the data for the data source (for example a Databricks Service Account).
+     */
+    'clientId'?: string | null;
+    /**
+     * The client secret to use to connect to the database providing the data for the data source (for example a Databricks Service Account).
+     */
+    'clientSecret'?: string | null;
+    /**
+     * Determines how datetime values are interpreted in data sources without native support for specifying this. Only StarRocks and AI Lakehouse data sources currently support this.
+     */
+    'dateTimeSemantics'?: JsonApiDataSourcePatchAttributesDateTimeSemanticsEnum | null;
+    /**
      * User-facing name of the data source.
      */
     'name'?: string;
     /**
-     * Type of the database providing the data for the data source.
+     * Additional parameters to be used when connecting to the database providing the data for the data source.
      */
-    'type'?: JsonApiDataSourcePatchAttributesTypeEnum;
-    /**
-     * The URL of the database providing the data for the data source.
-     */
-    'url'?: string | null;
-    /**
-     * The schema to use as the root of the data for the data source.
-     */
-    'schema'?: string;
-    /**
-     * The username to use to connect to the database providing the data for the data source.
-     */
-    'username'?: string | null;
+    'parameters'?: Array<JsonApiDataSourcePatchAttributesParametersInner> | null;
     /**
      * The password to use to connect to the database providing the data for the data source.
      */
@@ -5877,43 +6890,42 @@ export interface JsonApiDataSourcePatchAttributes {
      */
     'privateKeyPassphrase'?: string | null;
     /**
+     * The schema to use as the root of the data for the data source.
+     */
+    'schema'?: string;
+    /**
      * The token to use to connect to the database providing the data for the data source (for example a BigQuery Service Account).
      */
     'token'?: string | null;
     /**
-     * The client id to use to connect to the database providing the data for the data source (for example a Databricks Service Account).
+     * Type of the database providing the data for the data source.
      */
-    'clientId'?: string | null;
+    'type'?: JsonApiDataSourcePatchAttributesTypeEnum;
     /**
-     * The client secret to use to connect to the database providing the data for the data source (for example a Databricks Service Account).
+     * The URL of the database providing the data for the data source.
      */
-    'clientSecret'?: string | null;
+    'url'?: string | null;
     /**
-     * Additional parameters to be used when connecting to the database providing the data for the data source.
+     * The username to use to connect to the database providing the data for the data source.
      */
-    'parameters'?: Array<JsonApiDataSourceOutAttributesParametersInner> | null;
-    /**
-     * Determines how the results coming from a particular datasource should be cached.
-     */
-    'cacheStrategy'?: JsonApiDataSourcePatchAttributesCacheStrategyEnum | null;
-    /**
-     * Type of authentication used to connect to the database.
-     */
-    'authenticationType'?: JsonApiDataSourcePatchAttributesAuthenticationTypeEnum | null;
-    /**
-     * Alternative data source ID. It is a weak reference meaning data source does not have to exist. All the entities (e.g. tables) from the data source must be available also in the alternative data source. It must be present in the same organization as the data source.
-     */
-    'alternativeDataSourceId'?: string | null;
-    /**
-     * Determines how datetime values are interpreted in data sources without native support for specifying this. Only StarRocks and AI Lakehouse data sources currently support this.
-     */
-    'dateTimeSemantics'?: JsonApiDataSourcePatchAttributesDateTimeSemanticsEnum | null;
+    'username'?: string | null;
 }
 
-export type JsonApiDataSourcePatchAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'GREENPLUM' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
-export type JsonApiDataSourcePatchAttributesCacheStrategyEnum = 'ALWAYS' | 'NEVER';
 export type JsonApiDataSourcePatchAttributesAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'OIDC_PASSTHROUGH';
+export type JsonApiDataSourcePatchAttributesCacheStrategyEnum = 'ALWAYS' | 'NEVER';
 export type JsonApiDataSourcePatchAttributesDateTimeSemanticsEnum = 'LOCAL' | 'UTC';
+export type JsonApiDataSourcePatchAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'GREENPLUM' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
+
+/**
+ * @type JsonApiDataSourcePatchAttributesCacheRetention
+ * Determines when the cached results coming from a particular data source expire. When unset, the cache is kept per cacheStrategy and invalidated only explicitly.
+ */
+export type JsonApiDataSourcePatchAttributesCacheRetention = IndefiniteCacheRetention | ScheduleCacheRetention | ValidityPeriodCacheRetention;
+
+export interface JsonApiDataSourcePatchAttributesParametersInner {
+    'name': string;
+    'value': string;
+}
 
 export interface JsonApiDataSourcePatchDocument {
     'data': JsonApiDataSourcePatch;
@@ -5933,36 +6945,36 @@ export type JsonApiDatasetLinkageTypeEnum = 'dataset';
  * JSON:API representation of dataset entity.
  */
 export interface JsonApiDatasetOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiDatasetOutTypeEnum;
+    'attributes': JsonApiDatasetOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes': JsonApiDatasetOutAttributes;
+    'meta'?: JsonApiDatasetOutMeta;
     'relationships'?: JsonApiDatasetOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiDatasetOutTypeEnum;
 }
 
 export type JsonApiDatasetOutTypeEnum = 'dataset';
 
 export interface JsonApiDatasetOutAttributes {
-    'title'?: string;
-    'description'?: string;
-    'tags'?: Array<string>;
-    'type': JsonApiDatasetOutAttributesTypeEnum;
-    'grain'?: Array<JsonApiDatasetOutAttributesGrainInner>;
-    'referenceProperties'?: Array<JsonApiDatasetOutAttributesReferencePropertiesInner>;
+    'areRelationsValid'?: boolean;
     'dataSourceTableId'?: string;
     /**
      * Path to database table.
      */
     'dataSourceTablePath'?: Array<string>;
-    'sql'?: JsonApiDatasetOutAttributesSql;
+    'description'?: string;
+    'grain'?: Array<JsonApiDatasetOutAttributesGrainInner>;
     'precedence'?: number;
-    'areRelationsValid'?: boolean;
+    'referenceProperties'?: Array<JsonApiDatasetOutAttributesReferencePropertiesInner>;
+    'sql'?: JsonApiDatasetOutAttributesSql;
+    'tags'?: Array<string>;
+    'title'?: string;
+    'type': JsonApiDatasetOutAttributesTypeEnum;
     'workspaceDataFilterColumns'?: Array<JsonApiDatasetOutAttributesWorkspaceDataFilterColumnsInner>;
     'workspaceDataFilterReferences'?: Array<JsonApiDatasetOutAttributesWorkspaceDataFilterReferencesInner>;
 }
@@ -5979,21 +6991,21 @@ export type JsonApiDatasetOutAttributesGrainInnerTypeEnum = 'attribute' | 'date'
 export interface JsonApiDatasetOutAttributesReferencePropertiesInner {
     'identifier': DatasetReferenceIdentifier;
     'multivalue': boolean;
-    'sources'?: Array<ReferenceSourceColumn>;
-    'sourceColumns'?: Array<string>;
     'sourceColumnDataTypes'?: Array<JsonApiDatasetOutAttributesReferencePropertiesInnerSourceColumnDataTypesEnum>;
+    'sourceColumns'?: Array<string>;
+    'sources'?: Array<ReferenceSourceColumn>;
 }
 
 export type JsonApiDatasetOutAttributesReferencePropertiesInnerSourceColumnDataTypesEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
 
 export interface JsonApiDatasetOutAttributesSql {
-    'statement': string;
     'dataSourceId': string;
+    'statement': string;
 }
 
 export interface JsonApiDatasetOutAttributesWorkspaceDataFilterColumnsInner {
-    'name': string;
     'dataType': JsonApiDatasetOutAttributesWorkspaceDataFilterColumnsInnerDataTypeEnum;
+    'name': string;
 }
 
 export type JsonApiDatasetOutAttributesWorkspaceDataFilterColumnsInnerDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
@@ -6002,20 +7014,20 @@ export type JsonApiDatasetOutAttributesWorkspaceDataFilterColumnsInnerDataTypeEn
  * Workspace data filter reference.
  */
 export interface JsonApiDatasetOutAttributesWorkspaceDataFilterReferencesInner {
-    'filterId': DatasetWorkspaceDataFilterIdentifier;
     'filterColumn': string;
     'filterColumnDataType': JsonApiDatasetOutAttributesWorkspaceDataFilterReferencesInnerFilterColumnDataTypeEnum;
+    'filterId': DatasetWorkspaceDataFilterIdentifier;
 }
 
 export type JsonApiDatasetOutAttributesWorkspaceDataFilterReferencesInnerFilterColumnDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
 
 export interface JsonApiDatasetOutDocument {
     'data': JsonApiDatasetOut;
-    'links'?: ObjectLinks;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiDatasetOutIncludes>;
+    'links'?: ObjectLinks;
 }
 
 /**
@@ -6028,19 +7040,40 @@ export type JsonApiDatasetOutIncludes = JsonApiAggregatedFactOutWithLinks | Json
  */
 export interface JsonApiDatasetOutList {
     'data': Array<JsonApiDatasetOutWithLinks>;
-    'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiDatasetOutIncludes>;
+    'links'?: ListLinks;
+    'meta'?: JsonApiDatasetOutListMeta;
 }
 
+export interface JsonApiDatasetOutListMeta {
+    'page'?: PageMetadata;
+}
+
+export interface JsonApiDatasetOutMeta {
+    'origin'?: JsonApiDatasetOutMetaOrigin;
+}
+
+export interface JsonApiDatasetOutMetaOrigin {
+    /**
+     * defines id of the workspace where the entity comes from
+     */
+    'originId': string;
+    /**
+     * defines type of the origin of the entity
+     */
+    'originType': JsonApiDatasetOutMetaOriginOriginTypeEnum;
+}
+
+export type JsonApiDatasetOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
+
 export interface JsonApiDatasetOutRelationships {
+    'aggregatedFacts'?: JsonApiDatasetOutRelationshipsAggregatedFacts;
     'attributes'?: JsonApiDatasetOutRelationshipsAttributes;
     'facts'?: JsonApiDatasetOutRelationshipsFacts;
-    'aggregatedFacts'?: JsonApiDatasetOutRelationshipsAggregatedFacts;
-    'references'?: JsonApiAnalyticalDashboardOutRelationshipsDatasets;
+    'references'?: JsonApiDatasetOutRelationshipsReferences;
     'workspaceDataFilters'?: JsonApiDatasetOutRelationshipsWorkspaceDataFilters;
 }
 
@@ -6065,6 +7098,13 @@ export interface JsonApiDatasetOutRelationshipsFacts {
     'data': Array<JsonApiFactLinkage>;
 }
 
+export interface JsonApiDatasetOutRelationshipsReferences {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiDatasetLinkage>;
+}
+
 export interface JsonApiDatasetOutRelationshipsWorkspaceDataFilters {
     /**
      * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
@@ -6073,17 +7113,17 @@ export interface JsonApiDatasetOutRelationshipsWorkspaceDataFilters {
 }
 
 export interface JsonApiDatasetOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiDatasetOutWithLinksTypeEnum;
+    'attributes': JsonApiDatasetOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes': JsonApiDatasetOutAttributes;
+    'meta'?: JsonApiDatasetOutMeta;
     'relationships'?: JsonApiDatasetOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiDatasetOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -6093,18 +7133,24 @@ export type JsonApiDatasetOutWithLinksTypeEnum = 'dataset';
  * JSON:API representation of patching dataset entity.
  */
 export interface JsonApiDatasetPatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiDatasetPatchTypeEnum;
+    'attributes'?: JsonApiDatasetPatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiAttributePatchAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiDatasetPatchTypeEnum;
 }
 
 export type JsonApiDatasetPatchTypeEnum = 'dataset';
+
+export interface JsonApiDatasetPatchAttributes {
+    'description'?: string;
+    'tags'?: Array<string>;
+    'title'?: string;
+}
 
 export interface JsonApiDatasetPatchDocument {
     'data': JsonApiDatasetPatch;
@@ -6114,22 +7160,22 @@ export interface JsonApiDatasetPatchDocument {
  * JSON:API representation of entitlement entity.
  */
 export interface JsonApiEntitlementOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiEntitlementOutTypeEnum;
+    'attributes'?: JsonApiEntitlementOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiEntitlementOutAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiEntitlementOutTypeEnum;
 }
 
 export type JsonApiEntitlementOutTypeEnum = 'entitlement';
 
 export interface JsonApiEntitlementOutAttributes {
-    'value'?: string;
     'expiry'?: string;
+    'value'?: string;
 }
 
 export interface JsonApiEntitlementOutDocument {
@@ -6143,19 +7189,23 @@ export interface JsonApiEntitlementOutDocument {
 export interface JsonApiEntitlementOutList {
     'data': Array<JsonApiEntitlementOutWithLinks>;
     'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
+    'meta'?: JsonApiEntitlementOutListMeta;
+}
+
+export interface JsonApiEntitlementOutListMeta {
+    'page'?: PageMetadata;
 }
 
 export interface JsonApiEntitlementOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiEntitlementOutWithLinksTypeEnum;
+    'attributes'?: JsonApiEntitlementOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiEntitlementOutAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiEntitlementOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -6165,22 +7215,49 @@ export type JsonApiEntitlementOutWithLinksTypeEnum = 'entitlement';
  * JSON:API representation of exportDefinition entity.
  */
 export interface JsonApiExportDefinitionIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiExportDefinitionInTypeEnum;
+    'attributes'?: JsonApiExportDefinitionInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiExportDefinitionPostOptionalIdAttributes;
-    'relationships'?: JsonApiExportDefinitionPostOptionalIdRelationships;
+    'relationships'?: JsonApiExportDefinitionInRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiExportDefinitionInTypeEnum;
 }
 
 export type JsonApiExportDefinitionInTypeEnum = 'exportDefinition';
 
+export interface JsonApiExportDefinitionInAttributes {
+    'areRelationsValid'?: boolean;
+    'description'?: string;
+    'requestPayload'?: JsonApiExportDefinitionInAttributesRequestPayload;
+    'tags'?: Array<string>;
+    'title'?: string;
+}
+
+/**
+ * @type JsonApiExportDefinitionInAttributesRequestPayload
+ * JSON content to be used as export request payload for /export/tabular and /export/visual endpoints. 
+ */
+export type JsonApiExportDefinitionInAttributesRequestPayload = TabularExportRequest | VisualExportRequest;
+
 export interface JsonApiExportDefinitionInDocument {
     'data': JsonApiExportDefinitionIn;
+}
+
+export interface JsonApiExportDefinitionInRelationships {
+    'analyticalDashboard'?: JsonApiExportDefinitionInRelationshipsAnalyticalDashboard;
+    'visualizationObject'?: JsonApiExportDefinitionInRelationshipsVisualizationObject;
+}
+
+export interface JsonApiExportDefinitionInRelationshipsAnalyticalDashboard {
+    'data': JsonApiAnalyticalDashboardLinkage | null;
+}
+
+export interface JsonApiExportDefinitionInRelationshipsVisualizationObject {
+    'data': JsonApiVisualizationObjectLinkage | null;
 }
 
 /**
@@ -6197,35 +7274,35 @@ export type JsonApiExportDefinitionLinkageTypeEnum = 'exportDefinition';
  * JSON:API representation of exportDefinition entity.
  */
 export interface JsonApiExportDefinitionOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiExportDefinitionOutTypeEnum;
+    'attributes'?: JsonApiExportDefinitionOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
     'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes'?: JsonApiExportDefinitionOutAttributes;
     'relationships'?: JsonApiExportDefinitionOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiExportDefinitionOutTypeEnum;
 }
 
 export type JsonApiExportDefinitionOutTypeEnum = 'exportDefinition';
 
 export interface JsonApiExportDefinitionOutAttributes {
-    'title'?: string;
-    'description'?: string;
-    'tags'?: Array<string>;
-    'requestPayload'?: JsonApiExportDefinitionOutAttributesRequestPayload;
     'areRelationsValid'?: boolean;
     /**
      * Time of the entity creation.
      */
     'createdAt'?: string | null;
+    'description'?: string;
     /**
      * Time of the last entity modification.
      */
     'modifiedAt'?: string | null;
+    'requestPayload'?: JsonApiExportDefinitionOutAttributesRequestPayload;
+    'tags'?: Array<string>;
+    'title'?: string;
 }
 
 /**
@@ -6236,11 +7313,11 @@ export type JsonApiExportDefinitionOutAttributesRequestPayload = TabularExportRe
 
 export interface JsonApiExportDefinitionOutDocument {
     'data': JsonApiExportDefinitionOut;
-    'links'?: ObjectLinks;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiExportDefinitionOutIncludes>;
+    'links'?: ObjectLinks;
 }
 
 /**
@@ -6253,28 +7330,57 @@ export type JsonApiExportDefinitionOutIncludes = JsonApiAnalyticalDashboardOutWi
  */
 export interface JsonApiExportDefinitionOutList {
     'data': Array<JsonApiExportDefinitionOutWithLinks>;
-    'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiExportDefinitionOutIncludes>;
+    'links'?: ListLinks;
+    'meta'?: JsonApiExportDefinitionOutListMeta;
+}
+
+export interface JsonApiExportDefinitionOutListMeta {
+    'page'?: PageMetadata;
 }
 
 export interface JsonApiExportDefinitionOutMeta {
-    'origin'?: JsonApiAnalyticalDashboardOutMetaOrigin;
+    'origin'?: JsonApiExportDefinitionOutMetaOrigin;
 }
 
+export interface JsonApiExportDefinitionOutMetaOrigin {
+    /**
+     * defines id of the workspace where the entity comes from
+     */
+    'originId': string;
+    /**
+     * defines type of the origin of the entity
+     */
+    'originType': JsonApiExportDefinitionOutMetaOriginOriginTypeEnum;
+}
+
+export type JsonApiExportDefinitionOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
+
 export interface JsonApiExportDefinitionOutRelationships {
-    'visualizationObject'?: JsonApiExportDefinitionOutRelationshipsVisualizationObject;
     'analyticalDashboard'?: JsonApiExportDefinitionOutRelationshipsAnalyticalDashboard;
-    'automation'?: JsonApiAutomationResultOutRelationshipsAutomation;
-    'createdBy'?: JsonApiAgentOutRelationshipsCreatedBy;
-    'modifiedBy'?: JsonApiAgentOutRelationshipsCreatedBy;
+    'automation'?: JsonApiExportDefinitionOutRelationshipsAutomation;
+    'createdBy'?: JsonApiExportDefinitionOutRelationshipsCreatedBy;
+    'modifiedBy'?: JsonApiExportDefinitionOutRelationshipsModifiedBy;
+    'visualizationObject'?: JsonApiExportDefinitionOutRelationshipsVisualizationObject;
 }
 
 export interface JsonApiExportDefinitionOutRelationshipsAnalyticalDashboard {
     'data': JsonApiAnalyticalDashboardLinkage | null;
+}
+
+export interface JsonApiExportDefinitionOutRelationshipsAutomation {
+    'data': JsonApiAutomationLinkage | null;
+}
+
+export interface JsonApiExportDefinitionOutRelationshipsCreatedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+export interface JsonApiExportDefinitionOutRelationshipsModifiedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
 }
 
 export interface JsonApiExportDefinitionOutRelationshipsVisualizationObject {
@@ -6282,17 +7388,17 @@ export interface JsonApiExportDefinitionOutRelationshipsVisualizationObject {
 }
 
 export interface JsonApiExportDefinitionOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiExportDefinitionOutWithLinksTypeEnum;
+    'attributes'?: JsonApiExportDefinitionOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
     'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes'?: JsonApiExportDefinitionOutAttributes;
     'relationships'?: JsonApiExportDefinitionOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiExportDefinitionOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -6302,75 +7408,154 @@ export type JsonApiExportDefinitionOutWithLinksTypeEnum = 'exportDefinition';
  * JSON:API representation of patching exportDefinition entity.
  */
 export interface JsonApiExportDefinitionPatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiExportDefinitionPatchTypeEnum;
+    'attributes'?: JsonApiExportDefinitionPatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiExportDefinitionPostOptionalIdAttributes;
-    'relationships'?: JsonApiExportDefinitionPostOptionalIdRelationships;
+    'relationships'?: JsonApiExportDefinitionPatchRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiExportDefinitionPatchTypeEnum;
 }
 
 export type JsonApiExportDefinitionPatchTypeEnum = 'exportDefinition';
 
+export interface JsonApiExportDefinitionPatchAttributes {
+    'areRelationsValid'?: boolean;
+    'description'?: string;
+    'requestPayload'?: JsonApiExportDefinitionPatchAttributesRequestPayload;
+    'tags'?: Array<string>;
+    'title'?: string;
+}
+
+/**
+ * @type JsonApiExportDefinitionPatchAttributesRequestPayload
+ * JSON content to be used as export request payload for /export/tabular and /export/visual endpoints. 
+ */
+export type JsonApiExportDefinitionPatchAttributesRequestPayload = TabularExportRequest | VisualExportRequest;
+
 export interface JsonApiExportDefinitionPatchDocument {
     'data': JsonApiExportDefinitionPatch;
+}
+
+export interface JsonApiExportDefinitionPatchRelationships {
+    'analyticalDashboard'?: JsonApiExportDefinitionPatchRelationshipsAnalyticalDashboard;
+    'visualizationObject'?: JsonApiExportDefinitionPatchRelationshipsVisualizationObject;
+}
+
+export interface JsonApiExportDefinitionPatchRelationshipsAnalyticalDashboard {
+    'data': JsonApiAnalyticalDashboardLinkage | null;
+}
+
+export interface JsonApiExportDefinitionPatchRelationshipsVisualizationObject {
+    'data': JsonApiVisualizationObjectLinkage | null;
 }
 
 /**
  * JSON:API representation of exportDefinition entity.
  */
 export interface JsonApiExportDefinitionPostOptionalId {
-    /**
-     * Object type
-     */
-    'type': JsonApiExportDefinitionPostOptionalIdTypeEnum;
+    'attributes'?: JsonApiExportDefinitionPostOptionalIdAttributes;
     /**
      * API identifier of an object
      */
     'id'?: string;
-    'attributes'?: JsonApiExportDefinitionPostOptionalIdAttributes;
     'relationships'?: JsonApiExportDefinitionPostOptionalIdRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiExportDefinitionPostOptionalIdTypeEnum;
 }
 
 export type JsonApiExportDefinitionPostOptionalIdTypeEnum = 'exportDefinition';
 
 export interface JsonApiExportDefinitionPostOptionalIdAttributes {
-    'title'?: string;
-    'description'?: string;
-    'tags'?: Array<string>;
-    'requestPayload'?: JsonApiExportDefinitionOutAttributesRequestPayload;
     'areRelationsValid'?: boolean;
+    'description'?: string;
+    'requestPayload'?: JsonApiExportDefinitionPostOptionalIdAttributesRequestPayload;
+    'tags'?: Array<string>;
+    'title'?: string;
 }
+
+/**
+ * @type JsonApiExportDefinitionPostOptionalIdAttributesRequestPayload
+ * JSON content to be used as export request payload for /export/tabular and /export/visual endpoints. 
+ */
+export type JsonApiExportDefinitionPostOptionalIdAttributesRequestPayload = TabularExportRequest | VisualExportRequest;
 
 export interface JsonApiExportDefinitionPostOptionalIdDocument {
     'data': JsonApiExportDefinitionPostOptionalId;
 }
 
 export interface JsonApiExportDefinitionPostOptionalIdRelationships {
-    'visualizationObject'?: JsonApiExportDefinitionOutRelationshipsVisualizationObject;
-    'analyticalDashboard'?: JsonApiExportDefinitionOutRelationshipsAnalyticalDashboard;
+    'analyticalDashboard'?: JsonApiExportDefinitionPostOptionalIdRelationshipsAnalyticalDashboard;
+    'visualizationObject'?: JsonApiExportDefinitionPostOptionalIdRelationshipsVisualizationObject;
+}
+
+export interface JsonApiExportDefinitionPostOptionalIdRelationshipsAnalyticalDashboard {
+    'data': JsonApiAnalyticalDashboardLinkage | null;
+}
+
+export interface JsonApiExportDefinitionPostOptionalIdRelationshipsVisualizationObject {
+    'data': JsonApiVisualizationObjectLinkage | null;
 }
 
 /**
  * JSON:API representation of exportTemplate entity.
  */
 export interface JsonApiExportTemplateIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiExportTemplateInTypeEnum;
+    'attributes': JsonApiExportTemplateInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiExportTemplateOutAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiExportTemplateInTypeEnum;
 }
 
 export type JsonApiExportTemplateInTypeEnum = 'exportTemplate';
+
+export interface JsonApiExportTemplateInAttributes {
+    'dashboardSlidesTemplate'?: JsonApiExportTemplateInAttributesDashboardSlidesTemplate | null;
+    /**
+     * User-facing name of the Slides template.
+     */
+    'name': string;
+    'widgetSlidesTemplate'?: JsonApiExportTemplateInAttributesWidgetSlidesTemplate | null;
+}
+
+/**
+ * Template for dashboard slides export. Available variables: {{currentPageNumber}}, {{dashboardDateFilters}}, {{dashboardDescription}}, {{dashboardFilters}}, {{dashboardId}}, {{dashboardName}}, {{dashboardTags}}, {{dashboardUrl}}, {{exportedAt}}, {{exportedBy}}, {{logo}}, {{totalPages}}, {{workspaceId}}, {{workspaceName}}
+ */
+export interface JsonApiExportTemplateInAttributesDashboardSlidesTemplate {
+    /**
+     * Export types this template applies to.
+     */
+    'appliedOn': Array<JsonApiExportTemplateInAttributesDashboardSlidesTemplateAppliedOnEnum>;
+    'contentSlide'?: ContentSlideTemplate | null;
+    'coverSlide'?: CoverSlideTemplate | null;
+    'introSlide'?: IntroSlideTemplate | null;
+    'sectionSlide'?: SectionSlideTemplate | null;
+}
+
+export type JsonApiExportTemplateInAttributesDashboardSlidesTemplateAppliedOnEnum = 'PDF' | 'PPTX';
+
+/**
+ * Template for widget slides export. Available variables: {{currentPageNumber}}, {{dashboardDateFilters}}, {{dashboardDescription}}, {{dashboardFilters}}, {{dashboardId}}, {{dashboardName}}, {{dashboardTags}}, {{dashboardUrl}}, {{exportedAt}}, {{exportedBy}}, {{logo}}, {{totalPages}}, {{workspaceId}}, {{workspaceName}}
+ */
+export interface JsonApiExportTemplateInAttributesWidgetSlidesTemplate {
+    /**
+     * Export types this template applies to.
+     */
+    'appliedOn': Array<JsonApiExportTemplateInAttributesWidgetSlidesTemplateAppliedOnEnum>;
+    'contentSlide'?: ContentSlideTemplate | null;
+}
+
+export type JsonApiExportTemplateInAttributesWidgetSlidesTemplateAppliedOnEnum = 'PDF' | 'PPTX';
 
 export interface JsonApiExportTemplateInDocument {
     'data': JsonApiExportTemplateIn;
@@ -6380,25 +7565,25 @@ export interface JsonApiExportTemplateInDocument {
  * JSON:API representation of exportTemplate entity.
  */
 export interface JsonApiExportTemplateOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiExportTemplateOutTypeEnum;
+    'attributes': JsonApiExportTemplateOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiExportTemplateOutAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiExportTemplateOutTypeEnum;
 }
 
 export type JsonApiExportTemplateOutTypeEnum = 'exportTemplate';
 
 export interface JsonApiExportTemplateOutAttributes {
+    'dashboardSlidesTemplate'?: JsonApiExportTemplateOutAttributesDashboardSlidesTemplate | null;
     /**
      * User-facing name of the Slides template.
      */
     'name': string;
-    'dashboardSlidesTemplate'?: JsonApiExportTemplateOutAttributesDashboardSlidesTemplate | null;
     'widgetSlidesTemplate'?: JsonApiExportTemplateOutAttributesWidgetSlidesTemplate | null;
 }
 
@@ -6410,10 +7595,10 @@ export interface JsonApiExportTemplateOutAttributesDashboardSlidesTemplate {
      * Export types this template applies to.
      */
     'appliedOn': Array<JsonApiExportTemplateOutAttributesDashboardSlidesTemplateAppliedOnEnum>;
+    'contentSlide'?: ContentSlideTemplate | null;
     'coverSlide'?: CoverSlideTemplate | null;
     'introSlide'?: IntroSlideTemplate | null;
     'sectionSlide'?: SectionSlideTemplate | null;
-    'contentSlide'?: ContentSlideTemplate | null;
 }
 
 export type JsonApiExportTemplateOutAttributesDashboardSlidesTemplateAppliedOnEnum = 'PDF' | 'PPTX';
@@ -6442,19 +7627,23 @@ export interface JsonApiExportTemplateOutDocument {
 export interface JsonApiExportTemplateOutList {
     'data': Array<JsonApiExportTemplateOutWithLinks>;
     'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
+    'meta'?: JsonApiExportTemplateOutListMeta;
+}
+
+export interface JsonApiExportTemplateOutListMeta {
+    'page'?: PageMetadata;
 }
 
 export interface JsonApiExportTemplateOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiExportTemplateOutWithLinksTypeEnum;
+    'attributes': JsonApiExportTemplateOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiExportTemplateOutAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiExportTemplateOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -6464,27 +7653,56 @@ export type JsonApiExportTemplateOutWithLinksTypeEnum = 'exportTemplate';
  * JSON:API representation of patching exportTemplate entity.
  */
 export interface JsonApiExportTemplatePatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiExportTemplatePatchTypeEnum;
+    'attributes': JsonApiExportTemplatePatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiExportTemplatePatchAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiExportTemplatePatchTypeEnum;
 }
 
 export type JsonApiExportTemplatePatchTypeEnum = 'exportTemplate';
 
 export interface JsonApiExportTemplatePatchAttributes {
+    'dashboardSlidesTemplate'?: JsonApiExportTemplatePatchAttributesDashboardSlidesTemplate | null;
     /**
      * User-facing name of the Slides template.
      */
     'name'?: string;
-    'dashboardSlidesTemplate'?: JsonApiExportTemplateOutAttributesDashboardSlidesTemplate | null;
-    'widgetSlidesTemplate'?: JsonApiExportTemplateOutAttributesWidgetSlidesTemplate | null;
+    'widgetSlidesTemplate'?: JsonApiExportTemplatePatchAttributesWidgetSlidesTemplate | null;
 }
+
+/**
+ * Template for dashboard slides export. Available variables: {{currentPageNumber}}, {{dashboardDateFilters}}, {{dashboardDescription}}, {{dashboardFilters}}, {{dashboardId}}, {{dashboardName}}, {{dashboardTags}}, {{dashboardUrl}}, {{exportedAt}}, {{exportedBy}}, {{logo}}, {{totalPages}}, {{workspaceId}}, {{workspaceName}}
+ */
+export interface JsonApiExportTemplatePatchAttributesDashboardSlidesTemplate {
+    /**
+     * Export types this template applies to.
+     */
+    'appliedOn': Array<JsonApiExportTemplatePatchAttributesDashboardSlidesTemplateAppliedOnEnum>;
+    'contentSlide'?: ContentSlideTemplate | null;
+    'coverSlide'?: CoverSlideTemplate | null;
+    'introSlide'?: IntroSlideTemplate | null;
+    'sectionSlide'?: SectionSlideTemplate | null;
+}
+
+export type JsonApiExportTemplatePatchAttributesDashboardSlidesTemplateAppliedOnEnum = 'PDF' | 'PPTX';
+
+/**
+ * Template for widget slides export. Available variables: {{currentPageNumber}}, {{dashboardDateFilters}}, {{dashboardDescription}}, {{dashboardFilters}}, {{dashboardId}}, {{dashboardName}}, {{dashboardTags}}, {{dashboardUrl}}, {{exportedAt}}, {{exportedBy}}, {{logo}}, {{totalPages}}, {{workspaceId}}, {{workspaceName}}
+ */
+export interface JsonApiExportTemplatePatchAttributesWidgetSlidesTemplate {
+    /**
+     * Export types this template applies to.
+     */
+    'appliedOn': Array<JsonApiExportTemplatePatchAttributesWidgetSlidesTemplateAppliedOnEnum>;
+    'contentSlide'?: ContentSlideTemplate | null;
+}
+
+export type JsonApiExportTemplatePatchAttributesWidgetSlidesTemplateAppliedOnEnum = 'PDF' | 'PPTX';
 
 export interface JsonApiExportTemplatePatchDocument {
     'data': JsonApiExportTemplatePatch;
@@ -6494,18 +7712,56 @@ export interface JsonApiExportTemplatePatchDocument {
  * JSON:API representation of exportTemplate entity.
  */
 export interface JsonApiExportTemplatePostOptionalId {
-    /**
-     * Object type
-     */
-    'type': JsonApiExportTemplatePostOptionalIdTypeEnum;
+    'attributes': JsonApiExportTemplatePostOptionalIdAttributes;
     /**
      * API identifier of an object
      */
     'id'?: string;
-    'attributes': JsonApiExportTemplateOutAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiExportTemplatePostOptionalIdTypeEnum;
 }
 
 export type JsonApiExportTemplatePostOptionalIdTypeEnum = 'exportTemplate';
+
+export interface JsonApiExportTemplatePostOptionalIdAttributes {
+    'dashboardSlidesTemplate'?: JsonApiExportTemplatePostOptionalIdAttributesDashboardSlidesTemplate | null;
+    /**
+     * User-facing name of the Slides template.
+     */
+    'name': string;
+    'widgetSlidesTemplate'?: JsonApiExportTemplatePostOptionalIdAttributesWidgetSlidesTemplate | null;
+}
+
+/**
+ * Template for dashboard slides export. Available variables: {{currentPageNumber}}, {{dashboardDateFilters}}, {{dashboardDescription}}, {{dashboardFilters}}, {{dashboardId}}, {{dashboardName}}, {{dashboardTags}}, {{dashboardUrl}}, {{exportedAt}}, {{exportedBy}}, {{logo}}, {{totalPages}}, {{workspaceId}}, {{workspaceName}}
+ */
+export interface JsonApiExportTemplatePostOptionalIdAttributesDashboardSlidesTemplate {
+    /**
+     * Export types this template applies to.
+     */
+    'appliedOn': Array<JsonApiExportTemplatePostOptionalIdAttributesDashboardSlidesTemplateAppliedOnEnum>;
+    'contentSlide'?: ContentSlideTemplate | null;
+    'coverSlide'?: CoverSlideTemplate | null;
+    'introSlide'?: IntroSlideTemplate | null;
+    'sectionSlide'?: SectionSlideTemplate | null;
+}
+
+export type JsonApiExportTemplatePostOptionalIdAttributesDashboardSlidesTemplateAppliedOnEnum = 'PDF' | 'PPTX';
+
+/**
+ * Template for widget slides export. Available variables: {{currentPageNumber}}, {{dashboardDateFilters}}, {{dashboardDescription}}, {{dashboardFilters}}, {{dashboardId}}, {{dashboardName}}, {{dashboardTags}}, {{dashboardUrl}}, {{exportedAt}}, {{exportedBy}}, {{logo}}, {{totalPages}}, {{workspaceId}}, {{workspaceName}}
+ */
+export interface JsonApiExportTemplatePostOptionalIdAttributesWidgetSlidesTemplate {
+    /**
+     * Export types this template applies to.
+     */
+    'appliedOn': Array<JsonApiExportTemplatePostOptionalIdAttributesWidgetSlidesTemplateAppliedOnEnum>;
+    'contentSlide'?: ContentSlideTemplate | null;
+}
+
+export type JsonApiExportTemplatePostOptionalIdAttributesWidgetSlidesTemplateAppliedOnEnum = 'PDF' | 'PPTX';
 
 export interface JsonApiExportTemplatePostOptionalIdDocument {
     'data': JsonApiExportTemplatePostOptionalId;
@@ -6525,42 +7781,42 @@ export type JsonApiFactLinkageTypeEnum = 'fact';
  * JSON:API representation of fact entity.
  */
 export interface JsonApiFactOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiFactOutTypeEnum;
+    'attributes'?: JsonApiFactOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes'?: JsonApiFactOutAttributes;
+    'meta'?: JsonApiFactOutMeta;
     'relationships'?: JsonApiFactOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiFactOutTypeEnum;
 }
 
 export type JsonApiFactOutTypeEnum = 'fact';
 
 export interface JsonApiFactOutAttributes {
-    'title'?: string;
-    'description'?: string;
-    'tags'?: Array<string>;
-    'sourceColumn'?: string;
-    'sourceColumnDataType'?: JsonApiFactOutAttributesSourceColumnDataTypeEnum;
     'areRelationsValid'?: boolean;
+    'description'?: string;
     'isHidden'?: boolean;
     'isNullable'?: boolean;
     'nullValue'?: string;
+    'sourceColumn'?: string;
+    'sourceColumnDataType'?: JsonApiFactOutAttributesSourceColumnDataTypeEnum;
+    'tags'?: Array<string>;
+    'title'?: string;
 }
 
 export type JsonApiFactOutAttributesSourceColumnDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
 
 export interface JsonApiFactOutDocument {
     'data': JsonApiFactOut;
-    'links'?: ObjectLinks;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiDatasetOutWithLinks>;
+    'links'?: ObjectLinks;
 }
 
 /**
@@ -6568,30 +7824,55 @@ export interface JsonApiFactOutDocument {
  */
 export interface JsonApiFactOutList {
     'data': Array<JsonApiFactOutWithLinks>;
-    'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiDatasetOutWithLinks>;
+    'links'?: ListLinks;
+    'meta'?: JsonApiFactOutListMeta;
 }
 
+export interface JsonApiFactOutListMeta {
+    'page'?: PageMetadata;
+}
+
+export interface JsonApiFactOutMeta {
+    'origin'?: JsonApiFactOutMetaOrigin;
+}
+
+export interface JsonApiFactOutMetaOrigin {
+    /**
+     * defines id of the workspace where the entity comes from
+     */
+    'originId': string;
+    /**
+     * defines type of the origin of the entity
+     */
+    'originType': JsonApiFactOutMetaOriginOriginTypeEnum;
+}
+
+export type JsonApiFactOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
+
 export interface JsonApiFactOutRelationships {
-    'dataset'?: JsonApiAttributeOutRelationshipsDataset;
+    'dataset'?: JsonApiFactOutRelationshipsDataset;
+}
+
+export interface JsonApiFactOutRelationshipsDataset {
+    'data': JsonApiDatasetLinkage | null;
 }
 
 export interface JsonApiFactOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiFactOutWithLinksTypeEnum;
+    'attributes'?: JsonApiFactOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes'?: JsonApiFactOutAttributes;
+    'meta'?: JsonApiFactOutMeta;
     'relationships'?: JsonApiFactOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiFactOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -6601,18 +7882,24 @@ export type JsonApiFactOutWithLinksTypeEnum = 'fact';
  * JSON:API representation of patching fact entity.
  */
 export interface JsonApiFactPatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiFactPatchTypeEnum;
+    'attributes'?: JsonApiFactPatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiAttributePatchAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiFactPatchTypeEnum;
 }
 
 export type JsonApiFactPatchTypeEnum = 'fact';
+
+export interface JsonApiFactPatchAttributes {
+    'description'?: string;
+    'tags'?: Array<string>;
+    'title'?: string;
+}
 
 export interface JsonApiFactPatchDocument {
     'data': JsonApiFactPatch;
@@ -6622,18 +7909,29 @@ export interface JsonApiFactPatchDocument {
  * JSON:API representation of filterContext entity.
  */
 export interface JsonApiFilterContextIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiFilterContextInTypeEnum;
+    'attributes': JsonApiFilterContextInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiFilterContextOutAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiFilterContextInTypeEnum;
 }
 
 export type JsonApiFilterContextInTypeEnum = 'filterContext';
+
+export interface JsonApiFilterContextInAttributes {
+    'areRelationsValid'?: boolean;
+    /**
+     * Free-form JSON content. Maximum supported length is 250000 characters.
+     */
+    'content': object;
+    'description'?: string;
+    'tags'?: Array<string>;
+    'title'?: string;
+}
 
 export interface JsonApiFilterContextInDocument {
     'data': JsonApiFilterContextIn;
@@ -6653,39 +7951,39 @@ export type JsonApiFilterContextLinkageTypeEnum = 'filterContext';
  * JSON:API representation of filterContext entity.
  */
 export interface JsonApiFilterContextOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiFilterContextOutTypeEnum;
+    'attributes': JsonApiFilterContextOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes': JsonApiFilterContextOutAttributes;
+    'meta'?: JsonApiFilterContextOutMeta;
     'relationships'?: JsonApiFilterContextOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiFilterContextOutTypeEnum;
 }
 
 export type JsonApiFilterContextOutTypeEnum = 'filterContext';
 
 export interface JsonApiFilterContextOutAttributes {
-    'title'?: string;
-    'description'?: string;
-    'tags'?: Array<string>;
     'areRelationsValid'?: boolean;
     /**
      * Free-form JSON content. Maximum supported length is 250000 characters.
      */
     'content': object;
+    'description'?: string;
+    'tags'?: Array<string>;
+    'title'?: string;
 }
 
 export interface JsonApiFilterContextOutDocument {
     'data': JsonApiFilterContextOut;
-    'links'?: ObjectLinks;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiFilterContextOutIncludes>;
+    'links'?: ObjectLinks;
 }
 
 /**
@@ -6698,32 +7996,74 @@ export type JsonApiFilterContextOutIncludes = JsonApiAttributeOutWithLinks | Jso
  */
 export interface JsonApiFilterContextOutList {
     'data': Array<JsonApiFilterContextOutWithLinks>;
-    'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiFilterContextOutIncludes>;
+    'links'?: ListLinks;
+    'meta'?: JsonApiFilterContextOutListMeta;
 }
 
+export interface JsonApiFilterContextOutListMeta {
+    'page'?: PageMetadata;
+}
+
+export interface JsonApiFilterContextOutMeta {
+    'origin'?: JsonApiFilterContextOutMetaOrigin;
+}
+
+export interface JsonApiFilterContextOutMetaOrigin {
+    /**
+     * defines id of the workspace where the entity comes from
+     */
+    'originId': string;
+    /**
+     * defines type of the origin of the entity
+     */
+    'originType': JsonApiFilterContextOutMetaOriginOriginTypeEnum;
+}
+
+export type JsonApiFilterContextOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
+
 export interface JsonApiFilterContextOutRelationships {
-    'attributes'?: JsonApiDatasetOutRelationshipsAttributes;
-    'datasets'?: JsonApiAnalyticalDashboardOutRelationshipsDatasets;
-    'labels'?: JsonApiAnalyticalDashboardOutRelationshipsLabels;
+    'attributes'?: JsonApiFilterContextOutRelationshipsAttributes;
+    'datasets'?: JsonApiFilterContextOutRelationshipsDatasets;
+    'labels'?: JsonApiFilterContextOutRelationshipsLabels;
+}
+
+export interface JsonApiFilterContextOutRelationshipsAttributes {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiAttributeLinkage>;
+}
+
+export interface JsonApiFilterContextOutRelationshipsDatasets {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiDatasetLinkage>;
+}
+
+export interface JsonApiFilterContextOutRelationshipsLabels {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiLabelLinkage>;
 }
 
 export interface JsonApiFilterContextOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiFilterContextOutWithLinksTypeEnum;
+    'attributes': JsonApiFilterContextOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes': JsonApiFilterContextOutAttributes;
+    'meta'?: JsonApiFilterContextOutMeta;
     'relationships'?: JsonApiFilterContextOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiFilterContextOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -6733,28 +8073,28 @@ export type JsonApiFilterContextOutWithLinksTypeEnum = 'filterContext';
  * JSON:API representation of patching filterContext entity.
  */
 export interface JsonApiFilterContextPatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiFilterContextPatchTypeEnum;
+    'attributes': JsonApiFilterContextPatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiFilterContextPatchAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiFilterContextPatchTypeEnum;
 }
 
 export type JsonApiFilterContextPatchTypeEnum = 'filterContext';
 
 export interface JsonApiFilterContextPatchAttributes {
-    'title'?: string;
-    'description'?: string;
-    'tags'?: Array<string>;
     'areRelationsValid'?: boolean;
     /**
      * Free-form JSON content. Maximum supported length is 250000 characters.
      */
     'content'?: object;
+    'description'?: string;
+    'tags'?: Array<string>;
+    'title'?: string;
 }
 
 export interface JsonApiFilterContextPatchDocument {
@@ -6765,18 +8105,29 @@ export interface JsonApiFilterContextPatchDocument {
  * JSON:API representation of filterContext entity.
  */
 export interface JsonApiFilterContextPostOptionalId {
-    /**
-     * Object type
-     */
-    'type': JsonApiFilterContextPostOptionalIdTypeEnum;
+    'attributes': JsonApiFilterContextPostOptionalIdAttributes;
     /**
      * API identifier of an object
      */
     'id'?: string;
-    'attributes': JsonApiFilterContextOutAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiFilterContextPostOptionalIdTypeEnum;
 }
 
 export type JsonApiFilterContextPostOptionalIdTypeEnum = 'filterContext';
+
+export interface JsonApiFilterContextPostOptionalIdAttributes {
+    'areRelationsValid'?: boolean;
+    /**
+     * Free-form JSON content. Maximum supported length is 250000 characters.
+     */
+    'content': object;
+    'description'?: string;
+    'tags'?: Array<string>;
+    'title'?: string;
+}
 
 export interface JsonApiFilterContextPostOptionalIdDocument {
     'data': JsonApiFilterContextPostOptionalId;
@@ -6786,64 +8137,92 @@ export interface JsonApiFilterContextPostOptionalIdDocument {
  * JSON:API representation of filterView entity.
  */
 export interface JsonApiFilterViewIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiFilterViewInTypeEnum;
+    'attributes': JsonApiFilterViewInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiFilterViewOutAttributes;
-    'relationships'?: JsonApiFilterViewOutRelationships;
+    'relationships'?: JsonApiFilterViewInRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiFilterViewInTypeEnum;
 }
 
 export type JsonApiFilterViewInTypeEnum = 'filterView';
 
+export interface JsonApiFilterViewInAttributes {
+    'areRelationsValid'?: boolean;
+    /**
+     * The respective filter context.
+     */
+    'content': object;
+    'description'?: string;
+    /**
+     * Indicator whether the filter view should by applied by default.
+     */
+    'isDefault'?: boolean;
+    'tags'?: Array<string>;
+    'title': string;
+}
+
 export interface JsonApiFilterViewInDocument {
     'data': JsonApiFilterViewIn;
+}
+
+export interface JsonApiFilterViewInRelationships {
+    'analyticalDashboard'?: JsonApiFilterViewInRelationshipsAnalyticalDashboard;
+    'user'?: JsonApiFilterViewInRelationshipsUser;
+}
+
+export interface JsonApiFilterViewInRelationshipsAnalyticalDashboard {
+    'data': JsonApiAnalyticalDashboardLinkage | null;
+}
+
+export interface JsonApiFilterViewInRelationshipsUser {
+    'data': JsonApiUserLinkage | null;
 }
 
 /**
  * JSON:API representation of filterView entity.
  */
 export interface JsonApiFilterViewOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiFilterViewOutTypeEnum;
+    'attributes': JsonApiFilterViewOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiFilterViewOutAttributes;
     'relationships'?: JsonApiFilterViewOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiFilterViewOutTypeEnum;
 }
 
 export type JsonApiFilterViewOutTypeEnum = 'filterView';
 
 export interface JsonApiFilterViewOutAttributes {
-    'title': string;
-    'description'?: string;
-    'tags'?: Array<string>;
     'areRelationsValid'?: boolean;
-    /**
-     * Indicator whether the filter view should by applied by default.
-     */
-    'isDefault'?: boolean;
     /**
      * The respective filter context.
      */
     'content': object;
+    'description'?: string;
+    /**
+     * Indicator whether the filter view should by applied by default.
+     */
+    'isDefault'?: boolean;
+    'tags'?: Array<string>;
+    'title': string;
 }
 
 export interface JsonApiFilterViewOutDocument {
     'data': JsonApiFilterViewOut;
-    'links'?: ObjectLinks;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiFilterViewOutIncludes>;
+    'links'?: ObjectLinks;
 }
 
 /**
@@ -6856,30 +8235,42 @@ export type JsonApiFilterViewOutIncludes = JsonApiAnalyticalDashboardOutWithLink
  */
 export interface JsonApiFilterViewOutList {
     'data': Array<JsonApiFilterViewOutWithLinks>;
-    'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiFilterViewOutIncludes>;
+    'links'?: ListLinks;
+    'meta'?: JsonApiFilterViewOutListMeta;
+}
+
+export interface JsonApiFilterViewOutListMeta {
+    'page'?: PageMetadata;
 }
 
 export interface JsonApiFilterViewOutRelationships {
-    'analyticalDashboard'?: JsonApiExportDefinitionOutRelationshipsAnalyticalDashboard;
-    'user'?: JsonApiOrganizationOutRelationshipsBootstrapUser;
+    'analyticalDashboard'?: JsonApiFilterViewOutRelationshipsAnalyticalDashboard;
+    'user'?: JsonApiFilterViewOutRelationshipsUser;
+}
+
+export interface JsonApiFilterViewOutRelationshipsAnalyticalDashboard {
+    'data': JsonApiAnalyticalDashboardLinkage | null;
+}
+
+export interface JsonApiFilterViewOutRelationshipsUser {
+    'data': JsonApiUserLinkage | null;
 }
 
 export interface JsonApiFilterViewOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiFilterViewOutWithLinksTypeEnum;
+    'attributes': JsonApiFilterViewOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiFilterViewOutAttributes;
     'relationships'?: JsonApiFilterViewOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiFilterViewOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -6889,69 +8280,172 @@ export type JsonApiFilterViewOutWithLinksTypeEnum = 'filterView';
  * JSON:API representation of patching filterView entity.
  */
 export interface JsonApiFilterViewPatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiFilterViewPatchTypeEnum;
+    'attributes': JsonApiFilterViewPatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiFilterViewPatchAttributes;
-    'relationships'?: JsonApiFilterViewOutRelationships;
+    'relationships'?: JsonApiFilterViewPatchRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiFilterViewPatchTypeEnum;
 }
 
 export type JsonApiFilterViewPatchTypeEnum = 'filterView';
 
 export interface JsonApiFilterViewPatchAttributes {
-    'title'?: string;
-    'description'?: string;
-    'tags'?: Array<string>;
     'areRelationsValid'?: boolean;
-    /**
-     * Indicator whether the filter view should by applied by default.
-     */
-    'isDefault'?: boolean;
     /**
      * The respective filter context.
      */
     'content'?: object;
+    'description'?: string;
+    /**
+     * Indicator whether the filter view should by applied by default.
+     */
+    'isDefault'?: boolean;
+    'tags'?: Array<string>;
+    'title'?: string;
 }
 
 export interface JsonApiFilterViewPatchDocument {
     'data': JsonApiFilterViewPatch;
 }
 
+export interface JsonApiFilterViewPatchRelationships {
+    'analyticalDashboard'?: JsonApiFilterViewPatchRelationshipsAnalyticalDashboard;
+    'user'?: JsonApiFilterViewPatchRelationshipsUser;
+}
+
+export interface JsonApiFilterViewPatchRelationshipsAnalyticalDashboard {
+    'data': JsonApiAnalyticalDashboardLinkage | null;
+}
+
+export interface JsonApiFilterViewPatchRelationshipsUser {
+    'data': JsonApiUserLinkage | null;
+}
+
 /**
- * JSON:API representation of identityProvider entity.
+ * A custom fiscal calendar.
  */
-export interface JsonApiIdentityProviderIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiIdentityProviderInTypeEnum;
+export interface JsonApiFiscalCalendarOut {
+    'attributes'?: JsonApiFiscalCalendarOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
+    /**
+     * Object type
+     */
+    'type': JsonApiFiscalCalendarOutTypeEnum;
+}
+
+export type JsonApiFiscalCalendarOutTypeEnum = 'fiscalCalendar';
+
+export interface JsonApiFiscalCalendarOutAttributes {
+    'areRelationsValid'?: boolean;
+    'definition'?: JsonApiFiscalCalendarOutAttributesDefinition;
+    /**
+     * Calendar description.
+     */
+    'description'?: string;
+    /**
+     * Granularities available in the calendar, in drill-down order (finest to coarsest). Granularity title prefixes are localizable.
+     */
+    'enabledGranularities'?: Array<JsonApiFiscalCalendarOutAttributesEnabledGranularitiesInner>;
+    'tags'?: Array<string>;
+    /**
+     * Calendar title.
+     */
+    'title'?: string;
+}
+
+/**
+ * @type JsonApiFiscalCalendarOutAttributesDefinition
+ * Calendar definition details based on the calendar type.
+ */
+export type JsonApiFiscalCalendarOutAttributesDefinition = { type: 'custom' } & CustomCalendarDefinition | { type: 'fiscalYear' } & FiscalYearCalendarDefinition;
+
+/**
+ * A fiscal granularity enabled in a calendar together with its title prefix.
+ */
+export interface JsonApiFiscalCalendarOutAttributesEnabledGranularitiesInner {
+    /**
+     * Fiscal granularity available in the calendar. Corresponds to the calcique granularity name.
+     */
+    'granularity': JsonApiFiscalCalendarOutAttributesEnabledGranularitiesInnerGranularityEnum;
+    /**
+     * Prefix used to compose granularity titles. Can be localized via the metadata localization mechanism.
+     */
+    'prefix': string;
+}
+
+export type JsonApiFiscalCalendarOutAttributesEnabledGranularitiesInnerGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
+
+export interface JsonApiFiscalCalendarOutDocument {
+    'data': JsonApiFiscalCalendarOut;
+    'links'?: ObjectLinks;
+}
+
+/**
+ * A JSON:API document with a list of resources
+ */
+export interface JsonApiFiscalCalendarOutList {
+    'data': Array<JsonApiFiscalCalendarOutWithLinks>;
+    'links'?: ListLinks;
+    'meta'?: JsonApiFiscalCalendarOutListMeta;
+}
+
+export interface JsonApiFiscalCalendarOutListMeta {
+    'page'?: PageMetadata;
+}
+
+export interface JsonApiFiscalCalendarOutWithLinks {
+    'attributes'?: JsonApiFiscalCalendarOutAttributes;
+    /**
+     * API identifier of an object
+     */
+    'id': string;
+    /**
+     * Object type
+     */
+    'type': JsonApiFiscalCalendarOutWithLinksTypeEnum;
+    'links'?: ObjectLinks;
+}
+
+export type JsonApiFiscalCalendarOutWithLinksTypeEnum = 'fiscalCalendar';
+
+/**
+ * JSON:API representation of identityProvider entity.
+ */
+export interface JsonApiIdentityProviderIn {
     'attributes'?: JsonApiIdentityProviderInAttributes;
+    /**
+     * API identifier of an object
+     */
+    'id': string;
+    /**
+     * Object type
+     */
+    'type': JsonApiIdentityProviderInTypeEnum;
 }
 
 export type JsonApiIdentityProviderInTypeEnum = 'identityProvider';
 
 export interface JsonApiIdentityProviderInAttributes {
     /**
-     * List of identifiers for this IdP, where an identifier is a domain name. Users with email addresses belonging to these domains will be authenticated by this IdP.
-     */
-    'identifiers'?: Array<string>;
-    /**
      * Map of custom claim overrides. To be used when your Idp does not provide default claims (sub, email, name, given_name, family_name). Define the key pair for the claim you wish to override, where the key is the default name of the attribute and the value is your custom name for the given attribute.
      */
     'customClaimMapping'?: { [key: string]: string; };
     /**
-     * Base64 encoded xml document with SAML metadata. This document is issued by your SAML provider. It includes the issuer\'s name, expiration information, and keys that can be used to validate the response from the identity provider. This field is mandatory for SAML IdP.
+     * List of identifiers for this IdP, where an identifier is a domain name. Users with email addresses belonging to these domains will be authenticated by this IdP.
      */
-    'samlMetadata'?: string;
+    'identifiers'?: Array<string>;
+    /**
+     * Type of IdP for management purposes. MANAGED_IDP represents a GoodData managed IdP used in single OIDC setup, which is protected from altering/deletion. FIM_IDP represents a GoodData managed IdP used in federated identity management setup, which is protected from altering/deletion. DEX_IDP represents internal Dex IdP which is protected from altering/deletion. CUSTOM_IDP represents customer\'s own IdP, protected from deletion if currently used by org for authentication, deletable otherwise.
+     */
+    'idpType'?: JsonApiIdentityProviderInAttributesIdpTypeEnum;
     /**
      * The OAuth client id of your OIDC provider. This field is mandatory for OIDC IdP.
      */
@@ -6961,18 +8455,6 @@ export interface JsonApiIdentityProviderInAttributes {
      */
     'oauthClientSecret'?: string;
     /**
-     * The location of your OIDC provider. This field is mandatory for OIDC IdP.
-     */
-    'oauthIssuerLocation'?: string;
-    /**
-     * Any string identifying the OIDC provider. This value is used as suffix for OAuth2 callback (redirect) URL. If not defined, the standard callback URL is used. This value is valid only for external OIDC providers, not for the internal DEX provider.
-     */
-    'oauthIssuerId'?: string;
-    /**
-     * Any string identifying the claim in ID token, that should be used for user identification. The default value is \'sub\'.
-     */
-    'oauthSubjectIdClaim'?: string;
-    /**
      * Map of additional authentication attributes that should be added to the OAuth2 authentication requests, where the key is the name of the attribute and the value is the value of the attribute.
      */
     'oauthCustomAuthAttributes'?: { [key: string]: string; };
@@ -6981,9 +8463,21 @@ export interface JsonApiIdentityProviderInAttributes {
      */
     'oauthCustomScopes'?: Array<string> | null;
     /**
-     * Type of IdP for management purposes. MANAGED_IDP represents a GoodData managed IdP used in single OIDC setup, which is protected from altering/deletion. FIM_IDP represents a GoodData managed IdP used in federated identity management setup, which is protected from altering/deletion. DEX_IDP represents internal Dex IdP which is protected from altering/deletion. CUSTOM_IDP represents customer\'s own IdP, protected from deletion if currently used by org for authentication, deletable otherwise.
+     * Any string identifying the OIDC provider. This value is used as suffix for OAuth2 callback (redirect) URL. If not defined, the standard callback URL is used. This value is valid only for external OIDC providers, not for the internal DEX provider.
      */
-    'idpType'?: JsonApiIdentityProviderInAttributesIdpTypeEnum;
+    'oauthIssuerId'?: string;
+    /**
+     * The location of your OIDC provider. This field is mandatory for OIDC IdP.
+     */
+    'oauthIssuerLocation'?: string;
+    /**
+     * Any string identifying the claim in ID token, that should be used for user identification. The default value is \'sub\'.
+     */
+    'oauthSubjectIdClaim'?: string;
+    /**
+     * Base64 encoded xml document with SAML metadata. This document is issued by your SAML provider. It includes the issuer\'s name, expiration information, and keys that can be used to validate the response from the identity provider. This field is mandatory for SAML IdP.
+     */
+    'samlMetadata'?: string;
 }
 
 export type JsonApiIdentityProviderInAttributesIdpTypeEnum = 'MANAGED_IDP' | 'FIM_IDP' | 'DEX_IDP' | 'CUSTOM_IDP';
@@ -7006,44 +8500,36 @@ export type JsonApiIdentityProviderLinkageTypeEnum = 'identityProvider';
  * JSON:API representation of identityProvider entity.
  */
 export interface JsonApiIdentityProviderOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiIdentityProviderOutTypeEnum;
+    'attributes'?: JsonApiIdentityProviderOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiIdentityProviderOutAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiIdentityProviderOutTypeEnum;
 }
 
 export type JsonApiIdentityProviderOutTypeEnum = 'identityProvider';
 
 export interface JsonApiIdentityProviderOutAttributes {
     /**
-     * List of identifiers for this IdP, where an identifier is a domain name. Users with email addresses belonging to these domains will be authenticated by this IdP.
-     */
-    'identifiers'?: Array<string>;
-    /**
      * Map of custom claim overrides. To be used when your Idp does not provide default claims (sub, email, name, given_name, family_name). Define the key pair for the claim you wish to override, where the key is the default name of the attribute and the value is your custom name for the given attribute.
      */
     'customClaimMapping'?: { [key: string]: string; };
     /**
+     * List of identifiers for this IdP, where an identifier is a domain name. Users with email addresses belonging to these domains will be authenticated by this IdP.
+     */
+    'identifiers'?: Array<string>;
+    /**
+     * Type of IdP for management purposes. MANAGED_IDP represents a GoodData managed IdP used in single OIDC setup, which is protected from altering/deletion. FIM_IDP represents a GoodData managed IdP used in federated identity management setup, which is protected from altering/deletion. DEX_IDP represents internal Dex IdP which is protected from altering/deletion. CUSTOM_IDP represents customer\'s own IdP, protected from deletion if currently used by org for authentication, deletable otherwise.
+     */
+    'idpType'?: JsonApiIdentityProviderOutAttributesIdpTypeEnum;
+    /**
      * The OAuth client id of your OIDC provider. This field is mandatory for OIDC IdP.
      */
     'oauthClientId'?: string;
-    /**
-     * The location of your OIDC provider. This field is mandatory for OIDC IdP.
-     */
-    'oauthIssuerLocation'?: string;
-    /**
-     * Any string identifying the OIDC provider. This value is used as suffix for OAuth2 callback (redirect) URL. If not defined, the standard callback URL is used. This value is valid only for external OIDC providers, not for the internal DEX provider.
-     */
-    'oauthIssuerId'?: string;
-    /**
-     * Any string identifying the claim in ID token, that should be used for user identification. The default value is \'sub\'.
-     */
-    'oauthSubjectIdClaim'?: string;
     /**
      * Map of additional authentication attributes that should be added to the OAuth2 authentication requests, where the key is the name of the attribute and the value is the value of the attribute.
      */
@@ -7053,9 +8539,17 @@ export interface JsonApiIdentityProviderOutAttributes {
      */
     'oauthCustomScopes'?: Array<string> | null;
     /**
-     * Type of IdP for management purposes. MANAGED_IDP represents a GoodData managed IdP used in single OIDC setup, which is protected from altering/deletion. FIM_IDP represents a GoodData managed IdP used in federated identity management setup, which is protected from altering/deletion. DEX_IDP represents internal Dex IdP which is protected from altering/deletion. CUSTOM_IDP represents customer\'s own IdP, protected from deletion if currently used by org for authentication, deletable otherwise.
+     * Any string identifying the OIDC provider. This value is used as suffix for OAuth2 callback (redirect) URL. If not defined, the standard callback URL is used. This value is valid only for external OIDC providers, not for the internal DEX provider.
      */
-    'idpType'?: JsonApiIdentityProviderOutAttributesIdpTypeEnum;
+    'oauthIssuerId'?: string;
+    /**
+     * The location of your OIDC provider. This field is mandatory for OIDC IdP.
+     */
+    'oauthIssuerLocation'?: string;
+    /**
+     * Any string identifying the claim in ID token, that should be used for user identification. The default value is \'sub\'.
+     */
+    'oauthSubjectIdClaim'?: string;
 }
 
 export type JsonApiIdentityProviderOutAttributesIdpTypeEnum = 'MANAGED_IDP' | 'FIM_IDP' | 'DEX_IDP' | 'CUSTOM_IDP';
@@ -7071,19 +8565,23 @@ export interface JsonApiIdentityProviderOutDocument {
 export interface JsonApiIdentityProviderOutList {
     'data': Array<JsonApiIdentityProviderOutWithLinks>;
     'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
+    'meta'?: JsonApiIdentityProviderOutListMeta;
+}
+
+export interface JsonApiIdentityProviderOutListMeta {
+    'page'?: PageMetadata;
 }
 
 export interface JsonApiIdentityProviderOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiIdentityProviderOutWithLinksTypeEnum;
+    'attributes'?: JsonApiIdentityProviderOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiIdentityProviderOutAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiIdentityProviderOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -7093,18 +8591,67 @@ export type JsonApiIdentityProviderOutWithLinksTypeEnum = 'identityProvider';
  * JSON:API representation of patching identityProvider entity.
  */
 export interface JsonApiIdentityProviderPatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiIdentityProviderPatchTypeEnum;
+    'attributes'?: JsonApiIdentityProviderPatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiIdentityProviderInAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiIdentityProviderPatchTypeEnum;
 }
 
 export type JsonApiIdentityProviderPatchTypeEnum = 'identityProvider';
+
+export interface JsonApiIdentityProviderPatchAttributes {
+    /**
+     * Map of custom claim overrides. To be used when your Idp does not provide default claims (sub, email, name, given_name, family_name). Define the key pair for the claim you wish to override, where the key is the default name of the attribute and the value is your custom name for the given attribute.
+     */
+    'customClaimMapping'?: { [key: string]: string; };
+    /**
+     * List of identifiers for this IdP, where an identifier is a domain name. Users with email addresses belonging to these domains will be authenticated by this IdP.
+     */
+    'identifiers'?: Array<string>;
+    /**
+     * Type of IdP for management purposes. MANAGED_IDP represents a GoodData managed IdP used in single OIDC setup, which is protected from altering/deletion. FIM_IDP represents a GoodData managed IdP used in federated identity management setup, which is protected from altering/deletion. DEX_IDP represents internal Dex IdP which is protected from altering/deletion. CUSTOM_IDP represents customer\'s own IdP, protected from deletion if currently used by org for authentication, deletable otherwise.
+     */
+    'idpType'?: JsonApiIdentityProviderPatchAttributesIdpTypeEnum;
+    /**
+     * The OAuth client id of your OIDC provider. This field is mandatory for OIDC IdP.
+     */
+    'oauthClientId'?: string;
+    /**
+     * The OAuth client secret of your OIDC provider. This field is mandatory for OIDC IdP.
+     */
+    'oauthClientSecret'?: string;
+    /**
+     * Map of additional authentication attributes that should be added to the OAuth2 authentication requests, where the key is the name of the attribute and the value is the value of the attribute.
+     */
+    'oauthCustomAuthAttributes'?: { [key: string]: string; };
+    /**
+     * List of additional OAuth scopes which may be required by other providers (e.g. Snowflake)
+     */
+    'oauthCustomScopes'?: Array<string> | null;
+    /**
+     * Any string identifying the OIDC provider. This value is used as suffix for OAuth2 callback (redirect) URL. If not defined, the standard callback URL is used. This value is valid only for external OIDC providers, not for the internal DEX provider.
+     */
+    'oauthIssuerId'?: string;
+    /**
+     * The location of your OIDC provider. This field is mandatory for OIDC IdP.
+     */
+    'oauthIssuerLocation'?: string;
+    /**
+     * Any string identifying the claim in ID token, that should be used for user identification. The default value is \'sub\'.
+     */
+    'oauthSubjectIdClaim'?: string;
+    /**
+     * Base64 encoded xml document with SAML metadata. This document is issued by your SAML provider. It includes the issuer\'s name, expiration information, and keys that can be used to validate the response from the identity provider. This field is mandatory for SAML IdP.
+     */
+    'samlMetadata'?: string;
+}
+
+export type JsonApiIdentityProviderPatchAttributesIdpTypeEnum = 'MANAGED_IDP' | 'FIM_IDP' | 'DEX_IDP' | 'CUSTOM_IDP';
 
 export interface JsonApiIdentityProviderPatchDocument {
     'data': JsonApiIdentityProviderPatch;
@@ -7114,38 +8661,64 @@ export interface JsonApiIdentityProviderPatchDocument {
  * JSON:API representation of ipAllowlistPolicy entity.
  */
 export interface JsonApiIpAllowlistPolicyIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiIpAllowlistPolicyInTypeEnum;
+    'attributes': JsonApiIpAllowlistPolicyInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiIpAllowlistPolicyOutAttributes;
-    'relationships'?: JsonApiIpAllowlistPolicyOutRelationships;
+    'relationships'?: JsonApiIpAllowlistPolicyInRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiIpAllowlistPolicyInTypeEnum;
 }
 
 export type JsonApiIpAllowlistPolicyInTypeEnum = 'ipAllowlistPolicy';
 
+export interface JsonApiIpAllowlistPolicyInAttributes {
+    /**
+     * Allowed source IPv4 or IPv6 addresses or CIDR ranges. The /0 and ::/0 prefixes are not allowed.
+     */
+    'allowedSources': Array<string> | null;
+}
+
 export interface JsonApiIpAllowlistPolicyInDocument {
     'data': JsonApiIpAllowlistPolicyIn;
+}
+
+export interface JsonApiIpAllowlistPolicyInRelationships {
+    'userGroups'?: JsonApiIpAllowlistPolicyInRelationshipsUserGroups;
+    'users'?: JsonApiIpAllowlistPolicyInRelationshipsUsers;
+}
+
+export interface JsonApiIpAllowlistPolicyInRelationshipsUserGroups {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiUserGroupLinkage>;
+}
+
+export interface JsonApiIpAllowlistPolicyInRelationshipsUsers {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiUserLinkage>;
 }
 
 /**
  * JSON:API representation of ipAllowlistPolicy entity.
  */
 export interface JsonApiIpAllowlistPolicyOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiIpAllowlistPolicyOutTypeEnum;
+    'attributes': JsonApiIpAllowlistPolicyOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiIpAllowlistPolicyOutAttributes;
     'relationships'?: JsonApiIpAllowlistPolicyOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiIpAllowlistPolicyOutTypeEnum;
 }
 
 export type JsonApiIpAllowlistPolicyOutTypeEnum = 'ipAllowlistPolicy';
@@ -7159,11 +8732,11 @@ export interface JsonApiIpAllowlistPolicyOutAttributes {
 
 export interface JsonApiIpAllowlistPolicyOutDocument {
     'data': JsonApiIpAllowlistPolicyOut;
-    'links'?: ObjectLinks;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiIpAllowlistPolicyOutIncludes>;
+    'links'?: ObjectLinks;
 }
 
 /**
@@ -7176,17 +8749,28 @@ export type JsonApiIpAllowlistPolicyOutIncludes = JsonApiUserGroupOutWithLinks |
  */
 export interface JsonApiIpAllowlistPolicyOutList {
     'data': Array<JsonApiIpAllowlistPolicyOutWithLinks>;
-    'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiIpAllowlistPolicyOutIncludes>;
+    'links'?: ListLinks;
+    'meta'?: JsonApiIpAllowlistPolicyOutListMeta;
+}
+
+export interface JsonApiIpAllowlistPolicyOutListMeta {
+    'page'?: PageMetadata;
 }
 
 export interface JsonApiIpAllowlistPolicyOutRelationships {
+    'userGroups'?: JsonApiIpAllowlistPolicyOutRelationshipsUserGroups;
     'users'?: JsonApiIpAllowlistPolicyOutRelationshipsUsers;
-    'userGroups'?: JsonApiUserOutRelationshipsUserGroups;
+}
+
+export interface JsonApiIpAllowlistPolicyOutRelationshipsUserGroups {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiUserGroupLinkage>;
 }
 
 export interface JsonApiIpAllowlistPolicyOutRelationshipsUsers {
@@ -7197,16 +8781,16 @@ export interface JsonApiIpAllowlistPolicyOutRelationshipsUsers {
 }
 
 export interface JsonApiIpAllowlistPolicyOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiIpAllowlistPolicyOutWithLinksTypeEnum;
+    'attributes': JsonApiIpAllowlistPolicyOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiIpAllowlistPolicyOutAttributes;
     'relationships'?: JsonApiIpAllowlistPolicyOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiIpAllowlistPolicyOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -7216,18 +8800,22 @@ export type JsonApiIpAllowlistPolicyOutWithLinksTypeEnum = 'ipAllowlistPolicy';
  * JSON:API representation of jwk entity.
  */
 export interface JsonApiJwkIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiJwkInTypeEnum;
+    'attributes'?: JsonApiJwkInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiJwkOutAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiJwkInTypeEnum;
 }
 
 export type JsonApiJwkInTypeEnum = 'jwk';
+
+export interface JsonApiJwkInAttributes {
+    'content'?: RsaSpecification;
+}
 
 export interface JsonApiJwkInDocument {
     'data': JsonApiJwkIn;
@@ -7237,15 +8825,15 @@ export interface JsonApiJwkInDocument {
  * JSON:API representation of jwk entity.
  */
 export interface JsonApiJwkOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiJwkOutTypeEnum;
+    'attributes'?: JsonApiJwkOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiJwkOutAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiJwkOutTypeEnum;
 }
 
 export type JsonApiJwkOutTypeEnum = 'jwk';
@@ -7265,19 +8853,23 @@ export interface JsonApiJwkOutDocument {
 export interface JsonApiJwkOutList {
     'data': Array<JsonApiJwkOutWithLinks>;
     'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
+    'meta'?: JsonApiJwkOutListMeta;
+}
+
+export interface JsonApiJwkOutListMeta {
+    'page'?: PageMetadata;
 }
 
 export interface JsonApiJwkOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiJwkOutWithLinksTypeEnum;
+    'attributes'?: JsonApiJwkOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiJwkOutAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiJwkOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -7287,18 +8879,22 @@ export type JsonApiJwkOutWithLinksTypeEnum = 'jwk';
  * JSON:API representation of patching jwk entity.
  */
 export interface JsonApiJwkPatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiJwkPatchTypeEnum;
+    'attributes'?: JsonApiJwkPatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiJwkOutAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiJwkPatchTypeEnum;
 }
 
 export type JsonApiJwkPatchTypeEnum = 'jwk';
+
+export interface JsonApiJwkPatchAttributes {
+    'content'?: RsaSpecification;
+}
 
 export interface JsonApiJwkPatchDocument {
     'data': JsonApiJwkPatch;
@@ -7308,66 +8904,75 @@ export interface JsonApiJwkPatchDocument {
  * JSON:API representation of knowledgeRecommendation entity.
  */
 export interface JsonApiKnowledgeRecommendationIn {
+    'attributes': JsonApiKnowledgeRecommendationInAttributes;
+    /**
+     * API identifier of an object
+     */
+    'id': string;
+    'relationships': JsonApiKnowledgeRecommendationInRelationships;
     /**
      * Object type
      */
     'type': JsonApiKnowledgeRecommendationInTypeEnum;
-    /**
-     * API identifier of an object
-     */
-    'id': string;
-    'attributes': JsonApiKnowledgeRecommendationPostOptionalIdAttributes;
-    'relationships': JsonApiKnowledgeRecommendationPostOptionalIdRelationships;
 }
 
 export type JsonApiKnowledgeRecommendationInTypeEnum = 'knowledgeRecommendation';
 
-export interface JsonApiKnowledgeRecommendationInDocument {
-    'data': JsonApiKnowledgeRecommendationIn;
-}
-
-/**
- * JSON:API representation of knowledgeRecommendation entity.
- */
-export interface JsonApiKnowledgeRecommendationOut {
+export interface JsonApiKnowledgeRecommendationInAttributes {
     /**
-     * Object type
+     * Human-readable title of the analytical dashboard (denormalized for display)
      */
-    'type': JsonApiKnowledgeRecommendationOutTypeEnum;
+    'analyticalDashboardTitle'?: string;
     /**
-     * API identifier of an object
+     * Analyzed time period (e.g., \'2023-07\' or \'July 2023\')
      */
-    'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes': JsonApiKnowledgeRecommendationOutAttributes;
-    'relationships'?: JsonApiKnowledgeRecommendationOutRelationships;
-}
-
-export type JsonApiKnowledgeRecommendationOutTypeEnum = 'knowledgeRecommendation';
-
-export interface JsonApiKnowledgeRecommendationOutAttributes {
+    'analyzedPeriod'?: string;
     /**
-     * Human-readable title for the recommendation, e.g. \'Revenue decreased vs last month\'
+     * Metric value in the analyzed period (the observed value that triggered the anomaly)
      */
-    'title': string;
+    'analyzedValue'?: any;
+    'areRelationsValid'?: boolean;
+    /**
+     * Time period for comparison
+     */
+    'comparisonType': JsonApiKnowledgeRecommendationInAttributesComparisonTypeEnum;
+    /**
+     * Confidence score (0.0 to 1.0)
+     */
+    'confidence'?: any;
     /**
      * Description of the recommendation
      */
     'description'?: string;
-    'tags'?: Array<string>;
-    'areRelationsValid'?: boolean;
+    /**
+     * Direction of the metric change
+     */
+    'direction': JsonApiKnowledgeRecommendationInAttributesDirectionEnum;
     /**
      * Human-readable title of the metric (denormalized for display)
      */
     'metricTitle'?: string;
     /**
-     * Direction of the metric change
+     * Structured recommendations data as JSON
      */
-    'direction': JsonApiKnowledgeRecommendationOutAttributesDirectionEnum;
+    'recommendations'?: object;
     /**
-     * Time period for comparison
+     * Reference time period for comparison (e.g., \'2023-06\' or \'Jun 2023\')
      */
-    'comparisonType': JsonApiKnowledgeRecommendationOutAttributesComparisonTypeEnum;
+    'referencePeriod'?: string;
+    /**
+     * Metric value in the reference period
+     */
+    'referenceValue'?: any;
+    /**
+     * Number of source documents used for generation
+     */
+    'sourceCount'?: number;
+    'tags'?: Array<string>;
+    /**
+     * Human-readable title for the recommendation, e.g. \'Revenue decreased vs last month\'
+     */
+    'title': string;
     /**
      * ID of the widget where the anomaly was detected
      */
@@ -7376,51 +8981,123 @@ export interface JsonApiKnowledgeRecommendationOutAttributes {
      * Name of the widget where the anomaly was detected
      */
     'widgetName'?: string;
+}
+
+export type JsonApiKnowledgeRecommendationInAttributesComparisonTypeEnum = 'MONTH' | 'QUARTER' | 'YEAR';
+export type JsonApiKnowledgeRecommendationInAttributesDirectionEnum = 'INCREASED' | 'DECREASED';
+
+export interface JsonApiKnowledgeRecommendationInDocument {
+    'data': JsonApiKnowledgeRecommendationIn;
+}
+
+export interface JsonApiKnowledgeRecommendationInRelationships {
+    'analyticalDashboard'?: JsonApiKnowledgeRecommendationInRelationshipsAnalyticalDashboard;
+    'metric': JsonApiKnowledgeRecommendationInRelationshipsMetric;
+}
+
+export interface JsonApiKnowledgeRecommendationInRelationshipsAnalyticalDashboard {
+    'data': JsonApiAnalyticalDashboardLinkage | null;
+}
+
+export interface JsonApiKnowledgeRecommendationInRelationshipsMetric {
+    'data': JsonApiMetricLinkage | null;
+}
+
+/**
+ * JSON:API representation of knowledgeRecommendation entity.
+ */
+export interface JsonApiKnowledgeRecommendationOut {
+    'attributes': JsonApiKnowledgeRecommendationOutAttributes;
     /**
-     * Confidence score (0.0 to 1.0)
+     * API identifier of an object
      */
-    'confidence'?: any;
+    'id': string;
+    'meta'?: JsonApiKnowledgeRecommendationOutMeta;
+    'relationships'?: JsonApiKnowledgeRecommendationOutRelationships;
     /**
-     * Structured recommendations data as JSON
+     * Object type
      */
-    'recommendations'?: object;
+    'type': JsonApiKnowledgeRecommendationOutTypeEnum;
+}
+
+export type JsonApiKnowledgeRecommendationOutTypeEnum = 'knowledgeRecommendation';
+
+export interface JsonApiKnowledgeRecommendationOutAttributes {
     /**
-     * Number of source documents used for generation
+     * Human-readable title of the analytical dashboard (denormalized for display)
      */
-    'sourceCount'?: number;
-    /**
-     * Reference time period for comparison (e.g., \'2023-06\' or \'Jun 2023\')
-     */
-    'referencePeriod'?: string;
+    'analyticalDashboardTitle'?: string;
     /**
      * Analyzed time period (e.g., \'2023-07\' or \'July 2023\')
      */
     'analyzedPeriod'?: string;
     /**
+     * Metric value in the analyzed period (the observed value that triggered the anomaly)
+     */
+    'analyzedValue'?: any;
+    'areRelationsValid'?: boolean;
+    /**
+     * Time period for comparison
+     */
+    'comparisonType': JsonApiKnowledgeRecommendationOutAttributesComparisonTypeEnum;
+    /**
+     * Confidence score (0.0 to 1.0)
+     */
+    'confidence'?: any;
+    'createdAt'?: string;
+    /**
+     * Description of the recommendation
+     */
+    'description'?: string;
+    /**
+     * Direction of the metric change
+     */
+    'direction': JsonApiKnowledgeRecommendationOutAttributesDirectionEnum;
+    /**
+     * Human-readable title of the metric (denormalized for display)
+     */
+    'metricTitle'?: string;
+    /**
+     * Structured recommendations data as JSON
+     */
+    'recommendations'?: object;
+    /**
+     * Reference time period for comparison (e.g., \'2023-06\' or \'Jun 2023\')
+     */
+    'referencePeriod'?: string;
+    /**
      * Metric value in the reference period
      */
     'referenceValue'?: any;
     /**
-     * Metric value in the analyzed period (the observed value that triggered the anomaly)
+     * Number of source documents used for generation
      */
-    'analyzedValue'?: any;
+    'sourceCount'?: number;
+    'tags'?: Array<string>;
     /**
-     * Human-readable title of the analytical dashboard (denormalized for display)
+     * Human-readable title for the recommendation, e.g. \'Revenue decreased vs last month\'
      */
-    'analyticalDashboardTitle'?: string;
-    'createdAt'?: string;
+    'title': string;
+    /**
+     * ID of the widget where the anomaly was detected
+     */
+    'widgetId'?: string;
+    /**
+     * Name of the widget where the anomaly was detected
+     */
+    'widgetName'?: string;
 }
 
-export type JsonApiKnowledgeRecommendationOutAttributesDirectionEnum = 'INCREASED' | 'DECREASED';
 export type JsonApiKnowledgeRecommendationOutAttributesComparisonTypeEnum = 'MONTH' | 'QUARTER' | 'YEAR';
+export type JsonApiKnowledgeRecommendationOutAttributesDirectionEnum = 'INCREASED' | 'DECREASED';
 
 export interface JsonApiKnowledgeRecommendationOutDocument {
     'data': JsonApiKnowledgeRecommendationOut;
-    'links'?: ObjectLinks;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiKnowledgeRecommendationOutIncludes>;
+    'links'?: ObjectLinks;
 }
 
 /**
@@ -7433,31 +9110,60 @@ export type JsonApiKnowledgeRecommendationOutIncludes = JsonApiAnalyticalDashboa
  */
 export interface JsonApiKnowledgeRecommendationOutList {
     'data': Array<JsonApiKnowledgeRecommendationOutWithLinks>;
-    'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiKnowledgeRecommendationOutIncludes>;
+    'links'?: ListLinks;
+    'meta'?: JsonApiKnowledgeRecommendationOutListMeta;
 }
 
+export interface JsonApiKnowledgeRecommendationOutListMeta {
+    'page'?: PageMetadata;
+}
+
+export interface JsonApiKnowledgeRecommendationOutMeta {
+    'origin'?: JsonApiKnowledgeRecommendationOutMetaOrigin;
+}
+
+export interface JsonApiKnowledgeRecommendationOutMetaOrigin {
+    /**
+     * defines id of the workspace where the entity comes from
+     */
+    'originId': string;
+    /**
+     * defines type of the origin of the entity
+     */
+    'originType': JsonApiKnowledgeRecommendationOutMetaOriginOriginTypeEnum;
+}
+
+export type JsonApiKnowledgeRecommendationOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
+
 export interface JsonApiKnowledgeRecommendationOutRelationships {
-    'metric'?: JsonApiKnowledgeRecommendationPostOptionalIdRelationshipsMetric;
-    'analyticalDashboard'?: JsonApiExportDefinitionOutRelationshipsAnalyticalDashboard;
+    'analyticalDashboard'?: JsonApiKnowledgeRecommendationOutRelationshipsAnalyticalDashboard;
+    'metric'?: JsonApiKnowledgeRecommendationOutRelationshipsMetric;
+}
+
+export interface JsonApiKnowledgeRecommendationOutRelationshipsAnalyticalDashboard {
+    'data': JsonApiAnalyticalDashboardLinkage | null;
+}
+
+export interface JsonApiKnowledgeRecommendationOutRelationshipsMetric {
+    'data': JsonApiMetricLinkage | null;
 }
 
 export interface JsonApiKnowledgeRecommendationOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiKnowledgeRecommendationOutWithLinksTypeEnum;
+    'attributes': JsonApiKnowledgeRecommendationOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes': JsonApiKnowledgeRecommendationOutAttributes;
+    'meta'?: JsonApiKnowledgeRecommendationOutMeta;
     'relationships'?: JsonApiKnowledgeRecommendationOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiKnowledgeRecommendationOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -7467,43 +9173,75 @@ export type JsonApiKnowledgeRecommendationOutWithLinksTypeEnum = 'knowledgeRecom
  * JSON:API representation of patching knowledgeRecommendation entity.
  */
 export interface JsonApiKnowledgeRecommendationPatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiKnowledgeRecommendationPatchTypeEnum;
+    'attributes': JsonApiKnowledgeRecommendationPatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiKnowledgeRecommendationPatchAttributes;
-    'relationships': JsonApiKnowledgeRecommendationOutRelationships;
+    'relationships': JsonApiKnowledgeRecommendationPatchRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiKnowledgeRecommendationPatchTypeEnum;
 }
 
 export type JsonApiKnowledgeRecommendationPatchTypeEnum = 'knowledgeRecommendation';
 
 export interface JsonApiKnowledgeRecommendationPatchAttributes {
     /**
-     * Human-readable title for the recommendation, e.g. \'Revenue decreased vs last month\'
+     * Human-readable title of the analytical dashboard (denormalized for display)
      */
-    'title'?: string;
+    'analyticalDashboardTitle'?: string;
+    /**
+     * Analyzed time period (e.g., \'2023-07\' or \'July 2023\')
+     */
+    'analyzedPeriod'?: string;
+    /**
+     * Metric value in the analyzed period (the observed value that triggered the anomaly)
+     */
+    'analyzedValue'?: any;
+    'areRelationsValid'?: boolean;
+    /**
+     * Time period for comparison
+     */
+    'comparisonType'?: JsonApiKnowledgeRecommendationPatchAttributesComparisonTypeEnum;
+    /**
+     * Confidence score (0.0 to 1.0)
+     */
+    'confidence'?: any;
     /**
      * Description of the recommendation
      */
     'description'?: string;
-    'tags'?: Array<string>;
-    'areRelationsValid'?: boolean;
-    /**
-     * Human-readable title of the metric (denormalized for display)
-     */
-    'metricTitle'?: string;
     /**
      * Direction of the metric change
      */
     'direction'?: JsonApiKnowledgeRecommendationPatchAttributesDirectionEnum;
     /**
-     * Time period for comparison
+     * Human-readable title of the metric (denormalized for display)
      */
-    'comparisonType'?: JsonApiKnowledgeRecommendationPatchAttributesComparisonTypeEnum;
+    'metricTitle'?: string;
+    /**
+     * Structured recommendations data as JSON
+     */
+    'recommendations'?: object;
+    /**
+     * Reference time period for comparison (e.g., \'2023-06\' or \'Jun 2023\')
+     */
+    'referencePeriod'?: string;
+    /**
+     * Metric value in the reference period
+     */
+    'referenceValue'?: any;
+    /**
+     * Number of source documents used for generation
+     */
+    'sourceCount'?: number;
+    'tags'?: Array<string>;
+    /**
+     * Human-readable title for the recommendation, e.g. \'Revenue decreased vs last month\'
+     */
+    'title'?: string;
     /**
      * ID of the widget where the anomaly was detected
      */
@@ -7512,88 +9250,101 @@ export interface JsonApiKnowledgeRecommendationPatchAttributes {
      * Name of the widget where the anomaly was detected
      */
     'widgetName'?: string;
-    /**
-     * Confidence score (0.0 to 1.0)
-     */
-    'confidence'?: any;
-    /**
-     * Structured recommendations data as JSON
-     */
-    'recommendations'?: object;
-    /**
-     * Number of source documents used for generation
-     */
-    'sourceCount'?: number;
-    /**
-     * Reference time period for comparison (e.g., \'2023-06\' or \'Jun 2023\')
-     */
-    'referencePeriod'?: string;
-    /**
-     * Analyzed time period (e.g., \'2023-07\' or \'July 2023\')
-     */
-    'analyzedPeriod'?: string;
-    /**
-     * Metric value in the reference period
-     */
-    'referenceValue'?: any;
-    /**
-     * Metric value in the analyzed period (the observed value that triggered the anomaly)
-     */
-    'analyzedValue'?: any;
-    /**
-     * Human-readable title of the analytical dashboard (denormalized for display)
-     */
-    'analyticalDashboardTitle'?: string;
 }
 
-export type JsonApiKnowledgeRecommendationPatchAttributesDirectionEnum = 'INCREASED' | 'DECREASED';
 export type JsonApiKnowledgeRecommendationPatchAttributesComparisonTypeEnum = 'MONTH' | 'QUARTER' | 'YEAR';
+export type JsonApiKnowledgeRecommendationPatchAttributesDirectionEnum = 'INCREASED' | 'DECREASED';
 
 export interface JsonApiKnowledgeRecommendationPatchDocument {
     'data': JsonApiKnowledgeRecommendationPatch;
+}
+
+export interface JsonApiKnowledgeRecommendationPatchRelationships {
+    'analyticalDashboard'?: JsonApiKnowledgeRecommendationPatchRelationshipsAnalyticalDashboard;
+    'metric'?: JsonApiKnowledgeRecommendationPatchRelationshipsMetric;
+}
+
+export interface JsonApiKnowledgeRecommendationPatchRelationshipsAnalyticalDashboard {
+    'data': JsonApiAnalyticalDashboardLinkage | null;
+}
+
+export interface JsonApiKnowledgeRecommendationPatchRelationshipsMetric {
+    'data': JsonApiMetricLinkage | null;
 }
 
 /**
  * JSON:API representation of knowledgeRecommendation entity.
  */
 export interface JsonApiKnowledgeRecommendationPostOptionalId {
-    /**
-     * Object type
-     */
-    'type': JsonApiKnowledgeRecommendationPostOptionalIdTypeEnum;
+    'attributes': JsonApiKnowledgeRecommendationPostOptionalIdAttributes;
     /**
      * API identifier of an object
      */
     'id'?: string;
-    'attributes': JsonApiKnowledgeRecommendationPostOptionalIdAttributes;
     'relationships': JsonApiKnowledgeRecommendationPostOptionalIdRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiKnowledgeRecommendationPostOptionalIdTypeEnum;
 }
 
 export type JsonApiKnowledgeRecommendationPostOptionalIdTypeEnum = 'knowledgeRecommendation';
 
 export interface JsonApiKnowledgeRecommendationPostOptionalIdAttributes {
     /**
-     * Human-readable title for the recommendation, e.g. \'Revenue decreased vs last month\'
+     * Human-readable title of the analytical dashboard (denormalized for display)
      */
-    'title': string;
+    'analyticalDashboardTitle'?: string;
+    /**
+     * Analyzed time period (e.g., \'2023-07\' or \'July 2023\')
+     */
+    'analyzedPeriod'?: string;
+    /**
+     * Metric value in the analyzed period (the observed value that triggered the anomaly)
+     */
+    'analyzedValue'?: any;
+    'areRelationsValid'?: boolean;
+    /**
+     * Time period for comparison
+     */
+    'comparisonType': JsonApiKnowledgeRecommendationPostOptionalIdAttributesComparisonTypeEnum;
+    /**
+     * Confidence score (0.0 to 1.0)
+     */
+    'confidence'?: any;
     /**
      * Description of the recommendation
      */
     'description'?: string;
-    'tags'?: Array<string>;
-    'areRelationsValid'?: boolean;
-    /**
-     * Human-readable title of the metric (denormalized for display)
-     */
-    'metricTitle'?: string;
     /**
      * Direction of the metric change
      */
     'direction': JsonApiKnowledgeRecommendationPostOptionalIdAttributesDirectionEnum;
     /**
-     * Time period for comparison
+     * Human-readable title of the metric (denormalized for display)
      */
-    'comparisonType': JsonApiKnowledgeRecommendationPostOptionalIdAttributesComparisonTypeEnum;
+    'metricTitle'?: string;
+    /**
+     * Structured recommendations data as JSON
+     */
+    'recommendations'?: object;
+    /**
+     * Reference time period for comparison (e.g., \'2023-06\' or \'Jun 2023\')
+     */
+    'referencePeriod'?: string;
+    /**
+     * Metric value in the reference period
+     */
+    'referenceValue'?: any;
+    /**
+     * Number of source documents used for generation
+     */
+    'sourceCount'?: number;
+    'tags'?: Array<string>;
+    /**
+     * Human-readable title for the recommendation, e.g. \'Revenue decreased vs last month\'
+     */
+    'title': string;
     /**
      * ID of the widget where the anomaly was detected
      */
@@ -7602,50 +9353,22 @@ export interface JsonApiKnowledgeRecommendationPostOptionalIdAttributes {
      * Name of the widget where the anomaly was detected
      */
     'widgetName'?: string;
-    /**
-     * Confidence score (0.0 to 1.0)
-     */
-    'confidence'?: any;
-    /**
-     * Structured recommendations data as JSON
-     */
-    'recommendations'?: object;
-    /**
-     * Number of source documents used for generation
-     */
-    'sourceCount'?: number;
-    /**
-     * Reference time period for comparison (e.g., \'2023-06\' or \'Jun 2023\')
-     */
-    'referencePeriod'?: string;
-    /**
-     * Analyzed time period (e.g., \'2023-07\' or \'July 2023\')
-     */
-    'analyzedPeriod'?: string;
-    /**
-     * Metric value in the reference period
-     */
-    'referenceValue'?: any;
-    /**
-     * Metric value in the analyzed period (the observed value that triggered the anomaly)
-     */
-    'analyzedValue'?: any;
-    /**
-     * Human-readable title of the analytical dashboard (denormalized for display)
-     */
-    'analyticalDashboardTitle'?: string;
 }
 
-export type JsonApiKnowledgeRecommendationPostOptionalIdAttributesDirectionEnum = 'INCREASED' | 'DECREASED';
 export type JsonApiKnowledgeRecommendationPostOptionalIdAttributesComparisonTypeEnum = 'MONTH' | 'QUARTER' | 'YEAR';
+export type JsonApiKnowledgeRecommendationPostOptionalIdAttributesDirectionEnum = 'INCREASED' | 'DECREASED';
 
 export interface JsonApiKnowledgeRecommendationPostOptionalIdDocument {
     'data': JsonApiKnowledgeRecommendationPostOptionalId;
 }
 
 export interface JsonApiKnowledgeRecommendationPostOptionalIdRelationships {
+    'analyticalDashboard'?: JsonApiKnowledgeRecommendationPostOptionalIdRelationshipsAnalyticalDashboard;
     'metric': JsonApiKnowledgeRecommendationPostOptionalIdRelationshipsMetric;
-    'analyticalDashboard'?: JsonApiExportDefinitionOutRelationshipsAnalyticalDashboard;
+}
+
+export interface JsonApiKnowledgeRecommendationPostOptionalIdRelationshipsAnalyticalDashboard {
+    'data': JsonApiAnalyticalDashboardLinkage | null;
 }
 
 export interface JsonApiKnowledgeRecommendationPostOptionalIdRelationshipsMetric {
@@ -7666,36 +9389,36 @@ export type JsonApiLabelLinkageTypeEnum = 'label';
  * JSON:API representation of label entity.
  */
 export interface JsonApiLabelOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiLabelOutTypeEnum;
+    'attributes'?: JsonApiLabelOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes'?: JsonApiLabelOutAttributes;
+    'meta'?: JsonApiLabelOutMeta;
     'relationships'?: JsonApiLabelOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiLabelOutTypeEnum;
 }
 
 export type JsonApiLabelOutTypeEnum = 'label';
 
 export interface JsonApiLabelOutAttributes {
-    'title'?: string;
+    'areRelationsValid'?: boolean;
     'description'?: string;
-    'tags'?: Array<string>;
+    'geoAreaConfig'?: JsonApiLabelOutAttributesGeoAreaConfig;
+    'isHidden'?: boolean;
+    'isNullable'?: boolean;
+    'locale'?: string;
+    'nullValue'?: string;
     'primary'?: boolean;
     'sourceColumn'?: string;
     'sourceColumnDataType'?: JsonApiLabelOutAttributesSourceColumnDataTypeEnum;
-    'valueType'?: JsonApiLabelOutAttributesValueTypeEnum;
-    'isHidden'?: boolean;
-    'geoAreaConfig'?: JsonApiLabelOutAttributesGeoAreaConfig;
-    'areRelationsValid'?: boolean;
-    'locale'?: string;
+    'tags'?: Array<string>;
+    'title'?: string;
     'translations'?: Array<JsonApiLabelOutAttributesTranslationsInner>;
-    'isNullable'?: boolean;
-    'nullValue'?: string;
+    'valueType'?: JsonApiLabelOutAttributesValueTypeEnum;
 }
 
 export type JsonApiLabelOutAttributesSourceColumnDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
@@ -7709,17 +9432,17 @@ export interface JsonApiLabelOutAttributesGeoAreaConfig {
 }
 
 export interface JsonApiLabelOutAttributesTranslationsInner {
-    'sourceColumn': string;
     'locale': string;
+    'sourceColumn': string;
 }
 
 export interface JsonApiLabelOutDocument {
     'data': JsonApiLabelOut;
-    'links'?: ObjectLinks;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiAttributeOutWithLinks>;
+    'links'?: ObjectLinks;
 }
 
 /**
@@ -7727,30 +9450,55 @@ export interface JsonApiLabelOutDocument {
  */
 export interface JsonApiLabelOutList {
     'data': Array<JsonApiLabelOutWithLinks>;
-    'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiAttributeOutWithLinks>;
+    'links'?: ListLinks;
+    'meta'?: JsonApiLabelOutListMeta;
 }
 
+export interface JsonApiLabelOutListMeta {
+    'page'?: PageMetadata;
+}
+
+export interface JsonApiLabelOutMeta {
+    'origin'?: JsonApiLabelOutMetaOrigin;
+}
+
+export interface JsonApiLabelOutMetaOrigin {
+    /**
+     * defines id of the workspace where the entity comes from
+     */
+    'originId': string;
+    /**
+     * defines type of the origin of the entity
+     */
+    'originType': JsonApiLabelOutMetaOriginOriginTypeEnum;
+}
+
+export type JsonApiLabelOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
+
 export interface JsonApiLabelOutRelationships {
-    'attribute'?: JsonApiAggregatedFactOutRelationshipsSourceAttribute;
+    'attribute'?: JsonApiLabelOutRelationshipsAttribute;
+}
+
+export interface JsonApiLabelOutRelationshipsAttribute {
+    'data': JsonApiAttributeLinkage | null;
 }
 
 export interface JsonApiLabelOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiLabelOutWithLinksTypeEnum;
+    'attributes'?: JsonApiLabelOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes'?: JsonApiLabelOutAttributes;
+    'meta'?: JsonApiLabelOutMeta;
     'relationships'?: JsonApiLabelOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiLabelOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -7760,18 +9508,24 @@ export type JsonApiLabelOutWithLinksTypeEnum = 'label';
  * JSON:API representation of patching label entity.
  */
 export interface JsonApiLabelPatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiLabelPatchTypeEnum;
+    'attributes'?: JsonApiLabelPatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiAttributePatchAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiLabelPatchTypeEnum;
 }
 
 export type JsonApiLabelPatchTypeEnum = 'label';
+
+export interface JsonApiLabelPatchAttributes {
+    'description'?: string;
+    'tags'?: Array<string>;
+    'title'?: string;
+}
 
 export interface JsonApiLabelPatchDocument {
     'data': JsonApiLabelPatch;
@@ -7781,34 +9535,34 @@ export interface JsonApiLabelPatchDocument {
  * LLM Provider configuration for connecting to LLM services.
  */
 export interface JsonApiLlmProviderIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiLlmProviderInTypeEnum;
+    'attributes'?: JsonApiLlmProviderInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiLlmProviderInAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiLlmProviderInTypeEnum;
 }
 
 export type JsonApiLlmProviderInTypeEnum = 'llmProvider';
 
 export interface JsonApiLlmProviderInAttributes {
-    'name'?: string | null;
+    /**
+     * Required ID of the default model to use from the models list.
+     */
+    'defaultModelId'?: string | null;
     /**
      * Description of the LLM Provider.
      */
     'description'?: string | null;
     /**
-     * Required ID of the default model to use from the models list.
-     */
-    'defaultModelId'?: string | null;
-    'providerConfig'?: JsonApiLlmProviderInAttributesProviderConfig | null;
-    /**
      * List of LLM models available for this provider.
      */
     'models'?: Array<JsonApiLlmProviderInAttributesModelsInner> | null;
+    'name'?: string | null;
+    'providerConfig'?: JsonApiLlmProviderInAttributesProviderConfig | null;
 }
 
 /**
@@ -7816,13 +9570,13 @@ export interface JsonApiLlmProviderInAttributes {
  */
 export interface JsonApiLlmProviderInAttributesModelsInner {
     /**
-     * Unique identifier of the model (e.g., gpt-5.3, claude-4.6).
-     */
-    'id': string;
-    /**
      * Family of LLM models.
      */
     'family': JsonApiLlmProviderInAttributesModelsInnerFamilyEnum;
+    /**
+     * Unique identifier of the model (e.g., gpt-5.3, claude-4.6).
+     */
+    'id': string;
 }
 
 export type JsonApiLlmProviderInAttributesModelsInnerFamilyEnum = 'OPENAI' | 'ANTHROPIC' | 'META' | 'MISTRAL' | 'AMAZON' | 'GOOGLE' | 'COHERE' | 'UNKNOWN';
@@ -7841,18 +9595,57 @@ export interface JsonApiLlmProviderInDocument {
  * LLM Provider configuration for connecting to LLM services.
  */
 export interface JsonApiLlmProviderOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiLlmProviderOutTypeEnum;
+    'attributes'?: JsonApiLlmProviderOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiLlmProviderInAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiLlmProviderOutTypeEnum;
 }
 
 export type JsonApiLlmProviderOutTypeEnum = 'llmProvider';
+
+export interface JsonApiLlmProviderOutAttributes {
+    /**
+     * Required ID of the default model to use from the models list.
+     */
+    'defaultModelId'?: string | null;
+    /**
+     * Description of the LLM Provider.
+     */
+    'description'?: string | null;
+    /**
+     * List of LLM models available for this provider.
+     */
+    'models'?: Array<JsonApiLlmProviderOutAttributesModelsInner> | null;
+    'name'?: string | null;
+    'providerConfig'?: JsonApiLlmProviderOutAttributesProviderConfig | null;
+}
+
+/**
+ * LLM Model configuration (id, family) within a provider.
+ */
+export interface JsonApiLlmProviderOutAttributesModelsInner {
+    /**
+     * Family of LLM models.
+     */
+    'family': JsonApiLlmProviderOutAttributesModelsInnerFamilyEnum;
+    /**
+     * Unique identifier of the model (e.g., gpt-5.3, claude-4.6).
+     */
+    'id': string;
+}
+
+export type JsonApiLlmProviderOutAttributesModelsInnerFamilyEnum = 'OPENAI' | 'ANTHROPIC' | 'META' | 'MISTRAL' | 'AMAZON' | 'GOOGLE' | 'COHERE' | 'UNKNOWN';
+
+/**
+ * @type JsonApiLlmProviderOutAttributesProviderConfig
+ * Provider-specific configuration including authentication.
+ */
+export type JsonApiLlmProviderOutAttributesProviderConfig = AnthropicProviderConfig | AwsBedrockProviderConfig | AzureFoundryProviderConfig | OpenAIProviderConfig;
 
 export interface JsonApiLlmProviderOutDocument {
     'data': JsonApiLlmProviderOut;
@@ -7865,19 +9658,23 @@ export interface JsonApiLlmProviderOutDocument {
 export interface JsonApiLlmProviderOutList {
     'data': Array<JsonApiLlmProviderOutWithLinks>;
     'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
+    'meta'?: JsonApiLlmProviderOutListMeta;
+}
+
+export interface JsonApiLlmProviderOutListMeta {
+    'page'?: PageMetadata;
 }
 
 export interface JsonApiLlmProviderOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiLlmProviderOutWithLinksTypeEnum;
+    'attributes'?: JsonApiLlmProviderOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiLlmProviderInAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiLlmProviderOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -7887,18 +9684,57 @@ export type JsonApiLlmProviderOutWithLinksTypeEnum = 'llmProvider';
  * LLM Provider configuration for connecting to LLM services.
  */
 export interface JsonApiLlmProviderPatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiLlmProviderPatchTypeEnum;
+    'attributes'?: JsonApiLlmProviderPatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiLlmProviderInAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiLlmProviderPatchTypeEnum;
 }
 
 export type JsonApiLlmProviderPatchTypeEnum = 'llmProvider';
+
+export interface JsonApiLlmProviderPatchAttributes {
+    /**
+     * Required ID of the default model to use from the models list.
+     */
+    'defaultModelId'?: string | null;
+    /**
+     * Description of the LLM Provider.
+     */
+    'description'?: string | null;
+    /**
+     * List of LLM models available for this provider.
+     */
+    'models'?: Array<JsonApiLlmProviderPatchAttributesModelsInner> | null;
+    'name'?: string | null;
+    'providerConfig'?: JsonApiLlmProviderPatchAttributesProviderConfig | null;
+}
+
+/**
+ * LLM Model configuration (id, family) within a provider.
+ */
+export interface JsonApiLlmProviderPatchAttributesModelsInner {
+    /**
+     * Family of LLM models.
+     */
+    'family': JsonApiLlmProviderPatchAttributesModelsInnerFamilyEnum;
+    /**
+     * Unique identifier of the model (e.g., gpt-5.3, claude-4.6).
+     */
+    'id': string;
+}
+
+export type JsonApiLlmProviderPatchAttributesModelsInnerFamilyEnum = 'OPENAI' | 'ANTHROPIC' | 'META' | 'MISTRAL' | 'AMAZON' | 'GOOGLE' | 'COHERE' | 'UNKNOWN';
+
+/**
+ * @type JsonApiLlmProviderPatchAttributesProviderConfig
+ * Provider-specific configuration including authentication.
+ */
+export type JsonApiLlmProviderPatchAttributesProviderConfig = AnthropicProviderConfig | AwsBedrockProviderConfig | AzureFoundryProviderConfig | OpenAIProviderConfig;
 
 export interface JsonApiLlmProviderPatchDocument {
     'data': JsonApiLlmProviderPatch;
@@ -7908,18 +9744,43 @@ export interface JsonApiLlmProviderPatchDocument {
  * JSON:API representation of memoryItem entity.
  */
 export interface JsonApiMemoryItemIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiMemoryItemInTypeEnum;
+    'attributes': JsonApiMemoryItemInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiMemoryItemPostOptionalIdAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiMemoryItemInTypeEnum;
 }
 
 export type JsonApiMemoryItemInTypeEnum = 'memoryItem';
+
+export interface JsonApiMemoryItemInAttributes {
+    'areRelationsValid'?: boolean;
+    'description'?: string;
+    /**
+     * The text that will be injected into the system prompt
+     */
+    'instruction': string;
+    /**
+     * Whether memory item is disabled
+     */
+    'isDisabled'?: boolean;
+    /**
+     * Set of unique strings used for semantic similarity filtering
+     */
+    'keywords'?: Array<string>;
+    /**
+     * Strategy defining when the memory item should be applied
+     */
+    'strategy': JsonApiMemoryItemInAttributesStrategyEnum;
+    'tags'?: Array<string>;
+    'title'?: string;
+}
+
+export type JsonApiMemoryItemInAttributesStrategyEnum = 'ALWAYS' | 'AUTO';
 
 export interface JsonApiMemoryItemInDocument {
     'data': JsonApiMemoryItemIn;
@@ -7929,61 +9790,61 @@ export interface JsonApiMemoryItemInDocument {
  * JSON:API representation of memoryItem entity.
  */
 export interface JsonApiMemoryItemOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiMemoryItemOutTypeEnum;
+    'attributes': JsonApiMemoryItemOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes': JsonApiMemoryItemOutAttributes;
-    'relationships'?: JsonApiOrgMemoryItemOutRelationships;
+    'meta'?: JsonApiMemoryItemOutMeta;
+    'relationships'?: JsonApiMemoryItemOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiMemoryItemOutTypeEnum;
 }
 
 export type JsonApiMemoryItemOutTypeEnum = 'memoryItem';
 
 export interface JsonApiMemoryItemOutAttributes {
-    'title'?: string;
-    'description'?: string;
-    'tags'?: Array<string>;
     'areRelationsValid'?: boolean;
     /**
-     * Strategy defining when the memory item should be applied
+     * Time of the entity creation.
      */
-    'strategy': JsonApiMemoryItemOutAttributesStrategyEnum;
+    'createdAt'?: string | null;
+    'description'?: string;
     /**
      * The text that will be injected into the system prompt
      */
     'instruction': string;
     /**
-     * Set of unique strings used for semantic similarity filtering
-     */
-    'keywords'?: Array<string>;
-    /**
      * Whether memory item is disabled
      */
     'isDisabled'?: boolean;
     /**
-     * Time of the entity creation.
+     * Set of unique strings used for semantic similarity filtering
      */
-    'createdAt'?: string | null;
+    'keywords'?: Array<string>;
     /**
      * Time of the last entity modification.
      */
     'modifiedAt'?: string | null;
+    /**
+     * Strategy defining when the memory item should be applied
+     */
+    'strategy': JsonApiMemoryItemOutAttributesStrategyEnum;
+    'tags'?: Array<string>;
+    'title'?: string;
 }
 
 export type JsonApiMemoryItemOutAttributesStrategyEnum = 'ALWAYS' | 'AUTO';
 
 export interface JsonApiMemoryItemOutDocument {
     'data': JsonApiMemoryItemOut;
-    'links'?: ObjectLinks;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
+    'links'?: ObjectLinks;
 }
 
 /**
@@ -7991,26 +9852,60 @@ export interface JsonApiMemoryItemOutDocument {
  */
 export interface JsonApiMemoryItemOutList {
     'data': Array<JsonApiMemoryItemOutWithLinks>;
-    'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
+    'links'?: ListLinks;
+    'meta'?: JsonApiMemoryItemOutListMeta;
+}
+
+export interface JsonApiMemoryItemOutListMeta {
+    'page'?: PageMetadata;
+}
+
+export interface JsonApiMemoryItemOutMeta {
+    'origin'?: JsonApiMemoryItemOutMetaOrigin;
+}
+
+export interface JsonApiMemoryItemOutMetaOrigin {
+    /**
+     * defines id of the workspace where the entity comes from
+     */
+    'originId': string;
+    /**
+     * defines type of the origin of the entity
+     */
+    'originType': JsonApiMemoryItemOutMetaOriginOriginTypeEnum;
+}
+
+export type JsonApiMemoryItemOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
+
+export interface JsonApiMemoryItemOutRelationships {
+    'createdBy'?: JsonApiMemoryItemOutRelationshipsCreatedBy;
+    'modifiedBy'?: JsonApiMemoryItemOutRelationshipsModifiedBy;
+}
+
+export interface JsonApiMemoryItemOutRelationshipsCreatedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+export interface JsonApiMemoryItemOutRelationshipsModifiedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
 }
 
 export interface JsonApiMemoryItemOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiMemoryItemOutWithLinksTypeEnum;
+    'attributes': JsonApiMemoryItemOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes': JsonApiMemoryItemOutAttributes;
-    'relationships'?: JsonApiOrgMemoryItemOutRelationships;
+    'meta'?: JsonApiMemoryItemOutMeta;
+    'relationships'?: JsonApiMemoryItemOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiMemoryItemOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -8020,40 +9915,40 @@ export type JsonApiMemoryItemOutWithLinksTypeEnum = 'memoryItem';
  * JSON:API representation of patching memoryItem entity.
  */
 export interface JsonApiMemoryItemPatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiMemoryItemPatchTypeEnum;
+    'attributes': JsonApiMemoryItemPatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiMemoryItemPatchAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiMemoryItemPatchTypeEnum;
 }
 
 export type JsonApiMemoryItemPatchTypeEnum = 'memoryItem';
 
 export interface JsonApiMemoryItemPatchAttributes {
-    'title'?: string;
-    'description'?: string;
-    'tags'?: Array<string>;
     'areRelationsValid'?: boolean;
-    /**
-     * Strategy defining when the memory item should be applied
-     */
-    'strategy'?: JsonApiMemoryItemPatchAttributesStrategyEnum;
+    'description'?: string;
     /**
      * The text that will be injected into the system prompt
      */
     'instruction'?: string;
     /**
+     * Whether memory item is disabled
+     */
+    'isDisabled'?: boolean;
+    /**
      * Set of unique strings used for semantic similarity filtering
      */
     'keywords'?: Array<string>;
     /**
-     * Whether memory item is disabled
+     * Strategy defining when the memory item should be applied
      */
-    'isDisabled'?: boolean;
+    'strategy'?: JsonApiMemoryItemPatchAttributesStrategyEnum;
+    'tags'?: Array<string>;
+    'title'?: string;
 }
 
 export type JsonApiMemoryItemPatchAttributesStrategyEnum = 'ALWAYS' | 'AUTO';
@@ -8066,40 +9961,40 @@ export interface JsonApiMemoryItemPatchDocument {
  * JSON:API representation of memoryItem entity.
  */
 export interface JsonApiMemoryItemPostOptionalId {
-    /**
-     * Object type
-     */
-    'type': JsonApiMemoryItemPostOptionalIdTypeEnum;
+    'attributes': JsonApiMemoryItemPostOptionalIdAttributes;
     /**
      * API identifier of an object
      */
     'id'?: string;
-    'attributes': JsonApiMemoryItemPostOptionalIdAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiMemoryItemPostOptionalIdTypeEnum;
 }
 
 export type JsonApiMemoryItemPostOptionalIdTypeEnum = 'memoryItem';
 
 export interface JsonApiMemoryItemPostOptionalIdAttributes {
-    'title'?: string;
-    'description'?: string;
-    'tags'?: Array<string>;
     'areRelationsValid'?: boolean;
-    /**
-     * Strategy defining when the memory item should be applied
-     */
-    'strategy': JsonApiMemoryItemPostOptionalIdAttributesStrategyEnum;
+    'description'?: string;
     /**
      * The text that will be injected into the system prompt
      */
     'instruction': string;
     /**
+     * Whether memory item is disabled
+     */
+    'isDisabled'?: boolean;
+    /**
      * Set of unique strings used for semantic similarity filtering
      */
     'keywords'?: Array<string>;
     /**
-     * Whether memory item is disabled
+     * Strategy defining when the memory item should be applied
      */
-    'isDisabled'?: boolean;
+    'strategy': JsonApiMemoryItemPostOptionalIdAttributesStrategyEnum;
+    'tags'?: Array<string>;
+    'title'?: string;
 }
 
 export type JsonApiMemoryItemPostOptionalIdAttributesStrategyEnum = 'ALWAYS' | 'AUTO';
@@ -8112,18 +10007,42 @@ export interface JsonApiMemoryItemPostOptionalIdDocument {
  * JSON:API representation of metric entity.
  */
 export interface JsonApiMetricIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiMetricInTypeEnum;
+    'attributes': JsonApiMetricInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiMetricPostOptionalIdAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiMetricInTypeEnum;
 }
 
 export type JsonApiMetricInTypeEnum = 'metric';
+
+export interface JsonApiMetricInAttributes {
+    'areRelationsValid'?: boolean;
+    'content': JsonApiMetricInAttributesContent;
+    'description'?: string;
+    'isHidden'?: boolean;
+    'isHiddenFromKda'?: boolean;
+    'tags'?: Array<string>;
+    'title'?: string;
+}
+
+export interface JsonApiMetricInAttributesContent {
+    /**
+     * Excel-like format string with optional dynamic tokens. Filter value tokens: [$FILTER:<label_id>] for raw filter value passthrough. Currency tokens: [$CURRENCY:<label_id>] for currency symbol, with optional forms :symbol, :narrow, :code, :name. Locale abbreviations: [$K], [$M], [$B], [$T] for locale-specific scale abbreviations. Tokens are resolved at execution time based on AFM filters and user\'s format locale. Single-value filters only; multi-value filters use fallback values.
+     */
+    'format'?: string | null;
+    'maql': string;
+    /**
+     * Categorizes metric semantics (e.g., currency).
+     */
+    'metricType'?: JsonApiMetricInAttributesContentMetricTypeEnum;
+}
+
+export type JsonApiMetricInAttributesContentMetricTypeEnum = 'UNSPECIFIED' | 'CURRENCY';
 
 export interface JsonApiMetricInDocument {
     'data': JsonApiMetricIn;
@@ -8143,49 +10062,49 @@ export type JsonApiMetricLinkageTypeEnum = 'metric';
  * JSON:API representation of metric entity.
  */
 export interface JsonApiMetricOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiMetricOutTypeEnum;
+    'attributes': JsonApiMetricOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes': JsonApiMetricOutAttributes;
+    'meta'?: JsonApiMetricOutMeta;
     'relationships'?: JsonApiMetricOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiMetricOutTypeEnum;
 }
 
 export type JsonApiMetricOutTypeEnum = 'metric';
 
 export interface JsonApiMetricOutAttributes {
-    'title'?: string;
-    'description'?: string;
-    'tags'?: Array<string>;
     'areRelationsValid'?: boolean;
-    'content': JsonApiMetricOutAttributesContent;
-    /**
-     * Time of the entity creation.
-     */
-    'createdAt'?: string | null;
-    /**
-     * Time of the last entity modification.
-     */
-    'modifiedAt'?: string | null;
-    'isHidden'?: boolean;
-    'isHiddenFromKda'?: boolean;
     /**
      * Certification status of the entity.
      */
     'certification'?: JsonApiMetricOutAttributesCertificationEnum;
     /**
-     * Time when the certification was set.
-     */
-    'certifiedAt'?: string | null;
-    /**
      * Optional message associated with the certification.
      */
     'certificationMessage'?: string | null;
+    /**
+     * Time when the certification was set.
+     */
+    'certifiedAt'?: string | null;
+    'content': JsonApiMetricOutAttributesContent;
+    /**
+     * Time of the entity creation.
+     */
+    'createdAt'?: string | null;
+    'description'?: string;
+    'isHidden'?: boolean;
+    'isHiddenFromKda'?: boolean;
+    /**
+     * Time of the last entity modification.
+     */
+    'modifiedAt'?: string | null;
+    'tags'?: Array<string>;
+    'title'?: string;
 }
 
 export type JsonApiMetricOutAttributesCertificationEnum = 'CERTIFIED';
@@ -8206,11 +10125,11 @@ export type JsonApiMetricOutAttributesContentMetricTypeEnum = 'UNSPECIFIED' | 'C
 
 export interface JsonApiMetricOutDocument {
     'data': JsonApiMetricOut;
-    'links'?: ObjectLinks;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiMetricOutIncludes>;
+    'links'?: ObjectLinks;
 }
 
 /**
@@ -8223,38 +10142,113 @@ export type JsonApiMetricOutIncludes = JsonApiAttributeOutWithLinks | JsonApiDat
  */
 export interface JsonApiMetricOutList {
     'data': Array<JsonApiMetricOutWithLinks>;
-    'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiMetricOutIncludes>;
+    'links'?: ListLinks;
+    'meta'?: JsonApiMetricOutListMeta;
 }
 
+export interface JsonApiMetricOutListMeta {
+    'page'?: PageMetadata;
+}
+
+export interface JsonApiMetricOutMeta {
+    'origin'?: JsonApiMetricOutMetaOrigin;
+}
+
+export interface JsonApiMetricOutMetaOrigin {
+    /**
+     * defines id of the workspace where the entity comes from
+     */
+    'originId': string;
+    /**
+     * defines type of the origin of the entity
+     */
+    'originType': JsonApiMetricOutMetaOriginOriginTypeEnum;
+}
+
+export type JsonApiMetricOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
+
 export interface JsonApiMetricOutRelationships {
-    'createdBy'?: JsonApiAgentOutRelationshipsCreatedBy;
-    'modifiedBy'?: JsonApiAgentOutRelationshipsCreatedBy;
-    'certifiedBy'?: JsonApiAgentOutRelationshipsCreatedBy;
-    'facts'?: JsonApiDatasetOutRelationshipsFacts;
-    'attributes'?: JsonApiDatasetOutRelationshipsAttributes;
-    'labels'?: JsonApiAnalyticalDashboardOutRelationshipsLabels;
-    'metrics'?: JsonApiAnalyticalDashboardOutRelationshipsMetrics;
-    'datasets'?: JsonApiAnalyticalDashboardOutRelationshipsDatasets;
-    'parameters'?: JsonApiAnalyticalDashboardOutRelationshipsParameters;
+    'attributes'?: JsonApiMetricOutRelationshipsAttributes;
+    'certifiedBy'?: JsonApiMetricOutRelationshipsCertifiedBy;
+    'createdBy'?: JsonApiMetricOutRelationshipsCreatedBy;
+    'datasets'?: JsonApiMetricOutRelationshipsDatasets;
+    'facts'?: JsonApiMetricOutRelationshipsFacts;
+    'labels'?: JsonApiMetricOutRelationshipsLabels;
+    'metrics'?: JsonApiMetricOutRelationshipsMetrics;
+    'modifiedBy'?: JsonApiMetricOutRelationshipsModifiedBy;
+    'parameters'?: JsonApiMetricOutRelationshipsParameters;
+}
+
+export interface JsonApiMetricOutRelationshipsAttributes {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiAttributeLinkage>;
+}
+
+export interface JsonApiMetricOutRelationshipsCertifiedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+export interface JsonApiMetricOutRelationshipsCreatedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+export interface JsonApiMetricOutRelationshipsDatasets {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiDatasetLinkage>;
+}
+
+export interface JsonApiMetricOutRelationshipsFacts {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiFactLinkage>;
+}
+
+export interface JsonApiMetricOutRelationshipsLabels {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiLabelLinkage>;
+}
+
+export interface JsonApiMetricOutRelationshipsMetrics {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiMetricLinkage>;
+}
+
+export interface JsonApiMetricOutRelationshipsModifiedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+export interface JsonApiMetricOutRelationshipsParameters {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiParameterLinkage>;
 }
 
 export interface JsonApiMetricOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiMetricOutWithLinksTypeEnum;
+    'attributes': JsonApiMetricOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes': JsonApiMetricOutAttributes;
+    'meta'?: JsonApiMetricOutMeta;
     'relationships'?: JsonApiMetricOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiMetricOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -8264,28 +10258,42 @@ export type JsonApiMetricOutWithLinksTypeEnum = 'metric';
  * JSON:API representation of patching metric entity.
  */
 export interface JsonApiMetricPatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiMetricPatchTypeEnum;
+    'attributes': JsonApiMetricPatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiMetricPatchAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiMetricPatchTypeEnum;
 }
 
 export type JsonApiMetricPatchTypeEnum = 'metric';
 
 export interface JsonApiMetricPatchAttributes {
-    'title'?: string;
-    'description'?: string;
-    'tags'?: Array<string>;
     'areRelationsValid'?: boolean;
-    'content'?: JsonApiMetricOutAttributesContent;
+    'content'?: JsonApiMetricPatchAttributesContent;
+    'description'?: string;
     'isHidden'?: boolean;
     'isHiddenFromKda'?: boolean;
+    'tags'?: Array<string>;
+    'title'?: string;
 }
+
+export interface JsonApiMetricPatchAttributesContent {
+    /**
+     * Excel-like format string with optional dynamic tokens. Filter value tokens: [$FILTER:<label_id>] for raw filter value passthrough. Currency tokens: [$CURRENCY:<label_id>] for currency symbol, with optional forms :symbol, :narrow, :code, :name. Locale abbreviations: [$K], [$M], [$B], [$T] for locale-specific scale abbreviations. Tokens are resolved at execution time based on AFM filters and user\'s format locale. Single-value filters only; multi-value filters use fallback values.
+     */
+    'format'?: string | null;
+    'maql': string;
+    /**
+     * Categorizes metric semantics (e.g., currency).
+     */
+    'metricType'?: JsonApiMetricPatchAttributesContentMetricTypeEnum;
+}
+
+export type JsonApiMetricPatchAttributesContentMetricTypeEnum = 'UNSPECIFIED' | 'CURRENCY';
 
 export interface JsonApiMetricPatchDocument {
     'data': JsonApiMetricPatch;
@@ -8295,28 +10303,42 @@ export interface JsonApiMetricPatchDocument {
  * JSON:API representation of metric entity.
  */
 export interface JsonApiMetricPostOptionalId {
-    /**
-     * Object type
-     */
-    'type': JsonApiMetricPostOptionalIdTypeEnum;
+    'attributes': JsonApiMetricPostOptionalIdAttributes;
     /**
      * API identifier of an object
      */
     'id'?: string;
-    'attributes': JsonApiMetricPostOptionalIdAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiMetricPostOptionalIdTypeEnum;
 }
 
 export type JsonApiMetricPostOptionalIdTypeEnum = 'metric';
 
 export interface JsonApiMetricPostOptionalIdAttributes {
-    'title'?: string;
-    'description'?: string;
-    'tags'?: Array<string>;
     'areRelationsValid'?: boolean;
-    'content': JsonApiMetricOutAttributesContent;
+    'content': JsonApiMetricPostOptionalIdAttributesContent;
+    'description'?: string;
     'isHidden'?: boolean;
     'isHiddenFromKda'?: boolean;
+    'tags'?: Array<string>;
+    'title'?: string;
 }
+
+export interface JsonApiMetricPostOptionalIdAttributesContent {
+    /**
+     * Excel-like format string with optional dynamic tokens. Filter value tokens: [$FILTER:<label_id>] for raw filter value passthrough. Currency tokens: [$CURRENCY:<label_id>] for currency symbol, with optional forms :symbol, :narrow, :code, :name. Locale abbreviations: [$K], [$M], [$B], [$T] for locale-specific scale abbreviations. Tokens are resolved at execution time based on AFM filters and user\'s format locale. Single-value filters only; multi-value filters use fallback values.
+     */
+    'format'?: string | null;
+    'maql': string;
+    /**
+     * Categorizes metric semantics (e.g., currency).
+     */
+    'metricType'?: JsonApiMetricPostOptionalIdAttributesContentMetricTypeEnum;
+}
+
+export type JsonApiMetricPostOptionalIdAttributesContentMetricTypeEnum = 'UNSPECIFIED' | 'CURRENCY';
 
 export interface JsonApiMetricPostOptionalIdDocument {
     'data': JsonApiMetricPostOptionalId;
@@ -8326,31 +10348,31 @@ export interface JsonApiMetricPostOptionalIdDocument {
  * JSON:API representation of notificationChannelIdentifier entity.
  */
 export interface JsonApiNotificationChannelIdentifierOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiNotificationChannelIdentifierOutTypeEnum;
+    'attributes'?: JsonApiNotificationChannelIdentifierOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiNotificationChannelIdentifierOutAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiNotificationChannelIdentifierOutTypeEnum;
 }
 
 export type JsonApiNotificationChannelIdentifierOutTypeEnum = 'notificationChannelIdentifier';
 
 export interface JsonApiNotificationChannelIdentifierOutAttributes {
-    'name'?: string | null;
-    'description'?: string | null;
-    'destinationType'?: JsonApiNotificationChannelIdentifierOutAttributesDestinationTypeEnum;
     /**
      * Allowed recipients of notifications from this channel. CREATOR - only the creator INTERNAL - all users within the organization EXTERNAL - all recipients including those outside the organization 
      */
     'allowedRecipients'?: JsonApiNotificationChannelIdentifierOutAttributesAllowedRecipientsEnum;
+    'description'?: string | null;
+    'destinationType'?: JsonApiNotificationChannelIdentifierOutAttributesDestinationTypeEnum;
+    'name'?: string | null;
 }
 
-export type JsonApiNotificationChannelIdentifierOutAttributesDestinationTypeEnum = 'WEBHOOK' | 'SMTP' | 'DEFAULT_SMTP' | 'IN_PLATFORM';
 export type JsonApiNotificationChannelIdentifierOutAttributesAllowedRecipientsEnum = 'CREATOR' | 'INTERNAL' | 'EXTERNAL';
+export type JsonApiNotificationChannelIdentifierOutAttributesDestinationTypeEnum = 'WEBHOOK' | 'SMTP' | 'DEFAULT_SMTP' | 'IN_PLATFORM';
 
 export interface JsonApiNotificationChannelIdentifierOutDocument {
     'data': JsonApiNotificationChannelIdentifierOut;
@@ -8363,19 +10385,23 @@ export interface JsonApiNotificationChannelIdentifierOutDocument {
 export interface JsonApiNotificationChannelIdentifierOutList {
     'data': Array<JsonApiNotificationChannelIdentifierOutWithLinks>;
     'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
+    'meta'?: JsonApiNotificationChannelIdentifierOutListMeta;
+}
+
+export interface JsonApiNotificationChannelIdentifierOutListMeta {
+    'page'?: PageMetadata;
 }
 
 export interface JsonApiNotificationChannelIdentifierOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiNotificationChannelIdentifierOutWithLinksTypeEnum;
+    'attributes'?: JsonApiNotificationChannelIdentifierOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiNotificationChannelIdentifierOutAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiNotificationChannelIdentifierOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -8385,18 +10411,54 @@ export type JsonApiNotificationChannelIdentifierOutWithLinksTypeEnum = 'notifica
  * JSON:API representation of notificationChannel entity.
  */
 export interface JsonApiNotificationChannelIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiNotificationChannelInTypeEnum;
+    'attributes'?: JsonApiNotificationChannelInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiNotificationChannelPostOptionalIdAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiNotificationChannelInTypeEnum;
 }
 
 export type JsonApiNotificationChannelInTypeEnum = 'notificationChannel';
+
+export interface JsonApiNotificationChannelInAttributes {
+    /**
+     * Allowed recipients of notifications from this channel. CREATOR - only the creator INTERNAL - all users within the organization EXTERNAL - all recipients including those outside the organization 
+     */
+    'allowedRecipients'?: JsonApiNotificationChannelInAttributesAllowedRecipientsEnum;
+    /**
+     * Custom dashboard url that is going to be used in the notification. If not specified it is going to be deduced based on the context. Allowed placeholders are: {workspaceId} {dashboardId} {automationId} {asOfDate} 
+     */
+    'customDashboardUrl'?: string;
+    /**
+     * Dashboard link visibility in notifications. HIDDEN - the link will not be included INTERNAL_ONLY - only internal users will see the link ALL - all users will see the link 
+     */
+    'dashboardLinkVisibility'?: JsonApiNotificationChannelInAttributesDashboardLinkVisibilityEnum;
+    'description'?: string | null;
+    'destination'?: JsonApiNotificationChannelInAttributesDestination;
+    /**
+     * In-platform notifications configuration. No effect if the destination type is IN_PLATFORM. DISABLED - in-platform notifications are not sent ENABLED - in-platform notifications are sent in addition to the regular notifications 
+     */
+    'inPlatformNotification'?: JsonApiNotificationChannelInAttributesInPlatformNotificationEnum;
+    'name'?: string | null;
+    /**
+     * Human-readable description of the source of the notification. If specified, this propertywill be included in the notifications to this channel.Allowed placeholders are: {{workspaceId}} {{workspaceName}} {{workspaceDescription}} {{dashboardId}} {{dashboardName}} {{dashboardDescription}} 
+     */
+    'notificationSource'?: string;
+}
+
+export type JsonApiNotificationChannelInAttributesAllowedRecipientsEnum = 'CREATOR' | 'INTERNAL' | 'EXTERNAL';
+export type JsonApiNotificationChannelInAttributesDashboardLinkVisibilityEnum = 'HIDDEN' | 'INTERNAL_ONLY' | 'ALL';
+export type JsonApiNotificationChannelInAttributesInPlatformNotificationEnum = 'DISABLED' | 'ENABLED';
+
+/**
+ * @type JsonApiNotificationChannelInAttributesDestination
+ * The destination where the notifications are to be sent.
+ */
+export type JsonApiNotificationChannelInAttributesDestination = DefaultSmtp | InPlatform | Smtp | Webhook;
 
 export interface JsonApiNotificationChannelInDocument {
     'data': JsonApiNotificationChannelIn;
@@ -8416,24 +10478,24 @@ export type JsonApiNotificationChannelLinkageTypeEnum = 'notificationChannel';
  * JSON:API representation of notificationChannel entity.
  */
 export interface JsonApiNotificationChannelOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiNotificationChannelOutTypeEnum;
+    'attributes'?: JsonApiNotificationChannelOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiNotificationChannelOutAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiNotificationChannelOutTypeEnum;
 }
 
 export type JsonApiNotificationChannelOutTypeEnum = 'notificationChannel';
 
 export interface JsonApiNotificationChannelOutAttributes {
-    'name'?: string | null;
-    'description'?: string | null;
-    'destination'?: JsonApiNotificationChannelOutAttributesDestination;
-    'destinationType'?: JsonApiNotificationChannelOutAttributesDestinationTypeEnum | null;
+    /**
+     * Allowed recipients of notifications from this channel. CREATOR - only the creator INTERNAL - all users within the organization EXTERNAL - all recipients including those outside the organization 
+     */
+    'allowedRecipients'?: JsonApiNotificationChannelOutAttributesAllowedRecipientsEnum;
     /**
      * Custom dashboard url that is going to be used in the notification. If not specified it is going to be deduced based on the context. Allowed placeholders are: {workspaceId} {dashboardId} {automationId} {asOfDate} 
      */
@@ -8442,23 +10504,23 @@ export interface JsonApiNotificationChannelOutAttributes {
      * Dashboard link visibility in notifications. HIDDEN - the link will not be included INTERNAL_ONLY - only internal users will see the link ALL - all users will see the link 
      */
     'dashboardLinkVisibility'?: JsonApiNotificationChannelOutAttributesDashboardLinkVisibilityEnum;
-    /**
-     * Human-readable description of the source of the notification. If specified, this propertywill be included in the notifications to this channel.Allowed placeholders are: {{workspaceId}} {{workspaceName}} {{workspaceDescription}} {{dashboardId}} {{dashboardName}} {{dashboardDescription}} 
-     */
-    'notificationSource'?: string;
-    /**
-     * Allowed recipients of notifications from this channel. CREATOR - only the creator INTERNAL - all users within the organization EXTERNAL - all recipients including those outside the organization 
-     */
-    'allowedRecipients'?: JsonApiNotificationChannelOutAttributesAllowedRecipientsEnum;
+    'description'?: string | null;
+    'destination'?: JsonApiNotificationChannelOutAttributesDestination;
+    'destinationType'?: JsonApiNotificationChannelOutAttributesDestinationTypeEnum | null;
     /**
      * In-platform notifications configuration. No effect if the destination type is IN_PLATFORM. DISABLED - in-platform notifications are not sent ENABLED - in-platform notifications are sent in addition to the regular notifications 
      */
     'inPlatformNotification'?: JsonApiNotificationChannelOutAttributesInPlatformNotificationEnum;
+    'name'?: string | null;
+    /**
+     * Human-readable description of the source of the notification. If specified, this propertywill be included in the notifications to this channel.Allowed placeholders are: {{workspaceId}} {{workspaceName}} {{workspaceDescription}} {{dashboardId}} {{dashboardName}} {{dashboardDescription}} 
+     */
+    'notificationSource'?: string;
 }
 
-export type JsonApiNotificationChannelOutAttributesDestinationTypeEnum = 'WEBHOOK' | 'SMTP' | 'DEFAULT_SMTP' | 'IN_PLATFORM';
-export type JsonApiNotificationChannelOutAttributesDashboardLinkVisibilityEnum = 'HIDDEN' | 'INTERNAL_ONLY' | 'ALL';
 export type JsonApiNotificationChannelOutAttributesAllowedRecipientsEnum = 'CREATOR' | 'INTERNAL' | 'EXTERNAL';
+export type JsonApiNotificationChannelOutAttributesDashboardLinkVisibilityEnum = 'HIDDEN' | 'INTERNAL_ONLY' | 'ALL';
+export type JsonApiNotificationChannelOutAttributesDestinationTypeEnum = 'WEBHOOK' | 'SMTP' | 'DEFAULT_SMTP' | 'IN_PLATFORM';
 export type JsonApiNotificationChannelOutAttributesInPlatformNotificationEnum = 'DISABLED' | 'ENABLED';
 
 /**
@@ -8478,19 +10540,23 @@ export interface JsonApiNotificationChannelOutDocument {
 export interface JsonApiNotificationChannelOutList {
     'data': Array<JsonApiNotificationChannelOutWithLinks>;
     'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
+    'meta'?: JsonApiNotificationChannelOutListMeta;
+}
+
+export interface JsonApiNotificationChannelOutListMeta {
+    'page'?: PageMetadata;
 }
 
 export interface JsonApiNotificationChannelOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiNotificationChannelOutWithLinksTypeEnum;
+    'attributes'?: JsonApiNotificationChannelOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiNotificationChannelOutAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiNotificationChannelOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -8500,18 +10566,54 @@ export type JsonApiNotificationChannelOutWithLinksTypeEnum = 'notificationChanne
  * JSON:API representation of patching notificationChannel entity.
  */
 export interface JsonApiNotificationChannelPatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiNotificationChannelPatchTypeEnum;
+    'attributes'?: JsonApiNotificationChannelPatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiNotificationChannelPostOptionalIdAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiNotificationChannelPatchTypeEnum;
 }
 
 export type JsonApiNotificationChannelPatchTypeEnum = 'notificationChannel';
+
+export interface JsonApiNotificationChannelPatchAttributes {
+    /**
+     * Allowed recipients of notifications from this channel. CREATOR - only the creator INTERNAL - all users within the organization EXTERNAL - all recipients including those outside the organization 
+     */
+    'allowedRecipients'?: JsonApiNotificationChannelPatchAttributesAllowedRecipientsEnum;
+    /**
+     * Custom dashboard url that is going to be used in the notification. If not specified it is going to be deduced based on the context. Allowed placeholders are: {workspaceId} {dashboardId} {automationId} {asOfDate} 
+     */
+    'customDashboardUrl'?: string;
+    /**
+     * Dashboard link visibility in notifications. HIDDEN - the link will not be included INTERNAL_ONLY - only internal users will see the link ALL - all users will see the link 
+     */
+    'dashboardLinkVisibility'?: JsonApiNotificationChannelPatchAttributesDashboardLinkVisibilityEnum;
+    'description'?: string | null;
+    'destination'?: JsonApiNotificationChannelPatchAttributesDestination;
+    /**
+     * In-platform notifications configuration. No effect if the destination type is IN_PLATFORM. DISABLED - in-platform notifications are not sent ENABLED - in-platform notifications are sent in addition to the regular notifications 
+     */
+    'inPlatformNotification'?: JsonApiNotificationChannelPatchAttributesInPlatformNotificationEnum;
+    'name'?: string | null;
+    /**
+     * Human-readable description of the source of the notification. If specified, this propertywill be included in the notifications to this channel.Allowed placeholders are: {{workspaceId}} {{workspaceName}} {{workspaceDescription}} {{dashboardId}} {{dashboardName}} {{dashboardDescription}} 
+     */
+    'notificationSource'?: string;
+}
+
+export type JsonApiNotificationChannelPatchAttributesAllowedRecipientsEnum = 'CREATOR' | 'INTERNAL' | 'EXTERNAL';
+export type JsonApiNotificationChannelPatchAttributesDashboardLinkVisibilityEnum = 'HIDDEN' | 'INTERNAL_ONLY' | 'ALL';
+export type JsonApiNotificationChannelPatchAttributesInPlatformNotificationEnum = 'DISABLED' | 'ENABLED';
+
+/**
+ * @type JsonApiNotificationChannelPatchAttributesDestination
+ * The destination where the notifications are to be sent.
+ */
+export type JsonApiNotificationChannelPatchAttributesDestination = DefaultSmtp | InPlatform | Smtp | Webhook;
 
 export interface JsonApiNotificationChannelPatchDocument {
     'data': JsonApiNotificationChannelPatch;
@@ -8521,23 +10623,24 @@ export interface JsonApiNotificationChannelPatchDocument {
  * JSON:API representation of notificationChannel entity.
  */
 export interface JsonApiNotificationChannelPostOptionalId {
-    /**
-     * Object type
-     */
-    'type': JsonApiNotificationChannelPostOptionalIdTypeEnum;
+    'attributes'?: JsonApiNotificationChannelPostOptionalIdAttributes;
     /**
      * API identifier of an object
      */
     'id'?: string;
-    'attributes'?: JsonApiNotificationChannelPostOptionalIdAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiNotificationChannelPostOptionalIdTypeEnum;
 }
 
 export type JsonApiNotificationChannelPostOptionalIdTypeEnum = 'notificationChannel';
 
 export interface JsonApiNotificationChannelPostOptionalIdAttributes {
-    'name'?: string | null;
-    'description'?: string | null;
-    'destination'?: JsonApiNotificationChannelOutAttributesDestination;
+    /**
+     * Allowed recipients of notifications from this channel. CREATOR - only the creator INTERNAL - all users within the organization EXTERNAL - all recipients including those outside the organization 
+     */
+    'allowedRecipients'?: JsonApiNotificationChannelPostOptionalIdAttributesAllowedRecipientsEnum;
     /**
      * Custom dashboard url that is going to be used in the notification. If not specified it is going to be deduced based on the context. Allowed placeholders are: {workspaceId} {dashboardId} {automationId} {asOfDate} 
      */
@@ -8546,23 +10649,28 @@ export interface JsonApiNotificationChannelPostOptionalIdAttributes {
      * Dashboard link visibility in notifications. HIDDEN - the link will not be included INTERNAL_ONLY - only internal users will see the link ALL - all users will see the link 
      */
     'dashboardLinkVisibility'?: JsonApiNotificationChannelPostOptionalIdAttributesDashboardLinkVisibilityEnum;
-    /**
-     * Human-readable description of the source of the notification. If specified, this propertywill be included in the notifications to this channel.Allowed placeholders are: {{workspaceId}} {{workspaceName}} {{workspaceDescription}} {{dashboardId}} {{dashboardName}} {{dashboardDescription}} 
-     */
-    'notificationSource'?: string;
-    /**
-     * Allowed recipients of notifications from this channel. CREATOR - only the creator INTERNAL - all users within the organization EXTERNAL - all recipients including those outside the organization 
-     */
-    'allowedRecipients'?: JsonApiNotificationChannelPostOptionalIdAttributesAllowedRecipientsEnum;
+    'description'?: string | null;
+    'destination'?: JsonApiNotificationChannelPostOptionalIdAttributesDestination;
     /**
      * In-platform notifications configuration. No effect if the destination type is IN_PLATFORM. DISABLED - in-platform notifications are not sent ENABLED - in-platform notifications are sent in addition to the regular notifications 
      */
     'inPlatformNotification'?: JsonApiNotificationChannelPostOptionalIdAttributesInPlatformNotificationEnum;
+    'name'?: string | null;
+    /**
+     * Human-readable description of the source of the notification. If specified, this propertywill be included in the notifications to this channel.Allowed placeholders are: {{workspaceId}} {{workspaceName}} {{workspaceDescription}} {{dashboardId}} {{dashboardName}} {{dashboardDescription}} 
+     */
+    'notificationSource'?: string;
 }
 
-export type JsonApiNotificationChannelPostOptionalIdAttributesDashboardLinkVisibilityEnum = 'HIDDEN' | 'INTERNAL_ONLY' | 'ALL';
 export type JsonApiNotificationChannelPostOptionalIdAttributesAllowedRecipientsEnum = 'CREATOR' | 'INTERNAL' | 'EXTERNAL';
+export type JsonApiNotificationChannelPostOptionalIdAttributesDashboardLinkVisibilityEnum = 'HIDDEN' | 'INTERNAL_ONLY' | 'ALL';
 export type JsonApiNotificationChannelPostOptionalIdAttributesInPlatformNotificationEnum = 'DISABLED' | 'ENABLED';
+
+/**
+ * @type JsonApiNotificationChannelPostOptionalIdAttributesDestination
+ * The destination where the notifications are to be sent.
+ */
+export type JsonApiNotificationChannelPostOptionalIdAttributesDestination = DefaultSmtp | InPlatform | Smtp | Webhook;
 
 export interface JsonApiNotificationChannelPostOptionalIdDocument {
     'data': JsonApiNotificationChannelPostOptionalId;
@@ -8572,38 +10680,38 @@ export interface JsonApiNotificationChannelPostOptionalIdDocument {
  * Organization-scoped AI memory item.
  */
 export interface JsonApiOrgMemoryItemIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiOrgMemoryItemInTypeEnum;
+    'attributes': JsonApiOrgMemoryItemInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiOrgMemoryItemInAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiOrgMemoryItemInTypeEnum;
 }
 
 export type JsonApiOrgMemoryItemInTypeEnum = 'orgMemoryItem';
 
 export interface JsonApiOrgMemoryItemInAttributes {
-    'title'?: string | null;
     'description'?: string | null;
-    /**
-     * Strategy defining when the memory item should be applied
-     */
-    'strategy': JsonApiOrgMemoryItemInAttributesStrategyEnum;
     /**
      * The text that will be injected into the system prompt
      */
     'instruction': string;
     /**
+     * Whether memory item is disabled
+     */
+    'isDisabled'?: boolean;
+    /**
      * Set of unique strings used for semantic similarity filtering
      */
     'keywords'?: Array<string>;
     /**
-     * Whether memory item is disabled
+     * Strategy defining when the memory item should be applied
      */
-    'isDisabled'?: boolean;
+    'strategy': JsonApiOrgMemoryItemInAttributesStrategyEnum;
+    'title'?: string | null;
 }
 
 export type JsonApiOrgMemoryItemInAttributesStrategyEnum = 'ALWAYS' | 'AUTO';
@@ -8616,58 +10724,58 @@ export interface JsonApiOrgMemoryItemInDocument {
  * Organization-scoped AI memory item.
  */
 export interface JsonApiOrgMemoryItemOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiOrgMemoryItemOutTypeEnum;
+    'attributes': JsonApiOrgMemoryItemOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiOrgMemoryItemOutAttributes;
     'relationships'?: JsonApiOrgMemoryItemOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiOrgMemoryItemOutTypeEnum;
 }
 
 export type JsonApiOrgMemoryItemOutTypeEnum = 'orgMemoryItem';
 
 export interface JsonApiOrgMemoryItemOutAttributes {
-    'title'?: string | null;
-    'description'?: string | null;
     /**
-     * Strategy defining when the memory item should be applied
+     * Time of the entity creation.
      */
-    'strategy': JsonApiOrgMemoryItemOutAttributesStrategyEnum;
+    'createdAt'?: string | null;
+    'description'?: string | null;
     /**
      * The text that will be injected into the system prompt
      */
     'instruction': string;
     /**
-     * Set of unique strings used for semantic similarity filtering
-     */
-    'keywords'?: Array<string>;
-    /**
      * Whether memory item is disabled
      */
     'isDisabled'?: boolean;
     /**
-     * Time of the entity creation.
+     * Set of unique strings used for semantic similarity filtering
      */
-    'createdAt'?: string | null;
+    'keywords'?: Array<string>;
     /**
      * Time of the last entity modification.
      */
     'modifiedAt'?: string | null;
+    /**
+     * Strategy defining when the memory item should be applied
+     */
+    'strategy': JsonApiOrgMemoryItemOutAttributesStrategyEnum;
+    'title'?: string | null;
 }
 
 export type JsonApiOrgMemoryItemOutAttributesStrategyEnum = 'ALWAYS' | 'AUTO';
 
 export interface JsonApiOrgMemoryItemOutDocument {
     'data': JsonApiOrgMemoryItemOut;
-    'links'?: ObjectLinks;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
+    'links'?: ObjectLinks;
 }
 
 /**
@@ -8675,30 +10783,42 @@ export interface JsonApiOrgMemoryItemOutDocument {
  */
 export interface JsonApiOrgMemoryItemOutList {
     'data': Array<JsonApiOrgMemoryItemOutWithLinks>;
-    'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
+    'links'?: ListLinks;
+    'meta'?: JsonApiOrgMemoryItemOutListMeta;
+}
+
+export interface JsonApiOrgMemoryItemOutListMeta {
+    'page'?: PageMetadata;
 }
 
 export interface JsonApiOrgMemoryItemOutRelationships {
-    'createdBy'?: JsonApiAgentOutRelationshipsCreatedBy;
-    'modifiedBy'?: JsonApiAgentOutRelationshipsCreatedBy;
+    'createdBy'?: JsonApiOrgMemoryItemOutRelationshipsCreatedBy;
+    'modifiedBy'?: JsonApiOrgMemoryItemOutRelationshipsModifiedBy;
+}
+
+export interface JsonApiOrgMemoryItemOutRelationshipsCreatedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+export interface JsonApiOrgMemoryItemOutRelationshipsModifiedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
 }
 
 export interface JsonApiOrgMemoryItemOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiOrgMemoryItemOutWithLinksTypeEnum;
+    'attributes': JsonApiOrgMemoryItemOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiOrgMemoryItemOutAttributes;
     'relationships'?: JsonApiOrgMemoryItemOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiOrgMemoryItemOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -8708,38 +10828,38 @@ export type JsonApiOrgMemoryItemOutWithLinksTypeEnum = 'orgMemoryItem';
  * Organization-scoped AI memory item.
  */
 export interface JsonApiOrgMemoryItemPatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiOrgMemoryItemPatchTypeEnum;
+    'attributes': JsonApiOrgMemoryItemPatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiOrgMemoryItemPatchAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiOrgMemoryItemPatchTypeEnum;
 }
 
 export type JsonApiOrgMemoryItemPatchTypeEnum = 'orgMemoryItem';
 
 export interface JsonApiOrgMemoryItemPatchAttributes {
-    'title'?: string | null;
     'description'?: string | null;
-    /**
-     * Strategy defining when the memory item should be applied
-     */
-    'strategy'?: JsonApiOrgMemoryItemPatchAttributesStrategyEnum;
     /**
      * The text that will be injected into the system prompt
      */
     'instruction'?: string;
     /**
+     * Whether memory item is disabled
+     */
+    'isDisabled'?: boolean;
+    /**
      * Set of unique strings used for semantic similarity filtering
      */
     'keywords'?: Array<string>;
     /**
-     * Whether memory item is disabled
+     * Strategy defining when the memory item should be applied
      */
-    'isDisabled'?: boolean;
+    'strategy'?: JsonApiOrgMemoryItemPatchAttributesStrategyEnum;
+    'title'?: string | null;
 }
 
 export type JsonApiOrgMemoryItemPatchAttributesStrategyEnum = 'ALWAYS' | 'AUTO';
@@ -8752,46 +10872,21 @@ export interface JsonApiOrgMemoryItemPatchDocument {
  * JSON:API representation of organization entity.
  */
 export interface JsonApiOrganizationIn {
+    'attributes'?: JsonApiOrganizationInAttributes;
+    /**
+     * API identifier of an object
+     */
+    'id': string;
+    'relationships'?: JsonApiOrganizationInRelationships;
     /**
      * Object type
      */
     'type': JsonApiOrganizationInTypeEnum;
-    /**
-     * API identifier of an object
-     */
-    'id': string;
-    'attributes'?: JsonApiOrganizationPatchAttributes;
-    'relationships'?: JsonApiOrganizationPatchRelationships;
 }
 
 export type JsonApiOrganizationInTypeEnum = 'organization';
 
-export interface JsonApiOrganizationInDocument {
-    'data': JsonApiOrganizationIn;
-}
-
-/**
- * JSON:API representation of organization entity.
- */
-export interface JsonApiOrganizationOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiOrganizationOutTypeEnum;
-    /**
-     * API identifier of an object
-     */
-    'id': string;
-    'meta'?: JsonApiOrganizationOutMeta;
-    'attributes'?: JsonApiOrganizationOutAttributes;
-    'relationships'?: JsonApiOrganizationOutRelationships;
-}
-
-export type JsonApiOrganizationOutTypeEnum = 'organization';
-
-export interface JsonApiOrganizationOutAttributes {
-    'name'?: string | null;
-    'hostname'?: string;
+export interface JsonApiOrganizationInAttributes {
     'allowedOrigins'?: Array<string>;
     /**
      * The early access feature identifier. It is used to enable experimental features. Deprecated in favor of earlyAccessValues.
@@ -8802,31 +10897,79 @@ export interface JsonApiOrganizationOutAttributes {
      * The early access feature identifiers. They are used to enable experimental features.
      */
     'earlyAccessValues'?: Array<string> | null;
-    'cacheSettings'?: JsonApiOrganizationOutAttributesCacheSettings;
+    'hostname'?: string;
+    'name'?: string | null;
+}
+
+export interface JsonApiOrganizationInDocument {
+    'data': JsonApiOrganizationIn;
+}
+
+export interface JsonApiOrganizationInRelationships {
+    'identityProvider'?: JsonApiOrganizationInRelationshipsIdentityProvider;
+}
+
+export interface JsonApiOrganizationInRelationshipsIdentityProvider {
+    'data': JsonApiIdentityProviderLinkage | null;
+}
+
+/**
+ * JSON:API representation of organization entity.
+ */
+export interface JsonApiOrganizationOut {
+    'attributes'?: JsonApiOrganizationOutAttributes;
     /**
-     * Current deployment cluster name. Should be used for issue investigation only.
+     * API identifier of an object
      */
-    'region'?: string | null;
+    'id': string;
+    'meta'?: JsonApiOrganizationOutMeta;
+    'relationships'?: JsonApiOrganizationOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiOrganizationOutTypeEnum;
+}
+
+export type JsonApiOrganizationOutTypeEnum = 'organization';
+
+export interface JsonApiOrganizationOutAttributes {
+    'allowedOrigins'?: Array<string>;
+    'cacheSettings'?: JsonApiOrganizationOutAttributesCacheSettings;
     /**
      * Current deployment region. Should be used for issue investigation only.
      */
     'dataCenter'?: string | null;
+    /**
+     * The early access feature identifier. It is used to enable experimental features. Deprecated in favor of earlyAccessValues.
+     * @deprecated
+     */
+    'earlyAccess'?: string | null;
+    /**
+     * The early access feature identifiers. They are used to enable experimental features.
+     */
+    'earlyAccessValues'?: Array<string> | null;
+    'hostname'?: string;
+    'name'?: string | null;
+    /**
+     * Current deployment cluster name. Should be used for issue investigation only.
+     */
+    'region'?: string | null;
 }
 
 export interface JsonApiOrganizationOutAttributesCacheSettings {
-    'extraCacheBudget'?: number;
     'cacheStrategy'?: JsonApiOrganizationOutAttributesCacheSettingsCacheStrategyEnum;
+    'extraCacheBudget'?: number;
 }
 
 export type JsonApiOrganizationOutAttributesCacheSettingsCacheStrategyEnum = 'DURABLE' | 'EPHEMERAL';
 
 export interface JsonApiOrganizationOutDocument {
     'data': JsonApiOrganizationOut;
-    'links'?: ObjectLinks;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiOrganizationOutIncludes>;
+    'links'?: ObjectLinks;
 }
 
 /**
@@ -8865,23 +11008,21 @@ export interface JsonApiOrganizationOutRelationshipsIdentityProvider {
  * JSON:API representation of patching organization entity.
  */
 export interface JsonApiOrganizationPatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiOrganizationPatchTypeEnum;
+    'attributes'?: JsonApiOrganizationPatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiOrganizationPatchAttributes;
     'relationships'?: JsonApiOrganizationPatchRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiOrganizationPatchTypeEnum;
 }
 
 export type JsonApiOrganizationPatchTypeEnum = 'organization';
 
 export interface JsonApiOrganizationPatchAttributes {
-    'name'?: string | null;
-    'hostname'?: string;
     'allowedOrigins'?: Array<string>;
     /**
      * The early access feature identifier. It is used to enable experimental features. Deprecated in favor of earlyAccessValues.
@@ -8892,6 +11033,8 @@ export interface JsonApiOrganizationPatchAttributes {
      * The early access feature identifiers. They are used to enable experimental features.
      */
     'earlyAccessValues'?: Array<string> | null;
+    'hostname'?: string;
+    'name'?: string | null;
 }
 
 export interface JsonApiOrganizationPatchDocument {
@@ -8899,25 +11042,39 @@ export interface JsonApiOrganizationPatchDocument {
 }
 
 export interface JsonApiOrganizationPatchRelationships {
-    'identityProvider'?: JsonApiOrganizationOutRelationshipsIdentityProvider;
+    'identityProvider'?: JsonApiOrganizationPatchRelationshipsIdentityProvider;
+}
+
+export interface JsonApiOrganizationPatchRelationshipsIdentityProvider {
+    'data': JsonApiIdentityProviderLinkage | null;
 }
 
 /**
  * JSON:API representation of organizationSetting entity.
  */
 export interface JsonApiOrganizationSettingIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiOrganizationSettingInTypeEnum;
+    'attributes'?: JsonApiOrganizationSettingInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiOrganizationSettingOutAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiOrganizationSettingInTypeEnum;
 }
 
 export type JsonApiOrganizationSettingInTypeEnum = 'organizationSetting';
+
+export interface JsonApiOrganizationSettingInAttributes {
+    /**
+     * Free-form JSON content. Maximum supported length is 15000 characters.
+     */
+    'content'?: object;
+    'type'?: JsonApiOrganizationSettingInAttributesTypeEnum;
+}
+
+export type JsonApiOrganizationSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE';
 
 export interface JsonApiOrganizationSettingInDocument {
     'data': JsonApiOrganizationSettingIn;
@@ -8927,15 +11084,15 @@ export interface JsonApiOrganizationSettingInDocument {
  * JSON:API representation of organizationSetting entity.
  */
 export interface JsonApiOrganizationSettingOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiOrganizationSettingOutTypeEnum;
+    'attributes'?: JsonApiOrganizationSettingOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiOrganizationSettingOutAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiOrganizationSettingOutTypeEnum;
 }
 
 export type JsonApiOrganizationSettingOutTypeEnum = 'organizationSetting';
@@ -8961,19 +11118,23 @@ export interface JsonApiOrganizationSettingOutDocument {
 export interface JsonApiOrganizationSettingOutList {
     'data': Array<JsonApiOrganizationSettingOutWithLinks>;
     'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
+    'meta'?: JsonApiOrganizationSettingOutListMeta;
+}
+
+export interface JsonApiOrganizationSettingOutListMeta {
+    'page'?: PageMetadata;
 }
 
 export interface JsonApiOrganizationSettingOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiOrganizationSettingOutWithLinksTypeEnum;
+    'attributes'?: JsonApiOrganizationSettingOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiOrganizationSettingOutAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiOrganizationSettingOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -8983,18 +11144,28 @@ export type JsonApiOrganizationSettingOutWithLinksTypeEnum = 'organizationSettin
  * JSON:API representation of patching organizationSetting entity.
  */
 export interface JsonApiOrganizationSettingPatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiOrganizationSettingPatchTypeEnum;
+    'attributes'?: JsonApiOrganizationSettingPatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiOrganizationSettingOutAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiOrganizationSettingPatchTypeEnum;
 }
 
 export type JsonApiOrganizationSettingPatchTypeEnum = 'organizationSetting';
+
+export interface JsonApiOrganizationSettingPatchAttributes {
+    /**
+     * Free-form JSON content. Maximum supported length is 15000 characters.
+     */
+    'content'?: object;
+    'type'?: JsonApiOrganizationSettingPatchAttributesTypeEnum;
+}
+
+export type JsonApiOrganizationSettingPatchAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE';
 
 export interface JsonApiOrganizationSettingPatchDocument {
     'data': JsonApiOrganizationSettingPatch;
@@ -9004,18 +11175,31 @@ export interface JsonApiOrganizationSettingPatchDocument {
  * JSON:API representation of parameter entity.
  */
 export interface JsonApiParameterIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiParameterInTypeEnum;
+    'attributes': JsonApiParameterInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiParameterPostOptionalIdAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiParameterInTypeEnum;
 }
 
 export type JsonApiParameterInTypeEnum = 'parameter';
+
+export interface JsonApiParameterInAttributes {
+    'areRelationsValid'?: boolean;
+    'definition': JsonApiParameterInAttributesDefinition;
+    'description'?: string;
+    'tags'?: Array<string>;
+    'title'?: string;
+}
+
+/**
+ * @type JsonApiParameterInAttributesDefinition
+ */
+export type JsonApiParameterInAttributesDefinition = { type: 'NUMBER' } & NumberParameterDefinition | { type: 'STRING' } & StringParameterDefinition;
 
 export interface JsonApiParameterInDocument {
     'data': JsonApiParameterIn;
@@ -9035,35 +11219,35 @@ export type JsonApiParameterLinkageTypeEnum = 'parameter';
  * JSON:API representation of parameter entity.
  */
 export interface JsonApiParameterOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiParameterOutTypeEnum;
+    'attributes': JsonApiParameterOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes': JsonApiParameterOutAttributes;
-    'relationships'?: JsonApiOrgMemoryItemOutRelationships;
+    'meta'?: JsonApiParameterOutMeta;
+    'relationships'?: JsonApiParameterOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiParameterOutTypeEnum;
 }
 
 export type JsonApiParameterOutTypeEnum = 'parameter';
 
 export interface JsonApiParameterOutAttributes {
-    'title'?: string;
-    'description'?: string;
-    'tags'?: Array<string>;
     'areRelationsValid'?: boolean;
-    'definition': JsonApiParameterOutAttributesDefinition;
     /**
      * Time of the entity creation.
      */
     'createdAt'?: string | null;
+    'definition': JsonApiParameterOutAttributesDefinition;
+    'description'?: string;
     /**
      * Time of the last entity modification.
      */
     'modifiedAt'?: string | null;
+    'tags'?: Array<string>;
+    'title'?: string;
 }
 
 /**
@@ -9073,11 +11257,11 @@ export type JsonApiParameterOutAttributesDefinition = { type: 'NUMBER' } & Numbe
 
 export interface JsonApiParameterOutDocument {
     'data': JsonApiParameterOut;
-    'links'?: ObjectLinks;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
+    'links'?: ObjectLinks;
 }
 
 /**
@@ -9085,26 +11269,60 @@ export interface JsonApiParameterOutDocument {
  */
 export interface JsonApiParameterOutList {
     'data': Array<JsonApiParameterOutWithLinks>;
-    'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
+    'links'?: ListLinks;
+    'meta'?: JsonApiParameterOutListMeta;
+}
+
+export interface JsonApiParameterOutListMeta {
+    'page'?: PageMetadata;
+}
+
+export interface JsonApiParameterOutMeta {
+    'origin'?: JsonApiParameterOutMetaOrigin;
+}
+
+export interface JsonApiParameterOutMetaOrigin {
+    /**
+     * defines id of the workspace where the entity comes from
+     */
+    'originId': string;
+    /**
+     * defines type of the origin of the entity
+     */
+    'originType': JsonApiParameterOutMetaOriginOriginTypeEnum;
+}
+
+export type JsonApiParameterOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
+
+export interface JsonApiParameterOutRelationships {
+    'createdBy'?: JsonApiParameterOutRelationshipsCreatedBy;
+    'modifiedBy'?: JsonApiParameterOutRelationshipsModifiedBy;
+}
+
+export interface JsonApiParameterOutRelationshipsCreatedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+export interface JsonApiParameterOutRelationshipsModifiedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
 }
 
 export interface JsonApiParameterOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiParameterOutWithLinksTypeEnum;
+    'attributes': JsonApiParameterOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes': JsonApiParameterOutAttributes;
-    'relationships'?: JsonApiOrgMemoryItemOutRelationships;
+    'meta'?: JsonApiParameterOutMeta;
+    'relationships'?: JsonApiParameterOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiParameterOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -9114,26 +11332,31 @@ export type JsonApiParameterOutWithLinksTypeEnum = 'parameter';
  * JSON:API representation of patching parameter entity.
  */
 export interface JsonApiParameterPatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiParameterPatchTypeEnum;
+    'attributes': JsonApiParameterPatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiParameterPatchAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiParameterPatchTypeEnum;
 }
 
 export type JsonApiParameterPatchTypeEnum = 'parameter';
 
 export interface JsonApiParameterPatchAttributes {
-    'title'?: string;
+    'areRelationsValid'?: boolean;
+    'definition'?: JsonApiParameterPatchAttributesDefinition;
     'description'?: string;
     'tags'?: Array<string>;
-    'areRelationsValid'?: boolean;
-    'definition'?: JsonApiParameterOutAttributesDefinition;
+    'title'?: string;
 }
+
+/**
+ * @type JsonApiParameterPatchAttributesDefinition
+ */
+export type JsonApiParameterPatchAttributesDefinition = { type: 'NUMBER' } & NumberParameterDefinition | { type: 'STRING' } & StringParameterDefinition;
 
 export interface JsonApiParameterPatchDocument {
     'data': JsonApiParameterPatch;
@@ -9143,26 +11366,31 @@ export interface JsonApiParameterPatchDocument {
  * JSON:API representation of parameter entity.
  */
 export interface JsonApiParameterPostOptionalId {
-    /**
-     * Object type
-     */
-    'type': JsonApiParameterPostOptionalIdTypeEnum;
+    'attributes': JsonApiParameterPostOptionalIdAttributes;
     /**
      * API identifier of an object
      */
     'id'?: string;
-    'attributes': JsonApiParameterPostOptionalIdAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiParameterPostOptionalIdTypeEnum;
 }
 
 export type JsonApiParameterPostOptionalIdTypeEnum = 'parameter';
 
 export interface JsonApiParameterPostOptionalIdAttributes {
-    'title'?: string;
+    'areRelationsValid'?: boolean;
+    'definition': JsonApiParameterPostOptionalIdAttributesDefinition;
     'description'?: string;
     'tags'?: Array<string>;
-    'areRelationsValid'?: boolean;
-    'definition': JsonApiParameterOutAttributesDefinition;
+    'title'?: string;
 }
+
+/**
+ * @type JsonApiParameterPostOptionalIdAttributesDefinition
+ */
+export type JsonApiParameterPostOptionalIdAttributesDefinition = { type: 'NUMBER' } & NumberParameterDefinition | { type: 'STRING' } & StringParameterDefinition;
 
 export interface JsonApiParameterPostOptionalIdDocument {
     'data': JsonApiParameterPostOptionalId;
@@ -9172,18 +11400,26 @@ export interface JsonApiParameterPostOptionalIdDocument {
  * JSON:API representation of theme entity.
  */
 export interface JsonApiThemeIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiThemeInTypeEnum;
+    'attributes': JsonApiThemeInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiColorPaletteInAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiThemeInTypeEnum;
 }
 
 export type JsonApiThemeInTypeEnum = 'theme';
+
+export interface JsonApiThemeInAttributes {
+    /**
+     * Free-form JSON content. Maximum supported length is 15000 characters.
+     */
+    'content': object;
+    'name': string;
+}
 
 export interface JsonApiThemeInDocument {
     'data': JsonApiThemeIn;
@@ -9193,18 +11429,26 @@ export interface JsonApiThemeInDocument {
  * JSON:API representation of theme entity.
  */
 export interface JsonApiThemeOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiThemeOutTypeEnum;
+    'attributes': JsonApiThemeOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiColorPaletteInAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiThemeOutTypeEnum;
 }
 
 export type JsonApiThemeOutTypeEnum = 'theme';
+
+export interface JsonApiThemeOutAttributes {
+    /**
+     * Free-form JSON content. Maximum supported length is 15000 characters.
+     */
+    'content': object;
+    'name': string;
+}
 
 export interface JsonApiThemeOutDocument {
     'data': JsonApiThemeOut;
@@ -9217,19 +11461,23 @@ export interface JsonApiThemeOutDocument {
 export interface JsonApiThemeOutList {
     'data': Array<JsonApiThemeOutWithLinks>;
     'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
+    'meta'?: JsonApiThemeOutListMeta;
+}
+
+export interface JsonApiThemeOutListMeta {
+    'page'?: PageMetadata;
 }
 
 export interface JsonApiThemeOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiThemeOutWithLinksTypeEnum;
+    'attributes': JsonApiThemeOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiColorPaletteInAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiThemeOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -9239,18 +11487,26 @@ export type JsonApiThemeOutWithLinksTypeEnum = 'theme';
  * JSON:API representation of patching theme entity.
  */
 export interface JsonApiThemePatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiThemePatchTypeEnum;
+    'attributes': JsonApiThemePatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiColorPalettePatchAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiThemePatchTypeEnum;
 }
 
 export type JsonApiThemePatchTypeEnum = 'theme';
+
+export interface JsonApiThemePatchAttributes {
+    /**
+     * Free-form JSON content. Maximum supported length is 15000 characters.
+     */
+    'content'?: object;
+    'name'?: string;
+}
 
 export interface JsonApiThemePatchDocument {
     'data': JsonApiThemePatch;
@@ -9260,58 +11516,79 @@ export interface JsonApiThemePatchDocument {
  * JSON:API representation of userDataFilter entity.
  */
 export interface JsonApiUserDataFilterIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiUserDataFilterInTypeEnum;
+    'attributes': JsonApiUserDataFilterInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiUserDataFilterOutAttributes;
-    'relationships'?: JsonApiUserDataFilterPostOptionalIdRelationships;
+    'relationships'?: JsonApiUserDataFilterInRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiUserDataFilterInTypeEnum;
 }
 
 export type JsonApiUserDataFilterInTypeEnum = 'userDataFilter';
 
+export interface JsonApiUserDataFilterInAttributes {
+    'areRelationsValid'?: boolean;
+    'description'?: string;
+    'maql': string;
+    'tags'?: Array<string>;
+    'title'?: string;
+}
+
 export interface JsonApiUserDataFilterInDocument {
     'data': JsonApiUserDataFilterIn;
+}
+
+export interface JsonApiUserDataFilterInRelationships {
+    'user'?: JsonApiUserDataFilterInRelationshipsUser;
+    'userGroup'?: JsonApiUserDataFilterInRelationshipsUserGroup;
+}
+
+export interface JsonApiUserDataFilterInRelationshipsUser {
+    'data': JsonApiUserLinkage | null;
+}
+
+export interface JsonApiUserDataFilterInRelationshipsUserGroup {
+    'data': JsonApiUserGroupLinkage | null;
 }
 
 /**
  * JSON:API representation of userDataFilter entity.
  */
 export interface JsonApiUserDataFilterOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiUserDataFilterOutTypeEnum;
+    'attributes': JsonApiUserDataFilterOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes': JsonApiUserDataFilterOutAttributes;
+    'meta'?: JsonApiUserDataFilterOutMeta;
     'relationships'?: JsonApiUserDataFilterOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiUserDataFilterOutTypeEnum;
 }
 
 export type JsonApiUserDataFilterOutTypeEnum = 'userDataFilter';
 
 export interface JsonApiUserDataFilterOutAttributes {
-    'title'?: string;
-    'description'?: string;
-    'tags'?: Array<string>;
     'areRelationsValid'?: boolean;
+    'description'?: string;
     'maql': string;
+    'tags'?: Array<string>;
+    'title'?: string;
 }
 
 export interface JsonApiUserDataFilterOutDocument {
     'data': JsonApiUserDataFilterOut;
-    'links'?: ObjectLinks;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiUserDataFilterOutIncludes>;
+    'links'?: ObjectLinks;
 }
 
 /**
@@ -9324,37 +11601,108 @@ export type JsonApiUserDataFilterOutIncludes = JsonApiAttributeOutWithLinks | Js
  */
 export interface JsonApiUserDataFilterOutList {
     'data': Array<JsonApiUserDataFilterOutWithLinks>;
-    'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiUserDataFilterOutIncludes>;
+    'links'?: ListLinks;
+    'meta'?: JsonApiUserDataFilterOutListMeta;
 }
 
+export interface JsonApiUserDataFilterOutListMeta {
+    'page'?: PageMetadata;
+}
+
+export interface JsonApiUserDataFilterOutMeta {
+    'origin'?: JsonApiUserDataFilterOutMetaOrigin;
+}
+
+export interface JsonApiUserDataFilterOutMetaOrigin {
+    /**
+     * defines id of the workspace where the entity comes from
+     */
+    'originId': string;
+    /**
+     * defines type of the origin of the entity
+     */
+    'originType': JsonApiUserDataFilterOutMetaOriginOriginTypeEnum;
+}
+
+export type JsonApiUserDataFilterOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
+
 export interface JsonApiUserDataFilterOutRelationships {
-    'user'?: JsonApiOrganizationOutRelationshipsBootstrapUser;
-    'userGroup'?: JsonApiOrganizationOutRelationshipsBootstrapUserGroup;
-    'facts'?: JsonApiDatasetOutRelationshipsFacts;
-    'attributes'?: JsonApiDatasetOutRelationshipsAttributes;
-    'labels'?: JsonApiAnalyticalDashboardOutRelationshipsLabels;
-    'metrics'?: JsonApiAnalyticalDashboardOutRelationshipsMetrics;
-    'datasets'?: JsonApiAnalyticalDashboardOutRelationshipsDatasets;
-    'parameters'?: JsonApiAnalyticalDashboardOutRelationshipsParameters;
+    'attributes'?: JsonApiUserDataFilterOutRelationshipsAttributes;
+    'datasets'?: JsonApiUserDataFilterOutRelationshipsDatasets;
+    'facts'?: JsonApiUserDataFilterOutRelationshipsFacts;
+    'labels'?: JsonApiUserDataFilterOutRelationshipsLabels;
+    'metrics'?: JsonApiUserDataFilterOutRelationshipsMetrics;
+    'parameters'?: JsonApiUserDataFilterOutRelationshipsParameters;
+    'user'?: JsonApiUserDataFilterOutRelationshipsUser;
+    'userGroup'?: JsonApiUserDataFilterOutRelationshipsUserGroup;
+}
+
+export interface JsonApiUserDataFilterOutRelationshipsAttributes {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiAttributeLinkage>;
+}
+
+export interface JsonApiUserDataFilterOutRelationshipsDatasets {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiDatasetLinkage>;
+}
+
+export interface JsonApiUserDataFilterOutRelationshipsFacts {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiFactLinkage>;
+}
+
+export interface JsonApiUserDataFilterOutRelationshipsLabels {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiLabelLinkage>;
+}
+
+export interface JsonApiUserDataFilterOutRelationshipsMetrics {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiMetricLinkage>;
+}
+
+export interface JsonApiUserDataFilterOutRelationshipsParameters {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiParameterLinkage>;
+}
+
+export interface JsonApiUserDataFilterOutRelationshipsUser {
+    'data': JsonApiUserLinkage | null;
+}
+
+export interface JsonApiUserDataFilterOutRelationshipsUserGroup {
+    'data': JsonApiUserGroupLinkage | null;
 }
 
 export interface JsonApiUserDataFilterOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiUserDataFilterOutWithLinksTypeEnum;
+    'attributes': JsonApiUserDataFilterOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes': JsonApiUserDataFilterOutAttributes;
+    'meta'?: JsonApiUserDataFilterOutMeta;
     'relationships'?: JsonApiUserDataFilterOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiUserDataFilterOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -9364,79 +11712,123 @@ export type JsonApiUserDataFilterOutWithLinksTypeEnum = 'userDataFilter';
  * JSON:API representation of patching userDataFilter entity.
  */
 export interface JsonApiUserDataFilterPatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiUserDataFilterPatchTypeEnum;
+    'attributes': JsonApiUserDataFilterPatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiUserDataFilterPatchAttributes;
-    'relationships'?: JsonApiUserDataFilterPostOptionalIdRelationships;
+    'relationships'?: JsonApiUserDataFilterPatchRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiUserDataFilterPatchTypeEnum;
 }
 
 export type JsonApiUserDataFilterPatchTypeEnum = 'userDataFilter';
 
 export interface JsonApiUserDataFilterPatchAttributes {
-    'title'?: string;
-    'description'?: string;
-    'tags'?: Array<string>;
     'areRelationsValid'?: boolean;
+    'description'?: string;
     'maql'?: string;
+    'tags'?: Array<string>;
+    'title'?: string;
 }
 
 export interface JsonApiUserDataFilterPatchDocument {
     'data': JsonApiUserDataFilterPatch;
 }
 
+export interface JsonApiUserDataFilterPatchRelationships {
+    'user'?: JsonApiUserDataFilterPatchRelationshipsUser;
+    'userGroup'?: JsonApiUserDataFilterPatchRelationshipsUserGroup;
+}
+
+export interface JsonApiUserDataFilterPatchRelationshipsUser {
+    'data': JsonApiUserLinkage | null;
+}
+
+export interface JsonApiUserDataFilterPatchRelationshipsUserGroup {
+    'data': JsonApiUserGroupLinkage | null;
+}
+
 /**
  * JSON:API representation of userDataFilter entity.
  */
 export interface JsonApiUserDataFilterPostOptionalId {
-    /**
-     * Object type
-     */
-    'type': JsonApiUserDataFilterPostOptionalIdTypeEnum;
+    'attributes': JsonApiUserDataFilterPostOptionalIdAttributes;
     /**
      * API identifier of an object
      */
     'id'?: string;
-    'attributes': JsonApiUserDataFilterOutAttributes;
     'relationships'?: JsonApiUserDataFilterPostOptionalIdRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiUserDataFilterPostOptionalIdTypeEnum;
 }
 
 export type JsonApiUserDataFilterPostOptionalIdTypeEnum = 'userDataFilter';
+
+export interface JsonApiUserDataFilterPostOptionalIdAttributes {
+    'areRelationsValid'?: boolean;
+    'description'?: string;
+    'maql': string;
+    'tags'?: Array<string>;
+    'title'?: string;
+}
 
 export interface JsonApiUserDataFilterPostOptionalIdDocument {
     'data': JsonApiUserDataFilterPostOptionalId;
 }
 
 export interface JsonApiUserDataFilterPostOptionalIdRelationships {
-    'user'?: JsonApiOrganizationOutRelationshipsBootstrapUser;
-    'userGroup'?: JsonApiOrganizationOutRelationshipsBootstrapUserGroup;
+    'user'?: JsonApiUserDataFilterPostOptionalIdRelationshipsUser;
+    'userGroup'?: JsonApiUserDataFilterPostOptionalIdRelationshipsUserGroup;
+}
+
+export interface JsonApiUserDataFilterPostOptionalIdRelationshipsUser {
+    'data': JsonApiUserLinkage | null;
+}
+
+export interface JsonApiUserDataFilterPostOptionalIdRelationshipsUserGroup {
+    'data': JsonApiUserGroupLinkage | null;
 }
 
 /**
  * JSON:API representation of userGroup entity.
  */
 export interface JsonApiUserGroupIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiUserGroupInTypeEnum;
+    'attributes'?: JsonApiUserGroupInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiUserGroupOutAttributes;
-    'relationships'?: JsonApiUserGroupOutRelationships;
+    'relationships'?: JsonApiUserGroupInRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiUserGroupInTypeEnum;
 }
 
 export type JsonApiUserGroupInTypeEnum = 'userGroup';
 
+export interface JsonApiUserGroupInAttributes {
+    'name'?: string;
+}
+
 export interface JsonApiUserGroupInDocument {
     'data': JsonApiUserGroupIn;
+}
+
+export interface JsonApiUserGroupInRelationships {
+    'parents'?: JsonApiUserGroupInRelationshipsParents;
+}
+
+export interface JsonApiUserGroupInRelationshipsParents {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiUserGroupLinkage>;
 }
 
 /**
@@ -9453,16 +11845,16 @@ export type JsonApiUserGroupLinkageTypeEnum = 'userGroup';
  * JSON:API representation of userGroup entity.
  */
 export interface JsonApiUserGroupOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiUserGroupOutTypeEnum;
+    'attributes'?: JsonApiUserGroupOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiUserGroupOutAttributes;
     'relationships'?: JsonApiUserGroupOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiUserGroupOutTypeEnum;
 }
 
 export type JsonApiUserGroupOutTypeEnum = 'userGroup';
@@ -9473,11 +11865,11 @@ export interface JsonApiUserGroupOutAttributes {
 
 export interface JsonApiUserGroupOutDocument {
     'data': JsonApiUserGroupOut;
-    'links'?: ObjectLinks;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiUserGroupOutWithLinks>;
+    'links'?: ObjectLinks;
 }
 
 /**
@@ -9485,29 +11877,40 @@ export interface JsonApiUserGroupOutDocument {
  */
 export interface JsonApiUserGroupOutList {
     'data': Array<JsonApiUserGroupOutWithLinks>;
-    'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiUserGroupOutWithLinks>;
+    'links'?: ListLinks;
+    'meta'?: JsonApiUserGroupOutListMeta;
+}
+
+export interface JsonApiUserGroupOutListMeta {
+    'page'?: PageMetadata;
 }
 
 export interface JsonApiUserGroupOutRelationships {
-    'parents'?: JsonApiUserOutRelationshipsUserGroups;
+    'parents'?: JsonApiUserGroupOutRelationshipsParents;
+}
+
+export interface JsonApiUserGroupOutRelationshipsParents {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiUserGroupLinkage>;
 }
 
 export interface JsonApiUserGroupOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiUserGroupOutWithLinksTypeEnum;
+    'attributes'?: JsonApiUserGroupOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiUserGroupOutAttributes;
     'relationships'?: JsonApiUserGroupOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiUserGroupOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -9517,22 +11920,37 @@ export type JsonApiUserGroupOutWithLinksTypeEnum = 'userGroup';
  * JSON:API representation of patching userGroup entity.
  */
 export interface JsonApiUserGroupPatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiUserGroupPatchTypeEnum;
+    'attributes'?: JsonApiUserGroupPatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiUserGroupOutAttributes;
-    'relationships'?: JsonApiUserGroupOutRelationships;
+    'relationships'?: JsonApiUserGroupPatchRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiUserGroupPatchTypeEnum;
 }
 
 export type JsonApiUserGroupPatchTypeEnum = 'userGroup';
 
+export interface JsonApiUserGroupPatchAttributes {
+    'name'?: string;
+}
+
 export interface JsonApiUserGroupPatchDocument {
     'data': JsonApiUserGroupPatch;
+}
+
+export interface JsonApiUserGroupPatchRelationships {
+    'parents'?: JsonApiUserGroupPatchRelationshipsParents;
+}
+
+export interface JsonApiUserGroupPatchRelationshipsParents {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiUserGroupLinkage>;
 }
 
 /**
@@ -9549,23 +11967,23 @@ export type JsonApiUserIdentifierLinkageTypeEnum = 'userIdentifier';
  * JSON:API representation of userIdentifier entity.
  */
 export interface JsonApiUserIdentifierOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiUserIdentifierOutTypeEnum;
+    'attributes'?: JsonApiUserIdentifierOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiUserIdentifierOutAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiUserIdentifierOutTypeEnum;
 }
 
 export type JsonApiUserIdentifierOutTypeEnum = 'userIdentifier';
 
 export interface JsonApiUserIdentifierOutAttributes {
+    'email'?: string;
     'firstname'?: string;
     'lastname'?: string;
-    'email'?: string;
 }
 
 export interface JsonApiUserIdentifierOutDocument {
@@ -9579,19 +11997,23 @@ export interface JsonApiUserIdentifierOutDocument {
 export interface JsonApiUserIdentifierOutList {
     'data': Array<JsonApiUserIdentifierOutWithLinks>;
     'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
+    'meta'?: JsonApiUserIdentifierOutListMeta;
+}
+
+export interface JsonApiUserIdentifierOutListMeta {
+    'page'?: PageMetadata;
 }
 
 export interface JsonApiUserIdentifierOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiUserIdentifierOutWithLinksTypeEnum;
+    'attributes'?: JsonApiUserIdentifierOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiUserIdentifierOutAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiUserIdentifierOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -9601,22 +12023,44 @@ export type JsonApiUserIdentifierOutWithLinksTypeEnum = 'userIdentifier';
  * JSON:API representation of user entity.
  */
 export interface JsonApiUserIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiUserInTypeEnum;
+    'attributes'?: JsonApiUserInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiUserOutAttributes;
-    'relationships'?: JsonApiUserOutRelationships;
+    'relationships'?: JsonApiUserInRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiUserInTypeEnum;
 }
 
 export type JsonApiUserInTypeEnum = 'user';
 
+export interface JsonApiUserInAttributes {
+    'authenticationId'?: string;
+    'email'?: string;
+    'firstname'?: string;
+    'lastname'?: string;
+    /**
+     * Is user system account
+     */
+    'systemAccount'?: boolean;
+}
+
 export interface JsonApiUserInDocument {
     'data': JsonApiUserIn;
+}
+
+export interface JsonApiUserInRelationships {
+    'userGroups'?: JsonApiUserInRelationshipsUserGroups;
+}
+
+export interface JsonApiUserInRelationshipsUserGroups {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiUserGroupLinkage>;
 }
 
 /**
@@ -9633,25 +12077,25 @@ export type JsonApiUserLinkageTypeEnum = 'user';
  * JSON:API representation of user entity.
  */
 export interface JsonApiUserOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiUserOutTypeEnum;
+    'attributes'?: JsonApiUserOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiUserOutAttributes;
     'relationships'?: JsonApiUserOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiUserOutTypeEnum;
 }
 
 export type JsonApiUserOutTypeEnum = 'user';
 
 export interface JsonApiUserOutAttributes {
     'authenticationId'?: string;
+    'email'?: string;
     'firstname'?: string;
     'lastname'?: string;
-    'email'?: string;
     /**
      * Is user system account
      */
@@ -9660,11 +12104,11 @@ export interface JsonApiUserOutAttributes {
 
 export interface JsonApiUserOutDocument {
     'data': JsonApiUserOut;
-    'links'?: ObjectLinks;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiUserGroupOutWithLinks>;
+    'links'?: ObjectLinks;
 }
 
 /**
@@ -9672,12 +12116,16 @@ export interface JsonApiUserOutDocument {
  */
 export interface JsonApiUserOutList {
     'data': Array<JsonApiUserOutWithLinks>;
-    'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiUserGroupOutWithLinks>;
+    'links'?: ListLinks;
+    'meta'?: JsonApiUserOutListMeta;
+}
+
+export interface JsonApiUserOutListMeta {
+    'page'?: PageMetadata;
 }
 
 export interface JsonApiUserOutRelationships {
@@ -9692,16 +12140,16 @@ export interface JsonApiUserOutRelationshipsUserGroups {
 }
 
 export interface JsonApiUserOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiUserOutWithLinksTypeEnum;
+    'attributes'?: JsonApiUserOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiUserOutAttributes;
     'relationships'?: JsonApiUserOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiUserOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -9711,40 +12159,72 @@ export type JsonApiUserOutWithLinksTypeEnum = 'user';
  * JSON:API representation of patching user entity.
  */
 export interface JsonApiUserPatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiUserPatchTypeEnum;
+    'attributes'?: JsonApiUserPatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiUserOutAttributes;
-    'relationships'?: JsonApiUserOutRelationships;
+    'relationships'?: JsonApiUserPatchRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiUserPatchTypeEnum;
 }
 
 export type JsonApiUserPatchTypeEnum = 'user';
 
+export interface JsonApiUserPatchAttributes {
+    'authenticationId'?: string;
+    'email'?: string;
+    'firstname'?: string;
+    'lastname'?: string;
+    /**
+     * Is user system account
+     */
+    'systemAccount'?: boolean;
+}
+
 export interface JsonApiUserPatchDocument {
     'data': JsonApiUserPatch;
+}
+
+export interface JsonApiUserPatchRelationships {
+    'userGroups'?: JsonApiUserPatchRelationshipsUserGroups;
+}
+
+export interface JsonApiUserPatchRelationshipsUserGroups {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiUserGroupLinkage>;
 }
 
 /**
  * JSON:API representation of userSetting entity.
  */
 export interface JsonApiUserSettingIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiUserSettingInTypeEnum;
+    'attributes'?: JsonApiUserSettingInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiOrganizationSettingOutAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiUserSettingInTypeEnum;
 }
 
 export type JsonApiUserSettingInTypeEnum = 'userSetting';
+
+export interface JsonApiUserSettingInAttributes {
+    /**
+     * Free-form JSON content. Maximum supported length is 15000 characters.
+     */
+    'content'?: object;
+    'type'?: JsonApiUserSettingInAttributesTypeEnum;
+}
+
+export type JsonApiUserSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE';
 
 export interface JsonApiUserSettingInDocument {
     'data': JsonApiUserSettingIn;
@@ -9754,18 +12234,28 @@ export interface JsonApiUserSettingInDocument {
  * JSON:API representation of userSetting entity.
  */
 export interface JsonApiUserSettingOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiUserSettingOutTypeEnum;
+    'attributes'?: JsonApiUserSettingOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiOrganizationSettingOutAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiUserSettingOutTypeEnum;
 }
 
 export type JsonApiUserSettingOutTypeEnum = 'userSetting';
+
+export interface JsonApiUserSettingOutAttributes {
+    /**
+     * Free-form JSON content. Maximum supported length is 15000 characters.
+     */
+    'content'?: object;
+    'type'?: JsonApiUserSettingOutAttributesTypeEnum;
+}
+
+export type JsonApiUserSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE';
 
 export interface JsonApiUserSettingOutDocument {
     'data': JsonApiUserSettingOut;
@@ -9778,19 +12268,23 @@ export interface JsonApiUserSettingOutDocument {
 export interface JsonApiUserSettingOutList {
     'data': Array<JsonApiUserSettingOutWithLinks>;
     'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
+    'meta'?: JsonApiUserSettingOutListMeta;
+}
+
+export interface JsonApiUserSettingOutListMeta {
+    'page'?: PageMetadata;
 }
 
 export interface JsonApiUserSettingOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiUserSettingOutWithLinksTypeEnum;
+    'attributes'?: JsonApiUserSettingOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiOrganizationSettingOutAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiUserSettingOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -9800,18 +12294,30 @@ export type JsonApiUserSettingOutWithLinksTypeEnum = 'userSetting';
  * JSON:API representation of visualizationObject entity.
  */
 export interface JsonApiVisualizationObjectIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiVisualizationObjectInTypeEnum;
+    'attributes': JsonApiVisualizationObjectInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiVisualizationObjectPostOptionalIdAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiVisualizationObjectInTypeEnum;
 }
 
 export type JsonApiVisualizationObjectInTypeEnum = 'visualizationObject';
+
+export interface JsonApiVisualizationObjectInAttributes {
+    'areRelationsValid'?: boolean;
+    /**
+     * Free-form JSON content. Maximum supported length is 250000 characters.
+     */
+    'content': object;
+    'description'?: string;
+    'isHidden'?: boolean;
+    'tags'?: Array<string>;
+    'title'?: string;
+}
 
 export interface JsonApiVisualizationObjectInDocument {
     'data': JsonApiVisualizationObjectIn;
@@ -9831,26 +12337,35 @@ export type JsonApiVisualizationObjectLinkageTypeEnum = 'visualizationObject';
  * JSON:API representation of visualizationObject entity.
  */
 export interface JsonApiVisualizationObjectOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiVisualizationObjectOutTypeEnum;
+    'attributes': JsonApiVisualizationObjectOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes': JsonApiVisualizationObjectOutAttributes;
+    'meta'?: JsonApiVisualizationObjectOutMeta;
     'relationships'?: JsonApiVisualizationObjectOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiVisualizationObjectOutTypeEnum;
 }
 
 export type JsonApiVisualizationObjectOutTypeEnum = 'visualizationObject';
 
 export interface JsonApiVisualizationObjectOutAttributes {
-    'title'?: string;
-    'description'?: string;
-    'tags'?: Array<string>;
     'areRelationsValid'?: boolean;
+    /**
+     * Certification status of the entity.
+     */
+    'certification'?: JsonApiVisualizationObjectOutAttributesCertificationEnum;
+    /**
+     * Optional message associated with the certification.
+     */
+    'certificationMessage'?: string | null;
+    /**
+     * Time when the certification was set.
+     */
+    'certifiedAt'?: string | null;
     /**
      * Free-form JSON content. Maximum supported length is 250000 characters.
      */
@@ -9859,34 +12374,25 @@ export interface JsonApiVisualizationObjectOutAttributes {
      * Time of the entity creation.
      */
     'createdAt'?: string | null;
+    'description'?: string;
+    'isHidden'?: boolean;
     /**
      * Time of the last entity modification.
      */
     'modifiedAt'?: string | null;
-    'isHidden'?: boolean;
-    /**
-     * Certification status of the entity.
-     */
-    'certification'?: JsonApiVisualizationObjectOutAttributesCertificationEnum;
-    /**
-     * Time when the certification was set.
-     */
-    'certifiedAt'?: string | null;
-    /**
-     * Optional message associated with the certification.
-     */
-    'certificationMessage'?: string | null;
+    'tags'?: Array<string>;
+    'title'?: string;
 }
 
 export type JsonApiVisualizationObjectOutAttributesCertificationEnum = 'CERTIFIED';
 
 export interface JsonApiVisualizationObjectOutDocument {
     'data': JsonApiVisualizationObjectOut;
-    'links'?: ObjectLinks;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiMetricOutIncludes>;
+    'links'?: ObjectLinks;
 }
 
 /**
@@ -9894,38 +12400,113 @@ export interface JsonApiVisualizationObjectOutDocument {
  */
 export interface JsonApiVisualizationObjectOutList {
     'data': Array<JsonApiVisualizationObjectOutWithLinks>;
-    'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiMetricOutIncludes>;
+    'links'?: ListLinks;
+    'meta'?: JsonApiVisualizationObjectOutListMeta;
 }
 
+export interface JsonApiVisualizationObjectOutListMeta {
+    'page'?: PageMetadata;
+}
+
+export interface JsonApiVisualizationObjectOutMeta {
+    'origin'?: JsonApiVisualizationObjectOutMetaOrigin;
+}
+
+export interface JsonApiVisualizationObjectOutMetaOrigin {
+    /**
+     * defines id of the workspace where the entity comes from
+     */
+    'originId': string;
+    /**
+     * defines type of the origin of the entity
+     */
+    'originType': JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum;
+}
+
+export type JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
+
 export interface JsonApiVisualizationObjectOutRelationships {
-    'createdBy'?: JsonApiAgentOutRelationshipsCreatedBy;
-    'modifiedBy'?: JsonApiAgentOutRelationshipsCreatedBy;
-    'certifiedBy'?: JsonApiAgentOutRelationshipsCreatedBy;
-    'facts'?: JsonApiDatasetOutRelationshipsFacts;
-    'attributes'?: JsonApiDatasetOutRelationshipsAttributes;
-    'labels'?: JsonApiAnalyticalDashboardOutRelationshipsLabels;
-    'metrics'?: JsonApiAnalyticalDashboardOutRelationshipsMetrics;
-    'parameters'?: JsonApiAnalyticalDashboardOutRelationshipsParameters;
-    'datasets'?: JsonApiAnalyticalDashboardOutRelationshipsDatasets;
+    'attributes'?: JsonApiVisualizationObjectOutRelationshipsAttributes;
+    'certifiedBy'?: JsonApiVisualizationObjectOutRelationshipsCertifiedBy;
+    'createdBy'?: JsonApiVisualizationObjectOutRelationshipsCreatedBy;
+    'datasets'?: JsonApiVisualizationObjectOutRelationshipsDatasets;
+    'facts'?: JsonApiVisualizationObjectOutRelationshipsFacts;
+    'labels'?: JsonApiVisualizationObjectOutRelationshipsLabels;
+    'metrics'?: JsonApiVisualizationObjectOutRelationshipsMetrics;
+    'modifiedBy'?: JsonApiVisualizationObjectOutRelationshipsModifiedBy;
+    'parameters'?: JsonApiVisualizationObjectOutRelationshipsParameters;
+}
+
+export interface JsonApiVisualizationObjectOutRelationshipsAttributes {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiAttributeLinkage>;
+}
+
+export interface JsonApiVisualizationObjectOutRelationshipsCertifiedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+export interface JsonApiVisualizationObjectOutRelationshipsCreatedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+export interface JsonApiVisualizationObjectOutRelationshipsDatasets {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiDatasetLinkage>;
+}
+
+export interface JsonApiVisualizationObjectOutRelationshipsFacts {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiFactLinkage>;
+}
+
+export interface JsonApiVisualizationObjectOutRelationshipsLabels {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiLabelLinkage>;
+}
+
+export interface JsonApiVisualizationObjectOutRelationshipsMetrics {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiMetricLinkage>;
+}
+
+export interface JsonApiVisualizationObjectOutRelationshipsModifiedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+export interface JsonApiVisualizationObjectOutRelationshipsParameters {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiParameterLinkage>;
 }
 
 export interface JsonApiVisualizationObjectOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiVisualizationObjectOutWithLinksTypeEnum;
+    'attributes': JsonApiVisualizationObjectOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes': JsonApiVisualizationObjectOutAttributes;
+    'meta'?: JsonApiVisualizationObjectOutMeta;
     'relationships'?: JsonApiVisualizationObjectOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiVisualizationObjectOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -9935,29 +12516,29 @@ export type JsonApiVisualizationObjectOutWithLinksTypeEnum = 'visualizationObjec
  * JSON:API representation of patching visualizationObject entity.
  */
 export interface JsonApiVisualizationObjectPatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiVisualizationObjectPatchTypeEnum;
+    'attributes': JsonApiVisualizationObjectPatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiVisualizationObjectPatchAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiVisualizationObjectPatchTypeEnum;
 }
 
 export type JsonApiVisualizationObjectPatchTypeEnum = 'visualizationObject';
 
 export interface JsonApiVisualizationObjectPatchAttributes {
-    'title'?: string;
-    'description'?: string;
-    'tags'?: Array<string>;
     'areRelationsValid'?: boolean;
     /**
      * Free-form JSON content. Maximum supported length is 250000 characters.
      */
     'content'?: object;
+    'description'?: string;
     'isHidden'?: boolean;
+    'tags'?: Array<string>;
+    'title'?: string;
 }
 
 export interface JsonApiVisualizationObjectPatchDocument {
@@ -9968,29 +12549,29 @@ export interface JsonApiVisualizationObjectPatchDocument {
  * JSON:API representation of visualizationObject entity.
  */
 export interface JsonApiVisualizationObjectPostOptionalId {
-    /**
-     * Object type
-     */
-    'type': JsonApiVisualizationObjectPostOptionalIdTypeEnum;
+    'attributes': JsonApiVisualizationObjectPostOptionalIdAttributes;
     /**
      * API identifier of an object
      */
     'id'?: string;
-    'attributes': JsonApiVisualizationObjectPostOptionalIdAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiVisualizationObjectPostOptionalIdTypeEnum;
 }
 
 export type JsonApiVisualizationObjectPostOptionalIdTypeEnum = 'visualizationObject';
 
 export interface JsonApiVisualizationObjectPostOptionalIdAttributes {
-    'title'?: string;
-    'description'?: string;
-    'tags'?: Array<string>;
     'areRelationsValid'?: boolean;
     /**
      * Free-form JSON content. Maximum supported length is 250000 characters.
      */
     'content': object;
+    'description'?: string;
     'isHidden'?: boolean;
+    'tags'?: Array<string>;
+    'title'?: string;
 }
 
 export interface JsonApiVisualizationObjectPostOptionalIdDocument {
@@ -10001,72 +12582,72 @@ export interface JsonApiVisualizationObjectPostOptionalIdDocument {
  * JSON:API representation of workspaceAutomation entity.
  */
 export interface JsonApiWorkspaceAutomationOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiWorkspaceAutomationOutTypeEnum;
+    'attributes'?: JsonApiWorkspaceAutomationOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiWorkspaceAutomationOutAttributes;
     'relationships'?: JsonApiWorkspaceAutomationOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiWorkspaceAutomationOutTypeEnum;
 }
 
 export type JsonApiWorkspaceAutomationOutTypeEnum = 'workspaceAutomation';
 
 export interface JsonApiWorkspaceAutomationOutAttributes {
-    'title'?: string;
-    'description'?: string;
-    'tags'?: Array<string>;
+    'alert'?: JsonApiWorkspaceAutomationOutAttributesAlert;
     'areRelationsValid'?: boolean;
+    'createdAt'?: string;
+    'dashboardTabularExports'?: Array<JsonApiWorkspaceAutomationOutAttributesDashboardTabularExportsInner>;
+    'description'?: string;
     /**
      * Additional details to be included in the automated message.
      */
     'details'?: object;
-    'metadata'?: JsonApiWorkspaceAutomationOutAttributesMetadata | null;
-    /**
-     * Current state of the automation.
-     */
-    'state'?: JsonApiWorkspaceAutomationOutAttributesStateEnum;
     /**
      * Specify automation evaluation mode.
      */
     'evaluationMode'?: JsonApiWorkspaceAutomationOutAttributesEvaluationModeEnum;
-    'schedule'?: JsonApiWorkspaceAutomationOutAttributesSchedule;
-    'alert'?: JsonApiWorkspaceAutomationOutAttributesAlert;
-    'tabularExports'?: Array<JsonApiWorkspaceAutomationOutAttributesTabularExportsInner>;
-    'visualExports'?: Array<JsonApiWorkspaceAutomationOutAttributesVisualExportsInner>;
-    'imageExports'?: Array<JsonApiWorkspaceAutomationOutAttributesImageExportsInner>;
-    'rawExports'?: Array<JsonApiWorkspaceAutomationOutAttributesRawExportsInner>;
-    'slidesExports'?: Array<JsonApiWorkspaceAutomationOutAttributesSlidesExportsInner>;
-    'dashboardTabularExports'?: Array<JsonApiWorkspaceAutomationOutAttributesDashboardTabularExportsInner>;
     /**
      * External recipients of the automation action results.
      */
     'externalRecipients'?: Array<JsonApiWorkspaceAutomationOutAttributesExternalRecipientsInner>;
-    'createdAt'?: string;
+    'imageExports'?: Array<JsonApiWorkspaceAutomationOutAttributesImageExportsInner>;
+    'metadata'?: JsonApiWorkspaceAutomationOutAttributesMetadata | null;
     'modifiedAt'?: string;
+    'rawExports'?: Array<JsonApiWorkspaceAutomationOutAttributesRawExportsInner>;
+    'schedule'?: JsonApiWorkspaceAutomationOutAttributesSchedule;
+    'slidesExports'?: Array<JsonApiWorkspaceAutomationOutAttributesSlidesExportsInner>;
+    /**
+     * Current state of the automation.
+     */
+    'state'?: JsonApiWorkspaceAutomationOutAttributesStateEnum;
+    'tabularExports'?: Array<JsonApiWorkspaceAutomationOutAttributesTabularExportsInner>;
+    'tags'?: Array<string>;
+    'title'?: string;
+    'visualExports'?: Array<JsonApiWorkspaceAutomationOutAttributesVisualExportsInner>;
 }
 
-export type JsonApiWorkspaceAutomationOutAttributesStateEnum = 'ACTIVE' | 'PAUSED';
 export type JsonApiWorkspaceAutomationOutAttributesEvaluationModeEnum = 'SHARED' | 'PER_RECIPIENT';
+export type JsonApiWorkspaceAutomationOutAttributesStateEnum = 'ACTIVE' | 'PAUSED';
 
 export interface JsonApiWorkspaceAutomationOutAttributesAlert {
-    'execution': AlertAfm;
     'condition': AlertCondition;
-    /**
-     * Trigger behavior for the alert. ALWAYS - alert is triggered every time the condition is met. ONCE - alert is triggered only once when the condition is met. ONCE_PER_INTERVAL - alert is triggered when the condition is met, then suppressed for the interval. If no interval is specified, it behaves as ALWAYS. 
-     */
-    'trigger'?: JsonApiWorkspaceAutomationOutAttributesAlertTriggerEnum;
+    'execution': AlertAfm;
     /**
      * Date granularity for the interval of ONCE_PER_INTERVAL trigger. Supported granularities: DAY, WEEK, MONTH, QUARTER, YEAR.
      */
     'interval'?: JsonApiWorkspaceAutomationOutAttributesAlertIntervalEnum;
+    /**
+     * Trigger behavior for the alert. ALWAYS - alert is triggered every time the condition is met. ONCE - alert is triggered only once when the condition is met. ONCE_PER_INTERVAL - alert is triggered when the condition is met, then suppressed for the interval. If no interval is specified, it behaves as ALWAYS. 
+     */
+    'trigger'?: JsonApiWorkspaceAutomationOutAttributesAlertTriggerEnum;
 }
 
-export type JsonApiWorkspaceAutomationOutAttributesAlertTriggerEnum = 'ALWAYS' | 'ONCE' | 'ONCE_PER_INTERVAL';
 export type JsonApiWorkspaceAutomationOutAttributesAlertIntervalEnum = 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR';
+export type JsonApiWorkspaceAutomationOutAttributesAlertTriggerEnum = 'ALWAYS' | 'ONCE' | 'ONCE_PER_INTERVAL';
 
 export interface JsonApiWorkspaceAutomationOutAttributesDashboardTabularExportsInner {
     'requestPayload': DashboardTabularExportRequestV2;
@@ -10089,8 +12670,8 @@ export interface JsonApiWorkspaceAutomationOutAttributesImageExportsInner {
 export interface JsonApiWorkspaceAutomationOutAttributesMetadata {
     [key: string]: any;
 
-    'widget'?: string;
     'visibleFilters'?: Array<VisibleFilter>;
+    'widget'?: string;
 }
 
 export interface JsonApiWorkspaceAutomationOutAttributesRawExportsInner {
@@ -10107,13 +12688,13 @@ export interface JsonApiWorkspaceAutomationOutAttributesSchedule {
      */
     'cronDescription'?: string;
     /**
-     * Timezone in which the schedule is defined.
-     */
-    'timezone': string;
-    /**
      * Timestamp of the first scheduled action. If not provided default to the next scheduled time.
      */
     'firstRun'?: string;
+    /**
+     * Timezone in which the schedule is defined.
+     */
+    'timezone': string;
 }
 
 export interface JsonApiWorkspaceAutomationOutAttributesSlidesExportsInner {
@@ -10138,23 +12719,31 @@ export type JsonApiWorkspaceAutomationOutIncludes = JsonApiAnalyticalDashboardOu
  */
 export interface JsonApiWorkspaceAutomationOutList {
     'data': Array<JsonApiWorkspaceAutomationOutWithLinks>;
-    'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiWorkspaceAutomationOutIncludes>;
+    'links'?: ListLinks;
+    'meta'?: JsonApiWorkspaceAutomationOutListMeta;
+}
+
+export interface JsonApiWorkspaceAutomationOutListMeta {
+    'page'?: PageMetadata;
 }
 
 export interface JsonApiWorkspaceAutomationOutRelationships {
-    'workspace'?: JsonApiWorkspaceOutRelationshipsParent;
-    'notificationChannel'?: JsonApiWorkspaceAutomationOutRelationshipsNotificationChannel;
-    'analyticalDashboard'?: JsonApiExportDefinitionOutRelationshipsAnalyticalDashboard;
-    'createdBy'?: JsonApiAgentOutRelationshipsCreatedBy;
-    'modifiedBy'?: JsonApiAgentOutRelationshipsCreatedBy;
-    'exportDefinitions'?: JsonApiWorkspaceAutomationOutRelationshipsExportDefinitions;
-    'recipients'?: JsonApiIpAllowlistPolicyOutRelationshipsUsers;
+    'analyticalDashboard'?: JsonApiWorkspaceAutomationOutRelationshipsAnalyticalDashboard;
     'automationResults'?: JsonApiWorkspaceAutomationOutRelationshipsAutomationResults;
+    'createdBy'?: JsonApiWorkspaceAutomationOutRelationshipsCreatedBy;
+    'exportDefinitions'?: JsonApiWorkspaceAutomationOutRelationshipsExportDefinitions;
+    'modifiedBy'?: JsonApiWorkspaceAutomationOutRelationshipsModifiedBy;
+    'notificationChannel'?: JsonApiWorkspaceAutomationOutRelationshipsNotificationChannel;
+    'recipients'?: JsonApiWorkspaceAutomationOutRelationshipsRecipients;
+    'workspace'?: JsonApiWorkspaceAutomationOutRelationshipsWorkspace;
+}
+
+export interface JsonApiWorkspaceAutomationOutRelationshipsAnalyticalDashboard {
+    'data': JsonApiAnalyticalDashboardLinkage | null;
 }
 
 export interface JsonApiWorkspaceAutomationOutRelationshipsAutomationResults {
@@ -10164,6 +12753,10 @@ export interface JsonApiWorkspaceAutomationOutRelationshipsAutomationResults {
     'data': Array<JsonApiAutomationResultLinkage>;
 }
 
+export interface JsonApiWorkspaceAutomationOutRelationshipsCreatedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
 export interface JsonApiWorkspaceAutomationOutRelationshipsExportDefinitions {
     /**
      * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
@@ -10171,21 +12764,36 @@ export interface JsonApiWorkspaceAutomationOutRelationshipsExportDefinitions {
     'data': Array<JsonApiExportDefinitionLinkage>;
 }
 
+export interface JsonApiWorkspaceAutomationOutRelationshipsModifiedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
 export interface JsonApiWorkspaceAutomationOutRelationshipsNotificationChannel {
     'data': JsonApiNotificationChannelLinkage | null;
 }
 
-export interface JsonApiWorkspaceAutomationOutWithLinks {
+export interface JsonApiWorkspaceAutomationOutRelationshipsRecipients {
     /**
-     * Object type
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
      */
-    'type': JsonApiWorkspaceAutomationOutWithLinksTypeEnum;
+    'data': Array<JsonApiUserLinkage>;
+}
+
+export interface JsonApiWorkspaceAutomationOutRelationshipsWorkspace {
+    'data': JsonApiWorkspaceLinkage | null;
+}
+
+export interface JsonApiWorkspaceAutomationOutWithLinks {
+    'attributes'?: JsonApiWorkspaceAutomationOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiWorkspaceAutomationOutAttributes;
     'relationships'?: JsonApiWorkspaceAutomationOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiWorkspaceAutomationOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -10224,7 +12832,7 @@ export interface JsonApiWorkspaceColorPaletteInDocument {
  * JSON:API representation of workspaceColorPalette entity.
  */
 export interface JsonApiWorkspaceColorPaletteOut {
-    'attributes': JsonApiWorkspaceColorPaletteInAttributes;
+    'attributes': JsonApiWorkspaceColorPaletteOutAttributes;
     /**
      * API identifier of an object
      */
@@ -10238,6 +12846,14 @@ export interface JsonApiWorkspaceColorPaletteOut {
 
 export type JsonApiWorkspaceColorPaletteOutTypeEnum = 'workspaceColorPalette';
 
+export interface JsonApiWorkspaceColorPaletteOutAttributes {
+    /**
+     * Free-form JSON content. Maximum supported length is 15000 characters.
+     */
+    'content': object;
+    'name': string;
+}
+
 export interface JsonApiWorkspaceColorPaletteOutDocument {
     'data': JsonApiWorkspaceColorPaletteOut;
     'links'?: ObjectLinks;
@@ -10249,7 +12865,11 @@ export interface JsonApiWorkspaceColorPaletteOutDocument {
 export interface JsonApiWorkspaceColorPaletteOutList {
     'data': Array<JsonApiWorkspaceColorPaletteOutWithLinks>;
     'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
+    'meta'?: JsonApiWorkspaceColorPaletteOutListMeta;
+}
+
+export interface JsonApiWorkspaceColorPaletteOutListMeta {
+    'page'?: PageMetadata;
 }
 
 export interface JsonApiWorkspaceColorPaletteOutMeta {
@@ -10270,7 +12890,7 @@ export interface JsonApiWorkspaceColorPaletteOutMetaOrigin {
 export type JsonApiWorkspaceColorPaletteOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
 
 export interface JsonApiWorkspaceColorPaletteOutWithLinks {
-    'attributes': JsonApiWorkspaceColorPaletteInAttributes;
+    'attributes': JsonApiWorkspaceColorPaletteOutAttributes;
     /**
      * API identifier of an object
      */
@@ -10318,22 +12938,39 @@ export interface JsonApiWorkspaceColorPalettePatchDocument {
  * JSON:API representation of workspaceDataFilter entity.
  */
 export interface JsonApiWorkspaceDataFilterIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiWorkspaceDataFilterInTypeEnum;
+    'attributes'?: JsonApiWorkspaceDataFilterInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiWorkspaceDataFilterOutAttributes;
-    'relationships'?: JsonApiWorkspaceDataFilterOutRelationships;
+    'relationships'?: JsonApiWorkspaceDataFilterInRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiWorkspaceDataFilterInTypeEnum;
 }
 
 export type JsonApiWorkspaceDataFilterInTypeEnum = 'workspaceDataFilter';
 
+export interface JsonApiWorkspaceDataFilterInAttributes {
+    'columnName'?: string;
+    'description'?: string;
+    'title'?: string;
+}
+
 export interface JsonApiWorkspaceDataFilterInDocument {
     'data': JsonApiWorkspaceDataFilterIn;
+}
+
+export interface JsonApiWorkspaceDataFilterInRelationships {
+    'filterSettings'?: JsonApiWorkspaceDataFilterInRelationshipsFilterSettings;
+}
+
+export interface JsonApiWorkspaceDataFilterInRelationshipsFilterSettings {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiWorkspaceDataFilterSettingLinkage>;
 }
 
 /**
@@ -10350,34 +12987,34 @@ export type JsonApiWorkspaceDataFilterLinkageTypeEnum = 'workspaceDataFilter';
  * JSON:API representation of workspaceDataFilter entity.
  */
 export interface JsonApiWorkspaceDataFilterOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiWorkspaceDataFilterOutTypeEnum;
+    'attributes'?: JsonApiWorkspaceDataFilterOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes'?: JsonApiWorkspaceDataFilterOutAttributes;
+    'meta'?: JsonApiWorkspaceDataFilterOutMeta;
     'relationships'?: JsonApiWorkspaceDataFilterOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiWorkspaceDataFilterOutTypeEnum;
 }
 
 export type JsonApiWorkspaceDataFilterOutTypeEnum = 'workspaceDataFilter';
 
 export interface JsonApiWorkspaceDataFilterOutAttributes {
-    'title'?: string;
-    'description'?: string;
     'columnName'?: string;
+    'description'?: string;
+    'title'?: string;
 }
 
 export interface JsonApiWorkspaceDataFilterOutDocument {
     'data': JsonApiWorkspaceDataFilterOut;
-    'links'?: ObjectLinks;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiWorkspaceDataFilterSettingOutWithLinks>;
+    'links'?: ObjectLinks;
 }
 
 /**
@@ -10385,13 +13022,34 @@ export interface JsonApiWorkspaceDataFilterOutDocument {
  */
 export interface JsonApiWorkspaceDataFilterOutList {
     'data': Array<JsonApiWorkspaceDataFilterOutWithLinks>;
-    'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiWorkspaceDataFilterSettingOutWithLinks>;
+    'links'?: ListLinks;
+    'meta'?: JsonApiWorkspaceDataFilterOutListMeta;
 }
+
+export interface JsonApiWorkspaceDataFilterOutListMeta {
+    'page'?: PageMetadata;
+}
+
+export interface JsonApiWorkspaceDataFilterOutMeta {
+    'origin'?: JsonApiWorkspaceDataFilterOutMetaOrigin;
+}
+
+export interface JsonApiWorkspaceDataFilterOutMetaOrigin {
+    /**
+     * defines id of the workspace where the entity comes from
+     */
+    'originId': string;
+    /**
+     * defines type of the origin of the entity
+     */
+    'originType': JsonApiWorkspaceDataFilterOutMetaOriginOriginTypeEnum;
+}
+
+export type JsonApiWorkspaceDataFilterOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
 
 export interface JsonApiWorkspaceDataFilterOutRelationships {
     'filterSettings'?: JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings;
@@ -10405,17 +13063,17 @@ export interface JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings {
 }
 
 export interface JsonApiWorkspaceDataFilterOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiWorkspaceDataFilterOutWithLinksTypeEnum;
+    'attributes'?: JsonApiWorkspaceDataFilterOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes'?: JsonApiWorkspaceDataFilterOutAttributes;
+    'meta'?: JsonApiWorkspaceDataFilterOutMeta;
     'relationships'?: JsonApiWorkspaceDataFilterOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiWorkspaceDataFilterOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -10425,44 +13083,75 @@ export type JsonApiWorkspaceDataFilterOutWithLinksTypeEnum = 'workspaceDataFilte
  * JSON:API representation of patching workspaceDataFilter entity.
  */
 export interface JsonApiWorkspaceDataFilterPatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiWorkspaceDataFilterPatchTypeEnum;
+    'attributes'?: JsonApiWorkspaceDataFilterPatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiWorkspaceDataFilterOutAttributes;
-    'relationships'?: JsonApiWorkspaceDataFilterOutRelationships;
+    'relationships'?: JsonApiWorkspaceDataFilterPatchRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiWorkspaceDataFilterPatchTypeEnum;
 }
 
 export type JsonApiWorkspaceDataFilterPatchTypeEnum = 'workspaceDataFilter';
 
+export interface JsonApiWorkspaceDataFilterPatchAttributes {
+    'columnName'?: string;
+    'description'?: string;
+    'title'?: string;
+}
+
 export interface JsonApiWorkspaceDataFilterPatchDocument {
     'data': JsonApiWorkspaceDataFilterPatch;
+}
+
+export interface JsonApiWorkspaceDataFilterPatchRelationships {
+    'filterSettings'?: JsonApiWorkspaceDataFilterPatchRelationshipsFilterSettings;
+}
+
+export interface JsonApiWorkspaceDataFilterPatchRelationshipsFilterSettings {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiWorkspaceDataFilterSettingLinkage>;
 }
 
 /**
  * JSON:API representation of workspaceDataFilterSetting entity.
  */
 export interface JsonApiWorkspaceDataFilterSettingIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiWorkspaceDataFilterSettingInTypeEnum;
+    'attributes'?: JsonApiWorkspaceDataFilterSettingInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiWorkspaceDataFilterSettingOutAttributes;
-    'relationships'?: JsonApiWorkspaceDataFilterSettingOutRelationships;
+    'relationships'?: JsonApiWorkspaceDataFilterSettingInRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiWorkspaceDataFilterSettingInTypeEnum;
 }
 
 export type JsonApiWorkspaceDataFilterSettingInTypeEnum = 'workspaceDataFilterSetting';
 
+export interface JsonApiWorkspaceDataFilterSettingInAttributes {
+    'description'?: string;
+    'filterValues'?: Array<string>;
+    'title'?: string;
+}
+
 export interface JsonApiWorkspaceDataFilterSettingInDocument {
     'data': JsonApiWorkspaceDataFilterSettingIn;
+}
+
+export interface JsonApiWorkspaceDataFilterSettingInRelationships {
+    'workspaceDataFilter'?: JsonApiWorkspaceDataFilterSettingInRelationshipsWorkspaceDataFilter;
+}
+
+export interface JsonApiWorkspaceDataFilterSettingInRelationshipsWorkspaceDataFilter {
+    'data': JsonApiWorkspaceDataFilterLinkage | null;
 }
 
 /**
@@ -10479,34 +13168,34 @@ export type JsonApiWorkspaceDataFilterSettingLinkageTypeEnum = 'workspaceDataFil
  * JSON:API representation of workspaceDataFilterSetting entity.
  */
 export interface JsonApiWorkspaceDataFilterSettingOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiWorkspaceDataFilterSettingOutTypeEnum;
+    'attributes'?: JsonApiWorkspaceDataFilterSettingOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes'?: JsonApiWorkspaceDataFilterSettingOutAttributes;
+    'meta'?: JsonApiWorkspaceDataFilterSettingOutMeta;
     'relationships'?: JsonApiWorkspaceDataFilterSettingOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiWorkspaceDataFilterSettingOutTypeEnum;
 }
 
 export type JsonApiWorkspaceDataFilterSettingOutTypeEnum = 'workspaceDataFilterSetting';
 
 export interface JsonApiWorkspaceDataFilterSettingOutAttributes {
-    'title'?: string;
     'description'?: string;
     'filterValues'?: Array<string>;
+    'title'?: string;
 }
 
 export interface JsonApiWorkspaceDataFilterSettingOutDocument {
     'data': JsonApiWorkspaceDataFilterSettingOut;
-    'links'?: ObjectLinks;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiWorkspaceDataFilterOutWithLinks>;
+    'links'?: ObjectLinks;
 }
 
 /**
@@ -10514,13 +13203,34 @@ export interface JsonApiWorkspaceDataFilterSettingOutDocument {
  */
 export interface JsonApiWorkspaceDataFilterSettingOutList {
     'data': Array<JsonApiWorkspaceDataFilterSettingOutWithLinks>;
-    'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiWorkspaceDataFilterOutWithLinks>;
+    'links'?: ListLinks;
+    'meta'?: JsonApiWorkspaceDataFilterSettingOutListMeta;
 }
+
+export interface JsonApiWorkspaceDataFilterSettingOutListMeta {
+    'page'?: PageMetadata;
+}
+
+export interface JsonApiWorkspaceDataFilterSettingOutMeta {
+    'origin'?: JsonApiWorkspaceDataFilterSettingOutMetaOrigin;
+}
+
+export interface JsonApiWorkspaceDataFilterSettingOutMetaOrigin {
+    /**
+     * defines id of the workspace where the entity comes from
+     */
+    'originId': string;
+    /**
+     * defines type of the origin of the entity
+     */
+    'originType': JsonApiWorkspaceDataFilterSettingOutMetaOriginOriginTypeEnum;
+}
+
+export type JsonApiWorkspaceDataFilterSettingOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
 
 export interface JsonApiWorkspaceDataFilterSettingOutRelationships {
     'workspaceDataFilter'?: JsonApiWorkspaceDataFilterSettingOutRelationshipsWorkspaceDataFilter;
@@ -10531,17 +13241,17 @@ export interface JsonApiWorkspaceDataFilterSettingOutRelationshipsWorkspaceDataF
 }
 
 export interface JsonApiWorkspaceDataFilterSettingOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiWorkspaceDataFilterSettingOutWithLinksTypeEnum;
+    'attributes'?: JsonApiWorkspaceDataFilterSettingOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes'?: JsonApiWorkspaceDataFilterSettingOutAttributes;
+    'meta'?: JsonApiWorkspaceDataFilterSettingOutMeta;
     'relationships'?: JsonApiWorkspaceDataFilterSettingOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiWorkspaceDataFilterSettingOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -10551,40 +13261,92 @@ export type JsonApiWorkspaceDataFilterSettingOutWithLinksTypeEnum = 'workspaceDa
  * JSON:API representation of patching workspaceDataFilterSetting entity.
  */
 export interface JsonApiWorkspaceDataFilterSettingPatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiWorkspaceDataFilterSettingPatchTypeEnum;
+    'attributes'?: JsonApiWorkspaceDataFilterSettingPatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiWorkspaceDataFilterSettingOutAttributes;
-    'relationships'?: JsonApiWorkspaceDataFilterSettingOutRelationships;
+    'relationships'?: JsonApiWorkspaceDataFilterSettingPatchRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiWorkspaceDataFilterSettingPatchTypeEnum;
 }
 
 export type JsonApiWorkspaceDataFilterSettingPatchTypeEnum = 'workspaceDataFilterSetting';
 
+export interface JsonApiWorkspaceDataFilterSettingPatchAttributes {
+    'description'?: string;
+    'filterValues'?: Array<string>;
+    'title'?: string;
+}
+
 export interface JsonApiWorkspaceDataFilterSettingPatchDocument {
     'data': JsonApiWorkspaceDataFilterSettingPatch;
+}
+
+export interface JsonApiWorkspaceDataFilterSettingPatchRelationships {
+    'workspaceDataFilter'?: JsonApiWorkspaceDataFilterSettingPatchRelationshipsWorkspaceDataFilter;
+}
+
+export interface JsonApiWorkspaceDataFilterSettingPatchRelationshipsWorkspaceDataFilter {
+    'data': JsonApiWorkspaceDataFilterLinkage | null;
 }
 
 /**
  * JSON:API representation of workspaceExportTemplate entity.
  */
 export interface JsonApiWorkspaceExportTemplateIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiWorkspaceExportTemplateInTypeEnum;
+    'attributes': JsonApiWorkspaceExportTemplateInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiWorkspaceExportTemplatePostOptionalIdAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiWorkspaceExportTemplateInTypeEnum;
 }
 
 export type JsonApiWorkspaceExportTemplateInTypeEnum = 'workspaceExportTemplate';
+
+export interface JsonApiWorkspaceExportTemplateInAttributes {
+    'dashboardSlidesTemplate'?: JsonApiWorkspaceExportTemplateInAttributesDashboardSlidesTemplate | null;
+    /**
+     * User-facing name of the Slides template.
+     */
+    'name': string;
+    'widgetSlidesTemplate'?: JsonApiWorkspaceExportTemplateInAttributesWidgetSlidesTemplate | null;
+}
+
+/**
+ * Template for workspace dashboard slides export. Available variables: {{currentPageNumber}}, {{dashboardDateFilters}}, {{dashboardDescription}}, {{dashboardFilters}}, {{dashboardId}}, {{dashboardName}}, {{dashboardTags}}, {{dashboardUrl}}, {{exportedAt}}, {{exportedBy}}, {{logo}}, {{totalPages}}, {{workspaceId}}, {{workspaceName}}
+ */
+export interface JsonApiWorkspaceExportTemplateInAttributesDashboardSlidesTemplate {
+    /**
+     * Export types this template applies to.
+     */
+    'appliedOn': Array<JsonApiWorkspaceExportTemplateInAttributesDashboardSlidesTemplateAppliedOnEnum>;
+    'contentSlide'?: ContentSlideTemplate | null;
+    'coverSlide'?: CoverSlideTemplate | null;
+    'introSlide'?: IntroSlideTemplate | null;
+    'sectionSlide'?: SectionSlideTemplate | null;
+}
+
+export type JsonApiWorkspaceExportTemplateInAttributesDashboardSlidesTemplateAppliedOnEnum = 'PDF' | 'PPTX';
+
+/**
+ * Template for workspace widget slides export. Available variables: {{currentPageNumber}}, {{dashboardDateFilters}}, {{dashboardDescription}}, {{dashboardFilters}}, {{dashboardId}}, {{dashboardName}}, {{dashboardTags}}, {{dashboardUrl}}, {{exportedAt}}, {{exportedBy}}, {{logo}}, {{totalPages}}, {{workspaceId}}, {{workspaceName}}
+ */
+export interface JsonApiWorkspaceExportTemplateInAttributesWidgetSlidesTemplate {
+    /**
+     * Export types this template applies to.
+     */
+    'appliedOn': Array<JsonApiWorkspaceExportTemplateInAttributesWidgetSlidesTemplateAppliedOnEnum>;
+    'contentSlide'?: ContentSlideTemplate | null;
+}
+
+export type JsonApiWorkspaceExportTemplateInAttributesWidgetSlidesTemplateAppliedOnEnum = 'PDF' | 'PPTX';
 
 export interface JsonApiWorkspaceExportTemplateInDocument {
     'data': JsonApiWorkspaceExportTemplateIn;
@@ -10594,19 +13356,57 @@ export interface JsonApiWorkspaceExportTemplateInDocument {
  * JSON:API representation of workspaceExportTemplate entity.
  */
 export interface JsonApiWorkspaceExportTemplateOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiWorkspaceExportTemplateOutTypeEnum;
+    'attributes': JsonApiWorkspaceExportTemplateOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes': JsonApiWorkspaceExportTemplatePostOptionalIdAttributes;
+    'meta'?: JsonApiWorkspaceExportTemplateOutMeta;
+    /**
+     * Object type
+     */
+    'type': JsonApiWorkspaceExportTemplateOutTypeEnum;
 }
 
 export type JsonApiWorkspaceExportTemplateOutTypeEnum = 'workspaceExportTemplate';
+
+export interface JsonApiWorkspaceExportTemplateOutAttributes {
+    'dashboardSlidesTemplate'?: JsonApiWorkspaceExportTemplateOutAttributesDashboardSlidesTemplate | null;
+    /**
+     * User-facing name of the Slides template.
+     */
+    'name': string;
+    'widgetSlidesTemplate'?: JsonApiWorkspaceExportTemplateOutAttributesWidgetSlidesTemplate | null;
+}
+
+/**
+ * Template for workspace dashboard slides export. Available variables: {{currentPageNumber}}, {{dashboardDateFilters}}, {{dashboardDescription}}, {{dashboardFilters}}, {{dashboardId}}, {{dashboardName}}, {{dashboardTags}}, {{dashboardUrl}}, {{exportedAt}}, {{exportedBy}}, {{logo}}, {{totalPages}}, {{workspaceId}}, {{workspaceName}}
+ */
+export interface JsonApiWorkspaceExportTemplateOutAttributesDashboardSlidesTemplate {
+    /**
+     * Export types this template applies to.
+     */
+    'appliedOn': Array<JsonApiWorkspaceExportTemplateOutAttributesDashboardSlidesTemplateAppliedOnEnum>;
+    'contentSlide'?: ContentSlideTemplate | null;
+    'coverSlide'?: CoverSlideTemplate | null;
+    'introSlide'?: IntroSlideTemplate | null;
+    'sectionSlide'?: SectionSlideTemplate | null;
+}
+
+export type JsonApiWorkspaceExportTemplateOutAttributesDashboardSlidesTemplateAppliedOnEnum = 'PDF' | 'PPTX';
+
+/**
+ * Template for workspace widget slides export. Available variables: {{currentPageNumber}}, {{dashboardDateFilters}}, {{dashboardDescription}}, {{dashboardFilters}}, {{dashboardId}}, {{dashboardName}}, {{dashboardTags}}, {{dashboardUrl}}, {{exportedAt}}, {{exportedBy}}, {{logo}}, {{totalPages}}, {{workspaceId}}, {{workspaceName}}
+ */
+export interface JsonApiWorkspaceExportTemplateOutAttributesWidgetSlidesTemplate {
+    /**
+     * Export types this template applies to.
+     */
+    'appliedOn': Array<JsonApiWorkspaceExportTemplateOutAttributesWidgetSlidesTemplateAppliedOnEnum>;
+    'contentSlide'?: ContentSlideTemplate | null;
+}
+
+export type JsonApiWorkspaceExportTemplateOutAttributesWidgetSlidesTemplateAppliedOnEnum = 'PDF' | 'PPTX';
 
 export interface JsonApiWorkspaceExportTemplateOutDocument {
     'data': JsonApiWorkspaceExportTemplateOut;
@@ -10619,20 +13419,41 @@ export interface JsonApiWorkspaceExportTemplateOutDocument {
 export interface JsonApiWorkspaceExportTemplateOutList {
     'data': Array<JsonApiWorkspaceExportTemplateOutWithLinks>;
     'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
+    'meta'?: JsonApiWorkspaceExportTemplateOutListMeta;
 }
 
-export interface JsonApiWorkspaceExportTemplateOutWithLinks {
+export interface JsonApiWorkspaceExportTemplateOutListMeta {
+    'page'?: PageMetadata;
+}
+
+export interface JsonApiWorkspaceExportTemplateOutMeta {
+    'origin'?: JsonApiWorkspaceExportTemplateOutMetaOrigin;
+}
+
+export interface JsonApiWorkspaceExportTemplateOutMetaOrigin {
     /**
-     * Object type
+     * defines id of the workspace where the entity comes from
      */
-    'type': JsonApiWorkspaceExportTemplateOutWithLinksTypeEnum;
+    'originId': string;
+    /**
+     * defines type of the origin of the entity
+     */
+    'originType': JsonApiWorkspaceExportTemplateOutMetaOriginOriginTypeEnum;
+}
+
+export type JsonApiWorkspaceExportTemplateOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
+
+export interface JsonApiWorkspaceExportTemplateOutWithLinks {
+    'attributes': JsonApiWorkspaceExportTemplateOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes': JsonApiWorkspaceExportTemplatePostOptionalIdAttributes;
+    'meta'?: JsonApiWorkspaceExportTemplateOutMeta;
+    /**
+     * Object type
+     */
+    'type': JsonApiWorkspaceExportTemplateOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -10642,27 +13463,56 @@ export type JsonApiWorkspaceExportTemplateOutWithLinksTypeEnum = 'workspaceExpor
  * JSON:API representation of patching workspaceExportTemplate entity.
  */
 export interface JsonApiWorkspaceExportTemplatePatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiWorkspaceExportTemplatePatchTypeEnum;
+    'attributes': JsonApiWorkspaceExportTemplatePatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes': JsonApiWorkspaceExportTemplatePatchAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiWorkspaceExportTemplatePatchTypeEnum;
 }
 
 export type JsonApiWorkspaceExportTemplatePatchTypeEnum = 'workspaceExportTemplate';
 
 export interface JsonApiWorkspaceExportTemplatePatchAttributes {
+    'dashboardSlidesTemplate'?: JsonApiWorkspaceExportTemplatePatchAttributesDashboardSlidesTemplate | null;
     /**
      * User-facing name of the Slides template.
      */
     'name'?: string;
-    'dashboardSlidesTemplate'?: JsonApiWorkspaceExportTemplatePostOptionalIdAttributesDashboardSlidesTemplate | null;
-    'widgetSlidesTemplate'?: JsonApiWorkspaceExportTemplatePostOptionalIdAttributesWidgetSlidesTemplate | null;
+    'widgetSlidesTemplate'?: JsonApiWorkspaceExportTemplatePatchAttributesWidgetSlidesTemplate | null;
 }
+
+/**
+ * Template for workspace dashboard slides export. Available variables: {{currentPageNumber}}, {{dashboardDateFilters}}, {{dashboardDescription}}, {{dashboardFilters}}, {{dashboardId}}, {{dashboardName}}, {{dashboardTags}}, {{dashboardUrl}}, {{exportedAt}}, {{exportedBy}}, {{logo}}, {{totalPages}}, {{workspaceId}}, {{workspaceName}}
+ */
+export interface JsonApiWorkspaceExportTemplatePatchAttributesDashboardSlidesTemplate {
+    /**
+     * Export types this template applies to.
+     */
+    'appliedOn': Array<JsonApiWorkspaceExportTemplatePatchAttributesDashboardSlidesTemplateAppliedOnEnum>;
+    'contentSlide'?: ContentSlideTemplate | null;
+    'coverSlide'?: CoverSlideTemplate | null;
+    'introSlide'?: IntroSlideTemplate | null;
+    'sectionSlide'?: SectionSlideTemplate | null;
+}
+
+export type JsonApiWorkspaceExportTemplatePatchAttributesDashboardSlidesTemplateAppliedOnEnum = 'PDF' | 'PPTX';
+
+/**
+ * Template for workspace widget slides export. Available variables: {{currentPageNumber}}, {{dashboardDateFilters}}, {{dashboardDescription}}, {{dashboardFilters}}, {{dashboardId}}, {{dashboardName}}, {{dashboardTags}}, {{dashboardUrl}}, {{exportedAt}}, {{exportedBy}}, {{logo}}, {{totalPages}}, {{workspaceId}}, {{workspaceName}}
+ */
+export interface JsonApiWorkspaceExportTemplatePatchAttributesWidgetSlidesTemplate {
+    /**
+     * Export types this template applies to.
+     */
+    'appliedOn': Array<JsonApiWorkspaceExportTemplatePatchAttributesWidgetSlidesTemplateAppliedOnEnum>;
+    'contentSlide'?: ContentSlideTemplate | null;
+}
+
+export type JsonApiWorkspaceExportTemplatePatchAttributesWidgetSlidesTemplateAppliedOnEnum = 'PDF' | 'PPTX';
 
 export interface JsonApiWorkspaceExportTemplatePatchDocument {
     'data': JsonApiWorkspaceExportTemplatePatch;
@@ -10672,25 +13522,25 @@ export interface JsonApiWorkspaceExportTemplatePatchDocument {
  * JSON:API representation of workspaceExportTemplate entity.
  */
 export interface JsonApiWorkspaceExportTemplatePostOptionalId {
-    /**
-     * Object type
-     */
-    'type': JsonApiWorkspaceExportTemplatePostOptionalIdTypeEnum;
+    'attributes': JsonApiWorkspaceExportTemplatePostOptionalIdAttributes;
     /**
      * API identifier of an object
      */
     'id'?: string;
-    'attributes': JsonApiWorkspaceExportTemplatePostOptionalIdAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiWorkspaceExportTemplatePostOptionalIdTypeEnum;
 }
 
 export type JsonApiWorkspaceExportTemplatePostOptionalIdTypeEnum = 'workspaceExportTemplate';
 
 export interface JsonApiWorkspaceExportTemplatePostOptionalIdAttributes {
+    'dashboardSlidesTemplate'?: JsonApiWorkspaceExportTemplatePostOptionalIdAttributesDashboardSlidesTemplate | null;
     /**
      * User-facing name of the Slides template.
      */
     'name': string;
-    'dashboardSlidesTemplate'?: JsonApiWorkspaceExportTemplatePostOptionalIdAttributesDashboardSlidesTemplate | null;
     'widgetSlidesTemplate'?: JsonApiWorkspaceExportTemplatePostOptionalIdAttributesWidgetSlidesTemplate | null;
 }
 
@@ -10702,10 +13552,10 @@ export interface JsonApiWorkspaceExportTemplatePostOptionalIdAttributesDashboard
      * Export types this template applies to.
      */
     'appliedOn': Array<JsonApiWorkspaceExportTemplatePostOptionalIdAttributesDashboardSlidesTemplateAppliedOnEnum>;
+    'contentSlide'?: ContentSlideTemplate | null;
     'coverSlide'?: CoverSlideTemplate | null;
     'introSlide'?: IntroSlideTemplate | null;
     'sectionSlide'?: SectionSlideTemplate | null;
-    'contentSlide'?: ContentSlideTemplate | null;
 }
 
 export type JsonApiWorkspaceExportTemplatePostOptionalIdAttributesDashboardSlidesTemplateAppliedOnEnum = 'PDF' | 'PPTX';
@@ -10731,22 +13581,24 @@ export interface JsonApiWorkspaceExportTemplatePostOptionalIdDocument {
  * JSON:API representation of workspace entity.
  */
 export interface JsonApiWorkspaceIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiWorkspaceInTypeEnum;
+    'attributes'?: JsonApiWorkspaceInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiWorkspaceInAttributes;
-    'relationships'?: JsonApiWorkspaceOutRelationships;
+    'relationships'?: JsonApiWorkspaceInRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiWorkspaceInTypeEnum;
 }
 
 export type JsonApiWorkspaceInTypeEnum = 'workspace';
 
 export interface JsonApiWorkspaceInAttributes {
-    'name'?: string | null;
+    'cacheExtraLimit'?: number;
+    'dataSource'?: JsonApiWorkspaceInAttributesDataSource;
+    'description'?: string | null;
     /**
      * The early access feature identifier. It is used to enable experimental features. Deprecated in favor of earlyAccessValues.
      * @deprecated
@@ -10756,17 +13608,37 @@ export interface JsonApiWorkspaceInAttributes {
      * The early access feature identifiers. They are used to enable experimental features.
      */
     'earlyAccessValues'?: Array<string> | null;
-    'description'?: string | null;
+    'name'?: string | null;
     /**
      * Custom prefix of entity identifiers in workspace
      */
     'prefix'?: string | null;
-    'cacheExtraLimit'?: number;
-    'dataSource'?: JsonApiWorkspaceOutAttributesDataSource;
+}
+
+/**
+ * The data source used for the particular workspace instead of the one defined in the LDM inherited from its parent workspace. Such data source cannot be defined for a single or a top-parent workspace.
+ */
+export interface JsonApiWorkspaceInAttributesDataSource {
+    /**
+     * The ID of the used data source.
+     */
+    'id': string;
+    /**
+     * The full schema path as array of its path parts. Will be rendered as subPath1.subPath2...
+     */
+    'schemaPath'?: Array<string>;
 }
 
 export interface JsonApiWorkspaceInDocument {
     'data': JsonApiWorkspaceIn;
+}
+
+export interface JsonApiWorkspaceInRelationships {
+    'parent'?: JsonApiWorkspaceInRelationshipsParent;
+}
+
+export interface JsonApiWorkspaceInRelationshipsParent {
+    'data': JsonApiWorkspaceLinkage | null;
 }
 
 /**
@@ -10783,23 +13655,25 @@ export type JsonApiWorkspaceLinkageTypeEnum = 'workspace';
  * JSON:API representation of workspace entity.
  */
 export interface JsonApiWorkspaceOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiWorkspaceOutTypeEnum;
+    'attributes'?: JsonApiWorkspaceOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
     'meta'?: JsonApiWorkspaceOutMeta;
-    'attributes'?: JsonApiWorkspaceOutAttributes;
     'relationships'?: JsonApiWorkspaceOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiWorkspaceOutTypeEnum;
 }
 
 export type JsonApiWorkspaceOutTypeEnum = 'workspace';
 
 export interface JsonApiWorkspaceOutAttributes {
-    'name'?: string | null;
+    'cacheExtraLimit'?: number;
+    'dataSource'?: JsonApiWorkspaceOutAttributesDataSource;
+    'description'?: string | null;
     /**
      * The early access feature identifier. It is used to enable experimental features. Deprecated in favor of earlyAccessValues.
      * @deprecated
@@ -10809,17 +13683,15 @@ export interface JsonApiWorkspaceOutAttributes {
      * The early access feature identifiers. They are used to enable experimental features.
      */
     'earlyAccessValues'?: Array<string> | null;
-    'description'?: string | null;
-    /**
-     * Custom prefix of entity identifiers in workspace
-     */
-    'prefix'?: string | null;
-    'cacheExtraLimit'?: number;
-    'dataSource'?: JsonApiWorkspaceOutAttributesDataSource;
     /**
      * Whether the object is platform-managed and read-only.
      */
     'managed'?: boolean;
+    'name'?: string | null;
+    /**
+     * Custom prefix of entity identifiers in workspace
+     */
+    'prefix'?: string | null;
 }
 
 /**
@@ -10838,11 +13710,11 @@ export interface JsonApiWorkspaceOutAttributesDataSource {
 
 export interface JsonApiWorkspaceOutDocument {
     'data': JsonApiWorkspaceOut;
-    'links'?: ObjectLinks;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiWorkspaceOutWithLinks>;
+    'links'?: ObjectLinks;
 }
 
 /**
@@ -10850,35 +13722,39 @@ export interface JsonApiWorkspaceOutDocument {
  */
 export interface JsonApiWorkspaceOutList {
     'data': Array<JsonApiWorkspaceOutWithLinks>;
-    'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
     /**
      * Included resources
      */
     'included'?: Array<JsonApiWorkspaceOutWithLinks>;
+    'links'?: ListLinks;
+    'meta'?: JsonApiWorkspaceOutListMeta;
+}
+
+export interface JsonApiWorkspaceOutListMeta {
+    'page'?: PageMetadata;
 }
 
 export interface JsonApiWorkspaceOutMeta {
     'config'?: JsonApiWorkspaceOutMetaConfig;
+    'dataModel'?: JsonApiWorkspaceOutMetaDataModel;
+    'hierarchy'?: JsonApiWorkspaceOutMetaHierarchy;
     /**
      * List of valid permissions for a logged-in user.
      */
     'permissions'?: Array<JsonApiWorkspaceOutMetaPermissionsEnum>;
-    'hierarchy'?: JsonApiWorkspaceOutMetaHierarchy;
-    'dataModel'?: JsonApiWorkspaceOutMetaDataModel;
 }
 
 export type JsonApiWorkspaceOutMetaPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'VIEW';
 
 export interface JsonApiWorkspaceOutMetaConfig {
     /**
-     * is sampling enabled - based on type of data-source connected to this workspace
-     */
-    'dataSamplingAvailable'?: boolean;
-    /**
      * is approximate count enabled - based on type of data-source connected to this workspace
      */
     'approximateCountAvailable'?: boolean;
+    /**
+     * is sampling enabled - based on type of data-source connected to this workspace
+     */
+    'dataSamplingAvailable'?: boolean;
     /**
      * is \'show all values\' displayed for dates - based on type of data-source connected to this workspace
      */
@@ -10908,17 +13784,17 @@ export interface JsonApiWorkspaceOutRelationshipsParent {
 }
 
 export interface JsonApiWorkspaceOutWithLinks {
-    /**
-     * Object type
-     */
-    'type': JsonApiWorkspaceOutWithLinksTypeEnum;
+    'attributes'?: JsonApiWorkspaceOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
     'meta'?: JsonApiWorkspaceOutMeta;
-    'attributes'?: JsonApiWorkspaceOutAttributes;
     'relationships'?: JsonApiWorkspaceOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiWorkspaceOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -10928,40 +13804,92 @@ export type JsonApiWorkspaceOutWithLinksTypeEnum = 'workspace';
  * JSON:API representation of patching workspace entity.
  */
 export interface JsonApiWorkspacePatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiWorkspacePatchTypeEnum;
+    'attributes'?: JsonApiWorkspacePatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiWorkspaceInAttributes;
-    'relationships'?: JsonApiWorkspaceOutRelationships;
+    'relationships'?: JsonApiWorkspacePatchRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiWorkspacePatchTypeEnum;
 }
 
 export type JsonApiWorkspacePatchTypeEnum = 'workspace';
 
+export interface JsonApiWorkspacePatchAttributes {
+    'cacheExtraLimit'?: number;
+    'dataSource'?: JsonApiWorkspacePatchAttributesDataSource;
+    'description'?: string | null;
+    /**
+     * The early access feature identifier. It is used to enable experimental features. Deprecated in favor of earlyAccessValues.
+     * @deprecated
+     */
+    'earlyAccess'?: string | null;
+    /**
+     * The early access feature identifiers. They are used to enable experimental features.
+     */
+    'earlyAccessValues'?: Array<string> | null;
+    'name'?: string | null;
+    /**
+     * Custom prefix of entity identifiers in workspace
+     */
+    'prefix'?: string | null;
+}
+
+/**
+ * The data source used for the particular workspace instead of the one defined in the LDM inherited from its parent workspace. Such data source cannot be defined for a single or a top-parent workspace.
+ */
+export interface JsonApiWorkspacePatchAttributesDataSource {
+    /**
+     * The ID of the used data source.
+     */
+    'id': string;
+    /**
+     * The full schema path as array of its path parts. Will be rendered as subPath1.subPath2...
+     */
+    'schemaPath'?: Array<string>;
+}
+
 export interface JsonApiWorkspacePatchDocument {
     'data': JsonApiWorkspacePatch;
+}
+
+export interface JsonApiWorkspacePatchRelationships {
+    'parent'?: JsonApiWorkspacePatchRelationshipsParent;
+}
+
+export interface JsonApiWorkspacePatchRelationshipsParent {
+    'data': JsonApiWorkspaceLinkage | null;
 }
 
 /**
  * JSON:API representation of workspaceSetting entity.
  */
 export interface JsonApiWorkspaceSettingIn {
-    /**
-     * Object type
-     */
-    'type': JsonApiWorkspaceSettingInTypeEnum;
+    'attributes'?: JsonApiWorkspaceSettingInAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiOrganizationSettingOutAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiWorkspaceSettingInTypeEnum;
 }
 
 export type JsonApiWorkspaceSettingInTypeEnum = 'workspaceSetting';
+
+export interface JsonApiWorkspaceSettingInAttributes {
+    /**
+     * Free-form JSON content. Maximum supported length is 15000 characters.
+     */
+    'content'?: object;
+    'type'?: JsonApiWorkspaceSettingInAttributesTypeEnum;
+}
+
+export type JsonApiWorkspaceSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE';
 
 export interface JsonApiWorkspaceSettingInDocument {
     'data': JsonApiWorkspaceSettingIn;
@@ -10971,19 +13899,29 @@ export interface JsonApiWorkspaceSettingInDocument {
  * JSON:API representation of workspaceSetting entity.
  */
 export interface JsonApiWorkspaceSettingOut {
-    /**
-     * Object type
-     */
-    'type': JsonApiWorkspaceSettingOutTypeEnum;
+    'attributes'?: JsonApiWorkspaceSettingOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes'?: JsonApiOrganizationSettingOutAttributes;
+    'meta'?: JsonApiWorkspaceSettingOutMeta;
+    /**
+     * Object type
+     */
+    'type': JsonApiWorkspaceSettingOutTypeEnum;
 }
 
 export type JsonApiWorkspaceSettingOutTypeEnum = 'workspaceSetting';
+
+export interface JsonApiWorkspaceSettingOutAttributes {
+    /**
+     * Free-form JSON content. Maximum supported length is 15000 characters.
+     */
+    'content'?: object;
+    'type'?: JsonApiWorkspaceSettingOutAttributesTypeEnum;
+}
+
+export type JsonApiWorkspaceSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE';
 
 export interface JsonApiWorkspaceSettingOutDocument {
     'data': JsonApiWorkspaceSettingOut;
@@ -10996,20 +13934,41 @@ export interface JsonApiWorkspaceSettingOutDocument {
 export interface JsonApiWorkspaceSettingOutList {
     'data': Array<JsonApiWorkspaceSettingOutWithLinks>;
     'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
+    'meta'?: JsonApiWorkspaceSettingOutListMeta;
 }
 
-export interface JsonApiWorkspaceSettingOutWithLinks {
+export interface JsonApiWorkspaceSettingOutListMeta {
+    'page'?: PageMetadata;
+}
+
+export interface JsonApiWorkspaceSettingOutMeta {
+    'origin'?: JsonApiWorkspaceSettingOutMetaOrigin;
+}
+
+export interface JsonApiWorkspaceSettingOutMetaOrigin {
     /**
-     * Object type
+     * defines id of the workspace where the entity comes from
      */
-    'type': JsonApiWorkspaceSettingOutWithLinksTypeEnum;
+    'originId': string;
+    /**
+     * defines type of the origin of the entity
+     */
+    'originType': JsonApiWorkspaceSettingOutMetaOriginOriginTypeEnum;
+}
+
+export type JsonApiWorkspaceSettingOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
+
+export interface JsonApiWorkspaceSettingOutWithLinks {
+    'attributes'?: JsonApiWorkspaceSettingOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiExportDefinitionOutMeta;
-    'attributes'?: JsonApiOrganizationSettingOutAttributes;
+    'meta'?: JsonApiWorkspaceSettingOutMeta;
+    /**
+     * Object type
+     */
+    'type': JsonApiWorkspaceSettingOutWithLinksTypeEnum;
     'links'?: ObjectLinks;
 }
 
@@ -11019,18 +13978,28 @@ export type JsonApiWorkspaceSettingOutWithLinksTypeEnum = 'workspaceSetting';
  * JSON:API representation of patching workspaceSetting entity.
  */
 export interface JsonApiWorkspaceSettingPatch {
-    /**
-     * Object type
-     */
-    'type': JsonApiWorkspaceSettingPatchTypeEnum;
+    'attributes'?: JsonApiWorkspaceSettingPatchAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'attributes'?: JsonApiOrganizationSettingOutAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiWorkspaceSettingPatchTypeEnum;
 }
 
 export type JsonApiWorkspaceSettingPatchTypeEnum = 'workspaceSetting';
+
+export interface JsonApiWorkspaceSettingPatchAttributes {
+    /**
+     * Free-form JSON content. Maximum supported length is 15000 characters.
+     */
+    'content'?: object;
+    'type'?: JsonApiWorkspaceSettingPatchAttributesTypeEnum;
+}
+
+export type JsonApiWorkspaceSettingPatchAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE';
 
 export interface JsonApiWorkspaceSettingPatchDocument {
     'data': JsonApiWorkspaceSettingPatch;
@@ -11040,18 +14009,28 @@ export interface JsonApiWorkspaceSettingPatchDocument {
  * JSON:API representation of workspaceSetting entity.
  */
 export interface JsonApiWorkspaceSettingPostOptionalId {
-    /**
-     * Object type
-     */
-    'type': JsonApiWorkspaceSettingPostOptionalIdTypeEnum;
+    'attributes'?: JsonApiWorkspaceSettingPostOptionalIdAttributes;
     /**
      * API identifier of an object
      */
     'id'?: string;
-    'attributes'?: JsonApiOrganizationSettingOutAttributes;
+    /**
+     * Object type
+     */
+    'type': JsonApiWorkspaceSettingPostOptionalIdTypeEnum;
 }
 
 export type JsonApiWorkspaceSettingPostOptionalIdTypeEnum = 'workspaceSetting';
+
+export interface JsonApiWorkspaceSettingPostOptionalIdAttributes {
+    /**
+     * Free-form JSON content. Maximum supported length is 15000 characters.
+     */
+    'content'?: object;
+    'type'?: JsonApiWorkspaceSettingPostOptionalIdAttributesTypeEnum;
+}
+
+export type JsonApiWorkspaceSettingPostOptionalIdAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE';
 
 export interface JsonApiWorkspaceSettingPostOptionalIdDocument {
     'data': JsonApiWorkspaceSettingPostOptionalId;
@@ -11061,7 +14040,7 @@ export interface JsonApiWorkspaceSettingPostOptionalIdDocument {
  * JSON:API representation of workspaceTheme entity.
  */
 export interface JsonApiWorkspaceThemeIn {
-    'attributes': JsonApiWorkspaceColorPaletteInAttributes;
+    'attributes': JsonApiWorkspaceThemeInAttributes;
     /**
      * API identifier of an object
      */
@@ -11074,6 +14053,14 @@ export interface JsonApiWorkspaceThemeIn {
 
 export type JsonApiWorkspaceThemeInTypeEnum = 'workspaceTheme';
 
+export interface JsonApiWorkspaceThemeInAttributes {
+    /**
+     * Free-form JSON content. Maximum supported length is 15000 characters.
+     */
+    'content': object;
+    'name': string;
+}
+
 export interface JsonApiWorkspaceThemeInDocument {
     'data': JsonApiWorkspaceThemeIn;
 }
@@ -11082,12 +14069,12 @@ export interface JsonApiWorkspaceThemeInDocument {
  * JSON:API representation of workspaceTheme entity.
  */
 export interface JsonApiWorkspaceThemeOut {
-    'attributes': JsonApiWorkspaceColorPaletteInAttributes;
+    'attributes': JsonApiWorkspaceThemeOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiWorkspaceColorPaletteOutMeta;
+    'meta'?: JsonApiWorkspaceThemeOutMeta;
     /**
      * Object type
      */
@@ -11095,6 +14082,14 @@ export interface JsonApiWorkspaceThemeOut {
 }
 
 export type JsonApiWorkspaceThemeOutTypeEnum = 'workspaceTheme';
+
+export interface JsonApiWorkspaceThemeOutAttributes {
+    /**
+     * Free-form JSON content. Maximum supported length is 15000 characters.
+     */
+    'content': object;
+    'name': string;
+}
 
 export interface JsonApiWorkspaceThemeOutDocument {
     'data': JsonApiWorkspaceThemeOut;
@@ -11107,16 +14102,37 @@ export interface JsonApiWorkspaceThemeOutDocument {
 export interface JsonApiWorkspaceThemeOutList {
     'data': Array<JsonApiWorkspaceThemeOutWithLinks>;
     'links'?: ListLinks;
-    'meta'?: JsonApiAgentOutListMeta;
+    'meta'?: JsonApiWorkspaceThemeOutListMeta;
 }
 
+export interface JsonApiWorkspaceThemeOutListMeta {
+    'page'?: PageMetadata;
+}
+
+export interface JsonApiWorkspaceThemeOutMeta {
+    'origin'?: JsonApiWorkspaceThemeOutMetaOrigin;
+}
+
+export interface JsonApiWorkspaceThemeOutMetaOrigin {
+    /**
+     * defines id of the workspace where the entity comes from
+     */
+    'originId': string;
+    /**
+     * defines type of the origin of the entity
+     */
+    'originType': JsonApiWorkspaceThemeOutMetaOriginOriginTypeEnum;
+}
+
+export type JsonApiWorkspaceThemeOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
+
 export interface JsonApiWorkspaceThemeOutWithLinks {
-    'attributes': JsonApiWorkspaceColorPaletteInAttributes;
+    'attributes': JsonApiWorkspaceThemeOutAttributes;
     /**
      * API identifier of an object
      */
     'id': string;
-    'meta'?: JsonApiWorkspaceColorPaletteOutMeta;
+    'meta'?: JsonApiWorkspaceThemeOutMeta;
     /**
      * Object type
      */
@@ -11130,7 +14146,7 @@ export type JsonApiWorkspaceThemeOutWithLinksTypeEnum = 'workspaceTheme';
  * JSON:API representation of patching workspaceTheme entity.
  */
 export interface JsonApiWorkspaceThemePatch {
-    'attributes': JsonApiWorkspaceColorPalettePatchAttributes;
+    'attributes': JsonApiWorkspaceThemePatchAttributes;
     /**
      * API identifier of an object
      */
@@ -11142,6 +14158,14 @@ export interface JsonApiWorkspaceThemePatch {
 }
 
 export type JsonApiWorkspaceThemePatchTypeEnum = 'workspaceTheme';
+
+export interface JsonApiWorkspaceThemePatchAttributes {
+    /**
+     * Free-form JSON content. Maximum supported length is 15000 characters.
+     */
+    'content'?: object;
+    'name'?: string;
+}
 
 export interface JsonApiWorkspaceThemePatchDocument {
     'data': JsonApiWorkspaceThemePatch;
@@ -11169,13 +14193,13 @@ export interface LdmObjectPermissions {
      */
     'rules': Array<RulePermission>;
     /**
-     * List of users
-     */
-    'users': Array<UserPermission>;
-    /**
      * List of user groups
      */
     'userGroups': Array<UserGroupPermission>;
+    /**
+     * List of users
+     */
+    'users': Array<UserPermission>;
 }
 
 /**
@@ -11237,13 +14261,13 @@ export interface LlmProviderAuth {
 
 export interface LocalIdentifier {
     /**
-     * Local identifier of the metric to be compared.
-     */
-    'localIdentifier': string;
-    /**
      * Metric format.
      */
     'format'?: string | null;
+    /**
+     * Local identifier of the metric to be compared.
+     */
+    'localIdentifier': string;
     /**
      * Metric title.
      */
@@ -11258,9 +14282,19 @@ export interface LocaleRequest {
 }
 
 /**
+ * @type ManageAttributePermissionsRequestInner
+ */
+export type ManageAttributePermissionsRequestInner = LdmObjectPermissionsForAssignee | LdmObjectPermissionsForAssigneeRule;
+
+/**
  * @type ManageDashboardPermissionsRequestInner
  */
 export type ManageDashboardPermissionsRequestInner = PermissionsForAssignee | PermissionsForAssigneeRule;
+
+/**
+ * @type ManageFactPermissionsRequestInner
+ */
+export type ManageFactPermissionsRequestInner = LdmObjectPermissionsForAssignee | LdmObjectPermissionsForAssigneeRule;
 
 /**
  * @type ManageLabelPermissionsRequestInner
@@ -11280,10 +14314,17 @@ export interface MatchAttributeFilter {
 }
 
 export interface MatchAttributeFilterMatchAttributeFilter {
+    'applyOnResult'?: boolean;
+    /**
+     * Indicates whether the filter match is evaluated in case-sensitive mode or not.
+     */
+    'caseSensitive'?: boolean;
+    'label': AfmIdentifier;
     /**
      * Literal used to limit label values.
      */
     'literal': string;
+    'localIdentifier'?: string;
     /**
      * Requested match type.
      */
@@ -11292,13 +14333,6 @@ export interface MatchAttributeFilterMatchAttributeFilter {
      * Indicates whether the filter should negate the match.
      */
     'negate'?: boolean;
-    /**
-     * Indicates whether the filter match is evaluated in case-sensitive mode or not.
-     */
-    'caseSensitive'?: boolean;
-    'localIdentifier'?: string;
-    'applyOnResult'?: boolean;
-    'label': AfmIdentifier;
 }
 
 export type MatchAttributeFilterMatchAttributeFilterMatchTypeEnum = 'STARTS_WITH' | 'ENDS_WITH' | 'CONTAINS';
@@ -11312,13 +14346,13 @@ export interface MatomoService {
      */
     'host': string;
     /**
-     * Site ID on telemetry server.
-     */
-    'siteId': number;
-    /**
      * Optional reporting endpoint for proxying telemetry events.
      */
     'reportingEndpoint'?: string;
+    /**
+     * Site ID on telemetry server.
+     */
+    'siteId': number;
 }
 
 /**
@@ -11331,11 +14365,11 @@ export type MeasureDefinition = ArithmeticMeasureDefinition | InlineMeasureDefin
  * Metric is a quantity that is calculated from the data.
  */
 export interface MeasureItem {
+    'definition': MeasureDefinition;
     /**
      * Local identifier of the metric. This can be used to reference the metric in other parts of the execution definition.
      */
     'localIdentifier': string;
-    'definition': MeasureDefinition;
 }
 
 /**
@@ -11354,8 +14388,8 @@ export type MeasureValueFilter = ComparisonMeasureValueFilter | CompoundMeasureV
  * (EXPERIMENTAL) Override for a catalog metric definition.
  */
 export interface MetricDefinitionOverride {
-    'item': AfmObjectIdentifierCore;
     'definition': InlineMeasureDefinition;
+    'item': AfmObjectIdentifierCore;
 }
 
 export interface MetricPermissions {
@@ -11364,13 +14398,13 @@ export interface MetricPermissions {
      */
     'rules': Array<RulePermission>;
     /**
-     * List of users
-     */
-    'users': Array<UserPermission>;
-    /**
      * List of user groups
      */
     'userGroups': Array<UserGroupPermission>;
+    /**
+     * List of users
+     */
+    'users': Array<UserPermission>;
 }
 
 /**
@@ -11403,23 +14437,23 @@ export interface MetricPermissionsForAssigneeRule {
 export type MetricPermissionsForAssigneeRulePermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
 
 export interface ModelFile {
-    'skeleton'?: Skeleton;
     'any'?: Array<object>;
-    'notes'?: Notes;
-    'unitOrGroup'?: Array<object>;
-    'id'?: string;
     'canResegment'?: ModelFileCanResegmentEnum;
+    'id'?: string;
+    'notes'?: Notes;
     'original'?: string;
-    'translate'?: ModelFileTranslateEnum;
-    'srcDir'?: ModelFileSrcDirEnum;
-    'trgDir'?: ModelFileTrgDirEnum;
-    'space'?: string;
     'otherAttributes'?: { [key: string]: string; };
+    'skeleton'?: Skeleton;
+    'space'?: string;
+    'srcDir'?: ModelFileSrcDirEnum;
+    'translate'?: ModelFileTranslateEnum;
+    'trgDir'?: ModelFileTrgDirEnum;
+    'unitOrGroup'?: Array<object>;
 }
 
 export type ModelFileCanResegmentEnum = 'YES' | 'NO';
-export type ModelFileTranslateEnum = 'YES' | 'NO';
 export type ModelFileSrcDirEnum = 'LTR' | 'RTL' | 'AUTO';
+export type ModelFileTranslateEnum = 'YES' | 'NO';
 export type ModelFileTrgDirEnum = 'LTR' | 'RTL' | 'AUTO';
 
 /**
@@ -11430,23 +14464,23 @@ export interface NegativeAttributeFilter {
 }
 
 export interface NegativeAttributeFilterNegativeAttributeFilter {
-    'notIn': AttributeFilterElements;
-    'localIdentifier'?: string;
     'applyOnResult'?: boolean;
+    'label': AfmIdentifier;
+    'localIdentifier'?: string;
+    'notIn': AttributeFilterElements;
     /**
      * If true, indicates that the values in notInElements were filled free-form, otherwise they have been picked from existing elements.
      */
     'usesArbitraryValues'?: boolean;
-    'label': AfmIdentifier;
 }
 
 export interface Note {
-    'content'?: string;
-    'id'?: string;
     'appliesTo'?: NoteAppliesToEnum;
     'category'?: string;
-    'priority'?: number;
+    'content'?: string;
+    'id'?: string;
     'otherAttributes'?: { [key: string]: string; };
+    'priority'?: number;
 }
 
 export type NoteAppliesToEnum = 'SOURCE' | 'TARGET';
@@ -11461,13 +14495,13 @@ export interface Notes {
 export type NotificationChannelDestination = DefaultSmtp | InPlatform | Smtp | Webhook;
 
 export interface NumberConstraints {
-    'min'?: number;
     'max'?: number;
+    'min'?: number;
 }
 
 export interface NumberParameterDefinition {
-    'defaultValue': number;
     'constraints'?: NumberConstraints;
+    'defaultValue': number;
     /**
      * The parameter type.
      */
@@ -11491,15 +14525,15 @@ export interface ObjectLinksContainer {
  * Configuration for OpenAI provider.
  */
 export interface OpenAIProviderConfig {
-    /**
-     * OpenAI organization ID.
-     */
-    'organization'?: string | null;
+    'auth': OpenAiApiKeyAuth;
     /**
      * Custom base URL for OpenAI API.
      */
     'baseUrl'?: string;
-    'auth': OpenAiApiKeyAuth;
+    /**
+     * OpenAI organization ID.
+     */
+    'organization'?: string | null;
     /**
      * Provider type.
      */
@@ -11588,6 +14622,8 @@ export type ParameterDefinition = { type: 'NUMBER' } & NumberParameterDefinition
  * (EXPERIMENTAL) Parameter value for this execution.
  */
 export interface ParameterItem {
+    [key: string]: any;
+
     'parameter': AfmObjectIdentifierParameter;
     /**
      * Value to use for this parameter instead of its default.
@@ -11599,18 +14635,20 @@ export interface ParameterItem {
  * Parameter value override applied to the export. The (id, value) pair drives the execution; the title is FE-supplied for info-sheet display.
  */
 export interface ParameterValue {
+    [key: string]: any;
+
     /**
      * Identifier of the workspace parameter (matches the parameter entity id).
      */
     'id': string;
     /**
-     * Value to use for this parameter when executing the export.
-     */
-    'value': string;
-    /**
      * Display title of the parameter as the client wants it rendered on the info sheet.
      */
     'title': string;
+    /**
+     * Value to use for this parameter when executing the export.
+     */
+    'value': string;
 }
 
 /**
@@ -11618,13 +14656,13 @@ export interface ParameterValue {
  */
 export interface PdfTableStyle {
     /**
-     * CSS selector where to apply given properties.
-     */
-    'selector': string;
-    /**
      * List of CSS properties.
      */
     'properties'?: Array<PdfTableStyleProperty>;
+    /**
+     * CSS selector where to apply given properties.
+     */
+    'selector': string;
 }
 
 /**
@@ -11650,19 +14688,23 @@ export interface PdmLdmRequest {
      */
     'sqls'?: Array<PdmSql>;
     /**
-     * List of physical database tables.
-     */
-    'tables'?: Array<DeclarativeTable>;
-    /**
      * (BETA) List of table overrides.
      */
     'tableOverrides'?: Array<TableOverride>;
+    /**
+     * List of physical database tables.
+     */
+    'tables'?: Array<DeclarativeTable>;
 }
 
 /**
  * SQL dataset definition.
  */
 export interface PdmSql {
+    /**
+     * Columns defining SQL dataset.
+     */
+    'columns'?: Array<SqlColumn>;
     /**
      * SQL statement.
      */
@@ -11671,16 +14713,12 @@ export interface PdmSql {
      * SQL dataset title.
      */
     'title': string;
-    /**
-     * Columns defining SQL dataset.
-     */
-    'columns'?: Array<SqlColumn>;
 }
 
 export interface PermissionsAssignment {
     'assignees': Array<AssigneeIdentifier>;
-    'workspaces'?: Array<UserManagementWorkspacePermissionAssignment>;
     'dataSources'?: Array<UserManagementDataSourcePermissionAssignment>;
+    'workspaces'?: Array<UserManagementWorkspacePermissionAssignment>;
 }
 
 /**
@@ -11704,8 +14742,8 @@ export interface PermissionsForAssigneeRule {
 export type PermissionsForAssigneeRulePermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
 
 export interface PlatformUsage {
-    'name': PlatformUsageNameEnum;
     'count'?: number;
+    'name': PlatformUsageNameEnum;
 }
 
 export type PlatformUsageNameEnum = 'UserCount' | 'WorkspaceCount' | 'AiWorkspaceCount';
@@ -11735,11 +14773,11 @@ export interface PopDatasetMeasureDefinition {
 }
 
 export interface PopDatasetMeasureDefinitionPreviousPeriodMeasure {
-    'measureIdentifier': AfmLocalIdentifier;
     /**
      * Specification of which date data sets to use for determining the period to calculate the previous period for.
      */
     'dateDatasets': Array<PopDataset>;
+    'measureIdentifier': AfmLocalIdentifier;
 }
 
 /**
@@ -11761,11 +14799,11 @@ export interface PopDateMeasureDefinition {
 }
 
 export interface PopDateMeasureDefinitionOverPeriodMeasure {
-    'measureIdentifier': AfmLocalIdentifier;
     /**
      * Attributes to use for determining the period to calculate the PoP for.
      */
     'dateAttributes': Array<PopDate>;
+    'measureIdentifier': AfmLocalIdentifier;
 }
 
 /**
@@ -11781,29 +14819,29 @@ export interface PositiveAttributeFilter {
 }
 
 export interface PositiveAttributeFilterPositiveAttributeFilter {
-    'in': AttributeFilterElements;
-    'localIdentifier'?: string;
     'applyOnResult'?: boolean;
+    'in': AttributeFilterElements;
+    'label': AfmIdentifier;
+    'localIdentifier'?: string;
     /**
      * If true, indicates that the values in inElements were filled free-form, otherwise they have been picked from existing elements.
      */
     'usesArbitraryValues'?: boolean;
-    'label': AfmIdentifier;
 }
 
 export interface Profile {
-    'organizationId': string;
-    'organizationName': string;
-    'name'?: string;
-    'userId': string;
-    'permissions': Array<ProfilePermissionsEnum>;
-    'telemetryConfig': TelemetryConfig;
-    'links': ProfileLinks;
-    'features': ProfileFeatures;
     /**
      * Defines entitlements for given organization.
      */
     'entitlements': Array<ApiEntitlement>;
+    'features': ProfileFeatures;
+    'links': ProfileLinks;
+    'name'?: string;
+    'organizationId': string;
+    'organizationName': string;
+    'permissions': Array<ProfilePermissionsEnum>;
+    'telemetryConfig': TelemetryConfig;
+    'userId': string;
 }
 
 export type ProfilePermissionsEnum = 'MANAGE' | 'SELF_CREATE_TOKEN' | 'BASE_UI_ACCESS';
@@ -11814,15 +14852,15 @@ export type ProfilePermissionsEnum = 'MANAGE' | 'SELF_CREATE_TOKEN' | 'BASE_UI_A
 export type ProfileFeatures = LiveFeatures | StaticFeatures;
 
 export interface ProfileLinks {
-    'self': string;
     'organization': string;
+    'self': string;
     'user': string;
 }
 
 export interface Range {
-    'operator': RangeOperatorEnum;
-    'measure': LocalIdentifier;
     'from': Value;
+    'measure': LocalIdentifier;
+    'operator': RangeOperatorEnum;
     'to': Value;
 }
 
@@ -11836,8 +14874,8 @@ export interface RangeCondition {
 }
 
 export interface RangeConditionRange {
-    'operator': RangeConditionRangeOperatorEnum;
     'from': number;
+    'operator': RangeConditionRangeOperatorEnum;
     'to': number;
 }
 
@@ -11851,20 +14889,20 @@ export interface RangeMeasureValueFilter {
 }
 
 export interface RangeMeasureValueFilterRangeMeasureValueFilter {
+    'applyOnResult'?: boolean;
     /**
      * References to the attributes to be used when filtering.
      */
     'dimensionality'?: Array<AfmIdentifier>;
+    'from': number;
+    'localIdentifier'?: string;
+    'measure': AfmIdentifier;
+    'operator': RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum;
+    'to': number;
     /**
      * A value that will be substituted for null values in the metric for the comparisons.
      */
     'treatNullValuesAs'?: number;
-    'operator': RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum;
-    'from': number;
-    'to': number;
-    'localIdentifier'?: string;
-    'applyOnResult'?: boolean;
-    'measure': AfmIdentifier;
 }
 
 export type RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum = 'BETWEEN' | 'NOT_BETWEEN';
@@ -11881,10 +14919,12 @@ export interface RankingFilter {
 }
 
 export interface RankingFilterRankingFilter {
+    'applyOnResult'?: boolean;
     /**
      * References to the attributes to be used when filtering.
      */
     'dimensionality'?: Array<AfmIdentifier>;
+    'localIdentifier'?: string;
     /**
      * References to the metrics to be used when filtering.
      */
@@ -11894,15 +14934,13 @@ export interface RankingFilterRankingFilter {
      */
     'operator': RankingFilterRankingFilterOperatorEnum;
     /**
-     * Number of top/bottom values to filter.
-     */
-    'value': number;
-    /**
      * When true, filter returns requested number of rows at most. Default is false.
      */
     'strictLimitOfRows'?: boolean;
-    'localIdentifier'?: string;
-    'applyOnResult'?: boolean;
+    /**
+     * Number of top/bottom values to filter.
+     */
+    'value': number;
 }
 
 export type RankingFilterRankingFilterOperatorEnum = 'TOP' | 'BOTTOM';
@@ -11945,21 +14983,21 @@ export interface RawCustomOverride {
  * Export request object describing the export properties and overrides for raw exports.
  */
 export interface RawExportAutomationRequest {
-    /**
-     * Requested resulting file type.
-     */
-    'format': RawExportAutomationRequestFormatEnum;
-    'execution': AFM;
-    /**
-     * Filename of downloaded file without extension.
-     */
-    'fileName': string;
     'customOverride'?: RawCustomOverride;
-    'executionSettings'?: ExecutionSettings;
     /**
      * Set column delimiter. (CSV)
      */
     'delimiter'?: string;
+    'execution': AFM;
+    'executionSettings'?: ExecutionSettings;
+    /**
+     * Filename of downloaded file without extension.
+     */
+    'fileName': string;
+    /**
+     * Requested resulting file type.
+     */
+    'format': RawExportAutomationRequestFormatEnum;
     /**
      * Free-form JSON object
      */
@@ -11987,31 +15025,31 @@ export type ReferenceIdentifierTypeEnum = 'dataset';
 export interface ReferenceSourceColumn {
     'column'?: string;
     'dataType'?: ReferenceSourceColumnDataTypeEnum;
-    'target': DatasetGrain;
     'isNullable'?: boolean;
     'nullValue'?: string;
+    'target': DatasetGrain;
 }
 
 export type ReferenceSourceColumnDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
 
 export interface Relative {
+    'measure': ArithmeticMeasure;
     /**
      * Relative condition operator. INCREASES_BY - the metric increases by the specified value. DECREASES_BY - the metric decreases by the specified value. CHANGES_BY - the metric increases or decreases by the specified value. 
      */
     'operator': RelativeOperatorEnum;
-    'measure': ArithmeticMeasure;
     'threshold': Value;
 }
 
 export type RelativeOperatorEnum = 'INCREASES_BY' | 'DECREASES_BY' | 'CHANGES_BY';
 
 export interface RelativeBoundedDateFilter {
-    'granularity': RelativeBoundedDateFilterGranularityEnum;
     'from'?: number;
+    'granularity': RelativeBoundedDateFilterGranularityEnum;
     'to'?: number;
 }
 
-export type RelativeBoundedDateFilterGranularityEnum = 'ALL_TIME_GRANULARITY' | 'GDC.time.year' | 'GDC.time.week_us' | 'GDC.time.week_in_year' | 'GDC.time.week_in_quarter' | 'GDC.time.week' | 'GDC.time.euweek_in_year' | 'GDC.time.euweek_in_quarter' | 'GDC.time.quarter' | 'GDC.time.quarter_in_year' | 'GDC.time.month' | 'GDC.time.month_in_quarter' | 'GDC.time.month_in_year' | 'GDC.time.day_in_year' | 'GDC.time.day_in_quarter' | 'GDC.time.day_in_month' | 'GDC.time.day_in_week' | 'GDC.time.day_in_euweek' | 'GDC.time.date' | 'GDC.time.hour' | 'GDC.time.hour_in_day' | 'GDC.time.minute' | 'GDC.time.minute_in_hour' | 'GDC.time.fiscal_month' | 'GDC.time.fiscal_quarter' | 'GDC.time.fiscal_year';
+export type RelativeBoundedDateFilterGranularityEnum = 'ALL_TIME_GRANULARITY' | 'GDC.time.year' | 'GDC.time.week_us' | 'GDC.time.week_in_year' | 'GDC.time.week_in_quarter' | 'GDC.time.week' | 'GDC.time.euweek_in_year' | 'GDC.time.euweek_in_quarter' | 'GDC.time.quarter' | 'GDC.time.quarter_in_year' | 'GDC.time.month' | 'GDC.time.month_in_quarter' | 'GDC.time.month_in_year' | 'GDC.time.day_in_year' | 'GDC.time.day_in_quarter' | 'GDC.time.day_in_month' | 'GDC.time.day_in_week' | 'GDC.time.day_in_euweek' | 'GDC.time.date' | 'GDC.time.hour' | 'GDC.time.hour_in_day' | 'GDC.time.minute' | 'GDC.time.minute_in_hour' | 'GDC.time.minute_in_day' | 'GDC.time.second' | 'GDC.time.second_in_minute' | 'GDC.time.second_in_day' | 'GDC.time.fiscal_week' | 'GDC.time.fiscal_month' | 'GDC.time.fiscal_quarter' | 'GDC.time.fiscal_semester' | 'GDC.time.fiscal_year' | 'GDC.time.fiscal_day_in_fiscal_week' | 'GDC.time.fiscal_day_in_fiscal_month' | 'GDC.time.fiscal_day_in_fiscal_quarter' | 'GDC.time.fiscal_day_in_fiscal_semester' | 'GDC.time.fiscal_day_in_fiscal_year' | 'GDC.time.fiscal_week_in_fiscal_month' | 'GDC.time.fiscal_week_in_fiscal_quarter' | 'GDC.time.fiscal_week_in_fiscal_semester' | 'GDC.time.fiscal_week_in_fiscal_year' | 'GDC.time.fiscal_month_in_fiscal_quarter' | 'GDC.time.fiscal_month_in_fiscal_semester' | 'GDC.time.fiscal_month_in_fiscal_year' | 'GDC.time.fiscal_quarter_in_fiscal_semester' | 'GDC.time.fiscal_quarter_in_fiscal_year' | 'GDC.time.fiscal_semester_in_fiscal_year';
 
 /**
  * A date filter specifying a time interval that is relative to the current date. For example, last week, next month, and so on. Field dataset is representing qualifier of date dimension. The \'from\' and \'to\' properties mark the boundaries of the interval. If \'from\' is omitted, all values earlier than \'to\' are included. If \'to\' is omitted, all values later than \'from\' are included. It is not allowed to omit both.
@@ -12021,30 +15059,30 @@ export interface RelativeDateFilter {
 }
 
 export interface RelativeDateFilterRelativeDateFilter {
+    'applyOnResult'?: boolean;
+    'boundedFilter'?: BoundedFilter;
+    'dataset': AfmObjectIdentifierDataset;
     /**
-     * Date granularity specifying particular date attribute in given dimension.
+     * Specifies how rows with empty (null/missing) date values should be handled. INCLUDE includes empty dates in addition to the date range restriction, EXCLUDE removes rows with empty dates (default), ONLY keeps only rows with empty dates.
      */
-    'granularity': RelativeDateFilterRelativeDateFilterGranularityEnum;
+    'emptyValueHandling'?: RelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum;
     /**
      * Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for \'2 days/weeks, ... ago\').
      */
     'from': number;
     /**
+     * Date granularity specifying particular date attribute in given dimension.
+     */
+    'granularity': RelativeDateFilterRelativeDateFilterGranularityEnum;
+    'localIdentifier'?: string;
+    /**
      * End of the filtering interval. Specified by number of periods (with respect to given granularity). Value \'O\' is representing current time-interval (current day, week, ...).
      */
     'to': number;
-    'localIdentifier'?: string;
-    'applyOnResult'?: boolean;
-    'boundedFilter'?: BoundedFilter;
-    /**
-     * Specifies how rows with empty (null/missing) date values should be handled. INCLUDE includes empty dates in addition to the date range restriction, EXCLUDE removes rows with empty dates (default), ONLY keeps only rows with empty dates.
-     */
-    'emptyValueHandling'?: RelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum;
-    'dataset': AfmObjectIdentifierDataset;
 }
 
-export type RelativeDateFilterRelativeDateFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
 export type RelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
+export type RelativeDateFilterRelativeDateFilterGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
 
 export interface RelativeWrapper {
     'relative': Relative;
@@ -12065,14 +15103,14 @@ export interface ResolveSettingsRequest {
  */
 export interface ResolvedSetting {
     /**
+     * Free-form JSON object
+     */
+    'content'?: object | null;
+    /**
      * Setting ID. Formerly used to identify a type of a particular setting, going to be removed in a favor of setting\'s type.
      * @deprecated
      */
     'id': string;
-    /**
-     * Free-form JSON object
-     */
-    'content'?: object | null;
     /**
      * Type of the setting.
      */
@@ -12082,18 +15120,18 @@ export interface ResolvedSetting {
 export type ResolvedSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE';
 
 export interface RsaSpecification {
-    'kty': RsaSpecificationKtyEnum;
     'alg': RsaSpecificationAlgEnum;
-    'use': RsaSpecificationUseEnum;
-    'x5c'?: Array<string>;
-    'n': string;
     'e': string;
     'kid': string;
+    'kty': RsaSpecificationKtyEnum;
+    'n': string;
+    'use': RsaSpecificationUseEnum;
+    'x5c'?: Array<string>;
     'x5t'?: string;
 }
 
-export type RsaSpecificationKtyEnum = 'RSA';
 export type RsaSpecificationAlgEnum = 'RS256' | 'RS384' | 'RS512';
+export type RsaSpecificationKtyEnum = 'RSA';
 export type RsaSpecificationUseEnum = 'sig';
 
 /**
@@ -12101,13 +15139,13 @@ export type RsaSpecificationUseEnum = 'sig';
  */
 export interface RulePermission {
     /**
-     * Type of the rule
-     */
-    'type': string;
-    /**
      * Permissions granted by the rule
      */
     'permissions'?: Array<GrantedPermission>;
+    /**
+     * Type of the rule
+     */
+    'type': string;
 }
 
 /**
@@ -12125,15 +15163,28 @@ export interface RunningSection {
 }
 
 /**
+ * The cache expires according to a schedule.
+ */
+export interface ScheduleCacheRetention {
+    'schedule': CacheRetentionSchedule;
+    /**
+     * The cache retention type.
+     */
+    'type': ScheduleCacheRetentionTypeEnum;
+}
+
+export type ScheduleCacheRetentionTypeEnum = 'SCHEDULE';
+
+/**
  * Settings for section slide.
  */
 export interface SectionSlideTemplate {
-    'header'?: RunningSection | null;
-    'footer'?: RunningSection | null;
     /**
      * Show background image on the slide.
      */
     'backgroundImage'?: boolean;
+    'footer'?: RunningSection | null;
+    'header'?: RunningSection | null;
 }
 
 /**
@@ -12141,43 +15192,54 @@ export interface SectionSlideTemplate {
  */
 export interface SetCertificationRequest {
     /**
-     * Type of the entity.
-     */
-    'type': SetCertificationRequestTypeEnum;
-    /**
      * ID of the entity.
      */
     'id': string;
+    /**
+     * Optional message associated with the certification.
+     */
+    'message'?: string | null;
     /**
      * Certification status of the entity.
      */
     'status'?: SetCertificationRequestStatusEnum | null;
     /**
-     * Optional message associated with the certification.
+     * Type of the entity.
      */
-    'message'?: string | null;
+    'type': SetCertificationRequestTypeEnum;
 }
 
-export type SetCertificationRequestTypeEnum = 'metric' | 'visualizationObject' | 'analyticalDashboard';
 export type SetCertificationRequestStatusEnum = 'CERTIFIED';
+export type SetCertificationRequestTypeEnum = 'metric' | 'visualizationObject' | 'analyticalDashboard';
 
 /**
  * Additional settings.
  */
 export interface Settings {
     /**
+     * Set column delimiter. (CSV)
+     */
+    'delimiter'?: string;
+    /**
      * If true, the export will contain the information about the export – exported date, filters, etc. Works only with `visualizationObject`. (XLSX, PDF)
      */
     'exportInfo'?: boolean;
+    /**
+     * Grand totals position. Takes precedence over position specified in visualization.
+     */
+    'grandTotalsPosition'?: SettingsGrandTotalsPositionEnum;
     /**
      * Merge equal headers in neighbouring cells. (XLSX)
      */
     'mergeHeaders'?: boolean;
     /**
-     * Print applied filters on top of the document. (PDF/HTML when visualizationObject is given)
-     * @deprecated
+     * Set page orientation. (PDF)
      */
-    'showFilters'?: boolean;
+    'pageOrientation'?: SettingsPageOrientationEnum;
+    /**
+     * Set page size. (PDF)
+     */
+    'pageSize'?: SettingsPageSizeEnum;
     /**
      * Page size and orientation. (PDF)
      * @deprecated
@@ -12199,26 +15261,15 @@ export interface Settings {
      */
     'pdfTopRightContent'?: string;
     /**
-     * Set page size. (PDF)
+     * Print applied filters on top of the document. (PDF/HTML when visualizationObject is given)
+     * @deprecated
      */
-    'pageSize'?: SettingsPageSizeEnum;
-    /**
-     * Set page orientation. (PDF)
-     */
-    'pageOrientation'?: SettingsPageOrientationEnum;
-    /**
-     * Set column delimiter. (CSV)
-     */
-    'delimiter'?: string;
-    /**
-     * Grand totals position. Takes precedence over position specified in visualization.
-     */
-    'grandTotalsPosition'?: SettingsGrandTotalsPositionEnum;
+    'showFilters'?: boolean;
 }
 
-export type SettingsPageSizeEnum = 'A3' | 'A4' | 'LETTER';
-export type SettingsPageOrientationEnum = 'PORTRAIT' | 'LANDSCAPE';
 export type SettingsGrandTotalsPositionEnum = 'pinnedBottom' | 'pinnedTop' | 'bottom' | 'top';
+export type SettingsPageOrientationEnum = 'PORTRAIT' | 'LANDSCAPE';
+export type SettingsPageSizeEnum = 'A3' | 'A4' | 'LETTER';
 
 /**
  * Metric defined by referencing a MAQL metric or an LDM fact object with aggregation.
@@ -12228,7 +15279,6 @@ export interface SimpleMeasureDefinition {
 }
 
 export interface SimpleMeasureDefinitionMeasure {
-    'item': AfmObjectIdentifierCore;
     /**
      * Definition of aggregation type of the metric.
      */
@@ -12241,6 +15291,7 @@ export interface SimpleMeasureDefinitionMeasure {
      * Metrics can be filtered by attribute filters with the same interface as ones for global AFM. Note that only one DateFilter is allowed.
      */
     'filters'?: Array<FilterDefinitionForSimpleMeasure>;
+    'item': AfmObjectIdentifierCore;
 }
 
 export type SimpleMeasureDefinitionMeasureAggregationEnum = 'SUM' | 'COUNT' | 'AVG' | 'MIN' | 'MAX' | 'MEDIAN' | 'RUNSUM' | 'APPROXIMATE_COUNT';
@@ -12255,25 +15306,17 @@ export interface Skeleton {
  */
 export interface SlidesExportRequest {
     /**
-     * Requested resulting file type.
+     * Dashboard identifier
      */
-    'format': SlidesExportRequestFormatEnum;
+    'dashboardId'?: string;
     /**
      * File name to be used for retrieving the pdf document.
      */
     'fileName': string;
     /**
-     * Dashboard identifier
+     * Requested resulting file type.
      */
-    'dashboardId'?: string;
-    /**
-     * List of widget identifiers to be exported. Note that only one widget is currently supported.
-     */
-    'widgetIds'?: Array<string>;
-    /**
-     * List of visualization ids to be exported. Note that only one visualization is currently supported.
-     */
-    'visualizationIds'?: Array<string>;
+    'format': SlidesExportRequestFormatEnum;
     /**
      * Free-form JSON object
      */
@@ -12282,6 +15325,14 @@ export interface SlidesExportRequest {
      * Export template identifier.
      */
     'templateId'?: string | null;
+    /**
+     * List of visualization ids to be exported. Note that only one visualization is currently supported.
+     */
+    'visualizationIds'?: Array<string>;
+    /**
+     * List of widget identifiers to be exported. Note that only one widget is currently supported.
+     */
+    'widgetIds'?: Array<string>;
 }
 
 export type SlidesExportRequestFormatEnum = 'PDF' | 'PPTX';
@@ -12303,21 +15354,21 @@ export interface Smtp {
      */
     'host'?: string;
     /**
-     * The SMTP server port.
-     */
-    'port'?: SmtpPortEnum;
-    /**
-     * The SMTP server username.
-     */
-    'username'?: string;
-    /**
      * The SMTP server password.
      */
     'password'?: string;
     /**
+     * The SMTP server port.
+     */
+    'port'?: SmtpPortEnum;
+    /**
      * The destination type.
      */
     'type': SmtpTypeEnum;
+    /**
+     * The SMTP server username.
+     */
+    'username'?: string;
 }
 
 export type SmtpPortEnum = 25 | 465 | 587 | 2525;
@@ -12344,13 +15395,13 @@ export type SourceReferenceIdentifierTypeEnum = 'fact' | 'attribute';
  */
 export interface SqlColumn {
     /**
-     * Column name.
-     */
-    'name': string;
-    /**
      * Column data type.
      */
     'dataType': SqlColumnDataTypeEnum;
+    /**
+     * Column name.
+     */
+    'name': string;
     /**
      * Value used as sentinel for null values in the column.
      */
@@ -12368,13 +15419,14 @@ export interface StaticFeatures {
 }
 
 export interface StringConstraints {
-    'minLength'?: number;
     'maxLength'?: number;
+    'minLength'?: number;
 }
 
 export interface StringParameterDefinition {
-    'defaultValue': string;
+    'allowedValues'?: Array<AllowedValue>;
     'constraints'?: StringConstraints;
+    'defaultValue': string;
     /**
      * The parameter type.
      */
@@ -12405,23 +15457,24 @@ export interface TableOverride {
 }
 
 export interface TableStatisticsEntry {
-    'schemaName': string;
-    'tableName': string;
-    /**
-     * Total number of rows in the table.
-     */
-    'rowCount'?: number;
+    'columns': Array<ColumnStatisticsEntry>;
     /**
      * Total data size of the table in bytes.
      */
     'dataSize'?: number;
-    'columns': Array<ColumnStatisticsEntry>;
+    /**
+     * Total number of rows in the table.
+     */
+    'rowCount'?: number;
+    'schemaName': string;
+    'tableName': string;
 }
 
 /**
  * A single pre-executed layer in a multi-layer tabular export.
  */
 export interface TabularExportExecution {
+    'customOverride'?: CustomOverride;
     /**
      * Execution result identifier for this layer.
      */
@@ -12430,27 +15483,38 @@ export interface TabularExportExecution {
      * Layer title used for the exported sheet or file name.
      */
     'title'?: string;
-    'customOverride'?: CustomOverride;
 }
 
 /**
  * Export request object describing the export properties and overrides for tabular exports.
  */
 export interface TabularExportRequest {
-    /**
-     * Expected file format.
-     */
-    'format': TabularExportRequestFormatEnum;
+    'customOverride'?: CustomOverride;
     /**
      * Execution result identifier.
      */
     'executionResult'?: string;
     /**
+     * Pre-executed layers for multi-layer geo visualizations. When provided, this is the canonical source of the exported layers and takes precedence over the top-level executionResult and customOverride, which are ignored. Index 0 is the main layer; each layer carries its own executionResult and customOverride.
+     */
+    'executions'?: Array<TabularExportExecution>;
+    /**
      * Filename of downloaded file without extension.
      */
     'fileName': string;
+    /**
+     * Expected file format.
+     */
+    'format': TabularExportRequestFormatEnum;
+    /**
+     * Free-form JSON object
+     */
+    'metadata'?: object | null;
+    /**
+     * Analytical dashboard identifier. Optional identifier, which informs the system that the export is related to a specific dashboard.
+     */
+    'relatedDashboardId'?: string;
     'settings'?: Settings;
-    'customOverride'?: CustomOverride;
     /**
      * Visualization object identifier. Alternative to executionResult property.
      */
@@ -12463,18 +15527,6 @@ export interface TabularExportRequest {
      * Optional custom parameters to be applied when visualizationObject is given. Those parameters override the original parameters defined in the visualization.
      */
     'visualizationObjectCustomParameters'?: Array<ParameterValue>;
-    /**
-     * Analytical dashboard identifier. Optional identifier, which informs the system that the export is related to a specific dashboard.
-     */
-    'relatedDashboardId'?: string;
-    /**
-     * Free-form JSON object
-     */
-    'metadata'?: object | null;
-    /**
-     * Pre-executed layers for multi-layer geo visualizations. When provided, this is the canonical source of the exported layers and takes precedence over the top-level executionResult and customOverride, which are ignored. Index 0 is the main layer; each layer carries its own executionResult and customOverride.
-     */
-    'executions'?: Array<TabularExportExecution>;
 }
 
 export type TabularExportRequestFormatEnum = 'CSV' | 'XLSX' | 'HTML' | 'PDF';
@@ -12509,24 +15561,24 @@ export interface TelemetryContext {
  * Available telemetry services.
  */
 export interface TelemetryServices {
+    'amplitude'?: AmplitudeService;
     'matomo'?: MatomoService;
     'openTelemetry'?: OpenTelemetryService;
-    'amplitude'?: AmplitudeService;
 }
 
 /**
  * List of users
  */
 export interface UserAssignee {
+    /**
+     * User email address
+     */
+    'email'?: string;
     'id': string;
     /**
      * User name
      */
     'name'?: string;
-    /**
-     * User email address
-     */
-    'email'?: string;
 }
 
 /**
@@ -12568,6 +15620,10 @@ export interface UserGroupPermission {
  */
 export interface UserManagementDataSourcePermissionAssignment {
     /**
+     * How the subject gains access to the data source (DIRECT or GROUP). Absent for direct-only listings.
+     */
+    'accessSource'?: UserManagementDataSourcePermissionAssignmentAccessSourceEnum;
+    /**
      * Id of the datasource
      */
     'id': string;
@@ -12576,18 +15632,14 @@ export interface UserManagementDataSourcePermissionAssignment {
      */
     'name'?: string;
     'permissions': Array<UserManagementDataSourcePermissionAssignmentPermissionsEnum>;
-    /**
-     * How the subject gains access to the data source (DIRECT or GROUP). Absent for direct-only listings.
-     */
-    'accessSource'?: UserManagementDataSourcePermissionAssignmentAccessSourceEnum;
 }
 
-export type UserManagementDataSourcePermissionAssignmentPermissionsEnum = 'MANAGE' | 'USE';
 export type UserManagementDataSourcePermissionAssignmentAccessSourceEnum = 'DIRECT' | 'GROUP';
+export type UserManagementDataSourcePermissionAssignmentPermissionsEnum = 'MANAGE' | 'USE';
 
 export interface UserManagementPermissionAssignments {
-    'workspaces': Array<UserManagementWorkspacePermissionAssignment>;
     'dataSources': Array<UserManagementDataSourcePermissionAssignment>;
+    'workspaces': Array<UserManagementWorkspacePermissionAssignment>;
 }
 
 export interface UserManagementUserGroupMember {
@@ -12600,17 +15652,18 @@ export interface UserManagementUserGroupMembers {
 }
 
 export interface UserManagementUserGroups {
-    'userGroups': Array<UserManagementUserGroupsItem>;
     /**
      * Total number of groups
      */
     'totalCount': number;
+    'userGroups': Array<UserManagementUserGroupsItem>;
 }
 
 /**
  * List of groups
  */
 export interface UserManagementUserGroupsItem {
+    'dataSources': Array<UserManagementDataSourcePermissionAssignment>;
     'id': string;
     /**
      * Group name
@@ -12625,30 +15678,30 @@ export interface UserManagementUserGroupsItem {
      */
     'userCount': number;
     'workspaces': Array<UserManagementWorkspacePermissionAssignment>;
-    'dataSources': Array<UserManagementDataSourcePermissionAssignment>;
 }
 
 export interface UserManagementUsers {
-    'users': Array<UserManagementUsersItem>;
     /**
      * The total number of users is based on applied filters.
      */
     'totalCount': number;
+    'users': Array<UserManagementUsersItem>;
 }
 
 /**
  * List of users
  */
 export interface UserManagementUsersItem {
+    'dataSources': Array<UserManagementDataSourcePermissionAssignment>;
+    /**
+     * User email address
+     */
+    'email'?: string;
     'id': string;
     /**
      * User name
      */
     'name'?: string;
-    /**
-     * User email address
-     */
-    'email'?: string;
     /**
      * Is user organization admin
      */
@@ -12659,45 +15712,60 @@ export interface UserManagementUsersItem {
     'systemAccount': boolean;
     'userGroups': Array<UserGroupIdentifier>;
     'workspaces': Array<UserManagementWorkspacePermissionAssignment>;
-    'dataSources': Array<UserManagementDataSourcePermissionAssignment>;
 }
 
 /**
  * Workspace permission assignments for users and userGroups
  */
 export interface UserManagementWorkspacePermissionAssignment {
-    'id': string;
-    'name'?: string;
-    'permissions': Array<UserManagementWorkspacePermissionAssignmentPermissionsEnum>;
-    'hierarchyPermissions': Array<UserManagementWorkspacePermissionAssignmentHierarchyPermissionsEnum>;
     /**
      * How the subject gains access to the workspace (DIRECT, GROUP, HIERARCHY). Absent for direct-only listings.
      */
     'accessSource'?: UserManagementWorkspacePermissionAssignmentAccessSourceEnum;
+    'hierarchyPermissions': Array<UserManagementWorkspacePermissionAssignmentHierarchyPermissionsEnum>;
+    'id': string;
+    'name'?: string;
+    'permissions': Array<UserManagementWorkspacePermissionAssignmentPermissionsEnum>;
 }
 
-export type UserManagementWorkspacePermissionAssignmentPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'VIEW';
-export type UserManagementWorkspacePermissionAssignmentHierarchyPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'VIEW';
 export type UserManagementWorkspacePermissionAssignmentAccessSourceEnum = 'DIRECT' | 'GROUP' | 'HIERARCHY';
+export type UserManagementWorkspacePermissionAssignmentHierarchyPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'VIEW';
+export type UserManagementWorkspacePermissionAssignmentPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'VIEW';
 
 /**
  * List of users
  */
 export interface UserPermission {
+    /**
+     * User email address
+     */
+    'email'?: string;
     'id': string;
     /**
      * Name of user
      */
     'name'?: string;
     /**
-     * User email address
-     */
-    'email'?: string;
-    /**
      * Permissions granted to the user
      */
     'permissions'?: Array<GrantedPermission>;
 }
+
+/**
+ * The cache expires once a fixed period elapses since the results were computed.
+ */
+export interface ValidityPeriodCacheRetention {
+    /**
+     * The cache retention type.
+     */
+    'type': ValidityPeriodCacheRetentionTypeEnum;
+    /**
+     * How long the cached results stay valid after they were computed.
+     */
+    'validityPeriod': string;
+}
+
+export type ValidityPeriodCacheRetentionTypeEnum = 'VALIDITY_PERIOD';
 
 export interface Value {
     /**
@@ -12707,12 +15775,12 @@ export interface Value {
 }
 
 export interface VisibleFilter {
-    'localIdentifier'?: string;
-    'title'?: string;
     /**
      * Indicates if the filter is an all-time date filter. Such a filter is not included in report computation, so there is no filter with the same \'localIdentifier\' to be found. In such cases, this flag is used to inform the server to not search for the filter in the definitions and include it anyways.
      */
     'isAllTimeDateFilter'?: boolean;
+    'localIdentifier'?: string;
+    'title'?: string;
 }
 
 /**
@@ -12720,13 +15788,13 @@ export interface VisibleFilter {
  */
 export interface VisualExportRequest {
     /**
-     * File name to be used for retrieving the pdf document.
-     */
-    'fileName': string;
-    /**
      * Dashboard identifier
      */
     'dashboardId': string;
+    /**
+     * File name to be used for retrieving the pdf document.
+     */
+    'fileName': string;
     /**
      * Metadata definition in free-form JSON format.
      */
@@ -12738,13 +15806,9 @@ export interface VisualExportRequest {
  */
 export interface Webhook {
     /**
-     * The webhook URL.
+     * Flag indicating if webhook has a hmac secret key.
      */
-    'url'?: string;
-    /**
-     * Bearer token for the webhook.
-     */
-    'token'?: string | null;
+    'hasSecretKey'?: boolean | null;
     /**
      * Flag indicating if webhook has a token.
      */
@@ -12754,13 +15818,17 @@ export interface Webhook {
      */
     'secretKey'?: string | null;
     /**
-     * Flag indicating if webhook has a hmac secret key.
+     * Bearer token for the webhook.
      */
-    'hasSecretKey'?: boolean | null;
+    'token'?: string | null;
     /**
      * The destination type.
      */
     'type': WebhookTypeEnum;
+    /**
+     * The webhook URL.
+     */
+    'url'?: string;
 }
 
 export type WebhookTypeEnum = 'WEBHOOK';
@@ -12785,6 +15853,22 @@ export interface WorkspaceAutomationIdentifier {
 export interface WorkspaceAutomationManagementBulkRequest {
     'automations': Array<WorkspaceAutomationIdentifier>;
 }
+
+/**
+ * Template for workspace dashboard slides export. Available variables: {{currentPageNumber}}, {{dashboardDateFilters}}, {{dashboardDescription}}, {{dashboardFilters}}, {{dashboardId}}, {{dashboardName}}, {{dashboardTags}}, {{dashboardUrl}}, {{exportedAt}}, {{exportedBy}}, {{logo}}, {{totalPages}}, {{workspaceId}}, {{workspaceName}}
+ */
+export interface WorkspaceDashboardSlidesTemplate {
+    /**
+     * Export types this template applies to.
+     */
+    'appliedOn': Array<WorkspaceDashboardSlidesTemplateAppliedOnEnum>;
+    'contentSlide'?: ContentSlideTemplate | null;
+    'coverSlide'?: CoverSlideTemplate | null;
+    'introSlide'?: IntroSlideTemplate | null;
+    'sectionSlide'?: SectionSlideTemplate | null;
+}
+
+export type WorkspaceDashboardSlidesTemplateAppliedOnEnum = 'PDF' | 'PPTX';
 
 /**
  * The data source used for the particular workspace instead of the one defined in the LDM inherited from its parent workspace. Such data source cannot be defined for a single or a top-parent workspace.
@@ -12821,26 +15905,26 @@ export type WorkspaceIdentifierTypeEnum = 'workspace';
  */
 export interface WorkspacePermissionAssignment {
     'assigneeIdentifier': AssigneeIdentifier;
-    'permissions'?: Array<WorkspacePermissionAssignmentPermissionsEnum>;
     'hierarchyPermissions'?: Array<WorkspacePermissionAssignmentHierarchyPermissionsEnum>;
+    'permissions'?: Array<WorkspacePermissionAssignmentPermissionsEnum>;
 }
 
-export type WorkspacePermissionAssignmentPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'VIEW';
 export type WorkspacePermissionAssignmentHierarchyPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'VIEW';
+export type WorkspacePermissionAssignmentPermissionsEnum = 'MANAGE' | 'ANALYZE' | 'EXPORT' | 'EXPORT_TABULAR' | 'EXPORT_PDF' | 'CREATE_AUTOMATION' | 'USE_AI_ASSISTANT' | 'WRITE_KNOWLEDGE_DOCUMENTS' | 'READ_KNOWLEDGE_DOCUMENTS' | 'CREATE_FILTER_VIEW' | 'VIEW';
 
 /**
  * List of workspace users
  */
 export interface WorkspaceUser {
+    /**
+     * User email address
+     */
+    'email'?: string;
     'id': string;
     /**
      * User name
      */
     'name'?: string;
-    /**
-     * User email address
-     */
-    'email'?: string;
 }
 
 /**
@@ -12855,28 +15939,41 @@ export interface WorkspaceUserGroup {
 }
 
 export interface WorkspaceUserGroups {
-    'userGroups': Array<WorkspaceUserGroup>;
     /**
      * Total number of groups
      */
     'totalCount': number;
+    'userGroups': Array<WorkspaceUserGroup>;
 }
 
 export interface WorkspaceUsers {
-    'users': Array<WorkspaceUser>;
     /**
      * The total number of users is based on applied filters.
      */
     'totalCount': number;
+    'users': Array<WorkspaceUser>;
 }
+
+/**
+ * Template for workspace widget slides export. Available variables: {{currentPageNumber}}, {{dashboardDateFilters}}, {{dashboardDescription}}, {{dashboardFilters}}, {{dashboardId}}, {{dashboardName}}, {{dashboardTags}}, {{dashboardUrl}}, {{exportedAt}}, {{exportedBy}}, {{logo}}, {{totalPages}}, {{workspaceId}}, {{workspaceName}}
+ */
+export interface WorkspaceWidgetSlidesTemplate {
+    /**
+     * Export types this template applies to.
+     */
+    'appliedOn': Array<WorkspaceWidgetSlidesTemplateAppliedOnEnum>;
+    'contentSlide'?: ContentSlideTemplate | null;
+}
+
+export type WorkspaceWidgetSlidesTemplateAppliedOnEnum = 'PDF' | 'PPTX';
 
 export interface Xliff {
     'file'?: Array<any>;
-    'version'?: string;
+    'otherAttributes'?: { [key: string]: string; };
+    'space'?: string;
     'srcLang'?: string;
     'trgLang'?: string;
-    'space'?: string;
-    'otherAttributes'?: { [key: string]: string; };
+    'version'?: string;
 }
 
 
@@ -18617,13 +21714,13 @@ export async function ActionsApiAxiosParamCreator_ListWorkspaceUsers(
  * @summary Manage Permissions for an Attribute
  * @param {string} workspaceId 
  * @param {string} attributeId 
- * @param {Array<ManageLabelPermissionsRequestInner>} manageLabelPermissionsRequestInner 
+ * @param {Array<ManageAttributePermissionsRequestInner>} manageAttributePermissionsRequestInner 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ActionsApiAxiosParamCreator_ManageAttributePermissions(
-    workspaceId: string, attributeId: string, manageLabelPermissionsRequestInner: Array<ManageLabelPermissionsRequestInner>, 
+    workspaceId: string, attributeId: string, manageAttributePermissionsRequestInner: Array<ManageAttributePermissionsRequestInner>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -18631,8 +21728,8 @@ export async function ActionsApiAxiosParamCreator_ManageAttributePermissions(
     assertParamExists('manageAttributePermissions', 'workspaceId', workspaceId)
     // verify required parameter 'attributeId' is not null or undefined
     assertParamExists('manageAttributePermissions', 'attributeId', attributeId)
-    // verify required parameter 'manageLabelPermissionsRequestInner' is not null or undefined
-    assertParamExists('manageAttributePermissions', 'manageLabelPermissionsRequestInner', manageLabelPermissionsRequestInner)
+    // verify required parameter 'manageAttributePermissionsRequestInner' is not null or undefined
+    assertParamExists('manageAttributePermissions', 'manageAttributePermissionsRequestInner', manageAttributePermissionsRequestInner)
     const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/attributes/{attributeId}/managePermissions`
         .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
         .replace(`{${"attributeId"}}`, encodeURIComponent(String(attributeId)));
@@ -18664,11 +21761,11 @@ export async function ActionsApiAxiosParamCreator_ManageAttributePermissions(
         ...options.headers,
     };
     const needsSerialization =
-        typeof manageLabelPermissionsRequestInner !== "string" ||
+        typeof manageAttributePermissionsRequestInner !== "string" ||
         localVarRequestOptions.headers["Content-Type"] === "application/json";
     localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(manageLabelPermissionsRequestInner !== undefined ? manageLabelPermissionsRequestInner : {})
-        : manageLabelPermissionsRequestInner || "";
+        ? JSON.stringify(manageAttributePermissionsRequestInner !== undefined ? manageAttributePermissionsRequestInner : {})
+        : manageAttributePermissionsRequestInner || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -18811,13 +21908,13 @@ export async function ActionsApiAxiosParamCreator_ManageDataSourcePermissions(
  * @summary Manage Permissions for a Fact
  * @param {string} workspaceId 
  * @param {string} factId 
- * @param {Array<ManageLabelPermissionsRequestInner>} manageLabelPermissionsRequestInner 
+ * @param {Array<ManageFactPermissionsRequestInner>} manageFactPermissionsRequestInner 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ActionsApiAxiosParamCreator_ManageFactPermissions(
-    workspaceId: string, factId: string, manageLabelPermissionsRequestInner: Array<ManageLabelPermissionsRequestInner>, 
+    workspaceId: string, factId: string, manageFactPermissionsRequestInner: Array<ManageFactPermissionsRequestInner>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -18825,8 +21922,8 @@ export async function ActionsApiAxiosParamCreator_ManageFactPermissions(
     assertParamExists('manageFactPermissions', 'workspaceId', workspaceId)
     // verify required parameter 'factId' is not null or undefined
     assertParamExists('manageFactPermissions', 'factId', factId)
-    // verify required parameter 'manageLabelPermissionsRequestInner' is not null or undefined
-    assertParamExists('manageFactPermissions', 'manageLabelPermissionsRequestInner', manageLabelPermissionsRequestInner)
+    // verify required parameter 'manageFactPermissionsRequestInner' is not null or undefined
+    assertParamExists('manageFactPermissions', 'manageFactPermissionsRequestInner', manageFactPermissionsRequestInner)
     const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/facts/{factId}/managePermissions`
         .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
         .replace(`{${"factId"}}`, encodeURIComponent(String(factId)));
@@ -18858,11 +21955,11 @@ export async function ActionsApiAxiosParamCreator_ManageFactPermissions(
         ...options.headers,
     };
     const needsSerialization =
-        typeof manageLabelPermissionsRequestInner !== "string" ||
+        typeof manageFactPermissionsRequestInner !== "string" ||
         localVarRequestOptions.headers["Content-Type"] === "application/json";
     localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(manageLabelPermissionsRequestInner !== undefined ? manageLabelPermissionsRequestInner : {})
-        : manageLabelPermissionsRequestInner || "";
+        ? JSON.stringify(manageFactPermissionsRequestInner !== undefined ? manageFactPermissionsRequestInner : {})
+        : manageFactPermissionsRequestInner || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -21113,7 +24210,7 @@ export async function ActionsApi_ManageAttributePermissions(
     configuration?: Configuration,
 ): AxiosPromise<void> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ManageAttributePermissions(
-        requestParameters.workspaceId, requestParameters.attributeId, requestParameters.manageLabelPermissionsRequestInner, 
+        requestParameters.workspaceId, requestParameters.attributeId, requestParameters.manageAttributePermissionsRequestInner, 
         options || {},
         configuration,
     );
@@ -21191,7 +24288,7 @@ export async function ActionsApi_ManageFactPermissions(
     configuration?: Configuration,
 ): AxiosPromise<void> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ManageFactPermissions(
-        requestParameters.workspaceId, requestParameters.factId, requestParameters.manageLabelPermissionsRequestInner, 
+        requestParameters.workspaceId, requestParameters.factId, requestParameters.manageFactPermissionsRequestInner, 
         options || {},
         configuration,
     );
@@ -22961,10 +26058,10 @@ export interface ActionsApiManageAttributePermissionsRequest {
 
     /**
      * 
-     * @type {Array<ManageLabelPermissionsRequestInner>}
+     * @type {Array<ManageAttributePermissionsRequestInner>}
      * @memberof ActionsApiManageAttributePermissions
      */
-    readonly manageLabelPermissionsRequestInner: Array<ManageLabelPermissionsRequestInner>
+    readonly manageAttributePermissionsRequestInner: Array<ManageAttributePermissionsRequestInner>
 }
 
 /**
@@ -23038,10 +26135,10 @@ export interface ActionsApiManageFactPermissionsRequest {
 
     /**
      * 
-     * @type {Array<ManageLabelPermissionsRequestInner>}
+     * @type {Array<ManageFactPermissionsRequestInner>}
      * @memberof ActionsApiManageFactPermissions
      */
-    readonly manageLabelPermissionsRequestInner: Array<ManageLabelPermissionsRequestInner>
+    readonly manageFactPermissionsRequestInner: Array<ManageFactPermissionsRequestInner>
 }
 
 /**
@@ -27776,8 +30873,8 @@ export async function AppearanceApiAxiosParamCreator_CreateEntityWorkspaceColorP
 
     
     const consumes = [
-        'application/json',
-        'application/vnd.gooddata.api+json'
+        'application/vnd.gooddata.api+json',
+        'application/json'
     ];
     // use application/json if present, otherwise fallback to the first one
     localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
@@ -27844,8 +30941,8 @@ export async function AppearanceApiAxiosParamCreator_CreateEntityWorkspaceThemes
 
     
     const consumes = [
-        'application/json',
-        'application/vnd.gooddata.api+json'
+        'application/vnd.gooddata.api+json',
+        'application/json'
     ];
     // use application/json if present, otherwise fallback to the first one
     localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
@@ -28760,8 +31857,8 @@ export async function AppearanceApiAxiosParamCreator_PatchEntityWorkspaceColorPa
 
     
     const consumes = [
-        'application/json',
-        'application/vnd.gooddata.api+json'
+        'application/vnd.gooddata.api+json',
+        'application/json'
     ];
     // use application/json if present, otherwise fallback to the first one
     localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
@@ -28832,8 +31929,8 @@ export async function AppearanceApiAxiosParamCreator_PatchEntityWorkspaceThemes(
 
     
     const consumes = [
-        'application/json',
-        'application/vnd.gooddata.api+json'
+        'application/vnd.gooddata.api+json',
+        'application/json'
     ];
     // use application/json if present, otherwise fallback to the first one
     localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
@@ -29040,8 +32137,8 @@ export async function AppearanceApiAxiosParamCreator_UpdateEntityWorkspaceColorP
 
     
     const consumes = [
-        'application/json',
-        'application/vnd.gooddata.api+json'
+        'application/vnd.gooddata.api+json',
+        'application/json'
     ];
     // use application/json if present, otherwise fallback to the first one
     localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
@@ -29112,8 +32209,8 @@ export async function AppearanceApiAxiosParamCreator_UpdateEntityWorkspaceThemes
 
     
     const consumes = [
-        'application/json',
-        'application/vnd.gooddata.api+json'
+        'application/vnd.gooddata.api+json',
+        'application/json'
     ];
     // use application/json if present, otherwise fallback to the first one
     localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
@@ -58289,8 +61386,8 @@ export async function EntitiesApiAxiosParamCreator_CreateEntityWorkspaceColorPal
 
     
     const consumes = [
-        'application/json',
-        'application/vnd.gooddata.api+json'
+        'application/vnd.gooddata.api+json',
+        'application/json'
     ];
     // use application/json if present, otherwise fallback to the first one
     localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
@@ -58639,8 +61736,8 @@ export async function EntitiesApiAxiosParamCreator_CreateEntityWorkspaceThemes(
 
     
     const consumes = [
-        'application/json',
-        'application/vnd.gooddata.api+json'
+        'application/vnd.gooddata.api+json',
+        'application/json'
     ];
     // use application/json if present, otherwise fallback to the first one
     localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
@@ -62477,6 +65574,86 @@ export async function EntitiesApiAxiosParamCreator_GetAllEntitiesFilterViews(
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
+ * @summary Get all Fiscal Calendars
+ * @param {string} workspaceId 
+ * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {number} [page] Zero-based page index (0..N)
+ * @param {number} [size] The size of the page to be returned
+ * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'page' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApiAxiosParamCreator_GetAllEntitiesFiscalCalendars(
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'page' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getAllEntitiesFiscalCalendars', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/fiscalCalendars`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (origin !== undefined) {
+        localVarQueryParameter['origin'] = origin;
+    }
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+    if (sort) {
+        localVarQueryParameter['sort'] = sort;
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// EntitiesApi FP - EntitiesApiAxiosParamCreator
+/**
+ * 
  * @summary Get all Identity Providers
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
  * @param {number} [page] Zero-based page index (0..N)
@@ -66007,6 +69184,65 @@ export async function EntitiesApiAxiosParamCreator_GetEntityFilterViews(
 
     if (include) {
         localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// EntitiesApi FP - EntitiesApiAxiosParamCreator
+/**
+ * 
+ * @summary Get a Fiscal Calendar
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApiAxiosParamCreator_GetEntityFiscalCalendars(
+    workspaceId: string, objectId: string, filter?: string, xGDCVALIDATERELATIONS?: boolean, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getEntityFiscalCalendars', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('getEntityFiscalCalendars', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/fiscalCalendars/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
     }
 
     if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -70397,8 +73633,8 @@ export async function EntitiesApiAxiosParamCreator_PatchEntityWorkspaceColorPale
 
     
     const consumes = [
-        'application/json',
-        'application/vnd.gooddata.api+json'
+        'application/vnd.gooddata.api+json',
+        'application/json'
     ];
     // use application/json if present, otherwise fallback to the first one
     localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
@@ -70767,8 +74003,8 @@ export async function EntitiesApiAxiosParamCreator_PatchEntityWorkspaceThemes(
 
     
     const consumes = [
-        'application/json',
-        'application/vnd.gooddata.api+json'
+        'application/vnd.gooddata.api+json',
+        'application/json'
     ];
     // use application/json if present, otherwise fallback to the first one
     localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
@@ -75084,8 +78320,8 @@ export async function EntitiesApiAxiosParamCreator_UpdateEntityWorkspaceColorPal
 
     
     const consumes = [
-        'application/json',
-        'application/vnd.gooddata.api+json'
+        'application/vnd.gooddata.api+json',
+        'application/json'
     ];
     // use application/json if present, otherwise fallback to the first one
     localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
@@ -75454,8 +78690,8 @@ export async function EntitiesApiAxiosParamCreator_UpdateEntityWorkspaceThemes(
 
     
     const consumes = [
-        'application/json',
-        'application/vnd.gooddata.api+json'
+        'application/vnd.gooddata.api+json',
+        'application/json'
     ];
     // use application/json if present, otherwise fallback to the first one
     localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
@@ -78314,6 +81550,32 @@ export async function EntitiesApi_GetAllEntitiesFilterViews(
 // EntitiesApi Api FP
 /**
  * 
+ * @summary Get all Fiscal Calendars
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {EntitiesApiGetAllEntitiesFiscalCalendarsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApi_GetAllEntitiesFiscalCalendars(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: EntitiesApiGetAllEntitiesFiscalCalendarsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiFiscalCalendarOutList> {
+    const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_GetAllEntitiesFiscalCalendars(
+        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// EntitiesApi Api FP
+/**
+ * 
  * @summary Get all Identity Providers
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -79680,6 +82942,32 @@ export async function EntitiesApi_GetEntityFilterViews(
 ): AxiosPromise<JsonApiFilterViewOutDocument> {
     const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_GetEntityFilterViews(
         requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.include, requestParameters.xGDCVALIDATERELATIONS, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// EntitiesApi Api FP
+/**
+ * 
+ * @summary Get a Fiscal Calendar
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {EntitiesApiGetEntityFiscalCalendarsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApi_GetEntityFiscalCalendars(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: EntitiesApiGetEntityFiscalCalendarsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiFiscalCalendarOutDocument> {
+    const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_GetEntityFiscalCalendars(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.xGDCVALIDATERELATIONS, 
         options || {},
         configuration,
     );
@@ -84318,6 +87606,16 @@ export interface EntitiesApiInterface {
 
     /**
      * 
+     * @summary Get all Fiscal Calendars
+     * @param {EntitiesApiGetAllEntitiesFiscalCalendarsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    getAllEntitiesFiscalCalendars(requestParameters: EntitiesApiGetAllEntitiesFiscalCalendarsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFiscalCalendarOutList>;
+
+    /**
+     * 
      * @summary Get all Identity Providers
      * @param {EntitiesApiGetAllEntitiesIdentityProvidersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -84844,6 +88142,16 @@ export interface EntitiesApiInterface {
      * @memberof EntitiesApiInterface
      */
     getEntityFilterViews(requestParameters: EntitiesApiGetEntityFilterViewsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFilterViewOutDocument>;
+
+    /**
+     * 
+     * @summary Get a Fiscal Calendar
+     * @param {EntitiesApiGetEntityFiscalCalendarsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    getEntityFiscalCalendars(requestParameters: EntitiesApiGetEntityFiscalCalendarsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFiscalCalendarOutDocument>;
 
     /**
      * 
@@ -89293,6 +92601,69 @@ export interface EntitiesApiGetAllEntitiesFilterViewsRequest {
 }
 
 /**
+ * Request parameters for getAllEntitiesFiscalCalendars operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiGetAllEntitiesFiscalCalendarsRequest
+ */
+export interface EntitiesApiGetAllEntitiesFiscalCalendarsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiGetAllEntitiesFiscalCalendars
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {'ALL' | 'PARENTS' | 'NATIVE'}
+     * @memberof EntitiesApiGetAllEntitiesFiscalCalendars
+     */
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE'
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiGetAllEntitiesFiscalCalendars
+     */
+    readonly filter?: string
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {number}
+     * @memberof EntitiesApiGetAllEntitiesFiscalCalendars
+     */
+    readonly page?: number
+
+    /**
+     * The size of the page to be returned
+     * @type {number}
+     * @memberof EntitiesApiGetAllEntitiesFiscalCalendars
+     */
+    readonly size?: number
+
+    /**
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @type {Array<string>}
+     * @memberof EntitiesApiGetAllEntitiesFiscalCalendars
+     */
+    readonly sort?: Array<string>
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EntitiesApiGetAllEntitiesFiscalCalendars
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'page' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiGetAllEntitiesFiscalCalendars
+     */
+    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>
+}
+
+/**
  * Request parameters for getAllEntitiesIdentityProviders operation in EntitiesApi.
  * @export
  * @interface EntitiesApiGetAllEntitiesIdentityProvidersRequest
@@ -91654,6 +95025,41 @@ export interface EntitiesApiGetEntityFilterViewsRequest {
      * 
      * @type {boolean}
      * @memberof EntitiesApiGetEntityFilterViews
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+}
+
+/**
+ * Request parameters for getEntityFiscalCalendars operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiGetEntityFiscalCalendarsRequest
+ */
+export interface EntitiesApiGetEntityFiscalCalendarsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiGetEntityFiscalCalendars
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiGetEntityFiscalCalendars
+     */
+    readonly objectId: string
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiGetEntityFiscalCalendars
+     */
+    readonly filter?: string
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EntitiesApiGetEntityFiscalCalendars
      */
     readonly xGDCVALIDATERELATIONS?: boolean
 }
@@ -97749,6 +101155,18 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
+     * @summary Get all Fiscal Calendars
+     * @param {EntitiesApiGetAllEntitiesFiscalCalendarsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public getAllEntitiesFiscalCalendars(requestParameters: EntitiesApiGetAllEntitiesFiscalCalendarsRequest, options?: AxiosRequestConfig) {
+        return EntitiesApi_GetAllEntitiesFiscalCalendars(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
      * @summary Get all Identity Providers
      * @param {EntitiesApiGetAllEntitiesIdentityProvidersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -98380,6 +101798,18 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
      */
     public getEntityFilterViews(requestParameters: EntitiesApiGetEntityFilterViewsRequest, options?: AxiosRequestConfig) {
         return EntitiesApi_GetEntityFilterViews(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get a Fiscal Calendar
+     * @param {EntitiesApiGetEntityFiscalCalendarsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public getEntityFiscalCalendars(requestParameters: EntitiesApiGetEntityFiscalCalendarsRequest, options?: AxiosRequestConfig) {
+        return EntitiesApi_GetEntityFiscalCalendars(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -112397,6 +115827,708 @@ export class FilterViewsApi extends BaseAPI implements FilterViewsApiInterface {
      */
     public updateEntityFilterViews(requestParameters: FilterViewsApiUpdateEntityFilterViewsRequest, options?: AxiosRequestConfig) {
         return FilterViewsApi_UpdateEntityFilterViews(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+}
+
+
+// FiscalCalendarControllerApi FP - FiscalCalendarControllerApiAxiosParamCreator
+/**
+ * 
+ * @summary Get all Fiscal Calendars
+ * @param {string} workspaceId 
+ * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {number} [page] Zero-based page index (0..N)
+ * @param {number} [size] The size of the page to be returned
+ * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'page' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function FiscalCalendarControllerApiAxiosParamCreator_GetAllEntitiesFiscalCalendars(
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'page' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getAllEntitiesFiscalCalendars', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/fiscalCalendars`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (origin !== undefined) {
+        localVarQueryParameter['origin'] = origin;
+    }
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+    if (sort) {
+        localVarQueryParameter['sort'] = sort;
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// FiscalCalendarControllerApi FP - FiscalCalendarControllerApiAxiosParamCreator
+/**
+ * 
+ * @summary Get a Fiscal Calendar
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function FiscalCalendarControllerApiAxiosParamCreator_GetEntityFiscalCalendars(
+    workspaceId: string, objectId: string, filter?: string, xGDCVALIDATERELATIONS?: boolean, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getEntityFiscalCalendars', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('getEntityFiscalCalendars', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/fiscalCalendars/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+
+// FiscalCalendarControllerApi Api FP
+/**
+ * 
+ * @summary Get all Fiscal Calendars
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {FiscalCalendarControllerApiGetAllEntitiesFiscalCalendarsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function FiscalCalendarControllerApi_GetAllEntitiesFiscalCalendars(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: FiscalCalendarControllerApiGetAllEntitiesFiscalCalendarsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiFiscalCalendarOutList> {
+    const localVarAxiosArgs = await FiscalCalendarControllerApiAxiosParamCreator_GetAllEntitiesFiscalCalendars(
+        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// FiscalCalendarControllerApi Api FP
+/**
+ * 
+ * @summary Get a Fiscal Calendar
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {FiscalCalendarControllerApiGetEntityFiscalCalendarsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function FiscalCalendarControllerApi_GetEntityFiscalCalendars(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: FiscalCalendarControllerApiGetEntityFiscalCalendarsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiFiscalCalendarOutDocument> {
+    const localVarAxiosArgs = await FiscalCalendarControllerApiAxiosParamCreator_GetEntityFiscalCalendars(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.xGDCVALIDATERELATIONS, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+/**
+ * FiscalCalendarControllerApi - interface
+ * @export
+ * @interface FiscalCalendarControllerApi
+ */
+export interface FiscalCalendarControllerApiInterface {
+    /**
+     * 
+     * @summary Get all Fiscal Calendars
+     * @param {FiscalCalendarControllerApiGetAllEntitiesFiscalCalendarsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FiscalCalendarControllerApiInterface
+     */
+    getAllEntitiesFiscalCalendars(requestParameters: FiscalCalendarControllerApiGetAllEntitiesFiscalCalendarsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFiscalCalendarOutList>;
+
+    /**
+     * 
+     * @summary Get a Fiscal Calendar
+     * @param {FiscalCalendarControllerApiGetEntityFiscalCalendarsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FiscalCalendarControllerApiInterface
+     */
+    getEntityFiscalCalendars(requestParameters: FiscalCalendarControllerApiGetEntityFiscalCalendarsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFiscalCalendarOutDocument>;
+
+}
+
+/**
+ * Request parameters for getAllEntitiesFiscalCalendars operation in FiscalCalendarControllerApi.
+ * @export
+ * @interface FiscalCalendarControllerApiGetAllEntitiesFiscalCalendarsRequest
+ */
+export interface FiscalCalendarControllerApiGetAllEntitiesFiscalCalendarsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof FiscalCalendarControllerApiGetAllEntitiesFiscalCalendars
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {'ALL' | 'PARENTS' | 'NATIVE'}
+     * @memberof FiscalCalendarControllerApiGetAllEntitiesFiscalCalendars
+     */
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE'
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof FiscalCalendarControllerApiGetAllEntitiesFiscalCalendars
+     */
+    readonly filter?: string
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {number}
+     * @memberof FiscalCalendarControllerApiGetAllEntitiesFiscalCalendars
+     */
+    readonly page?: number
+
+    /**
+     * The size of the page to be returned
+     * @type {number}
+     * @memberof FiscalCalendarControllerApiGetAllEntitiesFiscalCalendars
+     */
+    readonly size?: number
+
+    /**
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @type {Array<string>}
+     * @memberof FiscalCalendarControllerApiGetAllEntitiesFiscalCalendars
+     */
+    readonly sort?: Array<string>
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof FiscalCalendarControllerApiGetAllEntitiesFiscalCalendars
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'page' | 'all' | 'ALL'>}
+     * @memberof FiscalCalendarControllerApiGetAllEntitiesFiscalCalendars
+     */
+    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for getEntityFiscalCalendars operation in FiscalCalendarControllerApi.
+ * @export
+ * @interface FiscalCalendarControllerApiGetEntityFiscalCalendarsRequest
+ */
+export interface FiscalCalendarControllerApiGetEntityFiscalCalendarsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof FiscalCalendarControllerApiGetEntityFiscalCalendars
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof FiscalCalendarControllerApiGetEntityFiscalCalendars
+     */
+    readonly objectId: string
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof FiscalCalendarControllerApiGetEntityFiscalCalendars
+     */
+    readonly filter?: string
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof FiscalCalendarControllerApiGetEntityFiscalCalendars
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+}
+
+/**
+ * FiscalCalendarControllerApi - object-oriented interface
+ * @export
+ * @class FiscalCalendarControllerApi
+ * @extends {BaseAPI}
+ */
+export class FiscalCalendarControllerApi extends BaseAPI implements FiscalCalendarControllerApiInterface {
+    /**
+     * 
+     * @summary Get all Fiscal Calendars
+     * @param {FiscalCalendarControllerApiGetAllEntitiesFiscalCalendarsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FiscalCalendarControllerApi
+     */
+    public getAllEntitiesFiscalCalendars(requestParameters: FiscalCalendarControllerApiGetAllEntitiesFiscalCalendarsRequest, options?: AxiosRequestConfig) {
+        return FiscalCalendarControllerApi_GetAllEntitiesFiscalCalendars(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get a Fiscal Calendar
+     * @param {FiscalCalendarControllerApiGetEntityFiscalCalendarsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FiscalCalendarControllerApi
+     */
+    public getEntityFiscalCalendars(requestParameters: FiscalCalendarControllerApiGetEntityFiscalCalendarsRequest, options?: AxiosRequestConfig) {
+        return FiscalCalendarControllerApi_GetEntityFiscalCalendars(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+}
+
+
+// FiscalCalendarsApi FP - FiscalCalendarsApiAxiosParamCreator
+/**
+ * 
+ * @summary Get all Fiscal Calendars
+ * @param {string} workspaceId 
+ * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {number} [page] Zero-based page index (0..N)
+ * @param {number} [size] The size of the page to be returned
+ * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'page' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function FiscalCalendarsApiAxiosParamCreator_GetAllEntitiesFiscalCalendars(
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'page' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getAllEntitiesFiscalCalendars', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/fiscalCalendars`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (origin !== undefined) {
+        localVarQueryParameter['origin'] = origin;
+    }
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+    if (sort) {
+        localVarQueryParameter['sort'] = sort;
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// FiscalCalendarsApi FP - FiscalCalendarsApiAxiosParamCreator
+/**
+ * 
+ * @summary Get a Fiscal Calendar
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function FiscalCalendarsApiAxiosParamCreator_GetEntityFiscalCalendars(
+    workspaceId: string, objectId: string, filter?: string, xGDCVALIDATERELATIONS?: boolean, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getEntityFiscalCalendars', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('getEntityFiscalCalendars', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/fiscalCalendars/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+
+// FiscalCalendarsApi Api FP
+/**
+ * 
+ * @summary Get all Fiscal Calendars
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {FiscalCalendarsApiGetAllEntitiesFiscalCalendarsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function FiscalCalendarsApi_GetAllEntitiesFiscalCalendars(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: FiscalCalendarsApiGetAllEntitiesFiscalCalendarsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiFiscalCalendarOutList> {
+    const localVarAxiosArgs = await FiscalCalendarsApiAxiosParamCreator_GetAllEntitiesFiscalCalendars(
+        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// FiscalCalendarsApi Api FP
+/**
+ * 
+ * @summary Get a Fiscal Calendar
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {FiscalCalendarsApiGetEntityFiscalCalendarsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function FiscalCalendarsApi_GetEntityFiscalCalendars(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: FiscalCalendarsApiGetEntityFiscalCalendarsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiFiscalCalendarOutDocument> {
+    const localVarAxiosArgs = await FiscalCalendarsApiAxiosParamCreator_GetEntityFiscalCalendars(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.xGDCVALIDATERELATIONS, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+/**
+ * FiscalCalendarsApi - interface
+ * @export
+ * @interface FiscalCalendarsApi
+ */
+export interface FiscalCalendarsApiInterface {
+    /**
+     * 
+     * @summary Get all Fiscal Calendars
+     * @param {FiscalCalendarsApiGetAllEntitiesFiscalCalendarsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FiscalCalendarsApiInterface
+     */
+    getAllEntitiesFiscalCalendars(requestParameters: FiscalCalendarsApiGetAllEntitiesFiscalCalendarsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFiscalCalendarOutList>;
+
+    /**
+     * 
+     * @summary Get a Fiscal Calendar
+     * @param {FiscalCalendarsApiGetEntityFiscalCalendarsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FiscalCalendarsApiInterface
+     */
+    getEntityFiscalCalendars(requestParameters: FiscalCalendarsApiGetEntityFiscalCalendarsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFiscalCalendarOutDocument>;
+
+}
+
+/**
+ * Request parameters for getAllEntitiesFiscalCalendars operation in FiscalCalendarsApi.
+ * @export
+ * @interface FiscalCalendarsApiGetAllEntitiesFiscalCalendarsRequest
+ */
+export interface FiscalCalendarsApiGetAllEntitiesFiscalCalendarsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof FiscalCalendarsApiGetAllEntitiesFiscalCalendars
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {'ALL' | 'PARENTS' | 'NATIVE'}
+     * @memberof FiscalCalendarsApiGetAllEntitiesFiscalCalendars
+     */
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE'
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof FiscalCalendarsApiGetAllEntitiesFiscalCalendars
+     */
+    readonly filter?: string
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {number}
+     * @memberof FiscalCalendarsApiGetAllEntitiesFiscalCalendars
+     */
+    readonly page?: number
+
+    /**
+     * The size of the page to be returned
+     * @type {number}
+     * @memberof FiscalCalendarsApiGetAllEntitiesFiscalCalendars
+     */
+    readonly size?: number
+
+    /**
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @type {Array<string>}
+     * @memberof FiscalCalendarsApiGetAllEntitiesFiscalCalendars
+     */
+    readonly sort?: Array<string>
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof FiscalCalendarsApiGetAllEntitiesFiscalCalendars
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'page' | 'all' | 'ALL'>}
+     * @memberof FiscalCalendarsApiGetAllEntitiesFiscalCalendars
+     */
+    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for getEntityFiscalCalendars operation in FiscalCalendarsApi.
+ * @export
+ * @interface FiscalCalendarsApiGetEntityFiscalCalendarsRequest
+ */
+export interface FiscalCalendarsApiGetEntityFiscalCalendarsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof FiscalCalendarsApiGetEntityFiscalCalendars
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof FiscalCalendarsApiGetEntityFiscalCalendars
+     */
+    readonly objectId: string
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof FiscalCalendarsApiGetEntityFiscalCalendars
+     */
+    readonly filter?: string
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof FiscalCalendarsApiGetEntityFiscalCalendars
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+}
+
+/**
+ * FiscalCalendarsApi - object-oriented interface
+ * @export
+ * @class FiscalCalendarsApi
+ * @extends {BaseAPI}
+ */
+export class FiscalCalendarsApi extends BaseAPI implements FiscalCalendarsApiInterface {
+    /**
+     * 
+     * @summary Get all Fiscal Calendars
+     * @param {FiscalCalendarsApiGetAllEntitiesFiscalCalendarsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FiscalCalendarsApi
+     */
+    public getAllEntitiesFiscalCalendars(requestParameters: FiscalCalendarsApiGetAllEntitiesFiscalCalendarsRequest, options?: AxiosRequestConfig) {
+        return FiscalCalendarsApi_GetAllEntitiesFiscalCalendars(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get a Fiscal Calendar
+     * @param {FiscalCalendarsApiGetEntityFiscalCalendarsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FiscalCalendarsApi
+     */
+    public getEntityFiscalCalendars(requestParameters: FiscalCalendarsApiGetEntityFiscalCalendarsRequest, options?: AxiosRequestConfig) {
+        return FiscalCalendarsApi_GetEntityFiscalCalendars(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 }
 
@@ -143373,13 +147505,13 @@ export async function PermissionsApiAxiosParamCreator_LabelPermissions(
  * @summary Manage Permissions for an Attribute
  * @param {string} workspaceId 
  * @param {string} attributeId 
- * @param {Array<ManageLabelPermissionsRequestInner>} manageLabelPermissionsRequestInner 
+ * @param {Array<ManageAttributePermissionsRequestInner>} manageAttributePermissionsRequestInner 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function PermissionsApiAxiosParamCreator_ManageAttributePermissions(
-    workspaceId: string, attributeId: string, manageLabelPermissionsRequestInner: Array<ManageLabelPermissionsRequestInner>, 
+    workspaceId: string, attributeId: string, manageAttributePermissionsRequestInner: Array<ManageAttributePermissionsRequestInner>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -143387,8 +147519,8 @@ export async function PermissionsApiAxiosParamCreator_ManageAttributePermissions
     assertParamExists('manageAttributePermissions', 'workspaceId', workspaceId)
     // verify required parameter 'attributeId' is not null or undefined
     assertParamExists('manageAttributePermissions', 'attributeId', attributeId)
-    // verify required parameter 'manageLabelPermissionsRequestInner' is not null or undefined
-    assertParamExists('manageAttributePermissions', 'manageLabelPermissionsRequestInner', manageLabelPermissionsRequestInner)
+    // verify required parameter 'manageAttributePermissionsRequestInner' is not null or undefined
+    assertParamExists('manageAttributePermissions', 'manageAttributePermissionsRequestInner', manageAttributePermissionsRequestInner)
     const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/attributes/{attributeId}/managePermissions`
         .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
         .replace(`{${"attributeId"}}`, encodeURIComponent(String(attributeId)));
@@ -143420,11 +147552,11 @@ export async function PermissionsApiAxiosParamCreator_ManageAttributePermissions
         ...options.headers,
     };
     const needsSerialization =
-        typeof manageLabelPermissionsRequestInner !== "string" ||
+        typeof manageAttributePermissionsRequestInner !== "string" ||
         localVarRequestOptions.headers["Content-Type"] === "application/json";
     localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(manageLabelPermissionsRequestInner !== undefined ? manageLabelPermissionsRequestInner : {})
-        : manageLabelPermissionsRequestInner || "";
+        ? JSON.stringify(manageAttributePermissionsRequestInner !== undefined ? manageAttributePermissionsRequestInner : {})
+        : manageAttributePermissionsRequestInner || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -143567,13 +147699,13 @@ export async function PermissionsApiAxiosParamCreator_ManageDataSourcePermission
  * @summary Manage Permissions for a Fact
  * @param {string} workspaceId 
  * @param {string} factId 
- * @param {Array<ManageLabelPermissionsRequestInner>} manageLabelPermissionsRequestInner 
+ * @param {Array<ManageFactPermissionsRequestInner>} manageFactPermissionsRequestInner 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function PermissionsApiAxiosParamCreator_ManageFactPermissions(
-    workspaceId: string, factId: string, manageLabelPermissionsRequestInner: Array<ManageLabelPermissionsRequestInner>, 
+    workspaceId: string, factId: string, manageFactPermissionsRequestInner: Array<ManageFactPermissionsRequestInner>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -143581,8 +147713,8 @@ export async function PermissionsApiAxiosParamCreator_ManageFactPermissions(
     assertParamExists('manageFactPermissions', 'workspaceId', workspaceId)
     // verify required parameter 'factId' is not null or undefined
     assertParamExists('manageFactPermissions', 'factId', factId)
-    // verify required parameter 'manageLabelPermissionsRequestInner' is not null or undefined
-    assertParamExists('manageFactPermissions', 'manageLabelPermissionsRequestInner', manageLabelPermissionsRequestInner)
+    // verify required parameter 'manageFactPermissionsRequestInner' is not null or undefined
+    assertParamExists('manageFactPermissions', 'manageFactPermissionsRequestInner', manageFactPermissionsRequestInner)
     const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/facts/{factId}/managePermissions`
         .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
         .replace(`{${"factId"}}`, encodeURIComponent(String(factId)));
@@ -143614,11 +147746,11 @@ export async function PermissionsApiAxiosParamCreator_ManageFactPermissions(
         ...options.headers,
     };
     const needsSerialization =
-        typeof manageLabelPermissionsRequestInner !== "string" ||
+        typeof manageFactPermissionsRequestInner !== "string" ||
         localVarRequestOptions.headers["Content-Type"] === "application/json";
     localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(manageLabelPermissionsRequestInner !== undefined ? manageLabelPermissionsRequestInner : {})
-        : manageLabelPermissionsRequestInner || "";
+        ? JSON.stringify(manageFactPermissionsRequestInner !== undefined ? manageFactPermissionsRequestInner : {})
+        : manageFactPermissionsRequestInner || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -144424,7 +148556,7 @@ export async function PermissionsApi_ManageAttributePermissions(
     configuration?: Configuration,
 ): AxiosPromise<void> {
     const localVarAxiosArgs = await PermissionsApiAxiosParamCreator_ManageAttributePermissions(
-        requestParameters.workspaceId, requestParameters.attributeId, requestParameters.manageLabelPermissionsRequestInner, 
+        requestParameters.workspaceId, requestParameters.attributeId, requestParameters.manageAttributePermissionsRequestInner, 
         options || {},
         configuration,
     );
@@ -144502,7 +148634,7 @@ export async function PermissionsApi_ManageFactPermissions(
     configuration?: Configuration,
 ): AxiosPromise<void> {
     const localVarAxiosArgs = await PermissionsApiAxiosParamCreator_ManageFactPermissions(
-        requestParameters.workspaceId, requestParameters.factId, requestParameters.manageLabelPermissionsRequestInner, 
+        requestParameters.workspaceId, requestParameters.factId, requestParameters.manageFactPermissionsRequestInner, 
         options || {},
         configuration,
     );
@@ -145140,10 +149272,10 @@ export interface PermissionsApiManageAttributePermissionsRequest {
 
     /**
      * 
-     * @type {Array<ManageLabelPermissionsRequestInner>}
+     * @type {Array<ManageAttributePermissionsRequestInner>}
      * @memberof PermissionsApiManageAttributePermissions
      */
-    readonly manageLabelPermissionsRequestInner: Array<ManageLabelPermissionsRequestInner>
+    readonly manageAttributePermissionsRequestInner: Array<ManageAttributePermissionsRequestInner>
 }
 
 /**
@@ -145217,10 +149349,10 @@ export interface PermissionsApiManageFactPermissionsRequest {
 
     /**
      * 
-     * @type {Array<ManageLabelPermissionsRequestInner>}
+     * @type {Array<ManageFactPermissionsRequestInner>}
      * @memberof PermissionsApiManageFactPermissions
      */
-    readonly manageLabelPermissionsRequestInner: Array<ManageLabelPermissionsRequestInner>
+    readonly manageFactPermissionsRequestInner: Array<ManageFactPermissionsRequestInner>
 }
 
 /**
@@ -161383,8 +165515,8 @@ export async function WorkspaceColorPaletteControllerApiAxiosParamCreator_Create
 
     
     const consumes = [
-        'application/json',
-        'application/vnd.gooddata.api+json'
+        'application/vnd.gooddata.api+json',
+        'application/json'
     ];
     // use application/json if present, otherwise fallback to the first one
     localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
@@ -161648,8 +165780,8 @@ export async function WorkspaceColorPaletteControllerApiAxiosParamCreator_PatchE
 
     
     const consumes = [
-        'application/json',
-        'application/vnd.gooddata.api+json'
+        'application/vnd.gooddata.api+json',
+        'application/json'
     ];
     // use application/json if present, otherwise fallback to the first one
     localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
@@ -161720,8 +165852,8 @@ export async function WorkspaceColorPaletteControllerApiAxiosParamCreator_Update
 
     
     const consumes = [
-        'application/json',
-        'application/vnd.gooddata.api+json'
+        'application/vnd.gooddata.api+json',
+        'application/json'
     ];
     // use application/json if present, otherwise fallback to the first one
     localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
@@ -167536,8 +171668,8 @@ export async function WorkspaceThemeControllerApiAxiosParamCreator_CreateEntityW
 
     
     const consumes = [
-        'application/json',
-        'application/vnd.gooddata.api+json'
+        'application/vnd.gooddata.api+json',
+        'application/json'
     ];
     // use application/json if present, otherwise fallback to the first one
     localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
@@ -167801,8 +171933,8 @@ export async function WorkspaceThemeControllerApiAxiosParamCreator_PatchEntityWo
 
     
     const consumes = [
-        'application/json',
-        'application/vnd.gooddata.api+json'
+        'application/vnd.gooddata.api+json',
+        'application/json'
     ];
     // use application/json if present, otherwise fallback to the first one
     localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
@@ -167873,8 +172005,8 @@ export async function WorkspaceThemeControllerApiAxiosParamCreator_UpdateEntityW
 
     
     const consumes = [
-        'application/json',
-        'application/vnd.gooddata.api+json'
+        'application/vnd.gooddata.api+json',
+        'application/json'
     ];
     // use application/json if present, otherwise fallback to the first one
     localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')

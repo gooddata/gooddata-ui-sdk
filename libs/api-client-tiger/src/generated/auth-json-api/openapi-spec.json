@@ -79,32 +79,6 @@
     },
     "components": {
         "schemas": {
-            "Invitation": {
-                "required": [
-                    "email",
-                    "userId"
-                ],
-                "type": "object",
-                "properties": {
-                    "email": {
-                        "type": "string",
-                        "format": "email"
-                    },
-                    "userId": {
-                        "type": "string"
-                    },
-                    "firstName": {
-                        "type": "string"
-                    },
-                    "lastName": {
-                        "type": "string"
-                    },
-                    "forceSend": {
-                        "type": "boolean",
-                        "description": "Force resend invitation email even if a pending invitation exists. Maximum 3 emails can be sent per invitation (1 initial + 2 resends)"
-                    }
-                }
-            },
             "AmplitudeService": {
                 "required": [
                     "aiProjectApiKey",
@@ -117,13 +91,13 @@
                         "type": "string",
                         "description": "API key for AI project - intended for frontend use."
                     },
-                    "gdCommonApiKey": {
-                        "type": "string",
-                        "description": "API key for GoodData common project - used by backend."
-                    },
                     "endpoint": {
                         "type": "string",
                         "description": "Amplitude endpoint URL."
+                    },
+                    "gdCommonApiKey": {
+                        "type": "string",
+                        "description": "API key for GoodData common project - used by backend."
                     },
                     "reportingEndpoint": {
                         "type": "string",
@@ -138,15 +112,15 @@
                 ],
                 "type": "object",
                 "properties": {
+                    "expiry": {
+                        "type": "string",
+                        "format": "date"
+                    },
                     "name": {
                         "type": "string"
                     },
                     "value": {
                         "type": "string"
-                    },
-                    "expiry": {
-                        "type": "string",
-                        "format": "date"
                     }
                 },
                 "description": "Defines entitlements for given organization."
@@ -158,15 +132,15 @@
                 ],
                 "type": "object",
                 "properties": {
+                    "earlyAccess": {
+                        "type": "string"
+                    },
                     "earlyAccessValues": {
                         "uniqueItems": true,
                         "type": "array",
                         "items": {
                             "type": "string"
                         }
-                    },
-                    "earlyAccess": {
-                        "type": "string"
                     }
                 }
             },
@@ -181,6 +155,32 @@
                     }
                 },
                 "description": "Base Structure for feature flags"
+            },
+            "Invitation": {
+                "required": [
+                    "email",
+                    "userId"
+                ],
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "forceSend": {
+                        "type": "boolean",
+                        "description": "Force resend invitation email even if a pending invitation exists. Maximum 3 emails can be sent per invitation (1 initial + 2 resends)"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "userId": {
+                        "type": "string"
+                    }
+                }
             },
             "LiveFeatureFlagConfiguration": {
                 "required": [
@@ -237,14 +237,14 @@
                         "type": "string",
                         "description": "Telemetry host to send events to."
                     },
+                    "reportingEndpoint": {
+                        "type": "string",
+                        "description": "Optional reporting endpoint for proxying telemetry events."
+                    },
                     "siteId": {
                         "type": "integer",
                         "description": "Site ID on telemetry server.",
                         "format": "int32"
-                    },
-                    "reportingEndpoint": {
-                        "type": "string",
-                        "description": "Optional reporting endpoint for proxying telemetry events."
                     }
                 },
                 "description": "Matomo service."
@@ -275,16 +275,33 @@
                 ],
                 "type": "object",
                 "properties": {
-                    "organizationId": {
-                        "type": "string"
+                    "entitlements": {
+                        "type": "array",
+                        "description": "Defines entitlements for given organization.",
+                        "items": {
+                            "$ref": "#/components/schemas/ApiEntitlement"
+                        }
                     },
-                    "organizationName": {
-                        "type": "string"
+                    "features": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/LiveFeatures"
+                            },
+                            {
+                                "$ref": "#/components/schemas/StaticFeatures"
+                            }
+                        ]
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ProfileLinks"
                     },
                     "name": {
                         "type": "string"
                     },
-                    "userId": {
+                    "organizationId": {
+                        "type": "string"
+                    },
+                    "organizationName": {
                         "type": "string"
                     },
                     "permissions": {
@@ -301,25 +318,8 @@
                     "telemetryConfig": {
                         "$ref": "#/components/schemas/TelemetryConfig"
                     },
-                    "links": {
-                        "$ref": "#/components/schemas/ProfileLinks"
-                    },
-                    "features": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/LiveFeatures"
-                            },
-                            {
-                                "$ref": "#/components/schemas/StaticFeatures"
-                            }
-                        ]
-                    },
-                    "entitlements": {
-                        "type": "array",
-                        "description": "Defines entitlements for given organization.",
-                        "items": {
-                            "$ref": "#/components/schemas/ApiEntitlement"
-                        }
+                    "userId": {
+                        "type": "string"
                     }
                 }
             },
@@ -331,10 +331,10 @@
                 ],
                 "type": "object",
                 "properties": {
-                    "self": {
+                    "organization": {
                         "type": "string"
                     },
-                    "organization": {
+                    "self": {
                         "type": "string"
                     },
                     "user": {
@@ -416,14 +416,14 @@
             "TelemetryServices": {
                 "type": "object",
                 "properties": {
+                    "amplitude": {
+                        "$ref": "#/components/schemas/AmplitudeService"
+                    },
                     "matomo": {
                         "$ref": "#/components/schemas/MatomoService"
                     },
                     "openTelemetry": {
                         "$ref": "#/components/schemas/OpenTelemetryService"
-                    },
-                    "amplitude": {
-                        "$ref": "#/components/schemas/AmplitudeService"
                     }
                 },
                 "description": "Available telemetry services."

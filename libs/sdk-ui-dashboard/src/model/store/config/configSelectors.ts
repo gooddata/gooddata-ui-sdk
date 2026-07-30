@@ -458,27 +458,6 @@ export const selectEnableImmediateAttributeFilterDisplayAsLabelMigration: Dashbo
     });
 
 /**
- * Returns whether arbitrary text filter mode is enabled in dashboards.
- *
- * @alpha
- */
-export const selectEnableArbitraryFilterKD: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableArbitraryFilterKD ?? true;
-    },
-);
-
-/**
- * Returns whether match text filter mode is enabled in dashboards.
- *
- * @alpha
- */
-export const selectEnableMatchFilterKD: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
-    return state.settings?.enableMatchFilterKD ?? true;
-});
-
-/**
  * Returns whether measure value (numeric) filter is enabled in dashboards.
  *
  * @alpha
@@ -490,31 +469,20 @@ export const selectEnableMeasureValueFilterKD: DashboardSelector<boolean> = crea
     },
 );
 
+const AVAILABLE_ATTRIBUTE_FILTER_SELECTION_TYPES: AttributeFilterAvailableSelectionType[] = [
+    "elements",
+    "arbitrary",
+    "match",
+];
+
 /**
- * Returns available attribute filter modes based on feature flags.
- *
- * @remarks
- * Always includes "elements" mode. Adds "arbitrary" and/or "match" when
- * the corresponding feature flags are enabled.
+ * Returns available attribute filter modes.
  *
  * @alpha
  */
 export const selectAvailableAttributeFilterSelectionTypes: DashboardSelector<
     AttributeFilterAvailableSelectionType[]
-> = createSelector(
-    selectEnableArbitraryFilterKD,
-    selectEnableMatchFilterKD,
-    (arbitraryEnabled, matchEnabled): AttributeFilterAvailableSelectionType[] => {
-        const modes: AttributeFilterAvailableSelectionType[] = ["elements"];
-        if (arbitraryEnabled) {
-            modes.push("arbitrary");
-        }
-        if (matchEnabled) {
-            modes.push("match");
-        }
-        return modes;
-    },
-);
+> = () => AVAILABLE_ATTRIBUTE_FILTER_SELECTION_TYPES;
 
 /**
  * Returns whether semantic search is enabled.

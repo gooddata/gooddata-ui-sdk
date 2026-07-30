@@ -8,7 +8,7 @@ import { connect, useSelector } from "react-redux";
 import { UiChip } from "@gooddata/sdk-ui-kit";
 
 import { collectContextReferences } from "../context/collectContextReferences.js";
-import { userContextSelector } from "../store/chatWindow/chatWindowSelectors.js";
+import { contextSetupEnabledSelector, userContextSelector } from "../store/chatWindow/chatWindowSelectors.js";
 import { removeContextReferenceAction } from "../store/chatWindow/chatWindowSlice.js";
 import { type IGenAIContextObject } from "../types.js";
 
@@ -37,6 +37,7 @@ function GenAIChatContextIndicatorCore({
     const intl = useIntl();
     const emptyReferenceLabel = intl.formatMessage({ id: "gd.gen-ai.context.untitled" });
 
+    const isContextSetupEnabled = useSelector(contextSetupEnabledSelector);
     const context = useSelector(userContextSelector);
     const references = collectContextReferences(context, emptyReferenceLabel);
 
@@ -50,7 +51,7 @@ function GenAIChatContextIndicatorCore({
         [removeContextReference, onDelete],
     );
 
-    if (references.length === 0) {
+    if (!isContextSetupEnabled || references.length === 0) {
         return null;
     }
 

@@ -70,7 +70,7 @@ const areElementsEqual = (elementsA: IAttributeElements, elementsB: IAttributeEl
     );
 };
 
-const areFiltersEqual = (filterA: IAttributeFilter, filterB: IAttributeFilter) => {
+const areFiltersEqual = (filterA: IAttributeFilter, filterB: IAttributeFilter | undefined) => {
     if (!filterA || !filterB) {
         return false;
     }
@@ -521,9 +521,23 @@ function useInitOrReload(
             shouldIncludeLimitingFilters && !isEqual(limitingDateFilters, handler.getLimitingDateFilters());
 
         const getFilterChanged = (filter: IAttributeFilter, handler: IMultiSelectAttributeFilterHandler) => {
+            // When the handler migrated the filter internally to a different label (displayAs
+            // handling of filters saved directly with a secondary label), the handler's filter
+            // never equals the label-based prop again. A prop that is still identical to the
+            // filter the handler was initialized from is then not an external change — without
+            // this, a working-selection edit racing the parent's display-form sync re-render is
+            // mistaken for an external update and resets the in-progress selection.
+            const isMigratedToOtherLabel = !areObjRefsEqual(
+                filterObjRef(filter),
+                filterObjRef(handler.getFilter()),
+            );
+            const isUnchangedOriginalOfMigrated =
+                isMigratedToOtherLabel && areFiltersEqual(filter, handler.getOriginalFilter());
+
             return (
                 !areFiltersEqual(filter, handler.getFilter()) &&
-                !areFiltersEqual(filter, handler.getFilterToDisplay())
+                !areFiltersEqual(filter, handler.getFilterToDisplay()) &&
+                !isUnchangedOriginalOfMigrated
             );
         };
 

@@ -1,10 +1,11 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { type Dispatch, type RefObject, type SetStateAction, useCallback, useMemo } from "react";
+import { type Dispatch, type SetStateAction, useCallback, useMemo, useRef } from "react";
 
 import { invariant } from "ts-invariant";
 
 import {
+    DEFAULT_CSV_DELIMITER,
     type DashboardAttachmentType,
     type FilterContextItem,
     type IAutomationMetadataObjectDefinition,
@@ -19,6 +20,12 @@ import {
 } from "@gooddata/sdk-model";
 
 import {
+    getAutomationExportParametersByTab,
+    setExportParametersByTab,
+} from "../../../../../_staging/automation/index.js";
+import { useAutomationsContext } from "../../../contexts/AutomationsContext.js";
+import { useScheduledEmailDialogContext } from "../../../contexts/ScheduledEmailDialogContext.js";
+import {
     newDashboardExportDefinitionMetadataObjectDefinition,
     newWidgetExportDefinitionMetadataObjectDefinition,
     withRebuiltExportDefinitions,
@@ -29,21 +36,12 @@ export interface IUseScheduledEmailExportSettingsProps {
     setEditedAutomation: Dispatch<SetStateAction<IAutomationMetadataObjectDefinition>>;
     insight?: IInsight;
     widget?: IWidget;
-    dashboardId?: string;
-    dashboardTitle: string;
     storeFilters?: boolean;
     effectiveDashboardFilters: FilterContextItem[] | undefined;
     effectiveDashboardFiltersByTab: Record<string, FilterContextItem[]> | undefined;
     effectiveWidgetFilters: IFilter[];
     effectiveWidgetFiltersWithInsight: IFilter[];
     defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
-    resolvedDefaultCsvDelimiter: string;
-    /**
-     * Holds the wire outside the automation so it survives a rebuild from zero export definitions —
-     * with no definitions `setExportParametersByTab` has nowhere to store it. Owned by the parent
-     * (`useEditScheduledEmail`); read here (never written) at attachment-change time.
-     */
-    latestParametersWireRef: RefObject<Record<string, IDashboardExportParameter[]> | undefined>;
 }
 
 export function useScheduledEmailExportSettings({
@@ -51,17 +49,36 @@ export function useScheduledEmailExportSettings({
     setEditedAutomation,
     insight,
     widget,
-    dashboardId,
-    dashboardTitle,
     storeFilters,
     effectiveDashboardFilters,
     effectiveDashboardFiltersByTab,
     effectiveWidgetFilters,
     effectiveWidgetFiltersWithInsight,
     defaultPdfPageSize,
-    resolvedDefaultCsvDelimiter,
-    latestParametersWireRef,
 }: IUseScheduledEmailExportSettingsProps) {
+    const { settings } = useAutomationsContext();
+    const { dashboardId, dashboardTitle } = useScheduledEmailDialogContext();
+
+    const resolvedDefaultCsvDelimiter = settings?.exportCsvCustomDelimiter ?? DEFAULT_CSV_DELIMITER;
+
+    // Holds the wire outside the automation so it survives a rebuild from zero export definitions —
+    // with no definitions `setExportParametersByTab` has nowhere to store it.
+    // Seeded from the stored wire.
+    const latestParametersWireRef = useRef<Record<string, IDashboardExportParameter[]> | undefined>(
+        getAutomationExportParametersByTab(editedAutomation),
+    );
+
+    // The user-edit path into `content.parametersByTab`: re-encoded wire in, every export definition
+    // patched. Handed to `useAutomationExportParameters`, which owns when to call it. Definition
+    // rebuilds preserve the wire separately via `withRebuiltExportDefinitions`.
+    const setParametersWire = useCallback(
+        (wire: Record<string, IDashboardExportParameter[]> | undefined) => {
+            latestParametersWireRef.current = wire;
+            setEditedAutomation((automation) => setExportParametersByTab(automation, wire));
+        },
+        [setEditedAutomation],
+    );
+
     // Re-derived locally (not passed as a prop) so that `invariant(isWidget, ...)` below narrows
     // `widget`/`insight` via TS's aliased-condition control-flow analysis — this requires the boolean
     // to be declared from those exact variables in this same scope, same as in the parent.
@@ -394,5 +411,6 @@ export function useScheduledEmailExportSettings({
         onCsvSettingsChange,
         onCsvRawSettingsChange,
         onSlidesTemplateIdChange,
+        setParametersWire,
     };
 }

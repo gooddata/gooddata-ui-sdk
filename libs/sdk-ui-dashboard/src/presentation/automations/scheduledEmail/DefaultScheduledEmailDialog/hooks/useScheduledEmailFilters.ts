@@ -38,14 +38,13 @@ export interface IUseScheduledEmailFiltersProps {
 }
 
 /**
- * Owns the four scheduled-email filters handlers: they update the edited filters state and sync the
- * result into the draft's export definitions and `metadata.visibleFilters`/`visibleFiltersByTab`.
+ * Owns the scheduled-email dialog's filter changes. Each handler updates the edited filter state and
+ * mirrors the result into the draft — rewriting the filters on its export definitions along with the
+ * `metadata.visibleFilters`/`visibleFiltersByTab` used to render them back to the user.
  *
- * Filters slice B of 2. Runs after `useScheduledEmailFormState` because the handlers need
- * `setEditedAutomation`; the derivation cluster in {@link useScheduledEmailEffectiveFilters} (slice A)
- * has to run before it, which is why the two are separate hooks. Reads
- * `hiddenFilters`/`commonDateFilterId` from {@link useScheduledEmailDialogContext} internally, same as
- * slice A and as the parent (`useEditScheduledEmail`) did before.
+ * Runs after `useScheduledEmailFormState`, because every handler writes through `setEditedAutomation`.
+ * The filter sets these handlers start from are derived earlier, in
+ * {@link useScheduledEmailEffectiveFilters}.
  *
  * @internal
  */

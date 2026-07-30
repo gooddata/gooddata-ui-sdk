@@ -33,17 +33,15 @@ export interface IUseScheduledEmailEffectiveFiltersProps {
 }
 
 /**
- * Derives the effective-filters cluster consumed early by `useScheduledEmailFormState` (draft init) and
- * `useScheduledEmailExportSettings`, and later still by the `useScheduledEmailFilters` handlers.
+ * Derives the filter sets a scheduled export actually runs with: the widget and dashboard filters left
+ * after hidden filters are removed, their visible-filter counterparts for display, and the per-tab
+ * variants used by multi-tab dashboards.
  *
- * Filters slice A of 2. Reads `hiddenFilters`/`commonDateFilterId`/`exportParametersByTab` from
- * {@link useScheduledEmailDialogContext} internally, as does `useScheduledEmailFilters` — the parent
- * (`useEditScheduledEmail`) no longer reads them itself. `isWidget` is re-derived internally
- * (`!!widget && !!insight`) — `useScheduledEmailFilters` keeps its own copy, a harmless identical
- * re-derivation (mirrors the sibling hooks).
- *
- * `useScheduledEmailFilters` (slice B) owns the four filters handlers, which run after `formState` (they
- * need `setEditedAutomation`); this derivation cluster runs before it, hence the split.
+ * This has to run before the draft exists, because `useScheduledEmailFormState` and
+ * `useScheduledEmailExportSettings` consume these values while initializing it. The handlers that
+ * *change* filters live in {@link useScheduledEmailFilters} and necessarily run later — they write
+ * through the draft's setter. That ordering is why reading and writing filters are two hooks rather
+ * than one.
  *
  * @internal
  */

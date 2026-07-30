@@ -18,7 +18,7 @@ import {
     type DeclarativeFilterContext,
     type JsonApiAnalyticalDashboardOutAttributes,
     type JsonApiAnalyticalDashboardOutDocument,
-    type JsonApiFilterContextOutAttributes,
+    type JsonApiFilterContextInAttributes,
     type JsonApiFilterContextOutDocument,
 } from "@gooddata/api-client-tiger";
 import {
@@ -431,7 +431,7 @@ function buildFilterContextWrapper(filterContext: DeclarativeFilterContext): Jso
         data: {
             id: filterContext.id,
             type: "filterContext",
-            attributes: filterContext as JsonApiFilterContextOutAttributes,
+            attributes: filterContext as JsonApiFilterContextInAttributes,
         },
         links: {
             self: "",
@@ -452,7 +452,7 @@ function buildDashboardWrapper(
         },
         included: tabFilterContexts?.map((fc) => ({
             type: "filterContext",
-            attributes: fc as JsonApiFilterContextOutAttributes,
+            attributes: fc as JsonApiFilterContextInAttributes,
             id: fc.id,
             links: {
                 self: "",

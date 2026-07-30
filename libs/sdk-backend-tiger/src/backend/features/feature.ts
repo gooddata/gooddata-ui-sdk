@@ -731,34 +731,7 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableDashboardFilterGroups,
         ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableMatchFilterAD,
-            "enableMatchFilterAD",
-            "BOOLEAN",
-            FeatureFlagsValues.enableMatchFilterAD,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableArbitraryFilterAD,
-            "enableArbitraryFilterAD",
-            "BOOLEAN",
-            FeatureFlagsValues.enableArbitraryFilterAD,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableMatchFilterKD,
-            "enableMatchFilterKD",
-            "BOOLEAN",
-            FeatureFlagsValues.enableMatchFilterKD,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableArbitraryFilterKD,
-            "enableArbitraryFilterKD",
-            "BOOLEAN",
-            FeatureFlagsValues.enableArbitraryFilterKD,
-        ),
+
         ...loadFeature(
             features,
             TigerFeaturesNames.EnableMeasureValueFilterKD,

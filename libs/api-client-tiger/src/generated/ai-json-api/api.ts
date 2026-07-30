@@ -25,12 +25,12 @@ export interface AiAbsoluteDateFilter {
 }
 
 export interface AiAbsoluteDateFilterBody {
-    'dataset': AiAfmObjectIdentifier;
-    'from': string;
-    'to': string;
     'applyOnResult'?: boolean | null;
+    'dataset': AiAfmObjectIdentifier;
     'emptyValueHandling'?: AiEmptyValueHandling | null;
+    'from': string;
     'localIdentifier'?: string | null;
+    'to': string;
 }
 
 
@@ -63,12 +63,12 @@ export interface AiAfmObjectIdentifierBody {
  * A single agent visible to the calling user in the workspace.
  */
 export interface AiAgentListItemResponse {
-    'id': string;
-    'name': string;
     'description'?: string | null;
+    'id': string;
     'isAvailableToAll': boolean;
-    'modifiedAt'?: string | null;
     'lastUsedAt'?: string | null;
+    'modifiedAt'?: string | null;
+    'name': string;
 }
 
 /**
@@ -103,16 +103,16 @@ export interface AiAlertDatasetRef {
  * The alert itself (mirrors canonical AutomationAlert).
  */
 export interface AiAlertDefinition {
+    'condition': AiCondition;
     /**
      * Execution (AFM) definition of the alert.
      */
     'execution': AiAlertExecution;
-    'condition': AiCondition;
+    'interval'?: AiIntervalGranularity | null;
     /**
      * Trigger behavior.
      */
     'trigger'?: AiAlertTrigger;
-    'interval'?: AiIntervalGranularity | null;
 }
 
 
@@ -123,10 +123,6 @@ export interface AiAlertExecution {
     [key: string]: any;
 
     /**
-     * Metrics computed by the alert (1-2).
-     */
-    'measures'?: Array<object>;
-    /**
      * Attribute slicing configuration.
      */
     'attributes'?: Array<object>;
@@ -134,6 +130,10 @@ export interface AiAlertExecution {
      * Alert execution filters.
      */
     'filters'?: Array<object>;
+    /**
+     * Metrics computed by the alert (1-2).
+     */
+    'measures'?: Array<object>;
 }
 
 /**
@@ -141,50 +141,50 @@ export interface AiAlertExecution {
  */
 export interface AiAlertProposal {
     /**
-     * Alert title.
-     */
-    'title': string;
-    /**
      * The alert definition (condition, execution, trigger).
      */
     'alert': AiAlertDefinition;
+    'automationId'?: string | null;
+    /**
+     * Confirmation call to action.
+     */
+    'cta'?: string;
+    'dashboard'?: AiDashboardRef | null;
+    'description'?: string | null;
+    'forLabel'?: string | null;
+    'forMode'?: string | null;
     /**
      * Notification channel for delivery.
      */
     'notificationChannel': AiNotificationChannelRef;
-    'description'?: string | null;
-    'automationId'?: string | null;
     /**
      * Recipients shown in the proposal.
      */
     'recipients'?: Array<AiAlertRecipient>;
     'schedule'?: AiAlertSchedule | null;
-    'dashboard'?: AiDashboardRef | null;
-    'forMode'?: string | null;
-    'forLabel'?: string | null;
     /**
-     * Confirmation call to action.
+     * Alert title.
      */
-    'cta'?: string;
+    'title': string;
 }
 
 export interface AiAlertProposalPart {
+    'alertProposal'?: AiAlertProposal | null;
     /**
      * Type of multipart part.
      */
     'type'?: AiAlertProposalPartTypeEnum;
-    'alertProposal'?: AiAlertProposal | null;
 }
 
 export type AiAlertProposalPartTypeEnum = 'alertProposal';
 
 export interface AiAlertRecipient {
+    'email'?: string | null;
+    'id'?: string | null;
     /**
      * Recipient display label.
      */
     'label': string;
-    'id'?: string | null;
-    'email'?: string | null;
 }
 
 export interface AiAlertSchedule {
@@ -206,19 +206,19 @@ export type AiAlertTrigger = typeof AiAlertTrigger[keyof typeof AiAlertTrigger];
 
 
 export interface AiAllTimeDateFilterBodyInput {
-    'dataset': AiAfmObjectIdentifier;
-    'granularity'?: AiDateGranularityInput | null;
     'applyOnResult'?: boolean | null;
+    'dataset': AiAfmObjectIdentifier;
     'emptyValueHandling'?: AiEmptyValueHandling | null;
+    'granularity'?: AiDateGranularityInput | null;
     'localIdentifier'?: string | null;
 }
 
 
 export interface AiAllTimeDateFilterBodyOutput {
-    'dataset': AiAfmObjectIdentifier;
-    'granularity'?: AiAppApplicationDtosAfmFilterDefinitionDateGranularity | null;
     'applyOnResult'?: boolean | null;
+    'dataset': AiAfmObjectIdentifier;
     'emptyValueHandling'?: AiEmptyValueHandling | null;
+    'granularity'?: AiAppApplicationDtosAfmFilterDefinitionDateGranularity | null;
     'localIdentifier'?: string | null;
 }
 
@@ -232,9 +232,9 @@ export interface AiAllTimeDateFilterOutput {
 }
 
 export interface AiAllowedRelationshipType {
+    'allowOrphans'?: boolean;
     'sourceType': string;
     'targetType': string;
-    'allowOrphans'?: boolean;
 }
 
 export interface AiAnomalyCondition {
@@ -246,18 +246,18 @@ export interface AiAnomalyCondition {
 
 export interface AiAnomalyDetection {
     /**
-     * Metric analyzed for anomalies.
+     * Date dataset used for anomaly detection.
      */
-    'measure': AiMetricOperand;
-    'sensitivity': AiSensitivity;
+    'dataset': AiAlertDatasetRef;
     /**
      * Time-based granularity of the analysis.
      */
     'granularity': AiAnomalyDetectionGranularity;
     /**
-     * Date dataset used for anomaly detection.
+     * Metric analyzed for anomalies.
      */
-    'dataset': AiAlertDatasetRef;
+    'measure': AiMetricOperand;
+    'sensitivity': AiSensitivity;
 }
 
 
@@ -323,24 +323,24 @@ export type AiAppDomainConversationsVisualizationDateGranularity = typeof AiAppD
 
 
 export interface AiAppDomainConversationsVisualizationRankingFilter {
+    'attribute'?: string;
+    'bottom'?: number;
+    'top'?: number;
     'type': AiAppDomainConversationsVisualizationRankingFilterTypeEnum;
     'using': string;
-    'attribute'?: string;
-    'top'?: number;
-    'bottom'?: number;
 }
 
 export type AiAppDomainConversationsVisualizationRankingFilterTypeEnum = 'ranking_filter';
 
 export interface AiArithmeticMeasure {
     /**
-     * Arithmetic operator between the two metrics.
-     */
-    'operator': AiArithmeticOperator;
-    /**
      * First metric.
      */
     'left': AiMetricOperand;
+    /**
+     * Arithmetic operator between the two metrics.
+     */
+    'operator': AiArithmeticOperator;
     /**
      * Second metric.
      */
@@ -361,9 +361,9 @@ export type AiArithmeticOperator = typeof AiArithmeticOperator[keyof typeof AiAr
 
 
 export interface AiAttributeFilter {
+    'state': AiAttributeFilterState;
     'type': AiAttributeFilterTypeEnum;
     'using': string;
-    'state': AiAttributeFilterState;
 }
 
 export type AiAttributeFilterTypeEnum = 'attribute_filter';
@@ -373,31 +373,31 @@ export interface AiAttributeFilterElements {
 }
 
 export interface AiAttributeFilterState {
-    'include'?: Array<string>;
     'exclude'?: Array<string>;
+    'include'?: Array<string>;
 }
 
 export interface AiAttributeSortItem {
-    'type': AiAttributeSortItemTypeEnum;
+    'aggregation'?: AiAttributeSortItemAggregationEnum;
     'by': string;
     'direction': AiAttributeSortItemDirectionEnum;
-    'aggregation'?: AiAttributeSortItemAggregationEnum;
+    'type': AiAttributeSortItemTypeEnum;
 }
 
-export type AiAttributeSortItemTypeEnum = 'attribute_sort';
-export type AiAttributeSortItemDirectionEnum = 'ASC' | 'DESC';
 export type AiAttributeSortItemAggregationEnum = 'SUM';
+export type AiAttributeSortItemDirectionEnum = 'ASC' | 'DESC';
+export type AiAttributeSortItemTypeEnum = 'attribute_sort';
 
 export interface AiBoundedFilterInput {
-    'granularity': AiDateGranularityInput;
     'from'?: number | null;
+    'granularity': AiDateGranularityInput;
     'to'?: number | null;
 }
 
 
 export interface AiBoundedFilterOutput {
-    'granularity': AiAppApplicationDtosAfmFilterDefinitionDateGranularity;
     'from'?: number | null;
+    'granularity': AiAppApplicationDtosAfmFilterDefinitionDateGranularity;
     'to'?: number | null;
 }
 
@@ -411,13 +411,13 @@ export interface AiClusteringAmount {
 
 export interface AiComparison {
     /**
-     * Comparison operator.
-     */
-    'operator': AiComparisonConditionOperator;
-    /**
      * Metric being compared.
      */
     'left': AiMetricOperand;
+    /**
+     * Comparison operator.
+     */
+    'operator': AiComparisonConditionOperator;
     'right': AiRight;
 }
 
@@ -450,13 +450,13 @@ export interface AiComparisonMeasureValueFilter {
 }
 
 export interface AiComparisonMeasureValueFilterBody {
+    'applyOnResult'?: boolean | null;
+    'dimensionality'?: Array<AiComparisonMeasureValueFilterBodyDimensionalityInner> | null;
+    'localIdentifier'?: string | null;
     'measure': AiMeasure;
     'operator': AiComparisonMeasureValueOperator;
-    'value': number;
     'treatNullValuesAs'?: number | null;
-    'dimensionality'?: Array<AiComparisonMeasureValueFilterBodyDimensionalityInner> | null;
-    'applyOnResult'?: boolean | null;
-    'localIdentifier'?: string | null;
+    'value': number;
 }
 
 
@@ -483,17 +483,22 @@ export interface AiCompoundMeasureValueFilter {
 }
 
 export interface AiCompoundMeasureValueFilterBody {
-    'measure': AiMeasure;
-    'conditions': Array<AiCompoundMeasureValueFilterBodyConditionsInner>;
-    'treatNullValuesAs'?: number | null;
-    'dimensionality'?: Array<AiComparisonMeasureValueFilterBodyDimensionalityInner> | null;
     'applyOnResult'?: boolean | null;
+    'conditions': Array<AiCompoundMeasureValueFilterBodyConditionsInner>;
+    'dimensionality'?: Array<AiCompoundMeasureValueFilterBodyDimensionalityInner> | null;
     'localIdentifier'?: string | null;
+    'measure': AiMeasure1;
+    'treatNullValuesAs'?: number | null;
 }
 
 export interface AiCompoundMeasureValueFilterBodyConditionsInner {
     'comparison': AiMeasureValueComparisonInner;
     'range': AiMeasureValueRangeInner;
+}
+
+export interface AiCompoundMeasureValueFilterBodyDimensionalityInner {
+    'identifier': AiAfmObjectIdentifierBody;
+    'localIdentifier': string;
 }
 
 /**
@@ -509,8 +514,8 @@ export type AiCondition = AiAnomalyCondition | AiComparisonCondition | AiRangeCo
 export type AiContent = { type: 'multipart' } & AiMultipartContent | { type: 'reasoning' } & AiReasoningContent | { type: 'text' } & AiTextMessageContent | { type: 'toolCall' } & AiFunctionCallContent | { type: 'toolResult' } & AiFunctionResultContent;
 
 export interface AiConversationFeedbackRequest {
-    'responseId': string;
     'feedback': AiResponseFeedback | null;
+    'responseId': string;
 }
 
 /**
@@ -527,34 +532,34 @@ export interface AiConversationItemListResponse {
  * Conversation item returned by the agentic HTTP API.
  */
 export interface AiConversationItemResponse {
-    /**
-     * Conversation item identifier.
-     */
-    'itemId': string;
+    'actorUserId'?: string | null;
+    'agentId'?: string | null;
+    'content': AiContent;
     /**
      * Parent conversation identifier.
      */
     'conversationId': string;
     /**
-     * Zero-based item order within the response turn.
-     */
-    'itemIndex': number;
-    /**
      * Item creation timestamp (ISO-8601 UTC).
      */
     'createdAt': string;
     /**
+     * Conversation item identifier.
+     */
+    'itemId': string;
+    /**
+     * Zero-based item order within the response turn.
+     */
+    'itemIndex': number;
+    'newAgentId'?: string | null;
+    'oldAgentId'?: string | null;
+    'replyTo'?: string | null;
+    'responseId'?: string | null;
+    /**
      * Author role of the item.
      */
     'role': AiConversationItemResponseRoleEnum;
-    'content': AiContent;
-    'responseId'?: string | null;
-    'replyTo'?: string | null;
     'taskId'?: string | null;
-    'agentId'?: string | null;
-    'oldAgentId'?: string | null;
-    'newAgentId'?: string | null;
-    'actorUserId'?: string | null;
     'trigger'?: AiConversationItemResponseTriggerEnum | null;
 }
 
@@ -589,40 +594,40 @@ export interface AiConversationListResponse {
  * Conversation returned by the agentic HTTP API.
  */
 export interface AiConversationResponse {
+    'agentId'?: string | null;
     /**
      * Conversation identifier.
      */
     'conversationId': string;
     /**
-     * Workspace identifier.
+     * Conversation creation timestamp (ISO-8601 UTC).
      */
-    'workspaceId': string;
-    /**
-     * Organization identifier.
-     */
-    'organizationId': string;
-    /**
-     * Owner user identifier.
-     */
-    'userId': string;
-    'title'?: string | null;
+    'createdAt': string;
     /**
      * Whether this is a preview conversation.
      */
     'isPreview'?: boolean;
     /**
-     * Whether this conversation is pinned by the user.
-     */
-    'pinned'?: boolean;
-    /**
-     * Conversation creation timestamp (ISO-8601 UTC).
-     */
-    'createdAt': string;
-    /**
      * Last activity timestamp (ISO-8601 UTC).
      */
     'lastActivityAt': string;
-    'agentId'?: string | null;
+    /**
+     * Organization identifier.
+     */
+    'organizationId': string;
+    /**
+     * Whether this conversation is pinned by the user.
+     */
+    'pinned'?: boolean;
+    'title'?: string | null;
+    /**
+     * Owner user identifier.
+     */
+    'userId': string;
+    /**
+     * Workspace identifier.
+     */
+    'workspaceId': string;
 }
 
 export interface AiConversationResponseList {
@@ -634,14 +639,14 @@ export interface AiConversationResponseList {
 
 export interface AiConversationTurnResponse {
     /**
-     * Response identifier.
-     */
-    'responseId': string;
-    'feedback'?: AiFeedback | null;
-    /**
      * Response creation timestamp (ISO-8601 UTC).
      */
     'createdAt': string;
+    'feedback'?: AiFeedback | null;
+    /**
+     * Response identifier.
+     */
+    'responseId': string;
     /**
      * Response update timestamp (ISO-8601 UTC).
      */
@@ -652,8 +657,8 @@ export interface AiConversationTurnResponse {
  * PATCH /conversations/{conversationId} body.
  */
 export interface AiConversationUpdateRequest {
-    'title'?: string | null;
     'pinned'?: boolean | null;
+    'title'?: string | null;
 }
 
 /**
@@ -667,22 +672,22 @@ export interface AiCreateConversationRequest {
  * AAC ref: dashboard.json (PoC subset).  The dashboard builder always emits the tabbed layout (``tabs``); ``sections`` is kept for compatibility with the AAC schema\'s flat (single-layout) form.
  */
 export interface AiDashboard {
-    'type': AiDashboardTypeEnum;
-    'id': string;
-    'title': string;
     'description'?: string;
-    'tabs'?: Array<AiDashboardTab>;
-    'sections'?: Array<AiDashboardSection>;
     'filters'?: { [key: string]: AiDashboardDateFilter; };
+    'id': string;
+    'sections'?: Array<AiDashboardSection>;
+    'tabs'?: Array<AiDashboardTab>;
+    'title': string;
+    'type': AiDashboardTypeEnum;
 }
 
 export type AiDashboardTypeEnum = 'dashboard';
 
 export interface AiDashboardDateFilter {
-    'type': AiDashboardDateFilterTypeEnum;
-    'granularity'?: AiAppDomainConversationsVisualizationDateGranularity;
     'from'?: number;
+    'granularity'?: AiAppDomainConversationsVisualizationDateGranularity;
     'to'?: number;
+    'type': AiDashboardDateFilterTypeEnum;
 }
 
 export type AiDashboardDateFilterTypeEnum = 'date_filter';
@@ -695,12 +700,12 @@ export interface AiDashboardIdUpdateRequest {
 }
 
 export interface AiDashboardPart {
+    'dashboard'?: AiDashboard | null;
+    'savedDashboardId'?: string | null;
     /**
      * Type of multipart part.
      */
     'type'?: AiDashboardPartTypeEnum;
-    'dashboard'?: AiDashboard | null;
-    'savedDashboardId'?: string | null;
 }
 
 export type AiDashboardPartTypeEnum = 'dashboard';
@@ -717,8 +722,8 @@ export interface AiDashboardRef {
  * AAC ref: dashboard.json section.
  */
 export interface AiDashboardSection {
-    'title'?: string;
     'description'?: string;
+    'title'?: string;
     'widgets': Array<AiDashboardWidget>;
 }
 
@@ -726,27 +731,27 @@ export interface AiDashboardSection {
  * AAC ref: dashboard.json tab (the latest, tabbed dashboard layout).  In the tabbed layout filters live on the tab, not on the dashboard root (the convertor treats tab-level and root-level filters as mutually exclusive).
  */
 export interface AiDashboardTab {
-    'id': string;
-    'title': string;
-    'sections': Array<AiDashboardSection>;
     'filters'?: { [key: string]: AiDashboardDateFilter; };
+    'id': string;
+    'sections': Array<AiDashboardSection>;
+    'title': string;
 }
 
 /**
  * AAC ref: dashboard.json visualization widget (size hints in 12-column grid units).
  */
 export interface AiDashboardWidget {
-    'visualization': string;
-    'title'?: string;
     'columns'?: number;
     'rows'?: number;
+    'title'?: string;
+    'visualization': string;
 }
 
 export interface AiDateFilterAbsolute {
-    'type': AiDateFilterAbsoluteTypeEnum;
-    'using': string;
     'from': string;
     'to': string;
+    'type': AiDateFilterAbsoluteTypeEnum;
+    'using': string;
 }
 
 export type AiDateFilterAbsoluteTypeEnum = 'date_filter';
@@ -774,11 +779,11 @@ export type AiDateFilterGranularity = typeof AiDateFilterGranularity[keyof typeo
 
 
 export interface AiDateFilterRelative {
+    'from': number;
+    'granularity': AiAppDomainConversationsVisualizationDateGranularity;
+    'to': number;
     'type': AiDateFilterRelativeTypeEnum;
     'using': string;
-    'granularity': AiAppDomainConversationsVisualizationDateGranularity;
-    'from': number;
-    'to': number;
 }
 
 export type AiDateFilterRelativeTypeEnum = 'date_filter';
@@ -813,25 +818,25 @@ export type AiDateGranularityInput = typeof AiDateGranularityInput[keyof typeof 
  * Response for DELETE /documents/{documentId}.
  */
 export interface AiDeleteDocumentResponse {
-    'success': boolean;
     'message': string;
+    'success': boolean;
 }
 
 /**
  * Document metadata returned by GET /documents/{document_id} and list.
  */
 export interface AiDocumentMetadataResponse {
-    'id': string;
-    'filename': string;
-    'numChunks': number;
     'createdAt': string;
-    'updatedAt': string;
     'createdBy': string;
-    'updatedBy': string;
-    'scopes': Array<string>;
-    'workspaceId'?: string | null;
-    'title'?: string | null;
+    'filename': string;
+    'id': string;
     'isDisabled'?: boolean | null;
+    'numChunks': number;
+    'scopes': Array<string>;
+    'title'?: string | null;
+    'updatedAt': string;
+    'updatedBy': string;
+    'workspaceId'?: string | null;
 }
 
 
@@ -845,40 +850,40 @@ export type AiEmptyValueHandling = typeof AiEmptyValueHandling[keyof typeof AiEm
 
 
 export interface AiFeedback {
+    'text'?: string | null;
     /**
      * Feedback type.
      */
     'type': AiFeedbackTypeEnum;
-    'text'?: string | null;
 }
 
 export type AiFeedbackTypeEnum = 'POSITIVE' | 'NEGATIVE';
 
 export interface AiFieldsValue {
-    'using': string;
     'aggregation'?: AiFieldsValueAggregationEnum;
     'title'?: string;
+    'using': string;
     'show_all_values'?: boolean;
 }
 
 export type AiFieldsValueAggregationEnum = 'SUM' | 'AVG' | 'MIN' | 'MAX' | 'MEDIAN' | 'COUNT';
 
 export interface AiFilterByValue {
+    'state': AiAttributeFilterState;
     'type': AiFilterByValueTypeEnum;
     'using': string;
-    'state': AiAttributeFilterState;
     'from': AiFrom;
     'to': AiTo;
     'granularity': AiAppDomainConversationsVisualizationDateGranularity;
     'attribute'?: string;
-    'top'?: number;
     'bottom'?: number;
+    'top'?: number;
     'condition': AiFilterByValueConditionEnum;
-    'value': string;
     'null_values_as_zero'?: boolean;
-    'values': Array<string>;
+    'value': string;
     'case_sensitive'?: boolean;
     'display_as'?: string;
+    'values': Array<string>;
 }
 
 export type AiFilterByValueTypeEnum = 'attribute_filter' | 'date_filter' | 'ranking_filter' | 'metric_value_filter' | 'text_filter';
@@ -890,36 +895,35 @@ export interface AiForecastPeriod {
 export interface AiFrom {
 }
 
+export interface AiFrom1 {
+}
+
 export interface AiFunctionCallContent {
     [key: string]: any;
 
     /**
-     * Type of item content.
+     * Function/tool arguments payload.
      */
-    'type'?: string;
-    /**
-     * Function call item identifier from LLM.
-     */
-    'id': string;
+    'arguments': object;
     /**
      * Function call correlation identifier.
      */
     'callId': string;
     /**
+     * Function call item identifier from LLM.
+     */
+    'id': string;
+    /**
      * Function/tool name.
      */
     'name': string;
     /**
-     * Function/tool arguments payload.
+     * Type of item content.
      */
-    'arguments': object;
+    'type'?: string;
 }
 
 export interface AiFunctionResultContent {
-    /**
-     * Type of item content.
-     */
-    'type'?: AiFunctionResultContentTypeEnum;
     /**
      * Function call correlation identifier.
      */
@@ -928,6 +932,10 @@ export interface AiFunctionResultContent {
      * Serialized function/tool execution result.
      */
     'result': string;
+    /**
+     * Type of item content.
+     */
+    'type'?: AiFunctionResultContentTypeEnum;
 }
 
 export type AiFunctionResultContentTypeEnum = 'toolResult';
@@ -941,8 +949,8 @@ export interface AiInlineFilterDefinition {
 }
 
 export interface AiInlineFilterDefinitionBody {
-    'filter': string;
     'applyOnResult'?: boolean | null;
+    'filter': string;
     'localIdentifier'?: string | null;
 }
 
@@ -965,28 +973,29 @@ export interface AiKeyDriverAnalysis {
     [key: string]: any;
 
     /**
-     * Measure definition for key driver analysis.
+     * Analyzed period identifier.
      */
-    'measure': AiKeyDriverAnalysisMeasure;
+    'analyzedPeriod': string;
     /**
      * Date attribute identifier used for period comparison.
      */
     'dateAttributeId': string;
     /**
-     * Analyzed period identifier.
+     * Filters applied to analysis.
      */
-    'analyzedPeriod': string;
+    'filters': Array<object>;
+    /**
+     * Measure definition for key driver analysis.
+     */
+    'measure': AiKeyDriverAnalysisMeasure;
     /**
      * Reference period identifier.
      */
     'referencePeriod': string;
-    /**
-     * Filters applied to analysis.
-     */
-    'filters': Array<object>;
 }
 
 export interface AiKeyDriverAnalysisMeasure {
+    'aggregation'?: AiKeyDriverAnalysisMeasureAggregationEnum | null;
     /**
      * Measure object identifier.
      */
@@ -995,18 +1004,17 @@ export interface AiKeyDriverAnalysisMeasure {
      * Measure object type.
      */
     'type': AiKeyDriverAnalysisMeasureTypeEnum;
-    'aggregation'?: AiKeyDriverAnalysisMeasureAggregationEnum | null;
 }
 
-export type AiKeyDriverAnalysisMeasureTypeEnum = 'metric' | 'fact' | 'attribute';
 export type AiKeyDriverAnalysisMeasureAggregationEnum = 'SUM' | 'AVG' | 'MIN' | 'MAX' | 'MEDIAN' | 'COUNT';
+export type AiKeyDriverAnalysisMeasureTypeEnum = 'metric' | 'fact' | 'attribute';
 
 export interface AiKeyDriverAnalysisPart {
+    'kda'?: AiKeyDriverAnalysis | null;
     /**
      * Type of multipart part.
      */
     'type'?: AiKeyDriverAnalysisPartTypeEnum;
-    'kda'?: AiKeyDriverAnalysis | null;
 }
 
 export type AiKeyDriverAnalysisPartTypeEnum = 'kda';
@@ -1016,13 +1024,23 @@ export interface AiLabel {
     'localIdentifier': string;
 }
 
+export interface AiLabel1 {
+    'identifier': AiAfmObjectIdentifierBody;
+    'localIdentifier': string;
+}
+
+export interface AiLabel2 {
+    'identifier': AiAfmObjectIdentifierBody;
+    'localIdentifier': string;
+}
+
 /**
  * Response for GET /documents.
  */
 export interface AiListDocumentsResponse {
     'documents': Array<AiDocumentMetadataResponse>;
-    'totalCount'?: number | null;
     'nextPageToken'?: string | null;
+    'totalCount'?: number | null;
 }
 
 export interface AiMatchAttributeFilter {
@@ -1030,13 +1048,13 @@ export interface AiMatchAttributeFilter {
 }
 
 export interface AiMatchAttributeFilterBody {
+    'applyOnResult'?: boolean | null;
+    'caseSensitive'?: boolean;
     'label': AiLabel;
     'literal': string;
-    'matchType': AiMatchType;
-    'caseSensitive'?: boolean;
-    'negate'?: boolean;
-    'applyOnResult'?: boolean | null;
     'localIdentifier'?: string | null;
+    'matchType': AiMatchType;
+    'negate'?: boolean;
 }
 
 
@@ -1051,6 +1069,16 @@ export type AiMatchType = typeof AiMatchType[keyof typeof AiMatchType];
 
 
 export interface AiMeasure {
+    'identifier': AiAfmObjectIdentifierBody;
+    'localIdentifier': string;
+}
+
+export interface AiMeasure1 {
+    'identifier': AiAfmObjectIdentifierBody;
+    'localIdentifier': string;
+}
+
+export interface AiMeasure2 {
     'identifier': AiAfmObjectIdentifierBody;
     'localIdentifier': string;
 }
@@ -1076,8 +1104,8 @@ export interface AiMeasureValueRangeCondition {
 }
 
 export interface AiMeasureValueRangeInner {
-    'operator': AiRangeMeasureValueOperator;
     'from': number;
+    'operator': AiRangeMeasureValueOperator;
     'to': number;
 }
 
@@ -1086,22 +1114,22 @@ export interface AiMeasureValueRangeInner {
  * Reference to a metric by AFM local identifier.
  */
 export interface AiMetricOperand {
+    'format'?: string | null;
     /**
      * Local identifier of the metric to be compared.
      */
     'localIdentifier': string;
-    'format'?: string | null;
     'title'?: string | null;
 }
 
 export interface AiMetricSortItem {
-    'type': AiMetricSortItemTypeEnum;
     'direction': AiMetricSortItemDirectionEnum;
     'metrics': Array<AiMetricSortItemMetricsInner>;
+    'type': AiMetricSortItemTypeEnum;
 }
 
-export type AiMetricSortItemTypeEnum = 'metric_sort';
 export type AiMetricSortItemDirectionEnum = 'ASC' | 'DESC';
+export type AiMetricSortItemTypeEnum = 'metric_sort';
 
 export interface AiMetricSortItemMetricsInner {
     'by': string;
@@ -1116,23 +1144,23 @@ export interface AiMetricSortLocatorItem {
 }
 
 export interface AiMetricUsageResponse {
-    'type': AiObservabilityMetricType;
     'currentValue': number;
     'previousValue': number;
     'total'?: number | null;
+    'type': AiObservabilityMetricType;
 }
 
 
 export interface AiMetricValueComparisonFilter {
+    'condition': AiMetricValueComparisonFilterConditionEnum;
+    'null_values_as_zero'?: boolean;
     'type': AiMetricValueComparisonFilterTypeEnum;
     'using': string;
-    'condition': AiMetricValueComparisonFilterConditionEnum;
     'value': AiValue;
-    'null_values_as_zero'?: boolean;
 }
 
-export type AiMetricValueComparisonFilterTypeEnum = 'metric_value_filter';
 export type AiMetricValueComparisonFilterConditionEnum = 'GREATER_THAN' | 'GREATER_THAN_OR_EQUAL_TO' | 'LESS_THAN' | 'LESS_THAN_OR_EQUAL_TO' | 'EQUAL_TO' | 'NOT_EQUAL_TO';
+export type AiMetricValueComparisonFilterTypeEnum = 'metric_value_filter';
 
 
 export const AiMetricValueFilterConditionComparison = {
@@ -1157,27 +1185,27 @@ export type AiMetricValueFilterConditionRange = typeof AiMetricValueFilterCondit
 
 
 export interface AiMetricValueRangeFilter {
-    'type': AiMetricValueRangeFilterTypeEnum;
-    'using': string;
     'condition': AiMetricValueRangeFilterConditionEnum;
     'from': AiFrom;
-    'to': AiTo;
     'null_values_as_zero'?: boolean;
+    'to': AiTo;
+    'type': AiMetricValueRangeFilterTypeEnum;
+    'using': string;
 }
 
-export type AiMetricValueRangeFilterTypeEnum = 'metric_value_filter';
 export type AiMetricValueRangeFilterConditionEnum = 'BETWEEN' | 'NOT_BETWEEN';
+export type AiMetricValueRangeFilterTypeEnum = 'metric_value_filter';
 
 export interface AiMultipartContent {
-    /**
-     * Type of item content.
-     */
-    'type'?: AiMultipartContentTypeEnum;
     /**
      * Ordered multipart content fragments.
      */
     'parts': Array<AiMultipartContentPartsInner>;
     'suggestions'?: AiSuggestions | null;
+    /**
+     * Type of item content.
+     */
+    'type'?: AiMultipartContentTypeEnum;
 }
 
 export type AiMultipartContentTypeEnum = 'multipart';
@@ -1192,10 +1220,10 @@ export interface AiNegativeAttributeFilter {
 }
 
 export interface AiNegativeAttributeFilterBody {
-    'label': AiLabel;
-    'notIn': AiAttributeFilterElements;
     'applyOnResult'?: boolean | null;
+    'label': AiLabel1;
     'localIdentifier'?: string | null;
+    'notIn': AiAttributeFilterElements;
     'usesArbitraryValues'?: boolean | null;
 }
 
@@ -1249,8 +1277,8 @@ export interface AiObservabilityOverviewResponse {
  */
 export interface AiPatchDocumentRequest {
     'isDisabled'?: boolean | null;
-    'title'?: string | null;
     'scopes'?: Array<string> | null;
+    'title'?: string | null;
 }
 
 export interface AiPositiveAttributeFilter {
@@ -1258,9 +1286,9 @@ export interface AiPositiveAttributeFilter {
 }
 
 export interface AiPositiveAttributeFilterBody {
-    'label': AiLabel;
-    'in': AiAttributeFilterElements;
     'applyOnResult'?: boolean | null;
+    'in': AiAttributeFilterElements;
+    'label': AiLabel2;
     'localIdentifier'?: string | null;
     'usesArbitraryValues'?: boolean | null;
 }
@@ -1272,47 +1300,47 @@ export interface AiQuery {
 }
 
 export interface AiQueryFieldAttribute {
-    'using': string;
-    'title'?: string;
     'show_all_values'?: boolean;
+    'title'?: string;
+    'using': string;
 }
 
 /**
  * Metric/fact/attribute measure field (attribute requires COUNT).
  */
 export interface AiQueryFieldMeasure {
-    'using': string;
     'aggregation'?: AiQueryFieldMeasureAggregationEnum;
     'title'?: string;
+    'using': string;
 }
 
 export type AiQueryFieldMeasureAggregationEnum = 'SUM' | 'AVG' | 'MIN' | 'MAX' | 'MEDIAN' | 'COUNT';
 
 export interface AiQuerySortByInner {
-    'type': AiQuerySortByInnerTypeEnum;
+    'aggregation'?: AiQuerySortByInnerAggregationEnum;
     'by': string;
     'direction': AiQuerySortByInnerDirectionEnum;
-    'aggregation'?: AiQuerySortByInnerAggregationEnum;
+    'type': AiQuerySortByInnerTypeEnum;
     'metrics': Array<AiMetricSortItemMetricsInner>;
 }
 
-export type AiQuerySortByInnerTypeEnum = 'attribute_sort' | 'metric_sort';
-export type AiQuerySortByInnerDirectionEnum = 'ASC' | 'DESC';
 export type AiQuerySortByInnerAggregationEnum = 'SUM';
+export type AiQuerySortByInnerDirectionEnum = 'ASC' | 'DESC';
+export type AiQuerySortByInnerTypeEnum = 'attribute_sort' | 'metric_sort';
 
 export interface AiRange {
     /**
-     * Range operator.
+     * Range lower bound.
      */
-    'operator': AiRangeConditionOperator;
+    'from': AiValueOperand;
     /**
      * Metric being compared.
      */
     'measure': AiMetricOperand;
     /**
-     * Range lower bound.
+     * Range operator.
      */
-    'from': AiValueOperand;
+    'operator': AiRangeConditionOperator;
     /**
      * Range upper bound.
      */
@@ -1344,16 +1372,21 @@ export interface AiRangeMeasureValueFilter {
 }
 
 export interface AiRangeMeasureValueFilterBody {
-    'measure': AiMeasure;
-    'operator': AiRangeMeasureValueOperator;
+    'applyOnResult'?: boolean | null;
+    'dimensionality'?: Array<AiRangeMeasureValueFilterBodyDimensionalityInner> | null;
     'from': number;
+    'localIdentifier'?: string | null;
+    'measure': AiMeasure2;
+    'operator': AiRangeMeasureValueOperator;
     'to': number;
     'treatNullValuesAs'?: number | null;
-    'dimensionality'?: Array<AiComparisonMeasureValueFilterBodyDimensionalityInner> | null;
-    'applyOnResult'?: boolean | null;
-    'localIdentifier'?: string | null;
 }
 
+
+export interface AiRangeMeasureValueFilterBodyDimensionalityInner {
+    'identifier': AiAfmObjectIdentifierBody;
+    'localIdentifier': string;
+}
 
 
 export const AiRangeMeasureValueOperator = {
@@ -1365,14 +1398,24 @@ export type AiRangeMeasureValueOperator = typeof AiRangeMeasureValueOperator[key
 
 
 export interface AiRankingFilterBody {
-    'measures': Array<AiComparisonMeasureValueFilterBodyDimensionalityInner>;
+    'applyOnResult'?: boolean | null;
+    'dimensionality'?: Array<AiRankingFilterBodyDimensionalityInner> | null;
+    'localIdentifier'?: string | null;
+    'measures': Array<AiRankingFilterBodyMeasuresInner>;
     'operator': AiRankingOperator;
     'value': number;
-    'dimensionality'?: Array<AiComparisonMeasureValueFilterBodyDimensionalityInner> | null;
-    'applyOnResult'?: boolean | null;
-    'localIdentifier'?: string | null;
 }
 
+
+export interface AiRankingFilterBodyDimensionalityInner {
+    'identifier': AiAfmObjectIdentifierBody;
+    'localIdentifier': string;
+}
+
+export interface AiRankingFilterBodyMeasuresInner {
+    'identifier': AiAfmObjectIdentifierBody;
+    'localIdentifier': string;
+}
 
 export interface AiRankingFilterInput {
     'rankingFilter': AiRankingFilterBody;
@@ -1389,26 +1432,26 @@ export type AiRankingOperator = typeof AiRankingOperator[keyof typeof AiRankingO
 
 export interface AiReasoningContent {
     /**
-     * Type of item content.
-     */
-    'type'?: AiReasoningContentTypeEnum;
-    /**
      * Reasoning summary intended for UI display.
      */
     'summary': string;
+    /**
+     * Type of item content.
+     */
+    'type'?: AiReasoningContentTypeEnum;
 }
 
 export type AiReasoningContentTypeEnum = 'reasoning';
 
 export interface AiRelative {
     /**
-     * Relative condition operator.
-     */
-    'operator': AiRelativeConditionOperator;
-    /**
      * Arithmetic combination of the two metrics.
      */
     'measure': AiArithmeticMeasure;
+    /**
+     * Relative condition operator.
+     */
+    'operator': AiRelativeConditionOperator;
     /**
      * Threshold the relative change is compared to.
      */
@@ -1437,26 +1480,26 @@ export type AiRelativeConditionOperator = typeof AiRelativeConditionOperator[key
 
 
 export interface AiRelativeDateFilterBodyInput {
-    'dataset': AiAfmObjectIdentifier;
-    'granularity': AiDateGranularityInput;
-    'from': number;
-    'to': number;
     'applyOnResult'?: boolean | null;
     'boundedFilter'?: AiBoundedFilterInput | null;
+    'dataset': AiAfmObjectIdentifier;
     'emptyValueHandling'?: AiEmptyValueHandling | null;
+    'from': number;
+    'granularity': AiDateGranularityInput;
     'localIdentifier'?: string | null;
+    'to': number;
 }
 
 
 export interface AiRelativeDateFilterBodyOutput {
-    'dataset': AiAfmObjectIdentifier;
-    'granularity': AiAppApplicationDtosAfmFilterDefinitionDateGranularity;
-    'from': number;
-    'to': number;
     'applyOnResult'?: boolean | null;
     'boundedFilter'?: AiBoundedFilterOutput | null;
+    'dataset': AiAfmObjectIdentifier;
     'emptyValueHandling'?: AiEmptyValueHandling | null;
+    'from': number;
+    'granularity': AiAppApplicationDtosAfmFilterDefinitionDateGranularity;
     'localIdentifier'?: string | null;
+    'to': number;
 }
 
 
@@ -1468,9 +1511,19 @@ export interface AiRelativeDateFilterOutput {
     'relativeDateFilter': AiRelativeDateFilterBodyOutput;
 }
 
+
+export const AiRequestedReasoningEffort = {
+    LOW: 'LOW',
+    MEDIUM: 'MEDIUM',
+    HIGH: 'HIGH'
+} as const;
+
+export type AiRequestedReasoningEffort = typeof AiRequestedReasoningEffort[keyof typeof AiRequestedReasoningEffort];
+
+
 export interface AiResponseFeedback {
-    'type': AiResponseFeedbackTypeEnum;
     'text'?: string | null;
+    'type': AiResponseFeedbackTypeEnum;
 }
 
 export type AiResponseFeedbackTypeEnum = 'POSITIVE' | 'NEGATIVE';
@@ -1494,105 +1547,105 @@ export interface AiSearchDocumentsResponse {
 }
 
 export interface AiSearchObject {
+    'certification'?: string | null;
+    'certificationMessage'?: string | null;
+    'createdAt'?: string | null;
+    'datasetId'?: string | null;
+    'datasetTitle'?: string | null;
+    'datasetType'?: string | null;
+    'description'?: string | null;
     /**
      * Object identifier.
      */
     'id': string;
-    /**
-     * Object type name.
-     */
-    'type': string;
-    /**
-     * Workspace identifier.
-     */
-    'workspaceId': string;
-    /**
-     * Object title.
-     */
-    'title': string;
-    'description'?: string | null;
-    'tags'?: Array<string> | null;
-    'datasetId'?: string | null;
-    'datasetType'?: string | null;
-    'datasetTitle'?: string | null;
-    'visualizationUrl'?: string | null;
-    'createdAt'?: string | null;
-    'modifiedAt'?: string | null;
     'isHidden'?: boolean | null;
+    'modifiedAt'?: string | null;
     /**
      * Search relevance score.
      */
     'score': number;
-    'certification'?: string | null;
-    'certificationMessage'?: string | null;
+    'tags'?: Array<string> | null;
+    /**
+     * Object title.
+     */
+    'title': string;
+    /**
+     * Object type name.
+     */
+    'type': string;
+    'visualizationUrl'?: string | null;
+    /**
+     * Workspace identifier.
+     */
+    'workspaceId': string;
 }
 
 export interface AiSearchRelationship {
-    /**
-     * Workspace ID of the source object.
-     */
-    'sourceWorkspaceId': string;
     /**
      * Source object identifier.
      */
     'sourceId': string;
     /**
-     * Source object type.
-     */
-    'sourceType': string;
-    /**
      * Source object title.
      */
     'sourceTitle': string;
     /**
-     * Workspace ID of the target object.
+     * Source object type.
      */
-    'targetWorkspaceId': string;
+    'sourceType': string;
+    /**
+     * Workspace ID of the source object.
+     */
+    'sourceWorkspaceId': string;
     /**
      * Target object identifier.
      */
     'targetId': string;
     /**
+     * Target object title.
+     */
+    'targetTitle': string;
+    /**
      * Target object type.
      */
     'targetType': string;
     /**
-     * Target object title.
+     * Workspace ID of the target object.
      */
-    'targetTitle': string;
+    'targetWorkspaceId': string;
 }
 
 /**
  * A single search result entry.
  */
 export interface AiSearchResultItem {
-    'id': string;
-    'filename': string;
-    'content': string;
-    'score': number;
     'chunkIndex': number;
-    'totalChunks': number;
+    'content': string;
+    'filename': string;
+    'id': string;
     'pageNumbers': Array<number>;
-    'workspaceId'?: string | null;
-    'title'?: string | null;
     'scopes': Array<string>;
+    'score': number;
+    'title'?: string | null;
+    'totalChunks': number;
+    'workspaceId'?: string | null;
 }
 
 export interface AiSearchResults {
     /**
-     * Type of multipart part.
+     * Keywords used in search query.
      */
-    'type'?: AiSearchResultsTypeEnum;
+    'keywords': Array<string>;
     /**
      * Search result objects for widget rendering.
      */
     'objects': Array<AiSearchObject>;
-    /**
-     * Keywords used in search query.
-     */
-    'keywords': Array<string>;
-    'requestedObjectType'?: string | null;
     'relationships'?: Array<AiSearchRelationship> | null;
+    'requestedObjectType'?: string | null;
+    /**
+     * Type of multipart part.
+     */
+    'type'?: AiSearchResultsTypeEnum;
 }
 
 export type AiSearchResultsTypeEnum = 'searchResults';
@@ -1601,27 +1654,29 @@ export type AiSearchResultsTypeEnum = 'searchResults';
  * Statistics about the search results.
  */
 export interface AiSearchStatistics {
-    'totalResults': number;
     'averageSimilarityScore': number;
+    'totalResults': number;
 }
 
 export interface AiSendMessageContent {
-    'type': AiSendMessageContentTypeEnum;
     'text': string;
+    'type': AiSendMessageContentTypeEnum;
 }
 
 export type AiSendMessageContentTypeEnum = 'text';
 
 export interface AiSendMessageItem {
-    'role': AiSendMessageItemRoleEnum;
     'content': AiSendMessageContent;
+    'role': AiSendMessageItemRoleEnum;
 }
 
 export type AiSendMessageItemRoleEnum = 'user';
 
 export interface AiSendMessageOptions {
+    'reasoningEffort'?: AiRequestedReasoningEffort | null;
     'search'?: AiSendMessageSearchOptions | null;
 }
+
 
 /**
  * POST /conversations/{conversationId}/messages body.
@@ -1633,11 +1688,11 @@ export interface AiSendMessageRequest {
 }
 
 export interface AiSendMessageSearchOptions {
+    'allowedRelationshipTypes'?: Array<AiAllowedRelationshipType> | null;
+    'excludeTags'?: Array<string> | null;
+    'includeTags'?: Array<string> | null;
     'objectTypes'?: Array<AiObjectType> | null;
     'searchLimit'?: number | null;
-    'includeTags'?: Array<string> | null;
-    'excludeTags'?: Array<string> | null;
-    'allowedRelationshipTypes'?: Array<AiAllowedRelationshipType> | null;
 }
 
 /**
@@ -1657,11 +1712,11 @@ export type AiSensitivity = typeof AiSensitivity[keyof typeof AiSensitivity];
  * A single skill available to the organization.
  */
 export interface AiSkillResponse {
-    'name': string;
-    'title': string;
     'description': string;
-    'tags': Array<string>;
     'examples': Array<string>;
+    'name': string;
+    'tags': Array<string>;
+    'title': string;
 }
 
 /**
@@ -1683,21 +1738,21 @@ export interface AiSuggestedAction {
  */
 export interface AiSuggestions {
     /**
-     * Yes-answerable follow-up question recommending the next step.
-     */
-    'followUpQuestion': string;
-    /**
      * Quick-reply action buttons. The first action matches the follow-up question.
      */
     'actions': Array<AiSuggestedAction>;
+    /**
+     * Yes-answerable follow-up question recommending the next step.
+     */
+    'followUpQuestion': string;
 }
 
 export interface AiSummarizeRequest {
-    'visualizations'?: Array<string> | null;
-    'filterContext'?: Array<AiSummarizeRequestFilterContextInner> | null;
     'dashboardId': string;
-    'tabId'?: string | null;
+    'filterContext'?: Array<AiSummarizeRequestFilterContextInner> | null;
     'formatHint'?: string | null;
+    'tabId'?: string | null;
+    'visualizations'?: Array<string> | null;
 }
 
 /**
@@ -1706,12 +1761,12 @@ export interface AiSummarizeRequest {
 export type AiSummarizeRequestFilterContextInner = AiAbsoluteDateFilter | AiAllTimeDateFilterInput | AiComparisonMeasureValueFilter | AiCompoundMeasureValueFilter | AiInlineFilterDefinition | AiMatchAttributeFilter | AiNegativeAttributeFilter | AiPositiveAttributeFilter | AiRangeMeasureValueFilter | AiRankingFilterInput | AiRelativeDateFilterInput;
 
 export interface AiSummarizeResponse {
-    'summary': string;
     'filterContext': Array<AiSummarizeResponseFilterContextInner>;
-    'visualizationsIncluded': Array<AiVisualizationIncludedResponse>;
-    'visualizationsExcluded': Array<AiVisualizationExcludedResponse>;
     'generatedAt': string;
+    'summary': string;
     'tabId'?: string | null;
+    'visualizationsExcluded': Array<AiVisualizationExcludedResponse>;
+    'visualizationsIncluded': Array<AiVisualizationIncludedResponse>;
 }
 
 /**
@@ -1727,51 +1782,51 @@ export interface AiSwitchAgentRequest {
 }
 
 export interface AiTextFilterValue {
+    'case_sensitive'?: boolean;
+    'condition': AiTextFilterValueConditionEnum;
+    'display_as'?: string;
     'type': AiTextFilterValueTypeEnum;
     'using': string;
-    'condition': AiTextFilterValueConditionEnum;
     'value': string;
-    'case_sensitive'?: boolean;
-    'display_as'?: string;
 }
 
-export type AiTextFilterValueTypeEnum = 'text_filter';
 export type AiTextFilterValueConditionEnum = 'contains' | 'doesNotContain' | 'startsWith' | 'doesNotStartWith' | 'endsWith' | 'doesNotEndWith';
+export type AiTextFilterValueTypeEnum = 'text_filter';
 
 export interface AiTextFilterValues {
+    'case_sensitive'?: boolean;
+    'condition': AiTextFilterValuesConditionEnum;
+    'display_as'?: string;
     'type': AiTextFilterValuesTypeEnum;
     'using': string;
-    'condition': AiTextFilterValuesConditionEnum;
     'values': Array<string | null>;
-    'case_sensitive'?: boolean;
-    'display_as'?: string;
 }
 
-export type AiTextFilterValuesTypeEnum = 'text_filter';
 export type AiTextFilterValuesConditionEnum = 'is' | 'isNot';
+export type AiTextFilterValuesTypeEnum = 'text_filter';
 
 export interface AiTextMessageContent {
-    /**
-     * Type of item content.
-     */
-    'type'?: AiTextMessageContentTypeEnum;
     /**
      * Plain text message content.
      */
     'text': string;
+    /**
+     * Type of item content.
+     */
+    'type'?: AiTextMessageContentTypeEnum;
 }
 
 export type AiTextMessageContentTypeEnum = 'text';
 
 export interface AiTextPart {
     /**
-     * Type of multipart part.
-     */
-    'type'?: AiTextPartTypeEnum;
-    /**
      * Text fragment.
      */
     'text': string;
+    /**
+     * Type of multipart part.
+     */
+    'type'?: AiTextPartTypeEnum;
 }
 
 export type AiTextPartTypeEnum = 'text';
@@ -1779,44 +1834,48 @@ export type AiTextPartTypeEnum = 'text';
 export interface AiTo {
 }
 
+export interface AiTo1 {
+}
+
 /**
  * Response for POST/PUT /documents.
  */
 export interface AiUploadDocumentResponse {
-    'id': string;
     'filename': string;
-    'success': boolean;
+    'id': string;
     'message': string;
     'numChunks': number;
+    'success': boolean;
 }
 
 export interface AiUserContext {
-    'view'?: AiUserContextView | null;
-    'referencedObjects'?: Array<AiUserContextObjectReferenceGroup> | null;
     'activeObject'?: AiActiveObjectIdentification | null;
+    'referencedObjects'?: Array<AiUserContextObjectReferenceGroup> | null;
+    'view'?: AiUserContextView | null;
 }
 
 export interface AiUserContextDashboard {
+    'filters'?: Array<AiVisualizationFilter> | null;
     'id': string;
     'title'?: string | null;
     'widgets'?: Array<AiUserContextWidgetDescriptor>;
-    'filters'?: Array<AiVisualizationFilter> | null;
 }
 
 export interface AiUserContextInsightWidgetDescriptor {
-    'widgetId': string;
-    'title': string;
     'filters'?: Array<AiVisualizationFilter> | null;
-    'widgetType': AiUserContextInsightWidgetDescriptorWidgetTypeEnum;
     'resultId'?: string | null;
+    'title': string;
     'visualizationId': string;
+    'widgetId': string;
+    'widgetType': AiUserContextInsightWidgetDescriptorWidgetTypeEnum;
 }
 
 export type AiUserContextInsightWidgetDescriptorWidgetTypeEnum = 'insight';
 
 export interface AiUserContextObjectReference {
-    'type': AiUserContextObjectReferenceTypeEnum;
     'id': string;
+    'title'?: string | null;
+    'type': AiUserContextObjectReferenceTypeEnum;
 }
 
 export type AiUserContextObjectReferenceTypeEnum = 'WIDGET' | 'METRIC' | 'ATTRIBUTE' | 'DASHBOARD' | 'FACT';
@@ -1827,11 +1886,11 @@ export interface AiUserContextObjectReferenceGroup {
 }
 
 export interface AiUserContextRichTextWidgetDescriptor {
-    'widgetId': string;
-    'title': string;
-    'filters'?: Array<AiVisualizationFilter> | null;
-    'widgetType': AiUserContextRichTextWidgetDescriptorWidgetTypeEnum;
     'content'?: string | null;
+    'filters'?: Array<AiVisualizationFilter> | null;
+    'title': string;
+    'widgetId': string;
+    'widgetType': AiUserContextRichTextWidgetDescriptorWidgetTypeEnum;
 }
 
 export type AiUserContextRichTextWidgetDescriptorWidgetTypeEnum = 'richText';
@@ -1841,24 +1900,24 @@ export interface AiUserContextView {
 }
 
 export interface AiUserContextVisualizationSwitcherWidgetDescriptor {
-    'widgetId': string;
-    'title': string;
-    'filters'?: Array<AiVisualizationFilter> | null;
-    'widgetType': AiUserContextVisualizationSwitcherWidgetDescriptorWidgetTypeEnum;
-    'resultId'?: string | null;
     'activeVisualizationId': string;
+    'filters'?: Array<AiVisualizationFilter> | null;
+    'resultId'?: string | null;
+    'title': string;
     'visualizationIds'?: Array<string>;
+    'widgetId': string;
+    'widgetType': AiUserContextVisualizationSwitcherWidgetDescriptorWidgetTypeEnum;
 }
 
 export type AiUserContextVisualizationSwitcherWidgetDescriptorWidgetTypeEnum = 'visualizationSwitcher';
 
 export interface AiUserContextWidgetDescriptor {
-    'widgetId': string;
-    'title': string;
     'filters'?: Array<AiVisualizationFilter>;
-    'widgetType': AiUserContextWidgetDescriptorWidgetTypeEnum;
     'resultId'?: string;
+    'title': string;
     'visualizationId': string;
+    'widgetId': string;
+    'widgetType': AiUserContextWidgetDescriptorWidgetTypeEnum;
     'content'?: string;
     'activeVisualizationId': string;
     'visualizationIds'?: Array<string>;
@@ -1867,11 +1926,11 @@ export interface AiUserContextWidgetDescriptor {
 export type AiUserContextWidgetDescriptorWidgetTypeEnum = 'visualizationSwitcher';
 
 export interface AiValidationError {
+    'ctx'?: object;
+    'input'?: any;
     'loc': Array<AiValidationErrorLocInner>;
     'msg': string;
     'type': string;
-    'input'?: any;
-    'ctx'?: object;
 }
 
 export interface AiValidationErrorLocInner {
@@ -1886,6 +1945,9 @@ export interface AiValue {
 export interface AiValue1 {
 }
 
+export interface AiValue2 {
+}
+
 /**
  * Literal threshold value.
  */
@@ -1894,71 +1956,71 @@ export interface AiValueOperand {
 }
 
 export interface AiVisualization {
-    'type': AiVisualizationTypeEnum;
-    'id': string;
-    'query': AiQuery;
-    'title'?: string;
-    'metrics'?: Array<AiVisualizationMetricsInner>;
-    'view_by'?: Array<AiVisualizationMetricsInner>;
-    'segment_by'?: Array<AiVisualizationMetricsInner>;
     'config'?: AiVisualizationConfig;
+    'id': string;
+    'metrics'?: Array<AiVisualizationMetricsInner>;
+    'query': AiQuery;
+    'segment_by'?: Array<AiVisualizationSegmentByInner>;
+    'title'?: string;
+    'type': AiVisualizationTypeEnum;
+    'view_by'?: Array<AiVisualizationViewByInner>;
 }
 
 export type AiVisualizationTypeEnum = 'table' | 'headline_chart' | 'bar_chart' | 'column_chart' | 'line_chart' | 'pie_chart' | 'scatter_chart';
 
 export interface AiVisualizationAbsoluteDateFilter {
-    'type': AiVisualizationAbsoluteDateFilterTypeEnum;
-    'using'?: string | null;
     'from': string;
     'to': string;
+    'type': AiVisualizationAbsoluteDateFilterTypeEnum;
+    'using'?: string | null;
 }
 
 export type AiVisualizationAbsoluteDateFilterTypeEnum = 'date_filter';
 
 export interface AiVisualizationAttributeFilter {
+    'state': AiVisualizationAttributeFilterState;
     'type': AiVisualizationAttributeFilterTypeEnum;
     'using': string;
-    'state': AiVisualizationAttributeFilterState;
 }
 
 export type AiVisualizationAttributeFilterTypeEnum = 'attribute_filter';
 
 export interface AiVisualizationAttributeFilterState {
-    'include'?: Array<string> | null;
     'exclude'?: Array<string> | null;
+    'include'?: Array<string> | null;
 }
 
 export interface AiVisualizationBottomRankingFilter {
-    'type': AiVisualizationBottomRankingFilterTypeEnum;
-    'using': string;
     'attribute'?: string | null;
     'bottom': number;
+    'type': AiVisualizationBottomRankingFilterTypeEnum;
+    'using': string;
 }
 
 export type AiVisualizationBottomRankingFilterTypeEnum = 'ranking_filter';
 
 export interface AiVisualizationConfig {
-    'forecast_enabled'?: boolean;
-    'forecast_confidence'?: number;
-    'forecast_period'?: AiForecastPeriod;
-    'forecast_seasonal'?: boolean;
-    'clustering_enabled'?: boolean;
-    'clustering_amount'?: AiClusteringAmount;
-    'clustering_threshold'?: number;
+    'anomaly_detection_color'?: string;
     'anomaly_detection_enabled'?: boolean;
     'anomaly_detection_sensitivity'?: AiVisualizationConfigAnomalyDetectionSensitivityEnum;
     'anomaly_detection_size'?: AiVisualizationConfigAnomalyDetectionSizeEnum;
-    'anomaly_detection_color'?: string;
+    'clustering_amount'?: AiClusteringAmount;
+    'clustering_enabled'?: boolean;
+    'clustering_threshold'?: number;
     'disable_key_drive_analysis'?: { [key: string]: boolean; };
+    'forecast_confidence'?: number;
+    'forecast_enabled'?: boolean;
+    'forecast_period'?: AiForecastPeriod;
+    'forecast_seasonal'?: boolean;
 }
 
 export type AiVisualizationConfigAnomalyDetectionSensitivityEnum = 'low' | 'medium' | 'high';
 export type AiVisualizationConfigAnomalyDetectionSizeEnum = 'small' | 'medium' | 'large';
 
 export interface AiVisualizationExcludedResponse {
-    'visualizationId': string;
     'reason': string;
     'title'?: string | null;
+    'visualizationId': string;
 }
 
 /**
@@ -1974,27 +2036,27 @@ export interface AiVisualizationIdUpdateRequest {
 }
 
 export interface AiVisualizationIncludedResponse {
-    'visualizationId': string;
     'title'?: string | null;
+    'visualizationId': string;
 }
 
 export interface AiVisualizationMetricValueComparisonFilter {
+    'condition': AiMetricValueFilterConditionComparison;
+    'nullValuesAsZero': boolean;
     'type': AiVisualizationMetricValueComparisonFilterTypeEnum;
     'using': string;
-    'condition': AiMetricValueFilterConditionComparison;
-    'value': AiValue;
-    'nullValuesAsZero': boolean;
+    'value': AiValue2;
 }
 
 export type AiVisualizationMetricValueComparisonFilterTypeEnum = 'metric_value_filter';
 
 export interface AiVisualizationMetricValueRangeFilter {
+    'condition': AiMetricValueFilterConditionRange;
+    'from': AiFrom1;
+    'nullValuesAsZero': boolean;
+    'to': AiTo1;
     'type': AiVisualizationMetricValueRangeFilterTypeEnum;
     'using': string;
-    'condition': AiMetricValueFilterConditionRange;
-    'from': AiFrom;
-    'to': AiTo;
-    'nullValuesAsZero': boolean;
 }
 
 export type AiVisualizationMetricValueRangeFilterTypeEnum = 'metric_value_filter';
@@ -2014,23 +2076,31 @@ export interface AiVisualizationPart {
 export type AiVisualizationPartTypeEnum = 'visualization';
 
 export interface AiVisualizationRelativeDateFilter {
+    'from': number;
+    'granularity': AiDateFilterGranularity;
+    'to': number;
     'type': AiVisualizationRelativeDateFilterTypeEnum;
     'using'?: string | null;
-    'granularity': AiDateFilterGranularity;
-    'from': number;
-    'to': number;
 }
 
 export type AiVisualizationRelativeDateFilterTypeEnum = 'date_filter';
 
+export interface AiVisualizationSegmentByInner {
+    'field': string;
+}
+
 export interface AiVisualizationTopRankingFilter {
-    'type': AiVisualizationTopRankingFilterTypeEnum;
-    'using': string;
     'attribute'?: string | null;
     'top': number;
+    'type': AiVisualizationTopRankingFilterTypeEnum;
+    'using': string;
 }
 
 export type AiVisualizationTopRankingFilterTypeEnum = 'ranking_filter';
+
+export interface AiVisualizationViewByInner {
+    'field': string;
+}
 
 export interface AiWhatIfAnalysisPart {
     /**
@@ -2059,28 +2129,28 @@ export interface AiWhatIfMeasureAdjustment {
 
 export interface AiWhatIfScenario {
     /**
-     * Base visualization reference used by scenario.
+     * Whether baseline values are included.
      */
-    'visualizationRef': string;
+    'includeBaseline': boolean;
     /**
      * Defined what-if variants.
      */
     'scenarios': Array<AiWhatIfScenarioVariant>;
     /**
-     * Whether baseline values are included.
+     * Base visualization reference used by scenario.
      */
-    'includeBaseline': boolean;
+    'visualizationRef': string;
 }
 
 export interface AiWhatIfScenarioVariant {
     /**
-     * Scenario name.
-     */
-    'label': string;
-    /**
      * Scenario adjustments.
      */
     'adjustments': Array<AiWhatIfMeasureAdjustment>;
+    /**
+     * Scenario name.
+     */
+    'label': string;
 }
 
 
@@ -3671,14 +3741,14 @@ export class ItemsAi extends BaseAPI implements ItemsAiInterface {
  * @summary Upload Document
  * @param {string} workspaceId 
  * @param {File} file 
- * @param {string} [title] 
  * @param {Array<string>} [scopes] 
+ * @param {string} [title] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function KnowledgeAiAxiosParamCreator_CreateDocument(
-    workspaceId: string, file: File, title?: string, scopes?: Array<string>, 
+    workspaceId: string, file: File, scopes?: Array<string>, title?: string, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -3703,13 +3773,13 @@ export async function KnowledgeAiAxiosParamCreator_CreateDocument(
     if (file !== undefined) { 
         localVarFormParams.append('file', file as any);
     }
-    
-    if (title !== undefined) { 
-        localVarFormParams.append('title', title as any);
-    }
         if (scopes) {
         
         localVarFormParams.append('scopes', scopes.join(COLLECTION_FORMATS.csv));
+    }
+    
+    if (title !== undefined) { 
+        localVarFormParams.append('title', title as any);
     }
     
     
@@ -3736,14 +3806,14 @@ export async function KnowledgeAiAxiosParamCreator_CreateDocument(
  * Upload a new org-scoped knowledge document.
  * @summary Upload Document Org
  * @param {File} file 
- * @param {string} [title] 
  * @param {Array<string>} [scopes] 
+ * @param {string} [title] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function KnowledgeAiAxiosParamCreator_CreateOrgDocument(
-    file: File, title?: string, scopes?: Array<string>, 
+    file: File, scopes?: Array<string>, title?: string, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -3765,13 +3835,13 @@ export async function KnowledgeAiAxiosParamCreator_CreateOrgDocument(
     if (file !== undefined) { 
         localVarFormParams.append('file', file as any);
     }
-    
-    if (title !== undefined) { 
-        localVarFormParams.append('title', title as any);
-    }
         if (scopes) {
         
         localVarFormParams.append('scopes', scopes.join(COLLECTION_FORMATS.csv));
+    }
+    
+    if (title !== undefined) { 
+        localVarFormParams.append('title', title as any);
     }
     
     
@@ -4485,14 +4555,14 @@ export async function KnowledgeAiAxiosParamCreator_SearchOrgKnowledge(
  * @summary Upsert Document
  * @param {string} workspaceId 
  * @param {File} file 
- * @param {string} [title] 
  * @param {Array<string>} [scopes] 
+ * @param {string} [title] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function KnowledgeAiAxiosParamCreator_UpsertDocument(
-    workspaceId: string, file: File, title?: string, scopes?: Array<string>, 
+    workspaceId: string, file: File, scopes?: Array<string>, title?: string, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -4517,13 +4587,13 @@ export async function KnowledgeAiAxiosParamCreator_UpsertDocument(
     if (file !== undefined) { 
         localVarFormParams.append('file', file as any);
     }
-    
-    if (title !== undefined) { 
-        localVarFormParams.append('title', title as any);
-    }
         if (scopes) {
         
         localVarFormParams.append('scopes', scopes.join(COLLECTION_FORMATS.csv));
+    }
+    
+    if (title !== undefined) { 
+        localVarFormParams.append('title', title as any);
     }
     
     
@@ -4550,14 +4620,14 @@ export async function KnowledgeAiAxiosParamCreator_UpsertDocument(
  * Upload or replace an org-scoped knowledge document.
  * @summary Upsert Document Org
  * @param {File} file 
- * @param {string} [title] 
  * @param {Array<string>} [scopes] 
+ * @param {string} [title] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function KnowledgeAiAxiosParamCreator_UpsertOrgDocument(
-    file: File, title?: string, scopes?: Array<string>, 
+    file: File, scopes?: Array<string>, title?: string, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -4579,13 +4649,13 @@ export async function KnowledgeAiAxiosParamCreator_UpsertOrgDocument(
     if (file !== undefined) { 
         localVarFormParams.append('file', file as any);
     }
-    
-    if (title !== undefined) { 
-        localVarFormParams.append('title', title as any);
-    }
         if (scopes) {
         
         localVarFormParams.append('scopes', scopes.join(COLLECTION_FORMATS.csv));
+    }
+    
+    if (title !== undefined) { 
+        localVarFormParams.append('title', title as any);
     }
     
     
@@ -4626,7 +4696,7 @@ export async function KnowledgeAi_CreateDocument(
     configuration?: Configuration,
 ): AxiosPromise<AiUploadDocumentResponse> {
     const localVarAxiosArgs = await KnowledgeAiAxiosParamCreator_CreateDocument(
-        requestParameters.workspaceId, requestParameters.file, requestParameters.title, requestParameters.scopes, 
+        requestParameters.workspaceId, requestParameters.file, requestParameters.scopes, requestParameters.title, 
         options || {},
         configuration,
     );
@@ -4652,7 +4722,7 @@ export async function KnowledgeAi_CreateOrgDocument(
     configuration?: Configuration,
 ): AxiosPromise<AiUploadDocumentResponse> {
     const localVarAxiosArgs = await KnowledgeAiAxiosParamCreator_CreateOrgDocument(
-        requestParameters.file, requestParameters.title, requestParameters.scopes, 
+        requestParameters.file, requestParameters.scopes, requestParameters.title, 
         options || {},
         configuration,
     );
@@ -4990,7 +5060,7 @@ export async function KnowledgeAi_UpsertDocument(
     configuration?: Configuration,
 ): AxiosPromise<AiUploadDocumentResponse> {
     const localVarAxiosArgs = await KnowledgeAiAxiosParamCreator_UpsertDocument(
-        requestParameters.workspaceId, requestParameters.file, requestParameters.title, requestParameters.scopes, 
+        requestParameters.workspaceId, requestParameters.file, requestParameters.scopes, requestParameters.title, 
         options || {},
         configuration,
     );
@@ -5016,7 +5086,7 @@ export async function KnowledgeAi_UpsertOrgDocument(
     configuration?: Configuration,
 ): AxiosPromise<AiUploadDocumentResponse> {
     const localVarAxiosArgs = await KnowledgeAiAxiosParamCreator_UpsertOrgDocument(
-        requestParameters.file, requestParameters.title, requestParameters.scopes, 
+        requestParameters.file, requestParameters.scopes, requestParameters.title, 
         options || {},
         configuration,
     );
@@ -5214,17 +5284,17 @@ export interface KnowledgeAiCreateDocumentRequest {
 
     /**
      * 
-     * @type {string}
-     * @memberof KnowledgeAiCreateDocument
-     */
-    readonly title?: string
-
-    /**
-     * 
      * @type {Array<string>}
      * @memberof KnowledgeAiCreateDocument
      */
     readonly scopes?: Array<string>
+
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeAiCreateDocument
+     */
+    readonly title?: string
 }
 
 /**
@@ -5242,17 +5312,17 @@ export interface KnowledgeAiCreateOrgDocumentRequest {
 
     /**
      * 
-     * @type {string}
-     * @memberof KnowledgeAiCreateOrgDocument
-     */
-    readonly title?: string
-
-    /**
-     * 
      * @type {Array<string>}
      * @memberof KnowledgeAiCreateOrgDocument
      */
     readonly scopes?: Array<string>
+
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeAiCreateOrgDocument
+     */
+    readonly title?: string
 }
 
 /**
@@ -5613,17 +5683,17 @@ export interface KnowledgeAiUpsertDocumentRequest {
 
     /**
      * 
-     * @type {string}
-     * @memberof KnowledgeAiUpsertDocument
-     */
-    readonly title?: string
-
-    /**
-     * 
      * @type {Array<string>}
      * @memberof KnowledgeAiUpsertDocument
      */
     readonly scopes?: Array<string>
+
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeAiUpsertDocument
+     */
+    readonly title?: string
 }
 
 /**
@@ -5641,17 +5711,17 @@ export interface KnowledgeAiUpsertOrgDocumentRequest {
 
     /**
      * 
-     * @type {string}
-     * @memberof KnowledgeAiUpsertOrgDocument
-     */
-    readonly title?: string
-
-    /**
-     * 
      * @type {Array<string>}
      * @memberof KnowledgeAiUpsertOrgDocument
      */
     readonly scopes?: Array<string>
+
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeAiUpsertOrgDocument
+     */
+    readonly title?: string
 }
 
 /**

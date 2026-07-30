@@ -188,13 +188,13 @@ const manageByKind = (
             return ActionsApi_ManageAttributePermissions(axios, basePath, {
                 workspaceId,
                 attributeId: objectId,
-                manageLabelPermissionsRequestInner,
+                manageAttributePermissionsRequestInner: manageLabelPermissionsRequestInner,
             });
         case "fact":
             return ActionsApi_ManageFactPermissions(axios, basePath, {
                 workspaceId,
                 factId: objectId,
-                manageLabelPermissionsRequestInner,
+                manageFactPermissionsRequestInner: manageLabelPermissionsRequestInner,
             });
         case "label":
             return ActionsApi_ManageLabelPermissions(axios, basePath, {

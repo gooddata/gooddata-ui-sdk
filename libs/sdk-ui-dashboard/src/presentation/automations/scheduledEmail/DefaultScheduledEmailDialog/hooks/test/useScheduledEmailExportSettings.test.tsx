@@ -1,14 +1,11 @@
 // (C) 2026 GoodData Corporation
 
-import { type RefObject } from "react";
-
 import { renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
     type DashboardAttachmentType,
     type IAutomationMetadataObjectDefinition,
-    type IDashboardExportParameter,
     type IExportDefinitionDashboardRequestPayload,
     type IExportDefinitionMetadataObjectDefinition,
     type IExportDefinitionVisualizationObjectRequestPayload,
@@ -25,16 +22,35 @@ import {
 // vi.mocked() after the import statements.
 // ---------------------------------------------------------------------------
 
+const { mockUseAutomationsContext, mockUseScheduledEmailDialogContext } = vi.hoisted(() => ({
+    mockUseAutomationsContext: vi.fn(),
+    mockUseScheduledEmailDialogContext: vi.fn(),
+}));
+
+vi.mock("../../../../contexts/AutomationsContext.js", () => ({
+    useAutomationsContext: mockUseAutomationsContext,
+}));
+
+vi.mock("../../../../contexts/ScheduledEmailDialogContext.js", () => ({
+    useScheduledEmailDialogContext: mockUseScheduledEmailDialogContext,
+}));
+
 vi.mock("../../utils/exportDefinitions.js", () => ({
     withRebuiltExportDefinitions: vi.fn(),
     newDashboardExportDefinitionMetadataObjectDefinition: vi.fn(),
     newWidgetExportDefinitionMetadataObjectDefinition: vi.fn(),
 }));
 
+vi.mock("../../../../../../_staging/automation/index.js", () => ({
+    getAutomationExportParametersByTab: vi.fn(),
+    setExportParametersByTab: vi.fn(),
+}));
+
 // ---------------------------------------------------------------------------
 // Imports placed AFTER vi.mock() calls to pick up mocked versions
 // ---------------------------------------------------------------------------
 
+import * as stagingAutomationModule from "../../../../../../_staging/automation/index.js";
 import * as exportDefinitionsUtilsModule from "../../utils/exportDefinitions.js";
 import {
     type IUseScheduledEmailExportSettingsProps,
@@ -52,6 +68,10 @@ const newDashboardExportDefinitionMetadataObjectDefinitionSpy = vi.mocked(
 const newWidgetExportDefinitionMetadataObjectDefinitionSpy = vi.mocked(
     exportDefinitionsUtilsModule.newWidgetExportDefinitionMetadataObjectDefinition,
 );
+const getAutomationExportParametersByTabSpy = vi.mocked(
+    stagingAutomationModule.getAutomationExportParametersByTab,
+);
+const setExportParametersByTabSpy = vi.mocked(stagingAutomationModule.setExportParametersByTab);
 
 // ---------------------------------------------------------------------------
 // Fixtures
@@ -127,25 +147,17 @@ const makeAutomation = (
     ...overrides,
 });
 
-const makeWireRef = (
-    current: Record<string, IDashboardExportParameter[]> | undefined = undefined,
-): RefObject<Record<string, IDashboardExportParameter[]> | undefined> => ({ current });
-
 const BASE_PROPS: IUseScheduledEmailExportSettingsProps = {
     editedAutomation: makeAutomation(),
     setEditedAutomation: vi.fn(),
     insight: undefined,
     widget: undefined,
-    dashboardId: "dashboard-1",
-    dashboardTitle: "Dashboard",
     storeFilters: true,
     effectiveDashboardFilters: undefined,
     effectiveDashboardFiltersByTab: undefined,
     effectiveWidgetFilters: [],
     effectiveWidgetFiltersWithInsight: [],
     defaultPdfPageSize: undefined,
-    resolvedDefaultCsvDelimiter: ",",
-    latestParametersWireRef: makeWireRef(),
 };
 
 // A generated export definition returned by the mocked factories, tagged with the requested format so
@@ -182,12 +194,18 @@ const generatedWidgetExportDefinition = (
 
 beforeEach(() => {
     vi.clearAllMocks();
+    mockUseAutomationsContext.mockReturnValue({ settings: undefined });
+    mockUseScheduledEmailDialogContext.mockReturnValue({
+        dashboardId: "dashboard-1",
+        dashboardTitle: "Dashboard",
+    });
     newDashboardExportDefinitionMetadataObjectDefinitionSpy.mockImplementation(({ format }) =>
         generatedDashboardExportDefinition(format),
     );
     newWidgetExportDefinitionMetadataObjectDefinitionSpy.mockImplementation(({ format }) =>
         generatedWidgetExportDefinition(format),
     );
+    getAutomationExportParametersByTabSpy.mockReturnValue(undefined);
 });
 
 // ---------------------------------------------------------------------------
@@ -262,8 +280,8 @@ describe("useScheduledEmailExportSettings — derivations", () => {
     });
 
     it("csvSettings falls back to resolvedDefaultCsvDelimiter when absent", () => {
+        mockUseAutomationsContext.mockReturnValue({ settings: { exportCsvCustomDelimiter: ";" } });
         const { result } = renderExportSettingsHook({
-            resolvedDefaultCsvDelimiter: ";",
             editedAutomation: makeAutomation({ exportDefinitions: [] }),
         });
 
@@ -295,7 +313,8 @@ describe("useScheduledEmailExportSettings — derivations", () => {
 
 describe("useScheduledEmailExportSettings — onDashboardAttachmentsChange", () => {
     it("keeps definitions for formats still selected and adds new ones via the factory", () => {
-        const wireRef = makeWireRef({ tab1: [{ id: "topN", value: "5", title: "Top N" }] });
+        const wire = { tab1: [{ id: "topN", value: "5", title: "Top N" }] };
+        getAutomationExportParametersByTabSpy.mockReturnValue(wire);
         const sentinel = makeAutomation({ title: "rebuilt" });
         withRebuiltExportDefinitionsSpy.mockReturnValue(sentinel);
 
@@ -303,7 +322,6 @@ describe("useScheduledEmailExportSettings — onDashboardAttachmentsChange", () 
         const existingPdf = makeDashboardExportDefinition("PDF");
 
         const { result, setEditedAutomation } = renderExportSettingsHook({
-            latestParametersWireRef: wireRef,
             storeFilters: true,
             effectiveDashboardFilters: [],
             effectiveDashboardFiltersByTab: { tab1: [] },
@@ -329,7 +347,7 @@ describe("useScheduledEmailExportSettings — onDashboardAttachmentsChange", () 
         expect(withRebuiltExportDefinitionsSpy).toHaveBeenCalledWith(
             stateBefore,
             [existingXlsx, generatedDashboardExportDefinition("PPTX")],
-            wireRef.current,
+            wire,
         );
         expect(returned).toBe(sentinel);
     });
@@ -357,7 +375,7 @@ describe("useScheduledEmailExportSettings — onDashboardAttachmentsChange", () 
 
 describe("useScheduledEmailExportSettings — onWidgetAttachmentsChange", () => {
     it("keeps definitions for formats still selected and adds new ones via the widget factory", () => {
-        const wireRef = makeWireRef(undefined);
+        getAutomationExportParametersByTabSpy.mockReturnValue(undefined);
         const sentinel = makeAutomation({ title: "rebuilt-widget" });
         withRebuiltExportDefinitionsSpy.mockReturnValue(sentinel);
 
@@ -367,7 +385,6 @@ describe("useScheduledEmailExportSettings — onWidgetAttachmentsChange", () => 
         const { result, setEditedAutomation } = renderExportSettingsHook({
             widget,
             insight,
-            latestParametersWireRef: wireRef,
             effectiveWidgetFilters: [],
             effectiveWidgetFiltersWithInsight: [],
             effectiveDashboardFilters: [],
@@ -397,7 +414,7 @@ describe("useScheduledEmailExportSettings — onWidgetAttachmentsChange", () => 
         expect(withRebuiltExportDefinitionsSpy).toHaveBeenCalledWith(
             stateBefore,
             [existingCsv, generatedWidgetExportDefinition("PNG")],
-            wireRef.current,
+            undefined,
         );
         expect(returned).toBe(sentinel);
     });
@@ -530,6 +547,69 @@ describe("useScheduledEmailExportSettings — onSlidesTemplateIdChange", () => {
 
         expect(returned.exportDefinitions?.[0].requestPayload.templateId).toBe("tpl-2");
         expect(returned.exportDefinitions?.[1]).toBe(widgetModePptx);
+    });
+});
+
+// ---------------------------------------------------------------------------
+// Case: setParametersWire (F1-2594) — the hook now owns the wire ref it reads from.
+// ---------------------------------------------------------------------------
+
+describe("useScheduledEmailExportSettings — setParametersWire (F1-2594)", () => {
+    it("writes both the ref-backed wire and the draft via setExportParametersByTab", () => {
+        const wire = { tab1: [{ id: "topN", value: "5", title: "Top N" }] };
+        const rebuiltAutomation = makeAutomation({ title: "rebuilt-with-wire" });
+        setExportParametersByTabSpy.mockReturnValue(rebuiltAutomation);
+
+        const { result, setEditedAutomation } = renderExportSettingsHook();
+
+        result.current.setParametersWire(wire);
+
+        expect(setEditedAutomation).toHaveBeenCalledTimes(1);
+        const updater = setEditedAutomation.mock.calls[0][0] as (
+            s: IAutomationMetadataObjectDefinition,
+        ) => IAutomationMetadataObjectDefinition;
+        const stateBefore = makeAutomation({ exportDefinitions: [] });
+        const returned = updater(stateBefore);
+
+        expect(setExportParametersByTabSpy).toHaveBeenCalledWith(stateBefore, wire);
+        expect(returned).toBe(rebuiltAutomation);
+    });
+
+    it("a wire written while no attachment is selected survives a later format selection", () => {
+        // Step 1: write the wire while exportDefinitions is empty (no attachment selected). The wire
+        // must land in the ref-backed store, not just in the (currently attachment-less) draft.
+        const wire = { tab1: [{ id: "topN", value: "5", title: "Top N" }] };
+        setExportParametersByTabSpy.mockReturnValue(
+            makeAutomation({ title: "rebuilt-with-wire", exportDefinitions: [] }),
+        );
+
+        const { result, setEditedAutomation } = renderExportSettingsHook({
+            effectiveDashboardFilters: [],
+            effectiveDashboardFiltersByTab: {},
+        });
+
+        result.current.setParametersWire(wire);
+        const setWireUpdater = setEditedAutomation.mock.calls[0][0] as (
+            s: IAutomationMetadataObjectDefinition,
+        ) => IAutomationMetadataObjectDefinition;
+        setWireUpdater(makeAutomation({ exportDefinitions: [] }));
+
+        // Step 2: a format is selected afterwards. withRebuiltExportDefinitions must be handed the
+        // ref-backed wire from step 1 (latestParametersWireRef.current), which the intervening draft
+        // rebuild does not carry.
+        withRebuiltExportDefinitionsSpy.mockReturnValue(makeAutomation({ title: "rebuilt-after-format" }));
+
+        result.current.onDashboardAttachmentsChange(["PDF"]);
+        const attachmentsUpdater = setEditedAutomation.mock.calls[1][0] as (
+            s: IAutomationMetadataObjectDefinition,
+        ) => IAutomationMetadataObjectDefinition;
+        attachmentsUpdater(makeAutomation({ exportDefinitions: [] }));
+
+        expect(withRebuiltExportDefinitionsSpy).toHaveBeenCalledWith(
+            expect.anything(),
+            expect.anything(),
+            wire,
+        );
     });
 });
 

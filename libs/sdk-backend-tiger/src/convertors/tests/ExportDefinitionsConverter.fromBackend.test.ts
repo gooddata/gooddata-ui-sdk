@@ -7,9 +7,9 @@ import {
     type AutomationAutomationSlidesExport,
     type AutomationAutomationTabularExport,
     type AutomationAutomationVisualExport,
+    type JsonApiAutomationInAttributesDashboardTabularExportsInner,
+    type JsonApiAutomationInAttributesRawExportsInner,
     type JsonApiExportDefinitionOutWithLinks,
-    type JsonApiWorkspaceAutomationOutAttributesDashboardTabularExportsInner,
-    type JsonApiWorkspaceAutomationOutAttributesRawExportsInner,
 } from "@gooddata/api-client-tiger";
 import {
     type IDashboardAttributeFilter,
@@ -111,7 +111,7 @@ describe("ExportDefinitionsConverter fromBackend", () => {
                     dashboard: "dashboardId",
                 },
             },
-        } as JsonApiWorkspaceAutomationOutAttributesRawExportsInner;
+        } as JsonApiAutomationInAttributesRawExportsInner;
 
         const result = convertToRawExportRequest(exportRequest);
 
@@ -131,7 +131,7 @@ describe("ExportDefinitionsConverter fromBackend", () => {
                     parametersByTab: { tabOwning: [parameter] },
                 },
             },
-        } as unknown as JsonApiWorkspaceAutomationOutAttributesRawExportsInner;
+        } as unknown as JsonApiAutomationInAttributesRawExportsInner;
 
         const result = convertToRawExportRequest(exportRequest);
 
@@ -195,7 +195,7 @@ describe("ExportDefinitionsConverter fromBackend", () => {
                 ],
                 settings: {},
             },
-        } as unknown as JsonApiWorkspaceAutomationOutAttributesDashboardTabularExportsInner;
+        } as unknown as JsonApiAutomationInAttributesDashboardTabularExportsInner;
 
         const result = convertDashboardTabularExportRequest(exportRequest);
         expect(result.type).toBe("visualizationObject");
@@ -371,7 +371,7 @@ describe("ExportDefinitionsConverter fromBackend", () => {
                 },
                 settings: {},
             },
-        } as JsonApiWorkspaceAutomationOutAttributesDashboardTabularExportsInner;
+        } as JsonApiAutomationInAttributesDashboardTabularExportsInner;
 
         const result = convertDashboardTabularExportRequest(
             exportRequest,
@@ -397,7 +397,7 @@ describe("ExportDefinitionsConverter fromBackend", () => {
                 },
                 settings: {},
             },
-        } as JsonApiWorkspaceAutomationOutAttributesDashboardTabularExportsInner;
+        } as JsonApiAutomationInAttributesDashboardTabularExportsInner;
 
         const result = convertDashboardTabularExportRequest(
             exportRequest,
@@ -421,7 +421,7 @@ describe("ExportDefinitionsConverter fromBackend", () => {
                 },
                 settings: {},
             },
-        } as JsonApiWorkspaceAutomationOutAttributesDashboardTabularExportsInner;
+        } as JsonApiAutomationInAttributesDashboardTabularExportsInner;
 
         const result = convertDashboardTabularExportRequest(
             exportRequest,
@@ -441,7 +441,7 @@ describe("ExportDefinitionsConverter fromBackend", () => {
                 dashboardId: "dashboardId",
                 settings: {},
             },
-        } as JsonApiWorkspaceAutomationOutAttributesDashboardTabularExportsInner;
+        } as JsonApiAutomationInAttributesDashboardTabularExportsInner;
 
         const result = convertDashboardTabularExportRequest(
             exportRequest,

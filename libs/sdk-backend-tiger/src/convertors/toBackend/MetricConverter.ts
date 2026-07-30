@@ -1,11 +1,9 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { type JsonApiMetricPostOptionalIdAttributes } from "@gooddata/api-client-tiger";
+import { type JsonApiMetricInAttributes } from "@gooddata/api-client-tiger";
 import { type IMeasureMetadataObjectDefinition } from "@gooddata/sdk-model";
 
-export function convertMetricToBackend(
-    measure: IMeasureMetadataObjectDefinition,
-): JsonApiMetricPostOptionalIdAttributes {
+export function convertMetricToBackend(measure: IMeasureMetadataObjectDefinition): JsonApiMetricInAttributes {
     return {
         title: measure.title,
         description: measure.description,

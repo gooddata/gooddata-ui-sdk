@@ -6,8 +6,6 @@ id: ht_use_react_component_in_angular_2.x
 draft: true
 ---
 
-<!-- Bear specific? -->
-
 To be able to use the visual components in your Angular 9+ environment, wrap each component into an Angular component, and then render the React component using React 18's `createRoot` API inside.
 
 Depending on your use case, it might be easier to integrate our [WebComponents library](../../../learn/web_components/) with your Angular app.
@@ -17,14 +15,14 @@ Depending on your use case, it might be easier to integrate our [WebComponents l
 Install the latest dependencies using either `npm` or `yarn`. Your application must be able to render React components from `@gooddata/sdk-ui-all` using a unique ID \(`uuid`\), and you also must be able to issue an `invariant` exception if the DOM node is not available.
 
 ```bash
-npm install --save uuid invariant react@^18.0.0 react-dom@^18.0.0 @gooddata/sdk-ui-all @gooddata/sdk-backend-bear
+npm install --save uuid invariant react@^18.0.0 react-dom@^18.0.0 @gooddata/sdk-ui-all @gooddata/sdk-backend-tiger
 npm install --save-dev @types/react @types/react-dom
 ```
 
 or
 
 ```bash
-yarn add uuid invariant react@^18.0.0 react-dom@^18.0.0 @gooddata/sdk-ui-all @gooddata/sdk-backend-bear
+yarn add uuid invariant react@^18.0.0 react-dom@^18.0.0 @gooddata/sdk-ui-all @gooddata/sdk-backend-tiger
 yarn add --dev @types/react @types/react-dom
 ```
 
@@ -54,10 +52,10 @@ import * as invariant from "invariant";
 
 import { Component, Input, OnInit, OnDestroy, OnChanges, AfterViewInit } from "@angular/core";
 import { Kpi, IKpiProps, newMeasure } from "@gooddata/sdk-ui-all";
-import bearFactory, { ContextDeferredAuthProvider } from "@gooddata/sdk-backend-bear";
+import tigerFactory, { ContextDeferredAuthProvider } from "@gooddata/sdk-backend-tiger";
 
 // Just for illustration, you would probably create this once in your app and import here
-const backend = bearFactory().withAuthentication(new ContextDeferredAuthProvider());
+const backend = tigerFactory().withAuthentication(new ContextDeferredAuthProvider());
 
 @Component({
     selector: "app-kpi",

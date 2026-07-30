@@ -7,8 +7,8 @@ import {
     type ArithmeticMeasureOperatorEnum,
     type ComparisonOperatorEnum,
     type JsonApiAutomationIn,
+    type JsonApiAutomationInAttributesAlert,
     type JsonApiAutomationOutAttributes,
-    type JsonApiWorkspaceAutomationOutAttributesAlert,
     type RelativeOperatorEnum,
 } from "@gooddata/api-client-tiger";
 import { type IRawExportCustomOverrides } from "@gooddata/sdk-backend-spi";
@@ -260,7 +260,7 @@ export function convertAutomation(
     };
 }
 
-export const convertAlert = (alert: IAutomationAlert): JsonApiWorkspaceAutomationOutAttributesAlert => {
+export const convertAlert = (alert: IAutomationAlert): JsonApiAutomationInAttributesAlert => {
     const { condition, execution } = alert;
 
     const { filters: convertedFilters } = convertAfmFilters(execution.measures, execution.filters, true);

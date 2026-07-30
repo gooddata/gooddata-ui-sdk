@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import {
     type JsonApiAttributeOutAttributesGranularityEnum,
@@ -7,8 +7,9 @@ import {
 import { NotSupported } from "@gooddata/sdk-backend-spi";
 import { type DateAttributeGranularity } from "@gooddata/sdk-model";
 
+// Need remove | undefined after feature is finished cq-2685
 type TigerToSdk = {
-    [key in JsonApiAttributeOutAttributesGranularityEnum]: DateAttributeGranularity;
+    [key in JsonApiAttributeOutAttributesGranularityEnum]: DateAttributeGranularity | undefined;
 };
 
 type SdkToTiger = {
@@ -56,17 +57,43 @@ const TigerToSdkGranularityMap: TigerToSdk = {
     ["FISCAL_YEAR"]: "GDC.time.fiscal_year",
     ["FISCAL_QUARTER"]: "GDC.time.fiscal_quarter",
     ["FISCAL_MONTH"]: "GDC.time.fiscal_month",
+
+    ["SECOND"]: undefined,
+    ["SECOND_OF_MINUTE"]: undefined,
+    ["SECOND_OF_DAY"]: undefined,
+    ["MINUTE_OF_DAY"]: undefined,
+    ["FISCAL_DAY_OF_FISCAL_WEEK"]: undefined,
+    ["FISCAL_DAY_OF_FISCAL_MONTH"]: undefined,
+    ["FISCAL_DAY_OF_FISCAL_QUARTER"]: undefined,
+    ["FISCAL_DAY_OF_FISCAL_SEMESTER"]: undefined,
+    ["FISCAL_DAY_OF_FISCAL_YEAR"]: undefined,
+    ["FISCAL_WEEK"]: undefined,
+    ["FISCAL_WEEK_OF_FISCAL_MONTH"]: undefined,
+    ["FISCAL_WEEK_OF_FISCAL_QUARTER"]: undefined,
+    ["FISCAL_WEEK_OF_FISCAL_SEMESTER"]: undefined,
+    ["FISCAL_WEEK_OF_FISCAL_YEAR"]: undefined,
+    ["FISCAL_MONTH_OF_FISCAL_QUARTER"]: undefined,
+    ["FISCAL_MONTH_OF_FISCAL_SEMESTER"]: undefined,
+    ["FISCAL_MONTH_OF_FISCAL_YEAR"]: undefined,
+    ["FISCAL_QUARTER_OF_FISCAL_SEMESTER"]: undefined,
+    ["FISCAL_QUARTER_OF_FISCAL_YEAR"]: undefined,
+    ["FISCAL_SEMESTER"]: undefined,
+    ["FISCAL_SEMESTER_OF_FISCAL_YEAR"]: undefined,
 };
 
 /**
- * Converts supported tiger backend granularities to values recognized by the SDK.
+ * Converts supported tiger backend granularities to values recognized by the SDK. Note that
+ * tiger granularities are a superset of those supported by the SDK (second and fiscal-calendar
+ * granularities have no SDK equivalent yet).
  *
  * @param granularity - tiger granularity
  */
 export function toSdkGranularity(
     granularity: JsonApiAttributeOutAttributesGranularityEnum,
 ): DateAttributeGranularity {
-    return TigerToSdkGranularityMap[granularity];
+    // Need remove ! after feature is finished cq-2685
+
+    return TigerToSdkGranularityMap[granularity]!;
 }
 
 const SdkToTigerGranularityMap: SdkToTiger = {
@@ -103,8 +130,6 @@ const SdkToTigerGranularityMap: SdkToTiger = {
 /**
  * Converts granularity values recognized by the SDK into granularities known by tiger. Note that
  * SDK granularities are superset of those supported by tiger.
- *
- * @throws NotSupport if the input granularity is not supported by tiger
  */
 export function toTigerGranularity(
     granularity: DateAttributeGranularity,

@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-tests-storybook",
-    "version": "11.50.0-alpha.3",
+    "version": "11.50.0-alpha.4",
     "description": "GoodData React components storybook",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",
@@ -33,9 +33,9 @@
         "neobackstop-prepare-local": "rm -rf neobackstop/debug/dist && cp -r dist neobackstop/debug && npm run scenario-extractor-local",
         "neobackstop-test-docker": "npm run neobackstop-prepare-docker && bash neobackstop/run-neobackstop-compose.sh test",
         "neobackstop-test-local": "npm run neobackstop-prepare-local && bash neobackstop/run-neobackstop-compose.sh test",
-        "scenario-extractor-docker": "DOCKER=true vite-node scripts/scenario-extractor.ts",
-        "scenario-extractor-local": "vite-node scripts/scenario-extractor.ts",
-        "story-generator": "vite-node scripts/story-generator.ts && npm run lint-fix",
+        "scenario-extractor-docker": "DOCKER=true node --import @oxc-node/core/register scripts/scenario-extractor.ts",
+        "scenario-extractor-local": "node --import @oxc-node/core/register scripts/scenario-extractor.ts",
+        "story-generator": "node --import @oxc-node/core/register scripts/story-generator.ts && npm run lint-fix",
         "storybook": "storybook dev -p 9001 -c .storybook",
         "storybook-serve": "bash stories/serve-storybook.sh",
         "stylelint": "stylelint '**/*.scss'",
@@ -66,6 +66,7 @@
         "@gooddata/sdk-ui-theme-provider": "workspace:*",
         "@gooddata/sdk-ui-web-components": "workspace:*",
         "@gooddata/stylelint-config": "workspace:*",
+        "@oxc-node/core": "0.1.0",
         "@storybook/addon-a11y": "10.4.1",
         "@storybook/builder-vite": "10.4.1",
         "@storybook/cli": "10.4.1",
@@ -117,7 +118,6 @@
         "typescript": "5.9.3",
         "uuid": "11.1.1",
         "vite": "8.0.16",
-        "vite-node": "^5.2.0",
         "vite-plugin-static-copy": "4.1.0"
     },
     "peerDependencies": {

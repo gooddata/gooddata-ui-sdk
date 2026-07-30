@@ -53,6 +53,11 @@ export const agentSwitchingEnabledSelector: (state: RootState) => boolean = crea
     (settings) => settings?.["enableGenAiAgentSwitching"] === true,
 );
 
+export const contextSetupEnabledSelector: (state: RootState) => boolean = createSelector(
+    settingsSelector,
+    (settings) => settings?.enableAiContextSetup === true,
+);
+
 // Whether the agent switcher is usable in the current chat context. It is never usable in preview
 // mode: the assistant is pinned to the single preview agent being built, so the switcher stays
 // hidden and the legacy input is used.
