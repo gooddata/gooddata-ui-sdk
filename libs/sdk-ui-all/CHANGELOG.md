@@ -1,6 +1,40 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Fri, 24 Jul 2026 12:57:57 GMT and should not be manually modified.
+This log was last generated on Thu, 30 Jul 2026 07:07:07 GMT and should not be manually modified.
+
+## 11.50.0
+
+Thu, 30 Jul 2026 07:07:07 GMT
+
+### Patches
+
+- sdk-ui-kit: Keep the parent Overlay open when selecting an option in a nested @ui dropdown.
+- remove enableArbitraryFilterAD/KD and enableMatchFilterAD/KD feature flags; arbitrary and match text attribute filters are now always enabled
+- sdk-ui-pluggable-host: restore the legacy behavior of bare /dashboards, /analyze, /metrics and /modeler URLs (no workspace in the hash) redirecting to the respective application in the user's first workspace instead of falling through to the generic root redirect
+- sdk-ui-kit: fix hyperlinks in insight/widget description tooltips being invisible (white-on-white) on the light bubble skin until hovered
+- sdk-ui-filters: fix the date filter's Static period/Relative period menu buttons truncating text into the submenu chevron icon when the dropdown is narrow
+
+### Updates
+
+- sdk-model, sdk-ui-charts, sdk-ui-ext: Add pie/donut data label position control (auto/inside/outside) with whole-chart adaptive auto mode and backplate composition, gated behind the enableDonutDataLabels feature flag
+- sdk-ui-catalog: Visualizations can now be edited the as-code way in catalog.
+- In-flight de-dupe getAttributesWithReferences so concurrent same-ref reads share a single bulk request
+- sdk-ui-all: Add date conditions (absolute/relative periods) to pivot table conditional formatting
+- sdk-ui-ext: Disable the conditional formatting Edit-rule Save button until the rule is changed.
+- sdk-ui-all: Fix pivot table dropping the active sort when its data source is recreated, e.g. after a conditional formatting change.
+- Fixed dropdowns and widget menus on dashboards being cut off near the viewport edges.
+- sdk-ui-gen-ai: fix chat object references being corrupted by Markdown emphasis parsing when an id contains an underscore-word-underscore pattern
+- Clarify automation dialog hook, context, and connector documentation (GDP-3167)
+- Extract scheduled-email effective-filters derivations into a hook (GDP-3167)
+- Extract scheduled-email export-settings into useScheduledEmailExportSettings hook (GDP-3167)
+- useScheduledEmailFilters owns the scheduled-email filters handlers (GDP-3167)
+- useScheduledEmailFormState owns the scheduled-email draft state (GDP-3167)
+- Extract scheduled-email field handlers into useScheduledEmailFormState hook (GDP-3167)
+- Extract scheduled-email form-validity into useScheduledEmailFormValidity hook (GDP-3167)
+- sdk-ui-vis-commons: Adopt the listbox/option ARIA pattern for the chart legend series switches (matching the geo chart legend precedent) so NVDA reliably enters focus mode for arrow-key navigation.
+- sdk-ui-dashboard: Fixed filter bar being announced as auto-expanded when it cannot expand.
+- sdk-ui-gen-ai: add data-testid to LandingScreen empty-state container so e2e can anchor on the empty conversation state
+- sdk-ui-kit: Qualify the generated app header stylesheet with .gd-header so branding/theme header colors are not reverted to the default black/white by a stylesheet injected into the document later (e.g. a lazy-loaded module-federated app re-shipping header.scss)
 
 ## 11.49.0
 
