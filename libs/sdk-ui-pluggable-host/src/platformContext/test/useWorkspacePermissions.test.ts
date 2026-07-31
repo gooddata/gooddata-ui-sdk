@@ -150,6 +150,60 @@ describe("useWorkspacePermissions", () => {
         await waitFor(() => expect(result.current.state).toBe("error"));
     });
 
+    it("never reports the previous workspace's permissions after workspaceId changes", async () => {
+        const backend = mockBackend(vi.fn().mockResolvedValue(stubPermissions));
+        const renderedStates: ReturnType<typeof useWorkspacePermissions>[] = [];
+
+        const { result, rerender } = renderHook(
+            ({ wid }: { wid: string }) => {
+                const state = useWorkspacePermissions(backend, wid);
+                renderedStates.push(state);
+                return state;
+            },
+            { initialProps: { wid: "ws-first" } },
+        );
+
+        await waitFor(() => expect(result.current.state).toBe("ready"));
+        renderedStates.length = 0;
+
+        rerender({ wid: "ws-second" });
+
+        // The fetch effect for ws-second runs after this render, so the state stored at this point
+        // still describes ws-first — it must not leak out as ready permissions for ws-second.
+        expect(renderedStates[0]?.state).toBe("loading");
+        expect(renderedStates.some((state) => state.state === "ready")).toBe(false);
+
+        // Let the ws-second fetch settle inside act() so its state update is not reported as an
+        // unwrapped update after the test ends.
+        await waitFor(() => expect(result.current.state).toBe("ready"));
+    });
+
+    it("never reports the previous backend's permissions after the backend changes", async () => {
+        const firstBackend = mockBackend(vi.fn().mockResolvedValue(stubPermissions));
+        const secondBackend = mockBackend(vi.fn().mockResolvedValue(stubPermissions));
+        const renderedStates: ReturnType<typeof useWorkspacePermissions>[] = [];
+
+        const { result, rerender } = renderHook(
+            ({ backend }: { backend: IAnalyticalBackend }) => {
+                const state = useWorkspacePermissions(backend, "ws-123");
+                renderedStates.push(state);
+                return state;
+            },
+            { initialProps: { backend: firstBackend } },
+        );
+
+        await waitFor(() => expect(result.current.state).toBe("ready"));
+        renderedStates.length = 0;
+
+        // Same workspace, new backend (e.g. a re-authenticated session) — the stored state still
+        // describes the previous backend until its effect refetches.
+        rerender({ backend: secondBackend });
+
+        expect(renderedStates[0]?.state).toBe("loading");
+
+        await waitFor(() => expect(result.current.state).toBe("ready"));
+    });
+
     it("returns the same idle object reference across re-renders (no churn)", () => {
         const { result, rerender } = renderHook(() => useWorkspacePermissions(undefined, undefined));
 

@@ -5,10 +5,29 @@ import { useEffect, useMemo } from "react";
 import cx from "classnames";
 import { defineMessages, useIntl } from "react-intl";
 
-import { Dropdown, UiButton, UiIcon, UiMenu, UiSubmenuHeader } from "@gooddata/sdk-ui-kit";
+import { type GenAIChatEffort } from "@gooddata/sdk-model";
+import {
+    DefaultUiMenuInteractiveItemWrapper,
+    Dropdown,
+    type IUiMenuInteractiveItem,
+    type IUiMenuInteractiveItemWrapperProps,
+    type IUiMenuItem,
+    UiButton,
+    UiIcon,
+    UiMenu,
+    UiSubmenuHeader,
+    typedUiMenuContextStore,
+} from "@gooddata/sdk-ui-kit";
 
 import { type GenAIAgent, type IChatConversationLocal } from "../model.js";
 
+import {
+    GenAIChatReasoningMenuRow,
+    REASONING_MENU_ITEM_ID,
+    type ReasoningMenuItemData,
+    useReasoningMenuItems,
+    useSelectedReasoningLabel,
+} from "./GenAIChatReasoningMenu.js";
 import { getEffectiveSelectedAgentId, selectDefaultAgentId } from "./utils/agentSelection.js";
 
 const msgs = defineMessages({
@@ -18,10 +37,13 @@ const msgs = defineMessages({
     loading: {
         id: "gd.gen-ai.agents.loading",
     },
+    close: {
+        id: "gd.gen-ai.close",
+    },
 });
 
 type AgentMenuItemData = {
-    interactive: GenAIAgent;
+    interactive: { type: "agent"; agent: GenAIAgent } | ReasoningMenuItemData;
 };
 
 export type GenAIChatAgentDropdownProps = {
@@ -32,6 +54,9 @@ export type GenAIChatAgentDropdownProps = {
     isDisabled?: boolean;
     isLoading?: boolean;
     onSelectAgent: (agentId: string | undefined, options?: { showChangeEvent?: boolean }) => void;
+    reasoningEnabled?: boolean;
+    selectedEffort?: GenAIChatEffort;
+    onSelectEffort?: (effort: GenAIChatEffort) => void;
 };
 
 export function GenAIChatAgentDropdown({
@@ -42,6 +67,9 @@ export function GenAIChatAgentDropdown({
     isDisabled,
     isLoading,
     onSelectAgent,
+    reasoningEnabled = false,
+    selectedEffort = "MEDIUM",
+    onSelectEffort,
 }: GenAIChatAgentDropdownProps) {
     const intl = useIntl();
     const effectiveSelectedAgentId = getEffectiveSelectedAgentId({
@@ -52,6 +80,12 @@ export function GenAIChatAgentDropdown({
     const selectedAgent = agents.find((agent) => agent.id === effectiveSelectedAgentId);
     const agentLabel = intl.formatMessage(msgs.agent);
     const loadingLabel = `${intl.formatMessage(msgs.loading)}…`;
+    const reasoningItems = useReasoningMenuItems({
+        enabled: reasoningEnabled,
+        selectedEffort,
+        onSelectEffort,
+    });
+    const reasoningValueLabel = useSelectedReasoningLabel(selectedEffort);
 
     useEffect(() => {
         const isConversationAgentAvailable =
@@ -84,34 +118,34 @@ export function GenAIChatAgentDropdown({
         }
     }, [agents, conversationAgentId, conversations, onSelectAgent, selectedAgentId]);
 
-    const items = useMemo(
-        () =>
-            agents.map((agent) => {
-                const isSelected = agent.id === effectiveSelectedAgentId;
+    const items = useMemo<IUiMenuItem<AgentMenuItemData>[]>(() => {
+        const agentItems: IUiMenuItem<AgentMenuItemData>[] = agents.map((agent) => {
+            const isSelected = agent.id === effectiveSelectedAgentId;
 
-                return {
-                    type: "interactive" as const,
-                    id: agent.id,
-                    stringTitle: agent.title,
-                    isSelected,
-                    isDisabled: false,
-                    data: agent,
-                    tooltip: agent.description || undefined,
-                    ariaAttributes: agent.description
-                        ? { "aria-label": `${agent.title}. ${agent.description}` }
-                        : undefined,
-                    iconRight: agent.description ? (
-                        <UiIcon
-                            type="question"
-                            size={12}
-                            color="complementary-5"
-                            accessibilityConfig={{ ariaHidden: true }}
-                        />
-                    ) : undefined,
-                };
-            }),
-        [agents, effectiveSelectedAgentId],
-    );
+            return {
+                type: "interactive",
+                id: agent.id,
+                stringTitle: agent.title,
+                isSelected,
+                isDisabled: false,
+                data: { type: "agent", agent },
+                tooltip: agent.description || undefined,
+                ariaAttributes: agent.description
+                    ? { "aria-label": `${agent.title}. ${agent.description}` }
+                    : undefined,
+                iconRight: agent.description ? (
+                    <UiIcon
+                        type="question"
+                        size={12}
+                        color="complementary-5"
+                        accessibilityConfig={{ ariaHidden: true }}
+                    />
+                ) : undefined,
+            };
+        });
+
+        return [...agentItems, ...reasoningItems];
+    }, [agents, effectiveSelectedAgentId, reasoningItems]);
 
     return (
         <>
@@ -130,6 +164,7 @@ export function GenAIChatAgentDropdown({
                 renderButton={({ isOpen, toggleDropdown, accessibilityConfig }) => (
                     <UiButton
                         label={isLoading ? loadingLabel : (selectedAgent?.title ?? agentLabel)}
+                        badgeAfter={!isLoading && reasoningEnabled ? reasoningValueLabel : undefined}
                         variant="dropdownInline"
                         size="small"
                         iconAfter={isLoading ? undefined : isOpen ? "navigateUp" : "navigateDown"}
@@ -150,10 +185,14 @@ export function GenAIChatAgentDropdown({
                         containerTopPadding="small"
                         containerBottomPadding="small"
                         MenuHeader={AgentMenuHeader}
+                        InteractiveItemWrapper={AgentMenuItemWrapper}
+                        onClose={closeDropdown}
                         ariaAttributes={ariaAttributes}
                         onSelect={(item) => {
-                            onSelectAgent(item.data.id, { showChangeEvent: true });
-                            closeDropdown();
+                            if (item.data.type === "agent") {
+                                onSelectAgent(item.data.agent.id, { showChangeEvent: true });
+                                closeDropdown();
+                            }
                         }}
                     />
                 )}
@@ -164,6 +203,27 @@ export function GenAIChatAgentDropdown({
 
 function AgentMenuHeader() {
     const intl = useIntl();
+    const { useContextStore, createSelector } = typedUiMenuContextStore();
+    const onClose = useContextStore(createSelector((ctx) => ctx.onClose));
 
-    return <UiSubmenuHeader title={intl.formatMessage(msgs.agent)} height="medium" />;
+    return (
+        <UiSubmenuHeader
+            title={intl.formatMessage(msgs.agent)}
+            height="medium"
+            onClose={onClose}
+            closeAriaLabel={intl.formatMessage(msgs.close)}
+        />
+    );
+}
+
+function AgentMenuItemWrapper(props: IUiMenuInteractiveItemWrapperProps<AgentMenuItemData>) {
+    if (props.item.id === REASONING_MENU_ITEM_ID) {
+        return (
+            <GenAIChatReasoningMenuRow
+                item={props.item as unknown as IUiMenuInteractiveItem<{ interactive: ReasoningMenuItemData }>}
+            />
+        );
+    }
+
+    return <DefaultUiMenuInteractiveItemWrapper {...props} />;
 }

@@ -519,7 +519,10 @@ a.gd-list-help-menu-item.gd-list-item {
 }
 
 .gd-header-chat {
-    --gd-icon-fill-color: #fff;
+    // Follow the header foreground colour instead of hardcoding white, which was only correct
+    // while the header was always black. `.gd-header-button` sets `color: inherit`, so this
+    // resolves to the (themeable) colour AppHeader puts on the header root.
+    --gd-icon-fill-color: currentColor;
     height: 100%;
     margin: 0;
     width: 32px;
@@ -685,12 +688,14 @@ a.gd-list-help-menu-item.gd-list-item {
 .anchor-tag-header-help,
 .anchor-tag-header-help:active,
 .anchor-tag-header-help:focus {
-    color: #fff;
+    // Inherit the themeable header foreground rather than hardcoding white. Applies only when
+    // `helpRedirectUrl` is configured (see HeaderHelp.tsx); the dropdown variant never had this rule.
+    color: inherit;
     opacity: 0.8;
     text-decoration: none;
 
     &:hover {
-        color: #fff;
+        color: inherit;
         text-decoration: none;
         opacity: 1;
     }

@@ -57,13 +57,12 @@ export function DashboardAttachments({
     const {
         available: availableAttachments,
         visibleSelected: visibleSelectedAttachments,
-        hiddenSelected: hiddenSelectedFormats,
-    } = partitionAttachments(
-        ALL_DASHBOARD_ATTACHMENTS,
-        SLIDE_DASHBOARD_ATTACHMENTS,
-        selectedAttachments,
-        isSlidesExportEnabled,
-    );
+        buildNextSelection,
+    } = partitionAttachments({
+        all: ALL_DASHBOARD_ATTACHMENTS,
+        selected: selectedAttachments,
+        excluded: isSlidesExportEnabled ? [] : SLIDE_DASHBOARD_ATTACHMENTS,
+    });
     const attachmentListRef = useRef<HTMLDivElement>(null);
     const addButtonRef = useRef<HTMLButtonElement | null>(null);
     const [announcement, setAnnouncement] = useState("");
@@ -114,9 +113,9 @@ export function DashboardAttachments({
 
     const handleChange = (attachments: { type: DashboardAttachmentType; selected: boolean }[]) => {
         const formats = attachments
-            .filter((attachment) => attachment.selected && availableAttachments.includes(attachment.type))
+            .filter((attachment) => attachment.selected)
             .map((attachment) => attachment.type);
-        handleDashboardAttachmentSelectionSave([...formats, ...hiddenSelectedFormats]);
+        handleDashboardAttachmentSelectionSave(buildNextSelection(formats));
         // Focus add button after state update causes remount (returnFocusTo ref becomes stale)
         requestAnimationFrame(() => {
             addButtonRef.current?.focus();

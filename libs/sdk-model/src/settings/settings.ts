@@ -1080,6 +1080,11 @@ export interface IFeatureFlags {
     enableGenAiAgentSwitching?: boolean;
 
     /**
+     * Enable the reasoning-effort selector in the AI Assistant chat input.
+     */
+    enableGenAiReasoningEffort?: boolean;
+
+    /**
      * Enable observability in AI Assistant.
      */
     enableGenAiObservability?: boolean;

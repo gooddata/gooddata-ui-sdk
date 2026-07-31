@@ -88,6 +88,7 @@ export enum TigerFeaturesNames {
     EnableGenAIReasoningVisibility = "enableGenAIReasoningVisibility",
     EnableAiAgenticConversations = "enableAiAgenticConversations",
     EnableGenAiAgentSwitching = "enableGenAiAgentSwitching",
+    EnableGenAiReasoningEffort = "enableGenAiReasoningEffort",
     EnableGenAiObservability = "enableGenAiObservability",
     EnableGenAiInteractionIntelligence = "enableGenAiInteractionIntelligence",
     EnableGenAiAgenticDataShareOptOut = "enableGenAiAgenticDataShareOptOut",
@@ -212,6 +213,7 @@ export type ITigerFeatureFlags = {
     enableAiAssistantEmbedding: (typeof FeatureFlagsValues)["enableAiAssistantEmbedding"][number];
     enableAiAgenticMultiConversations: (typeof FeatureFlagsValues)["enableAiAgenticMultiConversations"][number];
     enableGenAiAgentSwitching: (typeof FeatureFlagsValues)["enableGenAiAgentSwitching"][number];
+    enableGenAiReasoningEffort: (typeof FeatureFlagsValues)["enableGenAiReasoningEffort"][number];
     enableGenAiObservability: (typeof FeatureFlagsValues)["enableGenAiObservability"][number];
     enableGenAiInteractionIntelligence: (typeof FeatureFlagsValues)["enableGenAiInteractionIntelligence"][number];
     enableGenAIReasoningVisibility: (typeof FeatureFlagsValues)["enableGenAIReasoningVisibility"][number];
@@ -279,7 +281,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDataProfiling: false,
     enableExperimentalFeaturesUI: false,
     enableSingleStoreDataSource: false,
-    enableOidcAuth: false,
+    enableOidcAuth: true,
     enableSemanticSearch: false,
     enableCatalogSmartSearchResults: true,
     enableGenAIChat: false,
@@ -334,6 +336,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAiAssistantEmbedding: false,
     enableAiAgenticMultiConversations: false,
     enableGenAiAgentSwitching: false,
+    enableGenAiReasoningEffort: false,
     enableGenAiObservability: false,
     enableGenAiInteractionIntelligence: false,
     enableGenAIReasoningVisibility: false,
@@ -456,6 +459,7 @@ export const FeatureFlagsValues = {
     enableAiAssistantEmbedding: [true, false] as const,
     enableAiAgenticMultiConversations: [true, false] as const,
     enableGenAiAgentSwitching: [true, false] as const,
+    enableGenAiReasoningEffort: [true, false] as const,
     enableGenAiObservability: [true, false] as const,
     enableGenAiInteractionIntelligence: [true, false] as const,
     enableGenAIReasoningVisibility: [false, true] as const,

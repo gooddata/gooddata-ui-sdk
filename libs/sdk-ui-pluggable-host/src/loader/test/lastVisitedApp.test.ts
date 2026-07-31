@@ -1,15 +1,16 @@
 // (C) 2026 GoodData Corporation
 
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 
 import { getLastVisitedApp, setLastVisitedApp } from "../lastVisitedApp.js";
+
+import { withFailingStorage } from "./failingStorage.js";
 
 const STORAGE_KEY = "gdc-host-lastVisitedApp";
 
 describe("lastVisitedApp", () => {
     afterEach(() => {
         localStorage.removeItem(STORAGE_KEY);
-        vi.restoreAllMocks();
     });
 
     describe("getLastVisitedApp", () => {
@@ -33,10 +34,14 @@ describe("lastVisitedApp", () => {
         });
 
         it("returns undefined when localStorage.getItem throws", () => {
-            vi.spyOn(Storage.prototype, "getItem").mockImplementation(() => {
-                throw new Error("SecurityError");
+            let result: string | undefined = "not-read";
+
+            const failedCalls = withFailingStorage("getItem", () => {
+                result = getLastVisitedApp("workspace");
             });
-            expect(getLastVisitedApp("workspace")).toBeUndefined();
+
+            expect(result).toBeUndefined();
+            expect(failedCalls).toBe(1);
         });
     });
 
@@ -67,10 +72,11 @@ describe("lastVisitedApp", () => {
         });
 
         it("silently ignores errors when localStorage.setItem throws", () => {
-            vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
-                throw new Error("QuotaExceededError");
+            const failedCalls = withFailingStorage("setItem", () => {
+                expect(() => setLastVisitedApp("workspace", "gdc-dashboards")).not.toThrow();
             });
-            expect(() => setLastVisitedApp("workspace", "gdc-dashboards")).not.toThrow();
+
+            expect(failedCalls).toBe(1);
         });
 
         it("overwrites corrupt JSON with a fresh record", () => {

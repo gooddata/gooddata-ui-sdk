@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-pluggable-host: Remember the last visited workspace and land in it when the URL carries no workspace; stop reporting a previous workspace's permissions while a workspace switch is in flight.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

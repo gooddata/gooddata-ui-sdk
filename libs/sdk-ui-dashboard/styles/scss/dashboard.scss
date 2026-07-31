@@ -337,6 +337,12 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
     .item-headline {
         text-align: variables.$gd-dashboards-content-kpiWidget-title-textAlign;
         color: variables.$gd-dashboards-content-kpiWidget-title-color;
+
+        // reach the h3 directly, so bare element typography rules (e.g. from co-hosted apps)
+        // cannot override the inherited themed color
+        .item-headline-inner {
+            color: inherit;
+        }
     }
 }
 
@@ -373,6 +379,12 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
     max-height: (variables.$item-headline-lineHeight + variables.$item-headline-padding-vertical) * 2;
     text-align: variables.$gd-dashboards-content-widget-title-textAlign;
     color: variables.$gd-dashboards-content-widget-title-color;
+
+    // reach the h3 directly, so bare element typography rules (e.g. from co-hosted apps)
+    // cannot override the inherited themed color
+    .item-headline-inner {
+        color: inherit;
+    }
 }
 
 .item-headline-inner {

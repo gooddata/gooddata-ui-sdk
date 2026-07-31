@@ -6,7 +6,7 @@ import cx from "classnames";
 import { camelCase } from "lodash-es";
 import { useIntl } from "react-intl";
 
-import { CustomizableCheckmark, useMediaQuery } from "@gooddata/sdk-ui-kit";
+import { CustomizableCheckmark, ScopedIdStore, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
 import { getElementPrimaryTitle, getElementTitle } from "../../utils.js";
 
@@ -27,6 +27,8 @@ export function SingleSelectionAttributeFilterElementsSelectItem({
     primaryLabelTitle,
 }: IAttributeFilterElementsSelectItemProps) {
     const intl = useIntl();
+
+    const makeId = ScopedIdStore.useContextStoreOptional((ctx) => ctx.makeId);
 
     // Modify item click behavior to select only this particular item.
     const onItemClick = useCallback(
@@ -73,10 +75,8 @@ export function SingleSelectionAttributeFilterElementsSelectItem({
                 primaryLabelTitle={primaryLabelTitle}
                 itemPrimaryTitle={itemPrimaryTitle}
                 renderAsCell={false}
-                ariaLabel={intl.formatMessage(
-                    { id: "attributesDropdown.alternativeValueTooltipShort" },
-                    { label: primaryLabelTitle, value: itemPrimaryTitle },
-                )}
+                isFocused={!!focusedAction}
+                id={makeId?.({ item, specifier: "questionMark" })}
             />
         </div>
     );

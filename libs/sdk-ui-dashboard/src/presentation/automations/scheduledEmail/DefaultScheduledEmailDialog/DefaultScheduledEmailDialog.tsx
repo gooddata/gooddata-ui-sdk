@@ -177,6 +177,7 @@ export function ScheduledMailDialogRenderer({
         isCrossFiltering,
         isExecutionTimestampMode,
         isSlidesExportEnabled,
+        isAccessibilityModeEnabled,
         defaultPdfPageSize,
     } = useDefaultScheduledEmailDialogData();
 
@@ -631,6 +632,7 @@ export function ScheduledMailDialogRenderer({
                                                 csvRawSettings={csvRawSettings}
                                                 onCsvRawSettingsChange={onCsvRawSettingsChange}
                                                 isSlidesExportEnabled={isSlidesExportEnabled}
+                                                isAccessibilityModeEnabled={isAccessibilityModeEnabled}
                                                 defaultPdfPageSize={defaultPdfPageSize}
                                                 exportTemplates={exportTemplates}
                                                 slidesTemplateIds={slidesTemplateIds}
@@ -755,6 +757,7 @@ function useDefaultScheduledEmailDialogData() {
         isCrossFiltering,
         isExecutionTimestampMode,
         isSlidesExportEnabled: enableSlideshowExports,
+        isAccessibilityModeEnabled: settings?.enableAccessibilityMode === true,
         defaultPdfPageSize,
     };
 }

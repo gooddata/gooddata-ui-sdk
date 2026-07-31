@@ -1366,6 +1366,7 @@ export type {
     IGenAIChangeAnalysisParams,
     GenAIChatRoutingUseCase,
     GenAIChatInteractionUserFeedback,
+    GenAIChatEffort,
     GenAIChatInteractionUserVisualisation,
     GenAIChatRole,
     GenAIVisualizationType,

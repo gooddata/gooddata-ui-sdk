@@ -132,7 +132,7 @@ export function AttributeFilterElementsSelect({
             itemHeight={itemHeight}
             getItemKey={getElementKey}
             getItemTitle={(item) => getElementTitle(item, intl)}
-            isItemQuestionMarkEnabled={(item) => !!getElementPrimaryTitle(item)}
+            isItemQuestionMarkEnabled={(item) => !!primaryLabelTitle && !!getElementPrimaryTitle(item)}
             isInverted={isInverted}
             selectedItems={selectedItems}
             selectedItemsLimit={MAX_SELECTION_SIZE}

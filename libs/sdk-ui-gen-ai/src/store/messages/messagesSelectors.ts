@@ -2,6 +2,8 @@
 
 import { createSelector } from "@reduxjs/toolkit";
 
+import { type GenAIChatEffort } from "@gooddata/sdk-model";
+
 import { type IChatConversationLocal, type IChatConversationLocalItem, type Message } from "../../model.js";
 import { type RootState } from "../types.js";
 
@@ -98,6 +100,11 @@ export const conversationSelector: (state: RootState) => IChatConversationLocal 
 export const selectedAgentIdSelector: (state: RootState) => string | undefined = createSelector(
     messagesSliceSelector,
     (state) => state.selectedAgentId,
+);
+
+export const selectedEffortSelector: (state: RootState) => GenAIChatEffort = createSelector(
+    messagesSliceSelector,
+    (state) => state.selectedEffort,
 );
 
 export const agentsSelector = createSelector(messagesSliceSelector, (state) => state.agents);

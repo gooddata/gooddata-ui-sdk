@@ -9467,7 +9467,7 @@ export function useAsyncTableResponsiveColumns<T>(columns: Array<IUiAsyncTableCo
 };
 
 // @internal
-export function useCloseOnEscape(isOpen: boolean, onClose: () => void): void;
+export function useCloseOnEscape(isOpen: boolean, onClose: () => void, capture?: boolean): void;
 
 // @internal
 export function useCloseOnMouseDrag(isOpen: boolean, onClose: () => void): void;

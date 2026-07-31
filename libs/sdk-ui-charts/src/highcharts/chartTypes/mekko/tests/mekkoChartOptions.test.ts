@@ -2,10 +2,15 @@
 
 import { describe, expect, it } from "vitest";
 
-import { VisualizationTypes } from "@gooddata/sdk-ui";
+import { type DataViewFacade, VisualizationTypes } from "@gooddata/sdk-ui";
 
+import { type IUnwrappedAttributeHeadersWithItems } from "../../../typings/mess.js";
 import { type ISeriesItem } from "../../../typings/unsafe.js";
-import { dropZeroWidthMekkoColumns, isMekkoPercentBlockedByNegatives } from "../mekkoChartOptions.js";
+import {
+    collapseMekkoViewByItems,
+    dropZeroWidthMekkoColumns,
+    isMekkoPercentBlockedByNegatives,
+} from "../mekkoChartOptions.js";
 
 const series = (points: Array<{ y?: number; z?: number }>): ISeriesItem =>
     ({ data: points }) as unknown as ISeriesItem;
@@ -76,5 +81,57 @@ describe("dropZeroWidthMekkoColumns", () => {
 
         expect(result.series).toBe(input);
         expect(result.categories).toBe(categories);
+    });
+});
+
+describe("collapseMekkoViewByItems", () => {
+    const viewBy = (...names: string[]): IUnwrappedAttributeHeadersWithItems =>
+        ({
+            localIdentifier: "view",
+            items: names.map((name) => ({ attributeHeaderItem: { name, uri: `/${name}` } })),
+        }) as unknown as IUnwrappedAttributeHeadersWithItems;
+
+    const measureGroupDescriptor = (measureCount: number) => ({
+        measureGroupHeader: {
+            items: Array.from({ length: measureCount }, (_, index) => ({
+                measureHeaderItem: { localIdentifier: `m${index}` },
+            })),
+        },
+    });
+
+    const attributeDescriptor = { attributeHeader: { localIdentifier: "view" } };
+
+    const dvWithViewByDimensionHeaders = (headers: unknown[]): DataViewFacade =>
+        ({
+            meta: () => ({ dimensions: () => [{ headers: [] }, { headers }] }),
+        }) as unknown as DataViewFacade;
+
+    it("collapses view × measure interleaved items to one item per view value", () => {
+        const dv = dvWithViewByDimensionHeaders([attributeDescriptor, measureGroupDescriptor(2)]);
+
+        const result = collapseMekkoViewByItems(dv, viewBy("A", "A", "B", "B"));
+
+        expect(result?.items.map((item) => item.attributeHeaderItem.name)).toEqual(["A", "B"]);
+        expect(result?.localIdentifier).toBe("view");
+    });
+
+    it("returns items unchanged when the view-by dimension holds no measure group (non-stacked layout)", () => {
+        const dv = dvWithViewByDimensionHeaders([attributeDescriptor]);
+        const viewByAttribute = viewBy("A", "B");
+
+        expect(collapseMekkoViewByItems(dv, viewByAttribute)).toBe(viewByAttribute);
+    });
+
+    it("returns items unchanged with a single measure (stride 1)", () => {
+        const dv = dvWithViewByDimensionHeaders([attributeDescriptor, measureGroupDescriptor(1)]);
+        const viewByAttribute = viewBy("A", "B");
+
+        expect(collapseMekkoViewByItems(dv, viewByAttribute)).toBe(viewByAttribute);
+    });
+
+    it("passes through an undefined view-by attribute", () => {
+        const dv = dvWithViewByDimensionHeaders([measureGroupDescriptor(2)]);
+
+        expect(collapseMekkoViewByItems(dv, undefined)).toBeUndefined();
     });
 });

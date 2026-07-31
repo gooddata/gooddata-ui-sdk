@@ -12,6 +12,7 @@ import { DataValue } from '@gooddata/sdk-model';
 import { DateAttributeGranularity } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import type { FilterContextItem } from '@gooddata/sdk-model';
+import type { GenAIChatEffort } from '@gooddata/sdk-model';
 import type { GenAIChatInteractionUserFeedback } from '@gooddata/sdk-model';
 import type { GenAIChatInteractionUserVisualisation } from '@gooddata/sdk-model';
 import type { GenAIObjectType } from '@gooddata/sdk-model';
@@ -827,6 +828,7 @@ export interface IChatConversationThreadQuery {
     stream(): ReadableStream<IChatConversationItem | IChatConversationError>;
     withAllowedRelationshipTypes(relationshipTypes?: IAllowedRelationshipType[]): IChatConversationThreadQuery;
     withCreateLimit(createLimit: number): IChatConversationThreadQuery;
+    withEffort(effort?: GenAIChatEffort): IChatConversationThreadQuery;
     withExcludeTags(excludeTags?: string[]): IChatConversationThreadQuery;
     withIncludeTags(includeTags?: string[]): IChatConversationThreadQuery;
     withObjectTypes(objectTypes?: GenAIObjectType[]): IChatConversationThreadQuery;

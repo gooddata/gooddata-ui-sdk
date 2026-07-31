@@ -4,8 +4,15 @@ import { type ApplicationScope, type PluggableApplicationRegistryItem } from "@g
 import { type IPlatformContext } from "@gooddata/sdk-pluggable-application-model";
 
 import { debugLog } from "../debug.js";
+import { type WorkspaceAccess } from "../platformContext/workspaceAccess.js";
 
 import { getLastVisitedApp, setLastVisitedApp } from "./lastVisitedApp.js";
+import {
+    type ILastVisitedWorkspaceOwner,
+    clearLastVisitedWorkspace,
+    getLastVisitedWorkspace,
+    setLastVisitedWorkspace,
+} from "./lastVisitedWorkspace.js";
 import { mapBareLegacyPathToApp } from "./legacyRedirect.js";
 import { getActiveInternalApplication, getApplicationHref } from "./routing.js";
 
@@ -31,6 +38,11 @@ export interface IResolveRedirectTargetOptions {
     search?: string;
     /** Fetches the first workspace ID for the current user. */
     fetchFirstWorkspaceId: () => Promise<string | undefined>;
+    /**
+     * Resolves whether the given workspace can still be opened by the current user.
+     * Used to validate the remembered workspace before redirecting into it.
+     */
+    getWorkspaceAccess: (workspaceId: string) => Promise<WorkspaceAccess>;
 }
 
 /**
@@ -60,6 +72,67 @@ function isAtScopeRoot(pathname: string, scope: ApplicationScope, workspaceId?: 
     // TypeScript exhaustive check — catches unhandled ApplicationScope additions at compile time
     const _: never = scope;
     throw new Error(`[host-runtime/redirectLogic] Unhandled application scope: ${_}`);
+}
+
+/**
+ * Resolves the workspace to land in when the URL carries none: the workspace this user
+ * visited last, falling back to the first workspace they can see.
+ *
+ * The remembered workspace is validated before it is used — it may have been deleted or
+ * the user's access to it revoked since it was stored. Only a workspace the user provably
+ * cannot open is forgotten; a failed check ("unknown") keeps the memory, because losing the
+ * user's workspace over a network blip is worse than letting the workspace route retry the
+ * same request and report the real error.
+ */
+async function resolveLandingWorkspaceId(
+    owner: ILastVisitedWorkspaceOwner,
+    {
+        fetchFirstWorkspaceId,
+        getWorkspaceAccess,
+    }: Pick<IResolveRedirectTargetOptions, "fetchFirstWorkspaceId" | "getWorkspaceAccess">,
+): Promise<string | undefined> {
+    const rememberedWorkspaceId = getLastVisitedWorkspace(owner);
+
+    if (rememberedWorkspaceId) {
+        const access = await getWorkspaceAccess(rememberedWorkspaceId);
+        if (access === "forbidden") {
+            debugLog(
+                `[host-runtime/redirect] last visited workspace ${rememberedWorkspaceId} is not accessible — forgetting it`,
+            );
+            clearLastVisitedWorkspace(owner, rememberedWorkspaceId);
+        } else {
+            debugLog(
+                `[host-runtime/redirect] using last visited workspace → ${rememberedWorkspaceId} (access=${access})`,
+            );
+            return rememberedWorkspaceId;
+        }
+    }
+
+    debugLog("[host-runtime/redirect] fetching first workspace");
+    return fetchFirstWorkspaceId();
+}
+
+/**
+ * Remembers the workspace the user is in — reached by link, route change or the header
+ * workspace picker — so a later landing on a workspace-less URL returns here instead of the
+ * user's first workspace.
+ *
+ * Called only from the paths that resolved to an app the user may open, never from the
+ * not-found paths: a workspace whose URL maps to no app, or that grants the user no app at
+ * all, would otherwise stay remembered and send every later workspace-less landing back to
+ * the same 404 — which has no header, so there is no workspace picker to escape with.
+ *
+ * Also gated on loaded permissions: an inaccessible workspace reaches this point with
+ * `workspacePermissions` undefined (useWorkspacePermissions reports "forbidden" for 403/404).
+ */
+function rememberWorkspace(
+    owner: ILastVisitedWorkspaceOwner,
+    workspaceId: string | undefined,
+    ctx: IPlatformContext,
+): void {
+    if (workspaceId && ctx.workspacePermissions) {
+        setLastVisitedWorkspace(owner, workspaceId);
+    }
 }
 
 /**
@@ -132,9 +205,16 @@ export async function resolveRedirectTarget({
     pathname,
     search,
     fetchFirstWorkspaceId,
+    getWorkspaceAccess,
 }: IResolveRedirectTargetOptions): Promise<string | null> {
     const scope = ctx.currentApplicationScope;
     const workspaceId = ctx.currentWorkspaceId;
+    // The user id is the same identifier the host uses elsewhere (e.g. for the workspace
+    // picker); the organization keeps entries apart when one origin serves several backends
+    const owner: ILastVisitedWorkspaceOwner = {
+        organizationId: ctx.organization?.id,
+        userId: ctx.user.login,
+    };
 
     debugLog(
         `[host-runtime/redirect] resolveRedirectTarget: scope=${scope ?? "(none)"} workspaceId=${workspaceId ?? "(none)"} pathname=${pathname} apps=${apps.length}`,
@@ -147,8 +227,11 @@ export async function resolveRedirectTarget({
     // (which would land on /organization or the preferred workspace app).
     const legacyAppRouteBase = mapBareLegacyPathToApp(pathname);
     if (legacyAppRouteBase) {
-        debugLog(`[host-runtime/redirect] bare legacy app path — fetching first workspace`);
-        const legacyWorkspaceId = await fetchFirstWorkspaceId();
+        debugLog(`[host-runtime/redirect] bare legacy app path — resolving landing workspace`);
+        const legacyWorkspaceId = await resolveLandingWorkspaceId(owner, {
+            fetchFirstWorkspaceId,
+            getWorkspaceAccess,
+        });
         if (!legacyWorkspaceId) {
             debugLog("[host-runtime/redirect] no workspace available for user — throwing not-found");
             throw new AppNotFoundError("No workspace is available for this user.");
@@ -171,10 +254,21 @@ export async function resolveRedirectTarget({
             debugLog(
                 `[host-runtime/redirect] workspace scope: no app matched pathname → ${pathname} — throwing not-found`,
             );
+            // This URL can be one the host built itself: a bare legacy landing (/analyze) is
+            // redirected into the remembered workspace's app path, and if that app is not
+            // permitted there it lands exactly here. Leaving the memory intact would send every
+            // later bare-legacy visit back to this same 404, which has no header and therefore no
+            // workspace picker to escape with. Forgetting costs one preference update — the next
+            // successful app navigation records it again — so it is the cheaper side to err on
+            // even for a merely mistyped path.
+            if (workspaceId) {
+                clearLastVisitedWorkspace(owner, workspaceId);
+            }
             throw new AppNotFoundError(`No application found at path: ${pathname}`);
         }
         debugLog(`[host-runtime/redirect] workspace scope: active app matched → ${active.id}`);
         setLastVisitedApp("workspace", active.id);
+        rememberWorkspace(owner, workspaceId, ctx);
         return null;
     }
 
@@ -193,8 +287,11 @@ export async function resolveRedirectTarget({
 
         // Hop 1: resolve a workspace ID and redirect to its root so that the next render cycle
         // can load workspace permissions and filter apps accurately.
-        debugLog("[host-runtime/redirect] no workspace ID — fetching first workspace");
-        const resolvedWorkspaceId = await fetchFirstWorkspaceId();
+        debugLog("[host-runtime/redirect] no workspace ID — resolving landing workspace");
+        const resolvedWorkspaceId = await resolveLandingWorkspaceId(owner, {
+            fetchFirstWorkspaceId,
+            getWorkspaceAccess,
+        });
 
         if (!resolvedWorkspaceId) {
             debugLog("[host-runtime/redirect] no workspace available for user — throwing not-found");
@@ -212,6 +309,12 @@ export async function resolveRedirectTarget({
 
     if (!targetApp) {
         debugLog("[host-runtime/redirect] no permitted workspace apps — throwing not-found");
+        // A workspace that grants this user no app at all must not stay remembered. It can have
+        // had apps when it was stored and lost them since (an app permission or feature flag
+        // changed), and the access check cannot see that: the permissions endpoint still
+        // succeeds. Without this, every later workspace-less landing would be sent straight back
+        // to this 404, which has no header and therefore no workspace picker to escape with.
+        clearLastVisitedWorkspace(owner, workspaceId);
         throw new AppNotFoundError("No workspace-scoped applications are available for this workspace.");
     }
 
@@ -219,5 +322,6 @@ export async function resolveRedirectTarget({
     debugLog(
         `[host-runtime/redirect] redirecting to preferred workspace app → ${href} (app: ${targetApp.id})`,
     );
+    rememberWorkspace(owner, workspaceId, ctx);
     return href;
 }

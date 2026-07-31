@@ -4,11 +4,14 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
     type ILocalPluggableApplicationRegistryItemV1,
+    type IWorkspacePermissions,
     type PluggableApplicationRegistryItem,
 } from "@gooddata/sdk-model";
 import { type EmbeddingMode, type IPlatformContext } from "@gooddata/sdk-pluggable-application-model";
 
+import { type WorkspaceAccess } from "../../platformContext/workspaceAccess.js";
 import * as lastVisitedAppModule from "../lastVisitedApp.js";
+import * as lastVisitedWorkspaceModule from "../lastVisitedWorkspace.js";
 import { AppNotFoundError, resolveRedirectTarget } from "../redirectLogic.js";
 
 function context(overrides: Partial<IPlatformContext> = {}): IPlatformContext {
@@ -55,6 +58,13 @@ const wsApp = localApp({
     local: { routeBase: "/dashboards" },
 });
 const noFetchWorkspaceId = vi.fn<() => Promise<string | undefined>>().mockResolvedValue(undefined);
+const getWorkspaceAccess = vi
+    .fn<(workspaceId: string) => Promise<WorkspaceAccess>>()
+    .mockResolvedValue("accessible");
+// Only the presence of loaded permissions matters here, not the individual flags
+const workspacePermissions = {} as IWorkspacePermissions;
+// The owner the fixture context resolves to: no organization in the context, user login as id
+const OWNER = { organizationId: undefined, userId: "test@example.com" };
 
 const wsAppAnalyze = localApp({
     id: "gdc-analyze",
@@ -71,12 +81,19 @@ const orgAppAdmin = localApp({
 describe("resolveRedirectTarget", () => {
     const getLastVisitedAppSpy = vi.spyOn(lastVisitedAppModule, "getLastVisitedApp");
     const setLastVisitedAppSpy = vi.spyOn(lastVisitedAppModule, "setLastVisitedApp");
+    const getLastVisitedWorkspaceSpy = vi.spyOn(lastVisitedWorkspaceModule, "getLastVisitedWorkspace");
+    const setLastVisitedWorkspaceSpy = vi.spyOn(lastVisitedWorkspaceModule, "setLastVisitedWorkspace");
+    const clearLastVisitedWorkspaceSpy = vi.spyOn(lastVisitedWorkspaceModule, "clearLastVisitedWorkspace");
 
     beforeEach(() => {
         vi.clearAllMocks();
         noFetchWorkspaceId.mockResolvedValue(undefined);
+        getWorkspaceAccess.mockResolvedValue("accessible");
         getLastVisitedAppSpy.mockReturnValue(undefined);
         setLastVisitedAppSpy.mockImplementation(() => {});
+        getLastVisitedWorkspaceSpy.mockReturnValue(undefined);
+        setLastVisitedWorkspaceSpy.mockImplementation(() => {});
+        clearLastVisitedWorkspaceSpy.mockImplementation(() => {});
     });
     describe("organization scope", () => {
         it("returns null when user navigates to a valid org app sub-path", async () => {
@@ -88,6 +105,7 @@ describe("resolveRedirectTarget", () => {
                 }),
                 pathname: "/organization/ai-hub",
                 fetchFirstWorkspaceId: noFetchWorkspaceId,
+                getWorkspaceAccess,
             });
 
             expect(result).toBeNull();
@@ -102,6 +120,7 @@ describe("resolveRedirectTarget", () => {
                 }),
                 pathname: "/organization",
                 fetchFirstWorkspaceId: noFetchWorkspaceId,
+                getWorkspaceAccess,
             });
 
             expect(result).toBe("/organization/ai-hub");
@@ -117,6 +136,7 @@ describe("resolveRedirectTarget", () => {
                     }),
                     pathname: "/organization",
                     fetchFirstWorkspaceId: noFetchWorkspaceId,
+                    getWorkspaceAccess,
                 }),
             ).rejects.toThrow(AppNotFoundError);
         });
@@ -130,6 +150,7 @@ describe("resolveRedirectTarget", () => {
                 }),
                 pathname: "/organization/ai-hub",
                 fetchFirstWorkspaceId: noFetchWorkspaceId,
+                getWorkspaceAccess,
             });
 
             expect(result).toBeNull();
@@ -146,6 +167,7 @@ describe("resolveRedirectTarget", () => {
                 }),
                 pathname: "/organization",
                 fetchFirstWorkspaceId: noFetchWorkspaceId,
+                getWorkspaceAccess,
             });
 
             expect(result).toBe("/organization/admin");
@@ -162,6 +184,7 @@ describe("resolveRedirectTarget", () => {
                 }),
                 pathname: "/organization",
                 fetchFirstWorkspaceId: noFetchWorkspaceId,
+                getWorkspaceAccess,
             });
 
             expect(result).toBe("/organization/ai-hub");
@@ -176,6 +199,7 @@ describe("resolveRedirectTarget", () => {
                 }),
                 pathname: "/organization/ai-hub",
                 fetchFirstWorkspaceId: noFetchWorkspaceId,
+                getWorkspaceAccess,
             });
 
             expect(setLastVisitedAppSpy).toHaveBeenCalledWith("organization", "gdc-ai-hub");
@@ -191,6 +215,7 @@ describe("resolveRedirectTarget", () => {
                     }),
                     pathname: "/organization/nonexistent",
                     fetchFirstWorkspaceId: noFetchWorkspaceId,
+                    getWorkspaceAccess,
                 }),
             ).rejects.toThrow(AppNotFoundError);
         });
@@ -206,6 +231,7 @@ describe("resolveRedirectTarget", () => {
                 }),
                 pathname: "/workspace/ws-123/dashboards",
                 fetchFirstWorkspaceId: noFetchWorkspaceId,
+                getWorkspaceAccess,
             });
 
             expect(result).toBeNull();
@@ -221,6 +247,7 @@ describe("resolveRedirectTarget", () => {
                     }),
                     pathname: "/workspace/ws-123/dashboards",
                     fetchFirstWorkspaceId: noFetchWorkspaceId,
+                    getWorkspaceAccess,
                 }),
             ).rejects.toThrow(AppNotFoundError);
         });
@@ -235,6 +262,7 @@ describe("resolveRedirectTarget", () => {
                     }),
                     pathname: "/workspace/ws-123/nonexistent",
                     fetchFirstWorkspaceId: noFetchWorkspaceId,
+                    getWorkspaceAccess,
                 }),
             ).rejects.toThrow(AppNotFoundError);
         });
@@ -248,6 +276,7 @@ describe("resolveRedirectTarget", () => {
                 }),
                 pathname: "/workspace/ws-123",
                 fetchFirstWorkspaceId: noFetchWorkspaceId,
+                getWorkspaceAccess,
             });
 
             expect(result).toBe("/workspace/ws-123/dashboards");
@@ -264,6 +293,7 @@ describe("resolveRedirectTarget", () => {
                 }),
                 pathname: "/workspace/",
                 fetchFirstWorkspaceId,
+                getWorkspaceAccess,
             });
 
             expect(fetchFirstWorkspaceId).toHaveBeenCalledOnce();
@@ -282,6 +312,7 @@ describe("resolveRedirectTarget", () => {
                 }),
                 pathname: "/workspace/ws-123",
                 fetchFirstWorkspaceId: noFetchWorkspaceId,
+                getWorkspaceAccess,
             });
 
             expect(result).toBe("/workspace/ws-123/analyze");
@@ -298,6 +329,7 @@ describe("resolveRedirectTarget", () => {
                 }),
                 pathname: "/workspace/ws-123",
                 fetchFirstWorkspaceId: noFetchWorkspaceId,
+                getWorkspaceAccess,
             });
 
             expect(result).toBe("/workspace/ws-123/dashboards");
@@ -312,6 +344,7 @@ describe("resolveRedirectTarget", () => {
                 }),
                 pathname: "/workspace/ws-123/dashboards",
                 fetchFirstWorkspaceId: noFetchWorkspaceId,
+                getWorkspaceAccess,
             });
 
             expect(setLastVisitedAppSpy).toHaveBeenCalledWith("workspace", "gdc-dashboards");
@@ -327,6 +360,7 @@ describe("resolveRedirectTarget", () => {
                     }),
                     pathname: "/workspace/ws-123",
                     fetchFirstWorkspaceId: noFetchWorkspaceId,
+                    getWorkspaceAccess,
                 }),
             ).rejects.toThrow(AppNotFoundError);
         });
@@ -350,6 +384,7 @@ describe("resolveRedirectTarget", () => {
                 }),
                 pathname,
                 fetchFirstWorkspaceId,
+                getWorkspaceAccess,
             });
 
             expect(fetchFirstWorkspaceId).toHaveBeenCalledOnce();
@@ -368,6 +403,7 @@ describe("resolveRedirectTarget", () => {
                 pathname: "/modeler/",
                 search: "?displayEditMode",
                 fetchFirstWorkspaceId,
+                getWorkspaceAccess,
             });
 
             expect(result).toBe("/workspace/ws-fetched/modeler?displayEditMode");
@@ -385,6 +421,7 @@ describe("resolveRedirectTarget", () => {
                 }),
                 pathname: "/modeler/",
                 fetchFirstWorkspaceId,
+                getWorkspaceAccess,
             });
 
             expect(result).toBe("/workspace/ws-fetched/modeler");
@@ -400,6 +437,7 @@ describe("resolveRedirectTarget", () => {
                     }),
                     pathname: "/modeler/",
                     fetchFirstWorkspaceId: vi.fn().mockResolvedValue(undefined),
+                    getWorkspaceAccess,
                 }),
             ).rejects.toThrow(AppNotFoundError);
         });
@@ -416,6 +454,7 @@ describe("resolveRedirectTarget", () => {
                 }),
                 pathname: "/modeler/deep/route",
                 fetchFirstWorkspaceId,
+                getWorkspaceAccess,
             });
 
             // Falls through to the generic root redirect (first hop → workspace root)
@@ -434,6 +473,7 @@ describe("resolveRedirectTarget", () => {
                 }),
                 pathname: "/",
                 fetchFirstWorkspaceId: noFetchWorkspaceId,
+                getWorkspaceAccess,
             });
 
             expect(result).toBe("/organization");
@@ -452,6 +492,7 @@ describe("resolveRedirectTarget", () => {
                 }),
                 pathname: "/",
                 fetchFirstWorkspaceId,
+                getWorkspaceAccess,
             });
 
             expect(fetchFirstWorkspaceId).toHaveBeenCalledOnce();
@@ -469,8 +510,287 @@ describe("resolveRedirectTarget", () => {
                     }),
                     pathname: "/",
                     fetchFirstWorkspaceId: vi.fn().mockResolvedValue(undefined),
+                    getWorkspaceAccess,
                 }),
             ).rejects.toThrow(AppNotFoundError);
+        });
+    });
+
+    describe("last visited workspace", () => {
+        it("remembers the workspace of the current URL", async () => {
+            await resolveRedirectTarget({
+                apps: [wsApp] as PluggableApplicationRegistryItem[],
+                ctx: context({
+                    currentApplicationScope: "workspace",
+                    currentWorkspaceId: "ws-123",
+                    workspacePermissions,
+                }),
+                pathname: "/workspace/ws-123/dashboards",
+                fetchFirstWorkspaceId: noFetchWorkspaceId,
+                getWorkspaceAccess,
+            });
+
+            expect(setLastVisitedWorkspaceSpy).toHaveBeenCalledWith(OWNER, "ws-123");
+        });
+
+        it("remembers the workspace when the workspace root resolves to an app", async () => {
+            await resolveRedirectTarget({
+                apps: [wsApp] as PluggableApplicationRegistryItem[],
+                ctx: context({
+                    currentApplicationScope: "workspace",
+                    currentWorkspaceId: "ws-123",
+                    workspacePermissions,
+                }),
+                pathname: "/workspace/ws-123",
+                fetchFirstWorkspaceId: noFetchWorkspaceId,
+                getWorkspaceAccess,
+            });
+
+            expect(setLastVisitedWorkspaceSpy).toHaveBeenCalledWith(OWNER, "ws-123");
+        });
+
+        it("does not remember a workspace whose path maps to no app", async () => {
+            await expect(
+                resolveRedirectTarget({
+                    apps: [wsApp] as PluggableApplicationRegistryItem[],
+                    ctx: context({
+                        currentApplicationScope: "workspace",
+                        currentWorkspaceId: "ws-123",
+                        workspacePermissions,
+                    }),
+                    pathname: "/workspace/ws-123/nonexistent",
+                    fetchFirstWorkspaceId: noFetchWorkspaceId,
+                    getWorkspaceAccess,
+                }),
+            ).rejects.toThrow(AppNotFoundError);
+
+            // Remembering it would send every later workspace-less landing back to this 404
+            expect(setLastVisitedWorkspaceSpy).not.toHaveBeenCalled();
+        });
+
+        it("does not remember a workspace that grants the user no app", async () => {
+            await expect(
+                resolveRedirectTarget({
+                    apps: [],
+                    ctx: context({
+                        currentApplicationScope: "workspace",
+                        currentWorkspaceId: "ws-empty",
+                        workspacePermissions,
+                    }),
+                    pathname: "/workspace/ws-empty",
+                    fetchFirstWorkspaceId: noFetchWorkspaceId,
+                    getWorkspaceAccess,
+                }),
+            ).rejects.toThrow(AppNotFoundError);
+
+            expect(setLastVisitedWorkspaceSpy).not.toHaveBeenCalled();
+        });
+
+        it("forgets the remembered workspace when its app path does not resolve", async () => {
+            // How a bare legacy landing fails: /analyze is redirected into the remembered
+            // workspace's /analyze path, and that app is not permitted there
+            getLastVisitedWorkspaceSpy.mockReturnValue("ws-remembered");
+
+            await expect(
+                resolveRedirectTarget({
+                    apps: [wsApp] as PluggableApplicationRegistryItem[],
+                    ctx: context({
+                        currentApplicationScope: "workspace",
+                        currentWorkspaceId: "ws-remembered",
+                        workspacePermissions,
+                    }),
+                    pathname: "/workspace/ws-remembered/analyze",
+                    fetchFirstWorkspaceId: noFetchWorkspaceId,
+                    getWorkspaceAccess,
+                }),
+            ).rejects.toThrow(AppNotFoundError);
+
+            // Otherwise every later /analyze landing comes straight back to this 404
+            expect(clearLastVisitedWorkspaceSpy).toHaveBeenCalledWith(OWNER, "ws-remembered");
+        });
+
+        it("forgets a remembered workspace that no longer grants the user any app", async () => {
+            // Stored while it still had apps; an app permission or feature flag changed since, and
+            // the access check cannot see that because the permissions endpoint still succeeds
+            getLastVisitedWorkspaceSpy.mockReturnValue("ws-empty");
+
+            await expect(
+                resolveRedirectTarget({
+                    apps: [],
+                    ctx: context({
+                        currentApplicationScope: "workspace",
+                        currentWorkspaceId: "ws-empty",
+                        workspacePermissions,
+                    }),
+                    pathname: "/workspace/ws-empty",
+                    fetchFirstWorkspaceId: noFetchWorkspaceId,
+                    getWorkspaceAccess,
+                }),
+            ).rejects.toThrow(AppNotFoundError);
+
+            // Otherwise every later workspace-less landing is sent back to this 404
+            expect(clearLastVisitedWorkspaceSpy).toHaveBeenCalledWith(OWNER, "ws-empty");
+        });
+
+        it("keys the remembered workspace by the context organization", async () => {
+            await resolveRedirectTarget({
+                apps: [wsApp] as PluggableApplicationRegistryItem[],
+                ctx: context({
+                    currentApplicationScope: "workspace",
+                    currentWorkspaceId: "ws-123",
+                    workspacePermissions,
+                    organization: { id: "org-1", title: "Org One" },
+                }),
+                pathname: "/workspace/ws-123/dashboards",
+                fetchFirstWorkspaceId: noFetchWorkspaceId,
+                getWorkspaceAccess,
+            });
+
+            // One origin can serve several backends, so the same login must not share an entry
+            expect(setLastVisitedWorkspaceSpy).toHaveBeenCalledWith(
+                { organizationId: "org-1", userId: "test@example.com" },
+                "ws-123",
+            );
+        });
+
+        it("does not remember a workspace whose permissions could not be loaded", async () => {
+            await resolveRedirectTarget({
+                apps: [wsApp] as PluggableApplicationRegistryItem[],
+                ctx: context({
+                    currentApplicationScope: "workspace",
+                    currentWorkspaceId: "ws-forbidden",
+                    workspacePermissions: undefined,
+                }),
+                pathname: "/workspace/ws-forbidden/dashboards",
+                fetchFirstWorkspaceId: noFetchWorkspaceId,
+                getWorkspaceAccess,
+            });
+
+            expect(setLastVisitedWorkspaceSpy).not.toHaveBeenCalled();
+        });
+
+        it("redirects to the last visited workspace when the URL has no workspace ID", async () => {
+            getLastVisitedWorkspaceSpy.mockReturnValue("ws-remembered");
+            const fetchFirstWorkspaceId = vi.fn().mockResolvedValue("ws-first");
+
+            const result = await resolveRedirectTarget({
+                apps: [],
+                ctx: context({
+                    currentApplicationScope: "workspace",
+                    currentWorkspaceId: undefined,
+                }),
+                pathname: "/workspace/",
+                fetchFirstWorkspaceId,
+                getWorkspaceAccess,
+            });
+
+            expect(result).toBe("/workspace/ws-remembered");
+            // Looked up for the signed-in user, not globally — the key is shared by every
+            // account signing in from the same browser profile
+            expect(getLastVisitedWorkspaceSpy).toHaveBeenCalledWith(OWNER);
+            expect(getWorkspaceAccess).toHaveBeenCalledWith("ws-remembered");
+            expect(fetchFirstWorkspaceId).not.toHaveBeenCalled();
+        });
+
+        it("redirects to the last visited workspace at the app root", async () => {
+            getLastVisitedWorkspaceSpy.mockReturnValue("ws-remembered");
+            const fetchFirstWorkspaceId = vi.fn().mockResolvedValue("ws-first");
+
+            const result = await resolveRedirectTarget({
+                apps: [],
+                ctx: context({
+                    currentApplicationScope: undefined,
+                    currentWorkspaceId: undefined,
+                    organizationPermissions: { canManageOrganization: false },
+                }),
+                pathname: "/",
+                fetchFirstWorkspaceId,
+                getWorkspaceAccess,
+            });
+
+            expect(result).toBe("/workspace/ws-remembered");
+            expect(fetchFirstWorkspaceId).not.toHaveBeenCalled();
+        });
+
+        it("redirects a bare legacy app path into the last visited workspace", async () => {
+            getLastVisitedWorkspaceSpy.mockReturnValue("ws-remembered");
+            const fetchFirstWorkspaceId = vi.fn().mockResolvedValue("ws-first");
+
+            const result = await resolveRedirectTarget({
+                apps: [],
+                ctx: context({
+                    currentApplicationScope: undefined,
+                    currentWorkspaceId: undefined,
+                }),
+                pathname: "/analyze",
+                fetchFirstWorkspaceId,
+                getWorkspaceAccess,
+            });
+
+            expect(result).toBe("/workspace/ws-remembered/analyze");
+            expect(fetchFirstWorkspaceId).not.toHaveBeenCalled();
+        });
+
+        it("falls back to the first workspace and forgets the last visited one when it is forbidden", async () => {
+            getLastVisitedWorkspaceSpy.mockReturnValue("ws-deleted");
+            getWorkspaceAccess.mockResolvedValue("forbidden");
+            const fetchFirstWorkspaceId = vi.fn().mockResolvedValue("ws-first");
+
+            const result = await resolveRedirectTarget({
+                apps: [],
+                ctx: context({
+                    currentApplicationScope: "workspace",
+                    currentWorkspaceId: undefined,
+                }),
+                pathname: "/workspace/",
+                fetchFirstWorkspaceId,
+                getWorkspaceAccess,
+            });
+
+            expect(result).toBe("/workspace/ws-first");
+            expect(clearLastVisitedWorkspaceSpy).toHaveBeenCalledWith(OWNER, "ws-deleted");
+            expect(fetchFirstWorkspaceId).toHaveBeenCalledOnce();
+        });
+
+        it("keeps the last visited workspace when the access check itself fails", async () => {
+            getLastVisitedWorkspaceSpy.mockReturnValue("ws-remembered");
+            getWorkspaceAccess.mockResolvedValue("unknown");
+            const fetchFirstWorkspaceId = vi.fn().mockResolvedValue("ws-first");
+
+            const result = await resolveRedirectTarget({
+                apps: [],
+                ctx: context({
+                    currentApplicationScope: "workspace",
+                    currentWorkspaceId: undefined,
+                }),
+                pathname: "/workspace/",
+                fetchFirstWorkspaceId,
+                getWorkspaceAccess,
+            });
+
+            // A network blip or 5xx says nothing about the workspace — the memory survives and the
+            // workspace route re-runs the request rather than silently switching workspaces.
+            expect(result).toBe("/workspace/ws-remembered");
+            expect(clearLastVisitedWorkspaceSpy).not.toHaveBeenCalled();
+            expect(fetchFirstWorkspaceId).not.toHaveBeenCalled();
+        });
+
+        it("keeps preferring the organization for users who can manage it", async () => {
+            getLastVisitedWorkspaceSpy.mockReturnValue("ws-remembered");
+
+            const result = await resolveRedirectTarget({
+                apps: [],
+                ctx: context({
+                    currentApplicationScope: undefined,
+                    currentWorkspaceId: undefined,
+                    organizationPermissions: { canManageOrganization: true },
+                }),
+                pathname: "/",
+                fetchFirstWorkspaceId: noFetchWorkspaceId,
+                getWorkspaceAccess,
+            });
+
+            expect(result).toBe("/organization");
         });
     });
 });

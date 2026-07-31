@@ -3,7 +3,7 @@
 import { type PayloadAction, type Reducer, createSlice } from "@reduxjs/toolkit";
 
 import { type IChatConversationItem } from "@gooddata/sdk-backend-spi";
-import { type GenAIChatInteractionUserFeedback } from "@gooddata/sdk-model";
+import { type GenAIChatEffort, type GenAIChatInteractionUserFeedback } from "@gooddata/sdk-model";
 import { type SdkErrorType } from "@gooddata/sdk-ui";
 
 import { selectDefaultAgentId } from "../../components/utils/agentSelection.js";
@@ -80,6 +80,10 @@ type MessagesSliceState = {
      */
     selectedAgentId: string | undefined;
     /**
+     * The effort level the user selected for the next message.
+     */
+    selectedEffort: GenAIChatEffort;
+    /**
      * The enabled agents available for new prompts.
      * Undefined means the agent list has not been evaluated yet.
      */
@@ -130,6 +134,7 @@ const initialState: MessagesSliceState = {
     currentConversation: undefined,
     conversationsLoaded: false,
     selectedAgentId: undefined,
+    selectedEffort: "MEDIUM",
     agents: undefined,
     conversationsData: {},
 };
@@ -791,6 +796,9 @@ const messagesSlice = createSlice({
                 }
             }
         },
+        setSelectedEffortAction: (state, { payload }: PayloadAction<{ effort: GenAIChatEffort }>) => {
+            state.selectedEffort = payload.effort;
+        },
         applyPendingAgentSwitchAction: (
             state,
             { payload }: PayloadAction<{ conversationLocalId: string; beforeItemLocalId?: string }>,
@@ -1417,6 +1425,10 @@ export const {
      * @public
      */
     setSelectedAgentAction,
+    /**
+     * @public
+     */
+    setSelectedEffortAction,
     /**
      * @public
      */
