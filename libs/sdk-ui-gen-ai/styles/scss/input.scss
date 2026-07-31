@@ -134,6 +134,14 @@
     &__agent-dropdown {
         min-width: 0;
 
+        .gd-ui-kit-button__text {
+            color: var(--gd-palette-complementary-7);
+        }
+
+        .gd-ui-kit-button__badge {
+            color: var(--gd-palette-complementary-6);
+        }
+
         // Reuse the assistant "Thinking..." shimmer on the loading label, keeping the button's own font.
         &--loading .gd-ui-kit-button__text {
             @include variables.gd-reasoning();
@@ -424,5 +432,37 @@
         &.date {
             @include variables.gd-svg-icon("date");
         }
+    }
+}
+
+.gd-gen-ai-chat__reasoning-row {
+    &__button {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        box-sizing: border-box;
+        width: 100%;
+        height: 26px;
+        padding: 4px 10px;
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+        font-size: 12px;
+        line-height: 18px;
+        color: var(--gd-palette-complementary-8);
+
+        &:hover {
+            background-color: var(--gd-palette-complementary-2);
+        }
+    }
+
+    // Selected value (e.g. "Quick") as greyed secondary text, pushed to the right before the arrow.
+    &__value {
+        margin-left: auto;
+        color: var(--gd-palette-complementary-6);
+    }
+
+    .gd-icon-navigateright {
+        color: var(--gd-palette-complementary-5);
     }
 }

@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-dashboard: Apply the themed widget title color (dashboards.content.kpiWidget.title.color and dashboards.content.widget.title.color) directly to the title element, so bare h3 typography rules from co-hosted applications can no longer override it.",
+            "type": "patch"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

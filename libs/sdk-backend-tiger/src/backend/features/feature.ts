@@ -628,6 +628,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableGenAiReasoningEffort,
+            "enableGenAiReasoningEffort",
+            "BOOLEAN",
+            FeatureFlagsValues.enableGenAiReasoningEffort,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableGenAiObservability,
             "enableGenAiObservability",
             "BOOLEAN",

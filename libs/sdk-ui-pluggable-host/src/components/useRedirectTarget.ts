@@ -8,6 +8,7 @@ import { type IPlatformContext } from "@gooddata/sdk-pluggable-application-model
 import { debugLog } from "../debug.js";
 import { AppNotFoundError, resolveRedirectTarget } from "../loader/redirectLogic.js";
 import { getBackend } from "../platformContext/backend.js";
+import { getWorkspaceAccess } from "../platformContext/workspaceAccess.js";
 
 export type RedirectTargetState =
     | { state: "loading" }
@@ -48,6 +49,7 @@ export function useRedirectTarget(
             pathname,
             search,
             fetchFirstWorkspaceId,
+            getWorkspaceAccess: (workspaceId) => getWorkspaceAccess(getBackend(), workspaceId),
         })
             .then((url) => {
                 if (cancelled) {

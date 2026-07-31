@@ -360,7 +360,9 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
                 item,
                 title: getItemTitle(item),
                 isSelected: getIsItemSelected(item),
-                focusedAction: item === focusedItem ? focusedAction : undefined,
+                // `focusedAction` persists across blur (so Tab-back-in resumes sensibly), so gate
+                // it on `isFocusWithin` here to avoid reporting a stale focus to consumers.
+                focusedAction: isFocusWithin && item === focusedItem ? focusedAction : undefined,
                 listRef: containerRef as any,
                 index: items.indexOf(item) + 1,
                 itemsCount: items.length,
@@ -372,6 +374,7 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
             getIsItemSelected,
             focusedItem,
             focusedAction,
+            isFocusWithin,
             containerRef,
             items,
             selectItems,

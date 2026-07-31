@@ -13,7 +13,10 @@
     }
 
     &__icon {
-        --gd-icon-fill-color: #fff;
+        // Follow the surrounding foreground colour rather than hardcoding white: this button
+        // lives in the application header, whose colour is themeable. The block above sets
+        // `color: inherit`, so this resolves to the themed header foreground.
+        --gd-icon-fill-color: currentColor;
         opacity: 0.8;
         display: flex;
         align-items: center;

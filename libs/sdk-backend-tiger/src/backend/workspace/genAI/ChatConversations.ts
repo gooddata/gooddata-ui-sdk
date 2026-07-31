@@ -30,6 +30,7 @@ import {
     type IChatConversations,
 } from "@gooddata/sdk-backend-spi";
 import {
+    type GenAIChatEffort,
     type GenAIChatInteractionUserFeedback,
     type GenAIObjectType,
     type IAllowedRelationshipType,
@@ -331,6 +332,7 @@ export type ChatConversationThreadQueryConfig = {
     userContext?: IGenAIUserContext;
     objectTypes?: GenAIObjectType[];
     allowedRelationshipTypes?: IAllowedRelationshipType[];
+    effort?: GenAIChatEffort;
 };
 
 /**
@@ -388,6 +390,12 @@ export class ChatConversationThreadQuery implements IChatConversationThreadQuery
             allowedRelationshipTypes: relationshipTypes,
         });
     }
+    withEffort(effort?: GenAIChatEffort): IChatConversationThreadQuery {
+        return new ChatConversationThreadQuery(this.authCall, this.dateNormalizer, {
+            ...this.requestParameters,
+            effort,
+        });
+    }
     async query(options?: { signal?: AbortSignal }): Promise<IChatConversationItem[]> {
         const response = await this.authCall((client) => {
             return GenAiApi_PostMessages(
@@ -412,6 +420,7 @@ export class ChatConversationThreadQuery implements IChatConversationThreadQuery
                                 excludeTags: this.requestParameters.excludeTags,
                                 includeTags: this.requestParameters.includeTags,
                             },
+                            reasoningEffort: this.requestParameters.effort,
                         },
                         userContext: convertUserContext(
                             this.requestParameters.userContext,
@@ -458,6 +467,7 @@ export class ChatConversationThreadQuery implements IChatConversationThreadQuery
                                         excludeTags: requestParameters.excludeTags,
                                         includeTags: requestParameters.includeTags,
                                     },
+                                    reasoningEffort: requestParameters.effort,
                                 },
                                 userContext: convertUserContext(
                                     requestParameters.userContext,

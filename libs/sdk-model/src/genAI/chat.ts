@@ -22,6 +22,12 @@ export type GenAIChatRole = "USER" | "AI";
 export type GenAIChatInteractionUserFeedback = "POSITIVE" | "NEGATIVE" | "NONE";
 
 /**
+ * Effort level the user requests for a chat message, hinting how much the LLM should reason.
+ * @internal
+ */
+export type GenAIChatEffort = "LOW" | "MEDIUM" | "HIGH";
+
+/**
  * User visualization for the chat interaction.
  * @internal
  */

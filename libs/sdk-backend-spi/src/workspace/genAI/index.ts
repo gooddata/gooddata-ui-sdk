@@ -3,6 +3,7 @@
 import type {
     DateAttributeGranularity,
     FilterContextItem,
+    GenAIChatEffort,
     GenAIChatInteractionUserFeedback,
     GenAIChatInteractionUserVisualisation,
     GenAIObjectType,
@@ -1437,6 +1438,10 @@ export interface IChatConversationThreadQuery {
      * Sets the exclude tags
      */
     withExcludeTags(excludeTags?: string[]): IChatConversationThreadQuery;
+    /**
+     * Define how much effort the LLM should spend reasoning about this message.
+     */
+    withEffort(effort?: GenAIChatEffort): IChatConversationThreadQuery;
     /**
      * Execute the chat thread.
      */

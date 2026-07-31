@@ -147,6 +147,30 @@
         "text": "Switched to {title} agent",
         "crowdinContext": "Divider message shown in an AI chatbot conversation after the user switches to another agent"
     },
+    "gd.gen-ai.close": {
+        "text": "Close",
+        "crowdinContext": "Accessibility label for the button that closes the AI chatbot agent dropdown"
+    },
+    "gd.gen-ai.reasoning": {
+        "text": "Reasoning",
+        "crowdinContext": "Label for the reasoning-effort row in the AI chatbot agent dropdown, where the user picks how much effort the assistant spends on the answer"
+    },
+    "gd.gen-ai.reasoning.quick": {
+        "text": "Quick",
+        "crowdinContext": "Option in the AI chatbot reasoning selector for a quick, concise answer"
+    },
+    "gd.gen-ai.reasoning.quick.description": {
+        "text": "Fast answers for everyday questions like finding and building visualizations.",
+        "crowdinContext": "Tooltip explaining the trade-off of the Quick reasoning mode in the AI chatbot"
+    },
+    "gd.gen-ai.reasoning.thinking": {
+        "text": "Thinking",
+        "crowdinContext": "Option in the AI chatbot reasoning selector for a slower, more thorough answer"
+    },
+    "gd.gen-ai.reasoning.thinking.description": {
+        "text": "Slower but more thorough answers for complex analytical questions.",
+        "crowdinContext": "Tooltip explaining the trade-off of the Thinking reasoning mode in the AI chatbot"
+    },
     "gd.gen-ai.feedback.like": {
         "text": "Mark this message as helpful",
         "crowdinContext": "Button label to mark a message as helpful in the AI chatbot"

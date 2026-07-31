@@ -11,6 +11,7 @@ import { UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 import {
     agentSwitchingActiveSelector,
     agentSwitchingEnabledSelector,
+    reasoningEffortEnabledSelector,
 } from "../store/chatWindow/chatWindowSelectors.js";
 import {
     agentsSelector,
@@ -18,11 +19,13 @@ import {
     conversationsLoadedSelector,
     conversationsSelector,
     selectedAgentIdSelector,
+    selectedEffortSelector,
 } from "../store/messages/messagesSelectors.js";
-import { setSelectedAgentAction } from "../store/messages/messagesSlice.js";
+import { setSelectedAgentAction, setSelectedEffortAction } from "../store/messages/messagesSlice.js";
 import { type RootState } from "../store/types.js";
 
 import { GenAIChatAgentDropdown } from "./GenAIChatAgentDropdown.js";
+import { GenAIChatEffortDropdown } from "./GenAIChatEffortDropdown.js";
 import { getAgentSelectionStatus } from "./utils/agentSelection.js";
 
 const msgs = defineMessages({
@@ -53,10 +56,13 @@ type GenAiChatAgentSwitchingStateProps = {
     agentSwitchingEnabled: ReturnType<typeof agentSwitchingEnabledSelector>;
     agentSwitchingActive: ReturnType<typeof agentSwitchingActiveSelector>;
     selectedAgentId: ReturnType<typeof selectedAgentIdSelector>;
+    selectedEffort: ReturnType<typeof selectedEffortSelector>;
+    reasoningEffortEnabled: ReturnType<typeof reasoningEffortEnabledSelector>;
 };
 
 type IGenAiChatAgentSwitchingDispatchProps = {
     setSelectedAgent: typeof setSelectedAgentAction;
+    setSelectedEffort: typeof setSelectedEffortAction;
 };
 
 function GenAiChatAgentSwitchingCore({
@@ -69,10 +75,13 @@ function GenAiChatAgentSwitchingCore({
     agentDropdownDisabled,
     agents,
     selectedAgentId,
+    selectedEffort,
+    reasoningEffortEnabled,
     agentSwitchingActive,
     disabled,
     onMouseDown,
     setSelectedAgent,
+    setSelectedEffort,
     setBusy,
     setNoAgents,
     leftContent,
@@ -117,6 +126,13 @@ function GenAiChatAgentSwitchingCore({
         [conversation?.agentId, selectedAgentId, setSelectedAgent],
     );
 
+    const handleSelectEffort = useCallback(
+        (effort: ReturnType<typeof selectedEffortSelector>) => {
+            setSelectedEffort({ effort });
+        },
+        [setSelectedEffort],
+    );
+
     useEffect(() => {
         setBusy?.(isBusy);
     }, [isBusy, setBusy]);
@@ -146,9 +162,9 @@ function GenAiChatAgentSwitchingCore({
                 </span>
             ) : agentSwitchingEnabled ? (
                 <>
-                    {/* The switcher is hidden in preview mode (agentSwitchingActive is
-                                    false): the assistant is pinned to the preview agent being built,
-                                    but the new input/button layout is kept. */}
+                    {/* In preview mode (agentSwitchingActive is false) the assistant is pinned to the
+                        agent being built, so the agent dropdown — and its in-menu Reasoning row — is
+                        hidden. The effort selector is still relevant there, so it is shown standalone. */}
                     {agentSwitchingActive ? (
                         <GenAIChatAgentDropdown
                             agents={availableAgents}
@@ -158,6 +174,15 @@ function GenAiChatAgentSwitchingCore({
                             isDisabled={agentDropdownDisabled || isSelectionLoading}
                             isLoading={isSelectionLoading}
                             onSelectAgent={handleSelectAgent}
+                            reasoningEnabled={reasoningEffortEnabled}
+                            selectedEffort={selectedEffort}
+                            onSelectEffort={handleSelectEffort}
+                        />
+                    ) : reasoningEffortEnabled ? (
+                        <GenAIChatEffortDropdown
+                            selectedEffort={selectedEffort}
+                            isDisabled={agentDropdownDisabled}
+                            onSelectEffort={handleSelectEffort}
                         />
                     ) : null}
                     <UiTooltip
@@ -213,6 +238,8 @@ const mapStateToProps = (
     agentSwitchingEnabled: ReturnType<typeof agentSwitchingEnabledSelector>;
     agentSwitchingActive: ReturnType<typeof agentSwitchingActiveSelector>;
     selectedAgentId: ReturnType<typeof selectedAgentIdSelector>;
+    selectedEffort: ReturnType<typeof selectedEffortSelector>;
+    reasoningEffortEnabled: ReturnType<typeof reasoningEffortEnabledSelector>;
 } => {
     return {
         conversation: conversationSelector(state),
@@ -222,11 +249,14 @@ const mapStateToProps = (
         agentSwitchingEnabled: agentSwitchingEnabledSelector(state),
         agentSwitchingActive: agentSwitchingActiveSelector(state),
         selectedAgentId: selectedAgentIdSelector(state),
+        selectedEffort: selectedEffortSelector(state),
+        reasoningEffortEnabled: reasoningEffortEnabledSelector(state),
     };
 };
 
 const mapDispatchToProps = {
     setSelectedAgent: setSelectedAgentAction,
+    setSelectedEffort: setSelectedEffortAction,
 };
 
 export const GenAiChatAgentSwitching: FC<GenAiChatAgentSwitchingOwnProps> = connect(

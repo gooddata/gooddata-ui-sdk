@@ -1,6 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 @use "sass:color";
 @use "Button/_mixins" as button-mixins;
+@use "Button/placeholders"; // defines %btn, extended below
 @use "Button/variables" as button-variables;
 @use "mixins";
 @use "variables";

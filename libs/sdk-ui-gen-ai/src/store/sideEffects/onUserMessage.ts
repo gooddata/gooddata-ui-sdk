@@ -14,7 +14,11 @@ import {
     isChatConversationError,
     isChatConversationItem,
 } from "@gooddata/sdk-backend-spi";
-import { type GenAIObjectType, type IAllowedRelationshipType } from "@gooddata/sdk-model";
+import {
+    type GenAIChatEffort,
+    type GenAIObjectType,
+    type IAllowedRelationshipType,
+} from "@gooddata/sdk-model";
 
 import {
     type AssistantMessage,
@@ -42,6 +46,7 @@ import {
     messagesSelector,
     pendingAgentSwitchSelector,
     selectedAgentIdSelector,
+    selectedEffortSelector,
 } from "../messages/messagesSelectors.js";
 import {
     applyPendingAgentSwitchAction,
@@ -505,6 +510,7 @@ function* evaluateUserConversationMessage(
     );
 
     const context: ReturnType<typeof userContextSelector> = yield select(userContextSelector);
+    const selectedEffort: GenAIChatEffort = yield select(selectedEffortSelector);
 
     // Track interaction ID to assistant message mapping
     let currentUserMessage: IChatConversationLocalItem | undefined = userMessage;
@@ -513,7 +519,8 @@ function* evaluateUserConversationMessage(
 
     let queryBuilder = preparedChatThread
         .withSearchLimit(Number(settings?.["aiChatSearchLimit"]) || 10)
-        .withObjectTypes(objectTypes);
+        .withObjectTypes(objectTypes)
+        .withEffort(selectedEffort);
 
     if (excludeTags) {
         queryBuilder = queryBuilder.withExcludeTags(excludeTags);

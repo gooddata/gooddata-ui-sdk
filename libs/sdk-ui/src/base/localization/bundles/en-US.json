@@ -2563,13 +2563,9 @@
         "text": "empty value",
         "crowdinContext": "Display text for empty or null values in the attribute filter dropdown. Used when an attribute has no value assigned."
     },
-    "attributesDropdown.alternativeValueTooltip": {
-        "text": "Alternative value from primary label {label}: {value}",
-        "crowdinContext": "Shown to screen readers when there is an alternative value to an attribute."
-    },
-    "attributesDropdown.alternativeValueTooltipShort": {
-        "text": "({label}: {value})",
-        "crowdinContext": "Shown to screen readers when there is an alternative value to an attribute."
+    "attributesDropdown.detailsLabel": {
+        "text": "Show details",
+        "crowdinContext": "Shown to screen readers as a label for a control that reveals an attribute value's additional details."
     },
     "attributesDropdown.filterValues": {
         "text": "Filter values",

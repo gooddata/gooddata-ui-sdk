@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-kit: Fix secondary buttons losing their border in apps whose stylesheet entry point pulls several SDK packages in through legacy @import. The %btn placeholder moved from styles/scss/Button/_mixins.scss to the new styles/scss/Button/_placeholders.scss so that stylesheets needing only the button gradient mixin no longer re-emit the button base rules; if you @extend %btn in your own SCSS, load @gooddata/sdk-ui-kit/styles/scss/Button/placeholders instead of Button/mixins.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

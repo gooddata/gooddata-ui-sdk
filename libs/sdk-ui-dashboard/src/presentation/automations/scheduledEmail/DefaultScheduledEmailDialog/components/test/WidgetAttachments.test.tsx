@@ -21,6 +21,7 @@ function renderComponent(customProps: Partial<ComponentProps<typeof WidgetAttach
         csvRawSettings: {},
         onCsvRawSettingsChange: () => {},
         isSlidesExportEnabled: true,
+        isAccessibilityModeEnabled: false,
     };
 
     return render(
@@ -34,9 +35,17 @@ function openAddAttachments() {
     fireEvent.click(screen.getByTestId("add_attachments"));
 }
 
+function getAttachmentPicker(): HTMLElement {
+    const picker = document.querySelector<HTMLElement>(".gd-attachment-types-content");
+    if (!picker) {
+        throw new Error("Attachment picker was not found");
+    }
+    return picker;
+}
+
 function toggleFormat(label: string) {
     // Scope to the picker's checkbox list so we hit the checkbox, not a matching chip label.
-    const picker = document.querySelector(".gd-attachment-types-content") as HTMLElement;
+    const picker = getAttachmentPicker();
     fireEvent.click(within(picker).getByText(label).closest("label")!.querySelector("input")!);
 }
 
@@ -74,5 +83,30 @@ describe("WidgetAttachments", () => {
 
         expect(screen.queryByText("Single Slide (.pptx)")).not.toBeInTheDocument();
         expect(screen.getByText("Snapshot (.png)")).toBeInTheDocument();
+    });
+
+    it("offers tabular PDF when accessibility mode is disabled", () => {
+        renderComponent();
+
+        openAddAttachments();
+
+        expect(screen.getByText("Formatted data (.pdf)")).toBeInTheDocument();
+    });
+
+    it("hides tabular PDF from selected and available attachments in accessibility mode", () => {
+        renderComponent({
+            isAccessibilityModeEnabled: true,
+            selectedAttachments: ["PDF_TABULAR", "PNG"],
+        });
+
+        expect(screen.queryByText("Formatted data (.pdf)")).not.toBeInTheDocument();
+        expect(screen.getByText("Snapshot (.png)")).toBeInTheDocument();
+
+        openAddAttachments();
+
+        const picker = getAttachmentPicker();
+        expect(within(picker).queryByText("Formatted data (.pdf)")).not.toBeInTheDocument();
+        expect(within(picker).getByText("Snapshot (.png)")).toBeInTheDocument();
+        expect(within(picker).getByText("Formatted data (.xlsx)")).toBeInTheDocument();
     });
 });

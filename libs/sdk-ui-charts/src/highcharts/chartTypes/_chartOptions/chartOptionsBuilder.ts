@@ -54,7 +54,11 @@ import {
     getComboChartSeries,
     getComboChartStackingConfig,
 } from "../comboChart/comboChartOptions.js";
-import { dropZeroWidthMekkoColumns, isMekkoPercentBlockedByNegatives } from "../mekko/mekkoChartOptions.js";
+import {
+    collapseMekkoViewByItems,
+    dropZeroWidthMekkoColumns,
+    isMekkoPercentBlockedByNegatives,
+} from "../mekko/mekkoChartOptions.js";
 import {
     buildWaterfallChartSeries,
     getColorAssignment,
@@ -371,6 +375,14 @@ function chartedAttributeDiscovery(dv: DataViewFacade, chartType: string | undef
 
     if (isScatterPlot(chartType)) {
         return getScatterPlotAttributes(dv);
+    }
+
+    if (isMekko(chartType)) {
+        const attributes = defaultChartedAttributeDiscovery(dv);
+        return {
+            ...attributes,
+            viewByAttribute: collapseMekkoViewByItems(dv, attributes.viewByAttribute ?? undefined),
+        };
     }
 
     return defaultChartedAttributeDiscovery(dv);

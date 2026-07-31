@@ -728,6 +728,9 @@ export type GenAIAbsoluteDateFilter = {
     to: string;
 };
 
+// @internal
+export type GenAIChatEffort = "LOW" | "MEDIUM" | "HIGH";
+
 // @public
 export type GenAIChatInteractionUserFeedback = "POSITIVE" | "NEGATIVE" | "NONE";
 
@@ -2793,6 +2796,7 @@ export interface IFeatureFlags {
     enableGenAiInteractionIntelligence?: boolean;
     enableGenAIMemory?: boolean;
     enableGenAiObservability?: boolean;
+    enableGenAiReasoningEffort?: boolean;
     enableGenAIReasoningVisibility?: boolean;
     enableGeoArea?: boolean;
     enableGeoBasemapConfig?: boolean;
