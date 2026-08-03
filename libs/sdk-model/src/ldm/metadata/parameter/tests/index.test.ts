@@ -4,9 +4,11 @@ import { describe, expect, it } from "vitest";
 
 import {
     type IParameterDefinition,
+    getParameterAllowedValueTitle,
     isStringParameterDefinition,
     isValidNumberParameterValue,
     isValidParameterValue,
+    isValidStringParameterValue,
     parameterValueMatchesType,
     sanitizeParameterValue,
 } from "../index.js";
@@ -49,6 +51,41 @@ describe("isValidNumberParameterValue", () => {
     });
 });
 
+describe("isValidStringParameterValue", () => {
+    it("treats minLength/maxLength bounds as inclusive", () => {
+        expect(isValidStringParameterValue("Plan", { minLength: 4, maxLength: 4 })).toBe(true);
+        expect(isValidStringParameterValue("Pla", { minLength: 4 })).toBe(false);
+        expect(isValidStringParameterValue("Plans", { maxLength: 4 })).toBe(false);
+    });
+
+    it("requires membership when a non-empty allowedValues list is present", () => {
+        const allowedValues = [{ value: "Actual" }, { value: "Plan", title: "Plan scenario" }];
+        expect(isValidStringParameterValue("Plan", { allowedValues })).toBe(true);
+        expect(isValidStringParameterValue("Forecast", { allowedValues })).toBe(false);
+    });
+
+    it("enforces length bounds and membership together", () => {
+        const constraints = {
+            minLength: 1,
+            maxLength: 5,
+            allowedValues: [{ value: "Plan" }, { value: "Forecast" }],
+        };
+        expect(isValidStringParameterValue("Plan", constraints)).toBe(true);
+        expect(isValidStringParameterValue("Forecast", constraints)).toBe(false);
+        expect(isValidStringParameterValue("Actual", constraints)).toBe(false);
+    });
+
+    it("treats an empty allowedValues list as free text", () => {
+        expect(isValidStringParameterValue("Anything", { allowedValues: [] })).toBe(true);
+        expect(isValidStringParameterValue("Anything", { maxLength: 3, allowedValues: [] })).toBe(false);
+    });
+
+    it("accepts any value when no constraints are given", () => {
+        expect(isValidStringParameterValue("Anything")).toBe(true);
+        expect(isValidStringParameterValue("", {})).toBe(true);
+    });
+});
+
 describe("isValidParameterValue", () => {
     it("validates a NUMBER value against the definition's min/max", () => {
         const definition: IParameterDefinition = {
@@ -83,6 +120,41 @@ describe("isValidParameterValue", () => {
         expect(isValidParameterValue(numberDefinition, "Plan")).toBe(false);
         expect(isValidParameterValue(stringDefinition, 5)).toBe(false);
     });
+
+    it("requires membership when a STRING definition's constraints have allowedValues", () => {
+        const definition: IParameterDefinition = {
+            type: "STRING",
+            defaultValue: "Actual",
+            constraints: { allowedValues: [{ value: "Actual" }, { value: "Plan", title: "Plan scenario" }] },
+        };
+        expect(isValidParameterValue(definition, "Plan")).toBe(true);
+        expect(isValidParameterValue(definition, "Forecast")).toBe(false);
+    });
+
+    it("treats an empty allowedValues list as free text restricted only by the length bounds", () => {
+        const definition: IParameterDefinition = {
+            type: "STRING",
+            defaultValue: "Actual",
+            constraints: { maxLength: 6, allowedValues: [] },
+        };
+        expect(isValidParameterValue(definition, "Actual")).toBe(true);
+        expect(isValidParameterValue(definition, "Plan")).toBe(true);
+        expect(isValidParameterValue(definition, "TooLong")).toBe(false);
+    });
+
+    it("still enforces minLength/maxLength alongside allowedValues membership", () => {
+        const definition: IParameterDefinition = {
+            type: "STRING",
+            defaultValue: "Actual",
+            constraints: {
+                minLength: 1,
+                maxLength: 5,
+                allowedValues: [{ value: "Plan" }, { value: "Forecast" }],
+            },
+        };
+        expect(isValidParameterValue(definition, "Plan")).toBe(true);
+        expect(isValidParameterValue(definition, "Forecast")).toBe(false);
+    });
 });
 
 describe("sanitizeParameterValue", () => {
@@ -107,6 +179,16 @@ describe("sanitizeParameterValue", () => {
         expect(sanitizeParameterValue(definition, 7)).toBe("Actual");
         expect(sanitizeParameterValue(definition, "TooLong")).toBe("Actual");
     });
+
+    it("recovers an out-of-set STRING value to the default when allowedValues is present", () => {
+        const definition: IParameterDefinition = {
+            type: "STRING",
+            defaultValue: "Actual",
+            constraints: { allowedValues: [{ value: "Actual" }, { value: "Plan" }] },
+        };
+        expect(sanitizeParameterValue(definition, "Plan")).toBe("Plan");
+        expect(sanitizeParameterValue(definition, "Forecast")).toBe("Actual");
+    });
 });
 
 describe("parameterValueMatchesType", () => {
@@ -125,6 +207,15 @@ describe("parameterValueMatchesType", () => {
         expect(parameterValueMatchesType(numberDefinition, "Plan")).toBe(false);
         expect(parameterValueMatchesType(stringDefinition, "TooLong")).toBe(true);
         expect(parameterValueMatchesType(stringDefinition, 5)).toBe(false);
+    });
+});
+
+describe("getParameterAllowedValueTitle", () => {
+    it("returns the title when present and the value otherwise", () => {
+        expect(getParameterAllowedValueTitle({ value: "Plan", title: "Plan scenario" })).toBe(
+            "Plan scenario",
+        );
+        expect(getParameterAllowedValueTitle({ value: "Plan" })).toBe("Plan");
     });
 });
 

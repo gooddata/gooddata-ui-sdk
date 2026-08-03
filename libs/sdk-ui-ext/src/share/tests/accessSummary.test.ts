@@ -45,6 +45,12 @@ describe("deriveWorkspacePermissionLevel", () => {
     it("is SHARE when any rule entry holds a direct SHARE", () => {
         expect(deriveWorkspacePermissionLevel([rule([], ["VIEW"]), rule(["SHARE", "VIEW"])])).toBe("SHARE");
     });
+
+    it("is EDIT when a rule entry holds a direct EDIT over SHARE", () => {
+        expect(deriveWorkspacePermissionLevel([rule(["SHARE", "VIEW"]), rule(["EDIT", "VIEW"])])).toBe(
+            "EDIT",
+        );
+    });
 });
 
 describe("deriveInheritedWorkspaceLevel", () => {
@@ -62,6 +68,10 @@ describe("deriveInheritedWorkspaceLevel", () => {
 
     it("is SHARE when any rule entry inherits SHARE", () => {
         expect(deriveInheritedWorkspaceLevel([rule(["VIEW"]), rule([], ["SHARE", "VIEW"])])).toBe("SHARE");
+    });
+
+    it("is EDIT when a rule entry inherits EDIT over SHARE", () => {
+        expect(deriveInheritedWorkspaceLevel([rule([], ["SHARE"]), rule([], ["EDIT", "VIEW"])])).toBe("EDIT");
     });
 });
 
@@ -98,6 +108,20 @@ describe("composeEffectiveWorkspaceAccess", () => {
         expect(composeEffectiveWorkspaceAccess("WORKSPACE", "SHARE", "VIEW")).toEqual({
             generalAccess: "WORKSPACE",
             workspaceLevel: "SHARE",
+        });
+    });
+
+    it("keeps a direct EDIT over an inherited SHARE", () => {
+        expect(composeEffectiveWorkspaceAccess("WORKSPACE", "EDIT", "SHARE")).toEqual({
+            generalAccess: "WORKSPACE",
+            workspaceLevel: "EDIT",
+        });
+    });
+
+    it("pins the level to EDIT when EDIT is inherited over a direct VIEW", () => {
+        expect(composeEffectiveWorkspaceAccess("WORKSPACE", "VIEW", "EDIT")).toEqual({
+            generalAccess: "WORKSPACE",
+            workspaceLevel: "EDIT",
         });
     });
 });

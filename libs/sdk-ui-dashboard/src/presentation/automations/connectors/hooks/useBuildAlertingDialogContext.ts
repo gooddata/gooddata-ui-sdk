@@ -3,7 +3,16 @@
 import { useCallback, useMemo, useRef } from "react";
 
 import type { IExecutionResult } from "@gooddata/sdk-backend-spi";
-import { type IInsight, type IWidget, serializeObjRef } from "@gooddata/sdk-model";
+import {
+    type IAutomationMetadataObject,
+    type IInsight,
+    type INotificationChannelIdentifier,
+    type INotificationChannelMetadataObject,
+    type IWidget,
+    type IWorkspaceUser,
+    serializeObjRef,
+} from "@gooddata/sdk-model";
+import type { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import {
     createAlert as createAlertCmd,
@@ -28,12 +37,17 @@ export interface IUseBuildAlertingDialogContextOpts {
     mode: "create" | "edit";
     widget?: IWidget;
     insight?: IInsight;
+    alertToEdit?: IAutomationMetadataObject;
+    users: IWorkspaceUser[];
+    usersError?: GoodDataSdkError;
+    notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
+    isLoading: boolean;
 }
 
 export function useBuildAlertingDialogContext(
     opts: IUseBuildAlertingDialogContextOpts,
 ): IAlertingDialogContextValue {
-    const { mode, widget, insight } = opts;
+    const { mode, widget, insight, alertToEdit, users, usersError, notificationChannels, isLoading } = opts;
 
     const dashboardFilters = useDashboardSelector(selectAutomationDefaultSelectedFilters);
     const hiddenFilters = useDashboardSelector(selectDashboardHiddenFilters);
@@ -105,6 +119,11 @@ export function useBuildAlertingDialogContext(
             createAlert,
             saveAlert,
             deleteAlert,
+            alertToEdit,
+            users,
+            usersError,
+            notificationChannels,
+            isLoading,
         }),
         [
             mode,
@@ -122,6 +141,11 @@ export function useBuildAlertingDialogContext(
             createAlert,
             saveAlert,
             deleteAlert,
+            alertToEdit,
+            users,
+            usersError,
+            notificationChannels,
+            isLoading,
         ],
     );
 }

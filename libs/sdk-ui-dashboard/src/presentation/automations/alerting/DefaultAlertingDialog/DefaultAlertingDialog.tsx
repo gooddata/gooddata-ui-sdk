@@ -69,12 +69,6 @@ const CLOSE_ON_PARENT_SCROLL = true;
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 
 export function AlertingDialogRenderer({
-    alertToEdit,
-    users,
-    usersError,
-    notificationChannels,
-    insight,
-    widget,
     onCancel,
     onDeleteSuccess,
     onDeleteError,
@@ -99,7 +93,11 @@ export function AlertingDialogRenderer({
             canUseAiAssistant: enableAiAssistant,
         },
     } = useAutomationsContext();
-    const { widgetTitle } = useAlertingDialogContext();
+    // Read from context because this component calls useAutomationFiltersSelect and
+    // useValidateExistingAutomationFilters directly, and the filter-select call must run before
+    // useEditAlert, which consumes its output. Removed with the filter read-model consolidation
+    // (EB-867), which retires these call sites.
+    const { widgetTitle, alertToEdit, widget, insight } = useAlertingDialogContext();
 
     const [alertToDelete, setAlertToDelete] = useState<IAutomationMetadataObject | null>(null);
 
@@ -173,16 +171,14 @@ export function AlertingDialogRenderer({
         isParentValid,
         thresholdErrorMessage,
         allowHourlyRecurrence,
-    } = useEditAlert({
-        insight,
-        widget,
-        alertToEdit,
         users,
+        usersError,
+        notificationChannels,
+    } = useEditAlert({
         editedAutomationFilters,
         maxAutomationsRecipients,
         availableFiltersAsVisibleFilters,
         setEditedAutomationFilters,
-        notificationChannels,
         filtersForNewAutomation,
         externalRecipientOverride,
     });
@@ -658,8 +654,9 @@ export function AlertingDialogRenderer({
  * @alpha
  */
 export function DefaultAlertingDialog(props: IAlertingDialogProps) {
-    const { isLoading, onCancel, alertToEdit } = props;
+    const { onCancel } = props;
     const { locale } = useAutomationsContext();
+    const { isLoading, alertToEdit } = useAlertingDialogContext();
 
     if (isLoading) {
         return <DefaultLoadingAlertingDialog onCancel={onCancel} alertToEdit={alertToEdit} />;

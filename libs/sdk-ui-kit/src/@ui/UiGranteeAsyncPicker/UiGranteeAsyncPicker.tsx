@@ -4,18 +4,20 @@ import { useCallback, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
-import {
-    olpAddGranteeDialogMessages,
-    olpPermissionMessages,
-    uiGranteeAsyncPickerMessages,
-} from "../../locales.js";
+import { type ObjRef } from "@gooddata/sdk-model";
+
+import { olpAddGranteeDialogMessages, uiGranteeAsyncPickerMessages } from "../../locales.js";
 import { bem } from "../@utils/bem.js";
 import { type IUiAutocompleteOption, type IUiAutocompleteSection } from "../UiAutocomplete/types.js";
 import { UiAutocomplete } from "../UiAutocomplete/UiAutocomplete.js";
 import { UiButton } from "../UiButton/UiButton.js";
 import { type GranteeAvatarKind } from "../UiGranteeAvatar/UiGranteeAvatar.js";
 import { UiGranteeRow } from "../UiGranteeRow/UiGranteeRow.js";
-import { type PermissionMenuLevel, UiPermissionMenu } from "../UiPermissionMenu/UiPermissionMenu.js";
+import {
+    type PermissionMenuLevel,
+    UiPermissionMenu,
+    permissionLevelMessage,
+} from "../UiPermissionMenu/UiPermissionMenu.js";
 
 const { b, e } = bem("gd-ui-kit-grantee-async-picker");
 
@@ -27,6 +29,10 @@ const { b, e } = bem("gd-ui-kit-grantee-async-picker");
 export interface IUiGranteeAsyncOption {
     /** Stable identifier — used as the React key and as the value passed to `onSelect`. */
     id: string;
+    /** Backend ref of the user/group, carried through selection so the consumer can
+     * write the grant against the exact ref (preserves Uri-vs-Id; `id` is a lossy
+     * serialization). */
+    ref: ObjRef;
     /** Avatar variant. */
     kind: GranteeAvatarKind;
     /** Display name shown on the row. */
@@ -109,8 +115,6 @@ export function UiGranteeAsyncPicker({
 
     const groupsLabel = intl.formatMessage(uiGranteeAsyncPickerMessages.sectionGroups);
     const usersLabel = intl.formatMessage(uiGranteeAsyncPickerMessages.sectionUsers);
-    const canViewLabel = intl.formatMessage(olpPermissionMessages.canView);
-    const canShareLabel = intl.formatMessage(olpPermissionMessages.canViewAndShare);
 
     const selectedIds = useMemo(() => selectedGrantees.map((g) => g.id), [selectedGrantees]);
 
@@ -186,7 +190,7 @@ export function UiGranteeAsyncPicker({
             {selectedGrantees.length > 0 ? (
                 <ul className={e("picked-list")}>
                     {selectedGrantees.map((g) => {
-                        const triggerLabel = g.permissionLevel === "SHARE" ? canShareLabel : canViewLabel;
+                        const triggerLabel = intl.formatMessage(permissionLevelMessage(g.permissionLevel));
                         return (
                             <li key={g.id} className={e("picked-item")}>
                                 <UiGranteeRow

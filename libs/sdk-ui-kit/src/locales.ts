@@ -87,6 +87,7 @@ export const olpGeneralAccessMessages = defineMessages({
     workspaceTitle: { id: "shareDialog.olp.generalAccess.workspace.title" },
     workspaceDescription: { id: "shareDialog.olp.generalAccess.workspace.description" },
     workspaceDescriptionShare: { id: "shareDialog.olp.generalAccess.workspace.description.share" },
+    workspaceDescriptionEdit: { id: "shareDialog.olp.generalAccess.workspace.description.edit" },
 });
 
 export const olpLabelMessages = defineMessages({
@@ -100,16 +101,16 @@ export const olpLabelMessages = defineMessages({
 export const olpPermissionMessages = defineMessages({
     canViewAndShare: { id: "shareDialog.share.granular.grantee.permission.share" },
     canView: { id: "shareDialog.share.granular.grantee.permission.view" },
-    canEdit: { id: "shareDialog.olp.permission.edit" },
+    canEditAndShare: { id: "shareDialog.olp.permission.edit" },
+    canEditAndShareTooltip: { id: "shareDialog.olp.permission.tooltip.edit" },
     canViewAndShareTooltip: { id: "shareDialog.olp.permission.tooltip.share" },
     canViewTooltip: { id: "shareDialog.olp.permission.tooltip.view" },
     labels: { id: "shareDialog.olp.permission.labels" },
     removeAccess: { id: "shareDialog.olp.permission.removeAccess" },
     menuLabel: { id: "shareDialog.olp.permission.menuLabel" },
     moreInfoAriaLabel: { id: "shareDialog.olp.permission.moreInfoAriaLabel" },
-    moreOptionsAriaLabel: { id: "shareDialog.olp.permission.moreOptions.ariaLabel" },
-    moreOptionsMenuLabel: { id: "shareDialog.olp.permission.moreOptions.menuLabel" },
     effectivePermissionTooltipShare: { id: "shareDialog.olp.permission.effective.tooltip.share" },
+    effectivePermissionTooltipEdit: { id: "shareDialog.olp.permission.effective.tooltip.edit" },
     effectivePermissionAriaLabel: { id: "shareDialog.olp.permission.effective.ariaLabel" },
 });
 

@@ -45,25 +45,25 @@
                     {
                         "attributeHeaderItem": {
                             "name": "Direct Sales",
-                            "uri": "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/1026/elements?id=1226"
+                            "uri": "elem_1026_1226"
                         }
                     },
                     {
                         "attributeHeaderItem": {
                             "name": "Direct Sales",
-                            "uri": "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/1026/elements?id=1226"
+                            "uri": "elem_1026_1226"
                         }
                     },
                     {
                         "attributeHeaderItem": {
                             "name": "Inside Sales",
-                            "uri": "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/1026/elements?id=1234"
+                            "uri": "elem_1026_1234"
                         }
                     },
                     {
                         "attributeHeaderItem": {
                             "name": "Inside Sales",
-                            "uri": "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/1026/elements?id=1234"
+                            "uri": "elem_1026_1234"
                         }
                     }
                 ],
@@ -71,25 +71,25 @@
                     {
                         "attributeHeaderItem": {
                             "name": "East Coast",
-                            "uri": "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/1023/elements?id=1225"
+                            "uri": "elem_1023_1225"
                         }
                     },
                     {
                         "attributeHeaderItem": {
                             "name": "West Coast",
-                            "uri": "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/1023/elements?id=1237"
+                            "uri": "elem_1023_1237"
                         }
                     },
                     {
                         "attributeHeaderItem": {
                             "name": "East Coast",
-                            "uri": "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/1023/elements?id=1225"
+                            "uri": "elem_1023_1225"
                         }
                     },
                     {
                         "attributeHeaderItem": {
                             "name": "West Coast",
-                            "uri": "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/1023/elements?id=1237"
+                            "uri": "elem_1023_1237"
                         }
                     }
                 ]

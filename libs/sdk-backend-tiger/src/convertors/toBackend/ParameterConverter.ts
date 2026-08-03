@@ -4,10 +4,12 @@ import type {
     JsonApiParameterInAttributes,
     JsonApiParameterInAttributesDefinition,
     JsonApiParameterPatchAttributes,
+    StringConstraints,
 } from "@gooddata/api-client-tiger";
 import {
     type IParameterDefinition,
     type IParameterMetadataObjectDefinition,
+    type IStringParameterConstraints,
     throwUnexpected,
 } from "@gooddata/sdk-model";
 
@@ -26,11 +28,21 @@ function convertParameterDefinitionToBackend(
             return {
                 type: "STRING",
                 defaultValue: definition.defaultValue,
-                ...(definition.constraints === undefined ? {} : { constraints: definition.constraints }),
+                ...(definition.constraints === undefined
+                    ? {}
+                    : { constraints: convertStringConstraintsToBackend(definition.constraints) }),
             };
         default:
             return throwUnexpected(type);
     }
+}
+
+function convertStringConstraintsToBackend(constraints: IStringParameterConstraints): StringConstraints {
+    const { allowedValues, ...otherConstraints } = constraints;
+    return {
+        ...otherConstraints,
+        ...(allowedValues && allowedValues.length > 0 ? { allowedValues } : {}),
+    };
 }
 
 export function convertParameterToBackendCreate(

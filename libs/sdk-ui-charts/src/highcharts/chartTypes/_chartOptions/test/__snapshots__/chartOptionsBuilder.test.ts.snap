@@ -63,9 +63,9 @@ exports[`chartOptionsBuilder > outline chart fill > getDrillableSeries > in usec
           "localIdentifier": "lostMetric",
           "name": "<button>Lost</button> ...",
           "ref": {
-            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+            "uri": "obj_1283",
           },
-          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+          "uri": "obj_1283",
         },
       },
     },
@@ -76,21 +76,21 @@ exports[`chartOptionsBuilder > outline chart fill > getDrillableSeries > in usec
             "identifier": "created",
             "name": "Year created",
             "ref": {
-              "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
+              "uri": "obj_157",
             },
-            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
+            "uri": "obj_157",
           },
           "identifier": "created.aag81lMifn6q",
           "localIdentifier": "yearCreatedAttribute",
           "name": "Year (Created)",
           "ref": {
-            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
+            "uri": "obj_158",
           },
-          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
+          "uri": "obj_158",
         },
         "attributeHeaderItem": {
           "name": "<button>2008</button>",
-          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158/elements?id=2008",
+          "uri": "elem_158_2008",
         },
       },
     },
@@ -105,9 +105,9 @@ exports[`chartOptionsBuilder > outline chart fill > getDrillableSeries > in usec
           "localIdentifier": "expectedMetric",
           "name": "Expected",
           "ref": {
-            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1285",
+            "uri": "obj_1285",
           },
-          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1285",
+          "uri": "obj_1285",
         },
       },
     },
@@ -118,21 +118,21 @@ exports[`chartOptionsBuilder > outline chart fill > getDrillableSeries > in usec
             "identifier": "created",
             "name": "Year created",
             "ref": {
-              "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
+              "uri": "obj_157",
             },
-            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
+            "uri": "obj_157",
           },
           "identifier": "created.aag81lMifn6q",
           "localIdentifier": "yearCreatedAttribute",
           "name": "Year (Created)",
           "ref": {
-            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
+            "uri": "obj_158",
           },
-          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
+          "uri": "obj_158",
         },
         "attributeHeaderItem": {
           "name": "<button>2008</button>",
-          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158/elements?id=2008",
+          "uri": "elem_158_2008",
         },
       },
     },
@@ -153,42 +153,33 @@ exports[`chartOptionsBuilder > outline chart fill > getDrillableSeries > in usec
     {
       "header": {
         "measureHeaderItem": {
-          "format": "#,##0.00",
-          "identifier": "ab0bydLaaisS",
-          "localIdentifier": "784a5018a51049078e8f7e86247e08a3",
-          "name": "_Snapshot [EOP-2]",
-          "ref": {
-            "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/67097",
-          },
-          "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/67097",
+          "format": "$#,##0.00",
+          "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+          "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          "name": "Amount",
+          "ref": undefined,
         },
       },
     },
     {
       "header": {
         "measureHeaderItem": {
-          "format": "#,##0",
-          "identifier": "aaYh6Voua2yj",
-          "localIdentifier": "9e5c3cd9a93f4476a93d3494cedc6010",
-          "name": "# of Open Opps.",
-          "ref": {
-            "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/13465",
-          },
-          "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/13465",
+          "format": "#,##0.0%",
+          "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
+          "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
+          "name": "Win Rate",
+          "ref": undefined,
         },
       },
     },
     {
       "header": {
         "measureHeaderItem": {
-          "format": "$#,#00.00",
-          "identifier": "ab4EFOAmhjOx",
-          "localIdentifier": "71d50cf1d13746099b7f506576d78e4a",
-          "name": "Remaining Quota",
-          "ref": {
-            "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1543",
-          },
-          "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1543",
+          "format": "#,##0.0%",
+          "identifier": "b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa",
+          "localIdentifier": "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa",
+          "name": "Probability",
+          "ref": undefined,
         },
       },
     },
@@ -196,34 +187,36 @@ exports[`chartOptionsBuilder > outline chart fill > getDrillableSeries > in usec
       "header": {
         "attributeHeader": {
           "formOf": {
-            "identifier": "attr.owner.id",
-            "name": "Sales Rep",
-            "ref": {
-              "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1025",
-            },
-            "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1025",
+            "identifier": "attr.f_product.product",
+            "name": "Product",
+            "ref": undefined,
+            "uri": "",
           },
-          "identifier": "label.owner.id.name",
-          "localIdentifier": "49a659fbd7c541a69284769d53a2be7f",
-          "name": "Owner Name",
-          "ref": {
-            "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1028",
+          "granularity": null,
+          "identifier": "label.f_product.product.name",
+          "localIdentifier": "a_label.f_product.product.name",
+          "name": "Product Name",
+          "primaryLabel": {
+            "identifier": "attr.f_product.product",
+            "type": "displayForm",
           },
-          "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1028",
+          "ref": undefined,
+          "totalItems": [],
+          "uri": "",
         },
         "attributeHeaderItem": {
-          "name": "Jessica Traven",
-          "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1025/elements?id=1235",
+          "name": "Grammar Plus",
+          "uri": "Grammar Plus",
         },
       },
     },
   ],
   "drilldown": true,
-  "format": "$#,#00.00",
-  "name": "Jessica Traven",
-  "x": 245,
-  "y": 32,
-  "z": 2280481.04,
+  "format": "#,##0.0%",
+  "name": "Grammar Plus",
+  "x": 8042031.92,
+  "y": 0.5722772277227722,
+  "z": 0.61347,
 }
 `;
 
@@ -238,9 +231,9 @@ exports[`chartOptionsBuilder > outline chart fill > getDrillableSeries > in usec
           "localIdentifier": "lostMetric",
           "name": "<button>Lost</button> ...",
           "ref": {
-            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+            "uri": "obj_1283",
           },
-          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+          "uri": "obj_1283",
         },
       },
     },
@@ -252,9 +245,9 @@ exports[`chartOptionsBuilder > outline chart fill > getDrillableSeries > in usec
           "localIdentifier": "wonMetric",
           "name": "Won",
           "ref": {
-            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284",
+            "uri": "obj_1284",
           },
-          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284",
+          "uri": "obj_1284",
         },
       },
     },
@@ -265,21 +258,21 @@ exports[`chartOptionsBuilder > outline chart fill > getDrillableSeries > in usec
             "identifier": "created",
             "name": "Year created",
             "ref": {
-              "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
+              "uri": "obj_157",
             },
-            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
+            "uri": "obj_157",
           },
           "identifier": "created.aag81lMifn6q",
           "localIdentifier": "yearCreatedAttribute",
           "name": "Year (Created)",
           "ref": {
-            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
+            "uri": "obj_158",
           },
-          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
+          "uri": "obj_158",
         },
         "attributeHeaderItem": {
           "name": "<button>2008</button>",
-          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158/elements?id=2008",
+          "uri": "elem_158_2008",
         },
       },
     },
@@ -293,301 +286,91 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of b
     "color": "rgb(20,178,226)",
     "data": [
       {
-        "format": "$#,#00.00",
-        "name": "Adam Bradley",
+        "format": "#,##0.0%",
+        "name": "CompuSci",
         "x": 0,
-        "y": 33,
-        "z": 2424413.8,
+        "y": 27222899.64,
+        "z": 0.61087,
       },
     ],
     "legendIndex": 0,
-    "name": "Adam Bradley",
+    "name": "CompuSci",
     "seriesIndex": 0,
   },
   {
     "color": "rgb(0,193,141)",
     "data": [
       {
-        "format": "$#,#00.00",
-        "name": "Alejandro Vabiano",
+        "format": "#,##0.0%",
+        "name": "Educationly",
         "x": 0,
-        "y": 29,
-        "z": 1963436.86,
+        "y": 22946895.47,
+        "z": 0.60014,
       },
     ],
     "legendIndex": 1,
-    "name": "Alejandro Vabiano",
+    "name": "Educationly",
     "seriesIndex": 1,
   },
   {
     "color": "rgb(229,77,66)",
     "data": [
       {
-        "format": "$#,#00.00",
-        "name": "Alexsandr Fyodr",
+        "format": "#,##0.0%",
+        "name": "Explorer",
         "x": 0,
-        "y": 35,
-        "z": 2100205.16,
+        "y": 38596194.86,
+        "z": 0.57863,
       },
     ],
     "legendIndex": 2,
-    "name": "Alexsandr Fyodr",
+    "name": "Explorer",
     "seriesIndex": 2,
   },
   {
     "color": "rgb(241,134,0)",
     "data": [
       {
-        "format": "$#,#00.00",
-        "name": "Cory Owens",
+        "format": "#,##0.0%",
+        "name": "Grammar Plus",
         "x": 0,
-        "y": 30,
-        "z": 2364179.19,
+        "y": 8042031.92,
+        "z": 0.61347,
       },
     ],
     "legendIndex": 3,
-    "name": "Cory Owens",
+    "name": "Grammar Plus",
     "seriesIndex": 3,
   },
   {
     "color": "rgb(171,85,163)",
     "data": [
       {
-        "format": "$#,#00.00",
-        "name": "Dale Perdadtin",
+        "format": "#,##0.0%",
+        "name": "PhoenixSoft",
         "x": 0,
-        "y": 30,
-        "z": 1776567.88,
+        "y": 9525857.91,
+        "z": 0.615,
       },
     ],
     "legendIndex": 4,
-    "name": "Dale Perdadtin",
+    "name": "PhoenixSoft",
     "seriesIndex": 4,
   },
   {
     "color": "rgb(244,213,33)",
     "data": [
       {
-        "format": "$#,#00.00",
-        "name": "Dave Bostadt",
+        "format": "#,##0.0%",
+        "name": "WonderKid",
         "x": 0,
-        "y": 35,
-        "z": 2615259.07,
+        "y": 10291576.74,
+        "z": 0.56987,
       },
     ],
     "legendIndex": 5,
-    "name": "Dave Bostadt",
+    "name": "WonderKid",
     "seriesIndex": 5,
-  },
-  {
-    "color": "rgb(148,161,174)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Ellen Jones",
-        "x": 0,
-        "y": 29,
-        "z": 1471667.02,
-      },
-    ],
-    "legendIndex": 6,
-    "name": "Ellen Jones",
-    "seriesIndex": 6,
-  },
-  {
-    "color": "rgb(107,191,216)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Huey Jonas",
-        "x": 0,
-        "y": 31,
-        "z": 2161030.33,
-      },
-    ],
-    "legendIndex": 7,
-    "name": "Huey Jonas",
-    "seriesIndex": 7,
-  },
-  {
-    "color": "rgb(181,136,177)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Jessica Traven",
-        "x": 0,
-        "y": 32,
-        "z": 2280481.04,
-      },
-    ],
-    "legendIndex": 8,
-    "name": "Jessica Traven",
-    "seriesIndex": 8,
-  },
-  {
-    "color": "rgb(238,135,128)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "John Jovi",
-        "x": 0,
-        "y": 26,
-        "z": 1769560.54,
-      },
-    ],
-    "legendIndex": 9,
-    "name": "John Jovi",
-    "seriesIndex": 9,
-  },
-  {
-    "color": "rgb(241,171,84)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Jon Jons",
-        "x": 0,
-        "y": 42,
-        "z": 2346482.16,
-      },
-    ],
-    "legendIndex": 10,
-    "name": "Jon Jons",
-    "seriesIndex": 10,
-  },
-  {
-    "color": "rgb(133,209,188)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Lea Forbes",
-        "x": 0,
-        "y": 30,
-        "z": 1705084.84,
-      },
-    ],
-    "legendIndex": 11,
-    "name": "Lea Forbes",
-    "seriesIndex": 11,
-  },
-  {
-    "color": "rgb(41,117,170)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Monique Babonas",
-        "x": 0,
-        "y": 30,
-        "z": 2345090.98,
-      },
-    ],
-    "legendIndex": 12,
-    "name": "Monique Babonas",
-    "seriesIndex": 12,
-  },
-  {
-    "color": "rgb(4,140,103)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Paul Gomez",
-        "x": 0,
-        "y": 64,
-        "z": 131675.42,
-      },
-    ],
-    "legendIndex": 13,
-    "name": "Paul Gomez",
-    "seriesIndex": 13,
-  },
-  {
-    "color": "rgb(181,60,51)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Paul Jacobs",
-        "x": 0,
-        "y": 88,
-        "z": 1668600.86,
-      },
-    ],
-    "legendIndex": 14,
-    "name": "Paul Jacobs",
-    "seriesIndex": 14,
-  },
-  {
-    "color": "rgb(163,101,46)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Ravi Deetri",
-        "x": 0,
-        "y": 93,
-        "z": 1649882.14,
-      },
-    ],
-    "legendIndex": 15,
-    "name": "Ravi Deetri",
-    "seriesIndex": 15,
-  },
-  {
-    "color": "rgb(140,57,132)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Thomas Gones",
-        "x": 0,
-        "y": 70,
-        "z": 1229206.9,
-      },
-    ],
-    "legendIndex": 16,
-    "name": "Thomas Gones",
-    "seriesIndex": 16,
-  },
-  {
-    "color": "rgb(136,219,244)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Tom Stickler",
-        "x": 0,
-        "y": 71,
-        "z": 457045.18,
-      },
-    ],
-    "legendIndex": 17,
-    "name": "Tom Stickler",
-    "seriesIndex": 17,
-  },
-  {
-    "color": "rgb(189,234,222)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Trevor Deegan",
-        "x": 0,
-        "y": 60,
-        "z": 801178.61,
-      },
-    ],
-    "legendIndex": 18,
-    "name": "Trevor Deegan",
-    "seriesIndex": 18,
-  },
-  {
-    "color": "rgb(239,197,194)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Victor Crushetz",
-        "x": 0,
-        "y": 60,
-        "z": 1065164.57,
-      },
-    ],
-    "legendIndex": 19,
-    "name": "Victor Crushetz",
-    "seriesIndex": 19,
   },
 ]
 `;
@@ -842,7 +625,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of t
   {
     "borderColor": "rgb(20,178,226)",
     "color": "rgb(232,247,252)",
-    "format": "#,##0.00",
+    "format": "$#,##0.00",
     "id": "0",
     "legendIndex": 0,
     "name": "Amount",
@@ -850,23 +633,23 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of t
   },
   {
     "color": "rgb(20,178,226)",
-    "format": "#,##0.00",
-    "name": "Direct Sales",
+    "format": "$#,##0.00",
+    "name": "West Coast",
     "parent": "0",
     "showInLegend": false,
-    "value": 80406324.96,
+    "value": 88608360.12,
     "x": 0,
-    "y": 0,
+    "y": 1,
   },
   {
     "color": "rgb(114,209,238)",
-    "format": "#,##0.00",
-    "name": "Inside Sales",
+    "format": "$#,##0.00",
+    "name": "East Coast",
     "parent": "0",
     "showInLegend": false,
-    "value": 36219131.58,
+    "value": 28017096.42,
     "x": 0,
-    "y": 1,
+    "y": 0,
   },
 ]
 `;
@@ -876,23 +659,55 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of t
   {
     "borderColor": "rgb(20,178,226)",
     "color": "rgb(232,247,252)",
-    "format": "#,##0.00",
+    "format": "$#,##0.00",
     "legendIndex": 0,
-    "name": "Direct Sales",
-    "value": 80406324.96,
+    "name": "CompuSci",
+    "value": 27222899.64,
   },
   {
     "borderColor": "rgb(0,193,141)",
     "color": "rgb(230,249,244)",
-    "format": "#,##0.00",
+    "format": "$#,##0.00",
     "legendIndex": 1,
-    "name": "Inside Sales",
-    "value": 36219131.58,
+    "name": "Educationly",
+    "value": 22946895.47,
+  },
+  {
+    "borderColor": "rgb(229,77,66)",
+    "color": "rgb(252,237,236)",
+    "format": "$#,##0.00",
+    "legendIndex": 2,
+    "name": "Explorer",
+    "value": 38596194.86,
+  },
+  {
+    "borderColor": "rgb(241,134,0)",
+    "color": "rgb(254,243,230)",
+    "format": "$#,##0.00",
+    "legendIndex": 3,
+    "name": "Grammar Plus",
+    "value": 8042031.92,
+  },
+  {
+    "borderColor": "rgb(171,85,163)",
+    "color": "rgb(247,238,246)",
+    "format": "$#,##0.00",
+    "legendIndex": 4,
+    "name": "PhoenixSoft",
+    "value": 9525857.91,
+  },
+  {
+    "borderColor": "rgb(244,213,33)",
+    "color": "rgb(254,251,233)",
+    "format": "$#,##0.00",
+    "legendIndex": 5,
+    "name": "WonderKid",
+    "value": 10291576.74,
   },
 ]
 `;
 
-exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of treemap > with one measure, view by and stack by attribute > should fill correct series data 1`] = `6`;
+exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of treemap > with one measure, view by and stack by attribute > should fill correct series data 1`] = `18`;
 
 exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of treemap > with only one measure > should fill correct series color 1`] = `"rgb(232,247,252)"`;
 
@@ -900,14 +715,14 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of t
 {
   "borderColor": "rgb(20,178,226)",
   "color": "rgb(232,247,252)",
-  "format": "#,##0.00",
+  "format": "$#,##0.00",
   "legendIndex": 0,
   "name": "Amount",
   "value": 116625456.54,
 }
 `;
 
-exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of treemap > with two measures and stack by attribute including client sorting > should fill correct series data 1`] = `6`;
+exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of treemap > with two measures and stack by attribute including client sorting > should fill correct series data 1`] = `14`;
 
 exports[`chartOptionsBuilder > outline chart fill > getSeries > in usecase of bar chart with 3 measures and view by attribute > should fill correct series color 1`] = `
 [
@@ -944,6 +759,10 @@ exports[`chartOptionsBuilder > outline chart fill > getSeriesItemData > in useca
 [
   "rgb(232,247,252)",
   "rgb(230,249,244)",
+  "rgb(252,237,236)",
+  "rgb(254,243,230)",
+  "rgb(247,238,246)",
+  "rgb(254,251,233)",
 ]
 `;
 
@@ -951,6 +770,10 @@ exports[`chartOptionsBuilder > outline chart fill > getSeriesItemData > in useca
 [
   "rgb(232,247,252)",
   "rgb(230,249,244)",
+  "rgb(252,237,236)",
+  "rgb(254,243,230)",
+  "rgb(247,238,246)",
+  "rgb(254,251,233)",
 ]
 `;
 
@@ -1017,9 +840,9 @@ exports[`chartOptionsBuilder > pattern chart fill > getDrillableSeries > in usec
           "localIdentifier": "lostMetric",
           "name": "<button>Lost</button> ...",
           "ref": {
-            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+            "uri": "obj_1283",
           },
-          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+          "uri": "obj_1283",
         },
       },
     },
@@ -1030,21 +853,21 @@ exports[`chartOptionsBuilder > pattern chart fill > getDrillableSeries > in usec
             "identifier": "created",
             "name": "Year created",
             "ref": {
-              "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
+              "uri": "obj_157",
             },
-            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
+            "uri": "obj_157",
           },
           "identifier": "created.aag81lMifn6q",
           "localIdentifier": "yearCreatedAttribute",
           "name": "Year (Created)",
           "ref": {
-            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
+            "uri": "obj_158",
           },
-          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
+          "uri": "obj_158",
         },
         "attributeHeaderItem": {
           "name": "<button>2008</button>",
-          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158/elements?id=2008",
+          "uri": "elem_158_2008",
         },
       },
     },
@@ -1059,9 +882,9 @@ exports[`chartOptionsBuilder > pattern chart fill > getDrillableSeries > in usec
           "localIdentifier": "expectedMetric",
           "name": "Expected",
           "ref": {
-            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1285",
+            "uri": "obj_1285",
           },
-          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1285",
+          "uri": "obj_1285",
         },
       },
     },
@@ -1072,21 +895,21 @@ exports[`chartOptionsBuilder > pattern chart fill > getDrillableSeries > in usec
             "identifier": "created",
             "name": "Year created",
             "ref": {
-              "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
+              "uri": "obj_157",
             },
-            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
+            "uri": "obj_157",
           },
           "identifier": "created.aag81lMifn6q",
           "localIdentifier": "yearCreatedAttribute",
           "name": "Year (Created)",
           "ref": {
-            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
+            "uri": "obj_158",
           },
-          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
+          "uri": "obj_158",
         },
         "attributeHeaderItem": {
           "name": "<button>2008</button>",
-          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158/elements?id=2008",
+          "uri": "elem_158_2008",
         },
       },
     },
@@ -1129,42 +952,33 @@ exports[`chartOptionsBuilder > pattern chart fill > getDrillableSeries > in usec
     {
       "header": {
         "measureHeaderItem": {
-          "format": "#,##0.00",
-          "identifier": "ab0bydLaaisS",
-          "localIdentifier": "784a5018a51049078e8f7e86247e08a3",
-          "name": "_Snapshot [EOP-2]",
-          "ref": {
-            "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/67097",
-          },
-          "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/67097",
+          "format": "$#,##0.00",
+          "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+          "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          "name": "Amount",
+          "ref": undefined,
         },
       },
     },
     {
       "header": {
         "measureHeaderItem": {
-          "format": "#,##0",
-          "identifier": "aaYh6Voua2yj",
-          "localIdentifier": "9e5c3cd9a93f4476a93d3494cedc6010",
-          "name": "# of Open Opps.",
-          "ref": {
-            "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/13465",
-          },
-          "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/13465",
+          "format": "#,##0.0%",
+          "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
+          "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
+          "name": "Win Rate",
+          "ref": undefined,
         },
       },
     },
     {
       "header": {
         "measureHeaderItem": {
-          "format": "$#,#00.00",
-          "identifier": "ab4EFOAmhjOx",
-          "localIdentifier": "71d50cf1d13746099b7f506576d78e4a",
-          "name": "Remaining Quota",
-          "ref": {
-            "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1543",
-          },
-          "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1543",
+          "format": "#,##0.0%",
+          "identifier": "b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa",
+          "localIdentifier": "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa",
+          "name": "Probability",
+          "ref": undefined,
         },
       },
     },
@@ -1172,34 +986,36 @@ exports[`chartOptionsBuilder > pattern chart fill > getDrillableSeries > in usec
       "header": {
         "attributeHeader": {
           "formOf": {
-            "identifier": "attr.owner.id",
-            "name": "Sales Rep",
-            "ref": {
-              "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1025",
-            },
-            "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1025",
+            "identifier": "attr.f_product.product",
+            "name": "Product",
+            "ref": undefined,
+            "uri": "",
           },
-          "identifier": "label.owner.id.name",
-          "localIdentifier": "49a659fbd7c541a69284769d53a2be7f",
-          "name": "Owner Name",
-          "ref": {
-            "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1028",
+          "granularity": null,
+          "identifier": "label.f_product.product.name",
+          "localIdentifier": "a_label.f_product.product.name",
+          "name": "Product Name",
+          "primaryLabel": {
+            "identifier": "attr.f_product.product",
+            "type": "displayForm",
           },
-          "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1028",
+          "ref": undefined,
+          "totalItems": [],
+          "uri": "",
         },
         "attributeHeaderItem": {
-          "name": "Jessica Traven",
-          "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1025/elements?id=1235",
+          "name": "Grammar Plus",
+          "uri": "Grammar Plus",
         },
       },
     },
   ],
   "drilldown": true,
-  "format": "$#,#00.00",
-  "name": "Jessica Traven",
-  "x": 245,
-  "y": 32,
-  "z": 2280481.04,
+  "format": "#,##0.0%",
+  "name": "Grammar Plus",
+  "x": 8042031.92,
+  "y": 0.5722772277227722,
+  "z": 0.61347,
 }
 `;
 
@@ -1214,9 +1030,9 @@ exports[`chartOptionsBuilder > pattern chart fill > getDrillableSeries > in usec
           "localIdentifier": "lostMetric",
           "name": "<button>Lost</button> ...",
           "ref": {
-            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+            "uri": "obj_1283",
           },
-          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+          "uri": "obj_1283",
         },
       },
     },
@@ -1228,9 +1044,9 @@ exports[`chartOptionsBuilder > pattern chart fill > getDrillableSeries > in usec
           "localIdentifier": "wonMetric",
           "name": "Won",
           "ref": {
-            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284",
+            "uri": "obj_1284",
           },
-          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284",
+          "uri": "obj_1284",
         },
       },
     },
@@ -1241,21 +1057,21 @@ exports[`chartOptionsBuilder > pattern chart fill > getDrillableSeries > in usec
             "identifier": "created",
             "name": "Year created",
             "ref": {
-              "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
+              "uri": "obj_157",
             },
-            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
+            "uri": "obj_157",
           },
           "identifier": "created.aag81lMifn6q",
           "localIdentifier": "yearCreatedAttribute",
           "name": "Year (Created)",
           "ref": {
-            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
+            "uri": "obj_158",
           },
-          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
+          "uri": "obj_158",
         },
         "attributeHeaderItem": {
           "name": "<button>2008</button>",
-          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158/elements?id=2008",
+          "uri": "elem_158_2008",
         },
       },
     },
@@ -1269,301 +1085,91 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of b
     "color": "rgb(20,178,226)",
     "data": [
       {
-        "format": "$#,#00.00",
-        "name": "Adam Bradley",
+        "format": "#,##0.0%",
+        "name": "CompuSci",
         "x": 0,
-        "y": 33,
-        "z": 2424413.8,
+        "y": 27222899.64,
+        "z": 0.61087,
       },
     ],
     "legendIndex": 0,
-    "name": "Adam Bradley",
+    "name": "CompuSci",
     "seriesIndex": 0,
   },
   {
     "color": "rgb(0,193,141)",
     "data": [
       {
-        "format": "$#,#00.00",
-        "name": "Alejandro Vabiano",
+        "format": "#,##0.0%",
+        "name": "Educationly",
         "x": 0,
-        "y": 29,
-        "z": 1963436.86,
+        "y": 22946895.47,
+        "z": 0.60014,
       },
     ],
     "legendIndex": 1,
-    "name": "Alejandro Vabiano",
+    "name": "Educationly",
     "seriesIndex": 1,
   },
   {
     "color": "rgb(229,77,66)",
     "data": [
       {
-        "format": "$#,#00.00",
-        "name": "Alexsandr Fyodr",
+        "format": "#,##0.0%",
+        "name": "Explorer",
         "x": 0,
-        "y": 35,
-        "z": 2100205.16,
+        "y": 38596194.86,
+        "z": 0.57863,
       },
     ],
     "legendIndex": 2,
-    "name": "Alexsandr Fyodr",
+    "name": "Explorer",
     "seriesIndex": 2,
   },
   {
     "color": "rgb(241,134,0)",
     "data": [
       {
-        "format": "$#,#00.00",
-        "name": "Cory Owens",
+        "format": "#,##0.0%",
+        "name": "Grammar Plus",
         "x": 0,
-        "y": 30,
-        "z": 2364179.19,
+        "y": 8042031.92,
+        "z": 0.61347,
       },
     ],
     "legendIndex": 3,
-    "name": "Cory Owens",
+    "name": "Grammar Plus",
     "seriesIndex": 3,
   },
   {
     "color": "rgb(171,85,163)",
     "data": [
       {
-        "format": "$#,#00.00",
-        "name": "Dale Perdadtin",
+        "format": "#,##0.0%",
+        "name": "PhoenixSoft",
         "x": 0,
-        "y": 30,
-        "z": 1776567.88,
+        "y": 9525857.91,
+        "z": 0.615,
       },
     ],
     "legendIndex": 4,
-    "name": "Dale Perdadtin",
+    "name": "PhoenixSoft",
     "seriesIndex": 4,
   },
   {
     "color": "rgb(244,213,33)",
     "data": [
       {
-        "format": "$#,#00.00",
-        "name": "Dave Bostadt",
+        "format": "#,##0.0%",
+        "name": "WonderKid",
         "x": 0,
-        "y": 35,
-        "z": 2615259.07,
+        "y": 10291576.74,
+        "z": 0.56987,
       },
     ],
     "legendIndex": 5,
-    "name": "Dave Bostadt",
+    "name": "WonderKid",
     "seriesIndex": 5,
-  },
-  {
-    "color": "rgb(148,161,174)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Ellen Jones",
-        "x": 0,
-        "y": 29,
-        "z": 1471667.02,
-      },
-    ],
-    "legendIndex": 6,
-    "name": "Ellen Jones",
-    "seriesIndex": 6,
-  },
-  {
-    "color": "rgb(107,191,216)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Huey Jonas",
-        "x": 0,
-        "y": 31,
-        "z": 2161030.33,
-      },
-    ],
-    "legendIndex": 7,
-    "name": "Huey Jonas",
-    "seriesIndex": 7,
-  },
-  {
-    "color": "rgb(181,136,177)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Jessica Traven",
-        "x": 0,
-        "y": 32,
-        "z": 2280481.04,
-      },
-    ],
-    "legendIndex": 8,
-    "name": "Jessica Traven",
-    "seriesIndex": 8,
-  },
-  {
-    "color": "rgb(238,135,128)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "John Jovi",
-        "x": 0,
-        "y": 26,
-        "z": 1769560.54,
-      },
-    ],
-    "legendIndex": 9,
-    "name": "John Jovi",
-    "seriesIndex": 9,
-  },
-  {
-    "color": "rgb(241,171,84)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Jon Jons",
-        "x": 0,
-        "y": 42,
-        "z": 2346482.16,
-      },
-    ],
-    "legendIndex": 10,
-    "name": "Jon Jons",
-    "seriesIndex": 10,
-  },
-  {
-    "color": "rgb(133,209,188)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Lea Forbes",
-        "x": 0,
-        "y": 30,
-        "z": 1705084.84,
-      },
-    ],
-    "legendIndex": 11,
-    "name": "Lea Forbes",
-    "seriesIndex": 11,
-  },
-  {
-    "color": "rgb(41,117,170)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Monique Babonas",
-        "x": 0,
-        "y": 30,
-        "z": 2345090.98,
-      },
-    ],
-    "legendIndex": 12,
-    "name": "Monique Babonas",
-    "seriesIndex": 12,
-  },
-  {
-    "color": "rgb(4,140,103)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Paul Gomez",
-        "x": 0,
-        "y": 64,
-        "z": 131675.42,
-      },
-    ],
-    "legendIndex": 13,
-    "name": "Paul Gomez",
-    "seriesIndex": 13,
-  },
-  {
-    "color": "rgb(181,60,51)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Paul Jacobs",
-        "x": 0,
-        "y": 88,
-        "z": 1668600.86,
-      },
-    ],
-    "legendIndex": 14,
-    "name": "Paul Jacobs",
-    "seriesIndex": 14,
-  },
-  {
-    "color": "rgb(163,101,46)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Ravi Deetri",
-        "x": 0,
-        "y": 93,
-        "z": 1649882.14,
-      },
-    ],
-    "legendIndex": 15,
-    "name": "Ravi Deetri",
-    "seriesIndex": 15,
-  },
-  {
-    "color": "rgb(140,57,132)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Thomas Gones",
-        "x": 0,
-        "y": 70,
-        "z": 1229206.9,
-      },
-    ],
-    "legendIndex": 16,
-    "name": "Thomas Gones",
-    "seriesIndex": 16,
-  },
-  {
-    "color": "rgb(136,219,244)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Tom Stickler",
-        "x": 0,
-        "y": 71,
-        "z": 457045.18,
-      },
-    ],
-    "legendIndex": 17,
-    "name": "Tom Stickler",
-    "seriesIndex": 17,
-  },
-  {
-    "color": "rgb(189,234,222)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Trevor Deegan",
-        "x": 0,
-        "y": 60,
-        "z": 801178.61,
-      },
-    ],
-    "legendIndex": 18,
-    "name": "Trevor Deegan",
-    "seriesIndex": 18,
-  },
-  {
-    "color": "rgb(239,197,194)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Victor Crushetz",
-        "x": 0,
-        "y": 60,
-        "z": 1065164.57,
-      },
-    ],
-    "legendIndex": 19,
-    "name": "Victor Crushetz",
-    "seriesIndex": 19,
   },
 ]
 `;
@@ -1829,7 +1435,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of t
         "width": 8,
       },
     },
-    "format": "#,##0.00",
+    "format": "$#,##0.00",
     "id": "0",
     "legendIndex": 0,
     "name": "Amount",
@@ -1837,23 +1443,23 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of t
   },
   {
     "color": "rgb(20,178,226)",
-    "format": "#,##0.00",
-    "name": "Direct Sales",
+    "format": "$#,##0.00",
+    "name": "West Coast",
     "parent": "0",
     "showInLegend": false,
-    "value": 80406324.96,
+    "value": 88608360.12,
     "x": 0,
-    "y": 0,
+    "y": 1,
   },
   {
     "color": "rgb(114,209,238)",
-    "format": "#,##0.00",
-    "name": "Inside Sales",
+    "format": "$#,##0.00",
+    "name": "East Coast",
     "parent": "0",
     "showInLegend": false,
-    "value": 36219131.58,
+    "value": 28017096.42,
     "x": 0,
-    "y": 1,
+    "y": 0,
   },
 ]
 `;
@@ -1874,10 +1480,10 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of t
         "width": 8,
       },
     },
-    "format": "#,##0.00",
+    "format": "$#,##0.00",
     "legendIndex": 0,
-    "name": "Direct Sales",
-    "value": 80406324.96,
+    "name": "CompuSci",
+    "value": 27222899.64,
   },
   {
     "borderColor": "rgb(0,193,141)",
@@ -1893,15 +1499,91 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of t
         "width": 4,
       },
     },
-    "format": "#,##0.00",
+    "format": "$#,##0.00",
     "legendIndex": 1,
-    "name": "Inside Sales",
-    "value": 36219131.58,
+    "name": "Educationly",
+    "value": 22946895.47,
+  },
+  {
+    "borderColor": "rgb(229,77,66)",
+    "color": {
+      "pattern": {
+        "color": "rgb(229,77,66)",
+        "height": 4,
+        "opacity": 1,
+        "path": {
+          "d": "M0 0H4V4H0Z",
+          "strokeWidth": 1,
+        },
+        "width": 4,
+      },
+    },
+    "format": "$#,##0.00",
+    "legendIndex": 2,
+    "name": "Explorer",
+    "value": 38596194.86,
+  },
+  {
+    "borderColor": "rgb(241,134,0)",
+    "color": {
+      "pattern": {
+        "color": "rgb(241,134,0)",
+        "height": 4,
+        "opacity": 1,
+        "path": {
+          "d": "M0 0H4V1H0Z",
+          "strokeWidth": 1,
+        },
+        "width": 4,
+      },
+    },
+    "format": "$#,##0.00",
+    "legendIndex": 3,
+    "name": "Grammar Plus",
+    "value": 8042031.92,
+  },
+  {
+    "borderColor": "rgb(171,85,163)",
+    "color": {
+      "pattern": {
+        "color": "rgb(171,85,163)",
+        "height": 4,
+        "opacity": 1,
+        "path": {
+          "d": "M3 2a1 1 0 1 1-2 0a1 1 0 1 1 2 0Z",
+          "strokeWidth": 0.75,
+        },
+        "width": 4,
+      },
+    },
+    "format": "$#,##0.00",
+    "legendIndex": 4,
+    "name": "PhoenixSoft",
+    "value": 9525857.91,
+  },
+  {
+    "borderColor": "rgb(244,213,33)",
+    "color": {
+      "pattern": {
+        "color": "rgb(244,213,33)",
+        "height": 6,
+        "opacity": 1,
+        "path": {
+          "d": "M1.5 0H3V1.5H3Z",
+          "strokeWidth": 1,
+        },
+        "width": 6,
+      },
+    },
+    "format": "$#,##0.00",
+    "legendIndex": 5,
+    "name": "WonderKid",
+    "value": 10291576.74,
   },
 ]
 `;
 
-exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of treemap > with one measure, view by and stack by attribute > should fill correct series data 1`] = `6`;
+exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of treemap > with one measure, view by and stack by attribute > should fill correct series data 1`] = `18`;
 
 exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of treemap > with only one measure > should fill correct series color 1`] = `
 {
@@ -1933,14 +1615,14 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of t
       "width": 8,
     },
   },
-  "format": "#,##0.00",
+  "format": "$#,##0.00",
   "legendIndex": 0,
   "name": "Amount",
   "value": 116625456.54,
 }
 `;
 
-exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of treemap > with two measures and stack by attribute including client sorting > should fill correct series data 1`] = `6`;
+exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of treemap > with two measures and stack by attribute including client sorting > should fill correct series data 1`] = `14`;
 
 exports[`chartOptionsBuilder > pattern chart fill > getSeries > in usecase of bar chart with 3 measures and view by attribute > should fill correct series color 1`] = `
 [
@@ -2120,6 +1802,54 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeriesItemData > in useca
       "width": 4,
     },
   },
+  {
+    "pattern": {
+      "color": "rgb(229,77,66)",
+      "height": 4,
+      "opacity": 1,
+      "path": {
+        "d": "M0 0H4V4H0Z",
+        "strokeWidth": 1,
+      },
+      "width": 4,
+    },
+  },
+  {
+    "pattern": {
+      "color": "rgb(241,134,0)",
+      "height": 4,
+      "opacity": 1,
+      "path": {
+        "d": "M0 0H4V1H0Z",
+        "strokeWidth": 1,
+      },
+      "width": 4,
+    },
+  },
+  {
+    "pattern": {
+      "color": "rgb(171,85,163)",
+      "height": 4,
+      "opacity": 1,
+      "path": {
+        "d": "M3 2a1 1 0 1 1-2 0a1 1 0 1 1 2 0Z",
+        "strokeWidth": 0.75,
+      },
+      "width": 4,
+    },
+  },
+  {
+    "pattern": {
+      "color": "rgb(244,213,33)",
+      "height": 6,
+      "opacity": 1,
+      "path": {
+        "d": "M1.5 0H3V1.5H3Z",
+        "strokeWidth": 1,
+      },
+      "width": 6,
+    },
+  },
 ]
 `;
 
@@ -2147,6 +1877,54 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeriesItemData > in useca
         "strokeWidth": 1,
       },
       "width": 4,
+    },
+  },
+  {
+    "pattern": {
+      "color": "rgb(229,77,66)",
+      "height": 4,
+      "opacity": 1,
+      "path": {
+        "d": "M0 0H4V4H0Z",
+        "strokeWidth": 1,
+      },
+      "width": 4,
+    },
+  },
+  {
+    "pattern": {
+      "color": "rgb(241,134,0)",
+      "height": 4,
+      "opacity": 1,
+      "path": {
+        "d": "M0 0H4V1H0Z",
+        "strokeWidth": 1,
+      },
+      "width": 4,
+    },
+  },
+  {
+    "pattern": {
+      "color": "rgb(171,85,163)",
+      "height": 4,
+      "opacity": 1,
+      "path": {
+        "d": "M3 2a1 1 0 1 1-2 0a1 1 0 1 1 2 0Z",
+        "strokeWidth": 0.75,
+      },
+      "width": 4,
+    },
+  },
+  {
+    "pattern": {
+      "color": "rgb(244,213,33)",
+      "height": 6,
+      "opacity": 1,
+      "path": {
+        "d": "M1.5 0H3V1.5H3Z",
+        "strokeWidth": 1,
+      },
+      "width": 6,
     },
   },
 ]
@@ -2215,9 +1993,9 @@ exports[`chartOptionsBuilder > solid chart fill > getDrillableSeries > in usecas
           "localIdentifier": "lostMetric",
           "name": "<button>Lost</button> ...",
           "ref": {
-            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+            "uri": "obj_1283",
           },
-          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+          "uri": "obj_1283",
         },
       },
     },
@@ -2228,21 +2006,21 @@ exports[`chartOptionsBuilder > solid chart fill > getDrillableSeries > in usecas
             "identifier": "created",
             "name": "Year created",
             "ref": {
-              "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
+              "uri": "obj_157",
             },
-            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
+            "uri": "obj_157",
           },
           "identifier": "created.aag81lMifn6q",
           "localIdentifier": "yearCreatedAttribute",
           "name": "Year (Created)",
           "ref": {
-            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
+            "uri": "obj_158",
           },
-          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
+          "uri": "obj_158",
         },
         "attributeHeaderItem": {
           "name": "<button>2008</button>",
-          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158/elements?id=2008",
+          "uri": "elem_158_2008",
         },
       },
     },
@@ -2257,9 +2035,9 @@ exports[`chartOptionsBuilder > solid chart fill > getDrillableSeries > in usecas
           "localIdentifier": "expectedMetric",
           "name": "Expected",
           "ref": {
-            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1285",
+            "uri": "obj_1285",
           },
-          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1285",
+          "uri": "obj_1285",
         },
       },
     },
@@ -2270,21 +2048,21 @@ exports[`chartOptionsBuilder > solid chart fill > getDrillableSeries > in usecas
             "identifier": "created",
             "name": "Year created",
             "ref": {
-              "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
+              "uri": "obj_157",
             },
-            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
+            "uri": "obj_157",
           },
           "identifier": "created.aag81lMifn6q",
           "localIdentifier": "yearCreatedAttribute",
           "name": "Year (Created)",
           "ref": {
-            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
+            "uri": "obj_158",
           },
-          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
+          "uri": "obj_158",
         },
         "attributeHeaderItem": {
           "name": "<button>2008</button>",
-          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158/elements?id=2008",
+          "uri": "elem_158_2008",
         },
       },
     },
@@ -2305,42 +2083,33 @@ exports[`chartOptionsBuilder > solid chart fill > getDrillableSeries > in usecas
     {
       "header": {
         "measureHeaderItem": {
-          "format": "#,##0.00",
-          "identifier": "ab0bydLaaisS",
-          "localIdentifier": "784a5018a51049078e8f7e86247e08a3",
-          "name": "_Snapshot [EOP-2]",
-          "ref": {
-            "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/67097",
-          },
-          "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/67097",
+          "format": "$#,##0.00",
+          "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+          "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          "name": "Amount",
+          "ref": undefined,
         },
       },
     },
     {
       "header": {
         "measureHeaderItem": {
-          "format": "#,##0",
-          "identifier": "aaYh6Voua2yj",
-          "localIdentifier": "9e5c3cd9a93f4476a93d3494cedc6010",
-          "name": "# of Open Opps.",
-          "ref": {
-            "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/13465",
-          },
-          "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/13465",
+          "format": "#,##0.0%",
+          "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
+          "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
+          "name": "Win Rate",
+          "ref": undefined,
         },
       },
     },
     {
       "header": {
         "measureHeaderItem": {
-          "format": "$#,#00.00",
-          "identifier": "ab4EFOAmhjOx",
-          "localIdentifier": "71d50cf1d13746099b7f506576d78e4a",
-          "name": "Remaining Quota",
-          "ref": {
-            "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1543",
-          },
-          "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1543",
+          "format": "#,##0.0%",
+          "identifier": "b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa",
+          "localIdentifier": "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa",
+          "name": "Probability",
+          "ref": undefined,
         },
       },
     },
@@ -2348,34 +2117,36 @@ exports[`chartOptionsBuilder > solid chart fill > getDrillableSeries > in usecas
       "header": {
         "attributeHeader": {
           "formOf": {
-            "identifier": "attr.owner.id",
-            "name": "Sales Rep",
-            "ref": {
-              "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1025",
-            },
-            "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1025",
+            "identifier": "attr.f_product.product",
+            "name": "Product",
+            "ref": undefined,
+            "uri": "",
           },
-          "identifier": "label.owner.id.name",
-          "localIdentifier": "49a659fbd7c541a69284769d53a2be7f",
-          "name": "Owner Name",
-          "ref": {
-            "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1028",
+          "granularity": null,
+          "identifier": "label.f_product.product.name",
+          "localIdentifier": "a_label.f_product.product.name",
+          "name": "Product Name",
+          "primaryLabel": {
+            "identifier": "attr.f_product.product",
+            "type": "displayForm",
           },
-          "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1028",
+          "ref": undefined,
+          "totalItems": [],
+          "uri": "",
         },
         "attributeHeaderItem": {
-          "name": "Jessica Traven",
-          "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1025/elements?id=1235",
+          "name": "Grammar Plus",
+          "uri": "Grammar Plus",
         },
       },
     },
   ],
   "drilldown": true,
-  "format": "$#,#00.00",
-  "name": "Jessica Traven",
-  "x": 245,
-  "y": 32,
-  "z": 2280481.04,
+  "format": "#,##0.0%",
+  "name": "Grammar Plus",
+  "x": 8042031.92,
+  "y": 0.5722772277227722,
+  "z": 0.61347,
 }
 `;
 
@@ -2390,9 +2161,9 @@ exports[`chartOptionsBuilder > solid chart fill > getDrillableSeries > in usecas
           "localIdentifier": "lostMetric",
           "name": "<button>Lost</button> ...",
           "ref": {
-            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+            "uri": "obj_1283",
           },
-          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+          "uri": "obj_1283",
         },
       },
     },
@@ -2404,9 +2175,9 @@ exports[`chartOptionsBuilder > solid chart fill > getDrillableSeries > in usecas
           "localIdentifier": "wonMetric",
           "name": "Won",
           "ref": {
-            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284",
+            "uri": "obj_1284",
           },
-          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284",
+          "uri": "obj_1284",
         },
       },
     },
@@ -2417,21 +2188,21 @@ exports[`chartOptionsBuilder > solid chart fill > getDrillableSeries > in usecas
             "identifier": "created",
             "name": "Year created",
             "ref": {
-              "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
+              "uri": "obj_157",
             },
-            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
+            "uri": "obj_157",
           },
           "identifier": "created.aag81lMifn6q",
           "localIdentifier": "yearCreatedAttribute",
           "name": "Year (Created)",
           "ref": {
-            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
+            "uri": "obj_158",
           },
-          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
+          "uri": "obj_158",
         },
         "attributeHeaderItem": {
           "name": "<button>2008</button>",
-          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158/elements?id=2008",
+          "uri": "elem_158_2008",
         },
       },
     },
@@ -2445,301 +2216,91 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of bub
     "color": "rgb(20,178,226)",
     "data": [
       {
-        "format": "$#,#00.00",
-        "name": "Adam Bradley",
+        "format": "#,##0.0%",
+        "name": "CompuSci",
         "x": 0,
-        "y": 33,
-        "z": 2424413.8,
+        "y": 27222899.64,
+        "z": 0.61087,
       },
     ],
     "legendIndex": 0,
-    "name": "Adam Bradley",
+    "name": "CompuSci",
     "seriesIndex": 0,
   },
   {
     "color": "rgb(0,193,141)",
     "data": [
       {
-        "format": "$#,#00.00",
-        "name": "Alejandro Vabiano",
+        "format": "#,##0.0%",
+        "name": "Educationly",
         "x": 0,
-        "y": 29,
-        "z": 1963436.86,
+        "y": 22946895.47,
+        "z": 0.60014,
       },
     ],
     "legendIndex": 1,
-    "name": "Alejandro Vabiano",
+    "name": "Educationly",
     "seriesIndex": 1,
   },
   {
     "color": "rgb(229,77,66)",
     "data": [
       {
-        "format": "$#,#00.00",
-        "name": "Alexsandr Fyodr",
+        "format": "#,##0.0%",
+        "name": "Explorer",
         "x": 0,
-        "y": 35,
-        "z": 2100205.16,
+        "y": 38596194.86,
+        "z": 0.57863,
       },
     ],
     "legendIndex": 2,
-    "name": "Alexsandr Fyodr",
+    "name": "Explorer",
     "seriesIndex": 2,
   },
   {
     "color": "rgb(241,134,0)",
     "data": [
       {
-        "format": "$#,#00.00",
-        "name": "Cory Owens",
+        "format": "#,##0.0%",
+        "name": "Grammar Plus",
         "x": 0,
-        "y": 30,
-        "z": 2364179.19,
+        "y": 8042031.92,
+        "z": 0.61347,
       },
     ],
     "legendIndex": 3,
-    "name": "Cory Owens",
+    "name": "Grammar Plus",
     "seriesIndex": 3,
   },
   {
     "color": "rgb(171,85,163)",
     "data": [
       {
-        "format": "$#,#00.00",
-        "name": "Dale Perdadtin",
+        "format": "#,##0.0%",
+        "name": "PhoenixSoft",
         "x": 0,
-        "y": 30,
-        "z": 1776567.88,
+        "y": 9525857.91,
+        "z": 0.615,
       },
     ],
     "legendIndex": 4,
-    "name": "Dale Perdadtin",
+    "name": "PhoenixSoft",
     "seriesIndex": 4,
   },
   {
     "color": "rgb(244,213,33)",
     "data": [
       {
-        "format": "$#,#00.00",
-        "name": "Dave Bostadt",
+        "format": "#,##0.0%",
+        "name": "WonderKid",
         "x": 0,
-        "y": 35,
-        "z": 2615259.07,
+        "y": 10291576.74,
+        "z": 0.56987,
       },
     ],
     "legendIndex": 5,
-    "name": "Dave Bostadt",
+    "name": "WonderKid",
     "seriesIndex": 5,
-  },
-  {
-    "color": "rgb(148,161,174)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Ellen Jones",
-        "x": 0,
-        "y": 29,
-        "z": 1471667.02,
-      },
-    ],
-    "legendIndex": 6,
-    "name": "Ellen Jones",
-    "seriesIndex": 6,
-  },
-  {
-    "color": "rgb(107,191,216)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Huey Jonas",
-        "x": 0,
-        "y": 31,
-        "z": 2161030.33,
-      },
-    ],
-    "legendIndex": 7,
-    "name": "Huey Jonas",
-    "seriesIndex": 7,
-  },
-  {
-    "color": "rgb(181,136,177)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Jessica Traven",
-        "x": 0,
-        "y": 32,
-        "z": 2280481.04,
-      },
-    ],
-    "legendIndex": 8,
-    "name": "Jessica Traven",
-    "seriesIndex": 8,
-  },
-  {
-    "color": "rgb(238,135,128)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "John Jovi",
-        "x": 0,
-        "y": 26,
-        "z": 1769560.54,
-      },
-    ],
-    "legendIndex": 9,
-    "name": "John Jovi",
-    "seriesIndex": 9,
-  },
-  {
-    "color": "rgb(241,171,84)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Jon Jons",
-        "x": 0,
-        "y": 42,
-        "z": 2346482.16,
-      },
-    ],
-    "legendIndex": 10,
-    "name": "Jon Jons",
-    "seriesIndex": 10,
-  },
-  {
-    "color": "rgb(133,209,188)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Lea Forbes",
-        "x": 0,
-        "y": 30,
-        "z": 1705084.84,
-      },
-    ],
-    "legendIndex": 11,
-    "name": "Lea Forbes",
-    "seriesIndex": 11,
-  },
-  {
-    "color": "rgb(41,117,170)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Monique Babonas",
-        "x": 0,
-        "y": 30,
-        "z": 2345090.98,
-      },
-    ],
-    "legendIndex": 12,
-    "name": "Monique Babonas",
-    "seriesIndex": 12,
-  },
-  {
-    "color": "rgb(4,140,103)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Paul Gomez",
-        "x": 0,
-        "y": 64,
-        "z": 131675.42,
-      },
-    ],
-    "legendIndex": 13,
-    "name": "Paul Gomez",
-    "seriesIndex": 13,
-  },
-  {
-    "color": "rgb(181,60,51)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Paul Jacobs",
-        "x": 0,
-        "y": 88,
-        "z": 1668600.86,
-      },
-    ],
-    "legendIndex": 14,
-    "name": "Paul Jacobs",
-    "seriesIndex": 14,
-  },
-  {
-    "color": "rgb(163,101,46)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Ravi Deetri",
-        "x": 0,
-        "y": 93,
-        "z": 1649882.14,
-      },
-    ],
-    "legendIndex": 15,
-    "name": "Ravi Deetri",
-    "seriesIndex": 15,
-  },
-  {
-    "color": "rgb(140,57,132)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Thomas Gones",
-        "x": 0,
-        "y": 70,
-        "z": 1229206.9,
-      },
-    ],
-    "legendIndex": 16,
-    "name": "Thomas Gones",
-    "seriesIndex": 16,
-  },
-  {
-    "color": "rgb(136,219,244)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Tom Stickler",
-        "x": 0,
-        "y": 71,
-        "z": 457045.18,
-      },
-    ],
-    "legendIndex": 17,
-    "name": "Tom Stickler",
-    "seriesIndex": 17,
-  },
-  {
-    "color": "rgb(189,234,222)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Trevor Deegan",
-        "x": 0,
-        "y": 60,
-        "z": 801178.61,
-      },
-    ],
-    "legendIndex": 18,
-    "name": "Trevor Deegan",
-    "seriesIndex": 18,
-  },
-  {
-    "color": "rgb(239,197,194)",
-    "data": [
-      {
-        "format": "$#,#00.00",
-        "name": "Victor Crushetz",
-        "x": 0,
-        "y": 60,
-        "z": 1065164.57,
-      },
-    ],
-    "legendIndex": 19,
-    "name": "Victor Crushetz",
-    "seriesIndex": 19,
   },
 ]
 `;
@@ -2993,7 +2554,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of tre
 [
   {
     "color": "rgb(20,178,226)",
-    "format": "#,##0.00",
+    "format": "$#,##0.00",
     "id": "0",
     "legendIndex": 0,
     "name": "Amount",
@@ -3001,23 +2562,23 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of tre
   },
   {
     "color": "rgb(20,178,226)",
-    "format": "#,##0.00",
-    "name": "Direct Sales",
+    "format": "$#,##0.00",
+    "name": "West Coast",
     "parent": "0",
     "showInLegend": false,
-    "value": 80406324.96,
+    "value": 88608360.12,
     "x": 0,
-    "y": 0,
+    "y": 1,
   },
   {
     "color": "rgb(114,209,238)",
-    "format": "#,##0.00",
-    "name": "Inside Sales",
+    "format": "$#,##0.00",
+    "name": "East Coast",
     "parent": "0",
     "showInLegend": false,
-    "value": 36219131.58,
+    "value": 28017096.42,
     "x": 0,
-    "y": 1,
+    "y": 0,
   },
 ]
 `;
@@ -3027,23 +2588,55 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of tre
   {
     "borderColor": undefined,
     "color": "rgb(20,178,226)",
-    "format": "#,##0.00",
+    "format": "$#,##0.00",
     "legendIndex": 0,
-    "name": "Direct Sales",
-    "value": 80406324.96,
+    "name": "CompuSci",
+    "value": 27222899.64,
   },
   {
     "borderColor": undefined,
     "color": "rgb(0,193,141)",
-    "format": "#,##0.00",
+    "format": "$#,##0.00",
     "legendIndex": 1,
-    "name": "Inside Sales",
-    "value": 36219131.58,
+    "name": "Educationly",
+    "value": 22946895.47,
+  },
+  {
+    "borderColor": undefined,
+    "color": "rgb(229,77,66)",
+    "format": "$#,##0.00",
+    "legendIndex": 2,
+    "name": "Explorer",
+    "value": 38596194.86,
+  },
+  {
+    "borderColor": undefined,
+    "color": "rgb(241,134,0)",
+    "format": "$#,##0.00",
+    "legendIndex": 3,
+    "name": "Grammar Plus",
+    "value": 8042031.92,
+  },
+  {
+    "borderColor": undefined,
+    "color": "rgb(171,85,163)",
+    "format": "$#,##0.00",
+    "legendIndex": 4,
+    "name": "PhoenixSoft",
+    "value": 9525857.91,
+  },
+  {
+    "borderColor": undefined,
+    "color": "rgb(244,213,33)",
+    "format": "$#,##0.00",
+    "legendIndex": 5,
+    "name": "WonderKid",
+    "value": 10291576.74,
   },
 ]
 `;
 
-exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of treemap > with one measure, view by and stack by attribute > should fill correct series data 1`] = `6`;
+exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of treemap > with one measure, view by and stack by attribute > should fill correct series data 1`] = `18`;
 
 exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of treemap > with only one measure > should fill correct series color 1`] = `"rgb(20,178,226)"`;
 
@@ -3051,14 +2644,14 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of tre
 {
   "borderColor": undefined,
   "color": "rgb(20,178,226)",
-  "format": "#,##0.00",
+  "format": "$#,##0.00",
   "legendIndex": 0,
   "name": "Amount",
   "value": 116625456.54,
 }
 `;
 
-exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of treemap > with two measures and stack by attribute including client sorting > should fill correct series data 1`] = `6`;
+exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of treemap > with two measures and stack by attribute including client sorting > should fill correct series data 1`] = `14`;
 
 exports[`chartOptionsBuilder > solid chart fill > getSeries > in usecase of bar chart with 3 measures and view by attribute > should fill correct series color 1`] = `
 [
@@ -3095,6 +2688,10 @@ exports[`chartOptionsBuilder > solid chart fill > getSeriesItemData > in usecase
 [
   "rgb(20,178,226)",
   "rgb(0,193,141)",
+  "rgb(229,77,66)",
+  "rgb(241,134,0)",
+  "rgb(171,85,163)",
+  "rgb(244,213,33)",
 ]
 `;
 
@@ -3102,5 +2699,9 @@ exports[`chartOptionsBuilder > solid chart fill > getSeriesItemData > in usecase
 [
   "rgb(20,178,226)",
   "rgb(0,193,141)",
+  "rgb(229,77,66)",
+  "rgb(241,134,0)",
+  "rgb(171,85,163)",
+  "rgb(244,213,33)",
 ]
 `;

@@ -5,22 +5,12 @@ import { isEmpty, isEqual } from "lodash-es";
 import { AbstractExecutionFactory } from "@gooddata/sdk-backend-base";
 import {
     type ExplainType,
-    type IAnalyticalBackend,
-    type IAnalyticalBackendConfig,
-    type IAnalyticalWorkspace,
     type IAnomalyDetectionResult,
-    type IAttributeHierarchiesService,
-    type IAuthenticatedPrincipal,
-    type IAuthenticationProvider,
     type IClusteringConfig,
     type IClusteringResult,
     type ICollectionItemsConfig,
     type ICollectionItemsResult,
-    type IDataFiltersService,
-    type IDataSourcesService,
     type IDataView,
-    type IDateFilterConfigsQuery,
-    type IEntitlements,
     type IExecutionContext,
     type IExecutionFactory,
     type IExecutionResult,
@@ -29,39 +19,10 @@ import {
     type IExportResult,
     type IForecastResult,
     type IForecastView,
-    type IGenAIService,
-    type IGeoService,
-    type IOrganization,
-    type IOrganizations,
     type IOutliersConfig,
     type IOutliersResult,
     type IOutliersView,
     type IPreparedExecution,
-    type IReferencesService,
-    type IUserService,
-    type IWorkspaceAccessControlService,
-    type IWorkspaceAgentsService,
-    type IWorkspaceAttributesService,
-    type IWorkspaceAutomationService,
-    type IWorkspaceCatalogFactory,
-    type IWorkspaceDashboardsService,
-    type IWorkspaceDatasetsService,
-    type IWorkspaceDescriptor,
-    type IWorkspaceExportDefinitionsService,
-    type IWorkspaceExportTemplatesService,
-    type IWorkspaceFactsService,
-    type IWorkspaceInsightsService,
-    type IWorkspaceKeyDriverAnalysisService,
-    type IWorkspaceLogicalModelService,
-    type IWorkspaceMeasuresService,
-    type IWorkspaceObjectPermissionsService,
-    type IWorkspaceParametersService,
-    type IWorkspacePermissionsService,
-    type IWorkspaceSettingsService,
-    type IWorkspaceStylingService,
-    type IWorkspaceUserGroupsQuery,
-    type IWorkspaceUsersQuery,
-    type IWorkspacesQueryFactory,
     NotSupported,
 } from "@gooddata/sdk-backend-spi";
 import {
@@ -84,16 +45,12 @@ import {
     uriRef,
 } from "@gooddata/sdk-model";
 
-import { createMockGeoService } from "../geoService.js";
-
 import {
     type IExecutionResponse,
     type IExecutionResult as ILegacyExecutionResult,
     type IResultDimension,
     isAttributeHeader,
 } from "./legacyBackendTypes.js";
-
-const defaultConfig = { hostname: "test" };
 
 /**
  * Master Index is the input needed to initialize the recorded backend.
@@ -135,70 +92,6 @@ export type LegacyExecutionRecording = {
 };
 
 /**
- * This is legacy implementation of the recorded backend. Do not use for new tests.
- * @internal
- * @deprecated this implementation is deprecated, use non-legacy recorded backend
- */
-export function legacyRecordedBackend(
-    index: LegacyRecordingIndex,
-    config: IAnalyticalBackendConfig = defaultConfig,
-): IAnalyticalBackend {
-    const geoService = createMockGeoService();
-
-    const noopBackend: IAnalyticalBackend = {
-        capabilities: {},
-        config,
-        onHostname(hostname: string): IAnalyticalBackend {
-            return legacyRecordedBackend(index, { ...config, hostname });
-        },
-        withTelemetry(_component: string, _props: object): IAnalyticalBackend {
-            return noopBackend;
-        },
-        withCorrelation(_correlationMetadata: Record<string, string>): IAnalyticalBackend {
-            return noopBackend;
-        },
-        withAuthentication(_: IAuthenticationProvider): IAnalyticalBackend {
-            return this;
-        },
-        organization(_organizationId: string): IOrganization {
-            throw new NotSupported("not yet supported");
-        },
-        organizations(): IOrganizations {
-            throw new NotSupported("not yet supported");
-        },
-        currentUser(): IUserService {
-            throw new NotSupported("not yet supported");
-        },
-        workspace(id: string): IAnalyticalWorkspace {
-            return recordedWorkspace(id, index[id]);
-        },
-        workspaces(): IWorkspacesQueryFactory {
-            throw new NotSupported("not yet supported");
-        },
-        authenticate(): Promise<IAuthenticatedPrincipal> {
-            return Promise.resolve({ userId: "recordedUser" });
-        },
-        deauthenticate(): Promise<void> {
-            return Promise.resolve();
-        },
-        isAuthenticated(): Promise<IAuthenticatedPrincipal | null> {
-            return Promise.resolve({ userId: "recordedUser" });
-        },
-        entitlements(): IEntitlements {
-            throw new NotSupported("not yet supported");
-        },
-        dataSources(): IDataSourcesService {
-            throw new NotSupported("not yet supported");
-        },
-        geo(): IGeoService {
-            return geoService;
-        },
-    };
-
-    return noopBackend;
-}
-
-/**
  * Creates a new data view facade for the provided recording.
  *
  * This is legacy implementation of recorded backend. Do not use for new tests.
@@ -218,117 +111,6 @@ export function legacyRecordedDataView(recording: LegacyExecutionRecording): IDa
 //
 // Internals
 //
-
-function recordedWorkspace(
-    workspace: string,
-    recordings: LegacyWorkspaceRecordings = {},
-): IAnalyticalWorkspace {
-    return {
-        workspace,
-        getDescriptor(): Promise<IWorkspaceDescriptor> {
-            throw new NotSupported("not supported");
-        },
-        updateDescriptor(): Promise<IWorkspaceDescriptor> {
-            throw new NotSupported("not supported");
-        },
-        getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {
-            throw new NotSupported("not supported");
-        },
-        execution(): IExecutionFactory {
-            return new RecordedExecutionFactory(recordings, workspace);
-        },
-        keyDriverAnalysis(): IWorkspaceKeyDriverAnalysisService {
-            throw new NotSupported("not supported");
-        },
-        settings(): IWorkspaceSettingsService {
-            throw new NotSupported("not supported");
-        },
-        attributes(): IWorkspaceAttributesService {
-            throw new NotSupported("not supported");
-        },
-        measures(): IWorkspaceMeasuresService {
-            throw new NotSupported("not supported");
-        },
-        parameters(): IWorkspaceParametersService {
-            throw new NotSupported("not supported");
-        },
-        facts(): IWorkspaceFactsService {
-            throw new NotSupported("not supported");
-        },
-        insights(): IWorkspaceInsightsService {
-            throw new NotSupported("not supported");
-        },
-        dashboards(): IWorkspaceDashboardsService {
-            throw new NotSupported("not supported");
-        },
-        styling(): IWorkspaceStylingService {
-            throw new NotSupported("not supported");
-        },
-        catalog(): IWorkspaceCatalogFactory {
-            throw new NotSupported("not supported");
-        },
-        datasets(): IWorkspaceDatasetsService {
-            throw new NotSupported("not supported");
-        },
-        permissions(): IWorkspacePermissionsService {
-            throw new NotSupported("not supported");
-        },
-        users(): IWorkspaceUsersQuery {
-            throw new NotSupported("not supported");
-        },
-        dateFilterConfigs(): IDateFilterConfigsQuery {
-            throw new NotSupported("not supported");
-        },
-
-        userGroups(): IWorkspaceUserGroupsQuery {
-            throw new NotSupported("not supported");
-        },
-
-        accessControl(): IWorkspaceAccessControlService {
-            throw new NotSupported("not supported");
-        },
-
-        objectPermissions(): IWorkspaceObjectPermissionsService {
-            throw new NotSupported("not supported");
-        },
-
-        attributeHierarchies(): IAttributeHierarchiesService {
-            throw new NotSupported("not supported");
-        },
-
-        agents(): IWorkspaceAgentsService {
-            throw new NotSupported("not supported");
-        },
-
-        exportDefinitions(): IWorkspaceExportDefinitionsService {
-            throw new NotSupported("not supported");
-        },
-
-        dataFilters(): IDataFiltersService {
-            throw new NotSupported("not supported");
-        },
-
-        logicalModel(): IWorkspaceLogicalModelService {
-            throw new NotSupported("not supported");
-        },
-
-        automations(): IWorkspaceAutomationService {
-            throw new NotSupported("not supported");
-        },
-
-        genAI(): IGenAIService {
-            throw new NotSupported("not supported");
-        },
-
-        references(): IReferencesService {
-            throw new NotSupported("not supported");
-        },
-
-        exportTemplates(): IWorkspaceExportTemplatesService {
-            throw new NotSupported("not supported");
-        },
-    };
-}
 
 class RecordedExecutionFactory extends AbstractExecutionFactory {
     constructor(

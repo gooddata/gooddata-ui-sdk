@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type ComponentType } from "react";
 
@@ -75,9 +75,8 @@ export interface IDashboardLoader {
      * Alternatively specify workspace indirectly, using data product, segment and client identifier.
      *
      * @remarks
-     * Note: this indirect method of identification is not supported by all backends. At this moment, only
-     * the 'bear' backend allows this - and it does so only when it's Life Cycle Management features are
-     * employed in the solution.
+     * Note: this indirect method of identification was only supported by the Life Cycle Management
+     * features of the retired legacy platform; current backends do not support it.
      *
      * @param clientWorkspace - complex identifier of the client workspace
      */

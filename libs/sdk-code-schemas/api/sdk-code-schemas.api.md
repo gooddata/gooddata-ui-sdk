@@ -824,7 +824,7 @@ type Dataset = NormalDataset | SQLDataset | AuxiliaryDataset;
 interface DateDataset {
     description?: string;
     // (undocumented)
-    granularities?: ("MINUTE" | "HOUR" | "DAY" | "WEEK" | "WEEK_US" | "MONTH" | "QUARTER" | "YEAR" | "MINUTE_OF_HOUR" | "HOUR_OF_DAY" | "DAY_OF_WEEK" | "DAY_OF_WEEK_EU" | "DAY_OF_MONTH" | "DAY_OF_YEAR" | "DAY_OF_QUARTER" | "WEEK_OF_YEAR" | "WEEK_OF_YEAR_EU" | "WEEK_OF_QUARTER_EU" | "WEEK_OF_QUARTER" | "MONTH_OF_YEAR" | "MONTH_OF_QUARTER" | "QUARTER_OF_YEAR" | "FISCAL_YEAR" | "FISCAL_QUARTER" | "FISCAL_MONTH")[];
+    granularities?: ("SECOND" | "MINUTE" | "HOUR" | "DAY" | "WEEK" | "WEEK_US" | "MONTH" | "QUARTER" | "YEAR" | "SECOND_OF_MINUTE" | "SECOND_OF_DAY" | "MINUTE_OF_HOUR" | "MINUTE_OF_DAY" | "HOUR_OF_DAY" | "DAY_OF_WEEK" | "DAY_OF_WEEK_EU" | "DAY_OF_MONTH" | "DAY_OF_YEAR" | "DAY_OF_QUARTER" | "WEEK_OF_YEAR" | "WEEK_OF_YEAR_EU" | "WEEK_OF_QUARTER_EU" | "WEEK_OF_QUARTER" | "MONTH_OF_YEAR" | "MONTH_OF_QUARTER" | "QUARTER_OF_YEAR" | "FISCAL_YEAR" | "FISCAL_QUARTER" | "FISCAL_MONTH")[];
     // (undocumented)
     id: Id6;
     // (undocumented)
@@ -847,7 +847,7 @@ type DateFilter = DateFilter1 | DateFilter2;
 type DateFilter1 = {
     type: "date_filter";
     using: string;
-    granularity: "MINUTE" | "HOUR" | "DAY" | "WEEK" | "WEEK_US" | "MONTH" | "QUARTER" | "YEAR" | "MINUTE_OF_HOUR" | "HOUR_OF_DAY" | "DAY_OF_WEEK" | "DAY_OF_MONTH" | "DAY_OF_YEAR" | "WEEK_OF_YEAR" | "MONTH_OF_YEAR" | "QUARTER_OF_YEAR" | "FISCAL_YEAR" | "FISCAL_QUARTER" | "FISCAL_MONTH";
+    granularity: "SECOND" | "MINUTE" | "HOUR" | "DAY" | "WEEK" | "WEEK_US" | "MONTH" | "QUARTER" | "YEAR" | "SECOND_OF_MINUTE" | "SECOND_OF_DAY" | "MINUTE_OF_HOUR" | "MINUTE_OF_DAY" | "HOUR_OF_DAY" | "DAY_OF_WEEK" | "DAY_OF_MONTH" | "DAY_OF_YEAR" | "WEEK_OF_YEAR" | "MONTH_OF_YEAR" | "QUARTER_OF_YEAR" | "FISCAL_YEAR" | "FISCAL_QUARTER" | "FISCAL_MONTH";
     from?: number;
     to?: number;
     with?: {

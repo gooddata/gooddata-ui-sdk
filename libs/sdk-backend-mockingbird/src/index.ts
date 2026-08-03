@@ -60,7 +60,6 @@ export {
     type LegacyExecutionRecording,
     type LegacyRecordingIndex,
     type LegacyWorkspaceRecordings,
-    legacyRecordedBackend,
     legacyRecordedDataView,
 } from "./legacyRecordedBackend/index.js";
 

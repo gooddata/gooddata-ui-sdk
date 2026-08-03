@@ -37,13 +37,12 @@ import { ILoadingProps } from '@gooddata/sdk-ui';
 import { ILocale } from '@gooddata/sdk-ui';
 import { INotification } from '@gooddata/sdk-model';
 import { IntlShape } from 'react-intl';
+import type { IObjectAccessList } from '@gooddata/sdk-model';
 import type { IObjectPermissionsObject } from '@gooddata/sdk-backend-spi';
 import { IPivotTableConfig } from '@gooddata/sdk-ui-pivot';
 import { ISettings } from '@gooddata/sdk-model';
 import { ITab } from '@gooddata/sdk-ui-kit';
 import { ITheme } from '@gooddata/sdk-model';
-import type { IUiGranteeAsyncOptions } from '@gooddata/sdk-ui-kit';
-import type { IUiPickedGrantee } from '@gooddata/sdk-ui-kit';
 import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IWidgetUrlBuilder } from '@gooddata/sdk-ui';
@@ -60,6 +59,9 @@ import { SetStateAction } from 'react';
 import { UiAsyncTableVariant } from '@gooddata/sdk-ui-kit';
 import { UiSkeleton } from '@gooddata/sdk-ui-kit';
 import { UseCancelablePromiseStatus } from '@gooddata/sdk-ui';
+
+// @internal
+export function accessListToSummary(list: IObjectAccessList): IObjectAccessSummary;
 
 // @internal (undocumented)
 export const AddDataSourceToSubjects: {
@@ -553,12 +555,6 @@ export interface IGrantedDataSource {
     title: string;
 }
 
-// @internal
-export interface IGranteeIdentityFacts {
-    email?: string;
-    name?: string;
-}
-
 // @internal (undocumented)
 export interface IInsightErrorProps {
     // (undocumented)
@@ -898,94 +894,19 @@ export interface IObjectAccessSummary {
     // (undocumented)
     granteeCount: number;
     // (undocumented)
-    workspaceLevel: "VIEW" | "SHARE";
-}
-
-// @internal (undocumented)
-export interface IObjectShareController {
-    // (undocumented)
-    actions: IObjectShareControllerActions;
-    // (undocumented)
-    state: IObjectShareControllerState;
-}
-
-// @internal (undocumented)
-export interface IObjectShareControllerActions {
-    // (undocumented)
-    cancelGeneralAccessChange: () => void;
-    changeGranteeLabels: (granteeId: string, selectedLabelIds: string[]) => Promise<void>;
-    changePermissionLevel: (granteeId: string, level: ObjectSharePermissionLevel) => Promise<void>;
-    changeWorkspaceLevel: (level: "VIEW" | "SHARE") => Promise<void>;
-    // (undocumented)
-    closeAddGrantee: () => void;
-    confirmAddGrantees: () => Promise<void>;
-    confirmGeneralAccessChange: () => Promise<void>;
-    loadOptions: (search: string) => Promise<IUiGranteeAsyncOptions>;
-    // (undocumented)
-    openAddGrantee: () => void;
-    removeGrantee: (granteeId: string) => Promise<void>;
-    requestGeneralAccessChange: (next: GeneralAccessValue) => void;
-    reset: () => void;
-    // (undocumented)
-    setPendingGrantees: (next: IUiPickedGrantee[]) => void;
-}
-
-// @internal (undocumented)
-export interface IObjectShareControllerState {
-    accessUnavailable: boolean;
-    // (undocumented)
-    error?: Error;
-    // (undocumented)
-    generalAccess: GeneralAccessValue;
-    // (undocumented)
-    grantees: IObjectShareGrantee[];
-    labels: IObjectShareLabel[];
-    labelsResolved: boolean;
-    pendingGeneralAccess?: GeneralAccessValue;
-    pendingGrantees: IUiPickedGrantee[];
-    seededWithoutGrants: boolean;
-    selectedLabelIdsByGrantee: Record<string, string[]>;
-    selfIdentity: ISelfIdentity | undefined;
-    selfIdentityResolved: boolean;
-    // (undocumented)
-    status: "idle" | "loading" | "success" | "error" | "saving";
-    // (undocumented)
-    subview: "main" | "addGrantee";
-    // (undocumented)
-    summary: IObjectAccessSummary | undefined;
-    targetKey: string | undefined;
-    workspaceAccessInherited: boolean;
-    workspaceLevel: "VIEW" | "SHARE";
-    workspaceLevelLocked: boolean;
-    workspaceLevelSaving: boolean;
+    workspaceLevel: AccessGranularPermission;
 }
 
 // @internal
 export interface IObjectShareDialogProps {
-    controller?: IObjectShareController;
     isOpen: boolean;
     labels?: IObjectShareLabel[];
     labelsError?: boolean;
     labelsLoading?: boolean;
     objectTitle: string;
     onClose: () => void;
-    onSaved?: () => void;
+    onSummaryChange?: (summary: IObjectAccessSummary) => void;
     target: IObjectPermissionsObject | undefined;
-}
-
-// @internal
-export interface IObjectShareGrantee extends IGranteeIdentityFacts {
-    effectivePermission?: ObjectSharePermissionLevel;
-    // (undocumented)
-    granteeRef: ObjRef;
-    id: string;
-    inheritsShare?: boolean;
-    isSelf?: boolean;
-    // (undocumented)
-    kind: "user" | "group";
-    // (undocumented)
-    level: ObjectSharePermissionLevel;
-    pending?: "saving" | "removing";
 }
 
 // @internal
@@ -999,12 +920,6 @@ export interface IObjectShareLabel {
 
 // @beta
 export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition;
-
-// @internal
-export interface ISelfIdentity extends IGranteeIdentityFacts {
-    // (undocumented)
-    id: string;
-}
 
 // @alpha (undocumented)
 export function isEmptyAfm(obj: unknown): obj is EmptyAfmSdkError;
@@ -1039,6 +954,9 @@ export type ISizeInfoDefault = ISizeInfo & {
     default: number;
 };
 
+// @internal
+export function isPermissionsNotAvailable(error: unknown): boolean;
+
 // @alpha
 export function isSizeInfo(obj: any): obj is ISizeInfo;
 
@@ -1054,15 +972,6 @@ export interface ITabsIds {
     all: string;
     // (undocumented)
     my: string;
-}
-
-// @internal
-export interface IUseObjectShareOptions {
-    isOpen?: boolean;
-    labels?: IObjectShareLabel[];
-    labelsError?: boolean;
-    labelsLoading?: boolean;
-    onSaved?: () => void;
 }
 
 // @internal
@@ -1214,10 +1123,7 @@ export const MIN_VISUALIZATION_WIDTH = 2;
 export function NotificationsPanel(props: INotificationsPanelProps): JSX.Element;
 
 // @internal
-export function ObjectShareDialog(input: IObjectShareDialogProps): JSX.Element;
-
-// @internal
-export type ObjectSharePermissionLevel = AccessGranularPermission;
+export function ObjectShareDialog(props: IObjectShareDialogProps): JSX.Element | null;
 
 // @alpha (undocumented)
 export const PluggableVisualizationErrorCodes: {
@@ -1248,6 +1154,9 @@ export const RICH_TEXT_WIDGET_SIZE_INFO_NEW_DEFAULT: IVisualizationDefaultSizeIn
 // @internal
 export type ScheduleAutomationsColumnName = "nextRun" | "attachments";
 
+// @internal
+export function sortShareableLabels(labels: readonly IObjectShareLabel[]): IObjectShareLabel[];
+
 // @internal (undocumented)
 export type TelemetryEvent = "multiple-users-deleted" | "multiple-groups-deleted" | "group-deleted" | "user-deleted" | "group-created" | "user-detail-updated" | "group-detail-updated" | "groups-added-to-single-user" | "groups-added-to-multiple-users" | "users-added-to-single-group" | "users-added-to-multiple-groups" | "permission-added-to-single-user" | "permission-added-to-single-group" | "permission-added-to-multiple-users" | "permission-added-to-multiple-groups" | "user-permission-changed-to-hierarchy" | "user-permission-changed-to-single-workspace" | "group-permission-changed-to-hierarchy" | "group-permission-changed-to-single-workspace" | "user-permission-changed-to-view" | "group-permission-changed-to-view" | "user-permission-changed-to-view-save-views" | "group-permission-changed-to-view-save-views" | "user-permission-changed-to-view-export" | "group-permission-changed-to-view-export" | "user-permission-changed-to-view-export-save-views" | "group-permission-changed-to-view-export-save-views" | "user-permission-changed-to-analyze" | "group-permission-changed-to-analyze" | "user-permission-changed-to-analyze-export" | "group-permission-changed-to-analyze-export" | "user-permission-changed-to-manage" | "group-permission-changed-to-manage" | "user-data-source-permission-changed-to-use" | "group-data-source-permission-changed-to-use" | "user-data-source-permission-changed-to-manage" | "group-data-source-permission-changed-to-manage" | "user-role-changed-to-admin" | "user-role-changed-to-member" | "user-marked-system-account" | "user-unmarked-system-account";
 
@@ -1269,9 +1178,6 @@ export function useInsightPickerState(author?: string): {
     tagFilter: string[];
     onTagFilterChange: Dispatch<SetStateAction<string[]>>;
 };
-
-// @internal
-export function useObjectShare(target: IObjectPermissionsObject | undefined, options?: IUseObjectShareOptions): IObjectShareController;
 
 // @internal (undocumented)
 export const UserEditDialog: {

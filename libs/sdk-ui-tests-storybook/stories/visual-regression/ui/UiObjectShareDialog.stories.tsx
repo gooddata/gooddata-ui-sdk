@@ -25,9 +25,12 @@ const LABELS: IUiLabelsChecklistItem[] = [
 ];
 
 function buildGrantees(): IUiObjectShareDialogGrantee[] {
+    // No synthesized Admin "(you)" row here: the connected dialog shows it ONLY
+    // while the grantee list is empty, so a populated list never carries it (and
+    // never two "(you)" rows).
     return [
         {
-            // Self-managed row: merged menu offered even for an EDIT grant.
+            // Self-managed row: an EDIT grant anchors on "Can edit & share".
             id: "self",
             kind: "user",
             name: "Marek Stránský (you)",
@@ -37,7 +40,6 @@ function buildGrantees(): IUiObjectShareDialogGrantee[] {
                     labels={LABELS}
                     selectedLabelIds={["id", "name", "email", "ssn"]}
                     permissionLevel="EDIT"
-                    mergedControls
                     disabledTooltip="You can't set higher permissions for yourself."
                     onLabelsChange={action("Self → labels change")}
                     onPermissionChange={action("Self → permission change")}
@@ -113,6 +115,31 @@ function UiObjectShareDialogExample() {
     );
 }
 
+function UiObjectShareDialogLoadingExample() {
+    return (
+        <IntlProvider locale={DEFAULT_LANGUAGE} messages={DEFAULT_MESSAGES[DEFAULT_LANGUAGE]}>
+            {/* The skeleton shimmer is animated, so a capture of it can never match a
+                baseline. Disable it via react-loading-skeleton's own switch — globally,
+                because the dialog renders through a portal outside the screenshot target. */}
+            <style>{".react-loading-skeleton { --pseudo-element-display: none; }"}</style>
+            <div className="screenshot-target" style={{ minHeight: 400 }}>
+                <UiObjectShareDialog
+                    isOpen
+                    isLoading
+                    objectTitle="Customer"
+                    onClose={action("close")}
+                    grantees={[]}
+                    onAddClick={action("add")}
+                    isAddDisabled
+                    generalAccess="RESTRICTED"
+                    onGeneralAccessChange={action("general access change")}
+                    isGeneralAccessDisabled
+                />
+            </div>
+        </IntlProvider>
+    );
+}
+
 export default {
     title: "15 Ui/UiObjectShareDialog",
 };
@@ -122,6 +149,16 @@ export function Default() {
 }
 Default.parameters = {
     kind: "default",
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
+} satisfies IStoryParameters;
+
+export function Loading() {
+    return <UiObjectShareDialogLoadingExample />;
+}
+Loading.parameters = {
+    // `kind` names the neobackstop scenario — it must be unique per story in the
+    // file, or this capture silently replaces the Default one.
+    kind: "loading",
     screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;
 

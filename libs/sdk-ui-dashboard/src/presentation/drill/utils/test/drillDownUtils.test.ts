@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { cloneDeep } from "lodash-es";
 import { describe, expect, it } from "vitest";
@@ -20,10 +20,10 @@ describe("filterDrillFromAttributeByPriority", () => {
         },
         target: {
             displayForm: {
-                uri: "/gdc/md/referenceworkspace/obj/1067",
+                identifier: "obj_1067",
             },
             hyperlinkDisplayForm: {
-                uri: "/gdc/md/referenceworkspace/obj/1069",
+                identifier: "obj_1069",
             },
         },
     };

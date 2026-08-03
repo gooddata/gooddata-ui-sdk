@@ -1,8 +1,8 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import moment from "moment";
 
-import { platformDateFormat, platformDateTimeFormat } from "../constants/Platform.js";
+import { platformDateFormat, platformDateTimeFormatWithSeconds } from "../constants/Platform.js";
 
 export const convertDateToPlatformDateString = (
     date: Date | undefined | null,
@@ -37,5 +37,6 @@ export const convertPlatformDateStringToDate = (
 
     // unfortunately moment does not correctly export date via toDate method (always uses system time)
     // therefore it needs to be created via standard Date object to satisfy unit tests
-    return new Date(moment(platformDate, platformDateTimeFormat).format());
+    // parse with the seconds-aware format; it is a superset that also parses minute- and date-only strings
+    return new Date(moment(platformDate, platformDateTimeFormatWithSeconds).format());
 };

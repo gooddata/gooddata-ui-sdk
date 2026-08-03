@@ -1680,6 +1680,8 @@ export {
     selectDisableFilterViews,
     selectDashboardDescriptor,
     selectEvaluationFrequency,
+    selectDashboardTimezoneConfig,
+    selectPersistedDashboardTimezoneConfig,
     selectPersistedDashboardFilterContextDateFilterConfig,
     selectSectionHeadersDateDataSet,
 } from "./model/store/meta/metaSelectors.js";
@@ -2208,6 +2210,27 @@ export type {
     IAlertingManagementDialogProps,
     IAlertingDialogProps,
 } from "./presentation/automations/alerting/types.js";
+export {
+    useAutomationsContext,
+    type IAutomationsContextValue,
+    type IAutomationsDateFilterConfig,
+} from "./presentation/automations/contexts/AutomationsContext.js";
+export {
+    useAlertingDialogContext,
+    type IAlertingDialogContextValue,
+} from "./presentation/automations/contexts/AlertingDialogContext.js";
+export {
+    useAlertingManagementDialogContext,
+    type IAlertingManagementDialogContextValue,
+} from "./presentation/automations/contexts/AlertingManagementDialogContext.js";
+export {
+    useScheduledEmailDialogContext,
+    type IScheduledEmailDialogContextValue,
+} from "./presentation/automations/contexts/ScheduledEmailDialogContext.js";
+export {
+    useScheduledEmailManagementDialogContext,
+    type IScheduledEmailManagementDialogContextValue,
+} from "./presentation/automations/contexts/ScheduledEmailManagementDialogContext.js";
 export {
     DefaultSaveAsDialog,
     useSaveAsDialogProps,

@@ -1,26 +1,40 @@
-// (C) 2007-2019 GoodData Corporation
-import { createRequire } from "module";
+// (C) 2007-2026 GoodData Corporation
 
-import { type LegacyExecutionRecording, legacyRecordedDataView } from "@gooddata/sdk-backend-mockingbird";
-import { type IInsight, uriRef } from "@gooddata/sdk-model";
+import { dummyDataView } from "@gooddata/sdk-backend-base";
+import {
+    type IDimensionDescriptor,
+    type IExecutionDefinition,
+    type IInsight,
+    uriRef,
+} from "@gooddata/sdk-model";
 
 import { DataViewFacade } from "../src/base/results/facade.js";
 
+import barChartForDrillTestsDefinition from "./recordings/bar_chart_for_drill_tests/definition.json" with { type: "json" };
+import barChartForDrillTestsResponseJson from "./recordings/bar_chart_for_drill_tests/response.json" with { type: "json" };
+
 export const testWorkspace = "testWorkspace";
 
-const require = createRequire(import.meta.url);
-
-function legacyRecordedDataFacade(rec: LegacyExecutionRecording): DataViewFacade {
-    return DataViewFacade.for(legacyRecordedDataView(rec));
-}
-
-const BarChartForDrillTests = {
-    definition: require("./recordings/bar_chart_for_drill_tests/definition.json"),
-    response: require("./recordings/bar_chart_for_drill_tests/response.json"),
-    result: require("./recordings/bar_chart_for_drill_tests/result.json"),
+const barChartForDrillTestsResponse = barChartForDrillTestsResponseJson as unknown as {
+    executionResponse: { dimensions: IDimensionDescriptor[] };
 };
 
-export const barChartForDrillTests = legacyRecordedDataFacade(BarChartForDrillTests);
+const barChartForDrillTestsDataView = dummyDataView(
+    barChartForDrillTestsDefinition as unknown as IExecutionDefinition,
+);
+
+/**
+ * The header-matching predicates resolve master measure descriptors through `dv.meta().measureDescriptor()`,
+ * which reads `result.dimensions`. `dummyDataView` leaves those empty, so the recorded dimension descriptors
+ * are layered on top of it - the data itself stays empty, no test reads it.
+ */
+export const barChartForDrillTests = DataViewFacade.for({
+    ...barChartForDrillTestsDataView,
+    result: {
+        ...barChartForDrillTestsDataView.result,
+        dimensions: barChartForDrillTestsResponse.executionResponse.dimensions,
+    },
+});
 
 export const insightWithPoP: IInsight = {
     insight: {

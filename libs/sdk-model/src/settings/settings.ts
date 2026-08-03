@@ -935,12 +935,27 @@ export interface IFeatureFlags {
     enableFiscalCalendars?: boolean;
 
     /**
+     * Enable second-level date granularities (second, minute of day, second of day, second of minute)
+     * in the UI apps. Gates the UI surfacing only; the backend must also support time granularities and
+     * the date dimension must expose the corresponding attributes.
+     */
+    enableSecondGranularities?: boolean;
+
+    /**
      * Enable dashboard filter groups.
      *
      * Filter group are items in a filter bar which groups regular attribute filters into a logical groups.
      * Groups are configured via dashboard metadata new tab property called filterGroupsConfig.
      */
     enableDashboardFilterGroups?: boolean;
+
+    /**
+     * Enable dashboard-level timezone configuration.
+     *
+     * When enabled, dashboard editors can configure the dashboard timezone in the dashboard
+     * settings dialog. The configuration is stored in dashboard metadata as timezoneConfig.
+     */
+    enableDashboardTimezone?: boolean;
 
     /**
      * Enable measure value (numeric) filter in Dashboard app.

@@ -24,7 +24,11 @@ import {
 } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 
-import type { IUseObjectShareOptions } from "../objectShareController.types.js";
+import type {
+    IObjectShareController,
+    IUseObjectShareOptions,
+    ObjectSharePermissionLevel,
+} from "../objectShareController.types.js";
 import type { IObjectShareLabel } from "../types.js";
 import { useObjectShareController } from "../useObjectShareController.js";
 
@@ -116,7 +120,7 @@ function renderController(
             </BackendProvider>
         </IntlProvider>
     );
-    return renderHook(() => useObjectShareController(target, { isOpen: true, ...options }), { wrapper });
+    return renderHook(() => useObjectShareController(target, options), { wrapper });
 }
 
 const PRIMARY_LABEL: IObjectShareLabel = {
@@ -310,59 +314,6 @@ describe("useObjectShareController", () => {
         await waitFor(() => expect(result.current.state.status).toBe("error"));
         expect(result.current.state.error).toBeInstanceOf(Error);
         expect(result.current.state.grantees).toEqual([]);
-        // A transient error is not a permanent loss of access — consumers must not
-        // strip the share UI on it.
-        expect(result.current.state.accessUnavailable).toBe(false);
-    });
-
-    it("flags accessUnavailable when the access list 404s (manage-gated, user can't manage)", async () => {
-        // The permissions endpoint returns 404 for a user who can only view/analyze.
-        // The controller must distinguish this from a transient error so consumers
-        // can hide the share UI rather than retry.
-        const svc: IMockService = {
-            getAccessList: vi.fn(async () => {
-                throw notFound();
-            }),
-            manageObjectPermissions: vi.fn(async () => undefined),
-            getAvailableAssignees: vi.fn(async () => ASSIGNEES),
-        };
-        const { result } = renderController(svc, TARGET);
-        await waitFor(() => expect(result.current.state.status).toBe("error"));
-        expect(result.current.state.accessUnavailable).toBe(true);
-    });
-
-    it("does not flag accessUnavailable on a non-404 error (e.g. 501)", async () => {
-        // accessUnavailable matches the backend's actual deny status (404) only.
-        // A 501 — or any other non-404 — is not treated as "can't manage", so the
-        // share UI is not hidden on it.
-        const svc: IMockService = {
-            getAccessList: vi.fn(async () => {
-                throw new UnexpectedResponseError("Not Implemented", 501, {});
-            }),
-            manageObjectPermissions: vi.fn(async () => undefined),
-            getAvailableAssignees: vi.fn(async () => ASSIGNEES),
-        };
-        const { result } = renderController(svc, TARGET);
-        await waitFor(() => expect(result.current.state.status).toBe("error"));
-        expect(result.current.state.accessUnavailable).toBe(false);
-    });
-
-    it("reset returns to the main subview and clears pending buffers", async () => {
-        const { result } = renderController(makeService(), TARGET);
-        await waitFor(() => expect(result.current.state.status).toBe("success"));
-
-        act(() => result.current.actions.openAddGrantee());
-        act(() =>
-            result.current.actions.setPendingGrantees([
-                { id: "user:u2", kind: "user", name: "Marek", permissionLevel: "VIEW" },
-            ]),
-        );
-        expect(result.current.state.subview).toBe("addGrantee");
-        expect(result.current.state.pendingGrantees).toHaveLength(1);
-
-        act(() => result.current.actions.reset());
-        expect(result.current.state.subview).toBe("main");
-        expect(result.current.state.pendingGrantees).toHaveLength(0);
     });
 
     it("loadOptions excludes already-granted ids and filters by query", async () => {
@@ -402,7 +353,13 @@ describe("useObjectShareController", () => {
         act(() => result.current.actions.openAddGrantee());
         act(() =>
             result.current.actions.setPendingGrantees([
-                { id: "group:g1", kind: "group", name: "Marketing", permissionLevel: "SHARE" },
+                {
+                    id: "group:g1",
+                    ref: idRef("g1"),
+                    kind: "group",
+                    name: "Marketing",
+                    permissionLevel: "SHARE",
+                },
             ]),
         );
         await act(async () => {
@@ -439,7 +396,13 @@ describe("useObjectShareController", () => {
         act(() => result.current.actions.openAddGrantee());
         act(() =>
             result.current.actions.setPendingGrantees([
-                { id: "group:g1", kind: "group", name: "Marketing", permissionLevel: "VIEW" },
+                {
+                    id: "group:g1",
+                    ref: idRef("g1"),
+                    kind: "group",
+                    name: "Marketing",
+                    permissionLevel: "VIEW",
+                },
             ]),
         );
         let savePromise: Promise<void>;
@@ -485,14 +448,27 @@ describe("useObjectShareController", () => {
         expect(result.current.state.grantees.find((g) => g.id === "user:u1")?.pending).toBeUndefined();
     });
 
-    it("resolves a granted row's name eagerly when the grant carries only a raw id", async () => {
-        // The permissions endpoint returns grants without names (only ids) — the
-        // state after a page reload. The row must show the real name without the
-        // user ever opening the picker: opening the dialog resolves names from
-        // the available-assignees listing.
+    it("fetches available assignees on demand when the Add picker opens", async () => {
+        // No eager on-open fetch — the picker's loadOptions hits the listing only
+        // when the user actually opens Add, and each option carries its backend ref.
+        const svc = makeService([USER_GRANT]);
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        expect(svc.getAvailableAssignees).not.toHaveBeenCalled();
+
+        await act(async () => {
+            await result.current.actions.loadOptions("");
+        });
+        expect(svc.getAvailableAssignees).toHaveBeenCalledTimes(1);
+    });
+
+    it("displays a grant with only a raw id by its id, without any assignee fetch", async () => {
+        // The permissions response is the single source of names now (F1-2721). If a
+        // grant still arrives id-only, the row shows the id via the name→email→id
+        // fallback — there is no eager backfill fetch to resolve it.
         const RAW: AccessGranteeDetail = {
             type: "granularUser",
-            user: { ref: idRef("u2"), uri: "/u2", login: "u2", email: "u2", fullName: "u2" },
+            user: { ref: idRef("u2"), uri: "u2", login: "u2", email: "u2", fullName: "u2" },
             permissions: ["VIEW"],
             inheritedPermissions: [],
         } as AccessGranteeDetail;
@@ -500,14 +476,9 @@ describe("useObjectShareController", () => {
         const { result } = renderController(svc, TARGET);
         await waitFor(() => expect(result.current.state.status).toBe("success"));
 
-        // No picker interaction — name and email resolve from the eager assignee fetch.
-        await waitFor(() =>
-            expect(result.current.state.grantees.find((g) => g.id === "user:u2")?.name).toBe("Marek"),
-        );
-        expect(result.current.state.grantees.find((g) => g.id === "user:u2")?.email).toBe(
-            "marek@example.com",
-        );
-        expect(svc.getAvailableAssignees).toHaveBeenCalled();
+        // Row present, no assignee listing fetched, name fact absent (id-only grant).
+        expect(result.current.state.grantees.find((g) => g.id === "user:u2")?.name).toBeUndefined();
+        expect(svc.getAvailableAssignees).not.toHaveBeenCalled();
     });
 
     it("resolves the current user's own row identity from the profile, not the assignee listing", async () => {
@@ -569,94 +540,6 @@ describe("useObjectShareController", () => {
         expect(row?.email).toBeUndefined();
     });
 
-    it("resolves a group row's name eagerly when the grant carries only a raw id", async () => {
-        // Same reload scenario for a user group — g1's grant returns the raw id as
-        // its name, which must resolve to "Marketing" from the assignee listing.
-        const RAW_GROUP: AccessGranteeDetail = {
-            type: "granularGroup",
-            userGroup: { ref: idRef("g1"), name: "g1" },
-            permissions: ["VIEW"],
-            inheritedPermissions: [],
-        } as AccessGranteeDetail;
-        const svc = makeService([RAW_GROUP]);
-        const { result } = renderController(svc, TARGET);
-        await waitFor(() => expect(result.current.state.status).toBe("success"));
-
-        await waitFor(() =>
-            expect(result.current.state.grantees.find((g) => g.id === "group:g1")?.name).toBe("Marketing"),
-        );
-    });
-
-    it("still resolves names when the target object identity churns mid-resolve", async () => {
-        // A consumer that rebuilds the target object each render (new identity, same
-        // id) must not abort the eager name resolve. The resolve is keyed on the
-        // serialized targetKey, not the target object, so an identity-only re-render
-        // while the assignee fetch is in flight must let it complete and name the row.
-        const RAW: AccessGranteeDetail = {
-            type: "granularUser",
-            user: { ref: idRef("u2"), uri: "/u2", login: "u2", email: "u2", fullName: "u2" },
-            permissions: ["VIEW"],
-            inheritedPermissions: [],
-        } as AccessGranteeDetail;
-        const svc = makeService([RAW]);
-        let resolveAssignees: (a: IAvailableAccessGrantee[]) => void = () => {};
-        svc.getAvailableAssignees.mockImplementationOnce(
-            () => new Promise<IAvailableAccessGrantee[]>((res) => (resolveAssignees = res)),
-        );
-        const backend = makeBackend(svc);
-        const wrapper = ({ children }: PropsWithChildren) => (
-            <IntlProvider locale="en-US" messages={{}}>
-                <BackendProvider backend={backend}>
-                    <WorkspaceProvider workspace={WORKSPACE}>{children}</WorkspaceProvider>
-                </BackendProvider>
-            </IntlProvider>
-        );
-        const { result, rerender } = renderHook(
-            ({ target }: { target: IObjectPermissionsObject }) =>
-                useObjectShareController(target, { isOpen: true }),
-            // Each rerender passes a fresh object with the same id — identity churn.
-            { wrapper, initialProps: { target: { kind: "label", ref: idRef("label.country") } } },
-        );
-        await waitFor(() => expect(result.current.state.status).toBe("success"));
-        await waitFor(() => expect(svc.getAvailableAssignees).toHaveBeenCalledTimes(1));
-
-        // Re-render with a brand-new target object (same id) while the fetch is in
-        // flight. A target-object-keyed effect would cancel and never retry here.
-        await act(async () => {
-            rerender({ target: { kind: "label", ref: idRef("label.country") } });
-        });
-        await act(async () => {
-            resolveAssignees(ASSIGNEES);
-        });
-
-        await waitFor(() =>
-            expect(result.current.state.grantees.find((g) => g.id === "user:u2")?.name).toBe("Marek"),
-        );
-        // The identity churn must not have triggered a second fetch.
-        expect(svc.getAvailableAssignees).toHaveBeenCalledTimes(1);
-    });
-
-    it("fires no assignee request while the dialog is closed (summary-only path)", async () => {
-        // The summary renders only counts/levels — no identities — so the on-open
-        // facts resolve must not fire for a closed-dialog (inline row) consumer,
-        // even when the grant carries only a raw id.
-        const RAW: AccessGranteeDetail = {
-            type: "granularUser",
-            user: { ref: idRef("u2"), uri: "/u2", login: "u2", email: "u2", fullName: "u2" },
-            permissions: ["VIEW"],
-            inheritedPermissions: [],
-        } as AccessGranteeDetail;
-        const svc = makeService([RAW]);
-        const { result } = renderController(svc, TARGET, { isOpen: false });
-        await waitFor(() => expect(result.current.state.status).toBe("success"));
-
-        // Give any stray eager effect a chance to fire, then assert it did not.
-        await act(async () => {
-            await Promise.resolve();
-        });
-        expect(svc.getAvailableAssignees).not.toHaveBeenCalled();
-    });
-
     it("writes the new level through to local state and keeps it", async () => {
         // The initial fetch reports VIEW. After committing SHARE, the row reflects
         // SHARE from local state (which is authoritative) and is no longer pending —
@@ -683,7 +566,13 @@ describe("useObjectShareController", () => {
         act(() => result.current.actions.openAddGrantee());
         act(() =>
             result.current.actions.setPendingGrantees([
-                { id: "group:g1", kind: "group", name: "Marketing", permissionLevel: "VIEW" },
+                {
+                    id: "group:g1",
+                    ref: idRef("g1"),
+                    kind: "group",
+                    name: "Marketing",
+                    permissionLevel: "VIEW",
+                },
             ]),
         );
         await act(async () => {
@@ -708,6 +597,21 @@ describe("useObjectShareController", () => {
         expect(grantees).toEqual([
             expect.objectContaining({ type: "granularUser", permissions: ["SHARE", "VIEW"] }),
         ]);
+    });
+
+    it("changePermissionLevel writes an EDIT grant for the grantee", async () => {
+        const svc = makeService();
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+        await act(async () => {
+            await result.current.actions.changePermissionLevel("user:u1", "EDIT");
+        });
+        const [, grantees] = svc.manageObjectPermissions.mock.calls[0] as [unknown, IGranularAccessGrantee[]];
+        expect(grantees).toEqual([
+            expect.objectContaining({ type: "granularUser", permissions: ["EDIT", "VIEW"] }),
+        ]);
+        expect(result.current.state.grantees.find((g) => g.id === "user:u1")?.level).toBe("EDIT");
     });
 
     it("settles the row from local state after a write (no refetch)", async () => {
@@ -747,6 +651,128 @@ describe("useObjectShareController", () => {
         expect(row?.level).toBe("VIEW"); // rolled back
         expect(row?.pending).toBeUndefined();
         expect(addError).toHaveBeenCalledTimes(1);
+    });
+
+    // Successive edits compose on the same row with no refetch in between, so the
+    // fetched base doesn't hold the row's last-committed state — the overlay must.
+    describe("edit composition on the same row (no refetch)", () => {
+        const addGrantee = async (
+            result: { current: IObjectShareController },
+            level: ObjectSharePermissionLevel,
+        ) => {
+            act(() => result.current.actions.openAddGrantee());
+            act(() =>
+                result.current.actions.setPendingGrantees([
+                    {
+                        id: "group:g1",
+                        ref: idRef("g1"),
+                        kind: "group",
+                        name: "Marketing",
+                        permissionLevel: level,
+                    },
+                ]),
+            );
+            await act(async () => {
+                await result.current.actions.confirmAddGrantees();
+            });
+        };
+
+        it("keeps a freshly added grantee visible after changing its level", async () => {
+            // Regression (found in browser): the added row exists only in the overlay,
+            // and the level change used to replace its entry — vanishing the row.
+            const svc = makeService();
+            const { result } = renderController(svc, TARGET);
+            await waitFor(() => expect(result.current.state.status).toBe("success"));
+            await addGrantee(result, "SHARE");
+
+            await act(async () => {
+                await result.current.actions.changePermissionLevel("group:g1", "VIEW");
+            });
+
+            const row = result.current.state.grantees.find((g) => g.id === "group:g1");
+            expect(row).toMatchObject({ name: "Marketing", level: "VIEW" });
+            expect(row?.pending).toBeUndefined();
+            expect(result.current.state.summary?.granteeCount).toBe(2); // u1 + g1
+        });
+
+        it("restores a freshly added grantee's committed level when the follow-up change fails", async () => {
+            const svc = makeService();
+            const { result } = renderController(svc, TARGET);
+            await waitFor(() => expect(result.current.state.status).toBe("success"));
+            await addGrantee(result, "SHARE");
+
+            svc.manageObjectPermissions.mockRejectedValueOnce(new Error("nope"));
+            await act(async () => {
+                await result.current.actions.changePermissionLevel("group:g1", "VIEW");
+            });
+
+            const row = result.current.state.grantees.find((g) => g.id === "group:g1");
+            expect(row).toMatchObject({ name: "Marketing", level: "SHARE" }); // committed add, not gone
+            expect(row?.pending).toBeUndefined();
+        });
+
+        it("restores a freshly added grantee when its removal fails", async () => {
+            const svc = makeService();
+            const { result } = renderController(svc, TARGET);
+            await waitFor(() => expect(result.current.state.status).toBe("success"));
+            await addGrantee(result, "SHARE");
+
+            svc.manageObjectPermissions.mockRejectedValueOnce(new Error("nope"));
+            await act(async () => {
+                await result.current.actions.removeGrantee("group:g1");
+            });
+
+            const row = result.current.state.grantees.find((g) => g.id === "group:g1");
+            expect(row).toMatchObject({ name: "Marketing", level: "SHARE" });
+            expect(row?.pending).toBeUndefined();
+        });
+
+        it("rolls a repeated level change back to the last committed level, not the fetched one", async () => {
+            const svc = makeService();
+            const { result } = renderController(svc, TARGET);
+            await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+            // First change commits (backend now holds SHARE)...
+            await act(async () => {
+                await result.current.actions.changePermissionLevel("user:u1", "SHARE");
+            });
+            // ...so a failed second change must revert to SHARE, not the fetched VIEW.
+            svc.manageObjectPermissions.mockRejectedValueOnce(new Error("nope"));
+            await act(async () => {
+                await result.current.actions.changePermissionLevel("user:u1", "EDIT");
+            });
+
+            const row = result.current.state.grantees.find((g) => g.id === "user:u1");
+            expect(row?.level).toBe("SHARE");
+            expect(row?.pending).toBeUndefined();
+        });
+
+        it("keeps the committed workspace rule when a later general-access toggle fails", async () => {
+            const svc = makeService();
+            const { result } = renderController(svc, TARGET);
+            await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+            // Grant workspace access and re-grade the rule to EDIT — both commit.
+            act(() => result.current.actions.requestGeneralAccessChange("WORKSPACE"));
+            await act(async () => {
+                await result.current.actions.confirmGeneralAccessChange();
+            });
+            await act(async () => {
+                await result.current.actions.changeWorkspaceLevel("EDIT");
+            });
+            expect(result.current.state.workspaceLevel).toBe("EDIT");
+
+            // A failed Restricted toggle must revert to the committed WORKSPACE/EDIT
+            // rule, not to the fetched (restricted) state.
+            svc.manageObjectPermissions.mockRejectedValueOnce(new Error("nope"));
+            act(() => result.current.actions.requestGeneralAccessChange("RESTRICTED"));
+            await act(async () => {
+                await result.current.actions.confirmGeneralAccessChange();
+            });
+
+            expect(result.current.state.generalAccess).toBe("WORKSPACE");
+            expect(result.current.state.workspaceLevel).toBe("EDIT");
+        });
     });
 
     it("removeGrantee sends empty permissions", async () => {
@@ -918,7 +944,7 @@ describe("useObjectShareController", () => {
         const { result } = renderController(makeService([PARENT_RULE, OWN_RULE]), TARGET);
         await waitFor(() => expect(result.current.state.status).toBe("success"));
         expect(result.current.state.generalAccess).toBe("WORKSPACE");
-        expect(result.current.state.workspaceAccessInherited).toBe(true);
+        expect(result.current.state.workspaceInheritedLevel).toBe("VIEW");
         // A direct rule exists and only VIEW is inherited — re-grading stays possible.
         expect(result.current.state.workspaceLevelLocked).toBe(false);
     });
@@ -939,7 +965,7 @@ describe("useObjectShareController", () => {
             generalAccess: "WORKSPACE",
             workspaceLevel: "VIEW",
         });
-        expect(result.current.state.workspaceAccessInherited).toBe(true);
+        expect(result.current.state.workspaceInheritedLevel).toBe("VIEW");
         // No direct rule to re-grade.
         expect(result.current.state.workspaceLevelLocked).toBe(true);
 
@@ -954,7 +980,7 @@ describe("useObjectShareController", () => {
         expect(svc.manageObjectPermissions).not.toHaveBeenCalled();
     });
 
-    it("pins the workspace level to an inherited SHARE over a direct VIEW", async () => {
+    it("pins the workspace level to an inherited SHARE over a direct VIEW but allows raising to EDIT", async () => {
         const PARENT_SHARE: AccessGranteeDetail = {
             type: "allWorkspaceUsers",
             permissions: [],
@@ -969,13 +995,76 @@ describe("useObjectShareController", () => {
         const { result } = renderController(svc, TARGET);
         await waitFor(() => expect(result.current.state.status).toBe("success"));
         expect(result.current.state.workspaceLevel).toBe("SHARE");
-        expect(result.current.state.workspaceLevelLocked).toBe(true);
+        expect(result.current.state.workspaceInheritedLevel).toBe("SHARE");
+        // A direct EDIT would still raise the effective level, so the dropdown stays usable.
+        expect(result.current.state.workspaceLevelLocked).toBe(false);
+        // Policy travels with the classification: levels below the inherited SHARE.
+        expect(result.current.state.workspaceDisabledLevels).toEqual(["VIEW"]);
 
-        // A direct downgrade couldn't change the effective level — refused.
+        // A direct downgrade below the inherited level couldn't take effect — refused.
         await act(async () => {
             await result.current.actions.changeWorkspaceLevel("VIEW");
         });
         expect(svc.manageObjectPermissions).not.toHaveBeenCalled();
+
+        // Re-picking the displayed (inherited) level is a no-op — it must NOT
+        // silently escalate the persisted direct rule from VIEW to SHARE.
+        await act(async () => {
+            await result.current.actions.changeWorkspaceLevel("SHARE");
+        });
+        expect(svc.manageObjectPermissions).not.toHaveBeenCalled();
+
+        // Raising above the inherited level is a real re-grade — written through.
+        await act(async () => {
+            await result.current.actions.changeWorkspaceLevel("EDIT");
+        });
+        expect(svc.manageObjectPermissions).toHaveBeenCalledWith(TARGET, [
+            expect.objectContaining({ type: "allWorkspaceUsers", permissions: ["EDIT", "VIEW"] }),
+        ]);
+        expect(result.current.state.workspaceLevel).toBe("EDIT");
+    });
+
+    it("raises the workspace rule above an inherited SHARE with no self row present", async () => {
+        const PARENT_SHARE: AccessGranteeDetail = {
+            type: "allWorkspaceUsers",
+            permissions: [],
+            inheritedPermissions: ["SHARE", "VIEW"],
+        };
+        const OWN_VIEW: AccessGranteeDetail = {
+            type: "allWorkspaceUsers",
+            permissions: ["VIEW"],
+            inheritedPermissions: [],
+        };
+        const svc = makeService([PARENT_SHARE, OWN_VIEW]);
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+        await act(async () => {
+            await result.current.actions.changeWorkspaceLevel("EDIT");
+        });
+        expect(svc.manageObjectPermissions).toHaveBeenCalledWith(TARGET, [
+            expect.objectContaining({ type: "allWorkspaceUsers", permissions: ["EDIT", "VIEW"] }),
+        ]);
+    });
+
+    it("locks the workspace level entirely under an inherited EDIT", async () => {
+        const PARENT_EDIT: AccessGranteeDetail = {
+            type: "allWorkspaceUsers",
+            permissions: [],
+            inheritedPermissions: ["EDIT", "VIEW"],
+        };
+        const OWN_VIEW: AccessGranteeDetail = {
+            type: "allWorkspaceUsers",
+            permissions: ["VIEW"],
+            inheritedPermissions: [],
+        };
+        const svc = makeService([PARENT_EDIT, OWN_VIEW]);
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        expect(result.current.state.workspaceLevel).toBe("EDIT");
+        // Nothing can outrank an inherited EDIT — no re-grade could change the
+        // effective level, so the dropdown is read-only.
+        expect(result.current.state.workspaceLevelLocked).toBe(true);
     });
 
     it("blocks overlapping workspace-level writes while one is in flight", async () => {
@@ -1051,6 +1140,43 @@ describe("useObjectShareController", () => {
         await act(async () => {
             resolveSave();
             await regrade;
+        });
+        expect(result.current.state.workspaceLevelSaving).toBe(false);
+        expect(result.current.state.generalAccess).toBe("WORKSPACE");
+    });
+
+    it("blocks a workspace re-grade while the general-access save is in flight", async () => {
+        // The mirror of the guard above: enabling workspace access is one logical
+        // save (labels + the VIEW grant). Until it settles, the rule must stay
+        // pending, or a re-grade started meanwhile would race it on the same
+        // allWorkspaceUsers rule and the delayed VIEW write could land last.
+        const svc = makeService();
+        let resolveSave: () => void = () => {};
+        svc.manageObjectPermissions.mockImplementationOnce(
+            () => new Promise<void>((res) => (resolveSave = () => res(undefined))),
+        );
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+        act(() => result.current.actions.requestGeneralAccessChange("WORKSPACE"));
+        let grant: Promise<void>;
+        act(() => {
+            grant = result.current.actions.confirmGeneralAccessChange();
+        });
+        // The save is in flight: the rule is pending so the level menu stays locked.
+        expect(result.current.state.generalAccess).toBe("WORKSPACE"); // optimistic
+        expect(result.current.state.workspaceLevelSaving).toBe(true);
+
+        // A re-grade attempt in this window must be a no-op — no second write.
+        await act(async () => {
+            await result.current.actions.changeWorkspaceLevel("EDIT");
+        });
+        expect(svc.manageObjectPermissions).toHaveBeenCalledTimes(1);
+        expect(result.current.state.workspaceLevel).toBe("VIEW");
+
+        await act(async () => {
+            resolveSave();
+            await grant;
         });
         expect(result.current.state.workspaceLevelSaving).toBe(false);
         expect(result.current.state.generalAccess).toBe("WORKSPACE");
@@ -1214,6 +1340,9 @@ describe("useObjectShareController", () => {
             rerender({ labels: LABELS });
         });
         expect(result.current.state.labelsResolved).toBe(false);
+        // ...but NOT initializing: the session's first resolution already happened,
+        // so an open dialog re-disables controls without flashing back to skeletons.
+        expect(result.current.state.labelsInitializing).toBe(false);
 
         // Once the new label's probe lands, scope re-resolves to all three.
         await act(async () => {
@@ -1264,6 +1393,33 @@ describe("useObjectShareController", () => {
                 "lbl.primary",
             ]),
         );
+    });
+
+    it("holds labelsInitializing exactly through the session's first probe", async () => {
+        let release: () => void = () => {};
+        const held = new Promise<void>((res) => (release = () => res(undefined)));
+        const svc: IMockService = {
+            getAccessList: vi.fn(async (t: IObjectPermissionsObject) => {
+                if ((t.ref as { identifier: string }).identifier.startsWith("lbl.")) {
+                    await held;
+                }
+                return { grants: [USER_GRANT] };
+            }),
+            manageObjectPermissions: vi.fn(async () => undefined),
+            getAvailableAssignees: vi.fn(async () => ASSIGNEES),
+        };
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        // List loaded but the first probe is still out — the dialog must keep its
+        // skeletons rather than reveal disabled controls.
+        expect(result.current.state.labelsInitializing).toBe(true);
+        expect(result.current.state.labelsResolved).toBe(false);
+
+        await act(async () => {
+            release();
+        });
+        await waitFor(() => expect(result.current.state.labelsInitializing).toBe(false));
+        expect(result.current.state.labelsResolved).toBe(true);
     });
 
     it("resolves permissionable labels even when the object has no grantees", async () => {
@@ -1369,6 +1525,358 @@ describe("useObjectShareController", () => {
         expect(addSuccess).toHaveBeenCalled();
     });
 
+    it("re-adding a removed grantee renders one row, not a duplicate of the base row", async () => {
+        // After a settled removal the base row is hidden by its overlay entry and
+        // the picker offers the grantee again. The re-add must supersede the
+        // removal — not coexist with the hidden base row as a second row.
+        const svc = makeService();
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+        await act(async () => {
+            await result.current.actions.removeGrantee("user:u1");
+        });
+        expect(result.current.state.grantees).toHaveLength(0);
+
+        act(() => result.current.actions.openAddGrantee());
+        act(() =>
+            result.current.actions.setPendingGrantees([
+                { id: "user:u1", ref: idRef("u1"), kind: "user", name: "Jane Good", permissionLevel: "EDIT" },
+            ]),
+        );
+        await act(async () => {
+            await result.current.actions.confirmAddGrantees();
+        });
+
+        const rows = result.current.state.grantees.filter((g) => g.id === "user:u1");
+        expect(rows).toHaveLength(1);
+        expect(rows[0]!.level).toBe("EDIT");
+    });
+
+    it("keeps a removed grantee hidden when their re-add fails", async () => {
+        const svc = makeService();
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        await act(async () => {
+            await result.current.actions.removeGrantee("user:u1");
+        });
+
+        svc.manageObjectPermissions.mockRejectedValueOnce(new Error("nope"));
+        act(() => result.current.actions.openAddGrantee());
+        act(() =>
+            result.current.actions.setPendingGrantees([
+                { id: "user:u1", ref: idRef("u1"), kind: "user", name: "Jane Good", permissionLevel: "EDIT" },
+            ]),
+        );
+        await act(async () => {
+            await result.current.actions.confirmAddGrantees();
+        });
+
+        // The re-add failed — the committed removal must stand, not the fetched
+        // pre-removal row.
+        expect(result.current.state.grantees).toHaveLength(0);
+    });
+
+    it("keeps a removed re-added grantee removed after removing them again", async () => {
+        // remove → re-add → remove, all settled: the id lives in base, so the final
+        // removal must keep hiding the base row rather than dropping the overlay.
+        const svc = makeService();
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+        await act(async () => {
+            await result.current.actions.removeGrantee("user:u1");
+        });
+        act(() => result.current.actions.openAddGrantee());
+        act(() =>
+            result.current.actions.setPendingGrantees([
+                { id: "user:u1", ref: idRef("u1"), kind: "user", name: "Jane Good", permissionLevel: "VIEW" },
+            ]),
+        );
+        await act(async () => {
+            await result.current.actions.confirmAddGrantees();
+        });
+        expect(result.current.state.grantees).toHaveLength(1);
+
+        await act(async () => {
+            await result.current.actions.removeGrantee("user:u1");
+        });
+        expect(result.current.state.grantees).toHaveLength(0);
+    });
+
+    it("keeps a grantee out of the picker while their removal is in flight", async () => {
+        // Offering an in-flight-removal id would let a re-add overlap the pending
+        // revoke on one id — and the settle/fail finalizers act on the id's CURRENT
+        // overlay entry, not the write that started them. The id becomes offerable
+        // exactly when the revoke settles.
+        const svc = makeService();
+        svc.getAvailableAssignees = vi.fn(async () => [
+            { type: "user", ref: idRef("u1"), name: "Jane Good", email: "jane@example.com" },
+            ...ASSIGNEES,
+        ]);
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+        let release: () => void = () => {};
+        const held = new Promise<void>((r) => (release = r));
+        svc.manageObjectPermissions.mockImplementationOnce(() => held);
+        let removePromise: Promise<void>;
+        act(() => {
+            removePromise = result.current.actions.removeGrantee("user:u1");
+        });
+        await waitFor(() => expect(result.current.state.grantees[0]?.pending).toBe("removing"));
+
+        const during = await result.current.actions.loadOptions("");
+        expect(during.users.map((u) => u.id)).not.toContain("user:u1");
+
+        await act(async () => {
+            release();
+            await removePromise;
+        });
+        const after = await result.current.actions.loadOptions("");
+        expect(after.users.map((u) => u.id)).toContain("user:u1");
+    });
+
+    it("renders one muted row while re-removing a re-added grantee", async () => {
+        // remove → re-add (settled) → remove again with the revoke held open: the
+        // base row and the superseded added entry describe the same id — exactly
+        // one muted row may render, at the re-added level, not the base one.
+        const svc = makeService();
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+        await act(async () => {
+            await result.current.actions.removeGrantee("user:u1");
+        });
+        act(() => result.current.actions.openAddGrantee());
+        act(() =>
+            result.current.actions.setPendingGrantees([
+                { id: "user:u1", ref: idRef("u1"), kind: "user", name: "Jane Good", permissionLevel: "EDIT" },
+            ]),
+        );
+        await act(async () => {
+            await result.current.actions.confirmAddGrantees();
+        });
+
+        let release: () => void = () => {};
+        const held = new Promise<void>((r) => (release = r));
+        svc.manageObjectPermissions.mockImplementationOnce(() => held);
+        let removePromise: Promise<void>;
+        act(() => {
+            removePromise = result.current.actions.removeGrantee("user:u1");
+        });
+        await waitFor(() =>
+            expect(
+                result.current.state.grantees.some((g) => g.id === "user:u1" && g.pending === "removing"),
+            ).toBe(true),
+        );
+        const rows = result.current.state.grantees.filter((g) => g.id === "user:u1");
+        expect(rows).toHaveLength(1);
+        expect(rows[0]!.level).toBe("EDIT");
+
+        await act(async () => {
+            release();
+            await removePromise;
+        });
+        expect(result.current.state.grantees).toHaveLength(0);
+    });
+
+    it("keeps a saved level on the muted row while its removal is in flight", async () => {
+        const svc = makeService();
+        const { result } = renderController(svc, TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+
+        await act(async () => {
+            await result.current.actions.changePermissionLevel("user:u1", "EDIT");
+        });
+        expect(result.current.state.grantees[0]!.level).toBe("EDIT");
+
+        let release: () => void = () => {};
+        const held = new Promise<void>((r) => (release = r));
+        svc.manageObjectPermissions.mockImplementationOnce(() => held);
+        let removePromise: Promise<void>;
+        act(() => {
+            removePromise = result.current.actions.removeGrantee("user:u1");
+        });
+        await waitFor(() =>
+            expect(result.current.state.grantees.find((g) => g.id === "user:u1")?.pending).toBe("removing"),
+        );
+        // The muted row shows the LAST COMMITTED level (the settled edit), not the
+        // stale fetched one.
+        expect(result.current.state.grantees.find((g) => g.id === "user:u1")?.level).toBe("EDIT");
+        await act(async () => {
+            release();
+            await removePromise;
+        });
+    });
+
+    it("locks the row while a label edit is in flight", async () => {
+        // A label edit issues independent per-label writes; a second edit or a
+        // removal started meanwhile would race them on the same labels. The row is
+        // pending for the duration, and mutations on a pending row are refused.
+        const svc = makeLabelAwareService(["lbl.primary", "lbl.name"]);
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
+        await waitFor(() => expect(result.current.state.selectedLabelIdsByGrantee["user:u1"]).toBeDefined());
+        let releaseLabels: () => void = () => {};
+        const heldLabels = new Promise<void>((res) => (releaseLabels = () => res(undefined)));
+        svc.manageObjectPermissions.mockClear();
+        svc.manageObjectPermissions.mockImplementation(async () => {
+            await heldLabels;
+            return undefined;
+        });
+
+        let editPromise: Promise<void>;
+        act(() => {
+            editPromise = result.current.actions.changeGranteeLabels("user:u1", ["lbl.email"]);
+        });
+        expect(result.current.state.grantees.find((g) => g.id === "user:u1")?.pending).toBe("saving");
+        const writesInFlight = svc.manageObjectPermissions.mock.calls.length;
+
+        await act(async () => {
+            await result.current.actions.changeGranteeLabels("user:u1", ["lbl.name"]);
+            await result.current.actions.removeGrantee("user:u1");
+            await result.current.actions.changePermissionLevel("user:u1", "EDIT");
+        });
+        expect(svc.manageObjectPermissions.mock.calls.length).toBe(writesInFlight);
+
+        await act(async () => {
+            releaseLabels();
+            await editPromise;
+        });
+        const row = result.current.state.grantees.find((g) => g.id === "user:u1");
+        expect(row?.pending).toBeUndefined();
+        // The lock rode on the level overlay at the unchanged level — nothing moved.
+        expect(row?.level).toBe("VIEW");
+        expect(addSuccess).toHaveBeenCalled();
+    });
+
+    it("keeps the landed label writes when a label edit partially fails", async () => {
+        // Scope primary + name; the edit requests primary + email (revoke name,
+        // grant email). The email grant fails, the name revoke lands: local scope
+        // must track exactly what the backend now holds — primary only — not
+        // restore the whole previous scope past the revoke that succeeded.
+        const svc = makeLabelAwareService(["lbl.primary", "lbl.name"]);
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
+        await waitFor(() => expect(result.current.state.selectedLabelIdsByGrantee["user:u1"]).toBeDefined());
+        svc.manageObjectPermissions.mockImplementation(async (t: IObjectPermissionsObject) => {
+            if ((t.ref as { identifier: string }).identifier === "lbl.email") {
+                throw new Error("label write failed");
+            }
+            return undefined;
+        });
+
+        await act(async () => {
+            await result.current.actions.changeGranteeLabels("user:u1", ["lbl.email"]);
+        });
+
+        expect(addWarning).toHaveBeenCalledTimes(1);
+        expect(result.current.state.selectedLabelIdsByGrantee["user:u1"]).toEqual(["lbl.primary"]);
+        expect(result.current.state.grantees.find((g) => g.id === "user:u1")?.pending).toBeUndefined();
+    });
+
+    it("does not re-probe label access lists when a grantee is added or removed", async () => {
+        // The probe seeds only ids it doesn't already know, and adds/removes write
+        // their scope optimistically — a per-grantee-change re-probe would issue one
+        // request per label just to discard the results, while flipping
+        // labelsResolved false and disabling every control for the round trip.
+        const svc = makeLabelAwareService();
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
+        await waitFor(() => expect(result.current.state.labelsResolved).toBe(true));
+        const labelProbes = () =>
+            svc.getAccessList.mock.calls.filter(([t]) => (t as IObjectPermissionsObject).kind === "label")
+                .length;
+        const before = labelProbes();
+
+        act(() => result.current.actions.openAddGrantee());
+        act(() =>
+            result.current.actions.setPendingGrantees([
+                { id: "user:u2", ref: idRef("u2"), kind: "user", name: "Marek", permissionLevel: "VIEW" },
+            ]),
+        );
+        await act(async () => {
+            await result.current.actions.confirmAddGrantees();
+        });
+        await act(async () => {
+            await result.current.actions.removeGrantee("user:u2");
+        });
+
+        expect(labelProbes()).toBe(before);
+        expect(result.current.state.labelsResolved).toBe(true);
+    });
+
+    it("does nothing when the applied label scope equals the current one", async () => {
+        // Applying the checklist unchanged produces zero writes — it must not toast
+        // success or lock the row for a no-op.
+        const svc = makeLabelAwareService(["lbl.primary", "lbl.name"]);
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
+        await waitFor(() => expect(result.current.state.selectedLabelIdsByGrantee["user:u1"]).toBeDefined());
+        svc.manageObjectPermissions.mockClear();
+
+        await act(async () => {
+            await result.current.actions.changeGranteeLabels("user:u1", ["lbl.name"]);
+        });
+
+        expect(svc.manageObjectPermissions).not.toHaveBeenCalled();
+        expect(addSuccess).not.toHaveBeenCalled();
+        expect(result.current.state.grantees.find((g) => g.id === "user:u1")?.pending).toBeUndefined();
+    });
+
+    it("restores the previous scope with an error when no label write lands", async () => {
+        const svc = makeLabelAwareService(["lbl.primary", "lbl.name"]);
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
+        await waitFor(() => expect(result.current.state.selectedLabelIdsByGrantee["user:u1"]).toBeDefined());
+        svc.manageObjectPermissions.mockRejectedValue(new Error("nope"));
+
+        await act(async () => {
+            await result.current.actions.changeGranteeLabels("user:u1", ["lbl.email"]);
+        });
+
+        expect(addError).toHaveBeenCalledTimes(1);
+        expect(addWarning).not.toHaveBeenCalled();
+        expect(result.current.state.selectedLabelIdsByGrantee["user:u1"]!.sort()).toEqual([
+            "lbl.name",
+            "lbl.primary",
+        ]);
+    });
+
+    it("re-grants only the grantee's actual scope when the object revoke fails", async () => {
+        // u1 holds primary + name, NOT email. Removal revokes over the KNOWN scope,
+        // so when the object revoke fails, the compensation restores exactly that
+        // scope — never granting email, which u1 never had.
+        const svc = makeLabelAwareService(["lbl.primary", "lbl.name"]);
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
+        await waitFor(() => expect(result.current.state.selectedLabelIdsByGrantee["user:u1"]).toBeDefined());
+        svc.manageObjectPermissions.mockClear();
+        svc.manageObjectPermissions.mockImplementation(async (t: IObjectPermissionsObject) => {
+            if ((t.ref as { identifier: string }).identifier === "label.country") {
+                throw new Error("object revoke failed");
+            }
+            return undefined;
+        });
+
+        await act(async () => {
+            await result.current.actions.removeGrantee("user:u1");
+        });
+
+        const idOf = (t: IObjectPermissionsObject) => (t.ref as { identifier: string }).identifier;
+        const calls = svc.manageObjectPermissions.mock.calls as Array<
+            [IObjectPermissionsObject, IGranularAccessGrantee[]]
+        >;
+        // email was never in u1's scope — no write may touch it, in either direction.
+        expect(calls.some(([t]) => idOf(t) === "lbl.email")).toBe(false);
+        // name: revoked with the removal, re-granted by the compensation.
+        const nameWrites = calls.filter(([t]) => idOf(t) === "lbl.name").map(([, g]) => g[0]!.permissions);
+        expect(nameWrites).toEqual([[], ["VIEW"]]);
+        // The row is restored, unlocked, with its scope intact.
+        expect(result.current.state.grantees.find((g) => g.id === "user:u1")?.pending).toBeUndefined();
+        await waitFor(() =>
+            expect(result.current.state.selectedLabelIdsByGrantee["user:u1"]?.sort()).toEqual([
+                "lbl.name",
+                "lbl.primary",
+            ]),
+        );
+    });
+
     it("grants every non-primary label when adding a grantee (all labels by default)", async () => {
         const svc = makeLabelAwareService();
         const { result } = renderController(svc, TARGET, { labels: LABELS });
@@ -1378,7 +1886,7 @@ describe("useObjectShareController", () => {
         act(() => result.current.actions.openAddGrantee());
         act(() =>
             result.current.actions.setPendingGrantees([
-                { id: "user:u2", kind: "user", name: "New User", permissionLevel: "VIEW" },
+                { id: "user:u2", ref: idRef("u2"), kind: "user", name: "New User", permissionLevel: "VIEW" },
             ]),
         );
         await act(async () => {
@@ -1414,8 +1922,14 @@ describe("useObjectShareController", () => {
         act(() => result.current.actions.openAddGrantee());
         act(() =>
             result.current.actions.setPendingGrantees([
-                { id: "user:u2", kind: "user", name: "Marek", permissionLevel: "VIEW" },
-                { id: "group:g1", kind: "group", name: "Marketing", permissionLevel: "VIEW" },
+                { id: "user:u2", ref: idRef("u2"), kind: "user", name: "Marek", permissionLevel: "VIEW" },
+                {
+                    id: "group:g1",
+                    ref: idRef("g1"),
+                    kind: "group",
+                    name: "Marketing",
+                    permissionLevel: "VIEW",
+                },
             ]),
         );
         await act(async () => {
@@ -1466,8 +1980,14 @@ describe("useObjectShareController", () => {
         act(() => result.current.actions.openAddGrantee());
         act(() =>
             result.current.actions.setPendingGrantees([
-                { id: "user:u2", kind: "user", name: "Marek", permissionLevel: "VIEW" },
-                { id: "group:g1", kind: "group", name: "Marketing", permissionLevel: "VIEW" },
+                { id: "user:u2", ref: idRef("u2"), kind: "user", name: "Marek", permissionLevel: "VIEW" },
+                {
+                    id: "group:g1",
+                    ref: idRef("g1"),
+                    kind: "group",
+                    name: "Marketing",
+                    permissionLevel: "VIEW",
+                },
             ]),
         );
         await act(async () => {
@@ -1501,7 +2021,7 @@ describe("useObjectShareController", () => {
         act(() => result.current.actions.openAddGrantee());
         act(() =>
             result.current.actions.setPendingGrantees([
-                { id: "user:u2", kind: "user", name: "New User", permissionLevel: "VIEW" },
+                { id: "user:u2", ref: idRef("u2"), kind: "user", name: "New User", permissionLevel: "VIEW" },
             ]),
         );
         await act(async () => {
@@ -1528,7 +2048,7 @@ describe("useObjectShareController", () => {
         act(() => result.current.actions.openAddGrantee());
         act(() =>
             result.current.actions.setPendingGrantees([
-                { id: "user:u2", kind: "user", name: "New User", permissionLevel: "VIEW" },
+                { id: "user:u2", ref: idRef("u2"), kind: "user", name: "New User", permissionLevel: "VIEW" },
             ]),
         );
         await act(async () => {
@@ -1542,373 +2062,6 @@ describe("useObjectShareController", () => {
             "lbl.name",
             "lbl.primary",
         ]);
-    });
-
-    it("discards queued label grants when the target changes (no cross-object leak)", async () => {
-        const svc = makeLabelAwareService();
-        const backend = makeBackend(svc);
-        const wrapper = ({ children }: PropsWithChildren) => (
-            <IntlProvider locale="en-US" messages={{}}>
-                <BackendProvider backend={backend}>
-                    <WorkspaceProvider workspace={WORKSPACE}>{children}</WorkspaceProvider>
-                </BackendProvider>
-            </IntlProvider>
-        );
-        const TARGET_A: IObjectPermissionsObject = { kind: "attribute", ref: idRef("attr.a") };
-        const TARGET_B: IObjectPermissionsObject = { kind: "attribute", ref: idRef("attr.b") };
-        const { result, rerender } = renderHook(
-            ({ target, labels }: { target: IObjectPermissionsObject; labels: IObjectShareLabel[] }) =>
-                useObjectShareController(target, { labels }),
-            { wrapper, initialProps: { target: TARGET_A, labels: [] as IObjectShareLabel[] } },
-        );
-        await waitFor(() => expect(result.current.state.status).toBe("success"));
-
-        // Queue a grantee on A while A's labels are still empty.
-        act(() => result.current.actions.openAddGrantee());
-        act(() =>
-            result.current.actions.setPendingGrantees([
-                { id: "user:u2", kind: "user", name: "New User", permissionLevel: "VIEW" },
-            ]),
-        );
-        await act(async () => {
-            await result.current.actions.confirmAddGrantees();
-        });
-
-        // Switch to B, then B's labels load. The queue must NOT flush onto B.
-        await act(async () => {
-            rerender({ target: TARGET_B, labels: [] as IObjectShareLabel[] });
-        });
-        await waitFor(() => expect(result.current.state.status).toBe("success"));
-        svc.manageObjectPermissions.mockClear();
-        await act(async () => {
-            rerender({ target: TARGET_B, labels: LABELS });
-        });
-
-        // No per-label writes happened for B from A's queued grantee.
-        const labelCalls = svc.manageObjectPermissions.mock.calls.filter(([t]) =>
-            ((t as IObjectPermissionsObject).ref as { identifier: string }).identifier.startsWith("lbl."),
-        );
-        expect(labelCalls.length).toBe(0);
-    });
-
-    it("drops a prior object's optimistic label scope on target switch (same labelsKey)", async () => {
-        // u1 is granted on every label on both objects. The two objects share the
-        // same label set, so labelsKey is identical across the switch. After
-        // narrowing u1 to primary-only on A, switching to B must show B's
-        // freshly-resolved scope (all labels) — NOT A's local scope. Local scopes
-        // must be dropped on target change (keyed on targetKey, which differs even
-        // when labelsKey matches), or A's primary-only entry would survive — the
-        // probe seeds only unknown grantees, so it would never overwrite it. The
-        // service grants u1 on the object and on every label, for BOTH targets.
-        const ATTR_IDS = new Set(["attr.a", "attr.b"]);
-        const LABEL_IDS = new Set(["lbl.primary", "lbl.name", "lbl.email"]);
-        const svc: IMockService = {
-            getAccessList: vi.fn(async (t: IObjectPermissionsObject) => {
-                const id = (t.ref as { identifier: string }).identifier;
-                return { grants: ATTR_IDS.has(id) || LABEL_IDS.has(id) ? [USER_GRANT] : [] };
-            }),
-            manageObjectPermissions: vi.fn(async () => undefined),
-            getAvailableAssignees: vi.fn(async () => ASSIGNEES),
-        };
-        const backend = makeBackend(svc);
-        const wrapper = ({ children }: PropsWithChildren) => (
-            <IntlProvider locale="en-US" messages={{}}>
-                <BackendProvider backend={backend}>
-                    <WorkspaceProvider workspace={WORKSPACE}>{children}</WorkspaceProvider>
-                </BackendProvider>
-            </IntlProvider>
-        );
-        const TARGET_A: IObjectPermissionsObject = { kind: "attribute", ref: idRef("attr.a") };
-        const TARGET_B: IObjectPermissionsObject = { kind: "attribute", ref: idRef("attr.b") };
-        const { result, rerender } = renderHook(
-            ({ target }: { target: IObjectPermissionsObject }) =>
-                useObjectShareController(target, { labels: LABELS }),
-            { wrapper, initialProps: { target: TARGET_A } },
-        );
-        await waitFor(() => expect(result.current.state.status).toBe("success"));
-        await waitFor(() => expect(result.current.state.selectedLabelIdsByGrantee["user:u1"]).toBeDefined());
-
-        // Narrow u1 to primary-only on A (writes a local scope for u1).
-        await act(async () => {
-            await result.current.actions.changeGranteeLabels("user:u1", []);
-        });
-        expect(result.current.state.selectedLabelIdsByGrantee["user:u1"]!.sort()).toEqual(["lbl.primary"]);
-
-        // Switch to B (same labelsKey). B resolves u1 to all labels; A's local
-        // primary-only scope must NOT survive the switch.
-        await act(async () => {
-            rerender({ target: TARGET_B });
-        });
-        await waitFor(() => expect(result.current.state.status).toBe("success"));
-        await waitFor(() =>
-            expect(result.current.state.selectedLabelIdsByGrantee["user:u1"]?.sort()).toEqual([
-                "lbl.email",
-                "lbl.name",
-                "lbl.primary",
-            ]),
-        );
-    });
-
-    it("clears staged UI buffers when the target changes (no cross-object leak)", async () => {
-        // A staged add-grantee subview and a pending general-access confirm must not
-        // survive navigation: the detail view closes the dialog by toggling isOpen
-        // alone, so without a reset they would reappear on the next object and the
-        // confirm could apply to the wrong target.
-        const svc = makeService();
-        const backend = makeBackend(svc);
-        const wrapper = ({ children }: PropsWithChildren) => (
-            <IntlProvider locale="en-US" messages={{}}>
-                <BackendProvider backend={backend}>
-                    <WorkspaceProvider workspace={WORKSPACE}>{children}</WorkspaceProvider>
-                </BackendProvider>
-            </IntlProvider>
-        );
-        const TARGET_A: IObjectPermissionsObject = { kind: "attribute", ref: idRef("attr.a") };
-        const TARGET_B: IObjectPermissionsObject = { kind: "attribute", ref: idRef("attr.b") };
-        const { result, rerender } = renderHook(
-            ({ target }: { target: IObjectPermissionsObject }) => useObjectShareController(target),
-            { wrapper, initialProps: { target: TARGET_A } },
-        );
-        await waitFor(() => expect(result.current.state.status).toBe("success"));
-
-        // Stage an add-grantee subview, a pending grantee and a general-access confirm.
-        act(() => result.current.actions.openAddGrantee());
-        act(() =>
-            result.current.actions.setPendingGrantees([
-                { id: "user:u2", kind: "user", name: "New User", permissionLevel: "VIEW" },
-            ]),
-        );
-        act(() => result.current.actions.requestGeneralAccessChange("WORKSPACE"));
-        expect(result.current.state.subview).toBe("addGrantee");
-        expect(result.current.state.pendingGrantees).toHaveLength(1);
-        expect(result.current.state.pendingGeneralAccess).toBe("WORKSPACE");
-
-        // Navigate to B — the staged buffers must be dropped.
-        await act(async () => {
-            rerender({ target: TARGET_B });
-        });
-        expect(result.current.state.subview).toBe("main");
-        expect(result.current.state.pendingGrantees).toEqual([]);
-        expect(result.current.state.pendingGeneralAccess).toBeUndefined();
-    });
-
-    it("reports loading (not success) until the new target's list lands", async () => {
-        // After a target switch the previous list is dropped by the stamp, but the
-        // load status still reads idle from the prior completed fetch until the new
-        // one settles. Status must report loading in that window — not success with
-        // no list, which would let the dialog enable mutations and the catalog row
-        // hide both the summary and the skeleton. Gate the second fetch on a manual
-        // deferral so the in-flight window is observable.
-        let releaseB: (list: { grants: AccessGranteeDetail[] }) => void = () => {};
-        const svc: IMockService = {
-            getAccessList: vi.fn((t: IObjectPermissionsObject) => {
-                const id = (t.ref as { identifier: string }).identifier;
-                if (id === "attr.b") {
-                    return new Promise((resolve) => {
-                        releaseB = resolve;
-                    });
-                }
-                return Promise.resolve({ grants: [USER_GRANT] });
-            }),
-            manageObjectPermissions: vi.fn(async () => undefined),
-            getAvailableAssignees: vi.fn(async () => ASSIGNEES),
-        };
-        const backend = makeBackend(svc);
-        const wrapper = ({ children }: PropsWithChildren) => (
-            <IntlProvider locale="en-US" messages={{}}>
-                <BackendProvider backend={backend}>
-                    <WorkspaceProvider workspace={WORKSPACE}>{children}</WorkspaceProvider>
-                </BackendProvider>
-            </IntlProvider>
-        );
-        const TARGET_A: IObjectPermissionsObject = { kind: "attribute", ref: idRef("attr.a") };
-        const TARGET_B: IObjectPermissionsObject = { kind: "attribute", ref: idRef("attr.b") };
-        const { result, rerender } = renderHook(
-            ({ target }: { target: IObjectPermissionsObject }) => useObjectShareController(target),
-            { wrapper, initialProps: { target: TARGET_A } },
-        );
-        await waitFor(() => expect(result.current.state.status).toBe("success"));
-
-        // Switch to B; its fetch is still pending → status must be loading, not success.
-        await act(async () => {
-            rerender({ target: TARGET_B });
-        });
-        expect(result.current.state.status).toBe("loading");
-        expect(result.current.state.summary).toBeUndefined();
-
-        // Release B's fetch → resolves to success once the new list is stamped.
-        await act(async () => {
-            releaseB({ grants: [USER_GRANT] });
-        });
-        await waitFor(() => expect(result.current.state.status).toBe("success"));
-    });
-
-    it("re-fetches and reports loading when the same object is reopened after closing", async () => {
-        // Open A (grant set #1) → target clears (dialog closed / a non-shareable item
-        // selected) → reopen the SAME A. The seed stamp from visit #1 still equals A's
-        // key (the cleared target doesn't re-seed), so without re-checking the fetch
-        // status `hasList` would stay true and surface A's first-visit grantees as
-        // success while the reopen fetch is still in flight. The fix must report
-        // loading with no grantees, and have genuinely re-fetched.
-        const aCalls = { n: 0 };
-        let releaseReopenA: (list: { grants: AccessGranteeDetail[] }) => void = () => {};
-        const svc: IMockService = {
-            getAccessList: vi.fn(() => {
-                aCalls.n += 1;
-                if (aCalls.n === 1) {
-                    return Promise.resolve({ grants: [USER_GRANT] }); // first visit
-                }
-                // Reopen: held so the loading window stays observable after the act flush.
-                return new Promise<{ grants: AccessGranteeDetail[] }>((resolve) => {
-                    releaseReopenA = resolve;
-                });
-            }),
-            manageObjectPermissions: vi.fn(async () => undefined),
-            getAvailableAssignees: vi.fn(async () => ASSIGNEES),
-        };
-        const backend = makeBackend(svc);
-        const wrapper = ({ children }: PropsWithChildren) => (
-            <IntlProvider locale="en-US" messages={{}}>
-                <BackendProvider backend={backend}>
-                    <WorkspaceProvider workspace={WORKSPACE}>{children}</WorkspaceProvider>
-                </BackendProvider>
-            </IntlProvider>
-        );
-        const TARGET_A: IObjectPermissionsObject = { kind: "attribute", ref: idRef("attr.a") };
-        const { result, rerender } = renderHook(
-            ({ target }: { target: IObjectPermissionsObject | undefined }) =>
-                useObjectShareController(target),
-            { wrapper, initialProps: { target: TARGET_A as IObjectPermissionsObject | undefined } },
-        );
-        await waitFor(() => expect(result.current.state.status).toBe("success"));
-        expect(result.current.state.grantees.map((g) => g.id)).toEqual(["user:u1"]);
-
-        // Clear the target (no fetch → seed stamp stays at A), then reopen A. A's
-        // reopen fetch is held, so it is still in flight after the act flush.
-        await act(async () => {
-            rerender({ target: undefined });
-        });
-        await waitFor(() => expect(result.current.state.status).toBe("idle"));
-        await act(async () => {
-            rerender({ target: TARGET_A });
-        });
-        expect(result.current.state.status).toBe("loading");
-        expect(result.current.state.grantees).toEqual([]);
-        expect(result.current.state.summary).toBeUndefined();
-        expect(aCalls.n).toBe(2); // A was genuinely re-fetched, not served from the seed
-
-        // Release the held fetch so the test doesn't leak a pending promise.
-        await act(async () => {
-            releaseReopenA({ grants: [USER_GRANT] });
-        });
-    });
-
-    it("does not corrupt the switched-to target's row when an old-target write resolves late", async () => {
-        // Mutate A → switch to B (which has the SAME grantee id user:u1) → A's
-        // in-flight level write resolves late. Because local state is authoritative
-        // (no refetch), an unguarded finalizer would rewrite B's user:u1 row to the
-        // level A wrote. The finalizer must bail when the target has changed: B's row
-        // keeps its own level and B's summary stays intact.
-        let releaseWriteA: () => void = () => {};
-        const svc: IMockService = {
-            getAccessList: vi.fn(async () => ({ grants: [USER_GRANT] })), // u1 @ VIEW on both
-            manageObjectPermissions: vi.fn(
-                () =>
-                    new Promise<void>((resolve) => {
-                        releaseWriteA = () => resolve(undefined);
-                    }),
-            ),
-            getAvailableAssignees: vi.fn(async () => ASSIGNEES),
-        };
-        const backend = makeBackend(svc);
-        const wrapper = ({ children }: PropsWithChildren) => (
-            <IntlProvider locale="en-US" messages={{}}>
-                <BackendProvider backend={backend}>
-                    <WorkspaceProvider workspace={WORKSPACE}>{children}</WorkspaceProvider>
-                </BackendProvider>
-            </IntlProvider>
-        );
-        const TARGET_A: IObjectPermissionsObject = { kind: "attribute", ref: idRef("attr.a") };
-        const TARGET_B: IObjectPermissionsObject = { kind: "attribute", ref: idRef("attr.b") };
-        const { result, rerender } = renderHook(
-            ({ target }: { target: IObjectPermissionsObject }) => useObjectShareController(target),
-            { wrapper, initialProps: { target: TARGET_A } },
-        );
-        await waitFor(() => expect(result.current.state.status).toBe("success"));
-
-        // Raise user:u1 to SHARE on A; the object write is held in flight.
-        let mutation: Promise<void> = Promise.resolve();
-        act(() => {
-            mutation = result.current.actions.changePermissionLevel("user:u1", "SHARE");
-        });
-
-        // Switch to B; B's fetch lands immediately and seeds B with user:u1 @ VIEW.
-        await act(async () => {
-            rerender({ target: TARGET_B });
-        });
-        await waitFor(() => expect(result.current.state.status).toBe("success"));
-        expect(result.current.state.grantees.find((g) => g.id === "user:u1")?.level).toBe("VIEW");
-
-        // Let A's late write resolve — B's row must NOT flip to SHARE.
-        await act(async () => {
-            releaseWriteA();
-            await mutation;
-        });
-
-        expect(result.current.state.status).toBe("success");
-        expect(result.current.state.summary).toBeDefined();
-        const row = result.current.state.grantees.find((g) => g.id === "user:u1");
-        expect(row?.level).toBe("VIEW"); // A's SHARE write did not bleed into B
-        expect(row?.pending).toBeUndefined();
-    });
-
-    it("does not remove the switched-to target's row when an old-target removal resolves late", async () => {
-        // Same hazard for removeGrantee: A's in-flight removal of user:u1 must not
-        // drop B's user:u1 row after the switch.
-        let releaseWriteA: () => void = () => {};
-        const svc: IMockService = {
-            getAccessList: vi.fn(async () => ({ grants: [USER_GRANT] })),
-            manageObjectPermissions: vi.fn(
-                () =>
-                    new Promise<void>((resolve) => {
-                        releaseWriteA = () => resolve(undefined);
-                    }),
-            ),
-            getAvailableAssignees: vi.fn(async () => ASSIGNEES),
-        };
-        const backend = makeBackend(svc);
-        const wrapper = ({ children }: PropsWithChildren) => (
-            <IntlProvider locale="en-US" messages={{}}>
-                <BackendProvider backend={backend}>
-                    <WorkspaceProvider workspace={WORKSPACE}>{children}</WorkspaceProvider>
-                </BackendProvider>
-            </IntlProvider>
-        );
-        const TARGET_A: IObjectPermissionsObject = { kind: "attribute", ref: idRef("attr.a") };
-        const TARGET_B: IObjectPermissionsObject = { kind: "attribute", ref: idRef("attr.b") };
-        const { result, rerender } = renderHook(
-            ({ target }: { target: IObjectPermissionsObject }) => useObjectShareController(target),
-            { wrapper, initialProps: { target: TARGET_A } },
-        );
-        await waitFor(() => expect(result.current.state.status).toBe("success"));
-
-        let mutation: Promise<void> = Promise.resolve();
-        act(() => {
-            mutation = result.current.actions.removeGrantee("user:u1");
-        });
-        await act(async () => {
-            rerender({ target: TARGET_B });
-        });
-        await waitFor(() => expect(result.current.state.status).toBe("success"));
-
-        await act(async () => {
-            releaseWriteA();
-            await mutation;
-        });
-
-        // B's row survives — A's removal did not drop it.
-        expect(result.current.state.grantees.some((g) => g.id === "user:u1")).toBe(true);
-        expect(result.current.state.grantees.find((g) => g.id === "user:u1")?.pending).toBeUndefined();
     });
 
     it("revokes the grantee from every label when removing them", async () => {
@@ -2071,6 +2224,55 @@ describe("useObjectShareController", () => {
                 "lbl.primary",
             ]),
         );
+        // But its per-grantee grants are UNKNOWN — the scope must not read as
+        // resolved, or edits would diff against an invented current for lbl.name.
+        expect(result.current.state.labelsResolved).toBe(false);
+    });
+
+    it("keeps an added row pending until its label grants finish", async () => {
+        // The add is one logical operation: object grant + all-label grants. The row
+        // must stay locked through BOTH, or a remove/label edit started in between
+        // would race the in-flight label grants and could leave grants behind.
+        const svc = makeLabelAwareService();
+        let releaseLabels: () => void = () => {};
+        const heldLabels = new Promise<void>((res) => (releaseLabels = () => res(undefined)));
+        svc.manageObjectPermissions.mockImplementation(async (t: IObjectPermissionsObject) => {
+            const id = (t.ref as { identifier: string }).identifier;
+            if (id.startsWith("lbl.")) {
+                await heldLabels; // label grants held open; the object grant resolves at once
+            }
+            return undefined;
+        });
+        const { result } = renderController(svc, TARGET, { labels: LABELS });
+        await waitFor(() => expect(result.current.state.labelsResolved).toBe(true));
+
+        act(() => result.current.actions.openAddGrantee());
+        act(() =>
+            result.current.actions.setPendingGrantees([
+                {
+                    id: "group:g1",
+                    ref: idRef("g1"),
+                    kind: "group",
+                    name: "Marketing",
+                    permissionLevel: "VIEW",
+                },
+            ]),
+        );
+        let addPromise: Promise<void>;
+        act(() => {
+            addPromise = result.current.actions.confirmAddGrantees();
+        });
+
+        // The object grant has landed (label writes fired after it) — the row is
+        // visible but must still be marked saving while the label grants run.
+        await waitFor(() => expect(svc.manageObjectPermissions.mock.calls.length).toBeGreaterThan(1));
+        expect(result.current.state.grantees.find((g) => g.id === "group:g1")?.pending).toBe("saving");
+
+        await act(async () => {
+            releaseLabels();
+            await addPromise;
+        });
+        expect(result.current.state.grantees.find((g) => g.id === "group:g1")?.pending).toBeUndefined();
     });
 
     it("has no labels and never fetches per-label lists when none are passed", async () => {
@@ -2083,24 +2285,6 @@ describe("useObjectShareController", () => {
             ((t as IObjectPermissionsObject).ref as { identifier: string }).identifier.startsWith("lbl."),
         );
         expect(labelFetches).toHaveLength(0);
-    });
-
-    it("kind-qualifies the target key so same-identifier targets don't collide", async () => {
-        // Every target-scoped guard (seed stamp, finalizer bail-outs, the dialog's
-        // staged-confirm reset) compares targetKey — an attribute and a metric
-        // sharing an identifier must not share it.
-        const asLabel = renderController(makeService([]), {
-            kind: "label",
-            ref: idRef("f_stage.iswon_id"),
-        });
-        const asAttribute = renderController(makeService([]), {
-            kind: "attribute",
-            ref: idRef("f_stage.iswon_id"),
-        });
-        await waitFor(() => expect(asLabel.result.current.state.status).toBe("success"));
-        await waitFor(() => expect(asAttribute.result.current.state.status).toBe("success"));
-        expect(asLabel.result.current.state.targetKey).toContain("label");
-        expect(asLabel.result.current.state.targetKey).not.toBe(asAttribute.result.current.state.targetKey);
     });
 
     // Self identity feeds the single-viewer empty state: rows are marked isSelf
@@ -2129,6 +2313,19 @@ describe("useObjectShareController", () => {
             );
         });
 
+        it("identifies the current user in a multi-grantee list", async () => {
+            // The profile resolves once per dialog session, so self identification
+            // works regardless of how many grantees the list holds.
+            const { result } = renderController(
+                makeService([USER_GRANT, selfGrant(["SHARE", "VIEW"])]),
+                TARGET,
+            );
+            await waitFor(() =>
+                expect(result.current.state.grantees.find((g) => g.id === "user:self")?.isSelf).toBe(true),
+            );
+            expect(result.current.state.grantees.find((g) => g.id === "user:u1")?.isSelf).toBe(false);
+        });
+
         it("does not mark other grantees' rows with isSelf", async () => {
             const { result } = renderController(makeService([USER_GRANT]), TARGET);
             await waitFor(() => expect(result.current.state.status).toBe("success"));
@@ -2137,43 +2334,158 @@ describe("useObjectShareController", () => {
             expect(result.current.state.grantees.length).toBeGreaterThan(0);
             expect(result.current.state.grantees.every((g) => !g.isSelf)).toBe(true);
         });
+    });
+});
 
-        it("marks a list that seeded empty as seededWithoutGrants", async () => {
-            const { result } = renderController(makeService([]), TARGET);
-            await waitFor(() => expect(result.current.state.status).toBe("success"));
-            expect(result.current.state.seededWithoutGrants).toBe(true);
+describe("useObjectShareController row classification", () => {
+    const SELF_GRANT: AccessGranteeDetail = {
+        type: "granularUser",
+        user: { ref: idRef("self"), uri: "/self", login: "self", email: "self", fullName: "self" },
+        permissions: ["SHARE", "VIEW"],
+        inheritedPermissions: [],
+    } as AccessGranteeDetail;
+
+    it("classifies a sole self grant as the self-managed row with its disabled levels", async () => {
+        const { result } = renderController(makeService([SELF_GRANT]), TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        await waitFor(() => expect(result.current.state.selfManagedGranteeId).toBe("user:self"));
+        expect(result.current.state.granteeControlsLocked).toBe(false);
+        // Policy travels with the classification: SHARE self grant → EDIT disabled.
+        expect(result.current.state.selfManagedDisabledLevels).toEqual(["EDIT"]);
+    });
+
+    it("does not classify a self row as self-managed when other grantees exist", async () => {
+        const { result } = renderController(makeService([SELF_GRANT, USER_GRANT]), TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        expect(result.current.state.selfManagedGranteeId).toBeUndefined();
+        expect(result.current.state.selfManagedDisabledLevels).toBeUndefined();
+    });
+
+    it("locks a sole user row's controls while the profile cannot resolve", async () => {
+        // Profile errors are swallowed (selfIdentityResolved stays false) — an
+        // unidentified sole user row may be the caller's own grant, so mutating
+        // it would bypass the self-restriction confirm.
+        getUserMock.mockRejectedValueOnce(new Error("profile down"));
+        const { result } = renderController(makeService([USER_GRANT]), TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        expect(result.current.state.granteeControlsLocked).toBe(true);
+        expect(result.current.state.selfManagedGranteeId).toBeUndefined();
+    });
+
+    it("does not lock a sole group row on profile resolution", async () => {
+        const GROUP_GRANT: AccessGranteeDetail = {
+            type: "granularGroup",
+            userGroup: { ref: idRef("g1"), name: "Marketing" },
+            permissions: ["VIEW"],
+            inheritedPermissions: [],
+        } as AccessGranteeDetail;
+        getUserMock.mockRejectedValueOnce(new Error("profile down"));
+        const { result } = renderController(makeService([GROUP_GRANT]), TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        expect(result.current.state.granteeControlsLocked).toBe(false);
+    });
+
+    it("synthesizes the admin self row when the list loaded empty", async () => {
+        const { result } = renderController(makeService([]), TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        // The default profile mock knows only the login — the display pair falls
+        // back to the user id, mirroring grantee rows.
+        await waitFor(() => expect(result.current.state.adminSelfRow).toEqual({ name: "self" }));
+    });
+
+    it("shows the admin self row only while no other permissions are set", async () => {
+        // Per the design the synthesized "(you)" row is an EMPTY-STATE row: adding a
+        // grantee hides it, and removing that grantee brings it back (the caller is
+        // still an admin whose access is grant-independent).
+        const { result } = renderController(makeService([]), TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        await waitFor(() => expect(result.current.state.adminSelfRow).toEqual({ name: "self" }));
+
+        act(() => result.current.actions.openAddGrantee());
+        act(() =>
+            result.current.actions.setPendingGrantees([
+                {
+                    id: "group:g1",
+                    ref: idRef("g1"),
+                    kind: "group",
+                    name: "Marketing",
+                    permissionLevel: "VIEW",
+                },
+            ]),
+        );
+        await act(async () => {
+            await result.current.actions.confirmAddGrantees();
+        });
+        expect(result.current.state.grantees.some((g) => g.id === "group:g1")).toBe(true);
+        expect(result.current.state.adminSelfRow).toBeUndefined();
+
+        await act(async () => {
+            await result.current.actions.removeGrantee("group:g1");
+        });
+        expect(result.current.state.grantees).toEqual([]);
+        expect(result.current.state.adminSelfRow).toEqual({ name: "self" });
+    });
+
+    it("suppresses the admin row when a workspace-wide SHARE rule explains the access", async () => {
+        const RULE: AccessGranteeDetail = {
+            type: "allWorkspaceUsers",
+            permissions: ["SHARE", "VIEW"],
+            inheritedPermissions: [],
+        };
+        const { result } = renderController(makeService([RULE]), TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        expect(result.current.state.adminSelfRow).toBeUndefined();
+    });
+
+    it("suppresses the admin row when a workspace-wide EDIT rule explains the access", async () => {
+        // EDIT includes share capability, so it passes the manage gate like SHARE.
+        const RULE: AccessGranteeDetail = {
+            type: "allWorkspaceUsers",
+            permissions: ["EDIT", "VIEW"],
+            inheritedPermissions: [],
+        };
+        const { result } = renderController(makeService([RULE]), TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        expect(result.current.state.adminSelfRow).toBeUndefined();
+    });
+
+    it("keeps the admin row under a view-only workspace rule (not share-capable)", async () => {
+        const RULE: AccessGranteeDetail = {
+            type: "allWorkspaceUsers",
+            permissions: ["VIEW"],
+            inheritedPermissions: [],
+        };
+        const { result } = renderController(makeService([RULE]), TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        await waitFor(() => expect(result.current.state.adminSelfRow).toEqual({ name: "self" }));
+    });
+
+    it("shows no admin row when the caller's own grant was the way in (removed locally)", async () => {
+        // A grant-holder who removes their own sole grant empties the list, but the
+        // SEED held their grant — they have no grant-independent access to badge.
+        const { result } = renderController(makeService([SELF_GRANT]), TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        await act(async () => {
+            await result.current.actions.removeGrantee("user:self");
+        });
+        expect(result.current.state.grantees).toEqual([]);
+        expect(result.current.state.adminSelfRow).toBeUndefined();
+    });
+
+    it("shows the admin row after removing the last grantee from an others-only seed", async () => {
+        // Regression (found in browser): an admin opened a list holding only OTHER
+        // people's grants and removed the last one — the empty-state "(you)" row must
+        // appear in the SAME session, not only after a fresh reopen.
+        const { result } = renderController(makeService([USER_GRANT]), TARGET);
+        await waitFor(() => expect(result.current.state.status).toBe("success"));
+        await waitFor(() => expect(getUserMock).toHaveResolved());
+        expect(result.current.state.adminSelfRow).toBeUndefined(); // list non-empty
+
+        await act(async () => {
+            await result.current.actions.removeGrantee("user:u1");
         });
 
-        it("does not mark seededWithoutGrants when the seed carried grants", async () => {
-            const { result } = renderController(makeService([USER_GRANT]), TARGET);
-            await waitFor(() => expect(result.current.state.status).toBe("success"));
-            expect(result.current.state.seededWithoutGrants).toBe(false);
-        });
-
-        it("exposes the resolved profile as selfIdentity keyed by login", async () => {
-            const { result } = renderController(makeService([]), TARGET);
-            await waitFor(() => expect(getUserMock).toHaveResolved());
-            await waitFor(() => expect(result.current.state.selfIdentity).toBeDefined());
-            expect(result.current.state.selfIdentity?.id).toBe("self");
-        });
-
-        it("fires no profile request while the dialog is closed (summary-only path)", async () => {
-            const { result } = renderController(makeService([selfGrant(["EDIT", "VIEW"])]), TARGET, {
-                isOpen: false,
-            });
-            await waitFor(() =>
-                expect(result.current.state.grantees.some((g) => g.id === "user:self")).toBe(true),
-            );
-            await act(async () => {});
-            expect(getUserMock).not.toHaveBeenCalled();
-            expect(result.current.state.selfIdentity).toBeUndefined();
-            expect(result.current.state.selfIdentityResolved).toBe(false);
-        });
-
-        it("reports selfIdentityResolved once the profile lands", async () => {
-            const { result } = renderController(makeService([]), TARGET);
-            expect(result.current.state.selfIdentityResolved).toBe(false);
-            await waitFor(() => expect(result.current.state.selfIdentityResolved).toBe(true));
-        });
+        expect(result.current.state.grantees).toEqual([]);
+        expect(result.current.state.adminSelfRow).toEqual({ name: "self" });
     });
 });

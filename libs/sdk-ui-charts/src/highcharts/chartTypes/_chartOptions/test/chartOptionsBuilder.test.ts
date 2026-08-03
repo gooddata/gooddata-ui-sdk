@@ -3,7 +3,7 @@
 import { cloneDeep, range, set } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
-import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { type ScenarioRecording, dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { type IColorPaletteItem, emptyDef, idRef } from "@gooddata/sdk-model";
 import {
@@ -327,13 +327,13 @@ describe("chartOptionsBuilder", () => {
 
         describe("Treemap filters out root nodes for dataPoints limit", () => {
             it('should validate with "dataTooLarge: false" against data points limit', () => {
-                // 2 roots + 4 leafs
+                // 6 roots + 6 * 2 leafs
                 const treemapOptions = generateChartOptions(treemapWithMetricViewByAndStackByAttribute, {
                     type: "treemap",
                 });
                 const validationResult = validateData(
                     {
-                        dataPoints: 4,
+                        dataPoints: 12,
                     },
                     treemapOptions,
                 );
@@ -345,13 +345,13 @@ describe("chartOptionsBuilder", () => {
             });
 
             it('should validate with "dataTooLarge: true" against data points limit', () => {
-                // 2 roots + 4 leafs
+                // 6 roots + 6 * 2 leafs
                 const treemapOptions = generateChartOptions(treemapWithMetricViewByAndStackByAttribute, {
                     type: "treemap",
                 });
                 const validationResult = validateData(
                     {
-                        dataPoints: 3,
+                        dataPoints: 11,
                     },
                     treemapOptions,
                 );
@@ -658,16 +658,24 @@ describe("chartOptionsBuilder", () => {
                         undefined,
                     );
 
-                    it("should fill correct pointData name", () => {
-                        expect(pieSeriesItemData.map((pointData) => pointData.name)).toEqual([
-                            "Direct Sales",
-                            "Inside Sales",
-                        ]);
+                    const expectedViewByNames = [
+                        "Explorer",
+                        "CompuSci",
+                        "Educationly",
+                        "WonderKid",
+                        "PhoenixSoft",
+                        "Grammar Plus",
+                    ];
+                    const expectedFormats = expectedViewByNames.map(() => "$#,##0.00");
 
-                        expect(treemapSeriesItemData.map((pointData) => pointData.name)).toEqual([
-                            "Direct Sales",
-                            "Inside Sales",
-                        ]);
+                    it("should fill correct pointData name", () => {
+                        expect(pieSeriesItemData.map((pointData) => pointData.name)).toEqual(
+                            expectedViewByNames,
+                        );
+
+                        expect(treemapSeriesItemData.map((pointData) => pointData.name)).toEqual(
+                            expectedViewByNames,
+                        );
                     });
 
                     it("should fill correct pointData color", () => {
@@ -676,23 +684,23 @@ describe("chartOptionsBuilder", () => {
                     });
 
                     it("should fill correct pointData legendIndex", () => {
-                        expect(pieSeriesItemData.map((pointData) => pointData.legendIndex)).toEqual([0, 1]);
+                        expect(pieSeriesItemData.map((pointData) => pointData.legendIndex)).toEqual([
+                            0, 1, 2, 3, 4, 5,
+                        ]);
 
                         expect(treemapSeriesItemData.map((pointData) => pointData.legendIndex)).toEqual([
-                            0, 1,
+                            0, 1, 2, 3, 4, 5,
                         ]);
                     });
 
                     it("should fill correct pointData format", () => {
-                        expect(pieSeriesItemData.map((pointData) => pointData.format)).toEqual([
-                            "#,##0.00",
-                            "#,##0.00",
-                        ]);
+                        expect(pieSeriesItemData.map((pointData) => pointData.format)).toEqual(
+                            expectedFormats,
+                        );
 
-                        expect(treemapSeriesItemData.map((pointData) => pointData.format)).toEqual([
-                            "#,##0.00",
-                            "#,##0.00",
-                        ]);
+                        expect(treemapSeriesItemData.map((pointData) => pointData.format)).toEqual(
+                            expectedFormats,
+                        );
                     });
                 });
             });
@@ -1444,7 +1452,7 @@ describe("chartOptionsBuilder", () => {
                         });
 
                         it("should fill correct series data", () => {
-                            expect(seriesData[0].data.length).toMatchSnapshot(); // 2 parents + 2 * 2 leafs
+                            expect(seriesData[0].data.length).toMatchSnapshot(); // 6 parents + 6 * 2 leafs
                         });
                     });
 
@@ -1477,11 +1485,11 @@ describe("chartOptionsBuilder", () => {
                         });
 
                         it("should fill correct series name equal to measure name", () => {
-                            expect(seriesData[0].name).toEqual("Amount, # of Open Opps.");
+                            expect(seriesData[0].name).toEqual("Amount, Won");
                         });
 
                         it("should fill correct series data", () => {
-                            expect(seriesData[0].data.length).toMatchSnapshot(); // 2 parents + 2 * 2 leafs
+                            expect(seriesData[0].data.length).toMatchSnapshot(); // 2 parents + 2 * 6 leafs
                         });
                     });
                 });
@@ -1588,9 +1596,7 @@ describe("chartOptionsBuilder", () => {
                         { type: chartFill },
                     );
 
-                    const drillableMeasures = [
-                        HeaderPredicates.uriMatch("/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283"),
-                    ];
+                    const drillableMeasures = [HeaderPredicates.uriMatch("obj_1283")];
                     const drillableMeasuresSeriesData = getDrillableSeries(
                         dv,
                         seriesWithoutDrillability,
@@ -1634,9 +1640,7 @@ describe("chartOptionsBuilder", () => {
                             { type: chartFill },
                         );
 
-                        const drillableMeasures = [
-                            HeaderPredicates.uriMatch("/gdc/md/adtxv0e7evvx6dawu7t2jju5a6r73eua/obj/13465"),
-                        ];
+                        const drillableMeasures = [HeaderPredicates.uriMatch("obj_13465")];
                         const drillableMeasuresSeriesData = getDrillableSeries(
                             dv,
                             seriesWithoutDrillability,
@@ -1675,9 +1679,7 @@ describe("chartOptionsBuilder", () => {
                         undefined,
                         { type: chartFill },
                     );
-                    const drillableMeasures = [
-                        HeaderPredicates.uriMatch("/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/67097"),
-                    ];
+                    const drillableMeasures = [HeaderPredicates.localIdentifierMatch(ReferenceMd.Amount)];
                     const drillableMeasuresSeriesData = getDrillableSeries(
                         dv,
                         seriesWithoutDrillability,
@@ -1688,8 +1690,8 @@ describe("chartOptionsBuilder", () => {
                     );
 
                     it("should assign correct drillIntersection to pointData with drilldown true", () => {
-                        expect(drillableMeasuresSeriesData.length).toBe(20);
-                        expect(drillableMeasuresSeriesData[8].data[0]).toMatchSnapshot();
+                        expect(drillableMeasuresSeriesData.length).toBe(6);
+                        expect(drillableMeasuresSeriesData[3].data[0]).toMatchSnapshot();
                         drillableMeasuresSeriesData.forEach((seriesItem: any, index: number) => {
                             expect(seriesItem.isDrillable).toEqual(true);
                             expect(seriesItem.legendIndex).toEqual(index);
@@ -1723,9 +1725,7 @@ describe("chartOptionsBuilder", () => {
                             { type: chartFill },
                         );
 
-                        const drillableMeasures = [
-                            HeaderPredicates.uriMatch("/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/13465"),
-                        ];
+                        const drillableMeasures = [HeaderPredicates.uriMatch("obj_13465")];
                         const drillableMeasuresSeriesData = getDrillableSeries(
                             dv,
                             seriesWithoutDrillability,
@@ -1765,9 +1765,7 @@ describe("chartOptionsBuilder", () => {
 
                     describe("with all drillable measures", () => {
                         // setting drills on all measure series by setting drill on the attr they are sliced by
-                        const drillableAttr = [
-                            HeaderPredicates.uriMatch("/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158"),
-                        ];
+                        const drillableAttr = [HeaderPredicates.uriMatch("obj_158")];
                         const drillableMeasuresSeriesData = getDrillableSeries(
                             dv,
                             seriesWithoutDrillability,
@@ -1817,9 +1815,7 @@ describe("chartOptionsBuilder", () => {
                     );
 
                     describe("with all drillable measures", () => {
-                        const drillableMeasures = [
-                            HeaderPredicates.uriMatch("/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/324"),
-                        ];
+                        const drillableMeasures = [HeaderPredicates.uriMatch("obj_324")];
                         const drillableMeasuresSeriesData = getDrillableSeries(
                             dv,
                             seriesWithoutDrillability,
@@ -1926,8 +1922,8 @@ describe("chartOptionsBuilder", () => {
 
                     describe("with first and last drillable measures", () => {
                         const twoDrillableMeasuresItems = [
-                            HeaderPredicates.uriMatch("/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283"),
-                            HeaderPredicates.uriMatch("/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1285"),
+                            HeaderPredicates.uriMatch("obj_1283"),
+                            HeaderPredicates.uriMatch("obj_1285"),
                         ];
                         const twoDrillableMeasuresSeriesData = getDrillableSeries(
                             dv,
@@ -2086,12 +2082,7 @@ describe("chartOptionsBuilder", () => {
                             },
                             DEFAULT_TOOLTIP_CONTENT_WIDTH,
                         );
-                        expect(getValues(tooltip!)).toEqual([
-                            "Department",
-                            "category",
-                            "&lt;series&gt;",
-                            " 1",
-                        ]);
+                        expect(getValues(tooltip!)).toEqual(["Product", "category", "&lt;series&gt;", " 1"]);
                     });
 
                     it("should escape other html chars in series name and have output properly escaped", () => {
@@ -2105,7 +2096,7 @@ describe("chartOptionsBuilder", () => {
                             DEFAULT_TOOLTIP_CONTENT_WIDTH,
                         );
                         expect(getValues(tooltip!)).toEqual([
-                            "Department",
+                            "Product",
                             "category",
                             "&quot;&amp;&#39;&lt;",
                             " 1",
@@ -2123,7 +2114,7 @@ describe("chartOptionsBuilder", () => {
                             DEFAULT_TOOLTIP_CONTENT_WIDTH,
                         );
                         expect(getValues(tooltip!)).toEqual([
-                            "Department",
+                            "Product",
                             "&gt;&quot;&amp;&#39;&lt;",
                             "series",
                             " 1",
@@ -2163,7 +2154,7 @@ describe("chartOptionsBuilder", () => {
 
                         const tooltip = tooltipFn(testData, DEFAULT_TOOLTIP_CONTENT_WIDTH, 49.0111);
                         expect(getValues(tooltip!)).toEqual([
-                            "Department",
+                            "Product",
                             "category",
                             "series",
                             formattedValue,
@@ -2180,7 +2171,7 @@ describe("chartOptionsBuilder", () => {
                 it("should render correct values in usecase of pie chart with an attribute", () => {
                     const tooltipFn = buildTooltipFactory(viewByAttribute, "pie");
                     const tooltip = tooltipFn(pointData, DEFAULT_TOOLTIP_CONTENT_WIDTH);
-                    expect(getValues(tooltip!)).toEqual(["Department", "category", "series", " 1"]);
+                    expect(getValues(tooltip!)).toEqual(["Product", "category", "series", " 1"]);
                 });
 
                 it("should render correct values in usecase of pie chart with measures", () => {
@@ -2192,7 +2183,7 @@ describe("chartOptionsBuilder", () => {
                 it("should render correct values in usecase of treemap chart with an attribute", () => {
                     const tooltipFn = buildTooltipFactory(viewByAttribute, "treemap");
                     const tooltip = tooltipFn(pointData, DEFAULT_TOOLTIP_CONTENT_WIDTH);
-                    expect(getValues(tooltip!)).toEqual(["Department", "category", "series", " 1"]);
+                    expect(getValues(tooltip!)).toEqual(["Product", "category", "series", " 1"]);
                 });
 
                 it("should render correct values in usecase of treemap chart with measures", () => {
@@ -2402,7 +2393,7 @@ describe("chartOptionsBuilder", () => {
 
                     const tooltipFn = generateTooltipXYFn(measures, stackByAttribute);
                     const tooltip = tooltipFn(point, DEFAULT_TOOLTIP_CONTENT_WIDTH);
-                    expect(getValues(tooltip!)).toEqual(["Sales Rep", "point name"]);
+                    expect(getValues(tooltip!)).toEqual(["Product", "point name"]);
                 });
 
                 it("should generate valid tooltip for 1 measure", () => {
@@ -2410,12 +2401,7 @@ describe("chartOptionsBuilder", () => {
 
                     const tooltipFn = generateTooltipXYFn(measures, stackByAttribute);
                     const tooltip = tooltipFn(point, DEFAULT_TOOLTIP_CONTENT_WIDTH);
-                    expect(getValues(tooltip!)).toEqual([
-                        "Sales Rep",
-                        "point name",
-                        "_Snapshot [EOP-2]",
-                        "10.00",
-                    ]);
+                    expect(getValues(tooltip!)).toEqual(["Product", "point name", "Amount", "$10.00"]);
                 });
 
                 it("should generate valid tooltip for 2 measures", () => {
@@ -2424,12 +2410,12 @@ describe("chartOptionsBuilder", () => {
                     const tooltipFn = generateTooltipXYFn(measures, stackByAttribute);
                     const tooltip = tooltipFn(point, DEFAULT_TOOLTIP_CONTENT_WIDTH);
                     expect(getValues(tooltip!)).toEqual([
-                        "Sales Rep",
+                        "Product",
                         "point name",
-                        "_Snapshot [EOP-2]",
-                        "10.00",
-                        "# of Open Opps.",
-                        "20",
+                        "Amount",
+                        "$10.00",
+                        "Win Rate",
+                        "2,000.0%",
                     ]);
                 });
 
@@ -2439,14 +2425,14 @@ describe("chartOptionsBuilder", () => {
                     const tooltipFn = generateTooltipXYFn(measures, stackByAttribute);
                     const tooltip = tooltipFn(point, DEFAULT_TOOLTIP_CONTENT_WIDTH);
                     expect(getValues(tooltip!)).toEqual([
-                        "Sales Rep",
+                        "Product",
                         "point name",
-                        "_Snapshot [EOP-2]",
-                        "10.00",
-                        "# of Open Opps.",
-                        "20",
-                        "Remaining Quota",
-                        "$30.00",
+                        "Amount",
+                        "$10.00",
+                        "Win Rate",
+                        "2,000.0%",
+                        "Probability",
+                        "3,000.0%",
                     ]);
                 });
 
@@ -2458,14 +2444,14 @@ describe("chartOptionsBuilder", () => {
                     const tooltipFn = generateTooltipXYFn(measures, stackByAttribute);
                     const tooltip = tooltipFn(point, DEFAULT_TOOLTIP_CONTENT_WIDTH);
                     expect(getValues(tooltip!)).toEqual([
-                        "Sales Rep",
+                        "Product",
                         "point name",
-                        "_Snapshot [EOP-2]",
-                        "10.00",
-                        "# of Open Opps.",
-                        "20",
-                        "Remaining Quota",
-                        "$30.00",
+                        "Amount",
+                        "$10.00",
+                        "Win Rate",
+                        "2,000.0%",
+                        "Probability",
+                        "3,000.0%",
                     ]);
                 });
 
@@ -2480,13 +2466,13 @@ describe("chartOptionsBuilder", () => {
                     const tooltipFn = generateTooltipXYFn(measures, stackByAttribute, chartConfig);
                     const tooltip = tooltipFn(pointForSmallCharts, DEFAULT_TOOLTIP_CONTENT_WIDTH);
                     expect(getValues(tooltip!)).toEqual([
-                        "Sales Rep",
+                        "Product",
                         "name",
-                        "_Snapshot [EOP-2]",
-                        "0.00",
-                        "# of Open Opps.",
-                        "0",
-                        "Remaining Quota",
+                        "Amount",
+                        "$0.00",
+                        "Win Rate",
+                        "0.0%",
+                        "Probability",
                         "NaN",
                     ]);
                 });
@@ -2538,7 +2524,7 @@ describe("chartOptionsBuilder", () => {
                         "empty value",
                     );
                     const tooltip = tooltipFn(point, DEFAULT_TOOLTIP_CONTENT_WIDTH);
-                    expect(getValues(tooltip!)).toEqual(["Department", "Direct Sales", "serie name", "300"]);
+                    expect(getValues(tooltip!)).toEqual(["Product", "CompuSci", "serie name", "300"]);
                 });
 
                 it("should generate valid tooltip for 1 measure and stack by", () => {
@@ -2551,7 +2537,7 @@ describe("chartOptionsBuilder", () => {
                         "empty value",
                     );
                     const tooltip = tooltipFn(point, DEFAULT_TOOLTIP_CONTENT_WIDTH);
-                    expect(getValues(tooltip!)).toEqual(["Department", "Direct Sales", "category", "300"]);
+                    expect(getValues(tooltip!)).toEqual(["Region", "East Coast", "category", "300"]);
                 });
 
                 it("should generate valid tooltip for 1 measure, view by and stack by", () => {
@@ -2565,8 +2551,8 @@ describe("chartOptionsBuilder", () => {
                     );
                     const tooltip = tooltipFn(point, DEFAULT_TOOLTIP_CONTENT_WIDTH);
                     expect(getValues(tooltip!)).toEqual([
-                        "Department",
-                        "Direct Sales",
+                        "Product",
+                        "CompuSci",
                         "Region",
                         "West Coast",
                         "serie name",
@@ -2736,11 +2722,18 @@ describe("chartOptionsBuilder", () => {
                     });
 
                     it("should assign categories equal to view by attribute values", () => {
-                        expect(chartOptions.data!.categories).toEqual(["Direct Sales", "Inside Sales"]);
+                        expect(chartOptions.data!.categories).toEqual([
+                            "CompuSci",
+                            "Educationly",
+                            "Explorer",
+                            "Grammar Plus",
+                            "PhoenixSoft",
+                            "WonderKid",
+                        ]);
                     });
 
                     it("should assign correct tooltip function", () => {
-                        const { viewByAttribute, stackByAttribute } = getMVS(
+                        const { measureGroup, viewByAttribute, stackByAttribute } = getMVS(
                             barChartWithStackByAndViewByAttributes,
                         );
                         const pointData: IUnsafeHighchartsTooltipPoint = {
@@ -2763,7 +2756,9 @@ describe("chartOptionsBuilder", () => {
                             "column",
                             {},
                             false,
-                            undefined,
+                            // the recording carries buckets, so chart options build the tooltip
+                            // with the single measure taken from the measure group
+                            measureGroup.items[0],
                             stackByAttribute,
                         )(pointData, DEFAULT_TOOLTIP_CONTENT_WIDTH);
                         expect(tooltip).toBe(expectedTooltip);
@@ -2789,12 +2784,26 @@ describe("chartOptionsBuilder", () => {
                     });
 
                     it("should assign categories equal to view by attribute values", () => {
-                        expect(pieChartOptions.data!.categories).toEqual(["Direct Sales", "Inside Sales"]);
-                        expect(treemapOptions.data!.categories).toEqual(["Direct Sales", "Inside Sales"]);
+                        expect(pieChartOptions.data!.categories).toEqual([
+                            "Explorer",
+                            "CompuSci",
+                            "Educationly",
+                            "WonderKid",
+                            "PhoenixSoft",
+                            "Grammar Plus",
+                        ]);
+                        expect(treemapOptions.data!.categories).toEqual([
+                            "CompuSci",
+                            "Educationly",
+                            "Explorer",
+                            "Grammar Plus",
+                            "PhoenixSoft",
+                            "WonderKid",
+                        ]);
                     });
 
                     it("should assign correct tooltip function", () => {
-                        const { viewByAttribute } = getMVS(barChartWithStackByAndViewByAttributes);
+                        const { viewByAttribute } = getMVS(barChartWithViewByAttribute);
                         const pointData: IUnsafeHighchartsTooltipPoint = {
                             node: {
                                 isLeaf: true,
@@ -2822,8 +2831,12 @@ describe("chartOptionsBuilder", () => {
                         );
                         expect(pieChartTooltip).toBe(expectedTooltip);
 
+                        // the treemap tooltip renders the treemap's own view by attribute
+                        const { viewByAttribute: treemapViewByAttribute } = getMVSTreemap(
+                            treemapWithMetricAndViewByAttribute,
+                        );
                         expectedTooltip = buildTooltipTreemapFactory(
-                            viewByAttribute,
+                            treemapViewByAttribute,
                             undefined,
                             "empty value",
                         )(pointData, DEFAULT_TOOLTIP_CONTENT_WIDTH);
@@ -3095,7 +3108,7 @@ describe("chartOptionsBuilder", () => {
                         const expectedAxes = [
                             {
                                 label: "Amount",
-                                format: "#,##0.00",
+                                format: "$#,##0.00",
                                 seriesIndices: [0],
                             },
                         ];
@@ -3142,8 +3155,8 @@ describe("chartOptionsBuilder", () => {
                         );
                         const expectedAxes = [
                             {
-                                label: "Sum of Amount",
-                                format: "#,##0.00",
+                                label: "Amount",
+                                format: "$#,##0.00",
                             },
                         ];
 
@@ -3169,8 +3182,8 @@ describe("chartOptionsBuilder", () => {
                         });
                         const expectedAxes = [
                             {
-                                label: "_Snapshot [EOP-2]",
-                                format: "#,##0.00",
+                                label: "Amount",
+                                format: "$#,##0.00",
                             },
                         ];
 
@@ -3201,7 +3214,7 @@ describe("chartOptionsBuilder", () => {
                             type: "bubble",
                         });
 
-                        expect(chartOptions.data!.series!.length).toEqual(20);
+                        expect(chartOptions.data!.series!.length).toEqual(6);
                     });
 
                     it("should flip axis if primary measure bucket is empty", () => {
@@ -3222,8 +3235,8 @@ describe("chartOptionsBuilder", () => {
 
                         expect(chartOptions.xAxes!.length).toEqual(1);
                         expect(chartOptions.yAxes!.length).toEqual(1);
-                        expect(chartOptions.xAxes![0].label).toEqual("_Snapshot [EOP-2]");
-                        expect(chartOptions.yAxes![0].label).toEqual("# of Open Opps.");
+                        expect(chartOptions.xAxes![0].label).toEqual("Amount");
+                        expect(chartOptions.yAxes![0].label).toEqual("Win Rate");
                     });
                 });
 
@@ -3365,13 +3378,21 @@ describe("chartOptionsBuilder", () => {
                             const expectedSeries = [
                                 {
                                     data: [
-                                        { x: 0, y: 0, value: 21978695.46, drilldown: false },
-                                        { x: 1, y: 0, value: 6038400.96, drilldown: false },
-                                        { x: 0, y: 1, value: 58427629.5, drilldown: false },
-                                        { x: 1, y: 1, value: 30180730.62, drilldown: false },
+                                        { x: 0, y: 0, value: 5099309.54, drilldown: false },
+                                        { x: 1, y: 0, value: 6614222.47, drilldown: false },
+                                        { x: 2, y: 0, value: 8269682.68, drilldown: false },
+                                        { x: 3, y: 0, value: 2761931.26, drilldown: false },
+                                        { x: 4, y: 0, value: 2664832.4, drilldown: false },
+                                        { x: 5, y: 0, value: 2607118.07, drilldown: false },
+                                        { x: 0, y: 1, value: 22123590.1, drilldown: false },
+                                        { x: 1, y: 1, value: 16332673, drilldown: false },
+                                        { x: 2, y: 1, value: 30326512.18, drilldown: false },
+                                        { x: 3, y: 1, value: 5280100.66, drilldown: false },
+                                        { x: 4, y: 1, value: 6861025.51, drilldown: false },
+                                        { x: 5, y: 1, value: 7684458.67, drilldown: false },
                                     ],
                                     dataLabels: {
-                                        formatGD: "#,##0.00",
+                                        formatGD: "$#,##0.00",
                                     },
                                     legendIndex: 0,
                                     name: "Amount",
@@ -3395,7 +3416,14 @@ describe("chartOptionsBuilder", () => {
                             );
 
                             const expectedCategories = [
-                                ["Direct Sales", "Inside Sales"],
+                                [
+                                    "CompuSci",
+                                    "Educationly",
+                                    "Explorer",
+                                    "Grammar Plus",
+                                    "PhoenixSoft",
+                                    "WonderKid",
+                                ],
                                 ["East Coast", "West Coast"],
                             ];
 

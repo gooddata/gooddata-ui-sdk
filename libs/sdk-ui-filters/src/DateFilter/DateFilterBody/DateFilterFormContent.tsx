@@ -42,6 +42,7 @@ export interface IDateFilterFormContentProps {
     dateFormat: string;
     weekStart: WeekStart;
     isTimeForAbsoluteRangeEnabled: boolean;
+    isSecondsForAbsoluteRangeEnabled?: boolean;
     availableGranularities: DateFilterGranularity[];
 
     isMobile: boolean;
@@ -69,6 +70,7 @@ export function DateFilterFormContent({
     dateFormat,
     weekStart,
     isTimeForAbsoluteRangeEnabled,
+    isSecondsForAbsoluteRangeEnabled,
     availableGranularities,
     isMobile,
     withoutApply,
@@ -138,6 +140,7 @@ export function DateFilterFormContent({
                             selectedFilterOption={absoluteSelectedFilterOption as IUiAbsoluteDateFilterForm}
                             isMobile={isMobile}
                             isTimeEnabled={isTimeForAbsoluteRangeEnabled}
+                            isSecondsEnabled={isSecondsForAbsoluteRangeEnabled}
                             weekStart={weekStart}
                             submitForm={submitForm}
                             withoutApply={withoutApply}

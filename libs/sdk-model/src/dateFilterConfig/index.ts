@@ -76,6 +76,7 @@ export type RelativeDateFilterGranularityOffset = number;
  * @beta
  */
 export type DateFilterGranularity =
+    | "GDC.time.second"
     | "GDC.time.minute"
     | "GDC.time.hour"
     | "GDC.time.date"
@@ -88,6 +89,7 @@ export type DateFilterGranularity =
     | "GDC.time.fiscal_year";
 
 const dateFilterGranularity: DateFilterGranularity[] = [
+    "GDC.time.second",
     "GDC.time.minute",
     "GDC.time.hour",
     "GDC.time.date",

@@ -2,13 +2,21 @@
 
 import { type ReactElement, type ReactNode } from "react";
 
-import { isWidget } from "@gooddata/sdk-model";
+import {
+    type IAutomationMetadataObject,
+    type IInsight,
+    type INotificationChannelIdentifier,
+    type INotificationChannelMetadataObject,
+    type IWidget,
+    type IWorkspaceUser,
+    isWidget,
+} from "@gooddata/sdk-model";
+import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import { useDashboardAlerts } from "../../../model/react/useDashboardAlerting/useDashboardAlerts.js";
 import { useWorkspaceUsers } from "../../../model/react/useWorkspaceUsers.js";
 import { AlertingDialog } from "../alerting/AlertingDialog.js";
 import { AlertingManagementDialog } from "../alerting/AlertingManagementDialog.js";
-import { type IAlertingDialogProps } from "../alerting/types.js";
 import { AlertingDialogContextProvider } from "../contexts/AlertingDialogContext.js";
 import { AlertingManagementDialogContextProvider } from "../contexts/AlertingManagementDialogContext.js";
 import { AutomationsContextProvider } from "../contexts/AutomationsContext.js";
@@ -19,6 +27,8 @@ import { useBuildAlertingManagementDialogContext } from "./hooks/useBuildAlertin
 import { useBuildAutomationsContext } from "./hooks/useBuildAutomationsContext.js";
 
 type AlertsProps = ReturnType<typeof useDashboardAlerts>;
+
+const EMPTY_USERS: IWorkspaceUser[] = [];
 
 /**
  * Provides AutomationsContext to its children, built from dashboard Redux state.
@@ -70,8 +80,6 @@ function AlertingConnectorWithData({ alerts }: { alerts: AlertsProps }): ReactEl
         // Shared Local State
         alertToEdit,
         // Data
-        automations,
-        automationsError,
         automationsLoading,
         notificationChannels,
         // Single Alert Dialog
@@ -98,78 +106,109 @@ function AlertingConnectorWithData({ alerts }: { alerts: AlertsProps }): ReactEl
 
     const insightWidget = isWidget(widget) ? widget : undefined;
 
-    const alertingCtx = useBuildAlertingDialogContext({
-        mode: alertToEdit ? "edit" : "create",
-        widget: insightWidget,
-        insight,
-    });
-
     const managementCtx = useBuildAlertingManagementDialogContext();
 
-    const isManagementLoading = automationsLoading;
-
     return (
-        <AlertingDialogContextProvider value={alertingCtx}>
-            <AlertingManagementDialogContextProvider value={managementCtx}>
-                {isAlertManagementDialogOpen ? (
-                    // TODO(GDP-3167 phase3): automations, notificationChannels, and alertDataError
-                    // are still prop-threaded here because DefaultAlertingManagementDialog reads
-                    // them from props, not from AutomationsContext. Once all dialog fields are
-                    // migrated to read from context, remove these props and the corresponding prop types.
-                    <AlertingManagementDialog
-                        automations={automations}
-                        notificationChannels={notificationChannels}
-                        alertDataError={automationsError}
-                        isLoadingAlertingData={isManagementLoading}
-                        onAdd={onAlertingManagementAdd}
-                        onEdit={handleManagementEdit}
-                        onClose={onAlertingManagementClose}
-                        onDeleteSuccess={onAlertingManagementDeleteSuccess}
-                        onDeleteError={onAlertingManagementDeleteError}
-                        onPauseSuccess={onAlertingManagementPauseSuccess}
-                        onPauseError={onAlertingManagementPauseError}
-                    />
-                ) : null}
-                {isAlertDialogOpen ? (
-                    // TODO(GDP-3167 phase3): notificationChannels, users, usersError, and isLoading
-                    // are still prop-threaded here because DefaultAlertingDialog reads them from props,
-                    // not from AutomationsContext. Once all dialog fields are migrated to read from
-                    // context, remove these props and the corresponding prop types.
-                    <AlertingDialogWithUsers
-                        alertToEdit={alertToEdit}
-                        notificationChannels={notificationChannels}
-                        widget={insightWidget}
-                        insight={insight}
-                        isLoading={automationsLoading}
-                        onCancel={onAlertingCancel}
-                        onError={onAlertingCreateError}
-                        onSuccess={onAlertingCreateSuccess}
-                        onSaveError={onAlertingSaveError}
-                        onSaveSuccess={onAlertingSaveSuccess}
-                        onDeleteSuccess={onAlertingManagementDeleteSuccess}
-                        onDeleteError={onAlertingManagementDeleteError}
-                    />
-                ) : null}
-            </AlertingManagementDialogContextProvider>
-        </AlertingDialogContextProvider>
+        <AlertingManagementDialogContextProvider value={managementCtx}>
+            {isAlertManagementDialogOpen ? (
+                <AlertingManagementDialog
+                    onAdd={onAlertingManagementAdd}
+                    onEdit={handleManagementEdit}
+                    onClose={onAlertingManagementClose}
+                    onDeleteSuccess={onAlertingManagementDeleteSuccess}
+                    onDeleteError={onAlertingManagementDeleteError}
+                    onPauseSuccess={onAlertingManagementPauseSuccess}
+                    onPauseError={onAlertingManagementPauseError}
+                />
+            ) : null}
+            {isAlertDialogOpen ? (
+                <AlertingCreateEditConnector
+                    alertToEdit={alertToEdit}
+                    notificationChannels={notificationChannels}
+                    widget={insightWidget}
+                    insight={insight}
+                    automationsLoading={automationsLoading}
+                    onCancel={onAlertingCancel}
+                    onError={onAlertingCreateError}
+                    onSuccess={onAlertingCreateSuccess}
+                    onSaveError={onAlertingSaveError}
+                    onSaveSuccess={onAlertingSaveSuccess}
+                    onDeleteSuccess={onAlertingManagementDeleteSuccess}
+                    onDeleteError={onAlertingManagementDeleteError}
+                />
+            ) : null}
+        </AlertingManagementDialogContextProvider>
     );
 }
 
 /**
- * Loads workspace users only while the create/edit dialog is mounted. Keeping the
- * `useWorkspaceUsers()` call in this child (rather than in AlertingConnectorWithData) means that
- * opening only the management dialog — which does not consume users — never dispatches the
- * workspace-users load, matching the pre-separation behavior.
+ * Data and callbacks `AlertingCreateEditConnector` needs. These are the connector's own props, not
+ * `IAlertingDialogProps` members: the data fields feed `useBuildAlertingDialogContext` (the dialog itself
+ * now reads them from `AlertingDialogContext`), and the callbacks are forwarded to `AlertingDialog`
+ * unchanged.
  */
-function AlertingDialogWithUsers(props: Omit<IAlertingDialogProps, "users" | "usersError">): ReactElement {
+interface IAlertingCreateEditConnectorProps {
+    alertToEdit?: IAutomationMetadataObject;
+    notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
+    widget?: IWidget;
+    insight?: IInsight;
+    automationsLoading: boolean;
+    onCancel?: () => void;
+    onError?: (error: GoodDataSdkError) => void;
+    onSuccess?: (alertDefinition: IAutomationMetadataObject) => void;
+    onSaveError?: (error: GoodDataSdkError) => void;
+    onSaveSuccess?: (alert: IAutomationMetadataObject) => void;
+    onDeleteSuccess?: (alert: IAutomationMetadataObject) => void;
+    onDeleteError?: (error: GoodDataSdkError) => void;
+}
+
+/**
+ * Loads workspace users and hydrates the alerting create/edit context. Both live here rather than in
+ * the parent so that opening only the management dialog — which consumes neither — never dispatches the
+ * workspace-users load.
+ */
+function AlertingCreateEditConnector(props: IAlertingCreateEditConnectorProps): ReactElement {
+    const {
+        alertToEdit,
+        notificationChannels,
+        widget,
+        insight,
+        automationsLoading,
+        onCancel,
+        onError,
+        onSuccess,
+        onSaveError,
+        onSaveSuccess,
+        onDeleteSuccess,
+        onDeleteError,
+    } = props;
+
     const { users, status: usersStatus, usersError } = useWorkspaceUsers();
+    const isLoading = automationsLoading || usersStatus === "pending" || usersStatus === "loading";
+    const effectiveUsers = users ?? EMPTY_USERS;
+
+    const alertingCtx = useBuildAlertingDialogContext({
+        mode: alertToEdit ? "edit" : "create",
+        widget,
+        insight,
+        alertToEdit,
+        users: effectiveUsers,
+        usersError,
+        notificationChannels,
+        isLoading,
+    });
 
     return (
-        <AlertingDialog
-            {...props}
-            users={users ?? []}
-            usersError={usersError}
-            isLoading={props.isLoading || usersStatus === "pending" || usersStatus === "loading"}
-        />
+        <AlertingDialogContextProvider value={alertingCtx}>
+            <AlertingDialog
+                onCancel={onCancel}
+                onError={onError}
+                onSuccess={onSuccess}
+                onSaveError={onSaveError}
+                onSaveSuccess={onSaveSuccess}
+                onDeleteSuccess={onDeleteSuccess}
+                onDeleteError={onDeleteError}
+            />
+        </AlertingDialogContextProvider>
     );
 }

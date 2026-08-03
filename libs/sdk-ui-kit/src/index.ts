@@ -805,6 +805,21 @@ export {
     useIsZoomed,
 } from "./ZoomContext/ZoomContext.js";
 export { FilterGroupItem, type IFilterGroupItemProps } from "./FilterGroupItem/FilterGroupItem.js";
+export {
+    type ITimezoneItem,
+    getTimezones,
+    getTimezoneById,
+    getTimezoneLabels,
+    getTimezoneTitle,
+    getTimezoneDisplayLabel,
+    getUserTimezone,
+} from "./Timezone/timezones.js";
+export {
+    TimezoneSelect,
+    type ITimezoneSelectProps,
+    type ITimezoneSelectSpecialItem,
+    type ITimezoneSelectButtonRenderProps,
+} from "./Timezone/TimezoneSelect.js";
 // export * from "./Table/index.js";
 /**
  * New components
@@ -1283,13 +1298,10 @@ export {
 } from "./@ui/UiLabelsChecklist/UiLabelsChecklist.js";
 export {
     UiPermissionMenu,
+    permissionLevelMessage,
     type IUiPermissionMenuProps,
     type PermissionMenuLevel,
 } from "./@ui/UiPermissionMenu/UiPermissionMenu.js";
-export {
-    UiMoreOptionsMenu,
-    type IUiMoreOptionsMenuProps,
-} from "./@ui/UiMoreOptionsMenu/UiMoreOptionsMenu.js";
 export {
     UiGranteeRowControls,
     type IUiGranteeRowControlsProps,

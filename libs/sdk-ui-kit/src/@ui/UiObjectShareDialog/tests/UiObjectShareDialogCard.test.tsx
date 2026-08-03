@@ -43,6 +43,17 @@ describe("UiObjectShareDialogCard", () => {
         expect(screen.getByText("Jana Dvořák")).toBeInTheDocument();
     });
 
+    it("renders skeletons instead of grantees and the general-access radio while loading", () => {
+        const { container } = renderWithIntl(
+            <UiObjectShareDialogCard {...baseProps} isLoading grantees={[]} />,
+        );
+        expect(container.querySelector(".gd-ui-kit-skeleton")).toBeInTheDocument();
+        // Neither placeholder may read as a real policy: no empty "shared with
+        // no one" list, no pre-checked Restricted radio.
+        expect(screen.queryByText("Marek Stránský")).not.toBeInTheDocument();
+        expect(screen.queryByRole("radiogroup")).not.toBeInTheDocument();
+    });
+
     it("calls onAddClick when the + Add link is activated", () => {
         const onAddClick = vi.fn();
         renderWithIntl(<UiObjectShareDialogCard {...baseProps} onAddClick={onAddClick} />);

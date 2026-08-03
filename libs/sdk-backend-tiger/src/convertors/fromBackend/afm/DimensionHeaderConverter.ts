@@ -47,8 +47,8 @@ type DateAttributeFormatProps = {
     };
 };
 
-//ivec investigate
 const supportedSuffixes: JsonApiAttributeOutAttributesGranularityEnum[] = [
+    "SECOND",
     "MINUTE",
     "HOUR",
     "DAY",
@@ -56,8 +56,11 @@ const supportedSuffixes: JsonApiAttributeOutAttributesGranularityEnum[] = [
     "MONTH",
     "QUARTER",
     "YEAR",
+    "SECOND_OF_MINUTE",
     "MINUTE_OF_HOUR",
     "HOUR_OF_DAY",
+    "SECOND_OF_DAY",
+    "MINUTE_OF_DAY",
     "DAY_OF_WEEK",
     "DAY_OF_MONTH",
     "DAY_OF_QUARTER",

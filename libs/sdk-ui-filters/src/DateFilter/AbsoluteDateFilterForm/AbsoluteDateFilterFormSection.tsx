@@ -26,6 +26,7 @@ interface IAbsoluteDateFilterFormSection {
     dateFormat: string;
     weekStart: WeekStart;
     isTimeForAbsoluteRangeEnabled: boolean;
+    isSecondsForAbsoluteRangeEnabled?: boolean;
     isMobile: boolean;
     route: DateFilterRoute;
     withoutApply?: boolean;
@@ -41,6 +42,7 @@ export function AbsoluteDateFilterFormSection({
     dateFormat,
     weekStart,
     isTimeForAbsoluteRangeEnabled,
+    isSecondsForAbsoluteRangeEnabled,
     isMobile,
     route,
     withoutApply,
@@ -93,6 +95,7 @@ export function AbsoluteDateFilterFormSection({
                         selectedFilterOption={selectedFilterOption as IUiAbsoluteDateFilterForm}
                         isMobile={isMobile}
                         isTimeEnabled={isTimeForAbsoluteRangeEnabled}
+                        isSecondsEnabled={isSecondsForAbsoluteRangeEnabled}
                         weekStart={weekStart}
                         submitForm={submitForm}
                         withoutApply={withoutApply}

@@ -31,7 +31,7 @@ function MenuExample({
             anchor={<UiButton label={label} size="small" variant="secondary" iconAfter="chevronDown" />}
             selectedLevel="VIEW"
             onPermissionChange={action(`${label} → permission change`)}
-            disabledLevels={withDisabledShare ? ["SHARE"] : undefined}
+            disabledLevels={withDisabledShare ? ["SHARE", "EDIT"] : undefined}
             disabledTooltip={withDisabledShare ? "You can't set higher permissions for yourself." : undefined}
             labels={withLabels ? LABELS : undefined}
             selectedLabelIds={withLabels ? LABELS.map((l) => l.id) : undefined}

@@ -65,9 +65,17 @@ See [`src/api-endpoints/readme.md`](src/api-endpoints/readme.md) for more detail
 1. You need to install Java runtime environment (because openapi-generator is a java based tool).
 
 2. The script expects env variable `BASE_URL`
-   Usually you want to use staging: `BASE_URL=https://staging.dev-latest.stg11.panther.intgdc.com`
-   Create a file named `.env` in this directory based on `.env.template` file.
-   The script then loads variables from this file automatically.
+   It must point to `https://automation.staging-ui.stg11.panther.intgdc.com` — that deployment is the
+   one guaranteed to serve production-ready APIs. Create a file named `.env` in this directory based
+   on `.env.template` file. The script then loads variables from this file automatically.
+
+    Generating from any other host is refused. If you really need to (e.g. to try out an API that is
+    not on the preferred host yet), override the check with `FORCE` (or --force alternatively), but do
+    not commit the result, for example:
+
+    ```sh
+    FORCE=true BASE_URL=https://... rushx generate-client
+    ```
 
 3. run `npm run generate-client`.
 

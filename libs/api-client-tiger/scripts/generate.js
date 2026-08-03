@@ -17,6 +17,7 @@ dotenv.config();
 
 const DEFAULT_OUTPUT_DIR = "src/generated/";
 const DEFAULT_OUTPUT_FILE = "openapi-spec.json";
+const DEFAULT_BASE_URL = "https://automation.staging-ui.stg11.panther.intgdc.com";
 
 program
     .option("--base-url <url>", "Base url where the OpenAPI specs can be downloaded.")
@@ -24,6 +25,7 @@ program
     .option("--password <password>", "Password to use to authenticate.")
     .option("--output-dir <path>", `Path to the resulting directory. Defaults to ${DEFAULT_OUTPUT_DIR}`)
     .option("--output-file <name>", `Name of the openapi schema file. Defaults to ${DEFAULT_OUTPUT_FILE}`)
+    .option("--force", `Allow generating from a host other than ${DEFAULT_BASE_URL}.`)
     .parse(process.argv);
 
 const specs = [
@@ -254,12 +256,72 @@ const downloadAndGenerate = async (specMeta, outputDir, outputFile) => {
     await generate(specMeta, outputDir, outputFile);
 };
 
+/**
+ * The specs generate in parallel, each in its own `openapi-generator-cli` process. On a fresh
+ * install they race to download the generator jar to the same path and can spawn `java -jar` on a
+ * half-swapped file ("Unable to access jarfile"); fetching it once up front avoids that.
+ */
+const ensureGeneratorDownloaded = async () => {
+    await execPromise("openapi-generator-cli version");
+};
+
+/**
+ * Protocol and hostname of a url, or undefined when it cannot be parsed. The port is deliberately
+ * left out (unlike `URL.origin`) so that an explicit port does not count as a different deployment.
+ *
+ * @param url the url to take the origin of
+ */
+const originOf = (url) => {
+    try {
+        const { protocol, hostname } = new URL(url);
+        return `${protocol}//${hostname}`;
+    } catch {
+        return undefined;
+    }
+};
+
+const isForced = (forceFlag) => {
+    if (forceFlag) {
+        return true;
+    }
+    const force = (process.env.FORCE ?? "").trim().toLowerCase();
+    return force !== "" && force !== "0" && force !== "false";
+};
+
+/**
+ * Generating from anything other than DEFAULT_BASE_URL is a hard error: other deployments serve
+ * specs for APIs that are not production-ready yet, and the resulting client silently ships them.
+ * The comparison is against DEFAULT_BASE_URL as written, minus the port — so an explicit port or a
+ * trailing slash does not trip the check, but any other protocol or host does.
+ *
+ * @param baseUrl the base url the specs would be downloaded from
+ * @param forceFlag value of the --force CLI option
+ */
+const assertBaseUrlAllowed = (baseUrl, forceFlag) => {
+    if (originOf(baseUrl) === originOf(DEFAULT_BASE_URL)) {
+        return;
+    }
+
+    if (isForced(forceFlag)) {
+        console.warn(`WARN: FORCE is set, generating from ${baseUrl} instead of ${DEFAULT_BASE_URL}.`);
+        console.warn(`WARN: The generated client may contain APIs that are not production-ready.`);
+        return;
+    }
+
+    console.error(`ERROR: Refusing to generate from ${baseUrl}.`);
+    console.error(`ERROR: Use ${DEFAULT_BASE_URL} to make sure we use production-ready apis.`);
+    console.error(`ERROR: To override, re-run with FORCE=true:`);
+    console.error(`ERROR:   FORCE=true BASE_URL=${baseUrl} rushx generate-client`);
+    process.exit(1);
+};
+
 const main = async () => {
     const {
         baseUrl = process.env.BASE_URL,
         token = process.env.TOKEN,
         outputDir = process.env.OUTPUT_DIR || DEFAULT_OUTPUT_DIR,
         outputFile = process.env.OUTPUT_FILE || DEFAULT_OUTPUT_FILE,
+        force,
     } = program.opts();
 
     if (!baseUrl) {
@@ -267,11 +329,7 @@ const main = async () => {
         process.exit(1);
     }
 
-    const defaultBaseUrl = "https://automation.staging-ui.stg11.panther.intgdc.com";
-    if (baseUrl !== defaultBaseUrl) {
-        console.warn(`WARN: Using different baseUrl than ${defaultBaseUrl} is not recommended.`);
-        console.warn(`WARN: Use the ${defaultBaseUrl} to make sure we use production-ready apis.`);
-    }
+    assertBaseUrlAllowed(baseUrl, force);
 
     try {
         console.error(`Getting specs from ${baseUrl}`);
@@ -280,6 +338,8 @@ const main = async () => {
         if (token) {
             axios.defaults.headers["Authorization"] = `Bearer ${token}`;
         }
+
+        await ensureGeneratorDownloaded();
 
         await Promise.all(specs.map((spec) => downloadAndGenerate(spec, outputDir, outputFile)));
 

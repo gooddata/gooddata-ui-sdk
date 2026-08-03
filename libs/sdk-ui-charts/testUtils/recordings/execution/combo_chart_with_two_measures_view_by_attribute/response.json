@@ -12,7 +12,7 @@
                                         "identifier": "af2Ewj9Re2vK",
                                         "localIdentifier": "lostMetric",
                                         "name": "<button>Lost</button> ...",
-                                        "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283"
+                                        "uri": "obj_1283"
                                     }
                                 },
                                 {
@@ -21,7 +21,7 @@
                                         "identifier": "afSEwRwdbMeQ",
                                         "localIdentifier": "wonMetric",
                                         "name": "Won",
-                                        "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284"
+                                        "uri": "obj_1284"
                                     }
                                 }
                             ]
@@ -36,12 +36,12 @@
                             "formOf": {
                                 "identifier": "created",
                                 "name": "Year created",
-                                "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157"
+                                "uri": "obj_157"
                             },
                             "identifier": "created.aag81lMifn6q",
                             "localIdentifier": "yearCreatedAttribute",
                             "name": "Year (Created)",
-                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158"
+                            "uri": "obj_158"
                         }
                     }
                 ]

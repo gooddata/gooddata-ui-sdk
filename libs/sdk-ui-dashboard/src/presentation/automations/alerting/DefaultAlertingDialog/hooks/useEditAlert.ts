@@ -1,15 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import {
-    type FilterContextItem,
-    type IAutomationMetadataObject,
-    type IAutomationVisibleFilter,
-    type IInsight,
-    type INotificationChannelIdentifier,
-    type INotificationChannelMetadataObject,
-    type IWidget,
-    type IWorkspaceUser,
-} from "@gooddata/sdk-model";
+import { type FilterContextItem, type IAutomationVisibleFilter } from "@gooddata/sdk-model";
 
 import { useAlertingDialogContext } from "../../../contexts/AlertingDialogContext.js";
 import { useAutomationsContext } from "../../../contexts/AutomationsContext.js";
@@ -22,12 +13,7 @@ import { useAlertSupportedMetrics } from "./useAlertSupportedMetrics.js";
 import { useAlertThreshold } from "./useAlertThreshold.js";
 
 export interface IUseEditAlertProps {
-    alertToEdit?: IAutomationMetadataObject;
-    notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
     maxAutomationsRecipients: number;
-    users: IWorkspaceUser[];
-    widget?: IWidget;
-    insight?: IInsight;
     editedAutomationFilters?: FilterContextItem[];
 
     setEditedAutomationFilters: (filters: FilterContextItem[]) => void;
@@ -37,11 +23,6 @@ export interface IUseEditAlertProps {
 }
 
 export function useEditAlert({
-    alertToEdit,
-    notificationChannels,
-    insight,
-    widget,
-    users,
     editedAutomationFilters,
     maxAutomationsRecipients,
     setEditedAutomationFilters,
@@ -52,9 +33,18 @@ export function useEditAlert({
     const { catalogDateDatasets, catalogAttributes, separators, weekStart, timezone, allowHourlyRecurrence } =
         useAutomationsContext();
 
-    const isInvalidConnectionToInsight = alertToEdit?.metadata?.widget && !insight;
+    const {
+        hiddenFilters: dashboardHiddenFilters,
+        commonDateFilterId,
+        alertToEdit,
+        users,
+        usersError,
+        notificationChannels,
+        widget,
+        insight,
+    } = useAlertingDialogContext();
 
-    const { hiddenFilters: dashboardHiddenFilters, commonDateFilterId } = useAlertingDialogContext();
+    const isInvalidConnectionToInsight = alertToEdit?.metadata?.widget && !insight;
 
     const {
         measureFormatMap,
@@ -222,6 +212,9 @@ export function useEditAlert({
         defaultUser,
         originalAutomation,
         editedAutomation,
+        users,
+        usersError,
+        notificationChannels,
         allowOnlyLoggedUserRecipients,
         allowExternalRecipients,
         validationErrorMessage,

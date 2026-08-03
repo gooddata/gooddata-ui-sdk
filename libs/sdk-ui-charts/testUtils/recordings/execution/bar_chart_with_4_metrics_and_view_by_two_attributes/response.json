@@ -11,7 +11,7 @@
                                         "name": "_Close [BOP]",
                                         "format": "#,##0.00",
                                         "localIdentifier": "c2fa878519934f39aefe9325638f2beb",
-                                        "uri": "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/9211",
+                                        "uri": "obj_9211",
                                         "identifier": "aaeb7jTCfexV"
                                     }
                                 },
@@ -20,7 +20,7 @@
                                         "name": "_Close [EOP]",
                                         "format": "#,##0.00",
                                         "localIdentifier": "8a1a34106a8a41c8b0a8da816600802e",
-                                        "uri": "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/9203",
+                                        "uri": "obj_9203",
                                         "identifier": "aazb6kroa3iC"
                                     }
                                 },
@@ -29,7 +29,7 @@
                                         "name": "_Timeline [BOP]",
                                         "format": "#,##0.00",
                                         "localIdentifier": "3b4fc6113ff9452da677ef7842e2302c",
-                                        "uri": "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/1277",
+                                        "uri": "obj_1277",
                                         "identifier": "aiTEuXhZaJw5"
                                     }
                                 },
@@ -38,7 +38,7 @@
                                         "name": "_Timeline [EOP]",
                                         "format": "#,##0.00",
                                         "localIdentifier": "26843260d95c4c9fa0aecc996ffd7829",
-                                        "uri": "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/1276",
+                                        "uri": "obj_1276",
                                         "identifier": "ahUEuUVTefyt"
                                     }
                                 }
@@ -53,11 +53,11 @@
                         "attributeHeader": {
                             "name": "Department",
                             "localIdentifier": "0e3388d37e444c369731afe398740572",
-                            "uri": "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/1027",
+                            "uri": "obj_1027",
                             "identifier": "label.owner.department",
                             "formOf": {
                                 "name": "Department",
-                                "uri": "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/1026",
+                                "uri": "obj_1026",
                                 "identifier": "attr.owner.department"
                             }
                         }
@@ -66,11 +66,11 @@
                         "attributeHeader": {
                             "name": "Region",
                             "localIdentifier": "6af145960f4145efbe4ace7504b0f1de",
-                            "uri": "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/1024",
+                            "uri": "obj_1024",
                             "identifier": "label.owner.region",
                             "formOf": {
                                 "name": "Region",
-                                "uri": "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/1023",
+                                "uri": "obj_1023",
                                 "identifier": "attr.owner.region"
                             }
                         }

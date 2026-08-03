@@ -4,10 +4,12 @@ import {
     type JsonApiParameterOut,
     type JsonApiParameterOutWithLinks,
     type JsonApiUserIdentifierOutWithLinks,
+    type StringConstraints,
 } from "@gooddata/api-client-tiger";
 import {
     type IParameterDefinition,
     type IParameterMetadataObject,
+    type IStringParameterConstraints,
     idRef,
     throwUnexpected,
 } from "@gooddata/sdk-model";
@@ -56,9 +58,19 @@ function convertParameterDefinition(
             return {
                 type: "STRING",
                 defaultValue: definition.defaultValue,
-                ...(definition.constraints ? { constraints: definition.constraints } : {}),
+                ...(definition.constraints
+                    ? { constraints: convertStringConstraints(definition.constraints) }
+                    : {}),
             };
         default:
             return throwUnexpected(type);
     }
+}
+
+function convertStringConstraints(constraints: StringConstraints): IStringParameterConstraints {
+    const { allowedValues, ...otherConstraints } = constraints;
+    return {
+        ...otherConstraints,
+        ...(allowedValues && allowedValues.length > 0 ? { allowedValues } : {}),
+    };
 }

@@ -4,18 +4,19 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 import { describe, expect, it, vi } from "vitest";
 
+import { idRef } from "@gooddata/sdk-model";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
 
 import { type IUiGranteeAsyncOptions, UiGranteeAsyncPicker } from "../UiGranteeAsyncPicker.js";
 
 const SAMPLE: IUiGranteeAsyncOptions = {
     groups: [
-        { id: "g1", kind: "group", name: "Marketing" },
-        { id: "g2", kind: "group", name: "Engineering" },
+        { id: "g1", ref: idRef("g1"), kind: "group", name: "Marketing" },
+        { id: "g2", ref: idRef("g2"), kind: "group", name: "Engineering" },
     ],
     users: [
-        { id: "u1", kind: "user", name: "Jane Good", email: "jane@example.com" },
-        { id: "u2", kind: "user", name: "Marek", email: "marek@example.com" },
+        { id: "u1", ref: idRef("u1"), kind: "user", name: "Jane Good", email: "jane@example.com" },
+        { id: "u2", ref: idRef("u2"), kind: "user", name: "Marek", email: "marek@example.com" },
     ],
 };
 
@@ -69,6 +70,7 @@ describe("UiGranteeAsyncPicker", () => {
                 selectedGrantees={[
                     {
                         id: "u1",
+                        ref: idRef("u1"),
                         kind: "user",
                         name: "Jane Good",
                         email: "jane@example.com",

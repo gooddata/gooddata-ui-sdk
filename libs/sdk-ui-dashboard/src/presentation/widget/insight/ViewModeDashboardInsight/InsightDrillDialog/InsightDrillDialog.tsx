@@ -17,6 +17,7 @@ import {
 import { type ILocale, type OnLoadingChanged } from "@gooddata/sdk-ui";
 import {
     Button,
+    FLOATING_ELEMENT_DATA_ATTR,
     FullScreenOverlay,
     Overlay,
     OverlayController,
@@ -77,6 +78,7 @@ const overlayIgnoredClasses = [
     ".options-menu-export-xlsx",
     ".options-menu-export-csv",
     `#${DOWNLOADER_ID}`,
+    `[${FLOATING_ELEMENT_DATA_ATTR}]`,
 ];
 
 const defaultDescriptionConfig: IInsightWidgetDescriptionConfiguration = {

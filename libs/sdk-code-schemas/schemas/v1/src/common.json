@@ -1333,6 +1333,7 @@
                 "granularity": {
                     "type": "string",
                     "enum": [
+                        "SECOND",
                         "MINUTE",
                         "HOUR",
                         "DAY",
@@ -1341,7 +1342,10 @@
                         "MONTH",
                         "QUARTER",
                         "YEAR",
+                        "SECOND_OF_MINUTE",
+                        "SECOND_OF_DAY",
                         "MINUTE_OF_HOUR",
+                        "MINUTE_OF_DAY",
                         "HOUR_OF_DAY",
                         "DAY_OF_WEEK",
                         "DAY_OF_MONTH",
@@ -1404,6 +1408,7 @@
                             "granularity": {
                                 "type": "string",
                                 "enum": [
+                                    "SECOND",
                                     "MINUTE",
                                     "HOUR",
                                     "DAY",
@@ -1412,7 +1417,10 @@
                                     "MONTH",
                                     "QUARTER",
                                     "YEAR",
+                                    "SECOND_OF_MINUTE",
+                                    "SECOND_OF_DAY",
                                     "MINUTE_OF_HOUR",
+                                    "MINUTE_OF_DAY",
                                     "HOUR_OF_DAY",
                                     "DAY_OF_WEEK",
                                     "DAY_OF_MONTH",

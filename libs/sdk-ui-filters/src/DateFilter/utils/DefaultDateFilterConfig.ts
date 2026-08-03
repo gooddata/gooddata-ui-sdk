@@ -50,6 +50,7 @@ export const defaultDateFilterConfig: IDateFilterConfig = {
         availableGranularities: [
             "GDC.time.month",
             "GDC.time.fiscal_month",
+            "GDC.time.second",
             "GDC.time.minute",
             "GDC.time.hour",
             "GDC.time.date",

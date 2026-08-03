@@ -733,12 +733,25 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableSecondGranularities,
+            "enableSecondGranularities",
+            "BOOLEAN",
+            FeatureFlagsValues.enableSecondGranularities,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableDashboardFilterGroups,
             "enableDashboardFilterGroups",
             "BOOLEAN",
             FeatureFlagsValues.enableDashboardFilterGroups,
         ),
-
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableDashboardTimezone,
+            "enableDashboardTimezone",
+            "BOOLEAN",
+            FeatureFlagsValues.enableDashboardTimezone,
+        ),
         ...loadFeature(
             features,
             TigerFeaturesNames.EnableMeasureValueFilterKD,

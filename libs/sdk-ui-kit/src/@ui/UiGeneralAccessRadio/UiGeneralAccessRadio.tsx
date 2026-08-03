@@ -2,13 +2,20 @@
 
 import { type ReactNode, useId } from "react";
 
-import { useIntl } from "react-intl";
+import { type MessageDescriptor, useIntl } from "react-intl";
 
 import { olpGeneralAccessMessages } from "../../locales.js";
 import { bem } from "../@utils/bem.js";
 import { UiRadioRow } from "../UiRadioRow/UiRadioRow.js";
 
 const { b } = bem("gd-ui-kit-general-access-radio");
+
+// "All workspace members" description for each workspace-wide level.
+const WORKSPACE_DESCRIPTION: Record<"VIEW" | "SHARE" | "EDIT", MessageDescriptor> = {
+    VIEW: olpGeneralAccessMessages.workspaceDescription,
+    SHARE: olpGeneralAccessMessages.workspaceDescriptionShare,
+    EDIT: olpGeneralAccessMessages.workspaceDescriptionEdit,
+};
 
 /**
  * Which general-access option is currently selected.
@@ -42,9 +49,10 @@ export interface IUiGeneralAccessRadioProps {
     /**
      * Workspace-wide permission level, used to keep the `All workspace members`
      * description in sync with the level picked in `workspaceControls`
-     * (`view` → "can view", `share` → "can view and share"). Defaults to `view`.
+     * (`VIEW` → "can view", `SHARE` → "can view and share", `EDIT` → "can edit").
+     * Defaults to `VIEW`.
      */
-    workspaceLevel?: "VIEW" | "SHARE";
+    workspaceLevel?: "VIEW" | "SHARE" | "EDIT";
     /** Test id forwarded to the root element. */
     dataTestId?: string;
 }
@@ -93,11 +101,7 @@ export function UiGeneralAccessRadio({
                 checked={value === "WORKSPACE"}
                 disabled={disabled}
                 title={intl.formatMessage(olpGeneralAccessMessages.workspaceTitle)}
-                description={intl.formatMessage(
-                    workspaceLevel === "SHARE"
-                        ? olpGeneralAccessMessages.workspaceDescriptionShare
-                        : olpGeneralAccessMessages.workspaceDescription,
-                )}
+                description={intl.formatMessage(WORKSPACE_DESCRIPTION[workspaceLevel])}
                 onChange={() => onChange("WORKSPACE")}
                 trailing={workspaceControls}
             />

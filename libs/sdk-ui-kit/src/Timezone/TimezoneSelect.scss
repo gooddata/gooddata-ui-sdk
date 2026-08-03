@@ -1,0 +1,22 @@
+// (C) 2026 GoodData Corporation
+
+@use "../../styles/scss/variables";
+
+.gd-timezone-select__body {
+    width: 300px;
+}
+
+.gd-timezone-select__search {
+    padding: 10px;
+}
+
+.gd-timezone-select__body .gd-ui-kit-listbox {
+    padding-top: 0;
+
+    // design: resting selection is indicated by primary text color only; the default
+    // dimmed-blue background applies again once the selected item is hovered or focused
+    .gd-ui-kit-listbox__item--isSelected {
+        background-color: transparent;
+        color: variables.$is-selected-color;
+    }
+}

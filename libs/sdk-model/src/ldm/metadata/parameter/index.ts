@@ -65,6 +65,19 @@ export interface INumberParameterConstraints {
 }
 
 /**
+ * Allowed value of a string parameter. When a definition's `constraints` carry a non-empty
+ * `allowedValues` list, the parameter value must equal one entry's `value` and the entries are
+ * offered in list order; an absent or empty list means free text restricted only by the length
+ * constraints.
+ *
+ * @public
+ */
+export interface IParameterAllowedValue {
+    value: string;
+    title?: string;
+}
+
+/**
  * String parameter definition.
  *
  * @public
@@ -83,6 +96,7 @@ export interface IStringParameterDefinition {
 export interface IStringParameterConstraints {
     minLength?: number;
     maxLength?: number;
+    allowedValues?: IParameterAllowedValue[];
 }
 
 /**
@@ -173,7 +187,8 @@ export function parameterValueMatchesType(definition: IParameterDefinition, valu
 }
 
 /**
- * Tests whether `value` is a finite number within the optional `min`/`max` bounds (inclusive).
+ * Tests whether `value` is a valid value for a NUMBER parameter with the given `constraints`;
+ * non-finite values are always invalid.
  *
  * @alpha
  */
@@ -188,7 +203,8 @@ export function isValidNumberParameterValue(
 }
 
 /**
- * Tests whether `value` satisfies the optional `minLength`/`maxLength` bounds (inclusive).
+ * Tests whether `value` is a valid value for a STRING parameter with the given `constraints`
+ * (length bounds and `allowedValues` membership; see {@link IParameterAllowedValue}).
  *
  * @alpha
  */
@@ -196,11 +212,23 @@ export function isValidStringParameterValue(
     value: string,
     constraints: IStringParameterConstraints = {},
 ): boolean {
-    const { minLength, maxLength } = constraints;
+    const { minLength, maxLength, allowedValues } = constraints;
     return (
         (minLength === undefined || value.length >= minLength) &&
-        (maxLength === undefined || value.length <= maxLength)
+        (maxLength === undefined || value.length <= maxLength) &&
+        (allowedValues === undefined ||
+            allowedValues.length === 0 ||
+            allowedValues.some((allowed) => allowed.value === value))
     );
+}
+
+/**
+ * Returns the allowed value's `title` when present, its `value` otherwise.
+ *
+ * @alpha
+ */
+export function getParameterAllowedValueTitle(allowedValue: IParameterAllowedValue): string {
+    return allowedValue.title ?? allowedValue.value;
 }
 
 function isObjectRecord(value: unknown): value is Record<string, unknown> {

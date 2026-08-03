@@ -831,6 +831,18 @@
         "text": "Fiscal calendar",
         "crowdinContext": "Accessible label for the fiscal calendar tab in the date filter dropdown, announced by screen readers."
     },
+    "filters.thisSecond.title": {
+        "text": "This second",
+        "crowdinContext": "Filter option to select the current second in time-based filtering controls."
+    },
+    "filters.lastSecond.title": {
+        "text": "Last second",
+        "crowdinContext": "Filter option to select the previous second in time-based filtering controls."
+    },
+    "filters.nextSecond.title": {
+        "text": "Next second",
+        "crowdinContext": "Filter option to select the upcoming second in time-based filtering controls."
+    },
     "filters.thisMinute.title": {
         "text": "This minute",
         "crowdinContext": "Filter option to select the current minute in time-based filtering controls."
@@ -995,6 +1007,10 @@
         "text": "Next fiscal year",
         "crowdinContext": "Filter option for the next fiscal year"
     },
+    "filters.lastNSeconds": {
+        "text": "{n, plural, one {Last # second} other {Last # seconds}}",
+        "crowdinContext": "Filter option for the last N seconds (singular/plural)"
+    },
     "filters.lastNMinutes": {
         "text": "{n, plural, one {Last # minute} other {Last # minutes}}",
         "crowdinContext": "Filter option for the last N minutes (singular/plural)"
@@ -1039,6 +1055,10 @@
         "text": "{n, plural, one {Last # fiscal year} other {Last # fiscal years}}",
         "crowdinContext": "Filter option for the last N fiscal years (singular/plural)"
     },
+    "filters.nextNSeconds": {
+        "text": "{n, plural, one {Next # second} other {Next # seconds}}",
+        "crowdinContext": "Filter option for the next N seconds (singular/plural)"
+    },
     "filters.nextNMinutes": {
         "text": "{n, plural, one {Next # minute} other {Next # minutes}}",
         "crowdinContext": "Filter option for the next N minutes (singular/plural)"
@@ -1082,6 +1102,26 @@
     "filters.nextNFiscalYears": {
         "text": "{n, plural, one {Next # fiscal year} other {Next # fiscal years}}",
         "crowdinContext": "Filter option for the next N fiscal years (singular/plural)"
+    },
+    "filters.interval.seconds.past": {
+        "text": "From {from} to {to} {to, plural, one {second} other {seconds}} ago",
+        "crowdinContext": "Time interval in past seconds (e.g., 'From 5 to 10 seconds ago')"
+    },
+    "filters.interval.seconds.past.sameValue": {
+        "text": "{value} {value, plural, one {second} other {seconds}} ago",
+        "crowdinContext": "Time interval for a single past second (e.g., '5 seconds ago')"
+    },
+    "filters.interval.seconds.future": {
+        "text": "From {from} to {to} {to, plural, one {second} other {seconds}} ahead",
+        "crowdinContext": "Time interval in future seconds (e.g., 'From 5 to 10 seconds ahead')"
+    },
+    "filters.interval.seconds.future.sameValue": {
+        "text": "{value} {value, plural, one {second} other {seconds}} ahead",
+        "crowdinContext": "Time interval for a single future second (e.g., '5 seconds ahead')"
+    },
+    "filters.interval.seconds.mixed": {
+        "text": "From {from} {from, plural, one {second} other {seconds}} ago to {to} {to, plural, one {second} other {seconds}} ahead",
+        "crowdinContext": "Time interval spanning past and future in seconds (e.g., 'From 1 second ago to 2 seconds ahead')"
     },
     "filters.interval.minutes.past": {
         "text": "From {from} to {to} {to, plural, one {minute} other {minutes}} ago",
@@ -1303,6 +1343,10 @@
         "text": "From {from} {from, plural, one {fiscal year} other {fiscal years}} ago to {to} {to, plural, one {fiscal year} other {fiscal years}} ahead",
         "crowdinContext": "Time interval spanning both past and future fiscal years"
     },
+    "filters.granularity.seconds": {
+        "text": "Seconds",
+        "crowdinContext": "Time granularity option for filtering data at the second level. Used in time-based filters and selectors."
+    },
     "filters.granularity.minutes": {
         "text": "Minutes",
         "crowdinContext": "Time granularity option for filtering data at the minute level. Used in time-based filters and selectors."
@@ -1375,6 +1419,10 @@
         "text": "Use time format HH:MM; max value is 23:59.",
         "crowdinContext": "Displayed as a hint below input in which user enters a time."
     },
+    "filters.staticPeriod.timeFormatHintWithSeconds": {
+        "text": "Use time format HH:MM:SS; max value is 23:59:59.",
+        "crowdinContext": "Displayed as a hint below input in which user enters a time with seconds precision."
+    },
     "filters.date.accessibility.label.from": {
         "text": "Select date from",
         "crowdinContext": "Accessibility label for the 'from' date input field in date range selectors. Used by screen readers to identify the start date selection."
@@ -1430,6 +1478,18 @@
     "filters.floatingRange.tooBig": {
         "text": "Maximum value: {limit}",
         "crowdinContext": "Error message shown when a user enters a value exceeding the maximum allowed limit in a relative period filter. Example: 'Maximum value: 100'."
+    },
+    "filters.floatingRange.option.second.offset.history": {
+        "text": "{n, plural, one {last second} other {# seconds ago}}",
+        "crowdinContext": "Relative time expression using plural forms. Keep the {n, plural, ...} format and the # placeholder for numbers. Examples: 'last second', '5 seconds ago', 'next minute', '3 days ahead'."
+    },
+    "filters.floatingRange.option.second.offset.today": {
+        "text": "this second",
+        "crowdinContext": "Option in the relative time selector referring to the current second. Used when filtering data to include only the current second's data."
+    },
+    "filters.floatingRange.option.second.offset.future": {
+        "text": "{n, plural, one {next second} other {# seconds ahead}}",
+        "crowdinContext": "Relative time expression using plural forms. Keep the {n, plural, ...} format and the # placeholder for numbers. Examples: 'last second', '5 seconds ago', 'next minute', '3 days ahead'."
     },
     "filters.floatingRange.option.minute.offset.history": {
         "text": "{n, plural, one {last minute} other {# minutes ago}}",
@@ -1559,9 +1619,17 @@
         "text": "Include empty values",
         "crowdinContext": "Checkbox label for including records with empty (missing) date values together with the selected date range."
     },
+    "filters.second.title": {
+        "text": "SECOND",
+        "crowdinContext": "Header label for second-level time filter options. Used in filter configuration interfaces to group second-related filtering controls."
+    },
     "filters.minute.title": {
         "text": "MINUTE",
         "crowdinContext": "Header label for minute-level time filter options. Used in filter configuration interfaces to group minute-related filtering controls."
+    },
+    "filters.second.excludeCurrentPeriod": {
+        "text": "Exclude this second",
+        "crowdinContext": "Option to exclude the current second from the filtered results. Useful when the current second might contain incomplete or in-progress data."
     },
     "filters.minute.excludeCurrentPeriod": {
         "text": "Exclude this minute",
@@ -2887,6 +2955,10 @@
         "text": "Everyone in this workspace can view and share this object.",
         "crowdinContext": "Description of the All-workspace-members general-access option on the OLP share dialog, shown when the workspace permission level is 'Can view & share'. Explains the resulting view-and-share access for the whole workspace."
     },
+    "shareDialog.olp.generalAccess.workspace.description.edit": {
+        "text": "Everyone in this workspace can edit this object.",
+        "crowdinContext": "Description of the All-workspace-members general-access option on the OLP share dialog, shown when the workspace permission level is 'Can edit & share'. Explains the resulting edit access for the whole workspace."
+    },
     "uiKit.autocomplete.searchPlaceholder": {
         "text": "Search",
         "crowdinContext": "Default placeholder text in the search input of the generic autocomplete primitive. Sentence case."
@@ -2956,11 +3028,11 @@
         "crowdinContext": "Primary button at the bottom of the OLP add-grantee screen. Confirms granting access to the selected user or group and returns to the main share dialog."
     },
     "shareDialog.olp.permission.edit": {
-        "text": "Can edit",
-        "crowdinContext": "Read-only permission label shown for a grantee who has edit rights on the shared object. Edit access is granted outside this dialog, so the label is not selectable — it only reflects the grantee's existing level."
+        "text": "Can edit & share",
+        "crowdinContext": "Permission level in the object-level permissions menu granting the grantee edit and share rights on the shared object. Also shown as the current level on a grantee row."
     },
     "shareDialog.olp.permission.labels": {
-        "text": "Manage labels access",
+        "text": "Label access",
         "crowdinContext": "Menu item that opens the labels picker for the selected grantee — lets the author choose which of the attribute's labels this grantee can access."
     },
     "shareDialog.olp.permission.removeAccess": {
@@ -2975,24 +3047,24 @@
         "text": "More information about {label}",
         "crowdinContext": "Accessibility label for the info-circle next to a permission level row in the OLP permission menu. {label} is the permission level name (e.g. 'Can view'). Sentence case."
     },
-    "shareDialog.olp.permission.moreOptions.ariaLabel": {
-        "text": "More options",
-        "crowdinContext": "Accessibility label for the ellipsis (⋯) button on a grantee row in the OLP share dialog that opens the more-options menu (Manage labels access, Transfer ownership). Sentence case."
-    },
-    "shareDialog.olp.permission.moreOptions.menuLabel": {
-        "text": "More options",
-        "crowdinContext": "Accessibility label for the more-options menu on a grantee row in the OLP share dialog. Used by screen readers when entering the menu. Sentence case."
-    },
     "shareDialog.olp.permission.effective.tooltip.share": {
         "text": "This user inherits a higher permission from a group. Effective permission: Can view & share.",
         "crowdinContext": "Tooltip on the warning badge shown when a grantee's directly-assigned permission is lower than the permission they inherit (e.g. from a group). Explains that the effective access is higher than the row's selected level."
+    },
+    "shareDialog.olp.permission.effective.tooltip.edit": {
+        "text": "This user inherits a higher permission from a group. Effective permission: Can edit & share.",
+        "crowdinContext": "Tooltip on the warning badge shown when a grantee's directly-assigned permission is lower than the edit permission they inherit (e.g. from a group). Explains that the effective access is higher than the row's selected level."
     },
     "shareDialog.olp.permission.effective.ariaLabel": {
         "text": "Effective permission is higher than the assigned permission",
         "crowdinContext": "Accessibility label for the warning badge on a grantee row whose inherited permission exceeds the directly-assigned one. Sentence case."
     },
+    "shareDialog.olp.permission.tooltip.edit": {
+        "text": "Grantee can edit this object and share it with others.",
+        "crowdinContext": "Tooltip explaining the 'Can edit & share' permission level in the object-level permissions menu."
+    },
     "shareDialog.olp.permission.tooltip.share": {
-        "text": "Grantee can view this object and re-share it with others.",
+        "text": "Grantee can view this object and share it with others.",
         "crowdinContext": "Tooltip explaining the 'Can view & share' permission level in the object-level permissions menu."
     },
     "shareDialog.olp.permission.tooltip.view": {

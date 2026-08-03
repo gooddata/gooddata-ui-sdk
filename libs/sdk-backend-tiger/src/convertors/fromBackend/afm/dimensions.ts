@@ -67,7 +67,7 @@ function transformDimension(
             } else {
                 /*
                  * Funny stuff #1: tiger does not send name & format according to the contract (which is inspired
-                 *  by bear behavior). The code must reconciliate as follows:
+                 *  by the legacy platform behavior). The code must reconciliate as follows:
                  *
                  *  -  if name does not come from tiger, then default the name to localIdentifier
                  *  -  if format does not come from tiger, then default to a hardcoded format

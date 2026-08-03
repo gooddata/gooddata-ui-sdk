@@ -1,7 +1,11 @@
 // (C) 2026 GoodData Corporation
 
-import type { AccessGranteeDetail, IGranularRulesAccess } from "@gooddata/sdk-model";
+import type { AccessGranteeDetail, IGranularRulesAccess, IObjectAccessList } from "@gooddata/sdk-model";
 import type { GeneralAccessValue } from "@gooddata/sdk-ui-kit";
+
+import { directLevel, granteesFromAccessList, strongestLevel } from "./objectShareController.helpers.js";
+import type { ObjectSharePermissionLevel } from "./objectShareController.types.js";
+import type { IObjectAccessSummary } from "./types.js";
 
 /**
  * All `allWorkspaceUsers` rule grants. With workspace hierarchy the backend
@@ -27,14 +31,11 @@ export function deriveGeneralAccess(grants: AccessGranteeDetail[]): GeneralAcces
 }
 
 /**
- * Workspace-wide permission level of this workspace's own rule grant. Defaults
- * to VIEW; promoted to SHARE only when some rule entry directly permits SHARE.
- * EDIT is intentionally not surfaced — the UI caps at VIEW/SHARE.
+ * Workspace-wide permission level of this workspace's own rule grant — the
+ * strongest level any rule entry directly permits, defaulting to VIEW.
  */
-export function deriveWorkspacePermissionLevel(grants: AccessGranteeDetail[]): "VIEW" | "SHARE" {
-    return findAllWorkspaceUsersGrants(grants).some((rule) => rule.permissions.includes("SHARE"))
-        ? "SHARE"
-        : "VIEW";
+export function deriveWorkspacePermissionLevel(grants: AccessGranteeDetail[]): ObjectSharePermissionLevel {
+    return directLevel(findAllWorkspaceUsersGrants(grants).flatMap((rule) => rule.permissions));
 }
 
 /**
@@ -44,12 +45,10 @@ export function deriveWorkspacePermissionLevel(grants: AccessGranteeDetail[]): "
  * cannot be revoked from here — consumers must surface it as workspace access
  * and disable the Restricted option.
  */
-export function deriveInheritedWorkspaceLevel(grants: AccessGranteeDetail[]): "VIEW" | "SHARE" | undefined {
-    const inherited = findAllWorkspaceUsersGrants(grants).flatMap((rule) => rule.inheritedPermissions);
-    if (inherited.includes("SHARE")) {
-        return "SHARE";
-    }
-    return inherited.length > 0 ? "VIEW" : undefined;
+export function deriveInheritedWorkspaceLevel(
+    grants: AccessGranteeDetail[],
+): ObjectSharePermissionLevel | undefined {
+    return strongestLevel(findAllWorkspaceUsersGrants(grants).flatMap((rule) => rule.inheritedPermissions));
 }
 
 /**
@@ -60,11 +59,33 @@ export function deriveInheritedWorkspaceLevel(grants: AccessGranteeDetail[]): "V
  */
 export function composeEffectiveWorkspaceAccess(
     direct: GeneralAccessValue,
-    directLevel: "VIEW" | "SHARE",
-    inheritedLevel: "VIEW" | "SHARE" | undefined,
-): { generalAccess: GeneralAccessValue; workspaceLevel: "VIEW" | "SHARE" } {
+    directLevelValue: ObjectSharePermissionLevel,
+    inheritedLevel: ObjectSharePermissionLevel | undefined,
+): { generalAccess: GeneralAccessValue; workspaceLevel: ObjectSharePermissionLevel } {
     const generalAccess = direct === "WORKSPACE" || inheritedLevel ? "WORKSPACE" : "RESTRICTED";
-    const workspaceLevel =
-        inheritedLevel === "SHARE" || (direct === "WORKSPACE" && directLevel === "SHARE") ? "SHARE" : "VIEW";
+    const workspaceLevel = directLevel([
+        ...(direct === "WORKSPACE" ? [directLevelValue] : []),
+        ...(inheritedLevel ? [inheritedLevel] : []),
+    ]);
     return { generalAccess, workspaceLevel };
+}
+
+/**
+ * The access summary of a fetched access list — effective workspace access plus the
+ * explicit grantee count. The single derivation shared by an inline access row (a
+ * consumer's own page-level fetch) and {@link ObjectShareDialog}'s `onSummaryChange`,
+ * so the two can never disagree on what a list means.
+ *
+ * @internal
+ */
+export function accessListToSummary(list: IObjectAccessList): IObjectAccessSummary {
+    const inheritedLevel = deriveInheritedWorkspaceLevel(list.grants);
+    return {
+        ...composeEffectiveWorkspaceAccess(
+            deriveGeneralAccess(list.grants),
+            deriveWorkspacePermissionLevel(list.grants),
+            inheritedLevel,
+        ),
+        granteeCount: granteesFromAccessList(list).length,
+    };
 }

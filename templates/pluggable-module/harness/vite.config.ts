@@ -52,7 +52,6 @@ export default defineConfig(({ mode }): UserConfig => {
         base: isProduction ? "/{applicationTemplateScope}/" : "/",
         publicDir: false,
         define: {
-            SDK_BACKEND: JSON.stringify("tiger"),
             TIGER_API_TOKEN: isProduction ? undefined : JSON.stringify(env["TIGER_API_TOKEN"]),
             PRODUCTION: JSON.stringify(isProduction),
             APP_TEMPLATE_REMOTE_URL: isProduction
@@ -61,7 +60,6 @@ export default defineConfig(({ mode }): UserConfig => {
                   ? JSON.stringify(env["APP_TEMPLATE_REMOTE_URL"])
                   : "undefined",
             "process.env": JSON.stringify({}),
-            REACT_APP_SDK_BACKEND: JSON.stringify("TIGER"),
             REACT_APP_API_TOKEN: isProduction ? undefined : JSON.stringify(env["TIGER_API_TOKEN"]),
             REACT_APP_IN_AIO: JSON.stringify(false),
         },

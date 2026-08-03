@@ -37,30 +37,22 @@ const renderControls = (props: Partial<Parameters<typeof UiGranteeRowControls>[0
         />,
     );
 
-// The row has two separate popovers; open the relevant trigger before asserting on its content.
-const openPermissionMenu = () =>
-    fireEvent.click(screen.getByRole("button", { name: /^Can view( & share)?$/ }));
-const openMoreOptions = () => fireEvent.click(screen.getByRole("button", { name: /more options/i }));
-const openLabelsPicker = () => {
-    openMoreOptions();
-    fireEvent.click(screen.getByRole("menuitem", { name: /labels access/i }));
-};
+const openPermissionMenu = (name: RegExp = /^Can view( & share)?$/) =>
+    fireEvent.click(screen.getByRole("button", { name }));
 
 describe("UiGranteeRowControls", () => {
-    it("renders the permission menu and the ⋯ more-options menu, not a standalone labels dropdown", () => {
-        renderControls({ permissionLevel: "VIEW" });
-        // Permission trigger button — the permission level.
+    it("renders one permission dropdown hosting levels, Label access and Remove access", () => {
+        renderControls({ permissionLevel: "VIEW", onRemoveAccess: () => {} });
+        // Permission trigger button — the permission level; no standalone triggers.
         expect(screen.getByRole("button", { name: /^Can view$/ })).toBeInTheDocument();
-        // No standalone labels trigger button.
+        expect(screen.queryByRole("button", { name: /more options/i })).not.toBeInTheDocument();
         expect(screen.queryByRole("button", { name: /All labels/ })).not.toBeInTheDocument();
-        expect(screen.queryByRole("button", { name: /of 4/ })).not.toBeInTheDocument();
-        // The permission menu carries the level rows but not labels/transfer.
         openPermissionMenu();
+        expect(screen.getByRole("menuitemradio", { name: /^Can edit & share$/ })).toBeInTheDocument();
+        expect(screen.getByRole("menuitemradio", { name: /^Can view & share$/ })).toBeInTheDocument();
         expect(screen.getByRole("menuitemradio", { name: /^Can view$/ })).toBeInTheDocument();
-        expect(screen.queryByRole("menuitem", { name: /labels access/i })).not.toBeInTheDocument();
-        // The ⋯ menu carries the Manage labels access row.
-        openMoreOptions();
-        expect(screen.getByRole("menuitem", { name: /labels access/i })).toBeInTheDocument();
+        expect(screen.getByRole("menuitem", { name: /label access/i })).toBeInTheDocument();
+        expect(screen.getByRole("menuitem", { name: /Remove access/i })).toBeInTheDocument();
     });
 
     it("renders the 'Can view & share' permission label when level is SHARE", () => {
@@ -68,51 +60,27 @@ describe("UiGranteeRowControls", () => {
         expect(screen.getByRole("button", { name: /^Can view & share$/ })).toBeInTheDocument();
     });
 
-    it("renders EDIT as a static, non-interactive 'Can edit' label with no permission dropdown", () => {
+    it("renders EDIT as a selectable 'Can edit & share' dropdown with the level checked", () => {
         renderControls({ permissionLevel: "EDIT", selectedLabelIds: ["id"] });
-        // Shown as plain text, not a button — the grant can't be managed here.
-        expect(screen.getByText("Can edit")).toBeInTheDocument();
-        expect(screen.queryByRole("button", { name: /Can edit/ })).not.toBeInTheDocument();
-        expect(screen.queryByRole("button", { name: /Can view/ })).not.toBeInTheDocument();
+        openPermissionMenu(/^Can edit & share$/);
+        expect(screen.getByRole("menuitemradio", { name: /^Can edit & share$/ })).toBeChecked();
+        expect(screen.getByRole("menuitemradio", { name: /^Can view & share$/ })).not.toBeChecked();
+        expect(screen.getByRole("menuitemradio", { name: /^Can view$/ })).not.toBeChecked();
     });
 
-    it("still exposes the ⋯ labels menu for an EDIT-level grantee", () => {
-        // Label scope is independent of the permission level, so it stays editable.
-        renderControls({ permissionLevel: "EDIT" });
-        openMoreOptions();
-        expect(screen.getByRole("menuitem", { name: /labels access/i })).toBeInTheDocument();
-    });
-
-    it("keeps Remove access reachable for an EDIT row via the ⋯ menu", () => {
-        // EDIT has no permission dropdown to host Remove access, so it moves to the ⋯ menu.
-        const onRemoveAccess = vi.fn();
-        renderControls({ permissionLevel: "EDIT", onRemoveAccess });
-        openMoreOptions();
-        const removeItem = screen.getByRole("menuitem", { name: /Remove access/i });
-        fireEvent.click(removeItem);
-        expect(onRemoveAccess).toHaveBeenCalledOnce();
-    });
-
-    it("shows the ⋯ menu with Remove access for a label-less EDIT grantee", () => {
-        // Even with no labels and no transfer, an EDIT row must stay removable.
+    it("omits the Label access row for a label-less grantee but keeps Remove access", () => {
         renderControls({
             permissionLevel: "EDIT",
             labels: [],
             selectedLabelIds: [],
             onRemoveAccess: () => {},
         });
-        openMoreOptions();
+        openPermissionMenu(/^Can edit & share$/);
+        expect(screen.queryByRole("menuitem", { name: /label access/i })).not.toBeInTheDocument();
         expect(screen.getByRole("menuitem", { name: /Remove access/i })).toBeInTheDocument();
     });
 
-    it("does not duplicate Remove access into the ⋯ menu for a VIEW row", () => {
-        // VIEW keeps Remove in its permission dropdown; the ⋯ menu must not repeat it.
-        renderControls({ permissionLevel: "VIEW", onRemoveAccess: () => {} });
-        openMoreOptions();
-        expect(screen.queryByRole("menuitem", { name: /Remove access/i })).not.toBeInTheDocument();
-    });
-
-    it("shows the effective-permission warning badge only when effectivePermission is set", () => {
+    it("shows the effective-permission warning badge only when the inherited level is higher", () => {
         const { rerender } = renderControls({ permissionLevel: "VIEW" });
         // No badge when the assigned permission is already effective.
         expect(screen.queryByRole("img", { name: /effective permission/i })).not.toBeInTheDocument();
@@ -132,25 +100,33 @@ describe("UiGranteeRowControls", () => {
         expect(screen.getByRole("img", { name: /effective permission/i })).toBeInTheDocument();
     });
 
-    it("hides the badge when the assigned permission already matches the effective one", () => {
-        // SHARE assigned + SHARE effective is not an elevation, so no warning should show.
-        renderControls({ permissionLevel: "SHARE", effectivePermission: "SHARE", selectedLabelIds: ["id"] });
-        expect(screen.queryByRole("img", { name: /effective permission/i })).not.toBeInTheDocument();
+    it("shows the badge for an inherited EDIT above a direct SHARE grant", () => {
+        renderControls({ permissionLevel: "SHARE", effectivePermission: "EDIT", selectedLabelIds: ["id"] });
+        expect(screen.getByRole("img", { name: /effective permission/i })).toBeInTheDocument();
     });
 
-    it("does not render the labels picker until the menu Labels row is clicked", () => {
+    it("trusts the effectivePermission contract instead of re-deriving the level ordering", () => {
+        // The prop's contract says it is set only when it outranks the assigned
+        // level (the ext side owns that comparison) — the control renders the badge
+        // whenever set, even for input that violates the contract.
+        renderControls({ permissionLevel: "SHARE", effectivePermission: "SHARE", selectedLabelIds: ["id"] });
+        expect(screen.getByRole("img", { name: /effective permission/i })).toBeInTheDocument();
+    });
+
+    it("does not render the labels picker until the menu Label access row is clicked", () => {
         renderControls({ selectedLabelIds: ["id", "name", "email", "ssn"] });
-        openMoreOptions();
+        openPermissionMenu();
         // Picker body (checklist rows) not present until drilled in.
         expect(screen.queryByRole("checkbox", { name: /Customer Email/ })).not.toBeInTheDocument();
-        fireEvent.click(screen.getByRole("menuitem", { name: /labels access/i }));
+        fireEvent.click(screen.getByRole("menuitem", { name: /label access/i }));
         expect(screen.getByRole("checkbox", { name: /Customer Email/ })).toBeInTheDocument();
     });
 
     it("Apply in the opened picker fires onLabelsChange with the locked primary always included", () => {
         const onLabelsChange = vi.fn();
         renderControls({ selectedLabelIds: ["id", "name", "email", "ssn"], onLabelsChange });
-        openLabelsPicker();
+        openPermissionMenu();
+        fireEvent.click(screen.getByRole("menuitem", { name: /label access/i }));
         // Drop two non-locked labels.
         fireEvent.click(screen.getByRole("checkbox", { name: /Customer Email/ }));
         fireEvent.click(screen.getByRole("checkbox", { name: /Customer SSN/ }));
@@ -163,8 +139,8 @@ describe("UiGranteeRowControls", () => {
         const onPermissionChange = vi.fn();
         renderControls({ onPermissionChange });
         openPermissionMenu();
-        fireEvent.click(screen.getByRole("menuitemradio", { name: /Can view & share/ }));
-        expect(onPermissionChange).toHaveBeenCalledWith("SHARE");
+        fireEvent.click(screen.getByRole("menuitemradio", { name: /Can edit & share/ }));
+        expect(onPermissionChange).toHaveBeenCalledWith("EDIT");
     });
 
     it("emits onRemoveAccess from the permission menu when picked", () => {
@@ -175,39 +151,19 @@ describe("UiGranteeRowControls", () => {
         expect(onRemoveAccess).toHaveBeenCalledOnce();
     });
 
-    it("does not render the ⋯ menu at all when it would be empty (no labels, Remove in the dropdown)", () => {
-        renderControls({ labels: [], selectedLabelIds: [] });
-        // The ellipsis trigger button is absent.
-        expect(screen.queryByRole("button", { name: /More options/ })).not.toBeInTheDocument();
-        // The permission trigger is still there.
-        expect(screen.getByRole("button", { name: /^Can view$/ })).toBeInTheDocument();
-    });
-
-    it("merged mode hosts levels, labels and Remove access in one dropdown with no ⋯ menu", () => {
-        renderControls({ mergedControls: true, onRemoveAccess: () => {} });
-        expect(screen.queryByRole("button", { name: /more options/i })).not.toBeInTheDocument();
-        openPermissionMenu();
-        expect(screen.getByRole("menuitemradio", { name: /^Can view$/ })).toBeInTheDocument();
-        expect(screen.getByRole("menuitem", { name: /labels access/i })).toBeInTheDocument();
-        expect(screen.getByRole("menuitem", { name: /Remove access/i })).toBeInTheDocument();
-    });
-
-    it("merged mode offers the level dropdown even for an EDIT grant, anchored on 'Can edit'", () => {
-        renderControls({ mergedControls: true, permissionLevel: "EDIT" });
-        fireEvent.click(screen.getByRole("button", { name: /^Can edit$/ }));
-        // EDIT itself is not selectable — the menu opens with no level checked.
-        expect(screen.getByRole("menuitemradio", { name: /^Can view & share$/ })).not.toBeChecked();
-        expect(screen.getByRole("menuitemradio", { name: /^Can view$/ })).not.toBeChecked();
-    });
-
-    it("merged mode drills into the labels checklist from the permission menu", () => {
-        const onLabelsChange = vi.fn();
-        renderControls({ mergedControls: true, onLabelsChange });
-        openPermissionMenu();
-        fireEvent.click(screen.getByRole("menuitem", { name: /labels access/i }));
-        fireEvent.click(screen.getByRole("checkbox", { name: /Customer Email/ }));
-        fireEvent.click(screen.getByRole("button", { name: "Apply" }));
-        expect(onLabelsChange).toHaveBeenCalledWith(["id", "name", "ssn"]);
+    it("forwards disabledLevels with the disabled tooltip to the permission menu", () => {
+        const onPermissionChange = vi.fn();
+        renderControls({
+            permissionLevel: "SHARE",
+            disabledLevels: ["EDIT"],
+            disabledTooltip: "You can't set higher permissions for yourself.",
+            onPermissionChange,
+        });
+        openPermissionMenu(/^Can view & share$/);
+        const editRow = screen.getByRole("menuitemradio", { name: /^Can edit & share$/ });
+        expect(editRow).toHaveAttribute("aria-disabled", "true");
+        fireEvent.click(editRow);
+        expect(onPermissionChange).not.toHaveBeenCalled();
     });
 
     it("forwards dataTestId", () => {

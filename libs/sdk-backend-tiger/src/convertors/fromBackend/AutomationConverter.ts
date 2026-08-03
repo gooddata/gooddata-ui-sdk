@@ -324,7 +324,7 @@ export function convertAutomation(
         state: state as IAutomationState,
         dashboard,
         workspace,
-        // Bear legacy props
+        // Legacy props kept for backward compatibility
         unlisted: false,
         production: true,
         deprecated: false,

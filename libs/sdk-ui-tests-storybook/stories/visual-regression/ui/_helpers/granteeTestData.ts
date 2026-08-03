@@ -1,15 +1,28 @@
 // (C) 2026 GoodData Corporation
 
+import { idRef } from "@gooddata/sdk-model";
 import { type IUiGranteeAsyncOption, type IUiGranteeAsyncOptions } from "@gooddata/sdk-ui-kit";
 
 /** Shared grantee fixtures for the UiGranteeAsyncPicker / UiAddGranteeDialog stories. */
 export const ALL: IUiGranteeAsyncOption[] = [
-    { id: "g:marketing", kind: "group", name: "Marketing" },
-    { id: "g:engineering", kind: "group", name: "Engineering" },
-    { id: "g:design", kind: "group", name: "Design" },
-    { id: "u:jane", kind: "user", name: "Jane Good", email: "jane.good@company.com" },
-    { id: "u:marek", kind: "user", name: "Marek Stránský", email: "marek@example.com" },
-    { id: "u:julie", kind: "user", name: "Julie Better", email: "julie.better@company.com" },
+    { id: "g:marketing", ref: idRef("g:marketing"), kind: "group", name: "Marketing" },
+    { id: "g:engineering", ref: idRef("g:engineering"), kind: "group", name: "Engineering" },
+    { id: "g:design", ref: idRef("g:design"), kind: "group", name: "Design" },
+    { id: "u:jane", ref: idRef("u:jane"), kind: "user", name: "Jane Good", email: "jane.good@company.com" },
+    {
+        id: "u:marek",
+        ref: idRef("u:marek"),
+        kind: "user",
+        name: "Marek Stránský",
+        email: "marek@example.com",
+    },
+    {
+        id: "u:julie",
+        ref: idRef("u:julie"),
+        kind: "user",
+        name: "Julie Better",
+        email: "julie.better@company.com",
+    },
 ];
 
 export function loadOptions(query: string): Promise<IUiGranteeAsyncOptions> {

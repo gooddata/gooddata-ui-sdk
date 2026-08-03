@@ -28,6 +28,7 @@ interface IDateTimePickerProps {
     dateFormat?: string;
     isMobile: boolean;
     isTimeEnabled: boolean;
+    isSecondsEnabled?: boolean;
     className: string;
     defaultTime?: string;
     accessibilityConfig: IDateTimePickerAccessibilityConfig;
@@ -51,6 +52,7 @@ export const DateTimePicker = forwardRef<HTMLInputElement, IDateTimePickerProps>
             dateFormat,
             isMobile,
             isTimeEnabled,
+            isSecondsEnabled,
             className,
             accessibilityConfig,
             inputErrorMessageTexts,
@@ -108,6 +110,7 @@ export const DateTimePicker = forwardRef<HTMLInputElement, IDateTimePickerProps>
                             errorText={timeInputErrorText}
                             isMobile={isMobile}
                             withoutApply={withoutApply}
+                            withSeconds={isSecondsEnabled}
                         />
                     ) : null}
                 </fieldset>

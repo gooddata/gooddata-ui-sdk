@@ -27648,20 +27648,6 @@
                 },
                 "description": "An all-time date filter that does not restrict by date range. Controls how rows with empty (null/missing) date values are handled."
             },
-            "AllowedValue": {
-                "required": [
-                    "value"
-                ],
-                "type": "object",
-                "properties": {
-                    "title": {
-                        "type": "string"
-                    },
-                    "value": {
-                        "type": "string"
-                    }
-                }
-            },
             "AmplitudeService": {
                 "required": [
                     "aiProjectApiKey",
@@ -57060,6 +57046,13 @@
             "StringConstraints": {
                 "type": "object",
                 "properties": {
+                    "allowedValues": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/StringParameterAllowedValue"
+                        }
+                    },
                     "maxLength": {
                         "type": "integer",
                         "format": "int32"
@@ -57070,6 +57063,20 @@
                     }
                 }
             },
+            "StringParameterAllowedValue": {
+                "required": [
+                    "value"
+                ],
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "value": {
+                        "type": "string"
+                    }
+                }
+            },
             "StringParameterDefinition": {
                 "required": [
                     "defaultValue",
@@ -57077,13 +57084,6 @@
                 ],
                 "type": "object",
                 "properties": {
-                    "allowedValues": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/AllowedValue"
-                        }
-                    },
                     "constraints": {
                         "$ref": "#/components/schemas/StringConstraints"
                     },

@@ -22,6 +22,21 @@ import type {
 } from "../objectShareController.types.js";
 import { ObjectShareDialog } from "../ObjectShareDialog.js";
 
+// The dialog owns its controller (one open = one session), so tests inject a stub
+// by mocking the controller hook: `renderDialog` assigns the stub per test.
+// `hookCalls` counts hook invocations, so lifecycle tests can assert the session
+// does not exist at all while the dialog is closed.
+const injected = vi.hoisted(() => ({
+    controller: undefined as IObjectShareController | undefined,
+    hookCalls: 0,
+}));
+vi.mock("../useObjectShareController.js", () => ({
+    useObjectShareController: () => {
+        injected.hookCalls += 1;
+        return injected.controller!;
+    },
+}));
+
 // Real English strings, so copy-sensitive behavior ("(you)" suffix, the shared
 // self-restrict warning) is asserted against what users actually see.
 const MESSAGES = Object.fromEntries(Object.entries(en_US).map(([id, message]) => [id, message.text]));
@@ -32,6 +47,7 @@ const SELF_RESTRICT_WARNING = MESSAGES["objectShare.selfRestrict.warning"]!;
 // row composition can be asserted directly — no modal/portal DOM.
 const captured = vi.hoisted(() => ({
     addDisabled: [] as Array<boolean | undefined>,
+    isLoading: [] as Array<boolean | undefined>,
     rows: [] as Array<{ id: string; name: string; email?: string }>,
     controls: [] as Array<Partial<IUiGranteeRowControlsProps>>,
     confirms: [] as Array<{
@@ -56,6 +72,7 @@ vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
         // controls slot so row-control props (and the real Admin tag) render too.
         UiObjectShareDialog: (props: IUiObjectShareDialogProps) => {
             captured.addDisabled.push(props.isAddDisabled);
+            captured.isLoading.push(props.isLoading);
             // Snapshot of the LAST render only — re-renders replace, not append,
             // so whole-array assertions stay stable.
             captured.rows.length = 0;
@@ -109,7 +126,6 @@ const SELF_GRANTEE = {
 
 function makeController(stateOverrides: Partial<IObjectShareControllerState>): IObjectShareController {
     const actions: IObjectShareControllerActions = {
-        reset: noop,
         openAddGrantee: noop,
         closeAddGrantee: noop,
         setPendingGrantees: noop,
@@ -126,20 +142,21 @@ function makeController(stateOverrides: Partial<IObjectShareControllerState>): I
     const state: IObjectShareControllerState = {
         subview: "main",
         status: "success",
-        accessUnavailable: false,
         summary: undefined,
-        targetKey: "label.country",
-        selfIdentity: undefined,
-        selfIdentityResolved: true,
-        seededWithoutGrants: false,
         grantees: [OTHER_GRANTEE],
+        selfManagedGranteeId: undefined,
+        selfManagedDisabledLevels: undefined,
+        workspaceDisabledLevels: undefined,
+        granteeControlsLocked: false,
+        adminSelfRow: undefined,
         generalAccess: "RESTRICTED",
         workspaceLevel: "VIEW",
-        workspaceAccessInherited: false,
+        workspaceInheritedLevel: undefined,
         workspaceLevelLocked: false,
         workspaceLevelSaving: false,
         labels: [],
         labelsResolved: true,
+        labelsInitializing: false,
         selectedLabelIdsByGrantee: {},
         pendingGrantees: [],
         ...stateOverrides,
@@ -147,11 +164,13 @@ function makeController(stateOverrides: Partial<IObjectShareControllerState>): I
     return { state, actions };
 }
 
-function renderDialog(controller: IObjectShareController) {
+function renderDialog(controller: IObjectShareController, onSummaryChange?: (summary: unknown) => void) {
     captured.addDisabled.length = 0;
+    captured.isLoading.length = 0;
     captured.rows.length = 0;
     captured.controls.length = 0;
     captured.confirms.length = 0;
+    injected.controller = controller;
     return render(
         <IntlProvider locale="en-US" messages={MESSAGES}>
             <BackendProvider backend={dummyBackendEmptyData()}>
@@ -161,7 +180,7 @@ function renderDialog(controller: IObjectShareController) {
                         objectTitle="Country"
                         isOpen
                         onClose={noop}
-                        controller={controller}
+                        onSummaryChange={onSummaryChange}
                     />
                 </WorkspaceProvider>
             </BackendProvider>
@@ -170,6 +189,32 @@ function renderDialog(controller: IObjectShareController) {
 }
 
 const lastSelfConfirm = () => captured.confirms.filter((c) => c.title === SELF_RESTRICT_TITLE).at(-1);
+
+describe("ObjectShareDialog session lifecycle", () => {
+    it("mounts no session while closed — the controller does not exist", () => {
+        // The one-open-one-session contract is enforced by the component itself: a
+        // consumer keeping it mounted with isOpen=false must get no controller, no
+        // fetches, and no state that could leak into the next open.
+        injected.controller = makeController({});
+        injected.hookCalls = 0;
+        const { container } = render(
+            <IntlProvider locale="en-US" messages={MESSAGES}>
+                <BackendProvider backend={dummyBackendEmptyData()}>
+                    <WorkspaceProvider workspace="ws">
+                        <ObjectShareDialog
+                            target={TARGET}
+                            objectTitle="Country"
+                            isOpen={false}
+                            onClose={noop}
+                        />
+                    </WorkspaceProvider>
+                </BackendProvider>
+            </IntlProvider>,
+        );
+        expect(injected.hookCalls).toBe(0);
+        expect(container.firstChild).toBeNull();
+    });
+});
 
 describe("ObjectShareDialog gating", () => {
     it("locks Add and grantee-row controls until per-label scope resolves", () => {
@@ -185,6 +230,19 @@ describe("ObjectShareDialog gating", () => {
         expect(captured.addDisabled.at(-1)).toBe(false);
         expect(captured.controls.at(-1)?.isDisabled).toBe(false);
     });
+
+    it("stands skeletons in until the list AND the first label resolution load", () => {
+        renderDialog(makeController({ status: "loading", grantees: [] }));
+        expect(captured.isLoading.at(-1)).toBe(true);
+
+        // List loaded but the session's first label probe still out — reveal only
+        // once controls are actionable, not as a disabled-looking intermediate.
+        renderDialog(makeController({ labelsInitializing: true, labelsResolved: false }));
+        expect(captured.isLoading.at(-1)).toBe(true);
+
+        renderDialog(makeController({}));
+        expect(captured.isLoading.at(-1)).toBe(false);
+    });
 });
 
 describe("ObjectShareDialog self row", () => {
@@ -194,32 +252,52 @@ describe("ObjectShareDialog self row", () => {
         expect(captured.rows.map((r) => r.name)).toEqual(["Marek Stránský (you)", "Jane Good"]);
     });
 
-    it("renders the sole self grant as merged controls with the shared warning tooltip", () => {
-        renderDialog(makeController({ grantees: [SELF_GRANTEE] }));
+    it("forwards the controller's self-managed disabled levels with the shared warning tooltip", () => {
+        renderDialog(
+            makeController({
+                grantees: [SELF_GRANTEE],
+                selfManagedGranteeId: SELF_GRANTEE.id,
+                selfManagedDisabledLevels: ["EDIT", "SHARE"],
+            }),
+        );
 
         const controls = captured.controls.at(-1)!;
-        expect(controls.mergedControls).toBe(true);
-        expect(controls.disabledLevels).toEqual(["SHARE"]);
+        expect(controls.disabledLevels).toEqual(["EDIT", "SHARE"]);
         expect(controls.disabledTooltip).toBe(SELF_RESTRICT_WARNING);
     });
 
-    it("offers both levels enabled for a sole self EDIT grant", () => {
-        renderDialog(makeController({ grantees: [{ ...SELF_GRANTEE, level: "EDIT" as const }] }));
+    it("applies the disabled levels only to the self-managed row", () => {
+        renderDialog(
+            makeController({
+                grantees: [{ ...SELF_GRANTEE, level: "SHARE" as const }],
+                selfManagedGranteeId: SELF_GRANTEE.id,
+                selfManagedDisabledLevels: ["EDIT"],
+            }),
+        );
 
-        const controls = captured.controls.at(-1)!;
-        expect(controls.mergedControls).toBe(true);
-        expect(controls.disabledLevels).toBeUndefined();
+        expect(captured.controls.at(-1)!.disabledLevels).toEqual(["EDIT"]);
     });
 
-    it("keeps normal controls for a self row when other grantees exist", () => {
+    it("keeps normal controls when the controller classifies no self-managed row", () => {
+        // No self-managed row → no level disabling on any row.
         renderDialog(makeController({ grantees: [SELF_GRANTEE, OTHER_GRANTEE] }));
 
-        expect(captured.controls.every((c) => !c.mergedControls)).toBe(true);
+        expect(captured.controls.every((c) => c.disabledLevels === undefined)).toBe(true);
+    });
+
+    it("leaves other grantees' rows unconstrained (no level disabling — backend is the authority)", () => {
+        // Per the design there is no frontend grant-ceiling for granting to
+        // others; only the self-managed row disables levels (self-restriction).
+        renderDialog(makeController({ grantees: [{ ...OTHER_GRANTEE, level: "EDIT" as const }] }));
+
+        expect(captured.controls.at(-1)?.disabledLevels).toBeUndefined();
+        expect(captured.controls.at(-1)?.disabledTooltip).toBeUndefined();
     });
 
     it("confirms before lowering the signed-in user's own level, then commits", () => {
         const controller = makeController({
             grantees: [{ ...SELF_GRANTEE, level: "SHARE" as const }],
+            selfManagedGranteeId: SELF_GRANTEE.id,
         });
         renderDialog(controller);
         expect(lastSelfConfirm()?.isOpen).toBe(false);
@@ -242,6 +320,7 @@ describe("ObjectShareDialog self row", () => {
     it("discards the staged self-restriction on cancel", () => {
         const controller = makeController({
             grantees: [{ ...SELF_GRANTEE, level: "SHARE" as const }],
+            selfManagedGranteeId: SELF_GRANTEE.id,
         });
         renderDialog(controller);
 
@@ -258,7 +337,10 @@ describe("ObjectShareDialog self row", () => {
     });
 
     it("routes removing the signed-in user's own sole access through the same confirm", () => {
-        const controller = makeController({ grantees: [SELF_GRANTEE] });
+        const controller = makeController({
+            grantees: [SELF_GRANTEE],
+            selfManagedGranteeId: SELF_GRANTEE.id,
+        });
         renderDialog(controller);
 
         const controls = captured.controls.at(-1)!;
@@ -275,12 +357,16 @@ describe("ObjectShareDialog self row", () => {
 });
 
 describe("ObjectShareDialog administrator empty state", () => {
-    const SELF_IDENTITY = { id: "marek", name: "Marek Stránský", email: "marek@example.com" };
-    // The badge is keyed to the LOAD-time emptiness, so every positive case seeds empty.
-    const ADMIN_STATE = { grantees: [], selfIdentity: SELF_IDENTITY, seededWithoutGrants: true };
-
-    it("synthesizes the signed-in user's row with the Admin tag when the list loaded empty", () => {
-        renderDialog(makeController(ADMIN_STATE));
+    // WHEN the synthesized row applies is the controller's concern (see the
+    // row-classification tests on useObjectShareController) — these only cover
+    // rendering the classification.
+    it("renders the admin self row with the (you) suffix and the Admin tag", () => {
+        renderDialog(
+            makeController({
+                grantees: [],
+                adminSelfRow: { name: "Marek Stránský", email: "marek@example.com" },
+            }),
+        );
 
         expect(captured.rows).toEqual([
             { id: "self-admin", name: "Marek Stránský (you)", email: "marek@example.com" },
@@ -289,95 +375,46 @@ describe("ObjectShareDialog administrator empty state", () => {
         expect(screen.getByText(MESSAGES["objectShare.adminTag.label"]!)).toBeInTheDocument();
     });
 
-    it("shows no admin row when the list was only emptied locally (seeded with grants)", () => {
-        // A grant-holder who removed their own sole grant: list is empty NOW, but
-        // it did not load empty — they have no grant-independent access.
-        renderDialog(
-            makeController({ grantees: [], selfIdentity: SELF_IDENTITY, seededWithoutGrants: false }),
-        );
+    it("renders no rows when the controller classifies no admin row", () => {
+        renderDialog(makeController({ grantees: [], adminSelfRow: undefined }));
 
         expect(captured.rows).toEqual([]);
     });
 
-    it("shows no admin row when a workspace-wide SHARE rule explains the access", () => {
+    it("prepends the admin self row above added grantees rather than replacing them", () => {
+        // A caller with no grant of their own keeps the Admin badge even after
+        // adding grantees for others — the badge is not a zero-grantees empty state.
         renderDialog(
             makeController({
-                ...ADMIN_STATE,
-                generalAccess: "WORKSPACE",
-                workspaceLevel: "SHARE",
+                grantees: [OTHER_GRANTEE],
+                adminSelfRow: { name: "Marek Stránský", email: "marek@example.com" },
             }),
         );
 
-        expect(captured.rows).toEqual([]);
-    });
-
-    it("shows no admin row before the access list has loaded", () => {
-        renderDialog(makeController({ ...ADMIN_STATE, status: "loading" }));
-
-        expect(captured.rows).toEqual([]);
-    });
-
-    it("shows no admin row while the profile is unresolved", () => {
-        renderDialog(makeController({ ...ADMIN_STATE, selfIdentity: undefined }));
-
-        expect(captured.rows).toEqual([]);
+        expect(captured.rows.map((r) => r.id)).toEqual(["self-admin", "user:u1"]);
     });
 });
 
 describe("ObjectShareDialog sole-row identity guard", () => {
-    it("disables a sole grantee row until the profile resolves", () => {
+    it("disables grantee-row controls while the controller reports them locked", () => {
         // An unidentified sole row may be the caller's own grant — mutating it
         // would bypass the self-restriction confirm.
         renderDialog(
             makeController({
                 grantees: [{ ...SELF_GRANTEE, isSelf: undefined }],
-                selfIdentityResolved: false,
+                granteeControlsLocked: true,
             }),
         );
 
         expect(captured.controls.at(-1)?.isDisabled).toBe(true);
-        expect(captured.controls.at(-1)?.mergedControls).toBeFalsy();
+        // Locked, but not self-managed — no self-restrict level disabling.
+        expect(captured.controls.at(-1)?.disabledLevels).toBeUndefined();
     });
 
-    it("keeps a sole row disabled when the profile request failed", () => {
-        // Profile errors are swallowed (selfIdentityResolved stays false) — the
-        // guard must hold indefinitely, not just during the request.
-        renderDialog(
-            makeController({
-                grantees: [{ ...OTHER_GRANTEE }],
-                selfIdentityResolved: false,
-            }),
-        );
-
-        expect(captured.controls.at(-1)?.isDisabled).toBe(true);
-    });
-
-    it("does not gate a sole group row on profile resolution", () => {
-        // A group can never be the signed-in user — a failed profile lookup must
-        // not lock its controls.
-        renderDialog(
-            makeController({
-                grantees: [
-                    {
-                        id: "group:g1",
-                        kind: "group" as const,
-                        granteeRef: idRef("g1"),
-                        level: "VIEW" as const,
-                    },
-                ],
-                selfIdentityResolved: false,
-            }),
-        );
-
-        expect(captured.controls.at(-1)?.isDisabled).toBe(false);
-        expect(captured.controls.at(-1)?.mergedControls).toBeFalsy();
-    });
-
-    it("does not gate multi-row lists on profile resolution", () => {
+    it("leaves grantee-row controls enabled when not locked", () => {
         renderDialog(
             makeController({
                 grantees: [SELF_GRANTEE, OTHER_GRANTEE],
-                selfIdentityResolved: false,
             }),
         );
 
@@ -385,58 +422,22 @@ describe("ObjectShareDialog sole-row identity guard", () => {
     });
 });
 
-describe("ObjectShareDialog staged self-restriction lifecycle", () => {
-    it("drops the staged self-restriction when the dialog is closed via isOpen", () => {
-        // The detail view navigates between objects by toggling isOpen alone (no
-        // onClose), and the self row's id is target-independent — a stale confirm
-        // must not survive to the next object.
-        const controller = makeController({
-            grantees: [{ ...SELF_GRANTEE, level: "SHARE" as const }],
-        });
-        const view = (open: boolean) => (
-            <IntlProvider locale="en-US" messages={MESSAGES}>
-                <BackendProvider backend={dummyBackendEmptyData()}>
-                    <WorkspaceProvider workspace="ws">
-                        <ObjectShareDialog
-                            target={TARGET}
-                            objectTitle="Country"
-                            isOpen={open}
-                            onClose={noop}
-                            controller={controller}
-                        />
-                    </WorkspaceProvider>
-                </BackendProvider>
-            </IntlProvider>
-        );
-        captured.controls.length = 0;
-        captured.confirms.length = 0;
-        const { rerender } = render(view(true));
-
-        const controls = captured.controls.at(-1)!;
-        act(() => {
-            controls.onPermissionChange!("VIEW");
-        });
-        expect(lastSelfConfirm()?.isOpen).toBe(true);
-
-        rerender(view(false));
-        rerender(view(true));
-
-        expect(lastSelfConfirm()?.isOpen).toBe(false);
-        expect(controller.actions.changePermissionLevel).not.toHaveBeenCalled();
-    });
-
-    it("drops the staged self-restriction when the target changes while open", () => {
-        // A consumer may swap the target without closing; the staged confirm is
-        // keyed to the target and must not apply to the next object.
-        const controllerA = makeController({
-            targetKey: "label.country",
-            grantees: [{ ...SELF_GRANTEE, level: "SHARE" as const }],
-        });
-        const controllerB = makeController({
-            targetKey: "label.city",
-            grantees: [{ ...SELF_GRANTEE, level: "SHARE" as const }],
-        });
-        const view = (controller: IObjectShareController) => (
+describe("ObjectShareDialog summary synchronization", () => {
+    it("emits onSummaryChange when the displayed access changes", () => {
+        const summaryA = {
+            generalAccess: "RESTRICTED" as const,
+            workspaceLevel: "VIEW" as const,
+            granteeCount: 1,
+        };
+        const summaryB = {
+            generalAccess: "RESTRICTED" as const,
+            workspaceLevel: "VIEW" as const,
+            granteeCount: 2,
+        };
+        const onSummaryChange = vi.fn();
+        const controller = makeController({ summary: summaryA });
+        injected.controller = controller;
+        const view = () => (
             <IntlProvider locale="en-US" messages={MESSAGES}>
                 <BackendProvider backend={dummyBackendEmptyData()}>
                     <WorkspaceProvider workspace="ws">
@@ -445,26 +446,25 @@ describe("ObjectShareDialog staged self-restriction lifecycle", () => {
                             objectTitle="Country"
                             isOpen
                             onClose={noop}
-                            controller={controller}
+                            onSummaryChange={onSummaryChange}
                         />
                     </WorkspaceProvider>
                 </BackendProvider>
             </IntlProvider>
         );
-        captured.controls.length = 0;
-        captured.confirms.length = 0;
-        const { rerender } = render(view(controllerA));
+        const { rerender } = render(view());
+        expect(onSummaryChange).toHaveBeenLastCalledWith(summaryA);
 
-        const controls = captured.controls.at(-1)!;
-        act(() => {
-            controls.onPermissionChange!("VIEW");
-        });
-        expect(lastSelfConfirm()?.isOpen).toBe(true);
+        // A summary-affecting mutation produces a new summary → one more emission.
+        injected.controller = makeController({ summary: summaryB });
+        rerender(view());
+        expect(onSummaryChange).toHaveBeenLastCalledWith(summaryB);
+        expect(onSummaryChange).toHaveBeenCalledTimes(2);
+    });
 
-        rerender(view(controllerB));
-
-        expect(lastSelfConfirm()?.isOpen).toBe(false);
-        expect(controllerA.actions.changePermissionLevel).not.toHaveBeenCalled();
-        expect(controllerB.actions.changePermissionLevel).not.toHaveBeenCalled();
+    it("does not emit before the access list has loaded", () => {
+        const onSummaryChange = vi.fn();
+        renderDialog(makeController({ status: "loading", summary: undefined }), onSummaryChange);
+        expect(onSummaryChange).not.toHaveBeenCalled();
     });
 });

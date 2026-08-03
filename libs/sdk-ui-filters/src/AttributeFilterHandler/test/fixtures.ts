@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import {
@@ -31,7 +32,7 @@ export const anotherParticularAttributeElements: ElementsQueryOptionsElementsSpe
 export const limitingAttributeFilters: IElementsQueryAttributeFilter[] = [
     {
         attributeFilter: newPositiveAttributeFilter(ReferenceMd.Product.Name, {
-            uris: ["/gdc/md/referenceworkspace/obj/1086/elements?id=460488"],
+            uris: ["460488"],
         }),
         overAttribute: idRef("attr.opportunitysnapshot.id"),
     },
@@ -74,10 +75,7 @@ const backend = recordedBackend(ReferenceRecordings.Recordings, {
 const workspace = "testWorkspace";
 
 const positiveAttributeFilter = newPositiveAttributeFilter(ReferenceMd.Product.Name, {
-    uris: [
-        "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
-        "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
-    ],
+    uris: ["165678", "165847"],
 });
 
 const emptyPositiveAttributeFilter = newPositiveAttributeFilter(ReferenceMd.Product.Name, {
@@ -85,10 +83,7 @@ const emptyPositiveAttributeFilter = newPositiveAttributeFilter(ReferenceMd.Prod
 });
 
 const negativeAttributeFilter = newNegativeAttributeFilter(ReferenceMd.Product.Name, {
-    uris: [
-        "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
-        "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
-    ],
+    uris: ["165678", "165847"],
 });
 
 const nonExistingAttributeFilter = newPositiveAttributeFilter("non-existing-displayForm", {
@@ -141,10 +136,7 @@ export const newTestAttributeFilterHandler = (
 };
 
 export const positiveAttributeFilterDefaultDF = newPositiveAttributeFilter(ReferenceMd.Product.Default, {
-    uris: [
-        "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
-        "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
-    ],
+    uris: ["165678", "165847"],
 });
 
 export const emptyPositiveAttributeFilterDefaultDF = newPositiveAttributeFilter(ReferenceMd.Product.Default, {
@@ -152,10 +144,7 @@ export const emptyPositiveAttributeFilterDefaultDF = newPositiveAttributeFilter(
 });
 
 export const negativeAttributeFilterDefaultDF = newNegativeAttributeFilter(ReferenceMd.Product.Default, {
-    uris: [
-        "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
-        "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
-    ],
+    uris: ["165678", "165847"],
 });
 
 export const newTestAttributeFilterHandlerWithAttributeFilter = (

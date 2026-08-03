@@ -327,15 +327,7 @@ export {
 } from "./internal/components/insightList/useInsightPagedList.js";
 
 export { ObjectShareDialog, type IObjectShareDialogProps } from "./share/ObjectShareDialog.js";
-export { useObjectShareController as useObjectShare } from "./share/useObjectShareController.js";
+export { sortShareableLabels } from "./share/objectShareController.helpers.js";
+export { accessListToSummary } from "./share/accessSummary.js";
+export { isPermissionsNotAvailable } from "./share/accessErrors.js";
 export type { IObjectAccessSummary, IObjectShareLabel } from "./share/types.js";
-export type {
-    IGranteeIdentityFacts,
-    IObjectShareController,
-    IObjectShareControllerActions,
-    IObjectShareControllerState,
-    IObjectShareGrantee,
-    ISelfIdentity,
-    IUseObjectShareOptions,
-    ObjectSharePermissionLevel,
-} from "./share/objectShareController.types.js";

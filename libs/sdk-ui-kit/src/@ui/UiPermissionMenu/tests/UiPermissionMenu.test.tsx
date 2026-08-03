@@ -32,15 +32,17 @@ const renderMenu = (props: Partial<Parameters<typeof UiPermissionMenu>[0]> = {})
 const openMenu = () => fireEvent.click(screen.getByRole("button", { name: "open" }));
 
 describe("UiPermissionMenu", () => {
-    it("renders the two level rows as menuitemradio by default", () => {
+    it("renders the three level rows as menuitemradio by default", () => {
         renderMenu({ selectedLevel: "VIEW" });
         openMenu();
+        const edit = screen.getByRole("menuitemradio", { name: /Can edit & share/ });
         const share = screen.getByRole("menuitemradio", { name: /Can view & share/ });
         const view = screen.getByRole("menuitemradio", { name: "Can view" });
+        expect(edit).toHaveAttribute("aria-checked", "false");
         expect(share).toHaveAttribute("aria-checked", "false");
         expect(view).toHaveAttribute("aria-checked", "true");
         expect(screen.queryByRole("menuitem", { name: /Transfer ownership/ })).not.toBeInTheDocument();
-        expect(screen.queryByRole("menuitem", { name: /labels access/i })).not.toBeInTheDocument();
+        expect(screen.queryByRole("menuitem", { name: /label access/i })).not.toBeInTheDocument();
         expect(screen.queryByRole("menuitem", { name: /Remove access/ })).not.toBeInTheDocument();
     });
 
@@ -54,17 +56,25 @@ describe("UiPermissionMenu", () => {
         expect(screen.queryByRole("menuitemradio", { name: /Can view & share/ })).not.toBeInTheDocument();
     });
 
+    it("emits onPermissionChange with EDIT when Can edit & share is picked", () => {
+        const onPermissionChange = vi.fn();
+        renderMenu({ onPermissionChange });
+        openMenu();
+        fireEvent.click(screen.getByRole("menuitemradio", { name: /Can edit & share/ }));
+        expect(onPermissionChange).toHaveBeenCalledWith("EDIT");
+    });
+
     it("omits the labels row unless labels are provided", () => {
         renderMenu({ onRemoveAccess: () => {} });
         openMenu();
-        expect(screen.queryByRole("menuitem", { name: /labels access/i })).not.toBeInTheDocument();
+        expect(screen.queryByRole("menuitem", { name: /label access/i })).not.toBeInTheDocument();
     });
 
     it("renders levels above the caller's own as disabled with the explanatory tooltip", () => {
         const onPermissionChange = vi.fn();
         renderMenu({
             selectedLevel: "VIEW",
-            disabledLevels: ["SHARE"],
+            disabledLevels: ["SHARE", "EDIT"],
             disabledTooltip: "You can't set higher permissions for yourself.",
             onPermissionChange,
         });
@@ -74,6 +84,10 @@ describe("UiPermissionMenu", () => {
         // aria-disabled (not the disabled attribute) keeps the row focusable so
         // the explanatory tooltip stays keyboard-reachable.
         expect(share).toHaveAttribute("aria-disabled", "true");
+        expect(screen.getByRole("menuitemradio", { name: /Can edit & share/ })).toHaveAttribute(
+            "aria-disabled",
+            "true",
+        );
 
         fireEvent.click(share);
         expect(onPermissionChange).not.toHaveBeenCalled();
@@ -85,7 +99,7 @@ describe("UiPermissionMenu", () => {
     it("swaps the disabled level's info tooltip for the disabled explanation", async () => {
         renderMenu({
             selectedLevel: "VIEW",
-            disabledLevels: ["SHARE"],
+            disabledLevels: ["SHARE", "EDIT"],
             disabledTooltip: "You can't set higher permissions for yourself.",
         });
         openMenu();
@@ -107,7 +121,7 @@ describe("UiPermissionMenu", () => {
             onLabelsChange,
         });
         openMenu();
-        fireEvent.click(screen.getByRole("menuitem", { name: /labels access/i }));
+        fireEvent.click(screen.getByRole("menuitem", { name: /label access/i }));
         expect(screen.queryByRole("menuitemradio", { name: "Can view" })).not.toBeInTheDocument();
         fireEvent.click(screen.getByRole("checkbox", { name: /Customer Email/ }));
         fireEvent.click(screen.getByRole("button", { name: "Apply" }));
@@ -117,10 +131,22 @@ describe("UiPermissionMenu", () => {
     it("returns from the labels checklist to the row list on Back", () => {
         renderMenu({ labels: LABELS, selectedLabelIds: ["id"], onLabelsChange: () => {} });
         openMenu();
-        fireEvent.click(screen.getByRole("menuitem", { name: /labels access/i }));
+        fireEvent.click(screen.getByRole("menuitem", { name: /label access/i }));
         fireEvent.click(screen.getByRole("button", { name: /back/i }));
         expect(screen.getByRole("menuitemradio", { name: "Can view" })).toBeInTheDocument();
-        expect(screen.getByRole("menuitem", { name: /labels access/i })).toBeInTheDocument();
+        expect(screen.getByRole("menuitem", { name: /label access/i })).toBeInTheDocument();
+    });
+
+    it("hands keyboard focus into the drill-in and back to the labels row", () => {
+        // The view swap unmounts the focused element; without an explicit hand-off
+        // focus would drop to <body> and the next Tab would leave the popover. On
+        // drill-in the checklist's Back button takes focus; on return, the labels row.
+        renderMenu({ labels: LABELS, selectedLabelIds: ["id"], onLabelsChange: () => {} });
+        openMenu();
+        fireEvent.click(screen.getByRole("menuitem", { name: /label access/i }));
+        expect(screen.getByRole("button", { name: /back/i })).toHaveFocus();
+        fireEvent.click(screen.getByRole("button", { name: /back/i }));
+        expect(screen.getByRole("menuitem", { name: /label access/i })).toHaveFocus();
     });
 
     it("shows Remove access when handler is provided", () => {
@@ -142,8 +168,8 @@ describe("UiPermissionMenu", () => {
         renderMenu();
         openMenu();
         const infoButtons = screen.getAllByRole("button", { name: /More information about/ });
-        // One per level row (SHARE + VIEW)
-        expect(infoButtons.length).toBe(2);
+        // One per level row (EDIT + SHARE + VIEW)
+        expect(infoButtons.length).toBe(3);
         for (const btn of infoButtons) {
             // Not nested inside the menuitemradio button
             expect(btn.closest('[role="menuitemradio"]')).toBeNull();

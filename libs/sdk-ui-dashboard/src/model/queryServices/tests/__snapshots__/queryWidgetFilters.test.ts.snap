@@ -249,34 +249,34 @@ exports[`query widget filters > basic scenarios > should fail in case the widget
       },
       "config": {
         "getCommonAttributesResponses": {
-          "/gdc/md/referenceworkspace/obj/1054_/gdc/md/referenceworkspace/obj/1070": [
+          "obj_1054_obj_1070": [
             {
-              "uri": "/gdc/md/referenceworkspace/obj/1057",
+              "identifier": "obj_1057",
             },
           ],
-          "/gdc/md/referenceworkspace/obj/1054_/gdc/md/referenceworkspace/obj/1086": [
+          "obj_1054_obj_1086": [
             {
-              "uri": "/gdc/md/referenceworkspace/obj/1057",
+              "identifier": "obj_1057",
             },
           ],
-          "/gdc/md/referenceworkspace/obj/1054_/gdc/md/referenceworkspace/obj/1088": [
+          "obj_1054_obj_1088": [
             {
-              "uri": "/gdc/md/referenceworkspace/obj/1057",
+              "identifier": "obj_1057",
             },
           ],
-          "/gdc/md/referenceworkspace/obj/1070_/gdc/md/referenceworkspace/obj/1086": [
+          "obj_1070_obj_1086": [
             {
-              "uri": "/gdc/md/referenceworkspace/obj/1057",
+              "identifier": "obj_1057",
             },
           ],
-          "/gdc/md/referenceworkspace/obj/1070_/gdc/md/referenceworkspace/obj/1088": [
+          "obj_1070_obj_1088": [
             {
-              "uri": "/gdc/md/referenceworkspace/obj/1057",
+              "identifier": "obj_1057",
             },
           ],
-          "/gdc/md/referenceworkspace/obj/1086_/gdc/md/referenceworkspace/obj/1088": [
+          "obj_1086_obj_1088": [
             {
-              "uri": "/gdc/md/referenceworkspace/obj/1057",
+              "identifier": "obj_1057",
             },
           ],
         },

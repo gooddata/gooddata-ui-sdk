@@ -47,8 +47,8 @@ exports[`MultiSelectAttributeFilterHandler > invertSelection() should trigger on
       "irrelevantKeys": [],
       "isInverted": true,
       "keys": [
-        "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
-        "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+        "165678",
+        "165847",
       ],
     },
   },
@@ -62,8 +62,8 @@ exports[`MultiSelectAttributeFilterHandler > revertSelection() should trigger on
       "irrelevantKeys": [],
       "isInverted": false,
       "keys": [
-        "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
-        "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+        "165678",
+        "165847",
       ],
     },
   },
@@ -75,8 +75,8 @@ exports[`MultiSelectAttributeFilterHandler > should initialize selection for neg
   "irrelevantKeys": [],
   "isInverted": true,
   "keys": [
-    "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
-    "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+    "165678",
+    "165847",
   ],
 }
 `;
@@ -86,8 +86,8 @@ exports[`MultiSelectAttributeFilterHandler > should initialize selection for neg
   "irrelevantKeys": [],
   "isInverted": true,
   "keys": [
-    "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
-    "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+    "165678",
+    "165847",
   ],
 }
 `;
@@ -97,8 +97,8 @@ exports[`MultiSelectAttributeFilterHandler > should initialize selection for pos
   "irrelevantKeys": [],
   "isInverted": false,
   "keys": [
-    "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
-    "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+    "165678",
+    "165847",
   ],
 }
 `;
@@ -108,8 +108,8 @@ exports[`MultiSelectAttributeFilterHandler > should initialize selection for pos
   "irrelevantKeys": [],
   "isInverted": false,
   "keys": [
-    "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
-    "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+    "165678",
+    "165847",
   ],
 }
 `;

@@ -381,7 +381,7 @@ function chartedAttributeDiscovery(dv: DataViewFacade, chartType: string | undef
         const attributes = defaultChartedAttributeDiscovery(dv);
         return {
             ...attributes,
-            viewByAttribute: collapseMekkoViewByItems(dv, attributes.viewByAttribute ?? undefined),
+            viewByAttribute: collapseMekkoViewByItems(dv, attributes.viewByAttribute),
         };
     }
 

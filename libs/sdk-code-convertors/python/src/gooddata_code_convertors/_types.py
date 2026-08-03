@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 539cb0396bf007266ef615bc0afb002d3e891d865b1702e6314a204d76f154dd
+# schema-hash: e0a88378a899daa9d5b1c397c404dcccd795da324d31e7c10ee7c72cab374685
 
 from __future__ import annotations
 
@@ -1063,7 +1063,7 @@ QueryDateFilter1 = TypedDict(
     {
         'type': Literal['date_filter'],
         'using': str,
-        'granularity': Literal['MINUTE', 'HOUR', 'DAY', 'WEEK', 'WEEK_US', 'MONTH', 'QUARTER', 'YEAR', 'MINUTE_OF_HOUR', 'HOUR_OF_DAY', 'DAY_OF_WEEK', 'DAY_OF_MONTH', 'DAY_OF_YEAR', 'WEEK_OF_YEAR', 'MONTH_OF_YEAR', 'QUARTER_OF_YEAR', 'FISCAL_YEAR', 'FISCAL_QUARTER', 'FISCAL_MONTH'],
+        'granularity': Literal['SECOND', 'MINUTE', 'HOUR', 'DAY', 'WEEK', 'WEEK_US', 'MONTH', 'QUARTER', 'YEAR', 'SECOND_OF_MINUTE', 'SECOND_OF_DAY', 'MINUTE_OF_HOUR', 'MINUTE_OF_DAY', 'HOUR_OF_DAY', 'DAY_OF_WEEK', 'DAY_OF_MONTH', 'DAY_OF_YEAR', 'WEEK_OF_YEAR', 'MONTH_OF_YEAR', 'QUARTER_OF_YEAR', 'FISCAL_YEAR', 'FISCAL_QUARTER', 'FISCAL_MONTH'],
         'from': NotRequired[float],
         'to': NotRequired[float],
         'with': NotRequired[dict[str, QueryAttributeFilter]],
@@ -1080,7 +1080,7 @@ QueryDateFilter2 = TypedDict(
         'type': Literal['date_filter'],
         'using': str,
         'granularity': NotRequired[
-            Literal['MINUTE', 'HOUR', 'DAY', 'WEEK', 'WEEK_US', 'MONTH', 'QUARTER', 'YEAR', 'MINUTE_OF_HOUR', 'HOUR_OF_DAY', 'DAY_OF_WEEK', 'DAY_OF_MONTH', 'DAY_OF_YEAR', 'WEEK_OF_YEAR', 'MONTH_OF_YEAR', 'QUARTER_OF_YEAR', 'FISCAL_YEAR', 'FISCAL_QUARTER', 'FISCAL_MONTH']
+            Literal['SECOND', 'MINUTE', 'HOUR', 'DAY', 'WEEK', 'WEEK_US', 'MONTH', 'QUARTER', 'YEAR', 'SECOND_OF_MINUTE', 'SECOND_OF_DAY', 'MINUTE_OF_HOUR', 'MINUTE_OF_DAY', 'HOUR_OF_DAY', 'DAY_OF_WEEK', 'DAY_OF_MONTH', 'DAY_OF_YEAR', 'WEEK_OF_YEAR', 'MONTH_OF_YEAR', 'QUARTER_OF_YEAR', 'FISCAL_YEAR', 'FISCAL_QUARTER', 'FISCAL_MONTH']
         ],
         'from': NotRequired[str],
         'to': NotRequired[str],
@@ -1166,7 +1166,7 @@ class DateDataset(TypedDict):
     title_pattern: NotRequired[str]
     granularities: NotRequired[
         list[
-            Literal['MINUTE', 'HOUR', 'DAY', 'WEEK', 'WEEK_US', 'MONTH', 'QUARTER', 'YEAR', 'MINUTE_OF_HOUR', 'HOUR_OF_DAY', 'DAY_OF_WEEK', 'DAY_OF_WEEK_EU', 'DAY_OF_MONTH', 'DAY_OF_YEAR', 'DAY_OF_QUARTER', 'WEEK_OF_YEAR', 'WEEK_OF_YEAR_EU', 'WEEK_OF_QUARTER_EU', 'WEEK_OF_QUARTER', 'MONTH_OF_YEAR', 'MONTH_OF_QUARTER', 'QUARTER_OF_YEAR', 'FISCAL_YEAR', 'FISCAL_QUARTER', 'FISCAL_MONTH']
+            Literal['SECOND', 'MINUTE', 'HOUR', 'DAY', 'WEEK', 'WEEK_US', 'MONTH', 'QUARTER', 'YEAR', 'SECOND_OF_MINUTE', 'SECOND_OF_DAY', 'MINUTE_OF_HOUR', 'MINUTE_OF_DAY', 'HOUR_OF_DAY', 'DAY_OF_WEEK', 'DAY_OF_WEEK_EU', 'DAY_OF_MONTH', 'DAY_OF_YEAR', 'DAY_OF_QUARTER', 'WEEK_OF_YEAR', 'WEEK_OF_YEAR_EU', 'WEEK_OF_QUARTER_EU', 'WEEK_OF_QUARTER', 'MONTH_OF_YEAR', 'MONTH_OF_QUARTER', 'QUARTER_OF_YEAR', 'FISCAL_YEAR', 'FISCAL_QUARTER', 'FISCAL_MONTH']
         ]
     ]
 

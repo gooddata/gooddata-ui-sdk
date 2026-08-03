@@ -1,7 +1,8 @@
 // (C) 2026 GoodData Corporation
 
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage, type MessageDescriptor, useIntl } from "react-intl";
 
+import type { AccessGranularPermission } from "@gooddata/sdk-model";
 import type { IObjectAccessSummary } from "@gooddata/sdk-ui-ext";
 import { UiIcon } from "@gooddata/sdk-ui-kit";
 
@@ -22,6 +23,13 @@ export interface ICatalogDetailAccessRowProps {
     onOpen: () => void;
 }
 
+// Chip copy for each workspace-wide access level.
+const WORKSPACE_ACCESS_ROW_MESSAGE: Record<AccessGranularPermission, MessageDescriptor> = {
+    EDIT: shareMessages.accessRowWorkspaceEdit,
+    SHARE: shareMessages.accessRowWorkspaceShare,
+    VIEW: shareMessages.accessRowWorkspaceView,
+};
+
 /**
  * Inline metadata row showing the current access state. Composed of two chips:
  *
@@ -35,12 +43,11 @@ export function CatalogDetailAccessRow({ summary, onOpen }: ICatalogDetailAccess
     const intl = useIntl();
     const { generalAccess, workspaceLevel, granteeCount } = summary;
 
-    const stateText =
+    const stateText = intl.formatMessage(
         generalAccess === "RESTRICTED"
-            ? intl.formatMessage(shareMessages.accessRowRestricted)
-            : workspaceLevel === "SHARE"
-              ? intl.formatMessage(shareMessages.accessRowWorkspaceShare)
-              : intl.formatMessage(shareMessages.accessRowWorkspaceView);
+            ? shareMessages.accessRowRestricted
+            : WORKSPACE_ACCESS_ROW_MESSAGE[workspaceLevel],
+    );
 
     const stateIcon = generalAccess === "RESTRICTED" ? "lock" : "building";
 

@@ -53,6 +53,13 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     dateFormat?: string;
     locale?: string;
     isTimeForAbsoluteRangeEnabled?: boolean;
+    /**
+     * If enabled, the absolute date filter form time inputs allow second-level precision (HH:mm:ss) instead
+     * of minute precision (HH:mm). Only takes effect together with `isTimeForAbsoluteRangeEnabled`.
+     *
+     * @defaultValue false
+     */
+    isSecondsForAbsoluteRangeEnabled?: boolean;
     showDropDownHeaderMessage?: boolean;
     weekStart?: WeekStart;
     /**
@@ -192,6 +199,7 @@ export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState
         dateFormat: DEFAULT_DATE_FORMAT,
         isEditMode: false,
         isTimeForAbsoluteRangeEnabled: false,
+        isSecondsForAbsoluteRangeEnabled: false,
         locale: "en-US",
         onCancel: () => {},
         onOpen: () => {},
@@ -313,6 +321,7 @@ export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState
             openOnInit,
             locale,
             isTimeForAbsoluteRangeEnabled,
+            isSecondsForAbsoluteRangeEnabled,
             weekStart,
             customIcon,
             showDropDownHeaderMessage,
@@ -337,6 +346,7 @@ export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState
                 isExcludeCurrentPeriodEnabled={isExcludeCurrentPeriodEnabled}
                 hideDisabledExclude={this.props.hideDisabledExclude}
                 isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled ?? false}
+                isSecondsForAbsoluteRangeEnabled={isSecondsForAbsoluteRangeEnabled ?? false}
                 isEditMode={isEditMode ?? false}
                 filterOptions={filterOptions}
                 selectedFilterOption={selectedFilterOption}

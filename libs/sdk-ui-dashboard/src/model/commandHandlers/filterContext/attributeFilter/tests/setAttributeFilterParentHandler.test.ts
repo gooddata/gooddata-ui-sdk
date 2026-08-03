@@ -2,7 +2,7 @@
 
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { uriRef } from "@gooddata/sdk-model";
+import { idRef } from "@gooddata/sdk-model";
 
 import { setAttributeFilterParents } from "../../../../commands/filters.js";
 import { selectFilterContextAttributeFilters } from "../../../../store/tabs/filterContext/filterContextSelectors.js";
@@ -27,7 +27,7 @@ describe("setAttributeFilterParentHandler", () => {
             setAttributeFilterParents(firstFilterLocalId, [
                 {
                     filterLocalIdentifier: secondFilterLocalId,
-                    over: { attributes: [uriRef("/gdc/md/referenceworkspace/obj/1057")] },
+                    over: { attributes: [idRef("obj_1057")] },
                 },
             ]),
         );
@@ -46,7 +46,7 @@ describe("setAttributeFilterParentHandler", () => {
             setAttributeFilterParents(firstFilterLocalId, [
                 {
                     filterLocalIdentifier: secondFilterLocalId,
-                    over: { attributes: [uriRef("/gdc/md/referenceworkspace/obj/1057")] },
+                    over: { attributes: [idRef("obj_1057")] },
                 },
             ]),
         );

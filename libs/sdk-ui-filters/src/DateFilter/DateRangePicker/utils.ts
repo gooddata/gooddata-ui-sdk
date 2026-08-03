@@ -78,7 +78,7 @@ export const setTimeToDate = (baseDate: Date | undefined, time: ITime | undefine
     }
 
     const result = new Date(baseDate!);
-    result.setHours(time.hours!, time.minutes);
+    result.setHours(time.hours!, time.minutes, time.seconds ?? 0, 0);
 
     return result;
 };
@@ -90,5 +90,6 @@ export const getTimeFromDate = (date: Date | undefined): ITime | undefined => {
     return {
         hours: date.getHours(),
         minutes: date.getMinutes(),
+        seconds: date.getSeconds(),
     };
 };

@@ -4,6 +4,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 import { describe, expect, it, vi } from "vitest";
 
+import { idRef } from "@gooddata/sdk-model";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
 
 import { UiAddGranteeDialogCard } from "../UiAddGranteeDialogCard.js";
@@ -64,7 +65,9 @@ describe("UiAddGranteeDialogCard", () => {
             <UiAddGranteeDialogCard
                 {...baseProps}
                 onShare={onShare}
-                selectedGrantees={[{ id: "u1", kind: "user", name: "Jane", permissionLevel: "VIEW" }]}
+                selectedGrantees={[
+                    { id: "u1", ref: idRef("u1"), kind: "user", name: "Jane", permissionLevel: "VIEW" },
+                ]}
             />,
         );
         fireEvent.click(screen.getByRole("button", { name: "Add" }));
@@ -80,7 +83,9 @@ describe("UiAddGranteeDialogCard", () => {
         renderWithIntl(
             <UiAddGranteeDialogCard
                 {...baseProps}
-                selectedGrantees={[{ id: "u1", kind: "user", name: "Jane", permissionLevel: "VIEW" }]}
+                selectedGrantees={[
+                    { id: "u1", ref: idRef("u1"), kind: "user", name: "Jane", permissionLevel: "VIEW" },
+                ]}
             />,
         );
         expect(screen.getByRole("button", { name: "Add" })).toBeEnabled();

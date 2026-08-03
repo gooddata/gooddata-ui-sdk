@@ -27,6 +27,7 @@ export const StartDateInputField = forwardRef<HTMLInputElement, IDateRangeInputF
             dateFormat,
             isMobile,
             isTimeEnabled,
+            isSecondsEnabled,
             errors,
             intl,
             withoutApply,
@@ -78,6 +79,7 @@ export const StartDateInputField = forwardRef<HTMLInputElement, IDateRangeInputF
                 isMobile={isMobile}
                 onDayClick={onInputClick}
                 isTimeEnabled={isTimeEnabled}
+                isSecondsEnabled={isSecondsEnabled}
                 className={cx("s-date-range-picker-from", "gd-date-range-picker-from")}
                 defaultTime={DAY_START_TIME}
                 inputErrorMessageTexts={inputErrorMessageTexts}

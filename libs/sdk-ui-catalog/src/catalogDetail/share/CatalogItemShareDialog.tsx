@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { Suspense, lazy, useState } from "react";
+import { Suspense, lazy } from "react";
 
 import { useCatalogItemShareState } from "./CatalogItemShareProvider.js";
 
@@ -12,23 +12,17 @@ const CatalogItemShareDialogInner = lazy(() =>
 );
 
 /**
- * Lazy boundary for the catalog item's share dialog. Renders nothing until the
- * dialog is first opened; from then on it stays mounted (so close/reopen is
- * instant) and the dialog's own `isOpen` drives visibility. No-ops when sharing
- * is unavailable.
+ * Lazy boundary for the catalog item's share dialog. Mounted only while the dialog
+ * is open — one mount is one dialog session, and unmounting (close or navigation)
+ * discards the session's transient state. Reopening remounts the component; the
+ * chunk itself stays cached by the browser after the first open.
  *
  * @internal
  */
 export function CatalogItemShareDialog() {
     const { active, isOpen } = useCatalogItemShareState();
-    // Latch: once opened, keep the lazy dialog mounted so reopening doesn't reload
-    // the chunk or lose the dialog's transient state.
-    const [everOpened, setEverOpened] = useState(false);
-    if (isOpen && !everOpened) {
-        setEverOpened(true);
-    }
 
-    if (!active || !everOpened) {
+    if (!active || !isOpen) {
         return null;
     }
 

@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { type KeyboardEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { type KeyboardEvent, useCallback, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
 import { defineMessage, useIntl } from "react-intl";
@@ -59,6 +59,7 @@ import { SubjectForm } from "./components/SubjectForm/SubjectForm.js";
 import { SCHEDULED_EMAIL_DIALOG_ID } from "./constants.js";
 import { DefaultLoadingScheduledEmailDialog } from "./DefaultLoadingScheduledEmailDialog.js";
 import { useEditScheduledEmail } from "./hooks/useEditScheduledEmail.js";
+import { useElementHeightSnapshot } from "./hooks/useElementHeightSnapshot.js";
 import { useSaveScheduledEmailToBackend } from "./hooks/useSaveScheduledEmailToBackend.js";
 
 const OVERLAY_POSITION_TYPE = "sameAsTarget";
@@ -135,7 +136,6 @@ export function ScheduledMailDialogRenderer({
     >(null);
 
     const [selectedTabId, setSelectedTabId] = useState<"general" | "filters">("general");
-    const [tabContentHeight, setTabContentHeight] = useState<number | undefined>(undefined);
 
     const {
         isWhiteLabeled,
@@ -373,18 +373,12 @@ export function ScheduledMailDialogRenderer({
         setSelectedTabId(tab.id as "filters" | "general");
     }, []);
 
-    // Measure General tab content height to maintain consistent dialog size
-    useEffect(() => {
-        if (generalTabContentRef.current && selectedTabId === "general") {
-            // Use requestAnimationFrame to ensure DOM is fully rendered
-            requestAnimationFrame(() => {
-                if (generalTabContentRef.current) {
-                    const height = generalTabContentRef.current.scrollHeight;
-                    setTabContentHeight(height);
-                }
-            });
-        }
-    }, [selectedTabId]);
+    // Measure General tab content height to maintain consistent dialog size. Re-measures on
+    // content-size changes within the General tab itself (e.g. validation messages
+    // appearing/disappearing), not just on tab switch - otherwise the Filters tab could
+    // inherit a stale minHeight from before the change. The last measured value is kept
+    // internally so it survives the General tab unmounting when the user switches to Filters.
+    const tabContentHeight = useElementHeightSnapshot(generalTabContentRef, selectedTabId);
 
     if (isApplyCurrentFiltersDialogOpen) {
         return (

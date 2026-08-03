@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { type IDashboard, type ObjRef } from "@gooddata/sdk-model";
 import { type IClientWorkspaceIdentifiers } from "@gooddata/sdk-ui";
 import {
@@ -96,9 +97,8 @@ export interface IDashboardLoadOptions extends IDashboardBasePropsForLoader {
      * the dashboard from.
      *
      * @remarks
-     * Client workspace identifiers are not applicable to all backends - only the 'bear'
-     * backend supports them. They are tightly related to the Lifecycle Management feature of the 'bear'
-     * backend.
+     * Client workspace identifiers were only supported by the Lifecycle Management feature of the
+     * retired legacy platform; current backends do not support them.
      *
      * If you specify the client workspace then it has preference over all other means that can be used
      * to specify the workspace; more specifically the `workspace` prop on this object and workspace that may

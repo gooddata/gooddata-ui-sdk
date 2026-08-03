@@ -5,6 +5,7 @@ import { useCallback, useState } from "react";
 import { IntlProvider } from "react-intl";
 import { action } from "storybook/actions";
 
+import { idRef } from "@gooddata/sdk-model";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
 import { type IUiPickedGrantee, UiAddGranteeDialog } from "@gooddata/sdk-ui-kit";
 
@@ -60,6 +61,7 @@ export function WithGrantee() {
             initialPicked={[
                 {
                     id: "u:julie",
+                    ref: idRef("u:julie"),
                     kind: "user",
                     name: "Julie Better",
                     email: "julie.better@company.com",

@@ -41,6 +41,7 @@ interface IDateFilterBodyContentProps {
     route: DateFilterRoute;
     dateFormat: string;
     isTimeForAbsoluteRangeEnabled: boolean;
+    isSecondsForAbsoluteRangeEnabled?: boolean;
     weekStart: WeekStart;
     availableGranularities: DateFilterGranularity[];
     errors?: IExtendedDateFilterErrors;
@@ -70,6 +71,7 @@ export function DateFilterBodyContent({
     errors,
     dateFormat,
     isTimeForAbsoluteRangeEnabled,
+    isSecondsForAbsoluteRangeEnabled,
     weekStart,
     availableGranularities,
     withoutApply,
@@ -140,6 +142,7 @@ export function DateFilterBodyContent({
                 selectedFilterOption={selectedFilterOption as IUiAbsoluteDateFilterForm}
                 isMobile={isMobile}
                 isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled}
+                isSecondsForAbsoluteRangeEnabled={isSecondsForAbsoluteRangeEnabled}
                 weekStart={weekStart}
                 withoutApply={withoutApply}
             />

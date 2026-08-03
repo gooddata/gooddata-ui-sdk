@@ -13,11 +13,14 @@ import { isMekko, isNegativeValueIncluded } from "../_util/common.js";
  * enumerate view × measure combinations. Downstream consumers (categories, point names, drills)
  * index them by column, so collapse to one item per view value. No-op without a measure group
  * in the view-by dimension or with fewer than two measures.
+ *
+ * The `index % measureCount` stride holds only because MeasureGroup is the last header in its
+ * dimension (the invariant `findMeasureGroupInDimensions` enforces).
  */
 export function collapseMekkoViewByItems(
     dv: DataViewFacade,
-    viewByAttribute: IUnwrappedAttributeHeadersWithItems | undefined,
-): IUnwrappedAttributeHeadersWithItems | undefined {
+    viewByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
+): IUnwrappedAttributeHeadersWithItems | undefined | null {
     if (!viewByAttribute) {
         return viewByAttribute;
     }

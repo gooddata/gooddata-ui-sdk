@@ -73,14 +73,13 @@ function UiGranteeRowControlsExample() {
     return (
         <IntlProvider locale={DEFAULT_LANGUAGE} messages={DEFAULT_MESSAGES[DEFAULT_LANGUAGE]}>
             <div className="screenshot-target" style={{ width: 560 }}>
-                {/* Self-managed row: merged menu, SHARE disabled after dropping to VIEW. */}
+                {/* Self-managed row: levels above own disabled after dropping to VIEW. */}
                 <MockRow name="Marek Stránský (you)" email="marek.stransky@gooddata.com">
                     <UiGranteeRowControls
                         labels={LABELS}
                         selectedLabelIds={["id", "name", "email", "ssn"]}
                         permissionLevel="VIEW"
-                        mergedControls
-                        disabledLevels={["SHARE"]}
+                        disabledLevels={["SHARE", "EDIT"]}
                         disabledTooltip="You can't set higher permissions for yourself."
                         onLabelsChange={action("Marek → labels change")}
                         onPermissionChange={action("Marek → permission change")}

@@ -1,21 +1,24 @@
 // (C) 2026 GoodData Corporation
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import type { IObjectPermissionsObject } from "@gooddata/sdk-backend-spi";
 import {
-    type IAvailableAccessGrantee,
     type IGranularAccessGrantee,
     type IUser,
-    type ObjRef,
     idRef,
     objRefToString,
     serializeObjRef,
 } from "@gooddata/sdk-model";
-import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import {
+    type GoodDataSdkError,
+    convertError,
+    useBackendStrict,
+    useCancelablePromise,
+    useWorkspaceStrict,
+} from "@gooddata/sdk-ui";
 import { type GeneralAccessValue, type IUiGranteeAsyncOptions, useToastMessage } from "@gooddata/sdk-ui-kit";
 
-import { isPermissionsNotAvailable } from "./accessErrors.js";
 import {
     composeEffectiveWorkspaceAccess,
     deriveGeneralAccess,
@@ -24,18 +27,22 @@ import {
 } from "./accessSummary.js";
 import { objectShareMessages } from "./messages.js";
 import {
+    type GranteeEdit,
+    type IRuleEdit,
     assigneeIdentityFacts,
     assigneeMatchesQuery,
+    effectivePermissionAbove,
     granteeId,
     granteesFromAccessList,
+    mergeGrantees,
     userDisplayPair,
     userIdentityFacts,
 } from "./objectShareController.helpers.js";
 import type {
-    IGranteeIdentityFacts,
     IObjectShareControllerState,
     IObjectShareGrantee,
     ISelfIdentity,
+    ObjectSharePermissionLevel,
 } from "./objectShareController.types.js";
 import type { IObjectAccessSummary } from "./types.js";
 
@@ -45,153 +52,107 @@ import type { IObjectAccessSummary } from "./types.js";
  * @internal
  */
 export interface IAccessList {
-    /** Stable serialized key of the current target's ref, or undefined when none. */
-    targetKey: string | undefined;
-    /** True once the current target's list has been fetched and seeded into local state. */
+    /** True once the target's list has been fetched. */
     hasList: boolean;
-    /** Local grantee rows — seeded from the fetch, then authoritative; mutations write through. */
+    /** Display rows: the fetched list composed with the local edit overlay. */
     grantees: IObjectShareGrantee[];
     /**
-     * Whether the manage-gated fetch seeded ZERO explicit grants for the current
-     * target — i.e. the caller reached the access list without holding a grant of
-     * their own (grant-independent access). A load-time fact: locally emptying the
-     * list later (e.g. removing your own sole grant) must not retroactively claim
-     * grant-independent access, so this is never recomputed from the live list.
+     * Whether the fetched list held no grant for the SIGNED-IN user — they reached
+     * this manage-gated list without a grant of their own (grant-independent access:
+     * admin/manager rights, or a workspace rule reported separately). Derived from
+     * the immutable seed, never the live overlay: a caller whose own grant was the
+     * way in must not read as grant-independent after locally removing it.
      */
-    seededWithoutGrants: boolean;
+    seededWithoutSelfGrant: boolean;
     /** Signed-in user's identity facts + login id, once the profile resolves. */
     selfIdentity: ISelfIdentity | undefined;
     /**
-     * Whether the profile request resolved successfully — until then (or after a
-     * failure) rows' `isSelf` is only its unresolved default, so a sole grantee
-     * row cannot be told apart from the caller's own grant.
+     * Whether the profile resolved. Until then a sole grantee row can't be told apart
+     * from the caller's own grant, so its `isSelf` is only an unresolved default.
      */
     selfIdentityResolved: boolean;
-    /**
-     * Workspace vs restricted general access granted by THIS workspace's own rule —
-     * local state; mutations write through. Excludes inherited (parent-workspace)
-     * rule access, which is exposed separately as `inheritedWorkspaceLevel`.
-     */
+    /** Direct general access (excludes inherited rule access). */
     generalAccess: GeneralAccessValue;
-    /** Workspace-rule permission level (VIEW/SHARE) — local state; mutations write through. */
-    workspaceLevel: "VIEW" | "SHARE";
+    /** Workspace-rule permission level — the rule overlay if edited, else fetched. */
+    workspaceLevel: ObjectSharePermissionLevel;
     /**
-     * Strongest workspace-wide level inherited from parent workspaces, or undefined
-     * when none. Seeded from the fetch and never mutated: inherited access cannot
-     * be changed from this workspace, so no write-through applies. Effective
-     * (displayed) general access is WORKSPACE whenever this is set, regardless of
-     * the direct `generalAccess` state.
+     * Strongest workspace level inherited from parent workspaces. Cannot be changed
+     * from here, so effective general access is WORKSPACE whenever it's set.
      */
-    inheritedWorkspaceLevel: "VIEW" | "SHARE" | undefined;
-    /** Inline access summary, or undefined before the first load. */
+    workspaceInheritedLevel: ObjectSharePermissionLevel | undefined;
+    /** True while a workspace-rule re-grade is committing (the rule overlay is pending). */
+    workspaceLevelSaving: boolean;
+    /** Access summary of the displayed state, or undefined before the first load. */
     summary: IObjectAccessSummary | undefined;
-    /** Top-level load status surfaced as the controller status. */
+    /** Load status surfaced as the controller status. */
     status: IObjectShareControllerState["status"];
-    /** Error from the initial/target-change load. */
-    loadError: Error | undefined;
-    /**
-     * Whether the current target's load was denied because the caller can't manage
-     * its permissions (manage-gated endpoint returns 404). Derived from the live
-     * fetch, not the persisted `loadError`, so it can't lag a target switch and
-     * flag a new target with the previous one's 404.
-     */
-    accessUnavailable: boolean;
+    /** Typed SDK error from the load, or undefined. */
+    loadError: GoodDataSdkError | undefined;
 
     /** Write a grant change to the backend and toast. False on failure; no refetch. */
     commit: (mutate: IGranularAccessGrantee[], successMessage: { id: string }) => Promise<boolean>;
-    /**
-     * Picker loader — available assignees filtered by query, excluding
-     * already-granted grantees (add-grantee picker).
-     */
+    /** Picker loader — available assignees filtered by query, excluding already-granted ones. */
     loadOptions: (search: string) => Promise<IUiGranteeAsyncOptions>;
-    /** Resolve a grantee id back to the picker's original ObjRef (preserves Uri vs Id ref). */
-    refForId: (id: string) => ObjRef;
 
-    /** Write through a local grantee-row change (insert / level / remove); rolled back by the caller. */
-    setGrantees: React.Dispatch<React.SetStateAction<IObjectShareGrantee[]>>;
-    /** Write through a local general-access change; rolled back by the caller. */
-    setGeneralAccess: React.Dispatch<React.SetStateAction<GeneralAccessValue>>;
     /**
-     * Write through the local workspace-rule permission level. A general-access write
-     * always grants workspace VIEW, so the caller sets this to keep the summary from
-     * showing a stale SHARE inherited from the initial fetch.
+     * Overlay a freshly picked grantee as a pending added row. Applied synchronously,
+     * before the write. Re-adding a removed base row supersedes the committed removal
+     * (carried as `settled`, restored if the add fails).
      */
-    setWorkspaceLevel: React.Dispatch<React.SetStateAction<"VIEW" | "SHARE">>;
+    applyGranteeAdd: (grantee: IObjectShareGrantee) => void;
+    /**
+     * Overlay a pending level change. A row born in the overlay (added since the
+     * fetch) stays an `added` entry with the new level — base doesn't hold it, so a
+     * plain level entry would drop the row from the merged view.
+     */
+    applyGranteeLevel: (id: string, level: ObjectSharePermissionLevel) => void;
+    /** Overlay a pending removal; the row renders muted until the write settles. */
+    applyGranteeRemove: (id: string) => void;
+    /** Commit the pending edit for `id` after a successful write. */
+    settleGranteeEdit: (id: string) => void;
+    /**
+     * Revert the pending edit for `id` after a failed write: restore the committed
+     * entry it superseded, or drop the entry (back to the fetched row) if none.
+     */
+    failGranteeEdit: (id: string) => void;
+
+    /** Overlay the all-workspace-users rule edit (pending while a re-grade commits). */
+    applyRuleEdit: (edit: Omit<IRuleEdit, "settled">) => void;
+    /** Commit the pending rule edit after a successful write. */
+    settleRuleEdit: () => void;
+    /** Revert the rule edit after a failed write: the superseded committed edit, or the fetch. */
+    failRuleEdit: () => void;
 }
 
 /**
- * Owns the backend access list. It is fetched once (per target) then seeded into
- * local state, which is authoritative while the dialog/summary is mounted:
- * mutations write through to it directly and roll back the one changed entry on
- * failure. There is no post-write refetch, so the grantee list never blanks and
- * never fights the backend's read-after-write lag. A target switch re-seeds from
- * the new fetch; the seed is gated on a per-target stamp so a late fetch for a
- * previous target can't clobber the current one.
+ * Owns the backend access list for ONE dialog session: the hook is mounted while
+ * the dialog is open, for a single target that must not change while mounted
+ * (remount for a new target — see {@link ObjectShareDialog}). Unmounting discards
+ * every transient: the edit overlay, the profile, in-flight finalizers.
  *
- * Effective (inherited) permissions and display names come from that single
- * fetch: inherited access doesn't change as a result of editing a direct grant,
- * so the badge stays correct for the session without re-reading.
+ * The flow is one-directional: the list is fetched once, and the displayed state
+ * is *derived* from that fetch composed with a small local edit overlay
+ * ({@link mergeGrantees}). There is no mirrored state and no post-write refetch —
+ * a mutation writes its overlay entry (so the row updates immediately), commits to
+ * the backend, then settles the entry on success or reverts it on failure — to the
+ * committed entry it superseded (kept as `settled` on the pending edit), or to the
+ * fetched row when there was none. The grantee list therefore never blanks and
+ * never fights read-after-write lag.
  *
  * @internal
  */
-export function useAccessList(
-    target: IObjectPermissionsObject | undefined,
-    onSaved: (() => void) | undefined,
-    dialogOpen: boolean,
-): IAccessList {
+export function useAccessList(target: IObjectPermissionsObject | undefined): IAccessList {
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
     const toast = useToastMessage();
 
-    // Authoritative local state, seeded from the fetch below.
-    const [grantees, setGrantees] = useState<IObjectShareGrantee[]>([]);
-    // Load-time fact, deliberately NOT derived from the live list: local mutations
-    // must not change it (see the IAccessList doc).
-    const [seededWithoutGrants, setSeededWithoutGrants] = useState(false);
-    const [generalAccess, setGeneralAccess] = useState<GeneralAccessValue>("RESTRICTED");
-    const [workspaceLevel, setWorkspaceLevel] = useState<"VIEW" | "SHARE">("VIEW");
-    const [inheritedWorkspaceLevel, setInheritedWorkspaceLevel] = useState<"VIEW" | "SHARE" | undefined>(
-        undefined,
-    );
-    // The target the local state was seeded for; undefined until the first seed.
-    // Reading state as belonging to the current target hinges on this matching
-    // `targetKey` — a target switch makes the old state stale until the re-seed.
-    const [seededTarget, setSeededTarget] = useState<string | undefined>(undefined);
-    const [loadError, setLoadError] = useState<Error | undefined>(undefined);
-    // Assignee identities from the listing (picker + on-open resolve), keyed by
-    // grantee id: de-collapsed facts + the original ObjRef (the serialized id
-    // loses Uri-vs-Id). The signed-in user is absent from the listing; their
-    // facts derive from the profile instead.
-    const [knownAssignees, setKnownAssignees] = useState<
-        Record<string, { facts: IGranteeIdentityFacts; ref: ObjRef }>
-    >({});
-    // Memoized current-user fetch — the profile doesn't change while mounted,
-    // so resolve it at most once and share the promise across callers.
-    const currentUserCache = useRef<Promise<IUser> | undefined>(undefined);
+    // The only local state: the transient edit overlay. Everything else is derived.
+    const [granteeEdits, setGranteeEdits] = useState<Record<string, GranteeEdit>>({});
+    const [ruleEdit, setRuleEditState] = useState<IRuleEdit | undefined>(undefined);
 
-    // Kind-qualified: distinct permission targets can share an identifier (e.g. an
-    // attribute and a metric), and every target-scoped guard — the seed stamp, the
-    // async-finalizer bail-outs, the dialog's staged-confirm reset — compares this
-    // key. serializeObjRef keeps the ref's own `type` qualifier too.
-    const targetKey = target ? `${target.kind}:${serializeObjRef(target.ref)}` : undefined;
+    // Serialized so an inline idRef(...) — a new object each render — doesn't refetch forever.
+    const fetchKey = target ? `${workspace}:${target.kind}:${serializeObjRef(target.ref)}` : undefined;
 
-    // Written from both the picker (loadOptions) and the on-open resolve. Must not
-    // depend on the cache it writes, or it would re-trigger loadOptions' fetch.
-    const cacheAssignees = useCallback((assignees: IAvailableAccessGrantee[]) => {
-        setKnownAssignees((prev) => {
-            const next = { ...prev };
-            for (const assignee of assignees) {
-                next[granteeId(assignee.type === "user" ? "user" : "group", assignee.ref)] = {
-                    facts: assigneeIdentityFacts(assignee),
-                    ref: assignee.ref,
-                };
-            }
-            return next;
-        });
-    }, []);
-
-    // Initial (and target-change) load. Seeds local state once per target; thereafter
-    // local state is authoritative and mutations write through it.
     const {
         result: fetchedList,
         status: fetchStatus,
@@ -202,74 +163,36 @@ export function useAccessList(
                 ? () => backend.workspace(workspace).objectPermissions().getAccessList(target)
                 : undefined,
         },
-        // Key on the serialized ref, not the ObjRef object — an inline idRef(...) is a
-        // new instance each render and would otherwise refetch forever.
-        [backend, workspace, target?.kind, targetKey],
+        // fetchKey already encodes workspace, kind and ref.
+        [backend, fetchKey],
     );
 
-    // Local state belongs to the current target only once its list has been seeded
-    // AND no fetch is in flight for it. Requiring `fetchStatus === "success"` (not
-    // just a matching `seededTarget`) matters when the same object is reopened after
-    // navigating away: the deps change re-runs `useCancelablePromise`, which resets to
-    // `loading` while it refetches. Without this, the still-matching previous
-    // `seededTarget` would keep `hasList` true and surface the prior session's
-    // grantees as `success` (mutations enabled) until the new list lands.
-    const hasList = seededTarget === targetKey && targetKey !== undefined && fetchStatus === "success";
+    const hasList = fetchStatus === "success" && !!fetchedList;
 
-    useEffect(() => {
-        if (fetchStatus === "success" && fetchedList) {
-            // The cancelable promise is keyed on targetKey, so this list is for it.
-            const seededGrantees = granteesFromAccessList(fetchedList);
-            setGrantees(seededGrantees);
-            setSeededWithoutGrants(seededGrantees.length === 0);
-            setGeneralAccess(deriveGeneralAccess(fetchedList.grants));
-            setWorkspaceLevel(deriveWorkspacePermissionLevel(fetchedList.grants));
-            setInheritedWorkspaceLevel(deriveInheritedWorkspaceLevel(fetchedList.grants));
-            setSeededTarget(targetKey);
-            setLoadError(undefined);
-        } else if (fetchStatus === "error") {
-            setLoadError(fetchError instanceof Error ? fetchError : new Error(String(fetchError)));
-        } else if (fetchStatus === "loading") {
-            // A (re)fetch is in flight — including when the same object is reopened
-            // after navigating away. Drop the seed stamp so the previous session's
-            // list isn't surfaced as the current one until the fresh fetch is seeded.
-            setSeededTarget(undefined);
-        }
-    }, [fetchStatus, fetchedList, fetchError, targetKey]);
+    const base = useMemo<IObjectShareGrantee[]>(
+        () => (hasList ? granteesFromAccessList(fetchedList) : []),
+        [hasList, fetchedList],
+    );
 
-    const getCurrentUser = useCallback((): Promise<IUser> => {
-        if (!currentUserCache.current) {
-            currentUserCache.current = backend
-                .currentUser()
-                .getUser()
-                .catch((error) => {
-                    // Don't cache a rejected promise, or a transient profile-read
-                    // failure would stick for the rest of the session.
-                    currentUserCache.current = undefined;
-                    throw error;
-                });
-        }
-        return currentUserCache.current;
-    }, [backend]);
-
-    // Resolve the current user only while the dialog is open — keeps the summary-only
-    // path free of a profile request (the self-row facts it feeds aren't shown there).
+    // The profile identifies the caller's own row (self-managed classification, the
+    // admin empty-state row). The session exists only while the dialog is open, so
+    // fetch it once per session; the client caches it across sessions.
     const { result: currentUser, status: currentUserStatus } = useCancelablePromise<IUser>(
         {
-            promise: dialogOpen && targetKey ? () => getCurrentUser() : undefined,
+            promise: () => backend.currentUser().getUser(),
             onError: () => {},
         },
-        // Key on target presence, not identity — the resolved user is
-        // target-independent, so a target switch must not reset it.
-        [getCurrentUser, targetKey !== undefined, dialogOpen],
+        [backend],
     );
-    // Success only: while pending OR after a (silently swallowed) failure the
-    // rows' isSelf is just its unresolved default, and consumers must not treat
-    // an unidentified row as safe to mutate. Retried naturally on dialog reopen
-    // (the promise is keyed on `dialogOpen`; the failure isn't cached).
+    // Success only: while pending or after a swallowed failure a sole row can't be told
+    // apart from the caller's own grant, so it must not be treated as safe to mutate.
     const selfIdentityResolved = currentUserStatus === "success";
 
     const selfId = currentUser ? granteeId("user", idRef(currentUser.login)) : undefined;
+
+    // Derived from the immutable SEED (see the interface doc): a caller whose own
+    // grant was the way in must not read as grant-independent after removing it.
+    const seededWithoutSelfGrant = hasList && selfIdentityResolved && !base.some((g) => g.id === selfId);
 
     // De-collapsed like every listing fact — on tiger the user id is often the email.
     const selfIdentity = useMemo<ISelfIdentity | undefined>(
@@ -283,89 +206,53 @@ export function useAccessList(
         [currentUser],
     );
 
-    // Rows with identity facts backfilled from the assignee cache — or, for the
-    // signed-in user's own row (absent from the listing by design), from the
-    // profile. Empty until the current target's list is seeded; a derivation, so
-    // it re-applies as the caches grow.
-    const namedGrantees = useMemo<IObjectShareGrantee[]>(() => {
-        if (!hasList) {
-            return [];
-        }
-        return grantees.map((g) => {
-            const known = knownAssignees[g.id]?.facts ?? (g.id === selfId ? selfIdentity : undefined);
-            const isSelf = g.id === selfId;
-            return known
-                ? { ...g, isSelf, name: g.name ?? known.name, email: g.email ?? known.email }
-                : { ...g, isSelf };
-        });
-    }, [hasList, grantees, knownAssignees, selfIdentity, selfId]);
-
-    // Resolve identity facts on dialog open — grants often carry only raw ids
-    // (the post-reload state). Unconditional: no missing-facts gate to keep in
-    // sync with the cache, and summary-only consumers never fetch. Keyed on the
-    // serialized targetKey so an inline-ref consumer re-rendering mid-fetch
-    // doesn't cancel it.
-    useCancelablePromise<IAvailableAccessGrantee[]>(
-        {
-            promise:
-                target && dialogOpen
-                    ? () => backend.workspace(workspace).objectPermissions().getAvailableAssignees(target)
-                    : undefined,
-            onSuccess: cacheAssignees,
-            // Best-effort backfill: on error the raw id stays (pre-fix behavior, no
-            // regression) and the picker can still resolve it on demand. No toast.
-            onError: () => {},
-        },
-        [backend, workspace, targetKey, dialogOpen],
+    const grantees = useMemo<IObjectShareGrantee[]>(
+        () => mergeGrantees(base, granteeEdits, selfId, selfIdentity),
+        [base, granteeEdits, selfId, selfIdentity],
     );
 
-    // Stable sorted key of the currently-granted ids — drives the picker's
-    // "exclude already-granted" filter. Keyed on ids only (not names), so the
-    // picker's own name-cache writes can't change loadOptions' identity and
-    // re-trigger its fetch.
-    const excludedIdsKey = useMemo(
-        () =>
-            grantees
-                .filter((g) => g.pending !== "removing")
-                .map((g) => g.id)
-                .sort()
-                .join(","),
-        [grantees],
+    const generalAccess: GeneralAccessValue =
+        ruleEdit?.generalAccess ?? deriveGeneralAccess(fetchedList?.grants ?? []);
+    const workspaceLevel = ruleEdit?.level ?? deriveWorkspacePermissionLevel(fetchedList?.grants ?? []);
+    const workspaceLevelSaving = ruleEdit?.pending ?? false;
+    const workspaceInheritedLevel = useMemo(
+        () => deriveInheritedWorkspaceLevel(fetchedList?.grants ?? []),
+        [fetchedList],
     );
 
+    // Keyed on plain values so the summary's identity changes exactly when its
+    // content does — consumers (the dialog's onSummaryChange) rely on that.
+    const granteeCount = grantees.filter((g) => g.pending !== "removing").length;
     const summary = useMemo<IObjectAccessSummary | undefined>(() => {
         if (!hasList) {
             return undefined;
         }
-        // The summary shows effective access: an inherited rule counts as
-        // workspace access even when this workspace holds no rule of its own.
+        // Effective access: an inherited rule counts as WORKSPACE even without a local rule.
         return {
-            ...composeEffectiveWorkspaceAccess(generalAccess, workspaceLevel, inheritedWorkspaceLevel),
-            granteeCount: namedGrantees.filter((g) => g.pending !== "removing").length,
+            ...composeEffectiveWorkspaceAccess(generalAccess, workspaceLevel, workspaceInheritedLevel),
+            granteeCount,
         };
-    }, [hasList, generalAccess, workspaceLevel, inheritedWorkspaceLevel, namedGrantees]);
+    }, [hasList, generalAccess, workspaceLevel, workspaceInheritedLevel, granteeCount]);
 
-    // "success" only once the *current* target's list has been seeded. After a
-    // target switch the previous seed is stale (seededTarget !== targetKey), so
-    // gating on hasList keeps the status at "loading" until the new list lands —
-    // never "success" with no list, which would let the dialog enable mutations
-    // and the catalog row hide both summary and skeleton.
-    const status: IObjectShareControllerState["status"] = target
-        ? fetchStatus === "error"
-            ? "error"
-            : hasList
-              ? "success"
-              : "loading"
-        : "idle";
+    // "success" waits for `hasList` so consumers never see success with nothing to show.
+    const deriveStatus = (): IObjectShareControllerState["status"] => {
+        if (!target) {
+            return "idle";
+        }
+        if (fetchStatus === "error") {
+            return "error";
+        }
+        return hasList ? "success" : "loading";
+    };
+    const status = deriveStatus();
 
-    // Derived from the live fetch (status + error travel together), not the
-    // persisted loadError — so a target switch can't briefly flag the new target
-    // with the previous target's 404 before the load effect updates loadError.
-    const accessUnavailable = fetchStatus === "error" && isPermissionsNotAvailable(fetchError);
+    // Typed SDK error, the house pattern (see InsightView) — not a hand-rolled Error.
+    const loadError = useMemo<GoodDataSdkError | undefined>(
+        () => (fetchStatus === "error" ? convertError(fetchError) : undefined),
+        [fetchStatus, fetchError],
+    );
 
-    // Write a single grant change to the backend, then toast. The caller applies
-    // the optimistic local write-through and rolls it back on failure; there is no
-    // refetch — local state stays authoritative.
+    // The caller owns the optimistic overlay write and its rollback; there is no refetch.
     const commit = useCallback(
         async (mutate: IGranularAccessGrantee[], successMessage: { id: string }): Promise<boolean> => {
             if (!target) {
@@ -377,20 +264,23 @@ export function useAccessList(
                     .objectPermissions()
                     .manageObjectPermissions(target, mutate);
                 toast.addSuccess(successMessage);
-                onSaved?.();
                 return true;
             } catch {
                 toast.addError(objectShareMessages.toastError);
                 return false;
             }
         },
-        [backend, workspace, target, toast, onSaved],
+        [backend, workspace, target, toast],
     );
 
-    // Picker loader — fetches available assignees on demand, filters by the typed
-    // query, and excludes anything already granted. Depends only on the
-    // granted set (grantees), so its identity changes only when that set actually
-    // changes. It must NOT write state that feeds its own deps.
+    // Ids the picker excludes as already-granted — INCLUDING rows whose removal is
+    // still in flight: offering those would let a re-add overlap the pending revoke
+    // on one id, and the settle/fail finalizers act on the id's current overlay
+    // entry, not the write that started them. A settled removal drops out of the
+    // merged view, so the id becomes offerable exactly when the revoke has landed.
+    const excludedIds = useMemo(() => new Set(grantees.map((g) => g.id)), [grantees]);
+
+    // Each option carries its backend `ref` so the add flow grants against the exact ref.
     const loadOptions = useCallback(
         async (search: string): Promise<IUiGranteeAsyncOptions> => {
             if (!target) {
@@ -401,62 +291,135 @@ export function useAccessList(
                 .objectPermissions()
                 .getAvailableAssignees(target);
             const query = search.trim().toLowerCase();
-            const withIds = assignees.map((a) => ({
-                assignee: a,
-                id: granteeId(a.type === "user" ? "user" : "group", a.ref),
-            }));
-            // Remember every assignee's real name + ref so granted rows can show them
-            // even when the access-list grant later returns only a raw id. Safe here:
-            // the caches aren't dependencies of loadOptions, so this won't re-trigger it.
-            cacheAssignees(assignees);
-            const excluded = new Set(excludedIdsKey ? excludedIdsKey.split(",") : []);
-            const selectable = withIds
-                .filter(({ id }) => !excluded.has(id)) // hide anyone already granted
-                .filter(({ assignee }) => assigneeMatchesQuery(assignee, query));
 
-            return {
-                users: selectable
-                    .filter(({ assignee }) => assignee.type === "user")
-                    .map(({ assignee, id }) => ({
+            const users: IUiGranteeAsyncOptions["users"] = [];
+            const groups: IUiGranteeAsyncOptions["groups"] = [];
+            for (const assignee of assignees) {
+                const kind = assignee.type === "user" ? "user" : "group";
+                const id = granteeId(kind, assignee.ref);
+                if (excludedIds.has(id) || !assigneeMatchesQuery(assignee, query)) {
+                    continue;
+                }
+                if (assignee.type === "user") {
+                    users.push({
                         id,
-                        kind: "user" as const,
-                        // Same fallback pairs as the grantee rows.
+                        ref: assignee.ref,
+                        kind: "user",
+                        // Same name → email → id fallback the grantee rows use.
                         ...userDisplayPair(assigneeIdentityFacts(assignee), objRefToString(assignee.ref)),
-                    })),
-                groups: selectable
-                    .filter(({ assignee }) => assignee.type !== "user")
-                    .map(({ assignee, id }) => ({ id, kind: "group" as const, name: assignee.name })),
-            };
+                    });
+                } else {
+                    groups.push({ id, ref: assignee.ref, kind: "group", name: assignee.name });
+                }
+            }
+            return { users, groups };
         },
-        [backend, workspace, target, excludedIdsKey, cacheAssignees],
+        [backend, workspace, target, excludedIds],
     );
 
-    // Reuse the picker's original ref (preserves UriRef vs IdentifierRef);
-    // fall back to the serialized id only if it wasn't cached.
-    const refForId = useCallback(
-        (id: string): ObjRef => knownAssignees[id]?.ref ?? { identifier: id.split(":", 2)[1]! },
-        [knownAssignees],
-    );
+    const applyGranteeAdd = useCallback((grantee: IObjectShareGrantee) => {
+        setGranteeEdits((prev) => {
+            const current = prev[grantee.id];
+            // Re-adding a removed base row supersedes the committed removal — carry
+            // it, so a failed add restores the removal instead of dropping the entry
+            // and resurrecting the base row at its pre-removal level.
+            const settled = current ? { ...current, settled: undefined } : undefined;
+            return { ...prev, [grantee.id]: { kind: "added", grantee, pending: true, settled } };
+        });
+    }, []);
+
+    const applyGranteeLevel = useCallback((id: string, level: ObjectSharePermissionLevel) => {
+        setGranteeEdits((prev) => {
+            const current = prev[id];
+            // Keep one level of history: the committed entry this edit supersedes.
+            const settled = current ? { ...current, settled: undefined } : undefined;
+            if (current?.kind === "added") {
+                // Overlay-born row: stay an `added` entry, or the merge would drop it.
+                const grantee = {
+                    ...current.grantee,
+                    level,
+                    effectivePermission: effectivePermissionAbove(level, current.grantee.inheritedLevel),
+                };
+                return { ...prev, [id]: { kind: "added", grantee, pending: true, settled } };
+            }
+            return { ...prev, [id]: { kind: "level", level, pending: true, settled } };
+        });
+    }, []);
+
+    const applyGranteeRemove = useCallback((id: string) => {
+        setGranteeEdits((prev) => {
+            const current = prev[id];
+            const settled = current ? { ...current, settled: undefined } : undefined;
+            return { ...prev, [id]: { kind: "removed", pending: true, settled } };
+        });
+    }, []);
+
+    const settleGranteeEdit = useCallback((id: string) => {
+        setGranteeEdits((prev) => {
+            const current = prev[id];
+            if (!current) {
+                return prev;
+            }
+            // A settled removal always keeps its entry: for a base row (including a
+            // removed re-added one) it is what keeps the row hidden; for an
+            // overlay-born row it renders nothing and is harmless.
+            return { ...prev, [id]: { ...current, pending: false, settled: undefined } };
+        });
+    }, []);
+
+    const failGranteeEdit = useCallback((id: string) => {
+        setGranteeEdits((prev) => {
+            const current = prev[id];
+            if (!current) {
+                return prev;
+            }
+            if (current.settled) {
+                return { ...prev, [id]: current.settled };
+            }
+            const { [id]: _omit, ...rest } = prev;
+            return rest;
+        });
+    }, []);
+
+    const applyRuleEdit = useCallback((edit: Omit<IRuleEdit, "settled">) => {
+        setRuleEditState((current) => ({
+            ...edit,
+            settled: current ? { ...current, settled: undefined } : undefined,
+        }));
+    }, []);
+
+    const settleRuleEdit = useCallback(() => {
+        setRuleEditState((current) =>
+            current ? { ...current, pending: false, settled: undefined } : current,
+        );
+    }, []);
+
+    const failRuleEdit = useCallback(() => {
+        setRuleEditState((current) => current?.settled);
+    }, []);
 
     return {
-        targetKey,
         hasList,
-        grantees: namedGrantees,
-        seededWithoutGrants,
+        grantees,
+        seededWithoutSelfGrant,
         selfIdentity,
         selfIdentityResolved,
         generalAccess,
         workspaceLevel,
-        inheritedWorkspaceLevel,
+        workspaceInheritedLevel,
+        workspaceLevelSaving,
         summary,
         status,
         loadError,
-        accessUnavailable,
         commit,
         loadOptions,
-        refForId,
-        setGrantees,
-        setGeneralAccess,
-        setWorkspaceLevel,
+        applyGranteeAdd,
+        applyGranteeLevel,
+        applyGranteeRemove,
+        settleGranteeEdit,
+        failGranteeEdit,
+        applyRuleEdit,
+        settleRuleEdit,
+        failRuleEdit,
     };
 }

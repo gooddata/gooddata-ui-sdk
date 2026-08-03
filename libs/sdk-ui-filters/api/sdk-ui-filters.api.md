@@ -263,6 +263,7 @@ export const DateFilterHelpers: {
         "GDC.time.minute": GranularityIntlKey;
         "GDC.time.month": GranularityIntlKey;
         "GDC.time.quarter": GranularityIntlKey;
+        "GDC.time.second": GranularityIntlKey;
         "GDC.time.week_us": GranularityIntlKey;
         "GDC.time.year": GranularityIntlKey;
     };
@@ -440,7 +441,7 @@ export function getTextFilterStateText(operator: TextFilterOperator, values: Arr
 export function getValuesFromFilter(filter: IAttributeFilter | undefined): Array<string | null> | string;
 
 // @beta
-export type GranularityIntlKey = "day" | "minute" | "hour" | "week" | "month" | "quarter" | "year" | "period";
+export type GranularityIntlKey = "day" | "second" | "minute" | "hour" | "week" | "month" | "quarter" | "year" | "period";
 
 // @alpha
 export function hasFiscalPresets(presets: DateFilterRelativeOptionGroup): boolean;
@@ -1033,6 +1034,7 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     hideDisabledExclude?: boolean;
     // (undocumented)
     isEditMode?: boolean;
+    isSecondsForAbsoluteRangeEnabled?: boolean;
     // (undocumented)
     isTimeForAbsoluteRangeEnabled?: boolean;
     // (undocumented)

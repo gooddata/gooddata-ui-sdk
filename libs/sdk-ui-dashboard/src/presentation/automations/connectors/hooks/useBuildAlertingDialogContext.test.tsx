@@ -3,7 +3,12 @@
 import { renderHook } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { idRef } from "@gooddata/sdk-model";
+import {
+    type IAutomationMetadataObject,
+    type INotificationChannelMetadataObject,
+    type IWorkspaceUser,
+    idRef,
+} from "@gooddata/sdk-model";
 
 const fixtures = vi.hoisted(() => {
     // A single, referentially stable execution-result envelope, simulating an
@@ -68,7 +73,14 @@ describe("useBuildAlertingDialogContext", () => {
     it("returns a referentially stable execution-result envelope across renders (no render loop)", () => {
         const ref = idRef("widget-1");
 
-        const { result, rerender } = renderHook(() => useBuildAlertingDialogContext({ mode: "create" }));
+        const { result, rerender } = renderHook(() =>
+            useBuildAlertingDialogContext({
+                mode: "create",
+                users: [],
+                notificationChannels: [],
+                isLoading: false,
+            }),
+        );
 
         const first = result.current.executionResultByRef(ref);
         rerender();
@@ -80,5 +92,31 @@ describe("useBuildAlertingDialogContext", () => {
         // the alerting dialog Overlay never stabilizes and stays hidden.
         expect(second).toBe(first);
         expect(first?.executionResult).toBe(fixtures.stableEnvelope.executionResult);
+    });
+
+    it("passes the create/edit inputs through to the context unchanged", () => {
+        const alertToEdit = { id: "alert-1", title: "My alert" } as IAutomationMetadataObject;
+        const users: IWorkspaceUser[] = [
+            { ref: idRef("user-1"), uri: "/users/user-1", login: "user-1", email: "user-1@example.com" },
+        ];
+        const notificationChannels = [
+            { id: "channel-1", type: "notificationChannel" },
+        ] as INotificationChannelMetadataObject[];
+
+        const { result } = renderHook(() =>
+            useBuildAlertingDialogContext({
+                mode: "edit",
+                alertToEdit,
+                users,
+                usersError: undefined,
+                notificationChannels,
+                isLoading: true,
+            }),
+        );
+
+        expect(result.current.alertToEdit).toBe(alertToEdit);
+        expect(result.current.users).toBe(users);
+        expect(result.current.notificationChannels).toBe(notificationChannels);
+        expect(result.current.isLoading).toBe(true);
     });
 });

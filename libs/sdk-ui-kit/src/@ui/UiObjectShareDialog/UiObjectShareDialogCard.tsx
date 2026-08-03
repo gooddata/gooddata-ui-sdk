@@ -16,6 +16,7 @@ import { UiGranteeRow } from "../UiGranteeRow/UiGranteeRow.js";
 import { UiDialogFooter } from "../UiModalDialog/UiDialogFooter.js";
 import { UiDialogHeader } from "../UiModalDialog/UiDialogHeader.js";
 import { UiSectionHeading } from "../UiSectionHeading/UiSectionHeading.js";
+import { UiSkeleton } from "../UiSkeleton/UiSkeleton.js";
 
 const { b, e } = bem("gd-ui-kit-object-share-dialog");
 
@@ -55,6 +56,12 @@ export interface IUiObjectShareDialogCardProps {
 
     /** Grantee rows shown inside the SHARED WITH section, in render order. */
     grantees: IUiObjectShareDialogGrantee[];
+    /**
+     * When true, skeleton rows stand in for the grantee list and the
+     * general-access radio — set it while the access list is loading, so the
+     * placeholders (empty list, Restricted) aren't mistaken for a real policy.
+     */
+    isLoading?: boolean;
     /** Fires when the user clicks the + Add link in the SHARED WITH heading. */
     onAddClick: () => void;
     /** Disables the + Add action — e.g. while the object's labels are still loading. */
@@ -79,9 +86,9 @@ export interface IUiObjectShareDialogCardProps {
     workspaceControls?: ReactNode;
     /**
      * Workspace-wide permission level, so the "All workspace members" description
-     * matches the level picked in `workspaceControls`. Defaults to `view`.
+     * matches the level picked in `workspaceControls`. Defaults to `VIEW`.
      */
-    workspaceLevel?: "VIEW" | "SHARE";
+    workspaceLevel?: "VIEW" | "SHARE" | "EDIT";
 
     /**
      * Optional error notice. When set, it replaces the grantee list and
@@ -107,6 +114,7 @@ export function UiObjectShareDialogCard({
     objectTitle,
     onClose,
     grantees,
+    isLoading,
     onAddClick,
     isAddDisabled,
     generalAccess,
@@ -144,29 +152,37 @@ export function UiObjectShareDialogCard({
                         }
                     />
                     <div className={e("grantees")}>
-                        {grantees.map((grantee) => (
-                            <UiGranteeRow
-                                key={grantee.id}
-                                kind={grantee.kind}
-                                name={grantee.name}
-                                email={grantee.email}
-                                isPending={grantee.isPending}
-                                controls={grantee.controls}
-                            />
-                        ))}
+                        {isLoading ? (
+                            <UiSkeleton itemsCount={2} itemHeight={40} itemsGap={10} />
+                        ) : (
+                            grantees.map((grantee) => (
+                                <UiGranteeRow
+                                    key={grantee.id}
+                                    kind={grantee.kind}
+                                    name={grantee.name}
+                                    email={grantee.email}
+                                    isPending={grantee.isPending}
+                                    controls={grantee.controls}
+                                />
+                            ))
+                        )}
                     </div>
 
                     <UiSectionHeading
                         label={intl.formatMessage(olpObjectShareDialogMessages.generalAccess)}
                     />
-                    <UiGeneralAccessRadio
-                        value={generalAccess}
-                        onChange={onGeneralAccessChange}
-                        disabled={isGeneralAccessDisabled}
-                        workspaceAccessInherited={workspaceAccessInherited}
-                        workspaceControls={workspaceControls}
-                        workspaceLevel={workspaceLevel}
-                    />
+                    {isLoading ? (
+                        <UiSkeleton itemsCount={2} itemHeight={40} itemsGap={10} />
+                    ) : (
+                        <UiGeneralAccessRadio
+                            value={generalAccess}
+                            onChange={onGeneralAccessChange}
+                            disabled={isGeneralAccessDisabled}
+                            workspaceAccessInherited={workspaceAccessInherited}
+                            workspaceControls={workspaceControls}
+                            workspaceLevel={workspaceLevel}
+                        />
+                    )}
                 </>
             )}
 

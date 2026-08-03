@@ -11,7 +11,7 @@ function richTextWidget(content: string): IRichTextWidget {
     return {
         type: "richText",
         ref: idRef("rt"),
-        uri: "/gdc/md/rt",
+        uri: "rt",
         identifier: "rt",
         title: "t",
         description: "d",

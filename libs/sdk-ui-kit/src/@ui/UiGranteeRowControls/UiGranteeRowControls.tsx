@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { useIntl } from "react-intl";
+import { type MessageDescriptor, useIntl } from "react-intl";
 
 import { type AccessGranularPermission } from "@gooddata/sdk-model";
 
@@ -9,11 +9,21 @@ import { bem } from "../@utils/bem.js";
 import { UiButton } from "../UiButton/UiButton.js";
 import { UiIcon } from "../UiIcon/UiIcon.js";
 import { type IUiLabelsChecklistItem } from "../UiLabelsChecklist/UiLabelsChecklist.js";
-import { UiMoreOptionsMenu } from "../UiMoreOptionsMenu/UiMoreOptionsMenu.js";
-import { type PermissionMenuLevel, UiPermissionMenu } from "../UiPermissionMenu/UiPermissionMenu.js";
+import {
+    type PermissionMenuLevel,
+    UiPermissionMenu,
+    permissionLevelMessage,
+} from "../UiPermissionMenu/UiPermissionMenu.js";
 import { UiTooltip } from "../UiTooltip/UiTooltip.js";
 
 const { b, e } = bem("gd-ui-kit-grantee-row-controls");
+
+// The warning badge names an inherited EDIT or SHARE. VIEW can never be the
+// higher level and has no entry — an absent entry means "no badge".
+const EFFECTIVE_PERMISSION_TOOLTIP: Partial<Record<AccessGranularPermission, MessageDescriptor>> = {
+    EDIT: olpPermissionMessages.effectivePermissionTooltipEdit,
+    SHARE: olpPermissionMessages.effectivePermissionTooltipShare,
+};
 
 /**
  * @internal
@@ -22,37 +32,31 @@ export interface IUiGranteeRowControlsProps {
     /** Locked items are always treated as selected. */
     labels: ReadonlyArray<IUiLabelsChecklistItem>;
     selectedLabelIds: ReadonlyArray<string>;
-    /** The level to display. `EDIT` renders read-only; VIEW/SHARE are selectable. */
+    /** The grantee's current permission level — anchors the permission menu. */
     permissionLevel: AccessGranularPermission;
     /**
-     * Set only when the grantee inherits a higher permission than `permissionLevel`
-     * (e.g. from a group); drives the warning badge. Undefined when not elevated.
+     * CONTRACT: set only when the grantee inherits a higher permission than
+     * `permissionLevel` (e.g. via a group) — the control renders the warning badge
+     * whenever this is set and does not re-check the ordering. Undefined when the
+     * assigned level already is the effective one.
      */
     effectivePermission?: AccessGranularPermission;
-    /**
-     * Merge every action into the permission dropdown: the labels drill-in and
-     * Remove access render inside {@link UiPermissionMenu} (no "⋯" menu), and
-     * the level dropdown is offered even for an EDIT row. Used for the signed-in
-     * user's own row when they manage their own access.
-     */
-    mergedControls?: boolean;
     /** Levels rendered disabled in the permission menu — see {@link UiPermissionMenu}. */
     disabledLevels?: ReadonlyArray<PermissionMenuLevel>;
     /** Tooltip shown on disabled level rows in place of the level's info text. */
     disabledTooltip?: string;
     onLabelsChange: (selectedIds: string[]) => void;
-    /** Fires only for selectable rows (VIEW/SHARE); EDIT rows have no level control. */
     onPermissionChange: (level: PermissionMenuLevel) => void;
     onRemoveAccess?: () => void;
-    /** Disables both triggers, e.g. while the row's change is saving. */
+    /** Disables the permission trigger, e.g. while the row's change is saving. */
     isDisabled?: boolean;
     dataTestId?: string;
 }
 
 /**
- * Per-row controls in the OLP share dialog: a permission trigger
- * ({@link UiPermissionMenu}) plus a "⋯" menu ({@link UiMoreOptionsMenu}) for
- * labels access, with an optional inherited-permission warning badge.
+ * Per-row controls in the OLP share dialog: the permission dropdown
+ * ({@link UiPermissionMenu}) hosting the level choice, the labels drill-in and
+ * Remove access, with an optional inherited-permission warning badge.
  *
  * @internal
  */
@@ -61,7 +65,6 @@ export function UiGranteeRowControls({
     selectedLabelIds,
     permissionLevel,
     effectivePermission,
-    mergedControls,
     disabledLevels,
     disabledTooltip,
     onLabelsChange,
@@ -74,37 +77,13 @@ export function UiGranteeRowControls({
 
     const hasLabels = labels.length > 0;
 
-    // EDIT is display-only: the dialog can't assign or change it, and offering the
-    // VIEW/SHARE menu on an EDIT row would silently downgrade the grant on pick.
-    // So an EDIT row shows a static, non-interactive "Can edit" label instead of
-    // the permission dropdown — except in merged mode, where the user manages
-    // their own access and downgrading is exactly the offered action.
-    const isReadOnlyLevel = permissionLevel === "EDIT" && !mergedControls;
-    // EDIT is not selectable — a merged EDIT row anchors on "Can edit" with no
-    // radio checked, offering only the (lower) selectable levels.
-    const selectedLevel = permissionLevel === "EDIT" ? undefined : permissionLevel;
-
-    const permissionTriggerText = intl.formatMessage(
-        permissionLevel === "EDIT"
-            ? olpPermissionMessages.canEdit
-            : permissionLevel === "SHARE"
-              ? olpPermissionMessages.canViewAndShare
-              : olpPermissionMessages.canView,
-    );
-
-    // A read-only level has no permission dropdown to host Remove access, so that
-    // action moves into the ⋯ menu for those rows (dropdown rows keep it in the menu).
-    const removeInMoreOptions = isReadOnlyLevel ? onRemoveAccess : undefined;
-
-    // Nothing to put in the ⋯ menu → drop it. Merged mode hosts everything in
-    // the permission dropdown, so the ⋯ menu never renders there.
-    const hasMoreOptions = !mergedControls && (hasLabels || !!removeInMoreOptions);
-
-    // Guard on permissionLevel too, so the badge can't show when the assigned
-    // level already matches the inherited one.
-    const isInheritedHigherPermission = permissionLevel === "VIEW" && effectivePermission === "SHARE";
-    const effectiveTooltip = isInheritedHigherPermission
-        ? intl.formatMessage(olpPermissionMessages.effectivePermissionTooltipShare)
+    // The caller sets `effectivePermission` only when it outranks the assigned level
+    // (the ext side owns that comparison) — render the badge whenever it is set and
+    // has tooltip copy, without re-deriving the level ordering here.
+    const inheritedTooltipMessage =
+        effectivePermission === undefined ? undefined : EFFECTIVE_PERMISSION_TOOLTIP[effectivePermission];
+    const effectiveTooltip = inheritedTooltipMessage
+        ? intl.formatMessage(inheritedTooltipMessage)
         : undefined;
 
     return (
@@ -127,38 +106,25 @@ export function UiGranteeRowControls({
                     }
                 />
             ) : null}
-            {isReadOnlyLevel ? (
-                <span className={e("readonly-permission")}>{permissionTriggerText}</span>
-            ) : (
-                <UiPermissionMenu
-                    anchor={
-                        <UiButton
-                            label={permissionTriggerText}
-                            size="small"
-                            variant="dropdownInline"
-                            iconAfter="navigateDown"
-                            isDisabled={isDisabled}
-                        />
-                    }
-                    selectedLevel={selectedLevel}
-                    onPermissionChange={onPermissionChange}
-                    disabledLevels={disabledLevels}
-                    disabledTooltip={disabledTooltip}
-                    labels={mergedControls && hasLabels ? labels : undefined}
-                    selectedLabelIds={mergedControls ? selectedLabelIds : undefined}
-                    onLabelsChange={mergedControls ? onLabelsChange : undefined}
-                    onRemoveAccess={onRemoveAccess}
-                />
-            )}
-            {hasMoreOptions ? (
-                <UiMoreOptionsMenu
-                    labels={hasLabels ? labels : undefined}
-                    selectedLabelIds={selectedLabelIds}
-                    onLabelsChange={onLabelsChange}
-                    onRemoveAccess={removeInMoreOptions}
-                    isDisabled={isDisabled}
-                />
-            ) : null}
+            <UiPermissionMenu
+                anchor={
+                    <UiButton
+                        label={intl.formatMessage(permissionLevelMessage(permissionLevel))}
+                        size="small"
+                        variant="dropdownInline"
+                        iconAfter="navigateDown"
+                        isDisabled={isDisabled}
+                    />
+                }
+                selectedLevel={permissionLevel}
+                onPermissionChange={onPermissionChange}
+                disabledLevels={disabledLevels}
+                disabledTooltip={disabledTooltip}
+                labels={hasLabels ? labels : undefined}
+                selectedLabelIds={selectedLabelIds}
+                onLabelsChange={onLabelsChange}
+                onRemoveAccess={onRemoveAccess}
+            />
         </div>
     );
 }

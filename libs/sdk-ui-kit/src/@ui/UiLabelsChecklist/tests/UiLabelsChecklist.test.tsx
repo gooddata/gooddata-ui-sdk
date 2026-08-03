@@ -98,6 +98,16 @@ describe("UiLabelsChecklist", () => {
         expect(closeSpy).not.toHaveBeenCalled();
     });
 
+    it("focuses the Back button on mount when opened as a drill-in (autoFocus)", () => {
+        renderChecklist({ autoFocus: true });
+        expect(screen.getByRole("button", { name: /back/i })).toHaveFocus();
+    });
+
+    it("leaves focus alone when not opened as a drill-in", () => {
+        renderChecklist({ autoFocus: false });
+        expect(screen.getByRole("button", { name: /back/i })).not.toHaveFocus();
+    });
+
     it("auto-includes a newly-locked label when items change while staged edits exist", () => {
         const onApply = vi.fn();
         const initialItems: IUiLabelsChecklistItem[] = [

@@ -43,6 +43,13 @@ const defaultLocaleCode = "en-US";
 const defaultGranularityFormatPatterns: {
     [granularity in DateAttributeGranularity]?: string;
 } = {
+    "GDC.time.second": "M/d/y, h:mm:ss a", // 01/31/2020 14:01:59 PM
+    "GDC.time.second_in_minute": "s", // 0-59 (analogous to minute_in_hour "m")
+    // minute_in_day (0-1439) / second_in_day (0-86399) are elapsed time since midnight; the backend usually
+    // sends the pattern, these are the fallbacks — rendered as a clock time (the index is decomposed in
+    // dateValueParser).
+    "GDC.time.minute_in_day": "h:mm a", // 3:45 PM
+    "GDC.time.second_in_day": "h:mm:ss a", // 3:45:30 PM
     "GDC.time.minute": "M/d/y, h:mm a", // 01/31/2020 14:01 PM
     "GDC.time.minute_in_hour": "m", // 1-59
     "GDC.time.hour": "M/d/y, h a", // 01/31/2020 14 PM
@@ -166,11 +173,13 @@ export const defaultDateFormatter = (
     try {
         // Use formatInTimeZone for en-US-x-24h locale with specific granularities that need timezone support
         // This is a special case - currently no other locales or granularities use timezones.
-        // The timezone parameter is only provided for MINUTE and HOUR granularities from the backend.
+        // The timezone parameter is only provided for SECOND, MINUTE and HOUR granularities from the backend.
         if (
             locale === "en-US-x-24h" &&
             timezone &&
-            (granularity === "GDC.time.minute" || granularity === "GDC.time.hour")
+            (granularity === "GDC.time.second" ||
+                granularity === "GDC.time.minute" ||
+                granularity === "GDC.time.hour")
         ) {
             return formatInTimeZone(value, timezone, transformedFormatPattern, {
                 locale: convertedLocale,

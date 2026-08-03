@@ -68,10 +68,10 @@ export const SimpleDashboardSimpleSortedTableWidgetDrillTargets: IAvailableDrill
                     name: "Won",
                     format: "$#,##0.00",
                     localIdentifier: SimpleDashboardSimpleSortedTableWonMeasureLocalIdentifier,
-                    uri: "/gdc/md/referenceworkspace/obj/1272",
+                    uri: "obj_1272",
                     identifier: "acugFHNJgsBy",
                     ref: {
-                        uri: "/gdc/md/referenceworkspace/obj/1272",
+                        identifier: "obj_1272",
                     },
                 },
             },
@@ -80,18 +80,18 @@ export const SimpleDashboardSimpleSortedTableWidgetDrillTargets: IAvailableDrill
                     attributeHeader: {
                         name: "Product Name",
                         localIdentifier: "3b196b9f8de04b61ba37762fa28fcf4f",
-                        uri: "/gdc/md/referenceworkspace/obj/1055",
+                        uri: "obj_1055",
                         identifier: "label.product.id.name",
                         formOf: {
                             name: "Product",
-                            uri: "/gdc/md/referenceworkspace/obj/1054",
+                            uri: "obj_1054",
                             identifier: "attr.product.id",
                             ref: {
-                                uri: "/gdc/md/referenceworkspace/obj/1054",
+                                identifier: "obj_1054",
                             },
                         },
                         ref: {
-                            uri: "/gdc/md/referenceworkspace/obj/1055",
+                            identifier: "obj_1055",
                         },
                     },
                 } as unknown as IAttributeDescriptor,
@@ -99,18 +99,18 @@ export const SimpleDashboardSimpleSortedTableWidgetDrillTargets: IAvailableDrill
                     attributeHeader: {
                         name: "Department",
                         localIdentifier: "d25f36e4914f4ed18ee6b057d18decd9",
-                        uri: "/gdc/md/referenceworkspace/obj/1089",
+                        uri: "obj_1089",
                         identifier: "label.owner.department",
                         formOf: {
                             name: "Department",
-                            uri: "/gdc/md/referenceworkspace/obj/1088",
+                            uri: "obj_1088",
                             identifier: "attr.owner.department",
                             ref: {
-                                uri: "/gdc/md/referenceworkspace/obj/1088",
+                                identifier: "obj_1088",
                             },
                         },
                         ref: {
-                            uri: "/gdc/md/referenceworkspace/obj/1089",
+                            identifier: "obj_1089",
                         },
                     },
                 } as unknown as IAttributeDescriptor,
@@ -123,18 +123,18 @@ export const SimpleDashboardSimpleSortedTableWidgetDrillTargets: IAvailableDrill
                 attributeHeader: {
                     name: "Product Name",
                     localIdentifier: SimpleDashboardSimpleSortedTableProductAttributeLocalIdentifier,
-                    uri: "/gdc/md/referenceworkspace/obj/1055",
+                    uri: "obj_1055",
                     identifier: "label.product.id.name",
                     formOf: {
                         name: "Product",
-                        uri: "/gdc/md/referenceworkspace/obj/1054",
+                        uri: "obj_1054",
                         identifier: "attr.product.id",
                         ref: {
-                            uri: "/gdc/md/referenceworkspace/obj/1054",
+                            identifier: "obj_1054",
                         },
                     },
                     ref: {
-                        uri: "/gdc/md/referenceworkspace/obj/1055",
+                        identifier: "obj_1055",
                     },
                 },
             } as unknown as IAttributeDescriptor,
@@ -143,18 +143,18 @@ export const SimpleDashboardSimpleSortedTableWidgetDrillTargets: IAvailableDrill
                     attributeHeader: {
                         name: "Product Name",
                         localIdentifier: "3b196b9f8de04b61ba37762fa28fcf4f",
-                        uri: "/gdc/md/referenceworkspace/obj/1055",
+                        uri: "obj_1055",
                         identifier: "label.product.id.name",
                         formOf: {
                             name: "Product",
-                            uri: "/gdc/md/referenceworkspace/obj/1054",
+                            uri: "obj_1054",
                             identifier: "attr.product.id",
                             ref: {
-                                uri: "/gdc/md/referenceworkspace/obj/1054",
+                                identifier: "obj_1054",
                             },
                         },
                         ref: {
-                            uri: "/gdc/md/referenceworkspace/obj/1055",
+                            identifier: "obj_1055",
                         },
                     },
                 } as unknown as IAttributeDescriptor,
@@ -171,10 +171,10 @@ export const SimpleDashboarddrillToAttributeUrlWidgetDrillTargets: IAvailableDri
                     name: "# Of Opportunities",
                     format: "#,##0.00",
                     localIdentifier: "8e874c44107d41809d0d5e7bbd1c19ff",
-                    uri: "/gdc/md/referenceworkspace/obj/1268",
+                    uri: "obj_1268",
                     identifier: "abQgDWx4gOUu",
                     ref: {
-                        uri: "/gdc/md/referenceworkspace/obj/1268",
+                        identifier: "obj_1268",
                     },
                 },
             },
@@ -183,18 +183,18 @@ export const SimpleDashboarddrillToAttributeUrlWidgetDrillTargets: IAvailableDri
                     attributeHeader: {
                         name: "Opportunity Name",
                         localIdentifier: "a75a78a7e2194c339b4f6b8694777803",
-                        uri: "/gdc/md/referenceworkspace/obj/1067",
+                        uri: "obj_1067",
                         identifier: "label.opportunity.id.name",
                         formOf: {
                             name: "Opportunity",
-                            uri: "/gdc/md/referenceworkspace/obj/1066",
+                            uri: "obj_1066",
                             identifier: "attr.opportunity.id",
                             ref: {
-                                uri: "/gdc/md/referenceworkspace/obj/1066",
+                                identifier: "obj_1066",
                             },
                         },
                         ref: {
-                            uri: "/gdc/md/referenceworkspace/obj/1067",
+                            identifier: "obj_1067",
                         },
                     },
                 } as unknown as IAttributeDescriptor,
@@ -207,18 +207,18 @@ export const SimpleDashboarddrillToAttributeUrlWidgetDrillTargets: IAvailableDri
                 attributeHeader: {
                     name: "Opportunity Name",
                     localIdentifier: "a75a78a7e2194c339b4f6b8694777803",
-                    uri: "/gdc/md/referenceworkspace/obj/1067",
+                    uri: "obj_1067",
                     identifier: "label.opportunity.id.name",
                     formOf: {
                         name: "Opportunity",
-                        uri: "/gdc/md/referenceworkspace/obj/1066",
+                        uri: "obj_1066",
                         identifier: "attr.opportunity.id",
                         ref: {
-                            uri: "/gdc/md/referenceworkspace/obj/1066",
+                            identifier: "obj_1066",
                         },
                     },
                     ref: {
-                        uri: "/gdc/md/referenceworkspace/obj/1067",
+                        identifier: "obj_1067",
                     },
                 },
             } as unknown as IAttributeDescriptor,
@@ -227,18 +227,18 @@ export const SimpleDashboarddrillToAttributeUrlWidgetDrillTargets: IAvailableDri
                     attributeHeader: {
                         name: "Opportunity Name",
                         localIdentifier: "a75a78a7e2194c339b4f6b8694777803",
-                        uri: "/gdc/md/referenceworkspace/obj/1067",
+                        uri: "obj_1067",
                         identifier: "label.opportunity.id.name",
                         formOf: {
                             name: "Opportunity",
-                            uri: "/gdc/md/referenceworkspace/obj/1066",
+                            uri: "obj_1066",
                             identifier: "attr.opportunity.id",
                             ref: {
-                                uri: "/gdc/md/referenceworkspace/obj/1066",
+                                identifier: "obj_1066",
                             },
                         },
                         ref: {
-                            uri: "/gdc/md/referenceworkspace/obj/1067",
+                            identifier: "obj_1067",
                         },
                     },
                 } as unknown as IAttributeDescriptor,
@@ -321,10 +321,10 @@ export const DrillToAttributeUrlFromMeasureDefinition: IDrillToAttributeUrl = {
     },
     target: {
         displayForm: {
-            uri: "/gdc/md/referenceworkspace/obj/1067",
+            identifier: "obj_1067",
         },
         hyperlinkDisplayForm: {
-            uri: "/gdc/md/referenceworkspace/obj/1069",
+            identifier: "obj_1069",
         },
     },
 };

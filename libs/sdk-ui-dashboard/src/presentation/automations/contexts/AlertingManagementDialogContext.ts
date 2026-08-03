@@ -8,6 +8,8 @@ import type { IAutomationMetadataObject, IInsight, IUser, IWidget, ObjRef } from
  * Sub-context for the alerting management dialog.
  * The connector hydrates this from dashboard state.
  * The management dialog tree reads from this context instead of calling useDashboardSelector directly.
+ *
+ * @alpha
  */
 export interface IAlertingManagementDialogContextValue {
     currentUser?: IUser;
@@ -32,6 +34,18 @@ const AlertingManagementDialogContext = createContext<IAlertingManagementDialogC
 
 export const AlertingManagementDialogContextProvider = AlertingManagementDialogContext.Provider;
 
+/**
+ * Reads the alerting management dialog context.
+ *
+ * A replacement for the alerting management dialog renders inside this context and reads the current
+ * user, the dashboard it's rendered on, the widget/insight lookups (`getWidgetByRef`,
+ * `getInsightByWidgetRef`), and the pause/resume callbacks from here.
+ *
+ * Some members exist to wire internal machinery (`automationsInvalidationId`, `managementDialogContext`)
+ * and are not intended as a customization surface.
+ *
+ * @alpha
+ */
 export function useAlertingManagementDialogContext(): IAlertingManagementDialogContextValue {
     const ctx = useContext(AlertingManagementDialogContext);
     if (!ctx) {

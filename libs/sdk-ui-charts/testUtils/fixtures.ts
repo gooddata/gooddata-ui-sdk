@@ -1,11 +1,13 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { type LegacyExecutionRecording, legacyRecordedDataView } from "@gooddata/sdk-backend-mockingbird";
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { DataViewFacade } from "@gooddata/sdk-ui";
 
+import { type LegacyExecutionRecording, localLegacyDataView } from "./legacyDataView.js";
+import { recordedDataFacade } from "./recordings.js";
 import {
     AreaChartWith3MetricsAndViewByAttribute,
-    AreaChartWithMeasureViewByAndStackBy,
     BarChartWith3MetricsAndViewByAttribute,
     BarChartWith3MetricsAndViewByAttributeFunformat,
     BarChartWith3MetricsAndViewByAttributePercInFormat,
@@ -14,19 +16,10 @@ import {
     BarChartWithPopMeasureAndViewByAttributeX6,
     BarChartWithPreviousPeriodMeasure,
     BarChartWithPreviousPeriodMeasureX6,
-    BarChartWithSingleMeasureAndNoAttributes,
-    BarChartWithStackByAndViewByAttributes,
-    BarChartWithViewByAttribute,
-    BubbleChartWith1Metric,
-    BubbleChartWith2MetricsAndAttributeNoPrimaries,
-    BubbleChartWith3MetricsAndAttribute,
     BubbleChartWith3MetricsAndAttributeNullsInData,
     ComboChartWithTwoMeasuresViewByAttribute,
     ComboChartWithTwoMeasuresViewByAttributeNoBuckets,
     ComboChartWithTwoMeasuresViewByAttributePercformat,
-    HeadlineWithOneMeasure,
-    HeadlineWithOneMeasureWithIdentifier,
-    HeadlineWithTwoMeasures,
     HeadlineWithTwoMeasuresBothEmpty,
     HeadlineWithTwoMeasuresBothSame,
     HeadlineWithTwoMeasuresBothZero,
@@ -34,21 +27,13 @@ import {
     HeadlineWithTwoMeasuresFirstZero,
     HeadlineWithTwoMeasuresSecondEmpty,
     HeadlineWithTwoMeasuresSecondZero,
-    HeadlineWithTwoMeasuresWithIdentifier,
-    HeatMapWithEmptyCells,
-    HeatMapWithMetricRowColumn,
     PieChartWithMetricsOnly,
     PieChartWithMetricsOnlyFundata,
     ScatterPlotWith2MetricsAndAttributeNullsInData,
-    ScatterPlotWith2MetricsAndAttributeWithPrimary,
-    TreemapWithMetricAndStackByAttribute,
-    TreemapWithMetricAndViewByAttribute,
-    TreemapWithMetricViewByAndStackByAttribute,
-    TreemapWithTwoMetricsAndStackByAttribute,
 } from "./recordings/playlist.js";
 
 function legacyRecordedDataFacade(recording: LegacyExecutionRecording): DataViewFacade {
-    return DataViewFacade.for(legacyRecordedDataView(recording));
+    return DataViewFacade.for(localLegacyDataView(recording));
 }
 
 //
@@ -65,8 +50,8 @@ export const areaChartWith3MetricsAndViewByAttribute = legacyRecordedDataFacade(
     AreaChartWith3MetricsAndViewByAttribute,
 );
 
-export const areaChartWithMeasureViewByAndStackBy = legacyRecordedDataFacade(
-    AreaChartWithMeasureViewByAndStackBy,
+export const areaChartWithMeasureViewByAndStackBy = recordedDataFacade(
+    ReferenceRecordings.Scenarios.AreaChart.SingleMeasureWithViewByAndStackBy as unknown as ScenarioRecording,
 );
 
 //
@@ -76,10 +61,12 @@ export const areaChartWithMeasureViewByAndStackBy = legacyRecordedDataFacade(
 export const barChartWith4MetricsAndViewByTwoAttributes = legacyRecordedDataFacade(
     BarChartWith4MetricsAndViewByTwoAttributes,
 );
-export const barChartWithStackByAndViewByAttributes = legacyRecordedDataFacade(
-    BarChartWithStackByAndViewByAttributes,
+export const barChartWithStackByAndViewByAttributes = recordedDataFacade(
+    ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy as unknown as ScenarioRecording,
 );
-export const barChartWithViewByAttribute = legacyRecordedDataFacade(BarChartWithViewByAttribute);
+export const barChartWithViewByAttribute = recordedDataFacade(
+    ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewBy as unknown as ScenarioRecording,
+);
 
 export const barChartWith3MetricsAndViewByAttribute = legacyRecordedDataFacade(
     BarChartWith3MetricsAndViewByAttribute,
@@ -101,8 +88,8 @@ export const barChartWithPopMeasureAndViewByAttributeX6 = legacyRecordedDataFaca
 );
 
 export const barChartWithPreviousPeriodMeasure = legacyRecordedDataFacade(BarChartWithPreviousPeriodMeasure);
-export const barChartWithSingleMeasureAndNoAttributes = legacyRecordedDataFacade(
-    BarChartWithSingleMeasureAndNoAttributes,
+export const barChartWithSingleMeasureAndNoAttributes = recordedDataFacade(
+    ReferenceRecordings.Scenarios.BarChart.SingleMeasure as unknown as ScenarioRecording,
 );
 
 export const barChartWithPreviousPeriodMeasureX6 = legacyRecordedDataFacade(
@@ -112,14 +99,17 @@ export const barChartWithPreviousPeriodMeasureX6 = legacyRecordedDataFacade(
 //
 // Bubble chart
 //
-export const bubbleChartWith2MetricsAndAttributeNoPrimaries = legacyRecordedDataFacade(
-    BubbleChartWith2MetricsAndAttributeNoPrimaries,
+export const bubbleChartWith2MetricsAndAttributeNoPrimaries = recordedDataFacade(
+    ReferenceRecordings.Scenarios.BubbleChart.YAxisAndSizeMeasuresWithViewBy as unknown as ScenarioRecording,
 );
 
-export const bubbleChartWith1Metric = legacyRecordedDataFacade(BubbleChartWith1Metric);
+export const bubbleChartWith1Metric = recordedDataFacade(
+    ReferenceRecordings.Scenarios.BubbleChart.XAxisMeasure as unknown as ScenarioRecording,
+);
 
-export const bubbleChartWith3MetricsAndAttribute = legacyRecordedDataFacade(
-    BubbleChartWith3MetricsAndAttribute,
+export const bubbleChartWith3MetricsAndAttribute = recordedDataFacade(
+    ReferenceRecordings.Scenarios.BubbleChart
+        .XAndYAxisAndSizeMeasuresWithViewBy as unknown as ScenarioRecording,
 );
 export const bubbleChartWith3MetricsAndAttributeNullsInData = legacyRecordedDataFacade(
     BubbleChartWith3MetricsAndAttributeNullsInData,
@@ -143,13 +133,19 @@ export const comboChartWithTwoMeasuresViewByAttributePercformat = legacyRecorded
 //
 //
 //
-export const headlineWithOneMeasure = legacyRecordedDataFacade(HeadlineWithOneMeasure);
-export const headlineWithOneMeasureWithIdentifier = legacyRecordedDataFacade(
-    HeadlineWithOneMeasureWithIdentifier,
+export const headlineWithOneMeasure = recordedDataFacade(
+    ReferenceRecordings.Scenarios.Headline
+        .MultiMeasuresWithOnlyPrimaryMeasure as unknown as ScenarioRecording,
 );
-export const headlineWithTwoMeasures = legacyRecordedDataFacade(HeadlineWithTwoMeasures);
-export const headlineWithTwoMeasuresWithIdentifier = legacyRecordedDataFacade(
-    HeadlineWithTwoMeasuresWithIdentifier,
+export const headlineWithOneMeasureWithIdentifier = recordedDataFacade(
+    ReferenceRecordings.Scenarios.Headline
+        .MultiMeasuresWithOnlyPrimaryMeasure as unknown as ScenarioRecording,
+);
+export const headlineWithTwoMeasures = recordedDataFacade(
+    ReferenceRecordings.Scenarios.Headline.MultiMeasuresWithTwoMeasures as unknown as ScenarioRecording,
+);
+export const headlineWithTwoMeasuresWithIdentifier = recordedDataFacade(
+    ReferenceRecordings.Scenarios.Headline.MultiMeasuresWithTwoMeasures as unknown as ScenarioRecording,
 );
 export const headlineWithTwoMeasuresFirstEmpty = legacyRecordedDataFacade(HeadlineWithTwoMeasuresFirstEmpty);
 export const headlineWithTwoMeasuresSecondEmpty = legacyRecordedDataFacade(
@@ -165,8 +161,12 @@ export const headlineWithTwoMeasuresBothSame = legacyRecordedDataFacade(Headline
 // Heatmap recordings
 //
 
-export const heatMapWithEmptyCells = legacyRecordedDataFacade(HeatMapWithEmptyCells);
-export const heatMapWithMetricRowColumn = legacyRecordedDataFacade(HeatMapWithMetricRowColumn);
+export const heatMapWithEmptyCells = recordedDataFacade(
+    ReferenceRecordings.Scenarios.Heatmap.ThemedWithNullValues as unknown as ScenarioRecording,
+);
+export const heatMapWithMetricRowColumn = recordedDataFacade(
+    ReferenceRecordings.Scenarios.Heatmap.MeasureRowsAndColumns as unknown as ScenarioRecording,
+);
 //
 // Pie chart recordings
 //
@@ -181,23 +181,23 @@ export const pieChartWithMetricsOnlyFundata = legacyRecordedDataFacade(PieChartW
 export const scatterPlotWith2MetricsAndAttributeNullsInData = legacyRecordedDataFacade(
     ScatterPlotWith2MetricsAndAttributeNullsInData,
 );
-export const scatterPlotWith2MetricsAndAttributeWithPrimary = legacyRecordedDataFacade(
-    ScatterPlotWith2MetricsAndAttributeWithPrimary,
+export const scatterPlotWith2MetricsAndAttributeWithPrimary = recordedDataFacade(
+    ReferenceRecordings.Scenarios.ScatterPlot.XAndYAxisMeasuresAndAttribute as unknown as ScenarioRecording,
 );
 
 //
 // Treemap recordings
 //
 
-export const treemapWithMetricAndStackByAttribute = legacyRecordedDataFacade(
-    TreemapWithMetricAndStackByAttribute,
+export const treemapWithMetricAndStackByAttribute = recordedDataFacade(
+    ReferenceRecordings.Scenarios.Treemap.SingleMeasureAndSegment as unknown as ScenarioRecording,
 );
-export const treemapWithMetricAndViewByAttribute = legacyRecordedDataFacade(
-    TreemapWithMetricAndViewByAttribute,
+export const treemapWithMetricAndViewByAttribute = recordedDataFacade(
+    ReferenceRecordings.Scenarios.Treemap.SingleMeasureAndViewBy as unknown as ScenarioRecording,
 );
-export const treemapWithTwoMetricsAndStackByAttribute = legacyRecordedDataFacade(
-    TreemapWithTwoMetricsAndStackByAttribute,
+export const treemapWithTwoMetricsAndStackByAttribute = recordedDataFacade(
+    ReferenceRecordings.Scenarios.Treemap.TwoMeasuresAndSegmentBy as unknown as ScenarioRecording,
 );
-export const treemapWithMetricViewByAndStackByAttribute = legacyRecordedDataFacade(
-    TreemapWithMetricViewByAndStackByAttribute,
+export const treemapWithMetricViewByAndStackByAttribute = recordedDataFacade(
+    ReferenceRecordings.Scenarios.Treemap.SingleMeasureViewByAndSegment as unknown as ScenarioRecording,
 );

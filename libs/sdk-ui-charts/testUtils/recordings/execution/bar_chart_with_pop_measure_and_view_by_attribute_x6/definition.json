@@ -5,7 +5,7 @@
         {
             "attribute": {
                 "displayForm": {
-                    "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158"
+                    "uri": "obj_158"
                 },
                 "localIdentifier": "yearCreatedAttribute"
             }
@@ -20,7 +20,7 @@
                     "popMeasureDefinition": {
                         "measureIdentifier": "amountMeasure_1",
                         "popAttribute": {
-                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157"
+                            "uri": "obj_157"
                         }
                     }
                 }
@@ -33,7 +33,7 @@
                 "definition": {
                     "measureDefinition": {
                         "item": {
-                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279_1"
+                            "uri": "obj_1279_1"
                         },
                         "filters": []
                     }
@@ -48,7 +48,7 @@
                     "popMeasureDefinition": {
                         "measureIdentifier": "amountMeasure_2",
                         "popAttribute": {
-                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157"
+                            "uri": "obj_157"
                         }
                     }
                 }
@@ -61,7 +61,7 @@
                 "definition": {
                     "measureDefinition": {
                         "item": {
-                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279_2"
+                            "uri": "obj_1279_2"
                         },
                         "filters": []
                     }
@@ -76,7 +76,7 @@
                     "popMeasureDefinition": {
                         "measureIdentifier": "amountMeasure_3",
                         "popAttribute": {
-                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157"
+                            "uri": "obj_157"
                         }
                     }
                 }
@@ -89,7 +89,7 @@
                 "definition": {
                     "measureDefinition": {
                         "item": {
-                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279_3"
+                            "uri": "obj_1279_3"
                         },
                         "filters": []
                     }
@@ -104,7 +104,7 @@
                     "popMeasureDefinition": {
                         "measureIdentifier": "amountMeasure_4",
                         "popAttribute": {
-                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157"
+                            "uri": "obj_157"
                         }
                     }
                 }
@@ -117,7 +117,7 @@
                 "definition": {
                     "measureDefinition": {
                         "item": {
-                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279_4"
+                            "uri": "obj_1279_4"
                         },
                         "filters": []
                     }
@@ -132,7 +132,7 @@
                     "popMeasureDefinition": {
                         "measureIdentifier": "amountMeasure_5",
                         "popAttribute": {
-                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157"
+                            "uri": "obj_157"
                         }
                     }
                 }
@@ -145,7 +145,7 @@
                 "definition": {
                     "measureDefinition": {
                         "item": {
-                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279_5"
+                            "uri": "obj_1279_5"
                         },
                         "filters": []
                     }
@@ -160,7 +160,7 @@
                     "popMeasureDefinition": {
                         "measureIdentifier": "amountMeasure_6",
                         "popAttribute": {
-                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157"
+                            "uri": "obj_157"
                         }
                     }
                 }
@@ -173,7 +173,7 @@
                 "definition": {
                     "measureDefinition": {
                         "item": {
-                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279_6"
+                            "uri": "obj_1279_6"
                         },
                         "filters": []
                     }

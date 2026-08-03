@@ -5,7 +5,7 @@
         {
             "attribute": {
                 "displayForm": {
-                    "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158"
+                    "uri": "obj_158"
                 },
                 "localIdentifier": "yearCreatedAttribute"
             }
@@ -20,7 +20,7 @@
                     "popMeasureDefinition": {
                         "measureIdentifier": "amountMeasure",
                         "popAttribute": {
-                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157"
+                            "uri": "obj_157"
                         }
                     }
                 }
@@ -33,7 +33,7 @@
                 "definition": {
                     "measureDefinition": {
                         "item": {
-                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279"
+                            "uri": "obj_1279"
                         },
                         "filters": []
                     }

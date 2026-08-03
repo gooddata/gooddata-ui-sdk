@@ -5,7 +5,11 @@ import { describe, expect, it } from "vitest";
 import { type DateFilterGranularity } from "@gooddata/sdk-model";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
 
-import { DEFAULT_DATE_FORMAT, DEFAULT_DATE_FORMAT_WITH_TIME } from "../../../constants/Platform.js";
+import {
+    DEFAULT_DATE_FORMAT,
+    DEFAULT_DATE_FORMAT_WITH_TIME,
+    TIME_FORMAT_WITH_SECONDS_WITH_SEPARATOR,
+} from "../../../constants/Platform.js";
 import { type IUiRelativeDateFilterForm } from "../../../interfaces/index.js";
 import { getDateFilterRepresentation, getDateFilterTitleUsingTranslator } from "../DateFilterTitle.js";
 import { type IDateAndMessageTranslator } from "../Translators.js";
@@ -13,6 +17,8 @@ import { type IDateAndMessageTranslator } from "../Translators.js";
 import {
     absoluteFormFilter,
     absoluteFormFilterOneDay,
+    absoluteFormFilterWithSecondsInOneDay,
+    absoluteFormFilterWithSecondsWithinMoreDays,
     absoluteFormFilterWithTime,
     absoluteFormFilterWithTimeInOneDay,
     absoluteFormFilterWithTimeWithinMoreDays,
@@ -20,6 +26,8 @@ import {
     allTimeFilter,
     relativePresetFilter,
 } from "./fixtures.js";
+
+const DEFAULT_DATE_FORMAT_WITH_SECONDS = DEFAULT_DATE_FORMAT + TIME_FORMAT_WITH_SECONDS_WITH_SEPARATOR;
 
 const serializingTranslator: IDateAndMessageTranslator = {
     formatDate: (id, options) => `${id}__${JSON.stringify(options)}`,
@@ -101,6 +109,26 @@ describe("getDateFilterTitleUsingTranslator", () => {
                 DEFAULT_DATE_FORMAT_WITH_TIME,
             );
             expect(actual).toEqual("01/01/2019");
+        });
+
+        it("should include seconds in the title for an absolute form filter within one day", () => {
+            const actual = getDateFilterTitleUsingTranslator(
+                absoluteFormFilterWithSecondsInOneDay,
+                serializingTranslator,
+                "short",
+                DEFAULT_DATE_FORMAT_WITH_SECONDS,
+            );
+            expect(actual).toEqual("01/01/2019, 22:11:00 – 22:31:05");
+        });
+
+        it("should include seconds in the title for an absolute form filter across more days", () => {
+            const actual = getDateFilterTitleUsingTranslator(
+                absoluteFormFilterWithSecondsWithinMoreDays,
+                serializingTranslator,
+                "short",
+                DEFAULT_DATE_FORMAT_WITH_SECONDS,
+            );
+            expect(actual).toEqual("01/01/2019, 22:11:00 – 01/04/2019, 22:31:05");
         });
 
         it("should return the correct translation for absolute form filter for more days with default time", () => {

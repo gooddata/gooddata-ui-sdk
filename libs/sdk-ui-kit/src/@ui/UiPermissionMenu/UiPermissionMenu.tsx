@@ -1,8 +1,8 @@
 // (C) 2026 GoodData Corporation
 
-import { type KeyboardEvent, type ReactElement, useRef, useState } from "react";
+import { type KeyboardEvent, type ReactElement, useCallback, useRef, useState } from "react";
 
-import { useIntl } from "react-intl";
+import { type MessageDescriptor, useIntl } from "react-intl";
 
 import { olpPermissionMessages } from "../../locales.js";
 import { type IconType } from "../@types/icon.js";
@@ -16,13 +16,29 @@ import { UiTooltip } from "../UiTooltip/UiTooltip.js";
 const { b, e } = bem("gd-ui-kit-permission-menu");
 
 /**
- * Selectable permission level. The menu and the add-grantee picker only ever
- * assign VIEW or SHARE — EDIT is shown as a read-only row (via the model's
- * `AccessGranularPermission`) and is never selectable from the UI.
+ * Selectable permission level, mirroring the model's `AccessGranularPermission`:
+ * EDIT ("Can edit & share"), SHARE ("Can view & share") and VIEW ("Can view")
+ * are all assignable from the menu.
  *
  * @internal
  */
-export type PermissionMenuLevel = "VIEW" | "SHARE";
+export type PermissionMenuLevel = "VIEW" | "SHARE" | "EDIT";
+
+const PERMISSION_LEVEL_MESSAGE: Record<PermissionMenuLevel, MessageDescriptor> = {
+    EDIT: olpPermissionMessages.canEditAndShare,
+    SHARE: olpPermissionMessages.canViewAndShare,
+    VIEW: olpPermissionMessages.canView,
+};
+
+/**
+ * Message descriptor of a permission level's display label ("Can edit & share" /
+ * "Can view & share" / "Can view") — for triggers anchoring {@link UiPermissionMenu}.
+ *
+ * @internal
+ */
+export function permissionLevelMessage(level: PermissionMenuLevel): MessageDescriptor {
+    return PERMISSION_LEVEL_MESSAGE[level];
+}
 
 /**
  * @internal
@@ -36,7 +52,7 @@ export interface IUiPermissionMenuProps {
     onPermissionChange: (level: PermissionMenuLevel) => void;
     /**
      * Levels rendered disabled (`aria-disabled`, click blocked) — e.g. levels
-     * above the caller's own when they manage their own access.
+     * the signed-in user may not pick because they exceed their own.
      */
     disabledLevels?: ReadonlyArray<PermissionMenuLevel>;
     /** Tooltip shown on disabled level rows in place of the level's info text. */
@@ -77,11 +93,11 @@ interface IPermissionItem {
 }
 
 /**
- * Per-grantee permission popover. Renders a fixed set of rows — two
- * permission levels (Can view & share / Can view), an optional divider,
- * an optional labels drill-in and an optional Remove access action row.
- * Each level row carries an `infoCircle` tooltip; disabled level rows
- * (`disabledLevels`) swap it for `disabledTooltip`.
+ * Per-grantee permission popover. Renders a fixed set of rows — three
+ * permission levels (Can edit & share / Can view & share / Can view), an
+ * optional divider, an optional labels drill-in and an optional Remove access
+ * action row. Each level row carries an `infoCircle` tooltip; disabled level
+ * rows (`disabledLevels`) swap it for `disabledTooltip`.
  *
  * @internal
  */
@@ -148,8 +164,15 @@ function MenuBody({
 }: IMenuBodyProps) {
     const intl = useIntl();
     // Drill-in state — swaps the row list for the labels checklist. Local to the
-    // popover content, so it resets every time the menu opens.
-    const [view, setView] = useState<"menu" | "labels">("menu");
+    // popover content, so it resets every time the menu opens. `origin` is what
+    // triggered the current view so the newly-mounted view knows whether to grab
+    // focus: a drill-in/return swaps the focused element out of the DOM (focus
+    // would otherwise fall to <body>), while the initial open leaves focus to the
+    // popover. See `focusOnMount`.
+    const [{ view, origin }, setView] = useState<{ view: "menu" | "labels"; origin: "open" | "nav" }>({
+        view: "menu",
+        origin: "open",
+    });
     const choose = (next: () => void) => () => {
         next();
         onClose();
@@ -172,6 +195,11 @@ function MenuBody({
 
     const levelItems: IPermissionItem[] = [
         levelItem(
+            "EDIT",
+            intl.formatMessage(olpPermissionMessages.canEditAndShare),
+            intl.formatMessage(olpPermissionMessages.canEditAndShareTooltip),
+        ),
+        levelItem(
             "SHARE",
             intl.formatMessage(olpPermissionMessages.canViewAndShare),
             intl.formatMessage(olpPermissionMessages.canViewAndShareTooltip),
@@ -191,7 +219,7 @@ function MenuBody({
             icon: "ldmLabel",
             iconRight: "navigateRight",
             // Drill in — the checklist owns Back/Cancel/Apply and closes the menu itself.
-            onClick: () => setView("labels"),
+            onClick: () => setView({ view: "labels", origin: "nav" }),
         });
     }
     if (onRemoveAccess) {
@@ -235,12 +263,15 @@ function MenuBody({
     if (view === "labels") {
         return (
             <div className={b()} data-testid={dataTestId}>
+                {/* autoFocus on a drill-in hands keyboard focus to the checklist's
+                    named Back button (the view swap would otherwise drop it to <body>). */}
                 <UiLabelsChecklist
                     items={labels ?? []}
                     defaultSelectedIds={selectedLabelIds ?? []}
                     onApply={(ids) => onLabelsChange?.(ids)}
-                    onBack={() => setView("menu")}
+                    onBack={() => setView({ view: "menu", origin: "nav" })}
                     onClose={onClose}
+                    autoFocus={origin === "nav"}
                     dataTestId={dataTestId}
                 />
             </div>
@@ -262,7 +293,13 @@ function MenuBody({
                 ))}
                 {actionItems.length > 0 ? <div className={e("divider")} role="separator" /> : null}
                 {actionItems.map((item) => (
-                    <PermissionMenuItem key={item.key} item={item} selectedLevel={selectedLevel} />
+                    <PermissionMenuItem
+                        key={item.key}
+                        item={item}
+                        selectedLevel={selectedLevel}
+                        // Returning from the checklist restores focus to the row that opened it.
+                        autoFocus={item.key === "labels" && origin === "nav"}
+                    />
                 ))}
             </div>
         </div>
@@ -272,20 +309,34 @@ function MenuBody({
 interface IPermissionMenuItemProps {
     item: IPermissionItem;
     selectedLevel?: PermissionMenuLevel;
+    /** Focus this row's button on mount — used to restore focus when returning from a drill-in. */
+    autoFocus?: boolean;
 }
 
-function PermissionMenuItem({ item, selectedLevel }: IPermissionMenuItemProps) {
+function PermissionMenuItem({ item, selectedLevel, autoFocus }: IPermissionMenuItemProps) {
     const intl = useIntl();
     // Tooltip anchor must live OUTSIDE the menu-item button so we don't nest an
     // interactive element inside a button (invalid HTML, breaks focus). The row
     // wrapper provides the flex layout; the button covers the label; the
     // tooltip sits next to the button.
+    //
+    // When this row opens as the drill-in return target, focus it as it mounts via
+    // a callback ref — no effect, and it can't race the button's mount.
+    const focusOnAttach = useCallback(
+        (node: HTMLButtonElement | null) => {
+            if (autoFocus) {
+                node?.focus();
+            }
+        },
+        [autoFocus],
+    );
     const isRadio = !!item.radioValue;
     const isChecked = isRadio && item.radioValue === selectedLevel;
     return (
         <div className={e("item-row")}>
             <button
                 type="button"
+                ref={focusOnAttach}
                 role={isRadio ? "menuitemradio" : "menuitem"}
                 aria-checked={isRadio ? isChecked : undefined}
                 // Disabled rows stay focusable so their explanatory tooltip is

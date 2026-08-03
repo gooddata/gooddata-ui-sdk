@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type MouseEvent } from "react";
+import { type MouseEvent, type Ref } from "react";
 
 import cx from "classnames";
 
@@ -19,6 +19,8 @@ export interface IUiSubmenuHeaderProps {
     tooltipText?: string;
     onBack?: (e: MouseEvent<HTMLButtonElement>) => void;
     onClose?: (e: MouseEvent<HTMLButtonElement>) => void;
+    /** Ref to the back button, e.g. to focus it when the submenu opens. */
+    backButtonRef?: Ref<HTMLButtonElement>;
     backAriaLabel?: string;
     closeAriaLabel?: string;
     useShortenedTitle?: boolean;
@@ -38,6 +40,7 @@ export function UiSubmenuHeader({
     tooltipText,
     onBack,
     onClose,
+    backButtonRef,
     backAriaLabel,
     closeAriaLabel,
     useShortenedTitle,
@@ -61,6 +64,7 @@ export function UiSubmenuHeader({
         >
             {onBack ? (
                 <UiIconButton
+                    ref={backButtonRef}
                     icon={"navigateLeft"}
                     variant="bare"
                     size={backButtonSize}

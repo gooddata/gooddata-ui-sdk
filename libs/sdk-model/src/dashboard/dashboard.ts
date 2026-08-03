@@ -299,6 +299,106 @@ export interface IDashboardTab<TWidget = IDashboardWidget> {
 }
 
 /**
+ * Value of {@link IDashboardTimezoneConfig.timezoneId} representing that the effective timezone
+ * should be detected from the viewer's browser at load time. It is not a valid IANA identifier,
+ * so it cannot collide with a real timezone.
+ *
+ * This sentinel is only allowed in the dashboard content ({@link DashboardTimezoneId}). Values
+ * sent to executions or exports must always be concrete IANA IDs — resolve the sentinel first
+ * via {@link resolveTimezoneId}.
+ *
+ * @alpha
+ */
+export const BROWSER_DETECTED = "$browserDetected";
+
+/**
+ * Timezone value as stored in the dashboard content: an IANA timezone ID (e.g. "Europe/Prague"),
+ * or the {@link BROWSER_DETECTED} sentinel to be resolved at load time. Never pass this type
+ * to executions or exports unresolved — use {@link resolveTimezoneId}.
+ *
+ * @alpha
+ */
+export type DashboardTimezoneId = string;
+
+/**
+ * Tests whether the provided timezone value is the {@link BROWSER_DETECTED} sentinel.
+ *
+ * @param timezoneId - timezone value to test
+ * @alpha
+ */
+export function isBrowserDetectedTimezone(
+    timezoneId: DashboardTimezoneId | undefined,
+): timezoneId is typeof BROWSER_DETECTED {
+    return timezoneId === BROWSER_DETECTED;
+}
+
+/**
+ * Resolves a dashboard timezone value to a concrete IANA timezone ID: the {@link BROWSER_DETECTED}
+ * sentinel resolves to the browser/runtime timezone, any other value is returned as-is.
+ *
+ * This is the only supported way to turn {@link IDashboardTimezoneConfig.timezoneId} into a value
+ * usable in executions or exports — the sentinel must never leave the client unresolved.
+ *
+ * @param timezoneId - timezone value from the dashboard content
+ * @alpha
+ */
+export function resolveTimezoneId(timezoneId: DashboardTimezoneId | undefined): string | undefined {
+    return isBrowserDetectedTimezone(timezoneId)
+        ? Intl.DateTimeFormat().resolvedOptions().timeZone
+        : timezoneId;
+}
+
+/**
+ * Dashboard-level timezone configuration.
+ *
+ * @alpha
+ */
+export interface IDashboardTimezoneConfig {
+    /**
+     * IANA timezone ID (e.g. "Europe/Prague"), or {@link BROWSER_DETECTED} to detect the timezone
+     * from the viewer's browser at load time. Undefined means the workspace/organization setting
+     * is used.
+     */
+    readonly timezoneId?: DashboardTimezoneId;
+
+    /**
+     * Whether the timezone indicator is shown on the dashboard (and in its exports).
+     */
+    readonly showTimezoneInfo?: boolean;
+
+    /**
+     * Whether consumers may change the timezone ad-hoc in view mode. The override is session-only
+     * and never persisted to the dashboard. Also gates the embedding setTimezone command.
+     */
+    readonly allowUserOverrideInViewMode?: boolean;
+}
+
+/**
+ * Normalizes a dashboard timezone configuration to its canonical shape: unset and default
+ * (false/empty) properties are dropped, and a configuration with no effective values collapses
+ * to undefined. Apply before storing the configuration in state or persisting it, so that
+ * "all defaults" is always represented as an absent configuration rather than an empty object.
+ *
+ * @param config - timezone configuration to normalize
+ * @alpha
+ */
+export function normalizeDashboardTimezoneConfig(
+    config: IDashboardTimezoneConfig | undefined,
+): IDashboardTimezoneConfig | undefined {
+    if (!config) {
+        return undefined;
+    }
+
+    const normalized: IDashboardTimezoneConfig = {
+        ...(config.timezoneId ? { timezoneId: config.timezoneId } : {}),
+        ...(config.showTimezoneInfo ? { showTimezoneInfo: true } : {}),
+        ...(config.allowUserOverrideInViewMode ? { allowUserOverrideInViewMode: true } : {}),
+    };
+
+    return Object.keys(normalized).length > 0 ? normalized : undefined;
+}
+
+/**
  * Dashboard common properties
  * @alpha
  */
@@ -552,6 +652,12 @@ export interface IDashboard<TWidget = IDashboardWidget>
     readonly evaluationFrequency?: string;
 
     /**
+     * Dashboard-level timezone configuration.
+     * @alpha
+     */
+    readonly timezoneConfig?: IDashboardTimezoneConfig;
+
+    /**
      * Optional tabs configuration; when defined, the dashboard renders as a tabbed interface.
      * Each tab has its own layout, filter context and filter configs.
      *
@@ -648,6 +754,12 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget>
      * Evaluation frequency of alerts for the dashboard.
      */
     readonly evaluationFrequency?: string;
+
+    /**
+     * Dashboard-level timezone configuration.
+     * @alpha
+     */
+    readonly timezoneConfig?: IDashboardTimezoneConfig;
 
     /**
      * Optional tabs configuration; when defined, the dashboard renders as a tabbed interface.

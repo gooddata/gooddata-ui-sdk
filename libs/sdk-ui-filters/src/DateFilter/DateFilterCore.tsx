@@ -33,7 +33,11 @@ import {
     DATE_FILTER_SELECTED_LIST_ITEM_ID,
 } from "./accessibility/elementId.js";
 import { createDateFilterKeyboardHandler } from "./accessibility/keyboardNavigation.js";
-import { DEFAULT_DATE_FORMAT, TIME_FORMAT_WITH_SEPARATOR } from "./constants/Platform.js";
+import {
+    DEFAULT_DATE_FORMAT,
+    TIME_FORMAT_WITH_SECONDS_WITH_SEPARATOR,
+    TIME_FORMAT_WITH_SEPARATOR,
+} from "./constants/Platform.js";
 import { DateFilterBody } from "./DateFilterBody/DateFilterBody.js";
 import { type IFilterConfigurationProps } from "./DateFilterBody/types.js";
 import { type IDateFilterButtonProps } from "./DateFilterButton/DateFilterButton.js";
@@ -66,6 +70,7 @@ export interface IDateFilterCoreProps {
     hideDisabledExclude?: boolean;
     onExcludeCurrentPeriodChange: (isExcluded: boolean) => void;
     isTimeForAbsoluteRangeEnabled: boolean;
+    isSecondsForAbsoluteRangeEnabled?: boolean;
 
     availableGranularities: DateFilterGranularity[];
 
@@ -129,8 +134,21 @@ export const verifyDateFormat = (dateFormat: string): string => {
     }
 };
 
-const adjustDateFormatForDisplay = (dateFormat: string, isTimeForAbsoluteRangeEnabled: boolean = false) =>
-    isTimeForAbsoluteRangeEnabled ? dateFormat + TIME_FORMAT_WITH_SEPARATOR : dateFormat;
+const adjustDateFormatForDisplay = (
+    dateFormat: string,
+    isTimeForAbsoluteRangeEnabled: boolean = false,
+    isSecondsForAbsoluteRangeEnabled: boolean = false,
+) => {
+    if (!isTimeForAbsoluteRangeEnabled) {
+        return dateFormat;
+    }
+    return (
+        dateFormat +
+        (isSecondsForAbsoluteRangeEnabled
+            ? TIME_FORMAT_WITH_SECONDS_WITH_SEPARATOR
+            : TIME_FORMAT_WITH_SEPARATOR)
+    );
+};
 
 const getInitialFocus = (
     selectedFilterOption: DateFilterOption,
@@ -164,6 +182,7 @@ export function DateFilterCore({
     locale,
     filterOptions,
     isTimeForAbsoluteRangeEnabled,
+    isSecondsForAbsoluteRangeEnabled,
     weekStart,
     customIcon,
     FilterConfigurationComponent,
@@ -260,6 +279,7 @@ export function DateFilterCore({
                                 dateFormat={adjustDateFormatForDisplay(
                                     verifiedDateFormat,
                                     isTimeForAbsoluteRangeEnabled,
+                                    isSecondsForAbsoluteRangeEnabled,
                                 )}
                                 customFilterName={customFilterName}
                                 customIcon={customIcon}
@@ -331,6 +351,9 @@ export function DateFilterCore({
                                                 dateFilterButton={dateFilterButton(isMobile)}
                                                 dateFormat={verifiedDateFormat}
                                                 isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled}
+                                                isSecondsForAbsoluteRangeEnabled={
+                                                    isSecondsForAbsoluteRangeEnabled
+                                                }
                                                 weekStart={weekStart}
                                                 isConfigurationEnabled={
                                                     FilterConfigurationComponent !== undefined

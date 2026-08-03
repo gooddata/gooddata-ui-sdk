@@ -4,7 +4,7 @@ import { useMemo } from "react";
 
 import { objRefToString } from "@gooddata/sdk-model";
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import type { IObjectShareLabel } from "@gooddata/sdk-ui-ext";
+import { type IObjectShareLabel, sortShareableLabels } from "@gooddata/sdk-ui-ext";
 
 import type { ShareableCatalogItem } from "./types.js";
 
@@ -59,13 +59,18 @@ export function useShareableLabels(item: ShareableCatalogItem | undefined): ISha
 
     const labels = useMemo<IObjectShareLabel[]>(
         () =>
-            (result?.displayForms ?? []).map((df) => ({
-                ref: df.ref,
-                id: objRefToString(df.ref),
-                title: df.title,
-                isPrimary: df.isPrimary === true,
-                isDefault: df.isDefault === true,
-            })),
+            // Sort once at the source so the detail-page labels popup and the share
+            // dialog's label-access checklist — both fed from here — share one
+            // deterministic order (primary first, then alphabetical).
+            sortShareableLabels(
+                (result?.displayForms ?? []).map((df) => ({
+                    ref: df.ref,
+                    id: objRefToString(df.ref),
+                    title: df.title,
+                    isPrimary: df.isPrimary === true,
+                    isDefault: df.isDefault === true,
+                })),
+            ),
         [result],
     );
 

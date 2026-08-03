@@ -97,7 +97,6 @@ export default defineConfig(({ mode, command }): UserConfig => {
             ],
         },
         define: {
-            REACT_APP_SDK_BACKEND: JSON.stringify("TIGER"),
             PRODUCTION: JSON.stringify(mode === "production"),
             "process.env": JSON.stringify({}),
         },
