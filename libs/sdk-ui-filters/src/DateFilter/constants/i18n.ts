@@ -14,7 +14,16 @@ export type DateFilterLabelMode = "short" | "full";
  * Short-form intl keys for granularities.
  * @beta
  */
-export type GranularityIntlKey = "day" | "minute" | "hour" | "week" | "month" | "quarter" | "year" | "period";
+export type GranularityIntlKey =
+    | "day"
+    | "second"
+    | "minute"
+    | "hour"
+    | "week"
+    | "month"
+    | "quarter"
+    | "year"
+    | "period";
 
 /**
  * Full-form intl keys for granularities (includes fiscal variants).
@@ -30,6 +39,7 @@ export type GranularityIntlKeyFull = GranularityIntlKey | "fiscalmonth" | "fisca
 export const granularityIntlCodes: {
     [key in DateFilterGranularity]: GranularityIntlKey;
 } = {
+    "GDC.time.second": "second",
     "GDC.time.minute": "minute",
     "GDC.time.hour": "hour",
     "GDC.time.date": "day",
@@ -50,6 +60,7 @@ export const granularityIntlCodes: {
 export const granularityIntlCodesFull: {
     [key in DateFilterGranularity]: GranularityIntlKeyFull;
 } = {
+    "GDC.time.second": "second",
     "GDC.time.minute": "minute",
     "GDC.time.hour": "hour",
     "GDC.time.date": "day",

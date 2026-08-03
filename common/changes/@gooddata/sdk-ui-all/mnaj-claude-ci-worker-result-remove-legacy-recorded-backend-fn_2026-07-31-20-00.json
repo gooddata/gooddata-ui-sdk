@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-backend-mockingbird: Remove the deprecated internal legacyRecordedBackend function (no callers); legacyRecordedDataView and legacy recording types are unchanged.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

@@ -1,18 +1,45 @@
 // (C) 2026 GoodData Corporation
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import type { IObjectPermissionsObject } from "@gooddata/sdk-backend-spi";
-import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import type { IObjectAccessList } from "@gooddata/sdk-model";
+import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import { isPermissionsNotAvailable } from "./accessErrors.js";
 import {
     type LabelScopePrincipal,
-    buildLabelMutations,
     buildLabelMutationsForPrincipals,
     isGranteeGrantedIn,
 } from "./objectShareController.helpers.js";
 import type { IObjectShareLabel } from "./types.js";
+
+/** Per-label probe outcome: the fetched access list, or a failure with whether it was transient (not a 404). */
+type LabelProbeResult =
+    | { label: IObjectShareLabel; list: IObjectAccessList }
+    | { label: IObjectShareLabel; transient: boolean };
+
+/** Pure: each grantee's in-scope label ids — primary always counts, others only where the grantee is granted. */
+function resolveScopes(
+    results: readonly LabelProbeResult[],
+    committedGranteeIds: readonly string[],
+): Record<string, string[]> {
+    const resolved: Record<string, string[]> = {};
+    for (const id of committedGranteeIds) {
+        resolved[id] = [];
+    }
+    for (const result of results) {
+        if ("transient" in result) {
+            continue;
+        }
+        for (const id of committedGranteeIds) {
+            if (result.label.isPrimary || isGranteeGrantedIn(result.list, id)) {
+                resolved[id]!.push(result.label.id);
+            }
+        }
+    }
+    return resolved;
+}
 
 /**
  * Per-label access scope for the share dialog: which labels each grantee can
@@ -38,26 +65,27 @@ export interface ILabelScope {
      * on the "assume all labels" placeholder.
      */
     labelsResolved: boolean;
+    /**
+     * True until the session's FIRST scope resolution settles (labels metadata +
+     * the initial per-label probe). Unlike {@link labelsResolved} it never turns
+     * back on: a later re-probe (a grantee or label-set change) only re-disables
+     * controls. Lets the dialog hold its loading placeholders until controls are
+     * actionable without flashing back to them mid-session; a resolution that
+     * settles with failures counts too, so an error can't hold placeholders
+     * forever.
+     */
+    labelsInitializing: boolean;
     /** Per-grantee label scope: grantee id → label ids in scope (primary always in). */
     selectedLabelIdsByGrantee: Record<string, string[]>;
     setSelectedLabelIdsByGrantee: React.Dispatch<React.SetStateAction<Record<string, string[]>>>;
     /**
      * The single per-label write path. Diffs `desired` vs `current` over the
-     * permissionable labels and grants/revokes for one principal. Returns false
-     * if any write fails (callers surface the error and roll back).
+     * permissionable labels and issues one `manageObjectPermissions` per changed
+     * label, carrying every principal that changes on it. Reports `failedLabelIds`
+     * so callers can keep the labels that landed rather than treat a partial
+     * failure as all-or-nothing (each label write settles independently).
      */
     reconcileLabelScope: (
-        principal: LabelScopePrincipal,
-        desiredLabelIds: ReadonlySet<string>,
-        currentLabelIds: ReadonlySet<string>,
-    ) => Promise<boolean>;
-    /**
-     * Multi-principal {@link reconcileLabelScope}: one `manageObjectPermissions`
-     * per label carrying all principals that change on it (used by Add). Reports
-     * `failedLabelIds` so the caller can keep the labels that landed rather than
-     * discard the whole scope on a partial failure.
-     */
-    reconcileLabelScopeMany: (
         principals: LabelScopePrincipal[],
         desiredLabelIds: ReadonlySet<string>,
         currentLabelIds: ReadonlySet<string>,
@@ -72,14 +100,13 @@ export interface ILabelScope {
  *
  * The resolved scope is local-authoritative: the probe seeds a scope only for
  * grantees it doesn't already know, so an optimistic scope written for a freshly
- * added grantee is never overwritten by the backend's lagging read. Local scopes
- * are dropped on a target switch so the next object re-resolves from scratch.
+ * added grantee is never overwritten by the backend's lagging read. Session-scoped
+ * like its owner — the target is fixed for the mount (see {@link ObjectShareDialog}).
  *
  * @internal
  */
 export function useLabelScope(
     target: IObjectPermissionsObject | undefined,
-    targetKey: string | undefined,
     labels: IObjectShareLabel[],
     hasList: boolean,
     committedGranteeIds: string[],
@@ -89,118 +116,97 @@ export function useLabelScope(
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
 
+    // The optimistic label-scope overlay — kept authoritative: a scope written for
+    // a fresh add / labels edit must survive the backend's lagging re-read, so the
+    // probe below only seeds grantees it doesn't already know.
     const [selectedLabelIdsByGrantee, setSelectedLabelIdsByGrantee] = useState<Record<string, string[]>>({});
-    // Label ids whose permissions endpoint responded — not every display form is
-    // independently permissionable (some 404). `undefined` means "not resolved
-    // yet" (assume all).
-    const [permissionableLabelIds, setPermissionableLabelIds] = useState<Set<string> | undefined>(undefined);
+    // Whether the session's first probe has settled (see `labelsInitializing`) —
+    // a fact about session history, so it is state, flipped once in onSuccess.
+    const [everResolved, setEverResolved] = useState(false);
 
     const labelsKey = labels.map((l) => l.id).join(",");
 
-    // A target switch OR a label-set change invalidates the previous probe's
-    // permissionable set; until the resolution effect re-derives it,
-    // `effectiveLabels` must fall back to all labels rather than filter against
-    // stale ids. Resetting on `labelsKey` too matters when the label set changes
-    // under the same target (e.g. labels finish loading): otherwise the old
-    // permissionable set would briefly mark scope resolved and filter the new
-    // labels against stale ids, so add/share could skip expected per-label grants.
-    useEffect(() => {
-        setPermissionableLabelIds(undefined);
-    }, [targetKey, labelsKey]);
-
-    // A target switch — or a label-set change under the same target (labels finish
-    // loading, a label added/removed) — drops every resolved scope so the seeding
-    // effect below re-resolves from the current label set's per-label lists rather
-    // than preserving scopes computed against the old labels. Without the labelsKey
-    // reset, an existing grantee would keep a scope missing a newly-added label even
-    // when the backend grants them access to it. (An add under the SAME labels only
-    // changes granteeIdsKey, not labelsKey, so an optimistic scope still survives.)
-    useEffect(() => {
+    // Drop every resolved scope when the label SET changes (labels finish loading, a
+    // label added/removed) — the probe must re-resolve, or a grantee keeps a scope
+    // missing a newly-granted label. Render-time adjust-on-change.
+    const [seenLabelsKey, setSeenLabelsKey] = useState(labelsKey);
+    if (seenLabelsKey !== labelsKey) {
+        setSeenLabelsKey(labelsKey);
         setSelectedLabelIdsByGrantee({});
-    }, [targetKey, labelsKey]);
+    }
 
-    // Stable string key of the committed grantee ids — the array is rebuilt each
-    // render, so the effect keys on this instead to re-resolve only on a real change.
-    const granteeIdsKey = committedGranteeIds.slice().sort().join(",");
+    // Probe each label's access list to learn which are permissionable (some 404) and
+    // which each grantee holds. `hasList` gates it: a list with no named grantees keeps
+    // `granteeIdsKey` empty, but the permissionable set (404 filtering) must still resolve.
+    const { result: labelLists } = useCancelablePromise(
+        {
+            promise:
+                target && labels.length > 0 && hasList
+                    ? () =>
+                          Promise.all(
+                              labels.map((label) =>
+                                  backend
+                                      .workspace(workspace)
+                                      .objectPermissions()
+                                      .getAccessList({ kind: "label", ref: label.ref })
+                                      .then((list) => ({ label, list }) as const)
+                                      // Only a definitive 404 means the label can't take a
+                                      // grant; a transient failure must NOT drop a real label.
+                                      .catch(
+                                          (error: unknown) =>
+                                              ({
+                                                  label,
+                                                  transient: !isPermissionsNotAvailable(error),
+                                              }) as const,
+                                      ),
+                              ),
+                          )
+                    : undefined,
+            onSuccess: (results) => {
+                setEverResolved(true);
+                const resolved = resolveScopes(results, committedGranteeIds);
+                // Seed only grantees we don't already have a scope for — an optimistic
+                // scope is authoritative and must survive this re-resolution. Fired once
+                // per resolution (onSuccess), so reading `prev` is safe.
+                setSelectedLabelIdsByGrantee((prev) => {
+                    const next: Record<string, string[]> = {};
+                    for (const id of committedGranteeIds) {
+                        next[id] = prev[id] ?? resolved[id]!;
+                    }
+                    return next;
+                });
+            },
+        },
+        // Keyed on the label set's stable string hash, not the array (rebuilt every
+        // render — listing it would refetch each render, an infinite loop). NOT keyed
+        // on the grantee set: adds and removes maintain their scope optimistically,
+        // so a per-grantee-change re-probe would only discard its own results while
+        // flipping labelsResolved false and disabling controls for the round trip.
+        [backend, workspace, labelsKey, hasList],
+    );
 
-    // Resolve each grantee's label scope: fetch every label's access list once and
-    // record, per grantee, which labels they appear in (primary label always counts).
-    // Keyed on the committed grantee ids + labels so it re-resolves after add/remove.
-    // `hasList` is a dep too: a list that loads with no named grantees keeps
-    // `granteeIdsKey` empty, so without it the effect would never run and the
-    // permissionable set (404 filtering) would never resolve.
-    useEffect(() => {
-        if (!target || labels.length === 0 || !hasList) {
-            return;
+    // Permissionable ids derived straight from the probe result — `undefined` (assume
+    // all) until it resolves, which also invalidates automatically on a dep change
+    // (useCancelablePromise resets to loading), so no separate reset is needed.
+    const permissionableLabelIds = useMemo<Set<string> | undefined>(() => {
+        if (!labelLists) {
+            return undefined;
         }
-        let cancelled = false;
-        Promise.all(
-            labels.map((label) =>
-                backend
-                    .workspace(workspace)
-                    .objectPermissions()
-                    .getAccessList({ kind: "label", ref: label.ref })
-                    .then((list) => ({ label, list }) as const)
-                    // Only a definitive 404 means the label can't take a per-label
-                    // grant. A transient failure (5xx / 403 / network) must NOT drop a
-                    // real label — return it without grant info so it stays grantable.
-                    .catch(
-                        (error: unknown) =>
-                            ({ label, transient: !isPermissionsNotAvailable(error) }) as const,
-                    ),
-            ),
-        ).then((results) => {
-            if (cancelled) {
-                return;
-            }
-            const resolved: Record<string, string[]> = {};
-            for (const id of committedGranteeIds) {
-                resolved[id] = [];
-            }
-            const permissionable = new Set<string>();
-            for (const result of results) {
-                if ("transient" in result) {
-                    // Keep transiently-failed labels permissionable (don't hide a real
-                    // label); skip definitively-not-permissionable ones (404).
-                    if (result.transient) {
-                        permissionable.add(result.label.id);
-                    }
-                    continue;
+        const permissionable = new Set<string>();
+        for (const result of labelLists) {
+            // Keep transiently-failed labels permissionable; skip definitive 404s.
+            if ("transient" in result) {
+                if (result.transient) {
+                    permissionable.add(result.label.id);
                 }
-                const { label, list } = result;
-                permissionable.add(label.id);
-                for (const id of committedGranteeIds) {
-                    // Primary label is always part of the scope; others are scoped
-                    // only when the grantee actually holds a grant on that label.
-                    if (label.isPrimary || isGranteeGrantedIn(list, id)) {
-                        resolved[id]!.push(label.id);
-                    }
-                }
+            } else {
+                permissionable.add(result.label.id);
             }
-            setSelectedLabelIdsByGrantee((prev) => {
-                // Seed a scope only for grantees we don't already have one for. A
-                // scope written optimistically (a fresh add, a labels edit) is
-                // local-authoritative and must survive the re-resolution that the
-                // grantee-set change triggers — the backend's lagging read would
-                // otherwise reset it. Grantees gone from the list are dropped.
-                const next: Record<string, string[]> = {};
-                for (const id of committedGranteeIds) {
-                    next[id] = prev[id] ?? resolved[id]!;
-                }
-                return next;
-            });
-            setPermissionableLabelIds(permissionable);
-        });
-        return () => {
-            cancelled = true;
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [backend, workspace, targetKey, labelsKey, granteeIdsKey, hasList]);
+        }
+        return permissionable;
+    }, [labelLists]);
 
-    // Only labels whose permissions endpoint responded are scope-controllable; until
-    // resolution completes (permissionableLabelIds undefined) assume all are usable.
-    // While the current target's list isn't loaded yet, ignore a permissionable set
-    // left over from a previous object so we never mis-filter the new labels.
+    // Only permissionable labels are scope-controllable; assume all until resolved.
     const effectiveLabels = useMemo<IObjectShareLabel[]>(
         () =>
             hasList && permissionableLabelIds
@@ -209,45 +215,32 @@ export function useLabelScope(
         [labels, permissionableLabelIds, hasList],
     );
 
-    // Resolution is done when the probe has produced a permissionable set, or when
-    // there are genuinely no labels to probe (a label-free object). Until then
-    // callers must treat the scope as unknown (not "all selected").
-    //
-    // Crucially, an EMPTY `labels` list only means "resolved" when labels aren't
-    // still loading and didn't error: while they load, the consumer hasn't passed
-    // them yet (labels === [] with loading true), and on error they can't be known.
-    // Treating either as resolved would let row controls reconcile against an empty
-    // label set and silently orphan real per-label grants. So stay unresolved while
-    // labels are pending, regardless of the current (possibly empty) list.
+    // A transiently-failed probe means that label's per-grantee grants are UNKNOWN —
+    // the label stays visible (permissionable), but the scope must not count as
+    // resolved: edits would diff against an invented current and could orphan or
+    // skip that label's real grants. Same philosophy as the `labelsError` gate.
+    const hasTransientProbe = labelLists?.some((r) => "transient" in r && r.transient) ?? false;
+
+    // Resolved once the probe produced a permissionable set with no unknowns, or for
+    // a genuinely label-free object. An EMPTY `labels` list counts as resolved only
+    // when labels aren't still loading and didn't error — otherwise row controls
+    // would reconcile against an empty set and silently orphan real per-label grants.
     const labelsPending = labelsError || labelsLoading;
-    const labelsResolved = !labelsPending && (labels.length === 0 || permissionableLabelIds !== undefined);
+    const labelsResolved =
+        !labelsPending &&
+        (labels.length === 0 || (permissionableLabelIds !== undefined && !hasTransientProbe));
 
-    // The single per-label write path. Diffs `desired` vs `current` over the
-    // permissionable labels and applies the grants/revokes for one principal
-    // (a grantee, or the all-workspace-users rule). Returns false if ANY write
-    // fails — callers surface the error and roll back, so a partial write never
-    // looks like success (no silent .catch). Used by add, remove, general access
-    // and the labels picker alike, so their label behavior can't drift.
+    // First-resolution only: metadata still loading, or a probe will run and hasn't
+    // settled once. A metadata ERROR is not initializing (nothing more will load —
+    // the dialog reveals with disabled controls instead of holding placeholders).
+    const labelsInitializing = labelsLoading || (labels.length > 0 && !everResolved);
+
+    // The single per-label write path (see the interface doc) — used by add, remove,
+    // general access and the labels picker alike, so their label behavior can't
+    // drift. Writes settle independently (allSettled), and the failed labels are
+    // reported by id — never collapsed into one boolean, or a partial failure would
+    // roll callers back past writes that actually landed.
     const reconcileLabelScope = useCallback(
-        async (
-            principal: LabelScopePrincipal,
-            desiredLabelIds: ReadonlySet<string>,
-            currentLabelIds: ReadonlySet<string>,
-        ): Promise<boolean> => {
-            const writes = buildLabelMutations(principal, desiredLabelIds, currentLabelIds, effectiveLabels);
-            if (writes.length === 0) {
-                return true;
-            }
-            const svc = backend.workspace(workspace).objectPermissions();
-            const results = await Promise.allSettled(
-                writes.map((w) => svc.manageObjectPermissions({ kind: "label", ref: w.ref }, [w.grantee])),
-            );
-            return results.every((r) => r.status === "fulfilled");
-        },
-        [effectiveLabels, backend, workspace],
-    );
-
-    const reconcileLabelScopeMany = useCallback(
         async (
             principals: LabelScopePrincipal[],
             desiredLabelIds: ReadonlySet<string>,
@@ -277,9 +270,9 @@ export function useLabelScope(
     return {
         effectiveLabels,
         labelsResolved,
+        labelsInitializing,
         selectedLabelIdsByGrantee,
         setSelectedLabelIdsByGrantee,
         reconcileLabelScope,
-        reconcileLabelScopeMany,
     };
 }

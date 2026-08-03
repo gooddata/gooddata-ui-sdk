@@ -39,6 +39,7 @@ const useShareDialogDashboardHeader = () => {
             );
             dispatch(metaActions.setEvaluationFrequency(payload.evaluationFrequency));
             dispatch(metaActions.setSectionHeadersDateDataSet(payload.sectionHeadersDateDataSet));
+            dispatch(metaActions.setDashboardTimezoneConfig(payload.timezoneConfig));
         },
         [closeSettingsDialog, dispatch],
     );

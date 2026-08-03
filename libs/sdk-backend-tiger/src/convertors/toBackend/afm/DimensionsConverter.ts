@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 
@@ -50,7 +50,7 @@ function convertSortDirection(direction: SortDirection): SortKeyAttributeAttribu
  * For normal attribute sort by value:
  * - DEFAULT sort type is always used.
  * It means, that potential default sort label on model will have always higher priority over sort label provided by execution.
- * It behaves similar to the Bear behavior and according UX but it limits API capabilities as API can override default sort label by the one from execution by using SortType.LABEL
+ * It follows the legacy platform behavior and the agreed UX, but it limits API capabilities as API can override default sort label by the one from execution by using SortType.LABEL
  * If someone needs this here too, we need to extend IAttributeSortItem by some label prioritization flag and consider it in this convertor.
  *
  * For area sort it just uses SortType.AREA to use this sort by numerical sum in execution.
@@ -60,12 +60,12 @@ function convertAttributeSortType(sortItem: ISortItem): SortKeyAttributeAttribut
 }
 
 /**
- * This messed up function exists because PivotTable expects specific (bear) format of attribute element URIs from
+ * This messed up function exists because PivotTable expects a specific legacy format of attribute element URIs from
  * which it construct table column ids. The logic behind column ids is deeply rooted (rotted-into) that it would
  * mean non-trivial changes / partial rewrites in the pivot table.
  *
  * To avoid that (because it will likely be several weeks worth of effort and testing), we opted for a dirty 'trick'
- * where tiger backend constructs attribute element URIs so that they resemble the bear URIs. The element ID is
+ * where tiger backend constructs attribute element URIs so that they resemble those legacy URIs. The element ID is
  * actually the primaryLabelValue -→ thing that can be used for sorting.
  *
  * This function caters for the dirty trick + in case the sorts were created 'normally', programmatically by the
@@ -166,12 +166,12 @@ function handleMeasureSort(
 /**
  * Places sorting into dimensions. Returns new dimensions augmented by sorting. Does not mutate.
  *
- * Tiger does sorting differently from bear so this is somewhat more complicated than pure object conversions.
+ * Tiger's sorting model differs from the legacy platform's, so this is somewhat more complicated than pure object conversions.
  *
  * 1. Sorting is now placed in the dimension that has to be sorted
  * 2. When sorting by attribute (headers), then the attribute sort key must be placed into the dimension that
  *    contains the attribute
- * 3. When sorting by measure, we now fall back to 'bear-like' behavior: the dimension opposite to the one
+ * 3. When sorting by measure, we now fall back to the legacy-platform behavior: the dimension opposite to the one
  *    that contains the measures will be sorted. It will be sorted using the measure (possibly scoped for
  *    particular attribute values) located in the MeasureGroup dimension.
  *

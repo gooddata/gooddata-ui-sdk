@@ -7,11 +7,11 @@ import { type DateAttributeGranularity } from "./dateGranularities.js";
  *
  * @remarks
  * - `chronological` — sequential periods (year, quarter, month, week, date, hour, minute) and their fiscal variants.
- * - `cyclical` — "X of Y" periods that repeat (month of year, day of week, …); a.k.a. generic/periodical.
+ * - `generic` — "X of Y" periods that repeat (month of year, day of week, …); a.k.a. cyclical/periodical.
  *
  * @alpha
  */
-export type GranularityFamily = "chronological" | "cyclical";
+export type GranularityFamily = "chronological" | "generic";
 
 /**
  * Calendar a granularity belongs to.
@@ -19,7 +19,7 @@ export type GranularityFamily = "chronological" | "cyclical";
  * @remarks
  * - `standard` — Gregorian year/quarter/month.
  * - `fiscal` — fiscal year/quarter/month (and, with custom fiscal calendars, further fiscal periods).
- * - `shared` — usable under either calendar (week, date, hour, minute, and the standard-derived cyclical periods).
+ * - `shared` — usable under either calendar (week, date, hour, minute, and the standard-derived generic periods).
  *
  * @alpha
  */
@@ -41,20 +41,20 @@ export interface IGranularityDescriptor {
     family: GranularityFamily;
     /** Which calendar the granularity belongs to. */
     affinity: CalendarAffinity;
-    /** Whether the granularity is at the time-of-day scale (hour/minute and their cyclical forms). */
+    /** Whether the granularity is at the time-of-day scale (hour/minute/second and their generic forms). */
     timeScale: boolean;
     /**
      * Canonical coarse→fine display/drill-down order. Fiscal granularities are ranked immediately after
      * their standard sibling, so filtering to a single calendar reproduces each consumer's historical order.
      */
     order: number;
-    /** For cyclical granularities, the chronological granularity they are derived from (e.g. month_in_year → month). */
+    /** For generic granularities, the chronological granularity they are derived from (e.g. month_in_year → month). */
     chronologicalOrigin?: DateAttributeGranularity;
     /** Standard↔fiscal equivalent of the same period length (year↔fiscal_year, …), when one exists. */
     counterpart?: DateAttributeGranularity;
     /**
      * Whether the granularity is offered to users by default. `false` for tokens that exist in the type/backend
-     * but are not surfaced in any picker today (the `GDC.time.week` alias and the EU-week cyclical variants).
+     * but are not surfaced in any picker today (the `GDC.time.week` alias and the EU-week generic variants).
      * Descriptors still exist for them so classification/lookup works; they are just excluded from
      * {@link getGranularities} output unless explicitly requested.
      */
@@ -117,53 +117,66 @@ export const GRANULARITY_DESCRIPTORS: Record<DateAttributeGranularity, IGranular
     "GDC.time.date": makeDescriptor("GDC.time.date", "chronological", "shared", 50),
     "GDC.time.hour": makeDescriptor("GDC.time.hour", "chronological", "shared", 60, { timeScale: true }),
     "GDC.time.minute": makeDescriptor("GDC.time.minute", "chronological", "shared", 70, { timeScale: true }),
+    "GDC.time.second": makeDescriptor("GDC.time.second", "chronological", "shared", 80, { timeScale: true }),
 
-    // cyclical ("X of Y") — shared / standard-derived
-    "GDC.time.quarter_in_year": makeDescriptor("GDC.time.quarter_in_year", "cyclical", "shared", 22, {
+    // generic ("X of Y") — shared / standard-derived
+    "GDC.time.quarter_in_year": makeDescriptor("GDC.time.quarter_in_year", "generic", "shared", 22, {
         chronologicalOrigin: "GDC.time.quarter",
     }),
-    "GDC.time.month_in_quarter": makeDescriptor("GDC.time.month_in_quarter", "cyclical", "shared", 32, {
+    "GDC.time.month_in_quarter": makeDescriptor("GDC.time.month_in_quarter", "generic", "shared", 32, {
         chronologicalOrigin: "GDC.time.month",
     }),
-    "GDC.time.month_in_year": makeDescriptor("GDC.time.month_in_year", "cyclical", "shared", 33, {
+    "GDC.time.month_in_year": makeDescriptor("GDC.time.month_in_year", "generic", "shared", 33, {
         chronologicalOrigin: "GDC.time.month",
     }),
-    "GDC.time.week_in_quarter": makeDescriptor("GDC.time.week_in_quarter", "cyclical", "shared", 42, {
+    "GDC.time.week_in_quarter": makeDescriptor("GDC.time.week_in_quarter", "generic", "shared", 42, {
         chronologicalOrigin: "GDC.time.week_us",
     }),
-    "GDC.time.week_in_year": makeDescriptor("GDC.time.week_in_year", "cyclical", "shared", 43, {
+    "GDC.time.week_in_year": makeDescriptor("GDC.time.week_in_year", "generic", "shared", 43, {
         chronologicalOrigin: "GDC.time.week_us",
     }),
-    "GDC.time.euweek_in_quarter": makeDescriptor("GDC.time.euweek_in_quarter", "cyclical", "shared", 44, {
+    "GDC.time.euweek_in_quarter": makeDescriptor("GDC.time.euweek_in_quarter", "generic", "shared", 44, {
         chronologicalOrigin: "GDC.time.week",
         offeredByDefault: false,
     }),
-    "GDC.time.euweek_in_year": makeDescriptor("GDC.time.euweek_in_year", "cyclical", "shared", 45, {
+    "GDC.time.euweek_in_year": makeDescriptor("GDC.time.euweek_in_year", "generic", "shared", 45, {
         chronologicalOrigin: "GDC.time.week",
         offeredByDefault: false,
     }),
-    "GDC.time.day_in_week": makeDescriptor("GDC.time.day_in_week", "cyclical", "shared", 51, {
+    "GDC.time.day_in_week": makeDescriptor("GDC.time.day_in_week", "generic", "shared", 51, {
         chronologicalOrigin: "GDC.time.date",
     }),
-    "GDC.time.day_in_month": makeDescriptor("GDC.time.day_in_month", "cyclical", "shared", 52, {
+    "GDC.time.day_in_month": makeDescriptor("GDC.time.day_in_month", "generic", "shared", 52, {
         chronologicalOrigin: "GDC.time.date",
     }),
-    "GDC.time.day_in_quarter": makeDescriptor("GDC.time.day_in_quarter", "cyclical", "shared", 53, {
+    "GDC.time.day_in_quarter": makeDescriptor("GDC.time.day_in_quarter", "generic", "shared", 53, {
         chronologicalOrigin: "GDC.time.date",
     }),
-    "GDC.time.day_in_year": makeDescriptor("GDC.time.day_in_year", "cyclical", "shared", 54, {
+    "GDC.time.day_in_year": makeDescriptor("GDC.time.day_in_year", "generic", "shared", 54, {
         chronologicalOrigin: "GDC.time.date",
     }),
-    "GDC.time.day_in_euweek": makeDescriptor("GDC.time.day_in_euweek", "cyclical", "shared", 55, {
+    "GDC.time.day_in_euweek": makeDescriptor("GDC.time.day_in_euweek", "generic", "shared", 55, {
         chronologicalOrigin: "GDC.time.date",
         offeredByDefault: false,
     }),
-    "GDC.time.hour_in_day": makeDescriptor("GDC.time.hour_in_day", "cyclical", "shared", 61, {
+    "GDC.time.hour_in_day": makeDescriptor("GDC.time.hour_in_day", "generic", "shared", 61, {
         chronologicalOrigin: "GDC.time.hour",
         timeScale: true,
     }),
-    "GDC.time.minute_in_hour": makeDescriptor("GDC.time.minute_in_hour", "cyclical", "shared", 71, {
+    "GDC.time.minute_in_hour": makeDescriptor("GDC.time.minute_in_hour", "generic", "shared", 71, {
         chronologicalOrigin: "GDC.time.minute",
+        timeScale: true,
+    }),
+    "GDC.time.minute_in_day": makeDescriptor("GDC.time.minute_in_day", "generic", "shared", 72, {
+        chronologicalOrigin: "GDC.time.minute",
+        timeScale: true,
+    }),
+    "GDC.time.second_in_minute": makeDescriptor("GDC.time.second_in_minute", "generic", "shared", 81, {
+        chronologicalOrigin: "GDC.time.second",
+        timeScale: true,
+    }),
+    "GDC.time.second_in_day": makeDescriptor("GDC.time.second_in_day", "generic", "shared", 82, {
+        chronologicalOrigin: "GDC.time.second",
         timeScale: true,
     }),
 };
@@ -207,9 +220,9 @@ export interface IGranularitiesQuery {
      * a merge always uses the canonical registry order.
      */
     calendars: CalendarContext[];
-    /** Structural families to include. Defaults to `["chronological"]`; pass `["cyclical"]` for generic-only. */
+    /** Structural families to include. Defaults to `["chronological"]`; pass `["generic"]` for generic-only. */
     families?: GranularityFamily[];
-    /** Include time-scale granularities (hour/minute and their cyclical forms). Defaults to `true`. */
+    /** Include time-scale granularities (hour/minute/second and their generic forms). Defaults to `true`. */
     includeTime?: boolean;
     /** For a fiscal/custom calendar, also include shared granularities (week/date/time/…). Defaults to `true`. */
     includeShared?: boolean;
@@ -265,7 +278,7 @@ export function getGranularities(query: IGranularitiesQuery): DateAttributeGranu
         if (calendar.type === "custom") {
             // Custom calendar drives its own set (its own order); shared granularities appended when requested.
             // The families/includeTime gating intentionally applies to enabled granularities too: custom fiscal
-            // calendars define a mixture of chronological and cyclical periods, and UI callers typically need
+            // calendars define a mixture of chronological and generic periods, and UI callers typically need
             // just one family of them.
             const enabled = [...calendar.enabledGranularities]
                 .map((eg) => ({ eg, desc: DESCRIPTOR_BY_TOKEN.get(eg.granularity) }))
@@ -335,7 +348,7 @@ export const isSharedGranularity = (g: string | undefined): boolean =>
 
 /**
  * @remarks
- * Unknown or `undefined` input returns `false` — this is NOT the negation of {@link isCyclicalGranularity},
+ * Unknown or `undefined` input returns `false` — this is NOT the negation of {@link isGenericGranularity},
  * which also returns `false` for unknown input. Callers that want to default unknown granularities to
  * chronological must handle that themselves.
  *
@@ -345,8 +358,8 @@ export const isChronologicalGranularity = (g: string | undefined): boolean =>
     getGranularityDescriptor(g)?.family === "chronological";
 
 /** @alpha */
-export const isCyclicalGranularity = (g: string | undefined): boolean =>
-    getGranularityDescriptor(g)?.family === "cyclical";
+export const isGenericGranularity = (g: string | undefined): boolean =>
+    getGranularityDescriptor(g)?.family === "generic";
 
 /** @alpha */
 export const isTimeGranularity = (g: string | undefined): boolean =>
@@ -354,7 +367,7 @@ export const isTimeGranularity = (g: string | undefined): boolean =>
 
 /**
  * Whether a granularity is usable under the given calendar — its own (`standard`/`fiscal`) granularities plus
- * the `shared` ones (week/date/time/cyclical).
+ * the `shared` ones (week/date/time/generic).
  *
  * @remarks
  * Mirrors what a single calendar "tab" offers, so a merged result (e.g. `standard` + `fiscal`) can be split into
@@ -384,6 +397,6 @@ export const getFiscalEquivalent = (g: string | undefined): DateAttributeGranula
     return desc?.affinity === "standard" ? desc.counterpart : undefined;
 };
 
-/** Chronological granularity a cyclical one is derived from (month_in_year → month), if any. @alpha */
+/** Chronological granularity a generic one is derived from (month_in_year → month), if any. @alpha */
 export const getChronologicalOrigin = (g: string | undefined): DateAttributeGranularity | undefined =>
     getGranularityDescriptor(g)?.chronologicalOrigin;

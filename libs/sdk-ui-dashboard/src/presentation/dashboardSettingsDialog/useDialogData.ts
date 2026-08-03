@@ -4,8 +4,11 @@ import { useState } from "react";
 
 import { isEqual } from "lodash-es";
 
+import { normalizeDashboardTimezoneConfig } from "@gooddata/sdk-model";
+
 import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
 import {
+    selectDashboardTimezoneConfig,
     selectDisableDashboardCrossFiltering,
     selectDisableDashboardPersistentFiltersAcrossTabs,
     selectDisableDashboardUserFilterReset,
@@ -26,6 +29,9 @@ export function useDialogData() {
         useDashboardSelector(selectDisableDashboardPersistentFiltersAcrossTabs) ?? false;
     const evaluationFrequency = useDashboardSelector(selectEvaluationFrequency) ?? undefined;
     const sectionHeadersDateDataSet = useDashboardSelector(selectSectionHeadersDateDataSet) ?? undefined;
+    const timezoneConfig = normalizeDashboardTimezoneConfig(
+        useDashboardSelector(selectDashboardTimezoneConfig),
+    );
 
     const [currentData, setCurrentData] = useState<IDashboardSettingsApplyPayload>({
         disableCrossFiltering,
@@ -35,6 +41,7 @@ export function useDialogData() {
         disablePersistentFiltersAcrossTabs,
         evaluationFrequency,
         sectionHeadersDateDataSet,
+        timezoneConfig,
     });
 
     const [originalData] = useState(currentData);

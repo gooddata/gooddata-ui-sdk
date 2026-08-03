@@ -42,6 +42,7 @@ export const DefaultDateFilterConfig: IDateFilterConfig = {
             "GDC.time.month",
             "GDC.time.minute",
             "GDC.time.hour",
+            "GDC.time.second",
             "GDC.time.date",
             "GDC.time.week_us",
             "GDC.time.quarter",

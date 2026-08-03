@@ -290,13 +290,13 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
         shouldFormatTitle: boolean,
         dateValueFormatter: ReturnType<typeof createDateValueFormatter>,
         dateValueNormalizer: ReturnType<typeof createDateValueNormalizer>,
-        sdkGranularity: ReturnType<typeof toSdkGranularity>,
+        sdkGranularity: ReturnType<typeof toSdkGranularity> | undefined,
         locale: FormattingLocale,
         pattern: string,
     ): IAttributeElement {
         let objWithFormatted = {};
 
-        if (shouldFormatTitle) {
+        if (shouldFormatTitle && sdkGranularity) {
             const formattedTitle = dateValueFormatter(element.title, sdkGranularity, locale, pattern);
             const normalizedValue = dateValueNormalizer(element.title, sdkGranularity, locale);
             objWithFormatted = {
@@ -340,8 +340,11 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
 
                 const { paging, elements, format, granularity, cacheId: responseCacheId } = response.data;
 
-                const elementsGranularity = granularity as ElementsResponseGranularityEnum;
-                const sdkGranularity = toSdkGranularity(elementsGranularity);
+                // Only date attributes carry a granularity; for the rest it is absent, so convert only when
+                // present (passing undefined into the strict converter is what previously threw).
+                const sdkGranularity = granularity
+                    ? toSdkGranularity(granularity as ElementsResponseGranularityEnum)
+                    : undefined;
                 const locale = format?.locale as FormattingLocale;
                 const pattern = format?.pattern as string;
                 const shouldFormatTitle = !!(sdkGranularity && format);

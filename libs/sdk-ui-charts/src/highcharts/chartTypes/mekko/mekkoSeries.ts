@@ -88,8 +88,9 @@ export function getMekkoSeries(
         // Stacked layout from getBarColumnDimensions: [[stackBy], [viewBy, MeasureGroup]].
         // twoDimData rows = stack segments; each row's columns are ordered viewBy × measure
         // (view-major: [v0_width, v0_height, v1_width, v1_height, ...]).
-        // viewCount must come from the data width — NOT viewByAttribute.items.length, which
-        // counts view×measure header combinations.
+        // viewCount comes from the data width rather than viewByAttribute.items.length, so this
+        // builder doesn't depend on the items having been collapsed to one per view value
+        // upstream (collapseMekkoViewByItems).
         const viewCount = Math.round(data[0].length / measureCount);
 
         // column width (z) = width measure reduced to one value per column (summed across the

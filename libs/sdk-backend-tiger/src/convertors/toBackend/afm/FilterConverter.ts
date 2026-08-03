@@ -381,7 +381,6 @@ function convertMeasureValueFilter(
                 range: {
                     operator: c.range.operator,
                     // make sure the boundaries are always from <= to, because tiger backend cannot handle from > to in a user friendly way
-                    // this is effectively the same behavior as in bear
                     from: Math.min(originalFrom, originalTo),
                     to: Math.max(originalFrom, originalTo),
                 },
@@ -426,7 +425,6 @@ function convertMeasureValueFilter(
                 // Operator has same values, we only need type assertion
                 operator,
                 // make sure the boundaries are always from <= to, because tiger backend cannot handle from > to in a user friendly way
-                // this is effectively the same behavior as in bear
                 from: Math.min(originalFrom, originalTo),
                 to: Math.max(originalFrom, originalTo),
                 treatNullValuesAs,

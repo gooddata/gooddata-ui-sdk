@@ -5,7 +5,7 @@
         {
             "attribute": {
                 "displayForm": {
-                    "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158"
+                    "uri": "obj_158"
                 },
                 "localIdentifier": "yearCreatedAttribute"
             }
@@ -20,7 +20,7 @@
                 "definition": {
                     "measureDefinition": {
                         "item": {
-                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283"
+                            "uri": "obj_1283"
                         },
                         "filters": []
                     }
@@ -35,7 +35,7 @@
                 "definition": {
                     "measureDefinition": {
                         "item": {
-                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284"
+                            "uri": "obj_1284"
                         },
                         "filters": []
                     }

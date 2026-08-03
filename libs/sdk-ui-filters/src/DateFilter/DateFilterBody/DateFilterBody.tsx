@@ -68,6 +68,7 @@ export interface IDateFilterBodyProps {
     isExcludeCurrentPeriodEnabled: boolean;
     onExcludeCurrentPeriodChange: (isExcluded: boolean) => void;
     isTimeForAbsoluteRangeEnabled: boolean;
+    isSecondsForAbsoluteRangeEnabled?: boolean;
 
     availableGranularities: DateFilterGranularity[];
 
@@ -247,6 +248,7 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
         showHeaderMessage = true,
         dateFormat,
         isTimeForAbsoluteRangeEnabled,
+        isSecondsForAbsoluteRangeEnabled,
         weekStart = "Sunday",
         availableGranularities,
         onApplyClick,
@@ -360,6 +362,7 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
                         dateFormat={dateFormat}
                         weekStart={weekStart}
                         isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled}
+                        isSecondsForAbsoluteRangeEnabled={isSecondsForAbsoluteRangeEnabled}
                         availableGranularities={filteredAvailableGranularities}
                         isMobile={isMobile}
                         withoutApply={withoutApply}

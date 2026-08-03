@@ -943,6 +943,10 @@
         "text": "Access",
         "crowdinContext": "Label for the row in the catalog detail metadata grid that shows the current sharing state of the object."
     },
+    "analyticsCatalog.share.access.row.error": {
+        "text": "Couldn't load access.",
+        "crowdinContext": "Shown in the catalog detail Access row when loading the access summary failed; opening the Share dialog retries the load."
+    },
     "analyticsCatalog.share.access.row.restricted": {
         "text": "Restricted",
         "crowdinContext": "State chip text shown when the object's access is restricted to explicitly listed grantees only."
@@ -955,8 +959,12 @@
         "text": "All workspace users can share",
         "crowdinContext": "State chip text shown when every workspace user has view+share access to the object."
     },
+    "analyticsCatalog.share.access.row.workspace.edit": {
+        "text": "All workspace users can edit",
+        "crowdinContext": "State chip text shown when every workspace user has edit access to the object."
+    },
     "analyticsCatalog.share.access.row.sharedWith": {
-        "text": "Shared with {count, plural, one {# user or group} other {# users or groups}}",
+        "text": "Shared with {count, plural, one {# user/group} other {# users/groups}}",
         "crowdinContext": "Clickable summary in the catalog detail Access row. Opens the share dialog. Placeholder is the count of named grantees (users and groups)."
     },
     "analyticsCatalog.labels.more": {

@@ -29,6 +29,8 @@ import type { IAutomationFiltersTab } from "../../../model/store/filtering/types
 /**
  * Date filter configuration provided by the dashboard connector so that AutomationDateFilter
  * does not need to read dashboard selectors directly.
+ *
+ * @alpha
  */
 export interface IAutomationsDateFilterConfig {
     availableGranularities: DateFilterGranularity[];
@@ -40,6 +42,8 @@ export interface IAutomationsDateFilterConfig {
 /**
  * Main context shared across all automation dialogs.
  * Only fields actively consumed by migrated leaves are listed here — add fields as each leaf migrates.
+ *
+ * @alpha
  */
 export interface IAutomationsContextValue {
     locale: ILocale;
@@ -107,6 +111,15 @@ const AutomationsContext = createContext<IAutomationsContextValue | undefined>(u
 
 export const AutomationsContextProvider = AutomationsContext.Provider;
 
+/**
+ * Reads the automation dialogs' shared context.
+ *
+ * The alerting and scheduled-email dialogs (create/edit and management) render inside this context and
+ * read the workspace catalog, filter configuration, locale, formatting, and other cross-dialog data from
+ * here.
+ *
+ * @alpha
+ */
 export function useAutomationsContext(): IAutomationsContextValue {
     const ctx = useContext(AutomationsContext);
     if (!ctx) {

@@ -4,7 +4,12 @@ import { type ReactElement, type ReactNode, useCallback, useEffect, useState } f
 
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { type ICatalogDateDataset, type ObjRef, objRefToString } from "@gooddata/sdk-model";
+import {
+    type ICatalogDateDataset,
+    type ObjRef,
+    normalizeDashboardTimezoneConfig,
+    objRefToString,
+} from "@gooddata/sdk-model";
 import {
     Bubble,
     BubbleHoverTrigger,
@@ -37,6 +42,7 @@ import {
 } from "../../model/store/config/configSelectors.js";
 import { selectCrossFilteringEnabledAndSupported } from "../../model/store/topBar/topBarSelectors.js";
 
+import { TimezoneOption } from "./TimezoneOption.js";
 import { type IDashboardSettingsDialogProps } from "./types.js";
 import { useDialogData } from "./useDialogData.js";
 
@@ -119,10 +125,10 @@ export function DefaultDashboardSettingsDialog({
                                     id: "filters.configurationPanel.crossFiltering.toggle.tooltip",
                                 })}
                                 isChecked={!currentData.disableCrossFiltering}
-                                onChange={(newValue: boolean) => {
+                                onChange={(isChecked: boolean) => {
                                     setCurrentData({
                                         ...currentData,
-                                        disableCrossFiltering: newValue,
+                                        disableCrossFiltering: !isChecked,
                                     });
                                 }}
                             />
@@ -134,10 +140,10 @@ export function DefaultDashboardSettingsDialog({
                                     id: "filters.configurationPanel.userFilterReset.toggle.tooltip",
                                 })}
                                 isChecked={!currentData.disableUserFilterReset}
-                                onChange={(newValue: boolean) => {
+                                onChange={(isChecked: boolean) => {
                                     setCurrentData({
                                         ...currentData,
-                                        disableUserFilterReset: newValue,
+                                        disableUserFilterReset: !isChecked,
                                     });
                                 }}
                             />
@@ -154,10 +160,10 @@ export function DefaultDashboardSettingsDialog({
                             },
                         )}
                         isChecked={!currentData.disableFilterViews}
-                        onChange={(newValue: boolean) => {
+                        onChange={(isChecked: boolean) => {
                             setCurrentData({
                                 ...currentData,
-                                disableFilterViews: newValue,
+                                disableFilterViews: !isChecked,
                             });
                         }}
                     />
@@ -167,10 +173,10 @@ export function DefaultDashboardSettingsDialog({
                             id: "filters.configurationPanel.userFilterSave.toggle.tooltip",
                         })}
                         isChecked={!currentData.disableUserFilterSave}
-                        onChange={(newValue: boolean) => {
+                        onChange={(isChecked: boolean) => {
                             setCurrentData({
                                 ...currentData,
-                                disableUserFilterSave: newValue,
+                                disableUserFilterSave: !isChecked,
                             });
                         }}
                     />
@@ -183,10 +189,10 @@ export function DefaultDashboardSettingsDialog({
                                 id: "filters.configurationPanel.persistentFiltersAcrossTabs.toggle.tooltip",
                             })}
                             isChecked={!currentData.disablePersistentFiltersAcrossTabs}
-                            onChange={(newValue: boolean) => {
+                            onChange={(isChecked: boolean) => {
                                 setCurrentData({
                                     ...currentData,
-                                    disablePersistentFiltersAcrossTabs: newValue,
+                                    disablePersistentFiltersAcrossTabs: !isChecked,
                                 });
                             }}
                         />
@@ -253,6 +259,68 @@ export function DefaultDashboardSettingsDialog({
                         )}
                     </div>
                 </div>
+                {settings.enableDashboardTimezone ? (
+                    <div className="gd-dashboard-settings-dialog-section s-dashboard-settings-timezone">
+                        <DialogListHeader
+                            title={intl.formatMessage({ id: "settingsDashboardDialog.section.timezone" })}
+                            className="gd-dashboard-settings-filters"
+                        />
+                        <TimezoneOption
+                            label={intl.formatMessage({
+                                id: "settingsDashboardDialog.section.timezone.defaultTimezone",
+                            })}
+                            tooltip={intl.formatMessage({
+                                id: "settingsDashboardDialog.section.timezone.defaultTimezone.tooltip",
+                            })}
+                            timezoneConfig={currentData.timezoneConfig}
+                            onChange={(timezoneId: string | undefined) => {
+                                setCurrentData({
+                                    ...currentData,
+                                    timezoneConfig: normalizeDashboardTimezoneConfig({
+                                        ...currentData.timezoneConfig,
+                                        timezoneId,
+                                    }),
+                                });
+                            }}
+                        />
+                        <ConfigurationOption
+                            label={intl.formatMessage({
+                                id: "settingsDashboardDialog.section.timezone.allowUserOverride.toggle",
+                            })}
+                            tooltip={intl.formatMessage({
+                                id: "settingsDashboardDialog.section.timezone.allowUserOverride.toggle.tooltip",
+                            })}
+                            isChecked={currentData.timezoneConfig?.allowUserOverrideInViewMode ?? false}
+                            onChange={(isChecked: boolean) => {
+                                setCurrentData({
+                                    ...currentData,
+                                    timezoneConfig: normalizeDashboardTimezoneConfig({
+                                        ...currentData.timezoneConfig,
+                                        allowUserOverrideInViewMode: isChecked,
+                                    }),
+                                });
+                            }}
+                        />
+                        <ConfigurationOption
+                            label={intl.formatMessage({
+                                id: "settingsDashboardDialog.section.timezone.showTimezoneInfo.toggle",
+                            })}
+                            tooltip={intl.formatMessage({
+                                id: "settingsDashboardDialog.section.timezone.showTimezoneInfo.toggle.tooltip",
+                            })}
+                            isChecked={currentData.timezoneConfig?.showTimezoneInfo ?? false}
+                            onChange={(isChecked: boolean) => {
+                                setCurrentData({
+                                    ...currentData,
+                                    timezoneConfig: normalizeDashboardTimezoneConfig({
+                                        ...currentData.timezoneConfig,
+                                        showTimezoneInfo: isChecked,
+                                    }),
+                                });
+                            }}
+                        />
+                    </div>
+                ) : null}
             </div>
         </ConfirmDialog>
     );
@@ -264,7 +332,10 @@ interface IConfigurationOptionProps {
     label: ReactNode;
     tooltip: ReactNode;
     isChecked: boolean;
-    onChange: (newValue: boolean) => void;
+    /**
+     * Receives the new checked state of the toggle.
+     */
+    onChange: (isChecked: boolean) => void;
 }
 
 function ConfigurationOption({ label, tooltip, isChecked, onChange }: IConfigurationOptionProps) {
@@ -275,7 +346,7 @@ function ConfigurationOption({ label, tooltip, isChecked, onChange }: IConfigura
                     type="checkbox"
                     checked={isChecked}
                     onChange={(e) => {
-                        onChange(!e.currentTarget.checked);
+                        onChange(e.currentTarget.checked);
                     }}
                 />
                 <span className="input-label-text">

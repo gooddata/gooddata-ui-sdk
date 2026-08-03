@@ -10,9 +10,11 @@ import { defineMessages } from "react-intl";
 export const shareMessages = defineMessages({
     shareButton: { id: "analyticsCatalog.share.button" },
     accessRowLabel: { id: "analyticsCatalog.share.access.row.label" },
+    accessRowError: { id: "analyticsCatalog.share.access.row.error" },
     accessRowRestricted: { id: "analyticsCatalog.share.access.row.restricted" },
     accessRowWorkspaceView: { id: "analyticsCatalog.share.access.row.workspace.view" },
     accessRowWorkspaceShare: { id: "analyticsCatalog.share.access.row.workspace.share" },
+    accessRowWorkspaceEdit: { id: "analyticsCatalog.share.access.row.workspace.edit" },
     accessRowSharedWith: { id: "analyticsCatalog.share.access.row.sharedWith" },
 });
 

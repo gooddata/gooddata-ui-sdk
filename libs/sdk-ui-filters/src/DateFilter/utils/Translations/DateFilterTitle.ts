@@ -32,6 +32,8 @@ import {
     DAY_START_TIME,
     DEFAULT_DATE_FORMAT,
     TIME_FORMAT,
+    TIME_FORMAT_WITH_SECONDS,
+    TIME_FORMAT_WITH_SECONDS_WITH_SEPARATOR,
     TIME_FORMAT_WITH_SEPARATOR,
 } from "../../constants/Platform.js";
 import {
@@ -43,9 +45,14 @@ import { convertPlatformDateStringToDate } from "../DateConversions.js";
 
 import { type IDateAndMessageTranslator, type IMessageTranslator } from "./Translators.js";
 
-export const getTimeRange = (dateFrom: Date, dateTo: Date, splitter = "\u2013"): string => {
-    const fromTime = format(dateFrom, TIME_FORMAT);
-    const toTime = format(dateTo, TIME_FORMAT);
+export const getTimeRange = (
+    dateFrom: Date,
+    dateTo: Date,
+    splitter = "\u2013",
+    timeFormat: string = TIME_FORMAT,
+): string => {
+    const fromTime = format(dateFrom, timeFormat);
+    const toTime = format(dateTo, timeFormat);
 
     return fromTime === toTime ? fromTime : `${fromTime} ${splitter} ${toTime}`;
 };
@@ -75,7 +82,12 @@ export const formatAbsoluteDateRange = (
     splitter = "\u2013",
 ): string => {
     const isTimeEnabled = dateFormat.includes(TIME_FORMAT);
-    const dateFormatWithoutTime = dateFormat.replace(TIME_FORMAT_WITH_SEPARATOR, "");
+    const isSecondsEnabled = dateFormat.includes(TIME_FORMAT_WITH_SECONDS);
+    const timeFormat = isSecondsEnabled ? TIME_FORMAT_WITH_SECONDS : TIME_FORMAT;
+    const timeFormatWithSeparator = isSecondsEnabled
+        ? TIME_FORMAT_WITH_SECONDS_WITH_SEPARATOR
+        : TIME_FORMAT_WITH_SEPARATOR;
+    const dateFormatWithoutTime = dateFormat.replace(timeFormatWithSeparator, "");
 
     // append start and end times if necessary
     const adjustedFrom = adjustDatetime(from, isTimeEnabled, DAY_START_TIME);
@@ -87,7 +99,7 @@ export const formatAbsoluteDateRange = (
 
     if (fromDate && toDate && moment(fromDate).isSame(toDate, "day")) {
         if (isTimeEnabled && !coversWholeDay) {
-            return `${format(fromDate, dateFormatWithoutTime)}, ${getTimeRange(fromDate, toDate, splitter)}`;
+            return `${format(fromDate, dateFormatWithoutTime)}, ${getTimeRange(fromDate, toDate, splitter, timeFormat)}`;
         } else {
             return format(fromDate, dateFormatWithoutTime);
         }

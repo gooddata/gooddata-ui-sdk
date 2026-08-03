@@ -397,6 +397,7 @@ export type DateString = string;
  * @public
  */
 export type DateFilterGranularity =
+    | "GDC.time.second"
     | "GDC.time.minute"
     | "GDC.time.hour"
     | "GDC.time.date"

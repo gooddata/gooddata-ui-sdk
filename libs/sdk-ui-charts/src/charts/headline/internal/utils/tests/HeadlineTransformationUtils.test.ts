@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
@@ -24,6 +24,13 @@ import {
     buildDrillEventData,
     getHeadlineData,
 } from "../HeadlineTransformationUtils.js";
+
+// Measures of the reference-workspace Headline recordings backing the fixtures above:
+// primary is Won, secondary is Amount.
+const PRIMARY_MEASURE_ID = "e519fa2a-86c3-4e32-8313-0c03062348j3";
+const PRIMARY_MEASURE_LOCAL_ID = "m_e519fa2a_86c3_4e32_8313_0c03062348j3";
+const SECONDARY_MEASURE_ID = "87a053b0-3947-49f3-b0c5-de53fd01f050";
+const SECONDARY_MEASURE_LOCAL_ID = "m_87a053b0_3947_49f3_b0c5_de53fd01f050";
 
 // Helper to create test data with required format field
 const createTestData = (primaryItem: any, secondaryItem?: any, tertiaryItem?: any): IHeadlineData => ({
@@ -125,7 +132,7 @@ describe("HeadlineTransformationUtils", () => {
             expect(updatedData).toMatchSnapshot();
         });
 
-        it("should enable drilling of the primary item identified by the drillable item uri", () => {
+        it("should enable drilling of the primary item identified by the drillable item local identifier", () => {
             const data = applyDrillableItems(
                 createTestData({
                     localIdentifier: "m1",
@@ -133,7 +140,7 @@ describe("HeadlineTransformationUtils", () => {
                     value: "120",
                     isDrillable: false,
                 }),
-                [HeaderPredicates.uriMatch("/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283")],
+                [HeaderPredicates.localIdentifierMatch(PRIMARY_MEASURE_LOCAL_ID)],
                 headlineWithOneMeasure.dataView,
             );
 
@@ -148,14 +155,14 @@ describe("HeadlineTransformationUtils", () => {
                     value: "120",
                     isDrillable: false,
                 }),
-                [HeaderPredicates.identifierMatch("af2Ewj9Re2vK")],
+                [HeaderPredicates.identifierMatch(PRIMARY_MEASURE_ID)],
                 headlineWithOneMeasureWithIdentifier.dataView,
             );
 
             expect(data).toMatchSnapshot();
         });
 
-        it("should enable drilling of the secondary item identified by the drillable item uri", () => {
+        it("should enable drilling of the secondary item identified by the drillable item local identifier", () => {
             const headlineData = createTestData(
                 {
                     localIdentifier: "m1",
@@ -172,7 +179,7 @@ describe("HeadlineTransformationUtils", () => {
             );
             const data = applyDrillableItems(
                 headlineData,
-                [HeaderPredicates.uriMatch("/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284")],
+                [HeaderPredicates.localIdentifierMatch(SECONDARY_MEASURE_LOCAL_ID)],
                 headlineWithTwoMeasures.dataView,
             );
 
@@ -196,7 +203,7 @@ describe("HeadlineTransformationUtils", () => {
             );
             const data = applyDrillableItems(
                 headlineData,
-                [HeaderPredicates.identifierMatch("afSEwRwdbMeQ")],
+                [HeaderPredicates.identifierMatch(SECONDARY_MEASURE_ID)],
                 headlineWithTwoMeasuresWithIdentifier.dataView,
             );
 
@@ -220,8 +227,8 @@ describe("HeadlineTransformationUtils", () => {
                     },
                 ),
                 [
-                    HeaderPredicates.uriMatch("/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283"),
-                    HeaderPredicates.uriMatch("/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284"),
+                    HeaderPredicates.identifierMatch(PRIMARY_MEASURE_ID),
+                    HeaderPredicates.identifierMatch(SECONDARY_MEASURE_ID),
                 ],
                 headlineWithTwoMeasures.dataView,
             );
@@ -238,7 +245,7 @@ describe("HeadlineTransformationUtils", () => {
             });
             const updatedData = applyDrillableItems(
                 data,
-                [HeaderPredicates.uriMatch("/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283")],
+                [HeaderPredicates.identifierMatch(PRIMARY_MEASURE_ID)],
                 headlineWithOneMeasure.dataView,
             );
 
@@ -248,33 +255,22 @@ describe("HeadlineTransformationUtils", () => {
     });
 
     describe("buildDrillEventData", () => {
-        it("should build expected drill event data from execution request made with metric uri", () => {
+        it("should build expected drill event data from execution for primary value", () => {
             const itemContext: IHeadlineDrillItemContext = {
-                localIdentifier: "lostMetric",
+                localIdentifier: PRIMARY_MEASURE_LOCAL_ID,
                 element: "primaryValue",
-                value: "9011389.956",
+                value: "38310753.45",
             };
             const eventData = buildDrillEventData(itemContext, headlineWithOneMeasure.dataView);
             expect(eventData.dataView).toEqual(headlineWithOneMeasure.dataView);
             expect(eventData.drillContext).toMatchSnapshot();
         });
 
-        it("should build expected drill event data from execution request made with metric identifier", () => {
-            const itemContext: IHeadlineDrillItemContext = {
-                localIdentifier: "lostMetric",
-                element: "primaryValue",
-                value: "9011389.956",
-            };
-            const eventData = buildDrillEventData(itemContext, headlineWithOneMeasureWithIdentifier.dataView);
-            expect(eventData.dataView).toEqual(headlineWithOneMeasureWithIdentifier.dataView);
-            expect(eventData.drillContext).toMatchSnapshot();
-        });
-
         it("should build drill event data from execution for secondary value", () => {
             const itemContext: IHeadlineDrillItemContext = {
-                localIdentifier: "wonMetric",
+                localIdentifier: SECONDARY_MEASURE_LOCAL_ID,
                 element: "secondaryValue",
-                value: "42470571.16",
+                value: "116625456.54",
             };
             const eventData = buildDrillEventData(itemContext, headlineWithTwoMeasures.dataView);
             expect(eventData.dataView).toEqual(headlineWithTwoMeasures.dataView);

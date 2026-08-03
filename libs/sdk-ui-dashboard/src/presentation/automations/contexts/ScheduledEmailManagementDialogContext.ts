@@ -10,7 +10,7 @@ import { createContext, useContext } from "react";
  * isWhiteLabeled, isExecutionTimestampMode, externalRecipient, features.*) are NOT
  * duplicated here — consumers read those from useAutomationsContext().
  *
- * @internal
+ * @alpha
  */
 export interface IScheduledEmailManagementDialogContextValue {
     /**
@@ -60,6 +60,18 @@ const ScheduledEmailManagementDialogContext = createContext<
 
 export const ScheduledEmailManagementDialogContextProvider = ScheduledEmailManagementDialogContext.Provider;
 
+/**
+ * Reads the scheduled-email management dialog context.
+ *
+ * A replacement for the scheduled-email management dialog renders inside this context and reads the
+ * dashboard it's rendered on and the automations limit (`maxAutomations`, `unlimitedAutomations`) from
+ * here.
+ *
+ * Some members exist to wire internal machinery (`automationsInvalidationId`) and are not intended as a
+ * customization surface.
+ *
+ * @alpha
+ */
 export function useScheduledEmailManagementDialogContext(): IScheduledEmailManagementDialogContextValue {
     const ctx = useContext(ScheduledEmailManagementDialogContext);
     if (!ctx) {

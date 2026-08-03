@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-ext: the object share dialog's permission menu now offers a selectable \"Can edit & share\" level for grantees and the all-workspace-members rule, with label access and remove access consolidated into the same menu.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

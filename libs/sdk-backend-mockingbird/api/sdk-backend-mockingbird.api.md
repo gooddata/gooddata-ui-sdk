@@ -143,9 +143,6 @@ export type LegacyExecutionRecording = {
 };
 
 // @internal @deprecated
-export function legacyRecordedBackend(index: LegacyRecordingIndex, config?: IAnalyticalBackendConfig): IAnalyticalBackend;
-
-// @internal @deprecated
 export function legacyRecordedDataView(recording: LegacyExecutionRecording): IDataView;
 
 // @internal @deprecated

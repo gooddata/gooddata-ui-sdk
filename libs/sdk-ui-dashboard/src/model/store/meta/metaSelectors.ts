@@ -18,6 +18,7 @@ import {
     type IDashboardMeasureValueFilterConfig,
     type IDashboardObjectIdentity,
     type IDashboardTab,
+    type IDashboardTimezoneConfig,
     type IDashboardWidget,
     type IFilterContext,
     type IFilterContextDefinition,
@@ -33,6 +34,7 @@ import {
     isDashboardMeasureValueFilter,
     isDashboardTextAttributeFilter,
     isTempFilterContext,
+    normalizeDashboardTimezoneConfig,
     uriRef,
 } from "@gooddata/sdk-model";
 
@@ -702,6 +704,16 @@ export const selectEvaluationFrequency: DashboardSelector<string | undefined> = 
     },
 );
 
+/**
+ * Selects dashboard timezone configuration.
+ *
+ * @alpha
+ */
+export const selectDashboardTimezoneConfig: DashboardSelector<IDashboardTimezoneConfig | undefined> =
+    createSelector(selectDashboardDescriptor, (state) => {
+        return state.timezoneConfig;
+    });
+
 //
 //
 //
@@ -727,6 +739,20 @@ const selectPersistedDashboardTitle = createSelector(selectSelf, (state) => {
 const selectPersistedDashboardDisableCrossFiltering = createSelector(selectSelf, (state) => {
     return state.persistedDashboard?.disableCrossFiltering;
 });
+
+/**
+ * Selects persisted "timezoneConfig", the value that was used to initialize the rest
+ * of the dashboard state of the dashboard component during the initial load of the dashboard.
+ *
+ * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
+ * been persisted (typically newly created dashboard being edited).
+ *
+ * @alpha
+ */
+export const selectPersistedDashboardTimezoneConfig: DashboardSelector<IDashboardTimezoneConfig | undefined> =
+    createSelector(selectSelf, (state) => {
+        return state.persistedDashboard?.timezoneConfig;
+    });
 
 /**
  * Selects persisted "disableUserFilterReset", the value that was used to initialize the rest
@@ -1070,6 +1096,24 @@ export const selectIsSectionHeadersDateDataSetChanged: DashboardSelector<boolean
 );
 
 /**
+ * Selects a boolean indication if the dashboard has any changes to the timezone configuration compared to the persisted version (if any)
+ *
+ * @internal
+ */
+export const selectIsTimezoneConfigChanged: DashboardSelector<boolean> = createSelector(
+    selectPersistedDashboardTimezoneConfig,
+    selectDashboardTimezoneConfig,
+    (persistedTimezoneConfig, currentTimezoneConfig) => {
+        // normalize both sides so that a persisted config carrying explicit default (false)
+        // values compares equal to an absent configuration
+        return !isEqual(
+            normalizeDashboardTimezoneConfig(persistedTimezoneConfig),
+            normalizeDashboardTimezoneConfig(currentTimezoneConfig),
+        );
+    },
+);
+
+/**
  * Selects a boolean indication if the dashboard has any changes to the tabs compared to the persisted version (if any)
  * Compares only the tabs identifiers and titles.
  *
@@ -1159,6 +1203,7 @@ export const selectIsDashboardDirty: DashboardSelector<boolean> = createSelector
     selectIsDisablePersistentFiltersAcrossTabsChanged,
     selectEvaluationFrequencyChanged,
     selectIsSectionHeadersDateDataSetChanged,
+    selectIsTimezoneConfigChanged,
     selectIsTabsChanged,
     selectIsParametersChanged,
     (
@@ -1175,6 +1220,7 @@ export const selectIsDashboardDirty: DashboardSelector<boolean> = createSelector
         isDisablePersistentFiltersAcrossTabsChanged,
         isEvaluationFrequencyChanged,
         isSectionHeadersDateDataSetChanged,
+        isTimezoneConfigChanged,
         isTabsChanged,
         isParametersChanged,
     ) => {
@@ -1194,6 +1240,7 @@ export const selectIsDashboardDirty: DashboardSelector<boolean> = createSelector
             isDisablePersistentFiltersAcrossTabsChanged,
             isEvaluationFrequencyChanged,
             isSectionHeadersDateDataSetChanged,
+            isTimezoneConfigChanged,
             isTabsChanged,
             isParametersChanged,
         ].some(Boolean);

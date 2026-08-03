@@ -6,12 +6,14 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 import { describe, expect, it, vi } from "vitest";
 
+import { idRef } from "@gooddata/sdk-model";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
 
 import { type IUiPickedGrantee, UiGranteeAsyncPicker } from "../UiGranteeAsyncPicker.js";
 
 const JANE: IUiPickedGrantee = {
     id: "u1",
+    ref: idRef("u1"),
     kind: "user",
     name: "Jane Good",
     email: "jane@example.com",

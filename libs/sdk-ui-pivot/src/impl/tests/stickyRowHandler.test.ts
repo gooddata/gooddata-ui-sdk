@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { type GridApi } from "ag-grid-community";
 import { describe, expect, it, vi } from "vitest";
 
@@ -19,7 +20,7 @@ describe("stickyRowHandler", () => {
                 r_0: {
                     attributeHeaderItem: {
                         name: "Educationly",
-                        uri: "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+                        uri: "165847",
                     },
                 },
             },

@@ -19,6 +19,7 @@ export interface IAbsoluteDateFilterFormProps {
     isMobile: boolean;
     onSelectedFilterOptionChange: (option: DateFilterOption) => void;
     isTimeEnabled: boolean;
+    isSecondsEnabled?: boolean;
     weekStart?: WeekStart;
     shouldOverlayDatePicker?: boolean;
     withoutApply?: boolean;
@@ -38,6 +39,7 @@ export function AbsoluteDateFilterForm({
     isMobile,
     selectedFilterOption,
     isTimeEnabled,
+    isSecondsEnabled = false,
     weekStart,
     shouldOverlayDatePicker,
     withoutApply,
@@ -51,6 +53,7 @@ export function AbsoluteDateFilterForm({
                 selectedFilterOption.localIdentifier,
                 isTimeEnabled,
                 selectedFilterOption.emptyValueHandling,
+                isSecondsEnabled,
             ),
         );
     };
@@ -59,10 +62,11 @@ export function AbsoluteDateFilterForm({
         <DateRangePicker
             dateFormat={dateFormat}
             onRangeChange={handleRangeChange}
-            range={dateFilterValueToDateRange(selectedFilterOption, isTimeEnabled)}
+            range={dateFilterValueToDateRange(selectedFilterOption, isTimeEnabled, isSecondsEnabled)}
             isMobile={isMobile}
             dayPickerProps={dayPickerProps}
             isTimeEnabled={isTimeEnabled}
+            isSecondsEnabled={isSecondsEnabled}
             weekStart={weekStart}
             shouldOverlayDatePicker={shouldOverlayDatePicker}
             submitForm={submitForm}

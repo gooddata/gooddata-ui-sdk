@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 539cb0396bf007266ef615bc0afb002d3e891d865b1702e6314a204d76f154dd
+# schema-hash: e0a88378a899daa9d5b1c397c404dcccd795da324d31e7c10ee7c72cab374685
 
 from __future__ import annotations
 
@@ -1319,6 +1319,7 @@ class Type36(Enum):
 
 
 class Granularity(Enum):
+    SECOND = 'SECOND'
     MINUTE = 'MINUTE'
     HOUR = 'HOUR'
     DAY = 'DAY'
@@ -1327,7 +1328,10 @@ class Granularity(Enum):
     MONTH = 'MONTH'
     QUARTER = 'QUARTER'
     YEAR = 'YEAR'
+    SECOND_OF_MINUTE = 'SECOND_OF_MINUTE'
+    SECOND_OF_DAY = 'SECOND_OF_DAY'
     MINUTE_OF_HOUR = 'MINUTE_OF_HOUR'
+    MINUTE_OF_DAY = 'MINUTE_OF_DAY'
     HOUR_OF_DAY = 'HOUR_OF_DAY'
     DAY_OF_WEEK = 'DAY_OF_WEEK'
     DAY_OF_MONTH = 'DAY_OF_MONTH'
@@ -1338,6 +1342,7 @@ class Granularity(Enum):
     FISCAL_YEAR = 'FISCAL_YEAR'
     FISCAL_QUARTER = 'FISCAL_QUARTER'
     FISCAL_MONTH = 'FISCAL_MONTH'
+    SECOND_1 = 'SECOND'
     MINUTE_1 = 'MINUTE'
     HOUR_1 = 'HOUR'
     DAY_1 = 'DAY'
@@ -1346,7 +1351,10 @@ class Granularity(Enum):
     MONTH_1 = 'MONTH'
     QUARTER_1 = 'QUARTER'
     YEAR_1 = 'YEAR'
+    SECOND_OF_MINUTE_1 = 'SECOND_OF_MINUTE'
+    SECOND_OF_DAY_1 = 'SECOND_OF_DAY'
     MINUTE_OF_HOUR_1 = 'MINUTE_OF_HOUR'
+    MINUTE_OF_DAY_1 = 'MINUTE_OF_DAY'
     HOUR_OF_DAY_1 = 'HOUR_OF_DAY'
     DAY_OF_WEEK_1 = 'DAY_OF_WEEK'
     DAY_OF_MONTH_1 = 'DAY_OF_MONTH'
@@ -1357,6 +1365,7 @@ class Granularity(Enum):
     FISCAL_YEAR_1 = 'FISCAL_YEAR'
     FISCAL_QUARTER_1 = 'FISCAL_QUARTER'
     FISCAL_MONTH_1 = 'FISCAL_MONTH'
+    SECOND_2 = 'SECOND'
     MINUTE_2 = 'MINUTE'
     HOUR_2 = 'HOUR'
     DAY_2 = 'DAY'
@@ -1365,7 +1374,10 @@ class Granularity(Enum):
     MONTH_2 = 'MONTH'
     QUARTER_2 = 'QUARTER'
     YEAR_2 = 'YEAR'
+    SECOND_OF_MINUTE_2 = 'SECOND_OF_MINUTE'
+    SECOND_OF_DAY_2 = 'SECOND_OF_DAY'
     MINUTE_OF_HOUR_2 = 'MINUTE_OF_HOUR'
+    MINUTE_OF_DAY_2 = 'MINUTE_OF_DAY'
     HOUR_OF_DAY_2 = 'HOUR_OF_DAY'
     DAY_OF_WEEK_2 = 'DAY_OF_WEEK'
     DAY_OF_MONTH_2 = 'DAY_OF_MONTH'
@@ -1391,6 +1403,7 @@ class EmptyValues4(Enum):
 
 
 class Granularity1(Enum):
+    SECOND = 'SECOND'
     MINUTE = 'MINUTE'
     HOUR = 'HOUR'
     DAY = 'DAY'
@@ -1399,7 +1412,10 @@ class Granularity1(Enum):
     MONTH = 'MONTH'
     QUARTER = 'QUARTER'
     YEAR = 'YEAR'
+    SECOND_OF_MINUTE = 'SECOND_OF_MINUTE'
+    SECOND_OF_DAY = 'SECOND_OF_DAY'
     MINUTE_OF_HOUR = 'MINUTE_OF_HOUR'
+    MINUTE_OF_DAY = 'MINUTE_OF_DAY'
     HOUR_OF_DAY = 'HOUR_OF_DAY'
     DAY_OF_WEEK = 'DAY_OF_WEEK'
     DAY_OF_MONTH = 'DAY_OF_MONTH'
@@ -1410,6 +1426,7 @@ class Granularity1(Enum):
     FISCAL_YEAR = 'FISCAL_YEAR'
     FISCAL_QUARTER = 'FISCAL_QUARTER'
     FISCAL_MONTH = 'FISCAL_MONTH'
+    SECOND_1 = 'SECOND'
     MINUTE_1 = 'MINUTE'
     HOUR_1 = 'HOUR'
     DAY_1 = 'DAY'
@@ -1418,7 +1435,10 @@ class Granularity1(Enum):
     MONTH_1 = 'MONTH'
     QUARTER_1 = 'QUARTER'
     YEAR_1 = 'YEAR'
+    SECOND_OF_MINUTE_1 = 'SECOND_OF_MINUTE'
+    SECOND_OF_DAY_1 = 'SECOND_OF_DAY'
     MINUTE_OF_HOUR_1 = 'MINUTE_OF_HOUR'
+    MINUTE_OF_DAY_1 = 'MINUTE_OF_DAY'
     HOUR_OF_DAY_1 = 'HOUR_OF_DAY'
     DAY_OF_WEEK_1 = 'DAY_OF_WEEK'
     DAY_OF_MONTH_1 = 'DAY_OF_MONTH'
@@ -1991,6 +2011,7 @@ class Type51(Enum):
 
 
 class Granularity2(Enum):
+    SECOND = 'SECOND'
     MINUTE = 'MINUTE'
     HOUR = 'HOUR'
     DAY = 'DAY'
@@ -1999,7 +2020,10 @@ class Granularity2(Enum):
     MONTH = 'MONTH'
     QUARTER = 'QUARTER'
     YEAR = 'YEAR'
+    SECOND_OF_MINUTE = 'SECOND_OF_MINUTE'
+    SECOND_OF_DAY = 'SECOND_OF_DAY'
     MINUTE_OF_HOUR = 'MINUTE_OF_HOUR'
+    MINUTE_OF_DAY = 'MINUTE_OF_DAY'
     HOUR_OF_DAY = 'HOUR_OF_DAY'
     DAY_OF_WEEK = 'DAY_OF_WEEK'
     DAY_OF_WEEK_EU = 'DAY_OF_WEEK_EU'
@@ -3718,6 +3742,7 @@ class Type96(Enum):
 
 
 class Granularity4(Enum):
+    SECOND = 'SECOND'
     MINUTE = 'MINUTE'
     HOUR = 'HOUR'
     DAY = 'DAY'
@@ -3726,7 +3751,10 @@ class Granularity4(Enum):
     MONTH = 'MONTH'
     QUARTER = 'QUARTER'
     YEAR = 'YEAR'
+    SECOND_OF_MINUTE = 'SECOND_OF_MINUTE'
+    SECOND_OF_DAY = 'SECOND_OF_DAY'
     MINUTE_OF_HOUR = 'MINUTE_OF_HOUR'
+    MINUTE_OF_DAY = 'MINUTE_OF_DAY'
     HOUR_OF_DAY = 'HOUR_OF_DAY'
     DAY_OF_WEEK = 'DAY_OF_WEEK'
     DAY_OF_WEEK_EU = 'DAY_OF_WEEK_EU'

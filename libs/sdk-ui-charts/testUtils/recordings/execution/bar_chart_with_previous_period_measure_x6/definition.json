@@ -5,7 +5,7 @@
         {
             "attribute": {
                 "displayForm": {
-                    "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/324"
+                    "uri": "obj_324"
                 },
                 "localIdentifier": "a1"
             }
@@ -22,7 +22,7 @@
                         "dateDataSets": [
                             {
                                 "dataSet": {
-                                    "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/330_1"
+                                    "uri": "obj_330_1"
                                 },
                                 "periodsAgo": 1
                             }
@@ -38,18 +38,16 @@
                 "definition": {
                     "measureDefinition": {
                         "item": {
-                            "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/1279_1"
+                            "uri": "obj_1279_1"
                         },
                         "filters": [
                             {
                                 "positiveAttributeFilter": {
                                     "displayForm": {
-                                        "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/970"
+                                        "uri": "obj_970"
                                     },
                                     "in": {
-                                        "values": [
-                                            "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/969/elements?id=958077"
-                                        ]
+                                        "values": ["elem_969_958077"]
                                     }
                                 }
                             }
@@ -68,7 +66,7 @@
                         "dateDataSets": [
                             {
                                 "dataSet": {
-                                    "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/330_2"
+                                    "uri": "obj_330_2"
                                 },
                                 "periodsAgo": 1
                             }
@@ -84,18 +82,16 @@
                 "definition": {
                     "measureDefinition": {
                         "item": {
-                            "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/1279_2"
+                            "uri": "obj_1279_2"
                         },
                         "filters": [
                             {
                                 "positiveAttributeFilter": {
                                     "displayForm": {
-                                        "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/970"
+                                        "uri": "obj_970"
                                     },
                                     "in": {
-                                        "values": [
-                                            "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/969/elements?id=958077"
-                                        ]
+                                        "values": ["elem_969_958077"]
                                     }
                                 }
                             }
@@ -114,7 +110,7 @@
                         "dateDataSets": [
                             {
                                 "dataSet": {
-                                    "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/330_3"
+                                    "uri": "obj_330_3"
                                 },
                                 "periodsAgo": 1
                             }
@@ -130,18 +126,16 @@
                 "definition": {
                     "measureDefinition": {
                         "item": {
-                            "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/1279_3"
+                            "uri": "obj_1279_3"
                         },
                         "filters": [
                             {
                                 "positiveAttributeFilter": {
                                     "displayForm": {
-                                        "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/970"
+                                        "uri": "obj_970"
                                     },
                                     "in": {
-                                        "values": [
-                                            "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/969/elements?id=958077"
-                                        ]
+                                        "values": ["elem_969_958077"]
                                     }
                                 }
                             }
@@ -160,7 +154,7 @@
                         "dateDataSets": [
                             {
                                 "dataSet": {
-                                    "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/330_4"
+                                    "uri": "obj_330_4"
                                 },
                                 "periodsAgo": 1
                             }
@@ -176,18 +170,16 @@
                 "definition": {
                     "measureDefinition": {
                         "item": {
-                            "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/1279_4"
+                            "uri": "obj_1279_4"
                         },
                         "filters": [
                             {
                                 "positiveAttributeFilter": {
                                     "displayForm": {
-                                        "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/970"
+                                        "uri": "obj_970"
                                     },
                                     "in": {
-                                        "values": [
-                                            "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/969/elements?id=958077"
-                                        ]
+                                        "values": ["elem_969_958077"]
                                     }
                                 }
                             }
@@ -206,7 +198,7 @@
                         "dateDataSets": [
                             {
                                 "dataSet": {
-                                    "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/330_5"
+                                    "uri": "obj_330_5"
                                 },
                                 "periodsAgo": 1
                             }
@@ -222,18 +214,16 @@
                 "definition": {
                     "measureDefinition": {
                         "item": {
-                            "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/1279_5"
+                            "uri": "obj_1279_5"
                         },
                         "filters": [
                             {
                                 "positiveAttributeFilter": {
                                     "displayForm": {
-                                        "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/970"
+                                        "uri": "obj_970"
                                     },
                                     "in": {
-                                        "values": [
-                                            "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/969/elements?id=958077"
-                                        ]
+                                        "values": ["elem_969_958077"]
                                     }
                                 }
                             }
@@ -252,7 +242,7 @@
                         "dateDataSets": [
                             {
                                 "dataSet": {
-                                    "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/330_6"
+                                    "uri": "obj_330_6"
                                 },
                                 "periodsAgo": 1
                             }
@@ -268,18 +258,16 @@
                 "definition": {
                     "measureDefinition": {
                         "item": {
-                            "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/1279_6"
+                            "uri": "obj_1279_6"
                         },
                         "filters": [
                             {
                                 "positiveAttributeFilter": {
                                     "displayForm": {
-                                        "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/970"
+                                        "uri": "obj_970"
                                     },
                                     "in": {
-                                        "values": [
-                                            "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/969/elements?id=958077"
-                                        ]
+                                        "values": ["elem_969_958077"]
                                     }
                                 }
                             }
@@ -301,7 +289,7 @@
         {
             "absoluteDateFilter": {
                 "dataSet": {
-                    "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/330"
+                    "uri": "obj_330"
                 },
                 "from": "2011-01-01",
                 "to": "2011-12-31"

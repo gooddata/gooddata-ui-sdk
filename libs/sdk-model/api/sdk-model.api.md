@@ -225,6 +225,9 @@ export type AutomationNotificationType = "automation-task.completed" | "automati
 // @alpha
 export const belongsToCalendar: (g: string | undefined, calendar: "fiscal" | "standard") => boolean;
 
+// @alpha
+export const BROWSER_DETECTED = "$browserDetected";
+
 // @public
 export function bucketAttribute(bucket: IBucket, idOrFun?: string | AttributePredicate): IAttribute | undefined;
 
@@ -461,6 +464,9 @@ export const DashboardParameterModeValues: Record<Uppercase<DashboardParameterMo
 // @alpha
 export type DashboardTextAttributeFilter = IDashboardArbitraryAttributeFilter | IDashboardMatchAttributeFilter;
 
+// @alpha
+export type DashboardTimezoneId = string;
+
 // @public
 export type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
 
@@ -483,13 +489,13 @@ export type DataSourceType = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE"
 export type DataValue = null | string | number;
 
 // @public
-export type DateAttributeGranularity = "GDC.time.year" | "GDC.time.fiscal_year" | "GDC.time.week_us" | "GDC.time.week_in_year" | "GDC.time.week_in_quarter" | "GDC.time.week" | "GDC.time.euweek_in_year" | "GDC.time.euweek_in_quarter" | "GDC.time.quarter" | "GDC.time.fiscal_quarter" | "GDC.time.quarter_in_year" | "GDC.time.month" | "GDC.time.fiscal_month" | "GDC.time.month_in_quarter" | "GDC.time.month_in_year" | "GDC.time.day_in_year" | "GDC.time.day_in_quarter" | "GDC.time.day_in_month" | "GDC.time.day_in_week" | "GDC.time.day_in_euweek" | "GDC.time.date" | "GDC.time.hour" | "GDC.time.hour_in_day" | "GDC.time.minute" | "GDC.time.minute_in_hour";
+export type DateAttributeGranularity = "GDC.time.year" | "GDC.time.fiscal_year" | "GDC.time.week_us" | "GDC.time.week_in_year" | "GDC.time.week_in_quarter" | "GDC.time.week" | "GDC.time.euweek_in_year" | "GDC.time.euweek_in_quarter" | "GDC.time.quarter" | "GDC.time.fiscal_quarter" | "GDC.time.quarter_in_year" | "GDC.time.month" | "GDC.time.fiscal_month" | "GDC.time.month_in_quarter" | "GDC.time.month_in_year" | "GDC.time.day_in_year" | "GDC.time.day_in_quarter" | "GDC.time.day_in_month" | "GDC.time.day_in_week" | "GDC.time.day_in_euweek" | "GDC.time.date" | "GDC.time.hour" | "GDC.time.hour_in_day" | "GDC.time.minute" | "GDC.time.minute_in_hour" | "GDC.time.minute_in_day" | "GDC.time.second" | "GDC.time.second_in_minute" | "GDC.time.second_in_day";
 
 // @beta
 export type DateFilterAbsoluteType = "absolute";
 
 // @beta
-export type DateFilterGranularity = "GDC.time.minute" | "GDC.time.hour" | "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.fiscal_month" | "GDC.time.quarter" | "GDC.time.fiscal_quarter" | "GDC.time.year" | "GDC.time.fiscal_year";
+export type DateFilterGranularity = "GDC.time.second" | "GDC.time.minute" | "GDC.time.hour" | "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.fiscal_month" | "GDC.time.quarter" | "GDC.time.fiscal_quarter" | "GDC.time.year" | "GDC.time.fiscal_year";
 
 // @alpha
 export type DateFilterOptionAbsoluteFormType = "absoluteForm";
@@ -868,6 +874,9 @@ export const getHierarchyRef: (hierarchy: ICatalogAttributeHierarchy | ICatalogD
 export const getHierarchyTitle: (hierarchy: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy) => string;
 
 // @alpha
+export function getParameterAllowedValueTitle(allowedValue: IParameterAllowedValue): string;
+
+// @alpha
 export function getSelectedElementsCount(filter: IDashboardAttributeFilter): number;
 
 // @alpha
@@ -877,7 +886,7 @@ export const getStandardEquivalent: (g: string | undefined) => DateAttributeGran
 export const GRANULARITY_DESCRIPTORS: Record<DateAttributeGranularity, IGranularityDescriptor>;
 
 // @alpha
-export type GranularityFamily = "chronological" | "cyclical";
+export type GranularityFamily = "chronological" | "generic";
 
 // @public
 export type GroupableCatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact;
@@ -1750,6 +1759,7 @@ export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, 
     readonly plugins?: IDashboardPluginLink[];
     readonly sectionHeadersDateDataSet?: ObjRef;
     readonly tabs?: IDashboardTab<TWidget>[];
+    readonly timezoneConfig?: IDashboardTimezoneConfig;
     // (undocumented)
     readonly type: "IDashboard";
 }
@@ -1893,6 +1903,7 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashb
     readonly plugins?: IDashboardPluginLink[];
     readonly sectionHeadersDateDataSet?: ObjRef;
     readonly tabs?: IDashboardTab<TWidget>[];
+    readonly timezoneConfig?: IDashboardTimezoneConfig;
     // (undocumented)
     readonly type: "IDashboard";
 }
@@ -2134,6 +2145,13 @@ export interface IDashboardTab<TWidget = IDashboardWidget> {
     measureValueFilterConfigs?: IDashboardMeasureValueFilterConfig[];
     parameters?: IDashboardParameter[];
     title: string;
+}
+
+// @alpha
+export interface IDashboardTimezoneConfig {
+    readonly allowUserOverrideInViewMode?: boolean;
+    readonly showTimezoneInfo?: boolean;
+    readonly timezoneId?: DashboardTimezoneId;
 }
 
 // @public
@@ -2775,6 +2793,7 @@ export interface IFeatureFlags {
     enableDashboardSidebarResize?: boolean;
     enableDashboardsSearch?: boolean;
     enableDashboardTabularExport?: boolean;
+    enableDashboardTimezone?: boolean;
     // (undocumented)
     enableDataSection?: boolean;
     enableDefaultSmtp?: boolean;
@@ -2846,6 +2865,7 @@ export interface IFeatureFlags {
     // @alpha
     enableRichTextWidgetFilterConfiguration?: boolean;
     enableSeamlessIdpSwitch?: boolean;
+    enableSecondGranularities?: boolean;
     enableSemanticSearch?: boolean;
     enableShellApplication?: boolean;
     enableShellApplication_analyticalDesigner?: boolean;
@@ -4254,6 +4274,14 @@ export interface IOrganizationUserGroup {
 }
 
 // @public
+export interface IParameterAllowedValue {
+    // (undocumented)
+    title?: string;
+    // (undocumented)
+    value: string;
+}
+
+// @public
 export type IParameterDefinition = INumberParameterDefinition | IStringParameterDefinition;
 
 // @public
@@ -4782,6 +4810,9 @@ export const isAvailableUserAccessGrantee: (obj: unknown) => obj is IAvailableUs
 // @alpha
 export const isAvailableUserGroupAccessGrantee: (obj: unknown) => obj is IAvailableUserGroupAccessGrantee;
 
+// @alpha
+export function isBrowserDetectedTimezone(timezoneId: DashboardTimezoneId | undefined): timezoneId is typeof BROWSER_DETECTED;
+
 // @public
 export function isBucket(obj: unknown): obj is IBucket;
 
@@ -4870,9 +4901,6 @@ export function isComparisonConditionOperator(obj: unknown): obj is ComparisonCo
 
 // @alpha
 export function isCrossFiltering(obj: unknown): obj is ICrossFiltering;
-
-// @alpha (undocumented)
-export const isCyclicalGranularity: (g: string | undefined) => boolean;
 
 // @alpha
 export function isDashboard(obj: unknown): obj is IDashboard;
@@ -5120,6 +5148,9 @@ export function isFilterContextItem(obj: unknown): obj is FilterContextItem;
 
 // @alpha (undocumented)
 export const isFiscalGranularity: (g: string | undefined) => boolean;
+
+// @alpha (undocumented)
+export const isGenericGranularity: (g: string | undefined) => boolean;
 
 // @public
 export function isGeoLayerType(layerType: string): layerType is GeoLayerType;
@@ -5487,6 +5518,8 @@ export function isTotalLocator(obj: unknown): obj is ITotalLocatorItem;
 
 // @public
 export interface IStringParameterConstraints {
+    // (undocumented)
+    allowedValues?: IParameterAllowedValue[];
     // (undocumented)
     maxLength?: number;
     // (undocumented)
@@ -6723,6 +6756,9 @@ export function newTwoDimensional(dim1Input: DimensionItem[], dim2Input: Dimensi
 // @internal
 export function newVirtualArithmeticMeasure(measuresOrIds: ReadonlyArray<MeasureOrLocalId>, operator: ArithmeticMeasureOperator, modifications?: MeasureModifications<VirtualArithmeticMeasureBuilder>): IMeasure<IVirtualArithmeticMeasureDefinition>;
 
+// @alpha
+export function normalizeDashboardTimezoneConfig(config: IDashboardTimezoneConfig | undefined): IDashboardTimezoneConfig | undefined;
+
 // @beta
 export type NotificationChannelAllowedRecipients = "creator" | "internal" | "external";
 
@@ -6920,6 +6956,9 @@ export type RequiredSettings = Condition<Partial<IPermanentSettings | IFeatureFl
 
 // @alpha
 export type RequiredWorkspacePermissions = Condition<Partial<IPluggableApplicationWorkspacePermissions>>;
+
+// @alpha
+export function resolveTimezoneId(timezoneId: DashboardTimezoneId | undefined): string | undefined;
 
 // @alpha
 export function resolveWeekStart(settings: ISettings | undefined): WeekStart;

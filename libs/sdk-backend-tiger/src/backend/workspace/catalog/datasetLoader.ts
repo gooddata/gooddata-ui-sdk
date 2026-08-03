@@ -24,6 +24,7 @@ import {
     convertDateAttribute,
     convertDateDataset,
 } from "../../../convertors/fromBackend/CatalogConverter.js";
+import { isSupportedTigerGranularity } from "../../../convertors/fromBackend/dateGranularityConversions.js";
 import { convertAttributeHierarchy } from "../../../convertors/fromBackend/HierarchyConverter.js";
 
 import { addRsqlFilterToParams } from "./rsqlFilter.js";
@@ -130,7 +131,13 @@ function identifyDateDatasets(
 }
 
 function createDateDatasets(attributes: JsonApiAttributeOutList): ICatalogDateDataset[] {
-    const dateAttributes = attributes.data.filter((attr) => attr.attributes?.granularity !== undefined);
+    const dateAttributes = attributes.data.filter(
+        (attr) =>
+            attr.attributes?.granularity !== undefined &&
+            // Skip date attributes whose backend granularity is not (yet) modeled in the sdk-model registry
+            // (e.g. extended fiscal-calendar granularities), so they are not surfaced with the fallback.
+            isSupportedTigerGranularity(attr.attributes.granularity),
+    );
     const dateDatasets = identifyDateDatasets(dateAttributes, attributes.included);
 
     return dateDatasets

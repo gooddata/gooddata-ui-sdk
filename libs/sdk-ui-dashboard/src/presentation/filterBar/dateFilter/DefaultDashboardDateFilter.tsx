@@ -7,6 +7,8 @@ import { useIntl } from "react-intl";
 import {
     DashboardDateFilterConfigModeValues,
     type DateFilterGranularity,
+    type ICatalogDateDataset,
+    type ObjRef,
     areObjRefsEqual,
 } from "@gooddata/sdk-model";
 import {
@@ -34,6 +36,23 @@ import { getVisibilityIcon } from "../utils.js";
 
 import { DateFilterConfigurationBody } from "./configuration/DateFilterConfigurationBody.js";
 import { type IDashboardDateFilterProps } from "./types.js";
+
+/**
+ * Whether the date dimension relevant to the filter exposes the second-level attribute (`GDC.time.second`):
+ * a dimension-scoped filter checks its own dataset, a common (dataset-less) filter checks whether any date
+ * dimension has seconds enabled.
+ */
+function relevantDateDimensionHasSeconds(
+    dateDatasets: ICatalogDateDataset[],
+    dataSetRef: ObjRef | undefined,
+): boolean {
+    const datasetHasSeconds = (dateDataset: ICatalogDateDataset) =>
+        dateDataset.dateAttributes.some((attribute) => attribute.granularity === "GDC.time.second");
+
+    return dataSetRef
+        ? dateDatasets.some((ds) => areObjRefsEqual(ds.dataSet.ref, dataSetRef) && datasetHasSeconds(ds))
+        : dateDatasets.some(datasetHasSeconds);
+}
 
 /**
  * Default implementation of the date filter to use on the dashboard's filter bar.
@@ -158,6 +177,31 @@ export function DefaultDashboardDateFilter({
     const isTimeForAbsoluteRangeEnabled =
         !!capabilities.supportsTimeGranularities && hasHoursMinutesGranularities;
 
+    // Second-level relative granularities ship in the default config but are surfaced only when the
+    // enableSecondGranularities feature flag is on AND the backend supports time granularities; otherwise
+    // strip them from the tabs the relative form shows.
+    const availableGranularities = useMemo(
+        () =>
+            settings.enableSecondGranularities && capabilities.supportsTimeGranularities
+                ? config.availableGranularities
+                : config.availableGranularities.filter((granularity) => granularity !== "GDC.time.second"),
+        [
+            config.availableGranularities,
+            settings.enableSecondGranularities,
+            capabilities.supportsTimeGranularities,
+        ],
+    );
+
+    // Seconds precision in the absolute date filter time field is offered only when the backend supports time
+    // granularities, the enableSecondGranularities feature flag is on, and the relevant date dimension exposes
+    // the GDC.time.second attribute. This is a stricter, dimension-aware gate than the relative form's seconds
+    // tab (which follows availableGranularities); the absolute time field must not appear for a dimension that
+    // has no second attribute.
+    const isSecondsForAbsoluteRangeEnabled =
+        isTimeForAbsoluteRangeEnabled &&
+        !!settings.enableSecondGranularities &&
+        relevantDateDimensionHasSeconds(allDateDatasets, filter?.dateFilter.dataSet);
+
     const isConfigurationEnabled =
         isInEditMode &&
         (!!capabilities.supportsHiddenAndLockedFiltersOnUI || !!capabilities.supportsMultipleDateFilters);
@@ -191,13 +235,14 @@ export function DefaultDashboardDateFilter({
                     : DashboardDateFilterConfigModeValues.ACTIVE
             }
             filterOptions={dateFilterOptions}
-            availableGranularities={config.availableGranularities}
+            availableGranularities={availableGranularities}
             customFilterName={title}
             onApply={onApply}
             onSelect={isApplyAllAtOnceEnabledAndSet ? onSelect : undefined}
             dateFormat={dateFormat}
             locale={locale}
             isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled}
+            isSecondsForAbsoluteRangeEnabled={isSecondsForAbsoluteRangeEnabled}
             isEditMode={isInEditMode}
             openOnInit={autoOpen}
             weekStart={weekStart}

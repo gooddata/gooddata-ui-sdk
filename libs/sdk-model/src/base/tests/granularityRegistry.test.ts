@@ -11,8 +11,8 @@ import {
     getGranularityDescriptor,
     getStandardEquivalent,
     isChronologicalGranularity,
-    isCyclicalGranularity,
     isFiscalGranularity,
+    isGenericGranularity,
     isSharedGranularity,
     isStandardGranularity,
     isTimeGranularity,
@@ -45,6 +45,7 @@ describe("granularityRegistry", () => {
                 "GDC.time.date",
                 "GDC.time.hour",
                 "GDC.time.minute",
+                "GDC.time.second",
             ]);
         });
 
@@ -65,6 +66,7 @@ describe("granularityRegistry", () => {
                 "GDC.time.date",
                 "GDC.time.hour",
                 "GDC.time.minute",
+                "GDC.time.second",
             ]);
         });
 
@@ -80,8 +82,8 @@ describe("granularityRegistry", () => {
     });
 
     describe("family selection (generic-only, like MAQL LS chronological vs periodical)", () => {
-        it("returns cyclical/generic granularities for the standard calendar, excluding not-offered EU variants", () => {
-            const result = getGranularities({ calendars: [{ type: "standard" }], families: ["cyclical"] });
+        it("returns generic granularities for the standard calendar, excluding not-offered EU variants", () => {
+            const result = getGranularities({ calendars: [{ type: "standard" }], families: ["generic"] });
             expect(result).toEqual([
                 "GDC.time.quarter_in_year",
                 "GDC.time.month_in_quarter",
@@ -94,6 +96,9 @@ describe("granularityRegistry", () => {
                 "GDC.time.day_in_year",
                 "GDC.time.hour_in_day",
                 "GDC.time.minute_in_hour",
+                "GDC.time.minute_in_day",
+                "GDC.time.second_in_minute",
+                "GDC.time.second_in_day",
             ]);
             expect(result).not.toContain("GDC.time.euweek_in_year");
             expect(result).not.toContain("GDC.time.day_in_euweek");
@@ -104,7 +109,7 @@ describe("granularityRegistry", () => {
         it("never offers the GDC.time.week alias by default", () => {
             const all = getGranularities({
                 calendars: [{ type: "standard" }],
-                families: ["chronological", "cyclical"],
+                families: ["chronological", "generic"],
             });
             expect(all).not.toContain("GDC.time.week");
         });
@@ -139,6 +144,7 @@ describe("granularityRegistry", () => {
                 "GDC.time.date",
                 "GDC.time.hour",
                 "GDC.time.minute",
+                "GDC.time.second",
             ]);
         });
 
@@ -173,6 +179,7 @@ describe("granularityRegistry", () => {
                 "GDC.time.week_us",
                 "GDC.time.hour",
                 "GDC.time.minute",
+                "GDC.time.second",
             ]);
         });
     });
@@ -190,6 +197,7 @@ describe("granularityRegistry", () => {
                 "GDC.time.date",
                 "GDC.time.hour",
                 "GDC.time.minute",
+                "GDC.time.second",
             ]);
         });
 
@@ -217,6 +225,7 @@ describe("granularityRegistry", () => {
                 "GDC.time.date",
                 "GDC.time.hour",
                 "GDC.time.minute",
+                "GDC.time.second",
             ]);
         });
     });
@@ -233,6 +242,7 @@ describe("granularityRegistry", () => {
                 "GDC.time.date",
                 "GDC.time.hour",
                 "GDC.time.minute",
+                "GDC.time.second",
             ]);
         });
 
@@ -245,6 +255,7 @@ describe("granularityRegistry", () => {
                 "GDC.time.date",
                 "GDC.time.hour",
                 "GDC.time.minute",
+                "GDC.time.second",
             ]);
         });
 
@@ -267,7 +278,7 @@ describe("granularityRegistry", () => {
 
         it("classifies family and time scale", () => {
             expect(isChronologicalGranularity("GDC.time.month")).toBe(true);
-            expect(isCyclicalGranularity("GDC.time.month_in_year")).toBe(true);
+            expect(isGenericGranularity("GDC.time.month_in_year")).toBe(true);
             expect(isTimeGranularity("GDC.time.hour")).toBe(true);
             expect(isTimeGranularity("GDC.time.minute_in_hour")).toBe(true);
             expect(isTimeGranularity("GDC.time.month")).toBe(false);
@@ -291,7 +302,7 @@ describe("granularityRegistry", () => {
             expect(getFiscalEquivalent("GDC.time.week_us")).toBeUndefined();
         });
 
-        it("maps cyclical granularities to their chronological parent", () => {
+        it("maps generic granularities to their chronological parent", () => {
             expect(getChronologicalOrigin("GDC.time.month_in_year")).toEqual("GDC.time.month");
             expect(getChronologicalOrigin("GDC.time.day_in_week")).toEqual("GDC.time.date");
             expect(getChronologicalOrigin("GDC.time.year")).toBeUndefined();

@@ -10,16 +10,34 @@ const fixtures = vi.hoisted(() => {
     const navigate = vi.fn();
     const onAlertingManagementEdit = vi.fn();
     let managementDialogProps: Record<string, unknown> | undefined;
+    let dialogProps: Record<string, unknown> | undefined;
+    let automationsError: Error | undefined;
+    const useWorkspaceUsers = vi.fn(() => ({ users: [], status: "success", usersError: undefined }));
+    const alertsState = { isAlertDialogOpen: false, isAlertManagementDialogOpen: true };
 
     return {
         buildAutomationUrl,
         navigate,
         onAlertingManagementEdit,
+        useWorkspaceUsers,
+        alertsState,
         get managementDialogProps() {
             return managementDialogProps;
         },
         set managementDialogProps(value: Record<string, unknown> | undefined) {
             managementDialogProps = value;
+        },
+        get dialogProps() {
+            return dialogProps;
+        },
+        set dialogProps(value: Record<string, unknown> | undefined) {
+            dialogProps = value;
+        },
+        get automationsError() {
+            return automationsError;
+        },
+        set automationsError(value: Error | undefined) {
+            automationsError = value;
         },
     };
 });
@@ -37,11 +55,15 @@ vi.mock("../../../model/react/DashboardStoreProvider.js", () => ({
 vi.mock("../../../model/react/useDashboardAlerting/useDashboardAlerts.js", () => ({
     useDashboardAlerts: () => ({
         isInitialized: true,
-        isAlertDialogOpen: false,
-        isAlertManagementDialogOpen: true,
+        get isAlertDialogOpen() {
+            return fixtures.alertsState.isAlertDialogOpen;
+        },
+        get isAlertManagementDialogOpen() {
+            return fixtures.alertsState.isAlertManagementDialogOpen;
+        },
         alertToEdit: undefined,
         automations: [],
-        automationsError: undefined,
+        automationsError: fixtures.automationsError,
         automationsLoading: false,
         notificationChannels: [],
         onAlertingCancel: vi.fn(),
@@ -62,7 +84,7 @@ vi.mock("../../../model/react/useDashboardAlerting/useDashboardAlerts.js", () =>
 }));
 
 vi.mock("../../../model/react/useWorkspaceUsers.js", () => ({
-    useWorkspaceUsers: () => ({ users: [], status: "success", usersError: undefined }),
+    useWorkspaceUsers: fixtures.useWorkspaceUsers,
 }));
 
 vi.mock("../../../model/store/config/configSelectors.js", () => ({
@@ -79,7 +101,10 @@ vi.mock("../../../model/store/meta/metaSelectors.js", () => ({
 }));
 
 vi.mock("../alerting/AlertingDialog.js", () => ({
-    AlertingDialog: () => null,
+    AlertingDialog: (props: Record<string, unknown>) => {
+        fixtures.dialogProps = props;
+        return null;
+    },
 }));
 
 vi.mock("../alerting/AlertingManagementDialog.js", () => ({
@@ -134,6 +159,11 @@ describe("AlertingConnector", () => {
         fixtures.navigate.mockClear();
         fixtures.onAlertingManagementEdit.mockClear();
         fixtures.managementDialogProps = undefined;
+        fixtures.dialogProps = undefined;
+        fixtures.automationsError = undefined;
+        fixtures.useWorkspaceUsers.mockClear();
+        fixtures.alertsState.isAlertDialogOpen = false;
+        fixtures.alertsState.isAlertManagementDialogOpen = true;
     });
 
     it("uses host routes when editing an alert on another dashboard in shell mode", () => {
@@ -179,5 +209,52 @@ describe("AlertingConnector", () => {
             id: "alert-2",
             dashboard: undefined,
         });
+    });
+
+    it("does not load workspace users when only the management dialog is open", () => {
+        render(<AlertingConnector />);
+
+        expect(fixtures.useWorkspaceUsers).not.toHaveBeenCalled();
+    });
+
+    it("loads workspace users when the create/edit dialog is open", () => {
+        fixtures.alertsState.isAlertDialogOpen = true;
+        fixtures.alertsState.isAlertManagementDialogOpen = false;
+
+        render(<AlertingConnector />);
+
+        expect(fixtures.useWorkspaceUsers).toHaveBeenCalled();
+    });
+
+    it("does not supply the deprecated data props to the create/edit dialog", () => {
+        fixtures.alertsState.isAlertDialogOpen = true;
+        fixtures.alertsState.isAlertManagementDialogOpen = false;
+
+        render(<AlertingConnector />);
+
+        expect(fixtures.dialogProps).toBeDefined();
+        for (const prop of [
+            "alertToEdit",
+            "users",
+            "usersError",
+            "notificationChannels",
+            "widget",
+            "insight",
+            "isLoading",
+        ]) {
+            expect(fixtures.dialogProps?.[prop]).toBeUndefined();
+        }
+    });
+
+    it("renders the management dialog without the deprecated data props", () => {
+        fixtures.automationsError = new Error("automations failed to load");
+
+        render(<AlertingConnector />);
+
+        expect(fixtures.managementDialogProps).toBeDefined();
+        expect(fixtures.managementDialogProps?.["automations"]).toBeUndefined();
+        expect(fixtures.managementDialogProps?.["notificationChannels"]).toBeUndefined();
+        expect(fixtures.managementDialogProps?.["alertDataError"]).toBeUndefined();
+        expect(fixtures.managementDialogProps?.["isLoadingAlertingData"]).toBeUndefined();
     });
 });

@@ -353,7 +353,6 @@ createRoot(rootElement).render(
   "harness/typings.d.ts": "// (C) 2026 GoodData Corporation
 
 export declare global {
-    export const SDK_BACKEND: "tiger";
     export const PRODUCTION: boolean;
     export const TIGER_API_TOKEN: string | undefined;
 
@@ -418,7 +417,6 @@ export default defineConfig(({ mode }): UserConfig => {
         base: isProduction ? "/workspace/" : "/",
         publicDir: false,
         define: {
-            SDK_BACKEND: JSON.stringify("tiger"),
             TIGER_API_TOKEN: isProduction ? undefined : JSON.stringify(env["TIGER_API_TOKEN"]),
             PRODUCTION: JSON.stringify(isProduction),
             SNAP_TEST_REMOTE_URL: isProduction
@@ -427,7 +425,6 @@ export default defineConfig(({ mode }): UserConfig => {
                   ? JSON.stringify(env["SNAP_TEST_REMOTE_URL"])
                   : "undefined",
             "process.env": JSON.stringify({}),
-            REACT_APP_SDK_BACKEND: JSON.stringify("TIGER"),
             REACT_APP_API_TOKEN: isProduction ? undefined : JSON.stringify(env["TIGER_API_TOKEN"]),
             REACT_APP_IN_AIO: JSON.stringify(false),
         },
@@ -1349,7 +1346,6 @@ export default defineConfig(({ mode, command }): UserConfig => {
             ],
         },
         define: {
-            REACT_APP_SDK_BACKEND: JSON.stringify("TIGER"),
             PRODUCTION: JSON.stringify(mode === "production"),
             "process.env": JSON.stringify({}),
         },

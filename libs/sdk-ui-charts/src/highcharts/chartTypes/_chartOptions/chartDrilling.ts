@@ -14,7 +14,15 @@ import {
 
 import { type IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 import { type IPointData, type ISeriesDataItem } from "../../typings/unsafe.js";
-import { isBubbleChart, isHeatmap, isOneOfTypes, isScatterPlot, isTreemap, unwrap } from "../_util/common.js";
+import {
+    isBubbleChart,
+    isHeatmap,
+    isMekko,
+    isOneOfTypes,
+    isScatterPlot,
+    isTreemap,
+    unwrap,
+} from "../_util/common.js";
 import { findMeasureGroupInDimensions } from "../_util/executionResultHelper.js";
 
 import { multiMeasuresAlternatingTypes } from "./chartCapabilities.js";
@@ -94,6 +102,8 @@ export function getDrillableSeries(
                 measureHeaders = (measureGroup.items ?? []).slice(0, 2);
             } else if (isBubbleChart(type)) {
                 measureHeaders = (measureGroup.items ?? []).slice(0, 3);
+            } else if (isMekko(type)) {
+                measureHeaders = (measureGroup.items ?? []).slice(0, 2);
             } else if (isStackedTreemap) {
                 if (pointData.id !== undefined) {
                     // not leaf -> can't be drillable

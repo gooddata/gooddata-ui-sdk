@@ -8,6 +8,7 @@ import { AxiosInstance } from 'axios';
 import { AxiosPromise } from 'axios';
 import { AxiosRequestConfig } from 'axios';
 import { GenericAbortSignal } from 'axios';
+import { IDashboardTimezoneConfig } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import type { RawAxiosRequestConfig } from 'axios';
 
@@ -5714,14 +5715,6 @@ export type AllowedRelationshipTypeSourceTypeEnum = 'attribute' | 'metric' | 'fa
 
 // @public (undocumented)
 export type AllowedRelationshipTypeTargetTypeEnum = 'attribute' | 'metric' | 'fact' | 'label' | 'date' | 'dataset' | 'visualization' | 'dashboard';
-
-// @public (undocumented)
-export interface AllowedValue {
-    // (undocumented)
-    'title'?: string;
-    // (undocumented)
-    'value': string;
-}
 
 // @public
 export interface AllTimeDateFilter {
@@ -21622,6 +21615,8 @@ interface IAnalyticalDashboardCommonProps {
     plugins?: IDashboardPluginLink[];
     // (undocumented)
     sectionHeadersDateDataSet?: ObjRef;
+    // (undocumented)
+    timezoneConfig?: IDashboardTimezoneConfig;
 }
 
 // @public @deprecated
@@ -38424,15 +38419,23 @@ export interface SqlQuery {
 // @public (undocumented)
 export interface StringConstraints {
     // (undocumented)
+    'allowedValues'?: Array<StringParameterAllowedValue>;
+    // (undocumented)
     'maxLength'?: number;
     // (undocumented)
     'minLength'?: number;
 }
 
 // @public (undocumented)
-export interface StringParameterDefinition {
+export interface StringParameterAllowedValue {
     // (undocumented)
-    'allowedValues'?: Array<AllowedValue>;
+    'title'?: string;
+    // (undocumented)
+    'value': string;
+}
+
+// @public (undocumented)
+export interface StringParameterDefinition {
     // (undocumented)
     'constraints'?: StringConstraints;
     // (undocumented)

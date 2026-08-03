@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { format, parse } from "date-fns";
 import { fromZonedTime } from "date-fns-tz";
@@ -7,6 +7,8 @@ import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 import { type DateAttributeGranularity } from "@gooddata/sdk-model";
 
 type ValueTransform = (value: string) => string;
+
+const pad2 = (n: number): string => String(n).padStart(2, "0");
 
 const granularityParseValueTransformations: {
     [granularity in DateAttributeGranularity]?: ValueTransform;
@@ -17,6 +19,18 @@ const granularityParseValueTransformations: {
         // see https://date-fns.org/docs/parse
         return `${parseInt(value) + 1}`;
     },
+    // minute-of-day / second-of-day arrive as a running index (0-1439 / 0-86399), i.e. the elapsed
+    // minutes/seconds since midnight. They have no single date-fns token, so we decompose the index into an
+    // HH:mm[:ss] clock string that the parse pattern below can turn into a Date; the backend then formats it as
+    // a clock time (e.g. "h:mm a"). parseInt tolerates leading zeros the backend may send.
+    "GDC.time.minute_in_day": (value) => {
+        const minutes = parseInt(value, 10);
+        return `${pad2(Math.floor(minutes / 60))}:${pad2(minutes % 60)}`;
+    },
+    "GDC.time.second_in_day": (value) => {
+        const seconds = parseInt(value, 10);
+        return `${pad2(Math.floor(seconds / 3600))}:${pad2(Math.floor((seconds % 3600) / 60))}:${pad2(seconds % 60)}`;
+    },
 };
 
 /**
@@ -25,6 +39,12 @@ const granularityParseValueTransformations: {
  * See https://date-fns.org/docs/parse and https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table
  */
 const granularityParsePatterns: { [granularity in DateAttributeGranularity]?: string } = {
+    "GDC.time.second": "yyyy-MM-dd HH:mm:ss", // 2020-01-31 14:01:59
+    "GDC.time.second_in_minute": "ss", // 00-59 (analogous to minute_in_hour "mm")
+    // minute_in_day / second_in_day: the raw index is transformed to an HH:mm[:ss] clock string above, then
+    // parsed here so it can be formatted as a clock time (h:mm a) rather than shown as a bare index.
+    "GDC.time.minute_in_day": "HH:mm", // 00:00-23:59 (from 0-1439)
+    "GDC.time.second_in_day": "HH:mm:ss", // 00:00:00-23:59:59 (from 0-86399)
     "GDC.time.minute": "yyyy-MM-dd HH:mm", // 2020-01-31 14:01
     "GDC.time.minute_in_hour": "mm", // 00-59
     "GDC.time.hour": "yyyy-MM-dd HH", // 2020-01-31 14
@@ -87,7 +107,9 @@ export const parseDateValue = (
     if (
         locale === "en-US-x-24h" &&
         timezone &&
-        (granularity === "GDC.time.minute" || granularity === "GDC.time.hour")
+        (granularity === "GDC.time.second" ||
+            granularity === "GDC.time.minute" ||
+            granularity === "GDC.time.hour")
     ) {
         try {
             // Use fromZonedTime to convert the date from the specified timezone to UTC
@@ -133,7 +155,9 @@ export const serializeDateValue = (
     if (
         locale === "en-US-x-24h" &&
         timezone &&
-        (granularity === "GDC.time.minute" || granularity === "GDC.time.hour")
+        (granularity === "GDC.time.second" ||
+            granularity === "GDC.time.minute" ||
+            granularity === "GDC.time.hour")
     ) {
         try {
             // Use fromZonedTime to convert the date from the specified timezone to UTC

@@ -10,6 +10,7 @@ export const TIME_INPUT_HINT_ID = "date-range-picker-time-input-hint";
 export interface ITime {
     hours: number | undefined;
     minutes: number | undefined;
+    seconds?: number | undefined;
 }
 
 export interface IDateRangeInputFieldProps {
@@ -22,6 +23,7 @@ export interface IDateRangeInputFieldProps {
     dateFormat: string | undefined;
     isMobile: boolean;
     isTimeEnabled: boolean;
+    isSecondsEnabled?: boolean;
     errors?: IDateTimePickerErrors;
     intl: IntlShape;
     withoutApply?: boolean;

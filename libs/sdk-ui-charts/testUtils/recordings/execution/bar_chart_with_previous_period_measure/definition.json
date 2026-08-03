@@ -5,7 +5,7 @@
         {
             "attribute": {
                 "displayForm": {
-                    "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/324"
+                    "uri": "obj_324"
                 },
                 "localIdentifier": "a1"
             }
@@ -22,7 +22,7 @@
                         "dateDataSets": [
                             {
                                 "dataSet": {
-                                    "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/330"
+                                    "uri": "obj_330"
                                 },
                                 "periodsAgo": 1
                             }
@@ -38,18 +38,16 @@
                 "definition": {
                     "measureDefinition": {
                         "item": {
-                            "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/1279"
+                            "uri": "obj_1279"
                         },
                         "filters": [
                             {
                                 "positiveAttributeFilter": {
                                     "displayForm": {
-                                        "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/970"
+                                        "uri": "obj_970"
                                     },
                                     "in": {
-                                        "values": [
-                                            "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/969/elements?id=958077"
-                                        ]
+                                        "values": ["elem_969_958077"]
                                     }
                                 }
                             }
@@ -71,7 +69,7 @@
         {
             "absoluteDateFilter": {
                 "dataSet": {
-                    "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/330"
+                    "uri": "obj_330"
                 },
                 "from": "2011-01-01",
                 "to": "2011-12-31"

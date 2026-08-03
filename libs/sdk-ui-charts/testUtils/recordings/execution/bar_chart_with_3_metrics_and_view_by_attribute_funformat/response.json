@@ -11,7 +11,7 @@
                                         "name": "<button>Lost</button> ...",
                                         "format": "#,##0.00%",
                                         "localIdentifier": "lostMetric",
-                                        "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+                                        "uri": "obj_1283",
                                         "identifier": "af2Ewj9Re2vK"
                                     }
                                 },
@@ -20,7 +20,7 @@
                                         "name": "Won",
                                         "format": "#,##0.00%",
                                         "localIdentifier": "wonMetric",
-                                        "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284",
+                                        "uri": "obj_1284",
                                         "identifier": "afSEwRwdbMeQ"
                                     }
                                 },
@@ -29,7 +29,7 @@
                                         "name": "Expected",
                                         "format": "#,##0.00%",
                                         "localIdentifier": "expectedMetric",
-                                        "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1285",
+                                        "uri": "obj_1285",
                                         "identifier": "alUEwmBtbwSh"
                                     }
                                 }
@@ -44,10 +44,10 @@
                         "attributeHeader": {
                             "name": "Year (Created)",
                             "localIdentifier": "yearCreatedAttribute",
-                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
+                            "uri": "obj_158",
                             "identifier": "created.aag81lMifn6q",
                             "formOf": {
-                                "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
+                                "uri": "obj_157",
                                 "identifier": "created",
                                 "name": "Year created"
                             }

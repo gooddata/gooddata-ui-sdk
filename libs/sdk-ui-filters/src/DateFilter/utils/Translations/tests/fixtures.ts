@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import {
     type IAbsoluteDateFilterPreset,
@@ -47,6 +47,24 @@ export const absoluteFormFilterWithTimeInOneDay: IUiAbsoluteDateFilterForm = {
     type: "absoluteForm",
     from: "2019-01-01 00:00",
     to: "2019-01-01 23:59",
+    name: "Static range",
+    visible: true,
+};
+
+export const absoluteFormFilterWithSecondsInOneDay: IUiAbsoluteDateFilterForm = {
+    localIdentifier: "ABSOLUTE_FORM",
+    type: "absoluteForm",
+    from: "2019-01-01 22:11:00",
+    to: "2019-01-01 22:31:05",
+    name: "Static range",
+    visible: true,
+};
+
+export const absoluteFormFilterWithSecondsWithinMoreDays: IUiAbsoluteDateFilterForm = {
+    localIdentifier: "ABSOLUTE_FORM",
+    type: "absoluteForm",
+    from: "2019-01-01 22:11:00",
+    to: "2019-01-04 22:31:05",
     name: "Static range",
     visible: true,
 };

@@ -199,6 +199,7 @@ export function convertAnalyticalDashboard(
                 ? { disablePersistentFiltersAcrossTabs: dashboard.disablePersistentFiltersAcrossTabs }
                 : {}),
             evaluationFrequency: dashboard.evaluationFrequency,
+            timezoneConfig: dashboard.timezoneConfig,
         };
 
         if (enableDashboardSectionHeadersDateDataSet) {
@@ -260,6 +261,7 @@ export function convertAnalyticalDashboard(
             ? { disablePersistentFiltersAcrossTabs: dashboard.disablePersistentFiltersAcrossTabs }
             : {}),
         evaluationFrequency: dashboard.evaluationFrequency,
+        timezoneConfig: dashboard.timezoneConfig,
         tabs: convertedTabs,
         version: "2",
     };

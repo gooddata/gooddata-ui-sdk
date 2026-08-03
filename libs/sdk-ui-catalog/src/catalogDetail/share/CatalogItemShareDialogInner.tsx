@@ -7,27 +7,26 @@ import { useCatalogItemShareActions, useCatalogItemShareState } from "./CatalogI
 /**
  * The connected share dialog, split into its own module so it (and the heavy kit
  * dialog chrome it pulls from `@gooddata/sdk-ui-ext`) is code-split out of the main
- * catalog chunk and loaded only when the dialog is first opened. Reads the shared
- * controller from context so it and the inline access row use one access-list fetch.
+ * catalog chunk and loaded only when the dialog is first opened. Mounted per dialog
+ * session (see {@link CatalogItemShareDialog}); it reports summary changes back to
+ * the provider so the inline access row stays in sync without a refetch.
  *
  * @internal
  */
 export function CatalogItemShareDialogInner() {
-    const { controller, target, objectTitle, isOpen, labelsLoading } = useCatalogItemShareState();
-    const { close } = useCatalogItemShareActions();
-
-    if (!controller) {
-        return null;
-    }
+    const { target, objectTitle, labels } = useCatalogItemShareState();
+    const { close, onSummaryChange } = useCatalogItemShareActions();
 
     return (
         <ObjectShareDialog
             target={target}
             objectTitle={objectTitle}
-            isOpen={isOpen}
+            isOpen
             onClose={close}
-            labelsLoading={labelsLoading}
-            controller={controller}
+            labels={labels.labels}
+            labelsError={labels.error}
+            labelsLoading={labels.loading}
+            onSummaryChange={onSummaryChange}
         />
     );
 }

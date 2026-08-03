@@ -5,6 +5,7 @@ import { useCallback, useState } from "react";
 import { IntlProvider } from "react-intl";
 import { action } from "storybook/actions";
 
+import { idRef } from "@gooddata/sdk-model";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
 import {
     type IUiGranteeAsyncOption,
@@ -69,9 +70,16 @@ export function WithPicked() {
     return (
         <Example
             initialPicked={[
-                { id: "g:marketing", kind: "group", name: "Marketing", permissionLevel: "SHARE" },
+                {
+                    id: "g:marketing",
+                    ref: idRef("g:marketing"),
+                    kind: "group",
+                    name: "Marketing",
+                    permissionLevel: "SHARE",
+                },
                 {
                     id: "u:jane",
+                    ref: idRef("u:jane"),
                     kind: "user",
                     name: "Jane Good",
                     email: "jane.good@company.com",

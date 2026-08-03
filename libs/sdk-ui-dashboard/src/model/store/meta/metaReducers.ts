@@ -3,7 +3,12 @@
 import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
 import { invariant } from "ts-invariant";
 
-import { type IDashboard, type ObjRef } from "@gooddata/sdk-model";
+import {
+    type IDashboard,
+    type IDashboardTimezoneConfig,
+    type ObjRef,
+    normalizeDashboardTimezoneConfig,
+} from "@gooddata/sdk-model";
 
 import { EmptyDashboardDescriptor, type IDashboardMetaState } from "./metaState.js";
 
@@ -32,6 +37,7 @@ const setMeta: MetaReducer<PayloadAction<SetMetaPayload>> = (state, action) => {
               disableFilterViews: dashboard.disableFilterViews,
               disablePersistentFiltersAcrossTabs: dashboard.disablePersistentFiltersAcrossTabs,
               sectionHeadersDateDataSet: dashboard.sectionHeadersDateDataSet,
+              timezoneConfig: dashboard.timezoneConfig,
           }
         : { ...EmptyDashboardDescriptor };
     state.initialContent = initialContent;
@@ -47,6 +53,17 @@ const setDisableCrossFiltering: MetaReducer<PayloadAction<boolean>> = (state, ac
     invariant(state.descriptor);
 
     state.descriptor.disableCrossFiltering = action.payload;
+};
+
+const setDashboardTimezoneConfig: MetaReducer<PayloadAction<IDashboardTimezoneConfig | undefined>> = (
+    state,
+    action,
+) => {
+    invariant(state.descriptor);
+
+    // normalize on write so that every producer (settings dialog, embedding APIs, future
+    // ad-hoc commands) stores the canonical shape and "all defaults" is always undefined
+    state.descriptor.timezoneConfig = normalizeDashboardTimezoneConfig(action.payload);
 };
 
 const setDisablePersistentFiltersAcrossTabs: MetaReducer<PayloadAction<boolean>> = (state, action) => {
@@ -88,6 +105,7 @@ const setSectionHeadersDateDataSet: MetaReducer<PayloadAction<ObjRef | undefined
 export const metaReducers = {
     setMeta,
     setDashboardTitle,
+    setDashboardTimezoneConfig,
     setDisableCrossFiltering,
     setDisablePersistentFiltersAcrossTabs,
     setDisableUserFilterReset,

@@ -7,11 +7,11 @@
                         "attributeHeader": {
                             "name": "Product Name",
                             "localIdentifier": "7369345339414eceaaf67ba05dfe6724",
-                            "uri": "/gdc/md/adtxv0e7evvx6dawu7t2jju5a6r73eua/obj/952",
+                            "uri": "obj_952",
                             "identifier": "label.product.id.name",
                             "formOf": {
                                 "name": "Product",
-                                "uri": "/gdc/md/adtxv0e7evvx6dawu7t2jju5a6r73eua/obj/949",
+                                "uri": "obj_949",
                                 "identifier": "attr.product.id"
                             }
                         }
@@ -35,7 +35,7 @@
                                         "name": "# of Open Opps.",
                                         "format": "#,##0",
                                         "localIdentifier": "88291f6f6fef47a7b9c5ad709af2b45b",
-                                        "uri": "/gdc/md/adtxv0e7evvx6dawu7t2jju5a6r73eua/obj/13465",
+                                        "uri": "obj_13465",
                                         "identifier": "aaYh6Voua2yj"
                                     }
                                 }

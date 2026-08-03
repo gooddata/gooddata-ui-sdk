@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-dashboard: Move alerting create/edit data into the dialog context, update the connector and hooks to consume it, and deprecate the corresponding prop contracts while preserving callback props for compatibility.",
+            "type": "none",
+            "email": "jan.kruza@gooddata.com"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

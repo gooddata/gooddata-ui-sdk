@@ -1,7 +1,6 @@
 // (C) 2026 GoodData Corporation
 
 export declare global {
-    export const SDK_BACKEND: "tiger";
     export const PRODUCTION: boolean;
     export const TIGER_API_TOKEN: string | undefined;
 

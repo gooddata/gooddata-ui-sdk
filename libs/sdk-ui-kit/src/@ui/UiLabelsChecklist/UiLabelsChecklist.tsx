@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type KeyboardEvent, useId, useState } from "react";
+import { type KeyboardEvent, useCallback, useId, useState } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -50,6 +50,8 @@ export interface IUiLabelsChecklistProps {
     onBack: () => void;
     /** Dismisses the menu; Cancel and (post-commit) Apply both call it. */
     onClose: () => void;
+    /** Focus the Back button on mount — e.g. when opened as a drill-in so keyboard focus follows. */
+    autoFocus?: boolean;
     dataTestId?: string;
 }
 
@@ -66,10 +68,23 @@ export function UiLabelsChecklist({
     onApply,
     onBack,
     onClose,
+    autoFocus,
     dataTestId,
 }: IUiLabelsChecklistProps) {
     const intl = useIntl();
     const groupId = useId();
+    // When opened as a drill-in, focus the Back button as it mounts so the view
+    // swap hands keyboard focus to a named control instead of dropping it to
+    // <body>. A callback ref focuses on attach — no effect, and it can't race the
+    // node's mount the way a ref read in an effect could.
+    const focusOnAttach = useCallback(
+        (node: HTMLButtonElement | null) => {
+            if (autoFocus) {
+                node?.focus();
+            }
+        },
+        [autoFocus],
+    );
     // Staged toggles only; locked ids are folded in by the predicate, not stored here.
     const [selected, setSelected] = useState<ReadonlyArray<string>>(() => [...defaultSelectedIds]);
 
@@ -110,6 +125,7 @@ export function UiLabelsChecklist({
     return (
         <div className={b()} data-testid={dataTestId}>
             <UiSubmenuHeader
+                backButtonRef={focusOnAttach}
                 title={intl.formatMessage(olpLabelMessages.popoverTitle)}
                 backAriaLabel={intl.formatMessage(olpLabelMessages.backAriaLabel)}
                 height="medium"

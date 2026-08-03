@@ -4,7 +4,7 @@ import { useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
-import type { IObjectShareLabel } from "@gooddata/sdk-ui-ext";
+import { type IObjectShareLabel, sortShareableLabels } from "@gooddata/sdk-ui-ext";
 import { type IUiLabelsListItem, UiLabelsList, UiPopover } from "@gooddata/sdk-ui-kit";
 
 import {
@@ -19,7 +19,7 @@ import { labelsMessages } from "./messages.js";
  * @internal
  */
 export interface ICatalogDetailLabelsProps {
-    /** Labels of the attribute, primary first is not required — sorted here. */
+    /** Labels of the attribute, already in display order (primary first, then alphabetical). */
     labels: IObjectShareLabel[];
 }
 
@@ -33,11 +33,11 @@ export interface ICatalogDetailLabelsProps {
 export function CatalogDetailLabels({ labels }: ICatalogDetailLabelsProps) {
     const intl = useIntl();
 
-    // Primary label leads the summary and the list; the rest follow in source order.
-    const ordered = useMemo(
-        () => [...labels].sort((a, b) => Number(b.isPrimary) - Number(a.isPrimary)),
-        [labels],
-    );
+    // Deterministic display order (primary first, then alphabetical) via the
+    // shared helper — the same order the share dialog's label-access checklist
+    // uses, so the two lists never disagree. Sorting here as well keeps the
+    // component robust to an unsorted input.
+    const ordered = useMemo(() => sortShareableLabels(labels), [labels]);
 
     const items = useMemo<IUiLabelsListItem[]>(
         () =>

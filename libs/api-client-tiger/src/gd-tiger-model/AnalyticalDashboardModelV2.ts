@@ -2,7 +2,7 @@
 
 import { isEmpty } from "lodash-es";
 
-import { type ObjRef } from "@gooddata/sdk-model";
+import { type IDashboardTimezoneConfig, type ObjRef } from "@gooddata/sdk-model";
 
 import {
     type ITigerDashboardAttributeFilterConfig,
@@ -48,6 +48,7 @@ export interface IAnalyticalDashboardCommonProps {
     disablePersistentFiltersAcrossTabs?: boolean;
     evaluationFrequency?: string;
     sectionHeadersDateDataSet?: ObjRef;
+    timezoneConfig?: IDashboardTimezoneConfig;
 }
 
 /**

@@ -98,6 +98,7 @@ import { IDashboardObjectIdentity } from '@gooddata/sdk-model';
 import { IDashboardParameter } from '@gooddata/sdk-model';
 import { IDashboardPermissions } from '@gooddata/sdk-model';
 import { IDashboardReferences } from '@gooddata/sdk-backend-spi';
+import { IDashboardTimezoneConfig } from '@gooddata/sdk-model';
 import { IDashboardWidget } from '@gooddata/sdk-model';
 import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IDateFilter } from '@gooddata/sdk-model';
@@ -125,6 +126,7 @@ import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IExecutionResult } from '@gooddata/sdk-backend-spi';
 import { IExecutionResultLimitBreak } from '@gooddata/sdk-model';
 import { IExportResult } from '@gooddata/sdk-backend-spi';
+import type { IExportTemplate } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IFilterableWidget } from '@gooddata/sdk-model';
 import { IFilterContext } from '@gooddata/sdk-model';
@@ -1044,7 +1046,7 @@ export type DashboardDeinitializedPayload = {
 export type DashboardDensity = "comfortable" | "compact";
 
 // @public (undocumented)
-export type DashboardDescriptor = Pick<IDashboard, "title" | "description" | "tags" | "disableCrossFiltering" | "disableUserFilterReset" | "disableUserFilterSave" | "disableFilterViews" | "disablePersistentFiltersAcrossTabs" | "evaluationFrequency" | "sectionHeadersDateDataSet"> & IAccessControlAware;
+export type DashboardDescriptor = Pick<IDashboard, "title" | "description" | "tags" | "disableCrossFiltering" | "disableUserFilterReset" | "disableUserFilterSave" | "disableFilterViews" | "disablePersistentFiltersAcrossTabs" | "evaluationFrequency" | "sectionHeadersDateDataSet" | "timezoneConfig"> & IAccessControlAware;
 
 // @public (undocumented)
 export type DashboardDispatch = Dispatch<AnyAction>;
@@ -2307,12 +2309,56 @@ export interface IAlertDialogContext {
     widgetRef?: ObjRef;
 }
 
+// @alpha
+export interface IAlertingDialogContextValue {
+    alertToEdit?: IAutomationMetadataObject;
+    // (undocumented)
+    commonDateFilterId?: string;
+    // (undocumented)
+    createAlert(alert: IAutomationMetadataObjectDefinition): Promise<IAutomationMetadataObject>;
+    // (undocumented)
+    dashboardEvaluationFrequency?: string;
+    // (undocumented)
+    dashboardFilters: FilterContextItem[];
+    // (undocumented)
+    dashboardId?: string;
+    // (undocumented)
+    deleteAlert(alert: IAutomationMetadataObject): Promise<void>;
+    // (undocumented)
+    executionResultByRef: (ref: ObjRef | undefined) => {
+        executionResult?: IExecutionResult;
+    } | undefined;
+    // (undocumented)
+    hiddenFilters: FilterContextItem[];
+    // (undocumented)
+    insight?: IInsight;
+    isLoading: boolean;
+    // (undocumented)
+    mode: "create" | "edit";
+    notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
+    parameterValues: IInsightParameterValue[];
+    // (undocumented)
+    saveAlert(alert: IAutomationMetadataObject): Promise<IAutomationMetadataObject>;
+    users: IWorkspaceUser[];
+    usersError?: GoodDataSdkError;
+    // (undocumented)
+    widget?: IWidget;
+    // (undocumented)
+    widgetLocalIdToTabIdMap: Record<string, string>;
+    // (undocumented)
+    widgetTitle?: string;
+}
+
 // @alpha (undocumented)
 export interface IAlertingDialogProps {
+    // @deprecated
     alertToEdit?: IAutomationMetadataObject;
+    // @deprecated
     insight?: IInsight;
+    // @deprecated
     isLoading?: boolean;
-    notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
+    // @deprecated
+    notificationChannels?: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
     onCancel?: () => void;
     onDeleteError?: (error: GoodDataSdkError) => void;
     onDeleteSuccess?: (alert: IAutomationMetadataObject) => void;
@@ -2320,17 +2366,58 @@ export interface IAlertingDialogProps {
     onSaveError?: (error: GoodDataSdkError) => void;
     onSaveSuccess?: (alert: IAutomationMetadataObject) => void;
     onSuccess?: (alertDefinition: IAutomationMetadataObject) => void;
-    users: IWorkspaceUser[];
+    // @deprecated
+    users?: IWorkspaceUser[];
+    // @deprecated
     usersError?: GoodDataSdkError;
+    // @deprecated
     widget?: IWidget;
+}
+
+// @alpha
+export interface IAlertingManagementDialogContextValue {
+    // (undocumented)
+    alertingDialogReturnFocusTo?: string;
+    // (undocumented)
+    automationsInvalidationId?: number;
+    // (undocumented)
+    canManageWorkspace: boolean;
+    // (undocumented)
+    currentUser?: IUser;
+    // (undocumented)
+    dashboardId?: string;
+    // (undocumented)
+    dashboardTitle?: string;
+    // (undocumented)
+    enableAccessibilityMode: boolean;
+    // (undocumented)
+    getInsightByWidgetRef: (ref: ObjRef | undefined) => IInsight | undefined;
+    // (undocumented)
+    getWidgetByRef: (ref: ObjRef | undefined) => IWidget | undefined;
+    // (undocumented)
+    isAlertDialogOpen: boolean;
+    // (undocumented)
+    isEmbedded: boolean;
+    // (undocumented)
+    managementDialogContext: {
+        widgetRef?: ObjRef;
+    };
+    // (undocumented)
+    pauseAlert(alert: IAutomationMetadataObject): Promise<IAutomationMetadataObject>;
+    // (undocumented)
+    resumeAlert(alert: IAutomationMetadataObject): Promise<IAutomationMetadataObject>;
 }
 
 // @alpha (undocumented)
 export interface IAlertingManagementDialogProps {
+    // @deprecated
     alertDataError?: GoodDataSdkError;
-    automations: IAutomationMetadataObject[];
-    isLoadingAlertingData: boolean;
-    notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
+    // @deprecated
+    automations?: IAutomationMetadataObject[];
+    // @deprecated
+    isLoadingAlertingData?: boolean;
+    // @deprecated
+    notificationChannels?: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
     onAdd?: () => void;
     onClose?: () => void;
     onDeleteError?: (error: GoodDataSdkError) => void;
@@ -2404,6 +2491,104 @@ export interface IAutomationFiltersTab {
     lockedFilters: FilterContextItem[];
     tabId: string;
     tabTitle: string;
+}
+
+// @alpha
+export interface IAutomationsContextValue {
+    // (undocumented)
+    allowHourlyRecurrence: boolean;
+    // (undocumented)
+    attributeFilterConfigs: IDashboardAttributeFilterConfig[];
+    // (undocumented)
+    attributeFilterConfigsByTab: Record<string, IDashboardAttributeFilterConfig[]>;
+    // (undocumented)
+    attributeFilterSelectionTypeMap: Map<string, DashboardAttributeFilterSelectionType | undefined>;
+    // (undocumented)
+    attributeFilterSelectionTypeMapByTab: Record<string, Map<string, DashboardAttributeFilterSelectionType | undefined>>;
+    // (undocumented)
+    automationAvailableFilters: FilterContextItem[];
+    // (undocumented)
+    automationFiltersByTab: IAutomationFiltersTab[];
+    // (undocumented)
+    availableFilters: FilterContextItem[];
+    // (undocumented)
+    catalogAttributes: ICatalogAttribute[];
+    // (undocumented)
+    catalogDateDatasets: ICatalogDateDataset[];
+    // (undocumented)
+    catalogMeasures: ICatalogMeasure[];
+    // (undocumented)
+    commonDateFilterId: string | undefined;
+    // (undocumented)
+    currentUser: IUser;
+    // (undocumented)
+    dateFilterConfig: IAutomationsDateFilterConfig;
+    // (undocumented)
+    dateFilterConfigOverridesByTab: Record<string, IDashboardDateFilterConfig_2 | undefined>;
+    // (undocumented)
+    dateFilterConfigs: IDashboardDateFilterConfigItem[];
+    // (undocumented)
+    dateFilterConfigsByTab: Record<string, IDashboardDateFilterConfigItem[]>;
+    // (undocumented)
+    dateFilterContextConfig: IDashboardDateFilterConfig_2 | undefined;
+    // (undocumented)
+    defaultSelectedFilters: FilterContextItem[];
+    // (undocumented)
+    externalRecipient: string | undefined;
+    // (undocumented)
+    features: {
+        canCreateAutomation: boolean;
+        enableAlertOncePerInterval: boolean;
+        enableAnomalyDetectionAlert: boolean;
+        canUseAiAssistant: boolean;
+        canManageWorkspace: boolean;
+        enableSlideshowExports: boolean;
+        enableAutomationEvaluationMode: boolean;
+    };
+    // (undocumented)
+    getAttributeFilterDisplayForm: (displayForm: ObjRef) => IAttributeDisplayFormMetadataObject | undefined;
+    // (undocumented)
+    getCatalogAttributeByRef: (ref: ObjRef) => ICatalogAttribute | ICatalogDateAttribute | undefined;
+    // (undocumented)
+    hiddenFilters: FilterContextItem[];
+    // (undocumented)
+    isExecutionTimestampMode: boolean;
+    // (undocumented)
+    isSecondaryTitleVisible: boolean;
+    // (undocumented)
+    isWhiteLabeled: boolean;
+    // (undocumented)
+    locale: ILocale;
+    // (undocumented)
+    lockedFilters: FilterContextItem[];
+    // (undocumented)
+    maxAutomationsRecipients: number;
+    // (undocumented)
+    measureValueFilterConfigs: IDashboardMeasureValueFilterConfig[];
+    // (undocumented)
+    measureValueFilterConfigsByTab: Record<string, IDashboardMeasureValueFilterConfig[]>;
+    scheduleEmailDialogReturnFocusTo?: string;
+    // (undocumented)
+    separators: ISeparators;
+    // (undocumented)
+    settings?: ISettings;
+    // (undocumented)
+    timezone: string | undefined;
+    // (undocumented)
+    weekStart: WeekStart;
+    widgetExistsByRef: (ref: ObjRef | undefined) => boolean;
+}
+
+// @alpha
+export interface IAutomationsDateFilterConfig {
+    // (undocumented)
+    availableGranularities: DateFilterGranularity[];
+    // (undocumented)
+    dateFilterOptions: IDateFilterOptionsByType;
+    // (undocumented)
+    getGranularitiesForTab: (tabId: string) => DateFilterGranularity[];
+    // (undocumented)
+    getOptionsForTab: (tabId: string) => IDateFilterOptionsByType | undefined;
 }
 
 // @alpha (undocumented)
@@ -5052,6 +5237,8 @@ export interface IDashboardSettingsApplyPayload {
     evaluationFrequency: string | undefined;
     // (undocumented)
     sectionHeadersDateDataSet: ObjRef | undefined;
+    // (undocumented)
+    timezoneConfig?: IDashboardTimezoneConfig;
 }
 
 // @alpha (undocumented)
@@ -7587,6 +7774,41 @@ export function isBrokenAlertAttributeFilterInfo(item: IBrokenAlertFilterBasicIn
 // @alpha
 export function isBrokenAlertDateFilterInfo(item: IBrokenAlertFilterBasicInfo): item is BrokenAlertDateFilterInfo;
 
+// @alpha
+export interface IScheduledEmailDialogContextValue {
+    attributeFiltersModeMap: Map<string, DashboardAttributeFilterConfigMode>;
+    // (undocumented)
+    commonDateFilterId?: string;
+    commonDateFilterMode: DashboardDateFilterConfigMode;
+    // (undocumented)
+    createScheduledEmail(se: IAutomationMetadataObjectDefinition): Promise<IAutomationMetadataObject>;
+    // (undocumented)
+    dashboardFilters?: FilterContextItem[];
+    // (undocumented)
+    dashboardId?: string;
+    // (undocumented)
+    dashboardTitle: string;
+    dateFiltersModeMap: Map<string, DashboardDateFilterConfigMode>;
+    dateFormat: string | undefined;
+    // (undocumented)
+    deleteScheduledEmail(se: IAutomationMetadataObject): Promise<void>;
+    exportParametersByTab: Record<string, IDashboardExportParameter[]>;
+    exportTemplates: IExportTemplate[];
+    hasMultipleTabs: boolean;
+    hiddenFilters: FilterContextItem[];
+    // (undocumented)
+    insight?: IInsight;
+    isCrossFiltering: boolean;
+    // (undocumented)
+    saveScheduledEmail(se: IAutomationMetadataObject): Promise<IAutomationMetadataObject>;
+    // (undocumented)
+    widget?: IWidget;
+    // (undocumented)
+    widgetLocalIdToTabIdMap: Record<string, string>;
+    // (undocumented)
+    widgetTitle?: string;
+}
+
 // @alpha (undocumented)
 export interface IScheduledEmailDialogProps {
     dashboardFilters?: FilterContextItem[];
@@ -7608,6 +7830,18 @@ export interface IScheduledEmailDialogProps {
     usersError?: GoodDataSdkError;
     widget?: IWidget;
     widgetFilters?: IFilter[];
+}
+
+// @alpha
+export interface IScheduledEmailManagementDialogContextValue {
+    automationsInvalidationId?: number;
+    dashboardId?: string;
+    dashboardTitle?: string;
+    enableAccessibilityMode: boolean;
+    isEmbedded: boolean;
+    isScheduleEmailDialogOpen: boolean;
+    maxAutomations: number;
+    unlimitedAutomations: boolean;
 }
 
 // @alpha (undocumented)
@@ -9435,6 +9669,7 @@ export const metaActions: {
     initialContent?: boolean | undefined;
     }, "meta/setMeta">;
     setDashboardTitle: ActionCreatorWithPayload<string, "meta/setDashboardTitle">;
+    setDashboardTimezoneConfig: ActionCreatorWithOptionalPayload<IDashboardTimezoneConfig | undefined, "meta/setDashboardTimezoneConfig">;
     setDisableCrossFiltering: ActionCreatorWithPayload<boolean, "meta/setDisableCrossFiltering">;
     setDisablePersistentFiltersAcrossTabs: ActionCreatorWithPayload<boolean, "meta/setDisablePersistentFiltersAcrossTabs">;
     setDisableUserFilterReset: ActionCreatorWithPayload<boolean, "meta/setDisableUserFilterReset">;
@@ -10613,6 +10848,9 @@ export const selectDashboardShareStatus: DashboardSelector<ShareStatus>;
 // @public
 export const selectDashboardTags: DashboardSelector<string[]>;
 
+// @alpha
+export const selectDashboardTimezoneConfig: DashboardSelector<IDashboardTimezoneConfig | undefined>;
+
 // @public
 export const selectDashboardTitle: DashboardSelector<string>;
 
@@ -11550,6 +11788,9 @@ export const selectPersistedDashboard: DashboardSelector<IDashboard | undefined>
 
 // @internal
 export const selectPersistedDashboardFilterContextDateFilterConfig: DashboardSelector<IDashboardDateFilterConfig_2 | undefined>;
+
+// @alpha
+export const selectPersistedDashboardTimezoneConfig: DashboardSelector<IDashboardTimezoneConfig | undefined>;
 
 // @public
 export const selectPlatformEdition: DashboardSelector<PlatformEdition>;
@@ -12651,6 +12892,15 @@ export function unignoreFilterOnRichTextWidget(ref: ObjRef, oneOrMoreDisplayForm
 // @beta
 export function updateVisualizationsFromSwitcherWidgetContent(ref: ObjRef, visualizations: IInsightWidget[], correlationId?: string): IUpdateVisualizationsFromVisualizationSwitcherWidgetContent;
 
+// @alpha
+export function useAlertingDialogContext(): IAlertingDialogContextValue;
+
+// @alpha
+export function useAlertingManagementDialogContext(): IAlertingManagementDialogContextValue;
+
+// @alpha
+export function useAutomationsContext(): IAutomationsContextValue;
+
 // @internal (undocumented)
 export function useCancelButtonProps(): ICancelButtonProps;
 
@@ -13415,6 +13665,12 @@ export function useSaveAsNewButtonProps(): ISaveAsNewButtonProps;
 
 // @internal (undocumented)
 export function useSaveButtonProps(): ISaveButtonProps;
+
+// @alpha
+export function useScheduledEmailDialogContext(): IScheduledEmailDialogContextValue;
+
+// @alpha
+export function useScheduledEmailManagementDialogContext(): IScheduledEmailManagementDialogContextValue;
 
 // @alpha (undocumented)
 export const useSectionDescriptionExportData: (exportData: SectionExportData | undefined, loading: boolean, error: boolean) => SectionExportData | undefined;

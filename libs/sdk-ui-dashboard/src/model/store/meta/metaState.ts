@@ -17,6 +17,7 @@ export type DashboardDescriptor = Pick<
     | "disablePersistentFiltersAcrossTabs"
     | "evaluationFrequency"
     | "sectionHeadersDateDataSet"
+    | "timezoneConfig"
 > &
     IAccessControlAware;
 

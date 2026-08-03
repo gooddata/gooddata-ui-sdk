@@ -2511,6 +2511,10 @@
         "text": "You can't set higher permissions for yourself.",
         "crowdinContext": "Warning that lowering your own permission is one-way. Shown both as the body of the self-restrict confirm dialog and as the tooltip on permission options that are disabled because they are higher than the user's current level — the copy is identical in both places by design."
     },
+    "objectShare.workspaceLevel.inherited": {
+        "text": "This permission is granted from a parent workspace and cannot be lowered here.",
+        "crowdinContext": "Tooltip on permission options in the all-workspace-members permission menu that are disabled because a parent workspace already grants a higher workspace-wide level, so picking a lower level here could not take effect."
+    },
     "objectShare.grantee.you": {
         "text": "{name} (you)",
         "crowdinContext": "Display name of the signed-in user's own row in the share dialog grantee list. {name} is the user's full name."

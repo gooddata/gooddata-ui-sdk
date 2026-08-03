@@ -778,8 +778,26 @@ export const getSelectedMenuId: <T extends IUiMenuItemData = object, M = object>
 // @internal
 export const getSiblingItems: <T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[], itemId: string) => IUiMenuItem<T>[] | undefined;
 
+// @internal
+export function getTimezoneById(id: string | undefined): ITimezoneItem | undefined;
+
+// @internal
+export function getTimezoneDisplayLabel(id: string): string;
+
+// @internal
+export function getTimezoneLabels(id: string): Pick<ITimezoneItem, "name" | "offsetLabel">;
+
+// @internal
+export function getTimezones(): ITimezoneItem[];
+
+// @internal
+export function getTimezoneTitle(item: Pick<ITimezoneItem, "name" | "offsetLabel">): string;
+
 // @internal (undocumented)
 export function getTypedUiTabsContextStore<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>(): IContextStore<IUiTabContext<TTabProps, TTabActionProps>>;
+
+// @internal
+export function getUserTimezone(): ITimezoneItem;
 
 // @internal
 export const GOODSTRAP_DRAG_EVENT = "goodstrap.drag";
@@ -5762,6 +5780,43 @@ export interface ITimepickerOwnProps {
     timeFormat?: string;
 }
 
+// @internal
+export interface ITimezoneItem {
+    id: string;
+    januaryOffset: number;
+    juneOffset: number;
+    name: string;
+    offsetLabel: string;
+}
+
+// @internal
+export interface ITimezoneSelectButtonRenderProps extends IDropdownButtonRenderProps {
+    buttonLabel: string;
+    isDisabled?: boolean;
+    value: string | undefined;
+}
+
+// @internal
+export interface ITimezoneSelectProps {
+    ariaLabel: string;
+    header?: ReactNode;
+    // (undocumented)
+    isDisabled?: boolean;
+    noMatchLabel: string;
+    onChange: (id: string | undefined) => void;
+    placeholder?: string;
+    renderButton?: (props: ITimezoneSelectButtonRenderProps) => ReactNode;
+    searchPlaceholder: string;
+    specialItems?: ITimezoneSelectSpecialItem[];
+    value?: string;
+}
+
+// @internal
+export interface ITimezoneSelectSpecialItem {
+    id: string | undefined;
+    label: string;
+}
+
 // @internal (undocumented)
 export type IToastsCenterContext = {
     messages: IMessage[];
@@ -6731,7 +6786,7 @@ export interface IUiGeneralAccessRadioProps {
     value: GeneralAccessValue;
     workspaceAccessInherited?: boolean;
     workspaceControls?: ReactNode;
-    workspaceLevel?: "VIEW" | "SHARE";
+    workspaceLevel?: "VIEW" | "SHARE" | "EDIT";
 }
 
 // @internal
@@ -6740,6 +6795,7 @@ export interface IUiGranteeAsyncOption {
     id: string;
     kind: GranteeAvatarKind;
     name: string;
+    ref: ObjRef;
 }
 
 // @internal
@@ -6776,9 +6832,9 @@ export interface IUiGranteeRowControlsProps {
     effectivePermission?: AccessGranularPermission;
     isDisabled?: boolean;
     labels: ReadonlyArray<IUiLabelsChecklistItem>;
-    mergedControls?: boolean;
     // (undocumented)
     onLabelsChange: (selectedIds: string[]) => void;
+    // (undocumented)
     onPermissionChange: (level: PermissionMenuLevel) => void;
     // (undocumented)
     onRemoveAccess?: () => void;
@@ -6929,6 +6985,7 @@ export interface IUiLabelsChecklistItem {
 
 // @internal (undocumented)
 export interface IUiLabelsChecklistProps {
+    autoFocus?: boolean;
     // (undocumented)
     dataTestId?: string;
     defaultSelectedIds: ReadonlyArray<string>;
@@ -7360,19 +7417,6 @@ export interface IUiModalDialogProps {
 }
 
 // @internal (undocumented)
-export interface IUiMoreOptionsMenuProps {
-    // (undocumented)
-    dataTestId?: string;
-    // (undocumented)
-    isDisabled?: boolean;
-    labels?: ReadonlyArray<IUiLabelsChecklistItem>;
-    // (undocumented)
-    onLabelsChange?: (selectedIds: string[]) => void;
-    onRemoveAccess?: () => void;
-    selectedLabelIds?: ReadonlyArray<string>;
-}
-
-// @internal (undocumented)
 export interface IUiNavigationBypassProps {
     // (undocumented)
     items: IUiNavigationItem[];
@@ -7404,13 +7448,14 @@ export interface IUiObjectShareDialogCardProps {
     grantees: IUiObjectShareDialogGrantee[];
     isAddDisabled?: boolean;
     isGeneralAccessDisabled?: boolean;
+    isLoading?: boolean;
     objectTitle: string;
     onAddClick: () => void;
     onClose: () => void;
     onGeneralAccessChange: (value: GeneralAccessValue) => void;
     workspaceAccessInherited?: boolean;
     workspaceControls?: ReactNode;
-    workspaceLevel?: "VIEW" | "SHARE";
+    workspaceLevel?: "VIEW" | "SHARE" | "EDIT";
 }
 
 // @internal
@@ -7670,6 +7715,7 @@ export interface IUiStaticTreeViewProps<Level> extends IUiTreeViewProps<unknown[
 export interface IUiSubmenuHeaderProps {
     // (undocumented)
     backAriaLabel?: string;
+    backButtonRef?: Ref<HTMLButtonElement>;
     // (undocumented)
     backgroundColor?: string;
     // (undocumented)
@@ -8669,7 +8715,10 @@ export function ParameterControlButton(input: IParameterControlButtonProps): JSX
 export function ParameterPicker(input: IParameterPickerProps): JSX.Element;
 
 // @internal
-export type PermissionMenuLevel = "VIEW" | "SHARE";
+export function permissionLevelMessage(level: PermissionMenuLevel): MessageDescriptor;
+
+// @internal
+export type PermissionMenuLevel = "VIEW" | "SHARE" | "EDIT";
 
 // @internal (undocumented)
 export type PositionPoint = `${VerticalPosition}-${HorizontalPosition}`;
@@ -8968,6 +9017,9 @@ export type ThemeColor = "primary" | "success" | "warning" | "error" | "compleme
 // @internal (undocumented)
 export const Timepicker: NamedExoticComponent<ITimepickerOwnProps>;
 
+// @internal
+export function TimezoneSelect(input: ITimezoneSelectProps): ReactElement;
+
 // @internal (undocumented)
 export function ToastMessageList(input: {
     messages: IMessage[];
@@ -9262,9 +9314,6 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
 
 // @internal
 export function UiModalDialog(input: IUiModalDialogProps): JSX.Element | null;
-
-// @internal
-export function UiMoreOptionsMenu(input: IUiMoreOptionsMenuProps): JSX.Element;
 
 // @internal (undocumented)
 export function UiNavigationBypass(input: IUiNavigationBypassProps): JSX.Element;

@@ -1,104 +1,274 @@
 // (C) 2026 GoodData Corporation
 
-import { act, render } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { act, render, screen, waitFor } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
 
-import { idRef } from "@gooddata/sdk-model";
-import type {
-    IObjectShareController,
-    IObjectShareControllerActions,
-    IObjectShareControllerState,
-} from "@gooddata/sdk-ui-ext";
+import { dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
+import {
+    type IAnalyticalBackend,
+    type IWorkspaceObjectPermissionsService,
+    UnexpectedResponseError,
+} from "@gooddata/sdk-backend-spi";
+import { type AccessGranteeDetail, idRef } from "@gooddata/sdk-model";
+import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
+import type { IObjectAccessSummary } from "@gooddata/sdk-ui-ext";
 
-import type { ShareableCatalogItem } from "../types.js";
-
-// The provider creates a controller via useObjectShare and renders ObjectShareDialog.
-// Neither is under test here — stub both so the test isolates the context split
-// (state vs actions) and its re-render behavior. useShareableLabels is stubbed to a
-// settled, label-free result so the controller stub's inputs are stable.
-const stubState: IObjectShareControllerState = {
-    subview: "main",
-    status: "success",
-    accessUnavailable: false,
-    summary: undefined,
-    grantees: [],
-    generalAccess: "RESTRICTED",
-    workspaceLevel: "VIEW",
-    workspaceAccessInherited: false,
-    workspaceLevelLocked: false,
-    workspaceLevelSaving: false,
-    labels: [],
-    labelsResolved: true,
-    selectedLabelIdsByGrantee: {},
-    pendingGrantees: [],
-    targetKey: undefined,
-    selfIdentity: undefined,
-    selfIdentityResolved: false,
-    seededWithoutGrants: false,
-};
-const noop = () => {};
-const asyncNoop = async () => {};
-const stubActions: IObjectShareControllerActions = {
-    reset: noop,
-    openAddGrantee: noop,
-    closeAddGrantee: noop,
-    setPendingGrantees: noop,
-    loadOptions: async () => ({ groups: [], users: [] }),
-    confirmAddGrantees: asyncNoop,
-    changePermissionLevel: asyncNoop,
-    removeGrantee: asyncNoop,
-    changeGranteeLabels: asyncNoop,
-    requestGeneralAccessChange: noop,
-    cancelGeneralAccessChange: noop,
-    confirmGeneralAccessChange: asyncNoop,
-    changeWorkspaceLevel: asyncNoop,
-};
-// Mutable so a test can drive the controller into the not-permissionable state.
-let controllerStub: IObjectShareController = { state: stubState, actions: stubActions };
-
-vi.mock("@gooddata/sdk-ui-ext", () => ({
-    useObjectShare: () => controllerStub,
-    ObjectShareDialog: () => null,
-}));
-
-vi.mock("../useShareableLabels.js", () => ({
-    useShareableLabels: () => ({ labels: [], loading: false, error: false }),
-}));
-
+import { TestIntlProvider } from "../../../localization/TestIntlProvider.js";
+import { CatalogItemAccessRow } from "../CatalogItemAccessRow.js";
 import {
     CatalogItemShareProvider,
     useCatalogItemShareActions,
     useCatalogItemShareState,
 } from "../CatalogItemShareProvider.js";
+import type { ShareableCatalogItem } from "../types.js";
 
-const attribute: ShareableCatalogItem = {
-    description: "",
-    tags: [],
-    createdBy: "",
-    updatedBy: "",
-    createdAt: null,
-    updatedAt: null,
-    isLocked: false,
-    isEditable: true,
-    type: "attribute",
-    identifier: "attr.region",
-    title: "Region",
-};
+// The provider owns the page-level summary fetch; the dialog is a separate,
+// session-scoped component not under test here. Mock only the backend service.
+const USER_GRANT: AccessGranteeDetail = {
+    type: "granularUser",
+    user: { ref: idRef("u1"), uri: "/u1", login: "jane", email: "jane@example.com", fullName: "Jane Good" },
+    permissions: ["VIEW"],
+    inheritedPermissions: [],
+} as AccessGranteeDetail;
 
+const notFound = () => new UnexpectedResponseError("Not Found", 404, {});
+
+function makeBackend(getAccessList: (t: unknown) => Promise<{ grants: AccessGranteeDetail[] }>) {
+    const base = dummyBackendEmptyData();
+    return {
+        ...base,
+        workspace: (id: string) => ({
+            ...base.workspace(id),
+            objectPermissions: () => ({ getAccessList }) as unknown as IWorkspaceObjectPermissionsService,
+        }),
+    } as unknown as IAnalyticalBackend;
+}
+
+function makeItem(identifier: string, title = "Region"): ShareableCatalogItem {
+    return {
+        description: "",
+        tags: [],
+        createdBy: "",
+        updatedBy: "",
+        createdAt: null,
+        updatedAt: null,
+        isLocked: false,
+        isEditable: true,
+        type: "attribute",
+        identifier,
+        title,
+    };
+}
+
+const attribute = makeItem("attr.region");
 const target = { kind: "attribute" as const, ref: idRef("attr.region", "attribute") };
+const NO_LABELS = { labels: [], loading: false, error: false };
+
+function renderProvider(
+    backend: IAnalyticalBackend,
+    children: React.ReactNode,
+    item: ShareableCatalogItem | undefined = attribute,
+    itemTarget = item ? target : undefined,
+) {
+    const tree = (i: ShareableCatalogItem | undefined, t: typeof itemTarget) => (
+        <BackendProvider backend={backend}>
+            <WorkspaceProvider workspace="ws">
+                <CatalogItemShareProvider shareableItem={i} target={t} labels={NO_LABELS}>
+                    {children}
+                </CatalogItemShareProvider>
+            </WorkspaceProvider>
+        </BackendProvider>
+    );
+    const result = render(tree(item, itemTarget));
+    return {
+        ...result,
+        rerenderWith: (i: ShareableCatalogItem | undefined, t: typeof itemTarget) =>
+            result.rerender(tree(i, t)),
+    };
+}
 
 describe("CatalogItemShareProvider", () => {
-    beforeEach(() => {
-        controllerStub = { state: stubState, actions: stubActions };
+    it("loads the initial summary without the dialog ever opening", async () => {
+        const backend = makeBackend(vi.fn(async () => ({ grants: [USER_GRANT] })));
+        let summary: IObjectAccessSummary | undefined;
+        function Probe() {
+            summary = useCatalogItemShareState().summary;
+            return null;
+        }
+
+        renderProvider(backend, <Probe />);
+
+        await waitFor(() =>
+            expect(summary).toEqual({
+                generalAccess: "RESTRICTED",
+                workspaceLevel: "VIEW",
+                granteeCount: 1,
+            }),
+        );
     });
 
-    it("re-renders state consumers on an open/close tick but not actions-only consumers", () => {
+    it("updates the summary from the dialog's onSummaryChange without a refetch", async () => {
+        const getAccessList = vi.fn(async () => ({ grants: [USER_GRANT] }));
+        const backend = makeBackend(getAccessList);
+        let summary: IObjectAccessSummary | undefined;
+        let onSummaryChange: (s: IObjectAccessSummary) => void = () => {};
+        function Probe() {
+            summary = useCatalogItemShareState().summary;
+            onSummaryChange = useCatalogItemShareActions().onSummaryChange;
+            return null;
+        }
+
+        renderProvider(backend, <Probe />);
+        await waitFor(() => expect(summary?.granteeCount).toBe(1));
+
+        const updated: IObjectAccessSummary = {
+            generalAccess: "WORKSPACE",
+            workspaceLevel: "EDIT",
+            granteeCount: 2,
+        };
+        act(() => onSummaryChange(updated));
+
+        expect(summary).toEqual(updated);
+        expect(getAccessList).toHaveBeenCalledTimes(1); // no refetch
+    });
+
+    it("keeps a dialog-provided summary over a later page-fetch result (seed only)", async () => {
+        let release: (list: { grants: AccessGranteeDetail[] }) => void = () => {};
+        const backend = makeBackend(
+            vi.fn(
+                () =>
+                    new Promise<{ grants: AccessGranteeDetail[] }>((resolve) => {
+                        release = resolve;
+                    }),
+            ),
+        );
+        let summary: IObjectAccessSummary | undefined;
+        let onSummaryChange: (s: IObjectAccessSummary) => void = () => {};
+        function Probe() {
+            summary = useCatalogItemShareState().summary;
+            onSummaryChange = useCatalogItemShareActions().onSummaryChange;
+            return null;
+        }
+
+        renderProvider(backend, <Probe />);
+
+        // The dialog reports first (its own fetch is newer than the page's).
+        const fromDialog: IObjectAccessSummary = {
+            generalAccess: "RESTRICTED",
+            workspaceLevel: "VIEW",
+            granteeCount: 3,
+        };
+        act(() => onSummaryChange(fromDialog));
+        await act(async () => {
+            release({ grants: [USER_GRANT] });
+        });
+
+        expect(summary).toEqual(fromDialog);
+    });
+
+    it("closes the dialog and drops the summary when the item changes", async () => {
+        const backend = makeBackend(vi.fn(async () => ({ grants: [USER_GRANT] })));
+        let state: ReturnType<typeof useCatalogItemShareState> | undefined;
+        let open: () => void = () => {};
+        function Probe() {
+            state = useCatalogItemShareState();
+            open = useCatalogItemShareActions().open;
+            return null;
+        }
+
+        const { rerenderWith } = renderProvider(backend, <Probe />);
+        await waitFor(() => expect(state?.summary).toBeDefined());
+        act(() => open());
+        expect(state?.isOpen).toBe(true);
+
+        // Navigate to another item: the dialog must close (unmounting the session)
+        // and the previous item's summary must not linger under the new one.
+        const other = makeItem("attr.city", "City");
+        const otherTarget = { kind: "attribute" as const, ref: idRef("attr.city", "attribute") };
+        rerenderWith(other, otherTarget);
+
+        expect(state?.isOpen).toBe(false);
+        expect(state?.summary).toBeUndefined();
+        await waitFor(() => expect(state?.summary).toBeDefined()); // the new item's own fetch lands
+
+        // Regression (found in browser): navigating BACK to the item whose dialog was
+        // open must not reopen it — a lingering `dialogFor` would match the key again.
+        rerenderWith(attribute, target);
+        expect(state?.isOpen).toBe(false);
+    });
+
+    it("scopes the session to the workspace, not just the item id", async () => {
+        const backend = makeBackend(vi.fn(async () => ({ grants: [USER_GRANT] })));
+        let state: ReturnType<typeof useCatalogItemShareState> | undefined;
+        let open: () => void = () => {};
+        function Probe() {
+            state = useCatalogItemShareState();
+            open = useCatalogItemShareActions().open;
+            return null;
+        }
+        const tree = (ws: string) => (
+            <BackendProvider backend={backend}>
+                <WorkspaceProvider workspace={ws}>
+                    <CatalogItemShareProvider shareableItem={attribute} target={target} labels={NO_LABELS}>
+                        <Probe />
+                    </CatalogItemShareProvider>
+                </WorkspaceProvider>
+            </BackendProvider>
+        );
+        const { rerender } = render(tree("ws-a"));
+        await waitFor(() => expect(state?.summary).toBeDefined());
+        act(() => open());
+        expect(state?.isOpen).toBe(true);
+
+        // The SAME item identifier under another workspace is a different access
+        // scope: ws-a's summary and open dialog must not survive into ws-b.
+        rerender(tree("ws-b"));
+        expect(state?.isOpen).toBe(false);
+        expect(state?.summary).toBeUndefined();
+        await waitFor(() => expect(state?.summary).toBeDefined()); // ws-b's own fetch
+    });
+
+    it("scopes the session to the backend instance, not just the item key", async () => {
+        const backendA = makeBackend(vi.fn(async () => ({ grants: [USER_GRANT] })));
+        const backendB = makeBackend(vi.fn(async () => ({ grants: [USER_GRANT] })));
+        let state: ReturnType<typeof useCatalogItemShareState> | undefined;
+        let open: () => void = () => {};
+        function Probe() {
+            state = useCatalogItemShareState();
+            open = useCatalogItemShareActions().open;
+            return null;
+        }
+        const tree = (backend: IAnalyticalBackend) => (
+            <BackendProvider backend={backend}>
+                <WorkspaceProvider workspace="ws">
+                    <CatalogItemShareProvider shareableItem={attribute} target={target} labels={NO_LABELS}>
+                        <Probe />
+                    </CatalogItemShareProvider>
+                </WorkspaceProvider>
+            </BackendProvider>
+        );
+        const { rerender } = render(tree(backendA));
+        await waitFor(() => expect(state?.summary).toBeDefined());
+        act(() => open());
+        expect(state?.isOpen).toBe(true);
+
+        // The same item under another backend is a different access scope: the old
+        // summary must not survive, and closing unmounts the open dialog session.
+        rerender(tree(backendB));
+        expect(state?.isOpen).toBe(false);
+        expect(state?.summary).toBeUndefined();
+        await waitFor(() => expect(state?.summary).toBeDefined()); // backend B's own fetch
+    });
+
+    it("re-renders state consumers on an open/close tick but not actions-only consumers", async () => {
+        const backend = makeBackend(vi.fn(async () => ({ grants: [] })));
         const stateRenders = vi.fn();
         const actionsRenders = vi.fn();
         let open: () => void = () => {};
+        let summaryDefined = false;
 
         function StateConsumer() {
-            useCatalogItemShareState();
+            summaryDefined = useCatalogItemShareState().summary !== undefined;
             stateRenders();
             return null;
         }
@@ -108,57 +278,53 @@ describe("CatalogItemShareProvider", () => {
             return null;
         }
 
-        render(
-            <CatalogItemShareProvider
-                shareableItem={attribute}
-                target={target}
-                labels={{ labels: [], loading: false, error: false }}
-            >
+        renderProvider(
+            backend,
+            <>
                 <StateConsumer />
                 <ActionsConsumer />
-            </CatalogItemShareProvider>,
+            </>,
         );
-
-        expect(stateRenders).toHaveBeenCalledTimes(1);
-        expect(actionsRenders).toHaveBeenCalledTimes(1);
+        await waitFor(() => expect(summaryDefined).toBe(true));
+        const stateRendersBefore = stateRenders.mock.calls.length;
+        const actionsRendersBefore = actionsRenders.mock.calls.length;
 
         // Opening the dialog flips isOpen — a state change. The state consumer must
         // re-render; the actions consumer must NOT (its context value is stable).
         act(() => open());
 
-        expect(stateRenders).toHaveBeenCalledTimes(2);
-        expect(actionsRenders).toHaveBeenCalledTimes(1);
+        expect(stateRenders.mock.calls.length).toBe(stateRendersBefore + 1);
+        expect(actionsRenders.mock.calls.length).toBe(actionsRendersBefore);
     });
 
     it("reports inactive when the item is not shareable", () => {
+        const getAccessList = vi.fn(async () => ({ grants: [] }));
+        const backend = makeBackend(getAccessList);
         let active = true;
         function Probe() {
             active = useCatalogItemShareState().active;
             return null;
         }
 
+        // Rendered directly — the helper defaults an omitted item to a shareable one.
         render(
-            <CatalogItemShareProvider
-                shareableItem={undefined}
-                target={undefined}
-                labels={{ labels: [], loading: false, error: false }}
-            >
-                <Probe />
-            </CatalogItemShareProvider>,
+            <BackendProvider backend={backend}>
+                <WorkspaceProvider workspace="ws">
+                    <CatalogItemShareProvider shareableItem={undefined} target={undefined} labels={NO_LABELS}>
+                        <Probe />
+                    </CatalogItemShareProvider>
+                </WorkspaceProvider>
+            </BackendProvider>,
         );
 
         expect(active).toBe(false);
+        expect(getAccessList).not.toHaveBeenCalled(); // no target — nothing to fetch
     });
 
-    it("reports inactive for a shareable item when access is unavailable (404)", () => {
+    it("reports inactive for a shareable item when access is unavailable (404)", async () => {
         // A view/analyze-only user gets a 404 on the manage-gated permissions
-        // endpoint; the controller surfaces it as accessUnavailable. The share UI
-        // (Share button + inline access row) must then hide.
-        controllerStub = {
-            state: { ...stubState, status: "error", accessUnavailable: true },
-            actions: stubActions,
-        };
-
+        // endpoint. The share UI (Share button + inline access row) must then hide.
+        const backend = makeBackend(vi.fn(async () => Promise.reject(notFound())));
         let stateActive = true;
         let actionsActive = true;
         function Probe() {
@@ -167,44 +333,53 @@ describe("CatalogItemShareProvider", () => {
             return null;
         }
 
-        render(
-            <CatalogItemShareProvider
-                shareableItem={attribute}
-                target={target}
-                labels={{ labels: [], loading: false, error: false }}
-            >
-                <Probe />
-            </CatalogItemShareProvider>,
-        );
+        renderProvider(backend, <Probe />);
 
-        expect(stateActive).toBe(false);
+        await waitFor(() => expect(stateActive).toBe(false));
         expect(actionsActive).toBe(false);
     });
 
-    it("stays active for a shareable item on a transient load error", () => {
+    it("stays active and reports summaryError on a transient load error", async () => {
         // A transient failure does not set accessUnavailable, so the share UI must
-        // not be stripped — the fetch may still resolve.
-        controllerStub = {
-            state: { ...stubState, status: "error", accessUnavailable: false },
-            actions: stubActions,
-        };
-
-        let active = false;
+        // not be stripped — but the settled failure must surface as `summaryError`,
+        // or the access row would render its loading skeleton forever (there is no
+        // retry; opening the dialog fetches again and fills the summary in).
+        const backend = makeBackend(
+            vi.fn(async () => Promise.reject(new UnexpectedResponseError("Boom", 500, {}))),
+        );
+        let state: ReturnType<typeof useCatalogItemShareState> | undefined;
         function Probe() {
-            active = useCatalogItemShareState().active;
+            state = useCatalogItemShareState();
             return null;
         }
 
+        renderProvider(backend, <Probe />);
+
+        await waitFor(() => expect(state?.summaryError).toBe(true));
+        expect(state?.active).toBe(true);
+        expect(state?.summary).toBeUndefined();
+    });
+
+    it("renders the access-row error as an alert so screen readers announce it", async () => {
+        const backend = makeBackend(
+            vi.fn(async () => Promise.reject(new UnexpectedResponseError("Boom", 500, {}))),
+        );
         render(
-            <CatalogItemShareProvider
-                shareableItem={attribute}
-                target={target}
-                labels={{ labels: [], loading: false, error: false }}
-            >
-                <Probe />
-            </CatalogItemShareProvider>,
+            <TestIntlProvider>
+                <BackendProvider backend={backend}>
+                    <WorkspaceProvider workspace="ws">
+                        <CatalogItemShareProvider
+                            shareableItem={attribute}
+                            target={target}
+                            labels={NO_LABELS}
+                        >
+                            <CatalogItemAccessRow />
+                        </CatalogItemShareProvider>
+                    </WorkspaceProvider>
+                </BackendProvider>
+            </TestIntlProvider>,
         );
 
-        expect(active).toBe(true);
+        expect(await screen.findByRole("alert")).toHaveTextContent("Couldn't load access.");
     });
 });

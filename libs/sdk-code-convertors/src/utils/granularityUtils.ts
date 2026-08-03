@@ -63,6 +63,8 @@ export function convertGranularity(
 ): DateAttributeGranularity | null {
     const g = gran as Required<DateDataset>["granularities"][number];
     switch (g) {
+        case "SECOND":
+            return "GDC.time.second";
         case "MINUTE":
             return "GDC.time.minute";
         case "HOUR":
@@ -81,6 +83,12 @@ export function convertGranularity(
             return "GDC.time.year";
         case "MINUTE_OF_HOUR":
             return "GDC.time.minute_in_hour";
+        case "MINUTE_OF_DAY":
+            return "GDC.time.minute_in_day";
+        case "SECOND_OF_MINUTE":
+            return "GDC.time.second_in_minute";
+        case "SECOND_OF_DAY":
+            return "GDC.time.second_in_day";
         case "HOUR_OF_DAY":
             return "GDC.time.hour_in_day";
         case "DAY_OF_WEEK":
@@ -123,6 +131,8 @@ export function parseGranularity(
     gran: DateAttributeGranularity | null,
 ): Required<DateDataset>["granularities"][number] | null {
     switch (gran) {
+        case "GDC.time.second":
+            return "SECOND";
         case "GDC.time.minute":
             return "MINUTE";
         case "GDC.time.hour":
@@ -141,6 +151,12 @@ export function parseGranularity(
             return "YEAR";
         case "GDC.time.minute_in_hour":
             return "MINUTE_OF_HOUR";
+        case "GDC.time.minute_in_day":
+            return "MINUTE_OF_DAY";
+        case "GDC.time.second_in_minute":
+            return "SECOND_OF_MINUTE";
+        case "GDC.time.second_in_day":
+            return "SECOND_OF_DAY";
         case "GDC.time.hour_in_day":
             return "HOUR_OF_DAY";
         case "GDC.time.day_in_week":
@@ -184,6 +200,8 @@ export function convertGranularityToId(
     gran: Required<DateDataset>["granularities"][number] | string,
 ): string {
     switch (gran) {
+        case "SECOND":
+            return "second";
         case "MINUTE":
             return "minute";
         case "HOUR":
@@ -202,6 +220,12 @@ export function convertGranularityToId(
             return "year";
         case "MINUTE_OF_HOUR":
             return "minuteOfHour";
+        case "MINUTE_OF_DAY":
+            return "minuteOfDay";
+        case "SECOND_OF_MINUTE":
+            return "secondOfMinute";
+        case "SECOND_OF_DAY":
+            return "secondOfDay";
         case "HOUR_OF_DAY":
             return "hourOfDay";
         case "DAY_OF_WEEK":
@@ -260,6 +284,14 @@ export function convertGranularityToDeclarativeDatasetGranularity(
             return "MINUTE";
         case "MINUTE_OF_HOUR":
             return "MINUTE_OF_HOUR";
+        case "SECOND":
+            return "SECOND";
+        case "SECOND_OF_MINUTE":
+            return "SECOND_OF_MINUTE";
+        case "SECOND_OF_DAY":
+            return "SECOND_OF_DAY";
+        case "MINUTE_OF_DAY":
+            return "MINUTE_OF_DAY";
         case "MONTH":
             return "MONTH";
         case "MONTH_OF_YEAR":
@@ -1472,6 +1504,7 @@ export function parseGranularityValue(gran: ReturnType<typeof convertGranularity
  * Valid granularity suffixes that can be appended to dataset field IDs
  */
 const VALID_GRANULARITY_SUFFIXES = [
+    "second",
     "minute",
     "hour",
     "day",
@@ -1479,7 +1512,10 @@ const VALID_GRANULARITY_SUFFIXES = [
     "month",
     "quarter",
     "year",
+    "secondOfMinute",
+    "secondOfDay",
     "minuteOfHour",
+    "minuteOfDay",
     "hourOfDay",
     "dayOfWeek",
     "dayOfMonth",

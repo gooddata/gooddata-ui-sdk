@@ -10,7 +10,7 @@ import {
     recordedBackend,
 } from "@gooddata/sdk-backend-mockingbird";
 import { type IBackendCapabilities } from "@gooddata/sdk-backend-spi";
-import { type Identifier, type ObjRef, idRef, uriRef } from "@gooddata/sdk-model";
+import { type Identifier, type ObjRef, idRef } from "@gooddata/sdk-model";
 
 import { newRenderingWorker } from "../commandHandlers/render/renderingWorker.js";
 import { type IRenderingWorkerConfiguration } from "../commandHandlers/render/types.js";
@@ -322,28 +322,10 @@ export async function preloadedTesterFactory(
 }
 
 const commonAttributeResponses: Record<string, ObjRef[]> = {
-    [objRefsToStringKey([
-        uriRef("/gdc/md/referenceworkspace/obj/1054"),
-        uriRef("/gdc/md/referenceworkspace/obj/1086"),
-    ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
-    [objRefsToStringKey([
-        uriRef("/gdc/md/referenceworkspace/obj/1054"),
-        uriRef("/gdc/md/referenceworkspace/obj/1088"),
-    ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
-    [objRefsToStringKey([
-        uriRef("/gdc/md/referenceworkspace/obj/1054"),
-        uriRef("/gdc/md/referenceworkspace/obj/1070"),
-    ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
-    [objRefsToStringKey([
-        uriRef("/gdc/md/referenceworkspace/obj/1070"),
-        uriRef("/gdc/md/referenceworkspace/obj/1088"),
-    ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
-    [objRefsToStringKey([
-        uriRef("/gdc/md/referenceworkspace/obj/1086"),
-        uriRef("/gdc/md/referenceworkspace/obj/1088"),
-    ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
-    [objRefsToStringKey([
-        uriRef("/gdc/md/referenceworkspace/obj/1070"),
-        uriRef("/gdc/md/referenceworkspace/obj/1086"),
-    ])]: [uriRef("/gdc/md/referenceworkspace/obj/1057")],
+    [objRefsToStringKey([idRef("obj_1054"), idRef("obj_1086")])]: [idRef("obj_1057")],
+    [objRefsToStringKey([idRef("obj_1054"), idRef("obj_1088")])]: [idRef("obj_1057")],
+    [objRefsToStringKey([idRef("obj_1054"), idRef("obj_1070")])]: [idRef("obj_1057")],
+    [objRefsToStringKey([idRef("obj_1070"), idRef("obj_1088")])]: [idRef("obj_1057")],
+    [objRefsToStringKey([idRef("obj_1086"), idRef("obj_1088")])]: [idRef("obj_1057")],
+    [objRefsToStringKey([idRef("obj_1070"), idRef("obj_1086")])]: [idRef("obj_1057")],
 };

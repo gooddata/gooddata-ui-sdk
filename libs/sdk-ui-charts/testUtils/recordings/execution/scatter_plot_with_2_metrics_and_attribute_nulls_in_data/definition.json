@@ -11,7 +11,7 @@
                         "definition": {
                             "measureDefinition": {
                                 "item": {
-                                    "uri": "/gdc/md/adtxv0e7evvx6dawu7t2jju5a6r73eua/obj/1144"
+                                    "uri": "obj_1144"
                                 },
                                 "aggregation": "sum",
                                 "filters": []
@@ -31,7 +31,7 @@
                         "definition": {
                             "measureDefinition": {
                                 "item": {
-                                    "uri": "/gdc/md/adtxv0e7evvx6dawu7t2jju5a6r73eua/obj/13465"
+                                    "uri": "obj_13465"
                                 },
                                 "filters": []
                             }
@@ -46,7 +46,7 @@
                 {
                     "attribute": {
                         "displayForm": {
-                            "uri": "/gdc/md/adtxv0e7evvx6dawu7t2jju5a6r73eua/obj/952"
+                            "uri": "obj_952"
                         },
                         "localIdentifier": "7369345339414eceaaf67ba05dfe6724"
                     }
@@ -58,7 +58,7 @@
         {
             "attribute": {
                 "displayForm": {
-                    "uri": "/gdc/md/adtxv0e7evvx6dawu7t2jju5a6r73eua/obj/952"
+                    "uri": "obj_952"
                 },
                 "localIdentifier": "7369345339414eceaaf67ba05dfe6724"
             }
@@ -72,7 +72,7 @@
                 "definition": {
                     "measureDefinition": {
                         "item": {
-                            "uri": "/gdc/md/adtxv0e7evvx6dawu7t2jju5a6r73eua/obj/1144"
+                            "uri": "obj_1144"
                         },
                         "aggregation": "sum",
                         "filters": []
@@ -87,7 +87,7 @@
                 "definition": {
                     "measureDefinition": {
                         "item": {
-                            "uri": "/gdc/md/adtxv0e7evvx6dawu7t2jju5a6r73eua/obj/13465"
+                            "uri": "obj_13465"
                         },
                         "filters": []
                     }

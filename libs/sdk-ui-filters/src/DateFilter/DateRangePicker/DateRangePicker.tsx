@@ -270,6 +270,7 @@ export interface IDateRangePickerProps {
     dayPickerProps?: DayPickerProps;
     isMobile: boolean;
     isTimeEnabled: boolean;
+    isSecondsEnabled?: boolean;
     weekStart?: WeekStart;
     shouldOverlayDatePicker?: boolean;
     withoutApply?: boolean;
@@ -283,6 +284,7 @@ export function DateRangePicker({
     dayPickerProps,
     isMobile,
     isTimeEnabled,
+    isSecondsEnabled = false,
     weekStart = "Sunday",
     shouldOverlayDatePicker = false,
     withoutApply = false,
@@ -328,6 +330,7 @@ export function DateRangePicker({
             dateFormat={dateFormat}
             isMobile={isMobile}
             isTimeEnabled={isTimeEnabled}
+            isSecondsEnabled={isSecondsEnabled}
             errors={startDateTimeErrors}
             intl={intl}
             withoutApply={withoutApply}
@@ -346,6 +349,7 @@ export function DateRangePicker({
             dateFormat={dateFormat}
             isMobile={isMobile}
             isTimeEnabled={isTimeEnabled}
+            isSecondsEnabled={isSecondsEnabled}
             errors={endDateTimeErrors}
             intl={intl}
         />
@@ -372,6 +376,7 @@ export function DateRangePicker({
         <DateRangeHint
             dateFormat={dateFormat!}
             isTimeEnabled={isTimeEnabled}
+            isSecondsEnabled={isSecondsEnabled}
             dateHintId={DATE_INPUT_HINT_ID}
             timeHintId={TIME_INPUT_HINT_ID}
             intl={intl}

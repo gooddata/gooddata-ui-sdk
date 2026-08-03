@@ -3,7 +3,7 @@
 import { type ComponentType } from "react";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { type ObjRef } from "@gooddata/sdk-model";
+import { type IDashboardTimezoneConfig, type ObjRef } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
 /**
@@ -17,6 +17,7 @@ export interface IDashboardSettingsApplyPayload {
     evaluationFrequency: string | undefined;
     sectionHeadersDateDataSet: ObjRef | undefined;
     disablePersistentFiltersAcrossTabs: boolean;
+    timezoneConfig?: IDashboardTimezoneConfig;
 }
 
 /**

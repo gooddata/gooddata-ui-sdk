@@ -9,10 +9,12 @@ import {
     isGranularUserGroupAccess,
     objRefToString,
 } from "@gooddata/sdk-model";
+import type { GeneralAccessValue } from "@gooddata/sdk-ui-kit";
 
 import type {
     IGranteeIdentityFacts,
     IObjectShareGrantee,
+    ISelfIdentity,
     ObjectSharePermissionLevel,
 } from "./objectShareController.types.js";
 import type { IObjectShareLabel } from "./types.js";
@@ -52,7 +54,7 @@ export function assigneeIdentityFacts(assignee: IAvailableAccessGrantee): IGrant
         : { name: groupNameFact(assignee.ref, assignee.name) };
 }
 
-/** Display pair per the spec's fallback order: name + email → name + userID → email + userID → userID. */
+/** Display pair, falling back: name + email → name + userID → email + userID → userID. */
 export function userDisplayPair(
     facts: IGranteeIdentityFacts,
     userId: string,
@@ -75,6 +77,47 @@ export function granteeDisplayPair(grantee: IObjectShareGrantee): { name: string
     return userDisplayPair(grantee, id);
 }
 
+/**
+ * Deterministic display order for grantee rows — the backend returns them
+ * unsorted (and in an order that shuffles across reloads). Own row first, then
+ * groups, then users; within each, case-insensitive by display name with the
+ * grantee id as a stable tiebreaker so equal names don't reshuffle. Returns a
+ * new array; the input is not mutated.
+ */
+export function sortGrantees(grantees: readonly IObjectShareGrantee[]): IObjectShareGrantee[] {
+    const rank = (g: IObjectShareGrantee) => (g.isSelf ? 0 : g.kind === "group" ? 1 : 2);
+    return grantees.slice().sort((a, b) => {
+        const byRank = rank(a) - rank(b);
+        if (byRank !== 0) {
+            return byRank;
+        }
+        const byName = granteeDisplayPair(a).name.localeCompare(granteeDisplayPair(b).name, undefined, {
+            sensitivity: "base",
+        });
+        return byName === 0 ? a.id.localeCompare(b.id) : byName;
+    });
+}
+
+/**
+ * Deterministic display order for an attribute's labels — the backend returns
+ * display forms in an order that isn't guaranteed stable. Primary (key) label
+ * first, then the rest case-insensitive by title with the label id as a stable
+ * tiebreaker. Shared by the detail-page labels popup and the share dialog's
+ * label-access checklist so the two never disagree. Returns a new array; the
+ * input is not mutated.
+ *
+ * @internal
+ */
+export function sortShareableLabels(labels: readonly IObjectShareLabel[]): IObjectShareLabel[] {
+    return labels.slice().sort((a, b) => {
+        if (a.isPrimary !== b.isPrimary) {
+            return a.isPrimary ? -1 : 1;
+        }
+        const byTitle = a.title.localeCompare(b.title, undefined, { sensitivity: "base" });
+        return byTitle === 0 ? a.id.localeCompare(b.id) : byTitle;
+    });
+}
+
 /** Case-insensitive match of an assignee against the picker query (name, or email for users). */
 export function assigneeMatchesQuery(assignee: IAvailableAccessGrantee, query: string): boolean {
     if (!query) {
@@ -87,32 +130,53 @@ export function assigneeMatchesQuery(assignee: IAvailableAccessGrantee, query: s
 /** Permission levels from strongest to weakest; the row shows the strongest it holds. */
 const LEVELS_STRONGEST_FIRST = ["EDIT", "SHARE", "VIEW"] as const satisfies ObjectSharePermissionLevel[];
 
+const LEVEL_RANK: Record<ObjectSharePermissionLevel, number> = { VIEW: 0, SHARE: 1, EDIT: 2 };
+
+/** The strongest permission level present, or undefined when none. */
+export function strongestLevel(permissions: readonly string[]): ObjectSharePermissionLevel | undefined {
+    return LEVELS_STRONGEST_FIRST.find((level) => permissions.includes(level));
+}
+
 /** The row's directly-granted level — the strongest permission present, defaulting to VIEW. */
 export function directLevel(permissions: readonly string[]): ObjectSharePermissionLevel {
-    return LEVELS_STRONGEST_FIRST.find((level) => permissions.includes(level)) ?? "VIEW";
+    return strongestLevel(permissions) ?? "VIEW";
+}
+
+/**
+ * Levels strictly above the given one, e.g. for disabling levels the caller can't
+ * grant. An undefined bound means "unknown" — nothing is above it, so no level is
+ * disabled.
+ */
+export function levelsAbove(level: ObjectSharePermissionLevel | undefined): ObjectSharePermissionLevel[] {
+    return level === undefined ? [] : LEVELS_STRONGEST_FIRST.filter((l) => LEVEL_RANK[l] > LEVEL_RANK[level]);
+}
+
+/** Levels strictly below the given one, e.g. for disabling levels an inherited grant already exceeds. */
+export function levelsBelow(level: ObjectSharePermissionLevel): ObjectSharePermissionLevel[] {
+    return LEVELS_STRONGEST_FIRST.filter((l) => LEVEL_RANK[l] < LEVEL_RANK[level]);
 }
 
 /**
  * The effective permission to surface as a warning, or undefined when the direct
- * grant already covers it. Set only when the grantee *inherits* SHARE (e.g. via a
- * group) but is directly granted just VIEW — i.e. the effective access is higher
+ * grant already covers it. Set only when the grantee *inherits* a level (e.g. via
+ * a group) above the directly-granted one — i.e. the effective access is higher
  * than what the row's permission control shows.
  */
 export function effectivePermissionAbove(
     direct: ObjectSharePermissionLevel,
-    inheritedPermissions: readonly string[],
+    inheritedLevel: ObjectSharePermissionLevel | undefined,
 ): ObjectSharePermissionLevel | undefined {
-    // A direct EDIT already outranks any inherited SHARE — never warn in that case.
-    return direct === "VIEW" && inheritedPermissions.includes("SHARE") ? "SHARE" : undefined;
+    return inheritedLevel && LEVEL_RANK[inheritedLevel] > LEVEL_RANK[direct] ? inheritedLevel : undefined;
 }
 
 /** The permission-derived fields shared by every grantee row, regardless of kind. */
 function granteeAccess(permissions: readonly string[], inheritedPermissions: readonly string[]) {
     const level = directLevel(permissions);
+    const inheritedLevel = strongestLevel(inheritedPermissions);
     return {
         level,
-        effectivePermission: effectivePermissionAbove(level, inheritedPermissions),
-        inheritsShare: inheritedPermissions.includes("SHARE"),
+        effectivePermission: effectivePermissionAbove(level, inheritedLevel),
+        inheritedLevel,
     };
 }
 
@@ -143,7 +207,128 @@ export function granteesFromAccessList(list: IObjectAccessList | undefined): IOb
     return out;
 }
 
-/** The permission set a grant carries at each level; a higher level always implies VIEW. */
+/**
+ * A transient edit overlaid on a fetched grantee row (keyed by grantee id in
+ * {@link mergeGrantees}). The pending-guard keeps at most one edit in flight per id.
+ * A pending edit that superseded an already-COMMITTED entry (an added row, an
+ * earlier level change) carries it as `settled`, because the fetched base no longer
+ * holds that row's last-settled state: failure restores `settled`, success drops it.
+ * With no `settled`, failure deletes the entry, reverting to the fetched row.
+ *
+ * @internal
+ */
+export type GranteeEdit =
+    | { kind: "level"; level: ObjectSharePermissionLevel; pending: boolean; settled?: GranteeEdit }
+    | { kind: "added"; grantee: IObjectShareGrantee; pending: boolean; settled?: GranteeEdit }
+    | { kind: "removed"; pending: boolean; settled?: GranteeEdit };
+
+/**
+ * Transient edit of the all-workspace-users rule (general access + its level),
+ * overlaid on the fetched rule state in the hook. Same lifecycle and `settled`
+ * semantics as {@link GranteeEdit}, one edit in flight at a time.
+ *
+ * @internal
+ */
+export interface IRuleEdit {
+    generalAccess: GeneralAccessValue;
+    level: ObjectSharePermissionLevel;
+    pending: boolean;
+    /** The committed rule edit this pending one superseded; restored on failure. */
+    settled?: IRuleEdit;
+}
+
+/**
+ * Pure composition of the fetched base with the transient overlay — the hook's
+ * `grantees` derive from this with no effect and no mirrored state. Marks the
+ * caller's own row via `selfId`, backfilling its facts from `selfIdentity` (the
+ * self row is absent from the grant list by design). Input arrays are not mutated.
+ *
+ * @internal
+ */
+export function mergeGrantees(
+    base: readonly IObjectShareGrantee[],
+    edits: Readonly<Record<string, GranteeEdit>>,
+    selfId: string | undefined,
+    selfIdentity: ISelfIdentity | undefined,
+): IObjectShareGrantee[] {
+    const markSelf = (g: IObjectShareGrantee): IObjectShareGrantee => {
+        const isSelf = g.id === selfId;
+        return isSelf && selfIdentity
+            ? { ...g, isSelf, name: g.name ?? selfIdentity.name, email: g.email ?? selfIdentity.email }
+            : { ...g, isSelf };
+    };
+    // The row an id last COMMITTED to: an added `settled` is that row outright (the
+    // base may hold a stale pre-removal version of the same id), a level `settled`
+    // overlays the base row, otherwise the base row itself (undefined for an
+    // overlay-born id with no history).
+    const committedRow = (
+        g: IObjectShareGrantee | undefined,
+        settled: GranteeEdit | undefined,
+    ): IObjectShareGrantee | undefined => {
+        if (settled?.kind === "added") {
+            return settled.grantee;
+        }
+        if (g && settled?.kind === "level") {
+            return {
+                ...g,
+                level: settled.level,
+                effectivePermission: effectivePermissionAbove(settled.level, g.inheritedLevel),
+            };
+        }
+        return g;
+    };
+    // One renderer per id: for each id, exactly one of the branches below emits at
+    // most one row — every base id resolves here, and the loop after handles only
+    // ids born in the overlay. Growing this case-by-case instead bred duplicate-row
+    // bugs whenever an edit history (re-add, re-remove) crossed the base boundary.
+    const renderEntry = (
+        g: IObjectShareGrantee | undefined,
+        edit: GranteeEdit | undefined,
+    ): IObjectShareGrantee | undefined => {
+        if (!edit) {
+            return g;
+        }
+        if (edit.kind === "removed") {
+            // Visible (muted, at its last committed state) only while the revoke is
+            // in flight; a settled removal renders nothing — its entry persists to
+            // keep the base row hidden.
+            const committed = edit.pending ? committedRow(g, edit.settled) : undefined;
+            return committed ? { ...committed, pending: "removing" } : undefined;
+        }
+        if (edit.kind === "level") {
+            return g
+                ? {
+                      ...g,
+                      level: edit.level,
+                      effectivePermission: effectivePermissionAbove(edit.level, g.inheritedLevel),
+                      pending: edit.pending ? "saving" : undefined,
+                  }
+                : undefined;
+        }
+        return { ...edit.grantee, pending: edit.pending ? "saving" : undefined };
+    };
+
+    const out: IObjectShareGrantee[] = [];
+    const baseIds = new Set(base.map((g) => g.id));
+    for (const g of base) {
+        const row = renderEntry(g, edits[g.id]);
+        if (row) {
+            out.push(markSelf(row));
+        }
+    }
+    for (const [id, edit] of Object.entries(edits)) {
+        if (baseIds.has(id)) {
+            continue;
+        }
+        const row = renderEntry(undefined, edit);
+        if (row) {
+            out.push(markSelf(row));
+        }
+    }
+    return out;
+}
+
+/** Permission set per level; a higher level always implies VIEW. */
 const PERMISSIONS_BY_LEVEL = {
     none: [],
     VIEW: ["VIEW"],

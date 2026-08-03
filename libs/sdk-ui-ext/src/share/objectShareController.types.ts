@@ -1,16 +1,14 @@
 // (C) 2026 GoodData Corporation
 
 import type { AccessGranularPermission, ObjRef } from "@gooddata/sdk-model";
+import type { GoodDataSdkError } from "@gooddata/sdk-ui";
 import type { GeneralAccessValue, IUiGranteeAsyncOptions, IUiPickedGrantee } from "@gooddata/sdk-ui-kit";
 
 import type { IObjectAccessSummary, IObjectShareLabel } from "./types.js";
 
 /**
  * Permission level surfaced in the share dialog — the model's granular access
- * permission (VIEW / EDIT / SHARE). `EDIT` is display-only: the dialog reflects
- * an EDIT grant as a read-only "Can edit" row but cannot assign or change it
- * (granting EDIT is not part of the share UI), so only VIEW and SHARE are
- * selectable in the permission menu.
+ * permission (VIEW / SHARE / EDIT), assignable from the permission menu.
  *
  * @internal
  */
@@ -64,11 +62,11 @@ export interface IObjectShareGrantee extends IGranteeIdentityFacts {
      */
     effectivePermission?: ObjectSharePermissionLevel;
     /**
-     * Whether the grantee inherits SHARE (e.g. via a group), regardless of the
-     * current direct `level`. Retained from the fetch so `effectivePermission` can
-     * be recomputed locally when the direct level changes (no refetch).
+     * Strongest permission the grantee inherits (e.g. via a group), regardless of
+     * the current direct `level`. Retained from the fetch so `effectivePermission`
+     * can be recomputed locally when the direct level changes (no refetch).
      */
-    inheritsShare?: boolean;
+    inheritedLevel?: ObjectSharePermissionLevel;
     /**
      * Row-level in-flight state for optimistic updates: `"saving"` while a level
      * change or freshly-added grant is being committed, `"removing"` while a
@@ -83,64 +81,65 @@ export interface IObjectShareGrantee extends IGranteeIdentityFacts {
 export interface IObjectShareControllerState {
     subview: "main" | "addGrantee";
     status: "idle" | "loading" | "success" | "error" | "saving";
-    error?: Error;
-    /**
-     * Whether object-level permissions are unavailable to the current user — the
-     * manage-gated access-list endpoint returned 404, the backend's signal that
-     * the caller cannot manage this object's sharing. Distinct from a transient
-     * load error (5xx / network), which may still resolve: consumers use this to
-     * hide the share UI entirely rather than to retry.
-     */
-    accessUnavailable: boolean;
+    error?: GoodDataSdkError;
     summary: IObjectAccessSummary | undefined;
-
-    /**
-     * Stable serialized key of the current target's ref, or undefined when none.
-     * Consumers key target-scoped transient UI (e.g. a staged confirmation) on it,
-     * so nothing staged for one object can be applied to another.
-     */
-    targetKey: string | undefined;
-    /**
-     * Signed-in user's identity, once the profile resolves. Feeds their
-     * synthesized row when they can manage the object without holding any
-     * grant (administrator access) and the grantee list is empty.
-     */
-    selfIdentity: ISelfIdentity | undefined;
-    /**
-     * Whether the profile request resolved successfully. Until then — or after a
-     * silently-swallowed failure — `isSelf` on the rows is only its unresolved
-     * default, so a sole grantee row cannot be told apart from the caller's own
-     * grant and must not be offered destructive controls.
-     */
-    selfIdentityResolved: boolean;
-    /**
-     * Whether the manage-gated access list was LOADED with zero explicit grants —
-     * the caller reached it without holding a grant of their own. A load-time
-     * fact (never recomputed from the live list): removing your own sole grant
-     * empties the list but does not make this true.
-     */
-    seededWithoutGrants: boolean;
     grantees: IObjectShareGrantee[];
+    /**
+     * Id of the grantee row whose permission menu manages the signed-in user's
+     * OWN access — set only when the sole explicit grant is the caller's own
+     * (the "restrict own access" design). Consumers gate lowering behind a
+     * confirm and disable the levels above the row's own.
+     */
+    selfManagedGranteeId: string | undefined;
+    /**
+     * Levels the self-managed row's permission menu must disable — those above the
+     * caller's own current level (you can't raise yourself). Set exactly when
+     * `selfManagedGranteeId` is; every other row is unconstrained here (the backend
+     * is the authority on what may be granted).
+     */
+    selfManagedDisabledLevels: ObjectSharePermissionLevel[] | undefined;
+    /**
+     * Levels the workspace-rule permission menu must disable — those below an
+     * inherited workspace grant, which can't be lowered from this workspace.
+     * Undefined when no level is inherited.
+     */
+    workspaceDisabledLevels: ObjectSharePermissionLevel[] | undefined;
+    /**
+     * Whether grantee-row controls must stay disabled because a sole USER row
+     * cannot be told apart from the caller's own grant yet (profile pending or
+     * silently failed) — mutating it then would bypass the self-restriction
+     * confirm. Group rows and multi-row lists never set this.
+     */
+    granteeControlsLocked: boolean;
+    /**
+     * Display pair for the synthesized administrator self row, or undefined when
+     * no such row applies. Set while the DISPLAYED list is empty for a caller whose
+     * list loaded without a grant of their own and no workspace-wide share-capable
+     * rule explains the access — they can only have passed the backend's gate
+     * through administrator/manager rights. Adding a grantee hides the row;
+     * removing the last one brings it back. (Derived from the immutable seed:
+     * removing your own grant empties the list but never synthesizes this row.)
+     */
+    adminSelfRow: { name: string; email?: string } | undefined;
     generalAccess: GeneralAccessValue;
     /**
      * Permission level of the all-workspace-members rule when general access is
      * WORKSPACE. Drives the workspace row's permission dropdown. Meaningless (and
-     * not shown) while general access is RESTRICTED. Capped at VIEW/SHARE — EDIT is
-     * never offered for the workspace rule.
+     * not shown) while general access is RESTRICTED.
      */
-    workspaceLevel: "VIEW" | "SHARE";
+    workspaceLevel: ObjectSharePermissionLevel;
     /**
-     * Whether workspace-wide access is (at least partly) inherited from a parent
-     * workspace. Inherited rule access grants every user of this workspace access
-     * too, yet cannot be revoked from here — consumers disable the Restricted
-     * option and explain why. `generalAccess` and `workspaceLevel` are effective
-     * values that already account for it.
+     * Strongest workspace-wide level inherited from parent workspaces, or
+     * undefined when none. Inherited access grants every user of this workspace
+     * access too, yet cannot be revoked or lowered from here — consumers disable
+     * the Restricted option and the workspace-rule levels below this.
+     * `generalAccess` and `workspaceLevel` already account for it.
      */
-    workspaceAccessInherited: boolean;
+    workspaceInheritedLevel: ObjectSharePermissionLevel | undefined;
     /**
      * Whether the workspace-rule level dropdown must be read-only: this workspace
      * holds no rule of its own to re-grade (access is inherited-only), or an
-     * inherited SHARE pins the effective level regardless of the direct grant.
+     * inherited EDIT pins the effective level regardless of the direct grant.
      */
     workspaceLevelLocked: boolean;
     /**
@@ -163,6 +162,14 @@ export interface IObjectShareControllerState {
      */
     labelsResolved: boolean;
     /**
+     * True until the session's FIRST label-scope resolution settles. Unlike
+     * {@link labelsResolved} it never turns back on (a mid-session re-probe only
+     * re-disables controls), and a resolution that settles with failures counts
+     * too — so loading placeholders keyed on it can't stick forever or flash
+     * back mid-session.
+     */
+    labelsInitializing: boolean;
+    /**
      * Per-grantee label scope: grantee id → the label ids that grantee can access.
      * The primary label is always included. Empty entry means "all labels" has not
      * yet been resolved; consumers should treat a missing entry as all-selected.
@@ -179,9 +186,6 @@ export interface IObjectShareControllerState {
  * @internal
  */
 export interface IObjectShareControllerActions {
-    /** Reset transient dialog state (subview + pending buffers). Call on dialog close. */
-    reset: () => void;
-
     openAddGrantee: () => void;
     closeAddGrantee: () => void;
     setPendingGrantees: (next: IUiPickedGrantee[]) => void;
@@ -210,12 +214,12 @@ export interface IObjectShareControllerActions {
     /** Commit the pending general access change. Auto-saves. */
     confirmGeneralAccessChange: () => Promise<void>;
     /**
-     * Change the all-workspace-members rule's permission level (VIEW/SHARE).
-     * Only meaningful while general access is WORKSPACE. Auto-saves, no confirm —
-     * unlike the high-impact RESTRICTED↔WORKSPACE toggle, this only re-grades an
+     * Change the all-workspace-members rule's permission level. Only meaningful
+     * while general access is WORKSPACE. Auto-saves, no confirm — unlike the
+     * high-impact RESTRICTED↔WORKSPACE toggle, this only re-grades an
      * already-granted rule.
      */
-    changeWorkspaceLevel: (level: "VIEW" | "SHARE") => Promise<void>;
+    changeWorkspaceLevel: (level: ObjectSharePermissionLevel) => Promise<void>;
 }
 
 /**
@@ -227,17 +231,11 @@ export interface IObjectShareController {
 }
 
 /**
- * Options for {@link useObjectShare}.
+ * Options for {@link useObjectShareController}.
  *
  * @internal
  */
 export interface IUseObjectShareOptions {
-    /**
-     * Fires after each successful access mutation (add grantee, change level,
-     * remove, general access toggle). Use it to keep UI outside the dialog in
-     * sync with edits made inside it (e.g. refresh an inline access row).
-     */
-    onSaved?: () => void;
     /**
      * Labels (display forms) of the shared attribute, enabling the per-grantee
      * label-scope picker. Omit for objects without labels (e.g. facts).
@@ -252,12 +250,8 @@ export interface IUseObjectShareOptions {
      */
     labelsError?: boolean;
     /**
-     * Whether the object's labels are still loading. While true the controller stays
-     * label-unresolved (same gating as `labelsError`): the labels aren't passed yet,
-     * so an empty list must not be mistaken for a label-free object — otherwise row
-     * controls would reconcile against an empty set and orphan real per-label grants.
+     * Whether the object's labels are still loading. Same gating as `labelsError`:
+     * the labels aren't passed yet, so an empty list must not read as label-free.
      */
     labelsLoading?: boolean;
-    /** Whether the share dialog is open; a summary-only consumer leaves it false. */
-    isOpen?: boolean;
 }

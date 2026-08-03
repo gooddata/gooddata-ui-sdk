@@ -427,6 +427,50 @@
         "text": "Evaluation Frequency",
         "crowdinContext": "Label for alert evaluation frequency setting"
     },
+    "settingsDashboardDialog.section.timezone": {
+        "text": "Time zone",
+        "crowdinContext": "Section title for time zone settings in the dashboard settings dialog"
+    },
+    "settingsDashboardDialog.section.timezone.defaultTimezone": {
+        "text": "Default time zone",
+        "crowdinContext": "Label of the default time zone picker in the dashboard settings dialog"
+    },
+    "settingsDashboardDialog.section.timezone.defaultTimezone.tooltip": {
+        "text": "Time zone used to evaluate date filters and display dates on this dashboard.",
+        "crowdinContext": "Tooltip of the default time zone picker in the dashboard settings dialog"
+    },
+    "settingsDashboardDialog.section.timezone.defaultTimezone.workspace": {
+        "text": "Workspace time zone",
+        "crowdinContext": "Time zone picker item meaning the workspace default time zone is used"
+    },
+    "settingsDashboardDialog.section.timezone.defaultTimezone.fromBrowser": {
+        "text": "From browser ({timezone})",
+        "crowdinContext": "Time zone picker item meaning the time zone is detected from the viewer's browser. The {timezone} placeholder shows the detected time zone."
+    },
+    "settingsDashboardDialog.section.timezone.allowUserOverride.toggle": {
+        "text": "Allow users to change the dashboard time zone",
+        "crowdinContext": "Toggle allowing dashboard consumers to change the time zone in view mode"
+    },
+    "settingsDashboardDialog.section.timezone.allowUserOverride.toggle.tooltip": {
+        "text": "When enabled, viewers can temporarily change the dashboard time zone. The change is not saved.",
+        "crowdinContext": "Tooltip of the toggle allowing dashboard consumers to change the time zone in view mode"
+    },
+    "settingsDashboardDialog.section.timezone.showTimezoneInfo.toggle": {
+        "text": "Show time zone",
+        "crowdinContext": "Toggle controlling whether the used time zone is shown on the dashboard"
+    },
+    "settingsDashboardDialog.section.timezone.showTimezoneInfo.toggle.tooltip": {
+        "text": "When enabled, the dashboard displays which time zone is used.",
+        "crowdinContext": "Tooltip of the toggle controlling whether the used time zone is shown on the dashboard"
+    },
+    "settingsDashboardDialog.section.timezone.select.searchPlaceholder": {
+        "text": "Search ...",
+        "crowdinContext": "Placeholder of the search input in the time zone picker"
+    },
+    "settingsDashboardDialog.section.timezone.select.noMatch": {
+        "text": "No matching time zone.",
+        "crowdinContext": "Message shown when the time zone search yields no results"
+    },
     "deleteDashboardDialog.headline": {
         "text": "Delete dashboard?",
         "crowdinContext": "Confirmation dialog for deleting a dashboard"

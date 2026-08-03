@@ -2,6 +2,7 @@
 
 import { useIntl } from "react-intl";
 
+import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 import {
     ConfirmDialogBase,
     Overlay,
@@ -12,13 +13,14 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../../constants/zIndex.js";
-import { type IAlertingDialogProps } from "../types.js";
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 
-export function DefaultLoadingAlertingDialog({
-    alertToEdit,
-    onCancel,
-}: Pick<IAlertingDialogProps, "onCancel" | "alertToEdit">) {
+interface IDefaultLoadingAlertingDialogProps {
+    alertToEdit?: IAutomationMetadataObject;
+    onCancel?: () => void;
+}
+
+export function DefaultLoadingAlertingDialog({ alertToEdit, onCancel }: IDefaultLoadingAlertingDialogProps) {
     const intl = useIntl();
     const titleElementId = useId();
 

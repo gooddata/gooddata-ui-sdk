@@ -31,11 +31,11 @@
                         "attributeHeader": {
                             "name": "Year created",
                             "localIdentifier": "a1",
-                            "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/324",
+                            "uri": "obj_324",
                             "identifier": "closed.aag81lMifn6q",
                             "formOf": {
                                 "name": "Year created",
-                                "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/323",
+                                "uri": "obj_323",
                                 "identifier": "closed.year"
                             }
                         }

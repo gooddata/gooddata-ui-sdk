@@ -23,6 +23,11 @@ export const objectShareMessages = defineMessages({
      * the copy must stay identical in both places by design.
      */
     selfRestrictWarning: { id: "objectShare.selfRestrict.warning" },
+    /**
+     * Disabled-option tooltip on the workspace rule's permission menu for levels
+     * below an inherited workspace-wide grant, which they could never lower.
+     */
+    workspaceLevelInherited: { id: "objectShare.workspaceLevel.inherited" },
     granteeYou: { id: "objectShare.grantee.you" },
     adminTagLabel: { id: "objectShare.adminTag.label" },
     adminTagTooltip: { id: "objectShare.adminTag.tooltip" },

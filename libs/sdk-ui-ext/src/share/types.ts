@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import type { ObjRef } from "@gooddata/sdk-model";
+import type { AccessGranularPermission, ObjRef } from "@gooddata/sdk-model";
 import type { GeneralAccessValue } from "@gooddata/sdk-ui-kit";
 
 /**
@@ -35,9 +35,8 @@ export interface IObjectShareLabel {
  *
  * - `generalAccess` — `RESTRICTED` if only named grantees can access the object;
  *   `WORKSPACE` if the workspace-wide rule grant is present with non-empty permissions.
- * - `workspaceLevel` — the rule grant's permission level; `VIEW` by default,
- *   `SHARE` when the rule explicitly permits `SHARE`. EDIT is intentionally not
- *   surfaced (the UI caps at VIEW/SHARE).
+ * - `workspaceLevel` — the rule grant's permission level: the strongest level the
+ *   rule permits, `VIEW` by default.
  * - `granteeCount` — number of named grantees (users + groups). Excludes the
  *   workspace-wide rule grant itself.
  *
@@ -45,6 +44,6 @@ export interface IObjectShareLabel {
  */
 export interface IObjectAccessSummary {
     generalAccess: GeneralAccessValue;
-    workspaceLevel: "VIEW" | "SHARE";
+    workspaceLevel: AccessGranularPermission;
     granteeCount: number;
 }

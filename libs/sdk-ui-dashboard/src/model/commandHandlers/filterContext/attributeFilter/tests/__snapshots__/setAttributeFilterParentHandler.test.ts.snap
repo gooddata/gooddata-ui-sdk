@@ -48,7 +48,7 @@ exports[`setAttributeFilterParentHandler > should set the appropriate values in 
         "over": {
           "attributes": [
             {
-              "uri": "/gdc/md/referenceworkspace/obj/1057",
+              "identifier": "obj_1057",
             },
           ],
         },

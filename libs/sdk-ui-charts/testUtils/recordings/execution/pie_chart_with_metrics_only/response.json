@@ -14,7 +14,7 @@
                                         "name": "Lost",
                                         "format": "#,##0.00",
                                         "localIdentifier": "lostMetric",
-                                        "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+                                        "uri": "obj_1283",
                                         "identifier": "af2Ewj9Re2vK"
                                     }
                                 },
@@ -23,7 +23,7 @@
                                         "name": "Won",
                                         "format": "#,##0.00",
                                         "localIdentifier": "wonMetric",
-                                        "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284",
+                                        "uri": "obj_1284",
                                         "identifier": "afSEwRwdbMeQ"
                                     }
                                 },
@@ -32,7 +32,7 @@
                                         "name": "Expected",
                                         "format": "#,##0.00",
                                         "localIdentifier": "expectedMetric",
-                                        "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1285",
+                                        "uri": "obj_1285",
                                         "identifier": "alUEwmBtbwSh"
                                     }
                                 }

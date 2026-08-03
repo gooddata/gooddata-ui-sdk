@@ -7,7 +7,6 @@ interface Window {
     COMMITHASH: string;
 }
 
-declare const SDK_BACKEND: "tiger";
 declare const PRODUCTION: boolean;
 declare const TIGER_API_TOKEN: string | undefined;
 

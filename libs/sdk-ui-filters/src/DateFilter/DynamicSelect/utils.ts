@@ -11,6 +11,7 @@ import { type IMessageTranslator } from "../utils/Translations/Translators.js";
 
 import { type DynamicSelectItem, type DynamicSelectOption } from "./types.js";
 
+export const SECOND: DateFilterGranularity = "GDC.time.second";
 export const MINUTE: DateFilterGranularity = "GDC.time.minute";
 export const HOUR: DateFilterGranularity = "GDC.time.hour";
 export const DAY: DateFilterGranularity = "GDC.time.date";
@@ -58,6 +59,7 @@ const tooBigInputInfo: ITooBigInputInfo = {
 };
 
 const granularityOffsetLimits: { [key in DateFilterGranularity]: number } = {
+    [SECOND]: 120,
     [MINUTE]: 120,
     [HOUR]: 48,
     [DAY]: 365,

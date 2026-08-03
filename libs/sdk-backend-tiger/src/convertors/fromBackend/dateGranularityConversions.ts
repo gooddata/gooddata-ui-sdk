@@ -1,5 +1,7 @@
 // (C) 2019-2026 GoodData Corporation
 
+import { invariant } from "ts-invariant";
+
 import {
     type JsonApiAttributeOutAttributesGranularityEnum,
     type RelativeDateFilterRelativeDateFilterGranularityEnum,
@@ -7,9 +9,41 @@ import {
 import { NotSupported } from "@gooddata/sdk-backend-spi";
 import { type DateAttributeGranularity } from "@gooddata/sdk-model";
 
-// Need remove | undefined after feature is finished cq-2685
+/**
+ * Extended fiscal-calendar granularities the backend exposes but the sdk-model granularity registry does not
+ * model yet. Listing one here is a deliberate decision (see CQ-2685) — date attributes carrying them are
+ * filtered out of the catalog in datasetLoader.createDateDatasets until the SDK models them.
+ */
+const UNSUPPORTED_TIGER_GRANULARITIES = [
+    "FISCAL_WEEK",
+    "FISCAL_SEMESTER",
+    "FISCAL_DAY_OF_FISCAL_WEEK",
+    "FISCAL_DAY_OF_FISCAL_MONTH",
+    "FISCAL_DAY_OF_FISCAL_QUARTER",
+    "FISCAL_DAY_OF_FISCAL_SEMESTER",
+    "FISCAL_DAY_OF_FISCAL_YEAR",
+    "FISCAL_WEEK_OF_FISCAL_MONTH",
+    "FISCAL_WEEK_OF_FISCAL_QUARTER",
+    "FISCAL_WEEK_OF_FISCAL_SEMESTER",
+    "FISCAL_WEEK_OF_FISCAL_YEAR",
+    "FISCAL_MONTH_OF_FISCAL_QUARTER",
+    "FISCAL_MONTH_OF_FISCAL_SEMESTER",
+    "FISCAL_MONTH_OF_FISCAL_YEAR",
+    "FISCAL_QUARTER_OF_FISCAL_SEMESTER",
+    "FISCAL_QUARTER_OF_FISCAL_YEAR",
+    "FISCAL_SEMESTER_OF_FISCAL_YEAR",
+] as const satisfies readonly JsonApiAttributeOutAttributesGranularityEnum[];
+
+type UnsupportedTigerGranularity = (typeof UNSUPPORTED_TIGER_GRANULARITIES)[number];
+
+// Total over every tiger granularity the SDK models — the enum minus the explicitly-unsupported set. When the
+// backend adds a granularity, this map stops compiling until it is either mapped below or added to
+// UNSUPPORTED_TIGER_GRANULARITIES, forcing a conscious build-time decision.
 type TigerToSdk = {
-    [key in JsonApiAttributeOutAttributesGranularityEnum]: DateAttributeGranularity | undefined;
+    [key in Exclude<
+        JsonApiAttributeOutAttributesGranularityEnum,
+        UnsupportedTigerGranularity
+    >]: DateAttributeGranularity;
 };
 
 type SdkToTiger = {
@@ -54,46 +88,63 @@ const TigerToSdkGranularityMap: TigerToSdk = {
     ["DAY_OF_WEEK"]: "GDC.time.day_in_week",
     ["HOUR_OF_DAY"]: "GDC.time.hour_in_day",
     ["MINUTE_OF_HOUR"]: "GDC.time.minute_in_hour",
+
+    ["SECOND"]: "GDC.time.second",
+    ["SECOND_OF_MINUTE"]: "GDC.time.second_in_minute",
+    ["SECOND_OF_DAY"]: "GDC.time.second_in_day",
+    ["MINUTE_OF_DAY"]: "GDC.time.minute_in_day",
+
     ["FISCAL_YEAR"]: "GDC.time.fiscal_year",
     ["FISCAL_QUARTER"]: "GDC.time.fiscal_quarter",
     ["FISCAL_MONTH"]: "GDC.time.fiscal_month",
-
-    ["SECOND"]: undefined,
-    ["SECOND_OF_MINUTE"]: undefined,
-    ["SECOND_OF_DAY"]: undefined,
-    ["MINUTE_OF_DAY"]: undefined,
-    ["FISCAL_DAY_OF_FISCAL_WEEK"]: undefined,
-    ["FISCAL_DAY_OF_FISCAL_MONTH"]: undefined,
-    ["FISCAL_DAY_OF_FISCAL_QUARTER"]: undefined,
-    ["FISCAL_DAY_OF_FISCAL_SEMESTER"]: undefined,
-    ["FISCAL_DAY_OF_FISCAL_YEAR"]: undefined,
-    ["FISCAL_WEEK"]: undefined,
-    ["FISCAL_WEEK_OF_FISCAL_MONTH"]: undefined,
-    ["FISCAL_WEEK_OF_FISCAL_QUARTER"]: undefined,
-    ["FISCAL_WEEK_OF_FISCAL_SEMESTER"]: undefined,
-    ["FISCAL_WEEK_OF_FISCAL_YEAR"]: undefined,
-    ["FISCAL_MONTH_OF_FISCAL_QUARTER"]: undefined,
-    ["FISCAL_MONTH_OF_FISCAL_SEMESTER"]: undefined,
-    ["FISCAL_MONTH_OF_FISCAL_YEAR"]: undefined,
-    ["FISCAL_QUARTER_OF_FISCAL_SEMESTER"]: undefined,
-    ["FISCAL_QUARTER_OF_FISCAL_YEAR"]: undefined,
-    ["FISCAL_SEMESTER"]: undefined,
-    ["FISCAL_SEMESTER_OF_FISCAL_YEAR"]: undefined,
 };
 
 /**
- * Converts supported tiger backend granularities to values recognized by the SDK. Note that
- * tiger granularities are a superset of those supported by the SDK (second and fiscal-calendar
- * granularities have no SDK equivalent yet).
+ * Neutral granularity returned when a tiger granularity cannot be mapped at runtime (see toSdkGranularity).
+ * A safe, always-valid value so the client degrades instead of propagating `undefined`.
+ */
+const FALLBACK_SDK_GRANULARITY: DateAttributeGranularity = "GDC.time.date";
+
+/**
+ * Converts a tiger backend granularity to the value recognized by the SDK. The input is always a real
+ * granularity — callers must not pass a missing one (an attribute without a granularity is not a date
+ * attribute and should be branched on before calling this).
+ *
+ * Developer signal (build time): {@link TigerToSdkGranularityMap} is exhaustive over the supported tiger enum,
+ * so a newly added backend granularity breaks the build until it is mapped or added to
+ * {@link UNSUPPORTED_TIGER_GRANULARITIES}.
+ *
+ * Run time: for a value that is still not mapped (an explicitly-unsupported granularity that slipped past the
+ * catalog filter, or a backend value newer than the client's generated enum) it never throws — it warns and
+ * returns a neutral fallback so the client keeps working.
  *
  * @param granularity - tiger granularity
  */
 export function toSdkGranularity(
     granularity: JsonApiAttributeOutAttributesGranularityEnum,
 ): DateAttributeGranularity {
-    // Need remove ! after feature is finished cq-2685
+    const sdkGranularity = (TigerToSdkGranularityMap as Record<string, DateAttributeGranularity | undefined>)[
+        granularity
+    ];
+    if (sdkGranularity !== undefined) {
+        return sdkGranularity;
+    }
 
-    return TigerToSdkGranularityMap[granularity]!;
+    invariant.warn(
+        `Unsupported tiger date granularity "${granularity}" — falling back to "${FALLBACK_SDK_GRANULARITY}".`,
+    );
+    return FALLBACK_SDK_GRANULARITY;
+}
+
+/**
+ * Whether a tiger granularity is modeled in the SDK (i.e. maps to a real SDK granularity rather than the
+ * fallback). Use this to drop unsupported date attributes at the boundary — e.g. so extended fiscal-calendar
+ * granularities are excluded from the catalog instead of surfacing as the fallback granularity.
+ */
+export function isSupportedTigerGranularity(
+    granularity: JsonApiAttributeOutAttributesGranularityEnum,
+): boolean {
+    return granularity in TigerToSdkGranularityMap;
 }
 
 const SdkToTigerGranularityMap: SdkToTiger = {
@@ -125,11 +176,18 @@ const SdkToTigerGranularityMap: SdkToTiger = {
     "GDC.time.euweek_in_year": undefined,
     "GDC.time.month_in_quarter": undefined,
     "GDC.time.week_in_quarter": undefined,
+
+    "GDC.time.second": "SECOND",
+    "GDC.time.second_in_minute": "SECOND_OF_MINUTE",
+    "GDC.time.second_in_day": "SECOND_OF_DAY",
+    "GDC.time.minute_in_day": "MINUTE_OF_DAY",
 };
 
 /**
  * Converts granularity values recognized by the SDK into granularities known by tiger. Note that
  * SDK granularities are superset of those supported by tiger.
+ *
+ * @throws NotSupport if the input granularity is not supported by tiger
  */
 export function toTigerGranularity(
     granularity: DateAttributeGranularity,

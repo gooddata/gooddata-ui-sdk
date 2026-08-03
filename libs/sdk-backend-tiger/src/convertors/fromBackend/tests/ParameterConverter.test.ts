@@ -131,4 +131,69 @@ describe("convertParameter", () => {
             },
         });
     });
+
+    it("should carry allowedValues in original order for a STRING parameter", () => {
+        const parameter: JsonApiParameterOutWithLinks = {
+            id: "scenario",
+            type: "parameter",
+            attributes: {
+                title: "Scenario",
+                definition: {
+                    type: "STRING",
+                    defaultValue: "Actual",
+                    constraints: {
+                        allowedValues: [
+                            { value: "Actual", title: "Actual results" },
+                            { value: "Plan" },
+                            { value: "Forecast", title: "Forecast scenario" },
+                        ],
+                    },
+                },
+            },
+            links: {
+                self: "/api/v1/entities/workspaces/demo/parameters/scenario",
+            },
+        };
+
+        const result = convertParameter(parameter);
+
+        expect(result.definition).toEqual({
+            type: "STRING",
+            defaultValue: "Actual",
+            constraints: {
+                allowedValues: [
+                    { value: "Actual", title: "Actual results" },
+                    { value: "Plan" },
+                    { value: "Forecast", title: "Forecast scenario" },
+                ],
+            },
+        });
+    });
+
+    it("should omit an empty allowedValues list for a STRING parameter", () => {
+        const parameter: JsonApiParameterOutWithLinks = {
+            id: "scenario",
+            type: "parameter",
+            attributes: {
+                title: "Scenario",
+                definition: {
+                    type: "STRING",
+                    defaultValue: "Actual",
+                    constraints: { minLength: 1, allowedValues: [] },
+                },
+            },
+            links: {
+                self: "/api/v1/entities/workspaces/demo/parameters/scenario",
+            },
+        };
+
+        const result = convertParameter(parameter);
+
+        expect(result.definition).toEqual({
+            type: "STRING",
+            defaultValue: "Actual",
+            constraints: { minLength: 1 },
+        });
+        expect(result.definition.constraints).not.toHaveProperty("allowedValues");
+    });
 });

@@ -7,6 +7,11 @@
     align-self: stretch;
     display: flex;
     flex-direction: column;
+    // Bound the popover so the labels drill-in stays on screen when an attribute
+    // has many labels — the checklist's own items area scrolls (overflow-y:auto)
+    // only once an ancestor caps the height. Matches the 300px the removed
+    // UiMoreOptionsMenu supplied via UiMenu.
+    max-height: 300px;
     margin: calc(-1 * var(--gd-spacing-10px));
 
     &__items {

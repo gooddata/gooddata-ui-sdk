@@ -31,7 +31,7 @@ exports[`HeadlineTransformationUtils > applyDrillableItems > should enable drill
 }
 `;
 
-exports[`HeadlineTransformationUtils > applyDrillableItems > should enable drilling of the primary item identified by the drillable item uri 1`] = `
+exports[`HeadlineTransformationUtils > applyDrillableItems > should enable drilling of the primary item identified by the drillable item local identifier 1`] = `
 {
   "primaryItem": {
     "format": null,
@@ -62,7 +62,7 @@ exports[`HeadlineTransformationUtils > applyDrillableItems > should enable drill
 }
 `;
 
-exports[`HeadlineTransformationUtils > applyDrillableItems > should enable drilling of the secondary item identified by the drillable item uri 1`] = `
+exports[`HeadlineTransformationUtils > applyDrillableItems > should enable drilling of the secondary item identified by the drillable item local identifier 1`] = `
 {
   "primaryItem": {
     "format": null,
@@ -112,68 +112,38 @@ exports[`HeadlineTransformationUtils > buildDrillEventData > should build drill 
     {
       "header": {
         "measureHeaderItem": {
-          "format": "#,##0.00",
-          "identifier": "afSEwRwdbMeQ",
-          "localIdentifier": "wonMetric",
+          "format": "$#,##0.00",
+          "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+          "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          "name": "Amount",
+          "ref": undefined,
+        },
+      },
+    },
+  ],
+  "type": "headline",
+  "value": "116625456.54",
+}
+`;
+
+exports[`HeadlineTransformationUtils > buildDrillEventData > should build expected drill event data from execution for primary value 1`] = `
+{
+  "element": "primaryValue",
+  "intersection": [
+    {
+      "header": {
+        "measureHeaderItem": {
+          "format": "$#,##0.00",
+          "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
+          "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
           "name": "Won",
-          "ref": {
-            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284",
-          },
-          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284",
+          "ref": undefined,
         },
       },
     },
   ],
   "type": "headline",
-  "value": "42470571.16",
-}
-`;
-
-exports[`HeadlineTransformationUtils > buildDrillEventData > should build expected drill event data from execution request made with metric identifier 1`] = `
-{
-  "element": "primaryValue",
-  "intersection": [
-    {
-      "header": {
-        "measureHeaderItem": {
-          "format": "#,##0.00",
-          "identifier": "af2Ewj9Re2vK",
-          "localIdentifier": "lostMetric",
-          "name": "Lost",
-          "ref": {
-            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
-          },
-          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
-        },
-      },
-    },
-  ],
-  "type": "headline",
-  "value": "9011389.956",
-}
-`;
-
-exports[`HeadlineTransformationUtils > buildDrillEventData > should build expected drill event data from execution request made with metric uri 1`] = `
-{
-  "element": "primaryValue",
-  "intersection": [
-    {
-      "header": {
-        "measureHeaderItem": {
-          "format": "#,##0.00",
-          "identifier": "af2Ewj9Re2vK",
-          "localIdentifier": "lostMetric",
-          "name": "Lost",
-          "ref": {
-            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
-          },
-          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
-        },
-      },
-    },
-  ],
-  "type": "headline",
-  "value": "9011389.956",
+  "value": "38310753.45",
 }
 `;
 
@@ -362,11 +332,11 @@ exports[`HeadlineTransformationUtils > getData > should set null for tertiary va
 exports[`HeadlineTransformationUtils > getData > should set primary item data from the execution 1`] = `
 {
   "primaryItem": {
-    "format": "#,##0.00",
+    "format": "$#,##0.00",
     "isDrillable": false,
-    "localIdentifier": "lostMetric",
-    "title": "Lost",
-    "value": "9011389.956",
+    "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+    "title": "Won",
+    "value": "38310753.45",
   },
 }
 `;
@@ -374,25 +344,25 @@ exports[`HeadlineTransformationUtils > getData > should set primary item data fr
 exports[`HeadlineTransformationUtils > getData > should set primary, secondary and tertiary item data from the execution 1`] = `
 {
   "primaryItem": {
-    "format": "#,##0.00",
+    "format": "$#,##0.00",
     "isDrillable": false,
-    "localIdentifier": "lostMetric",
-    "title": "Lost",
-    "value": "9011389.956",
+    "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+    "title": "Won",
+    "value": "38310753.45",
   },
   "secondaryItem": {
-    "format": "#,##0.00",
+    "format": "$#,##0.00",
     "isDrillable": false,
-    "localIdentifier": "wonMetric",
-    "title": "Won",
-    "value": "42470571.16",
+    "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+    "title": "Amount",
+    "value": "116625456.54",
   },
   "tertiaryItem": {
     "format": null,
     "isDrillable": false,
     "localIdentifier": "tertiaryIdentifier",
     "title": "Versus",
-    "value": "-78.78203727929332",
+    "value": "-67.15060794907993",
   },
 }
 `;

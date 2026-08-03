@@ -551,6 +551,7 @@ export type DateFilter1 = {
      * A granularity to use in relative date filter
      */
     granularity:
+        | "SECOND"
         | "MINUTE"
         | "HOUR"
         | "DAY"
@@ -559,7 +560,10 @@ export type DateFilter1 = {
         | "MONTH"
         | "QUARTER"
         | "YEAR"
+        | "SECOND_OF_MINUTE"
+        | "SECOND_OF_DAY"
         | "MINUTE_OF_HOUR"
+        | "MINUTE_OF_DAY"
         | "HOUR_OF_DAY"
         | "DAY_OF_WEEK"
         | "DAY_OF_MONTH"
@@ -1632,6 +1636,7 @@ export interface DateDataset {
      */
     title_pattern?: string;
     granularities?: (
+        | "SECOND"
         | "MINUTE"
         | "HOUR"
         | "DAY"
@@ -1640,7 +1645,10 @@ export interface DateDataset {
         | "MONTH"
         | "QUARTER"
         | "YEAR"
+        | "SECOND_OF_MINUTE"
+        | "SECOND_OF_DAY"
         | "MINUTE_OF_HOUR"
+        | "MINUTE_OF_DAY"
         | "HOUR_OF_DAY"
         | "DAY_OF_WEEK"
         | "DAY_OF_WEEK_EU"

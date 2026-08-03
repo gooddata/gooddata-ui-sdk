@@ -102,7 +102,9 @@ export enum TigerFeaturesNames {
     EnableAnomalyDetectionVisualization = "enableAnomalyDetectionVisualization",
     EnableAlertOncePerInterval = "enableAlertOncePerInterval",
     EnableFiscalCalendars = "enableFiscalCalendars",
+    EnableSecondGranularities = "enableSecondGranularities",
     EnableDashboardFilterGroups = "enableDashboardFilterGroups",
+    EnableDashboardTimezone = "enableDashboardTimezone",
     EnableMeasureValueFilterKD = "enableMeasureValueFilterKD",
     EnableShellApplication = "enableShellApplication",
     EnableShellApplicationCatalog = "enableShellApplication_catalog",
@@ -225,8 +227,9 @@ export type ITigerFeatureFlags = {
     enableAnomalyDetectionVisualization: (typeof FeatureFlagsValues)["enableAnomalyDetectionVisualization"][number];
     enableAlertOncePerInterval: (typeof FeatureFlagsValues)["enableAlertOncePerInterval"][number];
     enableFiscalCalendars: (typeof FeatureFlagsValues)["enableFiscalCalendars"][number];
+    enableSecondGranularities: (typeof FeatureFlagsValues)["enableSecondGranularities"][number];
     enableDashboardFilterGroups: (typeof FeatureFlagsValues)["enableDashboardFilterGroups"][number];
-
+    enableDashboardTimezone: (typeof FeatureFlagsValues)["enableDashboardTimezone"][number];
     enableMeasureValueFilterKD: (typeof FeatureFlagsValues)["enableMeasureValueFilterKD"][number];
     enableShellApplication: (typeof FeatureFlagsValues)["enableShellApplication"][number];
     enableShellApplication_catalog: (typeof FeatureFlagsValues)["enableShellApplication_catalog"][number];
@@ -348,8 +351,9 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAnomalyDetectionVisualization: true,
     enableAlertOncePerInterval: false,
     enableFiscalCalendars: true,
+    enableSecondGranularities: false,
     enableDashboardFilterGroups: true,
-
+    enableDashboardTimezone: false,
     enableMeasureValueFilterKD: true,
     enableShellApplication: true,
     enableShellApplication_catalog: false,
@@ -471,9 +475,10 @@ export const FeatureFlagsValues = {
     enableAnomalyDetectionVisualization: [true, false] as const,
     enableAlertOncePerInterval: [true, false] as const,
     enableFiscalCalendars: [true, false] as const,
+    enableSecondGranularities: [true, false] as const,
     enableDashboardFilterGroups: [true, false] as const,
-
     enableMeasureValueFilterKD: [false, true] as const,
+    enableDashboardTimezone: [true, false] as const,
     enableShellApplication: [true, false] as const,
     enableShellApplication_catalog: [false, true] as const,
     enableShellApplication_dashboards: [false, true] as const,

@@ -83,10 +83,10 @@ function getStringDraftValidationError(
     draft: string,
     constraints?: IStringParameterConstraints,
 ): MessageDescriptor | undefined {
-    if (isValidStringParameterValue(draft, constraints)) {
+    const { minLength, maxLength } = constraints ?? {};
+    if (isValidStringParameterValue(draft, { minLength, maxLength })) {
         return undefined;
     }
-    const { minLength } = constraints ?? {};
     return minLength !== undefined && draft.length < minLength
         ? messages.errorTooShort
         : messages.errorTooLong;

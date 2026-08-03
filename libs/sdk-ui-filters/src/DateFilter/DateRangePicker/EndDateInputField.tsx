@@ -27,6 +27,7 @@ export const EndDateInputField = forwardRef<HTMLInputElement, IDateRangeInputFie
             dateFormat,
             isMobile,
             isTimeEnabled,
+            isSecondsEnabled,
             errors,
             intl,
         },
@@ -77,6 +78,7 @@ export const EndDateInputField = forwardRef<HTMLInputElement, IDateRangeInputFie
                 isMobile={isMobile}
                 onDayClick={onInputClick}
                 isTimeEnabled={isTimeEnabled}
+                isSecondsEnabled={isSecondsEnabled}
                 className={cx("s-date-range-picker-to", "gd-date-range-picker-to")}
                 defaultTime={DAY_END_TIME}
                 inputErrorMessageTexts={inputErrorMessageTexts}

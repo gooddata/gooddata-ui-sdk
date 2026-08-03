@@ -31,6 +31,7 @@ import {
     type IDashboardPlugin,
     type IDashboardPluginLink,
     type IDashboardTab,
+    type IDashboardTimezoneConfig,
     type IDashboardWidget,
     type IFilterContext,
     type IInsightWidget,
@@ -134,6 +135,7 @@ interface IAnalyticalDashboardContent {
     disablePersistentFiltersAcrossTabs?: boolean;
     evaluationFrequency?: string;
     sectionHeadersDateDataSet?: IdentifierRef;
+    timezoneConfig?: IDashboardTimezoneConfig;
     tabs?: IDashboardTab[];
 }
 
@@ -271,6 +273,7 @@ function getConvertedAnalyticalDashboardContent(
         disablePersistentFiltersAcrossTabs: analyticalDashboard.disablePersistentFiltersAcrossTabs,
         evaluationFrequency: analyticalDashboard.evaluationFrequency,
         sectionHeadersDateDataSet: cloneWithSanitizedIds(analyticalDashboard.sectionHeadersDateDataSet),
+        timezoneConfig: analyticalDashboard.timezoneConfig,
         tabs,
     };
 }
@@ -326,6 +329,7 @@ export function convertDashboard(
         disablePersistentFiltersAcrossTabs,
         evaluationFrequency,
         sectionHeadersDateDataSet,
+        timezoneConfig,
         tabs,
     } = getConvertedAnalyticalDashboardContent(
         content as AnalyticalDashboardModelV2.IAnalyticalDashboard,
@@ -367,6 +371,7 @@ export function convertDashboard(
         disablePersistentFiltersAcrossTabs,
         evaluationFrequency,
         sectionHeadersDateDataSet,
+        timezoneConfig,
         tabs,
         ...(certification ? { certification } : {}),
         dataSets: included?.filter(isDataSetItem).map((dataSet) => convertDataSetItem(dataSet)) ?? [],

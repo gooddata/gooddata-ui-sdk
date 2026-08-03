@@ -3,49 +3,76 @@
 import { type ReactNode, createContext, useCallback, useContext, useMemo, useState } from "react";
 
 import type { IObjectPermissionsObject } from "@gooddata/sdk-backend-spi";
-import { type IObjectShareController, useObjectShare } from "@gooddata/sdk-ui-ext";
+import type { IObjectAccessList } from "@gooddata/sdk-model";
+import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import {
+    type IObjectAccessSummary,
+    accessListToSummary,
+    isPermissionsNotAvailable,
+} from "@gooddata/sdk-ui-ext";
 
 import type { ShareableCatalogItem } from "./types.js";
 import type { IShareableLabels } from "./useShareableLabels.js";
 
 /**
- * Live share state for the catalog item. Consumed by the inline access row and the
- * share dialog, which re-render as the controller's state changes. `active` is false
- * when the item can't be shared (flag off / not a shareable kind), so consumers can
- * render nothing without conditional hooks.
+ * Page-level share state for the catalog item: the latest known access summary and
+ * the dialog-open flag. `active` is false when the item can't be shared (flag off /
+ * not a shareable kind / permissions unavailable), so consumers can render nothing
+ * without conditional hooks.
  */
 interface ICatalogItemShareState {
     active: boolean;
-    controller: IObjectShareController | undefined;
+    /**
+     * Latest known access summary — seeded by the page-level fetch, then kept in
+     * sync by the open dialog's `onSummaryChange`. Undefined while loading.
+     */
+    summary: IObjectAccessSummary | undefined;
+    /**
+     * Whether the page-level summary fetch failed transiently (a definitive
+     * not-permissionable failure turns the whole feature inactive instead).
+     * Sharing stays offered — opening the dialog runs its own fetch, whose
+     * `onSummaryChange` report then fills the summary in.
+     */
+    summaryError: boolean;
     target: IObjectPermissionsObject | undefined;
     objectTitle: string;
-    /** Whether the share dialog is open. */
+    /** Whether the share dialog is open (and should be mounted). */
     isOpen: boolean;
-    /** Whether the item's labels are still loading (passed to the dialog). */
-    labelsLoading: boolean;
+    /** The item's labels bundle, forwarded to the dialog. */
+    labels: IShareableLabels;
 }
 
 /**
- * Stable open/close actions for the share dialog. Split from the state so an
- * actions-only consumer (the Share button) never re-renders on a state tick.
+ * Stable share actions. Split from the state so an actions-only consumer (the
+ * Share button) never re-renders on a state tick.
  */
 interface ICatalogItemShareActions {
     active: boolean;
     open: () => void;
     close: () => void;
+    /** The dialog reports summary changes here, keeping the inline row in sync without refetching. */
+    onSummaryChange: (summary: IObjectAccessSummary) => void;
 }
+
+const NO_LABELS: IShareableLabels = { labels: [], loading: false, error: false };
 
 const INACTIVE_STATE: ICatalogItemShareState = {
     active: false,
-    controller: undefined,
+    summary: undefined,
+    summaryError: false,
     target: undefined,
     objectTitle: "",
     isOpen: false,
-    labelsLoading: false,
+    labels: NO_LABELS,
 };
 
 const noop = () => {};
-const INACTIVE_ACTIONS: ICatalogItemShareActions = { active: false, open: noop, close: noop };
+const INACTIVE_ACTIONS: ICatalogItemShareActions = {
+    active: false,
+    open: noop,
+    close: noop,
+    onSummaryChange: noop,
+};
 
 const ShareStateContext = createContext<ICatalogItemShareState>(INACTIVE_STATE);
 const ShareActionsContext = createContext<ICatalogItemShareActions>(INACTIVE_ACTIONS);
@@ -64,14 +91,15 @@ export interface ICatalogItemShareProviderProps {
 }
 
 /**
- * Owns the share controller, its single access-list fetch and the dialog open
- * state for one catalog item, and exposes them through two contexts (state +
- * actions). Because it renders `children` and the live state is read only by the
- * leaf components that need it (access row, dialog), the surrounding detail
- * subtree — header, tabs, status — does not re-render as access is edited.
+ * Owns the PAGE state of sharing for one catalog item: the initial access-summary
+ * fetch (the inline access row is visible before the dialog ever opens, so the page
+ * fetches its own summary) and the dialog-open flag. The dialog itself is a separate,
+ * session-scoped component — mounted only while open, owning its own controller and
+ * fetch — that reports summary changes back through `onSummaryChange`, so the row
+ * stays in sync with edits without a refetch.
  *
- * No-ops cleanly when the item can't be shared: the contexts then carry an
- * inactive value and the hooks below report `active: false`.
+ * No-ops cleanly when the item can't be shared: the contexts then carry an inactive
+ * value and the hooks below report `active: false`.
  *
  * @internal
  */
@@ -81,57 +109,88 @@ export function CatalogItemShareProvider({
     labels,
     children,
 }: ICatalogItemShareProviderProps) {
-    // One controller drives both the dialog and the inline access row; the row reads
-    // `state.summary`, so a save inside the dialog refreshes it too. labelsLoading/
-    // labelsError keep the controller label-unresolved while labels are pending.
-    const [isOpen, setIsOpen] = useState(false);
-    const controller = useObjectShare(target, {
-        labels: labels.labels,
-        labelsError: labels.error,
-        labelsLoading: labels.loading,
-        isOpen,
-    });
-    // The detail view is reused as the user navigates between objects, so close an
-    // open dialog when the shareable target changes (or becomes non-shareable) —
-    // otherwise it would linger open on the next object. Reset during render (React's
-    // "adjust state on prop change" idiom) rather than in an effect.
-    const targetKey = shareableItem?.identifier;
-    const [openForKey, setOpenForKey] = useState<string | undefined>(undefined);
-    if (isOpen && openForKey !== targetKey) {
-        setIsOpen(false);
+    const backend = useBackendStrict();
+    const workspace = useWorkspaceStrict();
+    // The page-session boundary: everything below (summary, open flag, the fetch) is
+    // scoped to this key. Workspace and kind are part of it — the same identifier can
+    // reappear under another workspace (or as another object kind), and the previous
+    // summary/dialog must not survive into it.
+    const itemKey = shareableItem
+        ? `${workspace}:${shareableItem.type}:${shareableItem.identifier}`
+        : undefined;
+
+    const [summary, setSummary] = useState<IObjectAccessSummary | undefined>(undefined);
+    // Which item's dialog is open. Navigating to another item changes `itemKey`, so
+    // `isOpen` turns false and the dialog unmounts.
+    const [dialogFor, setDialogFor] = useState<string | undefined>(undefined);
+
+    // Both the summary and the open flag belong to one item under one backend —
+    // drop them when either changes. Item change: the new item shows its loading
+    // skeleton instead of the previous item's access, and navigating BACK to an
+    // item whose dialog was open must not reopen it (a lingering `dialogFor`
+    // would match the returning key). Backend change (compared by reference —
+    // an instance has no string identity to fold into `itemKey`): the previous
+    // backend's summary must not survive into the new one, and clearing
+    // `dialogFor` unmounts the dialog session, discarding its edit overlay and
+    // staged state with it.
+    const [seenScope, setSeenScope] = useState({ backend, itemKey });
+    if (seenScope.backend !== backend || seenScope.itemKey !== itemKey) {
+        setSeenScope({ backend, itemKey });
+        setSummary(undefined);
+        setDialogFor(undefined);
     }
-    const open = useCallback(() => {
-        setOpenForKey(targetKey);
-        setIsOpen(true);
-    }, [targetKey]);
-    const close = useCallback(() => setIsOpen(false), []);
+
+    // The page-level summary fetch runs only while the summary is UNKNOWN: once
+    // anything seeds it — this fetch, or the dialog's `onSummaryChange` report (the
+    // dialog session fetches on its own) — the promise clears, so an open dialog
+    // never runs alongside a page fetch and a close never refetches. The item-change
+    // reset above clears the summary, which re-arms the fetch. The `prev ??` seed
+    // guard covers the resolve-vs-cancel race.
+    const summaryUnknown = summary === undefined;
+    const { status, error } = useCancelablePromise<IObjectAccessList, Error>(
+        {
+            promise:
+                target && summaryUnknown
+                    ? () => backend.workspace(workspace).objectPermissions().getAccessList(target)
+                    : undefined,
+            onSuccess: (list) => setSummary((prev) => prev ?? accessListToSummary(list)),
+            onError: () => {},
+        },
+        [backend, workspace, itemKey, summaryUnknown],
+    );
 
     // Sharing is offered only while the access list is reachable. The permissions
     // endpoint is manage-gated, so a user who can only view/analyze the object gets
-    // a 404 (surfaced as `accessUnavailable`); we then hide both the Share button and
-    // the inline access row — there is nothing they can act on, and the row would
-    // otherwise load forever. A transient load error does not set the flag, so a flaky
-    // fetch doesn't strip the UI. The access list loads optimistically, so the row and
-    // button show until the 404 lands, then disappear.
-    const active = Boolean(shareableItem) && !controller.state.accessUnavailable;
+    // a 404; we then hide both the Share button and the inline access row — there is
+    // nothing they can act on. A transient load error does not set the flag, so a
+    // flaky fetch doesn't strip the UI — it is reported as `summaryError` instead,
+    // so the access row can show an error rather than load forever.
+    const accessUnavailable = status === "error" && isPermissionsNotAvailable(error);
+    const active = Boolean(shareableItem) && !accessUnavailable;
+    const summaryError = status === "error" && !accessUnavailable;
+
+    const isOpen = dialogFor !== undefined && dialogFor === itemKey;
+    const open = useCallback(() => setDialogFor(itemKey), [itemKey]);
+    const close = useCallback(() => setDialogFor(undefined), []);
 
     const state = useMemo<ICatalogItemShareState>(
         () =>
             active && shareableItem
                 ? {
                       active: true,
-                      controller,
+                      summary,
+                      summaryError,
                       target,
                       objectTitle: shareableItem.title,
                       isOpen,
-                      labelsLoading: labels.loading,
+                      labels,
                   }
                 : INACTIVE_STATE,
-        [active, shareableItem, controller, target, isOpen, labels.loading],
+        [active, shareableItem, summary, summaryError, target, isOpen, labels],
     );
 
     const actions = useMemo<ICatalogItemShareActions>(
-        () => (active ? { active: true, open, close } : INACTIVE_ACTIONS),
+        () => (active ? { active: true, open, close, onSummaryChange: setSummary } : INACTIVE_ACTIONS),
         [active, open, close],
     );
 
@@ -143,7 +202,7 @@ export function CatalogItemShareProvider({
 }
 
 /**
- * Live share state (controller, summary, open flag) for the current catalog item.
+ * Page share state (summary, open flag, dialog inputs) for the current catalog item.
  * Reports `active: false` when sharing is unavailable.
  *
  * @internal
@@ -153,8 +212,9 @@ export function useCatalogItemShareState(): ICatalogItemShareState {
 }
 
 /**
- * Stable share actions (open/close the dialog) for the current catalog item.
- * Reading this instead of the state keeps a consumer from re-rendering on state ticks.
+ * Stable share actions (open/close the dialog, receive summary updates) for the
+ * current catalog item. Reading this instead of the state keeps a consumer from
+ * re-rendering on state ticks.
  *
  * @internal
  */

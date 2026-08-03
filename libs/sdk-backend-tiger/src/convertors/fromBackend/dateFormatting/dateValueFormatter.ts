@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { parseDateValue, serializeDateValue } from "./dateValueParser.js";
 import { type DateFormatter, type DateParseFormatter, type DateStringifier } from "./types.js";
@@ -15,6 +15,12 @@ export function createDateValueFormatter(dateFormatter: DateFormatter): DatePars
             return "";
         }
         const parsed = parseDateValue(value, granularity, timezone, locale);
+        // Some backend values cannot be represented as a Date and parse to an Invalid Date — e.g. the inclusive
+        // upper bound / leap value of a generic granularity (second-of-minute 60, minute-of-day 1440,
+        // second-of-day 86400). Show the raw value instead of letting date-fns throw so the result never fails.
+        if (Number.isNaN(parsed.getTime())) {
+            return value;
+        }
         return dateFormatter(parsed, granularity, locale, pattern, timezone);
     };
 }

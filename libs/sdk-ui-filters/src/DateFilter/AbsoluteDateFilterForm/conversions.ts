@@ -2,7 +2,11 @@
 
 import { type EmptyValues } from "@gooddata/sdk-model";
 
-import { platformDateFormat, platformDateTimeFormat } from "../constants/Platform.js";
+import {
+    platformDateFormat,
+    platformDateTimeFormat,
+    platformDateTimeFormatWithSeconds,
+} from "../constants/Platform.js";
 import { type IDateRange } from "../DateRangePicker/types.js";
 import { type IUiAbsoluteDateFilterForm } from "../interfaces/index.js";
 import {
@@ -15,8 +19,12 @@ export const dateRangeToDateFilterValue = (
     localIdentifier: string,
     isTimeForAbsoluteRangeEnabled: boolean,
     emptyValueHandling?: EmptyValues,
+    isSecondsForAbsoluteRangeEnabled = false,
 ): IUiAbsoluteDateFilterForm => {
-    const parsingFormat = isTimeForAbsoluteRangeEnabled ? platformDateTimeFormat : platformDateFormat;
+    const timeFormat = isSecondsForAbsoluteRangeEnabled
+        ? platformDateTimeFormatWithSeconds
+        : platformDateTimeFormat;
+    const parsingFormat = isTimeForAbsoluteRangeEnabled ? timeFormat : platformDateFormat;
 
     return {
         from: convertDateToPlatformDateString(range.from, parsingFormat) ?? undefined,
@@ -32,6 +40,7 @@ export const dateRangeToDateFilterValue = (
 export const dateFilterValueToDateRange = (
     value: IUiAbsoluteDateFilterForm,
     isTimeForAbsoluteRangeEnabled = false,
+    isSecondsForAbsoluteRangeEnabled = false,
 ): IDateRange => {
     const isFromTimeDefined = value.from && value.from.split(" ").length > 1;
     const isToTimeDefined = value.to && value.to.split(" ").length > 1;
@@ -42,11 +51,13 @@ export const dateFilterValueToDateRange = (
     if (from && !isFromTimeDefined && isTimeForAbsoluteRangeEnabled) {
         from.setHours(0);
         from.setMinutes(0);
+        from.setSeconds(0);
     }
 
     if (to && !isToTimeDefined && isTimeForAbsoluteRangeEnabled) {
         to.setHours(23);
         to.setMinutes(59);
+        to.setSeconds(isSecondsForAbsoluteRangeEnabled ? 59 : 0);
     }
     return { from, to };
 };
