@@ -3,12 +3,14 @@
 import { type ReactNode } from "react";
 
 import { act, renderHook } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
     type IDashboardExportParameter,
     type IInsight,
+    type INotificationChannelMetadataObject,
     type IWidget,
+    type IWorkspaceUser,
     idRef,
     isExportDefinitionVisualizationObjectRequestPayload,
 } from "@gooddata/sdk-model";
@@ -70,15 +72,32 @@ const automationsContextValue = {
     },
 } as unknown as IAutomationsContextValue;
 
-const scheduledEmailDialogContextValue = {
-    dashboardId: "dashboard-1",
-    dashboardTitle: "Dashboard",
-    hiddenFilters: [],
-    commonDateFilterId: undefined,
-    widgetLocalIdToTabIdMap: { w1: "tab1" },
-    // The reporter's case: no effective override, so the new automation seeds no params.
-    exportParametersByTab: {},
-} as unknown as IScheduledEmailDialogContextValue;
+function buildScheduledEmailDialogContextValue(): IScheduledEmailDialogContextValue {
+    return {
+        dashboardId: "dashboard-1",
+        dashboardTitle: "Dashboard",
+        hiddenFilters: [],
+        commonDateFilterId: undefined,
+        widgetLocalIdToTabIdMap: { w1: "tab1" },
+        // The reporter's case: no effective override, so the new automation seeds no params.
+        exportParametersByTab: {},
+        widget,
+        insight,
+        users: [] as IWorkspaceUser[],
+        notificationChannels: [{ id: "channel-1" }],
+    } as unknown as IScheduledEmailDialogContextValue;
+}
+
+let scheduledEmailDialogContextValue = buildScheduledEmailDialogContextValue();
+
+// Rebuild before every test so a mutation from one test can never leak into the next.
+beforeEach(() => {
+    scheduledEmailDialogContextValue = buildScheduledEmailDialogContextValue();
+});
+
+function setScheduledEmailDialogContext(overrides: Partial<IScheduledEmailDialogContextValue>) {
+    scheduledEmailDialogContextValue = { ...scheduledEmailDialogContextValue, ...overrides };
+}
 
 function wrapper({ children }: { children: ReactNode }) {
     return (
@@ -98,10 +117,6 @@ function renderEditHook() {
     return renderHook(
         () =>
             useEditScheduledEmail({
-                notificationChannels: [{ id: "channel-1" } as any],
-                insight,
-                widget,
-                users: [],
                 maxAutomationsRecipients: 10,
                 setEditedAutomationFilters: () => {},
                 setStoreFilters: () => {},
@@ -162,5 +177,22 @@ describe("useEditScheduledEmail — export parameters survive attachment changes
         });
 
         expect(paramsByTabOf(result)).toEqual([addedParameters]);
+    });
+});
+
+describe("useEditScheduledEmail — recipients and destination data", () => {
+    it("returns the recipients and destination data from the context", () => {
+        const users: IWorkspaceUser[] = [
+            { ref: idRef("user-1"), uri: "/users/user-1", login: "user-1", email: "user-1@example.com" },
+        ];
+        const notificationChannels = [
+            { id: "channel-1", type: "notificationChannel" },
+        ] as INotificationChannelMetadataObject[];
+        setScheduledEmailDialogContext({ users, notificationChannels });
+
+        const { result } = renderEditHook();
+
+        expect(result.current.users).toBe(users);
+        expect(result.current.notificationChannels).toBe(notificationChannels);
     });
 });

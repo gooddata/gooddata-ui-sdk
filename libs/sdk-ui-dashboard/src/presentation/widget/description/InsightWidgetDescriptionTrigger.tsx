@@ -5,9 +5,8 @@ import { simplifyText } from "@gooddata/util";
 
 import { useRichTextWidgetFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
 import { type DescriptionTooltipOpenedData } from "../../../model/events/userInteraction.js";
-import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { useDashboardUserInteraction } from "../../../model/react/useDashboardUserInteraction.js";
-import { selectExecutionTimestamp } from "../../../model/store/ui/uiSelectors.js";
+import { useDashboardExecConfig } from "../../../model/react/useWidgetExecConfig.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 
 import { DescriptionClickTrigger } from "./DescriptionClickTrigger.js";
@@ -21,7 +20,7 @@ export function InsightWidgetDescriptionTrigger(props: IInsightWidgetDescription
 
     const userInteraction = useDashboardUserInteraction();
 
-    const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
+    const execConfig = useDashboardExecConfig();
     const { filters } = useRichTextWidgetFilters(widget);
     const { LoadingComponent } = useDashboardComponentsContext();
 
@@ -40,9 +39,7 @@ export function InsightWidgetDescriptionTrigger(props: IInsightWidgetDescription
                 useReferences
                 filters={filters}
                 LoadingComponent={LoadingComponent}
-                execConfig={{
-                    timestamp: executionTimestamp,
-                }}
+                execConfig={execConfig}
             />
         );
     }

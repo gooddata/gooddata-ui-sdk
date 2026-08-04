@@ -1,7 +1,5 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { useSlideSizeStyle } from "../../dashboardContexts/useSlideData.js";
-
 import { GridLayoutElement } from "./GridLayoutElement.js";
 import { type IDashboardLayoutSectionRenderProps } from "./interfaces.js";
 
@@ -11,18 +9,16 @@ const defaultStyle = {};
 export function ExportableDashboardLayoutSectionRenderer({
     children,
     parentLayoutItemSize,
-    parentLayoutPath,
     className,
     isHidden,
     exportData,
+    exportStyles,
 }: IDashboardLayoutSectionRenderProps<unknown> & object) {
     const style = isHidden ? isHiddenStyle : defaultStyle;
-    const type = "section";
-    const exportStyles = useSlideSizeStyle("export", type, parentLayoutPath);
 
     return (
         <GridLayoutElement
-            type={type}
+            type="section"
             layoutItemSize={parentLayoutItemSize}
             className={className}
             style={style}

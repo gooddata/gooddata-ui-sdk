@@ -9,6 +9,7 @@ import {
     type IAllowedRelationshipType,
     type IColorPalette,
     type IGenAIUserContext,
+    areObjRefsEqual,
 } from "@gooddata/sdk-model";
 import type { IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
 
@@ -115,4 +116,21 @@ export const userContextSelector: (state: RootState) => IGenAIUserContext | unde
 export const ambientContextSelector: (state: RootState) => IGenAIUserContext | undefined = createSelector(
     chatWindowSliceSelector,
     (state) => state.context.ambient,
+);
+
+export const hasPinnedContextSelector: (state: RootState) => boolean = createSelector(
+    userContextSelector,
+    ambientContextSelector,
+    (active, ambient) => {
+        if (!active) {
+            return false;
+        }
+        if (active.referencedObjects?.length || active.activeObject) {
+            return true;
+        }
+
+        const dashboardRef = active.view?.dashboard?.ref;
+
+        return Boolean(dashboardRef) && !areObjRefsEqual(dashboardRef, ambient?.view?.dashboard?.ref);
+    },
 );

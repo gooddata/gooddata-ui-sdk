@@ -4,33 +4,31 @@ import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { DataViewFacade } from "@gooddata/sdk-ui";
 
+import { AreaChartWith3MetricsAndViewByAttribute } from "./fixturesData/AreaChartWith3MetricsAndViewByAttribute.js";
+import { BarChartWith3MetricsAndViewByAttribute } from "./fixturesData/BarChartWith3MetricsAndViewByAttribute.js";
+import { BarChartWith3MetricsAndViewByAttributeFunformat } from "./fixturesData/BarChartWith3MetricsAndViewByAttributeFunformat.js";
+import { BarChartWith3MetricsAndViewByAttributePercInFormat } from "./fixturesData/BarChartWith3MetricsAndViewByAttributePercInFormat.js";
+import { BarChartWith4MetricsAndViewByTwoAttributes } from "./fixturesData/BarChartWith4MetricsAndViewByTwoAttributes.js";
+import { BarChartWithPopMeasureAndViewByAttribute } from "./fixturesData/BarChartWithPopMeasureAndViewByAttribute.js";
+import { BarChartWithPopMeasureAndViewByAttributeX6 } from "./fixturesData/BarChartWithPopMeasureAndViewByAttributeX6.js";
+import { BarChartWithPreviousPeriodMeasure } from "./fixturesData/BarChartWithPreviousPeriodMeasure.js";
+import { BarChartWithPreviousPeriodMeasureX6 } from "./fixturesData/BarChartWithPreviousPeriodMeasureX6.js";
+import { BubbleChartWith3MetricsAndAttributeNullsInData } from "./fixturesData/BubbleChartWith3MetricsAndAttributeNullsInData.js";
+import { ComboChartWithTwoMeasuresViewByAttribute } from "./fixturesData/ComboChartWithTwoMeasuresViewByAttribute.js";
+import { ComboChartWithTwoMeasuresViewByAttributeNoBuckets } from "./fixturesData/ComboChartWithTwoMeasuresViewByAttributeNoBuckets.js";
+import { ComboChartWithTwoMeasuresViewByAttributePercformat } from "./fixturesData/ComboChartWithTwoMeasuresViewByAttributePercformat.js";
+import { HeadlineWithTwoMeasuresBothEmpty } from "./fixturesData/HeadlineWithTwoMeasuresBothEmpty.js";
+import { HeadlineWithTwoMeasuresBothSame } from "./fixturesData/HeadlineWithTwoMeasuresBothSame.js";
+import { HeadlineWithTwoMeasuresBothZero } from "./fixturesData/HeadlineWithTwoMeasuresBothZero.js";
+import { HeadlineWithTwoMeasuresFirstEmpty } from "./fixturesData/HeadlineWithTwoMeasuresFirstEmpty.js";
+import { HeadlineWithTwoMeasuresFirstZero } from "./fixturesData/HeadlineWithTwoMeasuresFirstZero.js";
+import { HeadlineWithTwoMeasuresSecondEmpty } from "./fixturesData/HeadlineWithTwoMeasuresSecondEmpty.js";
+import { HeadlineWithTwoMeasuresSecondZero } from "./fixturesData/HeadlineWithTwoMeasuresSecondZero.js";
+import { PieChartWithMetricsOnly } from "./fixturesData/PieChartWithMetricsOnly.js";
+import { PieChartWithMetricsOnlyFundata } from "./fixturesData/PieChartWithMetricsOnlyFundata.js";
 import { type LegacyExecutionRecording, localLegacyDataView } from "./legacyDataView.js";
 import { recordedDataFacade } from "./recordings.js";
-import {
-    AreaChartWith3MetricsAndViewByAttribute,
-    BarChartWith3MetricsAndViewByAttribute,
-    BarChartWith3MetricsAndViewByAttributeFunformat,
-    BarChartWith3MetricsAndViewByAttributePercInFormat,
-    BarChartWith4MetricsAndViewByTwoAttributes,
-    BarChartWithPopMeasureAndViewByAttribute,
-    BarChartWithPopMeasureAndViewByAttributeX6,
-    BarChartWithPreviousPeriodMeasure,
-    BarChartWithPreviousPeriodMeasureX6,
-    BubbleChartWith3MetricsAndAttributeNullsInData,
-    ComboChartWithTwoMeasuresViewByAttribute,
-    ComboChartWithTwoMeasuresViewByAttributeNoBuckets,
-    ComboChartWithTwoMeasuresViewByAttributePercformat,
-    HeadlineWithTwoMeasuresBothEmpty,
-    HeadlineWithTwoMeasuresBothSame,
-    HeadlineWithTwoMeasuresBothZero,
-    HeadlineWithTwoMeasuresFirstEmpty,
-    HeadlineWithTwoMeasuresFirstZero,
-    HeadlineWithTwoMeasuresSecondEmpty,
-    HeadlineWithTwoMeasuresSecondZero,
-    PieChartWithMetricsOnly,
-    PieChartWithMetricsOnlyFundata,
-    ScatterPlotWith2MetricsAndAttributeNullsInData,
-} from "./recordings/playlist.js";
+import { ScatterPlotWith2MetricsAndAttributeNullsInData } from "./recordings/playlist.js";
 
 function legacyRecordedDataFacade(recording: LegacyExecutionRecording): DataViewFacade {
     return DataViewFacade.for(localLegacyDataView(recording));

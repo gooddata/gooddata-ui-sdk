@@ -4,8 +4,8 @@ import { DescriptionPanelContent } from "@gooddata/sdk-ui-kit";
 
 import { useRichTextWidgetFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { useDashboardExecConfig } from "../../../model/react/useWidgetExecConfig.js";
 import { selectSeparators } from "../../../model/store/config/configSelectors.js";
-import { selectExecutionTimestamp } from "../../../model/store/ui/uiSelectors.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 
 import { type IInsightWidgetDescriptionTriggerProps } from "./types.js";
@@ -21,7 +21,7 @@ export function ExportModeInsightWidgetDescription(props: IInsightWidgetDescript
     const { isVisible, description } = useInsightWidgetDescription(props);
     const { filters } = useRichTextWidgetFilters(widget);
     const separators = useDashboardSelector(selectSeparators);
-    const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
+    const execConfig = useDashboardExecConfig();
     const { LoadingComponent } = useDashboardComponentsContext();
 
     if (!isVisible) {
@@ -36,9 +36,7 @@ export function ExportModeInsightWidgetDescription(props: IInsightWidgetDescript
                 filters={filters}
                 separators={separators}
                 LoadingComponent={LoadingComponent}
-                execConfig={{
-                    timestamp: executionTimestamp,
-                }}
+                execConfig={execConfig}
             />
         </div>
     );

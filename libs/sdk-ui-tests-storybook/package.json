@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-tests-storybook",
-    "version": "11.51.0-alpha.2",
+    "version": "11.51.0-alpha.3",
     "description": "GoodData React components storybook",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",
@@ -35,7 +35,7 @@
         "neobackstop-test-local": "npm run neobackstop-prepare-local && bash neobackstop/run-neobackstop-compose.sh test",
         "scenario-extractor-docker": "DOCKER=true node --import @oxc-node/core/register scripts/scenario-extractor.ts",
         "scenario-extractor-local": "node --import @oxc-node/core/register scripts/scenario-extractor.ts",
-        "story-generator": "node --import @oxc-node/core/register scripts/story-generator.ts && npm run lint-fix",
+        "story-generator": "node --import @oxc-node/core/register scripts/story-generator.ts && npm run lint-fix && npm run format-write",
         "storybook": "storybook dev -p 9001 -c .storybook",
         "storybook-serve": "bash stories/serve-storybook.sh",
         "stylelint": "stylelint '**/*.scss'",

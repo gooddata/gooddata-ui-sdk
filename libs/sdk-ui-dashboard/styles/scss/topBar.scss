@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 @use "variables";
 @use "zIndexes";
@@ -68,7 +68,8 @@ $gd-dashboards-section-title-lineColor: var(
     margin-left: 15px;
 
     .gd-locked-status,
-    .gd-share-status {
+    .gd-share-status,
+    .gd-timezone-indicator {
         align-self: flex-end;
     }
 
@@ -79,6 +80,16 @@ $gd-dashboards-section-title-lineColor: var(
 
     .gd-share-status {
         padding-bottom: 4px;
+    }
+
+    .gd-timezone-indicator {
+        padding-bottom: 4px;
+        margin-left: auto;
+    }
+
+    // When the indicator is mounted, it owns the flex spacer; keep buttons adjacent.
+    .gd-timezone-indicator + .dash-control-buttons {
+        margin-left: 0;
     }
 }
 

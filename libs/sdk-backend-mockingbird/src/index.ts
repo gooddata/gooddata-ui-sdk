@@ -56,11 +56,4 @@ export {
 
 export { type CompositeBackendPart, compositeBackend } from "./compositeBackend/index.js";
 
-export {
-    type LegacyExecutionRecording,
-    type LegacyRecordingIndex,
-    type LegacyWorkspaceRecordings,
-    legacyRecordedDataView,
-} from "./legacyRecordedBackend/index.js";
-
 export { objRefsToStringKey } from "./recordedBackend/utils.js";

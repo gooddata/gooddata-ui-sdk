@@ -5,11 +5,11 @@
         "description": "",
         "identifier": "emptyDashboard",
         "isLocked": false,
-        "ref": { "uri": "/gdc/md/referenceworkspace/obj/2021" },
+        "ref": { "identifier": "obj_2021" },
         "tags": [],
         "title": "an empty dashboard",
         "updated": "2021-06-12 11:06:22",
-        "uri": "/gdc/md/referenceworkspace/obj/2021"
+        "uri": "obj_2021"
     },
     "references": {
         "insights": [],

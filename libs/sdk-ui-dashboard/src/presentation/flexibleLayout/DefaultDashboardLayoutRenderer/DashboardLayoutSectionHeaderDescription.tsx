@@ -9,8 +9,8 @@ import { RichText } from "@gooddata/sdk-ui-kit";
 
 import { useSectionDescriptionFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { useDashboardExecConfig } from "../../../model/react/useWidgetExecConfig.js";
 import { selectSeparators } from "../../../model/store/config/configSelectors.js";
-import { selectExecutionTimestamp } from "../../../model/store/ui/uiSelectors.js";
 import { type DescriptionExportData } from "../../export/types.js";
 
 /**
@@ -33,7 +33,7 @@ export function DashboardLayoutSectionHeaderDescription({
 }: IDashboardLayoutSectionHeaderDescriptionProps) {
     const { loading, filters } = useSectionDescriptionFilters();
     const separators = useDashboardSelector(selectSeparators);
-    const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
+    const execConfig = useDashboardExecConfig();
 
     const className = cx("gd-paragraph", "description", "s-fluid-layout-row-description");
     return (
@@ -46,9 +46,7 @@ export function DashboardLayoutSectionHeaderDescription({
                     show: !!exportData?.richText,
                     dataAttributes: exportData?.richText?.markdown,
                 }}
-                execConfig={{
-                    timestamp: executionTimestamp,
-                }}
+                execConfig={execConfig}
                 referencesEnabled
                 filters={filters}
                 isFiltersLoading={loading}

@@ -7,7 +7,7 @@
             "identifier": "gdc.visualization.table",
             "orderIndex": 0,
             "title": "Table",
-            "uri": "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/4",
+            "uri": "obj_4",
             "url": "local:table"
         }
     },
@@ -19,7 +19,7 @@
             "identifier": "gdc.visualization.repeater",
             "orderIndex": 0.5,
             "title": "Repeater",
-            "uri": "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/1234",
+            "uri": "obj_1234",
             "url": "local:repeater"
         }
     },
@@ -31,7 +31,7 @@
             "identifier": "gdc.visualization.column",
             "orderIndex": 1,
             "title": "Column chart",
-            "uri": "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/6",
+            "uri": "obj_6",
             "url": "local:column"
         }
     },
@@ -43,7 +43,7 @@
             "identifier": "gdc.visualization.bar",
             "orderIndex": 2,
             "title": "Bar chart",
-            "uri": "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/12",
+            "uri": "obj_12",
             "url": "local:bar"
         }
     },
@@ -55,7 +55,7 @@
             "identifier": "gdc.visualization.line",
             "orderIndex": 3,
             "title": "Line chart",
-            "uri": "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/7",
+            "uri": "obj_7",
             "url": "local:line"
         }
     },
@@ -67,7 +67,7 @@
             "identifier": "gdc.visualization.area",
             "orderIndex": 4,
             "title": "Stacked Area chart",
-            "uri": "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/3",
+            "uri": "obj_3",
             "url": "local:area"
         }
     },
@@ -79,7 +79,7 @@
             "identifier": "gdc.visualization.combo",
             "orderIndex": 5,
             "title": "Combo",
-            "uri": "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/669",
+            "uri": "obj_669",
             "url": "local:combo2"
         }
     },
@@ -91,7 +91,7 @@
             "identifier": "gdc.visualization.headline",
             "orderIndex": 6,
             "title": "Headline",
-            "uri": "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/5",
+            "uri": "obj_5",
             "url": "local:headline"
         }
     },
@@ -103,7 +103,7 @@
             "identifier": "gdc.visualization.scatter",
             "orderIndex": 7,
             "title": "Scatter plot",
-            "uri": "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/1",
+            "uri": "obj_1",
             "url": "local:scatter"
         }
     },
@@ -115,7 +115,7 @@
             "identifier": "gdc.visualization.bubble",
             "orderIndex": 8,
             "title": "Bubble chart",
-            "uri": "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/10",
+            "uri": "obj_10",
             "url": "local:bubble"
         }
     },
@@ -127,7 +127,7 @@
             "identifier": "gdc.visualization.pie",
             "orderIndex": 9,
             "title": "Pie chart",
-            "uri": "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/11",
+            "uri": "obj_11",
             "url": "local:pie"
         }
     },
@@ -139,7 +139,7 @@
             "identifier": "gdc.visualization.donut",
             "orderIndex": 10,
             "title": "Donut chart",
-            "uri": "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/2",
+            "uri": "obj_2",
             "url": "local:donut"
         }
     },
@@ -151,7 +151,7 @@
             "identifier": "gdc.visualization.treemap",
             "orderIndex": 12,
             "title": "Treemap",
-            "uri": "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/8",
+            "uri": "obj_8",
             "url": "local:treemap"
         }
     },
@@ -163,7 +163,7 @@
             "identifier": "gdc.visualization.pyramid",
             "orderIndex": 12.5,
             "title": "Pyramid chart",
-            "uri": "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/1002",
+            "uri": "obj_1002",
             "url": "local:pyramid"
         }
     },
@@ -175,7 +175,7 @@
             "identifier": "gdc.visualization.funnel",
             "orderIndex": 12.6,
             "title": "Funnel chart",
-            "uri": "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/1003",
+            "uri": "obj_1003",
             "url": "local:funnel"
         }
     },
@@ -187,7 +187,7 @@
             "identifier": "gdc.visualization.heatmap",
             "orderIndex": 13,
             "title": "Heatmap",
-            "uri": "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/9",
+            "uri": "obj_9",
             "url": "local:heatmap"
         }
     },
@@ -199,7 +199,7 @@
             "identifier": "gdc.visualization.bullet",
             "orderIndex": 19,
             "title": "Bullet",
-            "uri": "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/1000",
+            "uri": "obj_1000",
             "url": "local:bullet"
         }
     },
@@ -211,7 +211,7 @@
             "identifier": "gdc.visualization.waterfall",
             "orderIndex": 19.1,
             "title": "Waterfall chart",
-            "uri": "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/1119",
+            "uri": "obj_1119",
             "url": "local:waterfall"
         }
     },
@@ -223,7 +223,7 @@
             "identifier": "gdc.visualization.dependencywheel",
             "orderIndex": 19.2,
             "title": "Dependency wheel chart",
-            "uri": "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glrn/obj/1219",
+            "uri": "obj_1219",
             "url": "local:dependencywheel"
         }
     },
@@ -235,7 +235,7 @@
             "identifier": "gdc.visualization.sankey",
             "orderIndex": 19.3,
             "title": "Sankey chart",
-            "uri": "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu5gpyn/obj/1319",
+            "uri": "obj_1319",
             "url": "local:sankey"
         }
     },
@@ -247,7 +247,7 @@
             "identifier": "gdc.visualization.pushpin",
             "orderIndex": 20,
             "title": "Geo Pushpin",
-            "uri": "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/1001",
+            "uri": "obj_1001",
             "url": "local:pushpin"
         }
     }

@@ -471,6 +471,10 @@
                         "type": "boolean",
                         "description": "Whether persistent filters across tabs are enabled for this dashboard. Defaults to true."
                     },
+                    "timezone_config": {
+                        "$ref": "#/$defs/timezoneConfig",
+                        "description": "Dashboard-level timezone configuration. If omitted, the workspace or organization timezone setting is used."
+                    },
                     "enable_section_headers": {
                         "type": "boolean",
                         "description": "Applies to the root layout. Whether all sections headers are enabled. Defaults to true."
@@ -4932,6 +4936,10 @@
                     "type": "boolean",
                     "description": "Whether persistent filters across tabs are enabled for this dashboard. Defaults to true."
                 },
+                "timezone_config": {
+                    "$ref": "#/$defs/timezoneConfig",
+                    "description": "Dashboard-level timezone configuration. If omitted, the workspace or organization timezone setting is used."
+                },
                 "enable_section_headers": {
                     "type": "boolean",
                     "description": "Applies to the root layout. Whether all sections headers are enabled. Defaults to true."
@@ -4995,6 +5003,24 @@
             },
             "required": ["id", "type"]
         },
+        "timezoneConfig": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "timezone_id": {
+                    "$ref": "#/$defs/timezoneId",
+                    "description": "Dashboard default timezone. Use an IANA timezone ID or $browserDetected. If omitted, the workspace or organization timezone setting is used."
+                },
+                "show_timezone_info": {
+                    "type": "boolean",
+                    "description": "Whether the dashboard timezone indicator is visible."
+                },
+                "allow_user_override_in_view_mode": {
+                    "type": "boolean",
+                    "description": "Whether viewers can override the dashboard timezone for their current session."
+                }
+            }
+        },
         "section": {
             "type": "object",
             "additionalProperties": false,
@@ -5031,6 +5057,13 @@
                 }
             },
             "required": ["id", "title", "sections"]
+        },
+        "timezoneId": {
+            "description": "An IANA timezone ID (for example, Europe/Prague or UTC) or $browserDetected to use the viewer browser timezone.",
+            "oneOf": [
+                { "type": "string", "const": "$browserDetected" },
+                { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_+.-]*(?:/[A-Za-z0-9_+.-]+)*$" }
+            ]
         },
         "widget": {
             "title": "Widget",

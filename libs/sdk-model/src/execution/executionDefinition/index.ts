@@ -81,6 +81,17 @@ export interface IExecutionConfig {
     timestamp?: string;
 
     /**
+     * Timezone in which the execution should be evaluated.
+     *
+     * @remarks
+     * Must be a concrete IANA time zone identifier (e.g. "Europe/Prague"). Never pass
+     * the browser-detected sentinel value here; resolve it to a concrete identifier first.
+     *
+     * @alpha
+     */
+    timezone?: string;
+
+    /**
      * (EXPERIMENTAL) Override definitions of catalog metrics for this execution request.
      *
      * @remarks
@@ -363,6 +374,9 @@ export function defFingerprint(def: IExecutionDefinition): string {
     }
     if (def.executionConfig?.timestamp) {
         hashFun(def.executionConfig.timestamp);
+    }
+    if (def.executionConfig?.timezone) {
+        hashFun(def.executionConfig.timezone);
     }
     if (def.executionConfig?.measureDefinitionOverrides?.length) {
         hashFun(JSON.stringify(def.executionConfig.measureDefinitionOverrides));

@@ -2,6 +2,8 @@
 
 import { createContext, useContext } from "react";
 
+import type { IAutomationMetadataObject } from "@gooddata/sdk-model";
+
 /**
  * Sub-context for the scheduled-email management dialog.
  * The connector hydrates this from dashboard state.
@@ -52,6 +54,12 @@ export interface IScheduledEmailManagementDialogContextValue {
      * max-automations limit is not enforced.
      */
     unlimitedAutomations: boolean;
+    /**
+     * Scheduled exports visible in the management dialog, scoped to the current dashboard context.
+     */
+    automations: IAutomationMetadataObject[];
+    /** True while the automation list is still loading. */
+    isLoading: boolean;
 }
 
 const ScheduledEmailManagementDialogContext = createContext<
@@ -64,8 +72,8 @@ export const ScheduledEmailManagementDialogContextProvider = ScheduledEmailManag
  * Reads the scheduled-email management dialog context.
  *
  * A replacement for the scheduled-email management dialog renders inside this context and reads the
- * dashboard it's rendered on and the automations limit (`maxAutomations`, `unlimitedAutomations`) from
- * here.
+ * dashboard it's rendered on, the automations limit (`maxAutomations`, `unlimitedAutomations`), the
+ * scheduled exports to list (`automations`), and whether they are still loading (`isLoading`) from here.
  *
  * Some members exist to wire internal machinery (`automationsInvalidationId`) and are not intended as a
  * customization surface.

@@ -11,8 +11,12 @@ import type {
     IDashboardExportParameter,
     IExportTemplate,
     IInsight,
+    INotificationChannelIdentifier,
+    INotificationChannelMetadataObject,
     IWidget,
+    IWorkspaceUser,
 } from "@gooddata/sdk-model";
+import type { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 /**
  * Sub-context for the scheduled-email create/edit dialog.
@@ -29,6 +33,10 @@ export interface IScheduledEmailDialogContextValue {
     widgetTitle?: string;
     dashboardId?: string;
     dashboardTitle: string;
+    /**
+     * Dashboard filters the export will use: the saved filters when editing, otherwise the currently
+     * applied dashboard filters with hidden filters resolved.
+     */
     dashboardFilters?: FilterContextItem[];
     /**
      * Raw dashboard hidden filters (selectDashboardHiddenFilters). Combined with edited filters via
@@ -63,6 +71,19 @@ export interface IScheduledEmailDialogContextValue {
     createScheduledEmail(se: IAutomationMetadataObjectDefinition): Promise<IAutomationMetadataObject>;
     saveScheduledEmail(se: IAutomationMetadataObject): Promise<IAutomationMetadataObject>;
     deleteScheduledEmail(se: IAutomationMetadataObject): Promise<void>;
+    /** The scheduled export being edited; undefined when creating a new one. */
+    scheduledExportToEdit?: IAutomationMetadataObject;
+    /**
+     * Workspace users available as scheduled-export recipients. Loaded only while the create/edit dialog
+     * is mounted, so opening the management dialog alone does not trigger the load.
+     */
+    users: IWorkspaceUser[];
+    /** Error from loading workspace users, if any. */
+    usersError?: GoodDataSdkError;
+    /** Notification channels available as scheduled-export destinations. */
+    notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
+    /** True while the dialog's initial data (automations, workspace users) is still loading. */
+    isLoading: boolean;
 }
 
 const ScheduledEmailDialogContext = createContext<IScheduledEmailDialogContextValue | undefined>(undefined);
@@ -73,8 +94,9 @@ export const ScheduledEmailDialogContextProvider = ScheduledEmailDialogContext.P
  * Reads the scheduled-email create/edit dialog context.
  *
  * A replacement for the scheduled-email dialog renders inside this context and reads the dialog's widget
- * and insight, the dashboard filter context and export templates it should apply, and the
- * create/save/delete callbacks from here.
+ * and insight, the dashboard filter context and export templates it should apply, the scheduled export
+ * being edited, the available workspace users and notification channels, and the create/save/delete
+ * callbacks from here.
  *
  * Some members exist to wire internal machinery (`exportParametersByTab`, `widgetLocalIdToTabIdMap`,
  * `commonDateFilterMode`, `dateFiltersModeMap`, `attributeFiltersModeMap`) and are not intended as a

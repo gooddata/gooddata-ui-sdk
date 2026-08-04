@@ -25,23 +25,32 @@ import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 export interface IScheduledEmailDialogProps {
     /**
      * In case, we are not creating new schedule, but editing existing one, this is the active schedule to be edited.
+     *
+     * @deprecated read `scheduledExportToEdit` from `useScheduledEmailDialogContext()` instead. Prop will be removed.
      */
     scheduledExportToEdit?: IAutomationMetadataObject;
 
     /**
      * Users in workspace
+     *
+     * @deprecated read `users` from `useScheduledEmailDialogContext()` instead. Prop will be removed.
      */
-    users: IWorkspaceUser[];
+    users?: IWorkspaceUser[];
 
     /**
      * Error occurred while loading users
+     *
+     * @deprecated read `usersError` from `useScheduledEmailDialogContext()` instead. Prop will be removed.
      */
     usersError?: GoodDataSdkError;
 
     /**
      * Notification channels in organization
+     *
+     * @deprecated read `notificationChannels` from `useScheduledEmailDialogContext()` instead.
+     *     Prop will be removed.
      */
-    notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
+    notificationChannels?: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
 
     /**
      * Widget to be used for scheduled email.
@@ -50,6 +59,8 @@ export interface IScheduledEmailDialogProps {
      * Typed as IWidget (not ExtendedDashboardWidget) because the dialog only
      * supports insight widgets; custom widgets and nested layouts are not valid
      * export targets and were silently discarded at the connector boundary anyway.
+     *
+     * @deprecated read `widget` from `useScheduledEmailDialogContext()` instead. Prop will be removed.
      */
     widget?: IWidget;
 
@@ -57,6 +68,8 @@ export interface IScheduledEmailDialogProps {
      * Insight to be used for scheduled email.
      *
      * Note: this is available only when scheduling export for widget, not dashboard.
+     *
+     * @deprecated read `insight` from `useScheduledEmailDialogContext()` instead. Prop will be removed.
      */
     insight?: IInsight;
 
@@ -71,6 +84,8 @@ export interface IScheduledEmailDialogProps {
      *   the export reflects the latest intended filter configuration and we don't want to save them.
      *
      * - If we are editing an existing scheduled export, this will contain its filters, as changing saved filters is currently not allowed.
+     *
+     * @deprecated read `dashboardFilters` from `useScheduledEmailDialogContext()` instead. Prop will be removed.
      */
     dashboardFilters?: FilterContextItem[];
 
@@ -84,11 +99,16 @@ export interface IScheduledEmailDialogProps {
      *     - If the resulting filters include all-time date filter, it is excluded as it has no effect on the scheduled export execution.
      *
      * - If we are editing an existing scheduled export, this will contain its filters, as changing saved filters is currently not allowed.
+     *
+     * @deprecated not read by the default dialog; the effective widget filters are derived from the
+     *     edited filters. Prop will be removed.
      */
     widgetFilters?: IFilter[];
 
     /**
      * Is scheduled email dialog loading initial data, before it can be rendered?
+     *
+     * @deprecated read `isLoading` from `useScheduledEmailDialogContext()` instead. Prop will be removed.
      */
     isLoading?: boolean;
 
@@ -152,23 +172,33 @@ export interface IScheduledEmailDialogProps {
 export interface IScheduledEmailManagementDialogProps {
     /**
      * Is loading schedule data?
+     *
+     * @deprecated read `isLoading` from `useScheduledEmailManagementDialogContext()` instead. Prop will
+     *     be removed.
      */
-    isLoadingScheduleData: boolean;
+    isLoadingScheduleData?: boolean;
 
     /**
      * Error occurred while loading schedule data?
+     *
+     * @deprecated not read by the default dialog. Prop will be removed.
      */
     scheduleDataError?: GoodDataSdkError;
 
     /**
      * Notification channels in organization
+     *
+     * @deprecated not read by the default dialog. Prop will be removed.
      */
-    notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
+    notificationChannels?: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
 
     /**
      * Automations in workspace
+     *
+     * @deprecated read `automations` from `useScheduledEmailManagementDialogContext()` instead. Prop
+     *     will be removed.
      */
-    automations: IAutomationMetadataObject[];
+    automations?: IAutomationMetadataObject[];
 
     /**
      * Callback to be called, when user adds new scheduled email item.

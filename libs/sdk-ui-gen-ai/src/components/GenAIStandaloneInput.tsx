@@ -30,6 +30,10 @@ const msgs = defineMessages({
  */
 export type GenAIStandaloneInputProps = Omit<GenAiStoreProps, "children"> & {
     /**
+     * Placeholder text for the input.
+     */
+    placeholder?: string;
+    /**
      * Callback called when the user submits a message.
      */
     onStart?: (prompt: string, agentId?: string) => void;
@@ -65,6 +69,7 @@ function StandaloneInputContent({
     className,
     canManage,
     canAnalyze,
+    placeholder,
     autofocus = true,
 }: Omit<GenAIStandaloneInputProps, keyof GenAiStoreProps>) {
     const intl = useIntl();
@@ -124,7 +129,7 @@ function StandaloneInputContent({
                     <div className="gd-gen-ai-chat__input__text" {...ref}>
                         <SyntaxHighlightingInput
                             className="gd-gen-ai-chat__input__mc"
-                            placeholder={intl.formatMessage(msgs.placeholder)}
+                            placeholder={placeholder ?? intl.formatMessage(msgs.placeholder)}
                             value={value}
                             onApi={setApi}
                             onChange={setValue}

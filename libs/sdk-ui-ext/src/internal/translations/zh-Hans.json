@@ -627,6 +627,7 @@
     "objectShare.confirm.button": "确认",
     "objectShare.selfRestrict.title": "限制您的访问权限？",
     "objectShare.selfRestrict.warning": "您无法为自己设置更高权限。",
+    "objectShare.workspaceLevel.inherited": "此权限由父工作区授予，无法在此处降低。",
     "objectShare.grantee.you": "{name}（您）",
     "objectShare.adminTag.label": "管理",
     "objectShare.adminTag.tooltip": "您和其他管理员对此对象具有完全访问权限。",

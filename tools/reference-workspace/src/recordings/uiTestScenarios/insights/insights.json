@@ -2683,14 +2683,19 @@
         "scenarioName": "area with color and segment",
         "visName": "GeoAreaChart"
     },
-    "GeoAreaChart.251227c8bb20949dc82b4559ea681c44": {
-        "comment": "Auto-generated insight for test scenario GeoAreaChart - area legend position bottom.",
-        "scenarioName": "area legend position bottom",
+    "GeoAreaChart.229c58bb37167e47de91be5a1b889fcb": {
+        "comment": "Auto-generated insight for test scenario GeoAreaChart - area legend position bottom-right.",
+        "scenarioName": "area legend position bottom-right",
         "visName": "GeoAreaChart"
     },
     "GeoAreaChart.3985ba32dfa5ff2a946c7a49c5b837b2": {
         "comment": "Auto-generated insight for test scenario GeoAreaChart - area viewport north america.",
         "scenarioName": "area viewport north america",
+        "visName": "GeoAreaChart"
+    },
+    "GeoAreaChart.41b04f8059a32e483b18bfdd867d8d59": {
+        "comment": "Auto-generated insight for test scenario GeoAreaChart - area legend position top-left.",
+        "scenarioName": "area legend position top-left",
         "visName": "GeoAreaChart"
     },
     "GeoAreaChart.4fe9f6ab697116f56ab06b3ed92a1dcd": {
@@ -2703,6 +2708,11 @@
         "scenarioName": "area legend with selection",
         "visName": "GeoAreaChart"
     },
+    "GeoAreaChart.5977d9acc044f55a9ce9e8381a49fd43": {
+        "comment": "Auto-generated insight for test scenario GeoAreaChart - area legend position bottom-left.",
+        "scenarioName": "area legend position bottom-left",
+        "visName": "GeoAreaChart"
+    },
     "GeoAreaChart.60b110131a437a26781d095391e04b0a": {
         "comment": "Auto-generated insight for test scenario GeoAreaChart - area chart-level custom gradient palette.",
         "scenarioName": "area chart-level custom gradient palette",
@@ -2713,29 +2723,19 @@
         "scenarioName": "area legend with category and color-scale",
         "visName": "GeoAreaChart"
     },
-    "GeoAreaChart.927eaba7ad215549e34c3d5748f44063": {
-        "comment": "Auto-generated insight for test scenario GeoAreaChart - area legend position left.",
-        "scenarioName": "area legend position left",
-        "visName": "GeoAreaChart"
-    },
     "GeoAreaChart.a6329e977538ade1062a41e4372e9dba": {
         "comment": "Auto-generated insight for test scenario GeoAreaChart - area with color attribute categories.",
         "scenarioName": "area with color attribute categories",
         "visName": "GeoAreaChart"
     },
-    "GeoAreaChart.d2ee210a0efe88c32a329224909a69c8": {
-        "comment": "Auto-generated insight for test scenario GeoAreaChart - area legend position right.",
-        "scenarioName": "area legend position right",
+    "GeoAreaChart.ba942c3e1fa4e5f310d5f5ab26c6b3ac": {
+        "comment": "Auto-generated insight for test scenario GeoAreaChart - area legend position top-right.",
+        "scenarioName": "area legend position top-right",
         "visName": "GeoAreaChart"
     },
     "GeoAreaChart.d9721f4cb94e76b8c4a6ece58db3f98d": {
         "comment": "Auto-generated insight for test scenario GeoAreaChart - area legend with color-scale only.",
         "scenarioName": "area legend with color-scale only",
-        "visName": "GeoAreaChart"
-    },
-    "GeoAreaChart.f71b96374c8601e0c843987d56dd8350": {
-        "comment": "Auto-generated insight for test scenario GeoAreaChart - area legend position top.",
-        "scenarioName": "area legend position top",
         "visName": "GeoAreaChart"
     },
     "GeoAreaChart.fd2f906e5c8a51c9734bc745c3cc5fa1": {
@@ -2813,14 +2813,9 @@
         "scenarioName": "area with clustered pushpin overlay",
         "visName": "GeoChart"
     },
-    "GeoPushpinChart.012f83c3798c79404e324c0b2b9fb593": {
-        "comment": "Auto-generated insight for test scenario GeoPushpinChart - legend position left.",
-        "scenarioName": "legend position left",
-        "visName": "GeoPushpinChart"
-    },
-    "GeoPushpinChart.21af35fd7d32645842d4a26cbfa49507": {
-        "comment": "Auto-generated insight for test scenario GeoPushpinChart - legend position bottom.",
-        "scenarioName": "legend position bottom",
+    "GeoPushpinChart.141c4be2ab0df6fc9ee2c3c31b6ce391": {
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - legend position bottom-left.",
+        "scenarioName": "legend position bottom-left",
         "visName": "GeoPushpinChart"
     },
     "GeoPushpinChart.2a4bfddafdaf950a22120387c5a9ef81": {
@@ -2841,11 +2836,6 @@
     "GeoPushpinChart.3cab1f3562ec39e9c183c588ea15d34c": {
         "comment": "Auto-generated insight for test scenario GeoPushpinChart - viewport europe.",
         "scenarioName": "viewport europe",
-        "visName": "GeoPushpinChart"
-    },
-    "GeoPushpinChart.4db9cbbbb5ae89d41b7623d3f5ad8647": {
-        "comment": "Auto-generated insight for test scenario GeoPushpinChart - legend position top.",
-        "scenarioName": "legend position top",
         "visName": "GeoPushpinChart"
     },
     "GeoPushpinChart.4ef0c8d4ea8a4ca22fdc8e0895b0bbb7": {
@@ -2883,9 +2873,9 @@
         "scenarioName": "pushpin size color gradient and segment",
         "visName": "GeoPushpinChart"
     },
-    "GeoPushpinChart.b9d042ecf17934f9c0471ccb4b9a9d5f": {
-        "comment": "Auto-generated insight for test scenario GeoPushpinChart - legend position right.",
-        "scenarioName": "legend position right",
+    "GeoPushpinChart.c5117de8f97db6890d2d1dc30050bdf6": {
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - legend position top-right.",
+        "scenarioName": "legend position top-right",
         "visName": "GeoPushpinChart"
     },
     "GeoPushpinChart.c8ad5ce0355f4921ba449ab37fc10d48": {
@@ -2898,9 +2888,19 @@
         "scenarioName": "clustered points",
         "visName": "GeoPushpinChart"
     },
+    "GeoPushpinChart.d79f0a89031a84446d5ae89e460e9601": {
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - legend position bottom-right.",
+        "scenarioName": "legend position bottom-right",
+        "visName": "GeoPushpinChart"
+    },
     "GeoPushpinChart.df1a1a5f15158f01c3ab2ba29ee59fc8": {
         "comment": "Auto-generated insight for test scenario GeoPushpinChart - viewport north america with segment.",
         "scenarioName": "viewport north america with segment",
+        "visName": "GeoPushpinChart"
+    },
+    "GeoPushpinChart.fdc023926c7a04fb8304908c9ce45523": {
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - legend position top-left.",
+        "scenarioName": "legend position top-left",
         "visName": "GeoPushpinChart"
     },
     "Headline.07812c19181ddb13069cad9383766cde": {

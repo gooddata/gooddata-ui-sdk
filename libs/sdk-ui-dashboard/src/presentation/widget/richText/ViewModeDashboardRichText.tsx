@@ -6,11 +6,11 @@ import { RichText } from "@gooddata/sdk-ui-kit";
 
 import { useRichTextWidgetFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { useDashboardExecConfig } from "../../../model/react/useWidgetExecConfig.js";
 import { selectSeparators } from "../../../model/store/config/configSelectors.js";
 import { DASHBOARD_SUMMARY_MACRO } from "../../../model/store/dashboardSummaryWorkflow/constants.js";
 import { selectCurrentDashboardSummaryWorkflowStatus } from "../../../model/store/dashboardSummaryWorkflow/dashboardSummaryWorkflowSelectors.js";
 import { selectCurrentDashboardSummary } from "../../../model/store/listedDashboards/listedDashboardsSummarySelectors.js";
-import { selectExecutionTimestamp } from "../../../model/store/ui/uiSelectors.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 
 import { type IDashboardRichTextProps } from "./types.js";
@@ -57,7 +57,7 @@ export function ViewModeDashboardRichText({
 
     const raw = widget?.content ?? "";
     const value = raw.split(DASHBOARD_SUMMARY_MACRO).join(summaryWorkflowReplaceString);
-    const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
+    const execConfig = useDashboardExecConfig();
 
     return (
         <RichText
@@ -71,9 +71,7 @@ export function ViewModeDashboardRichText({
                 show: !!richTextExportData,
                 dataAttributes: richTextExportData?.markdown,
             }}
-            execConfig={{
-                timestamp: executionTimestamp,
-            }}
+            execConfig={execConfig}
             onLoadingChanged={onLoadingChanged}
             onError={onError}
             LoadingComponent={LoadingComponent}

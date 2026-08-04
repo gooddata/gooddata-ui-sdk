@@ -5,6 +5,8 @@ import { describe, expect, it } from "vitest";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import {
     type CatalogItem,
+    type ICatalogDateDataset,
+    type ICatalogMeasure,
     type IMeasureValueFilter,
     type IRankingFilter,
     type ObjRefInScope,
@@ -14,7 +16,6 @@ import {
     measureLocalId,
     newAttribute,
     newMeasure,
-    uriRef,
 } from "@gooddata/sdk-model";
 
 import { filterAvailableItems, sanitizeFiltersForValidObjects } from "../availableItemsFactory.js";
@@ -22,27 +23,30 @@ import { filterAvailableItems, sanitizeFiltersForValidObjects } from "../availab
 describe("available item filtering", () => {
     describe("item filtering", () => {
         /*
-         * Note: reference workspace is created from bear. The 'refs' are thus UriRefs as that's what bear returns;
-         * the filtering must thus use uriRefs for available items.
+         * Note: the reference workspace recordings are Tiger-shaped, so catalog item refs are
+         * identifier refs and the filtering must use idRefs.
          *
-         * This does not diminish the benefit of those tests as they do not verify ref matching itself but rather
-         * whether simple objects or composite objects are filtered in correctly.
+         * These tests do not verify ref matching itself but rather whether simple objects or
+         * composite objects are filtered in correctly.
          */
         const AllItems: CatalogItem[] = ReferenceRecordings.Recordings.metadata!.catalog!.items;
 
         it("should return empty result if none match", () => {
-            expect(filterAvailableItems([uriRef("nonsense")], AllItems)).toEqual([]);
+            expect(filterAvailableItems([idRef("nonsense")], AllItems)).toEqual([]);
         });
+
         it("should filter-in simple object if ref matches", () => {
-            expect(
-                filterAvailableItems([uriRef("/gdc/md/referenceworkspace/obj/1267")], AllItems),
-            ).toMatchSnapshot();
+            const result = filterAvailableItems([idRef("of_activities", "measure")], AllItems);
+
+            expect(result).toHaveLength(1);
+            expect((result[0] as ICatalogMeasure).measure.id).toEqual("of_activities");
         });
 
         it("should filter-in date dataset if attribute ref matches", () => {
-            expect(
-                filterAvailableItems([uriRef("/gdc/md/referenceworkspace/obj/827")], AllItems),
-            ).toMatchSnapshot();
+            const result = filterAvailableItems([idRef("dt_activity_timestamp.day", "attribute")], AllItems);
+
+            expect(result).toHaveLength(1);
+            expect((result[0] as ICatalogDateDataset).dataSet.id).toEqual("dt_activity_timestamp");
         });
     });
 

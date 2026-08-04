@@ -627,6 +627,7 @@
     "objectShare.confirm.button": "ยืนยัน",
     "objectShare.selfRestrict.title": "จำกัดการเข้าถึงของคุณหรือไม่?",
     "objectShare.selfRestrict.warning": "คุณไม่สามารถตั้งค่าสิทธิ์ที่สูงขึ้นให้ตัวคุณเองได้",
+    "objectShare.workspaceLevel.inherited": "สิทธิ์นี้ได้รับการอนุญาตจากพื้นที่ทำงานแม่ และไม่สามารถลดระดับได้ที่นี่",
     "objectShare.grantee.you": "{name} (คุณ)",
     "objectShare.adminTag.label": "ผู้ดูแลระบบ",
     "objectShare.adminTag.tooltip": "คุณและผู้ดูแลระบบคนอื่นๆ มีสิทธิ์เข้าถึงออบเจ็กต์นี้อย่างเต็มรูปแบบ",

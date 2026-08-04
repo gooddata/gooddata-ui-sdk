@@ -627,6 +627,7 @@
     "objectShare.confirm.button": "Potrdi",
     "objectShare.selfRestrict.title": "Omejiti vaš dostop?",
     "objectShare.selfRestrict.warning": "Zase ne morete nastaviti višjih dovoljenj.",
+    "objectShare.workspaceLevel.inherited": "To dovoljenje je dodeljeno iz nadrejenega delovnega prostora in ga tukaj ni mogoče znižati.",
     "objectShare.grantee.you": "{name} (vi)",
     "objectShare.adminTag.label": "Skrbnik",
     "objectShare.adminTag.tooltip": "Vi in drugi administratorji imate poln dostop do tega predmeta.",

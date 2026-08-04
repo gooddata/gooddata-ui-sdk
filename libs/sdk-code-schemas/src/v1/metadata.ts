@@ -1799,6 +1799,7 @@ export interface Dashboard {
      * Whether persistent filters across tabs are enabled for this dashboard. Defaults to true.
      */
     persistent_filters_across_tabs?: boolean;
+    timezone_config?: TimezoneConfig;
     /**
      * Applies to the root layout. Whether all sections headers are enabled. Defaults to true.
      */
@@ -1835,6 +1836,23 @@ export interface Dashboard {
         EDIT?: Permission;
         SHARE?: Permission;
     };
+}
+/**
+ * Dashboard-level timezone configuration. If omitted, the workspace or organization timezone setting is used.
+ */
+export interface TimezoneConfig {
+    /**
+     * Dashboard default timezone. Use an IANA timezone ID or $browserDetected. If omitted, the workspace or organization timezone setting is used.
+     */
+    timezone_id?: "$browserDetected" | string;
+    /**
+     * Whether the dashboard timezone indicator is visible.
+     */
+    show_timezone_info?: boolean;
+    /**
+     * Whether viewers can override the dashboard timezone for their current session.
+     */
+    allow_user_override_in_view_mode?: boolean;
 }
 export interface Section {
     /**

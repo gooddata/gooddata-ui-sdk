@@ -2,6 +2,8 @@
 
 import { useMemo } from "react";
 
+import type { IAutomationMetadataObject } from "@gooddata/sdk-model";
+
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { DEFAULT_MAX_AUTOMATIONS } from "../../../../model/react/useDashboardAutomations/constants.js";
 import {
@@ -19,7 +21,16 @@ import {
 } from "../../../../model/store/ui/uiSelectors.js";
 import type { IScheduledEmailManagementDialogContextValue } from "../../contexts/ScheduledEmailManagementDialogContext.js";
 
-export function useBuildScheduledEmailManagementDialogContext(): IScheduledEmailManagementDialogContextValue {
+export interface IUseBuildScheduledEmailManagementDialogContextOpts {
+    automations: IAutomationMetadataObject[];
+    isLoading: boolean;
+}
+
+export function useBuildScheduledEmailManagementDialogContext(
+    opts: IUseBuildScheduledEmailManagementDialogContextOpts,
+): IScheduledEmailManagementDialogContextValue {
+    const { automations, isLoading } = opts;
+
     const isScheduleEmailDialogOpen = useDashboardSelector(selectIsScheduleEmailDialogOpen);
     const automationsInvalidationId = useDashboardSelector(selectAutomationsInvalidationId);
     const isEmbedded = useDashboardSelector(selectIsEmbedded);
@@ -41,6 +52,8 @@ export function useBuildScheduledEmailManagementDialogContext(): IScheduledEmail
             dashboardTitle,
             maxAutomations,
             unlimitedAutomations,
+            automations,
+            isLoading,
         }),
         [
             isScheduleEmailDialogOpen,
@@ -51,6 +64,8 @@ export function useBuildScheduledEmailManagementDialogContext(): IScheduledEmail
             dashboardTitle,
             maxAutomations,
             unlimitedAutomations,
+            automations,
+            isLoading,
         ],
     );
 }

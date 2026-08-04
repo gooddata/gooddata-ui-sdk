@@ -627,6 +627,7 @@
     "objectShare.confirm.button": "Vahvista",
     "objectShare.selfRestrict.title": "Rajoitetaanko käyttöoikeuttasi?",
     "objectShare.selfRestrict.warning": "Et voi asettaa itsellesi korkeampia oikeuksia.",
+    "objectShare.workspaceLevel.inherited": "Tämä käyttöoikeus myönnetään ylätason työtilasta, eikä sitä voi alentaa tässä.",
     "objectShare.grantee.you": "{name} (sinä)",
     "objectShare.adminTag.label": "Admin",
     "objectShare.adminTag.tooltip": "Sinulla ja muilla järjestelmänvalvojilla on täydet käyttöoikeudet tähän objektiin.",

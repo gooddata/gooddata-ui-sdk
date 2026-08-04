@@ -336,6 +336,39 @@ describe("Overlay", () => {
                 expect(props.overlay.onClose).not.toHaveBeenCalled();
             });
 
+            it("should not call onClose when pressing inside a floating panel anchored in a child overlay", async () => {
+                const props = {
+                    overlay: { closeOnOutsideClick: true, onClose: vi.fn() },
+                };
+
+                const overlay: any = renderOverlaySetup(div, props).current;
+                await act(async () => {
+                    overlay.align();
+                    await new Promise((resolve) => setTimeout(resolve, 20));
+                });
+
+                // A child overlay (later .overlay-wrapper in the DOM) portals to <body>, outside
+                // our subtree; a floating panel anchors inside it (e.g. a UiDropdown opened from
+                // a legacy dropdown opened from us) and portals to <body> as well.
+                const childOverlay = renderClickedElement("overlay-wrapper");
+                const anchorInChildOverlay = document.createElement("div");
+                childOverlay.appendChild(anchorInChildOverlay);
+                const panel = document.createElement("div");
+                panel.setAttribute("data-gd-floating-element", "true");
+                const menuItem = document.createElement("div");
+                panel.appendChild(menuItem);
+                document.body.appendChild(panel);
+                registerFloatingAnchor(panel, anchorInChildOverlay);
+
+                overlay.onDocumentMouseDown(createEvent({ target: menuItem }));
+                overlay.closeOnOutsideClick(createEvent({ target: menuItem }));
+
+                panel.remove();
+                childOverlay.remove();
+
+                expect(props.overlay.onClose).not.toHaveBeenCalled();
+            });
+
             it("should call onClose when pressing inside an unrelated floating panel anchored elsewhere", async () => {
                 const props = {
                     overlay: { closeOnOutsideClick: true, onClose: vi.fn() },

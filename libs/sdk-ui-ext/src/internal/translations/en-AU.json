@@ -627,6 +627,7 @@
     "objectShare.confirm.button": "Confirm",
     "objectShare.selfRestrict.title": "Restrict your access?",
     "objectShare.selfRestrict.warning": "You cannot set higher permissions for yourself.",
+    "objectShare.workspaceLevel.inherited": "This permission is granted from a parent workspace and cannot be reduced here.",
     "objectShare.grantee.you": "{name} (you)",
     "objectShare.adminTag.label": "Admin",
     "objectShare.adminTag.tooltip": "You and other administrators have full access to this object.",

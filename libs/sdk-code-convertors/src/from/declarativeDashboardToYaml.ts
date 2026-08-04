@@ -24,6 +24,7 @@ import {
     type IDashboardMatchAttributeFilter,
     type IDashboardMeasureValueFilter,
     type IDashboardMeasureValueFilterConfig,
+    type IDashboardTimezoneConfig,
     type IDashboardWidget,
     type IDrillDownIntersectionIgnoredAttributes,
     type IDrillDownReference,
@@ -137,6 +138,9 @@ export function declarativeDashboardToYaml(
 
     if (content.disablePersistentFiltersAcrossTabs) {
         doc.add(entryWithSpace("persistent_filters_across_tabs", false));
+    }
+    if (content.timezoneConfig) {
+        doc.add(entryWithSpace("timezone_config", declarativeTimezoneConfigToYaml(content.timezoneConfig)));
     }
 
     // Add dashboard tabs
@@ -629,6 +633,19 @@ export function declarativeRichTextWidgetToYaml(
     }
 
     return yamlWidget;
+}
+
+// TODO: NEN (CQ-2761) Update with proper regex/validation after final decision on timezone config IANA id format.
+function declarativeTimezoneConfigToYaml(
+    config: IDashboardTimezoneConfig,
+): NonNullable<Dashboard["timezone_config"]> {
+    return {
+        ...(config.timezoneId ? { timezone_id: config.timezoneId } : {}),
+        ...(config.showTimezoneInfo === undefined ? {} : { show_timezone_info: config.showTimezoneInfo }),
+        ...(config.allowUserOverrideInViewMode === undefined
+            ? {}
+            : { allow_user_override_in_view_mode: config.allowUserOverrideInViewMode }),
+    };
 }
 
 export function declarativeVisualizationSwitcherWidgetToYaml(

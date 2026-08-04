@@ -627,6 +627,7 @@
     "objectShare.confirm.button": "확인",
     "objectShare.selfRestrict.title": "귀하의 액세스를 제한하시겠습니까?",
     "objectShare.selfRestrict.warning": "귀하 자신에게 더 높은 권한을 설정할 수 없습니다.",
+    "objectShare.workspaceLevel.inherited": "이 권한은 상위 작업 공간에서 부여되며 여기에서 낮출 수 없습니다.",
     "objectShare.grantee.you": "{name} (귀하)",
     "objectShare.adminTag.label": "관리자",
     "objectShare.adminTag.tooltip": "귀하와 다른 관리자는 이 객체에 대한 전체 액세스 권한을 갖습니다.",

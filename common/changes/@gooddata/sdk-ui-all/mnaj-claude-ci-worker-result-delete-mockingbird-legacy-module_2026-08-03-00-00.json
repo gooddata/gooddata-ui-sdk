@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-backend-mockingbird: Remove the deprecated internal legacyRecordedBackend module and its exports (legacyRecordedDataView and the Legacy* recording types); all in-repo consumers were migrated to local test utilities.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

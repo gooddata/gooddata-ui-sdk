@@ -45,6 +45,7 @@ import {
     type IDashboardFilterReference,
     type IDashboardMeasureValueFilterConfig,
     type IDashboardPluginLink,
+    type IDashboardTimezoneConfig,
     type IDrillDownIntersectionIgnoredAttributes,
     type IDrillDownReference,
     type IDrillToAttributeUrl,
@@ -98,6 +99,7 @@ export type DashboardDefinition = Pick<
     | "plugins"
     | "dateFilterConfig"
     | "dateFilterConfigs"
+    | "timezoneConfig"
     | "disableCrossFiltering"
     | "disableUserFilterSave"
     | "disableUserFilterReset"
@@ -111,6 +113,8 @@ export type DashboardDefinition = Pick<
 > & {
     version: string;
 };
+
+type YamlTimezoneConfig = NonNullable<Dashboard["timezone_config"]>;
 
 /** @internal */
 export type FilterContextDefinition = Pick<IFilterContextDefinition, "filters"> & {
@@ -345,6 +349,7 @@ export function yamlDashboardToDeclarative(
               : processDashboardWithoutTabsV2(entities, input);
 
     const plugins = yamlPluginsToDeclarative(input.plugins);
+    const timezoneConfig = yamlTimezoneConfigToDeclarative(input.timezone_config);
     const [, permissions] = toDeclarativePermissions(input.permissions) as [
         Array<
             | DeclarativeAnalyticalDashboardPermissionForAssignee
@@ -359,6 +364,7 @@ export function yamlDashboardToDeclarative(
                   version: "3",
                   plugins,
                   tabs,
+                  ...(timezoneConfig ? { timezoneConfig } : {}),
                   ...(input.cross_filtering === false ? { disableCrossFiltering: true } : {}),
                   ...(input.user_filters_save === false ? { disableUserFilterSave: true } : {}),
                   ...(input.user_filters_reset === false ? { disableUserFilterReset: true } : {}),
@@ -375,6 +381,7 @@ export function yamlDashboardToDeclarative(
                   measureValueFilterConfigs,
                   dateFilterConfig,
                   dateFilterConfigs,
+                  ...(timezoneConfig ? { timezoneConfig } : {}),
                   ...(tabs ? { tabs } : {}),
                   ...(input.cross_filtering === false ? { disableCrossFiltering: true } : {}),
                   ...(input.user_filters_save === false ? { disableUserFilterSave: true } : {}),
@@ -917,6 +924,22 @@ function yamlPluginToDeclarative(input: Required<Dashboard>["plugins"][number]):
         type: "IDashboardPluginLink",
         plugin: createIdentifier<any>(input.id, { forceType: "dashboardPlugin" }),
         parameters: serialiseParameters(input.parameters ?? ""),
+    };
+}
+
+function yamlTimezoneConfigToDeclarative(
+    input: YamlTimezoneConfig | undefined,
+): IDashboardTimezoneConfig | undefined {
+    if (!input) {
+        return undefined;
+    }
+
+    return {
+        ...(input.timezone_id ? { timezoneId: input.timezone_id } : {}),
+        ...(input.show_timezone_info === undefined ? {} : { showTimezoneInfo: input.show_timezone_info }),
+        ...(input.allow_user_override_in_view_mode === undefined
+            ? {}
+            : { allowUserOverrideInViewMode: input.allow_user_override_in_view_mode }),
     };
 }
 

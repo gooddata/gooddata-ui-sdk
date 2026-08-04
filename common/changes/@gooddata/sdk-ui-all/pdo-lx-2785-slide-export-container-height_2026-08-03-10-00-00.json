@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-dashboard: Fix slide export of dashboards with containers, where the insights inside a container rendered with zero height and only their titles were visible, by giving export section grid rows a definite size. A section header no longer splits the slide height evenly with the widget below it either, so a slide with a section title now uses the whole slide for its content.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

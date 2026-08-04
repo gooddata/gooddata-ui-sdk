@@ -3,11 +3,16 @@
 import { useMemo } from "react";
 
 import {
+    type FilterContextItem,
     type IAutomationMetadataObject,
     type IInsight,
+    type INotificationChannelIdentifier,
+    type INotificationChannelMetadataObject,
     type IWidget,
+    type IWorkspaceUser,
     objRefToString,
 } from "@gooddata/sdk-model";
+import type { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import {
     createScheduledEmail as createScheduledEmailCmd,
@@ -20,7 +25,6 @@ import { selectDateFormat } from "../../../../model/store/config/configSelectors
 import { selectIsCrossFiltering } from "../../../../model/store/drill/drillSelectors.js";
 import {
     selectAutomationCommonDateFilterId,
-    selectAutomationDefaultSelectedFilters,
     selectDashboardHiddenFilters,
 } from "../../../../model/store/filtering/dashboardFilterSelectors.js";
 import { selectDashboardId, selectDashboardTitle } from "../../../../model/store/meta/metaSelectors.js";
@@ -38,14 +42,28 @@ import { useCommandAsPromise, useDeleteAutomation } from "./useCommandAsPromise.
 export interface IUseBuildScheduledEmailDialogContextOpts {
     widget?: IWidget;
     insight?: IInsight;
+    scheduledExportToEdit?: IAutomationMetadataObject;
+    users: IWorkspaceUser[];
+    usersError?: GoodDataSdkError;
+    notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
+    isLoading: boolean;
+    dashboardFilters?: FilterContextItem[];
 }
 
 export function useBuildScheduledEmailDialogContext(
     opts: IUseBuildScheduledEmailDialogContextOpts,
 ): IScheduledEmailDialogContextValue {
-    const { widget, insight } = opts;
+    const {
+        widget,
+        insight,
+        scheduledExportToEdit,
+        users,
+        usersError,
+        notificationChannels,
+        isLoading,
+        dashboardFilters,
+    } = opts;
 
-    const dashboardFilters = useDashboardSelector(selectAutomationDefaultSelectedFilters);
     const hiddenFilters = useDashboardSelector(selectDashboardHiddenFilters);
     const dashboardId = useDashboardSelector(selectDashboardId);
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
@@ -107,6 +125,11 @@ export function useBuildScheduledEmailDialogContext(
             createScheduledEmail,
             saveScheduledEmail,
             deleteScheduledEmail,
+            scheduledExportToEdit,
+            users,
+            usersError,
+            notificationChannels,
+            isLoading,
         }),
         [
             widget,
@@ -129,6 +152,11 @@ export function useBuildScheduledEmailDialogContext(
             createScheduledEmail,
             saveScheduledEmail,
             deleteScheduledEmail,
+            scheduledExportToEdit,
+            users,
+            usersError,
+            notificationChannels,
+            isLoading,
         ],
     );
 }

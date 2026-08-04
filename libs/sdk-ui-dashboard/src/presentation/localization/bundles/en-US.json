@@ -1475,6 +1475,10 @@
         "text": "The creator can edit this dashboard. Other users with appropriate user roles can edit this dashboard when they drill to it.",
         "crowdinContext": "Tooltip explaining that while the dashboard is private, users with proper roles can edit it when accessing through drill navigation"
     },
+    "topBar.timezoneIndicator.tooltip": {
+        "text": "Time zone: {name} ({offset})",
+        "crowdinContext": "Tooltip of the time zone indicator in the dashboard top bar. The {name} placeholder is the friendly time zone name (e.g. Prague), the {offset} placeholder is its UTC offset (e.g. GMT+02:00)."
+    },
     "dashboard.shareDialog.removeAccessGranteeTooltip": {
         "text": "Remove access to this dashboard.",
         "crowdinContext": "Tooltip for the button that revokes a user's or group's access to the dashboard"

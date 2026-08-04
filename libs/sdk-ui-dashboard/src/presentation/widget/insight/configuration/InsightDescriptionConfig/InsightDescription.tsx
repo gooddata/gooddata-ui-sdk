@@ -8,8 +8,7 @@ import { useIntl } from "react-intl";
 import { type IFilter, type ISeparators } from "@gooddata/sdk-model";
 import { type IAlignPoint, RichTextWithTooltip } from "@gooddata/sdk-ui-kit";
 
-import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
-import { selectExecutionTimestamp } from "../../../../../model/store/ui/uiSelectors.js";
+import { useDashboardExecConfig } from "../../../../../model/react/useWidgetExecConfig.js";
 
 const richTextTooltipAlignPoints: IAlignPoint[] = [
     { align: "bl tl", offset: { x: 4, y: 5 } },
@@ -40,7 +39,7 @@ export function InsightDescription({
     const [isRichTextEditing, setIsRichTextEditing] = useState(false);
     const [richTextValue, setRichTextValue] = useState(description);
 
-    const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
+    const execConfig = useDashboardExecConfig();
 
     useEffect(() => {
         setRichTextValue(description);
@@ -92,9 +91,7 @@ export function InsightDescription({
                     LoadingComponent={LoadingComponent}
                     filters={insightFilters}
                     separators={separators}
-                    execConfig={{
-                        timestamp: executionTimestamp,
-                    }}
+                    execConfig={execConfig}
                 />
             </div>
         </label>

@@ -175,7 +175,7 @@ export const AreaPrimaryWithPushpinOverlay = () =>
                             fillOpacity: 0.9,
                         },
                         legend: {
-                            position: "right",
+                            position: "top-right",
                         },
                         mapStyle: {
                             glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
@@ -478,7 +478,7 @@ export const AreaPrimaryWithTwoPushpinOverlays = () =>
                             fillOpacity: 0.9,
                         },
                         legend: {
-                            position: "right",
+                            position: "top-right",
                         },
                         mapStyle: {
                             glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
@@ -722,7 +722,7 @@ export const MultiLayerChartLevelSegmentMapping = () =>
                             },
                         ],
                         legend: {
-                            position: "right",
+                            position: "top-right",
                         },
                         mapStyle: {
                             glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
@@ -994,7 +994,7 @@ export const MultiLayerPerLayerSegmentMappingOverride = () =>
                             },
                         ],
                         legend: {
-                            position: "right",
+                            position: "top-right",
                         },
                         mapStyle: {
                             glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",

@@ -627,6 +627,7 @@
     "objectShare.confirm.button": "Confirmar",
     "objectShare.selfRestrict.title": "Restringir o seu acesso?",
     "objectShare.selfRestrict.warning": "Não pode definir permissões superiores para si.",
+    "objectShare.workspaceLevel.inherited": "Esta permissão é concedida a partir de um espaço de trabalho principal e não pode ser reduzida aqui.",
     "objectShare.grantee.you": "{name} (você)",
     "objectShare.adminTag.label": "Administrador",
     "objectShare.adminTag.tooltip": "Você e outros administradores têm acesso total a este objeto.",

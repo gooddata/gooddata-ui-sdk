@@ -11,6 +11,7 @@ import { convertGenAiTypeToReferenceType } from "../utils.js";
 
 import { mergeContexts } from "./build.js";
 import { isReferenceChanged } from "./isReferenceChanged.js";
+import { removeAmbientContribution } from "./removeContextReference.js";
 
 export function addContextReference(context: StoreContext, reference?: IGenAIContextObject): StoreContext {
     const { ambient, active } = context;
@@ -81,18 +82,20 @@ export function addAmbientContextReferences(
     context: StoreContext,
     userContext?: IGenAIUserContext,
 ): StoreContext {
-    const updateActive = Boolean(
-        !context.ambient ||
-        context.active?.view?.dashboard ||
-        isReferenceChanged(context.ambient, userContext),
-    );
+    const referenceChanged = isReferenceChanged(context.ambient, userContext);
+    const updateActive = Boolean(!context.ambient || context.active?.view?.dashboard || referenceChanged);
 
     return {
         ...context,
         ambient: userContext,
         ...(updateActive
             ? {
-                  active: mergeContexts(context.active, userContext),
+                  active: mergeContexts(
+                      referenceChanged
+                          ? removeAmbientContribution(context.active, context.ambient)
+                          : context.active,
+                      userContext,
+                  ),
               }
             : {}),
     };

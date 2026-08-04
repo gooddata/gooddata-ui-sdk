@@ -674,7 +674,7 @@
             "sortBy": [],
             "workspace": "reference-workspace"
         },
-        "scenario": "legend position top",
+        "scenario": "legend position top-left",
         "vis": "GeoPushpinChart"
     },
     {
@@ -812,7 +812,7 @@
             "sortBy": [],
             "workspace": "reference-workspace"
         },
-        "scenario": "legend position right",
+        "scenario": "legend position top-right",
         "vis": "GeoPushpinChart"
     },
     {
@@ -950,7 +950,7 @@
             "sortBy": [],
             "workspace": "reference-workspace"
         },
-        "scenario": "legend position bottom",
+        "scenario": "legend position bottom-left",
         "vis": "GeoPushpinChart"
     },
     {
@@ -1088,7 +1088,7 @@
             "sortBy": [],
             "workspace": "reference-workspace"
         },
-        "scenario": "legend position left",
+        "scenario": "legend position bottom-right",
         "vis": "GeoPushpinChart"
     },
     {

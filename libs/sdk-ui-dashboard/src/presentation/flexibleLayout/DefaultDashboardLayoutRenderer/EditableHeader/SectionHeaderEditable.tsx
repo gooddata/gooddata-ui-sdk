@@ -15,9 +15,9 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../model/react/DashboardStoreProvider.js";
+import { useDashboardExecConfig } from "../../../../model/react/useWidgetExecConfig.js";
 import { selectSeparators } from "../../../../model/store/config/configSelectors.js";
 import { uiActions } from "../../../../model/store/ui/index.js";
-import { selectExecutionTimestamp } from "../../../../model/store/ui/uiSelectors.js";
 import { useDashboardComponentsContext } from "../../../dashboardContexts/DashboardComponentsContext.js";
 
 import { EditableLabelWithBubble } from "./EditableLabelWithBubble.js";
@@ -100,7 +100,7 @@ export function SectionHeaderEditable({
     const serializedSectionIndex = serializeLayoutSectionPath(section.index());
     const isNestedLayout = section.layout().path() !== undefined;
 
-    const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
+    const execConfig = useDashboardExecConfig();
 
     return (
         <div className={cx("gd-row-header-edit", { "gd-row-header-edit--nested": isNestedLayout })}>
@@ -149,9 +149,7 @@ export function SectionHeaderEditable({
                         isFiltersLoading={loading}
                         separators={separators}
                         LoadingComponent={LoadingComponent}
-                        execConfig={{
-                            timestamp: executionTimestamp,
-                        }}
+                        execConfig={execConfig}
                     />
                 </div>
             </div>

@@ -86,6 +86,8 @@ function RichTextWithTooltipCore({
                 execConfig={{
                     timestamp: execConfig?.timestamp,
                     dataSamplingPercentage: execConfig?.dataSamplingPercentage,
+                    // omit when undefined so it does not bust the execution's defFingerprint
+                    ...(execConfig?.timezone ? { timezone: execConfig.timezone } : {}),
                 }}
             />
         );
@@ -107,6 +109,7 @@ function RichTextWithTooltipCore({
         separators,
         execConfig?.timestamp,
         execConfig?.dataSamplingPercentage,
+        execConfig?.timezone,
     ]);
 
     if (!showTooltip) {

@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type HTMLAttributes, type ReactElement } from "react";
 
@@ -6,6 +6,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
+import { isClickInsideOwnSubtree } from "../../@ui/hooks/useCloseOnOutsideClick.js";
 import { type IMenuProps, Menu } from "../Menu.js";
 import { SubMenu } from "../SubMenu.js";
 
@@ -51,6 +52,19 @@ describe("Menu renderer", () => {
 
         expect(isContentRenderedInBody()).toBeInTheDocument();
         expect(screen.getByText("1")).toBeInTheDocument();
+    });
+
+    it("should mark the portaled content as a floating element anchored to the toggler", () => {
+        const { container } = renderComponent({ menu: { opened: true } });
+
+        // the portal is DOM-outside whatever opened the menu, so overlay/dialog outside-click
+        // detection must be able to attribute its clicks through the floating-anchor registry
+        const content = screen.getByRole("content");
+        const panel = content.closest("[data-gd-floating-element]");
+        expect(panel).not.toBeNull();
+
+        // the subtree that hosts the toggler owns the portaled content through the anchor chain
+        expect(isClickInsideOwnSubtree(content, container)).toBe(true);
     });
 
     it("should render the menu content to portal target", () => {

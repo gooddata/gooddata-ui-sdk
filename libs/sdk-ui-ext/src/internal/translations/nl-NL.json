@@ -627,6 +627,7 @@
     "objectShare.confirm.button": "Bevestig",
     "objectShare.selfRestrict.title": "Uw toegang beperken?",
     "objectShare.selfRestrict.warning": "U kunt geen hogere machtigingen voor uzelf instellen.",
+    "objectShare.workspaceLevel.inherited": "Deze machtiging wordt verleend vanuit een bovenliggende werkruimte en kan hier niet worden verlaagd.",
     "objectShare.grantee.you": "{name} (u)",
     "objectShare.adminTag.label": "Admin",
     "objectShare.adminTag.tooltip": "U en andere beheerders hebben volledige toegang tot dit object.",

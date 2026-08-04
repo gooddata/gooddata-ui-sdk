@@ -2,19 +2,13 @@
 
 import {
     type FilterContextItem,
-    type IAutomationMetadataObject,
     type IAutomationVisibleFilter,
     type IExportDefinitionVisualizationObjectSettings,
-    type IFilter,
-    type IInsight,
-    type INotificationChannelIdentifier,
-    type INotificationChannelMetadataObject,
-    type IWidget,
-    type IWorkspaceUser,
 } from "@gooddata/sdk-model";
 
 import type { IAutomationFiltersTab } from "../../../../../model/store/filtering/types.js";
 import { useAutomationsContext } from "../../../contexts/AutomationsContext.js";
+import { useScheduledEmailDialogContext } from "../../../contexts/ScheduledEmailDialogContext.js";
 
 import { useScheduledEmailEffectiveFilters } from "./useScheduledEmailEffectiveFilters.js";
 import { useScheduledEmailExportSettings } from "./useScheduledEmailExportSettings.js";
@@ -23,16 +17,8 @@ import { useScheduledEmailFormState } from "./useScheduledEmailFormState.js";
 import { useScheduledEmailFormValidity } from "./useScheduledEmailFormValidity.js";
 
 export interface IUseEditScheduledEmailProps {
-    scheduledExportToEdit?: IAutomationMetadataObject;
-    notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
     maxAutomationsRecipients: number;
-    /** Workspace users, lazy-loaded in the connector and passed via dialog props. */
-    users: IWorkspaceUser[];
-    widget?: IWidget;
-    insight?: IInsight;
-    widgetFilters?: IFilter[];
     editedAutomationFilters?: FilterContextItem[];
-    dashboardFilters?: FilterContextItem[];
     setEditedAutomationFilters: (filters: FilterContextItem[]) => void;
 
     /**
@@ -57,13 +43,7 @@ export interface IUseEditScheduledEmailProps {
 }
 
 export function useEditScheduledEmail({
-    scheduledExportToEdit,
-    notificationChannels,
-    insight,
-    widget,
-    users,
     editedAutomationFilters,
-    dashboardFilters,
     editedAutomationFiltersByTab,
     maxAutomationsRecipients,
     setEditedAutomationFilters,
@@ -80,6 +60,16 @@ export function useEditScheduledEmail({
     const {
         features: { enableAutomationEvaluationMode },
     } = useAutomationsContext();
+
+    const {
+        scheduledExportToEdit,
+        widget,
+        insight,
+        users,
+        usersError,
+        notificationChannels,
+        dashboardFilters,
+    } = useScheduledEmailDialogContext();
 
     const areDashboardFiltersChanged = !!dashboardFilters;
 
@@ -211,6 +201,8 @@ export function useEditScheduledEmail({
         editedAutomation,
         isCronValid,
         notificationChannels,
+        users,
+        usersError,
         isDashboardExportSelected,
         isCsvExportSelected,
         isXlsxExportSelected,

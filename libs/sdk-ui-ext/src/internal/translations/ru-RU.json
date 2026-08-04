@@ -627,6 +627,7 @@
     "objectShare.confirm.button": "Подтвердить",
     "objectShare.selfRestrict.title": "Ограничить ваш доступ?",
     "objectShare.selfRestrict.warning": "Вы не можете установить для себя более высокие разрешения.",
+    "objectShare.workspaceLevel.inherited": "Это разрешение предоставлено из родительской рабочей области и не может быть понижено здесь.",
     "objectShare.grantee.you": "{name} (вы)",
     "objectShare.adminTag.label": "Администратор",
     "objectShare.adminTag.tooltip": "Вы и другие администраторы имеете полный доступ к этому объекту.",

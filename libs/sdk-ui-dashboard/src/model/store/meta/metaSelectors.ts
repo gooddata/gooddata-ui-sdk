@@ -35,9 +35,11 @@ import {
     isDashboardTextAttributeFilter,
     isTempFilterContext,
     normalizeDashboardTimezoneConfig,
+    resolveTimezoneId,
     uriRef,
 } from "@gooddata/sdk-model";
 
+import { selectEnableDashboardTimezone } from "../config/configSelectors.js";
 import { selectAttributeFilterConfigsOverridesByTab } from "../tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
     selectDateFilterConfigOverrides,
@@ -713,6 +715,28 @@ export const selectDashboardTimezoneConfig: DashboardSelector<IDashboardTimezone
     createSelector(selectDashboardDescriptor, (state) => {
         return state.timezoneConfig;
     });
+
+/**
+ * Selects the effective dashboard timezone as a concrete IANA timezone ID.
+ *
+ * @remarks
+ * Returns undefined when the dashboard timezone feature is disabled or when the dashboard has no
+ * timezone configured. The browser-detected sentinel is resolved to the browser's IANA timezone
+ * here — this selector is the single place where the sentinel is resolved, so consumers always
+ * receive a concrete timezone ID safe to pass to executions and exports.
+ *
+ * @alpha
+ */
+export const selectEffectiveDashboardTimezone: DashboardSelector<string | undefined> = createSelector(
+    selectEnableDashboardTimezone,
+    selectDashboardTimezoneConfig,
+    (isEnabled, timezoneConfig) => {
+        if (!isEnabled || !timezoneConfig?.timezoneId) {
+            return undefined;
+        }
+        return resolveTimezoneId(timezoneConfig.timezoneId);
+    },
+);
 
 //
 //
