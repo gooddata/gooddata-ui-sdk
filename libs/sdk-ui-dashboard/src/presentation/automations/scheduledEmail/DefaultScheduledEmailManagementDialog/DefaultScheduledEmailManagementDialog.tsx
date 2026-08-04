@@ -15,8 +15,6 @@ export function ScheduledEmailManagementDialog({
     onAdd,
     onEdit,
     onClose,
-    isLoadingScheduleData,
-    automations,
 }: IScheduledEmailManagementDialogProps) {
     const handleScheduleEdit = useCallback(
         (scheduledEmail: IAutomationMetadataObject) => {
@@ -30,8 +28,6 @@ export function ScheduledEmailManagementDialog({
             onAdd={onAdd}
             onClose={onClose}
             onEdit={handleScheduleEdit}
-            isLoadingScheduleData={isLoadingScheduleData}
-            automations={automations}
         />
     );
 }

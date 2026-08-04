@@ -2,6 +2,10 @@
 
 import { type ReactNode, useCallback, useEffect, useRef, useState } from "react";
 
+import {
+    FLOATING_ELEMENT_DATA_ATTR,
+    useRegisterFloatingAnchor,
+} from "../../@ui/hooks/useCloseOnOutsideClick.js";
 import { type IMenuPositionConfig } from "../MenuSharedTypes.js";
 
 import {
@@ -29,6 +33,15 @@ export function PositionedMenuContent(props: IPositionedMenuContentProps) {
     });
 
     const menuElRef = useRef<HTMLDivElement>(null);
+
+    // The menu portals to <body>, outside whatever opened it, so overlay/dialog outside-click
+    // detection cannot attribute its clicks by DOM containment. Mark it as a floating element and
+    // register the toggler as its anchor, so ownership resolves through the anchor chain (same
+    // contract as UiFloatingElement).
+    const assignMenuEl = useCallback((node: HTMLElement | null) => {
+        menuElRef.current = node as HTMLDivElement | null;
+    }, []);
+    const setMenuElWithAnchorRegistry = useRegisterFloatingAnchor(assignMenuEl, props.togglerEl);
 
     const positionMenu = useCallback(() => {
         if (!props.togglerEl || !menuElRef.current) {
@@ -86,7 +99,8 @@ export function PositionedMenuContent(props: IPositionedMenuContentProps) {
                 left: state.left,
                 top: state.top,
             }}
-            ref={menuElRef}
+            ref={setMenuElWithAnchorRegistry}
+            {...{ [FLOATING_ELEMENT_DATA_ATTR]: true }}
         >
             {props.children}
         </div>

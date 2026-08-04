@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: e0a88378a899daa9d5b1c397c404dcccd795da324d31e7c10ee7c72cab374685
+# schema-hash: 47f80eb639d11cce66768ffb9de4c10096abb9ade60d47e9d72e5086efc0bcc3
 
 from __future__ import annotations
 
@@ -187,6 +187,8 @@ __all__ = [
     "Target",
     "Target1",
     "TextWrapping",
+    "TimezoneConfig",
+    "TimezoneId",
     "Title",
     "TotalItem",
     "Using",
@@ -593,6 +595,9 @@ LineStyleMapping: TypeAlias = dict[str, LineStyleMapping1]
 
 
 ComplexColorItem: TypeAlias = float | str
+
+
+TimezoneId: TypeAlias = Literal['$browserDetected'] | str
 
 
 class IgnoredDrillDown1(TypedDict):
@@ -1113,6 +1118,12 @@ class Permissions(TypedDict):
     VIEW: NotRequired[Permission]
     EDIT: NotRequired[Permission]
     SHARE: NotRequired[Permission]
+
+
+class TimezoneConfig(TypedDict):
+    timezone_id: NotRequired[TimezoneId]
+    show_timezone_info: NotRequired[bool]
+    allow_user_override_in_view_mode: NotRequired[bool]
 
 
 class Widget1(TypedDict):
@@ -2246,6 +2257,7 @@ class Dashboard1(TypedDict):
     user_filters_save: NotRequired[bool]
     filter_views: NotRequired[bool]
     persistent_filters_across_tabs: NotRequired[bool]
+    timezone_config: NotRequired[TimezoneConfig]
     enable_section_headers: NotRequired[bool]
     sections: NotRequired[list[Section]]
     filters: NotRequired[DashboardFiltersModel]
@@ -2291,6 +2303,7 @@ class Dashboard(TypedDict):
     user_filters_save: NotRequired[bool]
     filter_views: NotRequired[bool]
     persistent_filters_across_tabs: NotRequired[bool]
+    timezone_config: NotRequired[TimezoneConfig]
     enable_section_headers: NotRequired[bool]
     sections: NotRequired[list[Section]]
     filters: NotRequired[DashboardFiltersModel]

@@ -5,7 +5,7 @@ import { type FC } from "react";
 import { useIntl } from "react-intl";
 import { connect } from "react-redux";
 
-import { settingsSelector } from "../store/chatWindow/chatWindowSelectors.js";
+import { hasPinnedContextSelector, settingsSelector } from "../store/chatWindow/chatWindowSelectors.js";
 import { setFullscreenAction, setHistoryAction } from "../store/chatWindow/chatWindowSlice.js";
 import { hasMessagesSelector } from "../store/messages/messagesSelectors.js";
 import { clearThreadAction, startNewConversationAction } from "../store/messages/messagesSlice.js";
@@ -20,6 +20,7 @@ type GenAIChatHeaderOwnProps = {
 
 type GenAIChatHeaderStateProps = {
     hasMessages: boolean;
+    hasPinnedContext: boolean;
     settings: ReturnType<typeof settingsSelector>;
 };
 
@@ -39,6 +40,7 @@ function GenAIChatHeaderComponent({
     setHistory,
     clearThread,
     hasMessages,
+    hasPinnedContext,
     setFullscreen,
     startNewConversation,
     onClose,
@@ -46,6 +48,7 @@ function GenAIChatHeaderComponent({
     const intl = useIntl();
 
     const { isFullscreen, isSmallScreen } = useFullscreenCheck();
+    const canStartOver = hasMessages || hasPinnedContext;
 
     return (
         <div className="gd-gen-ai-chat__window__header">
@@ -60,7 +63,7 @@ function GenAIChatHeaderComponent({
                     icon="ccw"
                     tooltip={intl.formatMessage({ id: "gd.gen-ai.header.reset-tooltip" })}
                     onClick={() => clearThread()}
-                    disabled={!hasMessages}
+                    disabled={!canStartOver}
                 />
             )}
             <div className="gd-gen-ai-chat__window__header__gap"></div>
@@ -74,7 +77,7 @@ function GenAIChatHeaderComponent({
                                 id: "gd.gen-ai.header.new-conversation-tooltip",
                             })}
                             onClick={() => startNewConversation()}
-                            disabled={!hasMessages}
+                            disabled={!canStartOver}
                         />
                     ) : null}
                     <HeaderIcon
@@ -101,6 +104,7 @@ function GenAIChatHeaderComponent({
 
 const mapStateToProps = (state: RootState): GenAIChatHeaderStateProps => ({
     hasMessages: hasMessagesSelector(state),
+    hasPinnedContext: hasPinnedContextSelector(state),
     settings: settingsSelector(state),
 });
 

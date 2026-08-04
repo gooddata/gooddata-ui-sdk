@@ -29,6 +29,7 @@ import { messages } from "../../locales.js";
 import { createInsightRequested } from "../../model/events/lab.js";
 import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
 import { useDashboardEventDispatch } from "../../model/react/useDashboardEventDispatch.js";
+import { useDashboardExecConfig } from "../../model/react/useWidgetExecConfig.js";
 import { selectBackendCapabilities } from "../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
 import {
     selectAllowCreateInsightRequest,
@@ -38,10 +39,7 @@ import {
     selectSettings,
 } from "../../model/store/config/configSelectors.js";
 import { selectCanCreateVisualization } from "../../model/store/permissions/permissionsSelectors.js";
-import {
-    selectExecutionTimestamp,
-    selectInsightListLastUpdateRequested,
-} from "../../model/store/ui/uiSelectors.js";
+import { selectInsightListLastUpdateRequested } from "../../model/store/ui/uiSelectors.js";
 import { selectCurrentUser } from "../../model/store/user/userSelectors.js";
 import { getAuthor } from "../../model/utils/author.js";
 import { useDashboardComponentsContext } from "../dashboardContexts/DashboardComponentsContext.js";
@@ -123,7 +121,7 @@ export function InsightList({
     const canCreateVisualization = useDashboardSelector(selectCanCreateVisualization);
     const allowCreateInsightRequest = useDashboardSelector(selectAllowCreateInsightRequest);
     const settings = useDashboardSelector(selectSettings);
-    const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
+    const execConfig = useDashboardExecConfig();
     const objectAvailability = useDashboardSelector(selectObjectAvailabilityConfig);
     const isFilteringByTagsEnabled = useDashboardSelector(selectEnableVisualizationFilteringByTags);
     const enableCatalogSmartSearchResults = useDashboardSelector(selectEnableCatalogSmartSearchResults);
@@ -314,9 +312,7 @@ export function InsightList({
                             onClick={() => onSelect?.(insight)}
                             metadataTimeZone={settings?.metadataTimeZone}
                             useReferences
-                            richTextExecConfig={{
-                                timestamp: executionTimestamp,
-                            }}
+                            richTextExecConfig={execConfig}
                             LoadingComponent={LoadingComponent}
                         />
                     );

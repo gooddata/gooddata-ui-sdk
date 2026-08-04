@@ -1615,6 +1615,9 @@ export function DefaultShareStatus(props: IShareStatusProps): ReactElement | nul
 // @internal (undocumented)
 export function DefaultShowAsTableButton(props: IShowAsTableButtonProps): ReactElement;
 
+// @alpha
+export function DefaultTimezoneIndicator(props: ITimezoneIndicatorProps): ReactElement | null;
+
 // @alpha (undocumented)
 export function DefaultTitle(input: ITitleProps): JSX.Element;
 
@@ -5378,6 +5381,13 @@ export interface IDashboardThemingProps {
     themeModifier?: (theme: ITheme) => ITheme;
 }
 
+// @alpha
+export interface IDashboardTimezoneInfo {
+    name: string;
+    offsetLabel: string;
+    timezoneId: string;
+}
+
 // @beta
 export interface IDashboardUserInteractionTriggered extends IDashboardEvent {
     // (undocumented)
@@ -7782,7 +7792,6 @@ export interface IScheduledEmailDialogContextValue {
     commonDateFilterMode: DashboardDateFilterConfigMode;
     // (undocumented)
     createScheduledEmail(se: IAutomationMetadataObjectDefinition): Promise<IAutomationMetadataObject>;
-    // (undocumented)
     dashboardFilters?: FilterContextItem[];
     // (undocumented)
     dashboardId?: string;
@@ -7799,8 +7808,13 @@ export interface IScheduledEmailDialogContextValue {
     // (undocumented)
     insight?: IInsight;
     isCrossFiltering: boolean;
+    isLoading: boolean;
+    notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
     // (undocumented)
     saveScheduledEmail(se: IAutomationMetadataObject): Promise<IAutomationMetadataObject>;
+    scheduledExportToEdit?: IAutomationMetadataObject;
+    users: IWorkspaceUser[];
+    usersError?: GoodDataSdkError;
     // (undocumented)
     widget?: IWidget;
     // (undocumented)
@@ -7811,10 +7825,14 @@ export interface IScheduledEmailDialogContextValue {
 
 // @alpha (undocumented)
 export interface IScheduledEmailDialogProps {
+    // @deprecated
     dashboardFilters?: FilterContextItem[];
+    // @deprecated
     insight?: IInsight;
+    // @deprecated
     isLoading?: boolean;
-    notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
+    // @deprecated
+    notificationChannels?: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
     onBack?: () => void;
     onCancel?: () => void;
     onDeleteError?: (error: GoodDataSdkError) => void;
@@ -7825,20 +7843,27 @@ export interface IScheduledEmailDialogProps {
     onSaveSuccess?: () => void;
     onSubmit?: (scheduledEmailDefinition: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => void;
     onSuccess?: (scheduledEmailDefinition: IAutomationMetadataObject) => void;
+    // @deprecated
     scheduledExportToEdit?: IAutomationMetadataObject;
-    users: IWorkspaceUser[];
+    // @deprecated
+    users?: IWorkspaceUser[];
+    // @deprecated
     usersError?: GoodDataSdkError;
+    // @deprecated
     widget?: IWidget;
+    // @deprecated
     widgetFilters?: IFilter[];
 }
 
 // @alpha
 export interface IScheduledEmailManagementDialogContextValue {
+    automations: IAutomationMetadataObject[];
     automationsInvalidationId?: number;
     dashboardId?: string;
     dashboardTitle?: string;
     enableAccessibilityMode: boolean;
     isEmbedded: boolean;
+    isLoading: boolean;
     isScheduleEmailDialogOpen: boolean;
     maxAutomations: number;
     unlimitedAutomations: boolean;
@@ -7846,14 +7871,18 @@ export interface IScheduledEmailManagementDialogContextValue {
 
 // @alpha (undocumented)
 export interface IScheduledEmailManagementDialogProps {
-    automations: IAutomationMetadataObject[];
-    isLoadingScheduleData: boolean;
-    notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
+    // @deprecated
+    automations?: IAutomationMetadataObject[];
+    // @deprecated
+    isLoadingScheduleData?: boolean;
+    // @deprecated
+    notificationChannels?: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
     onAdd?: () => void;
     onClose?: () => void;
     onDeleteError?: (error: GoodDataSdkError) => void;
     onDeleteSuccess?: () => void;
     onEdit?: (scheduledMail: IAutomationMetadataObject) => void;
+    // @deprecated
     scheduleDataError?: GoodDataSdkError;
 }
 
@@ -8904,6 +8933,13 @@ export interface ITabState {
     title?: string;
 }
 
+// @alpha (undocumented)
+export interface ITimezoneIndicatorProps {
+    defaultTimezone?: string;
+    timezone?: IDashboardTimezoneInfo;
+    timezoneConfig?: IDashboardTimezoneConfig;
+}
+
 // @public
 export interface ITitleCustomizer {
     withCustomDecorator(providerFactory: (next: TitleComponentProvider) => OptionalTitleComponentProvider): ITitleCustomizer;
@@ -8974,6 +9010,8 @@ export interface ITopBarProps {
     menuButtonProps: IMenuButtonProps;
     // (undocumented)
     shareStatusProps: IShareStatusProps;
+    // (undocumented)
+    timezoneIndicatorProps?: ITimezoneIndicatorProps;
     // (undocumented)
     titleProps: ITitleProps;
 }
@@ -10322,6 +10360,9 @@ export type ResolveAsyncRenderPayload = {
     readonly id: string;
 };
 
+// @alpha
+export function resolveDashboardTimezoneInfo(timezoneConfig: IDashboardTimezoneConfig | undefined, defaultTimezone?: string): IDashboardTimezoneInfo | undefined;
+
 // @public
 export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "agGridToken" | "maxZoomLevel" | "exportId" | "exportType" | "exportMetadata" | "focusObject" | "slideConfig" | "references" | "entitlements" | "initialContent" | "executionTimestamp" | "user" | "overrideDefaultFilters" | "overrideDefaultParameters" | "overrideTitle" | "hideWidgetTitles" | "workspaceDescriptor" | "evaluationFrequency" | "externalRecipient" | "openAutomationOnLoad" | "hideAddTabButton"> & DashboardConfig;
 
@@ -10978,6 +11019,9 @@ export const selectDrillTargetsByWidgetRef: (ref: ObjRef) => DashboardSelector<I
 export const selectEffectiveAttributeFiltersModeMap: DashboardSelector<Map<string, DashboardAttributeFilterConfigMode>>;
 
 // @alpha
+export const selectEffectiveDashboardTimezone: DashboardSelector<string | undefined>;
+
+// @alpha
 export const selectEffectiveDateFilterAvailableGranularities: DashboardSelector<DateFilterGranularity[]>;
 
 // @internal
@@ -11033,6 +11077,9 @@ export const selectEnableDashboardShareDialogLink: DashboardSelector<boolean>;
 
 // @internal (undocumented)
 export const selectEnableDashboardTabularExport: DashboardSelector<boolean>;
+
+// @alpha
+export const selectEnableDashboardTimezone: DashboardSelector<boolean>;
 
 // @internal (undocumented)
 export const selectEnableExecutionCancelling: DashboardSelector<boolean>;
@@ -12755,6 +12802,9 @@ type: string;
 
 // @alpha (undocumented)
 export type TabsReducer<A extends Action> = CaseReducer<ITabsState, A>;
+
+// @alpha
+export function TimezoneIndicator(input: ITimezoneIndicatorProps): ReactElement | null;
 
 // @internal (undocumented)
 export function Title(props: ITitleProps): ReactElement;

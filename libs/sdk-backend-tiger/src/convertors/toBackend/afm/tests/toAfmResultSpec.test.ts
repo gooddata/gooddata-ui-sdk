@@ -101,6 +101,20 @@ describe("converts execution definition to AFM Execution", () => {
         expect(() => toAfmExecution(def)).toThrow();
     });
 
+    it("should pass timezone from executionConfig into settings", () => {
+        const def = defSetExecConfig(emptyDef(workspace), { timezone: "Europe/Prague" });
+
+        const result = toAfmExecution(def);
+
+        expect(result.settings?.timezone).toBe("Europe/Prague");
+    });
+
+    it("should not include timezone in settings when not set on executionConfig", () => {
+        const result = toAfmExecution(emptyDef(workspace));
+
+        expect(result.settings?.timezone).toBeUndefined();
+    });
+
     it("should remove empty negative attribute filters and not cause RAIL-2083", () => {
         const emptyPositiveFilter = newPositiveAttributeFilter(ReferenceMd.Product.Name, []);
         const emptyNegativeFilter = newNegativeAttributeFilter(ReferenceMd.Product.Name, []);

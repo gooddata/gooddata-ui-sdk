@@ -10,6 +10,7 @@ import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 import { getAppLifecycleCallbacks } from "../loader/pluggableApplicationsLoader.js";
 import { getBackend } from "../platformContext/backend.js";
 
+import { GenAIChatEvent } from "./GenAIChat.js";
 import { HostIntlProvider } from "./HostIntlProvider.js";
 import { useHostChromeChat } from "./useHostChromeChat.js";
 import { useHostChromeWorkspaceFeatures } from "./useHostChromeWorkspaceFeatures.js";
@@ -72,6 +73,10 @@ export interface IHostChatProps {
      * visualization as an in-place overlay). Returns true if the app handled it.
      */
     onAppLinkClick?: (link: IHostChatLink) => boolean;
+    /**
+     * Delegates a chat event receive to the active application.
+     */
+    onAppEventReceive?: (event: GenAIChatEvent) => void;
 }
 
 /**
@@ -93,6 +98,7 @@ export function HostChat({
     onOpenChange,
     onChatStateChange,
     onAppLinkClick,
+    onAppEventReceive,
 }: IHostChatProps) {
     const features = useHostChromeWorkspaceFeatures(resolvedApplications, ctx, pathname);
 
@@ -108,6 +114,7 @@ export function HostChat({
         dialogPosition: context?.dialogPosition,
         embedded: context?.embedded,
         onAppLinkClick,
+        onAppEventReceive,
     });
     const {
         askAiAssistant: chatAskAiAssistant,

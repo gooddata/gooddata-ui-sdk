@@ -16,6 +16,13 @@ export function buildContext(props: Partial<IGenAIUserContext>): IGenAIUserConte
 /**
  * @internal
  */
+export function undefinedIfEmpty<T extends object>(value: T): T | undefined {
+    return Object.keys(value).length > 0 ? value : undefined;
+}
+
+/**
+ * @internal
+ */
 export function mergeContexts(...contexts: (IGenAIUserContext | undefined)[]): IGenAIUserContext | undefined {
     const merged = contexts.reduce<IGenAIUserContext>((acc, context) => {
         if (!context) {
@@ -37,7 +44,7 @@ export function mergeContexts(...contexts: (IGenAIUserContext | undefined)[]): I
         };
     }, {});
 
-    return Object.keys(merged).length > 0 ? merged : undefined;
+    return undefinedIfEmpty(merged);
 }
 
 function mergeDashboard(
@@ -50,7 +57,7 @@ function mergeDashboard(
             ...dashboard,
         } as IGenAIDashboardContext;
 
-        return Object.keys(merged).length > 0 ? merged : undefined;
+        return undefinedIfEmpty(merged);
     }
     return dashboard ?? existingDashboard;
 }
@@ -65,7 +72,7 @@ function mergeActiveObject(
             ...activeObject,
         } as IGenAIActiveObject;
 
-        return Object.keys(merged).length > 0 ? merged : undefined;
+        return undefinedIfEmpty(merged);
     }
     return activeObject ?? existingActiveObject;
 }

@@ -6,6 +6,7 @@ import { type IButtonBarProps } from "../buttonBar/types.js";
 import { type IMenuButtonProps } from "../menuButton/types.js";
 import { type ILockedStatusProps } from "../shareIndicators/lockedStatus/types.js";
 import { type IShareStatusProps } from "../shareIndicators/shareStatus/types.js";
+import { type ITimezoneIndicatorProps } from "../timezoneIndicator/types.js";
 import { type ITitleProps } from "../title/types.js";
 
 /**
@@ -17,6 +18,7 @@ export interface ITopBarProps {
     buttonBarProps: IButtonBarProps;
     shareStatusProps: IShareStatusProps;
     lockedStatusProps: ILockedStatusProps;
+    timezoneIndicatorProps?: ITimezoneIndicatorProps;
     DefaultTopBar: CustomTopBarComponent;
 }
 

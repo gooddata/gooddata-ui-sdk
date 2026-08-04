@@ -627,6 +627,7 @@
     "objectShare.confirm.button": "Potwierdź",
     "objectShare.selfRestrict.title": "Ograniczyć swój dostęp?",
     "objectShare.selfRestrict.warning": "Nie możesz ustawić wyższych uprawnień dla siebie.",
+    "objectShare.workspaceLevel.inherited": "To uprawnienie jest przyznane z nadrzędnej przestrzeni roboczej i nie można go tutaj obniżyć.",
     "objectShare.grantee.you": "{name} (Ty)",
     "objectShare.adminTag.label": "Administrator",
     "objectShare.adminTag.tooltip": "Ty i inni administratorzy macie pełny dostęp do tego obiektu.",

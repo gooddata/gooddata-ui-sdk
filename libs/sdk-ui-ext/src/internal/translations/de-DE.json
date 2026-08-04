@@ -627,6 +627,7 @@
     "objectShare.confirm.button": "Bestätigen",
     "objectShare.selfRestrict.title": "Ihren Zugriff beschränken?",
     "objectShare.selfRestrict.warning": "Sie können für sich selbst keine höheren Berechtigungen festlegen.",
+    "objectShare.workspaceLevel.inherited": "Diese Berechtigung wird von einem übergeordneten Workspace gewährt und kann hier nicht herabgestuft werden.",
     "objectShare.grantee.you": "{name} (Sie)",
     "objectShare.adminTag.label": "Administrator",
     "objectShare.adminTag.tooltip": "Sie und andere Administratoren haben vollen Zugriff auf dieses Objekt.",

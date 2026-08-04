@@ -3,6 +3,8 @@
 import { renderHook } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
+import type { IAutomationMetadataObject } from "@gooddata/sdk-model";
+
 // ---------------------------------------------------------------------------
 // Mocks
 // ---------------------------------------------------------------------------
@@ -39,7 +41,9 @@ import { useBuildScheduledEmailManagementDialogContext } from "./useBuildSchedul
 
 describe("useBuildScheduledEmailManagementDialogContext", () => {
     it("returns store-derived fields correctly", () => {
-        const { result } = renderHook(() => useBuildScheduledEmailManagementDialogContext());
+        const { result } = renderHook(() =>
+            useBuildScheduledEmailManagementDialogContext({ automations: [], isLoading: false }),
+        );
 
         expect(result.current.isScheduleEmailDialogOpen).toBe(false);
         expect(result.current.automationsInvalidationId).toBe(42);
@@ -49,5 +53,16 @@ describe("useBuildScheduledEmailManagementDialogContext", () => {
         expect(result.current.dashboardTitle).toBe("Dashboard Title");
         expect(result.current.maxAutomations).toBe(10);
         expect(result.current.unlimitedAutomations).toBe(false);
+    });
+
+    it("passes the automation list and loading flag through to the context", () => {
+        const automations = [{ id: "schedule-1", title: "Weekly" } as IAutomationMetadataObject];
+
+        const { result } = renderHook(() =>
+            useBuildScheduledEmailManagementDialogContext({ automations, isLoading: true }),
+        );
+
+        expect(result.current.automations).toBe(automations);
+        expect(result.current.isLoading).toBe(true);
     });
 });

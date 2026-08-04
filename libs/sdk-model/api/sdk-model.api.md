@@ -2512,6 +2512,8 @@ export interface IExecutionConfig {
     // @alpha
     parameterValues?: IInsightParameterValue[];
     timestamp?: string;
+    // @alpha
+    timezone?: string;
 }
 
 // @public

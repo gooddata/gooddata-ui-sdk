@@ -627,6 +627,7 @@
     "objectShare.confirm.button": "Xác nhận",
     "objectShare.selfRestrict.title": "Hạn chế quyền truy cập của bạn?",
     "objectShare.selfRestrict.warning": "Bạn không thể đặt quyền cao hơn cho chính mình.",
+    "objectShare.workspaceLevel.inherited": "Quyền này được cấp từ không gian làm việc cha và không thể hạ thấp tại đây.",
     "objectShare.grantee.you": "{name} (bạn)",
     "objectShare.adminTag.label": "Quản trị viên",
     "objectShare.adminTag.tooltip": "Bạn và các quản trị viên khác có toàn quyền truy cập vào đối tượng này.",

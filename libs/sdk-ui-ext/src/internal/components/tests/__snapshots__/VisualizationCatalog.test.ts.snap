@@ -35430,7 +35430,60 @@ export function MyComponent() {
 "
 `;
 
-exports[`getEmbeddingCode functionality > should generate code for GeoAreaChart - area legend position bottom 1`] = `
+exports[`getEmbeddingCode functionality > should generate code for GeoAreaChart - area legend position bottom-left 1`] = `
+"import React from "react";
+import { GeoChart, IGeoAreaChartConfig, IGeoLayer } from "@gooddata/sdk-ui-geo";
+import { idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+
+const type = "area";
+const layers: IGeoLayer[] = [
+    {
+        id: "primary",
+        type: "area",
+        color: newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.alias("Revenue").localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+        segmentBy: newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id")),
+        area: newAttribute(idRef("state_id.statecode", "displayForm"), a => a.localId("a_state_id.statecode"))
+    }
+];
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+];
+const config: IGeoAreaChartConfig = {
+    legend: {position: "bottom-left"},
+    mapStyle: {
+        glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+        layers: [
+            {
+                id: "background",
+                paint: {"background-color": "#ffffff"},
+                type: "background"
+            }
+        ],
+        name: "offline-minimal",
+        sources: {},
+        version: 8
+    },
+    viewport: {area: "continent_na"},
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoChart
+                type={type}
+                layers={layers}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoAreaChart - area legend position bottom-right 1`] = `
 "import React from "react";
 import { GeoChart, IGeoAreaChartConfig, IGeoLayer } from "@gooddata/sdk-ui-geo";
 import { idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
@@ -35483,7 +35536,7 @@ export function MyComponent() {
 "
 `;
 
-exports[`getEmbeddingCode functionality > should generate code for GeoAreaChart - area legend position left 1`] = `
+exports[`getEmbeddingCode functionality > should generate code for GeoAreaChart - area legend position top-left 1`] = `
 "import React from "react";
 import { GeoChart, IGeoAreaChartConfig, IGeoLayer } from "@gooddata/sdk-ui-geo";
 import { idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
@@ -35536,60 +35589,7 @@ export function MyComponent() {
 "
 `;
 
-exports[`getEmbeddingCode functionality > should generate code for GeoAreaChart - area legend position right 1`] = `
-"import React from "react";
-import { GeoChart, IGeoAreaChartConfig, IGeoLayer } from "@gooddata/sdk-ui-geo";
-import { idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
-
-const type = "area";
-const layers: IGeoLayer[] = [
-    {
-        id: "primary",
-        type: "area",
-        color: newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.alias("Revenue").localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
-        segmentBy: newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id")),
-        area: newAttribute(idRef("state_id.statecode", "displayForm"), a => a.localId("a_state_id.statecode"))
-    }
-];
-const filters: IFilter[] = [
-    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
-];
-const config: IGeoAreaChartConfig = {
-    legend: {position: "top-right"},
-    mapStyle: {
-        glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
-        layers: [
-            {
-                id: "background",
-                paint: {"background-color": "#ffffff"},
-                type: "background"
-            }
-        ],
-        name: "offline-minimal",
-        sources: {},
-        version: 8
-    },
-    viewport: {area: "continent_na"},
-    separators: {decimal: ".", thousand: ","}
-};
-const style = {height: 400};
-
-export function MyComponent() {
-    return (
-        <div style={style}>
-            <GeoChart
-                type={type}
-                layers={layers}
-                filters={filters}
-                config={config}
-            />
-        </div>
-    );
-}
-"
-`;
-
-exports[`getEmbeddingCode functionality > should generate code for GeoAreaChart - area legend position top 1`] = `
+exports[`getEmbeddingCode functionality > should generate code for GeoAreaChart - area legend position top-right 1`] = `
 "import React from "react";
 import { GeoChart, IGeoAreaChartConfig, IGeoLayer } from "@gooddata/sdk-ui-geo";
 import { idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
@@ -37090,7 +37090,7 @@ const location: IAttribute = newAttribute(idRef("f_city.id.latitude", "displayFo
 const size: IAttributeOrMeasure = newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"));
 const segmentBy: IAttribute = newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"));
 const config: IGeoConfig = {
-    legend: {position: "right"},
+    legend: {position: "top-right"},
     tooltipText: "f_city.id.cityname",
     viewport: {area: "continent_na"},
     separators: {decimal: ".", thousand: ","},
@@ -37113,7 +37113,7 @@ export function MyComponent() {
 "
 `;
 
-exports[`getEmbeddingCode functionality > should generate code for GeoPushpinChart - legend position bottom 1`] = `
+exports[`getEmbeddingCode functionality > should generate code for GeoPushpinChart - legend position bottom-left 1`] = `
 "import React from "react";
 import { IAttribute, IAttributeOrMeasure, idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
 import { GeoPushpinChart, IGeoConfig } from "@gooddata/sdk-ui-geo";
@@ -37125,7 +37125,7 @@ const filters: IFilter[] = [
     newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
 ];
 const config: IGeoConfig = {
-    legend: {position: "bottom"},
+    legend: {position: "bottom-left"},
     tooltipText: "f_city.id.cityname",
     separators: {decimal: ".", thousand: ","},
     mapboxToken: "<fill your Mapbox token here>"
@@ -37148,7 +37148,7 @@ export function MyComponent() {
 "
 `;
 
-exports[`getEmbeddingCode functionality > should generate code for GeoPushpinChart - legend position left 1`] = `
+exports[`getEmbeddingCode functionality > should generate code for GeoPushpinChart - legend position bottom-right 1`] = `
 "import React from "react";
 import { IAttribute, IAttributeOrMeasure, idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
 import { GeoPushpinChart, IGeoConfig } from "@gooddata/sdk-ui-geo";
@@ -37160,7 +37160,7 @@ const filters: IFilter[] = [
     newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
 ];
 const config: IGeoConfig = {
-    legend: {position: "left"},
+    legend: {position: "bottom-right"},
     tooltipText: "f_city.id.cityname",
     separators: {decimal: ".", thousand: ","},
     mapboxToken: "<fill your Mapbox token here>"
@@ -37183,7 +37183,7 @@ export function MyComponent() {
 "
 `;
 
-exports[`getEmbeddingCode functionality > should generate code for GeoPushpinChart - legend position right 1`] = `
+exports[`getEmbeddingCode functionality > should generate code for GeoPushpinChart - legend position top-left 1`] = `
 "import React from "react";
 import { IAttribute, IAttributeOrMeasure, idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
 import { GeoPushpinChart, IGeoConfig } from "@gooddata/sdk-ui-geo";
@@ -37195,7 +37195,7 @@ const filters: IFilter[] = [
     newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
 ];
 const config: IGeoConfig = {
-    legend: {position: "right"},
+    legend: {position: "top-left"},
     tooltipText: "f_city.id.cityname",
     separators: {decimal: ".", thousand: ","},
     mapboxToken: "<fill your Mapbox token here>"
@@ -37218,7 +37218,7 @@ export function MyComponent() {
 "
 `;
 
-exports[`getEmbeddingCode functionality > should generate code for GeoPushpinChart - legend position top 1`] = `
+exports[`getEmbeddingCode functionality > should generate code for GeoPushpinChart - legend position top-right 1`] = `
 "import React from "react";
 import { IAttribute, IAttributeOrMeasure, idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
 import { GeoPushpinChart, IGeoConfig } from "@gooddata/sdk-ui-geo";
@@ -37230,7 +37230,7 @@ const filters: IFilter[] = [
     newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
 ];
 const config: IGeoConfig = {
-    legend: {position: "top"},
+    legend: {position: "top-right"},
     tooltipText: "f_city.id.cityname",
     separators: {decimal: ".", thousand: ","},
     mapboxToken: "<fill your Mapbox token here>"
@@ -37266,7 +37266,7 @@ const filters: IFilter[] = [
     newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
 ];
 const config: IGeoConfig = {
-    legend: {position: "right"},
+    legend: {position: "top-right"},
     tooltipText: "f_city.id.cityname",
     viewport: {area: "continent_na"},
     separators: {decimal: ".", thousand: ","},
@@ -37303,7 +37303,7 @@ const filters: IFilter[] = [
     newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
 ];
 const config: IGeoConfig = {
-    legend: {position: "right"},
+    legend: {position: "top-right"},
     selectedSegmentItems: ["West Coast", "East Coast"],
     tooltipText: "f_city.id.cityname",
     separators: {decimal: ".", thousand: ","},

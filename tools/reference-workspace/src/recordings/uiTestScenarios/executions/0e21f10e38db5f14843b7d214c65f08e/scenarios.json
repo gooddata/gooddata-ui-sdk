@@ -452,7 +452,7 @@
                 "localIdentifier": "tooltipText"
             }
         ],
-        "scenario": "area legend position top",
+        "scenario": "area legend position top-left",
         "vis": "GeoAreaChart"
     },
     {
@@ -509,7 +509,7 @@
                 "localIdentifier": "tooltipText"
             }
         ],
-        "scenario": "area legend position right",
+        "scenario": "area legend position top-right",
         "vis": "GeoAreaChart"
     },
     {
@@ -566,7 +566,7 @@
                 "localIdentifier": "tooltipText"
             }
         ],
-        "scenario": "area legend position bottom",
+        "scenario": "area legend position bottom-left",
         "vis": "GeoAreaChart"
     },
     {
@@ -623,7 +623,7 @@
                 "localIdentifier": "tooltipText"
             }
         ],
-        "scenario": "area legend position left",
+        "scenario": "area legend position bottom-right",
         "vis": "GeoAreaChart"
     },
     {

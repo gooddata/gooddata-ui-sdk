@@ -148,7 +148,7 @@
                     { "color": { "type": "rgb", "value": { "b": 95, "g": 170, "r": 0 } } },
                     { "color": { "type": "rgb", "value": { "b": 87, "g": 87, "r": 235 } } }
                 ],
-                "legend": { "position": "right" },
+                "legend": { "position": "top-right" },
                 "mapStyle": {
                     "glyphs": "/geo-assets/glyphs/{fontstack}/{range}.pbf",
                     "layers": [

@@ -32,10 +32,10 @@ import {
 
 import { DOWNLOADER_ID } from "../../../../../_staging/fileUtils/downloadFile.js";
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
+import { useDashboardExecConfig } from "../../../../../model/react/useWidgetExecConfig.js";
 import { useWidgetExecutionsHandler } from "../../../../../model/react/useWidgetExecutionsHandler.js";
 import { selectSeparators } from "../../../../../model/store/config/configSelectors.js";
 import { DRILL_MODAL_EXECUTION_PSEUDO_REF } from "../../../../../model/store/executionResults/constants.js";
-import { selectExecutionTimestamp } from "../../../../../model/store/ui/uiSelectors.js";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../../constants/zIndex.js";
 import { useDashboardComponentsContext } from "../../../../dashboardContexts/DashboardComponentsContext.js";
 import { WithDrillSelect } from "../../../../drill/DrillSelect/WithDrillSelect.js";
@@ -374,7 +374,7 @@ function InsightDrillDialogDescriptionContent({
     LoadingComponent,
 }: IInsightDrillDialogDescriptionContentProps) {
     const separators = useDashboardSelector(selectSeparators);
-    const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
+    const execConfig = useDashboardExecConfig();
 
     return (
         <div
@@ -387,9 +387,7 @@ function InsightDrillDialogDescriptionContent({
             <div className="drill-dialog-insight-container-description-content">
                 <RichText
                     value={description}
-                    execConfig={{
-                        timestamp: executionTimestamp,
-                    }}
+                    execConfig={execConfig}
                     renderMode="view"
                     referencesEnabled
                     filters={widgetFilters}

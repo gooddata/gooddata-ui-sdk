@@ -883,6 +883,18 @@ export const selectEnableDashboardDensitySetting: DashboardSelector<boolean> = c
 );
 
 /**
+ * Returns whether dashboard-level timezone configuration is enabled.
+ *
+ * @alpha
+ */
+export const selectEnableDashboardTimezone: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableDashboardTimezone ?? false;
+    },
+);
+
+/**
  * Returns whether dashboard persistent filters across tabs feature flag is enabled.
  *
  * @alpha

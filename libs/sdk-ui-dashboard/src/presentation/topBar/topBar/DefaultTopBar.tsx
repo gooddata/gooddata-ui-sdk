@@ -8,9 +8,11 @@ import {
     selectEnableSnapshotExportAccessibility,
     selectIsExport,
     selectIsReadOnly,
+    selectTimezone,
 } from "../../../model/store/config/configSelectors.js";
 import {
     selectDashboardShareInfo,
+    selectDashboardTimezoneConfig,
     selectDashboardTitle,
     selectPersistedDashboard,
 } from "../../../model/store/meta/metaSelectors.js";
@@ -27,6 +29,8 @@ import { MenuButton } from "../menuButton/MenuButton.js";
 import { useDefaultMenuItems } from "../menuButton/useDefaultMenuItems.js";
 import { DefaultLockedStatus } from "../shareIndicators/lockedStatus/DefaultLockedStatus.js";
 import { DefaultShareStatus } from "../shareIndicators/shareStatus/DefaultShareStatus.js";
+import { DefaultTimezoneIndicator } from "../timezoneIndicator/DefaultTimezoneIndicator.js";
+import { resolveDashboardTimezoneInfo } from "../timezoneIndicator/resolveDashboardTimezoneInfo.js";
 import { Title } from "../title/Title.js";
 
 import { HiddenTopBar } from "./HiddenTopBar.js";
@@ -41,6 +45,8 @@ export const useTopBarProps = (): ITopBarProps => {
     const isReadOnly = useDashboardSelector(selectIsReadOnly);
     const shareInfo = useDashboardSelector(selectDashboardShareInfo);
     const persistedDashboard = useDashboardSelector(selectPersistedDashboard);
+    const timezoneConfig = useDashboardSelector(selectDashboardTimezoneConfig);
+    const defaultTimezone = useDashboardSelector(selectTimezone);
 
     const defaultMenuItems = useDefaultMenuItems();
 
@@ -81,6 +87,13 @@ export const useTopBarProps = (): ITopBarProps => {
         lockedStatusProps: {
             isLocked: !!shareInfo.isLocked,
         },
+        timezoneIndicatorProps: {
+            timezoneConfig,
+            defaultTimezone,
+            // the default indicator shows only the name; the offset label is exposed
+            // for custom top bar / indicator renderings
+            timezone: resolveDashboardTimezoneInfo(timezoneConfig, defaultTimezone),
+        },
         DefaultTopBar,
     };
 };
@@ -91,6 +104,7 @@ function TopBarCore({
     buttonBarProps,
     shareStatusProps,
     lockedStatusProps,
+    timezoneIndicatorProps,
 }: ITopBarProps): ReactElement {
     const snapshotExportAccessibilityEnabled = useDashboardSelector(selectEnableSnapshotExportAccessibility);
     const isExport = useDashboardSelector(selectIsExport);
@@ -113,6 +127,8 @@ function TopBarCore({
                 <Title {...titleProps} />
                 {/* No customization from useDashboardComponentsContext for now */}
                 <DefaultShareStatus {...shareStatusProps} />
+                {/* No customization from useDashboardComponentsContext for now */}
+                <DefaultTimezoneIndicator {...timezoneIndicatorProps} />
                 <ButtonBar {...buttonBarProps} />
             </div>
             <MenuButton {...menuButtonProps} />

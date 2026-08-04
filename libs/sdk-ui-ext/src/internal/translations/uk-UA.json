@@ -627,6 +627,7 @@
     "objectShare.confirm.button": "Підтвердити",
     "objectShare.selfRestrict.title": "Обмежити ваш доступ?",
     "objectShare.selfRestrict.warning": "Ви не можете встановити для себе вищий рівень дозволів.",
+    "objectShare.workspaceLevel.inherited": "Цей дозвіл надано з батьківської робочої області, і його не можна знизити тут.",
     "objectShare.grantee.you": "{name} (ви)",
     "objectShare.adminTag.label": "Адміністратор",
     "objectShare.adminTag.tooltip": "Ви та інші адміністратори маєте повний доступ до цього об’єкта.",

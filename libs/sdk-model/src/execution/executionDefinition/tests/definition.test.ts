@@ -191,6 +191,23 @@ describe("defFingerprint with parameterValues", () => {
     });
 });
 
+describe("defFingerprint with timezone", () => {
+    it("should produce different fingerprints for defs differing only in timezone", () => {
+        const base = emptyDef("ws");
+        const defWithPrague = defSetExecConfig(base, { timezone: "Europe/Prague" });
+        const defWithTokyo = defSetExecConfig(base, { timezone: "Asia/Tokyo" });
+
+        expect(defFingerprint(defWithPrague)).not.toBe(defFingerprint(defWithTokyo));
+    });
+
+    it("should produce a different fingerprint for a def with timezone than without it", () => {
+        const base = emptyDef("ws");
+        const defWithTimezone = defSetExecConfig(base, { timezone: "Europe/Prague" });
+
+        expect(defFingerprint(defWithTimezone)).not.toBe(defFingerprint(base));
+    });
+});
+
 describe("defSetPostProcessing", () => {
     const Scenarios: Array<[string, any]> = [
         ["MM/dd/yyyy", EmptyDef],

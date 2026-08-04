@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2026-02-18T13:52:09.924Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2026-08-01T22:37:35.545Z; */
 
 import df_attr_f_product_product from "./metadata/displayForms/attr.f_product.product/elements.json" with { type: "json" };
 import df_attr_f_stage_stagename from "./metadata/displayForms/attr.f_stage.stagename/elements.json" with { type: "json" };

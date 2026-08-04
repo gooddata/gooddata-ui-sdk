@@ -627,6 +627,7 @@
     "objectShare.confirm.button": "Onayla",
     "objectShare.selfRestrict.title": "Erişiminizi kısıtla?",
     "objectShare.selfRestrict.warning": "Kendiniz için daha yüksek izinler ayarlayamazsınız.",
+    "objectShare.workspaceLevel.inherited": "Bu izin bir üst çalışma alanından verilir ve burada düşürülemez.",
     "objectShare.grantee.you": "{name} (siz)",
     "objectShare.adminTag.label": "Yönetici",
     "objectShare.adminTag.tooltip": "Siz ve diğer yöneticiler bu nesneye tam erişime sahipsiniz.",

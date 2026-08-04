@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: e0a88378a899daa9d5b1c397c404dcccd795da324d31e7c10ee7c72cab374685
+# schema-hash: 47f80eb639d11cce66768ffb9de4c10096abb9ade60d47e9d72e5086efc0bcc3
 
 from __future__ import annotations
 
@@ -314,6 +314,8 @@ __all__ = [
     "Target1",
     "Template",
     "TextWrapping",
+    "TimezoneConfig",
+    "TimezoneId",
     "Title",
     "Title1",
     "Title2",
@@ -1874,6 +1876,20 @@ class Type47(Enum):
 class Version(Enum):
     field_2 = '2'
     field_3 = '3'
+
+
+class TimezoneId(
+    RootModel[
+        Literal['$browserDetected']
+        | constr(pattern=r'^[A-Za-z][A-Za-z0-9_+.-]*(?:/[A-Za-z0-9_+.-]+)*$')
+    ]
+):
+    root: Literal['$browserDetected'] | constr(
+        pattern=r'^[A-Za-z][A-Za-z0-9_+.-]*(?:/[A-Za-z0-9_+.-]+)*$'
+    ) = Field(
+        ...,
+        description='An IANA timezone ID (for example, Europe/Prague or UTC) or $browserDetected to use the viewer browser timezone.',
+    )
 
 
 class Columns(Enum):
@@ -5260,6 +5276,23 @@ class Permissions(BaseModel):
     SHARE: Permission | None = None
 
 
+class TimezoneConfig(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    timezone_id: TimezoneId | None = Field(
+        None,
+        description='Dashboard default timezone. Use an IANA timezone ID or $browserDetected. If omitted, the workspace or organization timezone setting is used.',
+    )
+    show_timezone_info: bool | None = Field(
+        None, description='Whether the dashboard timezone indicator is visible.'
+    )
+    allow_user_override_in_view_mode: bool | None = Field(
+        None,
+        description='Whether viewers can override the dashboard timezone for their current session.',
+    )
+
+
 class Widget1(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
@@ -7838,6 +7871,10 @@ class Dashboard1(BaseModel):
         None,
         description='Whether persistent filters across tabs are enabled for this dashboard. Defaults to true.',
     )
+    timezone_config: TimezoneConfig | None = Field(
+        None,
+        description='Dashboard-level timezone configuration. If omitted, the workspace or organization timezone setting is used.',
+    )
     enable_section_headers: bool | None = Field(
         None,
         description='Applies to the root layout. Whether all sections headers are enabled. Defaults to true.',
@@ -7956,6 +7993,10 @@ class Dashboard(BaseModel):
     persistent_filters_across_tabs: bool | None = Field(
         None,
         description='Whether persistent filters across tabs are enabled for this dashboard. Defaults to true.',
+    )
+    timezone_config: TimezoneConfig | None = Field(
+        None,
+        description='Dashboard-level timezone configuration. If omitted, the workspace or organization timezone setting is used.',
     )
     enable_section_headers: bool | None = Field(
         None,

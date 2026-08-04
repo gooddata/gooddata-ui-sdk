@@ -17,6 +17,506 @@ export default {
     title: "04 Stories For Pluggable Vis/GeoAreaChart/customization/legend",
 };
 
+export const AreaLegendPositionTopLeft = () =>
+    plugVizStory(
+        {
+            insight: {
+                buckets: [
+                    {
+                        items: [
+                            {
+                                attribute: {
+                                    displayForm: {
+                                        identifier: "state_id.statecode",
+                                        type: "displayForm",
+                                    },
+                                    localIdentifier: "geo.area",
+                                },
+                            },
+                        ],
+                        localIdentifier: "area",
+                    },
+                    {
+                        items: [
+                            {
+                                measure: {
+                                    alias: "Revenue",
+                                    definition: {
+                                        measureDefinition: {
+                                            item: {
+                                                identifier: "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                                type: "measure",
+                                            },
+                                        },
+                                    },
+                                    localIdentifier: "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                                },
+                            },
+                        ],
+                        localIdentifier: "color",
+                    },
+                    {
+                        items: [
+                            {
+                                attribute: {
+                                    displayForm: {
+                                        identifier: "f_owner.region_id",
+                                        type: "displayForm",
+                                    },
+                                    localIdentifier: "a_f_owner.region_id",
+                                },
+                            },
+                        ],
+                        localIdentifier: "segment",
+                    },
+                ],
+                filters: [
+                    {
+                        positiveAttributeFilter: {
+                            displayForm: {
+                                identifier: "f_owner.region_id",
+                                type: "displayForm",
+                            },
+                            in: {
+                                values: ["West Coast", "East Coast"],
+                            },
+                        },
+                    },
+                ],
+                identifier: "GeoAreaChart.41b04f8059a32e483b18bfdd867d8d59",
+                properties: {
+                    controls: {
+                        areas: {
+                            borderColor: "#000000",
+                            borderWidth: 2,
+                            fillOpacity: 0.9,
+                        },
+                        legend: {
+                            position: "top-left",
+                        },
+                        mapStyle: {
+                            glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+                            layers: [
+                                {
+                                    id: "background",
+                                    paint: {
+                                        "background-color": "#ffffff",
+                                    },
+                                    type: "background",
+                                },
+                            ],
+                            name: "offline-minimal",
+                            sources: {},
+                            version: 8,
+                        },
+                        viewport: {
+                            area: "continent_na",
+                        },
+                    },
+                },
+                sorts: [],
+                title: "GeoAreaChart - area legend position top-left",
+                uri: "GeoAreaChart.41b04f8059a32e483b18bfdd867d8d59",
+                visualizationUrl: "local:choropleth",
+            },
+        } as unknown as IInsight,
+        getScenariosGroupByIndexes(10, 2, 0),
+    )();
+AreaLegendPositionTopLeft.parameters = {
+    kind: "area legend position top-left",
+    screenshot: {
+        readySelector: {
+            selector: ".screenshot-ready-wrapper-done",
+            state: State.Attached,
+        },
+        postInteractionWait: {
+            delay: 200,
+        },
+        viewports: [
+            {
+                label: "desktop",
+                width: 1464,
+                height: 768,
+            },
+        ],
+    },
+} satisfies IStoryParameters;
+
+export const AreaLegendPositionTopRight = () =>
+    plugVizStory(
+        {
+            insight: {
+                buckets: [
+                    {
+                        items: [
+                            {
+                                attribute: {
+                                    displayForm: {
+                                        identifier: "state_id.statecode",
+                                        type: "displayForm",
+                                    },
+                                    localIdentifier: "geo.area",
+                                },
+                            },
+                        ],
+                        localIdentifier: "area",
+                    },
+                    {
+                        items: [
+                            {
+                                measure: {
+                                    alias: "Revenue",
+                                    definition: {
+                                        measureDefinition: {
+                                            item: {
+                                                identifier: "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                                type: "measure",
+                                            },
+                                        },
+                                    },
+                                    localIdentifier: "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                                },
+                            },
+                        ],
+                        localIdentifier: "color",
+                    },
+                    {
+                        items: [
+                            {
+                                attribute: {
+                                    displayForm: {
+                                        identifier: "f_owner.region_id",
+                                        type: "displayForm",
+                                    },
+                                    localIdentifier: "a_f_owner.region_id",
+                                },
+                            },
+                        ],
+                        localIdentifier: "segment",
+                    },
+                ],
+                filters: [
+                    {
+                        positiveAttributeFilter: {
+                            displayForm: {
+                                identifier: "f_owner.region_id",
+                                type: "displayForm",
+                            },
+                            in: {
+                                values: ["West Coast", "East Coast"],
+                            },
+                        },
+                    },
+                ],
+                identifier: "GeoAreaChart.ba942c3e1fa4e5f310d5f5ab26c6b3ac",
+                properties: {
+                    controls: {
+                        areas: {
+                            borderColor: "#000000",
+                            borderWidth: 2,
+                            fillOpacity: 0.9,
+                        },
+                        legend: {
+                            position: "top-right",
+                        },
+                        mapStyle: {
+                            glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+                            layers: [
+                                {
+                                    id: "background",
+                                    paint: {
+                                        "background-color": "#ffffff",
+                                    },
+                                    type: "background",
+                                },
+                            ],
+                            name: "offline-minimal",
+                            sources: {},
+                            version: 8,
+                        },
+                        viewport: {
+                            area: "continent_na",
+                        },
+                    },
+                },
+                sorts: [],
+                title: "GeoAreaChart - area legend position top-right",
+                uri: "GeoAreaChart.ba942c3e1fa4e5f310d5f5ab26c6b3ac",
+                visualizationUrl: "local:choropleth",
+            },
+        } as unknown as IInsight,
+        getScenariosGroupByIndexes(10, 2, 1),
+    )();
+AreaLegendPositionTopRight.parameters = {
+    kind: "area legend position top-right",
+    screenshot: {
+        readySelector: {
+            selector: ".screenshot-ready-wrapper-done",
+            state: State.Attached,
+        },
+        postInteractionWait: {
+            delay: 200,
+        },
+        viewports: [
+            {
+                label: "desktop",
+                width: 1464,
+                height: 768,
+            },
+        ],
+    },
+} satisfies IStoryParameters;
+
+export const AreaLegendPositionBottomLeft = () =>
+    plugVizStory(
+        {
+            insight: {
+                buckets: [
+                    {
+                        items: [
+                            {
+                                attribute: {
+                                    displayForm: {
+                                        identifier: "state_id.statecode",
+                                        type: "displayForm",
+                                    },
+                                    localIdentifier: "geo.area",
+                                },
+                            },
+                        ],
+                        localIdentifier: "area",
+                    },
+                    {
+                        items: [
+                            {
+                                measure: {
+                                    alias: "Revenue",
+                                    definition: {
+                                        measureDefinition: {
+                                            item: {
+                                                identifier: "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                                type: "measure",
+                                            },
+                                        },
+                                    },
+                                    localIdentifier: "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                                },
+                            },
+                        ],
+                        localIdentifier: "color",
+                    },
+                    {
+                        items: [
+                            {
+                                attribute: {
+                                    displayForm: {
+                                        identifier: "f_owner.region_id",
+                                        type: "displayForm",
+                                    },
+                                    localIdentifier: "a_f_owner.region_id",
+                                },
+                            },
+                        ],
+                        localIdentifier: "segment",
+                    },
+                ],
+                filters: [
+                    {
+                        positiveAttributeFilter: {
+                            displayForm: {
+                                identifier: "f_owner.region_id",
+                                type: "displayForm",
+                            },
+                            in: {
+                                values: ["West Coast", "East Coast"],
+                            },
+                        },
+                    },
+                ],
+                identifier: "GeoAreaChart.5977d9acc044f55a9ce9e8381a49fd43",
+                properties: {
+                    controls: {
+                        areas: {
+                            borderColor: "#000000",
+                            borderWidth: 2,
+                            fillOpacity: 0.9,
+                        },
+                        legend: {
+                            position: "bottom-left",
+                        },
+                        mapStyle: {
+                            glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+                            layers: [
+                                {
+                                    id: "background",
+                                    paint: {
+                                        "background-color": "#ffffff",
+                                    },
+                                    type: "background",
+                                },
+                            ],
+                            name: "offline-minimal",
+                            sources: {},
+                            version: 8,
+                        },
+                        viewport: {
+                            area: "continent_na",
+                        },
+                    },
+                },
+                sorts: [],
+                title: "GeoAreaChart - area legend position bottom-left",
+                uri: "GeoAreaChart.5977d9acc044f55a9ce9e8381a49fd43",
+                visualizationUrl: "local:choropleth",
+            },
+        } as unknown as IInsight,
+        getScenariosGroupByIndexes(10, 2, 2),
+    )();
+AreaLegendPositionBottomLeft.parameters = {
+    kind: "area legend position bottom-left",
+    screenshot: {
+        readySelector: {
+            selector: ".screenshot-ready-wrapper-done",
+            state: State.Attached,
+        },
+        postInteractionWait: {
+            delay: 200,
+        },
+        viewports: [
+            {
+                label: "desktop",
+                width: 1464,
+                height: 768,
+            },
+        ],
+    },
+} satisfies IStoryParameters;
+
+export const AreaLegendPositionBottomRight = () =>
+    plugVizStory(
+        {
+            insight: {
+                buckets: [
+                    {
+                        items: [
+                            {
+                                attribute: {
+                                    displayForm: {
+                                        identifier: "state_id.statecode",
+                                        type: "displayForm",
+                                    },
+                                    localIdentifier: "geo.area",
+                                },
+                            },
+                        ],
+                        localIdentifier: "area",
+                    },
+                    {
+                        items: [
+                            {
+                                measure: {
+                                    alias: "Revenue",
+                                    definition: {
+                                        measureDefinition: {
+                                            item: {
+                                                identifier: "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                                type: "measure",
+                                            },
+                                        },
+                                    },
+                                    localIdentifier: "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                                },
+                            },
+                        ],
+                        localIdentifier: "color",
+                    },
+                    {
+                        items: [
+                            {
+                                attribute: {
+                                    displayForm: {
+                                        identifier: "f_owner.region_id",
+                                        type: "displayForm",
+                                    },
+                                    localIdentifier: "a_f_owner.region_id",
+                                },
+                            },
+                        ],
+                        localIdentifier: "segment",
+                    },
+                ],
+                filters: [
+                    {
+                        positiveAttributeFilter: {
+                            displayForm: {
+                                identifier: "f_owner.region_id",
+                                type: "displayForm",
+                            },
+                            in: {
+                                values: ["West Coast", "East Coast"],
+                            },
+                        },
+                    },
+                ],
+                identifier: "GeoAreaChart.229c58bb37167e47de91be5a1b889fcb",
+                properties: {
+                    controls: {
+                        areas: {
+                            borderColor: "#000000",
+                            borderWidth: 2,
+                            fillOpacity: 0.9,
+                        },
+                        legend: {
+                            position: "bottom-right",
+                        },
+                        mapStyle: {
+                            glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+                            layers: [
+                                {
+                                    id: "background",
+                                    paint: {
+                                        "background-color": "#ffffff",
+                                    },
+                                    type: "background",
+                                },
+                            ],
+                            name: "offline-minimal",
+                            sources: {},
+                            version: 8,
+                        },
+                        viewport: {
+                            area: "continent_na",
+                        },
+                    },
+                },
+                sorts: [],
+                title: "GeoAreaChart - area legend position bottom-right",
+                uri: "GeoAreaChart.229c58bb37167e47de91be5a1b889fcb",
+                visualizationUrl: "local:choropleth",
+            },
+        } as unknown as IInsight,
+        getScenariosGroupByIndexes(10, 2, 3),
+    )();
+AreaLegendPositionBottomRight.parameters = {
+    kind: "area legend position bottom-right",
+    screenshot: {
+        readySelector: {
+            selector: ".screenshot-ready-wrapper-done",
+            state: State.Attached,
+        },
+        postInteractionWait: {
+            delay: 200,
+        },
+        viewports: [
+            {
+                label: "desktop",
+                width: 1464,
+                height: 768,
+            },
+        ],
+    },
+} satisfies IStoryParameters;
+
 export const AreaLegendWithSelection = () =>
     plugVizStory(
         {
@@ -92,7 +592,7 @@ export const AreaLegendWithSelection = () =>
                             fillOpacity: 0.9,
                         },
                         legend: {
-                            position: "right",
+                            position: "top-right",
                         },
                         mapStyle: {
                             glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
@@ -192,7 +692,7 @@ export const AreaLegendWithColorScaleOnly = () =>
                             fillOpacity: 0.9,
                         },
                         legend: {
-                            position: "bottom",
+                            position: "bottom-right",
                         },
                         mapStyle: {
                             glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
@@ -317,7 +817,7 @@ export const AreaLegendWithCategoryAndColorScale = () =>
                             fillOpacity: 0.9,
                         },
                         legend: {
-                            position: "right",
+                            position: "top-right",
                         },
                         mapStyle: {
                             glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",

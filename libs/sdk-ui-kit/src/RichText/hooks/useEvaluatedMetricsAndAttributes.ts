@@ -57,7 +57,7 @@ export function useEvaluatedMetricsAndAttributes(
                           .withExecConfig(execConfig)
                     : undefined,
         },
-        [execConfig.timestamp, execConfig.dataSamplingPercentage, isFiltersLoading],
+        [execConfig.timestamp, execConfig.dataSamplingPercentage, execConfig.timezone, isFiltersLoading],
     );
 
     const {

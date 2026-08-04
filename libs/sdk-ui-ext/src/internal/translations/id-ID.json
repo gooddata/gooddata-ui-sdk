@@ -627,6 +627,7 @@
     "objectShare.confirm.button": "Konfirmasi",
     "objectShare.selfRestrict.title": "Batasi akses Anda?",
     "objectShare.selfRestrict.warning": "Anda tidak dapat menetapkan izin yang lebih tinggi untuk diri Anda.",
+    "objectShare.workspaceLevel.inherited": "Izin ini diberikan dari ruang kerja induk dan tidak dapat diturunkan di sini.",
     "objectShare.grantee.you": "{name} (Anda)",
     "objectShare.adminTag.label": "Admin",
     "objectShare.adminTag.tooltip": "Anda dan administrator lainnya memiliki akses penuh ke objek ini.",

@@ -72,7 +72,7 @@
         "properties": {
             "controls": {
                 "latitude": "f_city.id.latitude",
-                "legend": { "position": "right" },
+                "legend": { "position": "top-right" },
                 "longitude": "f_city.id.longitude",
                 "mapStyle": {
                     "glyphs": "/geo-assets/glyphs/{fontstack}/{range}.pbf",

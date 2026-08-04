@@ -37,7 +37,7 @@
         "properties": {
             "controls": {
                 "areas": { "borderColor": "#000000", "borderWidth": 2, "fillOpacity": 0.9 },
-                "legend": { "position": "bottom" },
+                "legend": { "position": "bottom-right" },
                 "mapStyle": {
                     "glyphs": "/geo-assets/glyphs/{fontstack}/{range}.pbf",
                     "layers": [

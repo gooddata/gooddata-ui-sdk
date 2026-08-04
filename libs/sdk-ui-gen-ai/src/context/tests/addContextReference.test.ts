@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import { idRef } from "@gooddata/sdk-model";
 
 import { type IGenAIContextObject, type StoreContext } from "../../types.js";
-import { addContextReference } from "../addContextReference.js";
+import { addAmbientContextReferences, addContextReference } from "../addContextReference.js";
 
 describe("addContextReference", () => {
     const dashboardRef = idRef("dash1");
@@ -189,5 +189,64 @@ describe("addContextReference", () => {
             title: "Insight 2",
             type: "WIDGET",
         });
+    });
+});
+
+describe("addAmbientContextReferences", () => {
+    const dashboardContext = (id: string, filters: any[] = []) => ({
+        view: { dashboard: { ref: idRef(id), title: id, widgets: [], filters } },
+    });
+
+    const pinnedFrom = (dashboardId: string, widgetId: string) => ({
+        context: { ref: idRef(dashboardId), title: dashboardId, type: "DASHBOARD" as const },
+        objects: [{ ref: idRef(widgetId), title: widgetId, type: "WIDGET" as const }],
+    });
+
+    it("should adopt the ambient context when there is none yet", () => {
+        const result = addAmbientContextReferences({}, dashboardContext("dash1"));
+
+        expect(result.ambient).toEqual(dashboardContext("dash1"));
+        expect(result.active).toEqual(dashboardContext("dash1"));
+    });
+
+    it("should clear the active context when the user leaves all dashboards", () => {
+        const context: StoreContext = {
+            ambient: dashboardContext("dash1"),
+            active: dashboardContext("dash1"),
+        };
+
+        const result = addAmbientContextReferences(context, undefined);
+
+        expect(result.ambient).toBeUndefined();
+        expect(result.active).toBeUndefined();
+    });
+
+    it("should keep pinned objects when the same dashboard reports fresh state", () => {
+        const context: StoreContext = {
+            ambient: dashboardContext("dash1"),
+            active: {
+                ...dashboardContext("dash1"),
+                referencedObjects: [pinnedFrom("dash1", "widget1")],
+            },
+        };
+
+        const result = addAmbientContextReferences(context, dashboardContext("dash1", [{ type: "x" }]));
+
+        expect(result.active?.referencedObjects).toEqual([pinnedFrom("dash1", "widget1")]);
+        expect(result.active?.view?.dashboard?.filters).toEqual([{ type: "x" }]);
+    });
+
+    it("should drop the previous dashboard and its pinned objects when switching dashboards", () => {
+        const context: StoreContext = {
+            ambient: dashboardContext("dash1"),
+            active: {
+                ...dashboardContext("dash1"),
+                referencedObjects: [pinnedFrom("dash1", "widget1")],
+            },
+        };
+
+        const result = addAmbientContextReferences(context, dashboardContext("dash2"));
+
+        expect(result.active).toEqual(dashboardContext("dash2"));
     });
 });

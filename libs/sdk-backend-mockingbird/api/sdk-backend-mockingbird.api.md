@@ -135,36 +135,6 @@ export type IUsers = {
     users?: IWorkspaceUser[];
 };
 
-// @internal @deprecated
-export type LegacyExecutionRecording = {
-    definition: IExecutionDefinition;
-    response: any;
-    result: any;
-};
-
-// @internal @deprecated
-export function legacyRecordedDataView(recording: LegacyExecutionRecording): IDataView;
-
-// @internal @deprecated
-export type LegacyRecordingIndex = {
-    [workspace: string]: LegacyWorkspaceRecordings;
-};
-
-// @internal @deprecated
-export type LegacyWorkspaceRecordings = {
-    execution?: {
-        [fp: string]: LegacyExecutionRecording;
-    };
-    metadata?: {
-        attributeDisplayForm?: {
-            [id: string]: IAttributeDisplayFormMetadataObject;
-        };
-    };
-    elements?: {
-        [id: string]: IAttributeElement[];
-    };
-};
-
 // @internal (undocumented)
 export type NamedDataView = {
     name: string;

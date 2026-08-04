@@ -172,6 +172,34 @@ describe("dashboard conversion", () => {
             expect(content.disablePersistentFiltersAcrossTabs).toBe(true);
         });
 
+        it("should convert dashboard timezone config as one content object", () => {
+            const input = makeDashboard({
+                timezone_config: {
+                    timezone_id: "$browserDetected",
+                    show_timezone_info: true,
+                    allow_user_override_in_view_mode: false,
+                },
+            });
+
+            const result = yamlDashboardToDeclarative(emptyEntities, input);
+            const content = result.dashboard.content as any;
+
+            expect(content.timezoneConfig).toEqual({
+                timezoneId: "$browserDetected",
+                showTimezoneInfo: true,
+                allowUserOverrideInViewMode: false,
+            });
+        });
+
+        it("should leave timezone config undefined when omitted", () => {
+            const input = makeDashboard();
+
+            const result = yamlDashboardToDeclarative(emptyEntities, input);
+            const content = result.dashboard.content as any;
+
+            expect(content.timezoneConfig).toBeUndefined();
+        });
+
         it("should derive title from id when not provided", () => {
             const input = makeDashboard({ id: "sales_overview" });
 
@@ -365,6 +393,31 @@ describe("dashboard conversion", () => {
             );
 
             expect(json.cross_filtering).toBe(false);
+        });
+
+        it("should round-trip dashboard timezone config", () => {
+            const input = makeDashboard({
+                timezone_config: {
+                    timezone_id: "$browserDetected",
+                    show_timezone_info: true,
+                    allow_user_override_in_view_mode: true,
+                },
+            });
+
+            const { dashboard, filterContext } = yamlDashboardToDeclarative(emptyEntities, input);
+            const { json, content } = declarativeDashboardToYaml(
+                emptyFromEntities,
+                dashboard,
+                filterContext ? [filterContext] : [],
+            );
+
+            expect(json.timezone_config).toEqual({
+                timezone_id: "$browserDetected",
+                show_timezone_info: true,
+                allow_user_override_in_view_mode: true,
+            });
+            expect(content).toContain("timezone_config:");
+            expect(content).toContain("timezone_id: $browserDetected");
         });
 
         describe("YAML version round-trip", () => {

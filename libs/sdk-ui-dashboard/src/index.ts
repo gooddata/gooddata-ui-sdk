@@ -1309,6 +1309,7 @@ export {
     selectExportResultPollingTimeout,
     selectEnableAnomalyDetectionAlert,
     selectEnableFiscalCalendars,
+    selectEnableDashboardTimezone,
     selectActiveCalendars,
     selectEnableDashboardFilterGroups,
     selectEnableDashboardDensitySetting,
@@ -1681,6 +1682,7 @@ export {
     selectDashboardDescriptor,
     selectEvaluationFrequency,
     selectDashboardTimezoneConfig,
+    selectEffectiveDashboardTimezone,
     selectPersistedDashboardTimezoneConfig,
     selectPersistedDashboardFilterContextDateFilterConfig,
     selectSectionHeadersDateDataSet,
@@ -2328,6 +2330,13 @@ export { ShareStatusIndicator } from "./presentation/topBar/shareIndicators/shar
 export { DefaultShareStatus } from "./presentation/topBar/shareIndicators/shareStatus/DefaultShareStatus.js";
 export type { ILockedStatusProps } from "./presentation/topBar/shareIndicators/lockedStatus/types.js";
 export type { IShareStatusProps } from "./presentation/topBar/shareIndicators/shareStatus/types.js";
+export { TimezoneIndicator } from "./presentation/topBar/timezoneIndicator/TimezoneIndicator.js";
+export { DefaultTimezoneIndicator } from "./presentation/topBar/timezoneIndicator/DefaultTimezoneIndicator.js";
+export { resolveDashboardTimezoneInfo } from "./presentation/topBar/timezoneIndicator/resolveDashboardTimezoneInfo.js";
+export type {
+    IDashboardTimezoneInfo,
+    ITimezoneIndicatorProps,
+} from "./presentation/topBar/timezoneIndicator/types.js";
 export { DefaultDashboardToolbar } from "./presentation/toolbar/DefaultDashboardToolbar/DefaultDashboardToolbar.js";
 export {
     DefaultDashboardToolbarGroup,

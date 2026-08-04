@@ -23,7 +23,7 @@ import { generateConstantsForExecutions } from "./execution.js";
 import { generateConstantsForInsights } from "./insight.js";
 import { generateConstantsForVisClasses } from "./visClasses.js";
 
-const FILE_HEADER = `/* eslint-disable import-x/order */\n/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: ${new Date().toISOString()}; */`;
+const FILE_HEADER = `/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: ${new Date().toISOString()}; */`;
 
 const MainIndexConstName = "Recordings";
 

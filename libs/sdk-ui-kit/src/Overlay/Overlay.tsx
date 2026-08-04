@@ -508,7 +508,11 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
         const overlays = Array.from(document.querySelectorAll(".overlay-wrapper"));
         const thisOverlayIndex = overlays.findIndex((overlay) => overlay === this.overlayRef.current);
 
-        return overlays.slice(thisOverlayIndex + 1).some((overlay) => overlay.contains(element));
+        // floating-ui panels portal to <body>, outside every .overlay-wrapper, so plain containment
+        // misses a popup anchored inside a child overlay — attribute it through its anchor chain
+        return overlays
+            .slice(thisOverlayIndex + 1)
+            .some((overlay) => isClickInsideOwnSubtree(element, overlay));
     };
 
     public onDocumentMouseDown(e: MouseEvent): void {

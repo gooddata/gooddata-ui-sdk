@@ -17770,7 +17770,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
 }
 `;
 
-exports[`getAvailableDrillTargets > should provide correct available drill targets for: GeoAreaChart - area legend position bottom 1`] = `
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: GeoAreaChart - area legend position bottom-left 1`] = `
 {
   "attributes": [
     {
@@ -18070,7 +18070,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
 }
 `;
 
-exports[`getAvailableDrillTargets > should provide correct available drill targets for: GeoAreaChart - area legend position bottom 2`] = `
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: GeoAreaChart - area legend position bottom-left 2`] = `
 {
   "attributes": [
     {
@@ -18370,7 +18370,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
 }
 `;
 
-exports[`getAvailableDrillTargets > should provide correct available drill targets for: GeoAreaChart - area legend position left 1`] = `
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: GeoAreaChart - area legend position bottom-right 1`] = `
 {
   "attributes": [
     {
@@ -18670,7 +18670,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
 }
 `;
 
-exports[`getAvailableDrillTargets > should provide correct available drill targets for: GeoAreaChart - area legend position left 2`] = `
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: GeoAreaChart - area legend position bottom-right 2`] = `
 {
   "attributes": [
     {
@@ -18970,7 +18970,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
 }
 `;
 
-exports[`getAvailableDrillTargets > should provide correct available drill targets for: GeoAreaChart - area legend position right 1`] = `
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: GeoAreaChart - area legend position top-left 1`] = `
 {
   "attributes": [
     {
@@ -19270,7 +19270,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
 }
 `;
 
-exports[`getAvailableDrillTargets > should provide correct available drill targets for: GeoAreaChart - area legend position right 2`] = `
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: GeoAreaChart - area legend position top-left 2`] = `
 {
   "attributes": [
     {
@@ -19570,7 +19570,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
 }
 `;
 
-exports[`getAvailableDrillTargets > should provide correct available drill targets for: GeoAreaChart - area legend position top 1`] = `
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: GeoAreaChart - area legend position top-right 1`] = `
 {
   "attributes": [
     {
@@ -19870,7 +19870,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
 }
 `;
 
-exports[`getAvailableDrillTargets > should provide correct available drill targets for: GeoAreaChart - area legend position top 2`] = `
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: GeoAreaChart - area legend position top-right 2`] = `
 {
   "attributes": [
     {
@@ -37462,7 +37462,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
 }
 `;
 
-exports[`getAvailableDrillTargets > should provide correct available drill targets for: GeoPushpinChart - legend position bottom 1`] = `
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: GeoPushpinChart - legend position bottom-left 1`] = `
 {
   "attributes": [
     {
@@ -37846,7 +37846,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
 }
 `;
 
-exports[`getAvailableDrillTargets > should provide correct available drill targets for: GeoPushpinChart - legend position bottom 2`] = `
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: GeoPushpinChart - legend position bottom-left 2`] = `
 {
   "attributes": [
     {
@@ -38027,7 +38027,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
 }
 `;
 
-exports[`getAvailableDrillTargets > should provide correct available drill targets for: GeoPushpinChart - legend position left 1`] = `
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: GeoPushpinChart - legend position bottom-right 1`] = `
 {
   "attributes": [
     {
@@ -38411,7 +38411,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
 }
 `;
 
-exports[`getAvailableDrillTargets > should provide correct available drill targets for: GeoPushpinChart - legend position left 2`] = `
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: GeoPushpinChart - legend position bottom-right 2`] = `
 {
   "attributes": [
     {
@@ -38592,7 +38592,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
 }
 `;
 
-exports[`getAvailableDrillTargets > should provide correct available drill targets for: GeoPushpinChart - legend position right 1`] = `
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: GeoPushpinChart - legend position top-left 1`] = `
 {
   "attributes": [
     {
@@ -38976,7 +38976,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
 }
 `;
 
-exports[`getAvailableDrillTargets > should provide correct available drill targets for: GeoPushpinChart - legend position right 2`] = `
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: GeoPushpinChart - legend position top-left 2`] = `
 {
   "attributes": [
     {
@@ -39157,7 +39157,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
 }
 `;
 
-exports[`getAvailableDrillTargets > should provide correct available drill targets for: GeoPushpinChart - legend position top 1`] = `
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: GeoPushpinChart - legend position top-right 1`] = `
 {
   "attributes": [
     {
@@ -39541,7 +39541,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
 }
 `;
 
-exports[`getAvailableDrillTargets > should provide correct available drill targets for: GeoPushpinChart - legend position top 2`] = `
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: GeoPushpinChart - legend position top-right 2`] = `
 {
   "attributes": [
     {

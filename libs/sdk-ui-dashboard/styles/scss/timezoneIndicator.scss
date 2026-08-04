@@ -1,0 +1,23 @@
+// (C) 2026 GoodData Corporation
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.gd-timezone-indicator {
+    display: inline-block;
+
+    .gd-timezone-indicator-content {
+        display: inline-flex;
+        align-items: center;
+        margin-top: 10px;
+        gap: 5px;
+        color: kit-variables.$gd-color-state-blank;
+        font-size: 14px;
+        white-space: nowrap;
+
+        .gd-timezone-indicator-icon {
+            width: 18px;
+            height: 18px;
+            flex: 0 0 auto;
+            background: url("@gooddata/sdk-ui-dashboard/esm/assets/timezone.svg") no-repeat center / contain;
+        }
+    }
+}

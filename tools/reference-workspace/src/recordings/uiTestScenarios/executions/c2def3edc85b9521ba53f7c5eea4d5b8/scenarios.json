@@ -172,7 +172,7 @@
                 "localIdentifier": "segment"
             }
         ],
-        "scenario": "legend position top",
+        "scenario": "legend position top-left",
         "vis": "GeoPushpinChart"
     },
     {
@@ -216,7 +216,7 @@
                 "localIdentifier": "segment"
             }
         ],
-        "scenario": "legend position right",
+        "scenario": "legend position top-right",
         "vis": "GeoPushpinChart"
     },
     {
@@ -260,7 +260,7 @@
                 "localIdentifier": "segment"
             }
         ],
-        "scenario": "legend position bottom",
+        "scenario": "legend position bottom-left",
         "vis": "GeoPushpinChart"
     },
     {
@@ -304,7 +304,7 @@
                 "localIdentifier": "segment"
             }
         ],
-        "scenario": "legend position left",
+        "scenario": "legend position bottom-right",
         "vis": "GeoPushpinChart"
     },
     {

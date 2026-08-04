@@ -627,6 +627,7 @@
     "objectShare.confirm.button": "確認",
     "objectShare.selfRestrict.title": "限制您的存取權？",
     "objectShare.selfRestrict.warning": "您無法為自己設定更高權限。",
+    "objectShare.workspaceLevel.inherited": "此權限由父工作區授予，無法在此處降低。",
     "objectShare.grantee.you": "{name}（您）",
     "objectShare.adminTag.label": "管理",
     "objectShare.adminTag.tooltip": "您和其他管理員對此物件擁有完整存取權。",

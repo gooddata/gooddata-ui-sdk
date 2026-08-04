@@ -627,6 +627,7 @@
     "objectShare.confirm.button": "確認",
     "objectShare.selfRestrict.title": "自分のアクセスを制限しますか？",
     "objectShare.selfRestrict.warning": "自分により高い権限は設定できません。",
+    "objectShare.workspaceLevel.inherited": "この権限は親ワークスペースから付与されているため、ここでは引き下げられません。",
     "objectShare.grantee.you": "{name} (あなた)",
     "objectShare.adminTag.label": "管理者",
     "objectShare.adminTag.tooltip": "あなたと他の管理者は、このオブジェクトへの完全なアクセス権を持っています。",

@@ -4,8 +4,11 @@ import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import {
+    type FilterContextItem,
     type IAutomationMetadataObject,
     type IAutomationMetadataObjectDefinition,
+    type INotificationChannelMetadataObject,
+    type IWorkspaceUser,
     idRef,
 } from "@gooddata/sdk-model";
 
@@ -56,7 +59,6 @@ vi.mock("../../../../model/commands/scheduledEmail.js", () => ({
 
 vi.mock("../../../../model/store/filtering/dashboardFilterSelectors.js", () => ({
     selectAutomationCommonDateFilterId: () => "common-date-id",
-    selectAutomationDefaultSelectedFilters: () => [{ id: "filter-1" }],
     selectDashboardHiddenFilters: () => [],
 }));
 
@@ -118,23 +120,63 @@ import {
 } from "../../../../model/commands/scheduledEmail.js";
 
 import { sanitizeAutomationForSave } from "./sanitizeAutomationForSave.js";
-import { useBuildScheduledEmailDialogContext } from "./useBuildScheduledEmailDialogContext.js";
+import {
+    type IUseBuildScheduledEmailDialogContextOpts,
+    useBuildScheduledEmailDialogContext,
+} from "./useBuildScheduledEmailDialogContext.js";
 
 // ---------------------------------------------------------------------------
 // Tests
 // ---------------------------------------------------------------------------
 
+// The builder's create/edit inputs (users, notificationChannels, isLoading) are required options;
+// tests that don't care about them use this minimal, valid base and override what they need.
+const BASE_OPTS: IUseBuildScheduledEmailDialogContextOpts = {
+    users: [],
+    notificationChannels: [],
+    isLoading: false,
+};
+
 describe("useBuildScheduledEmailDialogContext", () => {
-    it("exposes dashboardId, dashboardTitle, and dashboardFilters from the store selectors", () => {
-        const { result } = renderHook(() => useBuildScheduledEmailDialogContext({}));
+    it("exposes dashboardId and dashboardTitle from the store selectors", () => {
+        const { result } = renderHook(() => useBuildScheduledEmailDialogContext(BASE_OPTS));
 
         expect(result.current.dashboardId).toBe("dashboard-1");
         expect(result.current.dashboardTitle).toBe("My Dashboard");
-        expect(result.current.dashboardFilters).toEqual([{ id: "filter-1" }]);
+    });
+
+    it("passes the create/edit inputs through and carries the effective dashboard filters", () => {
+        const scheduledExportToEdit = { id: "schedule-1", title: "Weekly" } as IAutomationMetadataObject;
+        const users: IWorkspaceUser[] = [
+            { ref: idRef("user-1"), uri: "/users/user-1", login: "user-1", email: "user-1@example.com" },
+        ];
+        const notificationChannels = [
+            { id: "channel-1", type: "notificationChannel" },
+        ] as INotificationChannelMetadataObject[];
+        const dashboardFilters: FilterContextItem[] = [];
+
+        const { result } = renderHook(() =>
+            useBuildScheduledEmailDialogContext({
+                scheduledExportToEdit,
+                users,
+                usersError: undefined,
+                notificationChannels,
+                isLoading: true,
+                dashboardFilters,
+            }),
+        );
+
+        expect(result.current.scheduledExportToEdit).toBe(scheduledExportToEdit);
+        expect(result.current.users).toBe(users);
+        expect(result.current.notificationChannels).toBe(notificationChannels);
+        expect(result.current.isLoading).toBe(true);
+        // the connector computes `saved ?? getAppliedDashboardFilters(...)` and passes the result in;
+        // the builder must not re-derive it from selectAutomationDefaultSelectedFilters
+        expect(result.current.dashboardFilters).toBe(dashboardFilters);
     });
 
     it("createScheduledEmail applies sanitizeAutomationForSave before dispatching the command", async () => {
-        const { result } = renderHook(() => useBuildScheduledEmailDialogContext({}));
+        const { result } = renderHook(() => useBuildScheduledEmailDialogContext(BASE_OPTS));
 
         const draft: IAutomationMetadataObjectDefinition = {
             type: "automation",
@@ -171,7 +213,7 @@ describe("useBuildScheduledEmailDialogContext", () => {
     });
 
     it("saveScheduledEmail applies sanitizeAutomationForSave before dispatching the command", async () => {
-        const { result } = renderHook(() => useBuildScheduledEmailDialogContext({}));
+        const { result } = renderHook(() => useBuildScheduledEmailDialogContext(BASE_OPTS));
 
         const existing: IAutomationMetadataObject = {
             type: "automation",
@@ -197,7 +239,7 @@ describe("useBuildScheduledEmailDialogContext", () => {
     });
 
     it("createScheduledEmail rejects with error when the command fails", async () => {
-        const { result } = renderHook(() => useBuildScheduledEmailDialogContext({}));
+        const { result } = renderHook(() => useBuildScheduledEmailDialogContext(BASE_OPTS));
 
         const draft: IAutomationMetadataObjectDefinition = {
             type: "automation",

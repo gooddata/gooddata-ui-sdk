@@ -106,14 +106,6 @@ function ScheduledEmailDialogFooter({
 }
 
 export function ScheduledMailDialogRenderer({
-    scheduledExportToEdit,
-    users,
-    usersError,
-    notificationChannels,
-    insight,
-    widget,
-    dashboardFilters,
-    widgetFilters,
     onBack,
     onCancel,
     onDeleteSuccess,
@@ -142,7 +134,19 @@ export function ScheduledMailDialogRenderer({
         externalRecipient: externalRecipientOverride,
         isSecondaryTitleVisible,
     } = useAutomationsContext();
-    const { exportTemplates, widgetTitle, hasMultipleTabs } = useScheduledEmailDialogContext();
+    // Read from context because this component calls useAutomationFiltersSelect,
+    // useAutomationExportParameters and useValidateExistingAutomationFilters directly, and the
+    // filter-select call must run before useEditScheduledEmail, which consumes its output. Removed
+    // with the filter read-model consolidation (EB-867), which retires these call sites.
+    const {
+        exportTemplates,
+        widgetTitle,
+        hasMultipleTabs,
+        scheduledExportToEdit,
+        widget,
+        insight,
+        dashboardFilters,
+    } = useScheduledEmailDialogContext();
 
     const handleScheduleDeleteSuccess = () => {
         onDeleteSuccess?.();
@@ -217,16 +221,12 @@ export function ScheduledMailDialogRenderer({
         onFiltersByTabChange,
         setParametersWire,
         enableAutomationEvaluationMode,
-    } = useEditScheduledEmail({
-        notificationChannels,
-        insight,
-        widget,
         users,
-        scheduledExportToEdit,
+        usersError,
+        notificationChannels,
+    } = useEditScheduledEmail({
         storeFilters,
         editedAutomationFilters,
-        dashboardFilters,
-        widgetFilters,
         maxAutomationsRecipients,
         setEditedAutomationFilters,
         setStoreFilters,
@@ -704,7 +704,8 @@ export function ScheduledMailDialogRenderer({
  * @alpha
  */
 export function DefaultScheduledEmailDialog(props: IScheduledEmailDialogProps) {
-    const { isLoading, onCancel, scheduledExportToEdit } = props;
+    const { onCancel } = props;
+    const { isLoading, scheduledExportToEdit } = useScheduledEmailDialogContext();
     if (isLoading) {
         return (
             <DefaultLoadingScheduledEmailDialog

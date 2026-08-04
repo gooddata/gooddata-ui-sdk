@@ -664,6 +664,8 @@ interface Dashboard {
     tabs?: Tab[];
     // (undocumented)
     tags?: Tags9;
+    // (undocumented)
+    timezone_config?: TimezoneConfig;
     title?: string;
     // (undocumented)
     type: "dashboard";
@@ -2428,6 +2430,10 @@ export const metadata_v1: {
                     };
                     persistent_filters_across_tabs: {
                         type: string;
+                        description: string;
+                    };
+                    timezone_config: {
+                        $ref: string;
                         description: string;
                     };
                     enable_section_headers: {
@@ -6800,6 +6806,10 @@ export const metadata_v1: {
                     type: string;
                     description: string;
                 };
+                timezone_config: {
+                    $ref: string;
+                    description: string;
+                };
                 enable_section_headers: {
                     type: string;
                     description: string;
@@ -6884,6 +6894,24 @@ export const metadata_v1: {
             };
             required: string[];
         };
+        timezoneConfig: {
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                timezone_id: {
+                    $ref: string;
+                    description: string;
+                };
+                show_timezone_info: {
+                    type: string;
+                    description: string;
+                };
+                allow_user_override_in_view_mode: {
+                    type: string;
+                    description: string;
+                };
+            };
+        };
         section: {
             type: string;
             additionalProperties: boolean;
@@ -6938,6 +6966,18 @@ export const metadata_v1: {
                 };
             };
             required: string[];
+        };
+        timezoneId: {
+            description: string;
+            oneOf: ({
+                pattern?: undefined;
+                type: string;
+                const: string;
+            } | {
+                const?: undefined;
+                type: string;
+                pattern: string;
+            })[];
         };
         widget: {
             title: string;
@@ -10440,6 +10480,15 @@ interface TextFilter2 {
     value: string;
 }
 
+// Warning: (ae-missing-release-tag) "TimezoneConfig" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface TimezoneConfig {
+    allow_user_override_in_view_mode?: boolean;
+    show_timezone_info?: boolean;
+    timezone_id?: "$browserDetected" | string;
+}
+
 // Warning: (ae-missing-release-tag) "TOP" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
@@ -10788,6 +10837,7 @@ declare namespace v1 {
         Metric,
         Metadata13,
         Dashboard,
+        TimezoneConfig,
         Section,
         VisualisationWidget,
         InteractionOpenPlainUrl,

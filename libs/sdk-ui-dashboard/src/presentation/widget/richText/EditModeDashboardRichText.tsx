@@ -20,9 +20,9 @@ import { useRichTextWidgetFilters } from "../../../_staging/sharedHooks/useRichT
 import { eagerRemoveSectionItemByWidgetRef } from "../../../model/commands/layout.js";
 import { changeRichTextWidgetContent } from "../../../model/commands/richText.js";
 import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { useDashboardExecConfig } from "../../../model/react/useWidgetExecConfig.js";
 import { useWidgetSelection } from "../../../model/react/useWidgetSelection.js";
 import { selectIsWhiteLabeled, selectSeparators } from "../../../model/store/config/configSelectors.js";
-import { selectExecutionTimestamp } from "../../../model/store/ui/uiSelectors.js";
 import { DASHBOARD_OVERLAYS_FILTER_Z_INDEX } from "../../../presentation/constants/zIndex.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 
@@ -40,7 +40,7 @@ export function EditModeDashboardRichText({ widget, clientWidth, clientHeight }:
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
     const intl = useIntl();
 
-    const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
+    const execConfig = useDashboardExecConfig();
 
     const { menuItems } = useEditableRichTextMenu({ closeMenu: closeConfigPanel, widget });
 
@@ -110,9 +110,7 @@ export function EditModeDashboardRichText({ widget, clientWidth, clientHeight }:
                 renderMode={isRichTextEditing ? "edit" : "view"}
                 emptyElement={EmptyElement}
                 LoadingComponent={LoadingComponent}
-                execConfig={{
-                    timestamp: executionTimestamp,
-                }}
+                execConfig={execConfig}
             />
             {isRichTextEditing && showLink ? (
                 <div className="gd-rich-text-widget-footer">

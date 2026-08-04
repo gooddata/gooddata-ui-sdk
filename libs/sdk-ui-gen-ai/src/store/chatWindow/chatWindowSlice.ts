@@ -18,6 +18,7 @@ import { addAmbientContextReferences, addContextReference } from "../../context/
 import { mergeContexts } from "../../context/build.js";
 import { removeContextReference, removeUserContextReferences } from "../../context/removeContextReference.js";
 import { type IGenAIContextObject, type StoreContext } from "../../types.js";
+import { clearThreadAction, startNewConversationAction } from "../messages/messagesSlice.js";
 
 type ChatWindowSliceState = {
     /**
@@ -196,6 +197,9 @@ const chatWindowSlice = createSlice({
             { payload: { userContext } }: PayloadAction<{ userContext?: IGenAIUserContext }>,
         ) => {
             if (!state.settings?.enableAiContextSetup) {
+                if (!userContext) {
+                    state.context.active = undefined;
+                }
                 return;
             }
             state.context = addAmbientContextReferences(state.context, userContext);
@@ -227,6 +231,15 @@ const chatWindowSlice = createSlice({
             }>,
         ) => state,
         copyToClipboardAction: (state, _action: PayloadAction<{ content: string }>) => state,
+    },
+    extraReducers: (builder) => {
+        const resetContextToAmbient = (state: ChatWindowSliceState) => {
+            state.context.active = mergeContexts(state.context.ambient);
+        };
+
+        builder
+            .addCase(startNewConversationAction, resetContextToAmbient)
+            .addCase(clearThreadAction, resetContextToAmbient);
     },
 });
 

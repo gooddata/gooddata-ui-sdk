@@ -37,16 +37,12 @@ interface IDefaultScheduledEmailManagementDialogContentProps {
     onAdd?: () => void;
     onClose?: () => void;
     onEdit: (scheduledEmail: IAutomationMetadataObject) => void;
-    isLoadingScheduleData: boolean;
-    automations: IAutomationMetadataObject[];
 }
 
 export function DefaultScheduledEmailManagementDialogContent({
     onAdd,
     onClose,
     onEdit,
-    isLoadingScheduleData,
-    automations,
 }: IDefaultScheduledEmailManagementDialogContentProps) {
     const intl = useIntl();
     const isMobile = isMobileView();
@@ -71,6 +67,8 @@ export function DefaultScheduledEmailManagementDialogContent({
         isEmbedded,
         maxAutomations,
         unlimitedAutomations,
+        automations,
+        isLoading: isLoadingScheduleData,
     } = useScheduledEmailManagementDialogContext();
 
     const enableBulkActions = !enableAccessibilityMode;

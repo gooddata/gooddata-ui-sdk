@@ -10,16 +10,41 @@ const fixtures = vi.hoisted(() => {
     const navigate = vi.fn();
     const onScheduleEmailingManagementEdit = vi.fn();
     let managementDialogProps: Record<string, unknown> | undefined;
+    let dialogProps: Record<string, unknown> | undefined;
+    let automationsError: Error | undefined;
+    const useWorkspaceUsers = vi.fn(() => ({
+        users: [],
+        status: "success",
+        usersError: new Error("users failed to load"),
+    }));
+    const seState = {
+        isScheduleEmailingDialogOpen: false,
+        isScheduleEmailingManagementDialogOpen: true,
+    };
 
     return {
         buildAutomationUrl,
         navigate,
         onScheduleEmailingManagementEdit,
+        useWorkspaceUsers,
+        seState,
         get managementDialogProps() {
             return managementDialogProps;
         },
         set managementDialogProps(value: Record<string, unknown> | undefined) {
             managementDialogProps = value;
+        },
+        get dialogProps() {
+            return dialogProps;
+        },
+        set dialogProps(value: Record<string, unknown> | undefined) {
+            dialogProps = value;
+        },
+        get automationsError() {
+            return automationsError;
+        },
+        set automationsError(value: Error | undefined) {
+            automationsError = value;
         },
     };
 });
@@ -37,11 +62,17 @@ vi.mock("../../../model/react/DashboardStoreProvider.js", () => ({
 vi.mock("../../../model/react/useDasboardScheduledEmails/useDashboardScheduledEmails.js", () => ({
     useDashboardScheduledEmails: () => ({
         isInitialized: true,
-        isScheduleEmailingDialogOpen: false,
-        isScheduleEmailingManagementDialogOpen: true,
-        scheduledExportToEdit: undefined,
+        get isScheduleEmailingDialogOpen() {
+            return fixtures.seState.isScheduleEmailingDialogOpen;
+        },
+        get isScheduleEmailingManagementDialogOpen() {
+            return fixtures.seState.isScheduleEmailingManagementDialogOpen;
+        },
+        scheduledExportToEdit: { id: "se-existing", title: "Existing schedule" },
         automations: [],
-        automationsError: undefined,
+        get automationsError() {
+            return fixtures.automationsError;
+        },
         automationsLoading: false,
         notificationChannels: [],
         onScheduleEmailingCancel: vi.fn(),
@@ -55,13 +86,13 @@ vi.mock("../../../model/react/useDasboardScheduledEmails/useDashboardScheduledEm
         onScheduleEmailingManagementEdit: fixtures.onScheduleEmailingManagementEdit,
         onScheduleEmailingManagementDeleteSuccess: vi.fn(),
         onScheduleEmailingManagementDeleteError: vi.fn(),
-        widget: undefined,
-        insight: undefined,
+        widget: { type: "insight", ref: { identifier: "widget-1" } },
+        insight: { insight: { identifier: "insight-1", title: "Insight" } },
     }),
 }));
 
 vi.mock("../../../model/react/useWorkspaceUsers.js", () => ({
-    useWorkspaceUsers: () => ({ users: [], status: "success", usersError: undefined }),
+    useWorkspaceUsers: fixtures.useWorkspaceUsers,
 }));
 
 vi.mock("../../../model/store/config/configSelectors.js", () => ({
@@ -99,7 +130,10 @@ vi.mock("../../../model/store/ui/uiSelectors.js", () => ({
 }));
 
 vi.mock("../scheduledEmail/ScheduledEmailDialog.js", () => ({
-    ScheduledEmailDialog: () => null,
+    ScheduledEmailDialog: (props: Record<string, unknown>) => {
+        fixtures.dialogProps = props;
+        return null;
+    },
 }));
 
 vi.mock("../scheduledEmail/ScheduledEmailManagementDialog.js", () => ({
@@ -139,7 +173,7 @@ vi.mock("./hooks/useWidgetAutomationFilters.js", () => ({
 
 vi.mock("../../../_staging/automation/index.js", () => ({
     getAutomationDashboardFilters: () => undefined,
-    getAutomationVisualizationFilters: () => ({ executionFilters: undefined }),
+    getAutomationVisualizationFilters: () => ({ executionFilters: [] }),
 }));
 
 vi.mock("../scheduledEmail/utils/filters.js", () => ({
@@ -154,6 +188,11 @@ describe("ScheduledEmailConnector", () => {
         fixtures.navigate.mockClear();
         fixtures.onScheduleEmailingManagementEdit.mockClear();
         fixtures.managementDialogProps = undefined;
+        fixtures.dialogProps = undefined;
+        fixtures.automationsError = undefined;
+        fixtures.useWorkspaceUsers.mockClear();
+        fixtures.seState.isScheduleEmailingDialogOpen = false;
+        fixtures.seState.isScheduleEmailingManagementDialogOpen = true;
     });
 
     it("navigates cross-dashboard when editing a schedule on another dashboard in shell mode", () => {
@@ -199,5 +238,58 @@ describe("ScheduledEmailConnector", () => {
             id: "se-2",
             dashboard: undefined,
         });
+    });
+
+    it("does not load workspace users when only the management dialog is open", () => {
+        render(<ScheduledEmailConnector />);
+
+        expect(fixtures.useWorkspaceUsers).not.toHaveBeenCalled();
+    });
+
+    it("loads workspace users when the create/edit dialog is open", () => {
+        fixtures.seState.isScheduleEmailingDialogOpen = true;
+        fixtures.seState.isScheduleEmailingManagementDialogOpen = false;
+
+        render(<ScheduledEmailConnector />);
+
+        expect(fixtures.useWorkspaceUsers).toHaveBeenCalled();
+    });
+
+    it("does not supply the deprecated data props to the create/edit dialog", () => {
+        fixtures.seState.isScheduleEmailingDialogOpen = true;
+        fixtures.seState.isScheduleEmailingManagementDialogOpen = false;
+
+        render(<ScheduledEmailConnector />);
+
+        expect(fixtures.dialogProps).toBeDefined();
+        for (const prop of [
+            "scheduledExportToEdit",
+            "users",
+            "usersError",
+            "notificationChannels",
+            "widget",
+            "insight",
+            "dashboardFilters",
+            "widgetFilters",
+            "isLoading",
+        ]) {
+            expect(fixtures.dialogProps?.[prop]).toBeUndefined();
+        }
+    });
+
+    it("does not supply the deprecated data props to the management dialog", () => {
+        fixtures.automationsError = new Error("automations failed to load");
+
+        render(<ScheduledEmailConnector />);
+
+        expect(fixtures.managementDialogProps).toBeDefined();
+        for (const prop of [
+            "automations",
+            "isLoadingScheduleData",
+            "notificationChannels",
+            "scheduleDataError",
+        ]) {
+            expect(fixtures.managementDialogProps?.[prop]).toBeUndefined();
+        }
     });
 });

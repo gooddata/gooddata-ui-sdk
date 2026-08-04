@@ -53,11 +53,11 @@ To update the recording metadata:
 
 ### Updating UI Test Scenarios
 
-The `src/recordings/uiTestScenarios` directory defines recordings for storybook scenarios (sdk-ui-tests). To update these recordings, follow these steps:
+The `src/recordings/uiTestScenarios` directory defines recordings for storybook scenarios (sdk-ui-tests-scenarios). To update these recordings, follow these steps:
 
 1. Run `rush build`.
 2. Run `npm run clear-recordings`.
-3. Run `npm run populate-ref` (from the sdk-ui-tests directory).
+3. Run `npm run populate-ref` (from the sdk-ui-tests-scenarios directory).
 4. Run `npm run refresh-recordings`.
 
 ## Working with Reference Workspace LDM

@@ -9,6 +9,7 @@ import { messagesSliceReducer } from "../../messages/messagesSlice.js";
 import { type RootState } from "../../types.js";
 import {
     agentSwitchingActiveSelector,
+    hasPinnedContextSelector,
     isPreviewSelector,
     userContextSelector,
 } from "../chatWindowSelectors.js";
@@ -103,11 +104,9 @@ describe("effectiveUserContextSelector", () => {
             setAmbientUserContextAction({ userContext: undefined }),
         );
 
-        // ambient was merged into active, so clearing ambient doesn't clear active by default
-        // unless it's explicitly cleared or changed.
-        // In current implementation, setAmbientUserContextAction(undefined) sets state.context.ambient to undefined
-        // but doesn't touch active.
-        expect(userContextSelector(state)).toEqual(ambientContext);
+        // The ambient context was merged into the active one, so clearing it has to subtract it
+        // again - otherwise the dashboard the user just left keeps being sent with every request.
+        expect(userContextSelector(state)).toBeUndefined();
     });
 
     it("should update active context via addContextReferenceAction when it matches ambient", () => {
@@ -126,5 +125,68 @@ describe("effectiveUserContextSelector", () => {
         );
 
         expect(userContextSelector(state)).toEqual(ambientContext);
+    });
+});
+
+describe("hasPinnedContextSelector", () => {
+    const ambientContext: IGenAIUserContext = {
+        view: { dashboard: { ref: idRef("ambient", "analyticalDashboard"), title: "2. Sales", widgets: [] } },
+    };
+
+    const stateWith = (
+        settings: Partial<IUserWorkspaceSettings>,
+        ...actions: Parameters<typeof chatWindowSliceReducer>[1][]
+    ): RootState => ({
+        messages: messagesSliceReducer(undefined, { type: "test/init" }),
+        [chatWindowSliceName]: actions.reduce(chatWindowSliceReducer, {
+            ...getInitialChatWindowState(),
+            settings: settings as IUserWorkspaceSettings,
+        }),
+    });
+
+    it("should be false without any context", () => {
+        expect(hasPinnedContextSelector(stateWith({ enableAiContextSetup: true }))).toBe(false);
+    });
+
+    it("should be false for the ambient context alone", () => {
+        const state = stateWith(
+            { enableAiContextSetup: true },
+            setAmbientUserContextAction({ userContext: ambientContext }),
+        );
+
+        expect(hasPinnedContextSelector(state)).toBe(false);
+    });
+
+    it("should be true for an object pinned from the ambient dashboard", () => {
+        const state = stateWith(
+            { enableAiContextSetup: true },
+            setAmbientUserContextAction({ userContext: ambientContext }),
+            addContextReferenceAction({
+                object: {
+                    id: "net-sales",
+                    ref: idRef("net-sales", "insight"),
+                    title: "Net Sales Over Time",
+                    type: "widget",
+                    where: "referencedObjects",
+                    context: {
+                        ref: idRef("ambient", "analyticalDashboard"),
+                        title: "2. Sales",
+                        type: "DASHBOARD",
+                    },
+                    nesting: 1,
+                },
+            }),
+        );
+
+        expect(hasPinnedContextSelector(state)).toBe(true);
+    });
+
+    it("should be true for a context attached while the chips are hidden", () => {
+        const state = stateWith(
+            { enableAiContextSetup: false },
+            setUserContextAction({ userContext: ambientContext }),
+        );
+
+        expect(hasPinnedContextSelector(state)).toBe(true);
     });
 });
