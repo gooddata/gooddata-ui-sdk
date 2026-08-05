@@ -30,7 +30,7 @@ import { ScheduledEmailDialogContextProvider } from "../contexts/ScheduledEmailD
 import { ScheduledEmailManagementDialogContextProvider } from "../contexts/ScheduledEmailManagementDialogContext.js";
 import { ScheduledEmailDialog } from "../scheduledEmail/ScheduledEmailDialog.js";
 import { ScheduledEmailManagementDialog } from "../scheduledEmail/ScheduledEmailManagementDialog.js";
-import { getAppliedDashboardFilters } from "../scheduledEmail/utils/filters.js";
+import { getAppliedDashboardFilters } from "../shared/filters/index.js";
 
 import { useAutomationManagementEditRouting } from "./hooks/useAutomationManagementEditRouting.js";
 import { useBuildAutomationsContext } from "./hooks/useBuildAutomationsContext.js";

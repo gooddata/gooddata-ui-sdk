@@ -62,8 +62,12 @@ function useParameterEditing(): IAsCodeEditing<IParameterMetadataObjectDefinitio
         () => ({
             completionSource,
             syntaxErrorMessage: intl.formatMessage(errorMessages.syntax),
-            // Parameter YAML round-trips 1:1 to its definition, so serialization is a plain stringify.
-            serialize: (definition) => serializeParameterToYaml(definition),
+            // Parameter YAML round-trips 1:1 to its definition, so serialization is a plain stringify and
+            // every definition has a code form.
+            serialize: (definition) => ({
+                yaml: serializeParameterToYaml(definition),
+                hasCodeForm: true,
+            }),
             validate: (value, context) => {
                 const result = validateParameterYaml(value, {
                     enabledTypes,

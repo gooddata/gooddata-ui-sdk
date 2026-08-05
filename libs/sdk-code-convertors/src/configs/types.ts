@@ -9,7 +9,8 @@ export type LineStyleMapping = {
 
 /** @public */
 export type ColorMapping = {
-    id: string;
+    /** `null` stands for the attribute's empty element, which is distinct from the empty string. */
+    id: string | null;
     color:
         | {
               type: "guid";

@@ -75,7 +75,7 @@ vi.mock(
 );
 
 vi.mock(
-    "../../../../shared/automationFilters/utils.js",
+    "../../../../shared/filters/index.js",
     async (importOriginal: () => Promise<Record<string, unknown>>) => {
         const actual = await importOriginal();
         return {
@@ -131,7 +131,7 @@ import {
     getAppliedWidgetFilters,
     getVisibleFiltersByFilters,
     resolveMvfDimensionalityLocalRefs,
-} from "../../../../shared/automationFilters/utils.js";
+} from "../../../../shared/filters/index.js";
 import {
     convertCurrentUserToAutomationRecipient,
     convertCurrentUserToWorkspaceUser,

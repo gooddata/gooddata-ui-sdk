@@ -176,7 +176,7 @@ vi.mock("../../../_staging/automation/index.js", () => ({
     getAutomationVisualizationFilters: () => ({ executionFilters: [] }),
 }));
 
-vi.mock("../scheduledEmail/utils/filters.js", () => ({
+vi.mock("../shared/filters/index.js", () => ({
     getAppliedDashboardFilters: () => [],
 }));
 

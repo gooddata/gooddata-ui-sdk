@@ -6,20 +6,28 @@ import type { Visualisation } from "@gooddata/sdk-code-schemas/v1";
 import type { IRankingFilterBody } from "@gooddata/sdk-model";
 
 import { type TableConfigProperties } from "../configs/table.js";
+import { declarativeVisualisationToYaml } from "../from/declarativeVisualisationToYaml.js";
+import { declarativeRankingFilterToYaml } from "../from/filtersToYaml.js";
 import {
-    declarativeRankingFilterToYaml,
-    declarativeVisualisationToYaml,
-} from "../from/declarativeVisualisationToYaml.js";
-import {
+    type VisualisationDefinition,
     yamlBucketsToDeclarative,
     yamlFiltersToDeclarative,
     yamlVisualisationToDeclarative,
     yamlVisualisationToMetadataObject,
 } from "../to/yamlVisualisationToDeclarative.js";
 import type { ExportEntities, FromEntities } from "../types.js";
+import { CoreErrorCode, type ICoreError } from "../utils/errors.js";
 
 const emptyEntities: ExportEntities = [];
 const emptyFromEntities: FromEntities = [];
+
+/** The schema types model a whole document, so a fixture states only the fields a test exercises. */
+type FixtureOf<T> = T extends object ? { [K in keyof T]?: FixtureOf<T[K]> } : T;
+
+type DeclarativeVisualisation = Parameters<typeof declarativeVisualisationToYaml>[1];
+
+const visualisation = (fixture: FixtureOf<Visualisation>) => fixture as Visualisation;
+const declarative = (fixture: FixtureOf<DeclarativeVisualisation>) => fixture as DeclarativeVisualisation;
 
 type YamlTableVisualisation = Extract<Visualisation, { type: "table" }>;
 type YamlConditionalFormatting = NonNullable<
@@ -444,6 +452,242 @@ describe("visualisation conversion", () => {
 
             const { buckets } = yamlBucketsToDeclarative([], input);
             expect(buckets).toHaveLength(0);
+        });
+    });
+
+    describe("display_as on a filter a date filter carries", () => {
+        const attributeFilter = (localIdentifier: string, displayForm: string) => ({
+            negativeAttributeFilter: {
+                localIdentifier,
+                displayForm: { identifier: displayForm, type: "displayForm" as const },
+                notIn: { values: [] },
+            },
+        });
+
+        const displayAs = { displayAsLabel: { identifier: "region_code", type: "displayForm" as const } };
+
+        it("writes display_as for a carried filter, as for one on the query", () => {
+            const fixture = declarative({
+                id: "b1",
+                title: "B",
+                content: {
+                    visualizationUrl: "local:bar",
+                    buckets: [],
+                    sorts: [],
+                    properties: {},
+                    filters: [
+                        attributeFilter("plain", "region"),
+                        {
+                            relativeDateFilter: {
+                                dataSet: { identifier: "created", type: "dataSet" as const },
+                                granularity: "GDC.time.month",
+                                from: -11,
+                                to: 0,
+                            },
+                        },
+                        attributeFilter("carried", "created.month"),
+                    ],
+                    attributeFilterConfigs: { plain: displayAs, carried: displayAs },
+                },
+            });
+
+            const { json } = declarativeVisualisationToYaml(emptyFromEntities, fixture);
+            type EmittedFilter = { display_as?: string; with?: Record<string, EmittedFilter> };
+            const filterBy = (json as { query: { filter_by: Record<string, EmittedFilter> } }).query
+                .filter_by;
+
+            // A carried filter is reachable by name for its config, but is not a filter of the query's own.
+            expect(Object.keys(filterBy)).toEqual(["plain", "created_month"]);
+            expect(filterBy["created_month"].with?.["carried"].display_as).toBe("displayForm/region_code");
+            expect(filterBy["plain"].display_as).toBe("displayForm/region_code");
+        });
+    });
+
+    describe("filters a date filter carries", () => {
+        // Grouping under a date filter requires the label to belong to that filter's own dataset.
+        const CARRIED_LABEL = "label/created.month";
+        const displayAs = { display_as: "label/region_code" };
+
+        const carried = (displayAs: Record<string, unknown>) =>
+            visualisation({
+                type: "bar_chart",
+                id: "b1",
+                title: "B",
+                query: {
+                    fields: { m1: { using: "metric/revenue" }, a1: { using: "label/region" } },
+                    filter_by: {
+                        d1: {
+                            type: "date_filter",
+                            using: "date/created",
+                            granularity: "MONTH",
+                            from: -11,
+                            to: 0,
+                            with: {
+                                af: { type: "attribute_filter", using: CARRIED_LABEL, ...displayAs },
+                            },
+                        },
+                    },
+                },
+                metrics: [{ field: "m1" }],
+                view_by: [{ field: "a1" }],
+            });
+
+        it("names the carried filter so its display_as config can reach it", () => {
+            const content = yamlVisualisationToDeclarative(
+                emptyEntities,
+                carried({ display_as: "label/region_code" }),
+            ).content as VisualisationDefinition;
+            const configured = Object.keys(content.attributeFilterConfigs ?? {});
+            const localIds = content.filters.map(
+                (filter) =>
+                    Object.values(filter as Record<string, { localIdentifier?: string }>)[0]?.localIdentifier,
+            );
+
+            expect(configured).toEqual(["af"]);
+            expect(localIds).toContain("af");
+        });
+
+        it("refuses one name claimed by two blocks, which would leave the filters alike", () => {
+            const clashing = visualisation({
+                type: "bar_chart",
+                id: "b1",
+                title: "B",
+                query: {
+                    fields: { m1: { using: "metric/revenue" } },
+                    filter_by: {
+                        af: { type: "attribute_filter", using: "label/region", ...displayAs },
+                        d1: {
+                            type: "date_filter",
+                            using: "date/created",
+                            granularity: "MONTH",
+                            from: -11,
+                            to: 0,
+                            with: { af: { type: "attribute_filter", using: CARRIED_LABEL, ...displayAs } },
+                        },
+                    },
+                },
+                metrics: [{ field: "m1" }],
+            });
+
+            try {
+                yamlVisualisationToDeclarative(emptyEntities, clashing);
+                expect.fail("Should have thrown error");
+            } catch (err: unknown) {
+                expect((err as ICoreError).code).toBe(CoreErrorCode.DuplicateFilterName);
+                expect((err as ICoreError).message).toContain("af");
+                // The dashboard wording names a tab and filter groups, neither of which a query has.
+                expect((err as ICoreError).message).not.toContain("dashboard");
+            }
+        });
+
+        it("leaves a measure's own carried filter unnamed, which must never claim one", () => {
+            const measureScoped = visualisation({
+                type: "bar_chart",
+                id: "b1",
+                title: "B",
+                query: {
+                    fields: {
+                        m1: {
+                            using: "metric/revenue",
+                            filter_by: {
+                                d1: {
+                                    type: "date_filter",
+                                    using: "date/created",
+                                    granularity: "MONTH",
+                                    from: -11,
+                                    to: 0,
+                                    with: {
+                                        af: {
+                                            type: "attribute_filter",
+                                            using: CARRIED_LABEL,
+                                            display_as: "label/created.month_name",
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+                metrics: [{ field: "m1" }],
+            });
+
+            const content = yamlVisualisationToDeclarative(emptyEntities, measureScoped)
+                .content as VisualisationDefinition;
+            const measure = content.buckets[0]?.items[0] as {
+                measure: { definition: { measureDefinition: { filters?: unknown[] } } };
+            };
+            const scopedFilters = measure.measure.definition.measureDefinition.filters ?? [];
+
+            expect(scopedFilters.length).toBeGreaterThan(0);
+            for (const filter of scopedFilters) {
+                const body = Object.values(filter as Record<string, { localIdentifier?: string }>)[0];
+                expect(body?.localIdentifier).toBeUndefined();
+            }
+        });
+
+        it("leaves a carried filter unnamed when nothing configures it", () => {
+            const content = yamlVisualisationToDeclarative(emptyEntities, carried({}))
+                .content as VisualisationDefinition;
+            const localIds = content.filters.map(
+                (filter) =>
+                    Object.values(filter as Record<string, { localIdentifier?: string }>)[0]?.localIdentifier,
+            );
+
+            expect(content.attributeFilterConfigs).toBeUndefined();
+            expect(localIds).not.toContain("af");
+        });
+    });
+
+    describe("yamlLayersToDeclarative", () => {
+        const geoWithLayer: Visualisation = {
+            type: "geo_chart",
+            id: "map1",
+            title: "Map",
+            query: { fields: { g1: { using: "label/region_geo" } } },
+            view_by: ["g1"],
+            layers: [{ id: "layer1", title: "Layer 1", type: "pushpin", view_by: ["g1"] }],
+        };
+
+        const withLayerIds = (first: string, second: string) =>
+            ({
+                type: "geo_chart",
+                id: "map1",
+                title: "Map",
+                query: { fields: { g1: { using: "label/region_geo" } } },
+                view_by: ["g1"],
+                layers: [
+                    { id: first, title: "First", type: "pushpin", view_by: ["g1"] },
+                    { id: second, title: "Second", type: "pushpin", view_by: ["g1"] },
+                ],
+            }) as Visualisation;
+
+        it("refuses one id claimed by two layers, which would name neither", () => {
+            try {
+                yamlVisualisationToDeclarative(emptyEntities, withLayerIds("dup", "dup"));
+                expect.fail("Should have thrown error");
+            } catch (err: unknown) {
+                expect((err as ICoreError).code).toBe(CoreErrorCode.DuplicateLayerIdentifier);
+                expect((err as ICoreError).message).toContain('"dup"');
+            }
+        });
+
+        it("converts layers whose ids differ", () => {
+            const content = yamlVisualisationToDeclarative(emptyEntities, withLayerIds("one", "two"))
+                .content as VisualisationDefinition;
+
+            expect((content.layers ?? []).map((layer) => layer.id)).toEqual(["one", "two"]);
+        });
+
+        it("leaves a layer's filters and sorts unset, which is what makes it inherit the insight's", () => {
+            // The declarative object types `content` loosely; the layers live in its visualisation shape.
+            const content = yamlVisualisationToDeclarative(emptyEntities, geoWithLayer)
+                .content as VisualisationDefinition;
+            const [layer] = content.layers ?? [];
+
+            expect(layer).toBeDefined();
+            expect(layer).not.toHaveProperty("filters");
+            expect(layer).not.toHaveProperty("sorts");
+            expect(layer).not.toHaveProperty("attributeFilterConfigs");
         });
     });
 

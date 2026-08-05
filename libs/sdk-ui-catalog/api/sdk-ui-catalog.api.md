@@ -5,7 +5,6 @@
 ```ts
 
 import type { CertificationStatus } from '@gooddata/sdk-model';
-import type { CompletionSource } from '@codemirror/autocomplete';
 import type { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import type { IDataSetMetadataObject } from '@gooddata/sdk-model';
 import type { IdentifierRef } from '@gooddata/sdk-model';
@@ -17,6 +16,7 @@ import { MouseEvent as MouseEvent_2 } from 'react';
 import type { ObjectType as ObjectType_2 } from '@gooddata/sdk-model';
 import { PropsWithChildren } from 'react';
 import { ReactNode } from 'react';
+import type { YamlCompletionSource } from '@gooddata/sdk-ui-kit';
 
 // @public (undocumented)
 export function AnalyticsCatalog(props: IAnalyticsCatalogProps): JSX.Element;
@@ -29,6 +29,12 @@ export function AnalyticsCatalogDetailContent(input: IAnalyticsCatalogDetailCont
 
 // @public
 export function AnalyticsCatalogFilter<T>(props: IAnalyticsCatalogFilterProps<T>): JSX.Element;
+
+// @internal (undocumented)
+export type AsCodeSerialization = {
+    yaml: string;
+    hasCodeForm: boolean;
+};
 
 // @internal (undocumented)
 export type AsCodeValidation<TDef> = {
@@ -105,10 +111,9 @@ export interface IAnalyticsCatalogProps {
 // @internal (undocumented)
 export interface IAsCodeEditing<TDef> {
     // (undocumented)
-    completionSource: CompletionSource;
+    completionSource: YamlCompletionSource;
     reconcile?(base: TDef, edited: TDef): TDef;
-    // (undocumented)
-    serialize(definition: TDef): string;
+    serialize(definition: TDef): AsCodeSerialization;
     // (undocumented)
     syntaxErrorMessage: string;
     // (undocumented)

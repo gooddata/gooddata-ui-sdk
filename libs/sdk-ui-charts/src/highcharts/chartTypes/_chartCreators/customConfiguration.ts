@@ -918,6 +918,19 @@ function getDataLabelsConfiguration(
                     ...dataLabelsBugWorkaround,
                 },
             },
+            // mekko; keeps absolute labels when negative values block "stack to 100%",
+            // as Highcharts computes point.percentage even then
+            variwide: {
+                dataLabels: {
+                    ...DEFAULT_LABELS_CONFIG,
+                    formatter: partial(
+                        chartOptions.stackToPercentBlockedByNegativeValues
+                            ? labelFormatter
+                            : dataLabelFormatter,
+                        chartConfig,
+                    ),
+                },
+            },
             heatmap: {
                 dataLabels: {
                     formatter: labelFormatterHeatmap,

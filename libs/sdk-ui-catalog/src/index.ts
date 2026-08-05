@@ -25,7 +25,12 @@ export {
     type VisualizationTypePredicate,
 } from "./insight/insightCodecContext.js";
 // Re-exported so the `IInsightCodec` rollup resolves.
-export type { IAsCodeEditing, AsCodeValidation, AsCodeValidationContext } from "./asCode/descriptor.js";
+export type {
+    IAsCodeEditing,
+    AsCodeSerialization,
+    AsCodeValidation,
+    AsCodeValidationContext,
+} from "./asCode/descriptor.js";
 
 /*
  * Supplementary API.

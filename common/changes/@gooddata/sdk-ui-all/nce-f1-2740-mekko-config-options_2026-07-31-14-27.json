@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-charts, sdk-ui-ext: fix mekko configuration options not applied (X-axis, custom tooltip, label display, total labels, key driver analysis)",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "nikola.cech@gooddata.com"
+}

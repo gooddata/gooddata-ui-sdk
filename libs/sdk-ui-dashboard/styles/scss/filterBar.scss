@@ -10,6 +10,13 @@ $attribute-filter-drag-handle-left: 10px;
 
 .dash-filters-wrapper {
     position: relative;
+    // The ".show-all" row below is in the flow, so it adds a full-width band to this wrapper that
+    // only the centred button paints on. The wrapper sits in the sticky/fixed dashboard header, so
+    // without a background of its own that band is see-through and the dashboard content scrolling
+    // underneath shows through either side of the button (EB-872). Paint the content background
+    // here rather than on ".show-all": as the parent, it lands *below* the filter rows' bottom
+    // border in paint order, so the border still shows through.
+    background-color: variables.$gd-dashboards-content-backgroundColor;
 
     .show-all {
         position: relative;

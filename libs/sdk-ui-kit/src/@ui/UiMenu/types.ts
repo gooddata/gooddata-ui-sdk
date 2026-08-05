@@ -131,6 +131,9 @@ export interface IUiMenuInteractiveItemProps<T extends IUiMenuItemData = object>
     item: IUiMenuInteractiveItem<T>;
 
     isFocused: boolean;
+
+    /** Whether the item's tooltip should be visually open right now (keyboard-focused, not dismissed). */
+    isTooltipOpen?: boolean;
 }
 
 /**
@@ -214,6 +217,9 @@ export interface IUiMenuContext<
     isItemFocusable: (item: IUiMenuItem<T>) => boolean;
     controlType: IUiMenuControlType;
     setControlType: Dispatch<SetStateAction<IUiMenuControlType>>;
+    /** Whether the <menu> container is real-DOM-focused with the browser's :focus-visible heuristic. */
+    isMenuFocusVisible: boolean;
+    setIsMenuFocusVisible: Dispatch<SetStateAction<boolean>>;
     scrollToView: (element: HTMLElement | null) => void;
     makeItemId: (item: IUiMenuItem<T>) => string | undefined;
     /**

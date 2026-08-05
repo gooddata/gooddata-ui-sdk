@@ -1,10 +1,11 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type KeyboardEvent, type MouseEvent, type ReactNode, useCallback } from "react";
+import { type KeyboardEvent, type MouseEvent, type ReactNode, useCallback, useState } from "react";
 
 import cx from "classnames";
 
 import { ShortenedText } from "../../../../ShortenedText/ShortenedText.js";
+import { useCloseOnEscape } from "../../../hooks/useCloseOnEscape.js";
 import { UiTooltip } from "../../../UiTooltip/UiTooltip.js";
 import { typedUiMenuContextStore } from "../../context.js";
 import { e } from "../../menuBem.js";
@@ -40,6 +41,7 @@ export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = 
         itemDataTestId: ctx.itemDataTestId,
         InteractiveItemComponent: ctx.InteractiveItem,
         isFocused: ctx.focusedItem?.id === item.id,
+        isMenuFocusVisible: ctx.isMenuFocusVisible,
     }));
 
     const {
@@ -52,6 +54,7 @@ export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = 
         itemDataTestId,
         InteractiveItemComponent,
         isFocused,
+        isMenuFocusVisible,
     } = useContextStore(selector);
 
     const scrollToItem = (element: HTMLLIElement | null) => {
@@ -61,6 +64,24 @@ export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = 
 
         scrollToView(element);
     };
+
+    // Same real :focus-visible signal the focus-ring CSS uses (UiMenu.scss) — the only reliable
+    // way to tell keyboard from pointer focus, since aria-activedescendant alone can't.
+    const isKeyboardFocused = isFocused && isMenuFocusVisible;
+
+    // Escape dismisses just this item's tooltip, not the whole menu - reset (during render, no
+    // effect needed) once focus moves away. Gated on item.tooltip so Escape on a plain item still
+    // closes the menu on the first press.
+    const [isDismissed, setIsDismissed] = useState(false);
+    const [wasKeyboardFocused, setWasKeyboardFocused] = useState(isKeyboardFocused);
+    if (isKeyboardFocused !== wasKeyboardFocused) {
+        setWasKeyboardFocused(isKeyboardFocused);
+        if (!isKeyboardFocused) {
+            setIsDismissed(false);
+        }
+    }
+    const isTooltipOpen = !!item.tooltip && isKeyboardFocused && !isDismissed;
+    useCloseOnEscape(isTooltipOpen, () => setIsDismissed(true), true);
 
     const handleMouseFocus = useCallback(() => {
         if (controlType !== "mouse") {
@@ -91,42 +112,35 @@ export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = 
 
     const dataTestId = typeof itemDataTestId === "function" ? itemDataTestId(item) : itemDataTestId;
     const tooltipId = getTooltipId(item, makeItemId);
-
+    // Only link while open — the sr-only copy it points to is empty otherwise.
     return (
-        <>
-            <li
-                ref={scrollToItem}
-                role="menuitem"
-                {...item.ariaAttributes}
-                aria-haspopup={item.subItems ? "menu" : item.ariaAttributes?.["aria-haspopup"]}
-                aria-disabled={item.isDisabled}
-                aria-describedby={
-                    [tooltipId, item.ariaAttributes?.["aria-describedby"]].filter(Boolean).join(" ") ||
-                    undefined
-                }
-                onMouseMove={handleMouseFocus}
-                onClick={item.isDisabled ? undefined : handleSelect}
-                tabIndex={-1}
-                id={makeItemId(item)}
-                className={classNames}
-                data-testid={dataTestId}
-            >
-                <InteractiveItemComponent item={item} isFocused={isFocused} />
-            </li>
-            {/*
-                Sibling of the <li>, not a descendant — so this text is exposed via aria-describedby
-                without also being folded into the <li>'s accessible NAME (which is computed from its
-                own descendant content). Rendered statically (not gated on UiTooltip's hover/focus-driven
-                open state) so aria-describedby always resolves to real content, matching the pattern in
-                MeasureValueFilterDropdownActions.tsx. Wrapped in a role="none" <li> (rather than a bare
-                <span>) so it stays valid content inside the enclosing <menu>/<ul>.
-            */}
-            {tooltipId ? (
-                <li role="none" className="sr-only">
-                    <span id={tooltipId}>{item.tooltip}</span>
-                </li>
-            ) : null}
-        </>
+        <li
+            ref={scrollToItem}
+            role="menuitem"
+            {...item.ariaAttributes}
+            aria-haspopup={item.subItems ? "menu" : item.ariaAttributes?.["aria-haspopup"]}
+            aria-disabled={item.isDisabled}
+            // Pin the name so the tooltip's sr-only copy (a descendant) doesn't fold into it too.
+            aria-label={
+                item.tooltip
+                    ? (item.ariaAttributes?.["aria-label"] ?? item.stringTitle)
+                    : item.ariaAttributes?.["aria-label"]
+            }
+            aria-describedby={
+                isTooltipOpen
+                    ? [tooltipId, item.ariaAttributes?.["aria-describedby"]].filter(Boolean).join(" ") ||
+                      undefined
+                    : item.ariaAttributes?.["aria-describedby"]
+            }
+            onMouseMove={handleMouseFocus}
+            onClick={item.isDisabled ? undefined : handleSelect}
+            tabIndex={-1}
+            id={makeItemId(item)}
+            className={classNames}
+            data-testid={dataTestId}
+        >
+            <InteractiveItemComponent item={item} isFocused={isFocused} isTooltipOpen={isTooltipOpen} />
+        </li>
     );
 }
 
@@ -136,9 +150,16 @@ export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = 
 export function DefaultUiMenuInteractiveItem<T extends IUiMenuItemData = object>({
     item,
     isFocused,
+    isTooltipOpen,
 }: IUiMenuInteractiveItemProps<T>): ReactNode {
+    const { useContextStore, createSelector } = typedUiMenuContextStore<T>();
+    const selector = createSelector((ctx) => ({ makeItemId: ctx.makeItemId }));
+    const { makeItemId } = useContextStore(selector);
+    const tooltipId = getTooltipId(item, makeItemId);
+
     return (
         <UiTooltip
+            id={tooltipId}
             anchor={
                 <div
                     className={e("item", {
@@ -160,14 +181,10 @@ export function DefaultUiMenuInteractiveItem<T extends IUiMenuItemData = object>
             content={item.tooltip}
             disabled={!item.tooltip}
             optimalPlacement
+            isOpen={isTooltipOpen ? true : undefined}
             triggerBy={["hover"]}
             arrowPlacement={"left"}
             width={item.tooltipWidth}
-            // The accessible description is provided by the dedicated sr-only <li> in
-            // DefaultUiMenuInteractiveItemWrapper; suppress UiTooltip's own internal
-            // screen-reader copy so its (hover-gated) text isn't also folded into this
-            // menu item's accessible name as a descendant of the <li>.
-            accessibilityHidden
         />
     );
 }

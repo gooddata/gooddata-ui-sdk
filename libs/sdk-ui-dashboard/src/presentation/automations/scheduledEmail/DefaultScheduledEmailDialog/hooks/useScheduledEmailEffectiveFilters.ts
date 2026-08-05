@@ -19,7 +19,7 @@ import {
     getAppliedWidgetFilters,
     getVisibleFiltersByFilters,
     getVisibleFiltersByFiltersByTab,
-} from "../../../shared/automationFilters/utils.js";
+} from "../../../shared/filters/index.js";
 
 export interface IUseScheduledEmailEffectiveFiltersProps {
     widget?: IWidget;

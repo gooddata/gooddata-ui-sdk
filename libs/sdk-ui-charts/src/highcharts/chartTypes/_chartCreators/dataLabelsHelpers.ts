@@ -13,7 +13,14 @@ import {
 } from "../../constants/label.js";
 import { type StackingType } from "../../constants/stacking.js";
 import { type DataLabelsOptions } from "../../lib/index.js";
-import { isAreaChart, isBarChart, isColumnChart, isDependencyWheel, isOneOfTypes } from "../_util/common.js";
+import {
+    isAreaChart,
+    isBarChart,
+    isColumnChart,
+    isDependencyWheel,
+    isMekko,
+    isOneOfTypes,
+} from "../_util/common.js";
 
 import {
     type IAxisRange,
@@ -289,7 +296,7 @@ export function getTotalsVisibility(chartConfig?: IChartConfig): IDataLabelsVisi
 }
 
 export function getTotalsVisibilityConfig(type: string | undefined, chartConfig?: IChartConfig) {
-    if (!(isColumnChart(type) || isBarChart(type))) {
+    if (!(isColumnChart(type) || isBarChart(type) || isMekko(type))) {
         return {};
     }
 

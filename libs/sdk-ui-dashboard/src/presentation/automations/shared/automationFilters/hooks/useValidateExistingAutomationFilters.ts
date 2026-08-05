@@ -53,6 +53,7 @@ import { selectTabs } from "../../../../../model/store/tabs/tabsSelectors.js";
 import { type ExtendedDashboardWidget } from "../../../../../model/types/layoutTypes.js";
 import { type IDashboardFilter } from "../../../../../types.js";
 import { useAutomationsContext } from "../../../contexts/AutomationsContext.js";
+import { isNoopAllTimeDateFilterFixed } from "../../filters/index.js";
 import {
     getAutomationAlertFilters,
     getAutomationDashboardFilters,
@@ -60,12 +61,7 @@ import {
     getAutomationVisualizationFilters,
 } from "../../utils/automationUtils.js";
 import { hasStaleAlertParameters } from "../automationParameters.js";
-import {
-    areFiltersEqual,
-    isFilterIgnoredByWidget,
-    isFilterMatch,
-    isNoopAllTimeDateFilterFixed,
-} from "../utils.js";
+import { areFiltersEqual, isFilterIgnoredByWidget, isFilterMatch } from "../utils.js";
 
 function sanitizeCommonDateFilter(filter: IDashboardFilter, commonDateFilterId?: string): IDashboardFilter {
     // Sanitize common date filters by removing date dataSet

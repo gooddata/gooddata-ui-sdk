@@ -20,13 +20,13 @@ import { type ExtendedDashboardWidget } from "../../../../../model/types/layoutT
 import { removeIgnoredWidgetFilters } from "../../../../../model/utils/widgetFilters.js";
 import { type IDashboardFilter, isDashboardFilter } from "../../../../../types.js";
 import { useAutomationsContext } from "../../../contexts/AutomationsContext.js";
+import { dashboardFilterToFilterContextItem } from "../../filters/index.js";
 import {
     getAutomationAlertFilters,
     getAutomationDashboardFilters,
     getAutomationDashboardFiltersByTab,
     getAutomationVisualizationFilters,
 } from "../../utils/automationUtils.js";
-import { dashboardFilterToFilterContextItem } from "../../utils/filterContextUtils.js";
 
 export function useDefaultSelectedFiltersForExistingAutomation(
     automationToEdit?: IAutomationMetadataObject,

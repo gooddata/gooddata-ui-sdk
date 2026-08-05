@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 
 import type { ParameterType } from "@gooddata/sdk-model";
 
+import { type ParameterDraft, serializeParameterToYaml } from "../parameterSerialization.js";
 import { validateParameterYaml } from "../parameterValidation.js";
 
 const NUMBER_ONLY: ParameterType[] = ["NUMBER"];
@@ -441,5 +442,30 @@ definition:
                 type: "STRING",
             });
         });
+    });
+});
+
+describe("a type behind a feature flag", () => {
+    const draft: ParameterDraft = {
+        type: "parameter",
+        id: "p1",
+        title: "My Param",
+        description: "",
+        tags: [],
+        definition: { type: "STRING", defaultValue: "abc" },
+    };
+    const stringParameter = serializeParameterToYaml(draft);
+
+    it("is rejected as an unsupported type while the type is not enabled", () => {
+        const result = validateParameterYaml(stringParameter, { enabledTypes: ["NUMBER"] });
+
+        expect(result.isValid).toBe(false);
+        expect(result.isValid === false && result.errorCode).toBe("unsupportedType");
+    });
+
+    it("is accepted once the type is enabled, from the very same document", () => {
+        expect(validateParameterYaml(stringParameter, { enabledTypes: ["NUMBER", "STRING"] }).isValid).toBe(
+            true,
+        );
     });
 });

@@ -1,14 +1,12 @@
 // (C) 2026 GoodData Corporation
 
-import type { CompletionSource } from "@codemirror/autocomplete";
-
-import { YamlEditor } from "@gooddata/sdk-ui-kit";
+import { type YamlCompletionSource, YamlEditor } from "@gooddata/sdk-ui-kit";
 
 type Props = {
     initialValue: string;
     onChange: (value: string) => void;
     disabled: boolean;
-    completionSource: CompletionSource;
+    completionSource: YamlCompletionSource;
     syntaxErrorMessage: string;
 };
 

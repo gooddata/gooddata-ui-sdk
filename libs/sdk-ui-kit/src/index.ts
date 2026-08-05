@@ -126,6 +126,11 @@ export {
     SyntaxHighlightingInput,
 } from "./syntaxHighlightingInput/SyntaxHighlightingInput.js";
 export { type IYamlEditorProps, YamlEditor } from "./syntaxHighlightingInput/YamlEditor.js";
+export {
+    type IYamlPosition,
+    type YamlCompletionSource,
+    yamlPositionAt,
+} from "./syntaxHighlightingInput/yamlPosition.js";
 export type {
     IDropdownButtonAccessibilityConfig,
     IButtonAccessibilityConfig,
