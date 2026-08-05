@@ -823,6 +823,10 @@
         "text": "Cancel",
         "crowdinContext": "Cancel button of the as-code editor dialog (metrics, parameters)."
     },
+    "analyticsCatalog.asCode.dialog.unrepresentable": {
+        "text": "This object uses content that cannot be represented as code. It is shown read-only; use the standard editor to change it.",
+        "crowdinContext": "Notice shown above the as-code editor when the object's stored content has no code representation, so the editor is read-only and saving is unavailable."
+    },
     "analyticsCatalog.metric.create.defaultTitle": {
         "text": "My metric",
         "crowdinContext": "Default placeholder title seeded into the new-metric as-code editor before the user types their own."

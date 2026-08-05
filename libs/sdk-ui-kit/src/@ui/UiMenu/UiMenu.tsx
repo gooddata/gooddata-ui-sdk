@@ -80,6 +80,7 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
         items,
         controlType,
         setControlType,
+        setIsMenuFocusVisible,
         MenuHeader,
         ItemComponent,
         Content,
@@ -108,8 +109,16 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
             <div
                 className={cx(b({ controlType, size }))}
                 style={{ minWidth, maxWidth, maxHeight: maxHeightValue }}
-                onKeyDownCapture={() => setControlType("keyboard")}
-                onMouseMoveCapture={() => setControlType("mouse")}
+                onKeyDownCapture={() => {
+                    setControlType("keyboard");
+                    // A keypress can flip :focus-visible without a new focus event.
+                    setIsMenuFocusVisible(menuComponentRef.current?.matches(":focus-visible") ?? false);
+                }}
+                onMouseMoveCapture={() => {
+                    setControlType("mouse");
+                    // Clear stale keyboard focus-visible so pointer movement can't reopen tooltips.
+                    setIsMenuFocusVisible(false);
+                }}
                 data-testid={menuDataTestId}
             >
                 {shownCustomContentItemId ? (
@@ -130,6 +139,12 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
                                 className={e("items")}
                                 tabIndex={0}
                                 onKeyDown={handleKeyDown}
+                                // Autofocus can move real focus here asynchronously (after mount),
+                                // so track :focus-visible via onFocus rather than checking once.
+                                onFocus={(event) =>
+                                    setIsMenuFocusVisible(event.currentTarget.matches(":focus-visible"))
+                                }
+                                onBlur={() => setIsMenuFocusVisible(false)}
                                 aria-activedescendant={focusedItem ? makeItemId(focusedItem) : undefined}
                                 {...ariaAttributes}
                                 role="menu"

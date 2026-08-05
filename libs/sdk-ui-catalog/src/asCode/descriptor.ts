@@ -1,9 +1,9 @@
 // (C) 2026 GoodData Corporation
 
-import type { CompletionSource } from "@codemirror/autocomplete";
 import type { MessageDescriptor } from "react-intl";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import type { YamlCompletionSource } from "@gooddata/sdk-ui-kit";
 
 import type { ICatalogItem, ICatalogItemRef } from "../catalogItem/types.js";
 import type { ObjectTypes } from "../objectType/constants.js";
@@ -55,10 +55,21 @@ export function fixedIdentifierOf(context: AsCodeValidationContext): string | un
 }
 
 /** @internal */
+export type AsCodeSerialization = {
+    yaml: string;
+    /**
+     * False for a definition with no code form at all, so no edit of it can be saved — as opposed to a
+     * document the codec's own rules reject, which the author can act on.
+     */
+    hasCodeForm: boolean;
+};
+
+/** @internal */
 export interface IAsCodeEditing<TDef> {
-    completionSource: CompletionSource;
+    completionSource: YamlCompletionSource;
     syntaxErrorMessage: string;
-    serialize(definition: TDef): string;
+    /** A throw is a failure to load the object, not a document error: the dialog closes. */
+    serialize(definition: TDef): AsCodeSerialization;
     validate(value: string, context: AsCodeValidationContext): AsCodeValidation<TDef>;
     /** Re-adds content the YAML can't express; applied on every persisting path. Omit if lossless. */
     reconcile?(base: TDef, edited: TDef): TDef;

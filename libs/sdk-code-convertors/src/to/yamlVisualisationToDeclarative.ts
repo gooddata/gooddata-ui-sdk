@@ -44,6 +44,7 @@ import {
     type MeasureAggregation,
     type MeasureValueFilterCondition,
     type TotalType,
+    filterLocalIdentifier,
 } from "@gooddata/sdk-model";
 
 import { areaChart } from "../configs/areaChart.js";
@@ -106,14 +107,11 @@ import { createIdentifier, createLocalIdentifier } from "../utils/yamlUtils.js";
 /** @internal */
 export type VisualisationDefinition = Pick<
     IInsight["insight"],
-    "visualizationUrl" | "properties" | "filters" | "buckets" | "sorts" | "attributeFilterConfigs"
+    "visualizationUrl" | "properties" | "filters" | "buckets" | "sorts" | "attributeFilterConfigs" | "layers"
 > & {
     version: string;
 };
 type VisBucket = Omit<IBucket, "items" | "totals"> & { items: Array<Bucket> };
-type YamlVisualizationLayer = VisualizationDataLayer & {
-    query?: Query;
-};
 
 /** @public */
 export function yamlVisualisationToDeclarative(
@@ -697,6 +695,7 @@ function convertYamlConditionsToSdk(
 function yamlAbsoluteDateFilterToDeclarative(
     entities: ExportEntities,
     filter: DateFilter,
+    assignFilterLocalId: boolean,
 ): YamlFilterToDeclarativeResult {
     let result: YamlFilterToDeclarativeResult = {
         filters: [
@@ -711,7 +710,10 @@ function yamlAbsoluteDateFilterToDeclarative(
     };
 
     result = mergeDeclarativeResults(result, dateFilterEmptyValuesToDeclarative(filter));
-    result = mergeDeclarativeResults(result, dateFilterWithFieldToDeclarative(entities, filter));
+    result = mergeDeclarativeResults(
+        result,
+        dateFilterWithFieldToDeclarative(entities, filter, assignFilterLocalId),
+    );
 
     return result;
 }
@@ -765,6 +767,7 @@ function dateFilterEmptyValuesToDeclarative(filter: DateFilter): YamlFilterToDec
 function dateFilterWithFieldToDeclarative(
     entities: ExportEntities,
     filter: DateFilter,
+    assignFilterLocalId: boolean,
 ): YamlFilterToDeclarativeResult {
     if (!filter.with) {
         return { filters: [] };
@@ -772,7 +775,7 @@ function dateFilterWithFieldToDeclarative(
 
     return mergeDeclarativeResults(
         ...Object.entries(filter.with).map(([key, withFilter]) =>
-            yamlFilterToDeclarative(entities, key, withFilter),
+            yamlFilterToDeclarative(entities, key, withFilter, assignFilterLocalId),
         ),
     );
 }
@@ -780,6 +783,7 @@ function dateFilterWithFieldToDeclarative(
 function yamlRelativeDateFilterToDeclarative(
     entities: ExportEntities,
     filter: DateFilter,
+    assignFilterLocalId: boolean,
 ): YamlFilterToDeclarativeResult {
     const identifier = createIdentifier<any>(filter.using, { forceType: "dataset" });
     if (!identifier) {
@@ -817,7 +821,10 @@ function yamlRelativeDateFilterToDeclarative(
     }
 
     result = mergeDeclarativeResults(result, dateFilterEmptyValuesToDeclarative(filter));
-    result = mergeDeclarativeResults(result, dateFilterWithFieldToDeclarative(entities, filter));
+    result = mergeDeclarativeResults(
+        result,
+        dateFilterWithFieldToDeclarative(entities, filter, assignFilterLocalId),
+    );
 
     return result;
 }
@@ -1049,13 +1056,13 @@ function yamlFilterToDeclarative(
     filter: QueryFilters[string],
     // Only view-level (report/layer) filters need a localIdentifier so their displayAsLabel can be
     // correlated via attributeFilterConfigs. Measure-scoped filters must NOT carry one.
-    assignFilterLocalId = false,
+    assignFilterLocalId: boolean,
 ): YamlFilterToDeclarativeResult {
     if (isAbsoluteDateFilter(filter)) {
-        return yamlAbsoluteDateFilterToDeclarative(entities, filter);
+        return yamlAbsoluteDateFilterToDeclarative(entities, filter, assignFilterLocalId);
     }
     if (isRelativeDateFilter(filter)) {
-        return yamlRelativeDateFilterToDeclarative(entities, filter);
+        return yamlRelativeDateFilterToDeclarative(entities, filter, assignFilterLocalId);
     }
     if (isPositiveAttributeFilter(filter)) {
         return yamlPositiveAttributeFilterToDeclarative(entities, key, filter, assignFilterLocalId);
@@ -1098,6 +1105,24 @@ function mergeDeclarativeResults(...results: YamlFilterToDeclarativeResult[]): Y
     };
 }
 
+/**
+ * A filter's key becomes its local identifier, and the whole query shares one namespace for them across
+ * nested blocks — a name reused between blocks would leave two filters indistinguishable.
+ */
+function assertDistinctLocalIdentifiers(filters: IFilter[]) {
+    const seen = new Set<string>();
+    for (const filter of filters) {
+        const localIdentifier = filterLocalIdentifier(filter);
+        if (!localIdentifier) {
+            continue;
+        }
+        if (seen.has(localIdentifier)) {
+            throw newError(CoreErrorCode.DuplicateFilterName, [localIdentifier]);
+        }
+        seen.add(localIdentifier);
+    }
+}
+
 /** @internal */
 export function yamlFiltersToDeclarative(
     entities: ExportEntities,
@@ -1124,6 +1149,7 @@ export function yamlFiltersToDeclarative(
               )
             : []),
     );
+    assertDistinctLocalIdentifiers(filters);
 
     return {
         filters,
@@ -1395,23 +1421,24 @@ function yamlLayersToDeclarative(
         return [];
     }
 
-    return (input.layers as YamlVisualizationLayer[]).map((layer) => {
+    const layers = input.layers as VisualizationDataLayer[];
+    // An id is what pairs a layer with the one it was read from, so a repeated one names no single layer.
+    const claimed = new Set<string>();
+    for (const { id } of layers) {
+        if (claimed.has(id)) {
+            throw newError(CoreErrorCode.DuplicateLayerIdentifier, [id]);
+        }
+        claimed.add(id);
+    }
+
+    return layers.map((layer) => {
         if (layer.type !== "pushpin" && layer.type !== "area") {
             throw newError(CoreErrorCode.LayerTypeNotSupported, [layer.type ?? "<missing>"]);
         }
         const layerVisualizationType = layer.type === "pushpin" ? "geo_chart" : "geo_area_chart";
-        const baseQuery: Query | undefined = layer.query;
-        const resolvedQuery: Query = {
-            ...input.query,
-            ...baseQuery,
-            fields: {
-                ...(input.query?.fields ?? {}),
-                ...(baseQuery?.fields ?? {}),
-            },
-        };
+        const resolvedQuery: Query = { ...input.query, fields: input.query?.fields ?? {} };
 
         const positions: Array<{ longitude: string; latitude: string }> = [];
-        let attrFilterConfig: IAttributeFilterConfigs = {};
 
         const visBuckets =
             layer.type === "pushpin"
@@ -1437,21 +1464,16 @@ function yamlLayersToDeclarative(
 
                 const items = bucket.items
                     .map((item) => {
-                        const { bucketItem, bucketTotals, longitude, latitude, filterConfig } =
-                            yamlBucketItemToDeclarative(
-                                entities,
-                                resolvedQuery,
-                                item,
-                                resolvedQuery.fields || {},
-                                localIdentifier,
-                            );
+                        const { bucketItem, bucketTotals, longitude, latitude } = yamlBucketItemToDeclarative(
+                            entities,
+                            resolvedQuery,
+                            item,
+                            resolvedQuery.fields || {},
+                            localIdentifier,
+                        );
 
                         if (longitude && latitude) {
                             positions.push({ longitude, latitude });
-                        }
-
-                        if (filterConfig) {
-                            attrFilterConfig = { ...attrFilterConfig, ...filterConfig };
                         }
 
                         bucketTotals.forEach((total) => totals.push(total));
@@ -1467,13 +1489,6 @@ function yamlLayersToDeclarative(
                 };
             })
             .filter(Boolean) as IBucket[];
-
-        const { filters: layerFilters, attributeFilterConfigs } = yamlFiltersToDeclarative(
-            entities,
-            baseQuery?.filter_by,
-            attrFilterConfig,
-            true,
-        );
 
         const layerProperties =
             layer.config || (layer.type === "pushpin" && positions.length > 0)
@@ -1491,17 +1506,12 @@ function yamlLayersToDeclarative(
                   )
                 : undefined;
 
+        // Unset keeps the layer inheriting the insight's properties; an empty object would pin its own.
         return {
             id: layer.id,
             name: layer.title,
             type: layer.type,
             buckets,
-            filters: layerFilters,
-            ...(attributeFilterConfigs ? { attributeFilterConfigs } : {}),
-            sorts: yamlSortsToDeclarative(
-                baseQuery?.sort_by,
-                baseQuery?.fields ?? resolvedQuery.fields ?? {},
-            ),
             properties:
                 layerProperties && Object.keys(layerProperties).length > 0 ? layerProperties : undefined,
         };

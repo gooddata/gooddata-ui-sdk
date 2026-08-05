@@ -95,9 +95,15 @@ export function headlineChartLoad(props: VisualisationConfig<HeadlineChartConfig
                         "indicator_colors",
                         val.colorConfig?.disabled === undefined ? undefined : !val.colorConfig.disabled,
                     ],
-                    ["indicator_color_equals", loadColor("equals", val.colorConfig?.equals)?.value],
-                    ["indicator_color_negative", loadColor("negative", val.colorConfig?.negative)?.value],
-                    ["indicator_color_positive", loadColor("positive", val.colorConfig?.positive)?.value],
+                    ["indicator_color_equals", loadColor("equals", val.colorConfig?.equals, "enum")?.value],
+                    [
+                        "indicator_color_negative",
+                        loadColor("negative", val.colorConfig?.negative, "enum")?.value,
+                    ],
+                    [
+                        "indicator_color_positive",
+                        loadColor("positive", val.colorConfig?.positive, "enum")?.value,
+                    ],
                     [
                         "label_default",
                         getValueOrDefault(

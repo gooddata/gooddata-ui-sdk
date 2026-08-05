@@ -817,9 +817,12 @@ export interface ChartFill {
 // @internal (undocumented)
 export type ChartFillType = "solid" | "pattern" | "outline";
 
+// @internal
+export type ClaimFilterKey = (baseKey: string) => string;
+
 // @public (undocumented)
 export type ColorMapping = {
-    id: string;
+    id: string | null;
     color: {
         type: "guid";
         value: string;
@@ -1221,7 +1224,13 @@ export enum CoreErrorCode {
     // (undocumented)
     BucketItemTypeNotSupported = "core.bucketItemTypeNotSupported",
     // (undocumented)
+    DuplicateFieldName = "core.duplicateFieldName",
+    // (undocumented)
     DuplicateFilterLocalIdentifier = "core.duplicateFilterLocalIdentifier",
+    // (undocumented)
+    DuplicateFilterName = "core.duplicateFilterName",
+    // (undocumented)
+    DuplicateLayerIdentifier = "core.duplicateLayerIdentifier",
     // (undocumented)
     DuplicateTabIdentifier = "core.duplicateTabIdentifier",
     // (undocumented)
@@ -1305,7 +1314,18 @@ export const DatasetTypes: string[];
 export const DateDatasetTypes: string[];
 
 // @internal (undocumented)
-export function declarativeAbsoluteDateFilterToYaml(absoluteDateFilter: IAbsoluteDateFilter["absoluteDateFilter"], connectedAttributeFilters: IFilter[] | undefined, entities: FromEntities, getUniqueKey: (baseKey: string) => string, errorContext?: IErrorContext): YAMLMap;
+export type DateFilterEmitOptions = {
+    entities: FromEntities;
+    claimKey: ClaimFilterKey;
+    connectedAttributeFilters?: IFilter[];
+    errorContext?: IErrorContext;
+};
+
+// @internal (undocumented)
+export function declarativeAbsoluteDateFilterToYaml(absoluteDateFilter: IAbsoluteDateFilter["absoluteDateFilter"], input: DateFilterEmitOptions): {
+    yaml: YAMLMap;
+    carried: WrittenFilter[];
+};
 
 // @internal (undocumented)
 export function declarativeArithmeticMetricToYaml(def: IMeasureBody, arithmeticDefinition: IArithmeticMeasureDefinition): YAMLMap;
@@ -1403,7 +1423,10 @@ export function declarativePreviousPeriodMetricToYaml(def: IMeasureBody, previou
 export function declarativeRankingFilterToYaml(rankingFilter: IRankingFilterBody, errorContext?: IErrorContext): YAMLMap;
 
 // @internal (undocumented)
-export function declarativeRelativeDateFilterToYaml(relativeDateFilter: IRelativeDateFilter["relativeDateFilter"], connectedAttributeFilters: IFilter[] | undefined, entities: FromEntities, getUniqueKey: (baseKey: string) => string, errorContext?: IErrorContext): YAMLMap;
+export function declarativeRelativeDateFilterToYaml(relativeDateFilter: IRelativeDateFilter["relativeDateFilter"], input: DateFilterEmitOptions): {
+    yaml: YAMLMap;
+    carried: WrittenFilter[];
+};
 
 // @internal (undocumented)
 export function declarativeSectionsToYaml(layout?: IDashboardLayout, entities?: FromEntities, errorContext?: IErrorContext): YAMLSeq<unknown> | undefined;
@@ -3945,7 +3968,7 @@ export type VisualisationConfig<T> = {
 };
 
 // @internal (undocumented)
-export type VisualisationDefinition = Pick<IInsight["insight"], "visualizationUrl" | "properties" | "filters" | "buckets" | "sorts" | "attributeFilterConfigs"> & {
+export type VisualisationDefinition = Pick<IInsight["insight"], "visualizationUrl" | "properties" | "filters" | "buckets" | "sorts" | "attributeFilterConfigs" | "layers"> & {
     version: string;
 };
 
@@ -4114,6 +4137,13 @@ export function waterfallChartSave(_fields: Visualisation["query"]["fields"] | u
     } | undefined;
     customTooltip: CustomTooltip | undefined;
 } | undefined;
+
+// @internal (undocumented)
+export type WrittenFilter = {
+    key: string;
+    yaml: YAMLMap;
+    filter: IFilter;
+};
 
 // @public (undocumented)
 export function yamlAttributeHierarchyToDeclarative(input: AttributeHierarchy): DeclarativeAttributeHierarchy;

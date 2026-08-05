@@ -21,6 +21,7 @@ import {
 } from "../configs/types.js";
 import { getValueOrDefault, saveConfigObject } from "../configs/utils.js";
 
+import { CoreErrorCode, newError } from "./errors.js";
 import { type FullFields, getFullField } from "./sharedUtils.js";
 import { isAttributeField, isMetricField } from "./typeGuards.js";
 
@@ -30,6 +31,9 @@ export function loadColorMapping(mappings: Array<ColorMapping>): YAMLMap<keyof L
 
     mappings.forEach((mapping) => {
         const { color, id } = mapping;
+        if (id === null) {
+            throw newError(CoreErrorCode.ItemNotSupported, ["color mapping of the empty element"]);
+        }
         const col = loadColor(id, color);
         if (col) {
             map.add(col);
@@ -53,25 +57,38 @@ export function loadColorDefinitions(mappings: Array<ColorMapping>): YAMLMap<key
     return map;
 }
 
-export function loadColor(key: string, color: ColorMapping["color"] | undefined) {
+const COMPARISON_GUIDS: Record<string, number> = { positive: 1, negative: -1, equals: 0 };
+
+/**
+ * Only `/^\d+$/` guids resolve against a workspace palette (see `guidEquals` in sdk-ui-vis-commons), and
+ * the schema admits no colour string but `rgb(...)`, so anything else has no code form.
+ */
+export function loadColor(
+    key: string,
+    color: ColorMapping["color"] | undefined,
+    mode: "number" | "enum" = "number",
+) {
     if (!color) {
         return undefined;
     }
-    if (color.type === "guid") {
-        switch (color.value) {
-            case "positive":
-                return new Pair(key, 1);
-            case "negative":
-                return new Pair(key, -1);
-            case "equals":
-                return new Pair(key, 0);
+    const { type } = color;
+    if (type === "guid") {
+        const comparison = COMPARISON_GUIDS[color.value];
+        if (mode === "enum") {
+            if (comparison === undefined) {
+                throw newError(CoreErrorCode.ItemNotSupported, [`comparison color "${color.value}"`]);
+            }
+            return new Pair(key, comparison);
         }
-        return new Pair(key, parseInt(color.value, 10));
+        if (!/^\d+$/.test(color.value)) {
+            throw newError(CoreErrorCode.ItemNotSupported, [`color "${color.value}"`]);
+        }
+        return new Pair(key, Number.parseInt(color.value, 10));
     }
-    if (color.type === "rgb") {
+    if (type === "rgb") {
         return new Pair(key, `rgb(${color.value.r},${color.value.g},${color.value.b})`);
     }
-    throw new Error(`Unknown color type: ${color}`);
+    throw newError(CoreErrorCode.ItemNotSupported, [`color of type "${type}"`]);
 }
 
 /** @public */
@@ -147,7 +164,7 @@ export function saveColor(
     } as ColorMapping;
 }
 
-function getDefById(id: string): keyof ColorDefinition {
+function getDefById(id: string | null): keyof ColorDefinition {
     switch (id) {
         case "properties.color.total":
             return "total";
@@ -156,7 +173,7 @@ function getDefById(id: string): keyof ColorDefinition {
         case "properties.color.negative":
             return "negative";
         default:
-            throw new Error(`Unknown color definition id: ${id}`);
+            throw newError(CoreErrorCode.ItemNotSupported, [`color definition "${id}"`]);
     }
 }
 

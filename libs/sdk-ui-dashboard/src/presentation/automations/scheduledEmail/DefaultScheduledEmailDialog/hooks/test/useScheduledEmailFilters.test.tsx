@@ -36,7 +36,7 @@ vi.mock("../../../../contexts/ScheduledEmailDialogContext.js", () => ({
     useScheduledEmailDialogContext: mockUseScheduledEmailDialogContext,
 }));
 
-vi.mock("../../../../shared/automationFilters/utils.js", () => ({
+vi.mock("../../../../shared/filters/index.js", () => ({
     getAppliedDashboardFilters: vi.fn(),
     getAppliedWidgetFilters: vi.fn(),
     getVisibleFiltersByFilters: vi.fn(),
@@ -57,7 +57,7 @@ import {
     getAppliedWidgetFilters,
     getVisibleFiltersByFilters,
     getVisibleFiltersByFiltersByTab,
-} from "../../../../shared/automationFilters/utils.js";
+} from "../../../../shared/filters/index.js";
 import {
     type IUseScheduledEmailFiltersProps,
     useScheduledEmailFilters,

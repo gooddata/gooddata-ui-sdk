@@ -5,8 +5,6 @@ import { Document, Pair, type Scalar, YAMLMap, YAMLSeq, type Node as YamlNode } 
 import { type DeclarativeVisualizationObject } from "@gooddata/api-client-tiger";
 import type { Visualisation } from "@gooddata/sdk-code-schemas/v1";
 import {
-    type IAbsoluteDateFilter,
-    type IArbitraryAttributeFilterBody,
     type IArithmeticMeasureDefinition,
     type IAttributeBody,
     type IAttributeSortItem,
@@ -15,55 +13,30 @@ import {
     type IInlineMeasureDefinition,
     type IInsightDefinition,
     type IInsightLayerDefinition,
-    type IMatchAttributeFilterBody,
     type IMeasureBody,
     type IMeasureDefinition,
     type IMeasureSortItem,
-    type IMeasureValueFilterBody,
-    type INegativeAttributeFilterBody,
     type IPoPMeasureDefinition,
-    type IPositiveAttributeFilterBody,
     type IPreviousPeriodMeasureDefinition,
-    type IRankingFilterBody,
-    type IRelativeDateFilter,
-    type IRelativeDateFilterAllTimeBody,
     type ISortItem,
     type ITotal,
-    type MeasureValueFilterCondition,
     type VisualizationProperties,
-    filterAttributeElements,
     filterLocalIdentifier,
-    filterObjRef,
-    getAttributeElementsItems,
-    isAbsoluteDateFilter,
-    isArbitraryAttributeFilter,
     isArithmeticMeasureDefinition,
     isAttribute,
-    isAttributeElementsByValue,
     isAttributeLocator,
     isAttributeSort,
     isBucket,
-    isComparisonCondition,
-    isDateFilter,
     isFilter,
     isInlineMeasureDefinition,
     isInsight,
-    isLocalIdRef,
-    isMatchAttributeFilter,
     isMeasure,
     isMeasureDefinition,
     isMeasureLocator,
     isMeasureSort,
-    isMeasureValueFilter,
-    isNegativeAttributeFilter,
     isPoPMeasureDefinition,
-    isPositiveAttributeFilter,
     isPreviousPeriodMeasureDefinition,
-    isRangeCondition,
-    isRankingFilter,
-    isRelativeDateFilter,
     isTotalLocator,
-    serializeObjRef,
 } from "@gooddata/sdk-model";
 
 import { areaChart } from "../configs/areaChart.js";
@@ -91,18 +64,12 @@ import { treemapChart } from "../configs/treemapChart.js";
 import { waterfallChart } from "../configs/waterfallChart.js";
 import { BucketsType, type FromEntities } from "../types.js";
 import { CoreErrorCode, type IErrorContext, newError, updateErrorContext } from "../utils/errors.js";
-import { matchConditionToYaml, parseDateValues } from "../utils/filterUtils.js";
-import { parseGranularity } from "../utils/granularityUtils.js";
 import { remapLocationAttribute } from "../utils/locationUtils.js";
 import { VISUALISATION_COMMENT } from "../utils/texts.js";
 import { visualizationUrlToYamlVisType } from "../utils/visualisationTypeMap.js";
-import {
-    cleanUpItems,
-    createFilterItemKeyName,
-    entryWithSpace,
-    fillOptionalMetaFields,
-    getIdentifier,
-} from "../utils/yamlUtils.js";
+import { cleanUpItems, entryWithSpace, fillOptionalMetaFields, getIdentifier } from "../utils/yamlUtils.js";
+
+import { type YamlFilterMapEntry, declarativeFiltersToYaml } from "./filtersToYaml.js";
 
 /** @public */
 export function declarativeVisualisationToYaml(
@@ -169,6 +136,17 @@ export function declarativeVisualisationToYaml(
         }),
     );
 
+    report.buckets.assertAllConsumed(errorContext);
+    // Only a type whose grammar has `layers:` writes them; any other drops the list whole, and its fields
+    // are already merged into `query.fields` by then, left declared and unreferenced.
+    if ((insight.insight.layers ?? []).length > 0 && doc.get("layers") === undefined) {
+        throw newError(
+            CoreErrorCode.ItemNotSupported,
+            ["layers"],
+            updateErrorContext(errorContext, { path: ["layers"] }),
+        );
+    }
+
     return {
         content: doc.toString({
             lineWidth: 0,
@@ -177,9 +155,43 @@ export function declarativeVisualisationToYaml(
     };
 }
 
+type BucketRegistry = {
+    consume(type: BucketsType): YamlBucketGroup | undefined;
+    assertAllConsumed(errorContext?: IErrorContext): void;
+};
+
+/**
+ * Every type reads the buckets it writes by looking them up, so one it never looks up is dropped whole,
+ * taking its items with it.
+ */
+function bucketRegistry(groups: YamlBucketGroup[]): BucketRegistry {
+    // Recorded per group, since two groups may share a type and one lookup reaches only the first.
+    const consumed = new Set<YamlBucketGroup>();
+    return {
+        consume(type) {
+            const found = groups.find((group) => group.type === type);
+            if (found) {
+                consumed.add(found);
+            }
+            return found;
+        },
+        // An empty bucket carries nothing to lose, so only one holding items is refused.
+        assertAllConsumed(errorContext) {
+            const dropped = groups.find((group) => group.items.length > 0 && !consumed.has(group));
+            if (dropped) {
+                throw newError(
+                    CoreErrorCode.ItemNotSupported,
+                    [`bucket "${dropped.type}"`],
+                    updateErrorContext(errorContext, { path: ["buckets", dropped.type] }),
+                );
+            }
+        },
+    };
+}
+
 type Report = {
     report: YAMLMap;
-    derivedBuckets: YamlBucketGroup[];
+    buckets: BucketRegistry;
 };
 
 function declarativeReportToYaml(
@@ -262,7 +274,7 @@ function declarativeReportToYaml(
 
     return {
         report,
-        derivedBuckets,
+        buckets: bucketRegistry(derivedBuckets),
     };
 }
 
@@ -516,6 +528,9 @@ export function declarativeBucketsToYaml(
         group: YamlBucketGroup,
         { format, axis }: YamlFieldData = {},
     ) => {
+        if (fullFieldsMap.has(local)) {
+            throw newError(CoreErrorCode.DuplicateFieldName, [local], errorContext);
+        }
         fullFieldsMap.add(new Pair(local, def));
         group.items.push(createBucketGroupItem(local, format, axis));
     };
@@ -835,746 +850,6 @@ function getShortenedBucket(def: YAMLMap): string | false {
     return false;
 }
 
-//filters
-
-/** @internal */
-export type YamlFilterMapEntry = {
-    yaml: YAMLMap;
-    filter: IFilter;
-};
-
-/** @internal */
-export type YamlFilters = {
-    filtersMap: Record<string, YamlFilterMapEntry>;
-    filtersArray: YAMLMap;
-};
-
-function detectEmptyValuesFilterType(filter: IFilter): "only" | "exclude" | undefined {
-    const attributeElements = filterAttributeElements(filter);
-    const items = attributeElements ? getAttributeElementsItems(attributeElements) : [];
-
-    if (items.length !== 1 || items[0] !== "") {
-        return undefined;
-    }
-
-    return isPositiveAttributeFilter(filter) ? "only" : "exclude";
-}
-
-function getObjRefGroupingKey(objRef: unknown): string | undefined {
-    if (!objRef || typeof objRef !== "object") {
-        return undefined;
-    }
-
-    if ("identifier" in objRef) {
-        const identifier = (objRef as { identifier?: unknown }).identifier;
-        if (typeof identifier === "string") {
-            return identifier;
-        }
-        if (identifier && typeof identifier === "object" && "id" in identifier) {
-            const id = (identifier as { id?: unknown }).id;
-            if (typeof id === "string") {
-                return id;
-            }
-        }
-    }
-
-    if ("uri" in objRef) {
-        const uri = (objRef as { uri?: unknown }).uri;
-        if (typeof uri === "string") {
-            return uri;
-        }
-    }
-
-    if ("localIdentifier" in objRef) {
-        const localIdentifier = (objRef as { localIdentifier?: unknown }).localIdentifier;
-        if (typeof localIdentifier === "string") {
-            return localIdentifier;
-        }
-    }
-
-    return serializeObjRef(objRef as any);
-}
-
-/**
- * Groups date filters with their associated attribute filters. Leaves the rest alone.
- * @param filters
- */
-function groupFiltersByDateFilter(filters: IFilter[]): {
-    grouped: {
-        [datasetId: string]: { dateFilter: [IFilter, number]; attributeFilters: [IFilter, number][] };
-    };
-    rest: [IFilter, number][];
-} {
-    const dateFilters = [...filters].filter(isDateFilter);
-    const nonDateFilters = [...filters].filter((f) => !isDateFilter(f));
-
-    const result: ReturnType<typeof groupFiltersByDateFilter> = { grouped: {}, rest: [] };
-
-    const getFilterRefDetails = (filter: IFilter) => {
-        const objRef = filterObjRef(filter);
-        if (!objRef) {
-            return {
-                objRef: undefined,
-                filterRef: undefined,
-            };
-        }
-
-        return {
-            objRef,
-            filterRef: getObjRefGroupingKey(objRef),
-        };
-    };
-
-    dateFilters.forEach((dateFilter) => {
-        const { filterRef: datasetId } = getFilterRefDetails(dateFilter);
-        const fi = filters.indexOf(dateFilter);
-
-        if (datasetId === undefined) {
-            result.rest.push([dateFilter, fi]);
-            return;
-        }
-
-        if (result.grouped[datasetId]) {
-            result.rest.push([dateFilter, fi]);
-        } else {
-            result.grouped[datasetId] = { dateFilter: [dateFilter, fi], attributeFilters: [] };
-        }
-    });
-
-    nonDateFilters.forEach((filter) => {
-        const { filterRef: filterId } = getFilterRefDetails(filter);
-        const fi = filters.indexOf(filter);
-
-        if (filterId === undefined) {
-            result.rest.push([filter, fi]);
-            return;
-        }
-
-        const datasetId = filterId.split(".")[0];
-
-        const group = result.grouped[datasetId];
-        if (group) {
-            group.attributeFilters.push([filter, fi]);
-        } else {
-            result.rest.push([filter, fi]);
-        }
-    });
-
-    return result;
-}
-
-/** @internal */
-export function declarativeFiltersToYaml(
-    entities: FromEntities,
-    filters: IFilter[],
-    errorContext?: IErrorContext,
-): YamlFilters {
-    const filtersArray: Array<Pair> = [];
-    const filtersMap: Record<string, YamlFilterMapEntry> = {};
-    const usedKeys = new Set<string>();
-
-    const getUniqueKey = (baseKey: string) => {
-        let key = baseKey;
-        let suffix = 2;
-
-        while (usedKeys.has(key)) {
-            key = `${baseKey}_${suffix}`;
-            suffix += 1;
-        }
-
-        usedKeys.add(key);
-
-        return key;
-    };
-
-    const filtersGroupedByDateFilter = groupFiltersByDateFilter(filters);
-
-    filtersGroupedByDateFilter.rest.forEach(([filter, fi]) => {
-        const result = declarativeFilterToYaml(
-            entities,
-            filter,
-            getUniqueKey,
-            undefined,
-            updateErrorContext(errorContext, {
-                path: [fi.toString()],
-            }),
-        );
-        if (!result) {
-            return;
-        }
-
-        const { key, yaml, filter: originalFilter } = result;
-        filtersArray.push(new Pair(key, yaml));
-        filtersMap[key] = {
-            yaml,
-            filter: originalFilter,
-        };
-    });
-
-    Object.values(filtersGroupedByDateFilter.grouped).forEach(({ dateFilter, attributeFilters }) => {
-        const result = declarativeFilterToYaml(
-            entities,
-            dateFilter[0],
-            getUniqueKey,
-            attributeFilters.map(([f]) => f),
-            updateErrorContext(errorContext, {
-                path: [dateFilter[1].toString()],
-            }),
-        );
-        if (!result) {
-            return;
-        }
-
-        const { key, yaml, filter: originalFilter } = result;
-        filtersArray.push(new Pair(key, yaml));
-        filtersMap[key] = {
-            yaml,
-            filter: originalFilter,
-        };
-    });
-
-    return {
-        filtersMap,
-        filtersArray: filtersArray.reduce((map, filter) => {
-            map.add(filter);
-            return map;
-        }, new YAMLMap()),
-    };
-}
-
-function declarativeFilterToYaml(
-    entities: FromEntities,
-    filter: IFilter,
-    getUniqueKey: (baseKey: string) => string,
-    connectedAttributeFilters?: IFilter[],
-    errorContext?: IErrorContext,
-): { key: string; yaml: YAMLMap; filter: IFilter } | null {
-    if (!isFilter(filter)) {
-        return null;
-    }
-
-    const key = getUniqueKey(
-        createFilterItemKeyName(
-            filter,
-            "date",
-            updateErrorContext(errorContext, {
-                path: ["date"],
-            }),
-        ),
-    );
-
-    if (isAbsoluteDateFilter(filter)) {
-        return {
-            key,
-            yaml: declarativeAbsoluteDateFilterToYaml(
-                filter.absoluteDateFilter,
-                connectedAttributeFilters,
-                entities,
-                getUniqueKey,
-                updateErrorContext(errorContext, {
-                    path: ["absoluteDateFilter"],
-                }),
-            ),
-            filter,
-        };
-    }
-    if (isRelativeDateFilter(filter)) {
-        return {
-            key,
-            yaml: declarativeRelativeDateFilterToYaml(
-                filter.relativeDateFilter,
-                connectedAttributeFilters,
-                entities,
-                getUniqueKey,
-                updateErrorContext(errorContext, {
-                    path: ["relativeDateFilter"],
-                }),
-            ),
-            filter,
-        };
-    }
-    if (isPositiveAttributeFilter(filter)) {
-        return {
-            key,
-            yaml: declarativePositiveAttributeFilterToYaml(
-                entities,
-                filter.positiveAttributeFilter,
-                updateErrorContext(errorContext, {
-                    path: ["positiveAttributeFilter"],
-                }),
-            ),
-            filter,
-        };
-    }
-    if (isNegativeAttributeFilter(filter)) {
-        return {
-            key,
-            yaml: declarativeNegativeAttributeFilterToYaml(
-                entities,
-                filter.negativeAttributeFilter,
-                updateErrorContext(errorContext, {
-                    path: ["negativeAttributeFilter"],
-                }),
-            ),
-            filter,
-        };
-    }
-    if (isArbitraryAttributeFilter(filter)) {
-        return {
-            key,
-            yaml: declarativeArbitraryAttributeFilterToYaml(
-                filter.arbitraryAttributeFilter,
-                updateErrorContext(errorContext, {
-                    path: ["arbitraryAttributeFilter"],
-                }),
-            ),
-            filter,
-        };
-    }
-    if (isMatchAttributeFilter(filter)) {
-        return {
-            key,
-            yaml: declarativeMatchAttributeFilterToYaml(
-                filter.matchAttributeFilter,
-                updateErrorContext(errorContext, {
-                    path: ["matchAttributeFilter"],
-                }),
-            ),
-            filter,
-        };
-    }
-    if (isMeasureValueFilter(filter)) {
-        return {
-            key,
-            yaml: declarativeMeasureValueFilterToYaml(
-                filter.measureValueFilter,
-                updateErrorContext(errorContext, {
-                    path: ["measureValueFilter"],
-                }),
-            ),
-            filter,
-        };
-    }
-    if (isRankingFilter(filter)) {
-        return {
-            key,
-            yaml: declarativeRankingFilterToYaml(
-                filter.rankingFilter,
-                updateErrorContext(errorContext, {
-                    path: ["rankingFilter"],
-                }),
-            ),
-            filter,
-        };
-    }
-
-    throw newError(CoreErrorCode.FilterItemTypeNotSupported, [JSON.stringify(filter)], errorContext);
-}
-
-/**
- * Modifies `map`, adding `empty_filters` and `with` keys, populated from connectedAttributeFilters.
- */
-function processConnectedAttributeFilters(
-    map: YAMLMap,
-    connectedAttributeFilters: IFilter[],
-    entities: FromEntities,
-    getUniqueKey: (baseKey: string) => string,
-    errorContext?: IErrorContext,
-) {
-    // empty values filter
-
-    const emptyValuesFilter = connectedAttributeFilters.find((filter) => detectEmptyValuesFilterType(filter));
-
-    if (emptyValuesFilter) {
-        map.add(new Pair("empty_values", detectEmptyValuesFilterType(emptyValuesFilter)));
-    }
-
-    // additional attribute filters
-
-    const additionalAttributeFilters = connectedAttributeFilters.filter(
-        (filter) => filter !== emptyValuesFilter,
-    );
-
-    if (additionalAttributeFilters.length === 0) {
-        return;
-    }
-
-    const withMap = new YAMLMap();
-    map.add(new Pair("with", withMap));
-
-    additionalAttributeFilters?.forEach((filter) => {
-        const converted = declarativeFilterToYaml(entities, filter, getUniqueKey, undefined, errorContext);
-        if (!converted) {
-            return;
-        }
-
-        withMap.add(new Pair(converted.key, converted.yaml));
-    });
-}
-
-/** @internal */
-export function declarativeAbsoluteDateFilterToYaml(
-    absoluteDateFilter: IAbsoluteDateFilter["absoluteDateFilter"],
-    connectedAttributeFilters: IFilter[] = [],
-    entities: FromEntities,
-    getUniqueKey: (baseKey: string) => string,
-    errorContext?: IErrorContext,
-): YAMLMap {
-    const map = new YAMLMap();
-
-    // base date filter attributes
-
-    map.add(new Pair("type", "date_filter"));
-
-    map.add(new Pair("from", absoluteDateFilter.from));
-    map.add(new Pair("to", absoluteDateFilter.to));
-
-    const id = getIdentifier(
-        absoluteDateFilter.dataSet,
-        true,
-        updateErrorContext(errorContext, {
-            path: ["dateSet"],
-        }),
-    );
-    map.add(new Pair("using", id));
-
-    // connected attribute filters
-
-    processConnectedAttributeFilters(map, connectedAttributeFilters, entities, getUniqueKey, errorContext);
-
-    return map;
-}
-
-function isRelativeDateFilterAllTime(
-    relativeDateFilter: IRelativeDateFilter["relativeDateFilter"],
-): relativeDateFilter is IRelativeDateFilterAllTimeBody {
-    const { granularity, from, to } = relativeDateFilter;
-
-    // This should be enough to tell the type is IRelativeDateFilterAllTimeBody
-    if (granularity === "ALL_TIME_GRANULARITY") {
-        return true;
-    }
-
-    // But unfortunately AD emits granularity as GDC.time.year for an all time date filter, so we need this check as well
-    return granularity === "GDC.time.year" && from === undefined && to === undefined;
-}
-
-/** @internal */
-export function declarativeRelativeDateFilterToYaml(
-    relativeDateFilter: IRelativeDateFilter["relativeDateFilter"],
-    connectedAttributeFilters: IFilter[] = [],
-    entities: FromEntities,
-    getUniqueKey: (baseKey: string) => string,
-    errorContext?: IErrorContext,
-): YAMLMap {
-    const map = new YAMLMap();
-
-    map.add(new Pair("type", "date_filter"));
-
-    if (isRelativeDateFilterAllTime(relativeDateFilter)) {
-        // Do not add anything
-    } else {
-        // Add granularity
-        if (relativeDateFilter.granularity) {
-            map.add(new Pair("granularity", parseGranularity(relativeDateFilter.granularity)));
-        }
-
-        // Add from/to only if both are defined
-        if (relativeDateFilter.from !== undefined && relativeDateFilter.to !== undefined) {
-            map.add(new Pair("from", relativeDateFilter.from));
-            map.add(new Pair("to", relativeDateFilter.to));
-        }
-    }
-
-    const id = getIdentifier(
-        relativeDateFilter.dataSet,
-        true,
-        updateErrorContext(errorContext, {
-            path: ["dataSet"],
-        }),
-    );
-    map.add(new Pair("using", id));
-
-    processConnectedAttributeFilters(map, connectedAttributeFilters, entities, getUniqueKey, errorContext);
-
-    return map;
-}
-
-/** @internal */
-export function declarativePositiveAttributeFilterToYaml(
-    entities: FromEntities,
-    attributeFilter: IPositiveAttributeFilterBody,
-    errorContext?: IErrorContext,
-): YAMLMap {
-    const map = new YAMLMap();
-
-    map.add(new Pair("type", "attribute_filter"));
-
-    const id = getIdentifier(
-        attributeFilter.displayForm,
-        undefined,
-        updateErrorContext(errorContext, {
-            path: ["displayForm"],
-        }),
-    );
-    map.add(new Pair("using", id));
-
-    if (isAttributeElementsByValue(attributeFilter.in)) {
-        const ind = attributeFilter.in;
-        // Filter out null/undefined but preserve empty strings which are valid attribute values
-        const values = ind.values.filter((v): v is string => v !== null && v !== undefined);
-        map.add(new Pair("state", new Pair("include", parseDateValues(entities, id, values))));
-    }
-
-    return map;
-}
-
-/** @internal */
-export function declarativeNegativeAttributeFilterToYaml(
-    entities: FromEntities,
-    attributeFilter: INegativeAttributeFilterBody,
-    errorContext?: IErrorContext,
-): YAMLMap {
-    const map = new YAMLMap();
-
-    map.add(new Pair("type", "attribute_filter"));
-
-    const id = getIdentifier(
-        attributeFilter.displayForm,
-        undefined,
-        updateErrorContext(errorContext, {
-            path: ["displayForm"],
-        }),
-    );
-    map.add(new Pair("using", id));
-
-    if (isAttributeElementsByValue(attributeFilter.notIn)) {
-        const ind = attributeFilter.notIn;
-        // Filter out null/undefined but preserve empty strings which are valid attribute values
-        const values = ind.values.filter((v): v is string => v !== null && v !== undefined);
-        if (values.length > 0) {
-            map.add(new Pair("state", new Pair("exclude", parseDateValues(entities, id, values))));
-        }
-    }
-
-    return map;
-}
-
-export function declarativeArbitraryAttributeFilterToYaml(
-    attributeFilter: IArbitraryAttributeFilterBody,
-    errorContext?: IErrorContext,
-): YAMLMap {
-    const map = new YAMLMap();
-
-    map.add(new Pair("type", "text_filter"));
-    map.add(
-        new Pair(
-            "using",
-            getIdentifier(
-                attributeFilter.label,
-                undefined,
-                updateErrorContext(errorContext, {
-                    path: ["label"],
-                }),
-            ),
-        ),
-    );
-    map.add(new Pair("condition", attributeFilter.negativeSelection ? "isNot" : "is"));
-    map.add(new Pair("values", attributeFilter.values));
-
-    return map;
-}
-
-export function declarativeMatchAttributeFilterToYaml(
-    attributeFilter: IMatchAttributeFilterBody,
-    errorContext?: IErrorContext,
-): YAMLMap {
-    const map = new YAMLMap();
-
-    map.add(new Pair("type", "text_filter"));
-    map.add(
-        new Pair(
-            "using",
-            getIdentifier(
-                attributeFilter.label,
-                undefined,
-                updateErrorContext(errorContext, {
-                    path: ["label"],
-                }),
-            ),
-        ),
-    );
-    map.add(
-        new Pair(
-            "condition",
-            matchConditionToYaml(attributeFilter.operator, attributeFilter.negativeSelection),
-        ),
-    );
-    map.add(new Pair("value", attributeFilter.literal));
-    if (attributeFilter.caseSensitive !== undefined) {
-        map.add(new Pair("case_sensitive", attributeFilter.caseSensitive));
-    }
-
-    return map;
-}
-
-function addSingleConditionToYaml(map: YAMLMap, condition: MeasureValueFilterCondition): void {
-    if (isComparisonCondition(condition)) {
-        const comp = condition.comparison;
-        map.add(new Pair("condition", comp.operator.toUpperCase()));
-        map.add(new Pair("value", comp.value));
-        map.add(new Pair("null_values_as_zero", comp.treatNullValuesAs !== undefined));
-    } else if (isRangeCondition(condition)) {
-        const range = condition.range;
-        map.add(new Pair("condition", range.operator.toUpperCase()));
-        map.add(new Pair("from", range.from));
-        map.add(new Pair("to", range.to));
-        map.add(new Pair("null_values_as_zero", range.treatNullValuesAs !== undefined));
-    }
-}
-
-function addConditionToYamlMap(conditionMap: YAMLMap, condition: MeasureValueFilterCondition): boolean {
-    let hasTreatNullValues = false;
-
-    if (isComparisonCondition(condition)) {
-        const comp = condition.comparison;
-        conditionMap.add(new Pair("condition", comp.operator.toUpperCase()));
-        conditionMap.add(new Pair("value", comp.value));
-        if (comp.treatNullValuesAs !== undefined) {
-            hasTreatNullValues = true;
-        }
-    } else if (isRangeCondition(condition)) {
-        const range = condition.range;
-        conditionMap.add(new Pair("condition", range.operator.toUpperCase()));
-        conditionMap.add(new Pair("from", range.from));
-        conditionMap.add(new Pair("to", range.to));
-        if (range.treatNullValuesAs !== undefined) {
-            hasTreatNullValues = true;
-        }
-    }
-
-    return hasTreatNullValues;
-}
-
-/** @internal */
-export function declarativeMeasureValueFilterToYaml(
-    measureValueFilter: IMeasureValueFilterBody,
-    errorContext?: IErrorContext,
-): YAMLMap {
-    const map = new YAMLMap();
-
-    map.add(new Pair("type", "metric_value_filter"));
-
-    if (isLocalIdRef(measureValueFilter.measure)) {
-        map.add(new Pair("using", measureValueFilter.measure.localIdentifier));
-    } else {
-        map.add(
-            new Pair(
-                "using",
-                getIdentifier(
-                    measureValueFilter.measure,
-                    undefined,
-                    updateErrorContext(errorContext, {
-                        path: ["measure"],
-                    }),
-                ),
-            ),
-        );
-    }
-
-    // Handle multiple conditions (new SDK model feature)
-    if (measureValueFilter.conditions && measureValueFilter.conditions.length > 1) {
-        // Multiple conditions: use conditions array
-        const conditionsSeq = new YAMLSeq();
-        let treatNullValuesAsZero = false;
-
-        measureValueFilter.conditions.forEach((cond) => {
-            const conditionMap = new YAMLMap();
-            if (addConditionToYamlMap(conditionMap, cond)) {
-                treatNullValuesAsZero = true;
-            }
-            conditionsSeq.add(conditionMap);
-        });
-
-        map.add(new Pair("conditions", conditionsSeq));
-
-        if (treatNullValuesAsZero) {
-            map.add(new Pair("null_values_as_zero", true));
-        }
-    } else if (measureValueFilter.conditions?.length === 1) {
-        // Single condition in array: use old format for cleaner output
-        addSingleConditionToYaml(map, measureValueFilter.conditions[0]);
-    } else if (measureValueFilter.condition) {
-        // Fallback to single condition field for backward compatibility
-        addSingleConditionToYaml(map, measureValueFilter.condition);
-    }
-
-    // Handle dimensionality field
-    if (measureValueFilter.dimensionality && Array.isArray(measureValueFilter.dimensionality)) {
-        const dimensionalitySeq = new YAMLSeq();
-        measureValueFilter.dimensionality.forEach((item) => {
-            if (isLocalIdRef(item)) {
-                dimensionalitySeq.add(item.localIdentifier);
-            } else {
-                dimensionalitySeq.add(getIdentifier(item));
-            }
-        });
-        map.add(new Pair("dimensionality", dimensionalitySeq));
-    }
-
-    return map;
-}
-
-/** @internal */
-export function declarativeRankingFilterToYaml(
-    rankingFilter: IRankingFilterBody,
-    errorContext?: IErrorContext,
-): YAMLMap {
-    const map = new YAMLMap();
-
-    map.add(new Pair("type", "ranking_filter"));
-
-    if (isLocalIdRef(rankingFilter.measure)) {
-        map.add(new Pair("using", rankingFilter.measure.localIdentifier));
-    } else {
-        map.add(
-            new Pair(
-                "using",
-                getIdentifier(
-                    rankingFilter.measure,
-                    undefined,
-                    updateErrorContext(errorContext, {
-                        path: ["measure"],
-                    }),
-                ),
-            ),
-        );
-    }
-
-    if (rankingFilter.operator === "TOP") {
-        map.add(new Pair("top", rankingFilter.value));
-    }
-    if (rankingFilter.operator === "BOTTOM") {
-        map.add(new Pair("bottom", rankingFilter.value));
-    }
-
-    //NOTE: There can be array, but UI allows only 1 attr now
-    if (rankingFilter.attributes?.[0]) {
-        const first = rankingFilter.attributes[0];
-        if (isLocalIdRef(first)) {
-            map.add(new Pair("attribute", first.localIdentifier));
-        } else {
-            map.add(new Pair("attribute", getIdentifier(first)));
-        }
-    }
-
-    if (rankingFilter.strictLimitOfRows !== undefined) {
-        map.add(new Pair("strict_limit_of_rows", rankingFilter.strictLimitOfRows));
-    }
-
-    return map;
-}
-
 //sorts
 
 /** @internal */
@@ -1661,17 +936,17 @@ function declarativeVisTableToYaml(
     _context?: IErrorContext,
 ) {
     //buckets
-    const metrics = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
+    const metrics = report.buckets.consume(BucketsType.Measures);
     if (metrics && metrics.items.length > 0) {
         doc.add(entryWithSpace("metrics", groupToYaml(metrics)));
     }
 
-    const attribute = report.derivedBuckets.find((item) => item.type === BucketsType.Attribute);
+    const attribute = report.buckets.consume(BucketsType.Attribute);
     if (attribute && attribute.items.length > 0) {
         doc.add(entryWithSpace("view_by", groupToYaml(attribute)));
     }
 
-    const columns = report.derivedBuckets.find((item) => item.type === BucketsType.Columns);
+    const columns = report.buckets.consume(BucketsType.Columns);
     if (columns && columns.items.length > 0) {
         doc.add(entryWithSpace("segment_by", groupToYaml(columns)));
     }
@@ -1689,17 +964,17 @@ function declarativeVisBarToYaml(
     _errorContext?: IErrorContext,
 ) {
     //buckets
-    const metrics = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
+    const metrics = report.buckets.consume(BucketsType.Measures);
     if (metrics && metrics.items.length > 0) {
         doc.add(entryWithSpace("metrics", groupToYaml(metrics)));
     }
 
-    const view = report.derivedBuckets.find((item) => item.type === BucketsType.View);
+    const view = report.buckets.consume(BucketsType.View);
     if (view && view.items.length > 0) {
         doc.add(entryWithSpace("view_by", groupToYaml(view)));
     }
 
-    const stack = report.derivedBuckets.find((item) => item.type === BucketsType.Stack);
+    const stack = report.buckets.consume(BucketsType.Stack);
     if (stack && stack.items.length > 0) {
         doc.add(entryWithSpace("segment_by", groupToYaml(stack)));
     }
@@ -1717,17 +992,17 @@ function declarativeVisColumnToYaml(
     _errorContext?: IErrorContext,
 ) {
     //buckets
-    const metrics = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
+    const metrics = report.buckets.consume(BucketsType.Measures);
     if (metrics && metrics.items.length > 0) {
         doc.add(entryWithSpace("metrics", groupToYaml(metrics)));
     }
 
-    const view = report.derivedBuckets.find((item) => item.type === BucketsType.View);
+    const view = report.buckets.consume(BucketsType.View);
     if (view && view.items.length > 0) {
         doc.add(entryWithSpace("view_by", groupToYaml(view)));
     }
 
-    const stack = report.derivedBuckets.find((item) => item.type === BucketsType.Stack);
+    const stack = report.buckets.consume(BucketsType.Stack);
     if (stack && stack.items.length > 0) {
         doc.add(entryWithSpace("segment_by", groupToYaml(stack)));
     }
@@ -1745,17 +1020,17 @@ function declarativeVisLineToYaml(
     _errorContext?: IErrorContext,
 ) {
     //buckets
-    const metrics = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
+    const metrics = report.buckets.consume(BucketsType.Measures);
     if (metrics && metrics.items.length > 0) {
         doc.add(entryWithSpace("metrics", groupToYaml(metrics)));
     }
 
-    const trend = report.derivedBuckets.find((item) => item.type === BucketsType.Trend);
+    const trend = report.buckets.consume(BucketsType.Trend);
     if (trend && trend.items.length > 0) {
         doc.add(entryWithSpace("view_by", groupToYaml(trend)));
     }
 
-    const segment = report.derivedBuckets.find((item) => item.type === BucketsType.Segment);
+    const segment = report.buckets.consume(BucketsType.Segment);
     if (segment && segment.items.length > 0) {
         doc.add(entryWithSpace("segment_by", groupToYaml(segment)));
     }
@@ -1773,17 +1048,17 @@ function declarativeVisRadarToYaml(
     _errorContext?: IErrorContext,
 ) {
     //buckets
-    const metrics = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
+    const metrics = report.buckets.consume(BucketsType.Measures);
     if (metrics && metrics.items.length > 0) {
         doc.add(entryWithSpace("metrics", groupToYaml(metrics)));
     }
 
-    const trend = report.derivedBuckets.find((item) => item.type === BucketsType.Trend);
+    const trend = report.buckets.consume(BucketsType.Trend);
     if (trend && trend.items.length > 0) {
         doc.add(entryWithSpace("view_by", groupToYaml(trend)));
     }
 
-    const segment = report.derivedBuckets.find((item) => item.type === BucketsType.Segment);
+    const segment = report.buckets.consume(BucketsType.Segment);
     if (segment && segment.items.length > 0) {
         doc.add(entryWithSpace("segment_by", groupToYaml(segment)));
     }
@@ -1801,17 +1076,17 @@ function declarativeVisAreaToYaml(
     _errorContext?: IErrorContext,
 ) {
     //buckets
-    const metrics = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
+    const metrics = report.buckets.consume(BucketsType.Measures);
     if (metrics && metrics.items.length > 0) {
         doc.add(entryWithSpace("metrics", groupToYaml(metrics)));
     }
 
-    const view = report.derivedBuckets.find((item) => item.type === BucketsType.View);
+    const view = report.buckets.consume(BucketsType.View);
     if (view && view.items.length > 0) {
         doc.add(entryWithSpace("view_by", groupToYaml(view)));
     }
 
-    const stack = report.derivedBuckets.find((item) => item.type === BucketsType.Stack);
+    const stack = report.buckets.consume(BucketsType.Stack);
     if (stack && stack.items.length > 0) {
         doc.add(entryWithSpace("segment_by", groupToYaml(stack)));
     }
@@ -1829,8 +1104,8 @@ function declarativeVisScatterToYaml(
     _errorContext?: IErrorContext,
 ) {
     //buckets
-    const metrics1 = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
-    const metrics2 = report.derivedBuckets.find((item) => item.type === BucketsType.SecondaryMeasures);
+    const metrics1 = report.buckets.consume(BucketsType.Measures);
+    const metrics2 = report.buckets.consume(BucketsType.SecondaryMeasures);
     const metrics: YamlBucketGroup = {
         items: cleanUpItems([
             ...(metrics1?.items.length ? metrics1.items : [null]),
@@ -1842,12 +1117,12 @@ function declarativeVisScatterToYaml(
         doc.add(entryWithSpace("metrics", groupToYaml(metrics)));
     }
 
-    const attributes = report.derivedBuckets.find((item) => item.type === BucketsType.Attribute);
+    const attributes = report.buckets.consume(BucketsType.Attribute);
     if (attributes && attributes.items.length > 0) {
         doc.add(entryWithSpace("view_by", groupToYaml(attributes)));
     }
 
-    const segments = report.derivedBuckets.find((item) => item.type === BucketsType.Segment);
+    const segments = report.buckets.consume(BucketsType.Segment);
     if (segments && segments.items.length > 0) {
         doc.add(entryWithSpace("segment_by", groupToYaml(segments)));
     }
@@ -1865,8 +1140,8 @@ function declarativeVisBubbleToYaml(
     _errorContext?: IErrorContext,
 ) {
     //buckets
-    const metrics1 = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
-    const metrics2 = report.derivedBuckets.find((item) => item.type === BucketsType.SecondaryMeasures);
+    const metrics1 = report.buckets.consume(BucketsType.Measures);
+    const metrics2 = report.buckets.consume(BucketsType.SecondaryMeasures);
     const metrics: YamlBucketGroup = {
         items: cleanUpItems([
             ...(metrics1?.items.length ? metrics1.items : [null]),
@@ -1878,12 +1153,12 @@ function declarativeVisBubbleToYaml(
         doc.add(entryWithSpace("metrics", groupToYaml(metrics)));
     }
 
-    const view = report.derivedBuckets.find((item) => item.type === BucketsType.View);
+    const view = report.buckets.consume(BucketsType.View);
     if (view && view.items.length > 0) {
         doc.add(entryWithSpace("view_by", groupToYaml(view)));
     }
 
-    const tertiaryMetrics = report.derivedBuckets.find((item) => item.type === BucketsType.TertiaryMeasures);
+    const tertiaryMetrics = report.buckets.consume(BucketsType.TertiaryMeasures);
     if (tertiaryMetrics && tertiaryMetrics.items.length > 0) {
         doc.add(entryWithSpace("segment_by", groupToYaml(tertiaryMetrics)));
     }
@@ -1901,12 +1176,12 @@ function declarativeVisPieToYaml(
     _errorContext?: IErrorContext,
 ) {
     //buckets
-    const metrics = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
+    const metrics = report.buckets.consume(BucketsType.Measures);
     if (metrics && metrics.items.length > 0) {
         doc.add(entryWithSpace("metrics", groupToYaml(metrics)));
     }
 
-    const view = report.derivedBuckets.find((item) => item.type === BucketsType.View);
+    const view = report.buckets.consume(BucketsType.View);
     if (view && view.items.length > 0) {
         doc.add(entryWithSpace("view_by", groupToYaml(view)));
     }
@@ -1924,12 +1199,12 @@ function declarativeVisDonutToYaml(
     _errorContext?: IErrorContext,
 ) {
     //buckets
-    const metrics = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
+    const metrics = report.buckets.consume(BucketsType.Measures);
     if (metrics && metrics.items.length > 0) {
         doc.add(entryWithSpace("metrics", groupToYaml(metrics)));
     }
 
-    const view = report.derivedBuckets.find((item) => item.type === BucketsType.View);
+    const view = report.buckets.consume(BucketsType.View);
     if (view && view.items.length > 0) {
         doc.add(entryWithSpace("view_by", groupToYaml(view)));
     }
@@ -1947,17 +1222,17 @@ function declarativeVisTreemapToYaml(
     _errorContext?: IErrorContext,
 ) {
     //buckets
-    const metrics = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
+    const metrics = report.buckets.consume(BucketsType.Measures);
     if (metrics && metrics.items.length > 0) {
         doc.add(entryWithSpace("metrics", groupToYaml(metrics)));
     }
 
-    const view = report.derivedBuckets.find((item) => item.type === BucketsType.View);
+    const view = report.buckets.consume(BucketsType.View);
     if (view && view.items.length > 0) {
         doc.add(entryWithSpace("view_by", groupToYaml(view)));
     }
 
-    const segment = report.derivedBuckets.find((item) => item.type === BucketsType.Segment);
+    const segment = report.buckets.consume(BucketsType.Segment);
     if (segment && segment.items.length > 0) {
         doc.add(entryWithSpace("segment_by", groupToYaml(segment)));
     }
@@ -1975,12 +1250,12 @@ function declarativeVisPyramidToYaml(
     _errorContext?: IErrorContext,
 ) {
     //buckets
-    const metrics = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
+    const metrics = report.buckets.consume(BucketsType.Measures);
     if (metrics && metrics.items.length > 0) {
         doc.add(entryWithSpace("metrics", groupToYaml(metrics)));
     }
 
-    const view = report.derivedBuckets.find((item) => item.type === BucketsType.View);
+    const view = report.buckets.consume(BucketsType.View);
     if (view && view.items.length > 0) {
         doc.add(entryWithSpace("view_by", groupToYaml(view)));
     }
@@ -1998,12 +1273,12 @@ function declarativeVisFunnelToYaml(
     _errorContext?: IErrorContext,
 ) {
     //buckets
-    const metrics = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
+    const metrics = report.buckets.consume(BucketsType.Measures);
     if (metrics && metrics.items.length > 0) {
         doc.add(entryWithSpace("metrics", groupToYaml(metrics)));
     }
 
-    const view = report.derivedBuckets.find((item) => item.type === BucketsType.View);
+    const view = report.buckets.consume(BucketsType.View);
     if (view && view.items.length > 0) {
         doc.add(entryWithSpace("view_by", groupToYaml(view)));
     }
@@ -2021,17 +1296,17 @@ function declarativeVisHeatmapToYaml(
     _errorContext?: IErrorContext,
 ) {
     //buckets
-    const metrics = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
+    const metrics = report.buckets.consume(BucketsType.Measures);
     if (metrics && metrics.items.length > 0) {
         doc.add(entryWithSpace("metrics", groupToYaml(metrics)));
     }
 
-    const view = report.derivedBuckets.find((item) => item.type === BucketsType.View);
+    const view = report.buckets.consume(BucketsType.View);
     if (view && view.items.length > 0) {
         doc.add(entryWithSpace("view_by", groupToYaml(view)));
     }
 
-    const stack = report.derivedBuckets.find((item) => item.type === BucketsType.Stack);
+    const stack = report.buckets.consume(BucketsType.Stack);
     if (stack && stack.items.length > 0) {
         doc.add(entryWithSpace("segment_by", groupToYaml(stack)));
     }
@@ -2049,9 +1324,9 @@ function declarativeVisBulletToYaml(
     _errorContext?: IErrorContext,
 ) {
     //buckets
-    const metrics1 = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
-    const metrics2 = report.derivedBuckets.find((item) => item.type === BucketsType.SecondaryMeasures);
-    const metrics3 = report.derivedBuckets.find((item) => item.type === BucketsType.TertiaryMeasures);
+    const metrics1 = report.buckets.consume(BucketsType.Measures);
+    const metrics2 = report.buckets.consume(BucketsType.SecondaryMeasures);
+    const metrics3 = report.buckets.consume(BucketsType.TertiaryMeasures);
     const metrics: YamlBucketGroup = {
         items: cleanUpItems([
             ...(metrics1?.items.length ? metrics1.items : [null]),
@@ -2064,7 +1339,7 @@ function declarativeVisBulletToYaml(
         doc.add(entryWithSpace("metrics", groupToYaml(metrics)));
     }
 
-    const view = report.derivedBuckets.find((item) => item.type === BucketsType.View);
+    const view = report.buckets.consume(BucketsType.View);
     if (view && view.items.length > 0) {
         doc.add(entryWithSpace("view_by", groupToYaml(view)));
     }
@@ -2082,12 +1357,12 @@ function declarativeVisWaterfallToYaml(
     _errorContext?: IErrorContext,
 ) {
     //buckets
-    const metrics = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
+    const metrics = report.buckets.consume(BucketsType.Measures);
     if (metrics && metrics.items.length > 0) {
         doc.add(entryWithSpace("metrics", groupToYaml(metrics)));
     }
 
-    const view = report.derivedBuckets.find((item) => item.type === BucketsType.View);
+    const view = report.buckets.consume(BucketsType.View);
     if (view && view.items.length > 0) {
         doc.add(entryWithSpace("view_by", groupToYaml(view)));
     }
@@ -2105,13 +1380,13 @@ function declarativeVisDependencyWheelToYaml(
     _errorContext?: IErrorContext,
 ) {
     //buckets
-    const metrics = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
+    const metrics = report.buckets.consume(BucketsType.Measures);
     if (metrics && metrics.items.length > 0) {
         doc.add(entryWithSpace("metrics", groupToYaml(metrics)));
     }
 
-    const from = report.derivedBuckets.find((item) => item.type === BucketsType.AttributeFrom);
-    const to = report.derivedBuckets.find((item) => item.type === BucketsType.AttributeTo);
+    const from = report.buckets.consume(BucketsType.AttributeFrom);
+    const to = report.buckets.consume(BucketsType.AttributeTo);
     const view: YamlBucketGroup = {
         items: cleanUpItems([
             ...(from?.items.length ? from.items : [null]),
@@ -2137,13 +1412,13 @@ function declarativeVisSankeyToYaml(
     _errorContext?: IErrorContext,
 ) {
     //buckets
-    const metrics = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
+    const metrics = report.buckets.consume(BucketsType.Measures);
     if (metrics && metrics.items.length > 0) {
         doc.add(entryWithSpace("metrics", groupToYaml(metrics)));
     }
 
-    const from = report.derivedBuckets.find((item) => item.type === BucketsType.AttributeFrom);
-    const to = report.derivedBuckets.find((item) => item.type === BucketsType.AttributeTo);
+    const from = report.buckets.consume(BucketsType.AttributeFrom);
+    const to = report.buckets.consume(BucketsType.AttributeTo);
     const view: YamlBucketGroup = {
         items: cleanUpItems([
             ...(from?.items.length ? from.items : [null]),
@@ -2169,8 +1444,8 @@ function declarativeVisHeadlineToYaml(
     _errorContext?: IErrorContext,
 ) {
     //buckets
-    const metrics1 = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
-    const metrics2 = report.derivedBuckets.find((item) => item.type === BucketsType.SecondaryMeasures);
+    const metrics1 = report.buckets.consume(BucketsType.Measures);
+    const metrics2 = report.buckets.consume(BucketsType.SecondaryMeasures);
     const metrics: YamlBucketGroup = {
         items: [...(metrics1?.items ?? [null]), ...(metrics2?.items ?? [])],
         type: BucketsType.Measures,
@@ -2192,14 +1467,8 @@ function declarativeVisComboToYaml(
     _errorContext?: IErrorContext,
 ) {
     //buckets
-    const metrics1 = addAxisTypeToGroup(
-        report.derivedBuckets.find((item) => item.type === BucketsType.Measures),
-        "primary",
-    );
-    const metrics2 = addAxisTypeToGroup(
-        report.derivedBuckets.find((item) => item.type === BucketsType.SecondaryMeasures),
-        "secondary",
-    );
+    const metrics1 = addAxisTypeToGroup(report.buckets.consume(BucketsType.Measures), "primary");
+    const metrics2 = addAxisTypeToGroup(report.buckets.consume(BucketsType.SecondaryMeasures), "secondary");
 
     const metrics: YamlBucketGroup = {
         items: [...(metrics1?.items ?? []), ...(metrics2?.items ?? [])],
@@ -2209,7 +1478,7 @@ function declarativeVisComboToYaml(
         doc.add(entryWithSpace("metrics", groupToYaml(metrics)));
     }
 
-    const view = report.derivedBuckets.find((item) => item.type === BucketsType.View);
+    const view = report.buckets.consume(BucketsType.View);
     if (view && view.items.length > 0) {
         doc.add(entryWithSpace("view_by", groupToYaml(view)));
     }
@@ -2220,9 +1489,9 @@ function declarativeVisComboToYaml(
     }
 }
 
-function addPushpinBucketsToYaml(target: Document | YAMLMap, groups: YamlBucketGroup[]) {
-    const sizeBucket = groups.find((item) => item.type === BucketsType.Size);
-    const colorBucket = groups.find((item) => item.type === BucketsType.Color);
+function addPushpinBucketsToYaml(target: Document | YAMLMap, buckets: BucketRegistry) {
+    const sizeBucket = buckets.consume(BucketsType.Size);
+    const colorBucket = buckets.consume(BucketsType.Color);
 
     const metrics: YamlBucketGroup = {
         items: cleanUpItems([
@@ -2236,19 +1505,19 @@ function addPushpinBucketsToYaml(target: Document | YAMLMap, groups: YamlBucketG
         target.add(entryWithSpace("metrics", groupToYaml(metrics)));
     }
 
-    const location = groups.find((item) => item.type === BucketsType.Location);
+    const location = buckets.consume(BucketsType.Location);
     if (location && location.items.length > 0) {
         target.add(entryWithSpace("view_by", groupToYaml(location)));
     }
 
-    const segment = groups.find((item) => item.type === BucketsType.Segment);
+    const segment = buckets.consume(BucketsType.Segment);
     if (segment && segment.items.length > 0) {
         target.add(entryWithSpace("segment_by", groupToYaml(segment)));
     }
 }
 
-function addGeoAreaBucketsToYaml(target: Document | YAMLMap, groups: YamlBucketGroup[]) {
-    const colorBucket = groups.find((item) => item.type === BucketsType.Color);
+function addGeoAreaBucketsToYaml(target: Document | YAMLMap, buckets: BucketRegistry) {
+    const colorBucket = buckets.consume(BucketsType.Color);
 
     const metrics: YamlBucketGroup = {
         items: cleanUpItems([...(colorBucket?.items.length ? colorBucket.items : [null])]),
@@ -2259,12 +1528,12 @@ function addGeoAreaBucketsToYaml(target: Document | YAMLMap, groups: YamlBucketG
         target.add(entryWithSpace("metrics", groupToYaml(metrics)));
     }
 
-    const area = groups.find((item) => item.type === BucketsType.Area);
+    const area = buckets.consume(BucketsType.Area);
     if (area && area.items.length > 0) {
         target.add(entryWithSpace("view_by", groupToYaml(area)));
     }
 
-    const segment = groups.find((item) => item.type === BucketsType.Segment);
+    const segment = buckets.consume(BucketsType.Segment);
     if (segment && segment.items.length > 0) {
         target.add(entryWithSpace("segment_by", groupToYaml(segment)));
     }
@@ -2278,7 +1547,7 @@ function declarativeVisGeoToYaml(
     errorContext?: IErrorContext,
 ) {
     //buckets
-    addPushpinBucketsToYaml(doc, report.derivedBuckets);
+    addPushpinBucketsToYaml(doc, report.buckets);
 
     const config = geoChart.load(def.properties);
     if (config) {
@@ -2294,7 +1563,7 @@ function declarativeVisGeoAreaToYaml(
     errorContext?: IErrorContext,
 ) {
     //buckets
-    addGeoAreaBucketsToYaml(doc, report.derivedBuckets);
+    addGeoAreaBucketsToYaml(doc, report.buckets);
 
     const config = geoAreaChart.load(def.properties);
     if (config) {
@@ -2331,18 +1600,18 @@ function declarativeVisRepeaterToYaml(
     report: Report,
     _errorContext?: IErrorContext,
 ) {
-    const columns = report.derivedBuckets.find((item) => item.type === BucketsType.Columns);
+    const columns = report.buckets.consume(BucketsType.Columns);
     const columnsMapped = addChartTypeToGroup(columns, def.properties);
     if (columnsMapped && columnsMapped.items.length > 0) {
         doc.add(entryWithSpace("metrics", groupToYaml(columnsMapped)));
     }
 
-    const view = report.derivedBuckets.find((item) => item.type === BucketsType.View);
+    const view = report.buckets.consume(BucketsType.View);
     if (view && view.items.length > 0) {
         doc.add(entryWithSpace("view_by", groupToYaml(view)));
     }
 
-    const attribute = report.derivedBuckets.find((item) => item.type === BucketsType.Attribute);
+    const attribute = report.buckets.consume(BucketsType.Attribute);
     if (attribute && attribute.items.length > 0) {
         doc.add(entryWithSpace("segment_by", groupToYaml(attribute)));
     }
@@ -2445,6 +1714,21 @@ function addChartTypeToGroup(
     };
 }
 
+type UnrepresentableLayerField = "filters" | "sorts" | "attributeFilterConfigs";
+
+// Each check matches what the emitter would have written, so a value it would have ignored anyway (an
+// unrecognized filter, a config carrying no label) is not refused.
+function unrepresentableLayerField(layer: IInsightLayerDefinition): UnrepresentableLayerField | null {
+    if (layer.filters?.some(isFilter)) {
+        return "filters";
+    }
+    if (layer.sorts?.length) {
+        return "sorts";
+    }
+    const configs = Object.values(layer.attributeFilterConfigs ?? {});
+    return configs.some((config) => config?.displayAsLabel) ? "attributeFilterConfigs" : null;
+}
+
 function declarativeLayersToYaml(
     entities: FromEntities,
     layersDefinition: IInsightLayerDefinition[],
@@ -2453,11 +1737,21 @@ function declarativeLayersToYaml(
     const layers = new YAMLSeq();
 
     layersDefinition.forEach((layer, li) => {
-        const { groups } = declarativeBucketsToYaml(
+        // A layer's own filters and sorts would read back as the insight's, so they are refused.
+        const unrepresentable = unrepresentableLayerField(layer);
+        if (unrepresentable !== null) {
+            throw newError(
+                CoreErrorCode.ItemNotSupported,
+                [`layer "${layer.id}" own ${unrepresentable}`],
+                updateErrorContext(errorContext, { path: [li.toString(), unrepresentable] }),
+            );
+        }
+        const { groups: layerGroups } = declarativeBucketsToYaml(
             entities,
             layer.buckets ?? [],
             updateErrorContext(errorContext, { path: [li.toString(), "buckets"] }),
         );
+        const buckets = bucketRegistry(layerGroups);
         const layerKind = resolveLayerExportKind(
             layer.type,
             updateErrorContext(errorContext, { path: [li.toString(), "type"] }),
@@ -2476,10 +1770,11 @@ function declarativeLayersToYaml(
 
         appendLayerBucketsForKind(
             layerMap,
-            groups,
+            buckets,
             layerKind,
             updateErrorContext(errorContext, { path: [li.toString()] }),
         );
+        buckets.assertAllConsumed(updateErrorContext(errorContext, { path: [li.toString()] }));
 
         addLayerConfig(layerMap, layerKind, layer.properties);
 
@@ -2504,17 +1799,17 @@ function resolveLayerExportKind(rawLayerType?: string, errorContext?: IErrorCont
 
 function appendLayerBucketsForKind(
     layerMap: YAMLMap,
-    groups: YamlBucketGroup[],
+    buckets: BucketRegistry,
     kind: LayerExportKind,
     errorContext?: IErrorContext,
 ) {
     if (kind === "pushpin") {
-        addPushpinBucketsToYaml(layerMap, groups);
+        addPushpinBucketsToYaml(layerMap, buckets);
         return;
     }
 
     if (kind === "area") {
-        addGeoAreaBucketsToYaml(layerMap, groups);
+        addGeoAreaBucketsToYaml(layerMap, buckets);
         return;
     }
 

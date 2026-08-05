@@ -287,7 +287,7 @@ describe("AsCodeDialog with an asynchronously-loaded editing brain", () => {
     const resolvedEditing: IAsCodeEditing<TestDefinition> = {
         completionSource: () => null,
         syntaxErrorMessage: "syntax",
-        serialize: (definition) => `serialized:${definition.id ?? "new"}`,
+        serialize: (definition) => ({ yaml: `serialized:${definition.id ?? "new"}`, hasCodeForm: true }),
         validate: () => ({ isValid: true, definition: { id: "x" } }),
     };
 
@@ -556,5 +556,79 @@ describe("AsCodeDialog with an asynchronously-loaded editing brain", () => {
         await waitFor(() =>
             expect(validate).toHaveBeenLastCalledWith(expect.any(String), { intent: "create" }),
         );
+    });
+});
+
+describe("AsCodeDialog with a base the codec cannot represent", () => {
+    // Mirrors the real codec: unprojectable content serializes to a comment note, reported as no code form.
+    const noteEditing: IAsCodeEditing<TestDefinition> = {
+        completionSource: () => null,
+        syntaxErrorMessage: "syntax",
+        serialize: () => ({ yaml: "# unsupported content", hasCodeForm: false }),
+        validate: (value) =>
+            value.trimStart().startsWith("#")
+                ? { isValid: false as const, error: "no code representation" }
+                : { isValid: true as const, definition: { id: "x" } },
+    };
+
+    const noticePattern = /cannot be represented as code/;
+
+    function renderEdit(editing: IAsCodeEditing<TestDefinition>, onClose = vi.fn()) {
+        render(
+            <AsCodeDialog
+                descriptor={{ ...parameterDescriptor, useEditing: () => editing }}
+                mode="edit"
+                fixedIdentifier="seed"
+                initialDefinition={{ id: "seed" }}
+                onClose={onClose}
+                onSubmit={vi.fn()}
+                onDuplicate={vi.fn()}
+            />,
+            { wrapper: makeWrapper() },
+        );
+        return { onClose };
+    }
+
+    const buttonNamed = (label: string) =>
+        screen.getByText(label, { selector: "button span, button" }).closest("button");
+
+    it("shows the note read-only and blocks both persisting actions", async () => {
+        renderEdit(noteEditing);
+
+        expect(await screen.findByTestId("yaml-editor")).toBeDisabled();
+        expect(screen.getByText(noticePattern)).toBeInTheDocument();
+        expect(buttonNamed("Save")).toHaveAttribute("aria-disabled", "true");
+        // Duplicating would carry the same unusable baseline into the copy.
+        expect(buttonNamed("Save as new")).toBeDisabled();
+    });
+
+    it("leaves the editor writable for a document the codec rejects but can still render", async () => {
+        renderEdit({
+            ...noteEditing,
+            serialize: () => ({ yaml: "id: seed", hasCodeForm: true }),
+            validate: () => ({ isValid: false as const, error: "type not enabled" }),
+        });
+
+        expect(await screen.findByTestId("yaml-editor")).not.toBeDisabled();
+        expect(screen.queryByText(noticePattern)).not.toBeInTheDocument();
+        expect(buttonNamed("Save as new")).not.toBeDisabled();
+    });
+
+    it("reports a base that cannot be serialized as a failure to load", async () => {
+        const { onClose } = renderEdit({
+            ...noteEditing,
+            serialize: () => {
+                throw new Error("serialize blew up");
+            },
+        });
+
+        await waitFor(() => expect(onClose).toHaveBeenCalled());
+    });
+
+    it("leaves the editor writable when the base has a code form", async () => {
+        renderEdit({ ...noteEditing, serialize: () => ({ yaml: "id: seed", hasCodeForm: true }) });
+
+        expect(await screen.findByTestId("yaml-editor")).not.toBeDisabled();
+        expect(screen.queryByText(noticePattern)).not.toBeInTheDocument();
     });
 });

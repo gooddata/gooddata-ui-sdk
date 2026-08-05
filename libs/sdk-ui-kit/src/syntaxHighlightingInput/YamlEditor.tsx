@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { type CompletionSource } from "@codemirror/autocomplete";
 import { yaml } from "@codemirror/lang-yaml";
@@ -9,6 +9,7 @@ import { type Extension } from "@codemirror/state";
 import { lineNumbers } from "@codemirror/view";
 
 import { SyntaxHighlightingInput } from "./SyntaxHighlightingInput.js";
+import { type YamlCompletionSource, yamlPositionAt } from "./yamlPosition.js";
 import { createYamlSyntaxLinter } from "./yamlSyntaxLinter.js";
 
 const noop = () => {};
@@ -22,8 +23,7 @@ export interface IYamlEditorProps {
     disabled?: boolean;
     /** Accessible name for the editor (wired to its aria-label). */
     label?: string;
-    /** Schema-aware autocompletion source supplied by the caller. */
-    completionSource?: CompletionSource;
+    completionSource?: YamlCompletionSource;
     /**
      * When set, wires the built-in YAML syntax linter with this (localized) diagnostic message.
      * Applied once when the editor mounts; later changes are not re-applied.
@@ -57,6 +57,12 @@ export function YamlEditor({
     placeholder,
 }: IYamlEditorProps) {
     const [seedValue] = useState(initialValue);
+    const onCompletion = useMemo<CompletionSource | undefined>(
+        () =>
+            completionSource &&
+            ((context) => completionSource(context, yamlPositionAt(context.state, context.pos))),
+        [completionSource],
+    );
     const [allExtensions] = useState(() => [
         yaml(),
         lineNumbers(),
@@ -71,7 +77,7 @@ export function YamlEditor({
             value={seedValue}
             onChange={onChange ?? noop}
             extensions={allExtensions}
-            onCompletion={completionSource}
+            onCompletion={onCompletion}
             disabled={disabled}
             placeholder={placeholder}
         />

@@ -34,7 +34,7 @@ import {
     getAppliedWidgetFilters,
     getVisibleFiltersByFilters,
     resolveMvfDimensionalityLocalRefs,
-} from "../../../shared/automationFilters/utils.js";
+} from "../../../shared/filters/index.js";
 import {
     convertCurrentUserToAutomationRecipient,
     convertCurrentUserToWorkspaceUser,

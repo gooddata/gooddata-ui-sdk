@@ -23,7 +23,7 @@ import { type AlertAttribute, type AlertMetric } from "../../../types.js";
 // vi.mocked() after the import statements.
 // ---------------------------------------------------------------------------
 
-vi.mock("../../../../shared/automationFilters/utils.js", () => ({
+vi.mock("../../../../shared/filters/index.js", () => ({
     getAppliedWidgetFilters: vi.fn(),
     getVisibleFiltersByFilters: vi.fn(),
 }));
@@ -41,7 +41,7 @@ vi.mock("../../utils/transformation.js", async (importOriginal: () => Promise<Re
 // Imports placed AFTER vi.mock() calls to pick up mocked versions
 // ---------------------------------------------------------------------------
 
-import * as utilsModule from "../../../../shared/automationFilters/utils.js";
+import * as utilsModule from "../../../../shared/filters/index.js";
 import * as transformationModule from "../../utils/transformation.js";
 import { useAlertFilters, type IUseAlertFiltersProps } from "../useAlertFilters.js";
 

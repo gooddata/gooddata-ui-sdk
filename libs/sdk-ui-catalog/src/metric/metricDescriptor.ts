@@ -71,8 +71,12 @@ function useMetricEditing(): IAsCodeEditing<IMeasureMetadataObjectDefinition> {
         () => ({
             completionSource: metricCompletions,
             syntaxErrorMessage: intl.formatMessage(errorMessages.syntax),
-            // The editor works in the YAML shape, a lossy projection of the measure definition.
-            serialize: (definition) => serializeMetricToYaml(definitionToMetricYaml(definition)),
+            // The editor works in the YAML shape, a lossy projection of the measure definition — lossy in
+            // what a document carries, which `reconcile` restores, never in whether one exists.
+            serialize: (definition) => ({
+                yaml: serializeMetricToYaml(definitionToMetricYaml(definition)),
+                hasCodeForm: true,
+            }),
             validate: (value, context) => {
                 const result = validateMetricYaml(value, { fixedIdentifier: fixedIdentifierOf(context) });
                 return result.isValid

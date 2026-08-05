@@ -647,4 +647,183 @@ describe("UiMenu", () => {
             expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("second-item"));
         });
     });
+
+    describe("item tooltip", () => {
+        const itemsWithTooltip: IUiMenuItem[] = [
+            { type: "interactive", id: "no-tooltip", stringTitle: "No tooltip", data: "a" },
+            {
+                type: "interactive",
+                id: "with-tooltip",
+                stringTitle: "With tooltip",
+                isDisabled: true,
+                tooltip: "Why this is disabled",
+                data: "b",
+            },
+        ];
+
+        it("should not show the tooltip while navigating to the item with the mouse", () => {
+            renderMenu({ items: itemsWithTooltip });
+
+            fireEvent.mouseMove(screen.getByText("With tooltip"));
+
+            expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
+        });
+
+        it("should reveal the tooltip once keyboard navigation focuses the item", () => {
+            renderMenu({ items: itemsWithTooltip });
+
+            const menu = screen.getByRole("menu");
+            fireEvent.keyDown(menu, { code: "ArrowDown" });
+            expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("with-tooltip"));
+
+            expect(screen.getByRole("tooltip")).toHaveTextContent("Why this is disabled");
+        });
+
+        it("should hide the tooltip once keyboard navigation moves away from the item", () => {
+            renderMenu({ items: itemsWithTooltip });
+
+            const menu = screen.getByRole("menu");
+            fireEvent.keyDown(menu, { code: "ArrowDown" });
+            expect(screen.getByRole("tooltip")).toBeInTheDocument();
+
+            fireEvent.keyDown(menu, { code: "ArrowUp" });
+            expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
+        });
+
+        it("should expose the tooltip text as a single accessible tooltip", () => {
+            renderMenu({ items: itemsWithTooltip });
+
+            const menu = screen.getByRole("menu");
+            fireEvent.keyDown(menu, { code: "ArrowDown" });
+
+            expect(screen.getAllByRole("tooltip")).toHaveLength(1);
+        });
+
+        it("should hide the tooltip once the mouse takes over after keyboard focus", () => {
+            renderMenu({ items: itemsWithTooltip });
+
+            const menu = screen.getByRole("menu");
+            fireEvent.keyDown(menu, { code: "ArrowDown" });
+            expect(screen.getByRole("tooltip")).toBeInTheDocument();
+
+            fireEvent.mouseMove(screen.getByText("With tooltip"));
+
+            expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
+        });
+
+        it("should dismiss just the tooltip on Escape, without closing the menu", () => {
+            const onClose = vi.fn();
+            renderMenu({ items: itemsWithTooltip, onClose });
+
+            const menu = screen.getByRole("menu");
+            fireEvent.keyDown(menu, { code: "ArrowDown" });
+            expect(screen.getByRole("tooltip")).toBeInTheDocument();
+
+            fireEvent.keyDown(document, { key: "Escape" });
+
+            expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
+            expect(onClose).not.toHaveBeenCalled();
+        });
+
+        it("should show the tooltip again once focus leaves and returns after an Escape dismissal", () => {
+            renderMenu({ items: itemsWithTooltip });
+
+            const menu = screen.getByRole("menu");
+            fireEvent.keyDown(menu, { code: "ArrowDown" });
+            fireEvent.keyDown(document, { key: "Escape" });
+            expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
+
+            fireEvent.keyDown(menu, { code: "ArrowUp" });
+            fireEvent.keyDown(menu, { code: "ArrowDown" });
+
+            expect(screen.getByRole("tooltip")).toBeInTheDocument();
+        });
+
+        it("should close the menu on the first Escape when the focused item has no tooltip", () => {
+            const onClose = vi.fn();
+            renderMenu({ items: itemsWithTooltip, onClose });
+
+            const menu = screen.getByRole("menu");
+            // Navigate away and back so isMenuFocusVisible is genuinely true on "No tooltip".
+            fireEvent.keyDown(menu, { code: "ArrowDown" });
+            fireEvent.keyDown(menu, { code: "ArrowUp" });
+            // useCloseOnEscape matches event.key, UiMenu's own nav matches event.code - set both.
+            fireEvent.keyDown(menu, { code: "Escape", key: "Escape" });
+
+            expect(onClose).toHaveBeenCalledTimes(1);
+        });
+
+        it("should clear aria-describedby once the tooltip is dismissed via Escape", () => {
+            renderMenu({ items: itemsWithTooltip });
+
+            const menu = screen.getByRole("menu");
+            fireEvent.keyDown(menu, { code: "ArrowDown" });
+
+            const disabledItemLi = screen.getByText("With tooltip").closest("li");
+            expect(disabledItemLi).toHaveAttribute("aria-describedby");
+
+            fireEvent.keyDown(document, { key: "Escape" });
+
+            expect(disabledItemLi).not.toHaveAttribute("aria-describedby");
+        });
+
+        it("should pin the item's accessible name so the tooltip's sr-only copy doesn't fold into it", () => {
+            renderMenu({ items: itemsWithTooltip });
+
+            const disabledItemLi = screen.getByText("With tooltip").closest("li");
+
+            // A tooltip's sr-only copy renders as a plain descendant of this <li>. Without an
+            // explicit aria-label, an unlabelled element's name is computed from that descendant
+            // content too, so the tooltip text would be read twice: once as the item's own name,
+            // once via its own role="tooltip". Pinning aria-label to the title avoids that.
+            expect(disabledItemLi).toHaveAttribute("aria-label", "With tooltip");
+        });
+
+        it("should not set an aria-label on items without a tooltip", () => {
+            renderMenu({ items: itemsWithTooltip });
+
+            const plainItemLi = screen.getByText("No tooltip").closest("li");
+
+            expect(plainItemLi).not.toHaveAttribute("aria-label");
+        });
+
+        it("should preserve a caller-supplied aria-label on items without a tooltip", () => {
+            renderMenu({
+                items: [
+                    {
+                        type: "interactive",
+                        id: "labelled-no-tooltip",
+                        stringTitle: "Labelled",
+                        data: "a",
+                        ariaAttributes: { "aria-label": "Custom label" },
+                    },
+                ],
+            });
+
+            const itemLi = screen.getByText("Labelled").closest("li");
+
+            expect(itemLi).toHaveAttribute("aria-label", "Custom label");
+        });
+
+        it("should link the item to its tooltip via aria-describedby while keyboard-focused", () => {
+            renderMenu({ items: itemsWithTooltip });
+
+            const menu = screen.getByRole("menu");
+            fireEvent.keyDown(menu, { code: "ArrowDown" });
+
+            const disabledItemLi = screen.getByText("With tooltip").closest("li");
+            const describedBy = disabledItemLi?.getAttribute("aria-describedby");
+
+            expect(describedBy).toBeTruthy();
+            expect(document.getElementById(describedBy!)).toHaveTextContent("Why this is disabled");
+        });
+
+        it("should not link the item to a description before it is keyboard-focused", () => {
+            renderMenu({ items: itemsWithTooltip });
+
+            const disabledItemLi = screen.getByText("With tooltip").closest("li");
+
+            expect(disabledItemLi).not.toHaveAttribute("aria-describedby");
+        });
+    });
 });

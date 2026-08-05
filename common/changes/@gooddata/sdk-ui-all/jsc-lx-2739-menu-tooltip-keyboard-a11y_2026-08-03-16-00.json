@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-kit: UiMenu item tooltips now open on keyboard focus, not just hover, so keyboard and screen-reader users can reach the same information as mouse users, and can dismiss the tooltip with Escape without closing the menu.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

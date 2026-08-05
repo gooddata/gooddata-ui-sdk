@@ -26,9 +26,9 @@ import { HeadlineWithTwoMeasuresSecondEmpty } from "./fixturesData/HeadlineWithT
 import { HeadlineWithTwoMeasuresSecondZero } from "./fixturesData/HeadlineWithTwoMeasuresSecondZero.js";
 import { PieChartWithMetricsOnly } from "./fixturesData/PieChartWithMetricsOnly.js";
 import { PieChartWithMetricsOnlyFundata } from "./fixturesData/PieChartWithMetricsOnlyFundata.js";
+import { ScatterPlotWith2MetricsAndAttributeNullsInData } from "./fixturesData/ScatterPlotWith2MetricsAndAttributeNullsInData.js";
 import { type LegacyExecutionRecording, localLegacyDataView } from "./legacyDataView.js";
 import { recordedDataFacade } from "./recordings.js";
-import { ScatterPlotWith2MetricsAndAttributeNullsInData } from "./recordings/playlist.js";
 
 function legacyRecordedDataFacade(recording: LegacyExecutionRecording): DataViewFacade {
     return DataViewFacade.for(localLegacyDataView(recording));

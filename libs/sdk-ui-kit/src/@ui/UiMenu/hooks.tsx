@@ -90,6 +90,7 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
     const items = useMemo(() => normalizeMenuItems(rawItems), [rawItems]);
 
     const [controlType, setControlType] = useState<IUiMenuControlType>("unknown");
+    const [isMenuFocusVisible, setIsMenuFocusVisible] = useState(false);
 
     const isItemFocusable = useCallback(
         (item?: IUiMenuItem<T>) => {
@@ -228,6 +229,8 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
         () => ({
             controlType,
             setControlType,
+            isMenuFocusVisible,
+            setIsMenuFocusVisible,
             setFocusedId,
             focusedItem,
             setShownCustomContentItemId,
@@ -273,6 +276,7 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
             focusedItem,
             handleSelectItem,
             isItemFocusable,
+            isMenuFocusVisible,
             itemDataTestId,
             items,
             itemsContainerRef,

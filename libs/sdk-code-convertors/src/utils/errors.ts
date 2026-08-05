@@ -16,6 +16,9 @@ export enum CoreErrorCode {
     OnlyOneAttributeItemAllowed = "core.onlyOneAttributeItemAllowed",
     MultipleCommonDateFilters = "core.multipleCommonDateFilters",
     DuplicateFilterLocalIdentifier = "core.duplicateFilterLocalIdentifier",
+    DuplicateFieldName = "core.duplicateFieldName",
+    DuplicateFilterName = "core.duplicateFilterName",
+    DuplicateLayerIdentifier = "core.duplicateLayerIdentifier",
     DuplicateTabIdentifier = "core.duplicateTabIdentifier",
     TabsAndRootContentMutuallyExclusive = "core.tabsAndRootContentMutuallyExclusive",
 }
@@ -35,6 +38,9 @@ export const CoreErrorMessages: Record<CoreErrorCode, string> = {
     [CoreErrorCode.OnlyOneAttributeItemAllowed]: `Dashboard filters contains more filters with same attribute or label "{0}".`,
     [CoreErrorCode.MultipleCommonDateFilters]: `Multiple usage of common date filters in dashboard. Define exactly one date filter that has no date dataset defined.`,
     [CoreErrorCode.DuplicateFilterLocalIdentifier]: `Duplicate filter local identifier "{0}". Each filter must have a unique local identifier across a dashboard tab, including filters in groups.`,
+    [CoreErrorCode.DuplicateFieldName]: `Duplicate field name "{0}". Each field a query declares must have a unique name.`,
+    [CoreErrorCode.DuplicateFilterName]: `Duplicate filter name "{0}". Each filter in a query must have a unique name, including the filters a date filter carries.`,
+    [CoreErrorCode.DuplicateLayerIdentifier]: `Duplicate layer id "{0}". Each layer of a visualisation must have a unique id.`,
     [CoreErrorCode.DuplicateTabIdentifier]: `Duplicate tab identifier "{0}". Each tab must have a unique identifier within the dashboard.`,
     [CoreErrorCode.TabsAndRootContentMutuallyExclusive]: `Dashboard "{0}" defines both "tabs" and root-level "sections" or "filters". These are mutually exclusive — keep all content inside tabs or at the root, not both.`,
 };
@@ -54,6 +60,9 @@ export const CoreErrorTypes: Record<CoreErrorCode, string> = {
     [CoreErrorCode.OnlyOneAttributeItemAllowed]: "OnlyOneAttributeItemAllowed",
     [CoreErrorCode.MultipleCommonDateFilters]: "MultipleCommonDateFilters",
     [CoreErrorCode.DuplicateFilterLocalIdentifier]: "DuplicateFilterLocalIdentifier",
+    [CoreErrorCode.DuplicateFieldName]: "DuplicateFieldName",
+    [CoreErrorCode.DuplicateFilterName]: "DuplicateFilterName",
+    [CoreErrorCode.DuplicateLayerIdentifier]: "DuplicateLayerIdentifier",
     [CoreErrorCode.DuplicateTabIdentifier]: "DuplicateTabIdentifier",
     [CoreErrorCode.TabsAndRootContentMutuallyExclusive]: "TabsAndRootContentMutuallyExclusive",
 };

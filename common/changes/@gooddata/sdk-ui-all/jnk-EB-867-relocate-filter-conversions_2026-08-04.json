@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-dashboard: Collocate the automation filter conversion helpers under a shared filters module, no runtime behavior change.",
+            "type": "none",
+            "email": "jan.kruza@gooddata.com"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

@@ -1047,6 +1047,35 @@ describe("getCustomizedConfiguration", () => {
             },
         );
 
+        describe("mekko (variwide) data labels", () => {
+            const getVariwideFormatter = (chartOptions: any) => {
+                const configuration = getCustomizedConfiguration(chartOptions, {
+                    stackMeasuresToPercent: true,
+                });
+                return (
+                    ((configuration?.plotOptions as any)?.variwide?.dataLabels?.formatter as any) ??
+                    (() => {})
+                );
+            };
+
+            it("should format labels to percentage with 'Stack to 100%'", () => {
+                const formatter = getVariwideFormatter({
+                    type: VisualizationTypes.MEKKO,
+                    yAxes: [{}],
+                });
+                expect(formatter.call(getDataLabelPoint())).toBe("55.55%");
+            });
+
+            it("should keep absolute labels when 'Stack to 100%' is blocked by negative values", () => {
+                const formatter = getVariwideFormatter({
+                    type: VisualizationTypes.MEKKO,
+                    yAxes: [{}],
+                    stackToPercentBlockedByNegativeValues: true,
+                });
+                expect(formatter.call(getDataLabelPoint())).toBe("1,000.00");
+            });
+        });
+
         describe("percentage data label formatter", () => {
             it("should return null with empty configuration", () => {
                 const result = percentageDataLabelFormatter.call({});

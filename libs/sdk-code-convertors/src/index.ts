@@ -27,7 +27,6 @@ export {
     type DashboardTab,
     BucketsType,
 } from "./types.js";
-
 // Entity converters: YAML → Declarative API
 export {
     yamlDatasetToDeclarative,
@@ -63,7 +62,6 @@ export {
 } from "./to/yamlDashboardToDeclarative.js";
 export { yamlPluginToDeclarative } from "./to/yamlPluginToDeclarative.js";
 export { yamlAttributeHierarchyToDeclarative } from "./to/yamlAttributeHierarchyToDeclarative.js";
-
 // Entity converters: Declarative API → YAML
 export { declarativeDatasetToYaml } from "./from/declarativeDatasetToYaml.js";
 export { declarativeDateInstanceToYaml } from "./from/declarativeDateInstanceToYaml.js";
@@ -71,22 +69,15 @@ export { declarativeMetricToYaml } from "./from/declarativeMetricToYaml.js";
 export {
     declarativeVisualisationToYaml,
     declarativeVisTypeToYaml,
-    declarativeAbsoluteDateFilterToYaml,
     declarativeArithmeticMetricToYaml,
     declarativeAttributeSortToYaml,
     declarativeAttributeToYaml,
     declarativeBucketsToYaml,
-    declarativeFiltersToYaml,
     declarativeInlineMetricToYaml,
     declarativeMeasureSortToYaml,
-    declarativeMeasureValueFilterToYaml,
-    declarativeNegativeAttributeFilterToYaml,
     declarativeNormalMetricToYaml,
     declarativePoPMetricToYaml,
     declarativePreviousPeriodMetricToYaml,
-    declarativePositiveAttributeFilterToYaml,
-    declarativeRankingFilterToYaml,
-    declarativeRelativeDateFilterToYaml,
     declarativeSortsToYaml,
     declarativeTotalToYaml,
     type YamlSorts,
@@ -95,9 +86,21 @@ export {
     type YamlBucketGroup,
     type YamlBucketGroupItems,
     type YamlFieldData,
+} from "./from/declarativeVisualisationToYaml.js";
+export {
+    type ClaimFilterKey,
+    type DateFilterEmitOptions,
+    type WrittenFilter,
+    declarativeAbsoluteDateFilterToYaml,
+    declarativeFiltersToYaml,
+    declarativeMeasureValueFilterToYaml,
+    declarativeNegativeAttributeFilterToYaml,
+    declarativePositiveAttributeFilterToYaml,
+    declarativeRankingFilterToYaml,
+    declarativeRelativeDateFilterToYaml,
     type YamlFilterMapEntry,
     type YamlFilters,
-} from "./from/declarativeVisualisationToYaml.js";
+} from "./from/filtersToYaml.js";
 export {
     declarativeDashboardToYaml,
     declarativeDrillToYaml,

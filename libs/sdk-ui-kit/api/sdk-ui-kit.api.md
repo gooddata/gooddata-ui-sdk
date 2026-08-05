@@ -10,6 +10,7 @@ import { AriaRole } from 'react';
 import { CertificationStatus } from '@gooddata/sdk-model';
 import { ChangeEvent } from 'react';
 import { ColorFormats } from 'tinycolor2';
+import type { CompletionContext } from '@codemirror/autocomplete';
 import { CompletionSource } from '@codemirror/autocomplete';
 import { Component } from 'react';
 import { ComponentProps } from 'react';
@@ -23,6 +24,7 @@ import { CsvDelimiterValidationError } from '@gooddata/sdk-model';
 import { DebouncedFunc } from 'lodash-es';
 import { DependencyList } from 'react';
 import { Dispatch } from 'react';
+import type { EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
 import { ElementType } from 'react';
 import { EmptyObject } from '@gooddata/util';
@@ -7199,6 +7201,7 @@ export interface IUiMenuContext<T extends IUiMenuItemData = object, M = object> 
     focusedItem: IUiMenuFocusableItem<T> | undefined;
     // (undocumented)
     isItemFocusable: (item: IUiMenuItem<T>) => boolean;
+    isMenuFocusVisible: boolean;
     // @deprecated (undocumented)
     itemClassName?: ((item: IUiMenuItem<T>) => string | undefined) | string;
     // (undocumented)
@@ -7233,6 +7236,8 @@ export interface IUiMenuContext<T extends IUiMenuItemData = object, M = object> 
     setControlType: Dispatch<SetStateAction<IUiMenuControlType>>;
     // (undocumented)
     setFocusedId: Dispatch<SetStateAction<string | undefined>>;
+    // (undocumented)
+    setIsMenuFocusVisible: Dispatch<SetStateAction<boolean>>;
     // (undocumented)
     setShownCustomContentItemId: Dispatch<SetStateAction<string | undefined>>;
     // (undocumented)
@@ -7285,6 +7290,7 @@ export type IUiMenuInteractiveItem<T extends IUiMenuItemData = object> = {
 export interface IUiMenuInteractiveItemProps<T extends IUiMenuItemData = object> {
     // (undocumented)
     isFocused: boolean;
+    isTooltipOpen?: boolean;
     // (undocumented)
     item: IUiMenuInteractiveItem<T>;
 }
@@ -8447,7 +8453,8 @@ export interface IWorkspacePickerHomeFooterProps {
 
 // @internal (undocumented)
 export interface IYamlEditorProps {
-    completionSource?: CompletionSource;
+    // (undocumented)
+    completionSource?: YamlCompletionSource;
     // (undocumented)
     disabled?: boolean;
     extensions?: Extension[];
@@ -8459,6 +8466,12 @@ export interface IYamlEditorProps {
     // (undocumented)
     placeholder?: string;
     syntaxErrorMessage?: string;
+}
+
+// @internal (undocumented)
+export interface IYamlPosition {
+    ancestorKeys: string[];
+    isInBlockScalar: boolean;
 }
 
 // @internal
@@ -9761,8 +9774,14 @@ export function withBubble<T>(WrappedComponent: ComponentType<T>): ForwardRefExo
 // @internal (undocumented)
 export const WorkspacePickerHomeFooter: ComponentType<Omit<IWorkspacePickerHomeFooterProps, "theme" | "themeIsLoading" | "themeStatus">>;
 
+// @internal (undocumented)
+export type YamlCompletionSource = (context: CompletionContext, position: IYamlPosition) => ReturnType<CompletionSource>;
+
 // @internal
 export function YamlEditor(input: IYamlEditorProps): JSX.Element;
+
+// @internal (undocumented)
+export function yamlPositionAt(state: EditorState, pos: number): IYamlPosition;
 
 // @internal
 export const ZOOM_THRESHOLD = 1.2;

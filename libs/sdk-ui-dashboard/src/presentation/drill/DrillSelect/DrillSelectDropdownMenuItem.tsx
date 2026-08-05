@@ -7,7 +7,7 @@ import { type IDrillSelectDropdownMenuItemData } from "../hooks/useDrillSelectDr
 export function DrillSelectDropdownMenuItem(
     props: IUiMenuInteractiveItemProps<IDrillSelectDropdownMenuItemData>,
 ) {
-    const { item, isFocused } = props;
+    const { item, isFocused, isTooltipOpen } = props;
 
     if (!item.stringTitle) {
         return (
@@ -19,7 +19,7 @@ export function DrillSelectDropdownMenuItem(
 
     return (
         <div className={`s-gd-drill-modal-picker-item s-${item.data.type}`}>
-            <DefaultUiMenuInteractiveItem item={item} isFocused={isFocused} />
+            <DefaultUiMenuInteractiveItem item={item} isFocused={isFocused} isTooltipOpen={isTooltipOpen} />
         </div>
     );
 }

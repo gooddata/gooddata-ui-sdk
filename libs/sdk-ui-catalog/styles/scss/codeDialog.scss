@@ -112,6 +112,17 @@
     }
 }
 
+.gd-ascode-dialog-notice {
+    // Same family for both: a theme omitting `warning` falls back per family, so mixing renders pale-on-pale.
+    background-color: var(--gd-palette-warning-dimmed, #fce7cc);
+    color: var(--gd-palette-warning-text-dimmed, #685945);
+    font-size: 14px;
+    line-height: 20px;
+    padding: 4px 10px;
+    margin: 0 20px 10px;
+    border-radius: 3px;
+}
+
 .gd-ascode-dialog-footer-left {
     display: flex;
     align-items: center;

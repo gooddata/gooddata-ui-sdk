@@ -10,8 +10,26 @@ import { ConfirmDialog, UiButton, UiIcon, UiLink, UiTooltip } from "@gooddata/sd
 import { useIsWhiteLabeled } from "../permission/PermissionsContext.js";
 import { extractBackendErrorDetail } from "../utils/backendError.js";
 
-import type { AsCodeValidationContext, IAsCodeDescriptor } from "./descriptor.js";
+import type {
+    AsCodeSerialization,
+    AsCodeValidationContext,
+    IAsCodeDescriptor,
+    IAsCodeEditing,
+} from "./descriptor.js";
 import { useAsCodeLoadFailure } from "./useAsCodeLoadFailure.js";
+
+// A base that did not serialize has no representability to report, so the shape cannot state one.
+type BaseProjection = AsCodeSerialization | { yaml: null };
+
+const EMPTY_PROJECTION: BaseProjection = { yaml: "", hasCodeForm: true };
+
+function projectBase(editing: IAsCodeEditing<unknown>, base: unknown): BaseProjection {
+    try {
+        return editing.serialize(base);
+    } catch {
+        return { yaml: null };
+    }
+}
 
 const AsCodeEditorBody = lazy(() =>
     import("./AsCodeEditorBody.js").then((m) => ({ default: m.AsCodeEditorBody })),
@@ -21,6 +39,7 @@ const messages = defineMessages({
     createSubmit: { id: "analyticsCatalog.asCode.dialog.create.submit" },
     editSubmit: { id: "analyticsCatalog.asCode.dialog.edit.submit" },
     cancel: { id: "analyticsCatalog.asCode.dialog.cancel" },
+    unrepresentable: { id: "analyticsCatalog.asCode.dialog.unrepresentable" },
 });
 
 type Props = {
@@ -59,18 +78,16 @@ export function AsCodeDialog(props: Props) {
         };
     }, [requestEditing, fail]);
 
-    // Serialize runs during render, so a throw becomes `null` and routes to the close-on-failure effect.
-    const initialYaml = useMemo(() => {
-        if (initialDefinition === undefined || !editing) {
-            return "";
-        }
-        try {
-            return editing.serialize(initialDefinition);
-        } catch {
-            return null;
-        }
-    }, [initialDefinition, editing]);
+    const projection = useMemo(
+        () =>
+            initialDefinition === undefined || !editing
+                ? EMPTY_PROJECTION
+                : projectBase(editing, initialDefinition),
+        [initialDefinition, editing],
+    );
+    const initialYaml = projection.yaml;
     const serializeFailed = initialYaml === null;
+    const isBaseUnrepresentable = projection.yaml !== null && !projection.hasCodeForm;
     useEffect(() => {
         if (serializeFailed) {
             fail();
@@ -173,13 +190,23 @@ export function AsCodeDialog(props: Props) {
                     <UiButton
                         label={intl.formatMessage(descriptor.messages.duplicate)}
                         variant="tertiary"
-                        isDisabled={isSubmitting || loading}
+                        isDisabled={isSubmitting || loading || isBaseUnrepresentable}
                         onClick={handleDuplicate}
                     />
                 ) : null}
             </div>
         ),
-        [descriptor, handleDuplicate, intl, isEdit, loading, isSubmitting, isWhiteLabeled, onDuplicate],
+        [
+            descriptor,
+            handleDuplicate,
+            intl,
+            isEdit,
+            loading,
+            isBaseUnrepresentable,
+            isSubmitting,
+            isWhiteLabeled,
+            onDuplicate,
+        ],
     );
 
     const bodySpinner = (
@@ -196,7 +223,7 @@ export function AsCodeDialog(props: Props) {
             cancelButtonText={cancelMessage}
             submitButtonText={submitMessage}
             isPositive
-            isSubmitDisabled={isSubmitting || loading || (isEdit && !isDirty)}
+            isSubmitDisabled={isSubmitting || loading || isBaseUnrepresentable || (isEdit && !isDirty)}
             isCancelDisabled={isSubmitting}
             shouldCloseOnEscape={!isSubmitting}
             onCancel={handleClose}
@@ -223,11 +250,16 @@ export function AsCodeDialog(props: Props) {
                                     content={intl.formatMessage(descriptor.messages.sectionHeaderTooltip)}
                                 />
                             </div>
+                            {isBaseUnrepresentable ? (
+                                <div className="gd-ascode-dialog-notice">
+                                    {intl.formatMessage(messages.unrepresentable)}
+                                </div>
+                            ) : null}
                             <div className="gd-ascode-dialog-editor">
                                 <AsCodeEditorBody
                                     initialValue={initialYaml}
                                     onChange={handleChange}
-                                    disabled={isSubmitting}
+                                    disabled={isSubmitting || isBaseUnrepresentable}
                                     completionSource={editing.completionSource}
                                     syntaxErrorMessage={editing.syntaxErrorMessage}
                                 />
