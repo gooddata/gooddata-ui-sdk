@@ -59,6 +59,7 @@ export default {
                 "src/presentation/dashboardSettingsDialog/*",
                 "src/presentation/cancelEditDialog/*",
                 "src/presentation/densityDialog/*",
+                "src/presentation/timezoneDialog/*",
                 "src/presentation/saveAs/*",
                 "src/presentation/export/*",
                 "src/presentation/topBar/*",

@@ -28,6 +28,7 @@ import {
     type IChatConversationError,
     type IChatConversationFeedback,
     type IChatConversationItem,
+    type IChatConversationMultipartPart,
     type IChatKdaDefinition,
     type IChatSuggestions,
     type IChatWhatIfDefinition,
@@ -81,7 +82,12 @@ export function convertChatConversationItemFromBackend(
     dateNormalizer: DateNormalizer,
     locale?: FormattingLocale,
     timezone?: string,
-): IChatConversationItem {
+): IChatConversationItem | undefined {
+    const content = convertChatConversationContentFromBackend(item.content, dateNormalizer, locale, timezone);
+    if (!content) {
+        return undefined;
+    }
+
     const response = responses?.find((r) => r.responseId === item.responseId);
 
     return {
@@ -92,7 +98,7 @@ export function convertChatConversationItemFromBackend(
         replyTo: item.replyTo ?? undefined,
         createdAt: new Date(item.createdAt).getTime(),
         feedback: convertChatConversationFeedbackFromBackend(response),
-        content: convertChatConversationContentFromBackend(item.content, dateNormalizer, locale, timezone),
+        content,
         agentId: item.newAgentId ?? undefined,
         oldAgentId: item.oldAgentId ?? undefined,
     };
@@ -105,9 +111,11 @@ export function convertChatConversationItemsFromBackend(
     locale?: FormattingLocale,
     timezone?: string,
 ): IChatConversationItem[] {
-    return items.map((item) =>
-        convertChatConversationItemFromBackend(item, responses, dateNormalizer, locale, timezone),
-    );
+    return items
+        .map((item) =>
+            convertChatConversationItemFromBackend(item, responses, dateNormalizer, locale, timezone),
+        )
+        .filter((item): item is IChatConversationItem => item !== undefined);
 }
 
 function convertChatConversationFeedbackFromBackend(
@@ -130,7 +138,7 @@ function convertChatConversationContentFromBackend(
     dateNormalizer: DateNormalizer,
     locale?: FormattingLocale,
     timezone?: string,
-): IChatConversationContent {
+): IChatConversationContent | undefined {
     switch (content.type) {
         case "text":
             return {
@@ -145,85 +153,91 @@ function convertChatConversationContentFromBackend(
         case "multipart":
             return {
                 type: "multipart",
-                parts: content.parts.map((part) => {
-                    switch (part.type) {
-                        case "text":
-                            return {
-                                type: "text",
-                                text: part.text,
-                            };
-                        case "alertProposal":
-                            return {
-                                type: "alertProposal",
-                                alertProposal: convertAlertProposalFrom(part.alertProposal),
-                            };
-                        case "visualization":
-                            return {
-                                type: "visualization",
-                                visualization: part.visualization
-                                    ? visualizationObjectsItemToInsight(
-                                          yamlVisualisationToMetadataObject(
-                                              [],
-                                              part.visualization as AacVisualisation,
-                                          ),
+                // Unknown parts are dropped rather than failing the whole item, so the rest
+                // of the message (known parts) keeps rendering normally.
+                parts: content.parts
+                    .map((part): IChatConversationMultipartPart | undefined => {
+                        switch (part.type) {
+                            case "text":
+                                return {
+                                    type: "text",
+                                    text: part.text,
+                                };
+                            case "alertProposal":
+                                return {
+                                    type: "alertProposal",
+                                    alertProposal: convertAlertProposalFrom(part.alertProposal),
+                                };
+                            case "visualization":
+                                return {
+                                    type: "visualization",
+                                    visualization: part.visualization
+                                        ? visualizationObjectsItemToInsight(
+                                              yamlVisualisationToMetadataObject(
+                                                  [],
+                                                  part.visualization as AacVisualisation,
+                                              ),
+                                          )
+                                        : null,
+                                };
+                            case "dashboard": {
+                                const data = part.dashboard
+                                    ? yamlDashboardToDeclarative([], part.dashboard as AacDashboard)
+                                    : null;
+
+                                const filters = data?.filterContext
+                                    ? convertFilterContextFromBackend(
+                                          buildFilterContextWrapper(data.filterContext),
                                       )
-                                    : null,
-                            };
-                        case "dashboard": {
-                            const data = part.dashboard
-                                ? yamlDashboardToDeclarative([], part.dashboard as AacDashboard)
-                                : null;
+                                    : undefined;
 
-                            const filters = data?.filterContext
-                                ? convertFilterContextFromBackend(
-                                      buildFilterContextWrapper(data.filterContext),
-                                  )
-                                : undefined;
+                                const dashboard = data
+                                    ? convertDashboard(
+                                          buildDashboardWrapper(
+                                              data.dashboard,
+                                              data.tabFilterContexts,
+                                              part.savedDashboardId,
+                                          ),
+                                          filters,
+                                      )
+                                    : null;
 
-                            const dashboard = data
-                                ? convertDashboard(
-                                      buildDashboardWrapper(
-                                          data.dashboard,
-                                          data.tabFilterContexts,
-                                          part.savedDashboardId,
-                                      ),
-                                      filters,
-                                  )
-                                : null;
-
-                            return {
-                                type: "dashboard",
-                                dashboard,
-                                saved: !!part.savedDashboardId,
-                            };
+                                return {
+                                    type: "dashboard",
+                                    dashboard,
+                                    saved: !!part.savedDashboardId,
+                                };
+                            }
+                            case "kda":
+                                return {
+                                    type: "kda",
+                                    kda: convertKda(
+                                        part.kda as AiKeyDriverAnalysis,
+                                        dateNormalizer,
+                                        locale,
+                                        timezone,
+                                    ),
+                                };
+                            case "whatIf":
+                                return {
+                                    type: "whatIf",
+                                    whatIf: convertWhatIf(part.whatIf as AiWhatIfScenario),
+                                };
+                            case "searchResults":
+                                return {
+                                    type: "searchResults",
+                                    keywords: part.keywords,
+                                    searchResults: convertSearchResults(part.objects),
+                                    relationships: convertSearchRelationships(part.relationships),
+                                };
+                            default:
+                                // Unknown part type (e.g. sent by a newer backend): log and drop
+                                // it, do not fail the whole item.
+                                assertNever(part);
+                                return undefined;
                         }
-                        case "kda":
-                            return {
-                                type: "kda",
-                                kda: convertKda(
-                                    part.kda as AiKeyDriverAnalysis,
-                                    dateNormalizer,
-                                    locale,
-                                    timezone,
-                                ),
-                            };
-                        case "whatIf":
-                            return {
-                                type: "whatIf",
-                                whatIf: convertWhatIf(part.whatIf as AiWhatIfScenario),
-                            };
-                        case "searchResults":
-                            return {
-                                type: "searchResults",
-                                keywords: part.keywords,
-                                searchResults: convertSearchResults(part.objects),
-                                relationships: convertSearchRelationships(part.relationships),
-                            };
-                        default:
-                            assertNever(part);
-                            throw new Error(`Unexpected part: ${JSON.stringify(part)}`);
-                    }
-                }),
+                    })
+                    .filter((part): part is IChatConversationMultipartPart => part !== undefined),
                 suggestions: convertChatSuggestionItemFromBackend(content.suggestions),
             };
         case "toolCall":
@@ -241,8 +255,10 @@ function convertChatConversationContentFromBackend(
                 result: tryParseJson(content.result),
             };
         default:
+            // Unknown content type (e.g. sent by a newer backend): log and drop the item,
+            // do not fail the whole conversation stream.
             assertNever(content);
-            throw new Error(`Unexpected content: ${JSON.stringify(content)}`);
+            return undefined;
     }
 }
 

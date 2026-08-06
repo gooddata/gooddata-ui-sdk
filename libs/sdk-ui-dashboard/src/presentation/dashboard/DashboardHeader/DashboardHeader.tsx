@@ -31,6 +31,7 @@ import { DashboardTabs, useDashboardTabsProps } from "./DashboardTabs.js";
 import { DensityDialogProvider } from "./DensityDialogProvider.js";
 import { SettingsDialogProvider } from "./SettingsDialogProvider.js";
 import { ShareDialogDashboardHeader } from "./ShareDialogDashboardHeader.js";
+import { TimezoneDialogProvider } from "./TimezoneDialogProvider.js";
 
 // these wrapper components are here to prevent the whole DashboardHeader from re-rendering whenever some
 // of the sub-components' props change. by isolating the hooks more, we make sure only the really changed component re-renders.
@@ -91,6 +92,7 @@ export function DashboardHeader(): ReactElement {
             <ShareDialogDashboardHeader />
             <SettingsDialogProvider />
             <DensityDialogProvider />
+            <TimezoneDialogProvider />
             <DeleteDialogWrapper />
             <WidgetDeleteDialogWrapper />
             <KpiDeleteDialogWrapper />

@@ -9,16 +9,20 @@ import { type IDashboardTimezoneInfo } from "./types.js";
  * Resolves the dashboard timezone configuration to displayable timezone information: a concrete
  * IANA timezone ID, the friendly name and the UTC offset label.
  *
- * Falls back to the effective workspace/organization timezone when the timezone is not explicitly
- * configured.
+ * When `effectiveTimezoneId` is provided (the concrete IANA ID already preferred by the
+ * dashboard — including any session-only view-mode override), it takes precedence. Otherwise
+ * falls back to the configured timezone (resolving the browser-detected sentinel) and then to
+ * the effective workspace/organization timezone.
  *
  * @alpha
  */
 export function resolveDashboardTimezoneInfo(
     timezoneConfig: IDashboardTimezoneConfig | undefined,
     defaultTimezone?: string,
+    effectiveTimezoneId?: string,
 ): IDashboardTimezoneInfo | undefined {
-    const timezoneId = resolveTimezoneId(timezoneConfig?.timezoneId) ?? defaultTimezone;
+    const timezoneId =
+        effectiveTimezoneId ?? resolveTimezoneId(timezoneConfig?.timezoneId) ?? defaultTimezone;
     if (!timezoneId) {
         return undefined;
     }

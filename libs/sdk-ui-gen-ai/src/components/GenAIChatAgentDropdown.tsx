@@ -85,7 +85,7 @@ export function GenAIChatAgentDropdown({
         selectedEffort,
         onSelectEffort,
     });
-    const reasoningValueLabel = useSelectedReasoningLabel(selectedEffort);
+    const reasoningValueLabel = useSelectedReasoningLabel(selectedEffort, "short");
 
     useEffect(() => {
         const isConversationAgentAvailable =
@@ -180,8 +180,8 @@ export function GenAIChatAgentDropdown({
                         dataTestId="agent_dropdown_menu"
                         items={items}
                         size="small"
-                        minWidth={160}
-                        maxWidth={220}
+                        minWidth={200}
+                        maxWidth={200}
                         containerTopPadding="small"
                         containerBottomPadding="small"
                         MenuHeader={AgentMenuHeader}

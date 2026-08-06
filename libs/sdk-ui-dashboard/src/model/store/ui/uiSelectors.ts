@@ -636,3 +636,26 @@ export const selectAutomationsInvalidationId: DashboardSelector<number> = create
     selectSelf,
     (state) => state.automationsManagement.invalidationId,
 );
+
+/**
+ * Selects the session-only ad-hoc timezone override selected by the viewer in view mode.
+ *
+ * @remarks
+ * The value is always a concrete IANA timezone ID (never the browser-detected sentinel).
+ * Undefined means no override is active and the dashboard/workspace timezone configuration
+ * applies. The override is never persisted with the dashboard.
+ *
+ * @alpha
+ */
+export const selectTimezoneOverride: DashboardSelector<string | undefined> = createSelector(
+    selectSelf,
+    (state) => state.timezoneOverride,
+);
+
+/**
+ * @internal
+ */
+export const selectIsTimezoneDialogOpen: DashboardSelector<boolean> = createSelector(
+    selectSelf,
+    (state) => state.timezoneDialog.open ?? false,
+);

@@ -7,7 +7,7 @@
  * @internal
  */
 export const assertNever = (value: never) => {
-    console.error(`Unhandled discriminated union member: ${value}`);
+    console.error(`Unhandled discriminated union member: ${safeStringify(value)}`);
 };
 
 /**
@@ -17,5 +17,21 @@ export const assertNever = (value: never) => {
  * @internal
  */
 export const throwUnexpected = (value: never): never => {
-    throw new Error(`Unexpected value: ${JSON.stringify(value)}`);
+    throw new Error(`Unexpected value: ${safeStringify(value)}`);
 };
+
+/**
+ * JSON.stringify wrapper that never throws (e.g. on circular references, or values whose
+ * serialization/coercion hooks themselves throw), so logging an unexpected value can't
+ * itself crash the caller.
+ */
+function safeStringify(value: unknown): string {
+    try {
+        // JSON.stringify returns undefined (not a throw) for functions/symbols/undefined;
+        // String() covers those without risk, since we only reach it when JSON.stringify
+        // itself didn't throw.
+        return JSON.stringify(value) ?? String(value);
+    } catch {
+        return "<unserializable value>";
+    }
+}

@@ -637,6 +637,11 @@ export {
     requestOpenDensityDialog,
 } from "./model/commands/density.js";
 export {
+    type IChangeDashboardTimezoneOverride,
+    type IChangeDashboardTimezoneOverridePayload,
+    changeDashboardTimezoneOverride,
+} from "./model/commands/timezone.js";
+export {
     type IAddDrillTargets,
     type IAddDrillTargetsPayload,
     addDrillTargets,
@@ -1159,6 +1164,12 @@ export {
     type IDashboardRenderModeChangedPayload,
     isDashboardRenderModeChanged,
 } from "./model/events/renderMode.js";
+export {
+    type IDashboardTimezoneOverrideChanged,
+    type IDashboardTimezoneOverrideChangedPayload,
+    dashboardTimezoneOverrideChanged,
+    isDashboardTimezoneOverrideChanged,
+} from "./model/events/timezone.js";
 export {
     type ICreateInsightRequested,
     createInsightRequested,
@@ -1781,6 +1792,7 @@ export {
     selectDashboardDensity,
     selectFilterValidationIncompatibleDefaultFiltersOverride,
     selectAutomationsInvalidationId,
+    selectTimezoneOverride,
 } from "./model/store/ui/uiSelectors.js";
 export { uiActions } from "./model/store/ui/index.js";
 export type { IRenderModeState } from "./model/store/renderMode/renderModeState.js";

@@ -140,6 +140,7 @@ import {
     type IStartRenamingDashboardTab,
     type ISwitchDashboardTab,
 } from "./tabs.js";
+import { type IChangeDashboardTimezoneOverride } from "./timezone.js";
 import { type ILoadAllWorkspaceUsers } from "./users.js";
 import {
     type IAddVisualizationToVisualizationSwitcherWidgetContent,
@@ -170,6 +171,7 @@ export type DashboardCommands =
     | IChangeRenderMode
     | IChangeDashboardDensity
     | IRequestOpenDensityDialog
+    | IChangeDashboardTimezoneOverride
     | ISaveDashboard
     | IRenameDashboard
     | IResetDashboard

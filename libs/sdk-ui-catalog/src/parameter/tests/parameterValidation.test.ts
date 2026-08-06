@@ -442,6 +442,441 @@ definition:
                 type: "STRING",
             });
         });
+
+        it("rejects an empty allowedValues list", () => {
+            const result = validate(
+                `definition:
+  type: STRING
+  defaultValue: actual
+  constraints:
+    allowedValues: []
+`,
+                { enabledTypes: ALL_TYPES },
+            );
+
+            expect(result).toEqual({
+                isValid: false,
+                errorCode: "emptyAllowedValues",
+                type: "STRING",
+            });
+        });
+
+        it("rejects an allowedValues entry with an empty value", () => {
+            const result = validate(
+                `definition:
+  type: STRING
+  defaultValue: actual
+  constraints:
+    allowedValues:
+      - value: ""
+`,
+                { enabledTypes: ALL_TYPES },
+            );
+
+            expect(result).toEqual({
+                isValid: false,
+                errorCode: "invalidAllowedValue",
+                type: "STRING",
+            });
+        });
+
+        it("rejects an allowedValues entry missing its value", () => {
+            const result = validate(
+                `definition:
+  type: STRING
+  defaultValue: actual
+  constraints:
+    allowedValues:
+      - title: Actual
+`,
+                { enabledTypes: ALL_TYPES },
+            );
+
+            expect(result).toEqual({
+                isValid: false,
+                errorCode: "invalidAllowedValue",
+                type: "STRING",
+            });
+        });
+
+        it("rejects an allowedValues entry with a non-string value", () => {
+            const result = validate(
+                `definition:
+  type: STRING
+  defaultValue: actual
+  constraints:
+    allowedValues:
+      - value: 5
+`,
+                { enabledTypes: ALL_TYPES },
+            );
+
+            expect(result).toEqual({
+                isValid: false,
+                errorCode: "invalidAllowedValue",
+                type: "STRING",
+            });
+        });
+
+        it("rejects an allowedValues entry with a blank explicit title", () => {
+            const result = validate(
+                `definition:
+  type: STRING
+  defaultValue: actual
+  constraints:
+    allowedValues:
+      - value: actual
+        title: "   "
+`,
+                { enabledTypes: ALL_TYPES },
+            );
+
+            expect(result).toEqual({
+                isValid: false,
+                errorCode: "invalidAllowedValueTitle",
+                type: "STRING",
+            });
+        });
+
+        it("rejects a whitespace-only value with no title (blank effective title)", () => {
+            const result = validate(
+                `definition:
+  type: STRING
+  defaultValue: " "
+  constraints:
+    allowedValues:
+      - value: " "
+`,
+                { enabledTypes: ALL_TYPES },
+            );
+
+            expect(result).toEqual({
+                isValid: false,
+                errorCode: "invalidAllowedValueTitle",
+                type: "STRING",
+            });
+        });
+
+        it("rejects an allowedValues entry with a non-string title", () => {
+            const result = validate(
+                `definition:
+  type: STRING
+  defaultValue: actual
+  constraints:
+    allowedValues:
+      - value: actual
+        title: 5
+`,
+                { enabledTypes: ALL_TYPES },
+            );
+
+            expect(result).toEqual({
+                isValid: false,
+                errorCode: "invalidAllowedValueTitle",
+                type: "STRING",
+            });
+        });
+
+        it("accepts a whitespace-only value that carries a real title", () => {
+            const result = validate(
+                `definition:
+  type: STRING
+  defaultValue: " "
+  constraints:
+    allowedValues:
+      - value: " "
+        title: Blank
+`,
+                { enabledTypes: ALL_TYPES },
+            );
+
+            expect(result).toEqual({
+                isValid: true,
+                parameter: {
+                    type: "parameter",
+                    definition: {
+                        type: "STRING",
+                        defaultValue: " ",
+                        constraints: {
+                            allowedValues: [{ value: " ", title: "Blank" }],
+                        },
+                    },
+                },
+            });
+        });
+
+        it("rejects duplicate allowedValues values", () => {
+            const result = validate(
+                `definition:
+  type: STRING
+  defaultValue: actual
+  constraints:
+    allowedValues:
+      - value: actual
+      - value: actual
+`,
+                { enabledTypes: ALL_TYPES },
+            );
+
+            expect(result).toEqual({
+                isValid: false,
+                errorCode: "duplicateAllowedValues",
+                type: "STRING",
+            });
+        });
+
+        it("rejects duplicate effective allowedValues titles", () => {
+            const result = validate(
+                `definition:
+  type: STRING
+  defaultValue: actual
+  constraints:
+    allowedValues:
+      - value: actual
+        title: Shared
+      - value: budget
+        title: Shared
+`,
+                { enabledTypes: ALL_TYPES },
+            );
+
+            expect(result).toEqual({
+                isValid: false,
+                errorCode: "duplicateAllowedValues",
+                type: "STRING",
+            });
+        });
+
+        it("treats a title colliding with another entry's value-as-title as a duplicate", () => {
+            const result = validate(
+                `definition:
+  type: STRING
+  defaultValue: actual
+  constraints:
+    allowedValues:
+      - value: actual
+      - value: budget
+        title: actual
+`,
+                { enabledTypes: ALL_TYPES },
+            );
+
+            expect(result).toEqual({
+                isValid: false,
+                errorCode: "duplicateAllowedValues",
+                type: "STRING",
+            });
+        });
+
+        it("does not treat case-differing values as duplicates", () => {
+            const result = validate(
+                `definition:
+  type: STRING
+  defaultValue: Actual
+  constraints:
+    allowedValues:
+      - value: Actual
+      - value: actual
+`,
+                { enabledTypes: ALL_TYPES },
+            );
+
+            expect(result).toEqual({
+                isValid: true,
+                parameter: {
+                    type: "parameter",
+                    definition: {
+                        type: "STRING",
+                        defaultValue: "Actual",
+                        constraints: {
+                            allowedValues: [{ value: "Actual" }, { value: "actual" }],
+                        },
+                    },
+                },
+            });
+        });
+
+        it("rejects a defaultValue that is not among allowedValues", () => {
+            const result = validate(
+                `definition:
+  type: STRING
+  defaultValue: forecast
+  constraints:
+    allowedValues:
+      - value: actual
+      - value: budget
+`,
+                { enabledTypes: ALL_TYPES },
+            );
+
+            expect(result).toEqual({
+                isValid: false,
+                errorCode: "invalidDefaultValue",
+                type: "STRING",
+            });
+        });
+
+        it("accepts a defaultValue that is among allowedValues", () => {
+            const result = validate(
+                `definition:
+  type: STRING
+  defaultValue: budget
+  constraints:
+    allowedValues:
+      - value: actual
+      - value: budget
+`,
+                { enabledTypes: ALL_TYPES },
+            );
+
+            expect(result).toEqual({
+                isValid: true,
+                parameter: {
+                    type: "parameter",
+                    definition: {
+                        type: "STRING",
+                        defaultValue: "budget",
+                        constraints: {
+                            allowedValues: [{ value: "actual" }, { value: "budget" }],
+                        },
+                    },
+                },
+            });
+        });
+
+        it("rejects allowedValues combined with minLength", () => {
+            const result = validate(
+                `definition:
+  type: STRING
+  defaultValue: actual
+  constraints:
+    minLength: 1
+    allowedValues:
+      - value: actual
+`,
+                { enabledTypes: ALL_TYPES },
+            );
+
+            expect(result).toEqual({
+                isValid: false,
+                errorCode: "constraintsAllowedValuesExclusive",
+                type: "STRING",
+            });
+        });
+
+        it("rejects allowedValues combined with maxLength", () => {
+            const result = validate(
+                `definition:
+  type: STRING
+  defaultValue: actual
+  constraints:
+    maxLength: 10
+    allowedValues:
+      - value: actual
+`,
+                { enabledTypes: ALL_TYPES },
+            );
+
+            expect(result).toEqual({
+                isValid: false,
+                errorCode: "constraintsAllowedValuesExclusive",
+                type: "STRING",
+            });
+        });
+
+        it("accepts cardinality single and strips it from the parse output", () => {
+            const result = validate(
+                `definition:
+  type: STRING
+  defaultValue: actual
+  cardinality: single
+  constraints:
+    allowedValues:
+      - value: actual
+`,
+                { enabledTypes: ALL_TYPES },
+            );
+
+            expect(result).toEqual({
+                isValid: true,
+                parameter: {
+                    type: "parameter",
+                    definition: {
+                        type: "STRING",
+                        defaultValue: "actual",
+                        constraints: {
+                            allowedValues: [{ value: "actual" }],
+                        },
+                    },
+                },
+            });
+        });
+
+        it("rejects cardinality multi as unsupported", () => {
+            const result = validate(
+                `definition:
+  type: STRING
+  defaultValue: actual
+  cardinality: multi
+  constraints:
+    allowedValues:
+      - value: actual
+`,
+                { enabledTypes: ALL_TYPES },
+            );
+
+            expect(result).toEqual({
+                isValid: false,
+                errorCode: "unsupportedCardinality",
+                type: "STRING",
+            });
+        });
+
+        it("rejects a bogus cardinality value as unsupported", () => {
+            const result = validate(
+                `definition:
+  type: STRING
+  defaultValue: actual
+  cardinality: both
+`,
+                { enabledTypes: ALL_TYPES },
+            );
+
+            expect(result).toEqual({
+                isValid: false,
+                errorCode: "unsupportedCardinality",
+                type: "STRING",
+            });
+        });
+
+        it("parses a STRING definition with allowedValues in order", () => {
+            const result = validate(
+                `definition:
+  type: STRING
+  defaultValue: actual
+  constraints:
+    allowedValues:
+      - value: actual
+        title: Actual
+      - value: budget
+`,
+                { enabledTypes: ALL_TYPES },
+            );
+
+            expect(result).toEqual({
+                isValid: true,
+                parameter: {
+                    type: "parameter",
+                    definition: {
+                        type: "STRING",
+                        defaultValue: "actual",
+                        constraints: {
+                            allowedValues: [{ value: "actual", title: "Actual" }, { value: "budget" }],
+                        },
+                    },
+                },
+            });
+        });
     });
 });
 

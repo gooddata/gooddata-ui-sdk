@@ -64,6 +64,7 @@ import {
 import { selectActiveTabLocalIdentifier, selectTabs } from "../tabs/tabsSelectors.js";
 import { DEFAULT_TAB_ID, type ITabState } from "../tabs/tabsState.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
+import { selectTimezoneOverride } from "../ui/uiSelectors.js";
 
 import { type DashboardDescriptor } from "./metaState.js";
 
@@ -720,18 +721,29 @@ export const selectDashboardTimezoneConfig: DashboardSelector<IDashboardTimezone
  * Selects the effective dashboard timezone as a concrete IANA timezone ID.
  *
  * @remarks
- * Returns undefined when the dashboard timezone feature is disabled or when the dashboard has no
- * timezone configured. The browser-detected sentinel is resolved to the browser's IANA timezone
- * here — this selector is the single place where the sentinel is resolved, so consumers always
- * receive a concrete timezone ID safe to pass to executions and exports.
+ * The session-only ad-hoc override selected by the viewer in view mode takes precedence over the
+ * dashboard's configured timezone. Returns undefined when the dashboard timezone feature is
+ * disabled or when there is neither an override nor a configured timezone. The browser-detected
+ * sentinel is resolved to the browser's IANA timezone here — this selector is the single place
+ * where the sentinel is resolved, so consumers always receive a concrete timezone ID safe to
+ * pass to executions and exports.
  *
  * @alpha
  */
 export const selectEffectiveDashboardTimezone: DashboardSelector<string | undefined> = createSelector(
     selectEnableDashboardTimezone,
     selectDashboardTimezoneConfig,
-    (isEnabled, timezoneConfig) => {
-        if (!isEnabled || !timezoneConfig?.timezoneId) {
+    selectTimezoneOverride,
+    (isEnabled, timezoneConfig, timezoneOverride) => {
+        if (!isEnabled) {
+            return undefined;
+        }
+        // the session-only override (already a concrete IANA ID) takes precedence over the
+        // configured dashboard timezone
+        if (timezoneOverride) {
+            return timezoneOverride;
+        }
+        if (!timezoneConfig?.timezoneId) {
             return undefined;
         }
         return resolveTimezoneId(timezoneConfig.timezoneId);

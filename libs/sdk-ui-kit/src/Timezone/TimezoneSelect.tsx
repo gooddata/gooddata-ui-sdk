@@ -2,10 +2,10 @@
 
 import { type ReactElement, type ReactNode, useMemo, useState } from "react";
 
-import { UiButton } from "../@ui/UiButton/UiButton.js";
 import { type IUiListboxInteractiveItem, type IUiListboxItem } from "../@ui/UiListbox/types.js";
 import { UiListbox } from "../@ui/UiListbox/UiListbox.js";
 import { Dropdown, type IDropdownButtonRenderProps } from "../Dropdown/Dropdown.js";
+import { DropdownButton } from "../Dropdown/DropdownButton.js";
 import { Input } from "../Form/Input.js";
 import { NoData } from "../NoData/NoData.js";
 import { type IAlignPoint } from "../typings/positioning.js";
@@ -152,13 +152,20 @@ export function buildListboxItems(
     const timezoneListItems: IUiListboxInteractiveItem<TimezoneListItemData>[] = getTimezones()
         .filter((timezone) => timezoneMatchesSearch(timezone, search))
         .map((timezone) => ({
-            type: "interactive",
+            type: "interactive" as const,
             id: timezone.id,
             stringTitle: getTimezoneDisplayLabel(timezone.id),
-            // the label shows the friendly name; surface the IANA ID on hover
-            tooltip: timezone.id,
             data: timezone.id,
-        }));
+        }))
+        .sort((a, b) => {
+            if (a.stringTitle < b.stringTitle) {
+                return -1;
+            }
+            if (a.stringTitle > b.stringTitle) {
+                return 1;
+            }
+            return 0;
+        });
 
     return specialListItems.length > 0 && timezoneListItems.length > 0
         ? [...specialListItems, { type: "separator" }, ...timezoneListItems]
@@ -210,6 +217,7 @@ export function TimezoneSelect({
     return (
         <Dropdown
             closeOnParentScroll
+            closeOnOutsideClick
             alignPoints={DROPDOWN_ALIGN_POINTS}
             className="gd-timezone-select s-timezone-select"
             onOpenStateChanged={(isOpen) => {
@@ -221,17 +229,19 @@ export function TimezoneSelect({
                 renderButton ? (
                     renderButton({ ...renderProps, buttonLabel, value, isDisabled })
                 ) : (
-                    <UiButton
-                        label={buttonLabel}
+                    <DropdownButton
+                        value={buttonLabel}
+                        isOpen={renderProps.isOpen}
                         onClick={renderProps.toggleDropdown}
-                        isDisabled={isDisabled}
-                        iconAfter={renderProps.isOpen ? "navigateUp" : "navigateDown"}
-                        size="small"
-                        dataTestId="s-timezone-select-button"
+                        disabled={isDisabled}
+                        dropdownId={renderProps.dropdownId}
+                        buttonRef={renderProps.buttonRef}
                         accessibilityConfig={{
                             ariaLabel,
                             ariaExpanded: renderProps.isOpen,
+                            popupType: "listbox",
                         }}
+                        className="gd-timezone-select__button s-timezone-select-button customizable"
                     />
                 )
             }

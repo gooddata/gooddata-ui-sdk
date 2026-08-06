@@ -91,11 +91,11 @@ describe("timezones", () => {
 
     describe("getTimezoneDisplayLabel", () => {
         it("should return the friendly name with the offset label as suffix in brackets", () => {
-            expect(getTimezoneDisplayLabel("Europe/Prague")).toBe("Prague (GMT+01:00)");
+            expect(getTimezoneDisplayLabel("Europe/Prague")).toBe("Prague");
         });
 
         it("should fall back to the raw id and Intl offset for an ICU-known id outside the curated list", () => {
-            expect(getTimezoneDisplayLabel("Australia/Eucla")).toBe("Australia/Eucla (GMT+08:45)");
+            expect(getTimezoneDisplayLabel("Australia/Eucla")).toBe("Australia/Eucla");
         });
 
         it("should return the plain id when the offset is not known", () => {
@@ -119,7 +119,7 @@ describe("timezones", () => {
         });
 
         it("should match on the picker display label as shown in the list", () => {
-            expect(timezoneMatchesSearch(prague, "Prague (GMT+01")).toBe(true);
+            expect(timezoneMatchesSearch(prague, "Prague")).toBe(true);
         });
 
         it("should match everything on an empty or whitespace-only search", () => {

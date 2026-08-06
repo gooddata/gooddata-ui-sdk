@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "comment": "Add ad-hoc timezone change menu item in dashboard view mode",
+      "type": "none",
+      "packageName": "@gooddata/sdk-ui-all"
+    }
+  ],
+  "packageName": "@gooddata/sdk-ui-all",
+  "email": "ivan.nejezchleb@gooddata.com"
+}

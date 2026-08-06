@@ -32,7 +32,7 @@ export function TimezoneIndicator({
         return null;
     }
 
-    const { name, offsetLabel } = resolvedTimezone;
+    const { name } = resolvedTimezone;
 
     return (
         <div className="s-timezone-indicator gd-timezone-indicator">
@@ -42,10 +42,7 @@ export function TimezoneIndicator({
                     {name}
                 </div>
                 <Bubble alignPoints={[{ align: "bc tc" }]} alignTo=".gd-timezone-indicator-icon">
-                    <FormattedMessage
-                        id="topBar.timezoneIndicator.tooltip"
-                        values={{ name, offset: offsetLabel }}
-                    />
+                    <FormattedMessage id="topBar.timezoneIndicator.tooltip" />
                 </Bubble>
             </BubbleHoverTrigger>
         </div>

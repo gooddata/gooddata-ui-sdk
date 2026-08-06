@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/eslint-config",
-    "version": "11.51.0-alpha.4",
+    "version": "11.51.0-alpha.5",
     "license": "MIT",
     "author": "GoodData",
     "repository": {
@@ -44,6 +44,13 @@
         "./oxlint-esm-vitest": {
             "import": "./dist/oxlint-esm-vitest.js"
         },
+        "./esm-vitest-rtl": {
+            "import": "./dist/esm-vitest-rtl.js",
+            "require": "./dist/esm-vitest-rtl.json"
+        },
+        "./oxlint-esm-vitest-rtl": {
+            "import": "./dist/oxlint-esm-vitest-rtl.js"
+        },
         "./react": {
             "import": "./dist/react.js",
             "require": "./dist/react.json"
@@ -57,6 +64,13 @@
         },
         "./oxlint-react-vitest": {
             "import": "./dist/oxlint-react-vitest.js"
+        },
+        "./react-vitest-rtl": {
+            "import": "./dist/react-vitest-rtl.js",
+            "require": "./dist/react-vitest-rtl.json"
+        },
+        "./oxlint-react-vitest-rtl": {
+            "import": "./dist/oxlint-react-vitest-rtl.js"
         },
         "./react-playwright": {
             "import": "./dist/react-playwright.js",
@@ -86,6 +100,13 @@
         "./oxlint-esm-react-playwright": {
             "import": "./dist/oxlint-esm-react-playwright.js"
         },
+        "./esm-react-storybook": {
+            "import": "./dist/esm-react-storybook.js",
+            "require": "./dist/esm-react-storybook.json"
+        },
+        "./oxlint-esm-react-storybook": {
+            "import": "./dist/oxlint-esm-react-storybook.js"
+        },
         "./esm-react-vitest": {
             "import": "./dist/esm-react-vitest.js",
             "require": "./dist/esm-react-vitest.json"
@@ -93,12 +114,12 @@
         "./oxlint-esm-react-vitest": {
             "import": "./dist/oxlint-esm-react-vitest.js"
         },
-        "./esm-react-vitest-storybook": {
-            "import": "./dist/esm-react-vitest-storybook.js",
-            "require": "./dist/esm-react-vitest-storybook.json"
+        "./esm-react-vitest-rtl": {
+            "import": "./dist/esm-react-vitest-rtl.js",
+            "require": "./dist/esm-react-vitest-rtl.json"
         },
-        "./oxlint-esm-react-vitest-storybook": {
-            "import": "./dist/oxlint-esm-react-vitest-storybook.js"
+        "./oxlint-esm-react-vitest-rtl": {
+            "import": "./dist/oxlint-esm-react-vitest-rtl.js"
         }
     },
     "scripts": {
@@ -135,13 +156,14 @@
         "eslint-plugin-react": "7.37.5",
         "eslint-plugin-react-hooks": "5.2.0",
         "eslint-plugin-sonarjs": "3.0.6",
-        "eslint-plugin-storybook": "10.1.11",
+        "eslint-plugin-storybook": "10.5.6",
+        "eslint-plugin-testing-library": "7.16.2",
         "globals": "17.2.0",
         "jiti": "2.6.1",
         "oxfmt": "0.52.0",
         "react": "19.1.1",
         "react-dom": "19.1.1",
-        "storybook": "10.4.1",
+        "storybook": "^10.5.6",
         "typescript": "5.9.3",
         "vite-node": "^5.2.0"
     },

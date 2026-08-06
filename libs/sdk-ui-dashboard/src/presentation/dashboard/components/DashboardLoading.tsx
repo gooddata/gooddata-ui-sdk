@@ -32,7 +32,7 @@ export function DashboardLoading(props: IDashboardProps) {
         return (
             <>
                 {exportData ? <div style={{ display: "none" }} {...exportData} /> : null}
-                <LoadingComponent className="sdk-dashboard-loading s-loading" />
+                <LoadingComponent />
             </>
         );
     }

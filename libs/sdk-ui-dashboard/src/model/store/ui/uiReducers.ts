@@ -484,6 +484,21 @@ const invalidateAutomationItems: UiReducer = (state) => {
     state.automationsManagement.invalidationId += 1;
 };
 
+// The override is session-only ui state and must never make it into the persisted dashboard.
+// The payload must be a concrete IANA timezone ID (the browser-detected sentinel is resolved
+// by the caller before dispatching); undefined clears the override.
+const setTimezoneOverride: UiReducer<PayloadAction<string | undefined>> = (state, action) => {
+    state.timezoneOverride = action.payload;
+};
+
+const openTimezoneDialog: UiReducer = (state) => {
+    state.timezoneDialog.open = true;
+};
+
+const closeTimezoneDialog: UiReducer = (state) => {
+    state.timezoneDialog.open = false;
+};
+
 export const uiReducers = {
     openSettingsDialog,
     closeSettingsDialog,
@@ -551,4 +566,7 @@ export const uiReducers = {
     setIncompatibleDefaultFiltersOverrideMessage,
     resetIncompatibleDefaultFiltersOverrideMessage,
     invalidateAutomationItems,
+    setTimezoneOverride,
+    openTimezoneDialog,
+    closeTimezoneDialog,
 };

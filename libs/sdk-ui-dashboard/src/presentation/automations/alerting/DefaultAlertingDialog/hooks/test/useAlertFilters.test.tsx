@@ -23,6 +23,10 @@ import { type AlertAttribute, type AlertMetric } from "../../../types.js";
 // vi.mocked() after the import statements.
 // ---------------------------------------------------------------------------
 
+vi.mock("../../../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js", () => ({
+    useValidateExistingAutomationFilters: vi.fn(),
+}));
+
 vi.mock("../../../../shared/filters/index.js", () => ({
     getAppliedWidgetFilters: vi.fn(),
     getVisibleFiltersByFilters: vi.fn(),
@@ -41,6 +45,7 @@ vi.mock("../../utils/transformation.js", async (importOriginal: () => Promise<Re
 // Imports placed AFTER vi.mock() calls to pick up mocked versions
 // ---------------------------------------------------------------------------
 
+import * as validateExistingAutomationFiltersModule from "../../../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
 import * as utilsModule from "../../../../shared/filters/index.js";
 import * as transformationModule from "../../utils/transformation.js";
 import { useAlertFilters, type IUseAlertFiltersProps } from "../useAlertFilters.js";
@@ -53,6 +58,9 @@ const getAppliedWidgetFiltersSpy = vi.mocked(utilsModule.getAppliedWidgetFilters
 const getVisibleFiltersByFiltersSpy = vi.mocked(utilsModule.getVisibleFiltersByFilters);
 const transformAlertByAttributeSpy = vi.mocked(transformationModule.transformAlertByAttribute);
 const transformAlertByMetricSpy = vi.mocked(transformationModule.transformAlertByMetric);
+const useValidateExistingAutomationFiltersSpy = vi.mocked(
+    validateExistingAutomationFiltersModule.useValidateExistingAutomationFilters,
+);
 
 // ---------------------------------------------------------------------------
 // Fixtures
@@ -79,6 +87,7 @@ const SENTINEL_FILTERS_FOR_NEW_AUTOMATION: FilterContextItem[] = [
     makeAttributeFilter("new-automation-filter"),
 ];
 const SENTINEL_HIDDEN_FILTERS: FilterContextItem[] = [makeAttributeFilter("hidden1")];
+const SENTINEL_AVAILABLE_FILTERS: FilterContextItem[] = [makeAttributeFilter("available1")];
 const SENTINEL_VISIBLE_FILTERS: IAutomationVisibleFilter[] = [{ localIdentifier: "vf1" }];
 
 // IWidget/IInsight are large identity-bearing unions (ref/uri/id plus kind-specific required
@@ -133,9 +142,26 @@ const SENTINEL_METRIC_TRANSFORM_RESULT = {
     title: "metric-transformed",
 } as unknown as IAutomationMetadataObject;
 
+const SENTINEL_VALIDATION_RESULT = {
+    isValid: true,
+    hiddenFilterIsMissingInSavedFilters: false,
+    hiddenFilterHasDifferentValueInSavedFilter: false,
+    lockedFilterIsMissingInSavedFilters: false,
+    lockedFilterHasDifferentValueInSavedFilter: false,
+    ignoredFilterIsAppliedInSavedFilters: false,
+    removedFilterIsAppliedInSavedFilters: false,
+    commonDateFilterIsMissingInSavedVisibleFilters: false,
+    visibleFilterIsMissingInSavedFilters: false,
+    visibleFiltersAreMissing: false,
+    incompatibleSelectionTypeIsAppliedInSavedFilters: false,
+    filtersAreStale: false,
+};
+
 const BASE_PROPS: IUseAlertFiltersProps = {
     setEditedAutomation: mockSetEditedAutomation,
+    editedAutomationFilters: SENTINEL_FILTERS,
     setEditedAutomationFilters: mockSetEditedAutomationFilters,
+    availableFilters: SENTINEL_AVAILABLE_FILTERS,
     filtersForNewAutomation: SENTINEL_FILTERS_FOR_NEW_AUTOMATION,
     availableFiltersAsVisibleFilters: SENTINEL_VISIBLE_FILTERS,
     dashboardHiddenFilters: SENTINEL_HIDDEN_FILTERS,
@@ -162,6 +188,7 @@ beforeEach(() => {
     getVisibleFiltersByFiltersSpy.mockReturnValue(SENTINEL_VISIBLE_FILTERS_RESULT);
     transformAlertByAttributeSpy.mockReturnValue(SENTINEL_ATTRIBUTE_TRANSFORM_RESULT);
     transformAlertByMetricSpy.mockReturnValue(SENTINEL_METRIC_TRANSFORM_RESULT);
+    useValidateExistingAutomationFiltersSpy.mockReturnValue(SENTINEL_VALIDATION_RESULT);
 });
 
 // ---------------------------------------------------------------------------
@@ -408,5 +435,24 @@ describe("useAlertFilters — onApplyCurrentFilters", () => {
         result.current.onApplyCurrentFilters();
 
         expect(mockSetEditedAutomationFilters).toHaveBeenCalledWith(SENTINEL_FILTERS_FOR_NEW_AUTOMATION);
+    });
+});
+
+// ---------------------------------------------------------------------------
+// Case 7: model shape
+// ---------------------------------------------------------------------------
+
+describe("useAlertFilters — model shape", () => {
+    it("exposes one filter model and leaks no other representation", () => {
+        const { result } = renderHook(() => useAlertFilters(BASE_PROPS));
+
+        expect(Object.keys(result.current).sort()).toEqual([
+            "automationIsValid",
+            "availableFilters",
+            "filtersAreStale",
+            "onApplyCurrentFilters",
+            "onFiltersChange",
+            "selectedFilters",
+        ]);
     });
 });

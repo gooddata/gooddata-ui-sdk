@@ -21,6 +21,13 @@ export { noOnlyTestsPlugin, noOnlyTestsRules } from "./configurations/no-only-te
 export { playwrightPlugin, playwrightRules } from "./configurations/playwright.js";
 export { securityRules } from "./configurations/security.js";
 export { sonarjsOverrides, sonarjsPlugin, sonarjsRules } from "./configurations/sonarjs.js";
+export { storybookOverrides, storybookPackages, storybookPlugin } from "./configurations/storybook.js";
+export {
+    testingLibraryPlugin,
+    testingLibraryDomRules,
+    testingLibraryReactRules,
+    testingLibraryVueRules,
+} from "./configurations/testing-library.js";
 export {
     typescriptConflicts,
     typescriptOverrideFiles,

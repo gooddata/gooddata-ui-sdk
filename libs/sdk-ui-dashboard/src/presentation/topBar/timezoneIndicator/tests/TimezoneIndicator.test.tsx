@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { BROWSER_DETECTED, type IDashboardTimezoneConfig } from "@gooddata/sdk-model";
@@ -41,20 +41,6 @@ describe("TimezoneIndicator", () => {
         );
 
         expect(getBadge(container)).toHaveTextContent("Prague");
-        expect(getBadge(container)!.textContent).not.toContain("GMT+02:00");
-    });
-
-    it("shows the offset only in the hover tooltip", async () => {
-        const { container } = renderIndicator(
-            { timezoneId: "Europe/Prague", showTimezoneInfo: true },
-            { timezoneId: "Europe/Prague", name: "Prague", offsetLabel: "GMT+02:00" },
-        );
-
-        fireEvent.mouseEnter(container.querySelector(".gd-timezone-indicator-content")!);
-
-        await waitFor(() => {
-            expect(document.body.textContent).toContain("Time zone: Prague (GMT+02:00)");
-        });
         expect(getBadge(container)!.textContent).not.toContain("GMT+02:00");
     });
 

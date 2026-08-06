@@ -19,6 +19,7 @@ import { regexp } from "./configurations/regexp.js";
 import { security } from "./configurations/security.js";
 import { sonarjs } from "./configurations/sonarjs.js";
 import { storybook } from "./configurations/storybook.js";
+import { testingLibraryDom, testingLibraryReact } from "./configurations/testing-library.js";
 import { typescript } from "./configurations/typescript.js";
 import { vitest } from "./configurations/vitest.js";
 import { type IDualConfiguration } from "./types.js";
@@ -46,14 +47,17 @@ export const commonVariants: Record<string, IDualConfiguration[]> = {
     // vitest: [vitest, noOnlyTests],
     esm: [esm, importEsm], // used for this lib
     "esm-vitest": [esm, importEsm, vitest, noOnlyTests], // for @gooddata/util and MAQL language server
+    "esm-vitest-rtl": [esm, importEsm, vitest, testingLibraryDom, noOnlyTests], // for @gooddata/util and MAQL language server
     react: [browserEnv, esm, react], // for skel tsx
     "react-vitest": [browserEnv, esm, react, vitest, noOnlyTests], // for gdc-ui libs
+    "react-vitest-rtl": [browserEnv, esm, react, vitest, testingLibraryReact, noOnlyTests], // for gdc-ui libs
     "react-playwright": [browserEnv, esm, react, playwright, chaiFriendly, noOnlyTests], // for gdc e2e libs
     "esm-playwright": [browserEnv, esm, importEsm, playwright, chaiFriendly, noOnlyTests], // for e2e-utils
     "esm-react": [browserEnv, esm, react, importEsm], // for most react libs
     "esm-react-playwright": [browserEnv, esm, react, importEsm, playwright, chaiFriendly, noOnlyTests], // for gdc e2e libs with react
+    "esm-react-storybook": [browserEnv, esm, react, importEsm, storybook], // for sdk-ui-tests-storybook
     "esm-react-vitest": [browserEnv, esm, react, importEsm, vitest, noOnlyTests], // for most sdk react libs with vitest
-    "esm-react-vitest-storybook": [browserEnv, esm, react, importEsm, vitest, noOnlyTests, storybook], // for sdk-ui-tests-storybook
+    "esm-react-vitest-rtl": [browserEnv, esm, react, importEsm, vitest, testingLibraryReact, noOnlyTests], // for most sdk react libs with vitest
 };
 
 export const v8Variants = { ...commonVariants };

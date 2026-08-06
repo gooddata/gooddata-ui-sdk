@@ -13,18 +13,26 @@ import { useDashboardAlerts } from "../../../model/react/useDashboardAlerting/us
 import {
     selectEnableDashboardDensitySetting,
     selectEnableDashboardTabularExport,
+    selectEnableDashboardTimezone,
     selectEnableSnapshotExport,
     selectIsReadOnly,
     selectSettings,
 } from "../../../model/store/config/configSelectors.js";
 import { selectHasAnyExecutionResultLimitBreaks } from "../../../model/store/executionResults/executionResultsSelectors.js";
-import { selectDashboardTitle, selectIsNewDashboard } from "../../../model/store/meta/metaSelectors.js";
+import {
+    selectDashboardTimezoneConfig,
+    selectDashboardTitle,
+    selectIsNewDashboard,
+} from "../../../model/store/meta/metaSelectors.js";
 import {
     selectCanCreateAutomation,
     selectCanExportPdf,
     selectCanExportTabular,
 } from "../../../model/store/permissions/permissionsSelectors.js";
-import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
+import {
+    selectIsInEditMode,
+    selectIsInViewMode,
+} from "../../../model/store/renderMode/renderModeSelectors.js";
 import { selectLayoutHasAnalyticalWidgets } from "../../../model/store/tabs/layout/layoutSelectors.js";
 import {
     selectDeleteVisible,
@@ -222,6 +230,13 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const openDensityDialog = useCallback(() => dispatch(requestOpenDensityDialog()), [dispatch]);
 
+    const isTimezoneEnabled = useDashboardSelector(selectEnableDashboardTimezone);
+    const timezoneConfig = useDashboardSelector(selectDashboardTimezoneConfig);
+    const isInViewMode = useDashboardSelector(selectIsInViewMode);
+    const isTimezoneChangeVisible =
+        isTimezoneEnabled && !!timezoneConfig?.allowUserOverrideInViewMode && isInViewMode;
+    const openTimezoneDialog = useCallback(() => dispatch(uiActions.openTimezoneDialog()), [dispatch]);
+
     // Do not show save as new button in menu item when it is already shown as a standalone top bar button.
     const isSaveAsVisible = useDashboardSelector(selectSaveAsVisible);
     const isSaveAsDisabled = isEmptyLayout || isNewDashboard || isReadOnly;
@@ -310,6 +325,18 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                     onClick: openDensityDialog,
                     visible: isDensitySettingEnabled && !isInEditMode,
                     icon: <MenuIcon type="density" />,
+                    opensDialog: true,
+                },
+            ],
+            // timezone section
+            [
+                {
+                    type: "button",
+                    itemId: "change-timezone-item",
+                    itemName: intl.formatMessage({ id: "options.menu.changeTimezone" }),
+                    onClick: openTimezoneDialog,
+                    visible: isTimezoneChangeVisible,
+                    icon: <MenuIcon type="timezone" />,
                     opensDialog: true,
                 },
             ],
@@ -444,6 +471,8 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
     }, [
         isDensitySettingEnabled,
         openDensityDialog,
+        isTimezoneChangeVisible,
+        openTimezoneDialog,
         defaultOnExportToPdf,
         defaultOnSaveAs,
         defaultOnScheduleEmailingManagement,

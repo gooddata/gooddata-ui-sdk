@@ -4,7 +4,7 @@ import { IPackage } from "../types.js";
 
 export const vitestPlugin: IPackage = {
     name: "@vitest/eslint-plugin",
-    version: "1.6.6",
+    version: "1.6.19",
 };
 
 const vitestRulesCommon = {

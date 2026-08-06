@@ -1,0 +1,31 @@
+// (C) 2026 GoodData Corporation
+
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.gd-timezone-dialog-description {
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+.gd-timezone-dialog {
+    .gd-dialog-footer {
+        border-top: 1px solid kit-variables.$gd-border-color;
+        padding-top: 20px;
+    }
+
+    .gd-timezone-select__button {
+        height: 32px;
+        width: 300px;
+    }
+
+    .gd-timezone-dialog-picker {
+        display: flex;
+        align-items: center;
+    }
+
+    .gd-timezone-dialog-current-time {
+        margin-left: 15px;
+        color: kit-variables.$gd-color-state-blank;
+        white-space: nowrap;
+    }
+}

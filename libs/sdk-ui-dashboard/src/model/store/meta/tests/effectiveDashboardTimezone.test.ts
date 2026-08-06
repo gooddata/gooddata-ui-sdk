@@ -6,6 +6,7 @@ import { describe, expect, it } from "vitest";
 import { BROWSER_DETECTED, type IDashboard, type IDashboardTimezoneConfig } from "@gooddata/sdk-model";
 
 import { type DashboardState } from "../../types.js";
+import { uiInitialState } from "../../ui/uiState.js";
 import { metaReducers } from "../metaReducers.js";
 import { selectEffectiveDashboardTimezone } from "../metaSelectors.js";
 import { type IDashboardMetaState } from "../metaState.js";
@@ -30,10 +31,12 @@ function loadedState(dashboard: IDashboard): IDashboardMetaState {
 function stateWith(
     timezoneConfig: IDashboardTimezoneConfig | undefined,
     enableDashboardTimezone: boolean,
+    timezoneOverride?: string,
 ): DashboardState {
     return {
         meta: loadedState(dashboardWith(timezoneConfig)),
         config: { config: { settings: { enableDashboardTimezone } } },
+        ui: { ...uiInitialState, timezoneOverride },
     } as unknown as DashboardState;
 }
 
@@ -66,6 +69,36 @@ describe("selectEffectiveDashboardTimezone", () => {
 
     it("should return undefined when the configuration has no timezoneId", () => {
         const state = stateWith({ showTimezoneInfo: true }, true);
+
+        expect(selectEffectiveDashboardTimezone(state)).toBeUndefined();
+    });
+
+    it("should give the session override precedence over the configured timezone", () => {
+        const state = stateWith({ timezoneId: "Europe/Prague" }, true, "America/New_York");
+
+        expect(selectEffectiveDashboardTimezone(state)).toBe("America/New_York");
+    });
+
+    it("should give the session override precedence over the browser-detected sentinel", () => {
+        const state = stateWith({ timezoneId: BROWSER_DETECTED }, true, "America/New_York");
+
+        expect(selectEffectiveDashboardTimezone(state)).toBe("America/New_York");
+    });
+
+    it("should return the session override even when the dashboard has no timezone configured", () => {
+        const state = stateWith(undefined, true, "America/New_York");
+
+        expect(selectEffectiveDashboardTimezone(state)).toBe("America/New_York");
+    });
+
+    it("should fall back to the configured timezone when the override is cleared", () => {
+        const state = stateWith({ timezoneId: "Europe/Prague" }, true, undefined);
+
+        expect(selectEffectiveDashboardTimezone(state)).toBe("Europe/Prague");
+    });
+
+    it("should return undefined when the feature flag is off even with an override set", () => {
+        const state = stateWith({ timezoneId: "Europe/Prague" }, false, "America/New_York");
 
         expect(selectEffectiveDashboardTimezone(state)).toBeUndefined();
     });

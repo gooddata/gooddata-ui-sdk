@@ -35,8 +35,8 @@ export function GenAIChatEffortDropdown({
 }: GenAIChatEffortDropdownProps) {
     const intl = useIntl();
     const reasoningLabel = intl.formatMessage(msgs.reasoning);
-    const options = useReasoningOptionItems(selectedEffort);
-    const valueLabel = useSelectedReasoningLabel(selectedEffort);
+    const options = useReasoningOptionItems(selectedEffort, "full");
+    const valueLabel = useSelectedReasoningLabel(selectedEffort, "full");
 
     return (
         <Dropdown

@@ -5,11 +5,13 @@ import { describe, expect, it } from "vitest";
 import {
     type FilterContextItem,
     type IAutomationVisibleFilter,
+    type IFilter,
     newAllTimeDashboardDateFilter,
+    newAllTimeFilter,
     newRelativeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
-import { getVisibleFiltersByFilters } from "../conversions.js";
+import { getVisibleFiltersByFilters, isNoopAllTimeDateFilterFixed } from "../conversions.js";
 
 describe("getVisibleFiltersByFilters", () => {
     const allValuesAttributeFilter: FilterContextItem = {
@@ -92,5 +94,70 @@ describe("getVisibleFiltersByFilters", () => {
         const result = getVisibleFiltersByFilters([allValuesAttributeFilter], visibleFiltersMetadata, true);
 
         expect(result).toEqual([]);
+    });
+});
+
+describe("isNoopAllTimeDateFilterFixed", () => {
+    it("should return true for standard noop all-time date filter", () => {
+        const filter = newAllTimeFilter({ identifier: "ds" }, "df");
+
+        expect(isNoopAllTimeDateFilterFixed(filter)).toBe(true);
+    });
+
+    it("should return false for all-time date filter with emptyValueHandling", () => {
+        const filter = newAllTimeFilter({ identifier: "ds" }, "df", "exclude");
+
+        expect(isNoopAllTimeDateFilterFixed(filter)).toBe(false);
+    });
+
+    it("should treat AD-style relative filter without from/to as noop only when emptyValueHandling is missing", () => {
+        const noopAdShape = {
+            relativeDateFilter: {
+                dataSet: { identifier: "ds" },
+                granularity: "GDC.time.date",
+                localIdentifier: "df",
+            },
+        };
+        const configuredAdShape = {
+            relativeDateFilter: {
+                dataSet: { identifier: "ds" },
+                granularity: "GDC.time.date",
+                localIdentifier: "df",
+                emptyValueHandling: "include",
+            },
+        };
+
+        expect(isNoopAllTimeDateFilterFixed(noopAdShape as IFilter)).toBe(true);
+        expect(isNoopAllTimeDateFilterFixed(configuredAdShape as IFilter)).toBe(false);
+    });
+
+    it("should treat an absolute date filter without from/to as noop only when emptyValueHandling is missing", () => {
+        const noopAbsoluteShape = {
+            absoluteDateFilter: {
+                dataSet: { identifier: "ds" },
+                localIdentifier: "df",
+            },
+        };
+        const configuredAbsoluteShape = {
+            absoluteDateFilter: {
+                dataSet: { identifier: "ds" },
+                localIdentifier: "df",
+                emptyValueHandling: "include",
+            },
+        };
+
+        expect(isNoopAllTimeDateFilterFixed(noopAbsoluteShape as IFilter)).toBe(true);
+        expect(isNoopAllTimeDateFilterFixed(configuredAbsoluteShape as IFilter)).toBe(false);
+    });
+
+    it("should return false for a non-date filter", () => {
+        const attributeFilter: IFilter = {
+            positiveAttributeFilter: {
+                displayForm: { identifier: "attr.df" },
+                in: { values: ["value"] },
+            },
+        };
+
+        expect(isNoopAllTimeDateFilterFixed(attributeFilter)).toBe(false);
     });
 });

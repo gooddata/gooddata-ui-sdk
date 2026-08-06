@@ -152,12 +152,16 @@
         "crowdinContext": "Accessibility label for the button that closes the AI chatbot agent dropdown"
     },
     "gd.gen-ai.reasoning": {
-        "text": "Reasoning",
+        "text": "Reasoning effort",
         "crowdinContext": "Label for the reasoning-effort row in the AI chatbot agent dropdown, where the user picks how much effort the assistant spends on the answer"
     },
     "gd.gen-ai.reasoning.quick": {
         "text": "Quick",
-        "crowdinContext": "Option in the AI chatbot reasoning selector for a quick, concise answer"
+        "crowdinContext": "Option in the AI chatbot reasoning selector for a quick, concise answer, shown next to the agent name"
+    },
+    "gd.gen-ai.reasoning.quick.full": {
+        "text": "Quick answer",
+        "crowdinContext": "Option in the standalone AI chatbot reasoning selector for a quick, concise answer, shown without an agent name next to it"
     },
     "gd.gen-ai.reasoning.quick.description": {
         "text": "Fast answers for everyday questions like finding and building visualizations.",
@@ -165,7 +169,11 @@
     },
     "gd.gen-ai.reasoning.thinking": {
         "text": "Thinking",
-        "crowdinContext": "Option in the AI chatbot reasoning selector for a slower, more thorough answer"
+        "crowdinContext": "Option in the AI chatbot reasoning selector for a slower, more thorough answer, shown next to the agent name"
+    },
+    "gd.gen-ai.reasoning.thinking.full": {
+        "text": "Deep thinking",
+        "crowdinContext": "Option in the standalone AI chatbot reasoning selector for a slower, more thorough answer, shown without an agent name next to it"
     },
     "gd.gen-ai.reasoning.thinking.description": {
         "text": "Slower but more thorough answers for complex analytical questions.",

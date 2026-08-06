@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 
-import { defineMessages, useIntl } from "react-intl";
+import { type MessageDescriptor, defineMessages, useIntl } from "react-intl";
 
 import { type GenAIChatEffort } from "@gooddata/sdk-model";
 import {
@@ -11,6 +11,7 @@ import {
     type IUiMenuItem,
     UiIcon,
     UiMenu,
+    typedUiMenuContextStore,
 } from "@gooddata/sdk-ui-kit";
 
 const msgs = defineMessages({
@@ -20,11 +21,17 @@ const msgs = defineMessages({
     quick: {
         id: "gd.gen-ai.reasoning.quick",
     },
+    quickFull: {
+        id: "gd.gen-ai.reasoning.quick.full",
+    },
     quickDescription: {
         id: "gd.gen-ai.reasoning.quick.description",
     },
     thinking: {
         id: "gd.gen-ai.reasoning.thinking",
+    },
+    thinkingFull: {
+        id: "gd.gen-ai.reasoning.thinking.full",
     },
     thinkingDescription: {
         id: "gd.gen-ai.reasoning.thinking.description",
@@ -44,23 +51,43 @@ export type ReasoningMenuItemData = {
 
 export const REASONING_MENU_ITEM_ID = "reasoning";
 
+/**
+ * Which wording the reasoning options use.
+ * - "short": abbreviated labels for the agent dropdown
+ * - "full": complete labels for standalone display
+ * @internal
+ */
+export type ReasoningLabelMode = "short" | "full";
+
 const REASONING_OPTIONS = [
-    { effort: "LOW", label: msgs.quick, description: msgs.quickDescription },
-    { effort: "MEDIUM", label: msgs.thinking, description: msgs.thinkingDescription },
+    {
+        effort: "LOW",
+        labels: { short: msgs.quick, full: msgs.quickFull },
+        description: msgs.quickDescription,
+    },
+    {
+        effort: "MEDIUM",
+        labels: { short: msgs.thinking, full: msgs.thinkingFull },
+        description: msgs.thinkingDescription,
+    },
 ] as const satisfies ReadonlyArray<{
     effort: GenAIChatEffort;
-    label: (typeof msgs)[keyof typeof msgs];
-    description: (typeof msgs)[keyof typeof msgs];
+    labels: Record<ReasoningLabelMode, MessageDescriptor>;
+    description: MessageDescriptor;
 }>;
 
 /**
- * Localized label of the currently selected reasoning mode (e.g. "Quick"), or undefined otherwise.
+ * Localized label of the currently selected reasoning mode ("Quick" or "Quick answer", depending on
+ * the label mode), or undefined otherwise.
  * @internal
  */
-export function useSelectedReasoningLabel(selectedEffort: GenAIChatEffort): string | undefined {
+export function useSelectedReasoningLabel(
+    selectedEffort: GenAIChatEffort,
+    labelMode: ReasoningLabelMode,
+): string | undefined {
     const intl = useIntl();
     const option = REASONING_OPTIONS.find((o) => o.effort === selectedEffort);
-    return option ? intl.formatMessage(option.label) : undefined;
+    return option ? intl.formatMessage(option.labels[labelMode]) : undefined;
 }
 
 /**
@@ -106,17 +133,20 @@ export type EffortMenuItemData = {
 };
 
 /**
- * Builds the effort options (Quick / Thinking) shared by the in-agent-menu reasoning row and the
- * standalone reasoning dropdown.
+ * Builds the effort options shared by the in-agent-menu reasoning row ("short": Quick / Thinking) and
+ * the standalone reasoning dropdown ("full": Quick answer / Deep thinking).
  * @internal
  */
-export function useReasoningOptionItems(selectedEffort: GenAIChatEffort): IUiMenuItem<EffortMenuItemData>[] {
+export function useReasoningOptionItems(
+    selectedEffort: GenAIChatEffort,
+    labelMode: ReasoningLabelMode,
+): IUiMenuItem<EffortMenuItemData>[] {
     const intl = useIntl();
 
     return useMemo(
         () =>
-            REASONING_OPTIONS.map(({ effort, label, description }) => {
-                const title = intl.formatMessage(label);
+            REASONING_OPTIONS.map(({ effort, labels, description }) => {
+                const title = intl.formatMessage(labels[labelMode]);
                 const descriptionText = intl.formatMessage(description);
 
                 return {
@@ -138,7 +168,7 @@ export function useReasoningOptionItems(selectedEffort: GenAIChatEffort): IUiMen
                     ),
                 };
             }),
-        [intl, selectedEffort],
+        [intl, selectedEffort, labelMode],
     );
 }
 
@@ -153,9 +183,12 @@ export function GenAIChatReasoningMenuRow({
     const intl = useIntl();
     const { selectedEffort, onSelectEffort } = item.data;
     const reasoningLabel = intl.formatMessage(msgs.reasoning);
-    const valueLabel = useSelectedReasoningLabel(selectedEffort);
-    const options = useReasoningOptionItems(selectedEffort);
-
+    const valueLabel = useSelectedReasoningLabel(selectedEffort, "short");
+    const options = useReasoningOptionItems(selectedEffort, "short");
+    const { useContextStore, createSelector } = typedUiMenuContextStore<{
+        interactive: ReasoningMenuItemData;
+    }>();
+    const closeParentMenu = useContextStore(createSelector((ctx) => ctx.onClose));
     return (
         <li role="none" className="gd-gen-ai-chat__reasoning-row">
             <Dropdown
@@ -195,6 +228,7 @@ export function GenAIChatReasoningMenuRow({
                         onSelect={(option) => {
                             onSelectEffort?.(option.data.effort);
                             closeDropdown();
+                            closeParentMenu?.();
                         }}
                     />
                 )}

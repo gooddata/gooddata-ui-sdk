@@ -270,10 +270,6 @@ export interface IPluggableAppEvent {
 
 // @alpha
 export interface IPluggableApplicationMountHandle {
-    onAiAssistantEventReceive?: (event: {
-        name: string;
-        payload: Record<string, unknown>;
-    }) => void;
     onAiAssistantLinkClicked?: (link: {
         type?: string;
         id?: string;

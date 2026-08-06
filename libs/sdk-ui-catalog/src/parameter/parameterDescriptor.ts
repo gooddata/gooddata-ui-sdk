@@ -51,6 +51,14 @@ const errorMessages = defineMessages({
     invalidDefaultValue: { id: "analyticsCatalog.parameter.validation.invalidDefaultValue" },
     invalidConstraints: { id: "analyticsCatalog.parameter.validation.invalidConstraints" },
     invalidConstraintRange: { id: "analyticsCatalog.parameter.validation.invalidConstraintRange" },
+    invalidAllowedValue: { id: "analyticsCatalog.parameter.validation.invalidAllowedValue" },
+    invalidAllowedValueTitle: { id: "analyticsCatalog.parameter.validation.invalidAllowedValueTitle" },
+    duplicateAllowedValues: { id: "analyticsCatalog.parameter.validation.duplicateAllowedValues" },
+    emptyAllowedValues: { id: "analyticsCatalog.parameter.validation.emptyAllowedValues" },
+    constraintsAllowedValuesExclusive: {
+        id: "analyticsCatalog.parameter.validation.constraintsAllowedValuesExclusive",
+    },
+    unsupportedCardinality: { id: "analyticsCatalog.parameter.validation.unsupportedCardinality" },
     invalidTags: { id: "analyticsCatalog.parameter.validation.invalidTags" },
 });
 

@@ -139,6 +139,7 @@ import {
     type IDashboardTabRenamingStarted,
     type IDashboardTabSwitched,
 } from "./tabs.js";
+import { type IDashboardTimezoneOverrideChanged } from "./timezone.js";
 import { type IDashboardUserInteractionTriggered } from "./userInteraction.js";
 import {
     type IDashboardVisualizationSwitcherWidgetVisualizationAdded,
@@ -174,6 +175,7 @@ export type DashboardEvents =
     | DashboardSharingChanged
     //beta
     | IDashboardRenderModeChanged
+    | IDashboardTimezoneOverrideChanged
     | IDashboardCommandStarted<any>
     | IDashboardCommandFailed<any>
     | IDashboardCommandRejected

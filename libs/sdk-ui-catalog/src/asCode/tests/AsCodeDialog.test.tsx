@@ -166,7 +166,11 @@ describe("AsCodeDialog validation display with the entity's own context (string 
         renderCreate(stringEnabled);
         await typeYaml("definition:\n  type: STRING\n  defaultValue: 5\n");
         clickSubmit("Create");
-        expect(screen.getByText("Default value must be a string.")).toBeInTheDocument();
+        expect(
+            screen.getByText(
+                "Default value must be a string, listed in allowedValues when they are defined.",
+            ),
+        ).toBeInTheDocument();
     });
 });
 

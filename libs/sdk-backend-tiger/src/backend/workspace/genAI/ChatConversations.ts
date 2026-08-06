@@ -562,15 +562,18 @@ class ServerSentEventsDataConverter extends TransformStream<
                         convertChatConversationErrorFromBackend(event.data, traceIdProvider()),
                     );
                 } else if (event.type === "item" && "item" in event.data) {
-                    controller.enqueue(
-                        convertChatConversationItemFromBackend(
-                            event.data.item as AiConversationItemResponse,
-                            undefined,
-                            dateNormalizer,
-                            locale,
-                            timezone,
-                        ),
+                    const item = convertChatConversationItemFromBackend(
+                        event.data.item as AiConversationItemResponse,
+                        undefined,
+                        dateNormalizer,
+                        locale,
+                        timezone,
                     );
+                    // Item is dropped (undefined) when its content type is unrecognized by
+                    // this frontend version - do not enqueue anything for it.
+                    if (item) {
+                        controller.enqueue(item);
+                    }
                 }
             },
         });

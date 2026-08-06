@@ -12,6 +12,7 @@ import { ConfigProvider, type LinkHandlerEvent, useConfig } from "./ConfigContex
 import { CustomizationProvider } from "./CustomizationProvider.js";
 import { GenAIChatWrapper } from "./GenAIChatWrapper.js";
 import { GenAiStore, type GenAiStoreProps } from "./GenAiStore.js";
+import { type GenAIAssistantMode, useFullscreenMode } from "./hooks/useFullscreenMode.js";
 
 /**
  * Properties for the GenAIAssistant component.
@@ -64,6 +65,19 @@ export type GenAIAssistantProps = Omit<GenAiStoreProps, "children"> & {
      * Additional class name applied to the root element.
      */
     className?: string;
+
+    /**
+     * Display mode of the assistant. Adapts the internal layout to a narrow or to a wide container;
+     * the assistant always fills its parent element, so this does not resize it.
+     * On small screens the fullscreen layout is always used.
+     */
+    mode?: GenAIAssistantMode;
+
+    /**
+     * Called when the display mode changes on its own, e.g. after `setFullscreenAction` is dispatched,
+     * so that the embedding application can keep its own chrome in sync.
+     */
+    onModeChange?: (mode: GenAIAssistantMode) => void;
 };
 
 /**
@@ -142,9 +156,13 @@ function GenAIContent(props: GenAIChatProps) {
         LandingScreenComponentProvider,
         DisclaimerComponentProvider,
         className,
+        mode,
+        onModeChange,
     } = props;
     const { permissions, loading } = usePermissions();
     const { allowNativeLinks } = useConfig();
+
+    useFullscreenMode(mode, onModeChange);
 
     return (
         <ConfigProvider

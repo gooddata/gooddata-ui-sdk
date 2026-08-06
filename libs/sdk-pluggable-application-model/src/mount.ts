@@ -630,19 +630,6 @@ export interface IPluggableApplicationMountHandle {
         itemUrl?: string;
         newTab?: boolean;
     }) => boolean;
-
-    /**
-     * Ref the renderer populates with a handler that delegates a host-chat event to the active
-     * app's mount handle (`onAiAssistantEventReceive`), so an embedded app can handle it in-app.
-     *
-     * @remarks
-     * On hosted routes the host owns the single chat instance; an application that exposes its own
-     * assistant controls (e.g. an embedded AI button, or the `toggleAIAssistant` postMessage command
-     * whose result is echoed to an embedding client) needs to know the real open-state to keep those
-     * controls and their reported results aligned with what the user sees. The host calls this
-     * when event is received.
-     */
-    onAiAssistantEventReceive?: (event: { name: string; payload: Record<string, unknown> }) => void;
 }
 
 /**

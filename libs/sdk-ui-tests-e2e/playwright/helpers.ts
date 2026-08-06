@@ -1511,7 +1511,8 @@ export async function switchToUser(page: Page, request: APIRequestContext, userI
     await page.waitForTimeout(1000);
     await expect(async () => {
         const check = await request.get("/api/v1/profile", {
-            headers: { Authorization: `Bearer ${bearerToken}` },
+            headers: { Authorization: `Bearer ${bearerToken}`, "X-Requested-With": "XMLHttpRequest" },
+            maxRedirects: 0,
         });
         expect(check.status()).toBe(200);
     }).toPass({ timeout: 30_000, intervals: [500, 1_000, 2_000] });

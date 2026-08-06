@@ -1,14 +1,10 @@
 // (C) 2019-2026 GoodData Corporation
 
-import {
-    type FilterContextItem,
-    type IAutomationVisibleFilter,
-    type IExportDefinitionVisualizationObjectSettings,
-} from "@gooddata/sdk-model";
+import { type IExportDefinitionVisualizationObjectSettings } from "@gooddata/sdk-model";
 
-import type { IAutomationFiltersTab } from "../../../../../model/store/filtering/types.js";
 import { useAutomationsContext } from "../../../contexts/AutomationsContext.js";
 import { useScheduledEmailDialogContext } from "../../../contexts/ScheduledEmailDialogContext.js";
+import { useAutomationFiltersSelect } from "../../../shared/automationFilters/useAutomationFiltersSelect.js";
 
 import { useScheduledEmailEffectiveFilters } from "./useScheduledEmailEffectiveFilters.js";
 import { useScheduledEmailExportSettings } from "./useScheduledEmailExportSettings.js";
@@ -18,44 +14,14 @@ import { useScheduledEmailFormValidity } from "./useScheduledEmailFormValidity.j
 
 export interface IUseEditScheduledEmailProps {
     maxAutomationsRecipients: number;
-    editedAutomationFilters?: FilterContextItem[];
-    setEditedAutomationFilters: (filters: FilterContextItem[]) => void;
-
-    /**
-     * Edited filters structured by tab ID for dashboard automations with tabs enabled.
-     * When provided, these are used instead of dashboardFilters for per-tab filter storage.
-     */
-    editedAutomationFiltersByTab?: Record<string, FilterContextItem[]>;
-    /**
-     * Setter for editedFiltersByTab state.
-     * Used to update filters for a specific tab.
-     */
-    setEditedAutomationFiltersByTab?: (filters: Record<string, FilterContextItem[]>) => void;
-    filtersDataByTab?: IAutomationFiltersTab[] | undefined;
-    availableFiltersAsVisibleFilters?: IAutomationVisibleFilter[] | undefined;
-    availableFiltersAsVisibleFiltersByTab?: Record<string, IAutomationVisibleFilter[]>;
-    // Option to opt out of storing filters
-    storeFilters?: boolean;
-    setStoreFilters: (storeFilters: boolean) => void;
-    filtersForNewAutomation: FilterContextItem[];
     externalRecipientOverride?: string;
     defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
 }
 
 export function useEditScheduledEmail({
-    editedAutomationFilters,
-    editedAutomationFiltersByTab,
     maxAutomationsRecipients,
-    setEditedAutomationFilters,
-    setEditedAutomationFiltersByTab,
-    availableFiltersAsVisibleFilters,
-    storeFilters,
-    setStoreFilters,
-    filtersForNewAutomation,
     externalRecipientOverride,
     defaultPdfPageSize,
-    filtersDataByTab,
-    availableFiltersAsVisibleFiltersByTab,
 }: IUseEditScheduledEmailProps) {
     const {
         features: { enableAutomationEvaluationMode },
@@ -74,6 +40,20 @@ export function useEditScheduledEmail({
     const areDashboardFiltersChanged = !!dashboardFilters;
 
     const {
+        editedAutomationFilters,
+        setEditedAutomationFilters,
+        availableFilters,
+        availableFiltersAsVisibleFilters,
+        filtersForNewAutomation,
+        storeFilters,
+        setStoreFilters,
+        filtersByTab,
+        editedAutomationFiltersByTab,
+        setEditedAutomationFiltersByTab,
+        availableFiltersAsVisibleFiltersByTab,
+    } = useAutomationFiltersSelect({ automationToEdit: scheduledExportToEdit, widget });
+
+    const {
         effectiveWidgetFilters,
         effectiveWidgetFiltersWithInsight,
         effectiveVisibleWidgetFilters,
@@ -89,7 +69,7 @@ export function useEditScheduledEmail({
         editedAutomationFiltersByTab,
         availableFiltersAsVisibleFilters,
         availableFiltersAsVisibleFiltersByTab,
-        filtersDataByTab,
+        filtersDataByTab: filtersByTab,
         storeFilters,
     });
 
@@ -160,20 +140,27 @@ export function useEditScheduledEmail({
         defaultPdfPageSize,
     });
 
-    const { onFiltersChange, onFiltersByTabChange, onApplyCurrentFilters, onStoreFiltersChange } =
-        useScheduledEmailFilters({
-            setEditedAutomation,
-            widget,
-            insight,
-            setEditedAutomationFilters,
-            setEditedAutomationFiltersByTab,
-            availableFiltersAsVisibleFilters,
-            availableFiltersAsVisibleFiltersByTab,
-            filtersDataByTab,
-            storeFilters,
-            setStoreFilters,
-            filtersForNewAutomation,
-        });
+    // Kept whole rather than destructured: every member is re-exposed unchanged, so spreading it into
+    // the return means a member can never be dropped by forgetting to re-list it. What the model may
+    // contain is gated by its own shape test, not here.
+    const filterModel = useScheduledEmailFilters({
+        setEditedAutomation,
+        scheduledExportToEdit,
+        widget,
+        insight,
+        editedAutomationFilters,
+        setEditedAutomationFilters,
+        editedAutomationFiltersByTab,
+        setEditedAutomationFiltersByTab,
+        availableFilters,
+        availableFiltersAsVisibleFilters,
+        availableFiltersAsVisibleFiltersByTab,
+        filtersByTab,
+        storeFilters,
+        setStoreFilters,
+        filtersForNewAutomation,
+        setParametersWire,
+    });
 
     const {
         isSubmitDisabled,
@@ -215,7 +202,6 @@ export function useEditScheduledEmail({
         allowExternalRecipients,
         validationErrorMessage,
         isSubmitDisabled,
-        storeFilters,
         selectedAttachments,
         isParentValid,
         onTitleChange,
@@ -233,11 +219,13 @@ export function useEditScheduledEmail({
         onCsvRawSettingsChange,
         slidesTemplateIds,
         onSlidesTemplateIdChange,
-        onFiltersChange,
-        onApplyCurrentFilters,
-        onStoreFiltersChange,
-        onFiltersByTabChange,
         setParametersWire,
         enableAutomationEvaluationMode,
+        // Filter and export-parameter model, absorbed from `useScheduledEmailFilters` (which itself
+        // absorbs `useAutomationExportParameters` and `useValidateExistingAutomationFilters`) — the
+        // renderer calls none of those three hooks itself, it takes their output from here. Spread
+        // last: its `availableFilters`, `storeFilters` and `filtersByTab` are the model's, not the
+        // raw selection hook's.
+        ...filterModel,
     };
 }

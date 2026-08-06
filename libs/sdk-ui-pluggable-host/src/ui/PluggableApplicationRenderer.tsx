@@ -31,7 +31,6 @@ import { getApplicationHref } from "../loader/routing.js";
 import { BackendPlatformContextProvider } from "../platformContext/useLoadPlatformContext.js";
 
 import "./PluggableApplicationRenderer.scss";
-import { GenAIChatEvent } from "./GenAIChat.js";
 
 const { b, e } = bemFactory("gd-pluggable-application-renderer");
 
@@ -80,11 +79,6 @@ export interface IPluggableApplicationRendererProps {
     aiLinkClickHandlerRef?: RefObject<
         ((link: { type?: string; id?: string; itemUrl?: string; newTab?: boolean }) => boolean) | undefined
     >;
-    /**
-     * Ref the renderer populates with a handler that delegates a host-chat event to the active
-     * app's mount handle (`onAiAssistantEventReceive`), so an embedded app can handle it in-app.
-     */
-    aiEventReceiveRef?: RefObject<((event: GenAIChatEvent) => void) | undefined>;
     onHeaderChange?: (appId: string, header: IAppHeaderOptions) => void;
     onDocumentTitleChange?: (appId: string, pageTitle: string | undefined) => void;
 }
@@ -98,7 +92,6 @@ export function PluggableApplicationRenderer({
     onCloseAiAssistant,
     onAiAssistantContext,
     aiLinkClickHandlerRef,
-    aiEventReceiveRef,
     onHeaderChange,
     onDocumentTitleChange,
 }: IPluggableApplicationRendererProps) {
@@ -325,20 +318,6 @@ export function PluggableApplicationRenderer({
             ref.current = undefined;
         };
     }, [aiLinkClickHandlerRef]);
-
-    // Expose a host-chat event delegate that defers to the active app's mount handle, so an
-    // embedded app can handle events in-app. Read through the ref at call time so it
-    // always targets the currently mounted app.
-    useEffect(() => {
-        const ref = aiEventReceiveRef;
-        if (!ref) {
-            return;
-        }
-        ref.current = (event) => mountHandleRef.current?.onAiAssistantEventReceive?.(event);
-        return () => {
-            ref.current = undefined;
-        };
-    }, [aiEventReceiveRef]);
 
     return (
         <section className={b()}>
