@@ -21,6 +21,12 @@ export {
     copyWithModifiedProps,
 } from "./scenarioGroup.js";
 export {
+    type IScenarioActionMarker,
+    type ScenarioAction,
+    scenarioAction,
+    isScenarioAction,
+} from "./scenarioAction.js";
+export {
     type VisProps,
     type UnboundVisProps,
     type PropsFactory,

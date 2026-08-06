@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/oxlint-config",
-    "version": "11.51.0-alpha.4",
+    "version": "11.51.0-alpha.5",
     "license": "MIT",
     "author": "GoodData",
     "repository": {
@@ -23,14 +23,17 @@
         "./browser-esm": "./dist/browser-esm.json",
         "./esm": "./dist/esm.json",
         "./esm-vitest": "./dist/esm-vitest.json",
+        "./esm-vitest-rtl": "./dist/esm-vitest-rtl.json",
         "./react": "./dist/react.json",
         "./react-vitest": "./dist/react-vitest.json",
+        "./react-vitest-rtl": "./dist/react-vitest-rtl.json",
         "./react-playwright": "./dist/react-playwright.json",
         "./esm-playwright": "./dist/esm-playwright.json",
         "./esm-react": "./dist/esm-react.json",
         "./esm-react-playwright": "./dist/esm-react-playwright.json",
+        "./esm-react-storybook": "./dist/esm-react-storybook.json",
         "./esm-react-vitest": "./dist/esm-react-vitest.json",
-        "./esm-react-vitest-storybook": "./dist/esm-react-vitest-storybook.json"
+        "./esm-react-vitest-rtl": "./dist/esm-react-vitest-rtl.json"
     },
     "scripts": {
         "_phase:build": "npm run build",
@@ -48,6 +51,7 @@
         "@eslint/js": "9.28.0",
         "@gooddata/eslint-config": "workspace:*",
         "@gooddata/lint-config": "workspace:*",
+        "@testing-library/dom": "10.4.1",
         "@types/node": "24.12.0",
         "@typescript-eslint/eslint-plugin": "8.58.0",
         "@typescript-eslint/parser": "8.58.0",
@@ -63,11 +67,16 @@
         "eslint-plugin-no-only-tests": "3.3.0",
         "eslint-plugin-playwright": "2.10.1",
         "eslint-plugin-sonarjs": "3.0.6",
+        "eslint-plugin-storybook": "10.5.6",
+        "eslint-plugin-testing-library": "7.16.2",
         "globals": "17.2.0",
         "jiti": "2.6.1",
         "oxfmt": "0.52.0",
         "oxlint": "1.51.0",
         "oxlint-tsgolint": "0.15.0",
+        "react": "19.1.1",
+        "react-dom": "19.1.1",
+        "storybook": "^10.5.6",
         "typescript": "5.9.3",
         "vite-node": "^5.2.0"
     },

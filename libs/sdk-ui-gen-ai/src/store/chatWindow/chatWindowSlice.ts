@@ -246,7 +246,6 @@ const chatWindowSlice = createSlice({
 export const chatWindowSliceReducer: Reducer<ChatWindowSliceState> = chatWindowSlice.reducer;
 export const {
     setOpenAction,
-    setFullscreenAction,
     setHistoryAction,
     setColorPaletteAction,
     setSettingsAction,
@@ -261,6 +260,11 @@ export const {
     addContextReferenceAction,
     removeContextReferenceAction,
     setIsPreviewAction,
+    /**
+     * Switches the assistant between the docked and the fullscreen layout.
+     * @public
+     */
+    setFullscreenAction,
     /**
      * @public
      */

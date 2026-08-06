@@ -12,6 +12,7 @@ import {
     type WeekStart,
 } from "@gooddata/sdk-model";
 
+import { useValidateExistingAutomationFilters } from "../../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
 import { getAppliedWidgetFilters, getVisibleFiltersByFilters } from "../../../shared/filters/index.js";
 import { type AlertAttribute, type AlertMetric } from "../../types.js";
 import { type IMeasureFormatMap } from "../utils/getters.js";
@@ -23,7 +24,10 @@ import { transformAlertByAttribute, transformAlertByMetric } from "../utils/tran
  */
 export interface IUseAlertFiltersProps {
     setEditedAutomation: Dispatch<SetStateAction<IAutomationMetadataObjectDefinition | undefined>>;
+    alertToEdit?: IAutomationMetadataObject;
+    editedAutomationFilters: FilterContextItem[];
     setEditedAutomationFilters: (filters: FilterContextItem[]) => void;
+    availableFilters?: FilterContextItem[];
     filtersForNewAutomation: FilterContextItem[];
     availableFiltersAsVisibleFilters?: IAutomationVisibleFilter[] | undefined;
     dashboardHiddenFilters: FilterContextItem[];
@@ -41,19 +45,24 @@ export interface IUseAlertFiltersProps {
 }
 
 /**
- * Owns the alerting dialog's filter changes: `onFiltersChange` and `onApplyCurrentFilters` update the
- * edited filters and mirror the result into the alert draft.
+ * Owns the alerting dialog's single filter model: the current selection and available filters,
+ * `onFiltersChange`/`onApplyCurrentFilters` to mutate the edited filters and mirror the result into
+ * the alert draft. `automationIsValid` gates the repair / apply-current-filters dialog: it is false
+ * whenever the saved filters no longer match the dashboard, or the automation's saved parameters
+ * are stale, or both — it does not distinguish which. `filtersAreStale` reports only whether saved
+ * filters no longer match the dashboard.
  *
- * Mutation only. The matching read model lives elsewhere — the renderer derives it through
- * `useAutomationFiltersSelect` — so the two directions are not yet unified behind a single hook.
- *
- * All inputs are params; this hook reads no context.
+ * All inputs are params; this hook reads no context directly — `useValidateExistingAutomationFilters`
+ * reads context internally.
  *
  * @internal
  */
 export function useAlertFilters({
     setEditedAutomation,
+    alertToEdit,
+    editedAutomationFilters,
     setEditedAutomationFilters,
+    availableFilters,
     filtersForNewAutomation,
     availableFiltersAsVisibleFilters,
     dashboardHiddenFilters,
@@ -69,8 +78,12 @@ export function useAlertFilters({
     weekStart,
     timezone,
 }: IUseAlertFiltersProps): {
+    selectedFilters: FilterContextItem[];
+    availableFilters: FilterContextItem[] | undefined;
     onFiltersChange: (filters: FilterContextItem[]) => void;
     onApplyCurrentFilters: () => void;
+    automationIsValid: boolean;
+    filtersAreStale: boolean;
 } {
     const onFiltersChange = useCallback(
         (filters: FilterContextItem[]) => {
@@ -159,8 +172,18 @@ export function useAlertFilters({
         onFiltersChange(filtersForNewAutomation);
     }, [filtersForNewAutomation, onFiltersChange]);
 
+    const { isValid: automationIsValid, filtersAreStale = false } = useValidateExistingAutomationFilters({
+        automationToEdit: alertToEdit,
+        widget,
+        insight,
+    });
+
     return {
+        selectedFilters: editedAutomationFilters,
+        availableFilters,
         onFiltersChange,
         onApplyCurrentFilters,
+        automationIsValid,
+        filtersAreStale,
     };
 }

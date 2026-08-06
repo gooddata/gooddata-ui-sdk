@@ -6,14 +6,69 @@ import { act, renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
+    type FilterContextItem,
     type IDashboardExportParameter,
     type IInsight,
     type INotificationChannelMetadataObject,
     type IWidget,
     type IWorkspaceUser,
     idRef,
+    isExportDefinitionDashboardRequestPayload,
     isExportDefinitionVisualizationObjectRequestPayload,
 } from "@gooddata/sdk-model";
+
+import type { IAutomationFiltersTab } from "../../../../../../model/store/filtering/types.js";
+import type * as AutomationFiltersSelectModule from "../../../../shared/automationFilters/useAutomationFiltersSelect.js";
+
+// ---------------------------------------------------------------------------
+// Mocks — vi.mock calls are hoisted; factories must not reference top-level
+// let/const declared after them (unless created via vi.hoisted()). We use
+// vi.fn() inline and retrieve spies via vi.mocked() after the import statements.
+//
+// `useAutomationFiltersSelect`, `useValidateExistingAutomationFilters` and
+// `useAutomationExportParameters` are the three shared, store-backed read hooks
+// `useEditScheduledEmail` now calls directly (via `useScheduledEmailFilters` for the latter two) —
+// mocked because none of them are wired up to a real dashboard Redux store in this unit test.
+// `AutomationsContext` and `ScheduledEmailDialogContext` are NOT mocked: this test renders through
+// their real providers, same as before this file's read-model consolidation. Everything else
+// `useEditScheduledEmail` composes (`useScheduledEmailEffectiveFilters`, `useScheduledEmailFormState`,
+// `useScheduledEmailExportSettings`, `useScheduledEmailFilters`'s own handlers) runs for real, because
+// the first-mount test's whole point is to exercise the real seeding computation through the real hooks.
+// ---------------------------------------------------------------------------
+
+const {
+    mockUseAutomationFiltersSelect,
+    mockUseValidateExistingAutomationFilters,
+    mockUseAutomationExportParameters,
+} = vi.hoisted(() => ({
+    mockUseAutomationFiltersSelect: vi.fn(),
+    mockUseValidateExistingAutomationFilters: vi.fn(),
+    mockUseAutomationExportParameters: vi.fn(),
+}));
+
+vi.mock("../../../../shared/automationFilters/useAutomationFiltersSelect.js", async (importOriginal) => {
+    const actual = await importOriginal<typeof AutomationFiltersSelectModule>();
+    return {
+        ...actual,
+        useAutomationFiltersSelect: mockUseAutomationFiltersSelect,
+    };
+});
+
+vi.mock("../../../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js", () => ({
+    useValidateExistingAutomationFilters: mockUseValidateExistingAutomationFilters,
+}));
+
+vi.mock("../../../../shared/automationFilters/useAutomationExportParameters.js", () => ({
+    useAutomationExportParameters: mockUseAutomationExportParameters,
+}));
+
+vi.mock("../useScheduleValidation.js", () => ({
+    useScheduleValidation: () => ({ isValid: true }),
+}));
+
+// ---------------------------------------------------------------------------
+// Imports placed AFTER vi.mock() calls to pick up mocked versions
+// ---------------------------------------------------------------------------
 
 import { IntlWrapper } from "../../../../../localization/IntlWrapper.js";
 import {
@@ -25,10 +80,6 @@ import {
     ScheduledEmailDialogContextProvider,
 } from "../../../../contexts/ScheduledEmailDialogContext.js";
 import { useEditScheduledEmail } from "../useEditScheduledEmail.js";
-
-vi.mock("../useScheduleValidation.js", () => ({
-    useScheduleValidation: () => ({ isValid: true }),
-}));
 
 const widget: IWidget = {
     type: "insight",
@@ -61,6 +112,17 @@ const addedParameters: Record<string, IDashboardExportParameter[]> = {
     tab1: [{ id: "topN", value: "5", title: "Top N" }],
 };
 
+function fakeFiltersTab(tabId: string): IAutomationFiltersTab {
+    return {
+        tabId,
+        tabTitle: `Tab ${tabId}`,
+        availableFilters: [],
+        defaultSelectedFilters: [],
+        lockedFilters: [],
+        hiddenFilters: [],
+    };
+}
+
 // The hook reads only a handful of context fields; the rest are optional-chained or `?? []`-coalesced
 // inside the hook, so partial stubs cast through `unknown` are safe for these tests.
 const automationsContextValue = {
@@ -90,9 +152,74 @@ function buildScheduledEmailDialogContextValue(): IScheduledEmailDialogContextVa
 
 let scheduledEmailDialogContextValue = buildScheduledEmailDialogContextValue();
 
+function mockAutomationFiltersSelect(
+    overrides: {
+        editedAutomationFilters?: FilterContextItem[];
+        storeFilters?: boolean;
+        filtersByTab?: IAutomationFiltersTab[];
+        editedAutomationFiltersByTab?: Record<string, FilterContextItem[]>;
+    } = {},
+) {
+    mockUseAutomationFiltersSelect.mockReturnValue({
+        editedAutomationFilters: [],
+        setEditedAutomationFilters: vi.fn(),
+        storeFilters: false,
+        setStoreFilters: vi.fn(),
+        availableFilters: [],
+        availableFiltersAsVisibleFilters: undefined,
+        filtersForNewAutomation: [],
+        filtersByTab: undefined,
+        editedAutomationFiltersByTab: undefined,
+        setEditedAutomationFiltersByTab: vi.fn(),
+        availableFiltersAsVisibleFiltersByTab: undefined,
+        ...overrides,
+    });
+}
+
+function mockValidateExistingAutomationFilters(
+    overrides: { isValid?: boolean; filtersAreStale?: boolean } = {},
+) {
+    mockUseValidateExistingAutomationFilters.mockReturnValue({
+        isValid: true,
+        hiddenFilterIsMissingInSavedFilters: false,
+        hiddenFilterHasDifferentValueInSavedFilter: false,
+        lockedFilterIsMissingInSavedFilters: false,
+        lockedFilterHasDifferentValueInSavedFilter: false,
+        ignoredFilterIsAppliedInSavedFilters: false,
+        removedFilterIsAppliedInSavedFilters: false,
+        commonDateFilterIsMissingInSavedVisibleFilters: false,
+        visibleFilterIsMissingInSavedFilters: false,
+        visibleFiltersAreMissing: false,
+        incompatibleSelectionTypeIsAppliedInSavedFilters: false,
+        filtersAreStale: false,
+        ...overrides,
+    });
+}
+
+function mockAutomationExportParameters() {
+    mockUseAutomationExportParameters.mockReturnValue({
+        parametersEnabled: false,
+        visibleParametersByTab: {},
+        availableParametersByTab: {},
+        flatTabId: undefined,
+        onParameterAdd: vi.fn(),
+        onParameterChange: vi.fn(),
+        onParameterDelete: vi.fn(),
+        onParameterAddByTab: vi.fn(),
+        onParameterChangeByTab: vi.fn(),
+        onParameterDeleteByTab: vi.fn(),
+        applyLatest: vi.fn(),
+        onStoreParametersChange: vi.fn(),
+    });
+}
+
 // Rebuild before every test so a mutation from one test can never leak into the next.
 beforeEach(() => {
+    vi.clearAllMocks();
     scheduledEmailDialogContextValue = buildScheduledEmailDialogContextValue();
+    mockAutomationFiltersSelect();
+    mockValidateExistingAutomationFilters();
+    mockAutomationExportParameters();
 });
 
 function setScheduledEmailDialogContext(overrides: Partial<IScheduledEmailDialogContextValue>) {
@@ -118,9 +245,6 @@ function renderEditHook() {
         () =>
             useEditScheduledEmail({
                 maxAutomationsRecipients: 10,
-                setEditedAutomationFilters: () => {},
-                setStoreFilters: () => {},
-                filtersForNewAutomation: [],
             }),
         { wrapper },
     );
@@ -194,5 +318,65 @@ describe("useEditScheduledEmail — recipients and destination data", () => {
 
         expect(result.current.users).toBe(users);
         expect(result.current.notificationChannels).toBe(notificationChannels);
+    });
+});
+
+// ---------------------------------------------------------------------------
+// Per-tab coverage — the per-tab filter path is the highest-regression surface in this package.
+// ---------------------------------------------------------------------------
+
+describe("useEditScheduledEmail — per-tab filters", () => {
+    it("keeps per-tab filters addressable through the consolidated model", () => {
+        setScheduledEmailDialogContext({ hasMultipleTabs: true });
+        mockAutomationFiltersSelect({
+            filtersByTab: [fakeFiltersTab("tab-1")],
+            editedAutomationFiltersByTab: { "tab-1": [] },
+        });
+
+        const { result } = renderEditHook();
+
+        expect(result.current.filtersByTab).toHaveLength(1);
+        expect(result.current.editedFiltersByTab).toHaveProperty("tab-1");
+        expect(typeof result.current.onFiltersByTabChange).toBe("function");
+    });
+});
+
+// ---------------------------------------------------------------------------
+// First-mount draft equivalence — the sharpest regression risk of the read-model move: the read
+// hook now runs upstream of `useScheduledEmailFormState`'s eager `useState` initializer, so a
+// one-render timing shift would silently change a new schedule's default filters. Mirrors the
+// alerting-side probe: validated against the pre-change (props-threaded) tree by stashing this
+// file's diff and running an equivalent assertion directly against `useEditScheduledEmail`, which
+// confirmed the same first-render seeding already held there.
+// ---------------------------------------------------------------------------
+
+describe("useEditScheduledEmail — first-mount filter seeding", () => {
+    it("seeds a new schedule's draft filters from the read model on first mount", () => {
+        // Dashboard schedule (no widget/insight) so the seeded filters land in a plain
+        // `content.filters`, not the widget path's per-format routing.
+        setScheduledEmailDialogContext({ widget: undefined, insight: undefined });
+
+        const filters: FilterContextItem[] = [
+            {
+                attributeFilter: {
+                    localIdentifier: "f1",
+                    displayForm: idRef("df1"),
+                    negativeSelection: false,
+                    attributeElements: { uris: ["/e1"] },
+                },
+            },
+        ];
+        mockAutomationFiltersSelect({ editedAutomationFilters: filters, storeFilters: true });
+
+        const { result } = renderEditHook();
+
+        const exportDefinition = result.current.editedAutomation.exportDefinitions?.[0];
+
+        // asserted on the FIRST render — not after an act()/settle, which would hide a one-render lag
+        expect(
+            exportDefinition && isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload)
+                ? exportDefinition.requestPayload.content.filters
+                : undefined,
+        ).toHaveLength(1);
     });
 });

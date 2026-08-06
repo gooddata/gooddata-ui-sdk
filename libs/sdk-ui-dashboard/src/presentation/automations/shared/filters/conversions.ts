@@ -338,7 +338,7 @@ export function resolveMvfDimensionalityLocalRefs(
 }
 
 /**
- * Similar to {@link isAllTimeDateFilterFixed}, but only matches *noop* all-time filters.
+ * Matches all-time date filters that are *noop*, i.e. that have no effect on execution.
  *
  * @remarks
  * Noop all-time filters are implicit defaults and have no effect on execution. All-time filters with `emptyValueHandling`

@@ -11,7 +11,11 @@ import {
     type IAlignPoint,
     type ITimezoneSelectSpecialItem,
     TimezoneSelect,
+    getTimezoneDisplayLabel,
 } from "@gooddata/sdk-ui-kit";
+
+import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
+import { selectTimezone } from "../../model/store/config/configSelectors.js";
 
 const BUBBLE_ALIGN_POINTS: IAlignPoint[] = [{ align: "bc tl" }];
 
@@ -24,25 +28,25 @@ interface ITimezoneOptionProps {
 
 export function TimezoneOption({ label, tooltip, timezoneConfig, onChange }: ITimezoneOptionProps) {
     const intl = useIntl();
+    const workspaceTimezone = useDashboardSelector(selectTimezone);
+    const workspaceTimezoneName = getTimezoneDisplayLabel(workspaceTimezone!);
 
     const specialItems: ITimezoneSelectSpecialItem[] = useMemo(() => {
-        // TODO INE (CQ-2726): resolve the effective workspace timezone and include it in the item label
-        const workspaceItemLabel = intl.formatMessage({
-            id: "settingsDashboardDialog.section.timezone.defaultTimezone.workspace",
-        });
-        // plain ID here — the label template already brackets the value, so the "id (offset)"
-        // display label would produce nested brackets
-        const browserTimezoneId = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        const browserItemLabel = intl.formatMessage(
-            { id: "settingsDashboardDialog.section.timezone.defaultTimezone.fromBrowser" },
-            { timezone: browserTimezoneId },
+        const workspaceItemLabel = intl.formatMessage(
+            {
+                id: "settingsDashboardDialog.section.timezone.defaultTimezone.workspace",
+            },
+            { timezone: workspaceTimezoneName },
         );
+        const browserItemLabel = intl.formatMessage({
+            id: "settingsDashboardDialog.section.timezone.defaultTimezone.fromBrowser",
+        });
 
         return [
             { id: undefined, label: workspaceItemLabel },
             { id: BROWSER_DETECTED, label: browserItemLabel },
         ];
-    }, [intl]);
+    }, [intl, workspaceTimezoneName]);
 
     return (
         <div className="configuration-category-item">

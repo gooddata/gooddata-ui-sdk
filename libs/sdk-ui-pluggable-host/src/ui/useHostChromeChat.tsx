@@ -72,8 +72,6 @@ export interface IUseHostChromeChatArgs {
     embedded?: boolean;
     /** Delegates a chat link click to the active app; returns true if the app handled it. */
     onAppLinkClick?: (link: { type?: string; id?: string; itemUrl?: string; newTab?: boolean }) => boolean;
-    /** Delegates a chat event receive to the active app. */
-    onAppEventReceive?: (event: GenAIChatEvent) => void;
 }
 
 /**
@@ -90,7 +88,6 @@ export function useHostChromeChat({
     dialogPosition,
     embedded,
     onAppLinkClick,
-    onAppEventReceive,
 }: IUseHostChromeChatArgs): IHostChromeChat {
     const [isChatOpen, setIsChatOpen] = useState(false);
     const [askedQuestion, setAskedQuestion] = useState<string | null>(null);
@@ -161,9 +158,8 @@ export function useHostChromeChat({
     const handleChatEvent = useCallback(
         (event: GenAIChatEvent) => {
             telemetry?.trackEvent(event.name, event.payload as unknown as Record<string, unknown>);
-            onAppEventReceive?.(event);
         },
-        [telemetry, onAppEventReceive],
+        [telemetry],
     );
 
     const showChatItem = useGenAiChatAvailability(

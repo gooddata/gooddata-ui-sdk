@@ -47,10 +47,24 @@ vi.mock("../../../../shared/automationFilters/useAutomationFiltersSelect.js", ()
     getDefaultSelectedFiltersFromFiltersByTab: vi.fn(),
 }));
 
+// `useValidateExistingAutomationFilters` and `useAutomationExportParameters` are the two
+// store-backed hooks `useScheduledEmailFilters` now calls directly. Both reach into the dashboard
+// Redux store via `useDashboardSelector`, which has no provider in this unit test, so they are
+// mocked the same way alerting's `useAlertFilters.test.tsx` mocks the first of the two.
+vi.mock("../../../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js", () => ({
+    useValidateExistingAutomationFilters: vi.fn(),
+}));
+
+vi.mock("../../../../shared/automationFilters/useAutomationExportParameters.js", () => ({
+    useAutomationExportParameters: vi.fn(),
+}));
+
 // ---------------------------------------------------------------------------
 // Imports placed AFTER vi.mock() calls to pick up mocked versions
 // ---------------------------------------------------------------------------
 
+import * as validateExistingAutomationFiltersModule from "../../../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
+import * as automationExportParametersModule from "../../../../shared/automationFilters/useAutomationExportParameters.js";
 import { getDefaultSelectedFiltersFromFiltersByTab } from "../../../../shared/automationFilters/useAutomationFiltersSelect.js";
 import {
     getAppliedDashboardFilters,
@@ -72,6 +86,12 @@ const getAppliedWidgetFiltersSpy = vi.mocked(getAppliedWidgetFilters);
 const getVisibleFiltersByFiltersSpy = vi.mocked(getVisibleFiltersByFilters);
 const getVisibleFiltersByFiltersByTabSpy = vi.mocked(getVisibleFiltersByFiltersByTab);
 const getDefaultSelectedFiltersFromFiltersByTabSpy = vi.mocked(getDefaultSelectedFiltersFromFiltersByTab);
+const useValidateExistingAutomationFiltersSpy = vi.mocked(
+    validateExistingAutomationFiltersModule.useValidateExistingAutomationFilters,
+);
+const useAutomationExportParametersSpy = vi.mocked(
+    automationExportParametersModule.useAutomationExportParameters,
+);
 
 // ---------------------------------------------------------------------------
 // Fixtures
@@ -230,18 +250,52 @@ const SENTINEL_VISIBLE_FILTERS_BY_TAB: Record<string, IAutomationVisibleFilter[]
     tab1: [{ localIdentifier: "visible-1" }],
 };
 
+const SENTINEL_VALIDATION_RESULT = {
+    isValid: true,
+    hiddenFilterIsMissingInSavedFilters: false,
+    hiddenFilterHasDifferentValueInSavedFilter: false,
+    lockedFilterIsMissingInSavedFilters: false,
+    lockedFilterHasDifferentValueInSavedFilter: false,
+    ignoredFilterIsAppliedInSavedFilters: false,
+    removedFilterIsAppliedInSavedFilters: false,
+    commonDateFilterIsMissingInSavedVisibleFilters: false,
+    visibleFilterIsMissingInSavedFilters: false,
+    visibleFiltersAreMissing: false,
+    incompatibleSelectionTypeIsAppliedInSavedFilters: false,
+    filtersAreStale: false,
+};
+
+const SENTINEL_PARAMETERS_RESULT = {
+    parametersEnabled: false,
+    visibleParametersByTab: {},
+    availableParametersByTab: {},
+    flatTabId: undefined,
+    onParameterAdd: vi.fn(),
+    onParameterChange: vi.fn(),
+    onParameterDelete: vi.fn(),
+    onParameterAddByTab: vi.fn(),
+    onParameterChangeByTab: vi.fn(),
+    onParameterDeleteByTab: vi.fn(),
+    applyLatest: vi.fn(),
+    onStoreParametersChange: vi.fn(),
+};
+
 const BASE_PROPS: IUseScheduledEmailFiltersProps = {
     setEditedAutomation: vi.fn(),
+    scheduledExportToEdit: undefined,
     widget: undefined,
     insight: undefined,
+    editedAutomationFilters: [],
     setEditedAutomationFilters: vi.fn(),
     setEditedAutomationFiltersByTab: vi.fn(),
+    availableFilters: undefined,
     availableFiltersAsVisibleFilters: undefined,
     availableFiltersAsVisibleFiltersByTab: undefined,
-    filtersDataByTab: undefined,
+    filtersByTab: undefined,
     storeFilters: true,
     setStoreFilters: vi.fn(),
     filtersForNewAutomation: [],
+    setParametersWire: vi.fn(),
 };
 
 // ---------------------------------------------------------------------------
@@ -263,6 +317,8 @@ beforeEach(() => {
     getVisibleFiltersByFiltersSpy.mockReturnValue(SENTINEL_VISIBLE_FILTERS);
     getVisibleFiltersByFiltersByTabSpy.mockReturnValue(SENTINEL_VISIBLE_FILTERS_BY_TAB);
     getDefaultSelectedFiltersFromFiltersByTabSpy.mockReturnValue(undefined);
+    useValidateExistingAutomationFiltersSpy.mockReturnValue(SENTINEL_VALIDATION_RESULT);
+    useAutomationExportParametersSpy.mockReturnValue(SENTINEL_PARAMETERS_RESULT);
 });
 
 // ---------------------------------------------------------------------------
@@ -441,10 +497,10 @@ describe("useScheduledEmailFilters — onFiltersByTabChange", () => {
         expect(returned.metadata?.visibleFiltersByTab).toBe(SENTINEL_VISIBLE_FILTERS_BY_TAB);
     });
 
-    it("shouldStoreFilters=true applies per-tab hiddenFilters from filtersDataByTab and sets metadata.visibleFiltersByTab", () => {
+    it("shouldStoreFilters=true applies per-tab hiddenFilters from filtersByTab and sets metadata.visibleFiltersByTab", () => {
         const tab1HiddenFilters = [fakeFilterContextItem("tab1-hidden")];
-        const filtersDataByTab = [fakeFiltersTab("tab1", tab1HiddenFilters)];
-        const { result, setEditedAutomation } = renderFiltersHook({ filtersDataByTab });
+        const filtersByTab = [fakeFiltersTab("tab1", tab1HiddenFilters)];
+        const { result, setEditedAutomation } = renderFiltersHook({ filtersByTab });
 
         const tab1Filters = [fakeFilterContextItem("tab1-f1")];
         const newFiltersByTab = { tab1: tab1Filters };
@@ -463,8 +519,8 @@ describe("useScheduledEmailFilters — onFiltersByTabChange", () => {
         });
     });
 
-    it("resolves tabHiddenFilters to [] when the tab is missing from filtersDataByTab", () => {
-        const { result } = renderFiltersHook({ filtersDataByTab: [fakeFiltersTab("other-tab")] });
+    it("resolves tabHiddenFilters to [] when the tab is missing from filtersByTab", () => {
+        const { result } = renderFiltersHook({ filtersByTab: [fakeFiltersTab("other-tab")] });
         const tab1Filters = [fakeFilterContextItem("tab1-f1")];
 
         result.current.onFiltersByTabChange({ tab1: tab1Filters }, true);
@@ -511,20 +567,20 @@ describe("useScheduledEmailFilters — onApplyCurrentFilters routing", () => {
         );
     });
 
-    it("no widget, filtersDataByTab yields defaults: routes to onFiltersByTabChange", () => {
+    it("no widget, filtersByTab yields defaults: routes to onFiltersByTabChange", () => {
         const defaults = { tab1: [fakeFilterContextItem("default-1")] };
         getDefaultSelectedFiltersFromFiltersByTabSpy.mockReturnValue(defaults);
-        const filtersDataByTab = [fakeFiltersTab("tab1")];
+        const filtersByTab = [fakeFiltersTab("tab1")];
 
         const { result, setEditedAutomationFiltersByTab, setEditedAutomationFilters } = renderFiltersHook({
             widget: undefined,
             insight: undefined,
-            filtersDataByTab,
+            filtersByTab,
         });
 
         result.current.onApplyCurrentFilters();
 
-        expect(getDefaultSelectedFiltersFromFiltersByTabSpy).toHaveBeenCalledWith(filtersDataByTab);
+        expect(getDefaultSelectedFiltersFromFiltersByTabSpy).toHaveBeenCalledWith(filtersByTab);
         expect(setEditedAutomationFiltersByTab).toHaveBeenCalledWith(defaults);
         expect(setEditedAutomationFilters).not.toHaveBeenCalled();
     });
@@ -596,6 +652,40 @@ describe("useScheduledEmailFilters — onStoreFiltersChange fan-out", () => {
         expect(setEditedAutomationFiltersByTab).not.toHaveBeenCalled();
         expect(setEditedAutomationFilters).toHaveBeenCalledWith(filters);
     });
+
+    // The store-filters toggle gates parameter persistence too, and the hook owns that half itself
+    // rather than leaving it to the caller. Both directions are asserted: a handler hardcoding
+    // `true` would pass a one-directional test.
+    it("fires the parameters half of the gate with the new value, in both directions", () => {
+        const { result } = renderFiltersHook({});
+
+        result.current.onStoreFiltersChange(true, [fakeFilterContextItem("f1")], undefined);
+        expect(SENTINEL_PARAMETERS_RESULT.onStoreParametersChange).toHaveBeenLastCalledWith(true);
+
+        result.current.onStoreFiltersChange(false, [fakeFilterContextItem("f1")], undefined);
+        expect(SENTINEL_PARAMETERS_RESULT.onStoreParametersChange).toHaveBeenLastCalledWith(false);
+    });
+
+    it("fires the parameters half even when neither filters nor filtersByTab is supplied", () => {
+        const { result, setEditedAutomationFilters, setEditedAutomationFiltersByTab } = renderFiltersHook({});
+
+        result.current.onStoreFiltersChange(true, undefined, undefined);
+
+        expect(setEditedAutomationFilters).not.toHaveBeenCalled();
+        expect(setEditedAutomationFiltersByTab).not.toHaveBeenCalled();
+        expect(SENTINEL_PARAMETERS_RESULT.onStoreParametersChange).toHaveBeenCalledWith(true);
+    });
+
+    it("fires the parameters half after the filters half", () => {
+        const { result, setEditedAutomationFilters } = renderFiltersHook({});
+
+        result.current.onStoreFiltersChange(true, [fakeFilterContextItem("f1")], undefined);
+
+        const filtersOrder = setEditedAutomationFilters.mock.invocationCallOrder[0];
+        const parametersOrder =
+            SENTINEL_PARAMETERS_RESULT.onStoreParametersChange.mock.invocationCallOrder[0];
+        expect(filtersOrder).toBeLessThan(parametersOrder);
+    });
 });
 
 // ---------------------------------------------------------------------------
@@ -626,6 +716,53 @@ describe("useScheduledEmailFilters — rerender / stale-closure guard", () => {
             filters,
             SENTINEL_HIDDEN_FILTERS,
             true,
+        );
+    });
+});
+
+// ---------------------------------------------------------------------------
+// Case 9: model shape
+// ---------------------------------------------------------------------------
+
+describe("useScheduledEmailFilters — model shape", () => {
+    it("exposes the filter model and leaks no other representation", () => {
+        const { result } = renderHook(() => useScheduledEmailFilters(BASE_PROPS));
+
+        const keys = Object.keys(result.current);
+        expect(keys).toContain("selectedFilters");
+        expect(keys).toContain("availableFilters");
+        expect(keys).toContain("automationIsValid");
+        expect(keys).toContain("filtersAreStale");
+        expect(keys).not.toContain("availableFiltersAsVisibleFilters");
+        expect(keys).not.toContain("filtersForNewAutomation");
+        expect(keys).not.toContain("availableFiltersAsVisibleFiltersByTab");
+
+        expect(keys.sort()).toEqual(
+            [
+                "selectedFilters",
+                "availableFilters",
+                "storeFilters",
+                "filtersByTab",
+                "editedFiltersByTab",
+                "onFiltersChange",
+                "onFiltersByTabChange",
+                "onApplyCurrentFilters",
+                "onStoreFiltersChange",
+                "automationIsValid",
+                "filtersAreStale",
+                "parametersEnabled",
+                "visibleParametersByTab",
+                "availableParametersByTab",
+                "flatTabId",
+                "onParameterAdd",
+                "onParameterChange",
+                "onParameterDelete",
+                "onParameterAddByTab",
+                "onParameterChangeByTab",
+                "onParameterDeleteByTab",
+                "applyLatest",
+                "onStoreParametersChange",
+            ].sort(),
         );
     });
 });

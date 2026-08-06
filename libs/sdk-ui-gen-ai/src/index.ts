@@ -14,6 +14,7 @@ export {
     type GenAIChatProps,
     type GenAIAssistantProps,
 } from "./components/GenAIChat.js";
+export { type GenAIAssistantMode } from "./components/hooks/useFullscreenMode.js";
 export { GenAIConversations, type GenAIConversationsProps } from "./components/GenAiConversations.js";
 export { GenAiStore, type GenAiStoreProps } from "./components/GenAiStore.js";
 export {
@@ -98,6 +99,7 @@ export {
     startNewConversationAction,
     setCurrentConversationAction,
 } from "./store/messages/messagesSlice.js";
+export { setFullscreenAction } from "./store/chatWindow/chatWindowSlice.js";
 export { type LinkHandlerEvent } from "./components/ConfigContext.js";
 export { useGenAiChatAvailability } from "./hooks/useGenAiChatAvailability.js";
 

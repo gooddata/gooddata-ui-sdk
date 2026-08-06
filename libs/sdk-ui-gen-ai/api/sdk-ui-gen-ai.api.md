@@ -248,6 +248,9 @@ export type ErrorContents = {
 export function GenAIAssistant(props: GenAIAssistantProps): JSX.Element;
 
 // @public
+export type GenAIAssistantMode = "docked" | "fullscreen";
+
+// @public
 export type GenAIAssistantProps = Omit<GenAiStoreProps, "children"> & {
     locale?: string;
     onLinkClick?: (linkClickEvent: LinkHandlerEvent) => string | undefined;
@@ -258,6 +261,8 @@ export type GenAIAssistantProps = Omit<GenAiStoreProps, "children"> & {
     LandingScreenComponentProvider?: () => ComponentType;
     DisclaimerComponentProvider?: () => ComponentType | null;
     className?: string;
+    mode?: GenAIAssistantMode;
+    onModeChange?: (mode: GenAIAssistantMode) => void;
 };
 
 // @public @deprecated
@@ -526,6 +531,11 @@ export type SemanticSearchContents = {
 export const setCurrentConversationAction: ActionCreatorWithPayload<    {
 conversation: IChatConversationLocal;
 }, "messages/setCurrentConversationAction">;
+
+// @public
+export const setFullscreenAction: ActionCreatorWithPayload<    {
+isFullscreen: boolean;
+}, "chatWindow/setFullscreenAction">;
 
 // @public (undocumented)
 export const startNewConversationAction: ActionCreatorWithoutPayload<"messages/startNewConversationAction">;

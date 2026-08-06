@@ -107,6 +107,7 @@ import { renameDashboardTabHandler } from "./tabs/renameDashboardTabHandler.js";
 import { repositionDashboardTabHandler } from "./tabs/repositionDashboardTabHandler.js";
 import { startRenamingDashboardTabHandler } from "./tabs/startRenamingDashboardTabHandler.js";
 import { switchDashboardTabHandler } from "./tabs/switchDashboardTabHandler.js";
+import { changeDashboardTimezoneOverrideHandler } from "./timezone/changeDashboardTimezoneOverrideHandler.js";
 import { loadAllWorkspaceUsersHandler } from "./users/loadAllUsersHandler.js";
 import { addDrillDownForInsightWidgetHandler } from "./widgets/addDrillDownForInsightWidgetHandler.js";
 import { addVisualizationToSwticherWidgetContentHandler } from "./widgets/addVisualizationToSwitcherWidgetHandler.js";
@@ -157,6 +158,7 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.CHANGE_RENDER_MODE": changeRenderModeHandler,
     "GDC.DASH/CMD.CHANGE_DENSITY": changeDashboardDensityHandler,
     "GDC.DASH/CMD.OPEN_DENSITY_DIALOG": requestOpenDensityDialogHandler,
+    "GDC.DASH/CMD.CHANGE_TIMEZONE_OVERRIDE": changeDashboardTimezoneOverrideHandler,
     "GDC.DASH/CMD.SHARING.CHANGE": changeSharingHandler,
     "GDC.DASH/CMD.EXPORT.PDF": exportDashboardToPdfHandler,
     "GDC.DASH/CMD.EXPORT.EXCEL": exportToTabularHandler,

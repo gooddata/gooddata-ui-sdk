@@ -174,4 +174,5 @@ export type IconType =
     | "pin"
     | "unpin"
     | "speechBubble"
-    | "pieChart";
+    | "pieChart"
+    | "timezone";

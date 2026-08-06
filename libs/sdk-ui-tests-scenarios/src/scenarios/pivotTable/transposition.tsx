@@ -1,11 +1,10 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { action } from "storybook/actions";
-
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newTotal } from "@gooddata/sdk-model";
 import { type IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
 
+import { scenarioAction } from "../../scenarioAction.js";
 import { scenariosFor } from "../../scenarioGroup.js";
 import {
     AmountMeasurePredicate,
@@ -96,7 +95,7 @@ export const transposition = scenariosFor<IPivotTableProps>("PivotTable", PivotT
             measureGroupDimension: "rows",
         },
         drillableItems: [ProductPredicate, DepartmentPredicate, AmountMeasurePredicate, WonMeasurePredicate],
-        onDrill: action("onDrill"),
+        onDrill: scenarioAction("onDrill"),
     })
     .addScenario("two measures in rows and only column attrs on left", {
         ...PivotTableWithMeasuresAndColumnsOnly,
@@ -112,7 +111,7 @@ export const transposition = scenariosFor<IPivotTableProps>("PivotTable", PivotT
             columnHeadersPosition: "left",
         },
         drillableItems: [DepartmentPredicate, RegionPredicate, AmountMeasurePredicate, WonMeasurePredicate],
-        onDrill: action("onDrill"),
+        onDrill: scenarioAction("onDrill"),
     })
     .addScenario("two measures in rows and column attrs on top, with invalid drilling on attributes", {
         ...PivotTableWithMeasuresAndColumnsOnly,
@@ -121,7 +120,7 @@ export const transposition = scenariosFor<IPivotTableProps>("PivotTable", PivotT
             columnHeadersPosition: "top",
         },
         drillableItems: [DepartmentPredicate, RegionPredicate],
-        onDrill: action("onDrill"),
+        onDrill: scenarioAction("onDrill"),
     })
     .addScenario("two measures in rows and column attrs on top, with drilling on metrics", {
         ...PivotTableWithMeasuresAndColumnsOnly,
@@ -130,7 +129,7 @@ export const transposition = scenariosFor<IPivotTableProps>("PivotTable", PivotT
             columnHeadersPosition: "top",
         },
         drillableItems: [AmountMeasurePredicate, WonMeasurePredicate],
-        onDrill: action("onDrill"),
+        onDrill: scenarioAction("onDrill"),
     })
     .addScenario("two measures in rows and column attrs on left, with totals", {
         ...PivotTableWithMeasuresAndColumnsOnly,

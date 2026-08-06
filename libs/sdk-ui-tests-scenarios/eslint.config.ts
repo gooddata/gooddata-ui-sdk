@@ -1,14 +1,3 @@
 // (C) 2020-2026 GoodData Corporation
 
-import config from "@gooddata/eslint-config/oxlint-esm-react-vitest";
-
-export default [
-    ...config,
-    // {
-    //     languageOptions: {
-    //         globals: {
-    //             fixture: true,
-    //         },
-    //     },
-    // },
-];
+export { default } from "@gooddata/eslint-config/oxlint-esm-react-vitest";

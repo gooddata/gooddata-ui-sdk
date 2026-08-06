@@ -117,6 +117,18 @@ export interface IUiState {
         sanitizedDrillWidgetRefs: ObjRef[];
         invalidCustomUrlDrillParameterWidgets: IInvalidCustomUrlDrillParameterInfo[];
     };
+    /**
+     * Session-only ad-hoc timezone override selected by the viewer in view mode. Always a
+     * concrete IANA timezone ID — never the browser-detected sentinel. Undefined means no
+     * override is active (the dashboard/workspace configuration applies). This value is never
+     * persisted with the dashboard.
+     *
+     * @alpha
+     */
+    timezoneOverride: string | undefined;
+    timezoneDialog: {
+        open: boolean;
+    };
     /** @internal */
     draggingWidgetSource: DraggableLayoutItem | undefined;
     draggingWidgetTarget: ILayoutItemPath | undefined;
@@ -199,6 +211,10 @@ export const uiInitialState: IUiState = {
         invalidDrillWidgetRefs: [],
         sanitizedDrillWidgetRefs: [],
         invalidCustomUrlDrillParameterWidgets: [],
+    },
+    timezoneOverride: undefined,
+    timezoneDialog: {
+        open: false,
     },
     draggingWidgetSource: undefined,
     draggingWidgetTarget: undefined,

@@ -83,7 +83,7 @@ describe("genAIConvertor", () => {
                 },
             };
 
-            const converted = convertChatConversationItemFromBackend(item, [], dateNormalizer);
+            const converted = convertChatConversationItemFromBackend(item, [], dateNormalizer)!;
             const whatIfPart = (converted.content as IChatConversationMultipartContent)
                 .parts[0] as IChatConversationWhatIfContent;
 
@@ -148,7 +148,7 @@ describe("genAIConvertor", () => {
         });
 
         const getFirstResult = (item: AiConversationItemResponse) => {
-            const converted = convertChatConversationItemFromBackend(item, [], dateNormalizer);
+            const converted = convertChatConversationItemFromBackend(item, [], dateNormalizer)!;
             const content = (converted.content as { parts: IChatConversationMultipartPart[] }).parts[0];
             if (!isChatConversationSearchContent(content)) {
                 throw new Error("Expected searchResults content");
@@ -271,7 +271,7 @@ describe("genAIConvertor", () => {
                 },
             };
 
-            const converted = convertChatConversationItemFromBackend(item, [], dateNormalizer);
+            const converted = convertChatConversationItemFromBackend(item, [], dateNormalizer)!;
 
             expect(converted.content).toEqual({
                 type: "toolResult",
@@ -299,13 +299,61 @@ describe("genAIConvertor", () => {
                 },
             };
 
-            const converted = convertChatConversationItemFromBackend(item, [], dateNormalizer);
+            const converted = convertChatConversationItemFromBackend(item, [], dateNormalizer)!;
 
             expect(converted.content).toEqual({
                 type: "toolResult",
                 callId: "call-2",
                 result: invalidJson,
             });
+        });
+    });
+
+    describe("unrecognized content/part types", () => {
+        it("drops the whole item when its content type is unrecognized", () => {
+            const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+            const item: AiConversationItemResponse = {
+                conversationId: "conv-1",
+                itemIndex: 0,
+                itemId: "item-id",
+                role: "assistant",
+                createdAt: "2024-01-01T00:00:00Z",
+                content: { type: "somethingNew" } as unknown as AiConversationItemResponse["content"],
+            };
+
+            const converted = convertChatConversationItemFromBackend(item, [], dateNormalizer);
+
+            expect(converted).toBeUndefined();
+            expect(errorSpy).toHaveBeenCalled();
+            errorSpy.mockRestore();
+        });
+
+        it("drops only the unrecognized part, keeping known parts in a multipart item", () => {
+            const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+            const item = {
+                conversationId: "conv-1",
+                itemIndex: 0,
+                itemId: "item-id",
+                role: "assistant",
+                createdAt: "2024-01-01T00:00:00Z",
+                content: {
+                    type: "multipart",
+                    parts: [
+                        { type: "text", text: "known part" },
+                        { type: "somethingNew" },
+                        { type: "text", text: "another known part" },
+                    ],
+                },
+            } as unknown as AiConversationItemResponse;
+
+            const converted = convertChatConversationItemFromBackend(item, [], dateNormalizer)!;
+
+            expect((converted.content as IChatConversationMultipartContent).parts).toEqual([
+                { type: "text", text: "known part" },
+                { type: "text", text: "another known part" },
+            ]);
+            expect(errorSpy).toHaveBeenCalled();
+            errorSpy.mockRestore();
         });
     });
 });

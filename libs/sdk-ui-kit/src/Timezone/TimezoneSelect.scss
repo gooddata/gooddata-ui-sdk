@@ -2,8 +2,16 @@
 
 @use "../../styles/scss/variables";
 
+.gd-timezone-select {
+    width: 300px;
+}
+
 .gd-timezone-select__body {
     width: 300px;
+}
+
+.gd-timezone-select__button {
+    width: 100%;
 }
 
 .gd-timezone-select__search {

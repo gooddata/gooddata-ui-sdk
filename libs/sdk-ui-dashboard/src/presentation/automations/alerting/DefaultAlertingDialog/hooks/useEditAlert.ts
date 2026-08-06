@@ -1,9 +1,8 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { type FilterContextItem, type IAutomationVisibleFilter } from "@gooddata/sdk-model";
-
 import { useAlertingDialogContext } from "../../../contexts/AlertingDialogContext.js";
 import { useAutomationsContext } from "../../../contexts/AutomationsContext.js";
+import { useAutomationFiltersSelect } from "../../../shared/automationFilters/useAutomationFiltersSelect.js";
 
 import { useAlertFilters } from "./useAlertFilters.js";
 import { useAlertFormState } from "./useAlertFormState.js";
@@ -14,22 +13,10 @@ import { useAlertThreshold } from "./useAlertThreshold.js";
 
 export interface IUseEditAlertProps {
     maxAutomationsRecipients: number;
-    editedAutomationFilters?: FilterContextItem[];
-
-    setEditedAutomationFilters: (filters: FilterContextItem[]) => void;
-    availableFiltersAsVisibleFilters?: IAutomationVisibleFilter[] | undefined;
-    filtersForNewAutomation: FilterContextItem[];
     externalRecipientOverride?: string;
 }
 
-export function useEditAlert({
-    editedAutomationFilters,
-    maxAutomationsRecipients,
-    setEditedAutomationFilters,
-    availableFiltersAsVisibleFilters,
-    filtersForNewAutomation,
-    externalRecipientOverride,
-}: IUseEditAlertProps) {
+export function useEditAlert({ maxAutomationsRecipients, externalRecipientOverride }: IUseEditAlertProps) {
     const { catalogDateDatasets, catalogAttributes, separators, weekStart, timezone, allowHourlyRecurrence } =
         useAutomationsContext();
 
@@ -43,6 +30,14 @@ export function useEditAlert({
         widget,
         insight,
     } = useAlertingDialogContext();
+
+    const {
+        editedAutomationFilters,
+        setEditedAutomationFilters,
+        availableFilters,
+        availableFiltersAsVisibleFilters,
+        filtersForNewAutomation,
+    } = useAutomationFiltersSelect({ automationToEdit: alertToEdit, widget });
 
     const isInvalidConnectionToInsight = alertToEdit?.metadata?.widget && !insight;
 
@@ -119,9 +114,15 @@ export function useEditAlert({
         notificationChannels,
     });
 
-    const { onFiltersChange, onApplyCurrentFilters } = useAlertFilters({
+    // Kept whole rather than destructured: every member is re-exposed unchanged, so spreading it into
+    // the return means a member can never be dropped by forgetting to re-list it. What the model may
+    // contain is gated by its own shape test, not here.
+    const filterModel = useAlertFilters({
         setEditedAutomation,
+        alertToEdit,
+        editedAutomationFilters,
         setEditedAutomationFilters,
+        availableFilters,
         filtersForNewAutomation,
         availableFiltersAsVisibleFilters,
         dashboardHiddenFilters,
@@ -168,8 +169,10 @@ export function useEditAlert({
     return {
         onTitleChange,
         onRecipientsChange,
-        onFiltersChange,
-        onApplyCurrentFilters,
+        // Filter model, absorbed from `useAlertFilters`. Spread rather than re-listed so a member
+        // cannot be dropped by omission; its `availableFilters` is the model's, not the raw
+        // selection hook's.
+        ...filterModel,
         automationParameters,
         availableParameters,
         onParameterChange,

@@ -130,7 +130,7 @@ const screenshotProps: INeobackstopConfig = {
     closed: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
     opened: {
         readySelector: { selector: ".screenshot-target", state: State.Attached },
-        clickSelector: '[data-testid="s-timezone-select-button"]',
+        clickSelector: ".s-timezone-select-button",
         postInteractionWait: { selector: '[data-testid="s-timezone-select-list"]', delay: 200 },
     },
 };

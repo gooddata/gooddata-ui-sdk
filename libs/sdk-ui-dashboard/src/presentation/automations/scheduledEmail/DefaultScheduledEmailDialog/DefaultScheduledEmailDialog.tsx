@@ -7,7 +7,6 @@ import { defineMessage, useIntl } from "react-intl";
 
 import {
     type DashboardAttachmentType,
-    type FilterContextItem,
     type IAutomationMetadataObject,
     type IAutomationMetadataObjectDefinition,
     type WidgetAttachmentType,
@@ -37,9 +36,6 @@ import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
 import { useScheduledEmailDialogContext } from "../../contexts/ScheduledEmailDialogContext.js";
 import { ApplyCurrentFiltersConfirmDialog } from "../../shared/automationFilters/components/ApplyLatestFiltersConfirmDialog.js";
 import { AutomationFiltersSelect } from "../../shared/automationFilters/components/AutomationFiltersSelect.js";
-import { useValidateExistingAutomationFilters } from "../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
-import { useAutomationExportParameters } from "../../shared/automationFilters/useAutomationExportParameters.js";
-import { useAutomationFiltersSelect } from "../../shared/automationFilters/useAutomationFiltersSelect.js";
 import { DeleteScheduleConfirmDialog } from "../DefaultScheduledEmailManagementDialog/components/DeleteScheduleConfirmDialog.js";
 import { useScheduleEmailDialogAccessibility } from "../hooks/useScheduleEmailDialogAccessibility.js";
 import { type IScheduledEmailDialogProps } from "../types.js";
@@ -134,42 +130,13 @@ export function ScheduledMailDialogRenderer({
         externalRecipient: externalRecipientOverride,
         isSecondaryTitleVisible,
     } = useAutomationsContext();
-    // Read from context because this component calls useAutomationFiltersSelect,
-    // useAutomationExportParameters and useValidateExistingAutomationFilters directly, and the
-    // filter-select call must run before useEditScheduledEmail, which consumes its output. Removed
-    // with the filter read-model consolidation (EB-867), which retires these call sites.
-    const {
-        exportTemplates,
-        widgetTitle,
-        hasMultipleTabs,
-        scheduledExportToEdit,
-        widget,
-        insight,
-        dashboardFilters,
-    } = useScheduledEmailDialogContext();
+    const { exportTemplates, widgetTitle, hasMultipleTabs, scheduledExportToEdit, widget, dashboardFilters } =
+        useScheduledEmailDialogContext();
 
     const handleScheduleDeleteSuccess = () => {
         onDeleteSuccess?.();
         setScheduledEmailToDelete(null);
     };
-
-    const {
-        editedAutomationFilters,
-        setEditedAutomationFilters,
-        storeFilters,
-        setStoreFilters,
-        availableFilters,
-        availableFiltersAsVisibleFilters,
-        filtersForNewAutomation,
-        // filter by tab data
-        filtersByTab,
-        editedAutomationFiltersByTab,
-        setEditedAutomationFiltersByTab,
-        availableFiltersAsVisibleFiltersByTab,
-    } = useAutomationFiltersSelect({
-        automationToEdit: scheduledExportToEdit,
-        widget,
-    });
 
     const {
         locale,
@@ -219,27 +186,16 @@ export function ScheduledMailDialogRenderer({
         onApplyCurrentFilters,
         onStoreFiltersChange,
         onFiltersByTabChange,
-        setParametersWire,
         enableAutomationEvaluationMode,
         users,
         usersError,
         notificationChannels,
-    } = useEditScheduledEmail({
+        selectedFilters,
+        availableFilters,
         storeFilters,
-        editedAutomationFilters,
-        maxAutomationsRecipients,
-        setEditedAutomationFilters,
-        setStoreFilters,
-        availableFiltersAsVisibleFilters,
-        filtersForNewAutomation,
-        externalRecipientOverride,
-        filtersDataByTab: filtersByTab,
-        editedAutomationFiltersByTab,
-        setEditedAutomationFiltersByTab,
-        availableFiltersAsVisibleFiltersByTab,
-    });
-
-    const {
+        filtersByTab,
+        editedFiltersByTab,
+        automationIsValid,
         parametersEnabled,
         visibleParametersByTab,
         availableParametersByTab,
@@ -251,34 +207,13 @@ export function ScheduledMailDialogRenderer({
         onParameterChangeByTab,
         onParameterDeleteByTab,
         applyLatest: applyLatestParameters,
-        onStoreParametersChange,
-    } = useAutomationExportParameters({
-        automationToEdit: scheduledExportToEdit,
-        widget,
-        storeParameters: storeFilters,
-        setParametersWire,
+    } = useEditScheduledEmail({
+        maxAutomationsRecipients,
+        externalRecipientOverride,
     });
 
-    // The store-filters checkbox gates parameter persistence too; the new value is passed to both
-    // sides because the `storeFilters` prop still holds the old one at call time.
-    const handleStoreFiltersChange = useCallback(
-        (
-            value: boolean,
-            filters?: FilterContextItem[],
-            filtersByTabParam?: Record<string, FilterContextItem[]>,
-        ) => {
-            onStoreFiltersChange(value, filters, filtersByTabParam);
-            onStoreParametersChange(value);
-        },
-        [onStoreFiltersChange, onStoreParametersChange],
-    );
-
-    const { isValid } = useValidateExistingAutomationFilters({
-        automationToEdit: scheduledExportToEdit,
-        widget,
-        insight,
-    });
-    const [isApplyCurrentFiltersDialogOpen, setIsApplyCurrentFiltersDialogOpen] = useState(!isValid);
+    const [isApplyCurrentFiltersDialogOpen, setIsApplyCurrentFiltersDialogOpen] =
+        useState(!automationIsValid);
 
     const { handleSaveScheduledEmail, isSavingScheduledEmail, savingErrorMessage } =
         useSaveScheduledEmailToBackend(editedAutomation, {
@@ -507,16 +442,16 @@ export function ScheduledMailDialogRenderer({
                                     >
                                         <AutomationFiltersSelect
                                             availableFilters={availableFilters}
-                                            selectedFilters={editedAutomationFilters}
+                                            selectedFilters={selectedFilters}
                                             onFiltersChange={onFiltersChange}
                                             storeFilters={storeFilters}
-                                            onStoreFiltersChange={handleStoreFiltersChange}
+                                            onStoreFiltersChange={onStoreFiltersChange}
                                             isDashboardAutomation={!widget}
                                             overlayPositionType={OVERLAY_POSITION_TYPE}
                                             hideTitle
                                             showAllFilters
                                             filtersByTab={filtersByTab}
-                                            editedFiltersByTab={editedAutomationFiltersByTab}
+                                            editedFiltersByTab={editedFiltersByTab}
                                             onFiltersByTabChange={onFiltersByTabChange}
                                             parameters={
                                                 flatTabId ? visibleParametersByTab[flatTabId] : undefined

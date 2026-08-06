@@ -14,6 +14,7 @@ import {
     selectDashboardShareInfo,
     selectDashboardTimezoneConfig,
     selectDashboardTitle,
+    selectEffectiveDashboardTimezone,
     selectPersistedDashboard,
 } from "../../../model/store/meta/metaSelectors.js";
 import { useCancelButtonProps } from "../buttonBar/button/cancelButton/DefaultCancelButton.js";
@@ -47,6 +48,7 @@ export const useTopBarProps = (): ITopBarProps => {
     const persistedDashboard = useDashboardSelector(selectPersistedDashboard);
     const timezoneConfig = useDashboardSelector(selectDashboardTimezoneConfig);
     const defaultTimezone = useDashboardSelector(selectTimezone);
+    const effectiveTimezone = useDashboardSelector(selectEffectiveDashboardTimezone);
 
     const defaultMenuItems = useDefaultMenuItems();
 
@@ -91,8 +93,9 @@ export const useTopBarProps = (): ITopBarProps => {
             timezoneConfig,
             defaultTimezone,
             // the default indicator shows only the name; the offset label is exposed
-            // for custom top bar / indicator renderings
-            timezone: resolveDashboardTimezoneInfo(timezoneConfig, defaultTimezone),
+            // for custom top bar / indicator renderings. Prefer the effective timezone so the
+            // badge updates when the viewer overrides the timezone in view mode.
+            timezone: resolveDashboardTimezoneInfo(timezoneConfig, defaultTimezone, effectiveTimezone),
         },
         DefaultTopBar,
     };

@@ -1,7 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
 /*
- * BackstopJS global configuration for scenarios created for storybook stories.
+ * NeoBackstop global configuration for scenarios created for storybook stories.
  *
  * This contains list of objects as:
  *
@@ -15,10 +15,10 @@
  * - idRegex is regular expression to match against the scenario identifier. Scenario identifier is
  *   constructed as "storybookKind_storybookName", e.g. "14 GenAI/SemanticSearch/short".
  *
- * - config is object with BackstopJS configuration; typically should contain at least the readySelector. This
- *   object will be passed to BackstopJS as-is.
+ * - config is object with NeoBackstop scenario configuration (see INeobackstopScenarioConfig); typically
+ *   should contain at least the readySelector. This object will be passed to NeoBackstop as-is.
  *
- * If no config matches the scenario ID, then the scenario will not be tested using BackstopJS
+ * If no config matches the scenario ID, then the scenario will not be screenshot tested by NeoBackstop
  */
 
 import { BrowserAlias } from "../stories/_infra/backstopScenario.js";
@@ -154,7 +154,7 @@ const ScenarioConfig = [
 // --------------------------------------------------------------------
 // Internals;
 //
-// there should be no need to touch these when customizing backstop scenarios config for stories
+// there should be no need to touch these when customizing NeoBackstop scenarios config for stories
 // --------------------------------------------------------------------
 
 function scenarioLabel(storyKind: string, storyName: string, scenarioName?: string) {
@@ -169,9 +169,9 @@ function scenarioUrlForId(id: string) {
 }
 
 /**
- * As a convenience, the screenshot testing infrastructure allows to globally define backstop JS configurations
- * to associate to scenarios automatically created for storybook stories. The association is done based on
- * story kind & name regex match.
+ * As a convenience, the screenshot testing infrastructure allows to globally define NeoBackstop scenario
+ * configurations to associate to scenarios automatically created for storybook stories. The association is
+ * done based on story kind & name regex match.
  *
  * @param kind - story kind
  * @param name - story name
@@ -203,8 +203,8 @@ export function storiesToScenarios(stories: IStoryInfo[]) {
              * Create configuration for this scenario. Find global configuration that applies for scenario done
              * for this kind of story (if any) and then overlay the config with local scenario (if any)
              *
-             * If the resulting configuration is empty, then the story will not be tested using backstop - as it is
-             * not clear what to wait for.
+             * If the resulting configuration is empty, then the story will not be screenshot tested by
+             * NeoBackstop - as it is not clear what to wait for.
              */
             const globalConfig = scenarioGlobalConfig(storyKind, storyName);
             const scenarioConfig = {
@@ -214,7 +214,7 @@ export function storiesToScenarios(stories: IStoryInfo[]) {
 
             if (Object.keys(scenarioConfig).length === 0) {
                 console.warn(
-                    `Cannot determine NeoBackstop configuration for scenario from story: ${label}; This story will not be screenshot tested using Backstop.`,
+                    `Cannot determine NeoBackstop configuration for scenario from story: ${label}; This story will not be screenshot tested using NeoBackstop.`,
                 );
 
                 return undefined;

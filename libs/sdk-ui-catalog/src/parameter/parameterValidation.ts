@@ -6,7 +6,12 @@ import type { ParameterType } from "@gooddata/sdk-model";
 
 import { validateYaml } from "../asCode/validateYaml.js";
 
-import { type ParameterSchema, buildParameterSchema } from "./parameterSchema.js";
+import {
+    type ParameterSchema,
+    type SchemaErrorCode,
+    buildParameterSchema,
+    schemaErrorCodes,
+} from "./parameterSchema.js";
 
 export type ParameterValidationResult =
     | {
@@ -27,8 +32,8 @@ export type ParameterValidationErrorCode =
     | "unsupportedType"
     | "invalidDefaultValue"
     | "invalidConstraints"
-    | "invalidConstraintRange"
-    | "invalidTags";
+    | "invalidTags"
+    | SchemaErrorCode;
 
 type ValidateParameterYamlOptions = {
     enabledTypes: ParameterType[];
@@ -61,10 +66,8 @@ function classifySchemaError(
     for (const issue of error.issues) {
         const path = issue.path.map(String).join(".");
 
-        if (issue.code === "custom") {
-            if (issue.message === "invalidConstraintRange") {
-                return invalid("invalidConstraintRange", declaredType);
-            }
+        if (isSchemaErrorCode(issue.message)) {
+            return invalid(issue.message, declaredType);
         }
         if (path === "definition.type") {
             return invalid("unsupportedType");
@@ -81,6 +84,12 @@ function classifySchemaError(
     }
 
     return invalid("invalidStructure");
+}
+
+const schemaErrorCodeSet: ReadonlySet<string> = new Set(schemaErrorCodes);
+
+function isSchemaErrorCode(message: string): message is SchemaErrorCode {
+    return schemaErrorCodeSet.has(message);
 }
 
 function readDeclaredType(parsed: unknown): ParameterType | undefined {

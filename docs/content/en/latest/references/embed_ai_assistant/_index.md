@@ -76,28 +76,73 @@ const App = () => {
 
 ### Props
 
-| Name                           | Type                                          | Default | Description                                                                                                                                        |
-| ------------------------------ | --------------------------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| locale                         | ILocale                                       | "en-US" | Specifies the locale for internationalization                                                                                                      |
-| backend                        | IAnalyticalBackend                            | -       | Backend instance. Falls back to BackendProvider context if not specified                                                                           |
-| workspace                      | string                                        | -       | Workspace ID. Falls back to WorkspaceProvider context if not specified                                                                             |
-| colorPalette                   | IColorPalette                                 | -       | Color palette used for rendering the visualizations. If not provided, the default color palette will be used                                       |
-| catalogItems                   | CatalogItem[]                                 | -       | Catalog items used for autocompletion. If not provided - will be lazy-loaded when needed                                                           |
-| settings                       | IUserWorkspaceSettings                        | -       | Workspace settings used by the assistant UI                                                                                                        |
-| eventHandlers                  | ChatEventHandler[]                            | -       | Event handlers for user interactions with the chat UI                                                                                              |
-| onLinkClick                    | (LinkHandlerEvent) => void                    | -       | Handle user clicks on the catalog items mentioned in chat.                                                                                         |
-| allowNativeLinks               | boolean                                       | false   | Whether to allow native links in chat messages. If false, `onLinkClick` handler will be fired when clicking on links                               |
-| disableManage                  | boolean                                       | false   | This will disable manage permissions for the user even if the user has them defined.                                                               |
-| disableAnalyze                 | boolean                                       | false   | This will disable analyze permissions for the user even if the user has them defined.                                                              |
-| disableFullControl             | boolean                                       | false   | This will disable full control permissions for the user even if the user has them defined.                                                         |
-| objectTypes                    | GenAIObjectType[]                             | -       | Restricts object types used by assistant search and suggestions.                                                                                   |
-| includeTags                    | string[]                                      | -       | Includes only tagged metadata objects when assistant resolves relevant content.                                                                    |
-| excludeTags                    | string[]                                      | -       | Excludes tagged metadata objects when assistant resolves relevant content.                                                                         |
-| onDispatcher                   | (dispatch: EnhancedStore["dispatch"]) => void | -       | Dispatcher callback for assistant actions and state changes.                                                                                       |
-| LandingScreenComponentProvider | () => ComponentType                           | -       | Factory for providing a custom initial assistant experience component. When omitted, the default landing screen with quick questions is displayed. |
-| DisclaimerComponentProvider    | () => ComponentType \| null                   | -       | Factory for providing a custom disclaimer component shown in the assistant UI. Return `null` to hide disclaimer rendering.                         |
-| className                      | string                                        | -       | Additional class name applied to the root assistant element.                                                                                       |
-| isPreview                      | boolean                                       | false   | Internal preview mode. Uses workspace preview agent and preview conversations. Toggling resets assistant state.                                    |
+| Name                           | Type                                          | Default  | Description                                                                                                                                         |
+| ------------------------------ | --------------------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| locale                         | ILocale                                       | "en-US"  | Specifies the locale for internationalization                                                                                                       |
+| backend                        | IAnalyticalBackend                            | -        | Backend instance. Falls back to BackendProvider context if not specified                                                                            |
+| workspace                      | string                                        | -        | Workspace ID. Falls back to WorkspaceProvider context if not specified                                                                              |
+| colorPalette                   | IColorPalette                                 | -        | Color palette used for rendering the visualizations. If not provided, the default color palette will be used                                        |
+| catalogItems                   | CatalogItem[]                                 | -        | Catalog items used for autocompletion. If not provided - will be lazy-loaded when needed                                                            |
+| settings                       | IUserWorkspaceSettings                        | -        | Workspace settings used by the assistant UI                                                                                                         |
+| eventHandlers                  | ChatEventHandler[]                            | -        | Event handlers for user interactions with the chat UI                                                                                               |
+| onLinkClick                    | (LinkHandlerEvent) => void                    | -        | Handle user clicks on the catalog items mentioned in chat.                                                                                          |
+| allowNativeLinks               | boolean                                       | false    | Whether to allow native links in chat messages. If false, `onLinkClick` handler will be fired when clicking on links                                |
+| disableManage                  | boolean                                       | false    | This will disable manage permissions for the user even if the user has them defined.                                                                |
+| disableAnalyze                 | boolean                                       | false    | This will disable analyze permissions for the user even if the user has them defined.                                                               |
+| disableFullControl             | boolean                                       | false    | This will disable full control permissions for the user even if the user has them defined.                                                          |
+| objectTypes                    | GenAIObjectType[]                             | -        | Restricts object types used by assistant search and suggestions.                                                                                    |
+| includeTags                    | string[]                                      | -        | Includes only tagged metadata objects when assistant resolves relevant content.                                                                     |
+| excludeTags                    | string[]                                      | -        | Excludes tagged metadata objects when assistant resolves relevant content.                                                                          |
+| onDispatcher                   | (dispatch: EnhancedStore["dispatch"]) => void | -        | Dispatcher callback for assistant actions and state changes.                                                                                        |
+| LandingScreenComponentProvider | () => ComponentType                           | -        | Factory for providing a custom initial assistant experience component. When omitted, the default landing screen with quick questions is displayed.  |
+| DisclaimerComponentProvider    | () => ComponentType \| null                   | -        | Factory for providing a custom disclaimer component shown in the assistant UI. Return `null` to hide disclaimer rendering.                          |
+| className                      | string                                        | -        | Additional class name applied to the root assistant element.                                                                                        |
+| mode                           | "docked" \| "fullscreen"                      | "docked" | Display mode of the assistant. Adapts its internal layout to a compact docked container or to a wide fullscreen one. Does not resize the component. |
+| onModeChange                   | (mode) => void                                | -        | Called when the display mode changes without the application asking for it, for example after `setFullscreenAction` is dispatched.                  |
+| isPreview                      | boolean                                       | false    | Internal preview mode. Uses workspace preview agent and preview conversations. Toggling resets assistant state.                                     |
+
+### Display mode
+
+Use `mode` to switch the assistant between the compact `docked` layout, intended for a side panel, and the wide `fullscreen` layout, intended for a full-page section.
+
+The assistant always fills its parent element, so `mode` does not resize it - sizing and positioning of the chrome around it stays under your control. What the property changes is the internal layout: in the `fullscreen` mode on large screens, the initial assistant experience is laid out for a wide container, with the suggested questions arranged in a row and the input centered in the available space.
+
+```tsx
+import { useState } from "react";
+
+import { GenAIAssistant, type GenAIAssistantMode } from "@gooddata/sdk-ui-gen-ai";
+
+const App = () => {
+    const [mode, setMode] = useState<GenAIAssistantMode>("docked");
+
+    return (
+        <div className={mode === "fullscreen" ? "my-app-ai-page" : "my-app-ai-panel"}>
+            <button onClick={() => setMode(mode === "docked" ? "fullscreen" : "docked")}>
+                Toggle fullscreen
+            </button>
+            <GenAIAssistant mode={mode} onModeChange={setMode} />
+        </div>
+    );
+};
+```
+
+The mode can also be changed through the store dispatcher, which is handy when the control that toggles it lives outside of the component tree that renders the assistant:
+
+```tsx
+import { GenAIAssistant, setFullscreenAction } from "@gooddata/sdk-ui-gen-ai";
+
+<GenAIAssistant
+    onDispatcher={(dispatch) => {
+        dispatch(setFullscreenAction({ isFullscreen: true }));
+    }}
+/>;
+```
+
+`onModeChange` is called whenever the display mode changes inside the assistant, so that your application can keep its own chrome in sync. That includes the `setFullscreenAction` dispatched in the example above, and the expand and minimize control of the chat header when the assistant is embedded in a chat dialog.
+
+The single exception is a change that results in the mode you already passed as `mode` - that one is not reported, so a controlled application can feed the reported value straight back as `mode` without a second call.
+
+Note that on small screens the fullscreen layout is always used, regardless of `mode`. This forced layout is not reported through `onModeChange`, as it is not part of the mode your application controls.
 
 ## Conversations list component
 
@@ -383,6 +428,7 @@ dispatcher(clearThreadAction());
 - `clearThreadAction` - reset the chat thread
 - `startNewConversationAction` - start a new conversation
 - `setCurrentConversationAction` - set active conversation in the chat
+- `setFullscreenAction` - switch the assistant between the docked and the fullscreen layout
 - `newMessageAction` - add message to the stack and get response from the assistant
 - `pinConversationAction` - pin or unpin a conversation
 - `renameConversationAction` - rename an existing conversation
@@ -395,6 +441,7 @@ import {
     clearThreadAction,
     startNewConversationAction,
     setCurrentConversationAction,
+    setFullscreenAction,
     newMessageAction,
     pinConversationAction,
     renameConversationAction,
@@ -414,6 +461,9 @@ dispatcher(newMessageAction(makeUserMessage([makeTextContents("Hello", [])])));
 dispatcher(startNewConversationAction());
 dispatcher(setCurrentConversationAction({ conversation }));
 dispatcher(newMessageAction(makeUserItem({ type: "text", text: "Hello" })));
+
+// Switch the assistant to the fullscreen layout
+dispatcher(setFullscreenAction({ isFullscreen: true }));
 
 // Pin/unpin conversation
 dispatcher(pinConversationAction({ conversation, pinned: true }));

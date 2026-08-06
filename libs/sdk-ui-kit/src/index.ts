@@ -815,6 +815,7 @@ export {
     getTimezones,
     getTimezoneById,
     getTimezoneLabels,
+    getCurrentTimeByTimezoneId,
     getTimezoneTitle,
     getTimezoneDisplayLabel,
     getUserTimezone,

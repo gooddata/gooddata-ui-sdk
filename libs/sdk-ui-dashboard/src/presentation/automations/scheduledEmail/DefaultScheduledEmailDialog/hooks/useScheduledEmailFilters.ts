@@ -4,8 +4,10 @@ import { type Dispatch, type SetStateAction, useCallback } from "react";
 
 import {
     type FilterContextItem,
+    type IAutomationMetadataObject,
     type IAutomationMetadataObjectDefinition,
     type IAutomationVisibleFilter,
+    type IDashboardExportParameter,
     type IInsight,
     type IWidget,
     isExportDefinitionDashboardRequestPayload,
@@ -15,6 +17,11 @@ import {
 
 import type { IAutomationFiltersTab } from "../../../../../model/store/filtering/types.js";
 import { useScheduledEmailDialogContext } from "../../../contexts/ScheduledEmailDialogContext.js";
+import { useValidateExistingAutomationFilters } from "../../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
+import {
+    type IUseAutomationExportParameters,
+    useAutomationExportParameters,
+} from "../../../shared/automationFilters/useAutomationExportParameters.js";
 import { getDefaultSelectedFiltersFromFiltersByTab } from "../../../shared/automationFilters/useAutomationFiltersSelect.js";
 import {
     getAppliedDashboardFilters,
@@ -25,42 +32,55 @@ import {
 
 export interface IUseScheduledEmailFiltersProps {
     setEditedAutomation: Dispatch<SetStateAction<IAutomationMetadataObjectDefinition>>;
+    scheduledExportToEdit?: IAutomationMetadataObject;
     widget?: IWidget;
     insight?: IInsight;
+    editedAutomationFilters: FilterContextItem[];
     setEditedAutomationFilters: (filters: FilterContextItem[]) => void;
+    editedAutomationFiltersByTab?: Record<string, FilterContextItem[]>;
     setEditedAutomationFiltersByTab?: (filters: Record<string, FilterContextItem[]>) => void;
+    availableFilters?: FilterContextItem[];
     availableFiltersAsVisibleFilters?: IAutomationVisibleFilter[] | undefined;
     availableFiltersAsVisibleFiltersByTab?: Record<string, IAutomationVisibleFilter[]>;
-    filtersDataByTab?: IAutomationFiltersTab[] | undefined;
-    storeFilters?: boolean;
+    filtersByTab?: IAutomationFiltersTab[] | undefined;
+    storeFilters: boolean;
     setStoreFilters: (storeFilters: boolean) => void;
     filtersForNewAutomation: FilterContextItem[];
+    setParametersWire: (wire: Record<string, IDashboardExportParameter[]> | undefined) => void;
 }
 
 /**
- * Owns the scheduled-email dialog's filter changes. Each handler updates the edited filter state and
- * mirrors the result into the draft — rewriting the filters on its export definitions along with the
- * `metadata.visibleFilters`/`visibleFiltersByTab` used to render them back to the user.
- *
- * Runs after `useScheduledEmailFormState`, because every handler writes through `setEditedAutomation`.
- * The filter sets these handlers start from are derived earlier, in
- * {@link useScheduledEmailEffectiveFilters}.
+ * The scheduled-email dialog's single filter model: the current selection and available filters
+ * (flat and per-tab), the handlers that mutate them and mirror the result into the draft, the
+ * `automationIsValid`/`filtersAreStale` staleness gate for a saved schedule, and the absorbed
+ * export-parameters model (chips, add/change/delete handlers, apply-latest and store-toggle).
+ * `automationIsValid` gates the repair / apply-current-filters dialog: it is false whenever the
+ * saved filters no longer match the dashboard, or the saved parameters are stale, or both — it does
+ * not distinguish which. `filtersAreStale` reports only whether saved filters no longer match.
+ * Parameters live here — rather than in form-state, as on the alerting side — because they have no
+ * draft dependency of their own; they only need `storeFilters` (the read model) and `setParametersWire`
+ * (from {@link useScheduledEmailExportSettings}).
  *
  * @internal
  */
 export function useScheduledEmailFilters({
     setEditedAutomation,
+    scheduledExportToEdit,
     widget,
     insight,
+    editedAutomationFilters,
     setEditedAutomationFilters,
+    editedAutomationFiltersByTab,
     setEditedAutomationFiltersByTab,
+    availableFilters,
     availableFiltersAsVisibleFilters,
     availableFiltersAsVisibleFiltersByTab,
-    filtersDataByTab,
+    filtersByTab,
     storeFilters,
     setStoreFilters,
     filtersForNewAutomation,
-}: IUseScheduledEmailFiltersProps) {
+    setParametersWire,
+}: IUseScheduledEmailFiltersProps): IUseScheduledEmailFilters {
     const { hiddenFilters: dashboardHiddenFilters, commonDateFilterId } = useScheduledEmailDialogContext();
     // Re-derived locally (not passed as a prop) so that the `if (isWidget)` branch below narrows
     // `widget`/`insight` via TS's aliased-condition control-flow analysis — this requires the boolean
@@ -205,7 +225,7 @@ export function useScheduledEmailFilters({
                 ? Object.entries(newFiltersByTab).reduce<Record<string, FilterContextItem[]>>(
                       (acc, [tabId, filters]) => {
                           const tabHiddenFilters =
-                              filtersDataByTab?.find((tab) => tab.tabId === tabId)?.hiddenFilters ?? [];
+                              filtersByTab?.find((tab) => tab.tabId === tabId)?.hiddenFilters ?? [];
                           const appliedFilters = getAppliedDashboardFilters(
                               filters ?? [],
                               tabHiddenFilters,
@@ -255,7 +275,7 @@ export function useScheduledEmailFilters({
             storeFilters,
             setEditedAutomation,
             availableFiltersAsVisibleFiltersByTab,
-            filtersDataByTab,
+            filtersByTab,
         ],
     );
 
@@ -263,21 +283,31 @@ export function useScheduledEmailFilters({
         // Widget schedules should never use per-tab filters, only dashboard schedules can have tabs
         const filtersByTabForNewAutomation = widget
             ? undefined
-            : getDefaultSelectedFiltersFromFiltersByTab(filtersDataByTab);
+            : getDefaultSelectedFiltersFromFiltersByTab(filtersByTab);
         if (filtersByTabForNewAutomation) {
             onFiltersByTabChange(filtersByTabForNewAutomation);
         } else {
             onFiltersChange(filtersForNewAutomation ?? [], widget ? true : storeFilters);
         }
-    }, [
-        filtersForNewAutomation,
-        storeFilters,
-        onFiltersChange,
-        onFiltersByTabChange,
-        widget,
-        filtersDataByTab,
-    ]);
+    }, [filtersForNewAutomation, storeFilters, onFiltersChange, onFiltersByTabChange, widget, filtersByTab]);
 
+    const { isValid: automationIsValid, filtersAreStale = false } = useValidateExistingAutomationFilters({
+        automationToEdit: scheduledExportToEdit,
+        widget,
+        insight,
+    });
+
+    const parameters = useAutomationExportParameters({
+        automationToEdit: scheduledExportToEdit,
+        widget,
+        storeParameters: storeFilters,
+        setParametersWire,
+    });
+    const { onStoreParametersChange } = parameters;
+
+    // The store-filters toggle gates parameter persistence as well, and this hook owns both sides of
+    // it, so no caller has to remember the parameters half. `value` is forwarded explicitly to every
+    // side because `storeFilters` still holds the old one at call time.
     const onStoreFiltersChange = useCallback(
         (
             value: boolean,
@@ -295,14 +325,50 @@ export function useScheduledEmailFilters({
                 // Use regular filters change
                 onFiltersChange(filters, value);
             }
+
+            onStoreParametersChange(value);
         },
-        [onFiltersChange, onFiltersByTabChange, setStoreFilters],
+        [onFiltersChange, onFiltersByTabChange, setStoreFilters, onStoreParametersChange],
     );
 
     return {
+        selectedFilters: editedAutomationFilters,
+        availableFilters,
+        storeFilters,
+        filtersByTab,
+        editedFiltersByTab: editedAutomationFiltersByTab,
         onFiltersChange,
         onFiltersByTabChange,
         onApplyCurrentFilters,
         onStoreFiltersChange,
+        automationIsValid,
+        filtersAreStale,
+        ...parameters,
     };
+}
+
+/**
+ * Return type of {@link useScheduledEmailFilters}: its own filter model plus the whole absorbed
+ * {@link useAutomationExportParameters} model, spread in verbatim so its member names stay canonical.
+ * @internal
+ */
+export interface IUseScheduledEmailFilters extends IUseAutomationExportParameters {
+    selectedFilters: FilterContextItem[];
+    availableFilters: FilterContextItem[] | undefined;
+    storeFilters: boolean;
+    filtersByTab: IAutomationFiltersTab[] | undefined;
+    editedFiltersByTab: Record<string, FilterContextItem[]> | undefined;
+    onFiltersChange: (filters: FilterContextItem[], storeFiltersParam?: boolean) => void;
+    onFiltersByTabChange: (
+        newFiltersByTab: Record<string, FilterContextItem[]>,
+        storeFiltersParam?: boolean,
+    ) => void;
+    onApplyCurrentFilters: () => void;
+    onStoreFiltersChange: (
+        value: boolean,
+        filters?: FilterContextItem[],
+        filtersByTabParam?: Record<string, FilterContextItem[]>,
+    ) => void;
+    automationIsValid: boolean;
+    filtersAreStale: boolean;
 }

@@ -5,71 +5,36 @@ import * as z from "zod/mini";
 
 import type { ParameterType } from "@gooddata/sdk-model";
 
-const numberConstraintsSchema = z
-    .strictObject({
-        min: z.optional(z.number()),
-        max: z.optional(z.number()),
-    })
-    .check((ctx) => {
-        const { min, max } = ctx.value;
-        if (min !== undefined && max !== undefined && min > max) {
-            ctx.issues.push({
-                code: "custom",
-                message: "invalidConstraintRange",
-                input: ctx.value,
-                path: [],
-            });
-        }
-    });
+/**
+ * Codes carried by schema issues via `issue.message`; `classifySchemaError` routes each to the
+ * equally named validation error code, so every entry needs a localized message wired up.
+ */
+export const schemaErrorCodes = [
+    "invalidConstraintRange",
+    "invalidAllowedValue",
+    "invalidAllowedValueTitle",
+    "duplicateAllowedValues",
+    "emptyAllowedValues",
+    "constraintsAllowedValuesExclusive",
+    "unsupportedCardinality",
+    "invalidDefaultValue",
+] as const;
 
-const lengthSchema = z.int().check(z.nonnegative());
-
-const stringConstraintsSchema = z
-    .strictObject({
-        minLength: z.optional(lengthSchema),
-        maxLength: z.optional(lengthSchema),
-    })
-    .check((ctx) => {
-        const { minLength, maxLength } = ctx.value;
-        if (minLength !== undefined && maxLength !== undefined && minLength > maxLength) {
-            ctx.issues.push({
-                code: "custom",
-                message: "invalidConstraintRange",
-                input: ctx.value,
-                path: [],
-            });
-        }
-    });
-
-/** One arm per model type; `satisfies` breaks the build if the model gains a type without an arm. */
-const definitionSchemas = {
-    NUMBER: z.strictObject({
-        type: z.literal("NUMBER"),
-        defaultValue: z.number(),
-        constraints: z.optional(numberConstraintsSchema),
-    }),
-    STRING: z.strictObject({
-        type: z.literal("STRING"),
-        defaultValue: z.string(),
-        constraints: z.optional(stringConstraintsSchema),
-    }),
-} satisfies Record<ParameterType, z.core.$ZodType>;
-
-/** Full-union schema: single source for the editor vocabulary and the exported types, independent of the flag. */
-const parameterSchema = z.strictObject({
-    type: z._default(z.literal("parameter"), "parameter"),
-    id: z.optional(z.string()),
-    title: z.optional(z.string()),
-    description: z.optional(z.string()),
-    tags: z.optional(z.array(z.string())),
-    definition: z.discriminatedUnion("type", [definitionSchemas.NUMBER, definitionSchemas.STRING]),
-});
+export type SchemaErrorCode = (typeof schemaErrorCodes)[number];
 
 export type ParameterSchemaInput = z.input<typeof parameterSchema>;
 export type ParameterSchema = z.infer<typeof parameterSchema>;
 
-/** Parent key → allowed child keys for the schema restricted to `enabledTypes`; powers YAML editor autocompletion. */
-export function parameterSchemaKeys(enabledTypes: ParameterType[]): Record<string, string[]> {
+export type ParameterSchemaKeys = Record<string, SchemaKeysEntry>;
+
+/** Child keys reachable under a parent key: directly in its mapping, or inside each item of its sequence. */
+export type SchemaKeysEntry = {
+    kind: "mapping" | "sequence";
+    keys: string[];
+};
+
+/** Parent key → child-key entry for the schema restricted to `enabledTypes`; powers YAML editor autocompletion. */
+export function parameterSchemaKeys(enabledTypes: ParameterType[]): ParameterSchemaKeys {
     return deriveSchemaKeys(buildParameterSchema(enabledTypes));
 }
 
@@ -82,18 +47,127 @@ export function buildParameterSchema(enabledTypes: ParameterType[]) {
     });
 }
 
-/** Map of parent key → allowed child keys. */
+const numberConstraintsSchema = z
+    .strictObject({
+        min: z.optional(z.number()),
+        max: z.optional(z.number()),
+    })
+    .check(
+        rule(
+            "invalidConstraintRange",
+            ({ min, max }) => min === undefined || max === undefined || min <= max,
+        ),
+    );
+
+const lengthSchema = z.int().check(z.nonnegative());
+
+const allowedValueSchema = z
+    .strictObject({
+        value: z.string("invalidAllowedValue"),
+        title: z.optional(z.string("invalidAllowedValueTitle")),
+    })
+    .check(
+        rule("invalidAllowedValue", ({ value }) => value !== ""),
+        rule("invalidAllowedValueTitle", ({ value, title }) => (title ?? value).trim() !== ""),
+    );
+
+const allowedValuesSchema = z.array(allowedValueSchema).check(
+    rule("emptyAllowedValues", (entries) => entries.length > 0),
+    rule("duplicateAllowedValues", (entries) => allUnique(entries.map((entry) => entry.value))),
+    rule("duplicateAllowedValues", (entries) =>
+        allUnique(entries.map((entry) => entry.title ?? entry.value)),
+    ),
+);
+
+const stringConstraintsSchema = z
+    .strictObject({
+        minLength: z.optional(lengthSchema),
+        maxLength: z.optional(lengthSchema),
+        allowedValues: z.optional(allowedValuesSchema),
+    })
+    .check(
+        rule(
+            "invalidConstraintRange",
+            ({ minLength, maxLength }) =>
+                minLength === undefined || maxLength === undefined || minLength <= maxLength,
+        ),
+        rule(
+            "constraintsAllowedValuesExclusive",
+            ({ minLength, maxLength, allowedValues }) =>
+                allowedValues === undefined || (minLength === undefined && maxLength === undefined),
+        ),
+    );
+
+/** One arm per model type; `satisfies` breaks the build if the model gains a type without an arm. */
+const definitionSchemas = {
+    NUMBER: z.strictObject({
+        type: z.literal("NUMBER"),
+        defaultValue: z.number(),
+        constraints: z.optional(numberConstraintsSchema),
+    }),
+    STRING: z.pipe(
+        z
+            .strictObject({
+                type: z.literal("STRING"),
+                defaultValue: z.string(),
+                constraints: z.optional(stringConstraintsSchema),
+                cardinality: z.optional(z.literal(["single", "multi"], "unsupportedCardinality")),
+            })
+            .check(
+                rule("unsupportedCardinality", ({ cardinality }) => cardinality !== "multi", ["cardinality"]),
+                rule(
+                    "invalidDefaultValue",
+                    ({ defaultValue, constraints }) =>
+                        !constraints?.allowedValues?.length ||
+                        constraints.allowedValues.some((allowed) => allowed.value === defaultValue),
+                    ["defaultValue"],
+                ),
+            ),
+        z.transform(({ cardinality: _cardinality, ...definition }) => definition),
+    ),
+} satisfies Record<ParameterType, z.core.$ZodType>;
+
+/** Full-union schema: single source for the editor vocabulary and the exported types, independent of the flag. */
+const parameterSchema = z.strictObject({
+    type: z._default(z.literal("parameter"), "parameter"),
+    id: z.optional(z.string()),
+    title: z.optional(z.string()),
+    description: z.optional(z.string()),
+    tags: z.optional(z.array(z.string())),
+    definition: z.discriminatedUnion("type", [definitionSchemas.NUMBER, definitionSchemas.STRING]),
+});
+
+function rule<TValue>(
+    code: SchemaErrorCode,
+    predicate: (value: NoInfer<TValue>) => boolean,
+    path?: string[],
+): z.core.$ZodCheck<TValue> {
+    return z.refine(predicate, { message: code, path });
+}
+
+function allUnique(items: string[]): boolean {
+    return new Set(items).size === items.length;
+}
+
+/** Map of parent key → child-key entry; an array-of-objects child is recorded as a `sequence` entry. */
 function deriveSchemaKeys(
     schema: z.core.$ZodType,
     parentKey = "",
-    result: Record<string, string[]> = {},
-): Record<string, string[]> {
+    kind: SchemaKeysEntry["kind"] = "mapping",
+    result: ParameterSchemaKeys = {},
+): ParameterSchemaKeys {
     for (const object of objectSchemasOf(schema)) {
         const { shape } = object._zod.def as z.core.$ZodObjectDef;
-        result[parentKey] = union(result[parentKey], Object.keys(shape));
+        result[parentKey] = { kind, keys: union(result[parentKey]?.keys, Object.keys(shape)) };
 
         for (const [key, child] of Object.entries(shape)) {
-            deriveSchemaKeys(unwrap(child), key, result);
+            const inner = unwrap(child);
+            if (inner._zod.def.type === "array") {
+                const element = unwrap((inner._zod.def as z.core.$ZodArrayDef).element);
+                deriveSchemaKeys(element, key, "sequence", result);
+            } else {
+                deriveSchemaKeys(inner, key, "mapping", result);
+            }
         }
     }
 
@@ -116,6 +190,9 @@ function unwrap(schema: z.core.$ZodType): z.core.$ZodType {
     const { type } = schema._zod.def;
     if (type === "optional" || type === "default") {
         return unwrap((schema._zod.def as z.core.$ZodOptionalDef).innerType);
+    }
+    if (type === "pipe") {
+        return unwrap((schema._zod.def as z.core.$ZodPipeDef).in);
     }
     return schema;
 }

@@ -37,8 +37,6 @@ import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
 import { RecipientsSelect } from "../../scheduledEmail/DefaultScheduledEmailDialog/components/RecipientsSelect/RecipientsSelect.js";
 import { ApplyCurrentFiltersConfirmDialog } from "../../shared/automationFilters/components/ApplyLatestFiltersConfirmDialog.js";
 import { AutomationFiltersSelect } from "../../shared/automationFilters/components/AutomationFiltersSelect.js";
-import { useValidateExistingAutomationFilters } from "../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
-import { useAutomationFiltersSelect } from "../../shared/automationFilters/useAutomationFiltersSelect.js";
 import { DeleteAlertConfirmDialog } from "../DefaultAlertingManagementDialog/components/DeleteAlertConfirmDialog.js";
 import { type IAlertingDialogProps } from "../types.js";
 
@@ -93,11 +91,7 @@ export function AlertingDialogRenderer({
             canUseAiAssistant: enableAiAssistant,
         },
     } = useAutomationsContext();
-    // Read from context because this component calls useAutomationFiltersSelect and
-    // useValidateExistingAutomationFilters directly, and the filter-select call must run before
-    // useEditAlert, which consumes its output. Removed with the filter read-model consolidation
-    // (EB-867), which retires these call sites.
-    const { widgetTitle, alertToEdit, widget, insight } = useAlertingDialogContext();
+    const { widgetTitle, alertToEdit } = useAlertingDialogContext();
 
     const [alertToDelete, setAlertToDelete] = useState<IAutomationMetadataObject | null>(null);
 
@@ -107,21 +101,14 @@ export function AlertingDialogRenderer({
     };
 
     const {
-        editedAutomationFilters,
-        setEditedAutomationFilters,
-        availableFilters,
-        availableFiltersAsVisibleFilters,
-        filtersForNewAutomation,
-    } = useAutomationFiltersSelect({
-        automationToEdit: alertToEdit,
-        widget,
-    });
-
-    const {
         onTitleChange,
         onRecipientsChange,
+        selectedFilters,
+        availableFilters,
         onFiltersChange,
         onApplyCurrentFilters,
+        automationIsValid,
+        filtersAreStale,
         dropStaleParameters,
         automationParameters,
         availableParameters,
@@ -175,20 +162,12 @@ export function AlertingDialogRenderer({
         usersError,
         notificationChannels,
     } = useEditAlert({
-        editedAutomationFilters,
         maxAutomationsRecipients,
-        availableFiltersAsVisibleFilters,
-        setEditedAutomationFilters,
-        filtersForNewAutomation,
         externalRecipientOverride,
     });
 
-    const { isValid, filtersAreStale = false } = useValidateExistingAutomationFilters({
-        automationToEdit: alertToEdit,
-        widget,
-        insight,
-    });
-    const [isApplyCurrentFiltersDialogOpen, setIsApplyCurrentFiltersDialogOpen] = useState(!isValid);
+    const [isApplyCurrentFiltersDialogOpen, setIsApplyCurrentFiltersDialogOpen] =
+        useState(!automationIsValid);
 
     const { isSaving, submit } = useAlertSubmit({
         editedAutomation,
@@ -334,7 +313,7 @@ export function AlertingDialogRenderer({
                                 <>
                                     <AutomationFiltersSelect
                                         availableFilters={availableFilters}
-                                        selectedFilters={editedAutomationFilters}
+                                        selectedFilters={selectedFilters}
                                         onFiltersChange={onFiltersChange}
                                         storeFilters
                                         onStoreFiltersChange={() => {}}

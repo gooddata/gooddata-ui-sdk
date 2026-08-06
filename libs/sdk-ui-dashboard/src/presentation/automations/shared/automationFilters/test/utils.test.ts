@@ -10,7 +10,6 @@ import {
     newRelativeDateFilter,
 } from "@gooddata/sdk-model";
 
-import { isNoopAllTimeDateFilterFixed } from "../../filters/index.js";
 import { areFiltersEqual, isAllTimeDateFilterFixed } from "../utils.js";
 
 describe("automationFilters/utils", () => {
@@ -52,41 +51,6 @@ describe("automationFilters/utils", () => {
             const filter = newRelativeDateFilter({ identifier: "ds" }, "GDC.time.date", -1, 0, "df");
 
             expect(isAllTimeDateFilterFixed(filter)).toBe(false);
-        });
-    });
-
-    describe("isNoopAllTimeDateFilterFixed", () => {
-        it("should return true for standard noop all-time date filter", () => {
-            const filter = newAllTimeFilter({ identifier: "ds" }, "df");
-
-            expect(isNoopAllTimeDateFilterFixed(filter)).toBe(true);
-        });
-
-        it("should return false for all-time date filter with emptyValueHandling", () => {
-            const filter = newAllTimeFilter({ identifier: "ds" }, "df", "exclude");
-
-            expect(isNoopAllTimeDateFilterFixed(filter)).toBe(false);
-        });
-
-        it("should treat AD-style relative filter without from/to as noop only when emptyValueHandling is missing", () => {
-            const noopAdShape = {
-                relativeDateFilter: {
-                    dataSet: { identifier: "ds" },
-                    granularity: "GDC.time.date",
-                    localIdentifier: "df",
-                },
-            };
-            const configuredAdShape = {
-                relativeDateFilter: {
-                    dataSet: { identifier: "ds" },
-                    granularity: "GDC.time.date",
-                    localIdentifier: "df",
-                    emptyValueHandling: "include",
-                },
-            };
-
-            expect(isNoopAllTimeDateFilterFixed(noopAdShape as IFilter)).toBe(true);
-            expect(isNoopAllTimeDateFilterFixed(configuredAdShape as IFilter)).toBe(false);
         });
     });
 

@@ -3,11 +3,12 @@
 import { type ComponentType } from "react";
 
 import { groupBy, sortBy } from "lodash-es";
+import { action } from "storybook/actions";
 
 import { withCustomWorkspaceSettings } from "@gooddata/sdk-backend-base";
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { type ISettings } from "@gooddata/sdk-model";
-import { type ScenarioGroup, allScenarios } from "@gooddata/sdk-ui-tests-scenarios";
+import { type ScenarioGroup, allScenarios, isScenarioAction } from "@gooddata/sdk-ui-tests-scenarios";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
 import "@gooddata/sdk-ui-charts/styles/css/main.css";
 import "@gooddata/sdk-ui-geo/styles/css/main.css";
@@ -18,12 +19,29 @@ import { wrapWithTheme } from "../themeWrapper.js";
 
 export const backend = StorybookBackend();
 
+/**
+ * Scenario props are storybook-free; handlers that should be reported to storybook are described by action
+ * placeholders (see `scenarioAction` in sdk-ui-tests-scenarios). This resolves each of them into a real
+ * storybook action, so that the events end up in the storybook actions panel.
+ */
+function resolveScenarioActions(props: Record<string, unknown>): Record<string, unknown> {
+    const resolved: Record<string, unknown> = {};
+
+    for (const [key, value] of Object.entries(props)) {
+        resolved[key] = isScenarioAction(value) ? action(value.scenarioActionLabel) : value;
+    }
+
+    return resolved;
+}
+
 export function buildStory(Component: ComponentType, props: any, wrapperStyle: any, tags: string[] = []) {
+    const resolvedProps = resolveScenarioActions(props);
+
     return () => {
         return wrapWithTheme(
             <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
                 <div style={wrapperStyle}>
-                    <Component {...props} />
+                    <Component {...resolvedProps} />
                 </div>
             </ScreenshotReadyWrapper>,
             tags,
@@ -39,9 +57,8 @@ export function groupedStory(group: ScenarioGroup<any>, wrapperStyle: any) {
             <ScreenshotReadyWrapper resolver={createElementCountResolver(scenarios.length)}>
                 {scenarios.map(([name, scenario], idx) => {
                     const { propsFactory, workspaceType, component: Component } = scenario;
-                    const props = propsFactory(
-                        withCustomSetting(backend, scenario.backendSettings),
-                        workspaceType,
+                    const props = resolveScenarioActions(
+                        propsFactory(withCustomSetting(backend, scenario.backendSettings), workspaceType),
                     );
 
                     return (

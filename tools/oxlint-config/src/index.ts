@@ -13,6 +13,8 @@ import { oxc } from "./configurations/oxc.js";
 import { playwright } from "./configurations/playwright.js";
 import { security } from "./configurations/security.js";
 import { sonarjs } from "./configurations/sonarjs.js";
+import { storybook } from "./configurations/storybook.js";
+import { testingLibraryDom, testingLibraryReact } from "./configurations/testing-library.js";
 import { typescript } from "./configurations/typescript.js";
 import { vitest } from "./configurations/vitest.js";
 import { type IConfiguration } from "./types.js";
@@ -36,12 +38,15 @@ export const variants: Record<string, IConfiguration[]> = {
     // vitest: [vitest, noOnlyTests],
     esm: [importEsm], // used for this lib
     "esm-vitest": [importEsm, vitest, noOnlyTests], // for @gooddata/util and MAQL language server
+    "esm-vitest-rtl": [importEsm, vitest, testingLibraryDom, noOnlyTests], // for @gooddata/util and MAQL language server
     react: [browserEnv], // for skel tsx
     "react-vitest": [browserEnv, vitest, noOnlyTests], // for gdc-ui libs
+    "react-vitest-rtl": [browserEnv, vitest, testingLibraryReact, noOnlyTests], // for gdc-ui libs
     "react-playwright": [browserEnv, playwright, chaiFriendly, noOnlyTests], // for gdc e2e libs
     "esm-playwright": [browserEnv, importEsm, playwright, chaiFriendly, noOnlyTests], // for e2e utils
     "esm-react": [browserEnv, importEsm], // for most react libs
     "esm-react-playwright": [browserEnv, importEsm, playwright, chaiFriendly, noOnlyTests], // for gdc e2e libs with react
+    "esm-react-storybook": [browserEnv, importEsm, storybook], // for sdk-ui-tests-storybook
     "esm-react-vitest": [browserEnv, importEsm, vitest, noOnlyTests], // for most sdk react libs with vitest
-    "esm-react-vitest-storybook": [browserEnv, importEsm, vitest, noOnlyTests], // for sdk-ui-tests-storybook
+    "esm-react-vitest-rtl": [browserEnv, importEsm, vitest, testingLibraryReact, noOnlyTests], // for most sdk react libs with vitest
 };

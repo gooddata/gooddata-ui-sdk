@@ -10,7 +10,7 @@ import {
 export default {
     forbidden: [
         // not-to-dev-dep: all deps are dev because this package is tooling and its dependencies occurred in FOSSA scan
-        // not-to-unresolvable: dep-cruiser can't resolve subpath exports (e.g. storybook/actions), TypeScript handles this
+        // not-to-unresolvable: dep-cruiser can't resolve subpath exports (e.g. @gooddata/sdk-ui-pivot/next), TypeScript handles this
         ...DefaultRules.filter(
             (rule) => rule.name !== "not-to-dev-dep" && rule.name !== "not-to-unresolvable",
         ),

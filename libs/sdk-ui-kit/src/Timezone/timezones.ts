@@ -242,11 +242,9 @@ export function getUserTimezone(): ITimezoneItem {
  *
  * @internal
  */
-// TODO INE (CQ-2725): finalize the picker label format and the ID-in-tooltip presentation
-// after the UX discussion.
 export function getTimezoneDisplayLabel(id: string): string {
-    const { name, offsetLabel } = getTimezoneLabels(id);
-    return offsetLabel ? `${name} (${offsetLabel})` : name;
+    const { name } = getTimezoneLabels(id);
+    return name;
 }
 
 /**
@@ -306,4 +304,19 @@ export function getTimezoneLabels(id: string): Pick<ITimezoneItem, "name" | "off
         name: id,
         offsetLabel: computeOffsetLabel(id),
     };
+}
+
+/**
+ * Returns the current time in the provided timezone.
+ *
+ * @internal
+ */
+export function getCurrentTimeByTimezoneId(id: string) {
+    const dateTime = new Date().toLocaleString("en-US", { timeZone: id });
+    // create new Date object
+    const date = new Date(dateTime);
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+
+    return hours && minutes ? `${("0" + hours).slice(-2)}:${("0" + minutes).slice(-2)}` : "";
 }

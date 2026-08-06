@@ -1,9 +1,8 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { action } from "storybook/actions";
-
 import { type IPivotTableNextProps, PivotTableNext } from "@gooddata/sdk-ui-pivot/next";
 
+import { scenarioAction } from "../../scenarioAction.js";
 import { scenariosFor } from "../../scenarioGroup.js";
 import {
     AmountMeasurePredicate,
@@ -26,7 +25,7 @@ export const drilling = scenariosFor<IPivotTableNextProps>("PivotTableNext", Piv
     .addScenario("with drill on all row atributes", {
         ...PivotTableWithTwoMeasuresAndThreeRowsAndTwoCols,
         drillableItems: [ProductPredicate, DepartmentPredicate, SalesRepPredicate],
-        onDrill: action("onDrill"),
+        onDrill: scenarioAction("onDrill"),
     })
     .addScenario("with drill on all row attributes and measures", {
         ...PivotTableWithTwoMeasuresAndThreeRowsAndTwoCols,
@@ -37,5 +36,5 @@ export const drilling = scenariosFor<IPivotTableNextProps>("PivotTableNext", Piv
             AmountMeasurePredicate,
             WonMeasurePredicate,
         ],
-        onDrill: action("onDrill"),
+        onDrill: scenarioAction("onDrill"),
     });
