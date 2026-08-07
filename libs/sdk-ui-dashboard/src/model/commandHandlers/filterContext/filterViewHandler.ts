@@ -20,7 +20,6 @@ import {
     type ISaveFilterView,
     type ISetFilterViewAsDefault,
     changeFilterContextSelectionByParams,
-    reloadFilterViews,
 } from "../../commands/filters.js";
 import {
     filterViewApplicationFailed,
@@ -114,7 +113,13 @@ export function* saveFilterViewHandler(ctx: DashboardContext, cmd: ISaveFilterVi
             ctx,
             filterView,
         );
-        yield put(reloadFilterViews());
+        // apply the create response, a list reload may not be consistent yet and would drop the new view
+        yield put(
+            filterViewsActions.addFilterView({
+                dashboard: ctx.dashboardRef,
+                filterView: newFilterView,
+            }),
+        );
         yield put(filterViewCreationSucceeded(ctx, newFilterView, cmd.correlationId));
     } catch (error) {
         defaultErrorHandler(error);
@@ -136,7 +141,13 @@ export function* deleteFilterViewHandler(ctx: DashboardContext, cmd: IDeleteFilt
         );
 
         yield call(deleteFilterView, ctx, cmd.payload.ref);
-        yield put(reloadFilterViews());
+        // no response body, so drop the view locally instead of re-reading a possibly stale list
+        yield put(
+            filterViewsActions.removeFilterView({
+                dashboard: ctx.dashboardRef!,
+                ref: cmd.payload.ref,
+            }),
+        );
         yield put(filterViewDeletionSucceeded(ctx, filterView, cmd.correlationId));
     } catch (error) {
         defaultErrorHandler(error);
@@ -203,7 +214,14 @@ export function* setFilterViewAsDefaultHandler(
     };
     try {
         yield call(setFilterViewAsDefault, ctx, cmd.payload.ref, cmd.payload.isDefault);
-        yield put(reloadFilterViews());
+        // same as delete - no response body, so apply the requested state locally
+        yield put(
+            filterViewsActions.setFilterViewAsDefault({
+                dashboard: ctx.dashboardRef!,
+                ref: cmd.payload.ref,
+                isDefault: cmd.payload.isDefault,
+            }),
+        );
         yield put(filterViewDefaultStatusChangeSucceeded(ctx, updatedFilterView, cmd.correlationId));
     } catch (error) {
         defaultErrorHandler(error);

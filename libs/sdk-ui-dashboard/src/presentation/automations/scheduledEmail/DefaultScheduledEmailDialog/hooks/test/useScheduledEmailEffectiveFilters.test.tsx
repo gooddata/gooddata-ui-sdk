@@ -464,6 +464,88 @@ describe("useScheduledEmailEffectiveFilters — effectiveDashboardFiltersByTab (
 });
 
 // ---------------------------------------------------------------------------
+// Referential stability
+// ---------------------------------------------------------------------------
+
+describe("useScheduledEmailEffectiveFilters — referential stability", () => {
+    it("returns referentially identical values when re-rendered with unchanged inputs", () => {
+        // The file-wide `beforeEach` default for `getAppliedDashboardFilters` is an identity
+        // passthrough, which would return the caller's own array and make the assertion below pass
+        // with or without a memo. Overridden with a fresh allocation per call so an unmemoized call
+        // site produces a new reference each render and the `toBe` actually fails.
+        // `getAppliedWidgetFilters`' default already allocates per call, so it needs no override.
+        getAppliedDashboardFiltersSpy.mockImplementation(() => [fakeFilterContextItem("dashboard-applied")]);
+
+        const editedAutomationFiltersByTab = { tab1: [fakeFilterContextItem("f1")] };
+
+        const props: IUseScheduledEmailEffectiveFiltersProps = {
+            widget: undefined,
+            insight: undefined,
+            editedAutomationFilters: [fakeFilterContextItem("f1")],
+            editedAutomationFiltersByTab,
+            availableFiltersAsVisibleFilters: undefined,
+            availableFiltersAsVisibleFiltersByTab: undefined,
+            filtersDataByTab: undefined,
+            storeFilters: true,
+        };
+        const { result, rerender } = renderHook(
+            (p: IUseScheduledEmailEffectiveFiltersProps) => useScheduledEmailEffectiveFilters(p),
+            { initialProps: props },
+        );
+        const first = result.current;
+
+        rerender(props);
+
+        expect(result.current.effectiveWidgetFilters).toBe(first.effectiveWidgetFilters);
+        expect(result.current.effectiveWidgetFiltersWithInsight).toBe(
+            first.effectiveWidgetFiltersWithInsight,
+        );
+        expect(result.current.effectiveDashboardFilters).toBe(first.effectiveDashboardFilters);
+        expect(result.current.effectiveDashboardFiltersByTab).toBe(first.effectiveDashboardFiltersByTab);
+
+        // The three visible-filter members are deliberately absent: their
+        // `availableFiltersAsVisibleFilters*` input is unstable in the production call path, so
+        // asserting their stability here would only characterise the mock, not the caller. See the
+        // note in `useScheduledEmailEffectiveFilters.ts`; stabilizing that chain upstream comes first.
+    });
+});
+
+// ---------------------------------------------------------------------------
+// Store-flag asymmetry: isWidget always forces effectiveDashboardFilters to
+// be stored, regardless of the storeFilters prop.
+// ---------------------------------------------------------------------------
+
+describe("useScheduledEmailEffectiveFilters — store-flag asymmetry", () => {
+    beforeEach(() => {
+        getAppliedDashboardFiltersSpy.mockImplementation((filters, _hidden, storeFilters) =>
+            storeFilters ? filters : undefined,
+        );
+    });
+
+    it("stores dashboard filters for a widget schedule even when storeFilters is false", () => {
+        const { result } = renderEffectiveFiltersHook({
+            widget: SENTINEL_WIDGET,
+            insight: SENTINEL_INSIGHT,
+            editedAutomationFilters: [fakeFilterContextItem("f1")],
+            storeFilters: false,
+        });
+
+        expect(result.current.effectiveDashboardFilters).toBeDefined();
+    });
+
+    it("does not store dashboard filters for a dashboard schedule when storeFilters is false", () => {
+        const { result } = renderEffectiveFiltersHook({
+            widget: undefined,
+            insight: undefined,
+            editedAutomationFilters: [fakeFilterContextItem("f1")],
+            storeFilters: false,
+        });
+
+        expect(result.current.effectiveDashboardFilters).toBeUndefined();
+    });
+});
+
+// ---------------------------------------------------------------------------
 // parametersByTabForNewAutomation
 // ---------------------------------------------------------------------------
 

@@ -35,7 +35,7 @@ import { getActiveInternalApplication, getApplicationHref } from "../loader/rout
 import { getBackend } from "../platformContext/backend.js";
 
 import { buildAppMenu, getLocalizedTitle } from "./appMenuItems.js";
-import { getUserDisplayName, swapWorkspaceInPath } from "./chromeHelpers.js";
+import { getUserDisplayName, isPlainLeftClick, swapWorkspaceInPath } from "./chromeHelpers.js";
 import { b, e } from "./hostChromeBem.js";
 import { HostIntlProvider } from "./HostIntlProvider.js";
 import { HostNotificationDispatcher } from "./HostNotificationDispatcher.js";
@@ -62,6 +62,9 @@ const LOGOUT_MENU_ITEM_KEY = "gs.header.logout";
 const initialFaviconUrl =
     (typeof document !== "undefined" && document.querySelector("link[rel~='icon']")?.getAttribute("href")) ||
     "/favicon.ico";
+
+// Switches the host scope to organization; the first organization app is then chosen by redirect logic.
+const LOGO_HREF = "/organization";
 
 export interface IHostChromeProps {
     ctx: IPlatformContext;
@@ -211,6 +214,18 @@ export function HostChrome({
         [resolvedApplications, ctx, pathname],
     );
 
+    // Without this the anchor would do a full page load instead of a client-side navigation.
+    const handleLogoClick = useCallback(
+        (e: MouseEvent<HTMLAnchorElement>) => {
+            if (!isPlainLeftClick(e)) {
+                return;
+            }
+            e.preventDefault();
+            onNavigate(LOGO_HREF);
+        },
+        [onNavigate],
+    );
+
     const handleWorkspaceSelect = useCallback(
         (workspace: IHeaderWorkspace) => {
             const newId = workspace.id;
@@ -289,7 +304,8 @@ export function HostChrome({
                             <div className={e("header")} onMouseOver={handleHeaderMouseOver}>
                                 <AppHeader
                                     logoUrl={ctx.whiteLabeling?.logoUrl || defaultLogoUrl}
-                                    logoHref="/organization" // switch the host scope to organization, the first org app will be chosen
+                                    logoHref={LOGO_HREF}
+                                    onLogoClick={handleLogoClick}
                                     logoTitle={logoTitle}
                                     headerColor={headerColor}
                                     headerTextColor={headerTextColor}

@@ -11,7 +11,7 @@ import { type IPlatformContext } from "@gooddata/sdk-pluggable-application-model
 
 const WORKSPACE_PATH_PATTERN = /^\/workspace\/(?<workspaceId>[^/]+)(?:\/|$)/;
 
-function stripEmbedPrefix(pathname: string): string {
+export function stripEmbedPrefix(pathname: string): string {
     return pathname.startsWith("/embedded/") ? pathname.slice("/embedded".length) : pathname;
 }
 
@@ -45,7 +45,7 @@ function ensureLeadingSlash(path: string): string {
     return path.startsWith("/") ? path : `/${path}`;
 }
 
-function normalizePath(path: string): string {
+export function normalizePath(path: string): string {
     const prefixed = ensureLeadingSlash(path);
     if (prefixed === "/") {
         return prefixed;

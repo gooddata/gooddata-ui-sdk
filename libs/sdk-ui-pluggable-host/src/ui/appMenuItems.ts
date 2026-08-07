@@ -12,20 +12,13 @@ import { type IHeaderMenuItem } from "@gooddata/sdk-ui-kit";
 
 import { getApplicationHref, isInternalAppRouteActive } from "../loader/routing.js";
 
+import { isPlainLeftClick } from "./chromeHelpers.js";
+
 function handleExternalAppClick(href: string) {
     return (event: MouseEvent) => {
-        // Let the browser handle modifier-click and non-primary buttons natively
-        // (opens in a new tab/window). Only intercept a plain left-click so we can
-        // suppress the parent menu's SPA navigation and do a full-page load instead —
-        // external apps live outside the host SPA, so React Router can't reach them.
-        if (
-            event.defaultPrevented ||
-            event.button !== 0 ||
-            event.metaKey ||
-            event.ctrlKey ||
-            event.shiftKey ||
-            event.altKey
-        ) {
+        // Suppresses the parent menu's SPA navigation in favour of a full page load: external
+        // apps live outside the host SPA, so React Router cannot reach them.
+        if (!isPlainLeftClick(event)) {
             return;
         }
         event.preventDefault();

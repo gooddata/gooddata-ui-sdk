@@ -119,6 +119,12 @@ export interface IDocumentTitleChangedEvent extends IPluggableAppEvent {
 export type IEffectiveSettings = IUserSettings | IUserWorkspaceSettings;
 
 // @alpha
+export interface IHostNavigationRequest {
+    readonly proceed: () => void;
+    readonly url: string;
+}
+
+// @alpha
 export interface IHostUiModule {
     // (undocumented)
     mount: HostUiMount;
@@ -276,6 +282,7 @@ export interface IPluggableApplicationMountHandle {
         itemUrl?: string;
         newTab?: boolean;
     }) => boolean;
+    onHostNavigationRequested?: (request: IHostNavigationRequest) => boolean;
     setAiAssistantOpen?: (open: boolean) => void;
     unmount(): void;
     updateContext?: (ctx: IPlatformContext) => void;

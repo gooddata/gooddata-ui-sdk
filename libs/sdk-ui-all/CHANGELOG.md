@@ -1,6 +1,61 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 30 Jul 2026 07:07:07 GMT and should not be manually modified.
+This log was last generated on Fri, 07 Aug 2026 07:40:30 GMT and should not be manually modified.
+
+## 11.51.0
+
+Fri, 07 Aug 2026 07:40:30 GMT
+
+### Minor changes
+
+- Add second-level date granularities (second, minute of day, second of day, second of minute)
+
+### Patches
+
+- sdk-ui-dashboard: Keep the drill dialog open when interacting with nested portaled menus.
+- sdk-ui-all: Do not offer tabular PDF (PDF_TABULAR) as a scheduled widget export attachment when Accessibility Mode is enabled, consistent with the ad-hoc widget export menu.
+- sdk-ui-dashboard: Fix dashboard content showing through the filter bar either side of the "Show all" button. The row holding that button is in the flow but had no background of its own, so the sticky filter bar was see-through across that band.
+- sdk-ui-dashboard: Apply the themed widget title color (dashboards.content.kpiWidget.title.color and dashboards.content.widget.title.color) directly to the title element, so bare h3 typography rules from co-hosted applications can no longer override it.
+- sdk-ui-dashboard: fix new scheduled PDF attachments saving page size A4 instead of the workspace's format-locale default, so workspaces with a US or Canadian format locale get LETTER as intended
+- sdk-ui-dashboard: Apply filter view create, delete and default status changes to the store directly instead of reloading the list, which may not be consistent yet and could hide a just saved view.
+
+### Updates
+
+- sdk-model: Add `allowedValues` to string parameter constraints
+- sdk-ui-catalog: Add `constraints.allowedValues` and `cardinality` support to the parameter YAML editor
+- sdk-ui-kit: YamlEditor exposes yamlPositionAt and passes the cursor's YAML position to its completion source.
+- sdk-code-convertors: ColorMapping.id accepts null; content with no code form is now refused instead of silently dropped.
+- sdk-ui-all: Current app can now intercept host app navigation
+- Add dashboard timezoneConfig model and tiger persistence
+- Apply dashboard timezone to widget executions
+- Add ad-hoc timezone change menu item in dashboard view mode
+- Add dashboard timezone indicator to top bar
+- sdk-ui-dashboard: Collocate the automation filter conversion helpers under a shared filters module, no runtime behavior change.
+- sdk-ui-dashboard: Move alerting create/edit data into the dialog context, update the connector and hooks to consume it, and deprecate the corresponding prop contracts while preserving callback props for compatibility.
+- sdk-ui-dashboard: Deprecate and stop forwarding unused alerting management data props from the connector, leaving callback props unchanged for compatibility.
+- sdk-ui-dashboard: Export the automation dialog context hooks and value types as alpha APIs, with consumer-facing TSDoc. No runtime behavior change.
+- sdk-ui-dashboard: Move scheduled email create/edit data into the dialog context, update the connector and hooks to consume it, and deprecate the corresponding prop contracts while preserving callback props for compatibility.
+- sdk-ui-dashboard: Move scheduled email management data into the dialog context, update the connector and hooks to consume it, and deprecate the corresponding prop contracts while preserving callback props for compatibility.
+- sdk-backend-tiger: skip unknown GenAI conversation content/part types instead of throwing and killing the whole assistant chat stream
+- sdk-ui-kit: UiMenu item tooltips now open on keyboard focus, not just hover, so keyboard and screen-reader users can reach the same information as mouse users, and can dismiss the tooltip with Escape without closing the menu.
+- sdk-ui-filters: Make single select attribute filter option tooltips keyboard-operable by revealing them on keyboard focus (:focus-visible) with a proper aria-describedby announcement, fix the invalid role and leaked icon aria-label, and support dismissing with Escape without closing the dropdown.
+- sdk-ui-dashboard: Replace the legacy `DropdownButton` behind the filter bar "My views" trigger with a tertiary `UiButton`, dropping the CSS hacks that were emulating its look. The button stays vertically centered and is now offset 10px from the right edge so it lines up with the dashboard header options button.
+- sdk-ui-ext: the object share dialog's permission menu now offers a selectable "Can edit & share" level for grantees and the all-workspace-members rule, with label access and remove access consolidated into the same menu.
+- sdk-backend-mockingbird: Remove the deprecated internal legacyRecordedBackend module and its exports (legacyRecordedDataView and the Legacy\* recording types); all in-repo consumers were migrated to local test utilities.
+- sdk-backend-mockingbird: Remove the deprecated internal legacyRecordedBackend function (no callers); legacyRecordedDataView and legacy recording types are unchanged.
+- sdk-ui-dashboard: filter bar exposes role=toolbar so NVDA switches to focus mode automatically
+- sdk-ui-charts: fixed Mekko chart drill intersections to carry both Width and Height measure headers instead of an alternating or Width-only measure
+- sdk-ui-charts: fix Mekko chart X-axis column labels being incorrect when both metric buckets are populated
+- sdk-ui-charts, sdk-ui-ext: fix mekko configuration options not applied (X-axis, custom tooltip, label display, total labels, key driver analysis)
+- Add ad-hoc timezone in Analytical Designer.
+- Turn on Enable Oidc Auth by default.
+- sdk-ui-kit, sdk-ui-ext: Make the header AI icon, notification icon and help link follow the themed header foreground colour instead of a hardcoded white, so they stay visible on a light themed header
+- sdk-ui-kit: Fix secondary buttons losing their border in apps whose stylesheet entry point pulls several SDK packages in through legacy @import. The %btn placeholder moved from styles/scss/Button/\_mixins.scss to the new styles/scss/Button/\_placeholders.scss so that stylesheets needing only the button gradient mixin no longer re-emit the button base rules; if you @extend %btn in your own SCSS, load @gooddata/sdk-ui-kit/styles/scss/Button/placeholders instead of Button/mixins.
+- sdk-ui-dashboard: Fix slide export of dashboards with containers, where the insights inside a container rendered with zero height and only their titles were visible, by giving export section grid rows a definite size. A section header no longer splits the slide height evenly with the widget below it either, so a slide with a section title now uses the whole slide for its content.
+- sdk-ui-pluggable-host: Remember the last visited workspace and land in it when the URL carries no workspace; stop reporting a previous workspace's permissions while a workspace switch is in flight.
+- sdk-ui-gen-ai: Add mode and onModeChange properties to GenAIAssistant to control the docked and fullscreen layout, and expose setFullscreenAction publicly.
+- sdk-ui-gen-ai: Add a Fast/Thinking effort selector to the chat input and relay the choice with each message
+- sdk-ui-gen-ai: Clear the AI assistant user context on new conversation, thread reset and when leaving the dashboard.
 
 ## 11.50.0
 
