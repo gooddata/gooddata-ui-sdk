@@ -7,53 +7,46 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
     type IAutomationMetadataObjectDefinition,
+    type IDashboardParameter,
     type IInsightParameterValue,
     type IParameterMetadataObject,
     idRef,
 } from "@gooddata/sdk-model";
 
-import {
-    selectCatalogParameters,
-    selectCatalogParametersIsLoaded,
-} from "../../../../../model/store/catalog/catalogSelectors.js";
-import {
-    selectEnableParameters,
-    selectEnableStringParameters,
-} from "../../../../../model/store/config/configSelectors.js";
 import { useAutomationAlertParameters } from "../useAutomationAlertParameters.js";
 
-import { workspaceNumberParameter, workspaceStringParameter } from "./parameterFixtures.js";
+import {
+    dashboardParameter,
+    workspaceNumberParameter,
+    workspaceStringParameter,
+} from "./parameterFixtures.js";
 
-interface IMockStoreState {
+interface IMockContextState {
     enableParameters: boolean;
     enableStringParameters: boolean;
     catalogParametersIsLoaded: boolean;
     catalog: IParameterMetadataObject[];
 }
 
-let mockState: IMockStoreState;
+let mockState: IMockContextState;
 
-function resolveSelectorValue(selector: unknown): unknown {
-    switch (selector) {
-        case selectEnableParameters:
-            return mockState.enableParameters;
-        case selectEnableStringParameters:
-            return mockState.enableStringParameters;
-        case selectCatalogParameters:
-            return mockState.catalog;
-        case selectCatalogParametersIsLoaded:
-            return mockState.catalogParametersIsLoaded;
-        default:
-            // The remaining selectors (effective dashboard/widget parameter values) only feed the
-            // chip-display derivation, which dropStaleParameters does not touch — an empty list
-            // renders the hook without needing to mock parametersSelectors' factory selectors.
-            return [];
-    }
-}
-
-vi.mock("../../../../../model/react/DashboardStoreProvider.js", () => ({
-    useDashboardSelector: (selector: unknown) => resolveSelectorValue(selector),
+// Three ups: `vi.mock` resolves relative to THIS test file, which sits in
+// shared/automationFilters/test/ — one level deeper than the hook whose import path is
+// "../../contexts/AutomationsContext.js".
+vi.mock("../../../contexts/AutomationsContext.js", () => ({
+    useAutomationsContext: () => ({
+        parameters: {
+            enabled: mockState.enableParameters,
+            stringParametersEnabled: mockState.enableStringParameters,
+            catalog: mockState.catalog,
+            catalogIsLoaded: mockState.catalogParametersIsLoaded,
+            dashboardParametersByTab: {},
+        },
+    }),
 }));
+
+const EMPTY_DASHBOARD_PARAMETERS: IDashboardParameter[] = [];
+const EMPTY_WIDGET_PARAMETER_VALUES: IInsightParameterValue[] = [];
 
 const alertAutomation = (
     parameters: IInsightParameterValue[] | undefined,
@@ -67,12 +60,23 @@ const alertAutomation = (
     },
 });
 
-function renderAlertParametersHook(initial: IAutomationMetadataObjectDefinition) {
+function renderAlertParametersHook(
+    initial: IAutomationMetadataObjectDefinition,
+    overrides: {
+        dashboardParameters?: IDashboardParameter[];
+        widgetParameterValues?: IInsightParameterValue[];
+    } = {},
+) {
     return renderHook(() => {
         const [editedAutomation, setEditedAutomation] = useState<
             IAutomationMetadataObjectDefinition | undefined
         >(initial);
-        const api = useAutomationAlertParameters({ editedAutomation, setEditedAutomation });
+        const api = useAutomationAlertParameters({
+            editedAutomation,
+            setEditedAutomation,
+            dashboardParameters: overrides.dashboardParameters ?? EMPTY_DASHBOARD_PARAMETERS,
+            widgetParameterValues: overrides.widgetParameterValues ?? EMPTY_WIDGET_PARAMETER_VALUES,
+        });
         return { editedAutomation, ...api };
     });
 }
@@ -216,5 +220,44 @@ describe("useAutomationAlertParameters — dropStaleParameters", () => {
         });
 
         expect(result.current.editedAutomation?.alert?.execution.parameters).toEqual(parameters);
+    });
+});
+
+describe("useAutomationAlertParameters — widget-scoped inputs come from props", () => {
+    it("offers a workspace parameter whose widget-effective value was passed in", () => {
+        mockState.catalog = [workspaceNumberParameter("topN", "Top N", 3)];
+
+        const { result } = renderAlertParametersHook(alertAutomation([]), {
+            widgetParameterValues: [{ ref: idRef("topN", "parameter"), value: 42 }],
+        });
+
+        expect(
+            result.current.availableParameters.map((parameter) => [
+                parameter.ref.identifier,
+                parameter.value,
+            ]),
+        ).toEqual([["topN", 42]]);
+    });
+
+    it("renders a stored chip with the dashboard parameter's label and mode", () => {
+        // Twin of the widgetParameterValues sentinel above, for the other widget-scoped prop.
+        // dashboardParameters is what reconstructAutomationParametersFromValues resolves title and
+        // mode from, so a non-empty one must beat the workspace catalog's title.
+        const { result } = renderAlertParametersHook(
+            alertAutomation([{ ref: idRef("topN", "parameter"), value: 8 }]),
+            {
+                dashboardParameters: [
+                    dashboardParameter("topN", { label: "Renamed on the dashboard", mode: "readonly" }),
+                ],
+            },
+        );
+
+        expect(
+            result.current.automationParameters.map((parameter) => [
+                parameter.ref.identifier,
+                parameter.title,
+                parameter.mode,
+            ]),
+        ).toEqual([["topN", "Renamed on the dashboard", "readonly"]]);
     });
 });

@@ -12,6 +12,7 @@ import {
     type IDashboardAttributeFilterConfig,
     type IDashboardMeasureValueFilter,
     type IMeasureValueFilter,
+    type IdentifierRef,
     type ObjRef,
     filterObjRef,
     idRef,
@@ -22,7 +23,6 @@ import {
     isMeasureValueFilter,
     isNegativeAttributeFilter,
     isPositiveAttributeFilter,
-    isUriRef,
     objRefToString,
     serializeObjRef,
 } from "@gooddata/sdk-model";
@@ -179,9 +179,10 @@ const buildValidInsightFiltersFormattingRule = (attributeFilters: IAttributeFilt
 
     const validInsightAttributeFilterPlaceholders = attributeFilters
         .map((filter) => {
-            const ref = filterObjRef(filter);
-            const id = isUriRef(ref) ? ref.uri : ref.identifier;
-            return `{attribute_filter_selection\\(${id}\\)}`;
+            // these filters always come from useSanitizedInsightFilters, which rewrites the display form
+            // ref to idRef(displayForm.id, "displayForm") or drops the filter -> never a uri ref here
+            const { identifier } = filterObjRef(filter) as IdentifierRef;
+            return `{attribute_filter_selection\\(${identifier}\\)}`;
         })
         .join("|");
     return {

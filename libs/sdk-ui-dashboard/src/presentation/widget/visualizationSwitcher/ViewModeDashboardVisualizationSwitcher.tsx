@@ -12,6 +12,7 @@ import {
     widgetTitle,
 } from "@gooddata/sdk-model";
 import { type VisType } from "@gooddata/sdk-ui";
+import { useId } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { useDashboardScheduledEmails } from "../../../model/react/useDasboardScheduledEmails/useDashboardScheduledEmails.js";
@@ -230,9 +231,10 @@ export function ViewModeDashboardVisualizationSwitcherContent({
     const { isWidgetAsTable, toggleWidgetAsTable } = useShowAsTable(activeVisualization);
     const widgetContainerRef = useRef<HTMLDivElement>(null);
 
+    const titleId = useId();
+
     return (
         <DashboardItem
-            as="div"
             className={cx(
                 "type-visualization",
                 "gd-dashboard-view-widget",
@@ -241,6 +243,7 @@ export function ViewModeDashboardVisualizationSwitcherContent({
             screen={screen}
             ref={widgetContainerRef}
             description={accessibilityWidgetDescription}
+            titleId={titleId}
         >
             <DashboardItemVisualization
                 isExport={!!exportData}
@@ -249,6 +252,7 @@ export function ViewModeDashboardVisualizationSwitcherContent({
                         widget={widget}
                         clientHeight={clientHeight}
                         clientWidth={clientWidth}
+                        titleId={titleId}
                         activeVisualization={activeVisualization}
                         onActiveVisualizationChange={(activeVisualizationId) =>
                             onActiveVisualizationChange(activeVisualizationId)

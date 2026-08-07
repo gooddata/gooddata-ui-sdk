@@ -11,7 +11,6 @@ import {
     type INotificationChannelIdentifier,
     type INotificationChannelMetadataObject,
     type IWidget,
-    type IWorkspaceUser,
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
@@ -29,20 +28,6 @@ export interface IScheduledEmailDialogProps {
      * @deprecated read `scheduledExportToEdit` from `useScheduledEmailDialogContext()` instead. Prop will be removed.
      */
     scheduledExportToEdit?: IAutomationMetadataObject;
-
-    /**
-     * Users in workspace
-     *
-     * @deprecated read `users` from `useScheduledEmailDialogContext()` instead. Prop will be removed.
-     */
-    users?: IWorkspaceUser[];
-
-    /**
-     * Error occurred while loading users
-     *
-     * @deprecated read `usersError` from `useScheduledEmailDialogContext()` instead. Prop will be removed.
-     */
-    usersError?: GoodDataSdkError;
 
     /**
      * Notification channels in organization

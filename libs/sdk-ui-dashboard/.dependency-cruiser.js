@@ -167,23 +167,19 @@ export default {
             "src/_staging/*",
             // GDP-3167 Phase-3 debt: frozen exact-file carve-out list (replaces the former
             // "src/model/*" / "src/presentation/filterBar/*" globs). The shared automationFilters
-            // layer still reads the dashboard store directly and renders filterBar components
-            // directly; each entry below is deliberate Phase-3 debt whose removal means moving the
-            // coupling behind an injected prop or a connector callback. Do NOT widen these back to
-            // globs. Add any genuinely new dependency as its own entry with a GDP-3167 Phase-3 note
-            // so reviewers can track the remaining coupling — the depcruiserBoundary test fails when
-            // a new unlisted model/filterBar import appears.
+            // layer no longer reads the dashboard store — every useDashboardSelector call moved
+            // behind AutomationsContext and the two dialog sub-contexts (EB-867 follow-up 4). What
+            // remains is pure model types and functions, plus filterBar components the Automation*
+            // filter components still render directly. Each entry below is deliberate Phase-3 debt
+            // whose removal means moving the coupling behind an injected prop or a connector
+            // callback. Do NOT widen these back to globs, and do NOT re-add a store selector — its
+            // data belongs on a context. Add any genuinely new dependency as its own entry with a
+            // GDP-3167 Phase-3 note so reviewers can track the remaining coupling — the
+            // depcruiserBoundary test fails when a new unlisted model/filterBar import appears.
             //
-            // model coupling — store selectors / hooks / types read by automationFilters:
+            // model coupling — pure types and functions used by automationFilters:
             "src/model/commandHandlers/dashboard/common/attributeFilterSelectionTypeCompatibility.ts",
-            "src/model/react/DashboardStoreProvider.tsx",
-            "src/model/store/catalog/catalogSelectors.ts",
-            "src/model/store/config/configSelectors.ts",
             "src/model/store/filtering/types.ts",
-            "src/model/store/tabs/layout/layoutSelectors.ts",
-            "src/model/store/tabs/parameters/parametersSelectors.ts",
-            "src/model/store/tabs/tabsSelectors.ts",
-            "src/model/store/tabs/tabsState.ts",
             // kept because ExtendedDashboardWidget stays in Phase 2 (D2 — IWidget deferred to Phase 3):
             "src/model/types/layoutTypes.ts",
             "src/model/utils/widgetFilters.ts",

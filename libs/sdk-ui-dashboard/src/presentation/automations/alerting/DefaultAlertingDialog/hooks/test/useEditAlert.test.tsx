@@ -9,7 +9,6 @@ import {
     type IAutomationMetadataObject,
     type INotificationChannelIdentifier,
     type IWidget,
-    type IWorkspaceUser,
     idRef,
     newMeasure,
 } from "@gooddata/sdk-model";
@@ -151,6 +150,7 @@ const DEFAULT_AUTOMATIONS_CONTEXT_VALUE = {
     allowHourlyRecurrence: false,
     settings: undefined,
     currentUser: SENTINEL_CURRENT_USER,
+    widgetLocalIdToTabIdMap: {} as Record<string, string>,
     features: { enableAlertOncePerInterval: false },
 };
 
@@ -160,14 +160,11 @@ const DEFAULT_ALERTING_DIALOG_CONTEXT_VALUE = {
     hiddenFilters: [] as FilterContextItem[],
     commonDateFilterId: undefined,
     alertToEdit: undefined as IAutomationMetadataObject | undefined,
-    users: [] as IWorkspaceUser[],
-    usersError: undefined,
     notificationChannels: [SENTINEL_CHANNEL],
     widget: SENTINEL_WIDGET,
     insight: undefined,
     dashboardId: undefined,
     dashboardEvaluationFrequency: undefined,
-    widgetLocalIdToTabIdMap: {} as Record<string, string>,
     parameterValues: [] as unknown[],
 };
 

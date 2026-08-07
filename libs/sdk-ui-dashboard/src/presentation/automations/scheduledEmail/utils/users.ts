@@ -1,24 +1,8 @@
 // (C) 2022-2026 GoodData Corporation
 
-import {
-    type IAutomationRecipient,
-    type IWorkspaceUser,
-    isAutomationUserGroupRecipient,
-} from "@gooddata/sdk-model";
+import { type IAutomationRecipient, isAutomationUserGroupRecipient } from "@gooddata/sdk-model";
 
 import { isEmail } from "./validate.js";
-
-export function matchUser(user: IWorkspaceUser, search: string) {
-    const lowerCaseSearch = search.toLowerCase();
-    const lowerCaseEmail = user.email?.toLowerCase();
-    const lowerCaseName = user.fullName?.toLowerCase();
-    const lowerCaseId = user.login.toLowerCase();
-    return (
-        lowerCaseEmail?.includes(lowerCaseSearch) ||
-        lowerCaseName?.includes(lowerCaseSearch) ||
-        lowerCaseId?.includes(lowerCaseSearch)
-    );
-}
 
 export function matchRecipient(user: IAutomationRecipient, search: string) {
     if (isAutomationUserGroupRecipient(user)) {

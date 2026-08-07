@@ -14,7 +14,6 @@ import {
     type IFilter,
     type ISettings,
     type IUser,
-    type IWorkspaceUser,
     isExportDefinitionDashboardRequestPayload,
     isExportDefinitionVisualizationObjectRequestPayload,
     isFilter,
@@ -187,32 +186,6 @@ export const areAutomationsEqual = (
     return (
         isEqual(automationWithoutExportDefinitions, origAutomationWithoutExportDefinitions) &&
         isEqual(automationExportDefinitions, origAutomationExportDefinitions)
-    );
-};
-
-export const convertCurrentUserToAutomationRecipient = (
-    users: IWorkspaceUser[],
-    user: IUser,
-): IAutomationRecipient => {
-    const foundUser = users.find((u) => u.login === user.login);
-
-    return convertUserToAutomationRecipient(foundUser ?? user);
-};
-
-export const convertCurrentUserToWorkspaceUser = (users: IWorkspaceUser[], user: IUser): IWorkspaceUser => {
-    const foundUser = users.find((u) => u.login === user.login);
-
-    return (
-        foundUser ?? {
-            email: user.email ?? "",
-            fullName: user.fullName,
-            status: "ENABLED",
-            login: user.login,
-            lastName: user.lastName,
-            firstName: user.firstName,
-            uri: user.login,
-            ref: user.ref,
-        }
     );
 };
 

@@ -11,13 +11,6 @@ import {
     idRef,
 } from "@gooddata/sdk-model";
 
-import { selectCatalogParameters } from "../../../../../model/store/catalog/catalogSelectors.js";
-import {
-    selectEnableParameters,
-    selectEnableStringParameters,
-} from "../../../../../model/store/config/configSelectors.js";
-import { selectWidgetLocalIdToTabIdMap } from "../../../../../model/store/tabs/layout/layoutSelectors.js";
-import { selectTabs } from "../../../../../model/store/tabs/tabsSelectors.js";
 import type { ExtendedDashboardWidget } from "../../../../../model/types/layoutTypes.js";
 import {
     type IUseAutomationExportParametersProps,
@@ -30,55 +23,33 @@ import {
     workspaceStringParameter,
 } from "./parameterFixtures.js";
 
-interface IMockStoreState {
+interface IMockContextState {
     enableParameters: boolean;
     enableStringParameters: boolean;
     catalog: IParameterMetadataObject[];
     dashboardParametersByTab: Record<string, IDashboardParameter[]>;
-    tabs: Array<{ localIdentifier: string }> | undefined;
+    tabIds: string[];
     widgetTabMap: Record<string, string>;
     effectiveParametersByTab: Record<string, IDashboardExportParameter[]>;
 }
 
-let mockState: IMockStoreState;
+let mockState: IMockContextState;
 
-// Sentinel selectors for the mocked parametersSelectors module; hoisted function declarations so the
-// vi.mock factories (which vitest hoists above imports) can reference them.
-function exportEffectiveParametersSelector(): never {
-    throw new Error("Sentinel selector must be resolved by the useDashboardSelector mock.");
-}
-function smartPersistedTabsParametersSelector(): never {
-    throw new Error("Sentinel selector must be resolved by the useDashboardSelector mock.");
-}
-
-function resolveSelectorValue(selector: unknown): unknown {
-    switch (selector) {
-        case selectEnableParameters:
-            return mockState.enableParameters;
-        case selectEnableStringParameters:
-            return mockState.enableStringParameters;
-        case selectCatalogParameters:
-            return mockState.catalog;
-        case smartPersistedTabsParametersSelector:
-            return mockState.dashboardParametersByTab;
-        case selectTabs:
-            return mockState.tabs;
-        case selectWidgetLocalIdToTabIdMap:
-            return mockState.widgetTabMap;
-        case exportEffectiveParametersSelector:
-            return mockState.effectiveParametersByTab;
-        default:
-            throw new Error("Unexpected selector in useAutomationExportParameters test.");
-    }
-}
-
-vi.mock("../../../../../model/react/DashboardStoreProvider.js", () => ({
-    useDashboardSelector: (selector: unknown) => resolveSelectorValue(selector),
-}));
-
-vi.mock("../../../../../model/store/tabs/parameters/parametersSelectors.js", () => ({
-    selectSmartPersistedTabsParameters: smartPersistedTabsParametersSelector,
-    selectExportEffectiveParameters: () => exportEffectiveParametersSelector,
+// Three `..`, not the two the hook itself uses: `vi.mock` resolves relative to THIS file, which sits
+// in shared/automationFilters/test/ — one level deeper than the hook, whose own import is
+// "../../contexts/AutomationsContext.js". Same arrangement in useAutomationAlertParameters.test.ts.
+vi.mock("../../../contexts/AutomationsContext.js", () => ({
+    useAutomationsContext: () => ({
+        parameters: {
+            enabled: mockState.enableParameters,
+            stringParametersEnabled: mockState.enableStringParameters,
+            catalog: mockState.catalog,
+            catalogIsLoaded: true,
+            dashboardParametersByTab: mockState.dashboardParametersByTab,
+        },
+        tabIds: mockState.tabIds,
+        widgetLocalIdToTabIdMap: mockState.widgetTabMap,
+    }),
 }));
 
 const existingAutomation = (
@@ -140,7 +111,7 @@ beforeEach(() => {
             workspaceStringParameter("scenario", "Scenario", "Actual"),
         ],
         dashboardParametersByTab: { tab1: [dashboardParameter("topN", { value: 5 })] },
-        tabs: [{ localIdentifier: "tab1" }],
+        tabIds: ["tab1"],
         widgetTabMap: { w1: "tab1" },
         effectiveParametersByTab: {
             tab1: [{ id: "topN", value: "5", title: "Top N", parameterType: "NUMBER" }],
@@ -148,10 +119,17 @@ beforeEach(() => {
     };
 });
 
-function renderParametersHook(props: Omit<IUseAutomationExportParametersProps, "setParametersWire"> = {}) {
+function renderParametersHook(
+    props: Omit<IUseAutomationExportParametersProps, "setParametersWire" | "effectiveParametersByTab"> = {},
+) {
     const setParametersWire = vi.fn();
     const hook = renderHook(() =>
-        useAutomationExportParameters({ storeParameters: true, ...props, setParametersWire }),
+        useAutomationExportParameters({
+            storeParameters: true,
+            ...props,
+            effectiveParametersByTab: mockState.effectiveParametersByTab,
+            setParametersWire,
+        }),
     );
     return { ...hook, setParametersWire };
 }
@@ -257,6 +235,14 @@ describe("useAutomationExportParameters — chip edits", () => {
         expect(setParametersWire).toHaveBeenLastCalledWith({
             tab1: [{ id: "topN", value: "9", title: "Top N", parameterType: "NUMBER" }],
         });
+    });
+
+    it("has no flat tab for a dashboard schedule spanning multiple tabs", () => {
+        mockState.tabIds = ["tab1", "tab2"];
+
+        const { result } = renderParametersHook();
+
+        expect(result.current.flatTabId).toBeUndefined();
     });
 
     it("keeps a stored STRING row on the wire when an unrelated chip is edited", () => {

@@ -8,8 +8,14 @@ import { type FilterContextItem, type IAutomationVisibleFilter } from "@gooddata
 
 import { useFiltersByTabNamings, useFiltersNamings } from "../../hooks/useFiltersNamings.js";
 
+// Module-level, not inline `= []` / `= {}` defaults: a default parameter is evaluated per call, so an
+// inline default hands a fresh reference to the namings memos on every render of a caller that passes
+// nothing - which would leave the chain unstable for exactly that caller. Do not inline these back.
+const EMPTY_FILTERS: FilterContextItem[] = [];
+const EMPTY_FILTERS_BY_TAB: Record<string, FilterContextItem[]> = {};
+
 export const useAutomationVisibleFilters = (
-    availableFilters: FilterContextItem[] | undefined = [],
+    availableFilters: FilterContextItem[] | undefined = EMPTY_FILTERS,
 ): IAutomationVisibleFilter[] => {
     const filterNamings = useFiltersNamings(availableFilters);
 
@@ -25,7 +31,7 @@ export const useAutomationVisibleFilters = (
 };
 
 export const useAutomationVisibleFiltersByTab = (
-    availableFilters: Record<string, FilterContextItem[]> | undefined = {},
+    availableFilters: Record<string, FilterContextItem[]> | undefined = EMPTY_FILTERS_BY_TAB,
 ): Record<string, IAutomationVisibleFilter[]> => {
     const filterNamings = useFiltersByTabNamings(availableFilters);
 

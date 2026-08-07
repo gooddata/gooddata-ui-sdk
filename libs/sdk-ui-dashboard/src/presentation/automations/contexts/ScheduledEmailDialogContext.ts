@@ -14,9 +14,7 @@ import type {
     INotificationChannelIdentifier,
     INotificationChannelMetadataObject,
     IWidget,
-    IWorkspaceUser,
 } from "@gooddata/sdk-model";
-import type { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 /**
  * Sub-context for the scheduled-email create/edit dialog.
@@ -43,7 +41,6 @@ export interface IScheduledEmailDialogContextValue {
      * getAppliedDashboardFilters/getAppliedWidgetFilters inside the dialog, mirroring the alerting context.
      */
     hiddenFilters: FilterContextItem[];
-    widgetLocalIdToTabIdMap: Record<string, string>;
     commonDateFilterId?: string;
     /**
      * Effective export parameter overrides keyed by tab, scoped to the dialog's widget when present.
@@ -59,8 +56,6 @@ export interface IScheduledEmailDialogContextValue {
     dateFormat: string | undefined;
     /** Whether cross-filtering is active on the dashboard; from selectIsCrossFiltering. */
     isCrossFiltering: boolean;
-    /** Whether the dashboard has more than one tab; derived from selectTabs. */
-    hasMultipleTabs: boolean;
     /** Effective mode for the common (dashboard-level) date filter. */
     commonDateFilterMode: DashboardDateFilterConfigMode;
     /** Effective mode map for per-dataset date filters (localIdentifier → mode). */
@@ -73,16 +68,9 @@ export interface IScheduledEmailDialogContextValue {
     deleteScheduledEmail(se: IAutomationMetadataObject): Promise<void>;
     /** The scheduled export being edited; undefined when creating a new one. */
     scheduledExportToEdit?: IAutomationMetadataObject;
-    /**
-     * Workspace users available as scheduled-export recipients. Loaded only while the create/edit dialog
-     * is mounted, so opening the management dialog alone does not trigger the load.
-     */
-    users: IWorkspaceUser[];
-    /** Error from loading workspace users, if any. */
-    usersError?: GoodDataSdkError;
     /** Notification channels available as scheduled-export destinations. */
     notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
-    /** True while the dialog's initial data (automations, workspace users) is still loading. */
+    /** True while the dialog's initial data (automations) is still loading. */
     isLoading: boolean;
 }
 
@@ -95,12 +83,10 @@ export const ScheduledEmailDialogContextProvider = ScheduledEmailDialogContext.P
  *
  * A replacement for the scheduled-email dialog renders inside this context and reads the dialog's widget
  * and insight, the dashboard filter context and export templates it should apply, the scheduled export
- * being edited, the available workspace users and notification channels, and the create/save/delete
- * callbacks from here.
+ * being edited, the available notification channels, and the create/save/delete callbacks from here.
  *
- * Some members exist to wire internal machinery (`exportParametersByTab`, `widgetLocalIdToTabIdMap`,
- * `commonDateFilterMode`, `dateFiltersModeMap`, `attributeFiltersModeMap`) and are not intended as a
- * customization surface.
+ * Some members exist to wire internal machinery (`exportParametersByTab`, `commonDateFilterMode`,
+ * `dateFiltersModeMap`, `attributeFiltersModeMap`) and are not intended as a customization surface.
  *
  * @alpha
  */

@@ -13,27 +13,14 @@ import {
     type IdentifierRef,
     type ParameterValue,
     areObjRefsEqual,
-    objRefToString,
 } from "@gooddata/sdk-model";
 
 import {
     exportParametersToValues,
     getAutomationExportParametersByTab,
 } from "../../../../_staging/automation/index.js";
-import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
-import { selectCatalogParameters } from "../../../../model/store/catalog/catalogSelectors.js";
-import {
-    selectEnableParameters,
-    selectEnableStringParameters,
-} from "../../../../model/store/config/configSelectors.js";
-import { selectWidgetLocalIdToTabIdMap } from "../../../../model/store/tabs/layout/layoutSelectors.js";
-import {
-    selectExportEffectiveParameters,
-    selectSmartPersistedTabsParameters,
-} from "../../../../model/store/tabs/parameters/parametersSelectors.js";
-import { selectTabs } from "../../../../model/store/tabs/tabsSelectors.js";
-import { type ITabState } from "../../../../model/store/tabs/tabsState.js";
 import type { ExtendedDashboardWidget } from "../../../../model/types/layoutTypes.js";
+import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
 
 import {
     type IAutomationParameter,
@@ -55,6 +42,12 @@ export type EditedParametersByTab = Record<string, IAutomationParameter[]>;
 export interface IUseAutomationExportParametersProps {
     automationToEdit?: IAutomationMetadataObject;
     widget?: ExtendedDashboardWidget;
+    /**
+     * Effective export parameter overrides keyed by tab, scoped to the dialog's widget when present;
+     * from {@link IScheduledEmailDialogContextValue.exportParametersByTab}, which the scheduled-email
+     * connector resolves from the same widget.
+     */
+    effectiveParametersByTab: Record<string, IDashboardExportParameter[]>;
     /**
      * Persist parameter values onto the export, versus omitting them so the server resolves the
      * latest dashboard defaults. Widget schedules force-store (no store-filters checkbox).
@@ -121,17 +114,20 @@ export function useAutomationExportParameters({
     widget,
     storeParameters,
     setParametersWire,
+    effectiveParametersByTab,
 }: IUseAutomationExportParametersProps): IUseAutomationExportParameters {
-    const parametersEnabled = useDashboardSelector(selectEnableParameters);
-    const stringParametersEnabled = useDashboardSelector(selectEnableStringParameters);
-    const catalog = useDashboardSelector(selectCatalogParameters);
-    const dashboardParametersByTab = useDashboardSelector(selectSmartPersistedTabsParameters);
-    const tabs = useDashboardSelector(selectTabs);
-    const widgetTabMap = useDashboardSelector(selectWidgetLocalIdToTabIdMap);
-    const widgetIds = widget ? [objRefToString(widget.ref)] : undefined;
-    const effectiveParametersByTab = useDashboardSelector(selectExportEffectiveParameters(widgetIds));
+    const {
+        parameters: {
+            enabled: parametersEnabled,
+            stringParametersEnabled,
+            catalog,
+            dashboardParametersByTab,
+        },
+        tabIds,
+        widgetLocalIdToTabIdMap: widgetTabMap,
+    } = useAutomationsContext();
 
-    const flatTabId = resolveFlatTabId(widget, widgetTabMap, tabs);
+    const flatTabId = resolveFlatTabId(widget, widgetTabMap, tabIds);
     const shouldStore = shouldStoreExportParameters(!!widget, storeParameters);
 
     const [editedParametersByTab, setEditedParametersByTab] = useState<EditedParametersByTab>(() => {
@@ -165,11 +161,7 @@ export function useAutomationExportParameters({
         }
         // The set of tabs the export covers: the widget's owning tab, or every dashboard tab. Keyed by
         // every in-scope tab (not just seeded ones) so tabs with no current override can still add params.
-        const scopeTabIds = widget
-            ? flatTabId
-                ? [flatTabId]
-                : []
-            : (tabs ?? []).map((tab) => tab.localIdentifier);
+        const scopeTabIds = widget ? (flatTabId ? [flatTabId] : []) : tabIds;
         const result: EditedParametersByTab = {};
         for (const tabId of scopeTabIds) {
             // Widget schedules seed addable chips from the widget-effective values, mirroring the alert
@@ -191,7 +183,7 @@ export function useAutomationExportParameters({
         parametersEnabled,
         widget,
         flatTabId,
-        tabs,
+        tabIds,
         editedParametersByTab,
         catalog,
         dashboardParametersByTab,
@@ -324,12 +316,12 @@ export function useAutomationExportParameters({
 function resolveFlatTabId(
     widget: ExtendedDashboardWidget | undefined,
     widgetTabMap: Record<string, string>,
-    tabs: ITabState[] | undefined,
+    tabIds: string[],
 ): string | undefined {
     if (widget) {
         return widget.localIdentifier ? widgetTabMap[widget.localIdentifier] : undefined;
     }
-    return (tabs?.length ?? 0) <= 1 ? tabs?.[0]?.localIdentifier : undefined;
+    return tabIds.length <= 1 ? tabIds[0] : undefined;
 }
 
 function isVisibleParameter(parameter: IAutomationParameter): boolean {

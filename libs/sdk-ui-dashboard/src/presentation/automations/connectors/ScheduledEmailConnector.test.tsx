@@ -12,11 +12,6 @@ const fixtures = vi.hoisted(() => {
     let managementDialogProps: Record<string, unknown> | undefined;
     let dialogProps: Record<string, unknown> | undefined;
     let automationsError: Error | undefined;
-    const useWorkspaceUsers = vi.fn(() => ({
-        users: [],
-        status: "success",
-        usersError: new Error("users failed to load"),
-    }));
     const seState = {
         isScheduleEmailingDialogOpen: false,
         isScheduleEmailingManagementDialogOpen: true,
@@ -26,7 +21,6 @@ const fixtures = vi.hoisted(() => {
         buildAutomationUrl,
         navigate,
         onScheduleEmailingManagementEdit,
-        useWorkspaceUsers,
         seState,
         get managementDialogProps() {
             return managementDialogProps;
@@ -89,10 +83,6 @@ vi.mock("../../../model/react/useDasboardScheduledEmails/useDashboardScheduledEm
         widget: { type: "insight", ref: { identifier: "widget-1" } },
         insight: { insight: { identifier: "insight-1", title: "Insight" } },
     }),
-}));
-
-vi.mock("../../../model/react/useWorkspaceUsers.js", () => ({
-    useWorkspaceUsers: fixtures.useWorkspaceUsers,
 }));
 
 vi.mock("../../../model/store/config/configSelectors.js", () => ({
@@ -190,7 +180,6 @@ describe("ScheduledEmailConnector", () => {
         fixtures.managementDialogProps = undefined;
         fixtures.dialogProps = undefined;
         fixtures.automationsError = undefined;
-        fixtures.useWorkspaceUsers.mockClear();
         fixtures.seState.isScheduleEmailingDialogOpen = false;
         fixtures.seState.isScheduleEmailingManagementDialogOpen = true;
     });
@@ -238,21 +227,6 @@ describe("ScheduledEmailConnector", () => {
             id: "se-2",
             dashboard: undefined,
         });
-    });
-
-    it("does not load workspace users when only the management dialog is open", () => {
-        render(<ScheduledEmailConnector />);
-
-        expect(fixtures.useWorkspaceUsers).not.toHaveBeenCalled();
-    });
-
-    it("loads workspace users when the create/edit dialog is open", () => {
-        fixtures.seState.isScheduleEmailingDialogOpen = true;
-        fixtures.seState.isScheduleEmailingManagementDialogOpen = false;
-
-        render(<ScheduledEmailConnector />);
-
-        expect(fixtures.useWorkspaceUsers).toHaveBeenCalled();
     });
 
     it("does not supply the deprecated data props to the create/edit dialog", () => {

@@ -101,6 +101,7 @@ export function EditableDashboardVisualizationSwitcherWidget({
     return (
         <>
             <DashboardItem
+                as="div"
                 className={cx(
                     dashboardItemClasses,
                     "type-visualization",

@@ -23,7 +23,6 @@ import {
     type INotificationChannelIdentifier,
     type INotificationChannelMetadataObject,
     type IWidget,
-    type IWorkspaceUser,
 } from "@gooddata/sdk-model";
 
 import { useAlertingDialogContext } from "../../../contexts/AlertingDialogContext.js";
@@ -36,9 +35,8 @@ import {
     resolveMvfDimensionalityLocalRefs,
 } from "../../../shared/filters/index.js";
 import {
-    convertCurrentUserToAutomationRecipient,
-    convertCurrentUserToWorkspaceUser,
     convertExternalRecipientToAutomationRecipient,
+    convertUserToAutomationRecipient,
 } from "../../../shared/utils/automationUtils.js";
 import { type AlertAttribute, type AlertMetric, type AlertMetricComparatorType } from "../../types.js";
 import { createDefaultAlert } from "../utils/convertors.js";
@@ -63,7 +61,6 @@ export interface IUseAlertFormStateProps {
     insight?: IInsight;
     widget?: IWidget;
     notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
-    users: IWorkspaceUser[];
     editedAutomationFilters?: FilterContextItem[];
     availableFiltersAsVisibleFilters?: IAutomationVisibleFilter[] | undefined;
     externalRecipientOverride?: string;
@@ -88,7 +85,6 @@ export function useAlertFormState({
     insight,
     widget,
     notificationChannels,
-    users,
     editedAutomationFilters,
     availableFiltersAsVisibleFilters,
     externalRecipientOverride,
@@ -103,6 +99,7 @@ export function useAlertFormState({
         timezone,
         settings,
         currentUser,
+        widgetLocalIdToTabIdMap: widgetTabMap,
         features: { enableAlertOncePerInterval },
     } = useAutomationsContext();
 
@@ -111,8 +108,8 @@ export function useAlertFormState({
         hiddenFilters: dashboardHiddenFilters,
         commonDateFilterId,
         dashboardEvaluationFrequency,
-        widgetLocalIdToTabIdMap: widgetTabMap,
         parameterValues,
+        dashboardParameters,
     } = useAlertingDialogContext();
 
     // Determine target tab ID if widget is present
@@ -120,10 +117,10 @@ export function useAlertFormState({
 
     // Default values
     const defaultMeasure = supportedMeasures[0];
-    const defaultUser = convertCurrentUserToWorkspaceUser(users ?? [], currentUser);
+    const defaultUser = convertUserToAutomationRecipient(currentUser);
     const defaultRecipient = externalRecipientOverride
         ? convertExternalRecipientToAutomationRecipient(externalRecipientOverride)
-        : convertCurrentUserToAutomationRecipient(users ?? [], currentUser);
+        : convertUserToAutomationRecipient(currentUser);
     const defaultNotificationChannelId = notificationChannels[0]?.id;
 
     const resolvedAlertToEdit = (() => {
@@ -198,7 +195,12 @@ export function useAlertFormState({
         onParameterDelete,
         onParameterAdd,
         dropStaleParameters,
-    } = useAutomationAlertParameters({ editedAutomation, setEditedAutomation, widgetRef: widget?.ref });
+    } = useAutomationAlertParameters({
+        editedAutomation,
+        setEditedAutomation,
+        dashboardParameters,
+        widgetParameterValues: parameterValues,
+    });
 
     // Local state
     const [warningMessage, setWarningMessage] = useState<string | undefined>(undefined);
@@ -418,7 +420,7 @@ export function useAlertFormState({
              */
             const updatedRecipients =
                 selectedDestination?.allowedRecipients === "creator"
-                    ? [convertCurrentUserToAutomationRecipient(users ?? [], currentUser)]
+                    ? [convertUserToAutomationRecipient(currentUser)]
                     : undefined;
 
             setEditedAutomation((alert) =>
@@ -431,14 +433,7 @@ export function useAlertFormState({
                     : undefined,
             );
         },
-        [
-            setEditedAutomation,
-            alertToEdit?.notificationChannel,
-            currentUser,
-            notificationChannels,
-            intl,
-            users,
-        ],
+        [setEditedAutomation, alertToEdit?.notificationChannel, currentUser, notificationChannels, intl],
     );
 
     const onTriggerModeChange = useCallback(

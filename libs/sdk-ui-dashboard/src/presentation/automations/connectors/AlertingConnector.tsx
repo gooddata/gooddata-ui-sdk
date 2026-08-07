@@ -8,13 +8,11 @@ import {
     type INotificationChannelIdentifier,
     type INotificationChannelMetadataObject,
     type IWidget,
-    type IWorkspaceUser,
     isWidget,
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import { useDashboardAlerts } from "../../../model/react/useDashboardAlerting/useDashboardAlerts.js";
-import { useWorkspaceUsers } from "../../../model/react/useWorkspaceUsers.js";
 import { AlertingDialog } from "../alerting/AlertingDialog.js";
 import { AlertingManagementDialog } from "../alerting/AlertingManagementDialog.js";
 import { AlertingDialogContextProvider } from "../contexts/AlertingDialogContext.js";
@@ -27,8 +25,6 @@ import { useBuildAlertingManagementDialogContext } from "./hooks/useBuildAlertin
 import { useBuildAutomationsContext } from "./hooks/useBuildAutomationsContext.js";
 
 type AlertsProps = ReturnType<typeof useDashboardAlerts>;
-
-const EMPTY_USERS: IWorkspaceUser[] = [];
 
 /**
  * Provides AutomationsContext to its children, built from dashboard Redux state.
@@ -46,11 +42,10 @@ export function AlertingAutomationsProvider({ children }: { children: ReactNode 
  * Connector component that reads from the dashboard Redux store and wires up
  * the alerting dialog tree (create/edit and management) via context providers.
  *
- * This is the primary bridge between dashboard store state and the alerting dialog tree. One
- * transitive exception remains: `useAutomationAlertParameters` (in `shared/automationFilters`) still
- * reads the store via `useDashboardSelector`, so alerting is not yet fully decoupled. That coupling is
- * an explicit carve-out frozen in the `automationFilters` allowlist of `.dependency-cruiser.js` (see
- * the note there); moving it behind this connector is tracked on GDP-3167.
+ * This is the bridge between dashboard store state and the alerting dialog tree, with no exceptions:
+ * the shared `automationFilters` hooks read AutomationsContext and take their widget-scoped values as
+ * props from this connector's `AlertingDialogContext`. The `automationFilters` allowlist in
+ * `.dependency-cruiser.js` no longer permits any store selector.
  *
  * AutomationsContext is provided by AlertingAutomationsProvider, which wraps this
  * connector (see AlertingDialogProvider).
@@ -68,7 +63,7 @@ export function AlertingConnector(): ReactElement | null {
 function AlertingConnectorInitialized(alerts: AlertsProps): ReactElement | null {
     const { isAlertDialogOpen, isAlertManagementDialogOpen } = alerts;
 
-    // Defer store reads and user loading until at least one dialog is open.
+    // Defer store reads until at least one dialog is open.
     if (!isAlertDialogOpen && !isAlertManagementDialogOpen) {
         return null;
     }
@@ -163,9 +158,8 @@ interface IAlertingCreateEditConnectorProps {
 }
 
 /**
- * Loads workspace users and hydrates the alerting create/edit context. Both live here rather than in
- * the parent so that opening only the management dialog — which consumes neither — never dispatches the
- * workspace-users load.
+ * Hydrates the alerting create/edit context. Lives here rather than in the parent so that opening only
+ * the management dialog — which does not consume it — skips the work.
  */
 function AlertingCreateEditConnector(props: IAlertingCreateEditConnectorProps): ReactElement {
     const {
@@ -183,19 +177,13 @@ function AlertingCreateEditConnector(props: IAlertingCreateEditConnectorProps): 
         onDeleteError,
     } = props;
 
-    const { users, status: usersStatus, usersError } = useWorkspaceUsers();
-    const isLoading = automationsLoading || usersStatus === "pending" || usersStatus === "loading";
-    const effectiveUsers = users ?? EMPTY_USERS;
-
     const alertingCtx = useBuildAlertingDialogContext({
         mode: alertToEdit ? "edit" : "create",
         widget,
         insight,
         alertToEdit,
-        users: effectiveUsers,
-        usersError,
         notificationChannels,
-        isLoading,
+        isLoading: automationsLoading,
     });
 
     return (

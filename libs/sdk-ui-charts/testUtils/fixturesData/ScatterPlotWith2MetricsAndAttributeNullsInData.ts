@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type LegacyExecutionRecording } from "../legacyDataView.js";
+import { type ILocalExecutionRecording } from "../localDataView.js";
 
 export const ScatterPlotWith2MetricsAndAttributeNullsInData = {
     definition: {
@@ -239,4 +239,4 @@ export const ScatterPlotWith2MetricsAndAttributeNullsInData = {
             ],
         },
     },
-} as unknown as LegacyExecutionRecording;
+} as unknown as ILocalExecutionRecording;

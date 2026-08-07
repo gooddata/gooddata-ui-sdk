@@ -239,6 +239,7 @@ const SENTINEL_COMMON_DATE_FILTER_ID = "common-date-filter-1";
 const DEFAULT_SCHEDULED_EMAIL_DIALOG_CONTEXT_VALUE = {
     hiddenFilters: SENTINEL_HIDDEN_FILTERS,
     commonDateFilterId: SENTINEL_COMMON_DATE_FILTER_ID,
+    exportParametersByTab: {},
 };
 
 const WIDGET_FILTERS_WITH_INSIGHT: IFilter[] = [fakeExecutionFilter("with-insight")];

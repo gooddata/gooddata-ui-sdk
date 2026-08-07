@@ -9,11 +9,11 @@ import {
     type IAutomationMetadataObject,
     type IAutomationRecipient,
     type IAutomationVisibleFilter,
+    type IDashboardParameter,
     type IFilter,
     type IInsight,
     type INotificationChannelIdentifier,
     type IWidget,
-    type IWorkspaceUser,
     idRef,
     newAttribute,
     newMeasure,
@@ -48,9 +48,8 @@ vi.mock(
         const actual = await importOriginal();
         return {
             ...actual,
-            convertCurrentUserToAutomationRecipient: vi.fn(),
-            convertCurrentUserToWorkspaceUser: vi.fn(),
             convertExternalRecipientToAutomationRecipient: vi.fn(),
+            convertUserToAutomationRecipient: vi.fn(),
         };
     },
 );
@@ -133,9 +132,8 @@ import {
     resolveMvfDimensionalityLocalRefs,
 } from "../../../../shared/filters/index.js";
 import {
-    convertCurrentUserToAutomationRecipient,
-    convertCurrentUserToWorkspaceUser,
     convertExternalRecipientToAutomationRecipient,
+    convertUserToAutomationRecipient,
 } from "../../../../shared/utils/automationUtils.js";
 import { createDefaultAlert } from "../../utils/convertors.js";
 import * as transformationModule from "../../utils/transformation.js";
@@ -155,8 +153,7 @@ const transformAlertByAnomalyDetectionSpy = vi.mocked(transformationModule.trans
 const transformAlertBySensitivitySpy = vi.mocked(transformationModule.transformAlertBySensitivity);
 const transformAlertByGranularitySpy = vi.mocked(transformationModule.transformAlertByGranularity);
 const transformAlertByDestinationSpy = vi.mocked(transformationModule.transformAlertByDestination);
-const convertCurrentUserToAutomationRecipientSpy = vi.mocked(convertCurrentUserToAutomationRecipient);
-const convertCurrentUserToWorkspaceUserSpy = vi.mocked(convertCurrentUserToWorkspaceUser);
+const convertUserToAutomationRecipientSpy = vi.mocked(convertUserToAutomationRecipient);
 const convertExternalRecipientToAutomationRecipientSpy = vi.mocked(
     convertExternalRecipientToAutomationRecipient,
 );
@@ -215,7 +212,6 @@ const SENTINEL_NOTIFICATION_CHANNELS: INotificationChannelIdentifier[] = [
     SENTINEL_CHANNEL_CREATOR,
 ];
 
-const SENTINEL_USERS: IWorkspaceUser[] = [];
 const SENTINEL_CURRENT_USER = { ref: idRef("user1"), login: "user1" };
 const SENTINEL_CONVERTED_RECIPIENT: IAutomationRecipient = {
     id: "user1",
@@ -223,11 +219,6 @@ const SENTINEL_CONVERTED_RECIPIENT: IAutomationRecipient = {
     name: "User One",
     type: "user",
 };
-const SENTINEL_WORKSPACE_USER: IWorkspaceUser = {
-    login: "user1",
-    email: "user1@example.com",
-    uri: "user1",
-} as IWorkspaceUser;
 const SENTINEL_EXTERNAL_RECIPIENT: IAutomationRecipient = {
     id: "ext@example.com",
     email: "ext@example.com",
@@ -242,16 +233,21 @@ const DEFAULT_AUTOMATIONS_CONTEXT_VALUE = {
     timezone: SENTINEL_TIMEZONE,
     settings: undefined,
     currentUser: SENTINEL_CURRENT_USER,
+    widgetLocalIdToTabIdMap: {} as Record<string, string>,
     features: { enableAlertOncePerInterval: SENTINEL_ENABLE_ALERT_ONCE_PER_INTERVAL },
 };
+
+const SENTINEL_DASHBOARD_PARAMETERS: IDashboardParameter[] = [
+    { ref: idRef("param-1", "parameter"), mode: "active", parameterType: "STRING", value: "value-1" },
+];
 
 const DEFAULT_ALERTING_DIALOG_CONTEXT_VALUE = {
     dashboardId: undefined,
     hiddenFilters: [] as FilterContextItem[],
     commonDateFilterId: undefined,
     dashboardEvaluationFrequency: undefined,
-    widgetLocalIdToTabIdMap: {} as Record<string, string>,
     parameterValues: [] as unknown[],
+    dashboardParameters: SENTINEL_DASHBOARD_PARAMETERS,
 };
 
 const DEFAULT_PARAMETERS_RETURN = {
@@ -311,8 +307,7 @@ beforeEach(() => {
     transformAlertByGranularitySpy.mockReturnValue(SENTINEL_GRANULARITY_RESULT);
     transformAlertByDestinationSpy.mockReturnValue(SENTINEL_DESTINATION_RESULT);
 
-    convertCurrentUserToAutomationRecipientSpy.mockReturnValue(SENTINEL_CONVERTED_RECIPIENT);
-    convertCurrentUserToWorkspaceUserSpy.mockReturnValue(SENTINEL_WORKSPACE_USER);
+    convertUserToAutomationRecipientSpy.mockReturnValue(SENTINEL_CONVERTED_RECIPIENT);
     convertExternalRecipientToAutomationRecipientSpy.mockReturnValue(SENTINEL_EXTERNAL_RECIPIENT);
 
     createDefaultAlertSpy.mockReturnValue(BASE_ALERT);
@@ -333,7 +328,6 @@ const BASE_PROPS: IUseAlertFormStateProps = {
     insight: undefined,
     widget: undefined,
     notificationChannels: SENTINEL_NOTIFICATION_CHANNELS,
-    users: SENTINEL_USERS,
     editedAutomationFilters: undefined,
     availableFiltersAsVisibleFilters: undefined,
     externalRecipientOverride: undefined,
@@ -727,7 +721,7 @@ describe("useAlertFormState — onDestinationChange", () => {
         const editAlert = makeAlertToEdit("channel-all");
         const { result, rerender } = renderFormStateHook({ alertToEdit: editAlert });
         // Isolate the action's own calls from the defaultRecipient computation at render time.
-        convertCurrentUserToAutomationRecipientSpy.mockClear();
+        convertUserToAutomationRecipientSpy.mockClear();
 
         act(() => {
             result.current.onDestinationChange("channel-creator");
@@ -735,10 +729,7 @@ describe("useAlertFormState — onDestinationChange", () => {
         rerender();
 
         expect(result.current.warningMessage).toBe("insightAlert.config.warning.destination");
-        expect(convertCurrentUserToAutomationRecipientSpy).toHaveBeenCalledWith(
-            SENTINEL_USERS,
-            SENTINEL_CURRENT_USER,
-        );
+        expect(convertUserToAutomationRecipientSpy).toHaveBeenCalledWith(SENTINEL_CURRENT_USER);
         expect(transformAlertByDestinationSpy).toHaveBeenCalledWith(editAlert, "channel-creator", [
             SENTINEL_CONVERTED_RECIPIENT,
         ]);
@@ -771,7 +762,7 @@ describe("useAlertFormState — onDestinationChange", () => {
         rerender();
 
         expect(result.current.warningMessage).toBeUndefined();
-        // updatedRecipients is undefined (not reset) -> convertCurrentUserToAutomationRecipient is not
+        // updatedRecipients is undefined (not reset) -> convertUserToAutomationRecipient is not
         // invoked by onDestinationChange's own branch for the recipient reset (it's still called on
         // every render for the unrelated defaultRecipient computation, so we assert via the
         // transform's 3rd arg rather than "not called" here).
@@ -961,12 +952,12 @@ describe("useAlertFormState — new-alert init (createDefaultAlert wiring)", () 
             hiddenFilters,
             commonDateFilterId: "common-date-1",
             dashboardEvaluationFrequency: "0 0 * * *",
-            widgetLocalIdToTabIdMap: { "widget-local-1": "tab-1" },
             dashboardId: "dashboard-1",
         });
         mockUseAutomationsContext.mockReturnValue({
             ...DEFAULT_AUTOMATIONS_CONTEXT_VALUE,
             settings: { alertDefault: { defaultTimezone: "Europe/Prague" } },
+            widgetLocalIdToTabIdMap: { "widget-local-1": "tab-1" },
         });
         getAppliedWidgetFiltersSpy.mockReturnValue(appliedFilters);
         getVisibleFiltersByFiltersSpy.mockReturnValue(visibleFilters);
@@ -1167,28 +1158,21 @@ describe("useAlertFormState — defaults", () => {
         const { result } = renderFormStateHook({ externalRecipientOverride: "ext@example.com" });
 
         expect(convertExternalRecipientToAutomationRecipientSpy).toHaveBeenCalledWith("ext@example.com");
-        expect(convertCurrentUserToAutomationRecipientSpy).not.toHaveBeenCalled();
         expect(result.current.defaultRecipient).toBe(SENTINEL_EXTERNAL_RECIPIENT);
     });
 
-    it("derives defaultRecipient from convertCurrentUserToAutomationRecipient when there is no override", () => {
+    it("derives defaultRecipient from convertUserToAutomationRecipient when there is no override", () => {
         const { result } = renderFormStateHook();
 
-        expect(convertCurrentUserToAutomationRecipientSpy).toHaveBeenCalledWith(
-            SENTINEL_USERS,
-            SENTINEL_CURRENT_USER,
-        );
+        expect(convertUserToAutomationRecipientSpy).toHaveBeenCalledWith(SENTINEL_CURRENT_USER);
         expect(result.current.defaultRecipient).toBe(SENTINEL_CONVERTED_RECIPIENT);
     });
 
-    it("derives defaultUser from convertCurrentUserToWorkspaceUser", () => {
-        const { result } = renderFormStateHook();
+    it("derives defaultUser from convertUserToAutomationRecipient", () => {
+        const { result } = renderFormStateHook({ externalRecipientOverride: "ext@example.com" });
 
-        expect(convertCurrentUserToWorkspaceUserSpy).toHaveBeenCalledWith(
-            SENTINEL_USERS,
-            SENTINEL_CURRENT_USER,
-        );
-        expect(result.current.defaultUser).toBe(SENTINEL_WORKSPACE_USER);
+        expect(convertUserToAutomationRecipientSpy).toHaveBeenCalledWith(SENTINEL_CURRENT_USER);
+        expect(result.current.defaultUser).toBe(SENTINEL_CONVERTED_RECIPIENT);
     });
 });
 
@@ -1198,14 +1182,15 @@ describe("useAlertFormState — defaults", () => {
 // ---------------------------------------------------------------------------
 
 describe("useAlertFormState — parameters passthrough", () => {
-    it("threads editedAutomation/setEditedAutomation/widgetRef into useAutomationAlertParameters and returns its result", () => {
+    it("threads editedAutomation/setEditedAutomation/dashboardParameters/widgetParameterValues into useAutomationAlertParameters and returns its result", () => {
         const widget = fakeWidget();
         const { result } = renderFormStateHook({ widget });
 
         expect(useAutomationAlertParametersSpy).toHaveBeenCalledWith(
             expect.objectContaining({
                 editedAutomation: BASE_ALERT,
-                widgetRef: widget.ref,
+                dashboardParameters: SENTINEL_DASHBOARD_PARAMETERS,
+                widgetParameterValues: DEFAULT_ALERTING_DIALOG_CONTEXT_VALUE.parameterValues,
                 setEditedAutomation: expect.any(Function),
             }),
         );

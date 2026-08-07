@@ -21,6 +21,7 @@ export function DefaultDashboardVisualizationSwitcherWidget({
 
     return (
         <DashboardItem
+            as="div"
             className={cx(dashboardItemClasses, "type-visualization", "gd-dashboard-view-widget", {
                 "gd-highlighted": highlighted,
             })}

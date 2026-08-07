@@ -10,8 +10,6 @@ import {
 } from "@gooddata/sdk-model";
 
 import { getAutomationExportParametersByTab } from "../../../../_staging/automation/index.js";
-import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
-import { selectEnableParameters } from "../../../../model/store/config/configSelectors.js";
 import type { IAutomationFiltersTab } from "../../../../model/store/filtering/types.js";
 import { type ExtendedDashboardWidget } from "../../../../model/types/layoutTypes.js";
 import { removeIgnoredWidgetFilters } from "../../../../model/utils/widgetFilters.js";
@@ -168,8 +166,12 @@ export const useAutomationFiltersSelect = ({
         availableFilters,
         automationFiltersByTab: allFiltersByTab,
         commonDateFilterId,
+        parameters: { enabled: parametersEnabled },
     } = useAutomationsContext();
-    const availableFiltersWithoutIgnoredWidgetFilters = removeIgnoredWidgetFilters(availableFilters, widget);
+    const availableFiltersWithoutIgnoredWidgetFilters = useMemo(
+        () => removeIgnoredWidgetFilters(availableFilters, widget),
+        [availableFilters, widget],
+    );
 
     const availableFiltersAsVisibleFilters = useAutomationVisibleFilters(
         availableFiltersWithoutIgnoredWidgetFilters,
@@ -183,10 +185,14 @@ export const useAutomationFiltersSelect = ({
     );
 
     // Get filters per tab - only applicable for whole dashboard automations (no widget)
-    const availableFiltersByTab = allFiltersByTab.reduce<Record<string, FilterContextItem[]>>((acc, tab) => {
-        acc[tab.tabId] = tab.availableFilters;
-        return acc;
-    }, {});
+    const availableFiltersByTab = useMemo(
+        () =>
+            allFiltersByTab.reduce<Record<string, FilterContextItem[]>>((acc, tab) => {
+                acc[tab.tabId] = tab.availableFilters;
+                return acc;
+            }, {}),
+        [allFiltersByTab],
+    );
 
     const availableFiltersAsVisibleFiltersByTab = useAutomationVisibleFiltersByTab(availableFiltersByTab);
 
@@ -195,7 +201,6 @@ export const useAutomationFiltersSelect = ({
     const hasMultipleTabs = allFiltersByTab.length > 1;
     const filtersByTab = isDashboardAutomation && hasMultipleTabs ? allFiltersByTab : undefined;
 
-    const parametersEnabled = useDashboardSelector(selectEnableParameters);
     const areFiltersOrParametersStored = useMemo(
         () =>
             checkAreFiltersStored(automationToEdit) ||

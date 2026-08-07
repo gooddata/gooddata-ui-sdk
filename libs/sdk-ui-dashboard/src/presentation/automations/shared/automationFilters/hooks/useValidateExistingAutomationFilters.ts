@@ -41,15 +41,6 @@ import {
 } from "../../../../../_staging/automation/index.js";
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../../../converters/filterConverters.js";
 import { isFilterTypeCompatibleWithSelectionType } from "../../../../../model/commandHandlers/dashboard/common/attributeFilterSelectionTypeCompatibility.js";
-import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
-import {
-    selectCatalogParameters,
-    selectCatalogParametersIsLoaded,
-} from "../../../../../model/store/catalog/catalogSelectors.js";
-import { selectEnableParameters } from "../../../../../model/store/config/configSelectors.js";
-import { selectWidgetLocalIdToTabIdMap } from "../../../../../model/store/tabs/layout/layoutSelectors.js";
-import { selectSmartPersistedTabsParameters } from "../../../../../model/store/tabs/parameters/parametersSelectors.js";
-import { selectTabs } from "../../../../../model/store/tabs/tabsSelectors.js";
 import { type ExtendedDashboardWidget } from "../../../../../model/types/layoutTypes.js";
 import { type IDashboardFilter } from "../../../../../types.js";
 import { useAutomationsContext } from "../../../contexts/AutomationsContext.js";
@@ -174,13 +165,15 @@ export function useValidateExistingAutomationFilters({
         automationFiltersByTab: dashboardFiltersByTab,
         attributeFilterSelectionTypeMap: selectionTypeMap,
         attributeFilterSelectionTypeMapByTab: selectionTypeMapByTab,
+        parameters: {
+            enabled: parametersEnabled,
+            catalog: catalogParameters,
+            catalogIsLoaded: catalogParametersIsLoaded,
+            dashboardParametersByTab,
+        },
+        tabIds,
+        widgetLocalIdToTabIdMap: widgetTabMap,
     } = useAutomationsContext();
-    const parametersEnabled = useDashboardSelector(selectEnableParameters);
-    const catalogParameters = useDashboardSelector(selectCatalogParameters);
-    const catalogParametersIsLoaded = useDashboardSelector(selectCatalogParametersIsLoaded);
-    const dashboardParametersByTab = useDashboardSelector(selectSmartPersistedTabsParameters);
-    const tabs = useDashboardSelector(selectTabs);
-    const widgetTabMap = useDashboardSelector(selectWidgetLocalIdToTabIdMap);
 
     // A widget export covers exactly the widget's current tab, so its stored overrides must live under
     // that tab; a dashboard export covers every tab. Resolved here so the validator can flag a widget
@@ -194,7 +187,7 @@ export function useValidateExistingAutomationFilters({
                   storedParametersByTab: getAutomationExportParametersByTab(automationToEdit),
                   catalog: catalogParameters,
                   dashboardParametersByTab,
-                  existingTabIds: new Set((tabs ?? []).map((tab) => tab.localIdentifier)),
+                  existingTabIds: new Set(tabIds),
                   widgetTabId,
               }) || validateExistingAutomationAlertParameters(automationToEdit, catalogParameters)
             : false;

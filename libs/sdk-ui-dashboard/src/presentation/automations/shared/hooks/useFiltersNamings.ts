@@ -1,5 +1,7 @@
 // (C) 2024-2026 GoodData Corporation
 
+import { useMemo } from "react";
+
 import { useIntl } from "react-intl";
 
 import {
@@ -92,21 +94,37 @@ function useFilterNamingDependencies(filtersForTitles: FilterContextItem[]): Fil
         ? getLocalizedIcuDateFormatPattern(settings.formatLocale)
         : settings?.responsiveUiDateFormat;
     const getAttributeFilterDisplayFormFromMap = useAttributeFilterDisplayFormFromMap();
-    const dateFiltersForTitles = filtersForTitles.filter(isDashboardDateFilterWithDimension);
+    const dateFiltersForTitles = useMemo(
+        () => filtersForTitles.filter(isDashboardDateFilterWithDimension),
+        [filtersForTitles],
+    );
     const commonDateFilterTitle = useCommonDateFilterTitle(intl);
     const allDateFiltersTitlesObj = useDateFiltersTitles(dateFiltersForTitles, intl);
 
-    return {
-        intl,
-        locale,
-        dateFormat,
-        getAttributeFilterDisplayFormFromMap,
-        getCatalogAttributeByRef,
-        measures,
-        separators,
-        commonDateFilterTitle,
-        allDateFiltersTitlesObj,
-    };
+    return useMemo(
+        () => ({
+            intl,
+            locale,
+            dateFormat,
+            getAttributeFilterDisplayFormFromMap,
+            getCatalogAttributeByRef,
+            measures,
+            separators,
+            commonDateFilterTitle,
+            allDateFiltersTitlesObj,
+        }),
+        [
+            intl,
+            locale,
+            dateFormat,
+            getAttributeFilterDisplayFormFromMap,
+            getCatalogAttributeByRef,
+            measures,
+            separators,
+            commonDateFilterTitle,
+            allDateFiltersTitlesObj,
+        ],
+    );
 }
 
 /**
@@ -293,22 +311,24 @@ function transformFiltersToNamings(
 export function useFiltersNamings(filtersToDisplay: FilterContextItem[]): (FilterNaming | undefined)[] {
     const deps = useFilterNamingDependencies(filtersToDisplay);
 
-    return transformFiltersToNamings(filtersToDisplay, deps);
+    return useMemo(() => transformFiltersToNamings(filtersToDisplay, deps), [filtersToDisplay, deps]);
 }
 
 export function useFiltersByTabNamings(
     tabFilters: Record<string, FilterContextItem[]>,
 ): Record<string, (FilterNaming | undefined)[]> {
     // Collect all filters from all tabs for titles lookup
-    const allFilters = Object.values(tabFilters).flat();
+    const allFilters = useMemo(() => Object.values(tabFilters).flat(), [tabFilters]);
     const deps = useFilterNamingDependencies(allFilters);
 
     // Process each tab's filters separately using the shared transformation function
-    const result: Record<string, (FilterNaming | undefined)[]> = {};
+    return useMemo(() => {
+        const result: Record<string, (FilterNaming | undefined)[]> = {};
 
-    Object.entries(tabFilters).forEach(([tabId, filters]) => {
-        result[tabId] = transformFiltersToNamings(filters, deps);
-    });
+        Object.entries(tabFilters).forEach(([tabId, filters]) => {
+            result[tabId] = transformFiltersToNamings(filters, deps);
+        });
 
-    return result;
+        return result;
+    }, [tabFilters, deps]);
 }

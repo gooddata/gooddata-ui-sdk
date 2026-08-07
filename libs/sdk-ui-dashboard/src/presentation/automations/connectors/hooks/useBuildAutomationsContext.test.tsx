@@ -32,11 +32,25 @@ const selectors = vi.hoisted(() => {
         } as unknown as IDateFilterOptionsByType,
     };
 
+    // Every mocked selector must return one of these. A mock that allocates per call
+    // (`() => []`) would make the context value change identity on every render, which the
+    // referential-stability test below exists to catch. In production every one of these
+    // selectors is a createSelector and returns a stable reference.
     return {
         availableGranularities,
         dateFilterOptions,
         granularitiesPerTab,
         optionsPerTab,
+        emptyArray: [] as never[],
+        emptyRecord: {} as Record<string, never>,
+        emptyMap: new Map<never, never>(),
+        separators: { decimal: ".", thousand: "," },
+        currentUser: { login: "test@example.com", ref: { identifier: "test" } },
+        widgetsMap: { get: () => undefined },
+        parameterCatalog: [] as never[],
+        dashboardParametersByTab: {} as Record<string, never>,
+        tabs: [{ localIdentifier: "tab1" }],
+        widgetTabMap: { "widget-1": "tab1" } as Record<string, string>,
     };
 });
 
@@ -45,11 +59,13 @@ vi.mock("../../../../model/react/DashboardStoreProvider.js", () => ({
 }));
 
 vi.mock("../../../../model/store/catalog/catalogSelectors.js", () => ({
-    selectAllCatalogAttributesMap: () => new Map(),
-    selectAllCatalogDisplayFormsMap: () => new Map(),
-    selectCatalogAttributes: () => [],
-    selectCatalogDateDatasets: () => [],
-    selectCatalogMeasures: () => [],
+    selectAllCatalogAttributesMap: () => selectors.emptyMap,
+    selectAllCatalogDisplayFormsMap: () => selectors.emptyMap,
+    selectCatalogAttributes: () => selectors.emptyArray,
+    selectCatalogDateDatasets: () => selectors.emptyArray,
+    selectCatalogMeasures: () => selectors.emptyArray,
+    selectCatalogParameters: () => selectors.parameterCatalog,
+    selectCatalogParametersIsLoaded: () => true,
 }));
 
 vi.mock("../../../../model/store/config/configSelectors.js", () => ({
@@ -57,11 +73,13 @@ vi.mock("../../../../model/store/config/configSelectors.js", () => ({
     selectEnableAlertOncePerInterval: () => false,
     selectEnableAnomalyDetectionAlert: () => false,
     selectEnableAutomationEvaluationMode: () => false,
+    selectEnableParameters: () => true,
     selectEnableSlideshowExports: () => false,
+    selectEnableStringParameters: () => true,
     selectExternalRecipient: () => undefined,
     selectIsWhiteLabeled: () => false,
     selectLocale: () => "en-US",
-    selectSeparators: () => ({ decimal: ".", thousand: "," }),
+    selectSeparators: () => selectors.separators,
     selectSettings: () => undefined,
     selectTimezone: () => undefined,
     selectWeekStart: () => "Sunday",
@@ -72,7 +90,11 @@ vi.mock("../../../../model/store/drill/drillSelectors.js", () => ({
 }));
 
 vi.mock("../../../../model/store/tabs/tabsSelectors.js", () => ({
-    selectTabs: () => [],
+    selectTabs: () => selectors.tabs,
+}));
+
+vi.mock("../../../../model/store/tabs/parameters/parametersSelectors.js", () => ({
+    selectSmartPersistedTabsParameters: () => selectors.dashboardParametersByTab,
 }));
 
 vi.mock("../../../../model/store/permissions/permissionsSelectors.js", () => ({
@@ -82,17 +104,17 @@ vi.mock("../../../../model/store/permissions/permissionsSelectors.js", () => ({
 }));
 
 vi.mock("../../../../model/store/user/userSelectors.js", () => ({
-    selectCurrentUser: () => ({ login: "test@example.com", ref: { identifier: "test" } }),
+    selectCurrentUser: () => selectors.currentUser,
 }));
 
 vi.mock("../../../../model/store/filtering/dashboardFilterSelectors.js", () => ({
-    selectAutomationAvailableDashboardFilters: () => [],
+    selectAutomationAvailableDashboardFilters: () => selectors.emptyArray,
     selectAutomationCommonDateFilterId: () => undefined,
-    selectAutomationDefaultSelectedFilters: () => [],
-    selectAutomationFiltersByTab: () => [],
-    selectDashboardFiltersWithoutCrossFiltering: () => [],
-    selectDashboardHiddenFilters: () => [],
-    selectDashboardLockedFilters: () => [],
+    selectAutomationDefaultSelectedFilters: () => selectors.emptyArray,
+    selectAutomationFiltersByTab: () => selectors.emptyArray,
+    selectDashboardFiltersWithoutCrossFiltering: () => selectors.emptyArray,
+    selectDashboardHiddenFilters: () => selectors.emptyArray,
+    selectDashboardLockedFilters: () => selectors.emptyArray,
 }));
 
 vi.mock("../../../../model/store/meta/metaSelectors.js", () => ({
@@ -100,15 +122,15 @@ vi.mock("../../../../model/store/meta/metaSelectors.js", () => ({
 }));
 
 vi.mock("../../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js", () => ({
-    selectAttributeFilterConfigsOverrides: () => [],
-    selectAttributeFilterConfigsOverridesByTab: () => ({}),
-    selectAttributeFilterConfigsSelectionTypeMap: () => new Map(),
-    selectAttributeFilterConfigsSelectionTypeMapByTab: () => ({}),
-    selectEffectiveAttributeFiltersModeMap: () => new Map(),
+    selectAttributeFilterConfigsOverrides: () => selectors.emptyArray,
+    selectAttributeFilterConfigsOverridesByTab: () => selectors.emptyRecord,
+    selectAttributeFilterConfigsSelectionTypeMap: () => selectors.emptyMap,
+    selectAttributeFilterConfigsSelectionTypeMapByTab: () => selectors.emptyRecord,
+    selectEffectiveAttributeFiltersModeMap: () => selectors.emptyMap,
 }));
 
 vi.mock("../../../../model/store/tabs/dateFilterConfig/dateFilterConfigSelectors.js", () => ({
-    selectDateFilterConfigOverridesByTab: () => ({}),
+    selectDateFilterConfigOverridesByTab: () => selectors.emptyRecord,
     selectEffectiveDateFilterAvailableGranularities: () => selectors.availableGranularities,
     selectEffectiveDateFilterGranularitiesPerTab: () => selectors.granularitiesPerTab,
     selectEffectiveDateFilterMode: () => "active",
@@ -117,13 +139,13 @@ vi.mock("../../../../model/store/tabs/dateFilterConfig/dateFilterConfigSelectors
 }));
 
 vi.mock("../../../../model/store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js", () => ({
-    selectDateFilterConfigsOverrides: () => [],
-    selectDateFilterConfigsOverridesByTab: () => ({}),
-    selectEffectiveDateFiltersModeMap: () => new Map(),
+    selectDateFilterConfigsOverrides: () => selectors.emptyArray,
+    selectDateFilterConfigsOverridesByTab: () => selectors.emptyRecord,
+    selectEffectiveDateFiltersModeMap: () => selectors.emptyMap,
 }));
 
 vi.mock("../../../../model/store/tabs/filterContext/filterContextSelectors.js", () => ({
-    selectAttributeFilterDisplayFormsMap: () => new Map(),
+    selectAttributeFilterDisplayFormsMap: () => selectors.emptyMap,
 }));
 
 vi.mock("../../../../model/store/entitlements/entitlementsSelectors.js", () => ({
@@ -139,13 +161,14 @@ vi.mock("../../../../model/store/ui/uiSelectors.js", () => ({
 vi.mock(
     "../../../../model/store/tabs/measureValueFilterConfigs/measureValueFilterConfigsSelectors.js",
     () => ({
-        selectMeasureValueFilterConfigsOverrides: () => [],
-        selectMeasureValueFilterConfigsOverridesByTab: () => ({}),
+        selectMeasureValueFilterConfigsOverrides: () => selectors.emptyArray,
+        selectMeasureValueFilterConfigsOverridesByTab: () => selectors.emptyRecord,
     }),
 );
 
 vi.mock("../../../../model/store/tabs/layout/layoutSelectors.js", () => ({
-    selectWidgetsMap: () => ({ get: () => undefined }),
+    selectWidgetsMap: () => selectors.widgetsMap,
+    selectWidgetLocalIdToTabIdMap: () => selectors.widgetTabMap,
 }));
 
 import { useBuildAutomationsContext } from "./useBuildAutomationsContext.js";
@@ -167,5 +190,37 @@ describe("useBuildAutomationsContext", () => {
         expect(result.current.dateFilterConfig.getGranularitiesForTab("missing-tab")).toEqual([]);
         expect(result.current.dateFilterConfig.getOptionsForTab("missing-tab")).toBeUndefined();
         expect(result.current.features.canCreateAutomation).toBe(true);
+    });
+});
+
+describe("useBuildAutomationsContext — parameter data", () => {
+    it("exposes the dashboard-global parameter data the shared automationFilters hooks need", () => {
+        const { result } = renderHook(() => useBuildAutomationsContext());
+
+        expect(result.current.parameters).toEqual({
+            enabled: true,
+            stringParametersEnabled: true,
+            catalog: selectors.parameterCatalog,
+            catalogIsLoaded: true,
+            dashboardParametersByTab: selectors.dashboardParametersByTab,
+        });
+        expect(result.current.tabIds).toEqual(["tab1"]);
+        expect(result.current.widgetLocalIdToTabIdMap).toBe(selectors.widgetTabMap);
+    });
+});
+
+describe("useBuildAutomationsContext — referential stability", () => {
+    it("returns a referentially identical context value when re-rendered with unchanged store state", () => {
+        const { result, rerender } = renderHook(() => useBuildAutomationsContext());
+        const first = result.current;
+
+        rerender();
+
+        // The whole context value, not just its members: an unmemoized `tabIds` or `parameters`
+        // would land in the top-level useMemo's dependency array and change this identity on
+        // every render, re-rendering every consumer in both dialog trees.
+        expect(result.current).toBe(first);
+        expect(result.current.tabIds).toBe(first.tabIds);
+        expect(result.current.parameters).toBe(first.parameters);
     });
 });

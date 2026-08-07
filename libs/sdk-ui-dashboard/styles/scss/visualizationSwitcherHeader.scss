@@ -12,7 +12,9 @@
     }
 
     .item-headline-inner::after {
+        // fallback first; the "/ ''" alt text keeps the icon glyph out of the accessible name
         content: "\e612";
+        content: "\e612" / "";
         display: inline-block;
         color: variables.$gd-dashboards-content-widget-title-color;
         vertical-align: top;

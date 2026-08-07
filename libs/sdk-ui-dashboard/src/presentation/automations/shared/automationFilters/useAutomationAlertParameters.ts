@@ -5,27 +5,15 @@ import { type Dispatch, type SetStateAction, useCallback, useMemo } from "react"
 import {
     DashboardParameterModeValues,
     type IAutomationMetadataObjectDefinition,
+    type IDashboardParameter,
     type IInsightParameterValue,
     type IdentifierRef,
-    type ObjRef,
     type ParameterValue,
     areObjRefsEqual,
 } from "@gooddata/sdk-model";
 
 import { getAutomationAlertParameters } from "../../../../_staging/automation/index.js";
-import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
-import {
-    selectCatalogParameters,
-    selectCatalogParametersIsLoaded,
-} from "../../../../model/store/catalog/catalogSelectors.js";
-import {
-    selectEnableParameters,
-    selectEnableStringParameters,
-} from "../../../../model/store/config/configSelectors.js";
-import {
-    selectEffectiveDashboardParametersForWidget,
-    selectEffectiveParameterValuesForWidget,
-} from "../../../../model/store/tabs/parameters/parametersSelectors.js";
+import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
 
 import {
     type IAutomationParameter,
@@ -70,18 +58,25 @@ export interface IUseAutomationAlertParameters {
 export function useAutomationAlertParameters({
     editedAutomation,
     setEditedAutomation,
-    widgetRef,
+    dashboardParameters,
+    widgetParameterValues,
 }: {
     editedAutomation: IAutomationMetadataObjectDefinition | undefined;
     setEditedAutomation: Dispatch<SetStateAction<IAutomationMetadataObjectDefinition | undefined>>;
-    widgetRef?: ObjRef;
+    /**
+     * Effective dashboard parameters for the dialog's widget; from
+     * {@link IAlertingDialogContextValue.dashboardParameters}.
+     */
+    dashboardParameters: IDashboardParameter[];
+    /**
+     * Effective widget parameter values for the dialog's widget; from
+     * {@link IAlertingDialogContextValue.parameterValues}.
+     */
+    widgetParameterValues: IInsightParameterValue[];
 }): IUseAutomationAlertParameters {
-    const parametersEnabled = useDashboardSelector(selectEnableParameters);
-    const stringParametersEnabled = useDashboardSelector(selectEnableStringParameters);
-    const catalog = useDashboardSelector(selectCatalogParameters);
-    const catalogIsLoaded = useDashboardSelector(selectCatalogParametersIsLoaded);
-    const dashboardParameters = useDashboardSelector(selectEffectiveDashboardParametersForWidget(widgetRef));
-    const widgetParameterValues = useDashboardSelector(selectEffectiveParameterValuesForWidget(widgetRef));
+    const {
+        parameters: { enabled: parametersEnabled, stringParametersEnabled, catalog, catalogIsLoaded },
+    } = useAutomationsContext();
     const storedParameters = getAutomationAlertParameters(editedAutomation);
 
     const automationParameters = useMemo(() => {

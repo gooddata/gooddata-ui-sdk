@@ -55,7 +55,6 @@ import { tabsSliceReducer } from "./tabs/index.js";
 import { type DashboardDispatch, type DashboardState } from "./types.js";
 import { uiSliceReducer } from "./ui/index.js";
 import { userSliceReducer } from "./user/index.js";
-import { usersSliceReducer } from "./users/index.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
@@ -324,7 +323,6 @@ export function createDashboardRootReducer({
         showWidgetAsTable: showWidgetAsTableSliceReducer,
         notificationChannels: notificationChannelsSliceReducer,
         automations: automationsSliceReducer,
-        users: usersSliceReducer,
         filterViews: filterViewsSliceReducer,
         dashboardSummaryWorkflow: dashboardSummaryWorkflowSliceReducer,
         _queryCache: queryCache,

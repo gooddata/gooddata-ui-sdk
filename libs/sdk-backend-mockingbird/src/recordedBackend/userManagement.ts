@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 import {
     type IWorkspaceAccessControlService,
@@ -52,22 +53,36 @@ export function recordedAccessControlFactory(
  */
 export class RecordedWorkspaceUsersQuery implements IWorkspaceUsersQuery {
     private config: RecordedBackendConfig = {};
+    private options: IWorkspaceUsersQueryOptions = {};
 
     constructor(config: RecordedBackendConfig) {
         this.config = config;
     }
 
-    withOptions(_options: IWorkspaceUsersQueryOptions): IWorkspaceUsersQuery {
+    withOptions(options: IWorkspaceUsersQueryOptions): IWorkspaceUsersQuery {
+        this.options = options ?? {};
         return this;
     }
 
     queryAll(): Promise<IWorkspaceUser[]> {
-        const result = this.config?.userManagement?.users?.users ?? [];
-        return Promise.resolve(result);
+        return Promise.resolve(this.matchingUsers());
     }
 
     query(): Promise<IWorkspaceUsersQueryResult> {
-        const result = this.config.userManagement?.users?.users ?? [];
-        return Promise.resolve(new InMemoryPaging(result));
+        const { limit, offset } = this.options;
+        return Promise.resolve(new InMemoryPaging(this.matchingUsers(), limit, offset));
+    }
+
+    private matchingUsers(): IWorkspaceUser[] {
+        const users = this.config.userManagement?.users?.users ?? [];
+        const search = this.options.search?.toLowerCase();
+
+        if (!search) {
+            return users;
+        }
+
+        return users.filter((user) =>
+            [user.fullName, user.login, user.email].some((value) => value?.toLowerCase().includes(search)),
+        );
     }
 }

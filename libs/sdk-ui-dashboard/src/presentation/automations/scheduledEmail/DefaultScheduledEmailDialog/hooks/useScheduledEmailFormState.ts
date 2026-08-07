@@ -17,16 +17,14 @@ import {
     type INotificationChannelIdentifier,
     type INotificationChannelMetadataObject,
     type IWidget,
-    type IWorkspaceUser,
 } from "@gooddata/sdk-model";
 
 import { setExportParametersByTab } from "../../../../../_staging/automation/index.js";
 import { useAutomationsContext } from "../../../contexts/AutomationsContext.js";
 import { useScheduledEmailDialogContext } from "../../../contexts/ScheduledEmailDialogContext.js";
 import {
-    convertCurrentUserToAutomationRecipient,
-    convertCurrentUserToWorkspaceUser,
     convertExternalRecipientToAutomationRecipient,
+    convertUserToAutomationRecipient,
 } from "../../../shared/utils/automationUtils.js";
 import {
     toModifiedISOStringToTimezone,
@@ -44,8 +42,6 @@ export interface IUseScheduledEmailFormStateProps {
     widget?: IWidget;
     insight?: IInsight;
     notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
-    /** Workspace users, lazy-loaded in the connector and passed via dialog props. */
-    users: IWorkspaceUser[];
     externalRecipientOverride?: string;
     effectiveWidgetFilters: IFilter[];
     effectiveWidgetFiltersWithInsight: IFilter[];
@@ -64,10 +60,11 @@ export interface IUseScheduledEmailFormStateProps {
  * baseline, the derived defaults (`defaultRecipient`, `defaultUser`), and the form's field/message
  * change handlers and their validity UI state.
  *
- * Values only this hook needs — `timezone` and `currentUser` from {@link useAutomationsContext},
- * `dashboardId`/`dashboardTitle`/`widgetLocalIdToTabIdMap` from {@link useScheduledEmailDialogContext} —
- * are read here directly. The effective-filters derivations, `parametersByTabForNewAutomation`, and
- * `defaultPdfPageSize` arrive as params instead, because the parent shares them with other consumers.
+ * Values only this hook needs — `timezone`, `currentUser`, and `widgetLocalIdToTabIdMap` from
+ * {@link useAutomationsContext}, `dashboardId`/`dashboardTitle` from
+ * {@link useScheduledEmailDialogContext} — are read here directly. The effective-filters
+ * derivations, `parametersByTabForNewAutomation`, and `defaultPdfPageSize` arrive as params
+ * instead, because the parent shares them with other consumers.
  *
  * @internal
  */
@@ -76,7 +73,6 @@ export function useScheduledEmailFormState({
     widget,
     insight,
     notificationChannels,
-    users,
     externalRecipientOverride,
     effectiveWidgetFilters,
     effectiveWidgetFiltersWithInsight,
@@ -88,28 +84,25 @@ export function useScheduledEmailFormState({
     parametersByTabForNewAutomation,
     defaultPdfPageSize,
 }: IUseScheduledEmailFormStateProps) {
-    const { timezone, currentUser } = useAutomationsContext();
-    const {
-        dashboardId,
-        dashboardTitle,
-        widgetLocalIdToTabIdMap: widgetTabMap,
-    } = useScheduledEmailDialogContext();
+    const { timezone, currentUser, widgetLocalIdToTabIdMap: widgetTabMap } = useAutomationsContext();
+    const { dashboardId, dashboardTitle } = useScheduledEmailDialogContext();
 
     const isWidget = !!widget && !!insight;
 
     // Determine target tab ID if widget is present
     const targetTabId = widget?.localIdentifier ? widgetTabMap[widget.localIdentifier] : undefined;
 
-    const defaultUser = convertCurrentUserToWorkspaceUser(users ?? [], currentUser);
+    const defaultUser = convertUserToAutomationRecipient(currentUser);
 
     const defaultRecipient = externalRecipientOverride
         ? convertExternalRecipientToAutomationRecipient(externalRecipientOverride)
-        : convertCurrentUserToAutomationRecipient(users ?? [], currentUser);
+        : convertUserToAutomationRecipient(currentUser);
 
     const firstChannel = notificationChannels[0]?.id;
 
     const [editedAutomation, setEditedAutomation] = useState<IAutomationMetadataObjectDefinition>(
-        scheduledExportToEdit ??
+        () =>
+            scheduledExportToEdit ??
             newAutomationMetadataObjectDefinition(
                 isWidget
                     ? {

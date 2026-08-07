@@ -158,8 +158,6 @@ export function AlertingDialogRenderer({
         isParentValid,
         thresholdErrorMessage,
         allowHourlyRecurrence,
-        users,
-        usersError,
         notificationChannels,
     } = useEditAlert({
         maxAutomationsRecipients,
@@ -565,8 +563,6 @@ export function AlertingDialogRenderer({
                                         <RecipientsSelect
                                             id="alert.recipients"
                                             loggedUser={defaultUser}
-                                            users={users}
-                                            usersError={usersError}
                                             value={editedAutomation?.recipients ?? []}
                                             originalValue={originalAutomation?.recipients || []}
                                             onChange={onRecipientsChange}

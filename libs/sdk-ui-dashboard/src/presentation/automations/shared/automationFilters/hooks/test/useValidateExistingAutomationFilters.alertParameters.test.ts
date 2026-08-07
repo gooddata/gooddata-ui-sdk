@@ -10,41 +10,16 @@ import {
     idRef,
 } from "@gooddata/sdk-model";
 
-import {
-    selectCatalogParameters,
-    selectCatalogParametersIsLoaded,
-} from "../../../../../../model/store/catalog/catalogSelectors.js";
-import { selectEnableParameters } from "../../../../../../model/store/config/configSelectors.js";
 import { workspaceNumberParameter } from "../../test/parameterFixtures.js";
 import { useValidateExistingAutomationFilters } from "../useValidateExistingAutomationFilters.js";
 
-interface IMockStoreState {
+interface IMockContextState {
     enableParameters: boolean;
     catalogParametersIsLoaded: boolean;
     catalog: IParameterMetadataObject[];
 }
 
-let mockState: IMockStoreState;
-
-function resolveSelectorValue(selector: unknown): unknown {
-    switch (selector) {
-        case selectEnableParameters:
-            return mockState.enableParameters;
-        case selectCatalogParameters:
-            return mockState.catalog;
-        case selectCatalogParametersIsLoaded:
-            return mockState.catalogParametersIsLoaded;
-        default:
-            // The alert under test carries no export definitions, so filter validation short-circuits
-            // (no saved dashboard filters) and the per-tab export-parameter path is empty. Every other
-            // selector the hook reads is therefore irrelevant to alert-parameter staleness.
-            return undefined;
-    }
-}
-
-vi.mock("../../../../../../model/react/DashboardStoreProvider.js", () => ({
-    useDashboardSelector: (selector: unknown) => resolveSelectorValue(selector),
-}));
+let mockState: IMockContextState;
 
 vi.mock("../../../../contexts/AutomationsContext.js", () => ({
     useAutomationsContext: () => ({
@@ -55,6 +30,17 @@ vi.mock("../../../../contexts/AutomationsContext.js", () => ({
         automationFiltersByTab: [],
         attributeFilterSelectionTypeMap: undefined,
         attributeFilterSelectionTypeMapByTab: undefined,
+        // The alert under test carries no export definitions, so filter validation short-circuits
+        // and the per-tab export-parameter path is empty; only the alert-parameter inputs matter.
+        parameters: {
+            enabled: mockState.enableParameters,
+            stringParametersEnabled: true,
+            catalog: mockState.catalog,
+            catalogIsLoaded: mockState.catalogParametersIsLoaded,
+            dashboardParametersByTab: {},
+        },
+        tabIds: [],
+        widgetLocalIdToTabIdMap: {},
     }),
 }));
 

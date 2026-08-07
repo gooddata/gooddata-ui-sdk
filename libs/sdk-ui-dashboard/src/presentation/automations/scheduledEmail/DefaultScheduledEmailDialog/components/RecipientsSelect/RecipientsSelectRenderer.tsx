@@ -1,18 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
-import {
-    type KeyboardEvent,
-    type ReactElement,
-    memo,
-    useCallback,
-    useEffect,
-    useMemo,
-    useRef,
-    useState,
-} from "react";
+import { type KeyboardEvent, type ReactElement, memo, useCallback, useEffect, useRef, useState } from "react";
 
 import cx from "classnames";
-import { debounce, isEmpty, isEqual } from "lodash-es";
+import { isEmpty } from "lodash-es";
 import { FormattedMessage, useIntl } from "react-intl";
 import ReactSelect, {
     type ActionMeta,
@@ -26,7 +17,6 @@ import ReactSelect, {
     type SelectComponentsConfig,
 } from "react-select";
 
-import { type IWorkspaceUsersQueryOptions } from "@gooddata/sdk-backend-spi";
 import {
     type IAutomationRecipient,
     type INotificationChannelIdentifier,
@@ -53,11 +43,9 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../../../../constants/zIndex.js";
-import { matchRecipient } from "../../../utils/users.js";
 import { isEmail } from "../../../utils/validate.js";
 
 const MAXIMUM_RECIPIENTS_RECEIVE = 60;
-const DELAY_TIME = 500;
 const PADDING = 16;
 const LOADING_MENU_HEIGHT = 50;
 const CREATE_OPTION = "create-option";
@@ -162,9 +150,14 @@ export interface IRecipientsSelectRendererProps {
     onChange?: (selectedUsers: IAutomationRecipient[]) => void;
 
     /**
-     * Callback to load autocomplete options.
+     * Callback to be called when the search text changes.
      */
-    onLoad?: (queryOptions?: IWorkspaceUsersQueryOptions) => void;
+    onSearch: (search: string) => void;
+
+    /**
+     * Callback to be called on menu open to start (or retry) loading options.
+     */
+    onActivate: () => void;
 
     /**
      * Show autocomplete loading indicator?
@@ -261,7 +254,8 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
         notificationChannel,
         showLabel,
         onChange,
-        onLoad,
+        onSearch,
+        onActivate,
         isLoading,
         canListUsersInProject,
         allowEmptySelection,
@@ -839,48 +833,23 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
         }
     }, [allowEmptySelection, value.length]);
 
-    const isRecipientAddedFn = useCallback(
-        (value: ReadonlyArray<IAutomationRecipient>, searchKey: string): boolean => {
-            return value.some((recipient: IAutomationRecipient) => isEqual(recipient.id, searchKey));
-        },
-        [],
-    );
-
-    const loadUserListItems = useCallback(
+    const handleSearchChange = useCallback(
         (searchString: string): void => {
-            const isRecipientAdded = isRecipientAddedFn(value, searchString);
-
-            if (!canListUsersInProject || isRecipientAdded) {
+            if (!canListUsersInProject) {
                 return;
             }
 
-            onLoad?.({ search: searchString });
+            onSearch(searchString);
         },
-        [isRecipientAddedFn, value, canListUsersInProject, onLoad],
+        [canListUsersInProject, onSearch],
     );
 
     const onMenuOpen = useCallback((): void => {
-        const userListCount = options.length;
         setState((prev) => ({ ...prev, menuOpen: true, focusedRecipientIndex: -1 }));
-        if (!userListCount && canListUsersInProject) {
-            onLoad?.();
+        if (canListUsersInProject) {
+            onActivate();
         }
-    }, [options.length, canListUsersInProject, onLoad]);
-
-    const onSearchCore = useCallback(
-        (searchString: string): void => {
-            loadUserListItems(searchString);
-        },
-        [loadUserListItems],
-    );
-
-    const onSearch = useMemo(
-        () =>
-            debounce((searchString: string) => {
-                onSearchCore(searchString);
-            }, DELAY_TIME),
-        [onSearchCore],
-    );
+    }, [canListUsersInProject, onActivate]);
 
     const creatableSelectComponent: SelectComponentsConfig<
         IAutomationRecipient,
@@ -986,9 +955,8 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
                         classNamePrefix="gd-recipients"
                         components={creatableSelectComponent}
                         formatOptionLabel={renderOptionLabel}
-                        filterOption={(opt, value) => {
-                            return matchRecipient(opt.data, value);
-                        }}
+                        // Options arrive pre-filtered (server search, or the owner's options memo).
+                        filterOption={null}
                         isClearable={false}
                         isDisabled={!isMulti}
                         isMulti={isMulti}
@@ -996,7 +964,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
                             // using as any as it would be too tricky to type properly
                             handleOnChange as any
                         }
-                        onInputChange={onSearch}
+                        onInputChange={handleSearchChange}
                         onMenuOpen={onMenuOpen}
                         onMenuClose={() => setState((prev) => ({ ...prev, menuOpen: false }))}
                         onKeyDown={handleKeyDown}
