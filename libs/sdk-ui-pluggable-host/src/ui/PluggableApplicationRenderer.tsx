@@ -7,6 +7,7 @@ import { FormattedMessage, type MessageDescriptor, defineMessage, useIntl } from
 import { type IGenAIUserContext, type PluggableApplicationRegistryItem } from "@gooddata/sdk-model";
 import {
     type IAppHeaderOptions,
+    type IHostNavigationRequest,
     type IPlatformContext,
     type IPluggableApp,
     type IPluggableAppEvent,
@@ -79,6 +80,12 @@ export interface IPluggableApplicationRendererProps {
     aiLinkClickHandlerRef?: RefObject<
         ((link: { type?: string; id?: string; itemUrl?: string; newTab?: boolean }) => boolean) | undefined
     >;
+    /**
+     * Ref the renderer populates with a handler that asks the active app's mount handle
+     * (`onHostNavigationRequested`) whether the host may navigate away. Must be referentially
+     * stable — a new ref object remounts the application.
+     */
+    navigationRequestRef?: RefObject<((request: IHostNavigationRequest) => boolean) | undefined>;
     onHeaderChange?: (appId: string, header: IAppHeaderOptions) => void;
     onDocumentTitleChange?: (appId: string, pageTitle: string | undefined) => void;
 }
@@ -92,6 +99,7 @@ export function PluggableApplicationRenderer({
     onCloseAiAssistant,
     onAiAssistantContext,
     aiLinkClickHandlerRef,
+    navigationRequestRef,
     onHeaderChange,
     onDocumentTitleChange,
 }: IPluggableApplicationRendererProps) {
@@ -175,13 +183,17 @@ export function PluggableApplicationRenderer({
         const mountId = `${app.id}:${Date.now()}`;
         const totalStart = now();
 
+        // Identity must change per mount — the host rejects a `proceed` retained from an earlier one.
+        const navigationRequest = (request: IHostNavigationRequest) =>
+            mountHandleRef.current?.onHostNavigationRequested?.(request) ?? false;
+
         const prevHandle = mountHandleRef.current;
         mountHandleRef.current = undefined;
         mountedAppRef.current = undefined;
         setViewState({ state: "loading" });
 
-        // Defer unmount of the previous app to avoid synchronously unmounting
-        // a React root while React is already rendering (race in strict mode).
+        // unmount() is synchronous, so calling it inline can re-enter React while the parent render
+        // that swapped this application out is still in progress.
         if (prevHandle) {
             queueMicrotask(() => prevHandle.unmount());
         }
@@ -233,6 +245,9 @@ export function PluggableApplicationRenderer({
                 });
 
                 mountedAppRef.current = { app, loadedApp };
+                if (navigationRequestRef) {
+                    navigationRequestRef.current = navigationRequest;
+                }
 
                 lifecycle?.onMountCompleted?.(app.id, now() - mountStart);
                 lifecycle?.onRendered?.(app.id, now() - totalStart);
@@ -241,6 +256,11 @@ export function PluggableApplicationRenderer({
             .catch((mountError: unknown) => {
                 if (cancelled) {
                     return;
+                }
+                // An application shown as failed must not veto navigation — its dialog would render
+                // into a hidden container.
+                if (navigationRequestRef?.current === navigationRequest) {
+                    navigationRequestRef.current = undefined;
                 }
                 const errorMessage =
                     mountError instanceof Error ? mountError.message : "Unknown module loading error.";
@@ -254,6 +274,10 @@ export function PluggableApplicationRenderer({
 
         return () => {
             cancelled = true;
+            // Only ever clear this mount's own registration, never a newer mount's.
+            if (navigationRequestRef?.current === navigationRequest) {
+                navigationRequestRef.current = undefined;
+            }
             const handle = mountHandleRef.current;
             if (handle) {
                 mountHandleRef.current = undefined;
@@ -264,7 +288,17 @@ export function PluggableApplicationRenderer({
                 });
             }
         };
-    }, [app, appBasePath, ctxRef, intlRef, onHeaderChangeRef, onTelemetryEvent, lifecycle, onEvent]);
+    }, [
+        app,
+        appBasePath,
+        ctxRef,
+        intlRef,
+        onHeaderChangeRef,
+        onTelemetryEvent,
+        lifecycle,
+        onEvent,
+        navigationRequestRef,
+    ]);
 
     useEffect(() => {
         const mounted = mountedAppRef.current;
@@ -286,6 +320,9 @@ export function PluggableApplicationRenderer({
             );
             mountHandleRef.current = undefined;
             mountedAppRef.current = undefined;
+            if (navigationRequestRef) {
+                navigationRequestRef.current = undefined;
+            }
             handle.unmount();
             lifecycle?.onUnmounted?.(mounted.app.id);
             lifecycle?.onLoadFailed?.(mounted.app.id, securityFailure.kind);
@@ -294,7 +331,7 @@ export function PluggableApplicationRenderer({
         }
 
         handle.updateContext?.(ctx);
-    }, [ctx, intlRef, lifecycle]);
+    }, [ctx, intlRef, lifecycle, navigationRequestRef]);
 
     // Forward the host-owned chat open-state to the mounted app once it is ready, and on every
     // change, so app-side assistant controls stay aligned with the real (host) state (LX-2544).

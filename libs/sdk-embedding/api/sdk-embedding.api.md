@@ -194,6 +194,12 @@ export type AdSetFilterContextCommandData = IGdcAdMessageEnvelope<GdcAdCommandTy
 // @public
 export type AdSetFilterContextFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.SetFilterContextFinished, IAdAvailableCommands>;
 
+// @beta
+export type AdSetTimezoneCommand = IGdcAdMessageEvent<GdcAdCommandType.SetTimezone, IAdSetTimezoneBody>;
+
+// @beta
+export type AdSetTimezoneCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.SetTimezone, IAdSetTimezoneBody>;
+
 // @public
 export type AdUndoCommand = IGdcAdMessageEvent<GdcAdCommandType.Undo, undefined>;
 
@@ -267,6 +273,8 @@ export enum GdcAdCommandType {
     SaveAs = "saveAsInsight",
     SetApiToken = "setApiToken",
     SetFilterContext = "setFilterContext",
+    // @beta
+    SetTimezone = "setTimezone",
     Undo = "undo"
 }
 
@@ -424,6 +432,11 @@ export interface IAdSetApiTokenBody {
     secondsBeforeTokenExpirationToEmitReminder?: number;
     token: string;
     type?: "gooddata" | "jwt";
+}
+
+// @beta
+export interface IAdSetTimezoneBody {
+    timezoneId?: string;
 }
 
 // @public (undocumented)
@@ -1087,6 +1100,9 @@ export function isAdSetApiTokenCommandData(obj: unknown): obj is AdSetApiTokenCo
 
 // @public
 export function isAdSetFilterContextCommandData(obj: unknown): obj is AdSetFilterContextCommandData;
+
+// @beta
+export function isAdSetTimezoneCommandData(obj: unknown): obj is AdSetTimezoneCommandData;
 
 // @public
 export function isAdUndoCommandData(obj: unknown): obj is AdUndoCommandData;

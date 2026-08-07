@@ -153,11 +153,7 @@ $attribute-filter-drag-handle-left: 10px;
     $default_space: 3px;
 
     position: relative;
-    display: flex;
-    align-items: stretch;
-    flex-wrap: wrap;
     width: calc(100% - 150px); // minus filters configuration buttons panel width
-    min-height: variables.$filter-bar-height;
     margin-right: variables.$scrollbar-width;
 
     .apply-all-at-once & {
@@ -352,6 +348,13 @@ $attribute-filter-drag-handle-left: 10px;
     }
 }
 
+.dash-filters-toolbar {
+    display: flex;
+    align-items: stretch;
+    flex-wrap: wrap;
+    min-height: variables.$filter-bar-height;
+}
+
 .filter-bar-dropzone-container {
     position: relative;
     flex-grow: 1;
@@ -544,6 +547,10 @@ $attribute-filter-drag-handle-left: 10px;
     align-items: start;
     justify-content: center;
     height: 100%;
+    // the tertiary "My views" button has no side padding, this keeps it aligned
+    // with the .dash-header-options-button in the top bar
+    padding-right: 10px;
+    gap: 10px;
 }
 
 // --- Filter Views configuration panel open button
@@ -551,78 +558,26 @@ $attribute-filter-drag-handle-left: 10px;
 .gd-filter-views {
     display: flex;
     align-items: center;
+    gap: 10px;
 }
 
-.gd-button-primary.gd-filter-views-button {
-    border: 0;
-    box-shadow: none;
-    color: var(--gd-palette-complementary-6);
-    background: variables.$gd-dashboards-content-backgroundColor;
-    font-size: 14px;
+.gd-filter-views-button {
+    display: flex;
+    align-items: center;
 
     // can be removed when filters apply modes feature flag is enabled
     &.deprecated-margin-top {
         margin-top: 7px;
-    }
-
-    // override .button behavior so text and icon does not "jump" (simulate pressed button)
-    &:not(.disabled):not(.gd-button-link) {
-        &:active {
-            &::before,
-            &::after {
-                top: 1px;
-            }
-
-            .gd-button-text {
-                top: 1px;
-            }
-
-            .gd-button-icon {
-                margin-top: 1px;
-                color: var(--gd-palette-primary-base);
-            }
-        }
-    }
-
-    &:not(.disabled):not(.gd-button-link):hover {
-        .gd-button-icon {
-            color: var(--gd-palette-primary-base);
-        }
-
-        color: var(--gd-palette-complementary-8);
-    }
-
-    .gd-button-icon {
-        color: var(--gd-palette-complementary-5);
-        // A little hack. The My views button is using the outdated <Button> component.
-        // This brings the visuals in line with the <UiButton> used in the All tabs component.
-        /* stylelint-disable-next-line declaration-no-important */
-        margin: 0 -8px 0 6px !important;
-    }
-
-    .gd-filter-views-button__label {
-        text-decoration: underline;
     }
 }
 
 .gd-dash-content--density-compact {
     .filter-bar-configuration {
         align-items: center;
-        padding-right: 10px;
     }
 
-    .gd-button-primary.gd-filter-views-button {
-        &.deprecated-margin-top {
-            margin-top: 0;
-        }
-    }
-}
-
-.gd-button-primary.gd-filter-views-button--open {
-    color: kit-variables.$gd-color-text;
-
-    .gd-button-icon::before {
-        color: kit-variables.$gd-color-highlight;
+    .gd-filter-views-button.deprecated-margin-top {
+        margin-top: 0;
     }
 }
 

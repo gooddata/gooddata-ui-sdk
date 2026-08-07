@@ -87,7 +87,6 @@ function DefaultFilterBarContainerCore({ children }: { children?: ReactNode }) {
     const configurationStyle = useMemo(
         () => ({
             alignItems: isApplyAllAtOnceEnabledAndSet ? "center" : undefined,
-            paddingRight: isApplyAllAtOnceEnabledAndSet ? "10px" : undefined,
         }),
         [isApplyAllAtOnceEnabledAndSet],
     );
@@ -416,13 +415,6 @@ function MeasuredDiv({
         }
         horizontalKeyboardNavigation(e);
     };
-    const setRefs = useCallback(
-        (node: HTMLDivElement | null) => {
-            measureRef(node);
-            containerRef.current = node;
-        },
-        [measureRef],
-    );
     const intl = useIntl();
 
     const regionLabel = isAutoExpanded
@@ -435,10 +427,18 @@ function MeasuredDiv({
             role="region"
             aria-label={regionLabel}
             tabIndex={-1}
-            ref={setRefs}
+            ref={containerRef}
             onKeyDown={keyboardNavigation}
         >
-            {children}
+            {/* role="toolbar" switches NVDA to focus mode; unlabeled — the region already announces "Filters" */}
+            <div
+                className="dash-filters-toolbar"
+                role="toolbar"
+                aria-orientation="horizontal"
+                ref={measureRef}
+            >
+                {children}
+            </div>
         </div>
     );
 }

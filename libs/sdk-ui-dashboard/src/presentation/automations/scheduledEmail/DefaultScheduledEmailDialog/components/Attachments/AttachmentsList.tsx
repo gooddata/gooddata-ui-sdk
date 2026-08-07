@@ -24,7 +24,6 @@ export function AttachmentsList<T extends WidgetAttachmentType | DashboardAttach
     onCsvSettingsChange,
     csvRawSettings,
     onCsvRawSettingsChange,
-    defaultPdfPageSize,
     mode,
     exportTemplates,
     slidesTemplateIds,
@@ -40,7 +39,6 @@ export function AttachmentsList<T extends WidgetAttachmentType | DashboardAttach
     onCsvSettingsChange?: (settings: IExportDefinitionVisualizationObjectSettings) => void;
     csvRawSettings?: IExportDefinitionVisualizationObjectSettings;
     onCsvRawSettingsChange?: (settings: IExportDefinitionVisualizationObjectSettings) => void;
-    defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
     mode: "widget" | "dashboard";
     exportTemplates?: IExportTemplate[];
     slidesTemplateIds?: { PPTX?: string; PDF_SLIDES?: string; PDF?: string };
@@ -72,7 +70,6 @@ export function AttachmentsList<T extends WidgetAttachmentType | DashboardAttach
                             type="PDF_TABULAR"
                             settings={pdfSettings}
                             onSettingsChange={onPdfSettingsChange}
-                            defaultPdfPageSize={defaultPdfPageSize}
                         />
                     ) : null}
                     {attachment === "CSV" && csvSettings && onCsvSettingsChange ? (

@@ -13,6 +13,31 @@ export interface IFilterViews {
 /**
  * @alpha
  */
+export interface IAddFilterView {
+    dashboard: ObjRef;
+    filterView: IDashboardFilterView;
+}
+
+/**
+ * @alpha
+ */
+export interface IRemoveFilterView {
+    dashboard: ObjRef;
+    ref: ObjRef;
+}
+
+/**
+ * @alpha
+ */
+export interface ISetFilterViewAsDefault {
+    dashboard: ObjRef;
+    ref: ObjRef;
+    isDefault: boolean;
+}
+
+/**
+ * @alpha
+ */
 export interface IFilterViewsState {
     filterViews: IFilterViews[];
     isLoading: boolean;

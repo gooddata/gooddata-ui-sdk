@@ -30,7 +30,6 @@ export interface IDashboardAttachmentsProps {
     xlsxSettings: IExportDefinitionVisualizationObjectSettings;
     onXlsxSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
     isSlidesExportEnabled: boolean;
-    defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
     exportTemplates?: IExportTemplate[];
     slidesTemplateIds?: { PPTX?: string; PDF_SLIDES?: string; PDF?: string };
     onSlidesTemplateIdChange?: (
@@ -47,7 +46,6 @@ export function DashboardAttachments({
     xlsxSettings,
     onXlsxSettingsChange,
     isSlidesExportEnabled,
-    defaultPdfPageSize,
     exportTemplates,
     slidesTemplateIds,
     onSlidesTemplateIdChange,
@@ -142,7 +140,6 @@ export function DashboardAttachments({
                         onDelete={handleDelete}
                         xlsxSettings={xlsxSettings}
                         onXlsxSettingsChange={onXlsxSettingsChange}
-                        defaultPdfPageSize={defaultPdfPageSize}
                         mode="dashboard"
                         exportTemplates={exportTemplates}
                         slidesTemplateIds={slidesTemplateIds}
