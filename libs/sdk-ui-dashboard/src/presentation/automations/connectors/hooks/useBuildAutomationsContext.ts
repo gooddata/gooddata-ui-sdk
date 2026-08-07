@@ -11,12 +11,16 @@ import {
     selectCatalogAttributes,
     selectCatalogDateDatasets,
     selectCatalogMeasures,
+    selectCatalogParameters,
+    selectCatalogParametersIsLoaded,
 } from "../../../../model/store/catalog/catalogSelectors.js";
 import {
     selectEnableAlertOncePerInterval,
     selectEnableAnomalyDetectionAlert,
     selectEnableAutomationEvaluationMode,
+    selectEnableParameters,
     selectEnableSlideshowExports,
+    selectEnableStringParameters,
     selectExternalRecipient,
     selectIsWhiteLabeled,
     selectLocale,
@@ -62,11 +66,16 @@ import {
     selectDateFilterConfigsOverridesByTab,
 } from "../../../../model/store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
 import { selectAttributeFilterDisplayFormsMap } from "../../../../model/store/tabs/filterContext/filterContextSelectors.js";
-import { selectWidgetsMap } from "../../../../model/store/tabs/layout/layoutSelectors.js";
+import {
+    selectWidgetLocalIdToTabIdMap,
+    selectWidgetsMap,
+} from "../../../../model/store/tabs/layout/layoutSelectors.js";
 import {
     selectMeasureValueFilterConfigsOverrides,
     selectMeasureValueFilterConfigsOverridesByTab,
 } from "../../../../model/store/tabs/measureValueFilterConfigs/measureValueFilterConfigsSelectors.js";
+import { selectSmartPersistedTabsParameters } from "../../../../model/store/tabs/parameters/parametersSelectors.js";
+import { selectTabs } from "../../../../model/store/tabs/tabsSelectors.js";
 import {
     selectExecutionTimestamp,
     selectScheduleEmailDialogReturnFocusTo,
@@ -75,6 +84,7 @@ import { selectCurrentUser } from "../../../../model/store/user/userSelectors.js
 import type {
     IAutomationsContextValue,
     IAutomationsDateFilterConfig,
+    IAutomationsParameters,
 } from "../../contexts/AutomationsContext.js";
 
 const DEFAULT_MIN_RECURRENCE_MINUTES = "60";
@@ -144,6 +154,14 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
 
     const widgetsMap = useDashboardSelector(selectWidgetsMap);
 
+    const parametersEnabled = useDashboardSelector(selectEnableParameters);
+    const stringParametersEnabled = useDashboardSelector(selectEnableStringParameters);
+    const parameterCatalog = useDashboardSelector(selectCatalogParameters);
+    const parameterCatalogIsLoaded = useDashboardSelector(selectCatalogParametersIsLoaded);
+    const dashboardParametersByTab = useDashboardSelector(selectSmartPersistedTabsParameters);
+    const tabs = useDashboardSelector(selectTabs);
+    const widgetLocalIdToTabIdMap = useDashboardSelector(selectWidgetLocalIdToTabIdMap);
+
     const getCatalogAttributeByRef = useCallback(
         (ref: ObjRef) => allCatalogAttributesMap.get(ref),
         [allCatalogAttributesMap],
@@ -166,6 +184,28 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
             getOptionsForTab: (tabId: string) => optionsPerTab[tabId],
         }),
         [availableGranularities, dateFilterOptions, granularitiesPerTab, optionsPerTab],
+    );
+
+    // Memoized deliberately: `.map()` allocates, and an unstable `tabIds` would land in the
+    // dependency array of the context useMemo below and change the whole context identity on
+    // every render.
+    const tabIds = useMemo(() => (tabs ?? []).map((tab) => tab.localIdentifier), [tabs]);
+
+    const parameters: IAutomationsParameters = useMemo(
+        () => ({
+            enabled: parametersEnabled,
+            stringParametersEnabled,
+            catalog: parameterCatalog,
+            catalogIsLoaded: parameterCatalogIsLoaded,
+            dashboardParametersByTab,
+        }),
+        [
+            parametersEnabled,
+            stringParametersEnabled,
+            parameterCatalog,
+            parameterCatalogIsLoaded,
+            dashboardParametersByTab,
+        ],
     );
 
     const features = useMemo(
@@ -225,6 +265,9 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
             isSecondaryTitleVisible: true,
             externalRecipient,
             features,
+            parameters,
+            tabIds,
+            widgetLocalIdToTabIdMap,
             getCatalogAttributeByRef,
             getAttributeFilterDisplayForm,
             widgetExistsByRef,
@@ -264,6 +307,9 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
             isWhiteLabeled,
             externalRecipient,
             features,
+            parameters,
+            tabIds,
+            widgetLocalIdToTabIdMap,
             getCatalogAttributeByRef,
             getAttributeFilterDisplayForm,
             widgetExistsByRef,

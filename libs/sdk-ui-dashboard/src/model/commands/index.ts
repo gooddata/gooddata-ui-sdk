@@ -141,7 +141,6 @@ import {
     type ISwitchDashboardTab,
 } from "./tabs.js";
 import { type IChangeDashboardTimezoneOverride } from "./timezone.js";
-import { type ILoadAllWorkspaceUsers } from "./users.js";
 import {
     type IAddVisualizationToVisualizationSwitcherWidgetContent,
     type IUpdateVisualizationsFromVisualizationSwitcherWidgetContent,
@@ -288,7 +287,6 @@ export type DashboardCommands =
     | IRenameDashboardTab
     //internal
     | ISetScreenSize
-    | ILoadAllWorkspaceUsers
     | IExportRawInsightWidget
     | IExportSlidesInsightWidget
     | IExportImageInsightWidget

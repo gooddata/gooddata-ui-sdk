@@ -15,6 +15,8 @@ import type {
     IDashboardDateFilterConfig,
     IDashboardDateFilterConfigItem,
     IDashboardMeasureValueFilterConfig,
+    IDashboardParameter,
+    IParameterMetadataObject,
     ISeparators,
     ISettings,
     IUser,
@@ -37,6 +39,28 @@ export interface IAutomationsDateFilterConfig {
     dateFilterOptions: IDateFilterOptionsByType;
     getGranularitiesForTab: (tabId: string) => DateFilterGranularity[];
     getOptionsForTab: (tabId: string) => IDateFilterOptionsByType | undefined;
+}
+
+/**
+ * Workspace and dashboard parameter data provided by the dashboard connector so that the shared
+ * automationFilters hooks do not need to read dashboard selectors directly.
+ *
+ * @alpha
+ */
+export interface IAutomationsParameters {
+    /** Whether the parameters feature is enabled; from selectEnableParameters. */
+    enabled: boolean;
+    /** Whether STRING-typed parameters are enabled; from selectEnableStringParameters. */
+    stringParametersEnabled: boolean;
+    /** The workspace parameter catalog; from selectCatalogParameters. */
+    catalog: IParameterMetadataObject[];
+    /**
+     * Whether the parameter catalog has finished loading. Before it has, every stored parameter
+     * ref looks removed, so staleness checks must treat loading as not-stale.
+     */
+    catalogIsLoaded: boolean;
+    /** Effective dashboard parameter values keyed by tab; from selectSmartPersistedTabsParameters. */
+    dashboardParametersByTab: Record<string, IDashboardParameter[]>;
 }
 
 /**
@@ -91,6 +115,15 @@ export interface IAutomationsContextValue {
         enableSlideshowExports: boolean;
         enableAutomationEvaluationMode: boolean;
     };
+    parameters: IAutomationsParameters;
+    /**
+     * Local identifiers of the dashboard's tabs, in layout order; empty when the dashboard has none.
+     * Narrowed from selectTabs (`ITabState[] | undefined`) because every consumer only ever reads
+     * `localIdentifier`, and all of them already coalesce `undefined` to `[]`.
+     */
+    tabIds: string[];
+    /** Maps a widget's localIdentifier to the localIdentifier of the tab that owns it. */
+    widgetLocalIdToTabIdMap: Record<string, string>;
     getCatalogAttributeByRef: (ref: ObjRef) => ICatalogAttribute | ICatalogDateAttribute | undefined;
     getAttributeFilterDisplayForm: (displayForm: ObjRef) => IAttributeDisplayFormMetadataObject | undefined;
     /**

@@ -469,14 +469,20 @@ describe("useScheduledEmailEffectiveFilters — effectiveDashboardFiltersByTab (
 
 describe("useScheduledEmailEffectiveFilters — referential stability", () => {
     it("returns referentially identical values when re-rendered with unchanged inputs", () => {
-        // The file-wide `beforeEach` default for `getAppliedDashboardFilters` is an identity
-        // passthrough, which would return the caller's own array and make the assertion below pass
-        // with or without a memo. Overridden with a fresh allocation per call so an unmemoized call
-        // site produces a new reference each render and the `toBe` actually fails.
+        // Local, distinguishable, non-undefined mocks: each invocation allocates a fresh
+        // object/array, so an unmemoized call site would produce a new reference on every
+        // render and fail the `toBe` assertions below. The file-wide `beforeEach` defaults
+        // (e.g. getVisibleFiltersByFilters -> undefined) are intentionally NOT reused here,
+        // since `undefined === undefined` would make those assertions vacuous.
         // `getAppliedWidgetFilters`' default already allocates per call, so it needs no override.
         getAppliedDashboardFiltersSpy.mockImplementation(() => [fakeFilterContextItem("dashboard-applied")]);
+        getVisibleFiltersByFiltersSpy.mockImplementation(() => [fakeVisibleFilter("visible")]);
+        getVisibleFiltersByFiltersByTabSpy.mockImplementation(() => ({
+            tab1: [fakeVisibleFilter("visible-tab")],
+        }));
 
         const editedAutomationFiltersByTab = { tab1: [fakeFilterContextItem("f1")] };
+        const availableFiltersAsVisibleFiltersByTab = { tab1: [fakeVisibleFilter("f1")] };
 
         const props: IUseScheduledEmailEffectiveFiltersProps = {
             widget: undefined,
@@ -484,7 +490,7 @@ describe("useScheduledEmailEffectiveFilters — referential stability", () => {
             editedAutomationFilters: [fakeFilterContextItem("f1")],
             editedAutomationFiltersByTab,
             availableFiltersAsVisibleFilters: undefined,
-            availableFiltersAsVisibleFiltersByTab: undefined,
+            availableFiltersAsVisibleFiltersByTab,
             filtersDataByTab: undefined,
             storeFilters: true,
         };
@@ -500,13 +506,17 @@ describe("useScheduledEmailEffectiveFilters — referential stability", () => {
         expect(result.current.effectiveWidgetFiltersWithInsight).toBe(
             first.effectiveWidgetFiltersWithInsight,
         );
+        expect(result.current.effectiveVisibleWidgetFilters).toBe(first.effectiveVisibleWidgetFilters);
         expect(result.current.effectiveDashboardFilters).toBe(first.effectiveDashboardFilters);
+        expect(result.current.effectiveVisibleDashboardFilters).toBe(first.effectiveVisibleDashboardFilters);
+        expect(result.current.effectiveVisibleDashboardFiltersByTab).toBe(
+            first.effectiveVisibleDashboardFiltersByTab,
+        );
         expect(result.current.effectiveDashboardFiltersByTab).toBe(first.effectiveDashboardFiltersByTab);
 
-        // The three visible-filter members are deliberately absent: their
-        // `availableFiltersAsVisibleFilters*` input is unstable in the production call path, so
-        // asserting their stability here would only characterise the mock, not the caller. See the
-        // note in `useScheduledEmailEffectiveFilters.ts`; stabilizing that chain upstream comes first.
+        // These three hold only because the upstream namings chain is stable now. The assertion that
+        // this is true of the *production* caller, and not just of these mocks, lives in
+        // useScheduledEmailEffectiveFilters.realChain.test.tsx.
     });
 });
 

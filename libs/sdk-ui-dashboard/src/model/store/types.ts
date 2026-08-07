@@ -29,7 +29,6 @@ import { type IShowWidgetAsTableState } from "./showWidgetAsTable/showWidgetAsTa
 import { type ITabsState } from "./tabs/tabsState.js";
 import { type IUiState } from "./ui/uiState.js";
 import { type UserState } from "./user/userState.js";
-import { type IUsersState } from "./users/usersState.js";
 
 /*
  * This explicit typing is unfortunate but cannot find better way. Normally the typings get inferred from store,
@@ -86,8 +85,6 @@ export type DashboardState = {
     dashboardPermissions: DashboardPermissionsState;
     /** @alpha */
     automations: IAutomationsState;
-    /** @alpha */
-    users: IUsersState;
     /** @alpha */
     notificationChannels: INotificationChannelsState;
 

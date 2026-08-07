@@ -11,7 +11,6 @@ import {
     type IInsight,
     type INotificationChannelMetadataObject,
     type IWidget,
-    type IWorkspaceUser,
     idRef,
     isExportDefinitionDashboardRequestPayload,
     isExportDefinitionVisualizationObjectRequestPayload,
@@ -130,6 +129,7 @@ const automationsContextValue = {
     settings: undefined,
     timezone: undefined,
     currentUser: { login: "u1", email: "u1@example.com", ref: idRef("u1") },
+    widgetLocalIdToTabIdMap: { w1: "tab1" },
     features: {
         enableAutomationEvaluationMode: false,
     },
@@ -141,12 +141,10 @@ function buildScheduledEmailDialogContextValue(): IScheduledEmailDialogContextVa
         dashboardTitle: "Dashboard",
         hiddenFilters: [],
         commonDateFilterId: undefined,
-        widgetLocalIdToTabIdMap: { w1: "tab1" },
         // The reporter's case: no effective override, so the new automation seeds no params.
         exportParametersByTab: {},
         widget,
         insight,
-        users: [] as IWorkspaceUser[],
         notificationChannels: [{ id: "channel-1" }],
     } as unknown as IScheduledEmailDialogContextValue;
 }
@@ -329,19 +327,15 @@ describe("useEditScheduledEmail — default PDF page size wiring", () => {
     });
 });
 
-describe("useEditScheduledEmail — recipients and destination data", () => {
-    it("returns the recipients and destination data from the context", () => {
-        const users: IWorkspaceUser[] = [
-            { ref: idRef("user-1"), uri: "/users/user-1", login: "user-1", email: "user-1@example.com" },
-        ];
+describe("useEditScheduledEmail — destination data", () => {
+    it("returns the destination data from the context", () => {
         const notificationChannels = [
             { id: "channel-1", type: "notificationChannel" },
         ] as INotificationChannelMetadataObject[];
-        setScheduledEmailDialogContext({ users, notificationChannels });
+        setScheduledEmailDialogContext({ notificationChannels });
 
         const { result } = renderEditHook();
 
-        expect(result.current.users).toBe(users);
         expect(result.current.notificationChannels).toBe(notificationChannels);
     });
 });
@@ -352,7 +346,6 @@ describe("useEditScheduledEmail — recipients and destination data", () => {
 
 describe("useEditScheduledEmail — per-tab filters", () => {
     it("keeps per-tab filters addressable through the consolidated model", () => {
-        setScheduledEmailDialogContext({ hasMultipleTabs: true });
         mockAutomationFiltersSelect({
             filtersByTab: [fakeFiltersTab("tab-1")],
             editedAutomationFiltersByTab: { "tab-1": [] },

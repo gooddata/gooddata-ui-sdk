@@ -97,17 +97,9 @@ export function useScheduledEmailEffectiveFilters({
         [editedAutomationFilters, dashboardHiddenFilters, widget, insight, commonDateFilterId],
     );
 
-    // The three visible-filter derivations below are deliberately NOT memoized: their
-    // `availableFiltersAsVisibleFilters*` dependency changes identity on every render, so a memo here
-    // would be a no-op that only looks like a guarantee. `useFiltersNamings` /
-    // `useFiltersByTabNamings` call `transformFiltersToNamings` unmemoized and return a fresh array
-    // each render, which invalidates `useAutomationVisibleFilters`' own memo; on the by-tab path
-    // `availableFiltersByTab` and `removeIgnoredWidgetFilters` in `useAutomationFiltersSelect` are
-    // unmemoized too. Stabilizing that chain upstream is the prerequisite — memoizing here is not.
-    const effectiveVisibleWidgetFilters = getVisibleFiltersByFilters(
-        editedAutomationFilters,
-        availableFiltersAsVisibleFilters,
-        true,
+    const effectiveVisibleWidgetFilters = useMemo(
+        () => getVisibleFiltersByFilters(editedAutomationFilters, availableFiltersAsVisibleFilters, true),
+        [editedAutomationFilters, availableFiltersAsVisibleFilters],
     );
 
     const effectiveDashboardFilters = useMemo(
@@ -145,18 +137,24 @@ export function useScheduledEmailEffectiveFilters({
         );
     }, [editedAutomationFiltersByTab, filtersDataByTab, storeFilters]);
 
-    // Not memoized — see the note above `effectiveVisibleWidgetFilters`.
-    const effectiveVisibleDashboardFilters = getVisibleFiltersByFilters(
-        editedAutomationFilters ?? [],
-        availableFiltersAsVisibleFilters,
-        storeFilters,
+    const effectiveVisibleDashboardFilters = useMemo(
+        () =>
+            getVisibleFiltersByFilters(
+                editedAutomationFilters ?? [],
+                availableFiltersAsVisibleFilters,
+                storeFilters,
+            ),
+        [editedAutomationFilters, availableFiltersAsVisibleFilters, storeFilters],
     );
 
-    // Not memoized — see the note above `effectiveVisibleWidgetFilters`.
-    const effectiveVisibleDashboardFiltersByTab = getVisibleFiltersByFiltersByTab(
-        editedAutomationFiltersByTab,
-        availableFiltersAsVisibleFiltersByTab,
-        storeFilters,
+    const effectiveVisibleDashboardFiltersByTab = useMemo(
+        () =>
+            getVisibleFiltersByFiltersByTab(
+                editedAutomationFiltersByTab,
+                availableFiltersAsVisibleFiltersByTab,
+                storeFilters,
+            ),
+        [editedAutomationFiltersByTab, availableFiltersAsVisibleFiltersByTab, storeFilters],
     );
 
     // Mirrors the filters seed above, for parameters.

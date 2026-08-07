@@ -9,7 +9,6 @@ import {
     type INotificationChannelIdentifier,
     type INotificationChannelMetadataObject,
     type IWidget,
-    type IWorkspaceUser,
     isWidget,
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
@@ -20,7 +19,6 @@ import {
 } from "../../../_staging/automation/index.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { useDashboardScheduledEmails } from "../../../model/react/useDasboardScheduledEmails/useDashboardScheduledEmails.js";
-import { useWorkspaceUsers } from "../../../model/react/useWorkspaceUsers.js";
 import {
     selectAutomationDefaultSelectedFilters,
     selectDashboardHiddenFilters,
@@ -40,10 +38,6 @@ import { useWidgetAutomationFilters } from "./hooks/useWidgetAutomationFilters.j
 
 type ScheduledEmailsProps = ReturnType<typeof useDashboardScheduledEmails>;
 
-// Stable placeholder so useBuildScheduledEmailDialogContext's useMemo does not see a fresh array
-// (and therefore a new context identity) on every render.
-const EMPTY_USERS: IWorkspaceUser[] = [];
-
 /**
  * Provides AutomationsContext to its children, built from dashboard Redux state.
  * Wraps the scheduled-email dialog subtree (both the create/edit and management dialogs reach
@@ -60,10 +54,10 @@ export function ScheduledEmailAutomationsProvider({ children }: { children: Reac
  * Connector component that reads from the dashboard Redux store and wires up
  * the scheduled-email dialog tree (create/edit and management) via context providers.
  *
- * This is the primary bridge between dashboard store state and the scheduled-email dialog tree, with one
- * exception: the shared `automationFilters` hooks (`useAutomationFiltersSelect`,
- * `useAutomationExportParameters`, `useValidateExistingAutomationFilters`) read the store directly via
- * `useDashboardSelector`.
+ * This is the bridge between dashboard store state and the scheduled-email dialog tree, with no
+ * exceptions: the shared `automationFilters` hooks (`useAutomationFiltersSelect`,
+ * `useAutomationExportParameters`, `useValidateExistingAutomationFilters`) read AutomationsContext and
+ * take their widget-scoped values as props from this connector's `ScheduledEmailDialogContext`.
  *
  * AutomationsContext is provided by ScheduledEmailAutomationsProvider, which wraps this
  * connector (see ScheduledEmailAutomationsProvider in DashboardHeader).
@@ -81,7 +75,7 @@ export function ScheduledEmailConnector(): ReactElement | null {
 function ScheduledEmailConnectorInitialized(se: ScheduledEmailsProps): ReactElement | null {
     const { isScheduleEmailingDialogOpen, isScheduleEmailingManagementDialogOpen } = se;
 
-    // Defer store reads and user loading until at least one dialog is open.
+    // Defer store reads until at least one dialog is open.
     // This is a deliberate behavior alignment with AlertingConnector (GDP-3167).
     if (!isScheduleEmailingDialogOpen && !isScheduleEmailingManagementDialogOpen) {
         return null;
@@ -198,9 +192,8 @@ interface IScheduledEmailCreateEditConnectorProps {
 }
 
 /**
- * Loads workspace users and hydrates the scheduled-email create/edit context. Both live here
- * rather than in the parent so that opening only the management dialog — which consumes
- * neither — never dispatches the workspace-users load.
+ * Hydrates the scheduled-email create/edit context. Lives here rather than in the parent so that
+ * opening only the management dialog — which does not consume it — skips the work.
  */
 function ScheduledEmailCreateEditConnector(props: IScheduledEmailCreateEditConnectorProps): ReactElement {
     const {
@@ -209,7 +202,7 @@ function ScheduledEmailCreateEditConnector(props: IScheduledEmailCreateEditConne
         widget,
         insight,
         dashboardFilters,
-        isLoading: isDataLoading,
+        isLoading,
         onBack,
         onCancel,
         onError,
@@ -220,16 +213,10 @@ function ScheduledEmailCreateEditConnector(props: IScheduledEmailCreateEditConne
         onDeleteError,
     } = props;
 
-    const { users, status: usersStatus, usersError } = useWorkspaceUsers();
-    const isLoading = isDataLoading || usersStatus === "pending" || usersStatus === "loading";
-    const effectiveUsers = users ?? EMPTY_USERS;
-
     const seCtx = useBuildScheduledEmailDialogContext({
         widget,
         insight,
         scheduledExportToEdit,
-        users: effectiveUsers,
-        usersError,
         notificationChannels,
         dashboardFilters,
         isLoading,

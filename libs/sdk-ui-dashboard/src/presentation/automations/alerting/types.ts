@@ -12,7 +12,6 @@ import {
     type INotificationChannelIdentifier,
     type INotificationChannelMetadataObject,
     type IWidget,
-    type IWorkspaceUser,
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
@@ -30,20 +29,6 @@ export interface IAlertingDialogProps {
      * @deprecated read `alertToEdit` from `useAlertingDialogContext()` instead. Prop will be removed.
      */
     alertToEdit?: IAutomationMetadataObject;
-
-    /**
-     * Users in workspace
-     *
-     * @deprecated read `users` from `useAlertingDialogContext()` instead. Prop will be removed.
-     */
-    users?: IWorkspaceUser[];
-
-    /**
-     * Error occurred while loading users
-     *
-     * @deprecated read `usersError` from `useAlertingDialogContext()` instead. Prop will be removed.
-     */
-    usersError?: GoodDataSdkError;
 
     /**
      * Notification channels in organization

@@ -27,11 +27,11 @@ import { HeadlineWithTwoMeasuresSecondZero } from "./fixturesData/HeadlineWithTw
 import { PieChartWithMetricsOnly } from "./fixturesData/PieChartWithMetricsOnly.js";
 import { PieChartWithMetricsOnlyFundata } from "./fixturesData/PieChartWithMetricsOnlyFundata.js";
 import { ScatterPlotWith2MetricsAndAttributeNullsInData } from "./fixturesData/ScatterPlotWith2MetricsAndAttributeNullsInData.js";
-import { type LegacyExecutionRecording, localLegacyDataView } from "./legacyDataView.js";
+import { type ILocalExecutionRecording, localDataView } from "./localDataView.js";
 import { recordedDataFacade } from "./recordings.js";
 
-function legacyRecordedDataFacade(recording: LegacyExecutionRecording): DataViewFacade {
-    return DataViewFacade.for(localLegacyDataView(recording));
+function localFixtureDataFacade(recording: ILocalExecutionRecording): DataViewFacade {
+    return DataViewFacade.for(localDataView(recording));
 }
 
 //
@@ -44,7 +44,7 @@ export const testWorkspace = "testWorkspace";
 // Area chart fixtures
 //
 
-export const areaChartWith3MetricsAndViewByAttribute = legacyRecordedDataFacade(
+export const areaChartWith3MetricsAndViewByAttribute = localFixtureDataFacade(
     AreaChartWith3MetricsAndViewByAttribute,
 );
 
@@ -56,7 +56,7 @@ export const areaChartWithMeasureViewByAndStackBy = recordedDataFacade(
 // Bar chart fixtures
 //
 
-export const barChartWith4MetricsAndViewByTwoAttributes = legacyRecordedDataFacade(
+export const barChartWith4MetricsAndViewByTwoAttributes = localFixtureDataFacade(
     BarChartWith4MetricsAndViewByTwoAttributes,
 );
 export const barChartWithStackByAndViewByAttributes = recordedDataFacade(
@@ -66,31 +66,31 @@ export const barChartWithViewByAttribute = recordedDataFacade(
     ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewBy as unknown as ScenarioRecording,
 );
 
-export const barChartWith3MetricsAndViewByAttribute = legacyRecordedDataFacade(
+export const barChartWith3MetricsAndViewByAttribute = localFixtureDataFacade(
     BarChartWith3MetricsAndViewByAttribute,
 );
-export const barChartWith3MetricsAndViewByAttributeFunformat = legacyRecordedDataFacade(
+export const barChartWith3MetricsAndViewByAttributeFunformat = localFixtureDataFacade(
     BarChartWith3MetricsAndViewByAttributeFunformat,
 );
 
-export const barChartWith3MetricsAndViewByAttributePercInFormat = legacyRecordedDataFacade(
+export const barChartWith3MetricsAndViewByAttributePercInFormat = localFixtureDataFacade(
     BarChartWith3MetricsAndViewByAttributePercInFormat,
 );
 
-export const barChartWithPopMeasureAndViewByAttribute = legacyRecordedDataFacade(
+export const barChartWithPopMeasureAndViewByAttribute = localFixtureDataFacade(
     BarChartWithPopMeasureAndViewByAttribute,
 );
 
-export const barChartWithPopMeasureAndViewByAttributeX6 = legacyRecordedDataFacade(
+export const barChartWithPopMeasureAndViewByAttributeX6 = localFixtureDataFacade(
     BarChartWithPopMeasureAndViewByAttributeX6,
 );
 
-export const barChartWithPreviousPeriodMeasure = legacyRecordedDataFacade(BarChartWithPreviousPeriodMeasure);
+export const barChartWithPreviousPeriodMeasure = localFixtureDataFacade(BarChartWithPreviousPeriodMeasure);
 export const barChartWithSingleMeasureAndNoAttributes = recordedDataFacade(
     ReferenceRecordings.Scenarios.BarChart.SingleMeasure as unknown as ScenarioRecording,
 );
 
-export const barChartWithPreviousPeriodMeasureX6 = legacyRecordedDataFacade(
+export const barChartWithPreviousPeriodMeasureX6 = localFixtureDataFacade(
     BarChartWithPreviousPeriodMeasureX6,
 );
 
@@ -109,22 +109,22 @@ export const bubbleChartWith3MetricsAndAttribute = recordedDataFacade(
     ReferenceRecordings.Scenarios.BubbleChart
         .XAndYAxisAndSizeMeasuresWithViewBy as unknown as ScenarioRecording,
 );
-export const bubbleChartWith3MetricsAndAttributeNullsInData = legacyRecordedDataFacade(
+export const bubbleChartWith3MetricsAndAttributeNullsInData = localFixtureDataFacade(
     BubbleChartWith3MetricsAndAttributeNullsInData,
 );
 
 //
 // Combo chart
 //
-export const comboWithTwoMeasuresAndViewByAttribute = legacyRecordedDataFacade(
+export const comboWithTwoMeasuresAndViewByAttribute = localFixtureDataFacade(
     ComboChartWithTwoMeasuresViewByAttribute,
 );
 
-export const comboChartWithTwoMeasuresViewByAttributeNoBuckets = legacyRecordedDataFacade(
+export const comboChartWithTwoMeasuresViewByAttributeNoBuckets = localFixtureDataFacade(
     ComboChartWithTwoMeasuresViewByAttributeNoBuckets,
 );
 
-export const comboChartWithTwoMeasuresViewByAttributePercformat = legacyRecordedDataFacade(
+export const comboChartWithTwoMeasuresViewByAttributePercformat = localFixtureDataFacade(
     ComboChartWithTwoMeasuresViewByAttributePercformat,
 );
 
@@ -145,15 +145,13 @@ export const headlineWithTwoMeasures = recordedDataFacade(
 export const headlineWithTwoMeasuresWithIdentifier = recordedDataFacade(
     ReferenceRecordings.Scenarios.Headline.MultiMeasuresWithTwoMeasures as unknown as ScenarioRecording,
 );
-export const headlineWithTwoMeasuresFirstEmpty = legacyRecordedDataFacade(HeadlineWithTwoMeasuresFirstEmpty);
-export const headlineWithTwoMeasuresSecondEmpty = legacyRecordedDataFacade(
-    HeadlineWithTwoMeasuresSecondEmpty,
-);
-export const headlineWithTwoMeasuresBothEmpty = legacyRecordedDataFacade(HeadlineWithTwoMeasuresBothEmpty);
-export const headlineWithTwoMeasuresBothZero = legacyRecordedDataFacade(HeadlineWithTwoMeasuresBothZero);
-export const headlineWithTwoMeasuresFirstZero = legacyRecordedDataFacade(HeadlineWithTwoMeasuresFirstZero);
-export const headlineWithTwoMeasuresSecondZero = legacyRecordedDataFacade(HeadlineWithTwoMeasuresSecondZero);
-export const headlineWithTwoMeasuresBothSame = legacyRecordedDataFacade(HeadlineWithTwoMeasuresBothSame);
+export const headlineWithTwoMeasuresFirstEmpty = localFixtureDataFacade(HeadlineWithTwoMeasuresFirstEmpty);
+export const headlineWithTwoMeasuresSecondEmpty = localFixtureDataFacade(HeadlineWithTwoMeasuresSecondEmpty);
+export const headlineWithTwoMeasuresBothEmpty = localFixtureDataFacade(HeadlineWithTwoMeasuresBothEmpty);
+export const headlineWithTwoMeasuresBothZero = localFixtureDataFacade(HeadlineWithTwoMeasuresBothZero);
+export const headlineWithTwoMeasuresFirstZero = localFixtureDataFacade(HeadlineWithTwoMeasuresFirstZero);
+export const headlineWithTwoMeasuresSecondZero = localFixtureDataFacade(HeadlineWithTwoMeasuresSecondZero);
+export const headlineWithTwoMeasuresBothSame = localFixtureDataFacade(HeadlineWithTwoMeasuresBothSame);
 
 //
 // Heatmap recordings
@@ -169,14 +167,14 @@ export const heatMapWithMetricRowColumn = recordedDataFacade(
 // Pie chart recordings
 //
 
-export const pieChartWithMetricsOnly = legacyRecordedDataFacade(PieChartWithMetricsOnly);
-export const pieChartWithMetricsOnlyFundata = legacyRecordedDataFacade(PieChartWithMetricsOnlyFundata);
+export const pieChartWithMetricsOnly = localFixtureDataFacade(PieChartWithMetricsOnly);
+export const pieChartWithMetricsOnlyFundata = localFixtureDataFacade(PieChartWithMetricsOnlyFundata);
 
 //
 // Scatter plot recording
 //
 
-export const scatterPlotWith2MetricsAndAttributeNullsInData = legacyRecordedDataFacade(
+export const scatterPlotWith2MetricsAndAttributeNullsInData = localFixtureDataFacade(
     ScatterPlotWith2MetricsAndAttributeNullsInData,
 );
 export const scatterPlotWith2MetricsAndAttributeWithPrimary = recordedDataFacade(

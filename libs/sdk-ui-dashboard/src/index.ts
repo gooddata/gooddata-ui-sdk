@@ -176,7 +176,6 @@ export { type IUseWidgetSelectionResult, useWidgetSelection } from "./model/reac
 export { useWidgetFilters } from "./model/react/useWidgetFilters.js";
 export { useDashboardAutomations } from "./model/react/useDashboardAutomations/useDashboardAutomations.js";
 export { DEFAULT_MAX_AUTOMATIONS } from "./model/react/useDashboardAutomations/constants.js";
-export { useWorkspaceUsers } from "./model/react/useWorkspaceUsers.js";
 export {
     selectAutomationCommonDateFilterId,
     selectAutomationAvailableDashboardFilters,
@@ -591,7 +590,6 @@ export {
     attributeHierarchyModified,
     exportImageInsightWidget,
 } from "./model/commands/insight.js";
-export { type ILoadAllWorkspaceUsers, loadAllWorkspaceUsers } from "./model/commands/users.js";
 export {
     type IChangeRichTextWidgetContent,
     type IChangeRichTextWidgetContentPayload,
@@ -1840,12 +1838,6 @@ export {
     selectAutomationsIsLoading,
     selectAutomationsError,
 } from "./model/store/automations/automationsSelectors.js";
-export type { IUsersState } from "./model/store/users/usersState.js";
-export {
-    selectUsers,
-    selectErrorUsers,
-    selectUsersLoadingStatus,
-} from "./model/store/users/usersSelectors.js";
 export {
     keyDriverYearGranularity,
     keyDriverAnalysisSupportedGranularities,
@@ -2228,6 +2220,7 @@ export {
     useAutomationsContext,
     type IAutomationsContextValue,
     type IAutomationsDateFilterConfig,
+    type IAutomationsParameters,
 } from "./presentation/automations/contexts/AutomationsContext.js";
 export {
     useAlertingDialogContext,

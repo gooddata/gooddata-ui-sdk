@@ -936,10 +936,10 @@ function yamlTimezoneConfigToDeclarative(
 
     return {
         ...(input.timezone_id ? { timezoneId: input.timezone_id } : {}),
-        ...(input.show_timezone_info === undefined ? {} : { showTimezoneInfo: input.show_timezone_info }),
-        ...(input.allow_user_override_in_view_mode === undefined
-            ? {}
-            : { allowUserOverrideInViewMode: input.allow_user_override_in_view_mode }),
+        ...(input.show_timezone_info ? { showTimezoneInfo: input.show_timezone_info } : {}),
+        ...(input.allow_user_override_in_view_mode
+            ? { allowUserOverrideInViewMode: input.allow_user_override_in_view_mode }
+            : {}),
     };
 }
 

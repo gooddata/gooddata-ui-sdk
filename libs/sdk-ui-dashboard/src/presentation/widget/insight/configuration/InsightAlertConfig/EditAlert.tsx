@@ -11,7 +11,6 @@ import {
     type INotificationChannelIdentifier,
     type INotificationChannelMetadataObject,
     type ISeparators,
-    type IWorkspaceUser,
 } from "@gooddata/sdk-model";
 import {
     Bubble,
@@ -87,7 +86,6 @@ interface IEditAlertProps {
     isNewAlert?: boolean;
     hasAlerts: boolean;
     destinations: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
-    users: IWorkspaceUser[];
     measures: AlertMetric[];
     attributes: AlertAttribute[];
     measureFormatMap: IMeasureFormatMap;
@@ -110,7 +108,6 @@ export function EditAlert({
     isNewAlert,
     hasAlerts,
     destinations,
-    users,
     attributes,
     measures,
     onClose,
@@ -411,7 +408,6 @@ export function EditAlert({
                         <RecipientsSelect
                             id="alert.recipients"
                             loggedUser={defaultUser}
-                            users={users}
                             value={updatedAlert.recipients ?? []}
                             originalValue={alert.recipients || []}
                             onChange={changeRecipients}

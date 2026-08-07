@@ -9,10 +9,8 @@ import {
     type INotificationChannelIdentifier,
     type INotificationChannelMetadataObject,
     type IWidget,
-    type IWorkspaceUser,
     serializeObjRef,
 } from "@gooddata/sdk-model";
-import type { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import {
     createAlert as createAlertCmd,
@@ -26,8 +24,10 @@ import {
     selectDashboardHiddenFilters,
 } from "../../../../model/store/filtering/dashboardFilterSelectors.js";
 import { selectDashboardId, selectEvaluationFrequency } from "../../../../model/store/meta/metaSelectors.js";
-import { selectWidgetLocalIdToTabIdMap } from "../../../../model/store/tabs/layout/layoutSelectors.js";
-import { selectEffectiveParameterValuesForWidget } from "../../../../model/store/tabs/parameters/parametersSelectors.js";
+import {
+    selectEffectiveDashboardParametersForWidget,
+    selectEffectiveParameterValuesForWidget,
+} from "../../../../model/store/tabs/parameters/parametersSelectors.js";
 import { getWidgetTitle } from "../../../../model/utils/dashboardItemUtils.js";
 import type { IAlertingDialogContextValue } from "../../contexts/AlertingDialogContext.js";
 
@@ -38,8 +38,6 @@ export interface IUseBuildAlertingDialogContextOpts {
     widget?: IWidget;
     insight?: IInsight;
     alertToEdit?: IAutomationMetadataObject;
-    users: IWorkspaceUser[];
-    usersError?: GoodDataSdkError;
     notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
     isLoading: boolean;
 }
@@ -47,16 +45,18 @@ export interface IUseBuildAlertingDialogContextOpts {
 export function useBuildAlertingDialogContext(
     opts: IUseBuildAlertingDialogContextOpts,
 ): IAlertingDialogContextValue {
-    const { mode, widget, insight, alertToEdit, users, usersError, notificationChannels, isLoading } = opts;
+    const { mode, widget, insight, alertToEdit, notificationChannels, isLoading } = opts;
 
     const dashboardFilters = useDashboardSelector(selectAutomationDefaultSelectedFilters);
     const hiddenFilters = useDashboardSelector(selectDashboardHiddenFilters);
     const dashboardId = useDashboardSelector(selectDashboardId);
-    const widgetLocalIdToTabIdMap = useDashboardSelector(selectWidgetLocalIdToTabIdMap);
     const executionResultEntities = useDashboardSelector(selectExecutionResultEntities);
     const commonDateFilterId = useDashboardSelector(selectAutomationCommonDateFilterId);
     const dashboardEvaluationFrequency = useDashboardSelector(selectEvaluationFrequency);
     const parameterValues = useDashboardSelector(selectEffectiveParameterValuesForWidget(widget?.ref));
+    const dashboardParameters = useDashboardSelector(
+        selectEffectiveDashboardParametersForWidget(widget?.ref),
+    );
 
     const widgetTitle = useMemo(() => {
         if (widget) {
@@ -111,17 +111,15 @@ export function useBuildAlertingDialogContext(
             dashboardId,
             dashboardFilters,
             hiddenFilters,
-            widgetLocalIdToTabIdMap,
             executionResultByRef,
             parameterValues,
+            dashboardParameters,
             commonDateFilterId,
             dashboardEvaluationFrequency,
             createAlert,
             saveAlert,
             deleteAlert,
             alertToEdit,
-            users,
-            usersError,
             notificationChannels,
             isLoading,
         }),
@@ -133,17 +131,15 @@ export function useBuildAlertingDialogContext(
             dashboardId,
             dashboardFilters,
             hiddenFilters,
-            widgetLocalIdToTabIdMap,
             executionResultByRef,
             parameterValues,
+            dashboardParameters,
             commonDateFilterId,
             dashboardEvaluationFrequency,
             createAlert,
             saveAlert,
             deleteAlert,
             alertToEdit,
-            users,
-            usersError,
             notificationChannels,
             isLoading,
         ],

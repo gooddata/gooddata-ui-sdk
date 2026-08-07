@@ -8,7 +8,6 @@ import {
     type INotificationChannelIdentifier,
     type INotificationChannelMetadataObject,
     type ISeparators,
-    type IWorkspaceUser,
 } from "@gooddata/sdk-model";
 
 import { type IExecutionResultEnvelope } from "../../../../../model/store/executionResults/types.js";
@@ -24,7 +23,6 @@ interface ICreateAlertProps {
     onCancel: () => void;
     onCreate?: (alert: IAutomationMetadataObjectDefinition) => void;
     destinations: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
-    users: IWorkspaceUser[];
     hasAlerts: boolean;
     measures: AlertMetric[];
     attributes: AlertAttribute[];
@@ -44,7 +42,6 @@ export function CreateAlert({
     onCancel,
     onCreate,
     destinations,
-    users,
     hasAlerts,
     measures,
     attributes,
@@ -65,7 +62,6 @@ export function CreateAlert({
             onCreate={onCreate}
             isNewAlert
             destinations={destinations}
-            users={users}
             hasAlerts={hasAlerts}
             measures={measures}
             attributes={attributes}

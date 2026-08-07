@@ -26,13 +26,7 @@ export class TigerWorkspaceUsersQuery implements IWorkspaceUsersQuery {
     };
 
     withOptions(options: IWorkspaceUsersQueryOptions): TigerWorkspaceUsersQuery {
-        if (options.search) {
-            this.options.search = options.search;
-        } else if (options.offset) {
-            this.options.offset = options.offset;
-        } else if (options.limit) {
-            this.options.limit = options.limit;
-        }
+        this.options = { ...this.options, ...options };
         return this;
     }
 

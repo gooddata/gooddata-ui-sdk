@@ -14,7 +14,10 @@ interface IDashboardItemProps extends HTMLAttributes<HTMLDivElement> {
     titleId?: string;
     ref?: Ref<HTMLDivElement>;
     exportData?: CommonExportDataAttributes;
-    // Use "div" when DashboardItem is nested to avoid invalid figure elements
+    /**
+     * Exactly one DashboardItem per widget renders as "figure" — the one carrying titleId/description;
+     * any other nested or wrapping DashboardItem must use "div" to avoid invalid/unnamed figures.
+     */
     as?: "figure" | "div";
 }
 

@@ -19,6 +19,7 @@ export function ExportableDashboardVisualizationSwitcherWidget({
 }: IDefaultDashboardVisualizationSwitcherWidgetProps) {
     return (
         <DashboardItem
+            as="div"
             className={cx(dashboardItemClasses, "type-visualization", "gd-dashboard-view-widget")}
             screen={screen}
             exportData={exportData?.section}

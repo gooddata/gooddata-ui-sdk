@@ -81,7 +81,11 @@ export function useScheduledEmailFilters({
     filtersForNewAutomation,
     setParametersWire,
 }: IUseScheduledEmailFiltersProps): IUseScheduledEmailFilters {
-    const { hiddenFilters: dashboardHiddenFilters, commonDateFilterId } = useScheduledEmailDialogContext();
+    const {
+        hiddenFilters: dashboardHiddenFilters,
+        commonDateFilterId,
+        exportParametersByTab,
+    } = useScheduledEmailDialogContext();
     // Re-derived locally (not passed as a prop) so that the `if (isWidget)` branch below narrows
     // `widget`/`insight` via TS's aliased-condition control-flow analysis — this requires the boolean
     // to be declared from those exact variables in this same scope, same as in the parent.
@@ -302,6 +306,7 @@ export function useScheduledEmailFilters({
         widget,
         storeParameters: storeFilters,
         setParametersWire,
+        effectiveParametersByTab: exportParametersByTab,
     });
     const { onStoreParametersChange } = parameters;
 

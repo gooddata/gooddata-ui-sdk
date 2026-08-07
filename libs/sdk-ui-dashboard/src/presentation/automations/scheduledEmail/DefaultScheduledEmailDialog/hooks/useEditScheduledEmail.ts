@@ -31,15 +31,8 @@ export function useEditScheduledEmail({
         features: { enableAutomationEvaluationMode },
     } = useAutomationsContext();
 
-    const {
-        scheduledExportToEdit,
-        widget,
-        insight,
-        users,
-        usersError,
-        notificationChannels,
-        dashboardFilters,
-    } = useScheduledEmailDialogContext();
+    const { scheduledExportToEdit, widget, insight, notificationChannels, dashboardFilters } =
+        useScheduledEmailDialogContext();
 
     const areDashboardFiltersChanged = !!dashboardFilters;
 
@@ -100,7 +93,6 @@ export function useEditScheduledEmail({
         widget,
         insight,
         notificationChannels,
-        users,
         externalRecipientOverride,
         effectiveWidgetFilters,
         effectiveWidgetFiltersWithInsight,
@@ -192,8 +184,6 @@ export function useEditScheduledEmail({
         editedAutomation,
         isCronValid,
         notificationChannels,
-        users,
-        usersError,
         isDashboardExportSelected,
         isCsvExportSelected,
         isXlsxExportSelected,

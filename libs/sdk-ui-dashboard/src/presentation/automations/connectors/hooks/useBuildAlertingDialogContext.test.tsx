@@ -6,7 +6,6 @@ import { describe, expect, it, vi } from "vitest";
 import {
     type IAutomationMetadataObject,
     type INotificationChannelMetadataObject,
-    type IWorkspaceUser,
     idRef,
 } from "@gooddata/sdk-model";
 
@@ -55,12 +54,14 @@ vi.mock("../../../../model/store/meta/metaSelectors.js", () => ({
     selectEvaluationFrequency: () => undefined,
 }));
 
-vi.mock("../../../../model/store/tabs/layout/layoutSelectors.js", () => ({
-    selectWidgetLocalIdToTabIdMap: () => ({}),
+const parameterSentinels = vi.hoisted(() => ({
+    parameterValues: [] as never[],
+    dashboardParameters: [] as never[],
 }));
 
 vi.mock("../../../../model/store/tabs/parameters/parametersSelectors.js", () => ({
-    selectEffectiveParameterValuesForWidget: () => () => [],
+    selectEffectiveParameterValuesForWidget: () => () => parameterSentinels.parameterValues,
+    selectEffectiveDashboardParametersForWidget: () => () => parameterSentinels.dashboardParameters,
 }));
 
 vi.mock("../../../../model/utils/dashboardItemUtils.js", () => ({
@@ -76,7 +77,6 @@ describe("useBuildAlertingDialogContext", () => {
         const { result, rerender } = renderHook(() =>
             useBuildAlertingDialogContext({
                 mode: "create",
-                users: [],
                 notificationChannels: [],
                 isLoading: false,
             }),
@@ -96,9 +96,6 @@ describe("useBuildAlertingDialogContext", () => {
 
     it("passes the create/edit inputs through to the context unchanged", () => {
         const alertToEdit = { id: "alert-1", title: "My alert" } as IAutomationMetadataObject;
-        const users: IWorkspaceUser[] = [
-            { ref: idRef("user-1"), uri: "/users/user-1", login: "user-1", email: "user-1@example.com" },
-        ];
         const notificationChannels = [
             { id: "channel-1", type: "notificationChannel" },
         ] as INotificationChannelMetadataObject[];
@@ -107,16 +104,25 @@ describe("useBuildAlertingDialogContext", () => {
             useBuildAlertingDialogContext({
                 mode: "edit",
                 alertToEdit,
-                users,
-                usersError: undefined,
                 notificationChannels,
                 isLoading: true,
             }),
         );
 
         expect(result.current.alertToEdit).toBe(alertToEdit);
-        expect(result.current.users).toBe(users);
         expect(result.current.notificationChannels).toBe(notificationChannels);
         expect(result.current.isLoading).toBe(true);
+    });
+
+    it("forwards the widget's effective dashboard parameters onto the alerting dialog context", () => {
+        const { result } = renderHook(() =>
+            useBuildAlertingDialogContext({
+                mode: "create",
+                notificationChannels: [],
+                isLoading: false,
+            }),
+        );
+
+        expect(result.current.dashboardParameters).toBe(parameterSentinels.dashboardParameters);
     });
 });

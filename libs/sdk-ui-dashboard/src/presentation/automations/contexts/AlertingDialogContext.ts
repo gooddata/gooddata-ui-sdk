@@ -7,15 +7,14 @@ import type {
     FilterContextItem,
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
+    IDashboardParameter,
     IInsight,
     IInsightParameterValue,
     INotificationChannelIdentifier,
     INotificationChannelMetadataObject,
     IWidget,
-    IWorkspaceUser,
     ObjRef,
 } from "@gooddata/sdk-model";
-import type { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 /**
  * Sub-context for the alerting create/edit dialog.
@@ -34,10 +33,15 @@ export interface IAlertingDialogContextValue {
     dashboardId?: string;
     dashboardFilters: FilterContextItem[];
     hiddenFilters: FilterContextItem[];
-    widgetLocalIdToTabIdMap: Record<string, string>;
     executionResultByRef: (ref: ObjRef | undefined) => { executionResult?: IExecutionResult } | undefined;
     /** Effective widget parameter values for the dialog's widget (replaces direct selectEffectiveParameterValuesForWidget read) */
     parameterValues: IInsightParameterValue[];
+    /**
+     * Effective dashboard parameters for the dialog's widget — the owning tab's parameters with any
+     * runtime override folded in (replaces the direct selectEffectiveDashboardParametersForWidget
+     * read in useAutomationAlertParameters).
+     */
+    dashboardParameters: IDashboardParameter[];
     commonDateFilterId?: string;
     dashboardEvaluationFrequency?: string;
     createAlert(alert: IAutomationMetadataObjectDefinition): Promise<IAutomationMetadataObject>;
@@ -45,16 +49,9 @@ export interface IAlertingDialogContextValue {
     deleteAlert(alert: IAutomationMetadataObject): Promise<void>;
     /** The alert being edited; undefined when creating a new one. */
     alertToEdit?: IAutomationMetadataObject;
-    /**
-     * Workspace users available as alert recipients. Loaded only while the create/edit dialog is
-     * mounted, so opening the management dialog alone does not trigger the load.
-     */
-    users: IWorkspaceUser[];
-    /** Error from loading workspace users, if any. */
-    usersError?: GoodDataSdkError;
     /** Notification channels available as alert destinations. */
     notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
-    /** True while the dialog's initial data (automations, workspace users) is still loading. */
+    /** True while the dialog's initial data (automations) is still loading. */
     isLoading: boolean;
 }
 
@@ -67,10 +64,10 @@ export const AlertingDialogContextProvider = AlertingDialogContext.Provider;
  *
  * A replacement for `AlertingDialogComponent` renders inside this context and reads the dialog's widget
  * and insight, the dashboard filter context it should apply, the alert being edited, the available
- * workspace users and notification channels, and the create/save/delete callbacks from here.
+ * notification channels, and the create/save/delete callbacks from here.
  *
- * Some members exist to wire internal machinery (`executionResultByRef`, `widgetLocalIdToTabIdMap`,
- * `parameterValues`) and are not intended as a customization surface.
+ * Some members exist to wire internal machinery (`executionResultByRef`, `parameterValues`,
+ * `dashboardParameters`) and are not intended as a customization surface.
  *
  * @alpha
  */

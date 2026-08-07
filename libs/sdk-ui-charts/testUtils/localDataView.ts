@@ -1,6 +1,7 @@
 // (C) 2026 GoodData Corporation
 
-// Local copy of the retired mockingbird legacy recording converter — test-only.
+// Builds an IDataView from inline execution-recording data (definition/response/result triple) for
+// hermetic chart tests.
 
 import { isEmpty, isEqual } from "lodash-es";
 
@@ -56,7 +57,7 @@ import {
 } from "@gooddata/sdk-model";
 
 //
-// Legacy AFM response / result types
+// AFM response / result types
 //
 
 interface IMeasureHeaderItem {
@@ -134,7 +135,7 @@ interface IWarning {
     parameters?: any[];
 }
 
-interface ILegacyExecutionResult {
+interface ILocalExecutionResult {
     headerItems?: IResultHeaderItem[][][];
     data: DataValue[][] | DataValue[];
     totals?: DataValue[][][];
@@ -165,9 +166,9 @@ function isAttributeHeader(header: IHeader): header is IAttributeHeader {
 /**
  * Workspace-specific recordings
  */
-type LegacyWorkspaceRecordings = {
+type ILocalWorkspaceRecordings = {
     execution?: {
-        [fp: string]: LegacyExecutionRecording;
+        [fp: string]: ILocalExecutionRecording;
     };
     metadata?: {
         attributeDisplayForm?: { [id: string]: IAttributeDisplayFormMetadataObject };
@@ -180,18 +181,18 @@ type LegacyWorkspaceRecordings = {
 /**
  * Each recording in the master index has these 3 entries
  */
-export type LegacyExecutionRecording = {
+export type ILocalExecutionRecording = {
     definition: IExecutionDefinition;
     response: any;
     result: any;
 };
 
 /**
- * Creates a new data view for the provided legacy recording.
+ * Creates a new data view for the provided recording.
  *
  * @param recording - recorded definition, AFM response and AFM result
  */
-export function localLegacyDataView(recording: LegacyExecutionRecording): IDataView {
+export function localDataView(recording: ILocalExecutionRecording): IDataView {
     const definition = recording.definition;
     const executionFactory = new RecordedExecutionFactory({}, recording.definition.workspace);
 
@@ -205,7 +206,7 @@ export function localLegacyDataView(recording: LegacyExecutionRecording): IDataV
 
 class RecordedExecutionFactory implements IExecutionFactory {
     constructor(
-        private readonly recordings: LegacyWorkspaceRecordings,
+        private readonly recordings: ILocalWorkspaceRecordings,
         private readonly workspace: string,
     ) {}
 
@@ -267,9 +268,9 @@ class RecordedExecutionFactory implements IExecutionFactory {
 function recordedDataView(
     definition: IExecutionDefinition,
     result: IExecutionResult,
-    recording: LegacyExecutionRecording,
+    recording: ILocalExecutionRecording,
 ): IDataView {
-    const afmResult = recording.result.executionResult as ILegacyExecutionResult;
+    const afmResult = recording.result.executionResult as ILocalExecutionResult;
     const fp = defFingerprint(definition) + "/recordedData";
 
     return {
@@ -364,7 +365,7 @@ function convertDimensions(dims: IResultDimension[]): IDimensionDescriptor[] {
 function recordedExecutionResult(
     definition: IExecutionDefinition,
     executionFactory: IExecutionFactory,
-    recording: LegacyExecutionRecording,
+    recording: ILocalExecutionRecording,
 ): IExecutionResult {
     const fp = defFingerprint(definition) + "/recordedResult";
     const afmResponse = recording.response.executionResponse as IExecutionResponse;
@@ -419,7 +420,7 @@ function recordedExecutionResult(
 function recordedPreparedExecution(
     definition: IExecutionDefinition,
     executionFactory: IExecutionFactory,
-    recordings: LegacyWorkspaceRecordings = {},
+    recordings: ILocalWorkspaceRecordings = {},
 ): IPreparedExecution {
     const fp = defFingerprint(definition);
 

@@ -129,8 +129,9 @@ export function ScheduledMailDialogRenderer({
         isWhiteLabeled,
         externalRecipient: externalRecipientOverride,
         isSecondaryTitleVisible,
+        tabIds,
     } = useAutomationsContext();
-    const { exportTemplates, widgetTitle, hasMultipleTabs, scheduledExportToEdit, widget, dashboardFilters } =
+    const { exportTemplates, widgetTitle, scheduledExportToEdit, widget, dashboardFilters } =
         useScheduledEmailDialogContext();
 
     const handleScheduleDeleteSuccess = () => {
@@ -187,8 +188,6 @@ export function ScheduledMailDialogRenderer({
         onStoreFiltersChange,
         onFiltersByTabChange,
         enableAutomationEvaluationMode,
-        users,
-        usersError,
         notificationChannels,
         selectedFilters,
         availableFilters,
@@ -476,7 +475,7 @@ export function ScheduledMailDialogRenderer({
                                         ref={generalTabContentRef}
                                         className="gd-schedule-dialog-tab-content"
                                     >
-                                        {!widget && hasMultipleTabs ? (
+                                        {!widget && tabIds.length > 1 ? (
                                             <Message
                                                 type="progress"
                                                 className="gd-schedule-dialog-tab-content-info"
@@ -518,8 +517,6 @@ export function ScheduledMailDialogRenderer({
                                         <RecipientsSelect
                                             id="schedule.email.recipients"
                                             loggedUser={defaultUser}
-                                            users={users}
-                                            usersError={usersError}
                                             value={editedAutomation.recipients ?? []}
                                             originalValue={originalAutomation.recipients || []}
                                             onChange={onRecipientsChange}

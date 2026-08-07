@@ -24,6 +24,7 @@ interface IVisualizationSwitcherNavigationHeaderProps {
     widget: IVisualizationSwitcherWidget;
     onActiveVisualizationChange: (visualizationId: string) => void;
     exportData?: CommonExportDataAttributes;
+    titleId: string;
 }
 
 const alignPoints = [
@@ -44,6 +45,7 @@ export function VisualizationSwitcherNavigationHeader({
     activeVisualization,
     onActiveVisualizationChange,
     exportData,
+    titleId,
 }: IVisualizationSwitcherNavigationHeaderProps) {
     const userInteraction = useDashboardUserInteraction();
 
@@ -88,6 +90,7 @@ export function VisualizationSwitcherNavigationHeader({
                     clientHeight={clientHeight}
                     exportData={exportData}
                     ariaAttributes={ariaAttributes}
+                    titleId={titleId}
                     ref={buttonRef}
                 />
             )}
@@ -102,13 +105,14 @@ type VisualizationSwitcherNavigationHeaderButtonProps = {
     clientHeight?: number;
     exportData?: CommonExportDataAttributes;
     ariaAttributes: IDropdownButtonRenderProps["ariaAttributes"];
+    titleId: string;
 };
 
 const VisualizationSwitcherNavigationHeaderButton = forwardRef<
     HTMLElement,
     VisualizationSwitcherNavigationHeaderButtonProps
 >(function VisualizationSwitcherNavigationHeaderButton(
-    { isOpen, toggleDropdown, title, clientHeight, ariaAttributes, exportData },
+    { isOpen, toggleDropdown, title, clientHeight, ariaAttributes, exportData, titleId },
     ref,
 ) {
     const classNames = cx("gd-visualization-switcher-widget-header s-visualization-switcher-widget-header", {
@@ -123,7 +127,7 @@ const VisualizationSwitcherNavigationHeaderButton = forwardRef<
             {...exportData}
             {...ariaAttributes}
         >
-            <DashboardItemHeadline clientHeight={clientHeight} title={title} />
+            <DashboardItemHeadline clientHeight={clientHeight} title={title} titleId={titleId} />
         </div>
     );
 });

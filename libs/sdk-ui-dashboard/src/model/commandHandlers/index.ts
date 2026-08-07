@@ -108,7 +108,6 @@ import { repositionDashboardTabHandler } from "./tabs/repositionDashboardTabHand
 import { startRenamingDashboardTabHandler } from "./tabs/startRenamingDashboardTabHandler.js";
 import { switchDashboardTabHandler } from "./tabs/switchDashboardTabHandler.js";
 import { changeDashboardTimezoneOverrideHandler } from "./timezone/changeDashboardTimezoneOverrideHandler.js";
-import { loadAllWorkspaceUsersHandler } from "./users/loadAllUsersHandler.js";
 import { addDrillDownForInsightWidgetHandler } from "./widgets/addDrillDownForInsightWidgetHandler.js";
 import { addVisualizationToSwticherWidgetContentHandler } from "./widgets/addVisualizationToSwitcherWidgetHandler.js";
 import { attributeHierarchyModifiedHandler } from "./widgets/attributeHierarchyModifiedHandler.js";
@@ -277,7 +276,6 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.APPLY": applyFilterViewHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.CHANGE_DEFAULT_STATUS": setFilterViewAsDefaultHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.RELOAD": reloadFilterViewsHandler,
-    "GDC.DASH/CMD.USERS.LOAD_ALL": loadAllWorkspaceUsersHandler,
     "GDC.DASH/CMD.CHANGE_IGNORE_EXECUTION_TIMESTAMP": changeIgnoreExecutionTimestampHandler,
     "GDC.DASH/CMD.SHOW_WIDGET_AS_TABLE.SET": handleSetWidgetToShowAsTable,
     "GDC.DASH/CMD.TAB.CREATE": createDashboardTabHandler,

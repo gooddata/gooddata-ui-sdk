@@ -12,14 +12,12 @@ const fixtures = vi.hoisted(() => {
     let managementDialogProps: Record<string, unknown> | undefined;
     let dialogProps: Record<string, unknown> | undefined;
     let automationsError: Error | undefined;
-    const useWorkspaceUsers = vi.fn(() => ({ users: [], status: "success", usersError: undefined }));
     const alertsState = { isAlertDialogOpen: false, isAlertManagementDialogOpen: true };
 
     return {
         buildAutomationUrl,
         navigate,
         onAlertingManagementEdit,
-        useWorkspaceUsers,
         alertsState,
         get managementDialogProps() {
             return managementDialogProps;
@@ -81,10 +79,6 @@ vi.mock("../../../model/react/useDashboardAlerting/useDashboardAlerts.js", () =>
         widget: undefined,
         insight: undefined,
     }),
-}));
-
-vi.mock("../../../model/react/useWorkspaceUsers.js", () => ({
-    useWorkspaceUsers: fixtures.useWorkspaceUsers,
 }));
 
 vi.mock("../../../model/store/config/configSelectors.js", () => ({
@@ -161,7 +155,6 @@ describe("AlertingConnector", () => {
         fixtures.managementDialogProps = undefined;
         fixtures.dialogProps = undefined;
         fixtures.automationsError = undefined;
-        fixtures.useWorkspaceUsers.mockClear();
         fixtures.alertsState.isAlertDialogOpen = false;
         fixtures.alertsState.isAlertManagementDialogOpen = true;
     });
@@ -209,21 +202,6 @@ describe("AlertingConnector", () => {
             id: "alert-2",
             dashboard: undefined,
         });
-    });
-
-    it("does not load workspace users when only the management dialog is open", () => {
-        render(<AlertingConnector />);
-
-        expect(fixtures.useWorkspaceUsers).not.toHaveBeenCalled();
-    });
-
-    it("loads workspace users when the create/edit dialog is open", () => {
-        fixtures.alertsState.isAlertDialogOpen = true;
-        fixtures.alertsState.isAlertManagementDialogOpen = false;
-
-        render(<AlertingConnector />);
-
-        expect(fixtures.useWorkspaceUsers).toHaveBeenCalled();
     });
 
     it("does not supply the deprecated data props to the create/edit dialog", () => {

@@ -66,5 +66,9 @@ function readPackage(packageJson, _context) {
         packageJson.dependencies["shell-quote"] = "1.8.4";
     }
 
+    if (packageJson.name === "@gooddata/fixtures") {
+        delete packageJson.dependencies["@gooddata/api-client-bear"];
+    }
+
     return packageJson;
 }

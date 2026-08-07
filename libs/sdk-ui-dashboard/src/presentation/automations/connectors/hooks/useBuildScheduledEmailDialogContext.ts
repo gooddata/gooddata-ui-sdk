@@ -9,10 +9,8 @@ import {
     type INotificationChannelIdentifier,
     type INotificationChannelMetadataObject,
     type IWidget,
-    type IWorkspaceUser,
     objRefToString,
 } from "@gooddata/sdk-model";
-import type { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import {
     createScheduledEmail as createScheduledEmailCmd,
@@ -31,9 +29,7 @@ import { selectDashboardId, selectDashboardTitle } from "../../../../model/store
 import { selectEffectiveAttributeFiltersModeMap } from "../../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectEffectiveDateFilterMode } from "../../../../model/store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
 import { selectEffectiveDateFiltersModeMap } from "../../../../model/store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
-import { selectWidgetLocalIdToTabIdMap } from "../../../../model/store/tabs/layout/layoutSelectors.js";
 import { selectExportEffectiveParameters } from "../../../../model/store/tabs/parameters/parametersSelectors.js";
-import { selectTabs } from "../../../../model/store/tabs/tabsSelectors.js";
 import { getWidgetTitle } from "../../../../model/utils/dashboardItemUtils.js";
 import type { IScheduledEmailDialogContextValue } from "../../contexts/ScheduledEmailDialogContext.js";
 
@@ -43,8 +39,6 @@ export interface IUseBuildScheduledEmailDialogContextOpts {
     widget?: IWidget;
     insight?: IInsight;
     scheduledExportToEdit?: IAutomationMetadataObject;
-    users: IWorkspaceUser[];
-    usersError?: GoodDataSdkError;
     notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
     isLoading: boolean;
     dashboardFilters?: FilterContextItem[];
@@ -53,21 +47,12 @@ export interface IUseBuildScheduledEmailDialogContextOpts {
 export function useBuildScheduledEmailDialogContext(
     opts: IUseBuildScheduledEmailDialogContextOpts,
 ): IScheduledEmailDialogContextValue {
-    const {
-        widget,
-        insight,
-        scheduledExportToEdit,
-        users,
-        usersError,
-        notificationChannels,
-        isLoading,
-        dashboardFilters,
-    } = opts;
+    const { widget, insight, scheduledExportToEdit, notificationChannels, isLoading, dashboardFilters } =
+        opts;
 
     const hiddenFilters = useDashboardSelector(selectDashboardHiddenFilters);
     const dashboardId = useDashboardSelector(selectDashboardId);
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
-    const widgetLocalIdToTabIdMap = useDashboardSelector(selectWidgetLocalIdToTabIdMap);
     const commonDateFilterId = useDashboardSelector(selectAutomationCommonDateFilterId);
     const exportParametersByTab = useDashboardSelector(
         selectExportEffectiveParameters(widget ? [objRefToString(widget.ref)] : undefined),
@@ -76,8 +61,6 @@ export function useBuildScheduledEmailDialogContext(
 
     const dateFormat = useDashboardSelector(selectDateFormat);
     const isCrossFiltering = useDashboardSelector(selectIsCrossFiltering);
-    const tabs = useDashboardSelector(selectTabs);
-    const hasMultipleTabs = (tabs?.length ?? 0) > 1;
     const commonDateFilterMode = useDashboardSelector(selectEffectiveDateFilterMode);
     const dateFiltersModeMap = useDashboardSelector(selectEffectiveDateFiltersModeMap);
     const attributeFiltersModeMap = useDashboardSelector(selectEffectiveAttributeFiltersModeMap);
@@ -112,13 +95,11 @@ export function useBuildScheduledEmailDialogContext(
             dashboardTitle,
             dashboardFilters,
             hiddenFilters,
-            widgetLocalIdToTabIdMap,
             commonDateFilterId,
             exportParametersByTab,
             exportTemplates,
             dateFormat,
             isCrossFiltering,
-            hasMultipleTabs,
             commonDateFilterMode,
             dateFiltersModeMap,
             attributeFiltersModeMap,
@@ -126,8 +107,6 @@ export function useBuildScheduledEmailDialogContext(
             saveScheduledEmail,
             deleteScheduledEmail,
             scheduledExportToEdit,
-            users,
-            usersError,
             notificationChannels,
             isLoading,
         }),
@@ -139,13 +118,11 @@ export function useBuildScheduledEmailDialogContext(
             dashboardTitle,
             dashboardFilters,
             hiddenFilters,
-            widgetLocalIdToTabIdMap,
             commonDateFilterId,
             exportParametersByTab,
             exportTemplates,
             dateFormat,
             isCrossFiltering,
-            hasMultipleTabs,
             commonDateFilterMode,
             dateFiltersModeMap,
             attributeFiltersModeMap,
@@ -153,8 +130,6 @@ export function useBuildScheduledEmailDialogContext(
             saveScheduledEmail,
             deleteScheduledEmail,
             scheduledExportToEdit,
-            users,
-            usersError,
             notificationChannels,
             isLoading,
         ],

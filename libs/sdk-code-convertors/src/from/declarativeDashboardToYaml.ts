@@ -641,10 +641,12 @@ function declarativeTimezoneConfigToYaml(
 ): NonNullable<Dashboard["timezone_config"]> {
     return {
         ...(config.timezoneId ? { timezone_id: config.timezoneId } : {}),
-        ...(config.showTimezoneInfo === undefined ? {} : { show_timezone_info: config.showTimezoneInfo }),
-        ...(config.allowUserOverrideInViewMode === undefined
-            ? {}
-            : { allow_user_override_in_view_mode: config.allowUserOverrideInViewMode }),
+        ...(config.showTimezoneInfo
+            ? { show_timezone_info: config.showTimezoneInfo }
+            : { show_timezone_info: false }),
+        ...(config.allowUserOverrideInViewMode
+            ? { allow_user_override_in_view_mode: config.allowUserOverrideInViewMode }
+            : { allow_user_override_in_view_mode: false }),
     };
 }
 

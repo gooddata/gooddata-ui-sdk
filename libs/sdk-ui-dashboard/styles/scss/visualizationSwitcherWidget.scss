@@ -32,7 +32,9 @@
             text-decoration-line: underline;
 
             &::after {
+                // fallback first; the "/ ''" alt text keeps the icon glyph out of the accessible name
                 content: "\e612";
+                content: "\e612" / "";
                 display: inline-block;
                 height: 1px;
                 color: variables.$gd-dashboards-content-widget-title-color;

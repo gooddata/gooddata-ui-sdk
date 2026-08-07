@@ -13,7 +13,6 @@ import {
     type IInsight,
     type INotificationChannelIdentifier,
     type IWidget,
-    type IWorkspaceUser,
     idRef,
     newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
@@ -52,9 +51,8 @@ vi.mock(
         const actual = await importOriginal();
         return {
             ...actual,
-            convertCurrentUserToAutomationRecipient: vi.fn(),
-            convertCurrentUserToWorkspaceUser: vi.fn(),
             convertExternalRecipientToAutomationRecipient: vi.fn(),
+            convertUserToAutomationRecipient: vi.fn(),
         };
     },
 );
@@ -74,9 +72,8 @@ vi.mock("../../../../../../_staging/automation/index.js", () => ({
 
 import { setExportParametersByTab } from "../../../../../../_staging/automation/index.js";
 import {
-    convertCurrentUserToAutomationRecipient,
-    convertCurrentUserToWorkspaceUser,
     convertExternalRecipientToAutomationRecipient,
+    convertUserToAutomationRecipient,
 } from "../../../../shared/utils/automationUtils.js";
 import * as dateModule from "../../../utils/date.js";
 import {
@@ -94,8 +91,7 @@ import {
 
 const toModifiedISOStringToTimezoneSpy = vi.mocked(dateModule.toModifiedISOStringToTimezone);
 const toNormalizedFirstRunAndCronSpy = vi.mocked(dateModule.toNormalizedFirstRunAndCron);
-const convertCurrentUserToAutomationRecipientSpy = vi.mocked(convertCurrentUserToAutomationRecipient);
-const convertCurrentUserToWorkspaceUserSpy = vi.mocked(convertCurrentUserToWorkspaceUser);
+const convertUserToAutomationRecipientSpy = vi.mocked(convertUserToAutomationRecipient);
 const convertExternalRecipientToAutomationRecipientSpy = vi.mocked(
     convertExternalRecipientToAutomationRecipient,
 );
@@ -118,19 +114,12 @@ const SENTINEL_FIRST_RUN = "2026-01-01T00:00:00.000Z";
 const SENTINEL_CRON = "0 0 * * *";
 
 const SENTINEL_CURRENT_USER = { ref: idRef("user1"), login: "user1" };
-const SENTINEL_USERS: IWorkspaceUser[] = [];
 
 const SENTINEL_CONVERTED_RECIPIENT: IAutomationRecipient = {
     id: "user1",
     email: "user1@example.com",
     name: "User One",
     type: "user",
-};
-const SENTINEL_WORKSPACE_USER: IWorkspaceUser = {
-    ref: idRef("user1"),
-    login: "user1",
-    email: "user1@example.com",
-    uri: "user1",
 };
 const SENTINEL_EXTERNAL_RECIPIENT: IAutomationRecipient = {
     id: "ext@example.com",
@@ -163,12 +152,12 @@ const SENTINEL_RECIPIENTS: IAutomationRecipient[] = [
 const DEFAULT_AUTOMATIONS_CONTEXT_VALUE = {
     timezone: SENTINEL_TIMEZONE,
     currentUser: SENTINEL_CURRENT_USER,
+    widgetLocalIdToTabIdMap: {},
 };
 
 const DEFAULT_SCHEDULED_EMAIL_DIALOG_CONTEXT_VALUE = {
     dashboardId: SENTINEL_DASHBOARD_ID,
     dashboardTitle: SENTINEL_DASHBOARD_TITLE,
-    widgetLocalIdToTabIdMap: {},
 };
 
 // Fully typed IWidget/IInsight fixtures (mirrors useScheduledEmailExportSettings.test.tsx).
@@ -284,8 +273,7 @@ beforeEach(() => {
         cron: SENTINEL_CRON,
     });
 
-    convertCurrentUserToAutomationRecipientSpy.mockReturnValue(SENTINEL_CONVERTED_RECIPIENT);
-    convertCurrentUserToWorkspaceUserSpy.mockReturnValue(SENTINEL_WORKSPACE_USER);
+    convertUserToAutomationRecipientSpy.mockReturnValue(SENTINEL_CONVERTED_RECIPIENT);
     convertExternalRecipientToAutomationRecipientSpy.mockReturnValue(SENTINEL_EXTERNAL_RECIPIENT);
 
     newDashboardExportDefinitionMetadataObjectDefinitionSpy.mockReturnValue(
@@ -304,7 +292,6 @@ const BASE_PROPS: IUseScheduledEmailFormStateProps = {
     widget: undefined,
     insight: undefined,
     notificationChannels: SENTINEL_NOTIFICATION_CHANNELS,
-    users: SENTINEL_USERS,
     externalRecipientOverride: undefined,
     effectiveWidgetFilters: [],
     effectiveWidgetFiltersWithInsight: [],
@@ -617,8 +604,8 @@ describe("useScheduledEmailFormState — new-automation init (widget branch)", (
         const effectiveVisibleWidgetFilters: IAutomationVisibleFilter[] = [fakeVisibleFilter("wf1")];
         const effectiveDashboardFilters: FilterContextItem[] = [fakeFilterContextItem("df1")];
 
-        mockUseScheduledEmailDialogContext.mockReturnValue({
-            ...DEFAULT_SCHEDULED_EMAIL_DIALOG_CONTEXT_VALUE,
+        mockUseAutomationsContext.mockReturnValue({
+            ...DEFAULT_AUTOMATIONS_CONTEXT_VALUE,
             widgetLocalIdToTabIdMap: { w1: "tab-1" },
         });
 
@@ -652,14 +639,14 @@ describe("useScheduledEmailFormState — new-automation init (widget branch)", (
 });
 
 // ---------------------------------------------------------------------------
-// New: targetTabId resolution — read from widgetLocalIdToTabIdMap (ScheduledEmailDialogContext)
+// New: targetTabId resolution — read from widgetLocalIdToTabIdMap (AutomationsContext)
 // directly in this hook now, keyed off the widget's localIdentifier.
 // ---------------------------------------------------------------------------
 
 describe("useScheduledEmailFormState — targetTabId resolution", () => {
     it("resolves targetTabId from widgetLocalIdToTabIdMap when the widget's tab is mapped", () => {
-        mockUseScheduledEmailDialogContext.mockReturnValue({
-            ...DEFAULT_SCHEDULED_EMAIL_DIALOG_CONTEXT_VALUE,
+        mockUseAutomationsContext.mockReturnValue({
+            ...DEFAULT_AUTOMATIONS_CONTEXT_VALUE,
             widgetLocalIdToTabIdMap: { w1: "tab-mapped" },
         });
 
@@ -669,8 +656,8 @@ describe("useScheduledEmailFormState — targetTabId resolution", () => {
     });
 
     it("leaves targetTabId undefined when the widget's tab is not in the map", () => {
-        mockUseScheduledEmailDialogContext.mockReturnValue({
-            ...DEFAULT_SCHEDULED_EMAIL_DIALOG_CONTEXT_VALUE,
+        mockUseAutomationsContext.mockReturnValue({
+            ...DEFAULT_AUTOMATIONS_CONTEXT_VALUE,
             widgetLocalIdToTabIdMap: { "some-other-widget": "tab-x" },
         });
 
@@ -680,8 +667,8 @@ describe("useScheduledEmailFormState — targetTabId resolution", () => {
     });
 
     it("leaves targetTabId undefined when there is no widget", () => {
-        mockUseScheduledEmailDialogContext.mockReturnValue({
-            ...DEFAULT_SCHEDULED_EMAIL_DIALOG_CONTEXT_VALUE,
+        mockUseAutomationsContext.mockReturnValue({
+            ...DEFAULT_AUTOMATIONS_CONTEXT_VALUE,
             widgetLocalIdToTabIdMap: { w1: "tab-mapped" },
         });
 
@@ -733,6 +720,18 @@ describe("useScheduledEmailFormState — edit init (scheduledExportToEdit)", () 
         expect(newDashboardExportDefinitionMetadataObjectDefinitionSpy).not.toHaveBeenCalled();
         expect(newWidgetExportDefinitionMetadataObjectDefinitionSpy).not.toHaveBeenCalled();
         expect(setExportParametersByTabSpy).not.toHaveBeenCalled();
+    });
+});
+
+describe("useScheduledEmailFormState — lazy draft initialization", () => {
+    it("builds the new-automation draft once, not on every render", () => {
+        const { rerender } = renderFormStateHook();
+
+        rerender();
+        rerender();
+
+        expect(newDashboardExportDefinitionMetadataObjectDefinitionSpy).toHaveBeenCalledTimes(1);
+        expect(toNormalizedFirstRunAndCronSpy).toHaveBeenCalledTimes(1);
     });
 });
 
@@ -788,28 +787,21 @@ describe("useScheduledEmailFormState — defaults", () => {
         const { result } = renderFormStateHook({ externalRecipientOverride: "ext@example.com" });
 
         expect(convertExternalRecipientToAutomationRecipientSpy).toHaveBeenCalledWith("ext@example.com");
-        expect(convertCurrentUserToAutomationRecipientSpy).not.toHaveBeenCalled();
         expect(result.current.defaultRecipient).toBe(SENTINEL_EXTERNAL_RECIPIENT);
     });
 
-    it("derives defaultRecipient from convertCurrentUserToAutomationRecipient when there is no override", () => {
+    it("derives defaultRecipient from convertUserToAutomationRecipient when there is no override", () => {
         const { result } = renderFormStateHook();
 
-        expect(convertCurrentUserToAutomationRecipientSpy).toHaveBeenCalledWith(
-            SENTINEL_USERS,
-            SENTINEL_CURRENT_USER,
-        );
+        expect(convertUserToAutomationRecipientSpy).toHaveBeenCalledWith(SENTINEL_CURRENT_USER);
         expect(result.current.defaultRecipient).toBe(SENTINEL_CONVERTED_RECIPIENT);
     });
 
-    it("derives defaultUser from convertCurrentUserToWorkspaceUser", () => {
-        const { result } = renderFormStateHook();
+    it("derives defaultUser from convertUserToAutomationRecipient", () => {
+        const { result } = renderFormStateHook({ externalRecipientOverride: "ext@example.com" });
 
-        expect(convertCurrentUserToWorkspaceUserSpy).toHaveBeenCalledWith(
-            SENTINEL_USERS,
-            SENTINEL_CURRENT_USER,
-        );
-        expect(result.current.defaultUser).toBe(SENTINEL_WORKSPACE_USER);
+        expect(convertUserToAutomationRecipientSpy).toHaveBeenCalledWith(SENTINEL_CURRENT_USER);
+        expect(result.current.defaultUser).toBe(SENTINEL_CONVERTED_RECIPIENT);
     });
 
     it("selects the widget branch (PNG export def) only when both widget and insight are present", () => {

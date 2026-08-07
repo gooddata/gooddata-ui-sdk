@@ -34,7 +34,6 @@ import {
 import { selectEntitlementMinimumRecurrenceMinutes } from "../../../../../../model/store/entitlements/entitlementsSelectors.js";
 import { selectCanUseAiAssistant } from "../../../../../../model/store/permissions/permissionsSelectors.js";
 import { selectCurrentUser } from "../../../../../../model/store/user/userSelectors.js";
-import { selectUsers } from "../../../../../../model/store/users/usersSelectors.js";
 import {
     type IMeasureFormatMap,
     getDescription,
@@ -61,10 +60,7 @@ import {
     type AlertMetricComparatorType,
 } from "../../../../../automations/alerting/types.js";
 import { isEmail } from "../../../../../automations/scheduledEmail/utils/validate.js";
-import {
-    convertCurrentUserToAutomationRecipient,
-    convertCurrentUserToWorkspaceUser,
-} from "../../../../../automations/shared/utils/automationUtils.js";
+import { convertUserToAutomationRecipient } from "../../../../../automations/shared/utils/automationUtils.js";
 
 const DEFAULT_MIN_RECURRENCE_MINUTES = "60";
 
@@ -95,7 +91,6 @@ export const useEditAlert = ({
     const [updatedAlert, setUpdatedAlert] = useState<IAutomationMetadataObject>(alert);
     const [warningMessage, setWarningMessage] = useState<string | undefined>(undefined);
     const currentUser = useDashboardSelector(selectCurrentUser);
-    const users = useDashboardSelector(selectUsers);
     const enableAnomalyDetectionAlert = useDashboardSelector(selectEnableAnomalyDetectionAlert);
     const enableAiAssistant = useDashboardSelector(selectCanUseAiAssistant);
     const weekStart = useDashboardSelector(selectWeekStart);
@@ -111,7 +106,7 @@ export const useEditAlert = ({
     const selectedDestination = destinations.find(
         (destination) => destination.id === updatedAlert.notificationChannel,
     );
-    const defaultUser = convertCurrentUserToWorkspaceUser(users ?? [], currentUser);
+    const defaultUser = convertUserToAutomationRecipient(currentUser);
     const allowExternalRecipients = selectedDestination?.allowedRecipients === "external";
     const allowOnlyLoggedUserRecipients = selectedDestination?.allowedRecipients === "creator";
 
@@ -226,12 +221,12 @@ export const useEditAlert = ({
              */
             const updatedRecipients =
                 selectedDestination?.allowedRecipients === "creator"
-                    ? [convertCurrentUserToAutomationRecipient(users ?? [], currentUser)]
+                    ? [convertUserToAutomationRecipient(currentUser)]
                     : undefined;
 
             setUpdatedAlert((alert) => transformAlertByDestination(alert, destinationId, updatedRecipients));
         },
-        [alert.notificationChannel, currentUser, destinations, intl, users],
+        [alert.notificationChannel, currentUser, destinations, intl],
     );
 
     const changeComparisonType = useCallback(
