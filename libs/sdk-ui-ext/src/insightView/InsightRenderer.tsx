@@ -221,13 +221,16 @@ class InsightRendererCore extends PureComponent<
                 onExportReady: this.onExportReadyDecorator,
                 afterRender: this.props.afterRender,
             },
-            configPanelElement: () => {
-                const rootNode =
-                    (this.containerRef.current?.getRootNode() as Document | ShadowRoot) ?? document;
-
-                // this is apparently a well-know constant (see BaseVisualization)
-                return rootNode.querySelector(".gd-configuration-panel-content");
-            },
+            // This renderer has no configuration panel of its own — it renders read-only insights.
+            // It used to resolve the panel with a document-wide lookup of the well-known
+            // `.gd-configuration-panel-content` class (see BaseVisualization), which only ever
+            // matched nothing in a plain dashboard. Once AD runs in-process on the same page (the
+            // insight-edit overlay opened from Dashboards), that lookup started matching AD's
+            // configuration panel: every re-render of a dashboard widget then created a second
+            // React root on AD's panel node and replaced its content with a dashboards-environment
+            // panel, losing the drill-down hierarchies and detaching the panel from AD's store.
+            // fix STL-3184
+            configPanelElement: () => null,
             element: () => {
                 const rootNode =
                     (this.containerRef.current?.getRootNode() as Document | ShadowRoot) ?? document;

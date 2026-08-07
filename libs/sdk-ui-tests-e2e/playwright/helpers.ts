@@ -698,10 +698,15 @@ export async function configureLimitingParentFilterDependency(
     await page.locator(".s-add").click();
     await page.locator(".s-add-limit-dashboard_filter").click();
     // The parent-filter row is a <div> whose onClick is a no-op while the item is
-    // `is-disabled` — which it stays until the async connecting-attribute validation
-    // (validParentFilters) resolves. Clicking too early silently does nothing, so the
-    // "Choose dashboard filter" popup never closes (observed: bubble visible 45s across
-    // all retries). Wait for the row to be enabled before clicking.
+    // `is-disabled`, so clicking it early (or with `force: true`) silently does nothing and the
+    // "Choose dashboard filter" popup never closes.
+    // NOTE: `is-disabled` here is NOT a transient "validation still loading" state — it never
+    // clears on its own. If the caller reaches this point before the dashboard has settled after
+    // applying a filter, the row stays disabled indefinitely with the misleading tooltip
+    // "There is no connection between the filter attributes in the data model", even though the
+    // backend's computeValidObjects response does contain the connection. So this expect is a
+    // precondition guard, not a wait — callers must settle the dashboard themselves (assert on the
+    // filtered widget data, not `waitTableLoaded`, which can return without waiting).
     const parentItem = page.locator(getTestClassByTitle(parentFilterName, "dashboard-filter-"));
     await expect(parentItem).toBeVisible();
     await expect(parentItem).not.toHaveClass(/is-disabled/);

@@ -97,6 +97,8 @@ export interface ITransformedAttributeFilterItem {
 
 const DATE_FORMAT_REGEX = /^\d{4}-\d{2}-\d{2}$/;
 const DATE_FORMAT_REGEX_TIME_SUPPORT = /^\d{4}-\d{2}-\d{2}( \d{2}:\d{2})?$/;
+// When second granularities are enabled, absolute date filters may carry second precision - (YYYY-MM-DD HH:mm:ss)
+const DATE_FORMAT_REGEX_TIME_SUPPORT_WITH_SECONDS = /^\d{4}-\d{2}-\d{2}( \d{2}:\d{2}(:\d{2})?)?$/;
 export const ALL_TIME_GRANULARITY = "ALL_TIME_GRANULARITY";
 
 export type ITransformedFilterItem = ITransformedDateFilterItem | ITransformedAttributeFilterItem;
@@ -110,10 +112,18 @@ function validateDataSet(dataSet: ObjQualifier | undefined): boolean {
     return typeof uri === "string" || typeof identifier === "string";
 }
 
+function getAbsoluteDateValueFormatRegex(isTimeSupported: boolean, isSecondsSupported: boolean): RegExp {
+    if (!isTimeSupported) {
+        return DATE_FORMAT_REGEX;
+    }
+    return isSecondsSupported ? DATE_FORMAT_REGEX_TIME_SUPPORT_WITH_SECONDS : DATE_FORMAT_REGEX_TIME_SUPPORT;
+}
+
 function isValidDateFilterFormat(
     filterItem: DateFilterItem,
     shouldValidateDataSet: boolean = true,
     isTimeSupported: boolean = false,
+    isSecondsSupported: boolean = false,
 ): boolean {
     if (isAbsoluteDateFilter(filterItem)) {
         const {
@@ -121,7 +131,7 @@ function isValidDateFilterFormat(
         } = filterItem;
 
         const isValidDataSet = shouldValidateDataSet ? validateDataSet(dataSet) : true;
-        const valueFormatRegex = isTimeSupported ? DATE_FORMAT_REGEX_TIME_SUPPORT : DATE_FORMAT_REGEX;
+        const valueFormatRegex = getAbsoluteDateValueFormatRegex(isTimeSupported, isSecondsSupported);
         return (
             isValidDataSet &&
             typeof from === "string" &&
@@ -311,9 +321,15 @@ function isValidFilterItemFormat(
     filterItem: unknown,
     shouldValidateDataSet: boolean = true,
     isTimeSupported: boolean = false,
+    isSecondsSupported: boolean = false,
 ): boolean {
     if (isDateFilter(filterItem)) {
-        return isValidDateFilterFormat(filterItem, shouldValidateDataSet, isTimeSupported);
+        return isValidDateFilterFormat(
+            filterItem,
+            shouldValidateDataSet,
+            isTimeSupported,
+            isSecondsSupported,
+        );
     } else if (isAttributeFilter(filterItem)) {
         return isValidAttributeFilterFormat(filterItem);
     } else if (isRankingFilter(filterItem)) {
@@ -354,10 +370,13 @@ export function isValidFiltersFormat(
     filters: unknown[],
     shouldValidateDataSet: boolean = true,
     isTimeSupported: boolean = false,
+    isSecondsSupported: boolean = false,
 ): boolean {
     return (
         !isEmpty(filters) &&
-        filters.every((filter) => isValidFilterItemFormat(filter, shouldValidateDataSet, isTimeSupported))
+        filters.every((filter) =>
+            isValidFilterItemFormat(filter, shouldValidateDataSet, isTimeSupported, isSecondsSupported),
+        )
     );
 }
 

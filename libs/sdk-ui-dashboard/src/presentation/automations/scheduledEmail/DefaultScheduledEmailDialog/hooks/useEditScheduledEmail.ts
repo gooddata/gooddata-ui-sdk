@@ -1,10 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { type IExportDefinitionVisualizationObjectSettings } from "@gooddata/sdk-model";
-
 import { useAutomationsContext } from "../../../contexts/AutomationsContext.js";
 import { useScheduledEmailDialogContext } from "../../../contexts/ScheduledEmailDialogContext.js";
 import { useAutomationFiltersSelect } from "../../../shared/automationFilters/useAutomationFiltersSelect.js";
+import { type PdfPageSize } from "../../utils/pdfPageSize.js";
 
 import { useScheduledEmailEffectiveFilters } from "./useScheduledEmailEffectiveFilters.js";
 import { useScheduledEmailExportSettings } from "./useScheduledEmailExportSettings.js";
@@ -15,7 +14,12 @@ import { useScheduledEmailFormValidity } from "./useScheduledEmailFormValidity.j
 export interface IUseEditScheduledEmailProps {
     maxAutomationsRecipients: number;
     externalRecipientOverride?: string;
-    defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
+    /**
+     * Locale-derived default page size for new PDF attachments. Required and non-nullable: it
+     * reaches the saved export definition through {@link useScheduledEmailExportSettings}, so a caller
+     * that omits it silently saves `A4` where the locale asks for `LETTER`.
+     */
+    defaultPdfPageSize: PdfPageSize;
 }
 
 export function useEditScheduledEmail({

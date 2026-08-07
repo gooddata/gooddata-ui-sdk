@@ -124,6 +124,12 @@ export enum GdcAdCommandType {
      * @beta
      */
     AttributeHierarchyModified = "attributeHierarchyModified",
+
+    /**
+     * The command to set a session-only timezone override for insight executions.
+     * @beta
+     */
+    SetTimezone = "setTimezone",
 }
 
 /**
@@ -1441,5 +1447,61 @@ export function isAttributeHierarchyModifiedCommandData(
         obj !== null &&
         typeof obj === "object" &&
         getEventType(obj) === (GdcAdCommandType.AttributeHierarchyModified as string)
+    );
+}
+
+//
+// SetTimezone command
+//
+
+/**
+ * Body of the {@link AdSetTimezoneCommand}.
+ *
+ * @beta
+ */
+export interface IAdSetTimezoneBody {
+    /**
+     * Concrete IANA timezone ID (e.g. "Europe/Prague") to apply as a session-only override
+     * for insight executions. Omit the field or pass an empty string to clear the override.
+     */
+    timezoneId?: string;
+}
+
+/**
+ * Sets a session-only timezone override used for AD insight executions.
+ *
+ * Contract:
+ * - Applies the given concrete IANA timezone ID as a session-only override
+ * - Omitting `timezoneId` or passing an empty string clears the override
+ * - Re-executes the open insight with the new timezone
+ * - The override is never written to the Insight object
+ * - Invalid IANA IDs result in CommandFailed
+ *
+ * @beta
+ */
+export type AdSetTimezoneCommand = IGdcAdMessageEvent<GdcAdCommandType.SetTimezone, IAdSetTimezoneBody>;
+
+/**
+ * Data type of {@link AdSetTimezoneCommand} command
+ *
+ * @beta
+ */
+export type AdSetTimezoneCommandData = IGdcAdMessageEnvelope<
+    GdcAdCommandType.SetTimezone,
+    IAdSetTimezoneBody
+>;
+
+/**
+ * Type-guard checking whether an object is an instance of {@link AdSetTimezoneCommandData}
+ *
+ * @param obj - object to test
+ *
+ * @beta
+ */
+export function isAdSetTimezoneCommandData(obj: unknown): obj is AdSetTimezoneCommandData {
+    return (
+        obj !== null &&
+        typeof obj === "object" &&
+        getEventType(obj) === (GdcAdCommandType.SetTimezone as string)
     );
 }

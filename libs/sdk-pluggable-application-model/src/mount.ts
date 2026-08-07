@@ -584,6 +584,28 @@ export interface IPluggableApplicationMountOptions {
 }
 
 /**
+ * A chrome-initiated navigation the host is about to perform, handed to the active application for
+ * confirmation via {@link IPluggableApplicationMountHandle.onHostNavigationRequested}.
+ *
+ * @alpha
+ */
+export interface IHostNavigationRequest {
+    /**
+     * Target URL of the pending navigation.
+     */
+    readonly url: string;
+
+    /**
+     * Performs the navigation the host originally intended.
+     *
+     * @remarks
+     * Only the first call takes effect, and only for the mount that received the request: a call made
+     * once that mount is gone — unmounted, or remounted for a new workspace — is ignored.
+     */
+    readonly proceed: () => void;
+}
+
+/**
  * Handle returned from mount for lifecycle management and host -\> module interaction.
  *
  * @alpha
@@ -601,6 +623,25 @@ export interface IPluggableApplicationMountHandle {
      * Host uses this to push down context changes after initial mount.
      */
     updateContext?: (ctx: IPlatformContext) => void;
+
+    /**
+     * Asks the application whether the host may navigate away from it.
+     *
+     * @remarks
+     * The host chrome owns navigation (workspace picker, application menu, logo), so an application
+     * holding unsaved user work cannot intercept it on its own — its own header is not rendered and its
+     * router does not observe host navigation. The host asks before a chrome-initiated push whose target
+     * pathname differs from the current one; programmatic redirects (replace) and navigations staying on
+     * the same pathname are not offered.
+     *
+     * Return `true` to take over: the host does not navigate, and the application calls `proceed` once
+     * the user confirms — or never, if the user cancels. Return `false` to let the host navigate
+     * immediately. Applications without unsaved state may omit it.
+     *
+     * `proceed` performs the host's original navigation, so the application does not need to know how
+     * host routing works.
+     */
+    onHostNavigationRequested?: (request: IHostNavigationRequest) => boolean;
 
     /**
      * Pushes the host-owned AI assistant chat open-state into the pluggable application.

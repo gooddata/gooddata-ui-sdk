@@ -19,6 +19,7 @@ import {
 
 import type { IAutomationFiltersTab } from "../../../../../../model/store/filtering/types.js";
 import type * as AutomationFiltersSelectModule from "../../../../shared/automationFilters/useAutomationFiltersSelect.js";
+import type { PdfPageSize } from "../../../utils/pdfPageSize.js";
 
 // ---------------------------------------------------------------------------
 // Mocks — vi.mock calls are hoisted; factories must not reference top-level
@@ -240,11 +241,12 @@ function wrapper({ children }: { children: ReactNode }) {
 
 // Drive the hook directly; the parameters hook (the only other caller of setParametersWire) is
 // covered separately.
-function renderEditHook() {
+function renderEditHook(defaultPdfPageSize: PdfPageSize = "A4") {
     return renderHook(
         () =>
             useEditScheduledEmail({
                 maxAutomationsRecipients: 10,
+                defaultPdfPageSize,
             }),
         { wrapper },
     );
@@ -301,6 +303,29 @@ describe("useEditScheduledEmail — export parameters survive attachment changes
         });
 
         expect(paramsByTabOf(result)).toEqual([addedParameters]);
+    });
+});
+
+describe("useEditScheduledEmail — default PDF page size wiring", () => {
+    it("carries the locale default page size into a newly added PDF_TABULAR export definition", () => {
+        const { result } = renderEditHook("LETTER");
+
+        act(() => {
+            result.current.onWidgetAttachmentsChange(["PDF_TABULAR"]);
+        });
+
+        const pdfExportDefinition = result.current.editedAutomation.exportDefinitions?.find(
+            (ed) =>
+                isExportDefinitionVisualizationObjectRequestPayload(ed.requestPayload) &&
+                ed.requestPayload.format === "PDF_TABULAR",
+        );
+
+        expect(
+            pdfExportDefinition &&
+                isExportDefinitionVisualizationObjectRequestPayload(pdfExportDefinition.requestPayload)
+                ? pdfExportDefinition.requestPayload.settings?.pageSize
+                : undefined,
+        ).toBe("LETTER");
     });
 });
 

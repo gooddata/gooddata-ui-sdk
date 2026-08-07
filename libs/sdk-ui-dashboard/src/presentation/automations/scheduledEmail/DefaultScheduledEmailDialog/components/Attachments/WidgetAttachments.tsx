@@ -42,7 +42,6 @@ export interface IWidgetAttachmentsProps {
     onCsvRawSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
     isSlidesExportEnabled: boolean;
     isAccessibilityModeEnabled: boolean;
-    defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
     exportTemplates?: IExportTemplate[];
     slidesTemplateIds?: { PPTX?: string; PDF_SLIDES?: string; PDF?: string };
     onSlidesTemplateIdChange?: (
@@ -64,7 +63,6 @@ export function WidgetAttachments({
     onCsvRawSettingsChange,
     isSlidesExportEnabled,
     isAccessibilityModeEnabled,
-    defaultPdfPageSize,
     exportTemplates,
     slidesTemplateIds,
     onSlidesTemplateIdChange,
@@ -169,7 +167,6 @@ export function WidgetAttachments({
                         onCsvSettingsChange={onCsvSettingsChange}
                         csvRawSettings={csvRawSettings}
                         onCsvRawSettingsChange={onCsvRawSettingsChange}
-                        defaultPdfPageSize={defaultPdfPageSize}
                         mode="widget"
                         exportTemplates={exportTemplates}
                         slidesTemplateIds={slidesTemplateIds}

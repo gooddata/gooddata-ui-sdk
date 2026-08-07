@@ -40,6 +40,15 @@ describe("filter convertors", () => {
             },
         },
     };
+    const absoluteDateFilterWithSeconds: IAbsoluteDateFilter = {
+        absoluteDateFilter: {
+            from: "2020-01-01 00:01:30",
+            to: "2020-02-01 22:50:59",
+            dataSet: {
+                uri: "uri",
+            },
+        },
+    };
     const relativeDateFilter: IRelativeDateFilter = {
         relativeDateFilter: {
             granularity: "gdc.time.month",
@@ -207,6 +216,14 @@ describe("filter convertors", () => {
 
     it("should return false when date filter has time but time is not supported", () => {
         expect(isValidFiltersFormat([absoluteDateFilterWithTime], true, false)).toBe(false);
+    });
+
+    it("should return true when date filter has seconds and seconds are supported", () => {
+        expect(isValidFiltersFormat([absoluteDateFilterWithSeconds], true, true, true)).toBe(true);
+    });
+
+    it("should return false when date filter has seconds but seconds are not supported", () => {
+        expect(isValidFiltersFormat([absoluteDateFilterWithSeconds], true, true, false)).toBe(false);
     });
 
     it("should return false when date filter is missing dataSet", () => {
