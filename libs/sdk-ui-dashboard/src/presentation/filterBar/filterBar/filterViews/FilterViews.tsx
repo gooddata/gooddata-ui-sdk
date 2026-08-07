@@ -3,13 +3,13 @@
 import { useCallback, useMemo } from "react";
 
 import cx from "classnames";
-import { FormattedMessage } from "react-intl";
+import { type IntlShape, useIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
 
 import { type IDashboardFilterView } from "@gooddata/sdk-model";
 import {
-    DropdownButton,
     type IAlignPoint,
+    UiButton,
     UiReturnFocusOnUnmount,
     useIdPrefixed,
     useMediaQuery,
@@ -33,7 +33,6 @@ import { selectCanCreateFilterView } from "../../../../model/store/permissions/p
 import { selectIsInEditMode } from "../../../../model/store/renderMode/renderModeSelectors.js";
 import { uiActions } from "../../../../model/store/ui/index.js";
 import {
-    selectDashboardDensity,
     selectFilterViewsDialogMode,
     selectIsFilterViewsDialogOpen,
 } from "../../../../model/store/ui/uiSelectors.js";
@@ -43,17 +42,12 @@ import { AddFilterView } from "./AddFilterView.js";
 import { FilterViewsList } from "./FilterViewsList.js";
 import { useFilterViewsToastMessages } from "./useFilterViewsToastMessages.js";
 
-const BUBBLE_ALIGN_POINTS: IAlignPoint[] = [{ align: "br tr", offset: { x: -27, y: -10 } }];
+const BUBBLE_ALIGN_POINTS: IAlignPoint[] = [{ align: "br tr", offset: { x: -10, y: -10 } }];
 
-function DropdownButtonLabel({ filterViews }: { filterViews: IDashboardFilterView[] }) {
-    return filterViews.length === 0 ? (
-        <FormattedMessage id="filters.filterViews.dropdown.buttonEmpty" />
-    ) : (
-        <FormattedMessage
-            id="filters.filterViews.dropdown.button"
-            values={{ count: filterViews?.length ?? 0 }}
-        />
-    );
+function getButtonLabel(intl: IntlShape, filterViews: IDashboardFilterView[]) {
+    return filterViews.length === 0
+        ? intl.formatMessage({ id: "filters.filterViews.dropdown.buttonEmpty" })
+        : intl.formatMessage({ id: "filters.filterViews.dropdown.button" }, { count: filterViews.length });
 }
 
 const useCallbacks = (isDialogOpen: boolean, countOfSavedViews: number) => {
@@ -132,7 +126,7 @@ export function FilterViews() {
         isDialogOpen,
         filterViews.length,
     );
-    const density = useDashboardSelector(selectDashboardDensity);
+    const intl = useIntl();
 
     const listDialogTitleId = useIdPrefixed("FilterViewsListTitle");
     const addDialogTitleId = useIdPrefixed("AddFilterViewTitle");
@@ -153,14 +147,12 @@ export function FilterViews() {
     // dashboard components
     const dropdownAnchorClassName = useMemo(() => `gd-filter-views__dropdown-anchor-${uuid()}`, []);
 
-    const buttonClassNames = cx("gd-filter-views-button", dropdownAnchorClassName, {
-        "gd-button-large": density === "comfortable", // button is set as gs-button-small via default isSmall prop of DropdownButton component
-        "gd-filter-views-button--open": isDialogOpen,
+    // UiButton has no className prop, so the dropdown anchor and layout tweaks live on a wrapper
+    const buttonWrapperClassNames = cx("gd-filter-views-button", dropdownAnchorClassName, {
         "deprecated-margin-top": !isApplyAllAtOnceEnabledAndSet,
     });
 
     const triggerId = useIdPrefixed("FilterViewsTrigger");
-    const triggerLabelId = useIdPrefixed("FilterViewsTriggerLabel");
     const dropdownId = useIdPrefixed("FilterViewsDropdown");
 
     const isReadOnly = useDashboardSelector(selectIsReadOnly);
@@ -172,25 +164,26 @@ export function FilterViews() {
         <div className="gd-filter-views">
             {showDropdownButton ? (
                 <>
-                    <DropdownButton
-                        id={triggerId}
-                        onClick={toggleDialog}
-                        className={buttonClassNames}
-                        isOpen={isDialogOpen}
-                        accessibilityConfig={{
-                            popupType: "dialog",
-                            role: "button",
-                            ariaLabelledBy: triggerLabelId,
-                        }}
-                        dropdownId={dropdownId}
-                    >
-                        <span className="gd-filter-views-button__label" id={triggerLabelId}>
-                            <DropdownButtonLabel filterViews={filterViews} />
-                        </span>
-                    </DropdownButton>
-                    {isDashboardEditMode ? (
-                        <div id={triggerId} className="gd-filters-views__panel__divider" />
-                    ) : null}
+                    <div className={buttonWrapperClassNames}>
+                        <UiButton
+                            id={triggerId}
+                            variant="tertiary"
+                            // tertiary has no padding, so size only drives font-size and height;
+                            // "medium" keeps the 14px label the button had in both densities
+                            size="medium"
+                            label={getButtonLabel(intl, filterViews)}
+                            iconAfter={isDialogOpen ? "navigateUp" : "navigateDown"}
+                            onClick={toggleDialog}
+                            dataTestId="filter-views-button"
+                            accessibilityConfig={{
+                                ariaHaspopup: "dialog",
+                                ariaExpanded: isDialogOpen,
+                                ariaControls: isDialogOpen ? dropdownId : undefined,
+                            }}
+                            disableIconAnimation
+                        />
+                    </div>
+                    {isDashboardEditMode ? <div className="gd-filters-views__panel__divider" /> : null}
                 </>
             ) : (
                 <div className={dropdownAnchorClassName} />

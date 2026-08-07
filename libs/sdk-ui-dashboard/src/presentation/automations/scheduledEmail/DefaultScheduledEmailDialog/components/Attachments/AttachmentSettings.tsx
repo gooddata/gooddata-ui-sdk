@@ -25,6 +25,7 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import { AUTOMATION_ATTACHMENT_SETTINGS_DIALOG_TITLE_ID } from "../../../../../constants/automations.js";
+import { type PdfPageSize } from "../../../utils/pdfPageSize.js";
 
 const DROPDOWN_ALIGN_POINTS: IAlignPoint[] = [
     {
@@ -44,7 +45,6 @@ const DEFAULT_PDF_PAGE_SIZE: PdfPageSize = "A4";
 const DEFAULT_PDF_PAGE_ORIENTATION: PdfPageOrientation = "PORTRAIT";
 const DEFAULT_PDF_ORIENTATION: PdfOrientation = "portrait";
 
-type PdfPageSize = NonNullable<IExportDefinitionVisualizationObjectSettings["pageSize"]>;
 type PdfPageOrientation = "PORTRAIT" | "LANDSCAPE";
 type PdfOrientation = NonNullable<IExportDefinitionVisualizationObjectSettings["orientation"]>;
 
@@ -54,7 +54,6 @@ export interface IAttachmentSettingsProps {
     type: IAttachmentSettingsType;
     settings: IExportDefinitionVisualizationObjectSettings;
     onSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
-    defaultPdfPageSize?: PdfPageSize;
 }
 
 type PageSizeMenuData = { interactive: PdfPageSize };
@@ -84,18 +83,13 @@ const mapPageOrientationToLegacyOrientation = (
     return undefined;
 };
 
-export function AttachmentSettings({
-    type,
-    settings,
-    onSettingsChange,
-    defaultPdfPageSize,
-}: IAttachmentSettingsProps) {
+export function AttachmentSettings({ type, settings, onSettingsChange }: IAttachmentSettingsProps) {
     const intl = useIntl();
     const isPdfTabular = type === "PDF_TABULAR";
     const isCsv = type === "CSV" || type === "CSV_RAW";
     const legacyOrientation = settings.orientation;
     const legacyPageOrientation = mapLegacyOrientationToPageOrientation(legacyOrientation);
-    const resolvedDefaultPageSize = settings.pageSize ?? defaultPdfPageSize ?? DEFAULT_PDF_PAGE_SIZE;
+    const resolvedDefaultPageSize = settings.pageSize ?? DEFAULT_PDF_PAGE_SIZE;
     const resolvedCsvDelimiter = settings.delimiter ?? DEFAULT_CSV_DELIMITER;
     const resolvedCsvState = getCsvDelimiterState(settings.delimiter);
     const [mergeHeaders, setMergeHeaders] = useState(settings.mergeHeaders ?? true);

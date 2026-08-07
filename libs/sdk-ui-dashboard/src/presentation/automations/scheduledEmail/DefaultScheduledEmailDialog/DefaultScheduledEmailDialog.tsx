@@ -210,6 +210,7 @@ export function ScheduledMailDialogRenderer({
     } = useEditScheduledEmail({
         maxAutomationsRecipients,
         externalRecipientOverride,
+        defaultPdfPageSize,
     });
 
     const [isApplyCurrentFiltersDialogOpen, setIsApplyCurrentFiltersDialogOpen] =
@@ -562,7 +563,6 @@ export function ScheduledMailDialogRenderer({
                                                 onCsvRawSettingsChange={onCsvRawSettingsChange}
                                                 isSlidesExportEnabled={isSlidesExportEnabled}
                                                 isAccessibilityModeEnabled={isAccessibilityModeEnabled}
-                                                defaultPdfPageSize={defaultPdfPageSize}
                                                 exportTemplates={exportTemplates}
                                                 slidesTemplateIds={slidesTemplateIds}
                                                 onSlidesTemplateIdChange={onSlidesTemplateIdChange}
@@ -578,7 +578,6 @@ export function ScheduledMailDialogRenderer({
                                                 xlsxSettings={xlsxSettings}
                                                 onXlsxSettingsChange={onXlsxSettingsChange}
                                                 isSlidesExportEnabled={isSlidesExportEnabled}
-                                                defaultPdfPageSize={defaultPdfPageSize}
                                                 exportTemplates={exportTemplates}
                                                 slidesTemplateIds={slidesTemplateIds}
                                                 onSlidesTemplateIdChange={onSlidesTemplateIdChange}

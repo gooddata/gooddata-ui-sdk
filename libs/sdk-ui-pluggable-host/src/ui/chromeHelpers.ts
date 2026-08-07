@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type MouseEvent } from "react";
+
 import { type IUser } from "@gooddata/sdk-model";
 
 /**
@@ -30,4 +32,22 @@ export function getUserDisplayName(user: IUser): string {
 export function swapWorkspaceInPath(pathname: string, newWorkspaceId: string): string {
     const replaced = pathname.replace(/^\/workspace\/[^/]+/, `/workspace/${newWorkspaceId}`);
     return replaced === pathname ? `/workspace/${newWorkspaceId}` : replaced;
+}
+
+/**
+ * Whether a click on a link may be taken over with `preventDefault`, rather than left to the
+ * browser's own handling of the href.
+ *
+ * @remarks
+ * Keyboard activation of a focused link reports button 0, so it counts as a plain left click.
+ */
+export function isPlainLeftClick(event: MouseEvent<Element>): boolean {
+    return (
+        !event.defaultPrevented &&
+        event.button === 0 &&
+        !event.metaKey &&
+        !event.ctrlKey &&
+        !event.shiftKey &&
+        !event.altKey
+    );
 }

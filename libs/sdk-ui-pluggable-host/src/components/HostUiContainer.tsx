@@ -8,6 +8,7 @@ import { type NavigateFunction } from "react-router";
 import { type IGenAIUserContext, type PluggableApplicationRegistryItem } from "@gooddata/sdk-model";
 import {
     type IAppHeaderOptions,
+    type IHostNavigationRequest,
     type IPlatformContext,
     type IHostUiMountHandle,
 } from "@gooddata/sdk-pluggable-application-model";
@@ -28,6 +29,7 @@ import { PluggableApplicationRenderer } from "../ui/PluggableApplicationRenderer
 import { resolveHostUiModule } from "../ui/resolveHostUiModule.js";
 
 import "./HostUiContainer.scss";
+import { runGuardedNavigation } from "./navigationGuard.js";
 
 export interface IHostUiContainerProps {
     ctx: IPlatformContext;
@@ -106,6 +108,9 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate }: IHostUi
         (link: IHostChatLink) => appAiLinkClickRef.current?.(link) ?? false,
         [],
     );
+    const appNavigationRequestRef = useRef<((request: IHostNavigationRequest) => boolean) | undefined>(
+        undefined,
+    );
     const activeAppRef = useAutoupdateRef(activeInternalApplication);
     const onHeaderChange = useCallback(
         (appId: string, header: IAppHeaderOptions) => {
@@ -124,13 +129,21 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate }: IHostUi
         [activeAppRef],
     );
 
-    // Stable navigation callbacks that always use the latest router navigate
+    // Stable navigation callbacks that always use the latest router navigate.
+    // Both must stay stable: the host UI module captures them once at mount, so a changing dependency
+    // would leave it calling a stale closure.
     const navigateRef = useAutoupdateRef(routerNavigate);
+    // `replace` stays unguarded: it serves programmatic redirects, not user intent.
     const navigate = useCallback(
         (url: string) => {
-            void navigateRef.current(url);
+            runGuardedNavigation({
+                url,
+                currentPathname: latestMountStateRef.current.pathname,
+                guardRef: appNavigationRequestRef,
+                navigate: (target) => void navigateRef.current(target),
+            });
         },
-        [navigateRef],
+        [navigateRef, latestMountStateRef],
     );
     const replace = useCallback(
         (url: string) => {
@@ -195,8 +208,12 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate }: IHostUi
             appRootRef.current = undefined;
             const handle = handleRef.current;
             handleRef.current = undefined;
-            appRoot?.unmount();
-            handle?.unmount();
+            // This cleanup runs synchronously inside the commit of the root that renders this
+            // component, and unmount() is synchronous — doing it here re-enters React mid-render.
+            queueMicrotask(() => {
+                appRoot?.unmount();
+                handle?.unmount();
+            });
         };
         // Mount only once; updates are pushed via handle
     }, [latestMountStateRef, navigationMountRef]);
@@ -286,6 +303,7 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate }: IHostUi
                         onCloseAiAssistant={requestCloseAi}
                         onAiAssistantContext={setAiAssistantContext}
                         aiLinkClickHandlerRef={appAiLinkClickRef}
+                        navigationRequestRef={appNavigationRequestRef}
                         onHeaderChange={onHeaderChange}
                         onDocumentTitleChange={onDocumentTitleChange}
                     />

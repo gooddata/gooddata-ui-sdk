@@ -146,6 +146,9 @@ export {
     type AdSetApiTokenCommandData,
     type AdAttributeHierarchyModifiedCommand,
     type AdAttributeHierarchyModifiedCommandData,
+    type IAdSetTimezoneBody,
+    type AdSetTimezoneCommand,
+    type AdSetTimezoneCommandData,
     GdcAdCommandType,
     GdcAdEventType,
     isAdCommandFailedData,
@@ -172,6 +175,7 @@ export {
     isAdRedoFinishedData,
     isAdSetApiTokenCommandData,
     isAttributeHierarchyModifiedCommandData,
+    isAdSetTimezoneCommandData,
 } from "./iframe/EmbeddedAnalyticalDesigner.js";
 
 // EmbeddedKpiDashboard

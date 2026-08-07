@@ -2,7 +2,7 @@
 
 import { type IExportDefinitionVisualizationObjectSettings } from "@gooddata/sdk-model";
 
-type PdfPageSize = NonNullable<IExportDefinitionVisualizationObjectSettings["pageSize"]>;
+export type PdfPageSize = NonNullable<IExportDefinitionVisualizationObjectSettings["pageSize"]>;
 
 /**
  * Returns the default PDF page size based on the format locale.
@@ -11,8 +11,16 @@ type PdfPageSize = NonNullable<IExportDefinitionVisualizationObjectSettings["pag
  * @returns The default PDF page size.
  */
 export function getDefaultPdfPageSize(formatLocale?: string): PdfPageSize {
-    const normalizedLocale = formatLocale?.replace("_", "-");
-    const region = normalizedLocale?.split("-")[1]?.toUpperCase();
+    if (!formatLocale) {
+        return "A4";
+    }
 
-    return region === "US" || region === "CA" ? "LETTER" : "A4";
+    // Intl.Locale parses the region subtag correctly regardless of script/variant subtags
+    // (e.g. "sr-Latn-US", "en_US_POSIX"), unlike a positional split on "-".
+    try {
+        const region = new Intl.Locale(formatLocale.replace(/_/g, "-")).region?.toUpperCase();
+        return region === "US" || region === "CA" ? "LETTER" : "A4";
+    } catch {
+        return "A4";
+    }
 }

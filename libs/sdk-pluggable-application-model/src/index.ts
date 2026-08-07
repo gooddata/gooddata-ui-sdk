@@ -38,6 +38,7 @@ export {
     type IOpenAiAssistantRequestedEvent,
     type ICloseAiAssistantRequestedEvent,
     type IAiAssistantContextChangedEvent,
+    type IHostNavigationRequest,
     type IPluggableApp,
     type IPluggableApplicationMountHandle,
     type IPluggableApplicationMountOptions,

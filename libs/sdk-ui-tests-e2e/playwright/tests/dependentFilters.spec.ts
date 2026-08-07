@@ -459,7 +459,11 @@ test.topLevelDescribe(
                 await waitFilterElementsLoaded(page);
                 await selectAttributeValues(page, ["Boston", "Nashua"]);
                 await applyAttributeFilter(page);
-                await waitTableLoaded(page, WIDGET);
+                // NOT waitTableLoaded here: it returns in ~16ms because `.s-loading` never appears
+                // for this apply and the table still holds the pre-filter rows, so it does not wait
+                // at all. Assert on the filtered data instead — that is the only signal that the
+                // widget actually re-executed and the dashboard state settled.
+                await assertTableColumnValues(page, WIDGET, 2, ["Boston", "Nashua"]);
 
                 // Configure State filter to depend on City
                 await openAttributeFilter(page, "State");
