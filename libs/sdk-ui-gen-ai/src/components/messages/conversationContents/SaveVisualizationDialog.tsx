@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 
 import { useIntl } from "react-intl";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { type IChatConversationVisualisationContent } from "@gooddata/sdk-backend-spi";
 import { ConfirmDialog, Input, Typography } from "@gooddata/sdk-ui-kit";
@@ -19,32 +19,17 @@ export type SaveVisualizationDialogProps = {
     onClose: () => void;
 };
 
-export type SaveVisualizationDialogDispatchProps = {
-    saveVisualizationAction: typeof saveVisualizationAction;
-    savedVisualizationAction: typeof savedVisualizationAction;
-};
-
-function SaveVisualizationDialogCore({
+export function SaveVisualizationDialog({
     type,
     message,
     part,
     visualization,
     onClose,
-    saveVisualizationAction,
-    savedVisualizationAction,
-}: SaveVisualizationDialogProps & SaveVisualizationDialogDispatchProps) {
+}: SaveVisualizationDialogProps) {
     const intl = useIntl();
 
     const [value, setValue] = useState<string>(visualization.insight.title);
-    const { onSubmit } = useVisualisationSaving(
-        type,
-        message,
-        part,
-        visualization,
-        saveVisualizationAction,
-        savedVisualizationAction,
-        onClose,
-    );
+    const { onSubmit } = useVisualisationSaving(type, message, part, visualization, onClose);
 
     return (
         <ConfirmDialog
@@ -91,57 +76,40 @@ function useVisualisationSaving(
     message: IChatConversationLocalItem,
     part: IChatConversationMultipartLocalPart,
     visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>,
-    saveVisualization: typeof saveVisualizationAction,
-    savedVisualization: typeof savedVisualizationAction,
     onClose: () => void,
 ) {
+    const dispatch = useDispatch();
+
     // Close the dialog automatically once the item is saved
     const isStarted = part.saving?.started;
     const isComplete = part.saving?.completed;
     useEffect(() => {
         if (isStarted && isComplete) {
             onClose();
-            savedVisualization({
-                visualizationId: visualization.insight.identifier,
-                assistantMessageId: message.localId,
-            });
+            dispatch(
+                savedVisualizationAction({
+                    visualizationId: visualization.insight.identifier,
+                    assistantMessageId: message.localId,
+                }),
+            );
         }
-    }, [
-        isStarted,
-        isComplete,
-        onClose,
-        part,
-        savedVisualization,
-        visualization.insight.identifier,
-        message.localId,
-    ]);
+    }, [isStarted, isComplete, onClose, part, dispatch, visualization.insight.identifier, message.localId]);
 
     const onSubmit = useCallback(
         async (title: string) => {
-            saveVisualization({
-                visualizationId: visualization.insight.identifier,
-                visualizationTitle: title || visualization.insight.title,
-                assistantMessageId: message.localId,
-                explore: type === "explore",
-            });
+            dispatch(
+                saveVisualizationAction({
+                    visualizationId: visualization.insight.identifier,
+                    visualizationTitle: title || visualization.insight.title,
+                    assistantMessageId: message.localId,
+                    explore: type === "explore",
+                }),
+            );
         },
-        [
-            type,
-            message.localId,
-            saveVisualization,
-            visualization.insight.identifier,
-            visualization.insight.title,
-        ],
+        [type, message.localId, dispatch, visualization.insight.identifier, visualization.insight.title],
     );
 
     return {
         onSubmit,
     };
 }
-
-const mapDispatchToProps = {
-    saveVisualizationAction,
-    savedVisualizationAction,
-};
-
-export const SaveVisualizationDialog = connect(null, mapDispatchToProps)(SaveVisualizationDialogCore);

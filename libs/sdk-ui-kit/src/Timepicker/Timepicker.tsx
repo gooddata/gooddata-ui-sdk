@@ -12,7 +12,7 @@ import {
 } from "react";
 
 import moment from "moment";
-import { type WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { sanitizeLocaleForMoment } from "@gooddata/util";
@@ -49,7 +49,7 @@ export interface ITimepickerOwnProps {
     closeOnParentScroll?: boolean;
 }
 
-export type TimePickerProps = ITimepickerOwnProps & WrappedComponentProps;
+export type TimePickerProps = ITimepickerOwnProps;
 
 export const WrappedTimepicker = memo(function WrappedTimepicker({
     time = new Date(),
@@ -63,8 +63,9 @@ export const WrappedTimepicker = memo(function WrappedTimepicker({
     timeAnchor = TIME_ANCHOR,
     timeFormat = undefined,
     closeOnParentScroll,
-    intl,
 }: TimePickerProps) {
+    const intl = useIntl();
+
     const dropdownRef = useRef<HTMLDivElement | null>(null);
 
     const updateLocaleForMoment = useCallback(() => {
@@ -241,15 +242,13 @@ export const WrappedTimepicker = memo(function WrappedTimepicker({
     );
 });
 
-const TimePickerWithIntl = injectIntl(WrappedTimepicker);
-
 /**
  * @internal
  */
 export const Timepicker = memo(function Timepicker(props: ITimepickerOwnProps) {
     return (
         <IntlWrapper locale={props.locale}>
-            <TimePickerWithIntl {...props} />
+            <WrappedTimepicker {...props} />
         </IntlWrapper>
     );
 });

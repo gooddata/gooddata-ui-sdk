@@ -2,7 +2,6 @@
 
 import {
     type DragEvent,
-    type FC,
     type KeyboardEvent,
     type MouseEvent,
     type ReactElement,
@@ -18,7 +17,7 @@ import {
 
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
-import { connect, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
     DefaultUiMenuInteractiveItemWrapper,
@@ -55,41 +54,18 @@ import { useFullscreenCheck } from "./hooks/useFullscreenCheck.js";
 import { useHistoryCheck } from "./hooks/useHistoryCheck.js";
 import { ConversationDateGroup, groupConversationsByDate } from "./utils/conversationGrouper.js";
 
-type GenAIChatConversationsStateProps = {
-    conversation: ReturnType<typeof conversationSelector>;
-    conversations: ReturnType<typeof conversationsSelector>;
-};
-
-type GenAIChatConversationsDispatchProps = {
-    deleteConversation: typeof deleteConversationAction;
-    pinConversation: typeof pinConversationAction;
-    renameConversation: typeof renameConversationAction;
-};
-
-type GenAIChatConversationsExternalProps = {
+type GenAIChatConversationsProps = {
     wrapper?: ReactElement;
     onClose?: () => void;
     onSelect: (conversation: IChatConversationLocal) => void;
 };
 
-export type GenAIChatConversationsProps = GenAIChatConversationsStateProps &
-    GenAIChatConversationsDispatchProps &
-    GenAIChatConversationsExternalProps;
-
 type ConversationDropZone = "pin" | "unpin" | "body";
 
-function GenAIChatConversationsComponent({
-    onClose,
-    onSelect,
-    wrapper,
-    deleteConversation,
-    pinConversation,
-    renameConversation,
-    conversations,
-    conversation: currentConversation,
-}: GenAIChatConversationsProps) {
+export function GenAIChatConversations({ onClose, onSelect, wrapper }: GenAIChatConversationsProps) {
     const menuRef = useRef<HTMLElement>(undefined);
     const intl = useIntl();
+    const dispatch = useDispatch();
 
     const { isFullscreen, isSmallScreen } = useFullscreenCheck();
     const { isHistory } = useHistoryCheck();
@@ -101,6 +77,8 @@ function GenAIChatConversationsComponent({
 
     const catalogItems = useSelector(catalogItemsSelector);
     const conversationLoaded = useSelector(conversationsLoadedSelector);
+    const currentConversation = useSelector((state: RootState) => conversationSelector(state));
+    const conversations = useSelector((state: RootState) => conversationsSelector(state));
 
     const groupedConversations = useMemo(() => groupConversationsByDate(conversations), [conversations]);
 
@@ -228,10 +206,12 @@ function GenAIChatConversationsComponent({
                                             } else if (selectedConversation.action === "rename") {
                                                 setConversationToRename(conversation);
                                             } else {
-                                                pinConversation({
-                                                    conversation: selectedConversation,
-                                                    pinned: !selectedConversation.pinned,
-                                                });
+                                                dispatch(
+                                                    pinConversationAction({
+                                                        conversation: selectedConversation,
+                                                        pinned: !selectedConversation.pinned,
+                                                    }),
+                                                );
                                             }
                                             event.preventDefault();
                                             event.stopPropagation();
@@ -255,7 +235,7 @@ function GenAIChatConversationsComponent({
             catalogItems,
             openedId,
             currentConversation,
-            pinConversation,
+            dispatch,
             setConversationToRename,
         ],
     );
@@ -285,24 +265,26 @@ function GenAIChatConversationsComponent({
 
     const handleDeleteSubmit = useCallback(() => {
         if (conversationToDelete) {
-            deleteConversation({ conversation: conversationToDelete });
+            dispatch(deleteConversationAction({ conversation: conversationToDelete }));
         }
         setConversationToDelete(undefined);
         menuRef.current?.focus();
-    }, [conversationToDelete, deleteConversation]);
+    }, [conversationToDelete, dispatch]);
 
     const handleRenameSubmit = useCallback(
         (title: string) => {
             if (conversationToRename) {
-                renameConversation({
-                    conversation: conversationToRename,
-                    title,
-                });
+                dispatch(
+                    renameConversationAction({
+                        conversation: conversationToRename,
+                        title,
+                    }),
+                );
             }
             setConversationToRename(undefined);
             menuRef.current?.focus();
         },
-        [conversationToRename, renameConversation],
+        [conversationToRename, dispatch],
     );
 
     const handleDragStart = useCallback((conversationId: string, event: DragEvent<HTMLDivElement>) => {
@@ -355,16 +337,18 @@ function GenAIChatConversationsComponent({
 
             const shouldBePinned = dropZone === "pin";
             if (draggedConversation.pinned !== shouldBePinned) {
-                pinConversation({
-                    conversation: draggedConversation,
-                    pinned: shouldBePinned,
-                });
+                dispatch(
+                    pinConversationAction({
+                        conversation: draggedConversation,
+                        pinned: shouldBePinned,
+                    }),
+                );
             }
 
             setDraggedConversationId(undefined);
             setActiveDropZone(undefined);
         },
-        [draggedConversation, pinConversation],
+        [draggedConversation, dispatch],
     );
 
     const handleMenuUnhandledKeyDown = useCallback(
@@ -749,22 +733,6 @@ function toggleInConversationItems(
     }
     menuRef.current = target;
 }
-
-const mapStateToProps = (state: RootState): GenAIChatConversationsStateProps => ({
-    conversation: conversationSelector(state),
-    conversations: conversationsSelector(state),
-});
-
-const mapDispatchToProps: GenAIChatConversationsDispatchProps = {
-    deleteConversation: deleteConversationAction,
-    pinConversation: pinConversationAction,
-    renameConversation: renameConversationAction,
-};
-
-export const GenAIChatConversations: FC<GenAIChatConversationsExternalProps> = connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(GenAIChatConversationsComponent);
 
 function getConversationGroupLabel(group: ConversationDateGroup, intl: ReturnType<typeof useIntl>): string {
     switch (group) {

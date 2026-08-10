@@ -1,12 +1,11 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { type FC, useCallback } from "react";
+import { useCallback } from "react";
 
 import cx from "classnames";
 import noop from "lodash-es/noop.js";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { type IUserWorkspaceSettings } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import { IntlWrapper } from "../localization/IntlWrapper.js";
@@ -19,7 +18,6 @@ import {
     loadThreadAction,
     setCurrentConversationAction,
 } from "../store/messages/messagesSlice.js";
-import { type RootState } from "../store/types.js";
 
 import { ConfigProvider } from "./ConfigContext.js";
 import { CustomizationProvider } from "./CustomizationProvider.js";
@@ -102,39 +100,21 @@ export function GenAIConversations(props: GenAIConversationsProps) {
     );
 }
 
-type GenAIConversationsWrapperProps = GenAIConversationsProps & {
-    loadThread: typeof loadThreadAction;
-    cancelLoading: typeof cancelAsyncAction;
-    loadConversation: typeof setCurrentConversationAction;
-    settings?: IUserWorkspaceSettings;
-};
-
-const mapDispatchToProps = {
-    loadConversation: setCurrentConversationAction,
-    loadThread: loadThreadAction,
-    cancelLoading: cancelAsyncAction,
-};
-
-const mapStateToProps = (state: RootState) => ({
-    settings: settingsSelector(state),
-});
-
-const GenAIConversationsContent: FC<GenAIConversationsProps> = connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(function GenAIConversationsContent(props: GenAIConversationsWrapperProps) {
-    const {
-        catalogItems,
-        className,
-        onConversationSelect = noop,
-        loadThread,
-        cancelLoading,
-        loadConversation,
-        settings,
-    } = props;
+function GenAIConversationsContent(props: GenAIConversationsProps) {
+    const { catalogItems, className, onConversationSelect = noop } = props;
+    const dispatch = useDispatch();
+    const settings = useSelector(settingsSelector);
     const { loading } = usePermissions();
 
     const classNames = cx("gd-gen-ai-chat__embed__conversations", className);
+
+    const loadThread = useCallback(() => {
+        dispatch(loadThreadAction());
+    }, [dispatch]);
+
+    const cancelLoading = useCallback(() => {
+        dispatch(cancelAsyncAction());
+    }, [dispatch]);
 
     useThreadLoading({
         initializing: loading || !settings,
@@ -144,10 +124,10 @@ const GenAIConversationsContent: FC<GenAIConversationsProps> = connect(
 
     const onSelectConversation = useCallback(
         (conversation: IChatConversationLocal) => {
-            loadConversation({ conversation });
+            dispatch(setCurrentConversationAction({ conversation }));
             onConversationSelect(conversation);
         },
-        [loadConversation, onConversationSelect],
+        [dispatch, onConversationSelect],
     );
 
     return (
@@ -166,4 +146,4 @@ const GenAIConversationsContent: FC<GenAIConversationsProps> = connect(
             </CustomizationProvider>
         </ConfigProvider>
     );
-});
+}

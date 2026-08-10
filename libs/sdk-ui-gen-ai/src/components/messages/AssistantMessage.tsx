@@ -1,8 +1,10 @@
 // (C) 2024-2026 GoodData Corporation
 
+import { useCallback } from "react";
+
 import cx from "classnames";
 import { useIntl } from "react-intl";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
@@ -12,19 +14,26 @@ import { setUserFeedback } from "../../store/messages/messagesSlice.js";
 import { FeedbackPopup } from "./FeedbackPopup.js";
 import { MessageContents } from "./MessageContents.js";
 import { getAssistantMessageState } from "./messageState.js";
-import { useUserFeedback } from "./useUserFeedback.js";
+import { type SetUserFeedbackHandler, useUserFeedback } from "./useUserFeedback.js";
 
 type AssistantMessageProps = {
     message: AssistantMessage;
-    setUserFeedback: typeof setUserFeedback;
     isLast?: boolean;
 };
 
-function AssistantMessageComponentCore({ message, setUserFeedback, isLast }: AssistantMessageProps) {
+export function AssistantMessageComponent({ message, isLast }: AssistantMessageProps) {
     const intl = useIntl();
+    const dispatch = useDispatch();
+
+    const setUserFeedbackAction = useCallback<SetUserFeedbackHandler>(
+        (payload) => {
+            dispatch(setUserFeedback(payload));
+        },
+        [dispatch],
+    );
 
     const { handlePositiveFeedbackClick, handleNegativeFeedbackClick, handleFeedbackSubmit } =
-        useUserFeedback({ message, setUserFeedback });
+        useUserFeedback({ message, setUserFeedback: setUserFeedbackAction });
 
     const messageState = getAssistantMessageState(message);
     const thumbsUpLabel = intl.formatMessage({ id: "gd.gen-ai.feedback.like" });
@@ -108,12 +117,3 @@ function AssistantMessageComponentCore({ message, setUserFeedback, isLast }: Ass
         </div>
     );
 }
-
-const mapDispatchToProps = {
-    setUserFeedback,
-};
-
-export const AssistantMessageComponent: any = connect(
-    null,
-    mapDispatchToProps,
-)(AssistantMessageComponentCore);

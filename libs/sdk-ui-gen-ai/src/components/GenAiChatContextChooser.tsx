@@ -1,11 +1,8 @@
 // (C) 2026 GoodData Corporation
 
-import { type FC } from "react";
-
 import { defineMessages, useIntl } from "react-intl";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { type IGenAIUserContext } from "@gooddata/sdk-model";
 import { Dropdown, UiIconButton, UiMenu, UiSubmenuHeader } from "@gooddata/sdk-ui-kit";
 
 import { ambientContextSelector, userContextSelector } from "../store/chatWindow/chatWindowSelectors.js";
@@ -19,30 +16,17 @@ type GenAiChatContextChooserOwnProps = {
     onAddContext?: (context: IGenAIContextObject) => void;
 };
 
-type GenAiChatContextChooserStateProps = {
-    active: IGenAIUserContext | undefined;
-    ambient: IGenAIUserContext | undefined;
-};
-
-type IGenAiChatContextChooserDispatchProps = {
-    addContextReference: typeof addContextReferenceAction;
-};
-
 const msgs = defineMessages({
     add: {
         id: "gd.gen-ai.context.add_context",
     },
 });
 
-function GenAiChatContextChooserCore({
-    active,
-    ambient,
-    addContextReference,
-    onAddContext,
-}: GenAiChatContextChooserOwnProps &
-    GenAiChatContextChooserStateProps &
-    IGenAiChatContextChooserDispatchProps) {
+export function GenAiChatContextChooser({ onAddContext }: GenAiChatContextChooserOwnProps) {
     const intl = useIntl();
+    const dispatch = useDispatch();
+    const ambient = useSelector((state: RootState) => ambientContextSelector(state));
+    const active = useSelector((state: RootState) => userContextSelector(state));
     const items = useContextItems(ambient, active);
 
     if (!ambient) {
@@ -84,7 +68,7 @@ function GenAiChatContextChooserCore({
                         MenuHeader={ContextMenuHeader}
                         ariaAttributes={ariaAttributes}
                         onSelect={(item) => {
-                            addContextReference({ object: item.data });
+                            dispatch(addContextReferenceAction({ object: item.data }));
                             onAddContext?.(item.data);
                             closeDropdown();
                         }}
@@ -94,25 +78,6 @@ function GenAiChatContextChooserCore({
         </div>
     );
 }
-
-const mapStateToProps = (state: RootState): GenAiChatContextChooserStateProps => {
-    const ambient = ambientContextSelector(state);
-    const active = userContextSelector(state);
-
-    return {
-        active,
-        ambient,
-    };
-};
-
-const mapDispatchToProps = {
-    addContextReference: addContextReferenceAction,
-};
-
-export const GenAiChatContextChooser: FC<GenAiChatContextChooserOwnProps> = connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(GenAiChatContextChooserCore);
 
 function ContextMenuHeader() {
     const intl = useIntl();

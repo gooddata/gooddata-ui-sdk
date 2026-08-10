@@ -3,7 +3,7 @@
 import { type MouseEvent } from "react";
 
 import cx from "classnames";
-import { type IntlShape, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { simplifyText } from "@gooddata/util";
 
@@ -14,11 +14,9 @@ export interface IHeaderWorkspacePickerItemProps {
     isSelected?: boolean;
     isLoading?: boolean;
     onClick: (e: MouseEvent<HTMLButtonElement>) => void;
-    intl: IntlShape;
 }
 
-function CoreHeaderWorkspacePickerItem({
-    intl,
+export function HeaderWorkspacePickerItem({
     workspaceId,
     title,
     isLoading,
@@ -26,6 +24,8 @@ function CoreHeaderWorkspacePickerItem({
     isDemo,
     onClick,
 }: IHeaderWorkspacePickerItemProps) {
+    const intl = useIntl();
+
     const t = intl.formatMessage;
 
     if (isLoading) {
@@ -55,5 +55,3 @@ function CoreHeaderWorkspacePickerItem({
         </button>
     );
 }
-
-export const HeaderWorkspacePickerItem = injectIntl(CoreHeaderWorkspacePickerItem);

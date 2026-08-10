@@ -5,7 +5,7 @@ import { type FC, type LegacyRef, type MouseEvent, type ReactNode, useMemo, useS
 import { type EditorView } from "@codemirror/view";
 import cx from "classnames";
 import { FormattedMessage, defineMessages, useIntl } from "react-intl";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { SyntaxHighlightingInput } from "@gooddata/sdk-ui-kit";
 
@@ -24,7 +24,7 @@ import {
     conversationsLoadedSelector,
     messagesSelector,
 } from "../store/messages/messagesSelectors.js";
-import { newMessageAction, setSelectedAgentAction } from "../store/messages/messagesSlice.js";
+import { newMessageAction } from "../store/messages/messagesSlice.js";
 import { type RootState } from "../store/types.js";
 
 import { collectReferences } from "./completion/references.js";
@@ -44,21 +44,6 @@ export type InputOwnProps = {
     targetRef?: LegacyRef<HTMLDivElement>;
 };
 
-type InputStateProps = {
-    isBusy: boolean;
-    isEvaluating: boolean;
-    messages: ReturnType<typeof messagesSelector>;
-    loading: ReturnType<typeof asyncProcessSelector>;
-    conversation: ReturnType<typeof conversationSelector>;
-    conversationsLoaded: ReturnType<typeof conversationsLoadedSelector>;
-    items: ReturnType<typeof conversationMessagesSelector>;
-    agentSwitchingEnabled: ReturnType<typeof agentSwitchingEnabledSelector>;
-};
-
-type InputDispatchProps = {
-    newMessage: typeof newMessageAction;
-};
-
 const msgs = defineMessages({
     placeholder: {
         id: "gd.gen-ai.input-placeholder",
@@ -75,23 +60,19 @@ const isMac =
     typeof navigator !== "undefined" &&
     (navigator.platform.toUpperCase().indexOf("MAC") >= 0 || navigator.userAgent.includes("Macintosh"));
 
-function InputComponent({
-    isBusy,
-    isEvaluating,
-    newMessage,
-    autofocus = false,
-    canManage,
-    canAnalyze,
-    targetRef,
-    messages,
-    conversation,
-    conversationsLoaded,
-    items,
-    agentSwitchingEnabled,
-    loading,
-}: InputOwnProps & InputStateProps & InputDispatchProps) {
+function InputComponent({ autofocus = false, canManage, canAnalyze, targetRef }: InputOwnProps) {
     const intl = useIntl();
+    const dispatch = useDispatch();
     const { isBigScreen, isSmallScreen, isFullscreen } = useFullscreenCheck();
+
+    const conversation = useSelector((state: RootState) => conversationSelector(state));
+    const conversationsLoaded = useSelector((state: RootState) => conversationsLoadedSelector(state));
+    const items = useSelector((state: RootState) => conversationMessagesSelector(state));
+    const messages = useSelector((state: RootState) => messagesSelector(state));
+    const loading = useSelector((state: RootState) => asyncProcessSelector(state));
+    const agentSwitchingEnabled = useSelector((state: RootState) => agentSwitchingEnabledSelector(state));
+    const isBusy = !!loading;
+    const isEvaluating = loading === "evaluating";
 
     const isLoading = loading === "loading" || loading === "clearing";
     const isAssistantLoading = isLoading || loading === "restoring";
@@ -125,7 +106,7 @@ function InputComponent({
                 makeTextContents(escapeMarkdown(value), collectReferences(value, used.current)),
             ]);
         }
-        newMessage(item);
+        dispatch(newMessageAction(item));
         setValue("");
     };
 
@@ -228,6 +209,8 @@ function InputComponent({
     );
 }
 
+export const Input: FC<InputOwnProps> = InputComponent;
+
 interface IHintTextProps {
     focused: boolean;
     where: "top" | "bottom";
@@ -261,36 +244,3 @@ function HintText({ where, focused }: IHintTextProps) {
         </div>
     );
 }
-
-const mapStateToProps = (
-    state: RootState,
-): {
-    isBusy: boolean;
-    isEvaluating: boolean;
-    items: ReturnType<typeof conversationMessagesSelector>;
-    conversation: ReturnType<typeof conversationSelector>;
-    conversationsLoaded: ReturnType<typeof conversationsLoadedSelector>;
-    messages: ReturnType<typeof messagesSelector>;
-    loading: ReturnType<typeof asyncProcessSelector>;
-    agentSwitchingEnabled: ReturnType<typeof agentSwitchingEnabledSelector>;
-} => {
-    const asyncState = asyncProcessSelector(state);
-
-    return {
-        conversation: conversationSelector(state),
-        conversationsLoaded: conversationsLoadedSelector(state),
-        items: conversationMessagesSelector(state),
-        messages: messagesSelector(state),
-        loading: asyncState,
-        agentSwitchingEnabled: agentSwitchingEnabledSelector(state),
-        isBusy: !!asyncState,
-        isEvaluating: asyncState === "evaluating",
-    };
-};
-
-const mapDispatchToProps = {
-    newMessage: newMessageAction,
-    setSelectedAgent: setSelectedAgentAction,
-};
-
-export const Input: FC<InputOwnProps> = connect(mapStateToProps, mapDispatchToProps)(InputComponent);

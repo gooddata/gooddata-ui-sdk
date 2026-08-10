@@ -12,7 +12,7 @@ import {
 } from "react";
 
 import cx from "classnames";
-import { type WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import {
     type IUiPagedVirtualListSkeletonItemProps,
@@ -143,15 +143,17 @@ export const DEFAULT_MOBILE_ITEM_HEIGHT = 40;
 
 type DefaultNoDataProps = (props: { hasNoMatchingData: boolean }) => ReactNode;
 
-const DefaultNoDataComponent = injectIntl(
-    ({ hasNoMatchingData, intl }: { hasNoMatchingData: boolean } & WrappedComponentProps) => (
+function DefaultNoDataComponent({ hasNoMatchingData }: { hasNoMatchingData: boolean }) {
+    const intl = useIntl();
+
+    return (
         <NoData
             hasNoMatchingData={hasNoMatchingData}
             notFoundLabel={intl.formatMessage({ id: "gs.noData.noMatchingData" })}
             noDataLabel={intl.formatMessage({ id: "gs.noData.noDataAvailable" })}
         />
-    ),
-);
+    );
+}
 
 const defaultNoData: DefaultNoDataProps = (props) => {
     return <DefaultNoDataComponent hasNoMatchingData={props.hasNoMatchingData} />;

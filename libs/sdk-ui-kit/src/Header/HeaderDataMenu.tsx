@@ -1,7 +1,7 @@
 // (C) 2020-2026 GoodData Corporation
 
 import cx from "classnames";
-import { type IntlShape, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
 
 import { Bubble } from "../Bubble/Bubble.js";
@@ -22,13 +22,17 @@ export interface IHeaderDataMenuItem extends IHeaderMenuItem {
  * @internal
  */
 export interface IHeaderDataMenuProps {
-    intl: IntlShape;
     className?: string;
     onMenuItemClick: (item: IHeaderDataMenuItem) => void;
     dataMenuItems: IHeaderDataMenuItem[];
 }
 
-function CoreHeaderDataMenu({ intl, onMenuItemClick, dataMenuItems, className }: IHeaderDataMenuProps) {
+/**
+ * @internal
+ */
+export function HeaderDataMenu({ onMenuItemClick, dataMenuItems, className }: IHeaderDataMenuProps) {
+    const intl = useIntl();
+
     const renderSection = (items: IHeaderDataMenuItem[]) => {
         return items.map((item: IHeaderDataMenuItem) => {
             const { isDisable, tooltipText, isActive, className, key, onClick } = item;
@@ -75,8 +79,3 @@ function CoreHeaderDataMenu({ intl, onMenuItemClick, dataMenuItems, className }:
         </div>
     );
 }
-
-/**
- * @internal
- */
-export const HeaderDataMenu = injectIntl(CoreHeaderDataMenu);
