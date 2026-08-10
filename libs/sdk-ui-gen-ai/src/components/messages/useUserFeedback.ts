@@ -8,11 +8,19 @@ import { type setUserFeedback } from "../../store/messages/messagesSlice.js";
 import { type IFeedbackData } from "./FeedbackPopup.js";
 
 /**
+ * Dispatches the {@link setUserFeedback} action. Satisfied both by the action creator bound to the store
+ * dispatch and by a plain callback wrapping `dispatch(setUserFeedback(payload))`.
+ *
+ * @internal
+ */
+export type SetUserFeedbackHandler = (payload: Parameters<typeof setUserFeedback>[0]) => void;
+
+/**
  * @internal
  */
 export interface IUseUserFeedbackProps {
     message: AssistantMessage | IChatConversationLocalItem;
-    setUserFeedback: typeof setUserFeedback;
+    setUserFeedback: SetUserFeedbackHandler;
 }
 
 /**

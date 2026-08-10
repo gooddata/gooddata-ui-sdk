@@ -69,6 +69,7 @@ export function VisualizationSwitcherNavigationHeader({
     return (
         <Dropdown
             alignPoints={alignPoints}
+            accessibilityConfig={{ popupRole: "listbox" }}
             autofocusOnOpen
             renderBody={({ closeDropdown, ariaAttributes }) => (
                 <UiListbox

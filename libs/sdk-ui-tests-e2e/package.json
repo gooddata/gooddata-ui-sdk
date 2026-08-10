@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-tests-e2e",
-    "version": "11.52.0-alpha.3",
+    "version": "11.52.0-alpha.4",
     "private": true,
     "description": "GoodData SDK e2e tests",
     "license": "LicenseRef-LICENSE",
@@ -42,7 +42,7 @@
         "@gooddata/sdk-ui-tests-app": "workspace:*",
         "@gooddata/sdk-ui-tests-reference-workspace": "workspace:*",
         "@gooddata/util": "workspace:*",
-        "@playwright/test": "1.61.0",
+        "@playwright/test": "1.62.1",
         "@types/lodash-es": "^4.17.12",
         "@types/node": "24.12.0",
         "@typescript-eslint/eslint-plugin": "8.58.0",

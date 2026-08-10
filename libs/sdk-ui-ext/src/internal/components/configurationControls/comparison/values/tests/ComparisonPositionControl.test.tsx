@@ -15,9 +15,13 @@ import { ComparisonPositionControl } from "../ComparisonPositionControl.js";
 vi.mock("../../../DropdownControl.js", async (importOriginal) => {
     // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
     const actual = await importOriginal<typeof import("../../../DropdownControl.js")>();
+    // DropdownControl is a memo component, so mock its inner render function to keep the mock callable
+    const { type: DropdownControlComponent } = actual.DropdownControl as unknown as {
+        type: typeof actual.DropdownControl;
+    };
     return {
         ...actual,
-        DropdownControl: vi.fn(actual.DropdownControl),
+        DropdownControl: vi.fn(DropdownControlComponent),
     };
 });
 

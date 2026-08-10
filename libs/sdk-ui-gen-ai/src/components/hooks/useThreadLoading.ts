@@ -6,12 +6,11 @@ import { useSelector } from "react-redux";
 
 import { settingsSelector } from "../../store/chatWindow/chatWindowSelectors.js";
 import { loadedSelector } from "../../store/messages/messagesSelectors.js";
-import { type cancelAsyncAction, type loadThreadAction } from "../../store/messages/messagesSlice.js";
 
 type ThreadLoadingProps = {
     initializing?: boolean;
-    loadThread: typeof loadThreadAction;
-    cancelLoading: typeof cancelAsyncAction;
+    loadThread: () => void;
+    cancelLoading: () => void;
 };
 
 export function useThreadLoading({ initializing, cancelLoading, loadThread }: ThreadLoadingProps) {

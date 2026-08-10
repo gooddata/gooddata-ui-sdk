@@ -1,10 +1,11 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import moment from "moment";
+import { RawIntlProvider } from "react-intl";
 import { describe, expect, it, vi } from "vitest";
 
-import { createIntlMock, withIntl } from "@gooddata/sdk-ui";
+import { createIntlMock } from "@gooddata/sdk-ui";
 
 import { type TimePickerProps, WrappedTimepicker } from "../Timepicker.js";
 
@@ -16,17 +17,19 @@ describe("TimePicker", () => {
     TEST_TIME.setMilliseconds(0);
 
     const defaultProps = {
-        intl: createIntlMock(),
         time: TEST_TIME,
     };
 
-    function renderComponent(customProps: Partial<TimePickerProps> = {}) {
+    function renderComponent(customProps: Partial<TimePickerProps> = {}, locale = "en-US") {
         const props = {
             ...defaultProps,
             ...customProps,
         };
-        const Wrapped = withIntl(WrappedTimepicker);
-        return render(<Wrapped {...props} />);
+        return render(
+            <RawIntlProvider value={createIntlMock({}, locale)}>
+                <WrappedTimepicker {...props} />
+            </RawIntlProvider>,
+        );
     }
 
     describe("initial state", () => {
@@ -82,9 +85,7 @@ describe("TimePicker", () => {
 
     describe("localization", () => {
         it("should translate time in zh-Hans locale", () => {
-            renderComponent({
-                intl: createIntlMock({}, "zh-Hans"),
-            });
+            renderComponent({}, "zh-Hans");
             expect(screen.getByText("09:30 上午")).toBeInTheDocument();
         });
     });

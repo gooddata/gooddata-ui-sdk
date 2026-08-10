@@ -1,12 +1,11 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { type FC, type RefObject, useCallback, useEffect, useMemo } from "react";
+import { type RefObject, useCallback, useEffect, useMemo } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { type IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
 import { Dialog } from "@gooddata/sdk-ui-kit";
 
 import { type IChatConversationLocal } from "../model.js";
@@ -24,16 +23,6 @@ import { GenAIChatHeader } from "./GenAIChatHeader.js";
 import { GenAIChatWrapper } from "./GenAIChatWrapper.js";
 import { useFullscreenCheck } from "./hooks/useFullscreenCheck.js";
 
-export type GenAIChatOverlayDispatchProps = {
-    setHistory: typeof setHistoryAction;
-    loadConversation: typeof setCurrentConversationAction;
-};
-
-export type GenAIChatOverlayStateProps = {
-    keyDriverAnalysis?: IKdaDefinition;
-    keyDriverAnalysisMinimized?: boolean;
-};
-
 export type GenAIChatOverlayExternalProps = {
     returnFocusTo?: RefObject<HTMLElement | null> | string;
     className?: string;
@@ -48,23 +37,21 @@ export type GenAIChatOverlayExternalProps = {
     onClose: () => void;
 };
 
-export type GenAIChatOverlayProps = GenAIChatOverlayExternalProps &
-    GenAIChatOverlayDispatchProps &
-    GenAIChatOverlayStateProps;
-
-function GenAIChatOverlayComponent({
+export function GenAIChatOverlay({
     onClose,
     returnFocusTo,
-    setHistory,
-    loadConversation,
     dialogPosition,
-    keyDriverAnalysis,
-    keyDriverAnalysisMinimized,
     className,
     closeOnEscape: closeOnEscapeProp = true,
-}: GenAIChatOverlayProps) {
+}: GenAIChatOverlayExternalProps) {
     const intl = useIntl();
     const { isFullscreen } = useFullscreenCheck();
+    const dispatch = useDispatch();
+
+    const keyDriverAnalysis = useSelector((state: RootState) => keyDriverAnalysisSelector(state));
+    const keyDriverAnalysisMinimized = useSelector((state: RootState) =>
+        keyDriverAnalysisMinimizedSelector(state),
+    );
 
     const classNames = cx("gd-gen-ai-chat__window", className, {
         "gd-gen-ai-chat__window--fullscreen": isFullscreen,
@@ -73,15 +60,15 @@ function GenAIChatOverlayComponent({
     });
 
     const onHistoryClose = useCallback(() => {
-        setHistory({ isHistory: false });
-    }, [setHistory]);
+        dispatch(setHistoryAction({ isHistory: false }));
+    }, [dispatch]);
 
     const onSelectConversation = useCallback(
         (conversation: IChatConversationLocal) => {
-            loadConversation({ conversation });
-            setHistory({ isHistory: false });
+            dispatch(setCurrentConversationAction({ conversation }));
+            dispatch(setHistoryAction({ isHistory: false }));
         },
-        [loadConversation, setHistory],
+        [dispatch],
     );
 
     const position = useMemo(() => {
@@ -137,20 +124,3 @@ function GenAIChatOverlayComponent({
         </Dialog>
     );
 }
-
-const mapDispatchToProps: GenAIChatOverlayDispatchProps = {
-    setHistory: setHistoryAction,
-    loadConversation: setCurrentConversationAction,
-};
-
-const mapStateToProps = (state: RootState): GenAIChatOverlayStateProps => {
-    return {
-        keyDriverAnalysis: keyDriverAnalysisSelector(state),
-        keyDriverAnalysisMinimized: keyDriverAnalysisMinimizedSelector(state),
-    };
-};
-
-export const GenAIChatOverlay: FC<GenAIChatOverlayExternalProps> = connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(GenAIChatOverlayComponent);

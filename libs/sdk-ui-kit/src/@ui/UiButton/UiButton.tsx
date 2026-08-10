@@ -147,14 +147,18 @@ export const UiButton = forwardRef<HTMLButtonElement, IUiButtonProps>(
                         disableAnimation={disableIconAnimation}
                     />
                 ) : null}
-                <span className={e("text")} style={{ maxWidth }}>
+                <span className={e("text")} data-testid={`${testId}-label`} style={{ maxWidth }}>
                     {label}
                 </span>
                 {badgeAfter !== undefined && typeof badgeAfter === "number" ? (
-                    <span className={e("badge")}>({badgeAfter})</span>
+                    <span className={e("badge-number")} data-testid={`${testId}-badge`}>
+                        ({badgeAfter})
+                    </span>
                 ) : null}
                 {badgeAfter !== undefined && typeof badgeAfter === "string" ? (
-                    <span className={e("badge")}>{badgeAfter}</span>
+                    <span className={e("badge-text")} data-testid={`${testId}-badge`}>
+                        {badgeAfter}
+                    </span>
                 ) : null}
                 {iconAfter ? (
                     <UiIcon

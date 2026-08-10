@@ -4,7 +4,7 @@ import { type ElementType, type ReactElement, useCallback, useMemo, useState } f
 
 import cx from "classnames";
 import { has, keyBy, take } from "lodash-es";
-import { FormattedMessage, type WrappedComponentProps, injectIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 import { Input } from "../Form/Input.js";
 import { Message } from "../Messages/Message.js";
@@ -101,14 +101,11 @@ export function LegacyInvertableList<T>({
     itemHeight,
     items,
     itemsCount,
-    limitHitWarningClass: LimitHitWarningClass = injectIntl<
-        "intl",
-        ILimitHitWarningProps & WrappedComponentProps
-    >(LimitHitWarning),
+    limitHitWarningClass: LimitHitWarningClass = LimitHitWarning,
     listItemClass = LegacyMultiSelectListItem,
     maxSelectionSize,
     noItemsFound,
-    noItemsFoundClass: NoItemsFoundClass = injectIntl(NoItemsFound),
+    noItemsFoundClass: NoItemsFoundClass = NoItemsFound,
     onRangeChange = () => {},
     onSearch,
     onSelect = () => {},

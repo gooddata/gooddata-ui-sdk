@@ -6,12 +6,12 @@
 # Playwright image with pre-bundled e2e test code.
 # Built by the pre-build job so shard runners only need docker compose up.
 
-FROM 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/mcr.microsoft.com/playwright:v1.61.0-noble@sha256:57b65fdc9ceabe0ef613124c7bbe2babcf9362c4d85e382fe3b03604e84b428a
+FROM 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/mcr.microsoft.com/playwright:v1.62.1-noble@sha256:dcc5531e97840b9b5e794f2814476b21571c5124a3fca2267d73041f56e7580e
 
 WORKDIR /app
 
 # Install @playwright/test so bundled code can require it at runtime
-RUN npm install --no-save @playwright/test@1.61.0
+RUN npm install --no-save @playwright/test@1.62.1
 
 # Compare JSON fixture files
 COPY playwright/fixtures ./playwright/fixtures

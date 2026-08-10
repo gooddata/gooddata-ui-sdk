@@ -3,7 +3,7 @@
 import { type ComponentType, memo, useCallback, useId, useState } from "react";
 
 import { cloneDeep, set } from "lodash-es";
-import { type WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import {
     Dropdown,
@@ -40,136 +40,135 @@ const alignPoints = ["bl tl", "tl bl", "br tr", "tr br"];
 
 const DROPDOWN_ALIGNMENTS = alignPoints.map((align) => ({ align, offset: { x: 1, y: 0 } }));
 
-export const DropdownControl = injectIntl(
-    memo(function DropdownControl({
-        valuePath,
-        properties,
-        labelText,
-        value = "",
-        items = [] as IDropdownItem[],
-        disabled = false,
-        width = 117,
-        showDisabledMessage = false,
-        disabledMessageAlignPoints,
-        customListItem: ListItem = SingleSelectListItem,
-        showSearch = false,
-        searchPlaceholder,
-        pushData,
-        intl,
-    }: IDropdownControlProps & WrappedComponentProps) {
-        const [searchString, setSearchString] = useState("");
-        const onSearch = useCallback((value: string) => setSearchString(value), []);
-        const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-        const popupId = useId();
+export const DropdownControl = memo(function DropdownControl({
+    valuePath,
+    properties,
+    labelText,
+    value = "",
+    items = [] as IDropdownItem[],
+    disabled = false,
+    width = 117,
+    showDisabledMessage = false,
+    disabledMessageAlignPoints,
+    customListItem: ListItem = SingleSelectListItem,
+    showSearch = false,
+    searchPlaceholder,
+    pushData,
+}: IDropdownControlProps) {
+    const intl = useIntl();
 
-        const filteredItems =
-            showSearch && searchString
-                ? items.filter(
-                      (item) =>
-                          item.type === "header" ||
-                          item.type === "separator" ||
-                          (item.title ?? "").toLowerCase().includes(searchString.toLowerCase()),
-                  )
-                : items;
+    const [searchString, setSearchString] = useState("");
+    const onSearch = useCallback((value: string) => setSearchString(value), []);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const popupId = useId();
 
-        const getSelectedItem = (value: string | number): IDropdownItem | undefined => {
-            if (items) {
-                return items.find((item) => item.value === value);
-            }
+    const filteredItems =
+        showSearch && searchString
+            ? items.filter(
+                  (item) =>
+                      item.type === "header" ||
+                      item.type === "separator" ||
+                      (item.title ?? "").toLowerCase().includes(searchString.toLowerCase()),
+              )
+            : items;
 
-            return undefined;
-        };
+    const getSelectedItem = (value: string | number): IDropdownItem | undefined => {
+        if (items) {
+            return items.find((item) => item.value === value);
+        }
 
-        const onSelect = (selectedItem: IDropdownItem) => {
-            // we must not change the properties at any cost, so deep clone for now.
-            // ideally we should use st. like immer with copy on write to not clone everything all the time
-            const clonedProperties = cloneDeep(properties);
-            set(clonedProperties!, `controls.${valuePath}`, selectedItem.value);
+        return undefined;
+    };
 
-            pushData?.({ properties: clonedProperties });
-        };
+    const onSelect = (selectedItem: IDropdownItem) => {
+        // we must not change the properties at any cost, so deep clone for now.
+        // ideally we should use st. like immer with copy on write to not clone everything all the time
+        const clonedProperties = cloneDeep(properties);
+        set(clonedProperties!, `controls.${valuePath}`, selectedItem.value);
 
-        const getDropdownButton = (
-            selectedItem: IDropdownItem,
-            disabled: boolean,
-            isOpen: boolean,
-            toggleDropdown: () => void,
-        ) => {
-            const { icon, title } = selectedItem;
+        pushData?.({ properties: clonedProperties });
+    };
 
-            return (
-                <DropdownButton
-                    value={title}
-                    iconLeft={icon}
-                    isOpen={isOpen}
-                    onClick={toggleDropdown}
-                    disabled={disabled}
-                    dropdownId={popupId}
-                />
-            );
-        };
-
-        const selectedItem = getSelectedItem(value) || {};
+    const getDropdownButton = (
+        selectedItem: IDropdownItem,
+        disabled: boolean,
+        isOpen: boolean,
+        toggleDropdown: () => void,
+    ) => {
+        const { icon, title } = selectedItem;
 
         return (
-            <DisabledBubbleMessage
-                showDisabledMessage={showDisabledMessage}
-                alignPoints={disabledMessageAlignPoints}
-            >
-                <div className="adi-properties-dropdown-container">
-                    <span className="input-label-text">{getTranslation(labelText, intl)}</span>
-                    <label className="adi-bucket-inputfield gd-input gd-input-small">
-                        <Dropdown
-                            autofocusOnOpen
-                            renderButton={({ isOpen, toggleDropdown }) => {
-                                return getDropdownButton(selectedItem, disabled, isOpen, toggleDropdown);
-                            }}
-                            closeOnParentScroll
-                            closeOnMouseDrag
-                            alignPoints={DROPDOWN_ALIGNMENTS}
-                            onOpenStateChanged={(open) => {
-                                setIsDropdownOpen(open);
-                                if (!open) {
-                                    setSearchString("");
-                                }
-                            }}
-                            renderBody={({ closeDropdown, isMobile }) => {
-                                return (
-                                    <DropdownList
-                                        id={popupId}
-                                        width={width}
-                                        isMobile={isMobile}
-                                        items={filteredItems}
-                                        showSearch={showSearch}
-                                        searchString={searchString}
-                                        onSearch={onSearch}
-                                        searchPlaceholder={searchPlaceholder}
-                                        onKeyDownSelect={(item: IDropdownItem) => {
-                                            onSelect(item);
-                                            closeDropdown();
-                                        }}
-                                        renderItem={({ item }) => (
-                                            <ListItem
-                                                title={item.title}
-                                                isSelected={item.value === selectedItem.value}
-                                                onClick={() => {
-                                                    onSelect(item);
-                                                    closeDropdown();
-                                                }}
-                                                type={item.type}
-                                                icon={item.icon}
-                                                info={item.info}
-                                            />
-                                        )}
-                                    />
-                                );
-                            }}
-                            className="adi-bucket-dropdown"
-                        />
-                    </label>
-                    {!isDropdownOpen && <div id={popupId} style={{ display: "none" }} aria-hidden="true" />}
-                </div>
-            </DisabledBubbleMessage>
+            <DropdownButton
+                value={title}
+                iconLeft={icon}
+                isOpen={isOpen}
+                onClick={toggleDropdown}
+                disabled={disabled}
+                dropdownId={popupId}
+            />
         );
-    }),
-);
+    };
+
+    const selectedItem = getSelectedItem(value) || {};
+
+    return (
+        <DisabledBubbleMessage
+            showDisabledMessage={showDisabledMessage}
+            alignPoints={disabledMessageAlignPoints}
+        >
+            <div className="adi-properties-dropdown-container">
+                <span className="input-label-text">{getTranslation(labelText, intl)}</span>
+                <label className="adi-bucket-inputfield gd-input gd-input-small">
+                    <Dropdown
+                        autofocusOnOpen
+                        renderButton={({ isOpen, toggleDropdown }) => {
+                            return getDropdownButton(selectedItem, disabled, isOpen, toggleDropdown);
+                        }}
+                        closeOnParentScroll
+                        closeOnMouseDrag
+                        alignPoints={DROPDOWN_ALIGNMENTS}
+                        onOpenStateChanged={(open) => {
+                            setIsDropdownOpen(open);
+                            if (!open) {
+                                setSearchString("");
+                            }
+                        }}
+                        renderBody={({ closeDropdown, isMobile }) => {
+                            return (
+                                <DropdownList
+                                    id={popupId}
+                                    width={width}
+                                    isMobile={isMobile}
+                                    items={filteredItems}
+                                    showSearch={showSearch}
+                                    searchString={searchString}
+                                    onSearch={onSearch}
+                                    searchPlaceholder={searchPlaceholder}
+                                    onKeyDownSelect={(item: IDropdownItem) => {
+                                        onSelect(item);
+                                        closeDropdown();
+                                    }}
+                                    renderItem={({ item }) => (
+                                        <ListItem
+                                            title={item.title}
+                                            isSelected={item.value === selectedItem.value}
+                                            onClick={() => {
+                                                onSelect(item);
+                                                closeDropdown();
+                                            }}
+                                            type={item.type}
+                                            icon={item.icon}
+                                            info={item.info}
+                                        />
+                                    )}
+                                />
+                            );
+                        }}
+                        className="adi-bucket-dropdown"
+                    />
+                </label>
+                {!isDropdownOpen && <div id={popupId} style={{ display: "none" }} aria-hidden="true" />}
+            </div>
+        </DisabledBubbleMessage>
+    );
+});

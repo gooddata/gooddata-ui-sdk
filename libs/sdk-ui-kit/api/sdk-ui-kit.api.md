@@ -874,9 +874,7 @@ export function HeaderBadge(input: IHeaderBadgeProps): JSX.Element;
 export function HeaderBadgeWithModal(input: IHeaderBadgeWithModalProps): JSX.Element;
 
 // @internal (undocumented)
-export const HeaderDataMenu: FC<WithIntlProps<IHeaderDataMenuProps>> & {
-    WrappedComponent: ComponentType<IHeaderDataMenuProps>;
-};
+export function HeaderDataMenu(input: IHeaderDataMenuProps): JSX.Element;
 
 // @internal
 export type HeaderSearchContext = {
@@ -888,9 +886,7 @@ export type HeaderSearchContext = {
 export function HeaderSearchProvider(input: PropsWithChildren<HeaderSearchContext>): JSX.Element;
 
 // @internal (undocumented)
-export const HeaderWorkspacePicker: FC<WithIntlProps<IHeaderWorkspacePickerProps>> & {
-    WrappedComponent: ComponentType<IHeaderWorkspacePickerProps>;
-};
+export function HeaderWorkspacePicker(input: IHeaderWorkspacePickerProps): JSX.Element;
 
 // @internal (undocumented)
 export type HelpMenuDropdownAlignPoints = "br tr" | "bl tl";
@@ -3119,8 +3115,6 @@ export interface IHeaderDataMenuProps {
     // (undocumented)
     dataMenuItems: IHeaderDataMenuItem[];
     // (undocumented)
-    intl: IntlShape;
-    // (undocumented)
     onMenuItemClick: (item: IHeaderDataMenuItem) => void;
 }
 
@@ -3188,8 +3182,6 @@ export interface IHeaderWorkspacePickerProps {
     className?: string;
     // (undocumented)
     hasNextPage?: boolean;
-    // (undocumented)
-    intl: IntlShape;
     // (undocumented)
     isLoading?: boolean;
     // (undocumented)

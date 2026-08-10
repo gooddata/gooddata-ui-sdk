@@ -3,7 +3,7 @@
 import { type ReactNode } from "react";
 
 import cx from "classnames";
-import { type IntlShape, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { UiSkeleton } from "../@ui/UiSkeleton/UiSkeleton.js";
 import { Dropdown } from "../Dropdown/Dropdown.js";
@@ -30,7 +30,6 @@ export interface IHeaderWorkspace {
  * @internal
  */
 export interface IHeaderWorkspacePickerProps {
-    intl: IntlShape;
     className?: string;
 
     isLoading?: boolean;
@@ -80,8 +79,10 @@ const renderProjectPickerFooter = (projectPickerFooter?: ReactNode) => {
     return comp;
 };
 
-function CoreHeaderWorkspacePicker({
-    intl,
+/**
+ * @internal
+ */
+export function HeaderWorkspacePicker({
     isLoading,
     workspaces,
     selectedWorkspace,
@@ -101,6 +102,8 @@ function CoreHeaderWorkspacePicker({
     isNextPageLoading,
     shouldLoadNextPage,
 }: IHeaderWorkspacePickerProps) {
+    const intl = useIntl();
+
     const dropdownClassNames = cx({
         "gd-header-project-wrapper": true,
         "gd-header-measure": true,
@@ -229,7 +232,3 @@ function CoreHeaderWorkspacePicker({
         />
     );
 }
-/**
- * @internal
- */
-export const HeaderWorkspacePicker = injectIntl(CoreHeaderWorkspacePicker);

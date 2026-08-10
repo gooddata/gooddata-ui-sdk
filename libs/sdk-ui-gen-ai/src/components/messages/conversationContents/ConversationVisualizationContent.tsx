@@ -16,10 +16,10 @@ import {
 import cx from "classnames";
 import copy from "copy-to-clipboard";
 import { FormattedMessage, useIntl } from "react-intl";
-import { connect, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { type IChatConversationVisualisationContent } from "@gooddata/sdk-backend-spi";
-import { type IColorPalette, type IDashboardAttributeFilter, type IFilter } from "@gooddata/sdk-model";
+import { type IDashboardAttributeFilter, type IFilter } from "@gooddata/sdk-model";
 import {
     type IDrillEvent,
     isClusteringNotReceived,
@@ -84,30 +84,28 @@ export type ConversationVisualizationContentProps = {
     part: IChatConversationMultipartLocalPart;
     scenario?: IWhatIfRenderableScenario;
     visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>;
-    colorPalette?: IColorPalette;
     className?: string;
-    agGridToken?: string;
-    onCopyToClipboard?: (data: { content: string }) => void;
-    setKeyDriverAnalysis?: typeof setKeyDriverAnalysisAction;
-    enableChangeAnalysis?: boolean;
-    enableNewPivotTable?: boolean;
-    enableAccessibleChartTooltip?: boolean;
 };
 
-function ConversationVisualizationContentCore({
+export function ConversationVisualizationContent({
     message,
     part,
     scenario,
     visualization,
     className,
-    onCopyToClipboard,
-    setKeyDriverAnalysis,
-    colorPalette,
-    agGridToken,
-    enableChangeAnalysis,
-    enableNewPivotTable,
-    enableAccessibleChartTooltip,
 }: ConversationVisualizationContentProps) {
+    const colorPalette = useSelector((state: RootState) => colorPaletteSelector(state));
+    const agGridToken = useSelector((state: RootState) => settingsSelector(state)?.agGridToken);
+    const enableNewPivotTable = useSelector(
+        (state: RootState) => settingsSelector(state)?.enableNewPivotTable,
+    );
+    const enableAccessibleChartTooltip = useSelector(
+        (state: RootState) => settingsSelector(state)?.enableAccessibleChartTooltip,
+    );
+    const enableChangeAnalysis = useSelector(
+        (state: RootState) => settingsSelector(state)?.enableChangeAnalysis,
+    );
+
     const containerRef = useRef<HTMLDivElement>(null);
 
     const [hasVisFatal, setVisFatal] = useState(false);
@@ -132,7 +130,7 @@ function ConversationVisualizationContentCore({
         !scenario || scenario.isBaseline,
     );
 
-    const { onCopy, onOpen, onSave } = useHandlers({ visualization, setSaveDialogOpen, onCopyToClipboard });
+    const { onCopy, onOpen, onSave } = useHandlers({ visualization, setSaveDialogOpen });
 
     const onVisualizationError = useCallback(
         (error: Error) => {
@@ -167,7 +165,6 @@ function ConversationVisualizationContentCore({
                 drillState={drillState}
                 setDrillState={setDrillState}
                 containerRef={containerRef}
-                setKeyDriverAnalysis={setKeyDriverAnalysis}
                 filters={visualization.insight.filters}
             >
                 <Wrapper containerRef={containerRef} visualization={visualization}>
@@ -565,19 +562,12 @@ interface IDrillStateProps {
         state: { keyDriverData: IDashboardKeyDriverCombinationItem[]; event: IDrillEvent } | null,
     ) => void;
     filters?: IFilter[];
-    setKeyDriverAnalysis?: typeof setKeyDriverAnalysisAction;
     children?: ReactNode;
 }
 
-function DrillState({
-    containerRef,
-    filters,
-    setKeyDriverAnalysis,
-    children,
-    drillState,
-    setDrillState,
-}: IDrillStateProps) {
+function DrillState({ containerRef, filters, children, drillState, setDrillState }: IDrillStateProps) {
     const intl = useIntl();
+    const dispatch = useDispatch();
     const catalogItems = useSelector(catalogItemsSelector);
 
     return (
@@ -626,7 +616,7 @@ function DrillState({
                                 event,
                                 allFilters,
                             );
-                            setKeyDriverAnalysis?.({ keyDriverAnalysis: definition });
+                            dispatch(setKeyDriverAnalysisAction({ keyDriverAnalysis: definition }));
                         }}
                         onClose={() => {
                             setDrillState(null);
@@ -705,11 +695,11 @@ function useSaveDialog({ message, part, visualization }: IUseSaveDialogProps) {
 interface IUseHandlersProps {
     visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>;
     setSaveDialogOpen: (value: "save" | "explore" | null) => void;
-    onCopyToClipboard?: (data: { content: string }) => void;
 }
 
-function useHandlers({ visualization, setSaveDialogOpen, onCopyToClipboard }: IUseHandlersProps) {
+function useHandlers({ visualization, setSaveDialogOpen }: IUseHandlersProps) {
     const config = useConfig();
+    const dispatch = useDispatch();
     const workspaceId = useWorkspaceStrict();
     const useHostedAnalyticalDesigner = Boolean(
         useSelector(settingsSelector)?.enableShellApplication_analyticalDesigner,
@@ -793,10 +783,10 @@ function useHandlers({ visualization, setSaveDialogOpen, onCopyToClipboard }: IU
             }
             if (link) {
                 copy(link);
-                onCopyToClipboard?.({ content: link });
+                dispatch(copyToClipboardAction({ content: link }));
             }
         },
-        [visualization, config, workspaceId, useHostedAnalyticalDesigner, onCopyToClipboard],
+        [visualization, config, workspaceId, useHostedAnalyticalDesigner, dispatch],
     );
 
     return {
@@ -805,35 +795,3 @@ function useHandlers({ visualization, setSaveDialogOpen, onCopyToClipboard }: IU
         onCopy,
     };
 }
-
-//CORE
-
-const mapDispatchToProps = {
-    onCopyToClipboard: copyToClipboardAction,
-    setKeyDriverAnalysis: setKeyDriverAnalysisAction,
-};
-
-const mapStateToProps = (
-    state: RootState,
-): Pick<
-    ConversationVisualizationContentProps,
-    | "colorPalette"
-    | "agGridToken"
-    | "enableNewPivotTable"
-    | "enableAccessibleChartTooltip"
-    | "enableChangeAnalysis"
-> => {
-    const settings = settingsSelector(state);
-    return {
-        colorPalette: colorPaletteSelector(state),
-        agGridToken: settings?.agGridToken,
-        enableNewPivotTable: settings?.enableNewPivotTable,
-        enableAccessibleChartTooltip: settings?.enableAccessibleChartTooltip,
-        enableChangeAnalysis: settings?.enableChangeAnalysis,
-    };
-};
-
-export const ConversationVisualizationContent = connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(ConversationVisualizationContentCore);

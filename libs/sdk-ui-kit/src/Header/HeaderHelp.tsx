@@ -1,10 +1,10 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type ReactNode, useCallback, useRef, useState } from "react";
 
 import cx from "classnames";
 import { isEmpty } from "lodash-es";
-import { FormattedMessage, type IntlShape, injectIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { UiFocusManager } from "../@ui/UiFocusManager/UiFocusManager.js";
 import { Button } from "../Button/Button.js";
@@ -25,7 +25,6 @@ interface IHelpItem {
 }
 
 interface IHeaderHelpProps {
-    intl: IntlShape;
     className: string;
     helpMenuDropdownAlignPoints?: HelpMenuDropdownAlignPoints;
     items: IHelpItem[];
@@ -35,7 +34,7 @@ interface IHeaderHelpProps {
     helpRedirectUrl?: string;
 }
 
-function CoreHeaderHelp({
+export function HeaderHelp({
     className,
     items,
     helpMenuDropdownAlignPoints,
@@ -43,8 +42,9 @@ function CoreHeaderHelp({
     disableDropdown,
     onHelpClicked,
     helpRedirectUrl,
-    intl,
 }: IHeaderHelpProps) {
+    const intl = useIntl();
+
     const [isOpen, setIsOpen] = useState(false);
     const helpMenuButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -173,5 +173,3 @@ function CoreHeaderHelp({
         </Button>
     );
 }
-
-export const HeaderHelp = injectIntl(CoreHeaderHelp);
