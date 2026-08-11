@@ -4,7 +4,7 @@ import { useMemo } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { type CatalogItem } from "@gooddata/sdk-model";
 
@@ -19,7 +19,6 @@ import {
     conversationSelector,
     messagesSelector,
 } from "../store/messages/messagesSelectors.js";
-import { type RootState } from "../store/types.js";
 
 import { ChatSkeleton } from "./ChatSkeleton.js";
 import { parseReferences } from "./completion/references.js";
@@ -36,24 +35,17 @@ import { UserMessageComponent } from "./messages/UserMessage.js";
 import { groupMessages } from "./utils/groupUtility.js";
 
 type MessagesComponentProps = {
-    messages: ReturnType<typeof messagesSelector>;
-    conversationMessages: ReturnType<typeof conversationMessagesSelector>;
-    conversation: ReturnType<typeof conversationSelector>;
-    catalogItems: ReturnType<typeof catalogItemsSelector>;
-    loading: ReturnType<typeof asyncProcessSelector>;
-    agentSwitchingActive: ReturnType<typeof agentSwitchingActiveSelector>;
     initializing?: boolean;
 };
 
-function MessagesComponent({
-    conversationMessages,
-    conversation,
-    catalogItems,
-    messages,
-    loading,
-    agentSwitchingActive,
-    initializing,
-}: MessagesComponentProps) {
+export function Messages({ initializing }: MessagesComponentProps) {
+    const messages = useSelector(messagesSelector);
+    const loading = useSelector(asyncProcessSelector);
+    const conversation = useSelector(conversationSelector);
+    const conversationMessages = useSelector(conversationMessagesSelector);
+    const catalogItems = useSelector(catalogItemsSelector);
+    const agentSwitchingActive = useSelector(agentSwitchingActiveSelector);
+
     const { scrollerRef } = useMessageScroller(conversation ? conversationMessages : messages);
     const { LandingScreenComponent } = useCustomization();
     const { isBigScreen, isSmallScreen, isFullscreen } = useFullscreenCheck();
@@ -202,14 +194,3 @@ function ConversationMessages({ messages, catalogItems }: IConversationMessagesP
 const assertNever = (value: never): never => {
     throw new Error(`Unhandled message role: ${value}`);
 };
-
-const mapStateToProps = (state: RootState): MessagesComponentProps => ({
-    messages: messagesSelector(state),
-    loading: asyncProcessSelector(state),
-    conversation: conversationSelector(state),
-    conversationMessages: conversationMessagesSelector(state),
-    catalogItems: catalogItemsSelector(state),
-    agentSwitchingActive: agentSwitchingActiveSelector(state),
-});
-
-export const Messages: any = connect(mapStateToProps)(MessagesComponent);

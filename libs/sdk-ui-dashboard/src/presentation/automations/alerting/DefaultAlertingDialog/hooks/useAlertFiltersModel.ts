@@ -19,10 +19,10 @@ import { type IMeasureFormatMap } from "../utils/getters.js";
 import { transformAlertByAttribute, transformAlertByMetric } from "../utils/transformation.js";
 
 /**
- * Props for {@link useAlertFilters}.
+ * Props for {@link useAlertFiltersModel}.
  * @internal
  */
-export interface IUseAlertFiltersProps {
+export interface IUseAlertFiltersModelProps {
     setEditedAutomation: Dispatch<SetStateAction<IAutomationMetadataObjectDefinition | undefined>>;
     alertToEdit?: IAutomationMetadataObject;
     editedAutomationFilters: FilterContextItem[];
@@ -57,7 +57,7 @@ export interface IUseAlertFiltersProps {
  *
  * @internal
  */
-export function useAlertFilters({
+export function useAlertFiltersModel({
     setEditedAutomation,
     alertToEdit,
     editedAutomationFilters,
@@ -77,7 +77,7 @@ export function useAlertFilters({
     selectedValue,
     weekStart,
     timezone,
-}: IUseAlertFiltersProps): {
+}: IUseAlertFiltersModelProps): {
     selectedFilters: FilterContextItem[];
     availableFilters: FilterContextItem[] | undefined;
     onFiltersChange: (filters: FilterContextItem[]) => void;

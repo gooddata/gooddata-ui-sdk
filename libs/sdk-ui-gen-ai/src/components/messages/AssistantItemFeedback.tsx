@@ -1,8 +1,10 @@
 // (C) 2024-2026 GoodData Corporation
 
+import { useCallback } from "react";
+
 import cx from "classnames";
 import { useIntl } from "react-intl";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
@@ -11,20 +13,27 @@ import { setUserFeedback } from "../../store/messages/messagesSlice.js";
 import { type IChatMessagesGroup } from "../utils/groupUtility.js";
 
 import { FeedbackPopup } from "./FeedbackPopup.js";
-import { useUserFeedback } from "./useUserFeedback.js";
+import { type SetUserFeedbackHandler, useUserFeedback } from "./useUserFeedback.js";
 
 export interface IAssistantItemFeedbackProps {
     group: IChatMessagesGroup;
     message: IChatConversationLocalItem;
-    setUserFeedback: typeof setUserFeedback;
     isLast?: boolean;
 }
 
-function AssistantItemFeedbackCore({ message, group, isLast, setUserFeedback }: IAssistantItemFeedbackProps) {
+export function AssistantItemFeedback({ message, group, isLast }: IAssistantItemFeedbackProps) {
     const intl = useIntl();
+    const dispatch = useDispatch();
+
+    const setUserFeedbackAction = useCallback<SetUserFeedbackHandler>(
+        (payload) => {
+            dispatch(setUserFeedback(payload));
+        },
+        [dispatch],
+    );
 
     const { handlePositiveFeedbackClick, handleNegativeFeedbackClick, handleFeedbackSubmit } =
-        useUserFeedback({ message, setUserFeedback });
+        useUserFeedback({ message, setUserFeedback: setUserFeedbackAction });
 
     if (group.type !== "assistant" || !message.complete) {
         return null;
@@ -91,9 +100,3 @@ function AssistantItemFeedbackCore({ message, group, isLast, setUserFeedback }: 
         </div>
     );
 }
-
-const mapDispatchToProps = {
-    setUserFeedback,
-};
-
-export const AssistantItemFeedback: any = connect(null, mapDispatchToProps)(AssistantItemFeedbackCore);

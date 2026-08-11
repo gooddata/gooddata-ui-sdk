@@ -26,7 +26,7 @@ import { type AlertAttribute, type AlertMetric } from "../../../types.js";
 // to a real dashboard store in this unit test. `useAlertSupportedMetrics` is mocked too:
 // its own context reads and insight-derived metrics are irrelevant to the filter-model
 // ordering this file exercises, and it has its own dedicated test file. Everything else
-// `useEditAlert` composes (`useAlertFormState`, `useAlertSelectedValues`, `useAlertFilters`,
+// `useEditAlert` composes (`useAlertFormState`, `useAlertSelectedValues`, `useAlertFiltersModel`,
 // `useAlertThreshold`, `useAlertFormValidation`) runs for real, because the first-mount
 // test's whole point is to exercise the real seeding computation through the real hooks.
 // ---------------------------------------------------------------------------

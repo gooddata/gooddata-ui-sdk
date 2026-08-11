@@ -3,7 +3,6 @@
 import { type KeyboardEvent, type MouseEvent, type ReactNode, useCallback, useMemo } from "react";
 
 import {
-    isExternalPluggableApplicationRegistryItem,
     type IGenAIUserContext,
     type IWorkspacePermissions,
     type PluggableApplicationRegistryItem,
@@ -27,11 +26,8 @@ import {
 import { defaultHeaderTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import defaultLogoUrl from "../assets/logo-white.svg";
-import {
-    getAppLifecycleCallbacks,
-    preloadPluggableApplication,
-} from "../loader/pluggableApplicationsLoader.js";
-import { getActiveInternalApplication, getApplicationHref } from "../loader/routing.js";
+import { getAppLifecycleCallbacks } from "../loader/pluggableApplicationsLoader.js";
+import { getActiveInternalApplication } from "../loader/routing.js";
 import { getBackend } from "../platformContext/backend.js";
 
 import { buildAppMenu, getLocalizedTitle } from "./appMenuItems.js";
@@ -39,6 +35,7 @@ import { getUserDisplayName, isPlainLeftClick, swapWorkspaceInPath } from "./chr
 import { b, e } from "./hostChromeBem.js";
 import { HostIntlProvider } from "./HostIntlProvider.js";
 import { HostNotificationDispatcher } from "./HostNotificationDispatcher.js";
+import { useAppPreloadOnHover } from "./useAppPreloadOnHover.js";
 import { useHostChromePricing } from "./useHostChromePricing.js";
 import { useHostChromeSearch } from "./useHostChromeSearch.js";
 import { useHostChromeWorkspaceFeatures } from "./useHostChromeWorkspaceFeatures.js";
@@ -108,6 +105,7 @@ export function HostChrome({
     headerOptions,
     notification = null,
     showChatItem = false,
+    chatIsOpen = false,
     onChatToggle,
     onAskAiAssistant,
     appPageTitle,
@@ -191,28 +189,7 @@ export function HostChrome({
         [onNavigate],
     );
 
-    const handleHeaderMouseOver = useCallback(
-        (e: MouseEvent<HTMLDivElement>) => {
-            const anchor = (e.target as HTMLElement).closest("a[href]") as HTMLAnchorElement | null;
-            if (!anchor) {
-                return;
-            }
-            const href = anchor.getAttribute("href");
-            if (!href) {
-                return;
-            }
-            for (const app of resolvedApplications) {
-                if (!isExternalPluggableApplicationRegistryItem(app)) {
-                    const appHref = getApplicationHref(app, ctx, pathname);
-                    if (appHref === href) {
-                        preloadPluggableApplication(app);
-                        return;
-                    }
-                }
-            }
-        },
-        [resolvedApplications, ctx, pathname],
-    );
+    const appPreloadOnHover = useAppPreloadOnHover(resolvedApplications, ctx, pathname);
 
     // Without this the anchor would do a full page load instead of a client-side navigation.
     const handleLogoClick = useCallback(
@@ -301,7 +278,11 @@ export function HostChrome({
                             appleTouchIconUrl={ctx.whiteLabeling?.appleTouchIconUrl}
                         />
                         {hideChrome ? null : (
-                            <div className={e("header")} onMouseOver={handleHeaderMouseOver}>
+                            <div
+                                className={e("header")}
+                                onMouseOver={appPreloadOnHover.onMouseOver}
+                                onMouseLeave={appPreloadOnHover.onMouseLeave}
+                            >
                                 <AppHeader
                                     logoUrl={ctx.whiteLabeling?.logoUrl || defaultLogoUrl}
                                     logoHref={LOGO_HREF}
@@ -323,6 +304,7 @@ export function HostChrome({
                                     expiredDate={pricing.isTrial ? pricing.expiredDate : undefined}
                                     search={search.element}
                                     showChatItem={showChatItem}
+                                    isChatOpen={chatIsOpen}
                                     onChatItemClick={onChatToggle}
                                     notificationsPanel={({ isMobile, closeNotificationsOverlay }) => (
                                         <AppHeaderNotifications

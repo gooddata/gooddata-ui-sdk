@@ -4,14 +4,12 @@ import { type ReactNode, useMemo, useState } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
-import { type ISettings } from "@gooddata/sdk-model";
 import { UiButton } from "@gooddata/sdk-ui-kit";
 
 import { type IChatConversationErrorContent } from "../../../model.js";
 import { settingsSelector } from "../../../store/chatWindow/chatWindowSelectors.js";
-import { type RootState } from "../../../store/types.js";
 import { useSettingsClick } from "../../hooks/useSettingsClick.js";
 import { MarkdownComponent } from "../contents/Markdown.js";
 
@@ -23,18 +21,17 @@ export type ConversationErrorContentProps = {
     useMarkdown?: boolean;
     className?: string;
     isLoading?: boolean;
-    settings?: ISettings;
 };
 
-function ConversationErrorContentCore({
+export function ConversationErrorContent({
     code,
     traceId,
     message,
     useMarkdown = false,
-    settings,
     className,
     reason,
 }: ConversationErrorContentProps) {
+    const settings = useSelector(settingsSelector);
     const [showMore, setShowMore] = useState(false);
     const { formatMessage } = useIntl();
 
@@ -160,12 +157,3 @@ function ErrorDetail({ traceId, code, message }: IErrorDetailProps) {
         </>
     );
 }
-
-const mapStateToProps = (state: RootState): Pick<ConversationErrorContentProps, "settings"> => {
-    const settings = settingsSelector(state);
-    return {
-        settings,
-    };
-};
-
-export const ConversationErrorContent = connect(mapStateToProps, null)(ConversationErrorContentCore);

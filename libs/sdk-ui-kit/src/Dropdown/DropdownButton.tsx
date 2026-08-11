@@ -87,6 +87,11 @@ export function DropdownButton({
                   ariaLabel,
                   ariaLabelledBy,
                   ariaDescribedBy,
+                  // Without a dropdownId the popup id is unknown, but the trigger is still a combobox,
+                  // so it has to expose its expanded state - callers commonly pass only isOpen - along
+                  // with any explicitly controlled id.
+                  ariaExpanded: effectiveAriaExpanded,
+                  ariaControls,
                   role: role ?? "combobox",
               }
     ) satisfies IButtonAccessibilityConfig;

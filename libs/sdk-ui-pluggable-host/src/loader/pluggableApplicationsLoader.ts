@@ -30,7 +30,47 @@ export function getAppLifecycleCallbacks(): IAppLifecycleCallbacks | undefined {
     return registeredLifecycle;
 }
 
+interface INetworkInformation {
+    saveData?: boolean;
+    effectiveType?: string;
+}
+
+const PRELOAD_HOSTILE_EFFECTIVE_TYPES = ["slow-2g", "2g"];
+
+/**
+ * Whether speculative preloading should be skipped altogether.
+ *
+ * Preloading trades bandwidth for latency, which is a bad trade when bandwidth is the scarce
+ * resource: on a very slow link the preload competes with the requests the page the user is
+ * actually looking at still needs. An explicit Save-Data opt-out is respected for the same
+ * reason.
+ *
+ * `navigator.connection` is not implemented everywhere; absent it we keep preloading.
+ *
+ * Exported for tests.
+ */
+export function shouldSkipPreload(): boolean {
+    if (typeof navigator === "undefined") {
+        return true;
+    }
+
+    const connection = (navigator as Navigator & { connection?: INetworkInformation }).connection;
+
+    if (!connection) {
+        return false;
+    }
+
+    return (
+        connection.saveData === true ||
+        (connection.effectiveType !== undefined &&
+            PRELOAD_HOSTILE_EFFECTIVE_TYPES.includes(connection.effectiveType))
+    );
+}
+
 export function preloadPluggableApplication(app: PluggableApplicationRegistryItem): void {
+    if (shouldSkipPreload()) {
+        return;
+    }
     if (isLocalPluggableApplicationRegistryItem(app)) {
         registeredLifecycle?.onPreloadStarted?.(app.id);
         const start = now();

@@ -11,11 +11,7 @@ import {
     type IAlignPoint,
     type ITimezoneSelectSpecialItem,
     TimezoneSelect,
-    getTimezoneDisplayLabel,
 } from "@gooddata/sdk-ui-kit";
-
-import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
-import { selectTimezone } from "../../model/store/config/configSelectors.js";
 
 const BUBBLE_ALIGN_POINTS: IAlignPoint[] = [{ align: "bc tl" }];
 
@@ -28,25 +24,29 @@ interface ITimezoneOptionProps {
 
 export function TimezoneOption({ label, tooltip, timezoneConfig, onChange }: ITimezoneOptionProps) {
     const intl = useIntl();
-    const workspaceTimezone = useDashboardSelector(selectTimezone);
-    const workspaceTimezoneName = getTimezoneDisplayLabel(workspaceTimezone!);
 
     const specialItems: ITimezoneSelectSpecialItem[] = useMemo(() => {
-        const workspaceItemLabel = intl.formatMessage(
-            {
-                id: "settingsDashboardDialog.section.timezone.defaultTimezone.workspace",
-            },
-            { timezone: workspaceTimezoneName },
-        );
+        const workspaceItemLabel = intl.formatMessage({
+            id: "settingsDashboardDialog.section.timezone.defaultTimezone.workspace",
+        });
+
+        const workspaceItemTooltip = intl.formatMessage({
+            id: "settingsDashboardDialog.section.timezone.defaultTimezone.workspace.tooltip",
+        });
+
         const browserItemLabel = intl.formatMessage({
             id: "settingsDashboardDialog.section.timezone.defaultTimezone.fromBrowser",
         });
 
+        const browserItemTooltip = intl.formatMessage({
+            id: "settingsDashboardDialog.section.timezone.defaultTimezone.fromBrowser.tooltip",
+        });
+
         return [
-            { id: undefined, label: workspaceItemLabel },
-            { id: BROWSER_DETECTED, label: browserItemLabel },
+            { id: undefined, label: workspaceItemLabel, tooltip: workspaceItemTooltip },
+            { id: BROWSER_DETECTED, label: browserItemLabel, tooltip: browserItemTooltip },
         ];
-    }, [intl, workspaceTimezoneName]);
+    }, [intl]);
 
     return (
         <div className="configuration-category-item">
@@ -66,6 +66,7 @@ export function TimezoneOption({ label, tooltip, timezoneConfig, onChange }: ITi
             </span>
             <TimezoneSelect
                 value={timezoneConfig?.timezoneId}
+                showTooltip
                 onChange={onChange}
                 specialItems={specialItems}
                 searchPlaceholder={intl.formatMessage({

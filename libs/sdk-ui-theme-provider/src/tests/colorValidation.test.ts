@@ -2,9 +2,13 @@
 
 import { describe, expect, it } from "vitest";
 
-import { type ITheme } from "@gooddata/sdk-model";
+import { type ITheme, type IThemeComplementaryPalette } from "@gooddata/sdk-model";
 
-import { findInvalidThemeColors, isValidThemeColor } from "../colorValidation.js";
+import {
+    findInvalidThemeColors,
+    findMissingRequiredThemeColors,
+    isValidThemeColor,
+} from "../colorValidation.js";
 
 describe("isValidThemeColor", () => {
     it.each([
@@ -84,4 +88,65 @@ describe("findInvalidThemeColors", () => {
             { path: "complementary.c0", value: "###" },
         ]);
     });
+});
+
+describe("findMissingRequiredThemeColors", () => {
+    // The backend accepts palettes without `c0`/`c9`, which the type forbids expressing.
+    const incompletePalette = (shades: Partial<IThemeComplementaryPalette>): IThemeComplementaryPalette =>
+        shades as IThemeComplementaryPalette;
+
+    it("should return an empty array when both palette endpoints are defined", () => {
+        const theme: ITheme = {
+            palette: {
+                complementary: { c0: "#ffffff", c5: "#949494", c9: "#000C36" },
+            },
+        };
+
+        expect(findMissingRequiredThemeColors(theme)).toEqual([]);
+    });
+
+    it("should return an empty array when the theme defines no complementary palette", () => {
+        expect(findMissingRequiredThemeColors({ palette: { primary: { base: "#001F5A" } } })).toEqual([]);
+        expect(findMissingRequiredThemeColors({})).toEqual([]);
+        expect(findMissingRequiredThemeColors(undefined)).toEqual([]);
+    });
+
+    it("should report both endpoints for a palette that only defines middle shades", () => {
+        const theme: ITheme = {
+            palette: {
+                primary: { base: "#CF4500" },
+                complementary: incompletePalette({ c2: "#EBEFF4", c5: "#949494", c6: "#5F6E7C" }),
+            },
+        };
+
+        expect(findMissingRequiredThemeColors(theme)).toEqual(["complementary.c0", "complementary.c9"]);
+    });
+
+    it("should report only the endpoint that is missing", () => {
+        expect(
+            findMissingRequiredThemeColors({
+                palette: { complementary: incompletePalette({ c0: "#fff" }) },
+            }),
+        ).toEqual(["complementary.c9"]);
+        expect(
+            findMissingRequiredThemeColors({
+                palette: { complementary: incompletePalette({ c9: "#000" }) },
+            }),
+        ).toEqual(["complementary.c0"]);
+    });
+
+    it.each([
+        ["unparseable", "###"],
+        ["null", null],
+    ])(
+        "should treat an endpoint present but %s as an invalid color rather than a missing one",
+        (_case, value) => {
+            const theme: ITheme = {
+                palette: { complementary: { c0: value as string, c9: "#000" } },
+            };
+
+            expect(findMissingRequiredThemeColors(theme)).toEqual([]);
+            expect(findInvalidThemeColors(theme)).toEqual([{ path: "complementary.c0", value }]);
+        },
+    );
 });

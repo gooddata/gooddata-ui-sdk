@@ -14,7 +14,7 @@ import { chatWindowSliceName } from "../store/chatWindow/chatWindowSlice.js";
 import { type ChatEventHandler } from "../store/events.js";
 import { messagesSliceName } from "../store/messages/messagesSlice.js";
 
-import { ConfigProvider, type LinkHandlerEvent } from "./ConfigContext.js";
+import { ConfigProvider, type GenAIAssistantMode, type LinkHandlerEvent } from "./ConfigContext.js";
 
 /**
  * Props for the GenAiStore component.
@@ -70,6 +70,12 @@ export type GenAiStoreProps = {
      * Color palette to use for the chat UI.
      */
     colorPalette?: IColorPalette;
+    /**
+     * Display mode of the assistant. Adapts the internal layout to a narrow or to a wide container;
+     * the assistant always fills its parent element, so this does not resize it.
+     * On small screens the fullscreen layout is always used.
+     */
+    mode?: GenAIAssistantMode;
     /**
      * When provided, the function will be called with the store dispatch function
      * after the store has been initialized.
@@ -192,6 +198,7 @@ function InternalStore({
     objectTypes,
     allowNativeLinks,
     onLinkClick,
+    mode,
     isPreview,
     colorPalette,
 }: GenAiStoreProps) {
@@ -209,6 +216,7 @@ function InternalStore({
         isPreview,
         allowNativeLinks,
         onLinkClick,
+        mode,
     });
 
     useEffect(() => {

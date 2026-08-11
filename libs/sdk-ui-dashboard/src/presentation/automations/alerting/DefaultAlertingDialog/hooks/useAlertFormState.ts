@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -117,10 +117,14 @@ export function useAlertFormState({
 
     // Default values
     const defaultMeasure = supportedMeasures[0];
-    const defaultUser = convertUserToAutomationRecipient(currentUser);
-    const defaultRecipient = externalRecipientOverride
-        ? convertExternalRecipientToAutomationRecipient(externalRecipientOverride)
-        : convertUserToAutomationRecipient(currentUser);
+    const defaultUser = useMemo(() => convertUserToAutomationRecipient(currentUser), [currentUser]);
+    const defaultRecipient = useMemo(
+        () =>
+            externalRecipientOverride
+                ? convertExternalRecipientToAutomationRecipient(externalRecipientOverride)
+                : convertUserToAutomationRecipient(currentUser),
+        [externalRecipientOverride, currentUser],
+    );
     const defaultNotificationChannelId = notificationChannels[0]?.id;
 
     const resolvedAlertToEdit = (() => {
@@ -210,10 +214,13 @@ export function useAlertFormState({
     //
     // Handlers
     //
-    const onTitleChange = (value: string, isValid: boolean) => {
-        setIsTitleValid(isValid);
-        setEditedAutomation((s) => (s ? { ...s, title: value } : undefined));
-    };
+    const onTitleChange = useCallback(
+        (value: string, isValid: boolean) => {
+            setIsTitleValid(isValid);
+            setEditedAutomation((s) => (s ? { ...s, title: value } : undefined));
+        },
+        [setEditedAutomation],
+    );
 
     const onMeasureChange = useCallback(
         (measure: AlertMetric) => {

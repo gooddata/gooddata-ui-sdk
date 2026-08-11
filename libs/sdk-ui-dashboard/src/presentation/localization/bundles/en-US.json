@@ -436,20 +436,28 @@
         "crowdinContext": "Section title for time zone settings in the dashboard settings dialog"
     },
     "settingsDashboardDialog.section.timezone.defaultTimezone": {
-        "text": "Default time zone",
+        "text": "Dashboard time zone",
         "crowdinContext": "Label of the default time zone picker in the dashboard settings dialog"
     },
     "settingsDashboardDialog.section.timezone.defaultTimezone.tooltip": {
-        "text": "Time zone used to evaluate date filters and display dates on this dashboard.",
+        "text": "Time zone used for date filters and date values on this dashboard.",
         "crowdinContext": "Tooltip of the default time zone picker in the dashboard settings dialog"
     },
     "settingsDashboardDialog.section.timezone.defaultTimezone.workspace": {
-        "text": "Workspace default ({timezone})",
-        "crowdinContext": "Time zone picker item meaning the workspace default time zone is used. The {timezone} placeholder shows the effective workspace or organization time zone."
+        "text": "Default",
+        "crowdinContext": "Time zone picker item meaning the workspace default time zone is used."
+    },
+    "settingsDashboardDialog.section.timezone.defaultTimezone.workspace.tooltip": {
+        "text": "Follows the time zone set for your organization, workspace, or user account. It updates automatically if that setting changes.",
+        "crowdinContext": "Tooltip of the default time zone picker item in the dashboard settings dialog"
     },
     "settingsDashboardDialog.section.timezone.defaultTimezone.fromBrowser": {
-        "text": "User local time (Browser-detected)",
+        "text": "Device time zone",
         "crowdinContext": "Time zone picker item meaning the time zone is detected from the viewer's browser."
+    },
+    "settingsDashboardDialog.section.timezone.defaultTimezone.fromBrowser.tooltip": {
+        "text": "Uses the time zone reported by the viewer's browser. Can differ for each viewer.",
+        "crowdinContext": "Tooltip of the device time zone picker item in the dashboard settings dialog"
     },
     "settingsDashboardDialog.section.timezone.allowUserOverride.toggle": {
         "text": "Allow users to change the dashboard time zone",
@@ -480,19 +488,19 @@
         "crowdinContext": "Title of the dialog for temporarily changing the dashboard time zone in view mode"
     },
     "timezoneDialog.description": {
-        "text": "<b>Note:</b> Time zone resets to the default ({timezone}) when you reload the page.",
-        "crowdinContext": "Note in the dialog for temporarily changing the dashboard time zone in view mode. The {timezone} placeholder is the dashboard's default time zone (friendly name, e.g. 'Prague'). The <b> tags wrap the 'Note:' label."
+        "text": "<b>Note:</b> Time zone resets to the default when you reload the page.",
+        "crowdinContext": "Note in the dialog for temporarily changing the dashboard time zone in view mode. The <b> tags wrap the 'Note:' label."
     },
     "timezoneDialog.description.ariaLabel": {
         "text": "Change timezone dialog information message",
         "crowdinContext": "Aria label for the change timezone dialog information message"
     },
     "timezoneDialog.default": {
-        "text": "Default ({timezone})",
-        "crowdinContext": "Time zone picker item meaning the dashboard's configured time zone is used. The {timezone} placeholder shows the configured time zone."
+        "text": "Default",
+        "crowdinContext": "Time zone picker item meaning the dashboard's configured time zone is used."
     },
     "timezoneDialog.fromBrowser": {
-        "text": "My local time ({timezone})",
+        "text": "Device time zone ({timezone})",
         "crowdinContext": "Time zone picker item meaning the time zone is detected from the viewer's browser. The {timezone} placeholder shows the detected time zone."
     },
     "timezoneDialog.select.searchPlaceholder": {

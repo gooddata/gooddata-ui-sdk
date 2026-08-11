@@ -14,7 +14,7 @@ import {
 import cx from "classnames";
 import copy from "copy-to-clipboard";
 import { useIntl } from "react-intl";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
     type IAttribute,
@@ -94,7 +94,6 @@ import {
     saveVisualisationRenderStatusAction,
     visualizationErrorAction,
 } from "../../../store/messages/messagesSlice.js";
-import { type RootState } from "../../../store/types.js";
 import { getAbsoluteVisualizationHref, getHeadlineComparison, getVisualizationHref } from "../../../utils.js";
 import { storeKdaReturnFocusFromDrillContext } from "../../../utils/kdaReturnFocus.js";
 import { mapVisualizationWhatIfToScenarios } from "../../../whatIf/whatIfMapping.js";
@@ -132,8 +131,21 @@ export type VisualizationContentsProps = {
     agGridToken?: string;
     agentsAvailable?: boolean;
     onCopyToClipboard?: (data: { content: string }) => void;
-    setKeyDriverAnalysis?: typeof setKeyDriverAnalysisAction;
+    setKeyDriverAnalysis?: (...args: Parameters<typeof setKeyDriverAnalysisAction>) => void;
 };
+
+type VisualizationContentsOwnProps = Omit<
+    VisualizationContentsProps,
+    | "colorPalette"
+    | "enableNewPivotTable"
+    | "enableChangeAnalysis"
+    | "enableAccessibleChartTooltip"
+    | "agentSwitchingActive"
+    | "agGridToken"
+    | "agentsAvailable"
+    | "onCopyToClipboard"
+    | "setKeyDriverAnalysis"
+>;
 
 function VisualizationContentsComponentCore({
     content,
@@ -1218,36 +1230,39 @@ function headerPredicate(m: IMeasure): IHeaderPredicate {
     };
 }
 
-const mapDispatchToProps = {
-    onCopyToClipboard: copyToClipboardAction,
-    setKeyDriverAnalysis: setKeyDriverAnalysisAction,
-};
+export function VisualizationContentsComponent(props: VisualizationContentsOwnProps) {
+    const dispatch = useDispatch();
+    const settings = useSelector(settingsSelector);
+    const colorPalette = useSelector(colorPaletteSelector);
+    const agentSwitchingActive = useSelector(agentSwitchingActiveSelector);
+    const agentsAvailable = useSelector(agentsAvailableSelector);
 
-const mapStateToProps = (
-    state: RootState,
-): Pick<
-    VisualizationContentsProps,
-    | "colorPalette"
-    | "enableNewPivotTable"
-    | "enableAccessibleChartTooltip"
-    | "enableChangeAnalysis"
-    | "agentSwitchingActive"
-    | "agGridToken"
-    | "agentsAvailable"
-> => {
-    const settings = settingsSelector(state);
-    return {
-        colorPalette: colorPaletteSelector(state),
-        enableNewPivotTable: settings?.enableNewPivotTable,
-        enableAccessibleChartTooltip: settings?.enableAccessibleChartTooltip,
-        enableChangeAnalysis: settings?.enableChangeAnalysis,
-        agentSwitchingActive: agentSwitchingActiveSelector(state),
-        agGridToken: settings?.agGridToken,
-        agentsAvailable: agentsAvailableSelector(state),
-    };
-};
+    const onCopyToClipboard = useCallback(
+        (...args: Parameters<typeof copyToClipboardAction>) => {
+            dispatch(copyToClipboardAction(...args));
+        },
+        [dispatch],
+    );
 
-export const VisualizationContentsComponent = connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(VisualizationContentsComponentCore);
+    const setKeyDriverAnalysis = useCallback(
+        (...args: Parameters<typeof setKeyDriverAnalysisAction>) => {
+            dispatch(setKeyDriverAnalysisAction(...args));
+        },
+        [dispatch],
+    );
+
+    return (
+        <VisualizationContentsComponentCore
+            {...props}
+            colorPalette={colorPalette}
+            enableNewPivotTable={settings?.enableNewPivotTable}
+            enableAccessibleChartTooltip={settings?.enableAccessibleChartTooltip}
+            enableChangeAnalysis={settings?.enableChangeAnalysis}
+            agentSwitchingActive={agentSwitchingActive}
+            agGridToken={settings?.agGridToken}
+            agentsAvailable={agentsAvailable}
+            onCopyToClipboard={onCopyToClipboard}
+            setKeyDriverAnalysis={setKeyDriverAnalysis}
+        />
+    );
+}

@@ -7,6 +7,7 @@ import {
 import { type IDashboard } from "@gooddata/sdk-model";
 import { type SdkErrorType } from "@gooddata/sdk-ui";
 
+import { type GenAIAssistantMode } from "../components/ConfigContext.js";
 import { type IChatConversationLocal, type TextContentObject } from "../model.js";
 
 /**
@@ -403,6 +404,41 @@ export const isChatDefinitionReceivedEvent = (event: ChatEvent): event is ChatDe
 };
 
 /**
+ * A chat mode changed
+ * @public
+ */
+export type ChatModeChangeEvent = BaseEvent & {
+    type: "onModeChange";
+    mode: GenAIAssistantMode;
+};
+
+/**
+ * Type guard for the ChatModeChangeEvent.
+ * @public
+ */
+export const isChatModeChangeEvent = (event: ChatEvent): event is ChatModeChangeEvent => {
+    return event.type === "onModeChange";
+};
+
+/**
+ * A chat agent changed
+ * @public
+ */
+export type ChatAgentChangeEvent = BaseEvent & {
+    type: "onSelectedAgentAction";
+    previousAgentId?: string;
+    agentId?: string;
+};
+
+/**
+ * Type guard for the ChatAgentChangeEvent.
+ * @public
+ */
+export const isChatAgentChangeEvent = (event: ChatEvent): event is ChatAgentChangeEvent => {
+    return event.type === "onSelectedAgentAction";
+};
+
+/**
  * A union type for all chat events.
  * @public
  */
@@ -410,6 +446,7 @@ export type ChatEvent =
     | ChatOpenedEvent
     | ChatClosedEvent
     | ChatResetEvent
+    | ChatModeChangeEvent
     | ChatConversationPinnedEvent
     | ChatConversationPinErrorEvent
     | ChatConversationDeleteEvent
@@ -419,6 +456,7 @@ export type ChatEvent =
     | ChatConversationRenamedSuccessEvent
     | ChatConversationRenamedErrorEvent
     | ChatUserMessageEvent
+    | ChatAgentChangeEvent
     | ChatAssistantMessageEvent
     | ChatFeedbackEvent
     | ChatFeedbackErrorEvent

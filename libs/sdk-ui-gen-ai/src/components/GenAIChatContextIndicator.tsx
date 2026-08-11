@@ -1,9 +1,9 @@
 // (C) 2026 GoodData Corporation
 
-import { type FC, useCallback } from "react";
+import { useCallback } from "react";
 
 import { useIntl } from "react-intl";
-import { connect, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { UiChip } from "@gooddata/sdk-ui-kit";
 
@@ -18,10 +18,6 @@ type GenAIChatContextIndicatorOwnProps = {
     onDelete?: () => void;
 };
 
-type GenAIChatContextIndicatorDispatchProps = {
-    removeContextReference: typeof removeContextReferenceAction;
-};
-
 /**
  * Shows what ambient context the assistant is answering about — the open dashboard and its live
  * filters (e.g. "Answering about: Revenue Dashboard · Region: Europe · Q1 2026"). Renders nothing
@@ -30,16 +26,19 @@ type GenAIChatContextIndicatorDispatchProps = {
  *
  * @internal
  */
-function GenAIChatContextIndicatorCore({
-    removeContextReference,
-    onDelete,
-}: GenAIChatContextIndicatorDispatchProps & GenAIChatContextIndicatorOwnProps) {
+export function GenAIChatContextIndicator({ onDelete }: GenAIChatContextIndicatorOwnProps) {
     const intl = useIntl();
     const emptyReferenceLabel = intl.formatMessage({ id: "gd.gen-ai.context.untitled" });
 
     const isContextSetupEnabled = useSelector(contextSetupEnabledSelector);
     const context = useSelector(userContextSelector);
     const references = collectContextReferences(context, emptyReferenceLabel);
+
+    const dispatch = useDispatch();
+    const removeContextReference = useCallback(
+        (payload: { object: IGenAIContextObject }) => dispatch(removeContextReferenceAction(payload)),
+        [dispatch],
+    );
 
     const onDeleteHandler = useCallback(
         (reference: IGenAIContextObject) => {
@@ -71,12 +70,3 @@ function GenAIChatContextIndicatorCore({
         </div>
     );
 }
-
-const mapDispatchToProps = {
-    removeContextReference: removeContextReferenceAction,
-};
-
-export const GenAIChatContextIndicator: FC<GenAIChatContextIndicatorOwnProps> = connect(
-    null,
-    mapDispatchToProps,
-)(GenAIChatContextIndicatorCore);

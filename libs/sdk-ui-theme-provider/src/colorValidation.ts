@@ -72,6 +72,39 @@ const collectInvalidComplementaryColors = (
         .map((key) => ({ path: `complementary.${key}`, value: complementary[key]! }));
 };
 
+const requiredComplementaryKeys = [
+    "c0",
+    "c9",
+] as const satisfies readonly (keyof IThemeComplementaryPalette)[];
+
+/**
+ * Returns the dot-separated paths of complementary palette shades a theme must define but omits.
+ *
+ * @remarks
+ * `c0` and `c9` are the endpoints of the complementary ramp and, unlike `c1`-`c8`, are never
+ * interpolated by `getComplementaryPalette` — keep this list in step with the shades it passes
+ * through untouched. Omitting one leaves its `--gd-palette-complementary-*` variable unset, so
+ * every element reading it falls back to a default chosen for the opposite background.
+ *
+ * Reported separately from {@link findInvalidThemeColors} because the theme still applies: the
+ * result is a degraded rendering rather than a theme that cannot be used at all. A shade that is
+ * present but unparseable counts as invalid rather than missing, matching that function.
+ *
+ * @internal
+ */
+export const findMissingRequiredThemeColors = (theme: ITheme | undefined): string[] => {
+    // Parsed from an API response, so the required shades may well be absent despite the type.
+    const complementary: Partial<IThemeComplementaryPalette> | undefined = theme?.palette?.complementary;
+
+    if (!complementary) {
+        return [];
+    }
+
+    return requiredComplementaryKeys
+        .filter((key) => complementary[key] === undefined)
+        .map((key) => `complementary.${key}`);
+};
+
 /**
  * Walks the theme palette and returns the colors that cannot be parsed, each with its location.
  *

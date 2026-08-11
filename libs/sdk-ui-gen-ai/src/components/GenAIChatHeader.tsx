@@ -1,51 +1,47 @@
 // (C) 2026 GoodData Corporation
 
-import { type FC } from "react";
+import { useCallback } from "react";
 
 import { useIntl } from "react-intl";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { hasPinnedContextSelector, settingsSelector } from "../store/chatWindow/chatWindowSelectors.js";
 import { setFullscreenAction, setHistoryAction } from "../store/chatWindow/chatWindowSlice.js";
 import { hasMessagesSelector } from "../store/messages/messagesSelectors.js";
 import { clearThreadAction, startNewConversationAction } from "../store/messages/messagesSlice.js";
-import { type RootState } from "../store/types.js";
 
 import { HeaderIcon } from "./HeaderIcon.js";
 import { useFullscreenCheck } from "./hooks/useFullscreenCheck.js";
 
-type GenAIChatHeaderOwnProps = {
+export interface IGenAIChatHeaderProps {
     onClose: () => void;
-};
+}
 
-type GenAIChatHeaderStateProps = {
-    hasMessages: boolean;
-    hasPinnedContext: boolean;
-    settings: ReturnType<typeof settingsSelector>;
-};
-
-type GenAIChatHeaderDispatchProps = {
-    clearThread: typeof clearThreadAction;
-    setFullscreen: typeof setFullscreenAction;
-    setHistory: typeof setHistoryAction;
-    startNewConversation: typeof startNewConversationAction;
-};
-
-export type GenAIChatHeaderProps = GenAIChatHeaderOwnProps &
-    GenAIChatHeaderStateProps &
-    GenAIChatHeaderDispatchProps;
-
-function GenAIChatHeaderComponent({
-    settings,
-    setHistory,
-    clearThread,
-    hasMessages,
-    hasPinnedContext,
-    setFullscreen,
-    startNewConversation,
-    onClose,
-}: GenAIChatHeaderProps) {
+export function GenAIChatHeader({ onClose }: IGenAIChatHeaderProps) {
     const intl = useIntl();
+    const dispatch = useDispatch();
+
+    const hasMessages = useSelector(hasMessagesSelector);
+    const hasPinnedContext = useSelector(hasPinnedContextSelector);
+    const settings = useSelector(settingsSelector);
+
+    const clearThread = useCallback(
+        (...args: Parameters<typeof clearThreadAction>) => dispatch(clearThreadAction(...args)),
+        [dispatch],
+    );
+    const setFullscreen = useCallback(
+        (...args: Parameters<typeof setFullscreenAction>) => dispatch(setFullscreenAction(...args)),
+        [dispatch],
+    );
+    const setHistory = useCallback(
+        (...args: Parameters<typeof setHistoryAction>) => dispatch(setHistoryAction(...args)),
+        [dispatch],
+    );
+    const startNewConversation = useCallback(
+        (...args: Parameters<typeof startNewConversationAction>) =>
+            dispatch(startNewConversationAction(...args)),
+        [dispatch],
+    );
 
     const { isFullscreen, isSmallScreen } = useFullscreenCheck();
     const canStartOver = hasMessages || hasPinnedContext;
@@ -101,21 +97,3 @@ function GenAIChatHeaderComponent({
         </div>
     );
 }
-
-const mapStateToProps = (state: RootState): GenAIChatHeaderStateProps => ({
-    hasMessages: hasMessagesSelector(state),
-    hasPinnedContext: hasPinnedContextSelector(state),
-    settings: settingsSelector(state),
-});
-
-const mapDispatchToProps: GenAIChatHeaderDispatchProps = {
-    clearThread: clearThreadAction,
-    setFullscreen: setFullscreenAction,
-    setHistory: setHistoryAction,
-    startNewConversation: startNewConversationAction,
-};
-
-export const GenAIChatHeader: FC<GenAIChatHeaderOwnProps> = connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(GenAIChatHeaderComponent);

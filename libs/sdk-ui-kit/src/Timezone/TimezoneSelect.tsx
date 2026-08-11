@@ -34,6 +34,11 @@ export interface ITimezoneSelectSpecialItem {
      * Display label of the item.
      */
     label: string;
+
+    /**
+     * Tooltip of the item.
+     */
+    tooltip?: string;
 }
 
 /**
@@ -114,6 +119,11 @@ export interface ITimezoneSelectProps {
     header?: ReactNode;
 
     /**
+     * Whether to show tooltip for list items. Default is false.
+     */
+    showTooltip?: boolean;
+
+    /**
      * Custom renderer of the dropdown trigger. When not provided, a standard dropdown
      * button showing the current selection is rendered.
      *
@@ -134,6 +144,7 @@ const SPECIAL_ITEM_ID_PREFIX = "special-item-";
 export function buildListboxItems(
     specialItems: ITimezoneSelectSpecialItem[],
     searchString: string,
+    showTooltip: boolean,
 ): IUiListboxItem<TimezoneListItemData>[] {
     const search = searchString.trim().toLowerCase();
 
@@ -146,6 +157,7 @@ export function buildListboxItems(
             type: "interactive" as const,
             id: `${SPECIAL_ITEM_ID_PREFIX}${index}`,
             stringTitle: item.label,
+            tooltip: showTooltip ? item.tooltip : undefined,
             data: item.id,
         }));
 
@@ -200,6 +212,7 @@ export function TimezoneSelect({
     noMatchLabel,
     isDisabled,
     header,
+    showTooltip = false,
     renderButton,
 }: ITimezoneSelectProps): ReactElement {
     const [searchString, setSearchString] = useState("");
@@ -211,7 +224,10 @@ export function TimezoneSelect({
           ? placeholder
           : getTimezoneDisplayLabel(value);
 
-    const items = useMemo(() => buildListboxItems(specialItems, searchString), [specialItems, searchString]);
+    const items = useMemo(
+        () => buildListboxItems(specialItems, searchString, showTooltip),
+        [specialItems, searchString, showTooltip],
+    );
     const hasNoMatchingData = items.length === 0;
 
     return (

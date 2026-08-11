@@ -312,7 +312,7 @@ export {
     HeaderSearchProvider,
     useHeaderSearch,
 } from "./Header/headerSearchContext.js";
-export { HEADER_CHAT_BUTTON_ID } from "./Header/HeaderChatButton.js";
+export { HEADER_CHAT_BUTTON_ID, HEADER_CHAT_PANEL_ID } from "./Header/HeaderChatButton.js";
 export type {
     MessageType,
     FormatMessageParams,

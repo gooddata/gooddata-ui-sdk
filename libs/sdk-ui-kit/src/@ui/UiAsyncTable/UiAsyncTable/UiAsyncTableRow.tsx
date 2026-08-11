@@ -14,6 +14,7 @@ import {
     type UiAsyncTableMenuRenderer,
 } from "../types.js";
 
+import { useAsyncTableGridRef } from "./asyncTableGridContext.js";
 import { UiAsyncTableCheckbox } from "./UiAsyncTableCheckbox.js";
 import { UiAsyncTableIconRenderer } from "./UiAsyncTableIconRenderer.js";
 import { getCellId, getColumnWidth, getItemKey, getRowId, getRowLabelId } from "./utils.js";
@@ -115,6 +116,21 @@ const useRenderCellContent = <T extends { id: string } | { ref: ObjRef }>({
 }: {
     isLarge: boolean;
 }) => {
+    const gridRef = useAsyncTableGridRef();
+
+    // Put focus back on the grid before the menu closes. Callers routinely close the menu and open a
+    // dialog in the same tick (flushSync(closeDropdown) then setState); that dialog captures whatever is
+    // focused as its own return target, and the dropdown's restore is deferred to a microtask, so it would
+    // land after the snapshot was taken and the dialog would return focus to <body> - i.e. the page top.
+    // Restoring here keeps it synchronous, and the deferred restore then correctly sees nothing to do.
+    const closeMenuAndRestoreFocus = useCallback(
+        (closeDropdown: () => void) => {
+            gridRef?.current?.focus();
+            closeDropdown();
+        },
+        [gridRef],
+    );
+
     const renderRoleIconWithWrapper = useCallback((renderRoleIcon: (item: T) => ReactNode, item: T) => {
         return (
             <UiAsyncTableIconRenderer renderIcon={renderRoleIcon} className={e("role-icon")} item={item} />
@@ -182,11 +198,13 @@ const useRenderCellContent = <T extends { id: string } | { ref: ObjRef }>({
                         );
                     }}
                     alignPoints={[{ align: "br tr" }, { align: "tr br" }]}
-                    renderBody={({ closeDropdown }) => renderMenu(item, closeDropdown)}
+                    renderBody={({ closeDropdown }) =>
+                        renderMenu(item, () => closeMenuAndRestoreFocus(closeDropdown))
+                    }
                 />
             );
         },
-        [isLarge],
+        [isLarge, closeMenuAndRestoreFocus],
     );
 
     const renderTextContent = useCallback(

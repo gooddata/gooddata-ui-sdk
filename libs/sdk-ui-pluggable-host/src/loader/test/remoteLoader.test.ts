@@ -6,12 +6,13 @@ import { type IRemotePluggableApplicationModule } from "@gooddata/sdk-model";
 
 const loadRemoteMock = vi.fn();
 const registerRemotesMock = vi.fn();
+const preloadRemoteMock = vi.fn();
 
 vi.mock("@module-federation/runtime", () => ({
     createInstance: () => ({
         loadRemote: loadRemoteMock,
         registerRemotes: registerRemotesMock,
-        preloadRemote: vi.fn(),
+        preloadRemote: preloadRemoteMock,
     }),
 }));
 
@@ -26,6 +27,7 @@ describe("remoteLoader.loadRemotePluggableApplication", () => {
     beforeEach(() => {
         loadRemoteMock.mockReset();
         registerRemotesMock.mockReset();
+        preloadRemoteMock.mockReset();
         // Replace window.location to satisfy isAllowedRemoteHostname for relative remote URLs.
         Object.defineProperty(window, "location", {
             configurable: true,
@@ -80,5 +82,42 @@ describe("remoteLoader.loadRemotePluggableApplication", () => {
         const { loadRemotePluggableApplication } = await import("../remoteLoader.js");
 
         await expect(loadRemotePluggableApplication(remote)).resolves.toBe(app);
+    });
+
+    describe("preloadRemotePluggableApplication", () => {
+        it('warms only the expose\'s "sync" assets', async () => {
+            // "all" additionally pulls the expose's whole async chunk graph — hundreds of files
+            // per application — which on a slow connection starves the page the user is on and
+            // makes the preload links time out. See LX-2791.
+            preloadRemoteMock.mockResolvedValueOnce(undefined);
+
+            const { preloadRemotePluggableApplication } = await import("../remoteLoader.js");
+            await preloadRemotePluggableApplication(remote);
+
+            expect(preloadRemoteMock).toHaveBeenCalledWith([
+                {
+                    nameOrAlias: "gdc_home_ui",
+                    exposes: ["pluggableApp"],
+                    resourceCategory: "sync",
+                },
+            ]);
+        });
+
+        it("reports a failed warm-up as a warning, not an error", async () => {
+            // A preload that times out on a slow link is not a failure the user can act on —
+            // the application still loads on demand. Logging it as an error made it look like
+            // a broken remote in the console.
+            const warn = vi.spyOn(console, "warn").mockImplementation(() => undefined);
+            const error = vi.spyOn(console, "error").mockImplementation(() => undefined);
+            preloadRemoteMock.mockRejectedValueOnce(new Error("preloadRemote failed to load 1 resource(s)."));
+
+            const { preloadRemotePluggableApplication } = await import("../remoteLoader.js");
+
+            await expect(preloadRemotePluggableApplication(remote)).rejects.toThrow(
+                /failed to load 1 resource/,
+            );
+            expect(warn).toHaveBeenCalledOnce();
+            expect(error).not.toHaveBeenCalled();
+        });
     });
 });

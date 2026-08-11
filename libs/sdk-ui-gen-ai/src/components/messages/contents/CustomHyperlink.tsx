@@ -2,12 +2,11 @@
 
 import { type MouseEvent, useMemo } from "react";
 
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 
 import { settingsSelector } from "../../../store/chatWindow/chatWindowSelectors.js";
-import { type RootState } from "../../../store/types.js";
 import { type LinkHandlerEvent, useConfig } from "../../ConfigContext.js";
 
 export type CustomHyperlinkOwnProps = {
@@ -139,6 +138,8 @@ const getItemUrl = (
     }
 };
 
-export const CustomHyperlink = connect((state: RootState) => ({
-    settings: settingsSelector(state),
-}))(CustomHyperlinkComponent);
+export function CustomHyperlink({ href, text }: CustomHyperlinkOwnProps) {
+    const settings = useSelector(settingsSelector);
+
+    return <CustomHyperlinkComponent href={href} text={text} settings={settings} />;
+}

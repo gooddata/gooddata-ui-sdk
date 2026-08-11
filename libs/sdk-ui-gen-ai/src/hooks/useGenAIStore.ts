@@ -7,10 +7,11 @@ import { type EnhancedStore } from "@reduxjs/toolkit";
 import { type IAnalyticalBackend, type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { type CatalogItem, type GenAIObjectType, type IColorPalette } from "@gooddata/sdk-model";
 
-import type { LinkHandlerEvent } from "../components/ConfigContext.js";
+import type { GenAIAssistantMode, LinkHandlerEvent } from "../components/ConfigContext.js";
 import {
     setCatalogItemsActions,
     setColorPaletteAction,
+    setFullscreenAction,
     setIsPreviewAction,
     setObjectTypesAction,
     setSettingsAction,
@@ -34,6 +35,7 @@ export const useGenAIStore = (
         isPreview?: boolean;
         onLinkClick?: (linkClickEvent: LinkHandlerEvent) => string | undefined;
         allowNativeLinks?: boolean;
+        mode?: GenAIAssistantMode;
     },
 ): EnhancedStore => {
     const {
@@ -47,6 +49,7 @@ export const useGenAIStore = (
         isPreview,
         onLinkClick,
         allowNativeLinks,
+        mode,
     } = opts;
 
     // Instantiate EventDispatcher. It's a designed to hold a reference to the handlers, so that
@@ -122,6 +125,13 @@ export const useGenAIStore = (
             store.dispatch(setCatalogItemsActions(catalogItems));
         }
     }, [eventHandlers, eventDispatcher, catalogItems, optionsDispatcher, store]);
+
+    useEffect(() => {
+        if (mode && mode !== optionsDispatcher.getMode()) {
+            optionsDispatcher.setMode(mode);
+            store.dispatch(setFullscreenAction({ isFullscreen: mode === "fullscreen" }));
+        }
+    }, [eventHandlers, eventDispatcher, optionsDispatcher, store, mode]);
 
     useEffect(() => {
         if (eventHandlers) {

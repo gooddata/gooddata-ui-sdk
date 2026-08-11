@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type KeyboardEvent, type MouseEvent, type ReactNode } from "react";
 
@@ -70,6 +70,11 @@ export interface IAppHeaderProps {
     search?: ReactNode;
     notificationsPanel?: (props: { isMobile: boolean; closeNotificationsOverlay: () => void }) => ReactNode;
     showChatItem?: boolean;
+    /**
+     * Whether the assistant panel opened by the chat button is currently open. Keeps the button's
+     * aria-expanded and aria-controls in sync with the panel.
+     */
+    isChatOpen?: boolean;
     onChatItemClick?: (e: MouseEvent) => void;
 }
 

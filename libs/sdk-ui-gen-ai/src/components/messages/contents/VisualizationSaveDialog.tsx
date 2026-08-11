@@ -1,14 +1,14 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import { useIntl } from "react-intl";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { type IGenAIVisualization } from "@gooddata/sdk-model";
 import { ConfirmDialog, Input, Typography } from "@gooddata/sdk-ui-kit";
 
-import { saveVisualizationAction } from "../../../store/messages/messagesSlice.js";
+import { saveVisualizationAction as saveVisualizationActionCreator } from "../../../store/messages/messagesSlice.js";
 
 import { useVisualisationSaving } from "./hooks/useVisualisationSaving.js";
 
@@ -20,7 +20,7 @@ export type VisualizationSaveDialogProps = {
 };
 
 export type VisualizationSaveDialogDispatchProps = {
-    saveVisualizationAction: typeof saveVisualizationAction;
+    saveVisualizationAction: (...args: Parameters<typeof saveVisualizationActionCreator>) => void;
 };
 
 function VisualizationSaveDialogCore({
@@ -81,8 +81,15 @@ function VisualizationSaveDialogCore({
     );
 }
 
-const mapDispatchToProps = {
-    saveVisualizationAction,
-};
+export function VisualizationSaveDialog(props: VisualizationSaveDialogProps) {
+    const dispatch = useDispatch();
 
-export const VisualizationSaveDialog: any = connect(null, mapDispatchToProps)(VisualizationSaveDialogCore);
+    const saveVisualization = useCallback(
+        (...args: Parameters<typeof saveVisualizationActionCreator>) => {
+            dispatch(saveVisualizationActionCreator(...args));
+        },
+        [dispatch],
+    );
+
+    return <VisualizationSaveDialogCore {...props} saveVisualizationAction={saveVisualization} />;
+}

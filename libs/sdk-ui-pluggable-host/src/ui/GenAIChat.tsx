@@ -139,16 +139,22 @@ export function GenAIChat({
     // open/navigate handler instead.
     const onLinkClick = useCallback(
         (link: LinkHandlerEvent): string | undefined => {
-            onAppLinkClick?.({
-                type: link.type,
-                id: link.id,
-                itemUrl: link.itemUrl,
-                newTab: link.newTab,
-            });
+            if (!embedded) {
+                const currentUrl = window.location.pathname + window.location.hash;
+                const areUrlsEqual = currentUrl === link.itemUrl;
+                if (link.newTab) {
+                    window.open(link.itemUrl, "_blank");
+                } else if (!areUrlsEqual) {
+                    window.location.assign(link.itemUrl);
+                }
+            }
+
+            onAppLinkClick?.(link);
             link.preventDefault();
-            return undefined;
+
+            return link.itemUrl;
         },
-        [onAppLinkClick],
+        [onAppLinkClick, embedded],
     );
 
     const handleEvent = useCallback(
@@ -224,9 +230,9 @@ export function GenAIChat({
             canFullControl={canFullControl}
             settings={settings}
             dialogPosition={dialogPosition}
-            allowNativeLinks={embedded ? false : undefined}
             className={embedded ? EMBEDDED_CHAT_CLASS : undefined}
-            onLinkClick={embedded ? onLinkClick : undefined}
+            allowNativeLinks={false}
+            onLinkClick={onLinkClick}
             onEvent={handleEvent}
             returnFocusTo={embedded ? EMBEDDED_AI_TRIGGER_ID : HEADER_CHAT_BUTTON_ID}
         />

@@ -30,6 +30,12 @@ export type LinkHandlerEvent = {
     visualizationStatus?: "saved" | "draft";
 };
 
+/**
+ * Display mode of the Gen AI assistant.
+ * @public
+ */
+export type GenAIAssistantMode = "docked" | "fullscreen";
+
 const configContext = createContext<ConfigContext>({});
 
 export function ConfigProvider({

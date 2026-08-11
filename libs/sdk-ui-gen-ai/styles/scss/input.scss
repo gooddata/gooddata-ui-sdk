@@ -138,8 +138,9 @@
             color: var(--gd-palette-complementary-7);
         }
 
-        .gd-ui-kit-button__badge {
+        .gd-ui-kit-button__badge-text {
             color: var(--gd-palette-complementary-6);
+            margin-left: 0;
         }
 
         // Reuse the assistant "Thinking..." shimmer on the loading label, keeping the button's own font.

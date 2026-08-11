@@ -1,10 +1,10 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { type FC, useEffect } from "react";
+import { useCallback, useEffect } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { Button, UiNavigationBypass, useKeyboardNavigationTarget } from "@gooddata/sdk-ui-kit";
@@ -14,7 +14,6 @@ import { settingsSelector } from "../store/chatWindow/chatWindowSelectors.js";
 import { setAllowedRelationshipTypesAction } from "../store/chatWindow/chatWindowSlice.js";
 import { asyncProcessSelector } from "../store/messages/messagesSelectors.js";
 import { cancelAsyncAction, clearThreadAction, loadThreadAction } from "../store/messages/messagesSlice.js";
-import { type RootState } from "../store/types.js";
 
 import { useConfig } from "./ConfigContext.js";
 import { useCustomization } from "./CustomizationProvider.js";
@@ -33,10 +32,10 @@ export type GenAIChatOwnProps = {
 };
 
 export type GenAIChatWrapperProps = GenAIChatOwnProps & {
-    loadThread: typeof loadThreadAction;
-    cancelLoading: typeof cancelAsyncAction;
-    clearThread: typeof clearThreadAction;
-    setAllowedRelationshipTypes: typeof setAllowedRelationshipTypesAction;
+    loadThread: (...args: Parameters<typeof loadThreadAction>) => void;
+    cancelLoading: (...args: Parameters<typeof cancelAsyncAction>) => void;
+    clearThread: (...args: Parameters<typeof clearThreadAction>) => void;
+    setAllowedRelationshipTypes: (...args: Parameters<typeof setAllowedRelationshipTypesAction>) => void;
     autofocus?: boolean;
     initializing?: boolean;
     isClearing?: boolean;
@@ -171,19 +170,45 @@ function NavigationBypass() {
     );
 }
 
-const mapStateToProps = (state: RootState) => ({
-    isClearing: asyncProcessSelector(state) === "clearing",
-    settings: settingsSelector(state),
-});
+export function GenAIChatWrapper(ownProps: GenAIChatOwnProps) {
+    const isClearing = useSelector(asyncProcessSelector) === "clearing";
+    const settings = useSelector(settingsSelector);
 
-const mapDispatchToProps = {
-    loadThread: loadThreadAction,
-    cancelLoading: cancelAsyncAction,
-    clearThread: clearThreadAction,
-    setAllowedRelationshipTypes: setAllowedRelationshipTypesAction,
-};
+    const dispatch = useDispatch();
+    const loadThread = useCallback(
+        (...args: Parameters<typeof loadThreadAction>) => {
+            dispatch(loadThreadAction(...args));
+        },
+        [dispatch],
+    );
+    const cancelLoading = useCallback(
+        (...args: Parameters<typeof cancelAsyncAction>) => {
+            dispatch(cancelAsyncAction(...args));
+        },
+        [dispatch],
+    );
+    const clearThread = useCallback(
+        (...args: Parameters<typeof clearThreadAction>) => {
+            dispatch(clearThreadAction(...args));
+        },
+        [dispatch],
+    );
+    const setAllowedRelationshipTypes = useCallback(
+        (...args: Parameters<typeof setAllowedRelationshipTypesAction>) => {
+            dispatch(setAllowedRelationshipTypesAction(...args));
+        },
+        [dispatch],
+    );
 
-export const GenAIChatWrapper: FC<GenAIChatOwnProps> = connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(GenAIChatWrapperComponent);
+    return (
+        <GenAIChatWrapperComponent
+            {...ownProps}
+            isClearing={isClearing}
+            settings={settings}
+            loadThread={loadThread}
+            cancelLoading={cancelLoading}
+            clearThread={clearThread}
+            setAllowedRelationshipTypes={setAllowedRelationshipTypes}
+        />
+    );
+}

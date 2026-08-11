@@ -1,10 +1,10 @@
 // (C) 2026 GoodData Corporation
 
-import { type FC, type MouseEvent, type ReactNode, useCallback, useEffect } from "react";
+import { type MouseEvent, type ReactNode, useCallback, useEffect } from "react";
 
 import cx from "classnames";
 import { defineMessages, useIntl } from "react-intl";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
@@ -52,6 +52,7 @@ type GenAiChatAgentSwitchingOwnProps = {
 type GenAiChatAgentSwitchingStateProps = {
     conversation: ReturnType<typeof conversationSelector>;
     conversations: ReturnType<typeof conversationsSelector>;
+    conversationsLoaded: ReturnType<typeof conversationsLoadedSelector>;
     agents: ReturnType<typeof agentsSelector>;
     agentSwitchingEnabled: ReturnType<typeof agentSwitchingEnabledSelector>;
     agentSwitchingActive: ReturnType<typeof agentSwitchingActiveSelector>;
@@ -61,8 +62,8 @@ type GenAiChatAgentSwitchingStateProps = {
 };
 
 type IGenAiChatAgentSwitchingDispatchProps = {
-    setSelectedAgent: typeof setSelectedAgentAction;
-    setSelectedEffort: typeof setSelectedEffortAction;
+    setSelectedAgent: (...args: Parameters<typeof setSelectedAgentAction>) => void;
+    setSelectedEffort: (...args: Parameters<typeof setSelectedEffortAction>) => void;
 };
 
 function GenAiChatAgentSwitchingCore({
@@ -228,38 +229,45 @@ function GenAiChatAgentSwitchingCore({
     );
 }
 
-const mapStateToProps = (
-    state: RootState,
-): {
-    conversation: ReturnType<typeof conversationSelector>;
-    conversations: ReturnType<typeof conversationsSelector>;
-    conversationsLoaded: ReturnType<typeof conversationsLoadedSelector>;
-    agents: ReturnType<typeof agentsSelector>;
-    agentSwitchingEnabled: ReturnType<typeof agentSwitchingEnabledSelector>;
-    agentSwitchingActive: ReturnType<typeof agentSwitchingActiveSelector>;
-    selectedAgentId: ReturnType<typeof selectedAgentIdSelector>;
-    selectedEffort: ReturnType<typeof selectedEffortSelector>;
-    reasoningEffortEnabled: ReturnType<typeof reasoningEffortEnabledSelector>;
-} => {
-    return {
-        conversation: conversationSelector(state),
-        conversations: conversationsSelector(state),
-        conversationsLoaded: conversationsLoadedSelector(state),
-        agents: agentsSelector(state),
-        agentSwitchingEnabled: agentSwitchingEnabledSelector(state),
-        agentSwitchingActive: agentSwitchingActiveSelector(state),
-        selectedAgentId: selectedAgentIdSelector(state),
-        selectedEffort: selectedEffortSelector(state),
-        reasoningEffortEnabled: reasoningEffortEnabledSelector(state),
-    };
-};
+export function GenAiChatAgentSwitching(ownProps: GenAiChatAgentSwitchingOwnProps) {
+    const conversation = useSelector((state: RootState) => conversationSelector(state));
+    const conversations = useSelector((state: RootState) => conversationsSelector(state));
+    const conversationsLoaded = useSelector((state: RootState) => conversationsLoadedSelector(state));
+    const agents = useSelector((state: RootState) => agentsSelector(state));
+    const agentSwitchingEnabled = useSelector((state: RootState) => agentSwitchingEnabledSelector(state));
+    const agentSwitchingActive = useSelector((state: RootState) => agentSwitchingActiveSelector(state));
+    const selectedAgentId = useSelector((state: RootState) => selectedAgentIdSelector(state));
+    const selectedEffort = useSelector((state: RootState) => selectedEffortSelector(state));
+    const reasoningEffortEnabled = useSelector((state: RootState) => reasoningEffortEnabledSelector(state));
 
-const mapDispatchToProps = {
-    setSelectedAgent: setSelectedAgentAction,
-    setSelectedEffort: setSelectedEffortAction,
-};
+    const dispatch = useDispatch();
+    const setSelectedAgent = useCallback(
+        (...args: Parameters<typeof setSelectedAgentAction>) => {
+            dispatch(setSelectedAgentAction(...args));
+        },
+        [dispatch],
+    );
+    const setSelectedEffort = useCallback(
+        (...args: Parameters<typeof setSelectedEffortAction>) => {
+            dispatch(setSelectedEffortAction(...args));
+        },
+        [dispatch],
+    );
 
-export const GenAiChatAgentSwitching: FC<GenAiChatAgentSwitchingOwnProps> = connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(GenAiChatAgentSwitchingCore);
+    return (
+        <GenAiChatAgentSwitchingCore
+            {...ownProps}
+            conversation={conversation}
+            conversations={conversations}
+            conversationsLoaded={conversationsLoaded}
+            agents={agents}
+            agentSwitchingEnabled={agentSwitchingEnabled}
+            agentSwitchingActive={agentSwitchingActive}
+            selectedAgentId={selectedAgentId}
+            selectedEffort={selectedEffort}
+            reasoningEffortEnabled={reasoningEffortEnabled}
+            setSelectedAgent={setSelectedAgent}
+            setSelectedEffort={setSelectedEffort}
+        />
+    );
+}

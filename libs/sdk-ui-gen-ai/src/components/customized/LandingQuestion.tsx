@@ -1,9 +1,9 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type FC } from "react";
+import { useCallback } from "react";
 
 import { defineMessage, useIntl } from "react-intl";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { type IUiButtonProps, UiButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
@@ -16,18 +16,8 @@ import {
 } from "../../model.js";
 import { agentSwitchingActiveSelector } from "../../store/chatWindow/chatWindowSelectors.js";
 import { agentsAvailableSelector } from "../../store/messages/messagesSelectors.js";
-import { setMessagesAction } from "../../store/messages/messagesSlice.js";
-import { type RootState } from "../../store/types.js";
+import { setMessagesAction as setMessagesActionCreator } from "../../store/messages/messagesSlice.js";
 import { escapeMarkdown } from "../utils/markdownUtils.js";
-
-interface ILandingQuestionActionsProps {
-    setMessagesAction: typeof setMessagesAction;
-}
-
-interface ILandingQuestionStateProps {
-    agentSwitchingActive: ReturnType<typeof agentSwitchingActiveSelector>;
-    agentsAvailable: ReturnType<typeof agentsAvailableSelector>;
-}
 
 const disabledTooltip = defineMessage({ id: "gd.gen-ai.agent.unavailable.disabled-tooltip" });
 
@@ -44,16 +34,17 @@ export interface ILandingQuestionProps {
 /**
  * @beta
  */
-function LandingQuestionComponent({
-    setMessagesAction,
-    agentSwitchingActive,
-    agentsAvailable,
-    icon,
-    question,
-    answer,
-    title = question,
-}: ILandingQuestionProps & ILandingQuestionActionsProps & ILandingQuestionStateProps) {
+export function DefaultLandingQuestion({ icon, question, answer, title = question }: ILandingQuestionProps) {
     const intl = useIntl();
+    const dispatch = useDispatch();
+    const agentSwitchingActive = useSelector(agentSwitchingActiveSelector);
+    const agentsAvailable = useSelector(agentsAvailableSelector);
+
+    const setMessagesAction = useCallback(
+        (...args: Parameters<typeof setMessagesActionCreator>) => dispatch(setMessagesActionCreator(...args)),
+        [dispatch],
+    );
+
     const isDisabled = agentSwitchingActive && agentsAvailable !== true;
 
     const button = (
@@ -99,20 +90,3 @@ function LandingQuestionComponent({
         />
     );
 }
-
-const mapStateToProps = (state: RootState): ILandingQuestionStateProps => ({
-    agentSwitchingActive: agentSwitchingActiveSelector(state),
-    agentsAvailable: agentsAvailableSelector(state),
-});
-
-const mapDispatchToProps: ILandingQuestionActionsProps = {
-    setMessagesAction,
-};
-
-/**
- * @beta
- */
-export const DefaultLandingQuestion: FC<ILandingQuestionProps> = connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(LandingQuestionComponent);

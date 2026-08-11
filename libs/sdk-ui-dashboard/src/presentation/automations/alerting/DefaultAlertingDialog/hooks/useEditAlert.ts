@@ -4,7 +4,7 @@ import { useAlertingDialogContext } from "../../../contexts/AlertingDialogContex
 import { useAutomationsContext } from "../../../contexts/AutomationsContext.js";
 import { useAutomationFiltersSelect } from "../../../shared/automationFilters/useAutomationFiltersSelect.js";
 
-import { useAlertFilters } from "./useAlertFilters.js";
+import { useAlertFiltersModel } from "./useAlertFiltersModel.js";
 import { useAlertFormState } from "./useAlertFormState.js";
 import { useAlertFormValidation } from "./useAlertFormValidation.js";
 import { useAlertSelectedValues } from "./useAlertSelectedValues.js";
@@ -114,7 +114,7 @@ export function useEditAlert({ maxAutomationsRecipients, externalRecipientOverri
     // Kept whole rather than destructured: every member is re-exposed unchanged, so spreading it into
     // the return means a member can never be dropped by forgetting to re-list it. What the model may
     // contain is gated by its own shape test, not here.
-    const filterModel = useAlertFilters({
+    const filterModel = useAlertFiltersModel({
         setEditedAutomation,
         alertToEdit,
         editedAutomationFilters,
@@ -166,7 +166,7 @@ export function useEditAlert({ maxAutomationsRecipients, externalRecipientOverri
     return {
         onTitleChange,
         onRecipientsChange,
-        // Filter model, absorbed from `useAlertFilters`. Spread rather than re-listed so a member
+        // Filter model, absorbed from `useAlertFiltersModel`. Spread rather than re-listed so a member
         // cannot be dropped by omission; its `availableFilters` is the model's, not the raw
         // selection hook's.
         ...filterModel,

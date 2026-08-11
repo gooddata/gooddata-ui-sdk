@@ -713,6 +713,33 @@ describe("useAlertFormState — onTitleChange", () => {
 });
 
 // ---------------------------------------------------------------------------
+// Handler identity across renders
+// ---------------------------------------------------------------------------
+
+describe("useAlertFormState — handler identity", () => {
+    it("keeps onTitleChange identical across a rerender with unchanged inputs", () => {
+        const { result, rerender } = renderFormStateHook();
+        const first = result.current.onTitleChange;
+
+        rerender();
+
+        expect(result.current.onTitleChange).toBe(first);
+    });
+
+    it("still updates the title and validity through the stabilized handler", () => {
+        const { result, rerender } = renderFormStateHook();
+
+        act(() => {
+            result.current.onTitleChange("New title", false);
+        });
+        rerender();
+
+        expect(result.current.editedAutomation?.title).toBe("New title");
+        expect(result.current.isTitleValid).toBe(false);
+    });
+});
+
+// ---------------------------------------------------------------------------
 // Case 3: onDestinationChange — warning message + recipient reset
 // ---------------------------------------------------------------------------
 
@@ -762,10 +789,9 @@ describe("useAlertFormState — onDestinationChange", () => {
         rerender();
 
         expect(result.current.warningMessage).toBeUndefined();
-        // updatedRecipients is undefined (not reset) -> convertUserToAutomationRecipient is not
-        // invoked by onDestinationChange's own branch for the recipient reset (it's still called on
-        // every render for the unrelated defaultRecipient computation, so we assert via the
-        // transform's 3rd arg rather than "not called" here).
+        // updatedRecipients is undefined (not reset), but the converter still runs once at
+        // mount for the defaultRecipient memo, so assert via the transform's 3rd arg rather
+        // than call count.
         expect(transformAlertByDestinationSpy).toHaveBeenCalledWith(editAlert, "channel-all", undefined);
     });
 
@@ -1173,6 +1199,42 @@ describe("useAlertFormState — defaults", () => {
 
         expect(convertUserToAutomationRecipientSpy).toHaveBeenCalledWith(SENTINEL_CURRENT_USER);
         expect(result.current.defaultUser).toBe(SENTINEL_CONVERTED_RECIPIENT);
+    });
+});
+
+// ---------------------------------------------------------------------------
+// Default recipient identity. The converters allocate a fresh recipient per
+// call, and beforeEach's shared mockReturnValue hands out one object, so these
+// tests override it — without the override an unmemoized value cannot fail them.
+// ---------------------------------------------------------------------------
+
+describe("useAlertFormState — default recipient identity", () => {
+    it("keeps defaultUser and defaultRecipient identical across a rerender", () => {
+        convertUserToAutomationRecipientSpy.mockImplementation(() => ({
+            ...SENTINEL_CONVERTED_RECIPIENT,
+        }));
+        const { result, rerender } = renderFormStateHook();
+        const firstUser = result.current.defaultUser;
+        const firstRecipient = result.current.defaultRecipient;
+
+        rerender();
+
+        expect(result.current.defaultUser).toBe(firstUser);
+        expect(result.current.defaultRecipient).toBe(firstRecipient);
+    });
+
+    it("keeps defaultRecipient identical across a rerender with an external override", () => {
+        convertExternalRecipientToAutomationRecipientSpy.mockImplementation(() => ({
+            ...SENTINEL_EXTERNAL_RECIPIENT,
+        }));
+        const { result, rerender } = renderFormStateHook({
+            externalRecipientOverride: "ext@example.com",
+        });
+        const first = result.current.defaultRecipient;
+
+        rerender();
+
+        expect(result.current.defaultRecipient).toBe(first);
     });
 });
 

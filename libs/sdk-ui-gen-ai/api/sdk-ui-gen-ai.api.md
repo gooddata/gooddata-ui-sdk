@@ -9,7 +9,6 @@ import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import { CatalogItem } from '@gooddata/sdk-model';
 import { ComponentType } from 'react';
 import { EnhancedStore } from '@reduxjs/toolkit';
-import { FC } from 'react';
 import type { GenAIChatInteractionUserFeedback } from '@gooddata/sdk-model';
 import type { GenAIChatRoutingUseCase } from '@gooddata/sdk-model';
 import { GenAIObjectType } from '@gooddata/sdk-model';
@@ -61,6 +60,13 @@ export type BaseMessage = {
 export type ChangeAnalysisContents = {
     type: "changeAnalysis";
     params: IGenAIChangeAnalysisParams;
+};
+
+// @public
+export type ChatAgentChangeEvent = BaseEvent & {
+    type: "onSelectedAgentAction";
+    previousAgentId?: string;
+    agentId?: string;
 };
 
 // @public
@@ -154,7 +160,7 @@ export type ChatDefinitionReceivedEvent = BaseEvent & {
 };
 
 // @public
-export type ChatEvent = ChatOpenedEvent | ChatClosedEvent | ChatResetEvent | ChatConversationPinnedEvent | ChatConversationPinErrorEvent | ChatConversationDeleteEvent | ChatConversationDeletedSuccessEvent | ChatConversationDeletedErrorEvent | ChatConversationRenameEvent | ChatConversationRenamedSuccessEvent | ChatConversationRenamedErrorEvent | ChatUserMessageEvent | ChatAssistantMessageEvent | ChatFeedbackEvent | ChatFeedbackErrorEvent | ChatCopyToClipboardEvent | ChatVisualizationErrorEvent | ChatSaveVisualizationErrorEvent | ChatSaveVisualizationSuccessEvent | ChatConversationChangedEvent | ChatDefinitionReceivedEvent;
+export type ChatEvent = ChatOpenedEvent | ChatClosedEvent | ChatResetEvent | ChatModeChangeEvent | ChatConversationPinnedEvent | ChatConversationPinErrorEvent | ChatConversationDeleteEvent | ChatConversationDeletedSuccessEvent | ChatConversationDeletedErrorEvent | ChatConversationRenameEvent | ChatConversationRenamedSuccessEvent | ChatConversationRenamedErrorEvent | ChatUserMessageEvent | ChatAgentChangeEvent | ChatAssistantMessageEvent | ChatFeedbackEvent | ChatFeedbackErrorEvent | ChatCopyToClipboardEvent | ChatVisualizationErrorEvent | ChatSaveVisualizationErrorEvent | ChatSaveVisualizationSuccessEvent | ChatConversationChangedEvent | ChatDefinitionReceivedEvent;
 
 // @public
 export type ChatEventHandler<TEvent extends ChatEvent = any> = {
@@ -175,6 +181,12 @@ export type ChatFeedbackEvent = BaseEvent & {
     interactionId?: string;
     feedback: "POSITIVE" | "NEGATIVE" | "NONE";
     userTextFeedback?: string;
+};
+
+// @public
+export type ChatModeChangeEvent = BaseEvent & {
+    type: "onModeChange";
+    mode: GenAIAssistantMode;
 };
 
 // @public
@@ -224,13 +236,13 @@ export type Contents = TextContents | RoutingContents | ReasoningContents | Sear
 export function DefaultLandingContainer(input: ILandingContentProps): JSX.Element;
 
 // @beta (undocumented)
-export const DefaultLandingQuestion: FC<ILandingQuestionProps>;
+export function DefaultLandingQuestion(input: ILandingQuestionProps): JSX.Element;
 
 // @beta (undocumented)
 export function DefaultLandingQuestions(input: ILandingContentProps): JSX.Element;
 
 // @beta (undocumented)
-export const DefaultLandingScreen: FC<LandingScreenProps>;
+export function DefaultLandingScreen(input: LandingScreenProps): JSX.Element;
 
 // @beta (undocumented)
 export function DefaultLandingTitle(input: ILandingTitleProps): JSX.Element;
@@ -298,6 +310,7 @@ export type GenAiStoreProps = {
     includeTags?: string[];
     excludeTags?: string[];
     colorPalette?: IColorPalette;
+    mode?: GenAIAssistantMode;
     onDispatcher?: (dispatch: EnhancedStore["dispatch"]) => void;
     children: ReactNode | ((genAIStore: EnhancedStore) => ReactNode);
     isPreview?: boolean;
@@ -385,6 +398,9 @@ export interface ILandingTitleProps {
 }
 
 // @public
+export const isChatAgentChangeEvent: (event: ChatEvent) => event is ChatAgentChangeEvent;
+
+// @public
 export const isChatAssistantMessageEvent: (event: ChatEvent) => event is ChatAssistantMessageEvent;
 
 // @public
@@ -428,6 +444,9 @@ export const isChatFeedbackErrorEvent: (event: ChatEvent) => event is ChatFeedba
 
 // @public
 export const isChatFeedbackEvent: (event: ChatEvent) => event is ChatFeedbackEvent;
+
+// @public
+export const isChatModeChangeEvent: (event: ChatEvent) => event is ChatModeChangeEvent;
 
 // @public
 export const isChatOpenedEvent: (event: ChatEvent) => event is ChatOpenedEvent;
@@ -536,6 +555,13 @@ conversation: IChatConversationLocal;
 export const setFullscreenAction: ActionCreatorWithPayload<    {
 isFullscreen: boolean;
 }, "chatWindow/setFullscreenAction">;
+
+// @public (undocumented)
+export const setSelectedAgentAction: ActionCreatorWithPayload<    {
+agentId: string | undefined;
+previousAgentId?: string | undefined;
+showChangeEvent?: boolean | undefined;
+}, "messages/setSelectedAgentAction">;
 
 // @public (undocumented)
 export const startNewConversationAction: ActionCreatorWithoutPayload<"messages/startNewConversationAction">;

@@ -14,7 +14,6 @@ export type DataSourceType =
     | "PRESTO"
     | "DREMIO"
     | "DRILL"
-    | "GREENPLUM"
     | "AZURESQL"
     | "SYNAPSESQL"
     | "DATABRICKS"
