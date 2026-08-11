@@ -78,6 +78,10 @@
             }
         }
 
+        &-warning {
+            margin-bottom: 20px;
+        }
+
         &-invalid {
             color: variables.$gd-palette-error-base;
 

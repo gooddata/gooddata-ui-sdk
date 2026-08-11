@@ -5,6 +5,7 @@ import { type ModuleFederation, createInstance } from "@module-federation/runtim
 import { type IRemotePluggableApplicationModule } from "@gooddata/sdk-model";
 import { type IPluggableApp, type IHostUiModule } from "@gooddata/sdk-pluggable-application-model";
 
+import { createHostFederationPlugin } from "./federationRuntimePlugin.js";
 import { isAllowedRemoteHostname } from "./remoteUrlSecurity.js";
 
 interface ILoadedRemotePluggableApplicationModule {
@@ -19,7 +20,11 @@ let federation: ModuleFederation | undefined;
 
 function getFederation(): ModuleFederation {
     if (!federation) {
-        federation = createInstance({ name: "gdc_host", remotes: [] });
+        federation = createInstance({
+            name: "gdc_host",
+            remotes: [],
+            plugins: [createHostFederationPlugin()],
+        });
     }
     return federation;
 }
@@ -171,18 +176,27 @@ export async function preloadRemotePluggableApplication(
     // the page. Registration and preload run inside the try so a synchronous registration
     // failure is caught too; on any failure reject after logging, so the caller skips
     // onPreloadCompleted (matching the local and load-remote paths).
+    //
+    // "sync" — not "all" — deliberately: "all" additionally pulls every async chunk reachable
+    // from the expose, which for these applications is hundreds of files. Downloading that
+    // whole graph on hover saturated slow connections (competing with the requests the current
+    // page still needs), and the browser then warned "preloaded but not used" for each chunk
+    // the user never reached. The sync assets are what an actual mount needs first.
     try {
         registerRemote(remote);
         await getFederation().preloadRemote([
             {
                 nameOrAlias: remote.scope,
                 exposes: [normalizeModuleName(remote.module)],
-                resourceCategory: "all",
+                resourceCategory: "sync",
             },
         ]);
     } catch (error: unknown) {
-        console.error(
-            `[host-runtime/remote-loader] Failed to preload remote "${remote.scope}/${remote.module}".`,
+        // warn, not error: preloading is an optimisation. MF counts an asset that has not
+        // finished within the link timeout as a failure, so a slow connection alone produces
+        // this — nothing is broken, the assets are simply fetched again when the app is opened.
+        console.warn(
+            `[host-runtime/remote-loader] Could not preload remote "${remote.scope}/${remote.module}". This is a non-fatal warm-up failure; the application still loads on demand.`,
             error,
         );
         throw error;

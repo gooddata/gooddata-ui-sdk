@@ -1,8 +1,8 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { Component, type ErrorInfo, type FC, type PropsWithChildren, type ReactNode } from "react";
+import { Component, type ErrorInfo, type PropsWithChildren, type ReactNode, useCallback } from "react";
 
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
     AnalyticalBackendErrorTypes,
@@ -12,7 +12,6 @@ import {
 
 import { asyncProcessSelector, globalErrorSelector } from "../store/messages/messagesSelectors.js";
 import { clearThreadAction, setGlobalErrorAction } from "../store/messages/messagesSlice.js";
-import { type RootState } from "../store/types.js";
 
 import { GlobalError } from "./GlobalError.js";
 
@@ -20,7 +19,7 @@ type ErrorBoundaryProps = {
     children: ReactNode;
     globalError: Record<string, unknown> | null;
     isClearing: boolean;
-    setGlobalError: typeof setGlobalErrorAction;
+    setGlobalError: (payload: { error: Error }) => void;
     clearThread: () => void;
 };
 
@@ -85,17 +84,30 @@ class ErrorBoundaryComponent extends Component<ErrorBoundaryProps, ErrorBoundary
     }
 }
 
-const mapStateToProps = (state: RootState) => ({
-    globalError: globalErrorSelector(state),
-    isClearing: asyncProcessSelector(state) === "clearing",
-});
+export function ErrorBoundary({ children }: PropsWithChildren) {
+    const dispatch = useDispatch();
+    const globalError = useSelector(globalErrorSelector);
+    const isClearing = useSelector(asyncProcessSelector) === "clearing";
 
-const mapDispatchToProps = {
-    setGlobalError: setGlobalErrorAction,
-    clearThread: clearThreadAction,
-};
+    const setGlobalError = useCallback(
+        (payload: { error: Error }) => {
+            dispatch(setGlobalErrorAction(payload));
+        },
+        [dispatch],
+    );
 
-export const ErrorBoundary: FC<PropsWithChildren> = connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(ErrorBoundaryComponent) as any;
+    const clearThread = useCallback(() => {
+        dispatch(clearThreadAction());
+    }, [dispatch]);
+
+    return (
+        <ErrorBoundaryComponent
+            globalError={globalError}
+            isClearing={isClearing}
+            setGlobalError={setGlobalError}
+            clearThread={clearThread}
+        >
+            {children}
+        </ErrorBoundaryComponent>
+    );
+}

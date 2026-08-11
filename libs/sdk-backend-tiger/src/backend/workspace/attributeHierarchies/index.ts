@@ -122,7 +122,7 @@ export class TigerAttributeHierarchiesService implements IAttributeHierarchiesSe
                 ref: idRef("default", "dateHierarchyTemplate"),
                 id: "default",
                 uri: "/default",
-                title: "Year, quarter, month, date, hour, minute",
+                title: "Year, quarter, month, date, hour, minute, second",
                 granularities: [
                     "GDC.time.year",
                     "GDC.time.quarter",
@@ -130,6 +130,7 @@ export class TigerAttributeHierarchiesService implements IAttributeHierarchiesSe
                     "GDC.time.date",
                     "GDC.time.hour",
                     "GDC.time.minute",
+                    "GDC.time.second",
                 ],
                 description: "Default hierarchy template for date dataset",
                 production: true,

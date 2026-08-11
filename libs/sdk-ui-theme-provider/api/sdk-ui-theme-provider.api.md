@@ -23,6 +23,9 @@ export const defaultHeaderTheme: IThemeHeader;
 export const findInvalidThemeColors: (theme: ITheme | undefined) => IInvalidThemeColor[];
 
 // @internal
+export const findMissingRequiredThemeColors: (theme: ITheme | undefined) => string[];
+
+// @internal
 export interface IInvalidThemeColor {
     // (undocumented)
     path: string;

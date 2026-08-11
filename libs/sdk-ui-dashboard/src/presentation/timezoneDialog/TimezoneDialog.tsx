@@ -49,13 +49,9 @@ export function TimezoneDialog(): ReactElement | null {
     // timezone so the Default item, description note, and current-time preview share the same
     // concrete ID.
     const defaultTimezoneId = resolveTimezoneId(timezoneConfig?.timezoneId) ?? workspaceTimezone;
-    const defaultTimezoneName = defaultTimezoneId ? getTimezoneDisplayLabel(defaultTimezoneId) : undefined;
 
     const specialItems: ITimezoneSelectSpecialItem[] = useMemo(() => {
-        const defaultItemLabel = intl.formatMessage(
-            { id: "timezoneDialog.default" },
-            { timezone: defaultTimezoneName },
-        );
+        const defaultItemLabel = intl.formatMessage({ id: "timezoneDialog.default" });
 
         // plain ID here — the label template already brackets the value, so the "id (offset)"
         // display label would produce nested brackets
@@ -70,7 +66,7 @@ export function TimezoneDialog(): ReactElement | null {
             { id: undefined, label: defaultItemLabel },
             { id: BROWSER_DETECTED, label: browserItemLabel },
         ];
-    }, [intl, defaultTimezoneName]);
+    }, [intl]);
 
     useEffect(() => {
         const timezoneId = resolveTimezoneId(selected) ?? defaultTimezoneId;
@@ -129,7 +125,6 @@ export function TimezoneDialog(): ReactElement | null {
                         id="timezoneDialog.description"
                         values={{
                             b: (chunks: ReactNode) => <strong>{chunks}</strong>,
-                            timezone: defaultTimezoneName,
                         }}
                     />
                 </span>

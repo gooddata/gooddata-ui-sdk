@@ -3,7 +3,7 @@
 import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { type CatalogItem, type GenAIObjectType, type IColorPalette } from "@gooddata/sdk-model";
 
-import type { LinkHandlerEvent } from "../components/ConfigContext.js";
+import type { GenAIAssistantMode, LinkHandlerEvent } from "../components/ConfigContext.js";
 
 /**
  * A dispatcher for chat events.
@@ -16,6 +16,7 @@ export class OptionsDispatcher {
     private includeTags: string[] | undefined = undefined;
     private excludeTags: string[] | undefined = undefined;
     private catalogItems: CatalogItem[] | undefined = undefined;
+    private mode: GenAIAssistantMode | undefined = undefined;
     private onLinkClick: ((linkClickEvent: LinkHandlerEvent) => string | undefined) | undefined = undefined;
     private allowNativeLinks: boolean | undefined = undefined;
 
@@ -79,5 +80,13 @@ export class OptionsDispatcher {
 
     public getCatalogItems(): CatalogItem[] | undefined {
         return this.catalogItems;
+    }
+
+    public setMode(mode: GenAIAssistantMode | undefined): void {
+        this.mode = mode;
+    }
+
+    public getMode(): GenAIAssistantMode | undefined {
+        return this.mode;
     }
 }

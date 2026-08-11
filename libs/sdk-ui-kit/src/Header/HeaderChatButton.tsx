@@ -9,6 +9,7 @@ import { Button } from "../Button/Button.js";
 
 type HeaderChatButtonProps = {
     title?: string;
+    isOpen?: boolean;
     onClick: (e: MouseEvent) => void;
 };
 
@@ -17,7 +18,15 @@ type HeaderChatButtonProps = {
  */
 export const HEADER_CHAT_BUTTON_ID = "gd-header-chat-button";
 
-export function HeaderChatButton({ title, onClick }: HeaderChatButtonProps) {
+/**
+ * Id of the assistant panel this button opens. Set on the chat dialog so the button can reference it
+ * through aria-controls.
+ *
+ * @internal
+ */
+export const HEADER_CHAT_PANEL_ID = "gd-header-chat-panel";
+
+export function HeaderChatButton({ title, isOpen = false, onClick }: HeaderChatButtonProps) {
     const classNames = cx("gd-header-measure", "gd-header-button", "gd-header-chat");
     // The text is not l18n-ed because it is not final
     return (
@@ -28,6 +37,10 @@ export function HeaderChatButton({ title, onClick }: HeaderChatButtonProps) {
             onClick={onClick}
             accessibilityConfig={{
                 ariaLabel: title,
+                ariaHaspopup: "dialog",
+                ariaExpanded: isOpen,
+                // The panel is mounted only while open, so reference it only then.
+                ariaControls: isOpen ? HEADER_CHAT_PANEL_ID : undefined,
             }}
         >
             <UiIcon type="genai" size={16} />

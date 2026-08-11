@@ -171,7 +171,9 @@ const chartClickDebounced = debounce(
         chartId: string,
         chartType: ChartType,
     ) => {
-        const originalEvent = event.originalEvent as PointerEvent | undefined;
+        const originalEvent = event.originalEvent as
+            | (PointerEvent & { chartX?: number; chartY?: number })
+            | undefined;
         const { dataView, onDrill } = drillConfig;
         const type = getVisualizationType(chartType);
         let drillContext: IDrillEventContext;
@@ -199,8 +201,10 @@ const chartClickDebounced = debounce(
         const data: IDrillEvent = {
             dataView,
             drillContext,
-            chartX: originalEvent?.offsetX,
-            chartY: originalEvent?.offsetY,
+            // Keyboard-triggered drills have no mouse offset; Highcharts provides
+            // container-relative chartX/chartY on the synthetic event instead.
+            chartX: originalEvent?.offsetX ?? originalEvent?.chartX,
+            chartY: originalEvent?.offsetY ?? originalEvent?.chartY,
             target: event.target?.container,
         };
 

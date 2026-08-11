@@ -3,9 +3,8 @@
 import { useCallback, useMemo } from "react";
 
 import { useIntl } from "react-intl";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { type ISeparators } from "@gooddata/sdk-model";
 import type { IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
 import { IntlWrapper, KdaDialogController, KdaStoreProvider } from "@gooddata/sdk-ui-dashboard/internal";
 import { useOverlayController } from "@gooddata/sdk-ui-kit";
@@ -19,31 +18,36 @@ import {
     setKeyDriverAnalysisAction,
     setKeyDriverAnalysisMinimizedAction,
 } from "../store/chatWindow/chatWindowSlice.js";
-import { type RootState } from "../store/types.js";
 import { returnFocusToKdaTrigger } from "../utils/kdaReturnFocus.js";
 
-interface IKeyDriverAnalysisProps {
-    keyDriverAnalysis?: IKdaDefinition;
-    separators?: ISeparators;
-    locale?: string;
-    includeTags?: string[];
-    excludeTags?: string[];
-    setKeyDriverAnalysis?: typeof setKeyDriverAnalysisAction;
-    setKeyDriverAnalysisMinimized?: typeof setKeyDriverAnalysisMinimizedAction;
-}
-
-function KeyDriverAnalysisComponent(props: IKeyDriverAnalysisProps) {
-    const {
-        keyDriverAnalysis,
-        separators,
-        locale,
-        includeTags,
-        excludeTags,
-        setKeyDriverAnalysis,
-        setKeyDriverAnalysisMinimized,
-    } = props;
+export function KeyDriverAnalysis() {
     const intl = useIntl();
     const parentOverlayController = useOverlayController();
+
+    const settings = useSelector(settingsSelector);
+    const tags = useSelector(tagsSelector);
+    const keyDriverAnalysis = useSelector(keyDriverAnalysisSelector);
+
+    const locale = settings?.locale;
+    const separators = settings?.separators;
+    const includeTags = tags?.includeTags;
+    const excludeTags = tags?.excludeTags;
+
+    const dispatch = useDispatch();
+
+    const setKeyDriverAnalysis = useCallback(
+        (...args: Parameters<typeof setKeyDriverAnalysisAction>) => {
+            dispatch(setKeyDriverAnalysisAction(...args));
+        },
+        [dispatch],
+    );
+
+    const setKeyDriverAnalysisMinimized = useCallback(
+        (...args: Parameters<typeof setKeyDriverAnalysisMinimizedAction>) => {
+            dispatch(setKeyDriverAnalysisMinimizedAction(...args));
+        },
+        [dispatch],
+    );
 
     const config = useMemo(
         () => ({
@@ -57,7 +61,7 @@ function KeyDriverAnalysisComponent(props: IKeyDriverAnalysisProps) {
 
     const onRequestedDefinitionChange = useCallback(
         (definition?: IKdaDefinition) => {
-            setKeyDriverAnalysis?.({ keyDriverAnalysis: definition });
+            setKeyDriverAnalysis({ keyDriverAnalysis: definition });
         },
         [setKeyDriverAnalysis],
     );
@@ -68,7 +72,7 @@ function KeyDriverAnalysisComponent(props: IKeyDriverAnalysisProps) {
 
     const onToggleKeyDriverAnalysis = useCallback(
         (minimized: boolean) => {
-            setKeyDriverAnalysisMinimized?.({ minimized });
+            setKeyDriverAnalysisMinimized({ minimized });
         },
         [setKeyDriverAnalysisMinimized],
     );
@@ -96,25 +100,3 @@ function KeyDriverAnalysisComponent(props: IKeyDriverAnalysisProps) {
         </IntlWrapper>
     );
 }
-
-const mapDispatchToProps: IKeyDriverAnalysisProps = {
-    setKeyDriverAnalysis: setKeyDriverAnalysisAction,
-    setKeyDriverAnalysisMinimized: setKeyDriverAnalysisMinimizedAction,
-};
-
-const mapStateToProps = (state: RootState): IKeyDriverAnalysisProps => {
-    const settings = settingsSelector(state);
-    const tags = tagsSelector(state);
-    return {
-        keyDriverAnalysis: keyDriverAnalysisSelector(state),
-        locale: settings?.locale,
-        separators: settings?.separators,
-        includeTags: tags?.includeTags,
-        excludeTags: tags?.excludeTags,
-    };
-};
-
-export const KeyDriverAnalysis: any = connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(KeyDriverAnalysisComponent);

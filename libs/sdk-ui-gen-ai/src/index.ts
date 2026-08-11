@@ -14,7 +14,6 @@ export {
     type GenAIChatProps,
     type GenAIAssistantProps,
 } from "./components/GenAIChat.js";
-export { type GenAIAssistantMode } from "./components/hooks/useFullscreenMode.js";
 export { GenAIConversations, type GenAIConversationsProps } from "./components/GenAiConversations.js";
 export { GenAiStore, type GenAiStoreProps } from "./components/GenAiStore.js";
 export {
@@ -70,6 +69,8 @@ export {
     type ChatConversationRenamedErrorEvent,
     type ChatConversationChangedEvent,
     type ChatDefinitionReceivedEvent,
+    type ChatModeChangeEvent,
+    type ChatAgentChangeEvent,
     isChatAssistantMessageEvent,
     isChatUserMessageEvent,
     isChatClosedEvent,
@@ -91,6 +92,8 @@ export {
     isChatConversationRenamedErrorEvent,
     isChatConversationChangedEvent,
     isChatDefinitionReceivedEvent,
+    isChatModeChangeEvent,
+    isChatAgentChangeEvent,
 } from "./store/events.js";
 
 export {
@@ -98,9 +101,10 @@ export {
     newMessageAction,
     startNewConversationAction,
     setCurrentConversationAction,
+    setSelectedAgentAction,
 } from "./store/messages/messagesSlice.js";
 export { setFullscreenAction } from "./store/chatWindow/chatWindowSlice.js";
-export { type LinkHandlerEvent } from "./components/ConfigContext.js";
+export { type LinkHandlerEvent, type GenAIAssistantMode } from "./components/ConfigContext.js";
 export { useGenAiChatAvailability } from "./hooks/useGenAiChatAvailability.js";
 
 //customization

@@ -9,6 +9,7 @@ import { makeGridKeyboardNavigation } from "../../@utils/keyboardNavigation.js";
 import { UiPagedVirtualList } from "../../UiPagedVirtualList/UiPagedVirtualList.js";
 import { type IUiAsyncTableBodyProps } from "../types.js";
 
+import { AsyncTableGridRefProvider } from "./asyncTableGridContext.js";
 import { useSkeletonItem } from "./SkeletonItemFactory.js";
 import { getCellId, getItemKey, getRowId } from "./utils.js";
 
@@ -30,6 +31,8 @@ export function UiAsyncTableBody<T extends { id: string } | { ref: ObjRef }>({
 }: IUiAsyncTableBodyProps<T>) {
     const SkeletonItem = useSkeletonItem(columns, bulkActions, isLargeRow ?? false);
 
+    const gridRef = useRef<HTMLElement>(null);
+
     const { handleKeyDown, handleFocus, focusedRowIndex, focusedColumnIndex, focusedItemRef } =
         useAsyncTableBodyKeyboardNavigation(items.length, columns.length, !!bulkActions, scrollToIndex);
 
@@ -45,39 +48,42 @@ export function UiAsyncTableBody<T extends { id: string } | { ref: ObjRef }>({
     }, [focusedRowIndex, focusedColumnIndex, items]);
 
     return (
-        <UiPagedVirtualList
-            maxHeight={maxHeight}
-            itemHeight={itemHeight}
-            itemsGap={0}
-            itemPadding={0}
-            items={items}
-            skeletonItemsCount={skeletonItemsCount}
-            hasNextPage={hasNextPage}
-            isLoading={isLoading}
-            onKeyDownSelect={onItemClick}
-            loadNextPage={loadNextPage}
-            SkeletonItem={SkeletonItem}
-            scrollbarHoverEffect
-            scrollToIndex={scrollToIndex ?? focusedRowIndex}
-            shouldLoadNextPage={shouldLoadNextPage}
-            tabIndex={items.length ? 0 : -1}
-            customKeyboardNavigationHandler={handleKeyDown}
-            onFocus={handleFocus}
-            listboxProps={{
-                "aria-activedescendant": activeDescendantId,
-            }}
-        >
-            {(item: T, focusedIndex?: number) => {
-                const itemIndex = focusedIndex ?? 0;
-                return renderItem(
-                    item,
-                    itemIndex,
-                    focusedItemRef as Ref<HTMLElement>,
-                    itemIndex === focusedRowIndex,
-                    focusedColumnIndex,
-                );
-            }}
-        </UiPagedVirtualList>
+        <AsyncTableGridRefProvider value={gridRef}>
+            <UiPagedVirtualList
+                maxHeight={maxHeight}
+                itemHeight={itemHeight}
+                itemsGap={0}
+                itemPadding={0}
+                items={items}
+                skeletonItemsCount={skeletonItemsCount}
+                hasNextPage={hasNextPage}
+                isLoading={isLoading}
+                onKeyDownSelect={onItemClick}
+                loadNextPage={loadNextPage}
+                SkeletonItem={SkeletonItem}
+                scrollbarHoverEffect
+                scrollToIndex={scrollToIndex ?? focusedRowIndex}
+                shouldLoadNextPage={shouldLoadNextPage}
+                tabIndex={items.length ? 0 : -1}
+                customKeyboardNavigationHandler={handleKeyDown}
+                onFocus={handleFocus}
+                listboxProps={{
+                    "aria-activedescendant": activeDescendantId,
+                    ref: gridRef,
+                }}
+            >
+                {(item: T, focusedIndex?: number) => {
+                    const itemIndex = focusedIndex ?? 0;
+                    return renderItem(
+                        item,
+                        itemIndex,
+                        focusedItemRef as Ref<HTMLElement>,
+                        itemIndex === focusedRowIndex,
+                        focusedColumnIndex,
+                    );
+                }}
+            </UiPagedVirtualList>
+        </AsyncTableGridRefProvider>
     );
 }
 

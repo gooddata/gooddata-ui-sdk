@@ -16,8 +16,8 @@ export function getVisualizationHref(
 ) {
     if (status === "draft") {
         return useHostedAnalyticalDesigner
-            ? `/workspace/${wsId}/analyze/?aibuilder=true`
-            : `/analyze/#/${wsId}/?aibuilder=true`;
+            ? `/workspace/${wsId}/analyze/?aibuilder=${visId}`
+            : `/analyze/#/${wsId}/?aibuilder=${visId}`;
     }
     return useHostedAnalyticalDesigner
         ? `/workspace/${wsId}/analyze/#/${visId}/edit`
@@ -32,8 +32,8 @@ export function getDashboardHref(
 ) {
     if (status === "draft") {
         return useHostedDashboards
-            ? `/workspace/${wsId}/dashboards/#/new-dashboard`
-            : `/dashboards/#/workspace/${wsId}/new-dashboard`;
+            ? `/workspace/${wsId}/dashboards/#/new-dashboard/?aibuilder=${dasId}`
+            : `/dashboards/#/workspace/${wsId}/new-dashboard/?aibuilder=${dasId}`;
     }
     return useHostedDashboards
         ? `/workspace/${wsId}/dashboards/#/dashboard/${dasId}/tab/defaultTabId`

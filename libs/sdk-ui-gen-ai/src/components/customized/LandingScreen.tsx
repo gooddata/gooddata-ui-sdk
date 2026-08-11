@@ -1,9 +1,8 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { type ComponentType, type FC } from "react";
+import { type ComponentType } from "react";
 
 import { FormattedMessage, defineMessage, useIntl } from "react-intl";
-import { connect } from "react-redux";
 
 import { DefaultLandingContainer, DefaultLandingQuestions } from "./LandingContainer.js";
 import { DefaultLandingQuestion } from "./LandingQuestion.js";
@@ -40,7 +39,10 @@ export type LandingScreenProps = {
     isSmallScreen?: boolean;
 };
 
-function LandingScreenComponent({
+/**
+ * @beta
+ */
+export function DefaultLandingScreen({
     LandingScreen,
     isBigScreen,
     isSmallScreen,
@@ -85,8 +87,3 @@ function LandingScreenComponent({
         </div>
     );
 }
-
-/**
- * @beta
- */
-export const DefaultLandingScreen: FC<LandingScreenProps> = connect(null, {})(LandingScreenComponent);

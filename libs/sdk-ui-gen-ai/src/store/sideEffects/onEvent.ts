@@ -19,6 +19,7 @@ import {
 import {
     copyToClipboardAction,
     onDefinitionReceivedAction,
+    setFullscreenAction,
     setOpenAction,
 } from "../chatWindow/chatWindowSlice.js";
 import { type EventDispatcher } from "../events.js";
@@ -46,6 +47,7 @@ import {
     saveVisualizationErrorAction,
     saveVisualizationSuccessAction,
     setCurrentConversationAction,
+    setSelectedAgentAction,
     setUserFeedback,
     setUserFeedbackError,
     visualizationErrorAction,
@@ -53,6 +55,8 @@ import {
 
 export function* onEvent() {
     yield takeEvery(setOpenAction.type, onSetOpen);
+    yield takeEvery(setFullscreenAction.type, onFullscreenChanged);
+    yield takeEvery(setSelectedAgentAction.type, onSelectedAgentChanged);
     yield takeEvery(loadThreadSuccessAction.type, onThreadLoaded);
     yield takeEvery(loadConversationSuccessAction.type, onThreadLoaded);
     yield takeEvery(clearThreadAction.type, onClearThread);
@@ -232,6 +236,31 @@ function* onSetOpen({ payload: { isOpen } }: ReturnType<typeof setOpenAction>) {
     eventDispatcher.dispatch({
         type: "chatClosed",
         threadId,
+    });
+}
+
+function* onFullscreenChanged({ payload: { isFullscreen } }: ReturnType<typeof setFullscreenAction>) {
+    const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
+    const threadId: string | undefined = yield select(threadIdSelector);
+
+    eventDispatcher.dispatch({
+        type: "onModeChange",
+        threadId,
+        mode: isFullscreen ? "fullscreen" : "docked",
+    });
+}
+
+function* onSelectedAgentChanged({
+    payload: { previousAgentId, agentId },
+}: ReturnType<typeof setSelectedAgentAction>) {
+    const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
+    const threadId: string | undefined = yield select(threadIdSelector);
+
+    eventDispatcher.dispatch({
+        type: "onSelectedAgentAction",
+        threadId,
+        previousAgentId,
+        agentId,
     });
 }
 

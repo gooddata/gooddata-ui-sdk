@@ -122,6 +122,7 @@ export enum TigerFeaturesNames {
     EnableRadarChart = "enableRadarChart",
     EnableMekkoChart = "enableMekkoChart",
     EnableLineChartStyling = "enableLineChartStyling",
+    EnableDonutDataLabels = "enableDonutDataLabels",
     EnableAnalyticalDesignerRemoteModule = "enableShellApplication_analyticalDesigner",
     EnableDashboardSidebarResize = "enableDashboardSidebarResize",
     EnableExportTimeoutFix = "enableExportTimeoutFix",
@@ -140,6 +141,7 @@ export type ITigerFeatureFlags = {
     enableRadarChart: (typeof FeatureFlagsValues)["enableRadarChart"][number];
     enableMekkoChart: (typeof FeatureFlagsValues)["enableMekkoChart"][number];
     enableLineChartStyling: (typeof FeatureFlagsValues)["enableLineChartStyling"][number];
+    enableDonutDataLabels: (typeof FeatureFlagsValues)["enableDonutDataLabels"][number];
     enableChangeAnalysis: (typeof FeatureFlagsValues)["enableChangeAnalysis"][number];
     enableRankingWithMvf: (typeof FeatureFlagsValues)["enableRankingWithMvf"][number];
     enableRankingStrictLimit: (typeof FeatureFlagsValues)["enableRankingStrictLimit"][number];
@@ -264,6 +266,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableRadarChart: false,
     enableMekkoChart: false,
     enableLineChartStyling: true,
+    enableDonutDataLabels: false,
     enableChangeAnalysis: false,
     enableRankingWithMvf: false,
     enableRankingStrictLimit: true,
@@ -388,6 +391,7 @@ export const FeatureFlagsValues = {
     enableRadarChart: [true, false] as const,
     enableMekkoChart: [true, false] as const,
     enableLineChartStyling: [true, false] as const,
+    enableDonutDataLabels: [true, false] as const,
     enableChangeAnalysis: [true, false] as const,
     enableRankingWithMvf: [true, false] as const,
     enableRankingStrictLimit: [true, false] as const,

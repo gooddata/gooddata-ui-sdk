@@ -48,7 +48,7 @@ vi.mock("../../utils/transformation.js", async (importOriginal: () => Promise<Re
 import * as validateExistingAutomationFiltersModule from "../../../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
 import * as utilsModule from "../../../../shared/filters/index.js";
 import * as transformationModule from "../../utils/transformation.js";
-import { useAlertFilters, type IUseAlertFiltersProps } from "../useAlertFilters.js";
+import { useAlertFiltersModel, type IUseAlertFiltersModelProps } from "../useAlertFiltersModel.js";
 
 // ---------------------------------------------------------------------------
 // Typed spy references (resolved after import)
@@ -157,7 +157,7 @@ const SENTINEL_VALIDATION_RESULT = {
     filtersAreStale: false,
 };
 
-const BASE_PROPS: IUseAlertFiltersProps = {
+const BASE_PROPS: IUseAlertFiltersModelProps = {
     setEditedAutomation: mockSetEditedAutomation,
     editedAutomationFilters: SENTINEL_FILTERS,
     setEditedAutomationFilters: mockSetEditedAutomationFilters,
@@ -195,9 +195,9 @@ beforeEach(() => {
 // Helper
 // ---------------------------------------------------------------------------
 
-function renderFiltersHook(props: Partial<IUseAlertFiltersProps> = {}) {
-    const mergedProps: IUseAlertFiltersProps = { ...BASE_PROPS, ...props };
-    return renderHook(() => useAlertFilters(mergedProps));
+function renderFiltersHook(props: Partial<IUseAlertFiltersModelProps> = {}) {
+    const mergedProps: IUseAlertFiltersModelProps = { ...BASE_PROPS, ...props };
+    return renderHook(() => useAlertFiltersModel(mergedProps));
 }
 
 function makeState(
@@ -221,7 +221,7 @@ function makeState(
 // Case 1: onFiltersChange wiring
 // ---------------------------------------------------------------------------
 
-describe("useAlertFilters — onFiltersChange wiring", () => {
+describe("useAlertFiltersModel — onFiltersChange wiring", () => {
     it("calls setEditedAutomationFilters(filters) and setEditedAutomation with an updater", () => {
         const { result } = renderFiltersHook();
 
@@ -294,7 +294,7 @@ describe("useAlertFilters — onFiltersChange wiring", () => {
 // Case 2: selectedMeasure branch
 // ---------------------------------------------------------------------------
 
-describe("useAlertFilters — selectedMeasure branch", () => {
+describe("useAlertFiltersModel — selectedMeasure branch", () => {
     it("returns transformAlertByMetric's result when selectedMeasure is truthy", () => {
         const { result } = renderFiltersHook({
             selectedMeasure: SENTINEL_MEASURE,
@@ -326,7 +326,7 @@ describe("useAlertFilters — selectedMeasure branch", () => {
 // Case 3: `!s.metadata?.widget` flag
 // ---------------------------------------------------------------------------
 
-describe("useAlertFilters — !s.metadata?.widget flag", () => {
+describe("useAlertFiltersModel — !s.metadata?.widget flag", () => {
     it("passes true as the 7th getAppliedWidgetFilters arg when state has no metadata.widget", () => {
         const { result } = renderFiltersHook();
 
@@ -370,7 +370,7 @@ describe("useAlertFilters — !s.metadata?.widget flag", () => {
 // Case 4: undefined state
 // ---------------------------------------------------------------------------
 
-describe("useAlertFilters — undefined state", () => {
+describe("useAlertFiltersModel — undefined state", () => {
     it("returns undefined without throwing when the updater is applied to undefined, setEditedAutomationFilters still called", () => {
         const { result } = renderFiltersHook();
 
@@ -390,7 +390,7 @@ describe("useAlertFilters — undefined state", () => {
 // Case 5: selectedValue nullish
 // ---------------------------------------------------------------------------
 
-describe("useAlertFilters — selectedValue nullish", () => {
+describe("useAlertFiltersModel — selectedValue nullish", () => {
     it("passes name: '' to transformAlertByAttribute when selectedValue is undefined", () => {
         const { result } = renderFiltersHook({ selectedValue: undefined });
 
@@ -426,7 +426,7 @@ describe("useAlertFilters — selectedValue nullish", () => {
 // Case 6: onApplyCurrentFilters
 // ---------------------------------------------------------------------------
 
-describe("useAlertFilters — onApplyCurrentFilters", () => {
+describe("useAlertFiltersModel — onApplyCurrentFilters", () => {
     it("calls onFiltersChange with filtersForNewAutomation", () => {
         const { result } = renderFiltersHook({
             filtersForNewAutomation: SENTINEL_FILTERS_FOR_NEW_AUTOMATION,
@@ -442,9 +442,9 @@ describe("useAlertFilters — onApplyCurrentFilters", () => {
 // Case 7: model shape
 // ---------------------------------------------------------------------------
 
-describe("useAlertFilters — model shape", () => {
+describe("useAlertFiltersModel — model shape", () => {
     it("exposes one filter model and leaks no other representation", () => {
-        const { result } = renderHook(() => useAlertFilters(BASE_PROPS));
+        const { result } = renderHook(() => useAlertFiltersModel(BASE_PROPS));
 
         expect(Object.keys(result.current).sort()).toEqual([
             "automationIsValid",

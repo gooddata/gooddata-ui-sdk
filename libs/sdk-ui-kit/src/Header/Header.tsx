@@ -82,6 +82,7 @@ export const AppHeader = withTheme(function AppHeader({
     onHelpClick,
     helpRedirectUrl,
     showChatItem,
+    isChatOpen,
     onChatItemClick,
     onLogoClick,
     onMenuItemClick,
@@ -572,6 +573,7 @@ export const AppHeader = withTheme(function AppHeader({
                 {showChatItem ? (
                     <HeaderChatButton
                         title={intl.formatMessage(messages.aiChat)}
+                        isOpen={isChatOpen}
                         onClick={onChatItemClick ?? (() => {})}
                     />
                 ) : null}

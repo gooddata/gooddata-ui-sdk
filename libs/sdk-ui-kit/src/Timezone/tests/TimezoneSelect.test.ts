@@ -12,7 +12,7 @@ const specialItems: ITimezoneSelectSpecialItem[] = [
 describe("TimezoneSelect listbox items", () => {
     it("should key special items by their unfiltered index so selection survives search", () => {
         // "browser" filters out the first special item; the remaining one must keep its original id
-        const items = buildListboxItems(specialItems, "browser");
+        const items = buildListboxItems(specialItems, "browser", false);
         const browserItem = items.find(
             (item) => item.type === "interactive" && item.stringTitle.startsWith("From browser"),
         );
@@ -23,7 +23,7 @@ describe("TimezoneSelect listbox items", () => {
 
     it("should not let a filtered list re-assign the selected id to a different special item", () => {
         // "Workspace" selected; search keeps only the browser item — nothing may match the selected id
-        const items = buildListboxItems(specialItems, "browser");
+        const items = buildListboxItems(specialItems, "browser", false);
         const selectedId = getSelectedItemId(undefined, specialItems);
 
         expect(selectedId).toBe("special-item-0");

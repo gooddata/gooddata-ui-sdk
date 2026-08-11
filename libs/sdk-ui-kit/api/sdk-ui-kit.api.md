@@ -837,6 +837,9 @@ export function Header(input: IHeaderProps): JSX.Element;
 // @internal (undocumented)
 export const HEADER_CHAT_BUTTON_ID = "gd-header-chat-button";
 
+// @internal
+export const HEADER_CHAT_PANEL_ID = "gd-header-chat-panel";
+
 // @internal (undocumented)
 export const HEADER_ITEM_ID_ANALYZE: string;
 
@@ -1038,6 +1041,7 @@ export interface IAppHeaderProps {
     helpRedirectUrl?: string;
     // (undocumented)
     isAccessibilityCompliant?: boolean;
+    isChatOpen?: boolean;
     // (undocumented)
     logoHref?: string;
     // (undocumented)
@@ -5536,6 +5540,7 @@ export interface IStylingEditorDialogProps<T extends StylingPickerItemContent> e
     // (undocumented)
     tooltip?: string;
     validateDefinition?: (content: T) => string | undefined;
+    validateDefinitionWarning?: (content: T) => string | undefined;
 }
 
 // @internal (undocumented)
@@ -5804,6 +5809,7 @@ export interface ITimezoneSelectProps {
     placeholder?: string;
     renderButton?: (props: ITimezoneSelectButtonRenderProps) => ReactNode;
     searchPlaceholder: string;
+    showTooltip?: boolean;
     specialItems?: ITimezoneSelectSpecialItem[];
     value?: string;
 }
@@ -5812,6 +5818,7 @@ export interface ITimezoneSelectProps {
 export interface ITimezoneSelectSpecialItem {
     id: string | undefined;
     label: string;
+    tooltip?: string;
 }
 
 // @internal (undocumented)

@@ -8,11 +8,15 @@ import { IntlWrapper } from "../localization/IntlWrapper.js";
 import { PermissionsProvider } from "../permissions/PermissionsContext.js";
 import { usePermissions } from "../permissions/usePermissions.js";
 
-import { ConfigProvider, type LinkHandlerEvent, useConfig } from "./ConfigContext.js";
+import {
+    ConfigProvider,
+    type GenAIAssistantMode,
+    type LinkHandlerEvent,
+    useConfig,
+} from "./ConfigContext.js";
 import { CustomizationProvider } from "./CustomizationProvider.js";
 import { GenAIChatWrapper } from "./GenAIChatWrapper.js";
 import { GenAiStore, type GenAiStoreProps } from "./GenAiStore.js";
-import { type GenAIAssistantMode, useFullscreenMode } from "./hooks/useFullscreenMode.js";
 
 /**
  * Properties for the GenAIAssistant component.
@@ -107,6 +111,7 @@ export function GenAIAssistant(props: GenAIAssistantProps) {
         providedStore,
         onDispatcher,
         onLinkClick,
+        mode,
         allowNativeLinks,
     } = props;
     const effectiveBackend = useBackendStrict(backend);
@@ -119,6 +124,7 @@ export function GenAIAssistant(props: GenAIAssistantProps) {
                 workspace={effectiveWorkspace}
                 onDispatcher={onDispatcher}
                 colorPalette={colorPalette}
+                mode={mode}
                 eventHandlers={eventHandlers}
                 allowNativeLinks={allowNativeLinks}
                 onLinkClick={onLinkClick}
@@ -156,13 +162,9 @@ function GenAIContent(props: GenAIChatProps) {
         LandingScreenComponentProvider,
         DisclaimerComponentProvider,
         className,
-        mode,
-        onModeChange,
     } = props;
     const { permissions, loading } = usePermissions();
     const { allowNativeLinks } = useConfig();
-
-    useFullscreenMode(mode, onModeChange);
 
     return (
         <ConfigProvider

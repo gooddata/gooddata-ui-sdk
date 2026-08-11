@@ -98,7 +98,6 @@ const App = () => {
 | DisclaimerComponentProvider    | () => ComponentType \| null                   | -        | Factory for providing a custom disclaimer component shown in the assistant UI. Return `null` to hide disclaimer rendering.                          |
 | className                      | string                                        | -        | Additional class name applied to the root assistant element.                                                                                        |
 | mode                           | "docked" \| "fullscreen"                      | "docked" | Display mode of the assistant. Adapts its internal layout to a compact docked container or to a wide fullscreen one. Does not resize the component. |
-| onModeChange                   | (mode) => void                                | -        | Called when the display mode changes without the application asking for it, for example after `setFullscreenAction` is dispatched.                  |
 | isPreview                      | boolean                                       | false    | Internal preview mode. Uses workspace preview agent and preview conversations. Toggling resets assistant state.                                     |
 
 ### Display mode
@@ -110,7 +109,12 @@ The assistant always fills its parent element, so `mode` does not resize it - si
 ```tsx
 import { useState } from "react";
 
-import { GenAIAssistant, type GenAIAssistantMode } from "@gooddata/sdk-ui-gen-ai";
+import {
+    GenAIAssistant,
+    type GenAIAssistantMode,
+    isChatModeChangeEvent,
+    type ChatModeChangeEvent,
+} from "@gooddata/sdk-ui-gen-ai";
 
 const App = () => {
     const [mode, setMode] = useState<GenAIAssistantMode>("docked");
@@ -120,7 +124,17 @@ const App = () => {
             <button onClick={() => setMode(mode === "docked" ? "fullscreen" : "docked")}>
                 Toggle fullscreen
             </button>
-            <GenAIAssistant mode={mode} onModeChange={setMode} />
+            <GenAIAssistant
+                mode={mode}
+                eventHandlers={[
+                    {
+                        eval: isChatModeChangeEvent,
+                        handler: (event: ChatModeChangeEvent) => {
+                            setMode(event.mode);
+                        },
+                    },
+                ]}
+            />
         </div>
     );
 };
@@ -138,7 +152,7 @@ import { GenAIAssistant, setFullscreenAction } from "@gooddata/sdk-ui-gen-ai";
 />;
 ```
 
-`onModeChange` is called whenever the display mode changes inside the assistant, so that your application can keep its own chrome in sync. That includes the `setFullscreenAction` dispatched in the example above, and the expand and minimize control of the chat header when the assistant is embedded in a chat dialog.
+`onModeChange` event is emitted whenever the display mode changes inside the assistant, so that your application can keep its own chrome in sync. That includes the `setFullscreenAction` dispatched in the example above, and the expand and minimize control of the chat header when the assistant is embedded in a chat dialog.
 
 The single exception is a change that results in the mode you already passed as `mode` - that one is not reported, so a controlled application can feed the reported value straight back as `mode` without a second call.
 
@@ -215,6 +229,7 @@ Use `GenAiStore` when you need to render multiple Gen AI UI components (`GenAIAs
 | objectTypes   | GenAIObjectType[]                                       | -       | Restricts object types used by assistant search and suggestions                                      |
 | includeTags   | string[]                                                | -       | Includes only tagged metadata objects when assistant resolves relevant content                       |
 | excludeTags   | string[]                                                | -       | Excludes tagged metadata objects when assistant resolves relevant content                            |
+| mode          | "docked" \| "fullscreen"                                | -       | Display mode of the assistant. Adapts internal layout to a narrow or to a wide container.            |
 | onDispatcher  | (dispatch: EnhancedStore["dispatch"]) => void           | -       | Callback called after initialization with dispatcher for the active Gen AI store                     |
 | children      | ReactNode \| ((genAIStore: EnhancedStore) => ReactNode) | -       | Child component(s) or render function wrapped by the shared store                                    |
 | isPreview     | boolean                                                 | false   | Internal preview mode. Uses workspace preview agent and preview conversations; toggling resets state |
@@ -259,6 +274,8 @@ Here is a list of the relevant events:
 | `ChatConversationRenamedSuccessEvent` | `isChatConversationRenamedSuccessEvent` | Conversation renamed successfully              |
 | `ChatConversationRenamedErrorEvent`   | `isChatConversationRenamedErrorEvent`   | Conversation rename failed                     |
 | `ChatConversationChangedEvent`        | `isChatConversationChangedEvent`        | Active conversation changed                    |
+| `ChatModeChangeEvent`                 | `isChatModeChangeEvent`                 | Assistant display mode changed                 |
+| `ChatAgentChangeEvent`                | `isChatAgentChangeEvent`                | Assistant agent changed                        |
 | `ChatDefinitionReceivedEvent`         | `isChatDefinitionReceivedEvent`         | Dashboard or visualization definition received |
 
 #### onLinkClick
@@ -292,6 +309,55 @@ This event is triggered immediately when a message with a visualization or dashb
 | interactionId  | string                         | (Optional) The ID of the interaction.    |
 | dashboard      | IDashboard                     | (Optional) The dashboard definition.     |
 | visualization  | IInsight                       | (Optional) The visualization definition. |
+
+#### onModeChange
+
+This event is triggered whenever the assistant display mode changes (e.g. between "docked" and "fullscreen").
+
+| Property | Type                 | Description            |
+| -------- | -------------------- | ---------------------- |
+| type     | `onModeChange`       | Event type identifier. |
+| mode     | `GenAIAssistantMode` | The new display mode.  |
+
+#### onSelectedAgentAction
+
+This event is triggered whenever the assistant agent is changed.
+
+| Property        | Type                    | Description                              |
+| --------------- | ----------------------- | ---------------------------------------- |
+| type            | `onSelectedAgentAction` | Event type identifier.                   |
+| previousAgentId | `string`                | (Optional) The ID of the previous agent. |
+| agentId         | `string`                | (Optional) The ID of the new agent.      |
+
+Example usage:
+
+```tsx
+<GenAIAssistant
+    eventHandlers={[
+        {
+            eval: isChatAgentChangeEvent,
+            handler: (event: ChatAgentChangeEvent) => {
+                console.log(`Agent changed from ${event.previousAgentId} to ${event.agentId}`);
+            },
+        },
+    ]}
+/>
+```
+
+Example usage:
+
+```tsx
+<GenAIAssistant
+    eventHandlers={[
+        {
+            eval: isChatModeChangeEvent,
+            handler: (event: ChatModeChangeEvent) => {
+                console.log(`New assistant mode: ${event.mode}`);
+            },
+        },
+    ]}
+/>
+```
 
 Example usage:
 
@@ -428,6 +494,7 @@ dispatcher(clearThreadAction());
 - `clearThreadAction` - reset the chat thread
 - `startNewConversationAction` - start a new conversation
 - `setCurrentConversationAction` - set active conversation in the chat
+- `setSelectedAgentAction` - change the assistant agent
 - `setFullscreenAction` - switch the assistant between the docked and the fullscreen layout
 - `newMessageAction` - add message to the stack and get response from the assistant
 - `pinConversationAction` - pin or unpin a conversation
@@ -473,6 +540,9 @@ dispatcher(renameConversationAction({ conversation, title: "Weekly performance r
 
 // Delete conversation
 dispatcher(deleteConversationAction({ conversation }));
+
+// Change assistant agent
+dispatcher(setSelectedAgentAction({ agentId: "new-agent-id", showChangeEvent: true }));
 ```
 
 [ai assistant]: https://www.gooddata.ai/platform/artificial-intelligence/

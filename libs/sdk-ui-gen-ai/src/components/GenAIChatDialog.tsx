@@ -72,6 +72,7 @@ export function GenAIChatDialog({
     colorPalette,
     onLinkClick,
     onDispatcher,
+    mode,
     LandingScreenComponentProvider,
     closeOnEscape,
 }: GenAIChatDialogProps) {
@@ -93,6 +94,7 @@ export function GenAIChatDialog({
                 includeTags={includeTags}
                 excludeTags={excludeTags}
                 catalogItems={catalogItems}
+                mode={mode}
             >
                 {(genAIStore) => (
                     <GenAIChatDialogContent

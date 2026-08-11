@@ -1,6 +1,6 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -9,6 +9,7 @@ import { type IColorPalette, type ITheme, type ObjRef } from "@gooddata/sdk-mode
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
 import { Button } from "../../Button/Button.js";
+import { Message } from "../../Messages/Message.js";
 import { Typography } from "../../Typography/Typography.js";
 import { useId } from "../../utils/useId.js";
 import { Dialog } from "../Dialog.js";
@@ -57,6 +58,15 @@ export interface IStylingEditorDialogProps<T extends StylingPickerItemContent>
      * submission and display it, or undefined when the content is valid.
      */
     validateDefinition?: (content: T) => string | undefined;
+    /**
+     * Optional non-blocking check of the parsed definition content.
+     *
+     * @remarks
+     * Called only when the definition is valid JSON. Return a localized message to display it as a
+     * warning, or undefined when there is nothing to report. Unlike {@link IStylingEditorDialogProps.validateDefinition}
+     * this never prevents submission — use it for content that applies but degrades the result.
+     */
+    validateDefinitionWarning?: (content: T) => string | undefined;
 }
 
 /**
@@ -88,6 +98,7 @@ function StylingEditorDialogCore<T extends StylingPickerItemContent>({
     className,
     onInvalidDefinition = () => {},
     validateDefinition,
+    validateDefinitionWarning,
 }: IStylingEditorDialogProps<T>) {
     const intl = useIntl();
     const providedExamples = !!examples && examples.length !== 0 && !!exampleToColorPreview;
@@ -96,42 +107,54 @@ function StylingEditorDialogCore<T extends StylingPickerItemContent>({
     const [nameField, setNameField] = useState(initialNameField);
     const [definitionField, setDefinitionField] = useState(initialDefinitionField);
 
-    const fieldsChanged = useMemo(() => {
+    const parsedDefinition = useMemo((): { ok: true; content: T } | { ok: false } => {
         try {
-            const parsedDefinition = JSON.parse(definitionField);
-            const formattedDefinition = JSON.stringify(parsedDefinition, null, 4);
-            return nameField !== initialNameField || formattedDefinition !== initialDefinitionField;
+            return { ok: true, content: JSON.parse(definitionField) as T };
         } catch {
+            return { ok: false };
+        }
+    }, [definitionField]);
+
+    const fieldsChanged = useMemo(() => {
+        if (!parsedDefinition.ok) {
             // initial state of the fields is presumed to be valid,
             // so if JSON throws error, definition was changed
             return true;
         }
-    }, [nameField, initialNameField, definitionField, initialDefinitionField]);
+        const formattedDefinition = JSON.stringify(parsedDefinition.content, null, 4);
+        return nameField !== initialNameField || formattedDefinition !== initialDefinitionField;
+    }, [parsedDefinition, nameField, initialNameField, initialDefinitionField]);
 
     const validName = useMemo(() => nameField !== "", [nameField]);
 
-    const validDefinition = useMemo(() => {
-        try {
-            JSON.parse(definitionField);
-            return true;
-        } catch {
-            return false;
-        }
-    }, [definitionField]);
+    const validDefinition = parsedDefinition.ok;
 
-    // Content-level validation (e.g. theme color values) runs only on well-formed JSON.
-    const definitionContentError = useMemo((): string | undefined => {
-        if (!validateDefinition || !validDefinition) {
-            return undefined;
-        }
-        try {
-            return validateDefinition(JSON.parse(definitionField) as T);
-        } catch (error) {
-            // a buggy validator must not crash the dialog; degrade gracefully and let the user proceed
-            console.error("StylingEditorDialog: the provided validateDefinition callback threw.", error);
-            return undefined;
-        }
-    }, [validateDefinition, validDefinition, definitionField]);
+    // A callback that throws must not crash the dialog, so it degrades to "nothing to report" and
+    // the user can keep working.
+    const runContentCheck = useCallback(
+        (check: ((content: T) => string | undefined) | undefined, name: string): string | undefined => {
+            if (!check || !parsedDefinition.ok) {
+                return undefined;
+            }
+            try {
+                return check(parsedDefinition.content);
+            } catch (error) {
+                console.error(`StylingEditorDialog: the provided ${name} callback threw.`, error);
+                return undefined;
+            }
+        },
+        [parsedDefinition],
+    );
+
+    const definitionContentError = useMemo(
+        () => runContentCheck(validateDefinition, "validateDefinition"),
+        [runContentCheck, validateDefinition],
+    );
+
+    const definitionContentWarning = useMemo(
+        () => runContentCheck(validateDefinitionWarning, "validateDefinitionWarning"),
+        [runContentCheck, validateDefinitionWarning],
+    );
 
     const validFields = useMemo(
         () => validName && validDefinition && !definitionContentError,
@@ -174,12 +197,12 @@ function StylingEditorDialogCore<T extends StylingPickerItemContent>({
 
     const getFinalStylingItem = (
         original: IStylingPickerItem<T>,
-        definition: string,
+        content: T,
         name: string,
     ): IStylingPickerItem<T> => {
         return {
             ...(original || {}),
-            content: JSON.parse(definition),
+            content,
             name,
         };
     };
@@ -247,6 +270,14 @@ function StylingEditorDialogCore<T extends StylingPickerItemContent>({
                             onChange={(e) => setDefinitionField(e.target.value)}
                         />
                     </label>
+                    {definitionContentWarning && !definitionContentError ? (
+                        <Message
+                            type="warning"
+                            className="gd-styling-editor-dialog-content-form-warning s-styling-editor-warning"
+                        >
+                            {definitionContentWarning}
+                        </Message>
+                    ) : null}
                 </form>
                 {providedExamples ? (
                     <div
@@ -280,7 +311,13 @@ function StylingEditorDialogCore<T extends StylingPickerItemContent>({
                 showProgressIndicator={showProgressIndicator}
                 link={link}
                 errorMessage={errorMessage}
-                onSubmit={() => onSubmit?.(getFinalStylingItem(stylingItem!, definitionField, nameField))}
+                onSubmit={() => {
+                    // Submission is disabled while the definition does not parse, so this only
+                    // narrows the type rather than guarding a reachable state.
+                    if (parsedDefinition.ok) {
+                        onSubmit?.(getFinalStylingItem(stylingItem!, parsedDefinition.content, nameField));
+                    }
+                }}
                 onCancel={() => {
                     onExit?.(nameField, definitionField);
                     onCancel?.();

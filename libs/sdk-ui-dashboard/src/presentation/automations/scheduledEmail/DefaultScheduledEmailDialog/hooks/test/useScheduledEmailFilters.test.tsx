@@ -50,7 +50,7 @@ vi.mock("../../../../shared/automationFilters/useAutomationFiltersSelect.js", ()
 // `useValidateExistingAutomationFilters` and `useAutomationExportParameters` are the two
 // store-backed hooks `useScheduledEmailFilters` now calls directly. Both reach into the dashboard
 // Redux store via `useDashboardSelector`, which has no provider in this unit test, so they are
-// mocked the same way alerting's `useAlertFilters.test.tsx` mocks the first of the two.
+// mocked the same way alerting's `useAlertFiltersModel.test.tsx` mocks the first of the two.
 vi.mock("../../../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js", () => ({
     useValidateExistingAutomationFilters: vi.fn(),
 }));

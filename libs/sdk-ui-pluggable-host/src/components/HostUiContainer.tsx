@@ -18,6 +18,7 @@ import { now } from "../debug.js";
 import { setActiveHostHandle } from "../lib/hostNotifications.js";
 import { getAppLifecycleCallbacks } from "../loader/pluggableApplicationsLoader.js";
 import { getActiveInternalApplication } from "../loader/routing.js";
+import { GenAIChatEvent } from "../ui/GenAIChat.js";
 import {
     HostChat,
     type IHostChatContext,
@@ -26,9 +27,10 @@ import {
 } from "../ui/HostChat.js";
 import { HostIntlProvider } from "../ui/HostIntlProvider.js";
 import { PluggableApplicationRenderer } from "../ui/PluggableApplicationRenderer.js";
-import { resolveHostUiModule } from "../ui/resolveHostUiModule.js";
 
 import "./HostUiContainer.scss";
+import { resolveHostUiModule } from "../ui/resolveHostUiModule.js";
+
 import { runGuardedNavigation } from "./navigationGuard.js";
 
 export interface IHostUiContainerProps {
@@ -108,6 +110,10 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate }: IHostUi
         (link: IHostChatLink) => appAiLinkClickRef.current?.(link) ?? false,
         [],
     );
+    // The active app's event handler, populated by PluggableApplicationRenderer (which holds the
+    // app mount handle) and read by HostChat's chat so embedded apps can handle events in-app.
+    const appEventReceiveRef = useRef<((event: GenAIChatEvent) => boolean) | undefined>(undefined);
+    const onAppEventReceive = useCallback((event: GenAIChatEvent) => appEventReceiveRef.current?.(event), []);
     const appNavigationRequestRef = useRef<((request: IHostNavigationRequest) => boolean) | undefined>(
         undefined,
     );
@@ -304,6 +310,7 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate }: IHostUi
                         onAiAssistantContext={setAiAssistantContext}
                         aiLinkClickHandlerRef={appAiLinkClickRef}
                         navigationRequestRef={appNavigationRequestRef}
+                        aiEventReceiveRef={appEventReceiveRef}
                         onHeaderChange={onHeaderChange}
                         onDocumentTitleChange={onDocumentTitleChange}
                     />
@@ -342,6 +349,7 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate }: IHostUi
                     onOpenChange={setAiAssistantOpen}
                     onChatStateChange={onChatStateChange}
                     onAppLinkClick={onAppLinkClick}
+                    onAppEventReceive={onAppEventReceive}
                 />
             ) : null}
         </>

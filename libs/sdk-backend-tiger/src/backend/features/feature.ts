@@ -68,6 +68,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableDonutDataLabels,
+            "enableDonutDataLabels",
+            "BOOLEAN",
+            FeatureFlagsValues.enableDonutDataLabels,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableSqlDatasets,
             "enableSqlDatasets",
             "BOOLEAN",

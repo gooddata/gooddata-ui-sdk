@@ -6,7 +6,7 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Dialog } from "@gooddata/sdk-ui-kit";
+import { Dialog, HEADER_CHAT_PANEL_ID } from "@gooddata/sdk-ui-kit";
 
 import { type IChatConversationLocal } from "../model.js";
 import {
@@ -116,6 +116,7 @@ export function GenAIChatOverlay({
             accessibilityConfig={{
                 title: intl.formatMessage({ id: "gd.gen-ai.dialog.label" }),
                 isModal: isFullscreen,
+                dialogId: HEADER_CHAT_PANEL_ID,
             }}
         >
             <GenAIChatHeader onClose={onClose} />

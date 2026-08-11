@@ -181,4 +181,78 @@ describe("Styling editor dialog", () => {
             consoleErrorSpy.mockRestore();
         }
     });
+
+    describe("validateDefinitionWarning", () => {
+        const WARNING = "Missing required color.";
+        const warnOnColor = (color: string) => (content: ITheme) =>
+            content?.palette?.primary?.base === color ? WARNING : undefined;
+
+        const warning = () => document.querySelector(".s-styling-editor-warning");
+
+        it("should report without disabling save", () => {
+            renderEditor({ validateDefinitionWarning: warnOnColor("#001F5A") });
+            const textarea = screen.getByLabelText("Styling item definition");
+
+            fireEvent.change(textarea, { target: { value: referenceTheme("#001F5A") } });
+
+            expect(warning()).toHaveTextContent(WARNING);
+            expect(screen.getByText("Save").closest("button")).not.toHaveClass("disabled");
+
+            fireEvent.change(textarea, { target: { value: referenceTheme("#CF4500") } });
+
+            expect(warning()).not.toBeInTheDocument();
+        });
+
+        it("should report on the definition the dialog opened with", () => {
+            renderEditor({ validateDefinitionWarning: warnOnColor("red") });
+
+            expect(warning()).toHaveTextContent(WARNING);
+        });
+
+        it("should report while the name field is still empty", () => {
+            // The add flow opens with no name, so the dialog already has a blocking error of its own;
+            // pasting a definition there is the main way this warning is ever seen.
+            renderEditor({ stylingItem: undefined, validateDefinitionWarning: warnOnColor("#001F5A") });
+
+            fireEvent.change(screen.getByLabelText("Styling item definition"), {
+                target: { value: referenceTheme("#001F5A") },
+            });
+
+            expect(warning()).toHaveTextContent(WARNING);
+        });
+
+        it("should stay hidden while the content is rejected outright", () => {
+            renderEditor({
+                validateDefinition: () => "Invalid color value.",
+                validateDefinitionWarning: warnOnColor("#001F5A"),
+            });
+
+            fireEvent.change(screen.getByLabelText("Styling item definition"), {
+                target: { value: referenceTheme("#001F5A") },
+            });
+
+            expect(warning()).not.toBeInTheDocument();
+        });
+
+        it("should not crash and should not block saving when it throws", () => {
+            const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+            try {
+                renderEditor({
+                    validateDefinitionWarning: () => {
+                        throw new Error("boom in warning callback");
+                    },
+                });
+
+                fireEvent.change(screen.getByLabelText("Styling item definition"), {
+                    target: { value: referenceTheme("#001F5A") },
+                });
+
+                expect(warning()).not.toBeInTheDocument();
+                expect(screen.getByText("Save").closest("button")).not.toHaveClass("disabled");
+                expect(consoleErrorSpy).toHaveBeenCalled();
+            } finally {
+                consoleErrorSpy.mockRestore();
+            }
+        });
+    });
 });

@@ -33,4 +33,9 @@ export {
     type IThemeContextProviderProps,
     type ThemeStatus,
 } from "./ThemeProvider/Context.js";
-export { isValidThemeColor, findInvalidThemeColors, type IInvalidThemeColor } from "./colorValidation.js";
+export {
+    isValidThemeColor,
+    findInvalidThemeColors,
+    findMissingRequiredThemeColors,
+    type IInvalidThemeColor,
+} from "./colorValidation.js";

@@ -1,15 +1,16 @@
 // (C) 2024-2026 GoodData Corporation
 
+import { useCallback } from "react";
+
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { UiButton, UiIcon } from "@gooddata/sdk-ui-kit";
 
 import { type ChangeAnalysisContents } from "../../../model.js";
 import { settingsSelector } from "../../../store/chatWindow/chatWindowSelectors.js";
 import { setKeyDriverAnalysisAction } from "../../../store/chatWindow/chatWindowSlice.js";
-import { type RootState } from "../../../store/types.js";
 import { storeKdaReturnFocusFromActiveElement } from "../../../utils/kdaReturnFocus.js";
 
 import { useKdaDefinition, useKdaInfo } from "./useKdaDefinition.js";
@@ -23,13 +24,22 @@ export type ChangeAnalysisContentsProps = {
     setKeyDriverAnalysis?: typeof setKeyDriverAnalysisAction;
 };
 
-function ChangeAnalysisContentsComponentCore({
+export function ChangeAnalysisContentsComponent({
     content,
-    locale,
-    format,
-    setKeyDriverAnalysis,
-}: ChangeAnalysisContentsProps) {
+}: Omit<ChangeAnalysisContentsProps, "locale" | "format" | "setKeyDriverAnalysis">) {
     const intl = useIntl();
+    const dispatch = useDispatch();
+    const settings = useSelector(settingsSelector);
+    const locale = settings?.locale;
+    const format = settings?.responsiveUiDateFormat;
+
+    const setKeyDriverAnalysis = useCallback(
+        (...args: Parameters<typeof setKeyDriverAnalysisAction>) => {
+            dispatch(setKeyDriverAnalysisAction(...args));
+        },
+        [dispatch],
+    );
+
     const className = cx(
         "gd-gen-ai-chat__messages__content",
         "gd-gen-ai-chat__messages__content--changeAnalysis",
@@ -65,27 +75,10 @@ function ChangeAnalysisContentsComponentCore({
                     iconBefore="explainai"
                     onClick={() => {
                         storeKdaReturnFocusFromActiveElement();
-                        setKeyDriverAnalysis?.({ keyDriverAnalysis: definition });
+                        setKeyDriverAnalysis({ keyDriverAnalysis: definition });
                     }}
                 />
             </div>
         </div>
     );
 }
-
-const mapDispatchToProps = {
-    setKeyDriverAnalysis: setKeyDriverAnalysisAction,
-};
-
-const mapStateToProps = (state: RootState): Pick<ChangeAnalysisContentsProps, "locale" | "format"> => {
-    const settings = settingsSelector(state);
-    return {
-        locale: settings?.locale,
-        format: settings?.responsiveUiDateFormat,
-    };
-};
-
-export const ChangeAnalysisContentsComponent = connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(ChangeAnalysisContentsComponentCore);
