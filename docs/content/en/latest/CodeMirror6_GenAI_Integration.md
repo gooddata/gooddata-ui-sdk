@@ -1,3 +1,7 @@
+---
+title: "CodeMirror 6 Integration with Gen AI Chat"
+---
+
 # CodeMirror 6 Integration with Gen AI Chat Component
 
 ## Overview
