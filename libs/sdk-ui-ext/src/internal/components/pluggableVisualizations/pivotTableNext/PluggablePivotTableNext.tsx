@@ -39,8 +39,8 @@ import {
 import {
     CorePivotTableNext,
     type ICorePivotTableNextProps,
-    type PivotTableNextConditionalFormattingConfig,
     type PivotTableNextConfig,
+    type PivotTableNextConfigWithConditionalFormatting,
 } from "@gooddata/sdk-ui-pivot/next";
 
 import { METRIC } from "../../../constants/bucket.js";
@@ -80,6 +80,7 @@ import {
     getReferencePointWithSupportedProperties,
     getSupportedPropertiesControls,
     getTextWrappingFromProperties,
+    isConditionalFormattingEnabled,
 } from "../../../utils/propertiesHelper.js";
 import {
     getPivotTableNextDefaultUiConfig,
@@ -454,8 +455,8 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
         const growToFit = this.environment === DASHBOARDS_ENVIRONMENT;
         const isInEditMode = config?.isInEditMode;
         const pagination = getPaginationFromProperties(insightProperties(insight));
-        const enableConditionalFormatting = this.settings.enableConditionalFormatting ?? false;
-        const tableConfig: PivotTableNextConfig & PivotTableNextConditionalFormattingConfig = {
+        const enableConditionalFormatting = isConditionalFormattingEnabled(this.settings);
+        const tableConfig: PivotTableNextConfigWithConditionalFormatting = {
             ...createPivotTableNextConfig(config, this.environment!, this.settings),
             ...customVisualizationConfig,
             measureGroupDimension,

@@ -499,6 +499,14 @@ const closeTimezoneDialog: UiReducer = (state) => {
     state.timezoneDialog.open = false;
 };
 
+const setVisualizationSwitcherActiveVisualization: UiReducer<
+    PayloadAction<{ widgetRef: ObjRef; activeVisualizationIdentifier: string }>
+> = (state, action) => {
+    const { widgetRef, activeVisualizationIdentifier } = action.payload;
+    state.visualizationSwitcherActiveVisualizations[objRefToString(widgetRef)] =
+        activeVisualizationIdentifier;
+};
+
 export const uiReducers = {
     openSettingsDialog,
     closeSettingsDialog,
@@ -569,4 +577,5 @@ export const uiReducers = {
     setTimezoneOverride,
     openTimezoneDialog,
     closeTimezoneDialog,
+    setVisualizationSwitcherActiveVisualization,
 };

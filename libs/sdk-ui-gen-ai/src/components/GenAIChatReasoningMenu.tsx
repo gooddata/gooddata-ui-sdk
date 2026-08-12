@@ -11,12 +11,22 @@ import {
     type IUiMenuItem,
     UiIcon,
     UiMenu,
+    UiSubmenuHeader,
     typedUiMenuContextStore,
+    useIdPrefixed,
 } from "@gooddata/sdk-ui-kit";
+
+import { SUPPORTED_EFFORTS, type SupportedEffort } from "./utils/effortSelection.js";
 
 const msgs = defineMessages({
     reasoning: {
         id: "gd.gen-ai.reasoning",
+    },
+    reasoningRowAriaLabel: {
+        id: "gd.gen-ai.reasoning.row.ariaLabel",
+    },
+    closeReasoning: {
+        id: "gd.gen-ai.close.reasoning",
     },
     quick: {
         id: "gd.gen-ai.reasoning.quick",
@@ -59,22 +69,24 @@ export const REASONING_MENU_ITEM_ID = "reasoning";
  */
 export type ReasoningLabelMode = "short" | "full";
 
-const REASONING_OPTIONS = [
-    {
-        effort: "LOW",
+const REASONING_COPY: Record<
+    SupportedEffort,
+    { labels: Record<ReasoningLabelMode, MessageDescriptor>; description: MessageDescriptor }
+> = {
+    LOW: {
         labels: { short: msgs.quick, full: msgs.quickFull },
         description: msgs.quickDescription,
     },
-    {
-        effort: "MEDIUM",
+    MEDIUM: {
         labels: { short: msgs.thinking, full: msgs.thinkingFull },
         description: msgs.thinkingDescription,
     },
-] as const satisfies ReadonlyArray<{
-    effort: GenAIChatEffort;
-    labels: Record<ReasoningLabelMode, MessageDescriptor>;
-    description: MessageDescriptor;
-}>;
+};
+
+const REASONING_OPTIONS = SUPPORTED_EFFORTS.map((effort) => ({
+    effort,
+    ...REASONING_COPY[effort],
+}));
 
 /**
  * Localized label of the currently selected reasoning mode ("Quick" or "Quick answer", depending on
@@ -154,10 +166,10 @@ export function useReasoningOptionItems(
                     id: `reasoning-${effort}`,
                     stringTitle: title,
                     isSelected: effort === selectedEffort,
+                    selectionRole: "radio",
                     isDisabled: false,
                     data: { effort },
                     tooltip: descriptionText,
-                    ariaAttributes: { "aria-label": `${title}. ${descriptionText}` },
                     iconRight: (
                         <UiIcon
                             type="question"
@@ -169,6 +181,26 @@ export function useReasoningOptionItems(
                 };
             }),
         [intl, selectedEffort, labelMode],
+    );
+}
+
+/**
+ * Header for the standalone effort dropdown (dialog with close control).
+ * @internal
+ */
+export function ReasoningEffortMenuHeader({ titleId }: { titleId: string }) {
+    const intl = useIntl();
+    const { useContextStore, createSelector } = typedUiMenuContextStore();
+    const onClose = useContextStore(createSelector((ctx) => ctx.onClose));
+
+    return (
+        <UiSubmenuHeader
+            title={intl.formatMessage(msgs.reasoning)}
+            titleId={titleId}
+            height="medium"
+            onClose={onClose}
+            closeAriaLabel={intl.formatMessage(msgs.closeReasoning)}
+        />
     );
 }
 
@@ -189,6 +221,11 @@ export function GenAIChatReasoningMenuRow({
         interactive: ReasoningMenuItemData;
     }>();
     const closeParentMenu = useContextStore(createSelector((ctx) => ctx.onClose));
+    const reasoningTriggerId = useIdPrefixed("reasoning-row-trigger");
+    const reasoningRowAriaLabel = intl.formatMessage(msgs.reasoningRowAriaLabel, {
+        effort: valueLabel ?? reasoningLabel,
+    });
+
     return (
         <li role="none" className="gd-gen-ai-chat__reasoning-row">
             <Dropdown
@@ -199,11 +236,14 @@ export function GenAIChatReasoningMenuRow({
                 closeOnEscape
                 fullscreenOnMobile={false}
                 autofocusOnOpen
+                returnFocusTo={reasoningTriggerId}
                 accessibilityConfig={{}}
                 renderButton={({ isOpen, toggleDropdown }) => (
                     <button
                         type="button"
+                        id={reasoningTriggerId}
                         className="gd-gen-ai-chat__reasoning-row__button"
+                        aria-label={reasoningRowAriaLabel}
                         aria-haspopup="menu"
                         aria-expanded={isOpen}
                         onClick={toggleDropdown}
@@ -225,6 +265,7 @@ export function GenAIChatReasoningMenuRow({
                         containerTopPadding="small"
                         containerBottomPadding="small"
                         ariaAttributes={ariaAttributes}
+                        onClose={closeDropdown}
                         onSelect={(option) => {
                             onSelectEffort?.(option.data.effort);
                             closeDropdown();

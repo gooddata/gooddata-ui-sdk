@@ -118,3 +118,60 @@ export const isDashboardVisualizationSwitcherWidgetVisualizationsUpdated =
     eventGuard<IDashboardVisualizationSwitcherWidgetVisualizationsUpdated>(
         "GDC.DASH/EVT.VISUALIZATION_SWITCHER_WIDGET.VISUALIZATIONS_UPDATED",
     );
+
+/**
+ * Payload of the {@link IDashboardVisualizationSwitcherWidgetActiveVisualizationChanged} event.
+ * @beta
+ */
+export interface IDashboardVisualizationSwitcherWidgetActiveVisualizationChangedPayload {
+    /**
+     * Reference to changed visualization switcher widget.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Identifier of the active visualization.
+     */
+    readonly activeVisualizationIdentifier: string;
+}
+
+/**
+ * This event is emitted when the dashboard's visualization switcher active visualization is changed.
+ *
+ * @beta
+ */
+export interface IDashboardVisualizationSwitcherWidgetActiveVisualizationChanged extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.VISUALIZATION_SWITCHER_WIDGET.ACTIVE_VISUALIZATION_CHANGED";
+    readonly payload: IDashboardVisualizationSwitcherWidgetActiveVisualizationChangedPayload;
+}
+
+/**
+ * @internal
+ */
+export function visualizationSwitcherWidgetActiveVisualizationChanged(
+    ctx: DashboardContext,
+    ref: ObjRef,
+    activeVisualizationIdentifier: string,
+    correlationId?: string,
+): IDashboardVisualizationSwitcherWidgetActiveVisualizationChanged {
+    return {
+        type: "GDC.DASH/EVT.VISUALIZATION_SWITCHER_WIDGET.ACTIVE_VISUALIZATION_CHANGED",
+        ctx,
+        correlationId,
+        payload: {
+            ref,
+            activeVisualizationIdentifier,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link IDashboardVisualizationSwitcherWidgetActiveVisualizationChanged}.
+ *
+ * @param obj - object to test
+ * @beta
+ */
+export const isDashboardVisualizationSwitcherWidgetActiveVisualizationChanged =
+    eventGuard<IDashboardVisualizationSwitcherWidgetActiveVisualizationChanged>(
+        "GDC.DASH/EVT.VISUALIZATION_SWITCHER_WIDGET.ACTIVE_VISUALIZATION_CHANGED",
+    );

@@ -546,12 +546,38 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "SSE stream with response_started/item/response_ended events",
+                        "description": "SSE stream with response_started/item/response_ended events; when interaction intelligence is enabled, interaction_step events (payload {\"step\": ...}) stream alongside the items.",
                         "content": {
-                            "application/json": {
-                                "schema": {}
+                            "text/event-stream": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "x-item-schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "string"
+                                        },
+                                        "event": {
+                                            "type": "string"
+                                        },
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "retry": {
+                                            "type": "integer",
+                                            "minimum": 0
+                                        }
+                                    }
+                                }
                             }
                         }
+                    },
+                    "400": {
+                        "description": "Call context is missing organization or user."
+                    },
+                    "403": {
+                        "description": "Organization is not entitled to the AI module."
                     },
                     "406": {
                         "description": "Accept header must include text/event-stream"
@@ -1253,10 +1279,14 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful Response",
+                        "description": "The document's raw file.",
                         "content": {
-                            "application/json": {
-                                "schema": {}
+                            "application/octet-stream": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary",
+                                    "contentMediaType": "application/octet-stream"
+                                }
                             }
                         }
                     },
@@ -1763,10 +1793,14 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful Response",
+                        "description": "The document's raw file.",
                         "content": {
-                            "application/json": {
-                                "schema": {}
+                            "application/octet-stream": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary",
+                                    "contentMediaType": "application/octet-stream"
+                                }
                             }
                         }
                     },
@@ -1986,6 +2020,73 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/SearchDocumentsResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/steps": {
+            "get": {
+                "tags": [
+                    "Interaction Steps"
+                ],
+                "summary": "Get Conversation Interaction Steps",
+                "operationId": "get_conversation_interaction_steps_api_v1_ai_workspaces__workspace_id__chat_conversations__conversation_id__steps_get",
+                "parameters": [
+                    {
+                        "name": "workspace_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Workspace Id"
+                        }
+                    },
+                    {
+                        "name": "conversation_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Conversation Id"
+                        }
+                    },
+                    {
+                        "name": "responseId",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "title": "Responseid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InteractionStepListResponse"
                                 }
                             }
                         }
@@ -2927,8 +3028,9 @@
                 "properties": {
                     "file": {
                         "type": "string",
-                        "format": "binary",
-                        "title": "File"
+                        "contentMediaType": "application/octet-stream",
+                        "title": "File",
+                        "format": "binary"
                     },
                     "scopes": {
                         "anyOf": [
@@ -2966,8 +3068,9 @@
                 "properties": {
                     "file": {
                         "type": "string",
-                        "format": "binary",
-                        "title": "File"
+                        "contentMediaType": "application/octet-stream",
+                        "title": "File",
+                        "format": "binary"
                     },
                     "scopes": {
                         "anyOf": [
@@ -3005,8 +3108,9 @@
                 "properties": {
                     "file": {
                         "type": "string",
-                        "format": "binary",
-                        "title": "File"
+                        "contentMediaType": "application/octet-stream",
+                        "title": "File",
+                        "format": "binary"
                     },
                     "scopes": {
                         "anyOf": [
@@ -3044,8 +3148,9 @@
                 "properties": {
                     "file": {
                         "type": "string",
-                        "format": "binary",
-                        "title": "File"
+                        "contentMediaType": "application/octet-stream",
+                        "title": "File",
+                        "format": "binary"
                     },
                     "scopes": {
                         "anyOf": [
@@ -3162,6 +3267,81 @@
                     "field"
                 ],
                 "title": "BucketRefObject"
+            },
+            "CatalogSearchDetail": {
+                "properties": {
+                    "category": {
+                        "type": "string",
+                        "const": "catalogSearch",
+                        "title": "Category",
+                        "description": "Category this body belongs to.",
+                        "default": "catalogSearch"
+                    },
+                    "found": {
+                        "items": {
+                            "$ref": "#/components/schemas/SearchedGroup"
+                        },
+                        "type": "array",
+                        "title": "Found",
+                        "description": "Titles the search returned, grouped by object type."
+                    },
+                    "query": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Query",
+                        "description": "Keywords the search looked for. Each runs against every requested type."
+                    },
+                    "requestedTypes": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Requestedtypes",
+                        "description": "Catalog types the search asked for."
+                    },
+                    "used": {
+                        "items": {
+                            "$ref": "#/components/schemas/CatalogSearchMatch"
+                        },
+                        "type": "array",
+                        "title": "Used",
+                        "description": "Best-matching object per type. Empty for the search modes that do not rank."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "title": "CatalogSearchDetail",
+                "description": "What one search looked for in the semantic catalog, what came back, and what it used."
+            },
+            "CatalogSearchMatch": {
+                "properties": {
+                    "objectType": {
+                        "type": "string",
+                        "title": "Objecttype",
+                        "description": "Catalog type the object is the best match of."
+                    },
+                    "score": {
+                        "type": "number",
+                        "title": "Score",
+                        "description": "Relevance score that ranked it."
+                    },
+                    "title": {
+                        "type": "string",
+                        "title": "Title",
+                        "description": "Title of the highest-ranked object."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "objectType",
+                    "title",
+                    "score"
+                ],
+                "title": "CatalogSearchMatch",
+                "description": "The highest-ranked object of one searched type, with the score that ranked it."
             },
             "Comparison": {
                 "properties": {
@@ -3330,6 +3510,66 @@
                     "NOT_EQUAL_TO"
                 ],
                 "title": "ComparisonMeasureValueOperator"
+            },
+            "ComposeAnswerDetail": {
+                "properties": {
+                    "category": {
+                        "type": "string",
+                        "const": "composeAnswer",
+                        "title": "Category",
+                        "description": "Category this body belongs to.",
+                        "default": "composeAnswer"
+                    },
+                    "modelId": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Modelid",
+                        "description": "Model that generated the answer."
+                    },
+                    "output": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "text",
+                                    "visualization",
+                                    "dashboard",
+                                    "keyDriverAnalysis",
+                                    "whatIf",
+                                    "searchResults",
+                                    "alertProposal"
+                                ]
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Output",
+                        "description": "What the turn produced, named by the richest part of its answer."
+                    },
+                    "suggestedActions": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Suggestedactions",
+                        "description": "Follow-up actions the answer offered, null when it carried no suggestions."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "title": "ComposeAnswerDetail",
+                "description": "How the answer itself came out: what it is and which model wrote it."
             },
             "CompoundMeasureValueFilter": {
                 "properties": {
@@ -3545,6 +3785,41 @@
                         "title": "Createdat",
                         "description": "Item creation timestamp (ISO-8601 UTC)."
                     },
+                    "detail": {
+                        "anyOf": [
+                            {
+                                "oneOf": [
+                                    {
+                                        "$ref": "#/components/schemas/CatalogSearchDetail"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/ComposeAnswerDetail"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/KnowledgeSearchDetail"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/SkillRoutingDetail"
+                                    }
+                                ],
+                                "description": "What one item's action did.",
+                                "discriminator": {
+                                    "propertyName": "category",
+                                    "mapping": {
+                                        "catalogSearch": "#/components/schemas/CatalogSearchDetail",
+                                        "composeAnswer": "#/components/schemas/ComposeAnswerDetail",
+                                        "knowledgeSearch": "#/components/schemas/KnowledgeSearchDetail",
+                                        "skillRouting": "#/components/schemas/SkillRoutingDetail"
+                                    }
+                                }
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Detail",
+                        "description": "What this item's action did, when its category has a card body. Absent otherwise."
+                    },
                     "itemId": {
                         "type": "string",
                         "title": "Itemid",
@@ -3578,6 +3853,17 @@
                         ],
                         "title": "Oldagentid",
                         "description": "Agent ID before the switch (marker rows only)."
+                    },
+                    "reasoningEffort": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/RequestedReasoningEffort"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Effort this message was sent with. Set only on user items that carried one; null everywhere else, meaning the turn ran at the MEDIUM default."
                     },
                     "replyTo": {
                         "anyOf": [
@@ -3613,6 +3899,18 @@
                         ],
                         "title": "Role",
                         "description": "Author role of the item."
+                    },
+                    "stepId": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Stepid",
+                        "description": "Interaction step this item belongs to."
                     },
                     "taskId": {
                         "anyOf": [
@@ -4009,7 +4307,18 @@
                         ],
                         "description": "Optional full dashboard draft payload (AAC JSON) when available."
                     },
-                    "savedDashboardId": {
+                    "references": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/DashboardReferences"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "AAC bodies of every widget-referenced visualization, when available."
+                    },
+                    "saved_dashboard_id": {
                         "anyOf": [
                             {
                                 "type": "string"
@@ -4018,7 +4327,7 @@
                                 "type": "null"
                             }
                         ],
-                        "title": "Saveddashboardid",
+                        "title": "Saved Dashboard Id",
                         "description": "Id of the persisted analyticalDashboard once the user has saved this draft; null while it is still an unsaved draft. Lets the client distinguish a saved dashboard from a draft (e.g. after reload) and update it in place on further edits."
                     },
                     "type": {
@@ -4059,6 +4368,26 @@
                     "id"
                 ],
                 "title": "DashboardRef"
+            },
+            "DashboardReferences": {
+                "properties": {
+                    "visualizations": {
+                        "items": {
+                            "additionalProperties": true,
+                            "type": "object"
+                        },
+                        "type": "array",
+                        "title": "Visualizations",
+                        "description": "Full AAC body of every widget-referenced visualization that has one available."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "visualizations"
+                ],
+                "title": "DashboardReferences",
+                "description": "AAC bodies of every widget-referenced visualization in a dashboard draft.\n\nEach entry is opaque AAC pass-through (dict), not modeled as a schema — same\ntreatment the codebase gives elsewhere to full AAC visualization bodies."
             },
             "DashboardSection": {
                 "properties": {
@@ -4532,6 +4861,76 @@
                 ],
                 "title": "InlineFilterDefinitionBody"
             },
+            "InteractionStepListResponse": {
+                "properties": {
+                    "steps": {
+                        "items": {
+                            "$ref": "#/components/schemas/InteractionStepResponse"
+                        },
+                        "type": "array",
+                        "title": "Steps",
+                        "description": "Ordered list of interaction steps."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "steps"
+                ],
+                "title": "InteractionStepListResponse",
+                "description": "Interaction step list response."
+            },
+            "InteractionStepResponse": {
+                "properties": {
+                    "conversationId": {
+                        "type": "string",
+                        "title": "Conversationid",
+                        "description": "Parent conversation identifier."
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "title": "Createdat",
+                        "description": "Step start timestamp (ISO-8601 UTC)."
+                    },
+                    "durationMs": {
+                        "type": "integer",
+                        "title": "Durationms",
+                        "description": "Wall-clock duration of the LLM call and its tool dispatches."
+                    },
+                    "responseId": {
+                        "type": "string",
+                        "title": "Responseid",
+                        "description": "Response/turn identifier the step belongs to."
+                    },
+                    "stepId": {
+                        "type": "string",
+                        "title": "Stepid",
+                        "description": "Interaction step identifier."
+                    },
+                    "stepIndex": {
+                        "type": "integer",
+                        "title": "Stepindex",
+                        "description": "Zero-based step order within the turn."
+                    },
+                    "tokens": {
+                        "$ref": "#/components/schemas/StepTokens",
+                        "description": "Token usage of the step's LLM call."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "stepId",
+                    "conversationId",
+                    "responseId",
+                    "stepIndex",
+                    "durationMs",
+                    "tokens",
+                    "createdAt"
+                ],
+                "title": "InteractionStepResponse",
+                "description": "One LLM call of a turn and the tools it dispatched.\n\nCarries only what belongs to the whole call -- ordering, duration, spend. What each\naction did lives on the items that link here via their ``stepId``."
+            },
             "IntervalGranularity": {
                 "type": "string",
                 "enum": [
@@ -4656,6 +5055,81 @@
                 "additionalProperties": false,
                 "type": "object",
                 "title": "KeyDriverAnalysisPart"
+            },
+            "KnowledgeSearchDetail": {
+                "properties": {
+                    "bestMatch": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Bestmatch",
+                        "description": "Title of the highest-scoring document. Null when nothing ranked."
+                    },
+                    "category": {
+                        "type": "string",
+                        "const": "knowledgeSearch",
+                        "title": "Category",
+                        "description": "Category this body belongs to.",
+                        "default": "knowledgeSearch"
+                    },
+                    "documents": {
+                        "items": {
+                            "$ref": "#/components/schemas/KnowledgeSearchDocument"
+                        },
+                        "type": "array",
+                        "title": "Documents",
+                        "description": "Documents the action reached, best-scoring first."
+                    },
+                    "query": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Query",
+                        "description": "What the action searched for. Null for an action that read a known document instead of searching."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "title": "KnowledgeSearchDetail",
+                "description": "What one action looked for in the knowledge base and which documents it reached."
+            },
+            "KnowledgeSearchDocument": {
+                "properties": {
+                    "score": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Score",
+                        "description": "Relevance of the document's best-matching chunk. Null when the action did not rank it."
+                    },
+                    "title": {
+                        "type": "string",
+                        "title": "Title",
+                        "description": "Document title, falling back to its filename when it has none."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "title"
+                ],
+                "title": "KnowledgeSearchDocument",
+                "description": "One knowledge document an action reached, named as the user would recognise it."
             },
             "ListDocumentsResponse": {
                 "properties": {
@@ -6478,6 +6952,30 @@
                 "title": "SearchStatistics",
                 "description": "Statistics about the search results."
             },
+            "SearchedGroup": {
+                "properties": {
+                    "objectType": {
+                        "type": "string",
+                        "title": "Objecttype",
+                        "description": "Catalog type name the group belongs to."
+                    },
+                    "titles": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Titles",
+                        "description": "Titles of that type that came back."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "objectType"
+                ],
+                "title": "SearchedGroup",
+                "description": "The results of a search that share one object type."
+            },
             "SendMessageContent": {
                 "properties": {
                     "text": {
@@ -6526,7 +7024,7 @@
                                 "type": "null"
                             }
                         ],
-                        "description": "How much effort the LLM should spend reasoning about this single message. Not persisted — applies to this message only; every other message falls back to MEDIUM. Behind a feature flag: when disabled, any value here is ignored and MEDIUM is used.\n\nSupported uniformly by all providers (OpenAI, Azure Foundry, Anthropic, Bedrock). On Anthropic/Bedrock models with adaptive thinking, the value is passed as a hint (output_config.effort) rather than a hard token budget."
+                        "description": "How much effort the LLM should spend reasoning about this single message. Applies to this message only; every other message falls back to MEDIUM. Stored on the resulting user item and returned as its reasoningEffort. Behind a feature flag: when disabled, any value here is ignored and MEDIUM is used.\n\nSupported uniformly by all providers (OpenAI, Azure Foundry, Anthropic, Bedrock). On Anthropic/Bedrock models with adaptive thinking, the value is passed as a hint (output_config.effort) rather than a hard token budget."
                     },
                     "search": {
                         "anyOf": [
@@ -6699,6 +7197,81 @@
                 ],
                 "title": "SkillResponse",
                 "description": "A single skill available to the organization."
+            },
+            "SkillRoutingDetail": {
+                "properties": {
+                    "activated": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Activated",
+                        "description": "Titles of the skills active after the call replaced the active set."
+                    },
+                    "available": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Available",
+                        "description": "Titles of the skills the model could choose from, in the order the prompt lists them."
+                    },
+                    "category": {
+                        "type": "string",
+                        "const": "skillRouting",
+                        "title": "Category",
+                        "description": "Category this body belongs to.",
+                        "default": "skillRouting"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "title": "SkillRoutingDetail",
+                "description": "Which skills the turn could reach for, and which this call left active."
+            },
+            "StepTokens": {
+                "properties": {
+                    "input": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Input",
+                        "description": "Input tokens."
+                    },
+                    "output": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Output",
+                        "description": "Output tokens."
+                    },
+                    "total": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Total",
+                        "description": "Total tokens."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "title": "StepTokens",
+                "description": "What the step's LLM call spent; a field is null when the provider did not report it."
             },
             "SuggestedAction": {
                 "properties": {

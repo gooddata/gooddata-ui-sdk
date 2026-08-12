@@ -3,14 +3,17 @@
 import { describe, expect, it } from "vitest";
 
 import { type DataValue, type IMeasureGroupDescriptor } from "@gooddata/sdk-model";
-import { type DataViewFacade } from "@gooddata/sdk-ui";
+import { BucketNames, type DataViewFacade } from "@gooddata/sdk-ui";
 import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
 import { type IUnwrappedAttributeHeadersWithItems } from "../../../typings/mess.js";
 import { getMekkoSeries } from "../mekkoSeries.js";
 
-const dvWith = (data: DataValue[][]): DataViewFacade =>
-    ({ rawData: () => ({ twoDimData: () => data }) }) as unknown as DataViewFacade;
+const dvWith = (data: DataValue[][], emptyBuckets: string[] = []): DataViewFacade =>
+    ({
+        rawData: () => ({ twoDimData: () => data }),
+        def: () => ({ isBucketEmpty: (localId: string) => emptyBuckets.includes(localId) }),
+    }) as unknown as DataViewFacade;
 
 const measureGroup = (
     ...measures: [name: string, format: string][]
@@ -39,8 +42,18 @@ function getSeries(
     mg: IMeasureGroupDescriptor["measureGroupHeader"],
     viewBy: IUnwrappedAttributeHeadersWithItems | null,
     stackBy: IUnwrappedAttributeHeadersWithItems | null,
+    emptyBuckets: string[] = [],
 ) {
-    return getMekkoSeries(dvWith(data), mg, viewBy, stackBy, colorStrategy, "(empty)", undefined, undefined);
+    return getMekkoSeries(
+        dvWith(data, emptyBuckets),
+        mg,
+        viewBy,
+        stackBy,
+        colorStrategy,
+        "(empty)",
+        undefined,
+        undefined,
+    );
 }
 
 describe("getMekkoSeries", () => {
@@ -107,12 +120,38 @@ describe("getMekkoSeries", () => {
                 measureGroup(["Height", "$#,##0"]),
                 attribute("A", "B"),
                 attribute("S1", "S2"),
+                [BucketNames.MEASURES],
             );
 
             expect(series[0].data).toEqual([
                 { y: 100, z: 1, format: "$#,##0", name: "A" },
                 { y: 200, z: 1, format: "$#,##0", name: "B" },
             ]);
+        });
+
+        it("uses the lone Width measure as segment heights (shares under the locked 100% stacking)", () => {
+            const singleMeasureData: DataValue[][] = [
+                ["10", "20"],
+                ["30", "40"],
+            ];
+
+            const series = getSeries(
+                singleMeasureData,
+                measureGroup(["Width", "#,##0"]),
+                attribute("A", "B"),
+                attribute("S1", "S2"),
+                [BucketNames.SECONDARY_MEASURES],
+            );
+
+            expect(series[0].data).toEqual([
+                { y: 10, z: 40, format: "#,##0", name: "A" },
+                { y: 20, z: 60, format: "#,##0", name: "B" },
+            ]);
+            expect(series[1].data).toEqual([
+                { y: 30, z: 40, format: "#,##0", name: "A" },
+                { y: 40, z: 60, format: "#,##0", name: "B" },
+            ]);
+            expect(series[0].minPointLength).toBeUndefined();
         });
     });
 
@@ -140,12 +179,49 @@ describe("getMekkoSeries", () => {
             ]);
         });
 
-        it("falls back to z = 1 with a single measure", () => {
+        it("falls back to z = 1 with a single Height measure", () => {
             const series = getSeries(
                 [["100", "200"]],
                 measureGroup(["Height", "$#,##0"]),
                 attribute("A", "B"),
                 null,
+                [BucketNames.MEASURES],
+            );
+
+            expect(points(series[0]).map((p) => [p.y, p.z])).toEqual([
+                [100, 1],
+                [200, 1],
+            ]);
+        });
+
+        it("keeps a lone Width measure driving z with zero-height placeholder points", () => {
+            const series = getSeries(
+                [["10", "20"]],
+                measureGroup(["Width", "#,##0"]),
+                attribute("A", "B"),
+                null,
+                [BucketNames.SECONDARY_MEASURES],
+            );
+
+            expect(series[0].name).toBe("Width");
+            expect(points(series[0]).map((p) => [p.y, p.z])).toEqual([
+                [0, 10],
+                [0, 20],
+            ]);
+            expect(series[0].minPointLength).toBe(5);
+            expect(points(series[0]).map((p) => (p as { format?: string }).format)).toEqual([
+                "#,##0",
+                "#,##0",
+            ]);
+        });
+
+        it("keeps the height-only treatment for a single measure without bucket information", () => {
+            const series = getSeries(
+                [["100", "200"]],
+                measureGroup(["Solo", "#,##0"]),
+                attribute("A", "B"),
+                null,
+                [BucketNames.MEASURES, BucketNames.SECONDARY_MEASURES],
             );
 
             expect(points(series[0]).map((p) => [p.y, p.z])).toEqual([

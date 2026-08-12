@@ -42,7 +42,10 @@ import {
 } from "../drillDownUtil.js";
 
 import { pivotTableNextAdditionalFactories } from "./pivotTableNextAdditionalFactories.js";
-import { pivotTableNextConfigFromInsight } from "./pivotTableNextConfigFromInsight.js";
+import {
+    pivotTableNextConfigFromInsight,
+    pivotTableNextConfigPropMeta,
+} from "./pivotTableNextConfigFromInsight.js";
 import { PluggablePivotTableNext } from "./PluggablePivotTableNext.js";
 
 export class PivotTableNextDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
@@ -106,14 +109,7 @@ export class PivotTableNextDescriptor extends BaseChartDescriptor implements IVi
             totals: totalsInsightConversion("totals"),
             config: insightConversion(
                 "config",
-                {
-                    typeImport: {
-                        importType: "named",
-                        name: "PivotTableNextConfig",
-                        package: "@gooddata/sdk-ui-pivot/next",
-                    },
-                    cardinality: "scalar",
-                },
+                pivotTableNextConfigPropMeta,
                 pivotTableNextConfigFromInsight,
             ),
             pageSize: insightConversion("pageSize", { cardinality: "scalar" }, (insight) => {

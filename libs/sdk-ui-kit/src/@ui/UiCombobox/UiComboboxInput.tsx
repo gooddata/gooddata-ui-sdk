@@ -24,6 +24,8 @@ export interface IUiComboboxInputProps {
     accessibilityConfig?: IAccessibilityConfigBase;
     /** Visible placeholder. */
     placeholder?: string;
+    /** Marks the field invalid: error-colored border plus `aria-invalid`. */
+    isError?: boolean;
     /** Form field name forwarded to the underlying input. */
     name?: string;
     autoFocus?: boolean;
@@ -45,6 +47,7 @@ export const UiComboboxInput = forwardRef<HTMLInputElement, IUiComboboxInputProp
         const {
             accessibilityConfig,
             placeholder,
+            isError,
             name,
             autoFocus,
             onKeyDown: callerOnKeyDown,
@@ -103,6 +106,7 @@ export const UiComboboxInput = forwardRef<HTMLInputElement, IUiComboboxInputProp
                 onChange={onInputChange}
                 name={name}
                 placeholder={placeholder}
+                isError={isError}
                 autoFocus={autoFocus}
                 // Browser autofill would overlap the listbox; the combobox
                 // owns its own typeahead so we suppress all native suggestions.

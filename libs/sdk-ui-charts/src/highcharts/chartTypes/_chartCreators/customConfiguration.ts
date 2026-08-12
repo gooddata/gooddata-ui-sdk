@@ -656,6 +656,14 @@ function labelFormatterScatter(this: { point: IExtendedPoint }) {
     return null;
 }
 
+function labelFormatterMekkoWidth(this: { point: IExtendedPoint }, config?: IChartConfig) {
+    const value = this.point?.z;
+    if (value === null || value === undefined || isNaN(value)) {
+        return null;
+    }
+    return formatLabel(value, this.point?.format, config);
+}
+
 // check whether series contains only positive values, not consider nulls
 function hasOnlyPositiveValues(series: any, x: any) {
     return series.every((seriesItem: any) => {
@@ -918,15 +926,16 @@ function getDataLabelsConfiguration(
                     ...dataLabelsBugWorkaround,
                 },
             },
-            // mekko; keeps absolute labels when negative values block "stack to 100%",
-            // as Highcharts computes point.percentage even then
+            // mekko: width-only without Stack By labels the Width value; absolute when negatives block 100%
             variwide: {
                 dataLabels: {
                     ...DEFAULT_LABELS_CONFIG,
                     formatter: partial(
-                        chartOptions.stackToPercentBlockedByNegativeValues
-                            ? labelFormatter
-                            : dataLabelFormatter,
+                        chartOptions.mekkoWidthOnly && !chartOptions.hasStackByAttribute
+                            ? labelFormatterMekkoWidth
+                            : chartOptions.stackToPercentBlockedByNegativeValues
+                              ? labelFormatter
+                              : dataLabelFormatter,
                         chartConfig,
                     ),
                 },

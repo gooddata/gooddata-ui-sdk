@@ -48,6 +48,7 @@ export type IUiMenuInteractiveItem<T extends IUiMenuItemData = object> = {
     stringTitle: string;
     isDisabled?: boolean;
     isSelected?: boolean;
+    selectionRole?: "radio" | "checkbox";
     isDestructive?: boolean;
     tooltip?: ReactNode;
     tooltipWidth?: number;

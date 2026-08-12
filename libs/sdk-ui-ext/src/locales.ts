@@ -516,7 +516,9 @@ export const conditionalFormattingMessages = defineMessages({
     dialogUnitPercent: { id: "properties.conditionalFormatting.dialog.unitPercent" },
     dialogCancel: { id: "properties.conditionalFormatting.dialog.cancel" },
     dialogSave: { id: "properties.conditionalFormatting.dialog.save" },
+    dialogErrorWrapper: { id: "properties.conditionalFormatting.dialog.error.wrapper" },
     dialogErrorRangeOrder: { id: "properties.conditionalFormatting.dialog.error.rangeOrder" },
+    dialogErrorValueEmpty: { id: "properties.conditionalFormatting.dialog.error.valueEmpty" },
     dialogSelectPeriod: { id: "properties.conditionalFormatting.dialog.selectPeriod" },
     dialogErrorDateUnresolvable: { id: "properties.conditionalFormatting.dialog.error.dateUnresolvable" },
 });

@@ -485,12 +485,11 @@ export const displayToRawNumber = (display: number, percent: boolean): number =>
 
 // --- Validation ------------------------------------------------------------------------------
 
-export type ConditionalFormattingFieldError = "rangeOrder" | "dateUnresolvable";
+/** Present-but-invalid input, detected by {@link validateCondition}. */
+export type ConditionInvalidError = "rangeOrder" | "dateUnresolvable";
 
-export interface IConditionErrors {
-    range?: ConditionalFormattingFieldError;
-    date?: ConditionalFormattingFieldError;
-}
+/** Everything the editor renders inline: the model's errors plus its own blank-visited-field state. */
+export type ConditionalFormattingFieldError = ConditionInvalidError | "valueEmpty";
 
 const isBlank = (value: string | number): boolean => String(value).trim() === "";
 
@@ -540,15 +539,16 @@ export const sanitizeRuleForEditing = (
 };
 
 export interface IConditionValidation {
-    /** A required operand is absent — gates Save, never shown as an error. */
+    /** A required operand is absent — gates Save; the editor shows it only on a visited field. */
     missing: boolean;
-    /** Present-but-invalid input — surfaced inline by the editor (and also gates Save). */
-    errors: IConditionErrors;
+    /** Present-but-invalid input — surfaced inline by the editor immediately (and also gates Save). */
+    error?: ConditionInvalidError;
 }
 
 /**
- * Single source for both validation surfaces, making "empty is incomplete, not invalid" structural:
- * {@link isRuleComplete} derives from the whole result, the editor renders only `errors`.
+ * Single source for both validation surfaces: {@link isRuleComplete} derives from the whole result,
+ * while the editor renders `error` unconditionally and `missing` only once the field has been
+ * visited (a value the user hasn't reached yet is incomplete, not wrong).
  */
 export const validateCondition = (
     condition: IConditionalFormattingCondition,
@@ -558,32 +558,31 @@ export const validateCondition = (
     const { value } = condition;
     switch (operatorArity(condition.operator)) {
         case "none":
-            return { missing: false, errors: {} };
+            return { missing: false };
         case "range": {
             if (value.kind !== "literalRange") {
-                return { missing: true, errors: {} };
+                return { missing: true };
             }
             const missing = !Number.isFinite(value.from) || !Number.isFinite(value.to);
-            return { missing, errors: !missing && value.from > value.to ? { range: "rangeOrder" } : {} };
+            return !missing && value.from > value.to ? { missing, error: "rangeOrder" } : { missing };
         }
         case "single":
             if (date) {
                 if (!isDateConditionValue(value)) {
-                    return { missing: true, errors: {} };
+                    return { missing: true };
                 }
                 // Unresolvable (malformed value, fiscal granularity) never matches — block Save.
                 const resolvable =
                     resolveDateConditionBounds(value, date.granularity, date.timezone) !== null;
-                return { missing: false, errors: resolvable ? {} : { date: "dateUnresolvable" } };
+                return resolvable ? { missing: false } : { missing: false, error: "dateUnresolvable" };
             }
             if (value.kind !== "literal") {
-                return { missing: true, errors: {} };
+                return { missing: true };
             }
             // Guard the empty string first: `Number("") === 0` (not NaN), which would otherwise let an
             // empty measure threshold pass as a valid 0.
             return {
                 missing: isBlank(value.value) || (kind === "measure" && Number.isNaN(Number(value.value))),
-                errors: {},
             };
     }
 };
@@ -592,6 +591,6 @@ export const validateCondition = (
 export const isRuleComplete = (rule: IConditionalFormattingRule, date?: ICfDateMeta): boolean =>
     rule.conditions.length > 0 &&
     rule.conditions.every((condition) => {
-        const { missing, errors } = validateCondition(condition, rule.target.kind, date);
-        return !missing && Object.keys(errors).length === 0;
+        const { missing, error } = validateCondition(condition, rule.target.kind, date);
+        return !missing && !error;
     });

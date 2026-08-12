@@ -38,6 +38,18 @@ describe("UiTextInput", () => {
         expect(screen.getByTestId("input")).toBeDisabled();
     });
 
+    it("marks the field invalid when isError is true", () => {
+        const { container } = render(<UiTextInput value="" onChange={() => {}} isError dataTestId="input" />);
+        expect(container.querySelector(".gd-ui-kit-text-input__field--error")).toBeInTheDocument();
+        expect(screen.getByTestId("input")).toHaveAttribute("aria-invalid", "true");
+    });
+
+    it("leaves the field valid by default", () => {
+        const { container } = render(<UiTextInput value="" onChange={() => {}} dataTestId="input" />);
+        expect(container.querySelector(".gd-ui-kit-text-input__field--error")).not.toBeInTheDocument();
+        expect(screen.getByTestId("input")).not.toHaveAttribute("aria-invalid");
+    });
+
     it("renders iconAfter as a static span when no click handler is given", () => {
         const { container } = render(
             <UiTextInput value="x" onChange={() => {}} iconAfter="cross" dataTestId="input" />,

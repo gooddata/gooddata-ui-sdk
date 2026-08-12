@@ -59,6 +59,8 @@ export interface IUiTextInputProps {
     onIconAfter?: IUiTextInputIconAfterButton;
     /** Accessibility config forwarded to the input element. */
     accessibilityConfig?: IAccessibilityConfigBase;
+    /** Marks the field invalid: error-colored border plus `aria-invalid`. */
+    isError?: boolean;
     disabled?: boolean;
     autoFocus?: boolean;
     /** Forwarded to the input element. Use for autocomplete / combobox patterns. */
@@ -101,6 +103,7 @@ export function UiTextInput({
     iconAfter,
     onIconAfter,
     accessibilityConfig,
+    isError = false,
     disabled = false,
     autoFocus = false,
     onKeyDown,
@@ -127,7 +130,7 @@ export function UiTextInput({
                     {label}
                 </label>
             ) : null}
-            <div className={e("field", { disabled })}>
+            <div className={e("field", { disabled, error: isError })}>
                 {iconBefore ? (
                     <span className={e("icon-before")}>
                         <UiIcon type={iconBefore} size={14} color="complementary-6" />
@@ -152,6 +155,7 @@ export function UiTextInput({
                     onFocus={onFocus}
                     onBlur={onBlur}
                     onClick={onClick}
+                    aria-invalid={isError || undefined}
                     {...accessibilityConfigToAttributes(inputA11y)}
                 />
                 {onIconAfter ? (

@@ -12,10 +12,9 @@ import { type IPivotTableExecutionDefinition } from "./features/data/executionDe
 import { PivotTableNextImplementation } from "./PivotTableNext.js";
 import {
     type IConditionalFormatting,
-    type PivotTableNextConditionalFormattingConfig,
+    type PivotTableNextConfigWithConditionalFormatting,
 } from "./types/conditionalFormatting.js";
 import { type ICorePivotTableNextProps } from "./types/internal.js";
-import { type PivotTableNextConfig } from "./types/public.js";
 
 const { capturedDatasources } = vi.hoisted(() => ({ capturedDatasources: [] as unknown[] }));
 
@@ -55,7 +54,7 @@ beforeEach(() => {
 // Rebuilds every field AD churns each render (fresh refs, equal content). Callbacks are omitted on
 // purpose: they are stable in the pluggable, so churning them here would fail the test for a non-bug.
 function buildProps(conditionalFormatting: IConditionalFormatting | undefined): ICorePivotTableNextProps {
-    const config: PivotTableNextConfig & PivotTableNextConditionalFormattingConfig = {
+    const config: PivotTableNextConfigWithConditionalFormatting = {
         conditionalFormatting,
         textWrapping: { wrapText: true },
     };

@@ -221,6 +221,52 @@ export function generateTooltipXYFn(
     };
 }
 
+/** Mekko tooltip: Height reads point.y, Width point.z; width-only stacked shows the segment's share instead. */
+export function generateTooltipMekkoFn(
+    widthMeasure: IMeasureDescriptor | undefined,
+    heightMeasure: IMeasureDescriptor | undefined,
+    viewByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
+    stackByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
+    config: IChartConfig = {},
+    percentStacked: boolean = false,
+    widthOnly: boolean = false,
+): ITooltipFactory {
+    const { separators } = config;
+
+    return (
+        point: IUnsafeHighchartsTooltipPoint,
+        maxTooltipContentWidth: number,
+        percentageValue?: number,
+    ): string => {
+        const textData: (string | undefined)[][] = [];
+
+        if (viewByAttribute) {
+            textData.push([
+                customEscape(viewByAttribute.formOf.name),
+                customEscape(point.category?.name || point.name),
+            ]);
+        }
+        if (stackByAttribute) {
+            textData.push([customEscape(stackByAttribute.formOf.name), customEscape(point.series?.name)]);
+        }
+        if (heightMeasure) {
+            textData.push([
+                customEscape(heightMeasure.measureHeaderItem.name),
+                getFormattedValueForTooltip(false, percentStacked, point, separators, percentageValue),
+            ]);
+        }
+        if (widthMeasure) {
+            const widthValue =
+                widthOnly && stackByAttribute
+                    ? getFormattedValueForTooltip(false, percentStacked, point, separators, percentageValue)
+                    : formatValueForTooltip(point.z, widthMeasure.measureHeaderItem.format, separators);
+            textData.push([customEscape(widthMeasure.measureHeaderItem.name), widthValue]);
+        }
+
+        return renderTooltipHTML(textData, maxTooltipContentWidth);
+    };
+}
+
 function decodeAxisLabel(axis: IAxis | undefined): string {
     return decodeHtmlEntities(axis?.label ?? "");
 }

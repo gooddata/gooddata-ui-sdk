@@ -4,13 +4,21 @@ import { type ReactElement } from "react";
 
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 
+import { AlertingDialogStateProvider } from "./state/AlertingDialogStateProvider.js";
 import { type IAlertingDialogProps } from "./types.js";
 
 /**
+ * Resolves the dialog component from DashboardComponentsContext and mounts it under the
+ * alerting dialog's state contexts.
+ *
  * @internal
  */
 export function AlertingDialog(props: IAlertingDialogProps): ReactElement {
     const { AlertingDialogComponent } = useDashboardComponentsContext();
 
-    return <AlertingDialogComponent {...props} />;
+    return (
+        <AlertingDialogStateProvider>
+            <AlertingDialogComponent {...props} />
+        </AlertingDialogStateProvider>
+    );
 }

@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type PropsWithChildren } from "react";
+
 import { renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -9,7 +11,7 @@ import {
 } from "@gooddata/sdk-model";
 
 // Mocks out the getters module so each getter's inputs/outputs can be asserted in isolation.
-vi.mock("../../utils/getters.js", () => ({
+vi.mock("../../DefaultAlertingDialog/utils/getters.js", () => ({
     getAlertMeasure: vi.fn(),
     getAlertCompareOperator: vi.fn(),
     getAlertRelativeOperator: vi.fn(),
@@ -20,9 +22,22 @@ vi.mock("../../utils/getters.js", () => ({
     getAlertAttribute: vi.fn(),
 }));
 
-import { type AlertAttribute, type AlertMetric } from "../../../types.js";
-import * as gettersModule from "../../utils/getters.js";
-import { useAlertSelectedValues, type IUseAlertSelectedValuesProps } from "../useAlertSelectedValues.js";
+// The hook path reads notificationChannels from AlertingDialogContext; mocked the same way the
+// sibling hook tests mock it.
+vi.mock("../../../contexts/AlertingDialogContext.js", () => ({
+    useAlertingDialogContext: vi.fn(),
+}));
+
+import * as AlertingDialogContextModule from "../../../contexts/AlertingDialogContext.js";
+import * as gettersModule from "../../DefaultAlertingDialog/utils/getters.js";
+import { type AlertAttribute, type AlertMetric } from "../../types.js";
+import { AlertDataContextProvider, type IAlertDataContextValue } from "../AlertDataContext.js";
+import { AlertDraftContextProvider, type IAlertDraftContextValue } from "../AlertDraftContext.js";
+import {
+    getAlertSelectedValues,
+    type IGetAlertSelectedValuesProps,
+    useAlertSelectedValues,
+} from "../useAlertSelectedValues.js";
 
 // Typed spy references (resolved after import)
 
@@ -34,6 +49,7 @@ const getAlertComparisonSpy = vi.mocked(gettersModule.getAlertComparison);
 const getAlertSensitivitySpy = vi.mocked(gettersModule.getAlertSensitivity);
 const getAlertGranularitySpy = vi.mocked(gettersModule.getAlertGranularity);
 const getAlertAttributeSpy = vi.mocked(gettersModule.getAlertAttribute);
+const useAlertingDialogContextSpy = vi.mocked(AlertingDialogContextModule.useAlertingDialogContext);
 
 // Fixtures
 
@@ -86,6 +102,7 @@ const mockAutomation: IAutomationMetadataObjectDefinition = {
 const supportedMeasures: AlertMetric[] = [SENTINEL_MEASURE];
 const supportedAttributes: AlertAttribute[] = [SENTINEL_ATTRIBUTE];
 const notificationChannels = [mockChannel1, mockChannel2, mockChannel3];
+const SENTINEL_CHANNELS: INotificationChannelMetadataObject[] = notificationChannels;
 
 // Reset mocks between tests
 
@@ -103,15 +120,15 @@ beforeEach(() => {
 
 // Helper
 
-function renderSelectedValuesHook(props: Partial<IUseAlertSelectedValuesProps> = {}) {
-    const mergedProps: IUseAlertSelectedValuesProps = {
+function renderSelectedValuesHook(props: Partial<IGetAlertSelectedValuesProps> = {}) {
+    const mergedProps: IGetAlertSelectedValuesProps = {
         editedAutomation: mockAutomation,
         supportedMeasures,
         supportedAttributes,
         notificationChannels,
         ...props,
     };
-    return renderHook(() => useAlertSelectedValues(mergedProps));
+    return renderHook(() => getAlertSelectedValues(mergedProps));
 }
 
 describe("useAlertSelectedValues — selection wiring", () => {
@@ -277,7 +294,7 @@ describe("useAlertSelectedValues — rerender on draft change", () => {
         } as unknown as IAutomationMetadataObjectDefinition;
 
         const { result, rerender } = renderHook(
-            ({ props }: { props: IUseAlertSelectedValuesProps }) => useAlertSelectedValues(props),
+            ({ props }: { props: IGetAlertSelectedValuesProps }) => getAlertSelectedValues(props),
             {
                 initialProps: {
                     props: {
@@ -309,5 +326,75 @@ describe("useAlertSelectedValues — rerender on draft change", () => {
         // Getters must have been called with the new alert
         expect(getAlertMeasureSpy).toHaveBeenLastCalledWith(supportedMeasures, automationV2.alert);
         expect(getAlertCompareOperatorSpy).toHaveBeenLastCalledWith(automationV2.alert);
+    });
+});
+
+// Fixtures for the context-reading hook path
+
+const DRAFT_FIXTURE: IAlertDraftContextValue = {
+    editedAutomation: mockAutomation,
+    originalAutomation: undefined,
+    warningMessage: undefined,
+    isTitleValid: true,
+};
+
+const DATA_FIXTURE: IAlertDataContextValue = {
+    supportedMeasures,
+    supportedAttributes,
+    measureFormatMap: {},
+    isResultLoading: false,
+    getAttributeValues: () => [],
+    getMetricValue: () => undefined,
+    defaultUser: { id: "user1", type: "user" },
+    defaultRecipient: { id: "user1", type: "user" },
+};
+
+const DIALOG_FIXTURE: AlertingDialogContextModule.IAlertingDialogContextValue = {
+    mode: "create",
+    widget: undefined,
+    insight: undefined,
+    widgetTitle: undefined,
+    dashboardId: "dashboard-1",
+    dashboardFilters: [],
+    hiddenFilters: [],
+    executionResultByRef: () => undefined,
+    parameterValues: [],
+    dashboardParameters: [],
+    commonDateFilterId: undefined,
+    dashboardEvaluationFrequency: undefined,
+    createAlert: vi.fn(),
+    saveAlert: vi.fn(),
+    deleteAlert: vi.fn(),
+    alertToEdit: undefined,
+    notificationChannels: SENTINEL_CHANNELS,
+    isLoading: false,
+};
+
+describe("useAlertSelectedValues — context path", () => {
+    it("derives the same values from the draft and data contexts as the pure function does", () => {
+        const draft: IAlertDraftContextValue = { ...DRAFT_FIXTURE };
+        const data: IAlertDataContextValue = { ...DATA_FIXTURE };
+        useAlertingDialogContextSpy.mockReturnValue({ ...DIALOG_FIXTURE });
+        const wrapper = ({ children }: PropsWithChildren) => (
+            <AlertDraftContextProvider value={draft}>
+                <AlertDataContextProvider value={data}>{children}</AlertDataContextProvider>
+            </AlertDraftContextProvider>
+        );
+        const { result } = renderHook(() => useAlertSelectedValues(), { wrapper });
+
+        // Asserted before the pure-function comparison call below runs the same getters again
+        // with the real arrays — otherwise that second call would satisfy `toHaveBeenCalledWith`
+        // even if the hook itself hardcoded empty arrays instead of reading useAlertData().
+        expect(getAlertMeasureSpy).toHaveBeenCalledWith(data.supportedMeasures, expect.anything());
+        expect(getAlertAttributeSpy).toHaveBeenCalledWith(data.supportedAttributes, expect.anything());
+
+        expect(result.current).toEqual(
+            getAlertSelectedValues({
+                editedAutomation: draft.editedAutomation,
+                supportedMeasures: data.supportedMeasures,
+                supportedAttributes: data.supportedAttributes,
+                notificationChannels: SENTINEL_CHANNELS,
+            }),
+        );
     });
 });

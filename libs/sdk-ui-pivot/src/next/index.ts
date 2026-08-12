@@ -32,6 +32,7 @@ export type { PivotTableNextExperimentalConfig } from "./types/experimental.js";
 // Conditional formatting (Increment 1, @alpha)
 export type {
     PivotTableNextConditionalFormattingConfig,
+    PivotTableNextConfigWithConditionalFormatting,
     IConditionalFormatting,
     IConditionalFormattingRule,
     IConditionalFormattingCondition,

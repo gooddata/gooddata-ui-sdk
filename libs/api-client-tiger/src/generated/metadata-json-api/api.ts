@@ -1897,7 +1897,7 @@ export interface DeclarativeDataSource {
 export type DeclarativeDataSourceAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'OIDC_PASSTHROUGH';
 export type DeclarativeDataSourceCacheStrategyEnum = 'ALWAYS' | 'NEVER';
 export type DeclarativeDataSourceDateTimeSemanticsEnum = 'LOCAL' | 'UTC';
-export type DeclarativeDataSourceTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
+export type DeclarativeDataSourceTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
 
 /**
  * @type DeclarativeDataSourceCacheRetention
@@ -6533,7 +6533,7 @@ export interface JsonApiDataSourceIdentifierOutAttributes {
     'type': JsonApiDataSourceIdentifierOutAttributesTypeEnum;
 }
 
-export type JsonApiDataSourceIdentifierOutAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
+export type JsonApiDataSourceIdentifierOutAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
 
 export interface JsonApiDataSourceIdentifierOutDocument {
     'data': JsonApiDataSourceIdentifierOut;
@@ -6666,7 +6666,7 @@ export interface JsonApiDataSourceInAttributes {
 export type JsonApiDataSourceInAttributesAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'OIDC_PASSTHROUGH';
 export type JsonApiDataSourceInAttributesCacheStrategyEnum = 'ALWAYS' | 'NEVER';
 export type JsonApiDataSourceInAttributesDateTimeSemanticsEnum = 'LOCAL' | 'UTC';
-export type JsonApiDataSourceInAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
+export type JsonApiDataSourceInAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
 
 /**
  * @type JsonApiDataSourceInAttributesCacheRetention
@@ -6760,7 +6760,7 @@ export interface JsonApiDataSourceOutAttributes {
 export type JsonApiDataSourceOutAttributesAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'OIDC_PASSTHROUGH';
 export type JsonApiDataSourceOutAttributesCacheStrategyEnum = 'ALWAYS' | 'NEVER';
 export type JsonApiDataSourceOutAttributesDateTimeSemanticsEnum = 'LOCAL' | 'UTC';
-export type JsonApiDataSourceOutAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
+export type JsonApiDataSourceOutAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
 
 /**
  * @type JsonApiDataSourceOutAttributesCacheRetention
@@ -6909,7 +6909,7 @@ export interface JsonApiDataSourcePatchAttributes {
 export type JsonApiDataSourcePatchAttributesAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'OIDC_PASSTHROUGH';
 export type JsonApiDataSourcePatchAttributesCacheStrategyEnum = 'ALWAYS' | 'NEVER';
 export type JsonApiDataSourcePatchAttributesDateTimeSemanticsEnum = 'LOCAL' | 'UTC';
-export type JsonApiDataSourcePatchAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
+export type JsonApiDataSourcePatchAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
 
 /**
  * @type JsonApiDataSourcePatchAttributesCacheRetention

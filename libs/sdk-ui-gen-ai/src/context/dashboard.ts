@@ -143,6 +143,7 @@ export function buildFiltersContext(
 export function buildWidgetsContext(
     widgetsMap: Pick<Map<ObjRef, IWidget>, "values" | "get"> | undefined,
     resultsIdMap?: Pick<Map<string, string | undefined>, "values" | "get">,
+    visualizationSwitcherActiveVisualizations?: Record<string, string>,
 ): { widgets: IGenAIWidgetDescriptor[]; referencedObjects: IGenAIObjectReference[] } {
     const widgets: IGenAIWidgetDescriptor[] = [];
     const referencedObjects: IGenAIObjectReference[] = [];
@@ -173,7 +174,11 @@ export function buildWidgetsContext(
             }
         }
         if (isVisualizationSwitcherWidget(widget)) {
-            const activeVisualization = widget.visualizations[0];
+            const activeVisualizationId =
+                visualizationSwitcherActiveVisualizations?.[objRefToString(widget.ref)];
+            const activeVisualization =
+                widget.visualizations.find((v) => v.identifier === activeVisualizationId) ??
+                widget.visualizations[0];
             widgets.push(
                 buildWidgetContext(
                     widget.title || activeVisualization?.title,

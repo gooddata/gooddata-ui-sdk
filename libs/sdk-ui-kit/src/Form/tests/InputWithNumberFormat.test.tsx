@@ -3,7 +3,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { InputWithNumberFormat, MAX_NUMBER } from "../InputWithNumberFormat.js";
+import { InputWithNumberFormat } from "../InputWithNumberFormat.js";
 import { type Separators } from "../typings.js";
 
 class InputWithNumberFormatFragment {
@@ -105,28 +105,37 @@ describe("InputWithNumberFormat", () => {
         expect(input).toHaveValue("");
     });
 
-    it("should not be able to type number higher than max number", () => {
+    it("should accept a magnitude beyond the former 10^15 cap", () => {
         const input = new InputWithNumberFormatFragment({ value: 100 });
 
-        input.simulateChange(`${MAX_NUMBER + 1}`);
+        input.simulateChange("10000000000000000");
 
-        expect(screen.getByDisplayValue("100")).toBeInTheDocument();
+        expect(input.value).toBe(1e16);
     });
 
-    it("should not be able to type number lower than min number", () => {
+    it("should accept a negative magnitude beyond the former cap", () => {
         const input = new InputWithNumberFormatFragment({ value: 100 });
 
-        input.simulateChange(`${-MAX_NUMBER - 1}`);
+        input.simulateChange("-10000000000000000");
 
-        expect(screen.getByDisplayValue("100")).toBeInTheDocument();
+        expect(input.value).toBe(-1e16);
     });
 
-    it("should round number which has more numbers right to decimal point than is allowed by platform", () => {
+    it("should keep more decimal places than the former 6-decimal limit", () => {
         const input = new InputWithNumberFormatFragment();
 
         input.simulateChange("0.00000000001").simulateBlur();
 
-        expect(screen.getByDisplayValue("0")).toBeInTheDocument();
+        expect(input.value).toBe(1e-11);
+        expect(screen.getByDisplayValue("1e-11")).toBeInTheDocument();
+    });
+
+    it("should still refuse a value that overflows to Infinity", () => {
+        const input = new InputWithNumberFormatFragment({ value: 100 });
+
+        input.simulateChange("1e309");
+
+        expect(screen.getByDisplayValue("100")).toBeInTheDocument();
     });
 
     describe("input validation", () => {
@@ -150,7 +159,7 @@ describe("InputWithNumberFormat", () => {
             ["-10045", -10045, "-10045"],
             ["-10045.", -10045, "-10045."],
             [",,,,,,,,,,,.", null, ",,,,,,,,,,,."],
-            ["0.00000000000000000000001", 0, "0.00000000000000000000001"],
+            ["0.00000000000000000000001", 1e-23, "0.00000000000000000000001"],
         ])(
             'should display value "%s" in input and returned value should be %s when "%s" is written',
             (resultInputValue, resultValue, typedValue) => {
@@ -162,6 +171,94 @@ describe("InputWithNumberFormat", () => {
                 expect(input.value).toEqual(resultValue);
             },
         );
+    });
+
+    describe("scientific notation and full double precision", () => {
+        it.each([
+            ["1.23e+9", 1230000000],
+            ["1e308", 1e308],
+            ["1E5", 100000],
+            ["-1.5e-3", -0.0015],
+        ])("should accept pasted scientific notation %s", (typedValue, expectedValue) => {
+            const input = new InputWithNumberFormatFragment();
+
+            input.simulateChange(typedValue);
+
+            expect(input.inputValue()).toBe(typedValue);
+            expect(input.value).toBe(expectedValue);
+        });
+
+        it.each([
+            ["1e308", 1e308],
+            ["1.23e+9", 1230000000],
+        ])(
+            "should keep every character when %s is typed one at a time (no silent truncation)",
+            (typedValue, expectedValue) => {
+                const input = new InputWithNumberFormatFragment();
+
+                input.simulateTyping(typedValue);
+
+                expect(input.inputValue()).toBe(typedValue);
+                expect(input.value).toBe(expectedValue);
+            },
+        );
+
+        it("should accept magnitudes far above the former cap", () => {
+            const input = new InputWithNumberFormatFragment();
+
+            input.simulateChange("1e16");
+
+            expect(input.value).toBe(1e16);
+        });
+
+        it("should keep decimal places beyond six", () => {
+            const input = new InputWithNumberFormatFragment();
+
+            input.simulateChange("0.00000000123").simulateBlur();
+
+            expect(input.value).toBe(1.23e-9);
+            expect(input.inputValue()).toBe("1.23e-9");
+        });
+
+        it.each(["1e309", "1e", "e", "e5", "1e+"])(
+            "should never let a non-finite value in (%s)",
+            (typedValue) => {
+                const input = new InputWithNumberFormatFragment();
+
+                input.simulateChange(typedValue);
+
+                expect(Number.isFinite(input.value ?? 0)).toBe(true);
+            },
+        );
+
+        it("should reject an exponent that overflows to Infinity", () => {
+            const input = new InputWithNumberFormatFragment();
+
+            input.simulateChange("1e309");
+
+            expect(input.inputValue()).toBe("");
+            expect(input.value).toBeNull();
+        });
+
+        it("should normalize the notation on blur without losing the value", () => {
+            const input = new InputWithNumberFormatFragment();
+
+            input.simulateChange("1.23e+9").simulateBlur();
+
+            // JS renders exponent form only from 1e21 up, so this one spells out with separators.
+            expect(input.inputValue()).toBe("1,230,000,000");
+            expect(input.value).toBe(1230000000);
+        });
+
+        it("should let an existing extreme value be edited incrementally", () => {
+            const input = new InputWithNumberFormatFragment({ value: 1e308 });
+
+            expect(input.inputValue()).toBe("1e+308");
+
+            input.simulateFocus().simulateChange("1e+30");
+
+            expect(input.value).toBe(1e30);
+        });
     });
 
     describe("input validation with different separators", () => {

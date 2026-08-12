@@ -143,7 +143,7 @@
         }
     }
 
-    &__item-wrapper .gd-ui-kit-tooltip__anchor {
+    &__item-wrapper .gd-ui-kit-tooltip__anchor:not(.gd-ui-kit-tooltip__anchor--inline) {
         width: 100%;
     }
 

@@ -6,9 +6,13 @@ import {
     PureComponent,
     type KeyboardEvent as ReactKeyboardEvent,
     type MouseEvent as ReactMouseEvent,
-    type ReactNode,
-    type Ref,
-    createRef,
+    memo,
+    useCallback,
+    useEffect,
+    useLayoutEffect,
+    useMemo,
+    useRef,
+    useState,
 } from "react";
 
 import classNames from "classnames";
@@ -78,14 +82,6 @@ export interface IDatePickerOwnProps {
 }
 
 export type DatePickerProps = IDatePickerOwnProps & WrappedComponentProps;
-
-interface IDatePickerState {
-    align: string;
-    selectedDate: Date | undefined;
-    monthDate: Date | undefined;
-    isOpen: boolean;
-    inputValue: string;
-}
 
 const convertedLocales: Record<string, Locale> = {
     "en-US": enUS,
@@ -160,264 +156,221 @@ function convertWeekStart(weekStart: WeekStart): DayPickerProps["weekStartsOn"] 
     }
 }
 
-export class WrappedDatePicker extends PureComponent<DatePickerProps, IDatePickerState> {
-    private rootRef: HTMLElement | null = null;
-    private datePickerContainerRef = createRef<HTMLDivElement>();
-    private inputRef = createRef<HTMLInputElement>();
+function normalizeDate(date: Date): Date {
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+}
 
-    private datePickerId = uuid();
+const DEFAULT_ALIGN_POINTS: IAlignPoint[] = [
+    { align: "bl tl" },
+    { align: "br tr" },
+    { align: "tl bl" },
+    { align: "tr br" },
+];
 
-    public static defaultProps = {
-        className: "",
-        date: new Date(),
-        placeholder: "",
-        onChange: () => {},
-        onBlur: () => {},
-        resetOnInvalidValue: false,
-        size: "",
-        tabIndex: 0,
-        alignPoints: [{ align: "bl tl" }, { align: "br tr" }, { align: "tl bl" }, { align: "tr br" }],
-        onAlign: () => {},
-        dateFormat: DEFAULT_DATE_FORMAT,
-        weekStart: "Sunday" as const,
-    };
-    constructor(props: DatePickerProps) {
-        super(props);
+// evaluated once per module load, mirroring the original static defaultProps
+const DEFAULT_DATE = new Date();
 
-        const { alignPoints, date, dateFormat } = props;
+function WrappedDatePickerCore({
+    accessibilityConfig,
+    date: dateProp,
+    className = "",
+    placeholder = "",
+    onChange,
+    onBlur,
+    onValidateInput,
+    resetOnInvalidValue = false,
+    size = "",
+    tabIndex = 0,
+    alignPoints: alignPointsProp,
+    onAlign,
+    dateFormat: dateFormatProp,
+    weekStart: weekStartProp,
+    onDateInputKeyDown,
+    intl,
+}: DatePickerProps) {
+    // these props are nullable at runtime (untyped callers do pass null explicitly), so plain default
+    // values are not enough - the class component guarded every usage with `||`, `??` or optional calls
+    const date = dateProp || DEFAULT_DATE;
+    const alignPoints = alignPointsProp ?? DEFAULT_ALIGN_POINTS;
+    const dateFormat = dateFormatProp ?? DEFAULT_DATE_FORMAT;
+    const weekStart = weekStartProp ?? "Sunday";
 
-        this.state = {
-            align: alignPoints?.[0]?.align ?? "bl tl",
-            selectedDate: date,
-            monthDate: date,
-            inputValue: formatDate(date || new Date(), dateFormat ?? DEFAULT_DATE_FORMAT),
-            isOpen: false,
-        };
+    const rootRef = useRef<HTMLDivElement>(null);
+    const datePickerContainerRef = useRef<HTMLDivElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
 
-        this.handleDayChanged = this.handleDayChanged.bind(this);
-        this.handleMonthChanged = this.handleMonthChanged.bind(this);
-        this.handleInputChanged = this.handleInputChanged.bind(this);
-        this.handleInputBlur = this.handleInputBlur.bind(this);
-        this.alignDatePicker = this.alignDatePicker.bind(this);
-        this.setComponentRef = this.setComponentRef.bind(this);
-        this.handleWrapperClick = this.handleWrapperClick.bind(this);
-        this.handleClickOutside = this.handleClickOutside.bind(this);
-        this.onKeyDown = this.onKeyDown.bind(this);
-        this.handleCustomDayClick = this.handleCustomDayClick.bind(this);
+    const datePickerId = useMemo(() => uuid(), []);
+
+    const [align, setAlign] = useState<string>(alignPoints[0]?.align ?? "bl tl");
+    const [selectedDate, setSelectedDate] = useState<Date | undefined>(() => normalizeDate(date));
+    const [monthDate, setMonthDate] = useState<Date | undefined>(date);
+    const [inputValue, setInputValue] = useState<string>(() => formatDate(date, dateFormat));
+    const [isOpen, setIsOpen] = useState(false);
+
+    // resync the derived state whenever the date coming from the props changes
+    const [prevDateTime, setPrevDateTime] = useState(date.getTime());
+    if (date.getTime() !== prevDateTime) {
+        const newlySelectedDate = normalizeDate(date);
+
+        setPrevDateTime(date.getTime());
+        setSelectedDate(newlySelectedDate);
+        setMonthDate(newlySelectedDate);
+        setInputValue(formatDate(newlySelectedDate, dateFormat));
     }
 
-    public override componentDidMount(): void {
-        const { date, dateFormat } = this.props;
+    const alignDatePicker = useCallback(() => {
+        const container = datePickerContainerRef.current?.parentElement;
 
-        this.setState({ selectedDate: this.updateDate(date || new Date()) });
-        this.setState({ inputValue: formatDate(date || new Date(), dateFormat ?? DEFAULT_DATE_FORMAT) });
-        window.addEventListener("resize", this.resizeHandler);
-        document.addEventListener("mousedown", this.handleClickOutside);
-    }
-
-    public override UNSAFE_componentWillReceiveProps(nextProps: DatePickerProps): void {
-        const { props } = this;
-
-        const propsDate = props.date?.getTime() ?? 0;
-        const nextPropsDate = nextProps.date?.getTime() ?? 0;
-
-        if (propsDate !== nextPropsDate) {
-            const selectedDate = this.updateDate(nextProps.date || new Date());
-            this.setState({ selectedDate });
-            this.setState({ monthDate: selectedDate });
-            this.setState({ inputValue: formatDate(selectedDate, props.dateFormat ?? DEFAULT_DATE_FORMAT) });
-        }
-    }
-
-    public override componentWillUnmount(): void {
-        window.removeEventListener("resize", this.resizeHandler);
-        document.removeEventListener("mousedown", this.handleClickOutside);
-    }
-
-    private handleClickOutside(event: MouseEvent) {
-        if (
-            this.datePickerContainerRef.current &&
-            !this.datePickerContainerRef.current.contains(event.target as Node) &&
-            this.inputRef.current &&
-            !this.inputRef.current.contains(event.target as Node)
-        ) {
-            this.setState({ isOpen: false });
-        }
-    }
-
-    public override componentDidUpdate(_prevProps: DatePickerProps, prevState: IDatePickerState): void {
-        if (this.state.isOpen && !prevState.isOpen) {
-            this.alignDatePicker();
-        }
-    }
-
-    private setComponentRef(ref: HTMLElement) {
-        this.rootRef = ref;
-    }
-
-    private getInputClasses() {
-        return classNames(
-            "input-text",
-            "small-12",
-            this.props.size,
-            `gd-datepicker-input-${this.datePickerId}`,
-        );
-    }
-
-    private getComponentClasses() {
-        return classNames(
-            "gd-datepicker",
-            this.props.className,
-            this.props.size,
-            "gd-datepicker-input",
-            this.state.isOpen ? "gd-datepicker-focused" : "",
-        );
-    }
-
-    private getOverlayWrapperClasses() {
-        const [inputAnchorPoint, pickerAnchorPoint] = this.state.align.split(" ");
-
-        return classNames(
-            "gd-datepicker-picker",
-            "gd-datepicker-OverlayWrapper",
-            `gd-datepicker-OverlayWrapper-${inputAnchorPoint}-xx`,
-            `gd-datepicker-OverlayWrapper-xx-${pickerAnchorPoint}`,
-        );
-    }
-
-    resizeHandler = debounce(() => this.alignDatePicker(), 100);
-
-    private updateDate(date: Date) {
-        return this.normalizeDate(date);
-    }
-
-    private handleInputBlur(e: FocusEvent<HTMLInputElement>) {
-        this.props.onBlur?.(e.target.value);
-    }
-
-    private handleInputChanged(e: ChangeEvent<HTMLInputElement>) {
-        const { value } = e.target;
-
-        const parsedDate = parseDate(value, this.props.dateFormat ?? DEFAULT_DATE_FORMAT);
-
-        this.props.onValidateInput?.(value);
-
-        this.setState({ inputValue: value });
-
-        if (parsedDate) {
-            this.setState(
-                {
-                    selectedDate: parsedDate,
-                    monthDate: parsedDate,
-                },
-                () => {
-                    if (this.state.selectedDate) {
-                        this.props.onChange?.(this.state.selectedDate);
-                    }
-                },
-            );
-        } else {
-            if (this.props.resetOnInvalidValue) {
-                this.setState({
-                    selectedDate: this.state.selectedDate,
-                    monthDate: this.state.selectedDate,
-                });
-                return;
-            }
-
-            this.setState(
-                {
-                    selectedDate: undefined,
-                    monthDate: undefined,
-                },
-                () => {
-                    // Signal invalid state by passing null
-                    this.props.onChange?.(null as unknown as Date);
-                },
-            );
-        }
-    }
-
-    private handleDayChanged(newlySelectedDate: Date) {
-        if (!newlySelectedDate) {
-            this.setState({ isOpen: false });
-            return;
-        }
-
-        if (this.state.selectedDate && isSameDay(this.state.selectedDate, newlySelectedDate)) {
-            this.setState({ isOpen: false });
-            return;
-        }
-
-        this.inputRef.current?.focus();
-
-        this.props.onValidateInput?.(
-            formatDate(newlySelectedDate, this.props.dateFormat ?? DEFAULT_DATE_FORMAT),
-        );
-
-        this.setState(
-            {
-                selectedDate: newlySelectedDate,
-                monthDate: newlySelectedDate,
-                inputValue: formatDate(newlySelectedDate, this.props.dateFormat ?? DEFAULT_DATE_FORMAT),
-                isOpen: false,
-            },
-            () => {
-                this.props.onChange?.(newlySelectedDate);
-            },
-        );
-    }
-
-    private handleMonthChanged(month: Date) {
-        this.inputRef.current?.focus();
-        this.setState({ monthDate: month });
-    }
-
-    private handleCustomDayClick: DayEventHandler<ReactMouseEvent> = (day, _modifiers) => {
-        // Handle all day clicks, including outside days
-        this.handleDayChanged(day);
-    };
-
-    private normalizeDate(date: Date) {
-        return new Date(date.getFullYear(), date.getMonth(), date.getDate());
-    }
-
-    private alignDatePicker() {
-        const { alignPoints } = this.props;
-        const container = this.datePickerContainerRef.current?.parentElement;
-
-        if (!alignPoints || !container || !this.rootRef) {
+        if (!alignPoints || !container || !rootRef.current) {
             return;
         }
 
         const optimalAlignment = getOptimalAlignment({
-            targetRegion: elementRegion(this.rootRef),
+            targetRegion: elementRegion(rootRef.current),
             selfRegion: elementRegion(container),
             alignPoints,
         });
 
-        const { align } = optimalAlignment.alignment;
+        const { align: optimalAlign } = optimalAlignment.alignment;
 
-        this.setState(
-            {
-                align,
-            },
-            () => {
-                this.props.onAlign?.(align);
-            },
-        );
-    }
+        setAlign(optimalAlign);
+        onAlign?.(optimalAlign);
+    }, [alignPoints, onAlign]);
 
-    private onKeyDown(e: ReactKeyboardEvent<HTMLInputElement>) {
-        if (e.key === "Escape" || e.key === "Tab") {
-            this.setState({ isOpen: false });
+    // keeps the debounced resize handler and the "just opened" effect stable while still
+    // calling the up-to-date alignment logic, the same way the class instance method did
+    const alignDatePickerRef = useRef(alignDatePicker);
+    // must run before the "just opened" layout effect below, hence useLayoutEffect
+    useLayoutEffect(() => {
+        alignDatePickerRef.current = alignDatePicker;
+    }, [alignDatePicker]);
+
+    const resizeHandler = useMemo(() => debounce(() => alignDatePickerRef.current(), 100), []);
+
+    useEffect(() => {
+        window.addEventListener("resize", resizeHandler);
+
+        return () => {
+            resizeHandler.cancel();
+            window.removeEventListener("resize", resizeHandler);
+        };
+    }, [resizeHandler]);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                datePickerContainerRef.current &&
+                !datePickerContainerRef.current.contains(event.target as Node) &&
+                inputRef.current &&
+                !inputRef.current.contains(event.target as Node)
+            ) {
+                setIsOpen(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
+    useLayoutEffect(() => {
+        if (isOpen) {
+            alignDatePickerRef.current();
         }
+    }, [isOpen]);
 
-        if (isEnterKey(e)) {
-            this.props.onDateInputKeyDown?.(e);
-        }
-    }
-    private handleWrapperClick(e: ReactMouseEvent<HTMLDivElement>) {
+    const handleInputBlur = useCallback(
+        (e: FocusEvent<HTMLInputElement>) => {
+            onBlur?.(e.target.value);
+        },
+        [onBlur],
+    );
+
+    const handleInputChanged = useCallback(
+        (e: ChangeEvent<HTMLInputElement>) => {
+            const { value } = e.target;
+
+            const parsedDate = parseDate(value, dateFormat);
+
+            onValidateInput?.(value);
+
+            setInputValue(value);
+
+            if (parsedDate) {
+                setSelectedDate(parsedDate);
+                setMonthDate(parsedDate);
+                onChange?.(parsedDate);
+                return;
+            }
+
+            if (resetOnInvalidValue) {
+                setMonthDate(selectedDate);
+                return;
+            }
+
+            setSelectedDate(undefined);
+            setMonthDate(undefined);
+            // Signal invalid state by passing null
+            onChange?.(null as unknown as Date);
+        },
+        [dateFormat, onChange, onValidateInput, resetOnInvalidValue, selectedDate],
+    );
+
+    const handleDayChanged = useCallback(
+        (newlySelectedDate: Date) => {
+            if (!newlySelectedDate) {
+                setIsOpen(false);
+                return;
+            }
+
+            if (selectedDate && isSameDay(selectedDate, newlySelectedDate)) {
+                setIsOpen(false);
+                return;
+            }
+
+            inputRef.current?.focus();
+
+            onValidateInput?.(formatDate(newlySelectedDate, dateFormat));
+
+            setSelectedDate(newlySelectedDate);
+            setMonthDate(newlySelectedDate);
+            setInputValue(formatDate(newlySelectedDate, dateFormat));
+            setIsOpen(false);
+
+            onChange?.(newlySelectedDate);
+        },
+        [dateFormat, onChange, onValidateInput, selectedDate],
+    );
+
+    const handleMonthChanged = useCallback((month: Date) => {
+        inputRef.current?.focus();
+        setMonthDate(month);
+    }, []);
+
+    const handleCustomDayClick = useCallback<DayEventHandler<ReactMouseEvent>>(
+        (day, _modifiers) => {
+            // Handle all day clicks, including outside days
+            handleDayChanged(day);
+        },
+        [handleDayChanged],
+    );
+
+    const handleKeyDown = useCallback(
+        (e: ReactKeyboardEvent<HTMLInputElement>) => {
+            if (e.key === "Escape" || e.key === "Tab") {
+                setIsOpen(false);
+            }
+
+            if (isEnterKey(e)) {
+                onDateInputKeyDown?.(e);
+            }
+        },
+        [onDateInputKeyDown],
+    );
+
+    const handleWrapperClick = useCallback((e: ReactMouseEvent<HTMLDivElement>) => {
         const { classList } = e.target as HTMLInputElement;
 
         /**
@@ -427,66 +380,78 @@ export class WrappedDatePicker extends PureComponent<DatePickerProps, IDatePicke
         if (e.target && classList?.contains(DATEPICKER_OUTSIDE_DAY_SELECTOR)) {
             e.preventDefault();
         }
-    }
+    }, []);
 
-    public override render(): ReactNode {
-        const { inputValue, selectedDate, monthDate, isOpen } = this.state;
-        const { accessibilityConfig, placeholder, intl, tabIndex } = this.props;
+    const handleInputClick = useCallback(() => {
+        setIsOpen(true);
+    }, []);
 
-        const classNamesProps: ClassNames = {
-            root: this.getOverlayWrapperClasses(),
-        } as ClassNames;
+    const dayPickerClassNames = useMemo<Partial<ClassNames>>(() => {
+        const [inputAnchorPoint, pickerAnchorPoint] = align.split(" ");
 
-        return (
-            <div
-                data-testid="datepicker"
-                className={this.getComponentClasses()}
-                ref={this.setComponentRef as Ref<HTMLDivElement>}
-                onClick={this.handleWrapperClick}
-            >
-                <input
-                    autoComplete="off"
-                    aria-labelledby={accessibilityConfig?.ariaLabelledBy}
-                    aria-label={
-                        accessibilityConfig?.ariaLabel ||
-                        intl.formatMessage({ id: "datePicker.accessibility.label" })
-                    }
-                    aria-describedby={accessibilityConfig?.ariaDescribedBy}
-                    onKeyDown={this.onKeyDown}
-                    tabIndex={tabIndex}
-                    onClick={() => this.setState({ isOpen: true })}
-                    ref={this.inputRef}
-                    value={inputValue}
-                    className={this.getInputClasses()}
-                    placeholder={placeholder}
-                    onChange={this.handleInputChanged}
-                    onBlur={this.handleInputBlur}
-                />
+        return {
+            root: classNames(
+                "gd-datepicker-picker",
+                "gd-datepicker-OverlayWrapper",
+                `gd-datepicker-OverlayWrapper-${inputAnchorPoint}-xx`,
+                `gd-datepicker-OverlayWrapper-xx-${pickerAnchorPoint}`,
+            ),
+        };
+    }, [align]);
 
-                {isOpen ? (
-                    <div
-                        id={`datepicker-popup-${this.datePickerId}`}
-                        role="dialog"
-                        ref={this.datePickerContainerRef}
-                    >
-                        <DayPicker
-                            classNames={classNamesProps}
-                            locale={convertLocale(intl.locale)}
-                            showOutsideDays
-                            mode="single"
-                            selected={selectedDate}
-                            month={monthDate}
-                            onMonthChange={this.handleMonthChanged}
-                            weekStartsOn={convertWeekStart(this.props.weekStart ?? "Sunday")}
-                            onDayClick={this.handleCustomDayClick}
-                        />
-                    </div>
-                ) : null}
-                <span className="gd-datepicker-icon gd-icon-calendar" />
-            </div>
-        );
-    }
+    const componentClasses = classNames(
+        "gd-datepicker",
+        className,
+        size,
+        "gd-datepicker-input",
+        isOpen ? "gd-datepicker-focused" : "",
+    );
+
+    const inputClasses = classNames("input-text", "small-12", size, `gd-datepicker-input-${datePickerId}`);
+
+    return (
+        <div data-testid="datepicker" className={componentClasses} ref={rootRef} onClick={handleWrapperClick}>
+            <input
+                autoComplete="off"
+                aria-labelledby={accessibilityConfig?.ariaLabelledBy}
+                aria-label={
+                    accessibilityConfig?.ariaLabel ||
+                    intl.formatMessage({ id: "datePicker.accessibility.label" })
+                }
+                aria-describedby={accessibilityConfig?.ariaDescribedBy}
+                onKeyDown={handleKeyDown}
+                tabIndex={tabIndex}
+                onClick={handleInputClick}
+                ref={inputRef}
+                value={inputValue}
+                className={inputClasses}
+                placeholder={placeholder}
+                onChange={handleInputChanged}
+                onBlur={handleInputBlur}
+            />
+
+            {isOpen ? (
+                <div id={`datepicker-popup-${datePickerId}`} role="dialog" ref={datePickerContainerRef}>
+                    <DayPicker
+                        classNames={dayPickerClassNames}
+                        locale={convertLocale(intl.locale)}
+                        showOutsideDays
+                        mode="single"
+                        selected={selectedDate}
+                        month={monthDate}
+                        onMonthChange={handleMonthChanged}
+                        weekStartsOn={convertWeekStart(weekStart)}
+                        onDayClick={handleCustomDayClick}
+                    />
+                </div>
+            ) : null}
+            <span className="gd-datepicker-icon gd-icon-calendar" />
+        </div>
+    );
 }
+
+export const WrappedDatePicker = memo(WrappedDatePickerCore);
+WrappedDatePicker.displayName = "WrappedDatePicker";
 
 const DatePickerWithIntl = injectIntl(WrappedDatePicker);
 

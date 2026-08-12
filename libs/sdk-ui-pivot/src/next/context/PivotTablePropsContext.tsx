@@ -18,10 +18,9 @@ import {
     EMPTY_TOTALS,
     PAGE_SIZE,
 } from "../constants/internal.js";
-import { type PivotTableNextConditionalFormattingConfig } from "../types/conditionalFormatting.js";
+import { type PivotTableNextConfigWithConditionalFormatting } from "../types/conditionalFormatting.js";
 import { type ICorePivotTableNextProps } from "../types/internal.js";
 import { type IMenu } from "../types/menu.js";
-import { type PivotTableNextConfig } from "../types/public.js";
 import { type IColumnSizing } from "../types/resizing.js";
 
 const PivotTablePropsContext = createContext<ICorePivotTableNextProps | undefined>(undefined);
@@ -57,11 +56,10 @@ type ConfigDefaults =
     | "textWrapping"
     | "menu";
 
-type ConfigWithDefaults = WithRequired<PivotTableNextConfig, ConfigDefaults> &
-    PivotTableNextConditionalFormattingConfig & {
-        columnSizing: ColumnSizingWithDefaults;
-        menu: MenuWithDefaults;
-    };
+type ConfigWithDefaults = WithRequired<PivotTableNextConfigWithConditionalFormatting, ConfigDefaults> & {
+    columnSizing: ColumnSizingWithDefaults;
+    menu: MenuWithDefaults;
+};
 
 type RootPropsDefaults =
     | "rows"

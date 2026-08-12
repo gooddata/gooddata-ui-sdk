@@ -2,14 +2,19 @@
 
 import { describe, expect, it } from "vitest";
 
-import { type IChatConversationLocal, makeUserItem } from "../../../model.js";
+import { type GenAIChatEffort } from "@gooddata/sdk-model";
+
+import { type IChatConversationLocal, makeConversationItem, makeUserItem } from "../../../model.js";
 import {
     applyPendingAgentSwitchAction,
     cancelAsyncAction,
     clearConversationLoadingAction,
     clearThreadAction,
+    loadConversationSuccessAction,
     messagesSliceReducer,
+    setCurrentConversationAction,
     setSelectedAgentAction,
+    setSelectedEffortAction,
     startNewConversationAction,
 } from "../messagesSlice.js";
 
@@ -161,6 +166,132 @@ describe("messagesSlice", () => {
             }),
         );
         expect(data.order[1]).toBe(userMessage.localId);
+    });
+
+    describe("reasoning effort per conversation", () => {
+        const makeUserHistoryItem = (id: string, reasoningEffort?: GenAIChatEffort) =>
+            makeConversationItem({
+                id,
+                type: "item",
+                responseId: "",
+                createdAt: 1,
+                role: "user",
+                reasoningEffort,
+                content: { type: "text", text: "hello" },
+            });
+
+        it("attaches the selection to the conversation it was made in", () => {
+            const conversation = makeConversation("conversation-a");
+
+            const state = messagesSliceReducer(
+                {
+                    ...messagesSliceReducer(undefined, { type: "test/init" }),
+                    currentConversation: conversation,
+                    conversations: [conversation],
+                    conversationsData: {},
+                },
+                setSelectedEffortAction({ effort: "LOW" }),
+            );
+
+            expect(state.conversationsData[conversation.localId].reasoningEffort).toBe("LOW");
+            expect(state.selectedEffort).toBe("MEDIUM");
+        });
+
+        it("keeps the selection global while no conversation is selected", () => {
+            const state = messagesSliceReducer(
+                messagesSliceReducer(undefined, { type: "test/init" }),
+                setSelectedEffortAction({ effort: "LOW" }),
+            );
+
+            expect(state.selectedEffort).toBe("LOW");
+        });
+
+        it("seeds the effort from the loaded history", () => {
+            const conversation = makeConversation("conversation-a");
+            const items = [makeUserHistoryItem("1", "MEDIUM"), makeUserHistoryItem("2", "LOW")];
+
+            const state = messagesSliceReducer(
+                messagesSliceReducer(undefined, { type: "test/init" }),
+                loadConversationSuccessAction({
+                    currentConversation: conversation,
+                    conversationItems: items,
+                    threadId: conversation.id,
+                }),
+            );
+
+            expect(state.conversationsData[conversation.localId].reasoningEffort).toBe("LOW");
+        });
+
+        it("does not let a load overwrite a selection made while the history was still loading", () => {
+            const conversation = makeConversation("conversation-a");
+
+            const afterSelect = messagesSliceReducer(
+                {
+                    ...messagesSliceReducer(undefined, { type: "test/init" }),
+                    currentConversation: conversation,
+                    conversations: [conversation],
+                    conversationsData: {},
+                },
+                setSelectedEffortAction({ effort: "LOW" }),
+            );
+
+            const state = messagesSliceReducer(
+                afterSelect,
+                loadConversationSuccessAction({
+                    currentConversation: conversation,
+                    conversationItems: [makeUserHistoryItem("1", "MEDIUM")],
+                    threadId: conversation.id,
+                }),
+            );
+
+            expect(state.conversationsData[conversation.localId].reasoningEffort).toBe("LOW");
+        });
+
+        it("seeds from cached history when switching to a conversation that is not reloaded", () => {
+            const conversationA = makeConversation("conversation-a");
+            const conversationB = makeConversation("conversation-b");
+            const item = makeUserHistoryItem("1", "LOW");
+
+            const state = messagesSliceReducer(
+                {
+                    ...messagesSliceReducer(undefined, { type: "test/init" }),
+                    currentConversation: conversationA,
+                    conversations: [conversationA, conversationB],
+                    conversationsData: {
+                        [conversationA.localId]: { order: [], items: {}, reasoningEffort: "MEDIUM" },
+                        [conversationB.localId]: {
+                            order: [item.localId],
+                            items: { [item.localId]: item },
+                        },
+                    },
+                },
+                setCurrentConversationAction({ conversation: conversationB }),
+            );
+
+            expect(state.conversationsData[conversationB.localId].reasoningEffort).toBe("LOW");
+            expect(state.conversationsData[conversationA.localId].reasoningEffort).toBe("MEDIUM");
+        });
+
+        it("starts a new conversation with nothing recorded, so it opens on the default", () => {
+            const conversation = makeConversation("conversation-a");
+
+            const afterSelect = messagesSliceReducer(
+                {
+                    ...messagesSliceReducer(undefined, { type: "test/init" }),
+                    currentConversation: conversation,
+                    conversations: [conversation],
+                    conversationsData: {},
+                },
+                setSelectedEffortAction({ effort: "LOW" }),
+            );
+
+            const state = messagesSliceReducer(afterSelect, startNewConversationAction());
+
+            const newLocalId = state.currentConversation!.localId;
+            expect(newLocalId).not.toBe(conversation.localId);
+            expect(state.conversationsData[newLocalId]?.reasoningEffort).toBeUndefined();
+            expect(state.conversationsData[conversation.localId].reasoningEffort).toBe("LOW");
+        });
     });
 
     describe("orphaned loading flag (LX-2577)", () => {

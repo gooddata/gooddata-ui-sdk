@@ -1,12 +1,64 @@
 // (C) 2026 GoodData Corporation
 
-import { isMeasureGroupDescriptor } from "@gooddata/sdk-model";
-import { type DataViewFacade } from "@gooddata/sdk-ui";
+import {
+    type IMeasureDescriptor,
+    type IMeasureGroupDescriptor,
+    isMeasureGroupDescriptor,
+} from "@gooddata/sdk-model";
+import { BucketNames, type DataViewFacade } from "@gooddata/sdk-ui";
 
+import { type IAxisConfig, type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { VIEW_BY_DIMENSION_INDEX } from "../../constants/dimensions.js";
 import { type IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 import { type ISeriesItem } from "../../typings/unsafe.js";
 import { isMekko, isNegativeValueIncluded } from "../_util/common.js";
+
+/** Width-only authoring state: Width (MEASURES) filled, Height (SECONDARY_MEASURES) empty. */
+export function isMekkoWidthOnly(dv: DataViewFacade): boolean {
+    return (
+        !dv.def().isBucketEmpty(BucketNames.MEASURES) &&
+        dv.def().isBucketEmpty(BucketNames.SECONDARY_MEASURES)
+    );
+}
+
+export interface IMekkoMeasures {
+    width?: IMeasureDescriptor;
+    height?: IMeasureDescriptor;
+}
+
+/** Width = first item (MEASURES), Height = last (SECONDARY_MEASURES); a lone measure goes by its bucket. */
+export function getMekkoMeasures(
+    dv: DataViewFacade,
+    measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
+): IMekkoMeasures {
+    const { items } = measureGroup;
+    if (items.length >= 2) {
+        return { width: items[0], height: items[items.length - 1] };
+    }
+    return isMekkoWidthOnly(dv) ? { width: items[0] } : { height: items[0] };
+}
+
+/** Bucket-driven stacking sanitization, applied once at the ChartTransformation config boundary. */
+export function getMekkoEffectiveConfig(config: IChartConfig, dv: DataViewFacade): IChartConfig {
+    if (!isMekko(config.type)) {
+        return config;
+    }
+    if (dv.def().isBucketEmpty(BucketNames.STACK)) {
+        return { ...config, stackMeasures: false, stackMeasuresToPercent: false };
+    }
+    return isMekkoWidthOnly(dv) ? { ...config, stackMeasuresToPercent: true } : config;
+}
+
+/** Width-only without Stack By pins the flat zero axis to [0, 1] and hides it (min alone still gets padded). */
+export function getMekkoWidthOnlyYAxisProps(
+    mekkoWidthOnly: boolean,
+    hasStackByAttribute: boolean,
+    yAxisProps: IAxisConfig | undefined,
+): IAxisConfig | undefined {
+    return mekkoWidthOnly && !hasStackByAttribute
+        ? { ...yAxisProps, min: "0", max: "1", visible: false }
+        : yAxisProps;
+}
 
 /**
  * Stacked Mekko executes with [[stackBy], [viewBy, MeasureGroup]], so the view-by header items

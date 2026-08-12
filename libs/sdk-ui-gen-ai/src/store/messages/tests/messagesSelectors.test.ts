@@ -2,14 +2,18 @@
 
 import { describe, expect, it } from "vitest";
 
+import { DEFAULT_EFFORT } from "../../../components/utils/effortSelection.js";
+import { type IChatConversationLocal } from "../../../model.js";
 import { chatWindowSliceReducer } from "../../chatWindow/chatWindowSlice.js";
 import { type RootState } from "../../types.js";
 import { createEmptyConversation } from "../../utils.js";
 import {
+    conversationEffortSelector,
     conversationMessagesByIdSelector,
     conversationMessagesSelector,
     hasMessagesSelector,
     lastMessageSelector,
+    selectedEffortSelector,
 } from "../messagesSelectors.js";
 import { messagesSliceReducer } from "../messagesSlice.js";
 
@@ -206,6 +210,84 @@ describe("messagesSelectors", () => {
 
         it("should return an empty list when conversation id does not exist", () => {
             expect(conversationMessagesByIdSelector(baseState, "unknown-conversation")).toEqual([]);
+        });
+    });
+
+    describe("selectedEffortSelector", () => {
+        const conversation = (localId: string): IChatConversationLocal => ({
+            id: localId,
+            localId,
+            title: localId,
+            createdAt: new Date(1).toISOString(),
+            updatedAt: new Date(1).toISOString(),
+        });
+
+        it("should return the effort recorded for the current conversation", () => {
+            const state = makeState({
+                ...baseState.messages,
+                currentConversation: conversation("conversation-1"),
+                conversationsData: {
+                    "conversation-1": { order: [], items: {}, reasoningEffort: "LOW" },
+                },
+            });
+
+            expect(selectedEffortSelector(state)).toBe("LOW");
+        });
+
+        it("should return the default for a conversation with nothing recorded", () => {
+            const state = makeState({
+                ...baseState.messages,
+                currentConversation: createEmptyConversation(),
+            });
+
+            expect(selectedEffortSelector(state)).toBe(DEFAULT_EFFORT);
+        });
+
+        it("should not leak one conversation's effort into another", () => {
+            const conversationsData = {
+                "conversation-1": { order: [], items: {}, reasoningEffort: "LOW" as const },
+                "conversation-2": { order: [], items: {} },
+            };
+
+            const onFirst = makeState({
+                ...baseState.messages,
+                currentConversation: conversation("conversation-1"),
+                conversationsData,
+            });
+            const onSecond = makeState({
+                ...baseState.messages,
+                currentConversation: conversation("conversation-2"),
+                conversationsData,
+            });
+
+            expect(selectedEffortSelector(onFirst)).toBe("LOW");
+            expect(selectedEffortSelector(onSecond)).toBe(DEFAULT_EFFORT);
+        });
+
+        it("should fall back to the global value in the legacy single-thread mode", () => {
+            const state = makeState({
+                ...baseState.messages,
+                currentConversation: undefined,
+                selectedEffort: "LOW",
+            });
+
+            expect(selectedEffortSelector(state)).toBe("LOW");
+        });
+    });
+
+    describe("conversationEffortSelector", () => {
+        it("should read the keyed conversation, not whichever one is current", () => {
+            const state = makeState({
+                ...baseState.messages,
+                currentConversation: createEmptyConversation(),
+                conversationsData: {
+                    "conversation-1": { order: [], items: {}, reasoningEffort: "LOW" },
+                },
+            });
+
+            expect(conversationEffortSelector(state, "conversation-1")).toBe("LOW");
+            expect(conversationEffortSelector(state, "unknown-conversation")).toBe(DEFAULT_EFFORT);
+            expect(conversationEffortSelector(state, undefined)).toBe(DEFAULT_EFFORT);
         });
     });
 });

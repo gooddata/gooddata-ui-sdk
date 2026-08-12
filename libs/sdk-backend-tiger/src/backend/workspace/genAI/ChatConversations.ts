@@ -396,43 +396,6 @@ export class ChatConversationThreadQuery implements IChatConversationThreadQuery
             effort,
         });
     }
-    async query(options?: { signal?: AbortSignal }): Promise<IChatConversationItem[]> {
-        const response = await this.authCall((client) => {
-            return GenAiApi_PostMessages(
-                client.axios,
-                client.basePath,
-                {
-                    workspaceId: this.requestParameters.workspaceId,
-                    conversationId: this.requestParameters.conversationId,
-                    aiSendMessageRequest: {
-                        item: {
-                            role: "user",
-                            content: {
-                                type: "text",
-                                text: this.requestParameters.userQuestion,
-                            },
-                        },
-                        options: {
-                            search: {
-                                objectTypes: this.requestParameters.objectTypes,
-                                searchLimit: this.requestParameters.limitSearch,
-                                allowedRelationshipTypes: this.requestParameters.allowedRelationshipTypes,
-                                excludeTags: this.requestParameters.excludeTags,
-                                includeTags: this.requestParameters.includeTags,
-                            },
-                            reasoningEffort: this.requestParameters.effort,
-                        },
-                        userContext: convertUserContext(
-                            this.requestParameters.userContext,
-                        ) as AiSendMessageRequest["userContext"],
-                    },
-                },
-                options,
-            );
-        });
-        const data = response.data as { items: AiConversationItemResponse[] };
-        return convertChatConversationItemsFromBackend(data.items, undefined, this.dateNormalizer);
-    }
     stream(): ReadableStream<IChatConversationItem | IChatConversationError> {
         // We are using Axios <1.7, which does not support streaming,
         // as it can't use fetch API instead of XHR.

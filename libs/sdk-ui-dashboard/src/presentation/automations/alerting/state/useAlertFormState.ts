@@ -25,22 +25,21 @@ import {
     type IWidget,
 } from "@gooddata/sdk-model";
 
-import { useAlertingDialogContext } from "../../../contexts/AlertingDialogContext.js";
-import { useAutomationsContext } from "../../../contexts/AutomationsContext.js";
-import { setAlertExecutionParameters } from "../../../shared/automationFilters/automationParameters.js";
-import { useAutomationAlertParameters } from "../../../shared/automationFilters/useAutomationAlertParameters.js";
+import { useAlertingDialogContext } from "../../contexts/AlertingDialogContext.js";
+import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
+import { setAlertExecutionParameters } from "../../shared/automationFilters/automationParameters.js";
+import { useAutomationAlertParameters } from "../../shared/automationFilters/useAutomationAlertParameters.js";
 import {
     getAppliedWidgetFilters,
     getVisibleFiltersByFilters,
     resolveMvfDimensionalityLocalRefs,
-} from "../../../shared/filters/index.js";
+} from "../../shared/filters/index.js";
 import {
     convertExternalRecipientToAutomationRecipient,
     convertUserToAutomationRecipient,
-} from "../../../shared/utils/automationUtils.js";
-import { type AlertAttribute, type AlertMetric, type AlertMetricComparatorType } from "../../types.js";
-import { createDefaultAlert } from "../utils/convertors.js";
-import { type IMeasureFormatMap } from "../utils/getters.js";
+} from "../../shared/utils/automationUtils.js";
+import { createDefaultAlert } from "../DefaultAlertingDialog/utils/convertors.js";
+import { type IMeasureFormatMap } from "../DefaultAlertingDialog/utils/getters.js";
 import {
     transformAlertByAnomalyDetection,
     transformAlertByAttribute,
@@ -50,7 +49,8 @@ import {
     transformAlertByMetric,
     transformAlertByRelativeOperator,
     transformAlertBySensitivity,
-} from "../utils/transformation.js";
+} from "../DefaultAlertingDialog/utils/transformation.js";
+import { type AlertAttribute, type AlertMetric, type AlertMetricComparatorType } from "../types.js";
 
 /**
  * Props for {@link useAlertFormState}.

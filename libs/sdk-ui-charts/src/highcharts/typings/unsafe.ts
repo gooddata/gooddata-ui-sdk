@@ -177,6 +177,8 @@ export interface IChartOptions {
     hasViewByAttribute?: boolean;
     isViewByTwoAttributes?: boolean;
     stackToPercentBlockedByNegativeValues?: boolean;
+    // Mekko width-only state (Width bucket filled, Height empty) — labels/axes present the Width value.
+    mekkoWidthOnly?: boolean;
     legendLayout?: string;
     xAxes?: IAxis[];
     yAxes?: IAxis[];
@@ -345,6 +347,7 @@ export interface ISeriesItemConfig {
     dashStyle?: string;
     lineWidth?: number;
     marker?: { enabled: boolean };
+    minPointLength?: number;
 }
 
 export interface IAxis {

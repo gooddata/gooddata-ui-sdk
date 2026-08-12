@@ -17,10 +17,9 @@ import {
     isAutomationUserRecipient,
 } from "@gooddata/sdk-model";
 
-import { isEmail } from "../../../scheduledEmail/utils/validate.js";
-import { isAlertValueDefined } from "../utils/guards.js";
-
-import { useAlertValidation } from "./useAlertValidation.js";
+import { isEmail } from "../../scheduledEmail/utils/validate.js";
+import { useAlertValidation } from "../DefaultAlertingDialog/hooks/useAlertValidation.js";
+import { isAlertValueDefined } from "../DefaultAlertingDialog/utils/guards.js";
 
 export interface IUseAlertFormValidationProps {
     editedAutomation: IAutomationMetadataObjectDefinition | undefined;

@@ -17,11 +17,11 @@ import {
 // vi.mocked() after the import statements.
 // ---------------------------------------------------------------------------
 
-vi.mock("../useAlertValidation.js", () => ({
+vi.mock("../../DefaultAlertingDialog/hooks/useAlertValidation.js", () => ({
     useAlertValidation: vi.fn(),
 }));
 
-vi.mock("../../utils/guards.js", () => ({
+vi.mock("../../DefaultAlertingDialog/utils/guards.js", () => ({
     isAlertValueDefined: vi.fn(),
 }));
 
@@ -39,10 +39,10 @@ vi.mock("react-intl", async () => {
 // Imports placed AFTER vi.mock() calls to pick up mocked versions
 // ---------------------------------------------------------------------------
 
-import { IntlWrapper } from "../../../../../localization/IntlWrapper.js";
-import * as guardsModule from "../../utils/guards.js";
+import { IntlWrapper } from "../../../../localization/IntlWrapper.js";
+import * as useAlertValidationModule from "../../DefaultAlertingDialog/hooks/useAlertValidation.js";
+import * as guardsModule from "../../DefaultAlertingDialog/utils/guards.js";
 import { useAlertFormValidation, type IUseAlertFormValidationProps } from "../useAlertFormValidation.js";
-import * as useAlertValidationModule from "../useAlertValidation.js";
 
 // ---------------------------------------------------------------------------
 // Typed spy references (resolved after import)

@@ -3587,6 +3587,25 @@ export interface AiBucketRefObject {
     'field': string;
 }
 
+// @public
+export interface AiCatalogSearchDetail {
+    'category'?: AiCatalogSearchDetailCategoryEnum;
+    'found'?: Array<AiSearchedGroup>;
+    'query'?: Array<string>;
+    'requestedTypes'?: Array<string>;
+    'used'?: Array<AiCatalogSearchMatch>;
+}
+
+// @public (undocumented)
+export type AiCatalogSearchDetailCategoryEnum = 'catalogSearch';
+
+// @public
+export interface AiCatalogSearchMatch {
+    'objectType': string;
+    'score': number;
+    'title': string;
+}
+
 // @public (undocumented)
 export interface AiClusteringAmount {
 }
@@ -3661,6 +3680,23 @@ export const AiComparisonMeasureValueOperator: {
 
 // @public (undocumented)
 export type AiComparisonMeasureValueOperator = typeof AiComparisonMeasureValueOperator[keyof typeof AiComparisonMeasureValueOperator];
+
+// @public
+export interface AiComposeAnswerDetail {
+    'category'?: AiComposeAnswerDetailCategoryEnum;
+    // (undocumented)
+    'modelId'?: string | null;
+    // (undocumented)
+    'output'?: AiComposeAnswerDetailOutputEnum | null;
+    // (undocumented)
+    'suggestedActions'?: number | null;
+}
+
+// @public (undocumented)
+export type AiComposeAnswerDetailCategoryEnum = 'composeAnswer';
+
+// @public (undocumented)
+export type AiComposeAnswerDetailOutputEnum = 'text' | 'visualization' | 'dashboard' | 'keyDriverAnalysis' | 'whatIf' | 'searchResults' | 'alertProposal';
 
 // @public (undocumented)
 export interface AiCompoundMeasureValueFilter {
@@ -3773,6 +3809,8 @@ export interface AiConversationItemResponse {
     'content': AiContent;
     'conversationId': string;
     'createdAt': string;
+    // (undocumented)
+    'detail'?: AiConversationItemResponseDetail | null;
     'itemId': string;
     'itemIndex': number;
     // (undocumented)
@@ -3780,15 +3818,30 @@ export interface AiConversationItemResponse {
     // (undocumented)
     'oldAgentId'?: string | null;
     // (undocumented)
+    'reasoningEffort'?: AiRequestedReasoningEffort | null;
+    // (undocumented)
     'replyTo'?: string | null;
     // (undocumented)
     'responseId'?: string | null;
     'role': AiConversationItemResponseRoleEnum;
     // (undocumented)
+    'stepId'?: string | null;
+    // (undocumented)
     'taskId'?: string | null;
     // (undocumented)
     'trigger'?: AiConversationItemResponseTriggerEnum | null;
 }
+
+// @public
+export type AiConversationItemResponseDetail = ({
+    category: 'catalogSearch';
+} & AiCatalogSearchDetail) | ({
+    category: 'composeAnswer';
+} & AiComposeAnswerDetail) | ({
+    category: 'knowledgeSearch';
+} & AiKnowledgeSearchDetail) | ({
+    category: 'skillRouting';
+} & AiSkillRoutingDetail);
 
 // @public (undocumented)
 export type AiConversationItemResponseRoleEnum = 'user' | 'assistant' | 'tool' | 'system';
@@ -3907,7 +3960,9 @@ export interface AiDashboardPart {
     // (undocumented)
     'dashboard'?: AiDashboard | null;
     // (undocumented)
-    'savedDashboardId'?: string | null;
+    'references'?: AiDashboardReferences | null;
+    // (undocumented)
+    'saved_dashboard_id'?: string | null;
     'type'?: AiDashboardPartTypeEnum;
 }
 
@@ -3919,6 +3974,13 @@ export interface AiDashboardRef {
     'id': string;
     // (undocumented)
     'title'?: string | null;
+}
+
+// @public
+export interface AiDashboardReferences {
+    // (undocumented)
+    [key: string]: any;
+    'visualizations': Array<object>;
 }
 
 // @public
@@ -4205,6 +4267,22 @@ export interface AiInlineFilterDefinitionBody {
 }
 
 // @public
+export interface AiInteractionStepListResponse {
+    'steps': Array<AiInteractionStepResponse>;
+}
+
+// @public
+export interface AiInteractionStepResponse {
+    'conversationId': string;
+    'createdAt': string;
+    'durationMs': number;
+    'responseId': string;
+    'stepId': string;
+    'stepIndex': number;
+    'tokens': AiStepTokens;
+}
+
+// @public
 export const AiIntervalGranularity: {
     readonly DAY: "DAY";
     readonly WEEK: "WEEK";
@@ -4250,6 +4328,26 @@ export interface AiKeyDriverAnalysisPart {
 
 // @public (undocumented)
 export type AiKeyDriverAnalysisPartTypeEnum = 'kda';
+
+// @public
+export interface AiKnowledgeSearchDetail {
+    // (undocumented)
+    'bestMatch'?: string | null;
+    'category'?: AiKnowledgeSearchDetailCategoryEnum;
+    'documents'?: Array<AiKnowledgeSearchDocument>;
+    // (undocumented)
+    'query'?: string | null;
+}
+
+// @public (undocumented)
+export type AiKnowledgeSearchDetailCategoryEnum = 'knowledgeSearch';
+
+// @public
+export interface AiKnowledgeSearchDocument {
+    // (undocumented)
+    'score'?: number | null;
+    'title': string;
+}
 
 // @public (undocumented)
 export interface AiLabel {
@@ -4942,6 +5040,12 @@ export interface AiSearchDocumentsResponse {
     'statistics': AiSearchStatistics;
 }
 
+// @public
+export interface AiSearchedGroup {
+    'objectType': string;
+    'titles'?: Array<string>;
+}
+
 // @public (undocumented)
 export interface AiSearchObject {
     // (undocumented)
@@ -5107,6 +5211,26 @@ export interface AiSkillResponse {
     'tags': Array<string>;
     // (undocumented)
     'title': string;
+}
+
+// @public
+export interface AiSkillRoutingDetail {
+    'activated'?: Array<string>;
+    'available'?: Array<string>;
+    'category'?: AiSkillRoutingDetailCategoryEnum;
+}
+
+// @public (undocumented)
+export type AiSkillRoutingDetailCategoryEnum = 'skillRouting';
+
+// @public
+export interface AiStepTokens {
+    // (undocumented)
+    'input'?: number | null;
+    // (undocumented)
+    'output'?: number | null;
+    // (undocumented)
+    'total'?: number | null;
 }
 
 // @public
@@ -12841,7 +12965,7 @@ export interface DeclarativeDataSources {
 }
 
 // @public (undocumented)
-export type DeclarativeDataSourceTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
+export type DeclarativeDataSourceTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
 
 // @public
 export interface DeclarativeDateDataset {
@@ -22139,6 +22263,29 @@ export interface InPlatform {
 export type InPlatformTypeEnum = 'IN_PLATFORM';
 
 // @public
+export class InteractionStepsAi extends AiBaseAPI implements InteractionStepsAiInterface {
+    getConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet(requestParameters: InteractionStepsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiInteractionStepListResponse>;
+}
+
+// @public
+export function InteractionStepsAi_GetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet(axios: AxiosInstance, basePath: string, requestParameters: InteractionStepsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiInteractionStepListResponse>;
+
+// @public
+export function InteractionStepsAiAxiosParamCreator_GetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet(workspaceId: string, conversationId: string, responseId?: string, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
+
+// @public
+export interface InteractionStepsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest {
+    readonly conversationId: string;
+    readonly responseId?: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface InteractionStepsAiInterface {
+    getConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet(requestParameters: InteractionStepsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiInteractionStepListResponse>;
+}
+
+// @public
 export interface IntroSlideTemplate {
     'backgroundImage'?: boolean;
     // (undocumented)
@@ -26040,7 +26187,7 @@ export interface JsonApiDataSourceIdentifierOutAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiDataSourceIdentifierOutAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
+export type JsonApiDataSourceIdentifierOutAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
 
 // @public (undocumented)
 export interface JsonApiDataSourceIdentifierOutDocument {
@@ -26143,7 +26290,7 @@ export interface JsonApiDataSourceInAttributesParametersInner {
 }
 
 // @public (undocumented)
-export type JsonApiDataSourceInAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
+export type JsonApiDataSourceInAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
 
 // @public (undocumented)
 export interface JsonApiDataSourceInDocument {
@@ -26212,7 +26359,7 @@ export interface JsonApiDataSourceOutAttributesParametersInner {
 }
 
 // @public (undocumented)
-export type JsonApiDataSourceOutAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
+export type JsonApiDataSourceOutAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
 
 // @public (undocumented)
 export interface JsonApiDataSourceOutDocument {
@@ -26315,7 +26462,7 @@ export interface JsonApiDataSourcePatchAttributesParametersInner {
 }
 
 // @public (undocumented)
-export type JsonApiDataSourcePatchAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
+export type JsonApiDataSourcePatchAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
 
 // @public (undocumented)
 export interface JsonApiDataSourcePatchDocument {
@@ -33068,8 +33215,8 @@ export class KnowledgeAi extends AiBaseAPI implements KnowledgeAiInterface {
     createOrgDocument(requestParameters: KnowledgeAiCreateOrgDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiUploadDocumentResponse>;
     deleteDocument(requestParameters: KnowledgeAiDeleteDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiDeleteDocumentResponse>;
     deleteOrgDocument(requestParameters: KnowledgeAiDeleteOrgDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiDeleteDocumentResponse>;
-    downloadDocument(requestParameters: KnowledgeAiDownloadDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<any>;
-    downloadOrgDocument(requestParameters: KnowledgeAiDownloadOrgDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<any>;
+    downloadDocument(requestParameters: KnowledgeAiDownloadDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
+    downloadOrgDocument(requestParameters: KnowledgeAiDownloadOrgDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
     getDocument(requestParameters: KnowledgeAiGetDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiDocumentMetadataResponse>;
     getOrgDocument(requestParameters: KnowledgeAiGetOrgDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiDocumentMetadataResponse>;
     listDocuments(requestParameters: KnowledgeAiListDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<AiListDocumentsResponse>;
@@ -33103,10 +33250,10 @@ export { KnowledgeAi_DeleteOrgDocument as GenAiApi_DeleteOrgKnowledgeDocument }
 export { KnowledgeAi_DeleteOrgDocument }
 
 // @public
-export function KnowledgeAi_DownloadDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiDownloadDocumentRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<any>;
+export function KnowledgeAi_DownloadDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiDownloadDocumentRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<File>;
 
 // @public
-export function KnowledgeAi_DownloadOrgDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiDownloadOrgDocumentRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<any>;
+export function KnowledgeAi_DownloadOrgDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiDownloadOrgDocumentRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<File>;
 
 // @public
 function KnowledgeAi_GetDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiGetDocumentRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiDocumentMetadataResponse>;
@@ -33272,8 +33419,8 @@ export interface KnowledgeAiInterface {
     createOrgDocument(requestParameters: KnowledgeAiCreateOrgDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiUploadDocumentResponse>;
     deleteDocument(requestParameters: KnowledgeAiDeleteDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiDeleteDocumentResponse>;
     deleteOrgDocument(requestParameters: KnowledgeAiDeleteOrgDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiDeleteDocumentResponse>;
-    downloadDocument(requestParameters: KnowledgeAiDownloadDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<any>;
-    downloadOrgDocument(requestParameters: KnowledgeAiDownloadOrgDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<any>;
+    downloadDocument(requestParameters: KnowledgeAiDownloadDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
+    downloadOrgDocument(requestParameters: KnowledgeAiDownloadOrgDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
     getDocument(requestParameters: KnowledgeAiGetDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiDocumentMetadataResponse>;
     getOrgDocument(requestParameters: KnowledgeAiGetOrgDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiDocumentMetadataResponse>;
     listDocuments(requestParameters: KnowledgeAiListDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<AiListDocumentsResponse>;
@@ -35002,11 +35149,11 @@ export interface MemoryItemControllerApiUpdateEntityMemoryItemsRequest {
 
 // @public
 export class MessagesAi extends AiBaseAPI implements MessagesAiInterface {
-    postMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost(requestParameters: MessagesAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest, options?: AxiosRequestConfig): AxiosPromise<any>;
+    postMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost(requestParameters: MessagesAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest, options?: AxiosRequestConfig): AxiosPromise<string>;
 }
 
 // @public
-function MessagesAi_PostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost(axios: AxiosInstance, basePath: string, requestParameters: MessagesAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<any>;
+function MessagesAi_PostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost(axios: AxiosInstance, basePath: string, requestParameters: MessagesAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<string>;
 export { MessagesAi_PostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost as GenAiApi_PostMessages }
 export { MessagesAi_PostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost }
 
@@ -35015,7 +35162,7 @@ export function MessagesAiAxiosParamCreator_PostMessagesApiV1AiWorkspacesWorkspa
 
 // @public
 export interface MessagesAiInterface {
-    postMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost(requestParameters: MessagesAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest, options?: AxiosRequestConfig): AxiosPromise<any>;
+    postMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost(requestParameters: MessagesAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest, options?: AxiosRequestConfig): AxiosPromise<string>;
 }
 
 // @public
@@ -38633,7 +38780,7 @@ export interface TestDefinitionRequest {
 export type TestDefinitionRequestAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'OIDC_PASSTHROUGH';
 
 // @public (undocumented)
-export type TestDefinitionRequestTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
+export type TestDefinitionRequestTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
 
 // @public (undocumented)
 export interface TestLlmProviderByIdRequest {

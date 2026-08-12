@@ -278,8 +278,9 @@ export default {
                 "Only the connectors layer may cross those boundaries. " +
                 "DashboardComponentsContext is explicitly allowed: AlertingDialog and " +
                 "AlertingManagementDialog use it to resolve the wholesale slot components. " +
-                "TODO(GDP-3167 phase3): move this lookup to AlertingConnector so the " +
-                "clean alerting tree has no dashboardContexts dependency at all.",
+                "The lookup stays in this tree by design: AlertingDialog wraps the component it " +
+                "resolves in AlertingDialogStateProvider, so the dialog's state model mounts above " +
+                "any replacement for the slot.",
             severity: "error",
             from: {
                 path: "^src/presentation/automations/(alerting|contexts)/",

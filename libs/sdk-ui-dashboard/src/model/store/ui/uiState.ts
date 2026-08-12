@@ -135,6 +135,12 @@ export interface IUiState {
     /** @internal */
     draggingWidgetTriggeringDropZoneType: DropZoneType | undefined;
     widgetsOverlay: Record<string, IDashboardWidgetOverlay>;
+    /**
+     * Map of widget reference to the identifier of the active visualization.
+     * This is used for VisualizationSwitcherWidget to track which visualization is currently selected.
+     * @internal
+     */
+    visualizationSwitcherActiveVisualizations: Record<string, string>;
 }
 
 export const uiInitialState: IUiState = {
@@ -220,5 +226,6 @@ export const uiInitialState: IUiState = {
     draggingWidgetTarget: undefined,
     draggingWidgetTriggeringDropZoneType: undefined,
     widgetsOverlay: {},
+    visualizationSwitcherActiveVisualizations: {},
     ignoreExecutionTimestamp: false,
 };

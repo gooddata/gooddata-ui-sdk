@@ -13,7 +13,6 @@ export type DataSourceType =
     | "MSSQL"
     | "PRESTO"
     | "DREMIO"
-    | "DRILL"
     | "AZURESQL"
     | "SYNAPSESQL"
     | "DATABRICKS"

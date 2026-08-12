@@ -27,6 +27,15 @@ export interface IUseAlertThresholdProps {
     selectedValue: string | null | undefined;
 }
 
+/**
+ * Owns the alerting dialog's threshold field: the displayed value, its change and blur handlers,
+ * and its validation message.
+ *
+ * Writes the draft — its effect auto-computes the comparison threshold when the selection changes
+ * and clears it for relative operators — so exactly one consumer per dialog tree may call it.
+ *
+ * @internal
+ */
 export function useAlertThreshold({
     setEditedAutomation,
     editedAutomation,

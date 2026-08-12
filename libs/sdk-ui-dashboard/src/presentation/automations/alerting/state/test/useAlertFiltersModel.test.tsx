@@ -15,7 +15,7 @@ import {
     newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
 
-import { type AlertAttribute, type AlertMetric } from "../../../types.js";
+import { type AlertAttribute, type AlertMetric } from "../../types.js";
 
 // ---------------------------------------------------------------------------
 // Mocks — vi.mock calls are hoisted; factories must not reference top-level
@@ -23,31 +23,34 @@ import { type AlertAttribute, type AlertMetric } from "../../../types.js";
 // vi.mocked() after the import statements.
 // ---------------------------------------------------------------------------
 
-vi.mock("../../../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js", () => ({
+vi.mock("../../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js", () => ({
     useValidateExistingAutomationFilters: vi.fn(),
 }));
 
-vi.mock("../../../../shared/filters/index.js", () => ({
+vi.mock("../../../shared/filters/index.js", () => ({
     getAppliedWidgetFilters: vi.fn(),
     getVisibleFiltersByFilters: vi.fn(),
 }));
 
-vi.mock("../../utils/transformation.js", async (importOriginal: () => Promise<Record<string, unknown>>) => {
-    const actual = await importOriginal();
-    return {
-        ...actual,
-        transformAlertByAttribute: vi.fn(),
-        transformAlertByMetric: vi.fn(),
-    };
-});
+vi.mock(
+    "../../DefaultAlertingDialog/utils/transformation.js",
+    async (importOriginal: () => Promise<Record<string, unknown>>) => {
+        const actual = await importOriginal();
+        return {
+            ...actual,
+            transformAlertByAttribute: vi.fn(),
+            transformAlertByMetric: vi.fn(),
+        };
+    },
+);
 
 // ---------------------------------------------------------------------------
 // Imports placed AFTER vi.mock() calls to pick up mocked versions
 // ---------------------------------------------------------------------------
 
-import * as validateExistingAutomationFiltersModule from "../../../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
-import * as utilsModule from "../../../../shared/filters/index.js";
-import * as transformationModule from "../../utils/transformation.js";
+import * as validateExistingAutomationFiltersModule from "../../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
+import * as utilsModule from "../../../shared/filters/index.js";
+import * as transformationModule from "../../DefaultAlertingDialog/utils/transformation.js";
 import { useAlertFiltersModel, type IUseAlertFiltersModelProps } from "../useAlertFiltersModel.js";
 
 // ---------------------------------------------------------------------------

@@ -116,6 +116,44 @@ describe("PluggableMekko", () => {
             const extended = await createComponent().getExtendedReferencePoint(emptyReferencePoint);
             expect(extended.uiConfig!.supportedOverTimeComparisonTypes).toEqual([]);
         });
+
+        it("should lock Stack to 100% (uiConfig only) when only Width and Stack By are filled", async () => {
+            const extended = await createComponent().getExtendedReferencePoint(
+                referencePoint({
+                    measures: [masterMeasureItems[0]],
+                    view: [attributeItems[0]],
+                    stack: [attributeItems[1]],
+                }),
+            );
+
+            expect(extended.uiConfig!.optionalStacking!.disabled).toBe(true);
+            expect(extended.uiConfig!.optionalStacking!.stackMeasuresToPercent).toBe(true);
+            expect(extended.properties?.controls?.["stackMeasuresToPercent"]).toBeUndefined();
+        });
+
+        it("should not lock Stack to 100% once the Height measure is present", async () => {
+            const extended = await createComponent().getExtendedReferencePoint(
+                referencePoint({
+                    measures: [masterMeasureItems[0], masterMeasureItems[1]],
+                    view: [attributeItems[0]],
+                    stack: [attributeItems[1]],
+                }),
+            );
+
+            expect(extended.uiConfig!.optionalStacking!.disabled).toBeUndefined();
+            expect(extended.uiConfig!.optionalStacking!.stackMeasuresToPercent).toBeUndefined();
+            expect(extended.properties?.controls?.["stackMeasuresToPercent"]).toBeUndefined();
+        });
+
+        it("should not lock Stack to 100% without a Stack By attribute", async () => {
+            const extended = await createComponent().getExtendedReferencePoint(
+                referencePoint({ measures: [masterMeasureItems[0]], view: [attributeItems[0]] }),
+            );
+
+            expect(extended.uiConfig!.optionalStacking!.disabled).toBeUndefined();
+            expect(extended.uiConfig!.optionalStacking!.stackMeasuresToPercent).toBeUndefined();
+            expect(extended.properties?.controls?.["stackMeasuresToPercent"]).toBeUndefined();
+        });
     });
 
     describe("getSortConfig", () => {

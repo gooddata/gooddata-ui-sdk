@@ -363,44 +363,41 @@ describe("isRuleComplete", () => {
 });
 
 describe("validateCondition", () => {
-    it("reports empty fields as missing, never as errors (the disabled Save button covers them)", () => {
+    it("reports empty fields as missing, never as invalid input (the editor gates that on a visit)", () => {
         expect(
             validateCondition(condition("GREATER_THAN", { kind: "literal", value: "" }), "measure"),
-        ).toEqual({ missing: true, errors: {} });
+        ).toEqual({ missing: true });
         expect(
             validateCondition(condition("BETWEEN", { kind: "literalRange", from: NaN, to: NaN }), "measure"),
-        ).toEqual({ missing: true, errors: {} });
+        ).toEqual({ missing: true });
     });
 
     it("reports a non-numeric measure literal as missing, but a textual attribute value as present", () => {
         expect(
             validateCondition(condition("EQUAL_TO", { kind: "literal", value: "abc" }), "measure"),
-        ).toEqual({ missing: true, errors: {} });
+        ).toEqual({ missing: true });
         expect(
             validateCondition(condition("EQUAL_TO", { kind: "literal", value: "abc" }), "attribute"),
-        ).toEqual({ missing: false, errors: {} });
+        ).toEqual({ missing: false });
     });
 
     it("flags a range whose lower bound exceeds its upper bound", () => {
         expect(
             validateCondition(condition("BETWEEN", { kind: "literalRange", from: 5, to: 1 }), "measure"),
-        ).toEqual({ missing: false, errors: { range: "rangeOrder" } });
+        ).toEqual({ missing: false, error: "rangeOrder" });
     });
 
     it("accepts a valid range and treats a partial range as missing without errors", () => {
         expect(
             validateCondition(condition("BETWEEN", { kind: "literalRange", from: 1, to: 5 }), "measure"),
-        ).toEqual({ missing: false, errors: {} });
+        ).toEqual({ missing: false });
         expect(
             validateCondition(condition("BETWEEN", { kind: "literalRange", from: 5, to: NaN }), "measure"),
-        ).toEqual({ missing: true, errors: {} });
+        ).toEqual({ missing: true });
     });
 
     it("treats no-operand operators as complete", () => {
-        expect(validateCondition(condition("ALL", { kind: "none" }), "measure")).toEqual({
-            missing: false,
-            errors: {},
-        });
+        expect(validateCondition(condition("ALL", { kind: "none" }), "measure")).toEqual({ missing: false });
     });
 });
 
@@ -541,11 +538,9 @@ describe("date conditions (model)", () => {
     it("validateCondition: unpicked period is missing; any resolvable period passes; malformed errors", () => {
         expect(validateCondition(condition("EQUAL_TO", { kind: "none" }), "attribute", MONTH_META)).toEqual({
             missing: true,
-            errors: {},
         });
         expect(validateCondition(condition("EQUAL_TO", decemberValue), "attribute", MONTH_META)).toEqual({
             missing: false,
-            errors: {},
         });
         // Partial-month bounds resolve by overlap — no longer a drift error.
         expect(
@@ -554,7 +549,7 @@ describe("date conditions (model)", () => {
                 "attribute",
                 MONTH_META,
             ),
-        ).toEqual({ missing: false, errors: {} });
+        ).toEqual({ missing: false });
         // A genuinely malformed value is the remaining inline-error case.
         expect(
             validateCondition(
@@ -562,7 +557,7 @@ describe("date conditions (model)", () => {
                 "attribute",
                 MONTH_META,
             ),
-        ).toEqual({ missing: false, errors: { date: "dateUnresolvable" } });
+        ).toEqual({ missing: false, error: "dateUnresolvable" });
     });
 
     it("validateCondition: relative values of any linear granularity resolve; fiscal errors", () => {
@@ -577,7 +572,7 @@ describe("date conditions (model)", () => {
                 "attribute",
                 MONTH_META,
             ),
-        ).toEqual({ missing: false, errors: {} });
+        ).toEqual({ missing: false });
         // A day-granularity value on a month column resolves by overlap.
         expect(
             validateCondition(
@@ -585,7 +580,7 @@ describe("date conditions (model)", () => {
                 "attribute",
                 MONTH_META,
             ),
-        ).toEqual({ missing: false, errors: {} });
+        ).toEqual({ missing: false });
         // Fiscal stays unresolvable until its labeling convention is verified.
         expect(
             validateCondition(
@@ -598,7 +593,7 @@ describe("date conditions (model)", () => {
                 "attribute",
                 MONTH_META,
             ),
-        ).toEqual({ missing: false, errors: { date: "dateUnresolvable" } });
+        ).toEqual({ missing: false, error: "dateUnresolvable" });
     });
 
     it("isRuleComplete gates Save on the date operand", () => {
