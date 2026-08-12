@@ -135,6 +135,14 @@
         "text": "Loading",
         "crowdinContext": "Label shown on the AI chatbot agent selector while the available agents are loading"
     },
+    "gd.gen-ai.agent.trigger.ariaLabel": {
+        "text": "Agent: {agent}.",
+        "crowdinContext": "Accessibility label for the AI chatbot agent selector trigger in the chat input"
+    },
+    "gd.gen-ai.agent.trigger.withReasoning.ariaLabel": {
+        "text": "Agent: {agent}. Reasoning effort: {effort}.",
+        "crowdinContext": "Accessibility label for the AI chatbot agent selector trigger when the current reasoning effort is shown next to the agent name"
+    },
     "gd.gen-ai.agent.unavailable": {
         "text": "No agent available",
         "crowdinContext": "Message shown in the AI chatbot input when no agent can answer prompts"
@@ -148,12 +156,24 @@
         "crowdinContext": "Divider message shown in an AI chatbot conversation after the user switches to another agent"
     },
     "gd.gen-ai.close": {
-        "text": "Close",
-        "crowdinContext": "Accessibility label for the button that closes the AI chatbot agent dropdown"
+        "text": "Close agents",
+        "crowdinContext": "Accessibility label for the button that closes the AI chatbot agents dialog"
+    },
+    "gd.gen-ai.close.reasoning": {
+        "text": "Close reasoning effort",
+        "crowdinContext": "Accessibility label for the button that closes the AI chatbot reasoning-effort dialog"
+    },
+    "gd.gen-ai.effort.trigger.ariaLabel": {
+        "text": "Reasoning effort: {effort}.",
+        "crowdinContext": "Accessibility label for the standalone reasoning-effort selector trigger in the chat input"
     },
     "gd.gen-ai.reasoning": {
         "text": "Reasoning effort",
         "crowdinContext": "Label for the reasoning-effort row in the AI chatbot agent dropdown, where the user picks how much effort the assistant spends on the answer"
+    },
+    "gd.gen-ai.reasoning.row.ariaLabel": {
+        "text": "Reasoning effort: {effort}.",
+        "crowdinContext": "Accessibility label for the reasoning-effort row in the agents dialog"
     },
     "gd.gen-ai.reasoning.quick": {
         "text": "Quick",

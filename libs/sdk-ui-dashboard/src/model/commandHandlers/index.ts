@@ -126,6 +126,7 @@ import { changeKpiWidgetHeaderHandler } from "./widgets/changeKpiWidgetHeaderHan
 import { changeKpiWidgetMeasureHandler } from "./widgets/changeKpiWidgetMeasureHandler.js";
 import { changeRichTextWidgetContentHandler } from "./widgets/changeRichTextWidgetContentHandler.js";
 import { changeRichTextWidgetFilterSettingsHandler } from "./widgets/changeRichTextWidgetFilterSettingsHandler.js";
+import { changeVisualizationSwitcherActiveVisualizationHandler } from "./widgets/changeVisualizationSwitcherActiveVisualizationHandler.js";
 import { exportImageInsightWidgetHandler } from "./widgets/exportImageInsightWidgetHandler.js";
 import { exportInsightWidgetHandler } from "./widgets/exportInsightWidgetHandler.js";
 import { exportRawInsightWidgetHandler } from "./widgets/exportRawInsightWidgetHandler.js";
@@ -252,6 +253,8 @@ export const DefaultCommandHandlers: {
         addVisualizationToSwticherWidgetContentHandler,
     "GDC.DASH/CMD.VISUALIZATION_SWITCHER_WIDGET.UPDATE_VISUALIZATIONS":
         updateVisualizationsFromSwticherWidgetContentHandler,
+    "GDC.DASH/CMD.VISUALIZATION_SWITCHER_WIDGET.CHANGE_ACTIVE_VISUALIZATION":
+        changeVisualizationSwitcherActiveVisualizationHandler,
     "GDC.DASH/CMD.ALERT.CREATE": createAlertHandler,
     "GDC.DASH/CMD.ALERT.SAVE": saveAlertHandler,
     "GDC.DASH/CMD.SCHEDULED_EMAIL.CREATE": createScheduledEmailHandler,

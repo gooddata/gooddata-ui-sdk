@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { type ReactElement, memo, useEffect, useRef } from "react";
+import { type ReactElement, memo, useEffect, useMemo, useRef } from "react";
 
 import Highcharts from "highcharts/esm/highcharts.js";
 import { isEqual, omitBy } from "lodash-es";
@@ -11,6 +11,7 @@ import { invariant } from "ts-invariant";
 import { type IDataView } from "@gooddata/sdk-backend-spi";
 import { type ITheme } from "@gooddata/sdk-model";
 import {
+    DataViewFacade,
     type ExplicitDrill,
     type OnFiredDrillEvent,
     anomaliesTitleFromIntl,
@@ -44,6 +45,7 @@ import {
 } from "./chartTypes/_chartOptions/chartLimits.js";
 import { getChartOptions } from "./chartTypes/_chartOptions/chartOptionsBuilder.js";
 import { isChartSupported, stringifyChartTypes } from "./chartTypes/_util/common.js";
+import { getMekkoEffectiveConfig } from "./chartTypes/mekko/mekkoChartOptions.js";
 import { type IChartOptions, type ICustomTooltipRuntime } from "./typings/unsafe.js";
 
 export function renderHighCharts(props: IHighChartsRendererProps): ReactElement {
@@ -88,7 +90,7 @@ export interface IChartTransformationProps {
 }
 
 function ChartTransformationImpl({
-    config,
+    config: configProp,
     renderer = renderHighCharts,
     dataView,
     height,
@@ -109,6 +111,12 @@ function ChartTransformationImpl({
     const intl = useIntl();
     const referenceThemeFromContext = useReferenceTheme();
     const referenceTheme = referenceThemeProp ?? referenceThemeFromContext;
+
+    // mekko stacking is bucket-driven — sanitize stackMeasures* once for every config consumer below
+    const config = useMemo(
+        () => getMekkoEffectiveConfig(configProp, DataViewFacade.for(dataView)),
+        [configProp, dataView],
+    );
 
     const visType = config.type;
     const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);

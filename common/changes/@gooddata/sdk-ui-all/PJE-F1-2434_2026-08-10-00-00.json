@@ -1,0 +1,15 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-model: Remove `DRILL` from the `DataSourceType` union; Drill is no longer a supported data source type",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        },
+        {
+            "comment": "api-client-tiger: Remove `DRILL` from the generated data source type enums",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

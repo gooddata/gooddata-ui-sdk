@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { cloneDeep, isEmpty } from "lodash-es";
+import { cloneDeep, isEmpty, set } from "lodash-es";
 
 import { type ISortItem, newAttributeSort } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
@@ -26,6 +26,22 @@ import { setMekkoUiConfig } from "../../../utils/uiConfigHelpers/mekkoUiConfigHe
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 
 import { transformBuckets } from "./bucketHelper.js";
+
+/** Width-only + Stack By locks "Stack to 100%" via uiConfig only — never the durable user property. */
+function lockPercentStackingForWidthOnly(referencePoint: IExtendedReferencePoint): IExtendedReferencePoint {
+    const buckets = referencePoint[BUCKETS];
+    const widthOnlyWithStack =
+        !isEmpty(getBucketItems(buckets, BucketNames.MEASURES)) &&
+        isEmpty(getBucketItems(buckets, BucketNames.SECONDARY_MEASURES)) &&
+        !isEmpty(getBucketItems(buckets, BucketNames.STACK));
+
+    if (widthOnlyWithStack) {
+        set(referencePoint, ["uiConfig", "optionalStacking", "disabled"], true);
+        set(referencePoint, ["uiConfig", "optionalStacking", "stackMeasuresToPercent"], true);
+    }
+
+    return referencePoint;
+}
 
 /**
  * PluggableMekko
@@ -77,6 +93,7 @@ export class PluggableMekko extends PluggableBaseChart {
         newReferencePoint[BUCKETS] = transformBuckets(newReferencePoint.buckets);
 
         newReferencePoint = setMekkoUiConfig(newReferencePoint, this.intl, this.type);
+        newReferencePoint = lockPercentStackingForWidthOnly(newReferencePoint);
         newReferencePoint = configurePercent(newReferencePoint, true);
         newReferencePoint = configureOverTimeComparison(newReferencePoint);
         newReferencePoint = getReferencePointWithSupportedProperties(

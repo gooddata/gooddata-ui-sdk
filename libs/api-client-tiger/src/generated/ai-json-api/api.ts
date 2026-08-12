@@ -406,6 +406,52 @@ export interface AiBucketRefObject {
     'field': string;
 }
 
+/**
+ * What one search looked for in the semantic catalog, what came back, and what it used.
+ */
+export interface AiCatalogSearchDetail {
+    /**
+     * Category this body belongs to.
+     */
+    'category'?: AiCatalogSearchDetailCategoryEnum;
+    /**
+     * Titles the search returned, grouped by object type.
+     */
+    'found'?: Array<AiSearchedGroup>;
+    /**
+     * Keywords the search looked for. Each runs against every requested type.
+     */
+    'query'?: Array<string>;
+    /**
+     * Catalog types the search asked for.
+     */
+    'requestedTypes'?: Array<string>;
+    /**
+     * Best-matching object per type. Empty for the search modes that do not rank.
+     */
+    'used'?: Array<AiCatalogSearchMatch>;
+}
+
+export type AiCatalogSearchDetailCategoryEnum = 'catalogSearch';
+
+/**
+ * The highest-ranked object of one searched type, with the score that ranked it.
+ */
+export interface AiCatalogSearchMatch {
+    /**
+     * Catalog type the object is the best match of.
+     */
+    'objectType': string;
+    /**
+     * Relevance score that ranked it.
+     */
+    'score': number;
+    /**
+     * Title of the highest-ranked object.
+     */
+    'title': string;
+}
+
 export interface AiClusteringAmount {
 }
 
@@ -478,6 +524,22 @@ export const AiComparisonMeasureValueOperator = {
 export type AiComparisonMeasureValueOperator = typeof AiComparisonMeasureValueOperator[keyof typeof AiComparisonMeasureValueOperator];
 
 
+/**
+ * How the answer itself came out: what it is and which model wrote it.
+ */
+export interface AiComposeAnswerDetail {
+    /**
+     * Category this body belongs to.
+     */
+    'category'?: AiComposeAnswerDetailCategoryEnum;
+    'modelId'?: string | null;
+    'output'?: AiComposeAnswerDetailOutputEnum | null;
+    'suggestedActions'?: number | null;
+}
+
+export type AiComposeAnswerDetailCategoryEnum = 'composeAnswer';
+export type AiComposeAnswerDetailOutputEnum = 'text' | 'visualization' | 'dashboard' | 'keyDriverAnalysis' | 'whatIf' | 'searchResults' | 'alertProposal';
+
 export interface AiCompoundMeasureValueFilter {
     'compoundMeasureValueFilter': AiCompoundMeasureValueFilterBody;
 }
@@ -543,6 +605,7 @@ export interface AiConversationItemResponse {
      * Item creation timestamp (ISO-8601 UTC).
      */
     'createdAt': string;
+    'detail'?: AiConversationItemResponseDetail | null;
     /**
      * Conversation item identifier.
      */
@@ -553,18 +616,26 @@ export interface AiConversationItemResponse {
     'itemIndex': number;
     'newAgentId'?: string | null;
     'oldAgentId'?: string | null;
+    'reasoningEffort'?: AiRequestedReasoningEffort | null;
     'replyTo'?: string | null;
     'responseId'?: string | null;
     /**
      * Author role of the item.
      */
     'role': AiConversationItemResponseRoleEnum;
+    'stepId'?: string | null;
     'taskId'?: string | null;
     'trigger'?: AiConversationItemResponseTriggerEnum | null;
 }
 
 export type AiConversationItemResponseRoleEnum = 'user' | 'assistant' | 'tool' | 'system';
 export type AiConversationItemResponseTriggerEnum = 'agent_switched' | 'agent_updated';
+
+/**
+ * @type AiConversationItemResponseDetail
+ * What one item\'s action did.
+ */
+export type AiConversationItemResponseDetail = { category: 'catalogSearch' } & AiCatalogSearchDetail | { category: 'composeAnswer' } & AiComposeAnswerDetail | { category: 'knowledgeSearch' } & AiKnowledgeSearchDetail | { category: 'skillRouting' } & AiSkillRoutingDetail;
 
 export interface AiConversationListMeta {
     'page': AiConversationListPageMeta;
@@ -701,7 +772,8 @@ export interface AiDashboardIdUpdateRequest {
 
 export interface AiDashboardPart {
     'dashboard'?: AiDashboard | null;
-    'savedDashboardId'?: string | null;
+    'references'?: AiDashboardReferences | null;
+    'saved_dashboard_id'?: string | null;
     /**
      * Type of multipart part.
      */
@@ -716,6 +788,18 @@ export interface AiDashboardRef {
      */
     'id': string;
     'title'?: string | null;
+}
+
+/**
+ * AAC bodies of every widget-referenced visualization in a dashboard draft.  Each entry is opaque AAC pass-through (dict), not modeled as a schema — same treatment the codebase gives elsewhere to full AAC visualization bodies.
+ */
+export interface AiDashboardReferences {
+    [key: string]: any;
+
+    /**
+     * Full AAC body of every widget-referenced visualization that has one available.
+     */
+    'visualizations': Array<object>;
 }
 
 /**
@@ -955,6 +1039,50 @@ export interface AiInlineFilterDefinitionBody {
 }
 
 /**
+ * Interaction step list response.
+ */
+export interface AiInteractionStepListResponse {
+    /**
+     * Ordered list of interaction steps.
+     */
+    'steps': Array<AiInteractionStepResponse>;
+}
+
+/**
+ * One LLM call of a turn and the tools it dispatched.  Carries only what belongs to the whole call -- ordering, duration, spend. What each action did lives on the items that link here via their ``stepId``.
+ */
+export interface AiInteractionStepResponse {
+    /**
+     * Parent conversation identifier.
+     */
+    'conversationId': string;
+    /**
+     * Step start timestamp (ISO-8601 UTC).
+     */
+    'createdAt': string;
+    /**
+     * Wall-clock duration of the LLM call and its tool dispatches.
+     */
+    'durationMs': number;
+    /**
+     * Response/turn identifier the step belongs to.
+     */
+    'responseId': string;
+    /**
+     * Interaction step identifier.
+     */
+    'stepId': string;
+    /**
+     * Zero-based step order within the turn.
+     */
+    'stepIndex': number;
+    /**
+     * Token usage of the step\'s LLM call.
+     */
+    'tokens': AiStepTokens;
+}
+
+/**
  * Date granularity for the interval of an ONCE_PER_INTERVAL trigger.
  */
 
@@ -1018,6 +1146,35 @@ export interface AiKeyDriverAnalysisPart {
 }
 
 export type AiKeyDriverAnalysisPartTypeEnum = 'kda';
+
+/**
+ * What one action looked for in the knowledge base and which documents it reached.
+ */
+export interface AiKnowledgeSearchDetail {
+    'bestMatch'?: string | null;
+    /**
+     * Category this body belongs to.
+     */
+    'category'?: AiKnowledgeSearchDetailCategoryEnum;
+    /**
+     * Documents the action reached, best-scoring first.
+     */
+    'documents'?: Array<AiKnowledgeSearchDocument>;
+    'query'?: string | null;
+}
+
+export type AiKnowledgeSearchDetailCategoryEnum = 'knowledgeSearch';
+
+/**
+ * One knowledge document an action reached, named as the user would recognise it.
+ */
+export interface AiKnowledgeSearchDocument {
+    'score'?: number | null;
+    /**
+     * Document title, falling back to its filename when it has none.
+     */
+    'title': string;
+}
 
 export interface AiLabel {
     'identifier': AiAfmObjectIdentifierBody;
@@ -1658,6 +1815,20 @@ export interface AiSearchStatistics {
     'totalResults': number;
 }
 
+/**
+ * The results of a search that share one object type.
+ */
+export interface AiSearchedGroup {
+    /**
+     * Catalog type name the group belongs to.
+     */
+    'objectType': string;
+    /**
+     * Titles of that type that came back.
+     */
+    'titles'?: Array<string>;
+}
+
 export interface AiSendMessageContent {
     'text': string;
     'type': AiSendMessageContentTypeEnum;
@@ -1717,6 +1888,35 @@ export interface AiSkillResponse {
     'name': string;
     'tags': Array<string>;
     'title': string;
+}
+
+/**
+ * Which skills the turn could reach for, and which this call left active.
+ */
+export interface AiSkillRoutingDetail {
+    /**
+     * Titles of the skills active after the call replaced the active set.
+     */
+    'activated'?: Array<string>;
+    /**
+     * Titles of the skills the model could choose from, in the order the prompt lists them.
+     */
+    'available'?: Array<string>;
+    /**
+     * Category this body belongs to.
+     */
+    'category'?: AiSkillRoutingDetailCategoryEnum;
+}
+
+export type AiSkillRoutingDetailCategoryEnum = 'skillRouting';
+
+/**
+ * What the step\'s LLM call spent; a field is null when the provider did not report it.
+ */
+export interface AiStepTokens {
+    'input'?: number | null;
+    'output'?: number | null;
+    'total'?: number | null;
 }
 
 /**
@@ -3599,6 +3799,154 @@ export class DashboardsAi extends BaseAPI implements DashboardsAiInterface {
 }
 
 
+// InteractionStepsAi FP - InteractionStepsAiAxiosParamCreator
+/**
+ * 
+ * @summary Get Conversation Interaction Steps
+ * @param {string} workspaceId 
+ * @param {string} conversationId 
+ * @param {string} [responseId] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function InteractionStepsAiAxiosParamCreator_GetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet(
+    workspaceId: string, conversationId: string, responseId?: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet', 'workspaceId', workspaceId)
+    // verify required parameter 'conversationId' is not null or undefined
+    assertParamExists('getConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet', 'conversationId', conversationId)
+    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/steps`
+        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"conversation_id"}}`, encodeURIComponent(String(conversationId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (responseId !== undefined) {
+        localVarQueryParameter['responseId'] = responseId;
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+
+// InteractionStepsAi Api FP
+/**
+ * 
+ * @summary Get Conversation Interaction Steps
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {InteractionStepsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function InteractionStepsAi_GetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: InteractionStepsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AiInteractionStepListResponse> {
+    const localVarAxiosArgs = await InteractionStepsAiAxiosParamCreator_GetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet(
+        requestParameters.workspaceId, requestParameters.conversationId, requestParameters.responseId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+/**
+ * InteractionStepsAi - interface
+ * @export
+ * @interface InteractionStepsAi
+ */
+export interface InteractionStepsAiInterface {
+    /**
+     * 
+     * @summary Get Conversation Interaction Steps
+     * @param {InteractionStepsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof InteractionStepsAiInterface
+     */
+    getConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet(requestParameters: InteractionStepsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiInteractionStepListResponse>;
+
+}
+
+/**
+ * Request parameters for getConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet operation in InteractionStepsAi.
+ * @export
+ * @interface InteractionStepsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest
+ */
+export interface InteractionStepsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof InteractionStepsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof InteractionStepsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet
+     */
+    readonly conversationId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof InteractionStepsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet
+     */
+    readonly responseId?: string
+}
+
+/**
+ * InteractionStepsAi - object-oriented interface
+ * @export
+ * @class InteractionStepsAi
+ * @extends {BaseAPI}
+ */
+export class InteractionStepsAi extends BaseAPI implements InteractionStepsAiInterface {
+    /**
+     * 
+     * @summary Get Conversation Interaction Steps
+     * @param {InteractionStepsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof InteractionStepsAi
+     */
+    public getConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet(requestParameters: InteractionStepsAiGetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGetRequest, options?: AxiosRequestConfig) {
+        return InteractionStepsAi_GetConversationInteractionStepsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdStepsGet(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+}
+
+
 // ItemsAi FP - ItemsAiAxiosParamCreator
 /**
  * 
@@ -4798,7 +5146,7 @@ export async function KnowledgeAi_DownloadDocument(
     requestParameters: KnowledgeAiDownloadDocumentRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<any> {
+): AxiosPromise<File> {
     const localVarAxiosArgs = await KnowledgeAiAxiosParamCreator_DownloadDocument(
         requestParameters.workspaceId, requestParameters.documentId, 
         options || {},
@@ -4824,7 +5172,7 @@ export async function KnowledgeAi_DownloadOrgDocument(
     requestParameters: KnowledgeAiDownloadOrgDocumentRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<any> {
+): AxiosPromise<File> {
     const localVarAxiosArgs = await KnowledgeAiAxiosParamCreator_DownloadOrgDocument(
         requestParameters.documentId, 
         options || {},
@@ -5148,7 +5496,7 @@ export interface KnowledgeAiInterface {
      * @throws {RequiredError}
      * @memberof KnowledgeAiInterface
      */
-    downloadDocument(requestParameters: KnowledgeAiDownloadDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<any>;
+    downloadDocument(requestParameters: KnowledgeAiDownloadDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
 
     /**
      * Download an org-scoped knowledge document\'s raw file.
@@ -5158,7 +5506,7 @@ export interface KnowledgeAiInterface {
      * @throws {RequiredError}
      * @memberof KnowledgeAiInterface
      */
-    downloadOrgDocument(requestParameters: KnowledgeAiDownloadOrgDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<any>;
+    downloadOrgDocument(requestParameters: KnowledgeAiDownloadOrgDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
 
     /**
      * Get a single knowledge document\'s metadata. Inherited and org-level docs are visible.
@@ -6008,7 +6356,7 @@ export async function MessagesAi_PostMessagesApiV1AiWorkspacesWorkspaceIdChatCon
     requestParameters: MessagesAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<any> {
+): AxiosPromise<string> {
     const localVarAxiosArgs = await MessagesAiAxiosParamCreator_PostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost(
         requestParameters.workspaceId, requestParameters.conversationId, requestParameters.aiSendMessageRequest, 
         options || {},
@@ -6032,7 +6380,7 @@ export interface MessagesAiInterface {
      * @throws {RequiredError}
      * @memberof MessagesAiInterface
      */
-    postMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost(requestParameters: MessagesAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest, options?: AxiosRequestConfig): AxiosPromise<any>;
+    postMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost(requestParameters: MessagesAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest, options?: AxiosRequestConfig): AxiosPromise<string>;
 
 }
 

@@ -606,9 +606,12 @@ export {
 export {
     type IAddVisualizationToVisualizationSwitcherWidgetContent,
     type IAddVisualizationToVisualizationSwitcherWidgetContentPayload,
+    type IChangeVisualizationSwitcherActiveVisualization,
+    type IChangeVisualizationSwitcherActiveVisualizationPayload,
     type IUpdateVisualizationsFromVisualizationSwitcherWidgetContent,
     type IUpdateVisualizationsFromVisualizationSwitcherWidgetContentPayload,
     addVisualizationToSwitcherWidgetContent,
+    changeVisualizationSwitcherActiveVisualization,
     updateVisualizationsFromSwitcherWidgetContent,
 } from "./model/commands/visualizationSwitcher.js";
 export {
@@ -1005,11 +1008,15 @@ export {
     richTextWidgetFilterSettingsChanged,
 } from "./model/events/richText.js";
 export {
+    type IDashboardVisualizationSwitcherWidgetActiveVisualizationChanged,
+    type IDashboardVisualizationSwitcherWidgetActiveVisualizationChangedPayload,
     type IDashboardVisualizationSwitcherWidgetVisualizationAdded,
     type IDashboardVisualizationSwitcherWidgetVisualizationAddedPayload,
     type IDashboardVisualizationSwitcherWidgetVisualizationsUpdated,
     type IDashboardVisualizationSwitcherWidgetVisualizationsUpdatedPayload,
+    isDashboardVisualizationSwitcherWidgetActiveVisualizationChanged,
     isDashboardVisualizationSwitcherWidgetVisualizationAdded,
+    visualizationSwitcherWidgetActiveVisualizationChanged,
     visualizationSwitcherWidgetVisualizationAdded,
     isDashboardVisualizationSwitcherWidgetVisualizationsUpdated,
     visualizationSwitcherWidgetVisualizationsUpdated,
@@ -1791,6 +1798,8 @@ export {
     selectFilterValidationIncompatibleDefaultFiltersOverride,
     selectAutomationsInvalidationId,
     selectTimezoneOverride,
+    selectVisualizationSwitcherActiveVisualizations,
+    selectVisualizationSwitcherActiveVisualizationByWidgetRef,
 } from "./model/store/ui/uiSelectors.js";
 export { uiActions } from "./model/store/ui/index.js";
 export type { IRenderModeState } from "./model/store/renderMode/renderModeState.js";

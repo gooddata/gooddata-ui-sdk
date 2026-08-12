@@ -31,6 +31,7 @@ export {
     type PivotTableNextPaginationConfig,
     type PivotTableNextExperimentalConfig,
     type PivotTableNextConditionalFormattingConfig,
+    type PivotTableNextConfigWithConditionalFormatting,
     type IConditionalFormatting,
     type IConditionalFormattingRule,
     type IConditionalFormattingCondition,

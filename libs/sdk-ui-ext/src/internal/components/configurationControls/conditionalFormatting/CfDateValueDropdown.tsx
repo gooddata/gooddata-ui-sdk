@@ -27,6 +27,7 @@ import {
 
 import { conditionalFormattingMessages } from "../../../../locales.js";
 
+import { type ICfFieldProps } from "./cfFieldProps.js";
 import { type ICfDateMeta, type ICfDateSettings } from "./conditionalFormattingModel.js";
 
 const ABSOLUTE_FORM_ID = "ABSOLUTE_FORM";
@@ -108,8 +109,8 @@ function matchStoredValue(
     return matchDateFilterToDateFilterOptionWithPreference(storedFilter, filterOptions, undefined);
 }
 
-// DateFilter's button contract is fixed, so the error association travels via context.
-const CfDateButtonA11yContext = createContext<{ describedBy?: string }>({});
+// DateFilter's button contract is fixed, so the error state travels via context.
+const CfDateButtonA11yContext = createContext<{ describedBy?: string; hasError?: boolean }>({});
 
 // Rendered through DateFilter's button slot. Module-level so its identity is stable across renders.
 // Deliberately NOT wiring props.onClick: DateFilterCore's wrapping span already toggles the dropdown,
@@ -121,11 +122,10 @@ function CfDateButton({
     buttonRef,
     dropdownId,
 }: IDateFilterButtonProps) {
-    // describedBy is only set while the value has an inline error — it doubles as the error state.
-    const { describedBy } = useContext(CfDateButtonA11yContext);
+    const { describedBy, hasError } = useContext(CfDateButtonA11yContext);
     return (
         <DropdownButton
-            className={cx("gd-cf-date-value", { "gd-cf-date-value--error": describedBy !== undefined })}
+            className={cx("gd-cf-date-value", { "gd-cf-date-value--error": hasError })}
             value={customFilterName ?? textSubtitle}
             isOpen={isOpen}
             isFullWidth
@@ -136,15 +136,13 @@ function CfDateButton({
     );
 }
 
-export interface ICfDateValueDropdownProps {
+export interface ICfDateValueDropdownProps extends ICfFieldProps {
     value: ConditionalFormattingValue;
     date: ICfDateMeta;
     /** Workspace preset catalog (shared with the dashboard date filter); undefined = static only. */
     catalogOptions?: IDateFilterOptionsByType;
     /** Workspace date-display settings (format, week start). */
     dateSettings?: ICfDateSettings;
-    /** Id of the rendered inline error, associated with the trigger for assistive tech. */
-    errorId?: string;
     onChange: (value: ConditionalFormattingValue) => void;
 }
 
@@ -162,8 +160,10 @@ export function CfDateValueDropdown({
     date,
     catalogOptions,
     dateSettings,
+    hasError,
     errorId,
     onChange,
+    onVisit,
 }: ICfDateValueDropdownProps) {
     const intl = useIntl();
     const stored = value.kind === "absoluteDate" ? { from: value.from, to: value.to } : undefined;
@@ -214,7 +214,7 @@ export function CfDateValueDropdown({
     };
 
     return (
-        <CfDateButtonA11yContext.Provider value={{ describedBy: errorId }}>
+        <CfDateButtonA11yContext.Provider value={{ describedBy: errorId, hasError }}>
             <DateFilter
                 dateFilterMode="active"
                 filterOptions={filterOptions}
@@ -230,6 +230,9 @@ export function CfDateValueDropdown({
                 weekStart={date.granularity === "GDC.time.week_us" ? "Monday" : dateSettings?.weekStart}
                 locale={intl.locale}
                 onApply={handleApply}
+                // Every close counts as a visit, applied or not. Blur can't serve as that signal: opening
+                // the picker moves focus into its own overlay.
+                onClose={onVisit}
                 overlayPositionType="sameAsTarget"
                 ButtonComponent={CfDateButton}
                 customFilterName={

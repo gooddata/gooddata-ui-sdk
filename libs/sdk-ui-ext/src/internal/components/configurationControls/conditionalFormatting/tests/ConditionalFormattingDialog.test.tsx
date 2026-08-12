@@ -2,7 +2,7 @@
 
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { describe, expect, it, vi } from "vitest";
+import { type Mock, describe, expect, it, vi } from "vitest";
 
 import { type IConditionalFormattingRule } from "@gooddata/sdk-ui-pivot/next";
 
@@ -36,7 +36,7 @@ const saveButton = () => screen.getByText("Save").closest("button");
 const isSaveDisabled = () => saveButton()?.getAttribute("aria-disabled") === "true";
 
 function renderDialog(props: Partial<IConditionalFormattingDialogProps> = {}) {
-    const onSave = vi.fn();
+    const onSave = vi.fn<IConditionalFormattingDialogProps["onSave"]>();
     render(
         <InternalIntlWrapper>
             <ConditionalFormattingDialog
@@ -71,5 +71,51 @@ describe("ConditionalFormattingDialog — Save dirty gating", () => {
     it("enables Save immediately for a new complete rule (no change required)", () => {
         renderDialog({ isNew: true });
         expect(isSaveDisabled()).toBe(false);
+    });
+});
+
+describe("ConditionalFormattingDialog — measure threshold input (F1-2738)", () => {
+    const valueInput = () => screen.getByPlaceholderText("Value");
+
+    const emptyRule: IConditionalFormattingRule = {
+        ...completeRule,
+        conditions: [{ ...completeRule.conditions[0], value: { kind: "literal", value: "" } }],
+    };
+
+    const savedThreshold = (onSave: Mock<IConditionalFormattingDialogProps["onSave"]>) => {
+        const value = onSave.mock.calls[0][0].conditions[0].value;
+        if (value.kind !== "literal") {
+            throw new Error(`expected a literal condition value, got "${value.kind}"`);
+        }
+        return value.value;
+    };
+
+    it.each([
+        ["1.23e+9", 1230000000],
+        ["1e308", 1e308],
+        ["1.23e-9", 1.23e-9],
+    ])(
+        "accepts the scientific-notation threshold %s and saves it in raw numeric space",
+        async (typed, expected) => {
+            const user = userEvent.setup();
+            const { onSave } = renderDialog({ rule: emptyRule, isNew: true });
+            expect(isSaveDisabled()).toBe(true);
+
+            await user.type(valueInput(), typed);
+            expect(isSaveDisabled()).toBe(false);
+
+            await user.click(screen.getByText("Save"));
+            expect(savedThreshold(onSave)).toBe(expected);
+        },
+    );
+
+    it("never saves a non-finite threshold when the exponent overflows", async () => {
+        const user = userEvent.setup();
+        const { onSave } = renderDialog({ rule: emptyRule, isNew: true });
+
+        await user.type(valueInput(), "1e309");
+        await user.click(screen.getByText("Save"));
+
+        expect(Number.isFinite(savedThreshold(onSave))).toBe(true);
     });
 });

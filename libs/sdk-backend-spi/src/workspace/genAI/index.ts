@@ -964,6 +964,10 @@ export type IChatConversationItem = {
      * Id of the agent the conversation was switched from, when known.
      */
     oldAgentId?: string;
+    /**
+     * Effort the message was sent with. Only set on user items that carried one.
+     */
+    reasoningEffort?: GenAIChatEffort;
 };
 
 /**
@@ -1325,6 +1329,7 @@ export function isChatConversationSearchContent(
 export type IChatConversationDashboardContent = {
     type: "dashboard";
     dashboard: IDashboard | null;
+    insights: IInsight[] | null;
     saved: boolean;
 };
 
@@ -1442,10 +1447,6 @@ export interface IChatConversationThreadQuery {
      * Define how much effort the LLM should spend reasoning about this message.
      */
     withEffort(effort?: GenAIChatEffort): IChatConversationThreadQuery;
-    /**
-     * Execute the chat thread.
-     */
-    query(options?: { signal?: AbortSignal }): Promise<IChatConversationItem[]>;
     /**
      * Execute the chat thread and stream the results.
      */

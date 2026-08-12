@@ -659,3 +659,20 @@ export const selectIsTimezoneDialogOpen: DashboardSelector<boolean> = createSele
     selectSelf,
     (state) => state.timezoneDialog.open ?? false,
 );
+
+/**
+ * @internal
+ */
+export const selectVisualizationSwitcherActiveVisualizations: DashboardSelector<Record<string, string>> =
+    createSelector(selectSelf, (state) => state.visualizationSwitcherActiveVisualizations ?? {});
+
+/**
+ * @internal
+ */
+export const selectVisualizationSwitcherActiveVisualizationByWidgetRef: (
+    ref: ObjRef,
+) => DashboardSelector<string | undefined> = createMemoizedSelector((ref: ObjRef) =>
+    createSelector(selectVisualizationSwitcherActiveVisualizations, (activeVisualizations) => {
+        return activeVisualizations[objRefToString(ref)];
+    }),
+);

@@ -142,6 +142,7 @@ import {
 import { type IDashboardTimezoneOverrideChanged } from "./timezone.js";
 import { type IDashboardUserInteractionTriggered } from "./userInteraction.js";
 import {
+    type IDashboardVisualizationSwitcherWidgetActiveVisualizationChanged,
     type IDashboardVisualizationSwitcherWidgetVisualizationAdded,
     type IDashboardVisualizationSwitcherWidgetVisualizationsUpdated,
 } from "./visualizationSwitcher.js";
@@ -248,6 +249,7 @@ export type DashboardEvents =
     | IDashboardRichTextWidgetFilterSettingsChanged
     | IDashboardVisualizationSwitcherWidgetVisualizationAdded
     | IDashboardVisualizationSwitcherWidgetVisualizationsUpdated
+    | IDashboardVisualizationSwitcherWidgetActiveVisualizationChanged
     | IDashboardWidgetExecutionStarted
     | IDashboardWidgetExecutionSucceeded
     | IDashboardWidgetExecutionFailed

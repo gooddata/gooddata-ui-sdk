@@ -422,6 +422,56 @@ describe("sanitizeFilters", () => {
         expect(newExtendedReferencePoint.filters.items[0].filters![0]).toEqual(catalogRankingFilter);
     });
 
+    it("should remove a ranking filter referencing a catalog measure whose local 'out of' attribute is missing", () => {
+        const newReferencePoint = cloneDeep(measureValueFilterReferencePoint);
+        const catalogRankingFilter: any = {
+            measureRef: { identifier: "catalogMetric", type: "measure" },
+            attributes: ["non_existent_attribute"],
+            operator: "TOP",
+            value: 10,
+        };
+        newReferencePoint.filters.items = [
+            {
+                localIdentifier: "fbr1",
+                filters: [catalogRankingFilter],
+            },
+        ];
+        const extendedReferencePoint: IExtendedReferencePoint = {
+            ...newReferencePoint,
+            uiConfig: DEFAULT_BASE_CHART_UICONFIG,
+        };
+
+        const newExtendedReferencePoint = sanitizeFilters(extendedReferencePoint, extendedReferencePoint);
+
+        expect(newExtendedReferencePoint.filters.items).toHaveLength(0);
+    });
+
+    it("should keep a legacy ranking filter referencing a bucket measure with no attributes in buckets", () => {
+        const newReferencePoint = cloneDeep(measureValueFilterReferencePoint);
+        // No attributes in buckets, and the ranking filter references no "out of" attribute either.
+        newReferencePoint.buckets[2].items = [];
+        const legacyRankingFilter: any = {
+            measure: newReferencePoint.buckets[0].items[0].localIdentifier,
+            operator: "TOP",
+            value: 10,
+        };
+        newReferencePoint.filters.items = [
+            {
+                localIdentifier: "fbr1",
+                filters: [legacyRankingFilter],
+            },
+        ];
+        const extendedReferencePoint: IExtendedReferencePoint = {
+            ...newReferencePoint,
+            uiConfig: DEFAULT_BASE_CHART_UICONFIG,
+        };
+
+        const newExtendedReferencePoint = sanitizeFilters(extendedReferencePoint, extendedReferencePoint);
+
+        expect(newExtendedReferencePoint.filters.items).toHaveLength(1);
+        expect(newExtendedReferencePoint.filters.items[0].filters![0]).toEqual(legacyRankingFilter);
+    });
+
     it("should remove a legacy ranking filter whose bucket measure is missing", () => {
         const newReferencePoint = cloneDeep(measureValueFilterReferencePoint);
         const legacyRankingFilter: any = {

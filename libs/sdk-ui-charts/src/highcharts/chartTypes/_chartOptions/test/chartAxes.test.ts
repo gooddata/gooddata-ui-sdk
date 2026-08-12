@@ -3,7 +3,7 @@
 import { describe, expect, it } from "vitest";
 
 import { type IMeasureGroupDescriptor } from "@gooddata/sdk-model";
-import { type DataViewFacade, VisualizationTypes } from "@gooddata/sdk-ui";
+import { BucketNames, type DataViewFacade, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { type IChartConfig } from "../../../../interfaces/chartConfig.js";
 import { getYAxes } from "../chartAxes.js";
@@ -109,5 +109,61 @@ describe("getYAxes default (single-axis) Y axis title", () => {
             const [yAxis] = getYAxes(dv, config, buildMeasureGroup([REVENUE, TARGET]), undefined);
             expect(yAxis.label).toBe("");
         });
+    });
+});
+
+describe("getYAxes for Mekko", () => {
+    const WIDTH: IMeasureSpec = { localIdentifier: "width", name: "Width", format: "#,##0" };
+    const HEIGHT: IMeasureSpec = { localIdentifier: "height", name: "Height", format: "$#,##0" };
+    const config = { type: VisualizationTypes.MEKKO } as IChartConfig;
+
+    const dvWithEmptyBuckets = (emptyBuckets: string[]): DataViewFacade =>
+        ({
+            def: () => ({ isBucketEmpty: (localId: string) => emptyBuckets.includes(localId) }),
+        }) as unknown as DataViewFacade;
+
+    it("labels and formats the Y axis by the Height measure when both measures are present", () => {
+        const [yAxis] = getYAxes(dvWithEmptyBuckets([]), config, buildMeasureGroup([WIDTH, HEIGHT]), null);
+        expect(yAxis).toMatchObject({ label: "Height", format: "$#,##0" });
+    });
+
+    it("labels the Y axis by a lone Height measure", () => {
+        const [yAxis] = getYAxes(
+            dvWithEmptyBuckets([BucketNames.MEASURES]),
+            config,
+            buildMeasureGroup([HEIGHT]),
+            null,
+        );
+        expect(yAxis).toMatchObject({ label: "Height", format: "$#,##0" });
+    });
+
+    it("keeps the Y axis unlabeled with a lone Width measure (fallback height only)", () => {
+        const [yAxis] = getYAxes(
+            dvWithEmptyBuckets([BucketNames.SECONDARY_MEASURES]),
+            config,
+            buildMeasureGroup([WIDTH]),
+            null,
+        );
+        expect(yAxis).toMatchObject({ label: "", format: undefined });
+    });
+
+    it("prefers the explicit yLabel override", () => {
+        const [yAxis] = getYAxes(
+            dvWithEmptyBuckets([]),
+            { ...config, yLabel: "Custom title" } as IChartConfig,
+            buildMeasureGroup([WIDTH, HEIGHT]),
+            null,
+        );
+        expect(yAxis.label).toBe("Custom title");
+    });
+
+    it("does not throw on an empty measure group (no metrics yet)", () => {
+        const [yAxis] = getYAxes(
+            dvWithEmptyBuckets([BucketNames.MEASURES, BucketNames.SECONDARY_MEASURES]),
+            config,
+            buildMeasureGroup([]),
+            null,
+        );
+        expect(yAxis).toMatchObject({ label: "", format: undefined });
     });
 });

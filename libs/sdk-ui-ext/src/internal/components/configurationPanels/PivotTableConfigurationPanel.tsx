@@ -22,6 +22,7 @@ import {
     SHOW_DELAY_DEFAULT,
 } from "../../constants/bubble.js";
 import { isSetColumnHeadersPositionToLeftAllowed } from "../../utils/controlsHelper.js";
+import { isConditionalFormattingEnabled } from "../../utils/propertiesHelper.js";
 import { CellsControl } from "../configurationControls/CellsControl.js";
 import { ColumnHeadersPositionControl } from "../configurationControls/ColumnHeadersPositionControl.js";
 import {
@@ -73,7 +74,7 @@ export class PivotTableConfigurationPanel extends ConfigurationPanelContent<IPiv
     protected renderConfigurationPanel(): ReactNode {
         const { featureFlags } = this.props;
         const enableNewPivotTable = featureFlags?.enableNewPivotTable ?? true;
-        const enableConditionalFormatting = featureFlags?.enableConditionalFormatting ?? false;
+        const enableConditionalFormatting = isConditionalFormattingEnabled(featureFlags);
 
         return (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>

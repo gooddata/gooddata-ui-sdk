@@ -55,9 +55,13 @@ import {
     getComboChartStackingConfig,
 } from "../comboChart/comboChartOptions.js";
 import {
+    type IMekkoMeasures,
     collapseMekkoViewByItems,
     dropZeroWidthMekkoColumns,
+    getMekkoMeasures,
+    getMekkoWidthOnlyYAxisProps,
     isMekkoPercentBlockedByNegatives,
+    isMekkoWidthOnly,
 } from "../mekko/mekkoChartOptions.js";
 import {
     buildWaterfallChartSeries,
@@ -88,6 +92,7 @@ import {
     generateDescriptionTreemapFn,
     generateDescriptionXYFn,
     generateTooltipHeatmapFn,
+    generateTooltipMekkoFn,
     generateTooltipSankeyChartFn,
     generateTooltipScatterPlotFn,
     generateTooltipXYFn,
@@ -164,10 +169,7 @@ function getStackingConfig(
     const { type, stackMeasures, stackMeasuresToPercent } = options;
     const stackingValue: StackingType = stackMeasuresToPercent ? "percent" : "normal";
 
-    // Mekko has a single Height measure, so it stacks ONLY by the Stack-by attribute. Without a
-    // stack attribute there is nothing to stack: applying stack-measures / stack-to-100% to the
-    // single series would collapse every column to uniform full height. Guard before the generic
-    // stackMeasures/stackMeasuresToPercent branch below (which a stale property would otherwise hit).
+    // Mekko stacks ONLY by the Stack-by attribute; its stackMeasures* flags are pre-sanitized bucket-driven
     if (isMekko(type)) {
         return stackByAttribute ? stackingValue : null;
     }
@@ -846,17 +848,6 @@ export function getChartOptions(
         };
     }
 
-    const tooltipFactory: ITooltipFactory = getTooltipFactory(
-        isViewByTwoAttributes,
-        viewByAttribute,
-        viewByParentAttribute,
-        stackByAttribute,
-        measure,
-        emptyHeaderTitle,
-        config,
-        isDualAxis,
-    );
-
     // apply distinct point shapes configuration if enabled
     const finalSeries = setupDistinctPointShapesToSeries(type, series, config, measureGroup);
 
@@ -872,10 +863,41 @@ export function getChartOptions(
     const effectiveStacking =
         stacking === "percent" && stackToPercentBlockedByNegativeValues ? "normal" : stacking;
 
+    const mekkoWidthOnly = isMekko(type) && isMekkoWidthOnly(dv);
+    const mekkoMeasures: IMekkoMeasures = isMekko(type) ? getMekkoMeasures(dv, measureGroup) : {};
+
+    const tooltipFactory: ITooltipFactory = isMekko(type)
+        ? generateTooltipMekkoFn(
+              mekkoMeasures.width,
+              mekkoMeasures.height,
+              viewByAttribute,
+              stackByAttribute,
+              config,
+              effectiveStacking === "percent",
+              mekkoWidthOnly,
+          )
+        : getTooltipFactory(
+              isViewByTwoAttributes,
+              viewByAttribute,
+              viewByParentAttribute,
+              stackByAttribute,
+              measure,
+              emptyHeaderTitle,
+              config,
+              isDualAxis,
+          );
+
+    const effectiveYAxisProps = getMekkoWidthOnlyYAxisProps(
+        mekkoWidthOnly,
+        Boolean(stackByAttribute),
+        yAxisProps,
+    );
+
     return {
         type,
         stacking: effectiveStacking,
         stackToPercentBlockedByNegativeValues,
+        mekkoWidthOnly,
         hasStackByAttribute: Boolean(stackByAttribute),
         hasViewByAttribute: Boolean(viewByAttribute),
         legendLayout: config.legendLayout || "horizontal",
@@ -897,7 +919,7 @@ export function getChartOptions(
             enabled: gridEnabled,
         },
         xAxisProps,
-        yAxisProps,
+        yAxisProps: effectiveYAxisProps,
         secondary_xAxisProps,
         secondary_yAxisProps,
         colorAssignments,

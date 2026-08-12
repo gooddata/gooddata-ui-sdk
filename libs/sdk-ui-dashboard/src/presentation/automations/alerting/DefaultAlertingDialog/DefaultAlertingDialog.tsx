@@ -38,6 +38,12 @@ import { RecipientsSelect } from "../../scheduledEmail/DefaultScheduledEmailDial
 import { ApplyCurrentFiltersConfirmDialog } from "../../shared/automationFilters/components/ApplyLatestFiltersConfirmDialog.js";
 import { AutomationFiltersSelect } from "../../shared/automationFilters/components/AutomationFiltersSelect.js";
 import { DeleteAlertConfirmDialog } from "../DefaultAlertingManagementDialog/components/DeleteAlertConfirmDialog.js";
+import { useAlertActions } from "../state/AlertActionsContext.js";
+import { useAlertData } from "../state/AlertDataContext.js";
+import { useAlertDraft } from "../state/AlertDraftContext.js";
+import { useAlertFilters } from "../state/AlertFiltersContext.js";
+import { useAlertDialogValidity } from "../state/useAlertDialogValidity.js";
+import { useAlertSelectedValues } from "../state/useAlertSelectedValues.js";
 import { type IAlertingDialogProps } from "../types.js";
 
 import { AlertingDialogHeader } from "./AlertingDialogHeader.js";
@@ -56,7 +62,7 @@ import { AlertTriggerModeSelect } from "./components/AlertTriggerModeSelect.js";
 import { ALERTING_DIALOG_ID } from "./constants.js";
 import { DefaultLoadingAlertingDialog } from "./DefaultLoadingAlertingDialog.js";
 import { useAlertSubmit } from "./hooks/useAlertSubmit.js";
-import { useEditAlert } from "./hooks/useEditAlert.js";
+import { useAlertThreshold } from "./hooks/useAlertThreshold.js";
 import { getValueSuffix } from "./utils/getters.js";
 import { isAnomalyDetection, isChangeOrDifferenceOperator } from "./utils/guards.js";
 import { isMobileView } from "./utils/responsive.js";
@@ -90,8 +96,12 @@ export function AlertingDialogRenderer({
             enableAnomalyDetectionAlert,
             canUseAiAssistant: enableAiAssistant,
         },
+        catalogAttributes,
+        catalogDateDatasets,
+        separators,
+        allowHourlyRecurrence,
     } = useAutomationsContext();
-    const { widgetTitle, alertToEdit } = useAlertingDialogContext();
+    const { widgetTitle, alertToEdit, notificationChannels } = useAlertingDialogContext();
 
     const [alertToDelete, setAlertToDelete] = useState<IAutomationMetadataObject | null>(null);
 
@@ -100,69 +110,81 @@ export function AlertingDialogRenderer({
         setAlertToDelete(null);
     };
 
+    const { editedAutomation, originalAutomation, warningMessage } = useAlertDraft();
+
     const {
         onTitleChange,
         onRecipientsChange,
+        onMeasureChange,
+        onAttributeChange,
+        onComparisonOperatorChange,
+        onRelativeOperatorChange,
+        onAnomalyDetectionChange,
+        onComparisonTypeChange,
+        onDestinationChange,
+        onTriggerModeChange,
+        onTriggerIntervalChange,
+        onSensitivityChange,
+        onGranularityChange,
+        setEditedAutomation,
+    } = useAlertActions();
+
+    const {
+        supportedMeasures,
+        supportedAttributes,
+        isResultLoading,
+        getAttributeValues,
+        defaultUser,
+        getMetricValue,
+    } = useAlertData();
+
+    const {
         selectedFilters,
         availableFilters,
         onFiltersChange,
         onApplyCurrentFilters,
         automationIsValid,
         filtersAreStale,
-        dropStaleParameters,
         automationParameters,
         availableParameters,
         onParameterChange,
         onParameterDelete,
         onParameterAdd,
-        onMeasureChange,
-        getAttributeValues,
-        onAttributeChange,
-        onComparisonOperatorChange,
-        onRelativeOperatorChange,
-        onAnomalyDetectionChange,
-        onChange,
-        onBlur,
-        onComparisonTypeChange,
-        onDestinationChange,
-        onTriggerModeChange,
-        onTriggerIntervalChange,
+        dropStaleParameters,
+    } = useAlertFilters();
+
+    const {
         selectedMeasure,
-        canChangeMeasure,
-        supportedMeasures,
-        selectedAttribute,
-        selectedValue,
-        supportedAttributes,
-        catalogAttributes,
-        catalogDateDatasets,
-        isResultLoading,
         selectedComparisonOperator,
         selectedRelativeOperator,
         selectedAiOperator,
-        value,
         selectedComparator,
         selectedSensitivity,
-        onSensitivityChange,
         selectedGranularity,
-        onGranularityChange,
-        separators,
-        defaultUser,
-        originalAutomation,
-        editedAutomation,
-        allowOnlyLoggedUserRecipients,
+        selectedAttribute,
+        selectedValue,
         allowExternalRecipients,
-        warningMessage,
-        validationErrorMessage,
-        isInvalidConnectionToInsight,
-        isSubmitDisabled,
-        isParentValid,
-        thresholdErrorMessage,
-        allowHourlyRecurrence,
-        notificationChannels,
-    } = useEditAlert({
-        maxAutomationsRecipients,
-        externalRecipientOverride,
+        allowOnlyLoggedUserRecipients,
+    } = useAlertSelectedValues();
+
+    const { value, onChange, onBlur, thresholdErrorMessage } = useAlertThreshold({
+        setEditedAutomation,
+        editedAutomation,
+        getMetricValue,
+        isNewAlert: !alertToEdit,
+        selectedRelativeOperator,
+        selectedMeasure,
+        selectedAttribute,
+        selectedValue,
     });
+
+    const {
+        isSubmitDisabled,
+        validationErrorMessage,
+        isParentValid,
+        canChangeMeasure,
+        isInvalidConnectionToInsight,
+    } = useAlertDialogValidity();
 
     const [isApplyCurrentFiltersDialogOpen, setIsApplyCurrentFiltersDialogOpen] =
         useState(!automationIsValid);
@@ -615,12 +637,15 @@ export function AlertingDialogRenderer({
 /**
  * Default implementation of the alerting create/edit dialog.
  *
- * This component is a pure consumer of `AutomationsContext` and `AlertingDialogContext`: it reads
- * org/workspace data and per-dialog state from those contexts rather than from the dashboard store.
- * It must therefore be rendered within an `AutomationsContextProvider` (and, for the create/edit
- * flow, an `AlertingDialogContextProvider`). Inside a `Dashboard`, the alerting connector supplies
- * both providers above the `AlertingDialogComponent` slot — so the default component, and any
- * wholesale slot replacement, inherit the contexts automatically and require no extra wiring.
+ * This component is a pure consumer of `AutomationsContext`, `AlertingDialogContext`, and the
+ * alerting dialog state contexts: it reads org/workspace data, per-dialog state, and the alert
+ * draft's state from those contexts rather than from the dashboard store. It must therefore be
+ * rendered within an `AutomationsContextProvider`, an `AlertingDialogContextProvider` (for the
+ * create/edit flow), and an `AlertingDialogStateProvider`. Inside a `Dashboard`, the alerting
+ * connector supplies the first two providers above the `AlertingDialogComponent` slot, and mounts
+ * `AlertingDialogStateProvider` around the resolved slot component once
+ * `useAlertingDialogContext().isLoading` is false — so the default component, and any wholesale
+ * slot replacement, inherit all three contexts automatically and require no extra wiring.
  *
  * The providers are intentionally hoisted above the slot rather than built inside this component:
  * that is what lets a wholesale replacement receive the same contexts. Rendering this component

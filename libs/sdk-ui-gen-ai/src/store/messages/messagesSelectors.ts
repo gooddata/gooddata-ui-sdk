@@ -4,6 +4,7 @@ import { createSelector } from "@reduxjs/toolkit";
 
 import { type GenAIChatEffort } from "@gooddata/sdk-model";
 
+import { DEFAULT_EFFORT } from "../../components/utils/effortSelection.js";
 import { type IChatConversationLocal, type IChatConversationLocalItem, type Message } from "../../model.js";
 import { type RootState } from "../types.js";
 
@@ -104,8 +105,16 @@ export const selectedAgentIdSelector: (state: RootState) => string | undefined =
 
 export const selectedEffortSelector: (state: RootState) => GenAIChatEffort = createSelector(
     messagesSliceSelector,
-    (state) => state.selectedEffort,
+    (state) => {
+        if (!state.currentConversation) {
+            return state.selectedEffort;
+        }
+        return state.conversationsData[state.currentConversation.localId]?.reasoningEffort ?? DEFAULT_EFFORT;
+    },
 );
+
+export const conversationEffortSelector = (state: RootState, conversationLocalId?: string): GenAIChatEffort =>
+    state[messagesSliceName].conversationsData[conversationLocalId ?? ""]?.reasoningEffort ?? DEFAULT_EFFORT;
 
 export const agentsSelector = createSelector(messagesSliceSelector, (state) => state.agents);
 

@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type IBucket, type IInsightDefinition, insightBucket } from "@gooddata/sdk-model";
 
@@ -19,7 +19,7 @@ export interface IInsightToPropConversion<
     TReturnType = TProps[TPropKey],
 > {
     propName: TPropKey;
-    propType: PropMeta;
+    propType: PropMeta | ((value: unknown) => PropMeta);
     itemAccessor: (insight: IInsightDefinition, ctx: IEmbeddingCodeContext | undefined) => TReturnType;
 }
 
@@ -32,7 +32,7 @@ export function insightConversion<
     TReturnType = TProps[TPropKey],
 >(
     propName: TPropKey,
-    propType: PropMeta,
+    propType: PropMeta | ((value: unknown) => PropMeta),
     insightItemAccessor: (insight: IInsightDefinition, ctx: IEmbeddingCodeContext | undefined) => TReturnType,
 ): IInsightToPropConversion<TProps, TPropKey, TReturnType> {
     return {
@@ -89,7 +89,10 @@ export function getInsightToPropsConverter<TProps extends object>(
             if (propValue) {
                 acc[propName] = {
                     value: propValue,
-                    meta: conversion.propType,
+                    meta:
+                        typeof conversion.propType === "function"
+                            ? conversion.propType(propValue)
+                            : conversion.propType,
                 };
             }
 

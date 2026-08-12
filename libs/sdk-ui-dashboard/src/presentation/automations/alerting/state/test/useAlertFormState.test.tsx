@@ -19,7 +19,7 @@ import {
     newMeasure,
 } from "@gooddata/sdk-model";
 
-import { type AlertAttribute, type AlertMetric, AlertMetricComparatorType } from "../../../types.js";
+import { type AlertAttribute, type AlertMetric, AlertMetricComparatorType } from "../../types.js";
 
 // ---------------------------------------------------------------------------
 // Mocks — vi.mock calls are hoisted; factories must not reference top-level
@@ -27,23 +27,26 @@ import { type AlertAttribute, type AlertMetric, AlertMetricComparatorType } from
 // vi.fn() inline and retrieve spies via vi.mocked() after the import statements.
 // ---------------------------------------------------------------------------
 
-vi.mock("../../utils/transformation.js", async (importOriginal: () => Promise<Record<string, unknown>>) => {
-    const actual = await importOriginal();
-    return {
-        ...actual,
-        transformAlertByMetric: vi.fn(),
-        transformAlertByAttribute: vi.fn(),
-        transformAlertByComparisonOperator: vi.fn(),
-        transformAlertByRelativeOperator: vi.fn(),
-        transformAlertByAnomalyDetection: vi.fn(),
-        transformAlertBySensitivity: vi.fn(),
-        transformAlertByGranularity: vi.fn(),
-        transformAlertByDestination: vi.fn(),
-    };
-});
+vi.mock(
+    "../../DefaultAlertingDialog/utils/transformation.js",
+    async (importOriginal: () => Promise<Record<string, unknown>>) => {
+        const actual = await importOriginal();
+        return {
+            ...actual,
+            transformAlertByMetric: vi.fn(),
+            transformAlertByAttribute: vi.fn(),
+            transformAlertByComparisonOperator: vi.fn(),
+            transformAlertByRelativeOperator: vi.fn(),
+            transformAlertByAnomalyDetection: vi.fn(),
+            transformAlertBySensitivity: vi.fn(),
+            transformAlertByGranularity: vi.fn(),
+            transformAlertByDestination: vi.fn(),
+        };
+    },
+);
 
 vi.mock(
-    "../../../../shared/utils/automationUtils.js",
+    "../../../shared/utils/automationUtils.js",
     async (importOriginal: () => Promise<Record<string, unknown>>) => {
         const actual = await importOriginal();
         return {
@@ -54,16 +57,19 @@ vi.mock(
     },
 );
 
-vi.mock("../../utils/convertors.js", async (importOriginal: () => Promise<Record<string, unknown>>) => {
-    const actual = await importOriginal();
-    return {
-        ...actual,
-        createDefaultAlert: vi.fn(),
-    };
-});
+vi.mock(
+    "../../DefaultAlertingDialog/utils/convertors.js",
+    async (importOriginal: () => Promise<Record<string, unknown>>) => {
+        const actual = await importOriginal();
+        return {
+            ...actual,
+            createDefaultAlert: vi.fn(),
+        };
+    },
+);
 
 vi.mock(
-    "../../../../shared/automationFilters/automationParameters.js",
+    "../../../shared/automationFilters/automationParameters.js",
     async (importOriginal: () => Promise<Record<string, unknown>>) => {
         const actual = await importOriginal();
         return {
@@ -74,7 +80,7 @@ vi.mock(
 );
 
 vi.mock(
-    "../../../../shared/filters/index.js",
+    "../../../shared/filters/index.js",
     async (importOriginal: () => Promise<Record<string, unknown>>) => {
         const actual = await importOriginal();
         return {
@@ -89,7 +95,7 @@ vi.mock(
 // Fully replaced (not partial) — this hook internally reads redux selectors via
 // useDashboardSelector, which isn't wired up in these unit tests. Its own behavior is
 // covered by shared/automationFilters/test/useAutomationAlertParameters.test.ts.
-vi.mock("../../../../shared/automationFilters/useAutomationAlertParameters.js", () => ({
+vi.mock("../../../shared/automationFilters/useAutomationAlertParameters.js", () => ({
     useAutomationAlertParameters: vi.fn(),
 }));
 
@@ -101,11 +107,11 @@ const { mockUseAutomationsContext, mockUseAlertingDialogContext } = vi.hoisted((
     mockUseAlertingDialogContext: vi.fn(),
 }));
 
-vi.mock("../../../../contexts/AutomationsContext.js", () => ({
+vi.mock("../../../contexts/AutomationsContext.js", () => ({
     useAutomationsContext: mockUseAutomationsContext,
 }));
 
-vi.mock("../../../../contexts/AlertingDialogContext.js", () => ({
+vi.mock("../../../contexts/AlertingDialogContext.js", () => ({
     useAlertingDialogContext: mockUseAlertingDialogContext,
 }));
 
@@ -123,20 +129,20 @@ vi.mock("react-intl", async () => {
 // Imports placed AFTER vi.mock() calls to pick up mocked versions
 // ---------------------------------------------------------------------------
 
-import { IntlWrapper } from "../../../../../localization/IntlWrapper.js";
-import { setAlertExecutionParameters } from "../../../../shared/automationFilters/automationParameters.js";
-import { useAutomationAlertParameters } from "../../../../shared/automationFilters/useAutomationAlertParameters.js";
+import { IntlWrapper } from "../../../../localization/IntlWrapper.js";
+import { setAlertExecutionParameters } from "../../../shared/automationFilters/automationParameters.js";
+import { useAutomationAlertParameters } from "../../../shared/automationFilters/useAutomationAlertParameters.js";
 import {
     getAppliedWidgetFilters,
     getVisibleFiltersByFilters,
     resolveMvfDimensionalityLocalRefs,
-} from "../../../../shared/filters/index.js";
+} from "../../../shared/filters/index.js";
 import {
     convertExternalRecipientToAutomationRecipient,
     convertUserToAutomationRecipient,
-} from "../../../../shared/utils/automationUtils.js";
-import { createDefaultAlert } from "../../utils/convertors.js";
-import * as transformationModule from "../../utils/transformation.js";
+} from "../../../shared/utils/automationUtils.js";
+import { createDefaultAlert } from "../../DefaultAlertingDialog/utils/convertors.js";
+import * as transformationModule from "../../DefaultAlertingDialog/utils/transformation.js";
 import { useAlertFormState, type IUseAlertFormStateProps } from "../useAlertFormState.js";
 
 // ---------------------------------------------------------------------------
@@ -226,8 +232,8 @@ const SENTINEL_EXTERNAL_RECIPIENT: IAutomationRecipient = {
     type: "externalUser",
 };
 
-// Default context return values — mirror exactly what useEditAlert read from these contexts
-// before part 2 (see useAlertFormState.ts's own context reads).
+// Default context return values — mirror exactly what useAlertFormState.ts reads from these
+// contexts.
 const DEFAULT_AUTOMATIONS_CONTEXT_VALUE = {
     weekStart: SENTINEL_WEEK_START,
     timezone: SENTINEL_TIMEZONE,

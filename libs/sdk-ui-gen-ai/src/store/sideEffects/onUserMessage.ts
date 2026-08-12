@@ -41,12 +41,12 @@ import {
     userContextSelector,
 } from "../chatWindow/chatWindowSelectors.js";
 import {
+    conversationEffortSelector,
     conversationMessagesByIdSelector,
     conversationSelector,
     messagesSelector,
     pendingAgentSwitchSelector,
     selectedAgentIdSelector,
-    selectedEffortSelector,
 } from "../messages/messagesSelectors.js";
 import {
     applyPendingAgentSwitchAction,
@@ -510,7 +510,7 @@ function* evaluateUserConversationMessage(
     );
 
     const context: ReturnType<typeof userContextSelector> = yield select(userContextSelector);
-    const selectedEffort: GenAIChatEffort = yield select(selectedEffortSelector);
+    const selectedEffort: GenAIChatEffort = yield select(conversationEffortSelector, conversation.localId);
 
     // Track interaction ID to assistant message mapping
     let currentUserMessage: IChatConversationLocalItem | undefined = userMessage;

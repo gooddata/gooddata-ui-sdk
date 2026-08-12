@@ -101,6 +101,7 @@ export function convertChatConversationItemFromBackend(
         content,
         agentId: item.newAgentId ?? undefined,
         oldAgentId: item.oldAgentId ?? undefined,
+        reasoningEffort: item.reasoningEffort ?? undefined,
     };
 }
 
@@ -191,12 +192,19 @@ function convertChatConversationContentFromBackend(
                                       )
                                     : undefined;
 
+                                const insights =
+                                    part.references?.visualizations.map((vis) => {
+                                        return visualizationObjectsItemToInsight(
+                                            yamlVisualisationToMetadataObject([], vis as AacVisualisation),
+                                        );
+                                    }) ?? null;
+
                                 const dashboard = data
                                     ? convertDashboard(
                                           buildDashboardWrapper(
                                               data.dashboard,
                                               data.tabFilterContexts,
-                                              part.savedDashboardId,
+                                              part.saved_dashboard_id,
                                           ),
                                           filters,
                                       )
@@ -205,7 +213,8 @@ function convertChatConversationContentFromBackend(
                                 return {
                                     type: "dashboard",
                                     dashboard,
-                                    saved: !!part.savedDashboardId,
+                                    insights,
+                                    saved: !!part.saved_dashboard_id,
                                 };
                             }
                             case "kda":

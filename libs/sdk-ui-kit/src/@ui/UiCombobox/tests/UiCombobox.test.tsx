@@ -380,4 +380,15 @@ describe("UiCombobox", () => {
 
         expect(input.value).toBe("Apple");
     });
+
+    it("forwards isError to the underlying input", () => {
+        const { container } = render(
+            <UiCombobox options={options}>
+                <UiComboboxInput placeholder="Search..." isError />
+            </UiCombobox>,
+        );
+
+        expect(container.querySelector(".gd-ui-kit-text-input__field--error")).toBeInTheDocument();
+        expect(screen.getByRole("combobox")).toHaveAttribute("aria-invalid", "true");
+    });
 });

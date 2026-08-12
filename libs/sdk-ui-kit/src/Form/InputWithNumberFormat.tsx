@@ -8,30 +8,11 @@ import { type IInputPureProps, InputPure } from "./InputPure.js";
 import { DEFAULT_SEPARATORS, formatNumberWithSeparators } from "./numberFormat.js";
 import { type Separators } from "./typings.js";
 
-// Highest number (BIGINT) according to gooddata documentation help.gooddata.com object-datatypes
-export const MAX_NUMBER = 10 ** 15;
-
-// Max number of digits right to decimal point according to gooddata documentation help.gooddata.com object-datatypes
-const MAX_DECIMAL_POINT_NUMBERS = 6;
-
 const getDanglingDecimalPointRegExp = memoize((decimal) => new RegExp(`\\${decimal}$`));
 
-const getFormatValidationRegExp = memoize(
-    ({ thousand, decimal }) => new RegExp(`^-?(\\d|\\${thousand})*(\\${decimal}\\d*)?$`),
-);
-
-const parseStandardNumberString = (numberString: string) => {
-    const belowDecimal = numberString.split(".")[1];
-
-    const roundedNumberString =
-        belowDecimal && belowDecimal.length >= MAX_DECIMAL_POINT_NUMBERS
-            ? parseFloat(numberString).toFixed(MAX_DECIMAL_POINT_NUMBERS)
-            : numberString;
-
-    const number = parseFloat(roundedNumberString);
-
-    return number === 0 ? 0 : number;
-};
+// A half-typed exponent ("1e", "1e+") stays valid so it can be entered one character at a time.
+const buildValidationRegExp = ({ thousand, decimal }: Separators) =>
+    new RegExp(`^-?(\\d|\\${thousand})*(\\${decimal}\\d*)?([eE][-+]?\\d*)?$`);
 
 // Removes thousand separators while keeping the decimal separator intact, so the value can be
 // edited as plain digits (no separators popping in/out) while the input is focused.
@@ -51,7 +32,7 @@ const convertFormattedStringToStandard = (formattedString: string, { thousand, d
     return withStandardDecimalPoint.length > 0 ? withStandardDecimalPoint : null;
 };
 
-const parse = (value: any, separators: Separators = DEFAULT_SEPARATORS) => {
+const parse = (value: any, separators: Separators) => {
     if (value === null || value === "" || value === "-") {
         return null;
     }
@@ -62,12 +43,18 @@ const parse = (value: any, separators: Separators = DEFAULT_SEPARATORS) => {
         return null;
     }
 
-    return parseStandardNumberString(numberString);
+    const number = parseFloat(numberString);
+
+    return number === 0 ? 0 : number;
 };
 
-const isValid = (value: any, separators: Separators = DEFAULT_SEPARATORS) => {
+// The wire layer draws the same line: it throws on Infinity/NaN.
+const isValid = (value: any, separators: Separators) => {
+    if (!buildValidationRegExp(separators).test(value)) {
+        return false;
+    }
     const parsed = parse(value, separators);
-    return getFormatValidationRegExp(separators).test(value) && Math.abs(parsed ?? 0) <= MAX_NUMBER;
+    return parsed === null || Number.isFinite(parsed);
 };
 
 /**
@@ -108,7 +95,7 @@ const toNumberValue = (value: string | number | null | undefined): number | null
  * @internal
  */
 export const InputWithNumberFormat = memo(function InputWithNumberFormat({
-    separators,
+    separators = DEFAULT_SEPARATORS,
     value: propValue,
     onChange,
     onFocus,

@@ -12,6 +12,8 @@ import { type IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js"
 import { type IPointData, type ISeriesItemConfig } from "../../typings/unsafe.js";
 import { parseValue, unwrap } from "../_util/common.js";
 
+import { getMekkoMeasures } from "./mekkoChartOptions.js";
+
 /**
  * Mekko (Marimekko) series builder.
  *
@@ -39,6 +41,9 @@ import { parseValue, unwrap } from "../_util/common.js";
 const WIDTH_MEASURE_INDEX = 0;
 const HEIGHT_MEASURE_INDEX = 1;
 
+// Minimal visual height (px, Highcharts minPointLength) of the zero-height width-only columns.
+export const MEKKO_WIDTH_ONLY_MIN_POINT_LENGTH = 5;
+
 export function getMekkoSeries(
     dv: DataViewFacade,
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
@@ -58,17 +63,19 @@ export function getMekkoSeries(
         return [];
     }
 
-    const hasWidthMeasure = measureCount >= 2;
-    // With a single metric present treat it as the Height (the value drawn on the Y axis);
-    // width then falls back to equal-width columns (z = 1).
-    const heightIndex = hasWidthMeasure ? HEIGHT_MEASURE_INDEX : 0;
-    const heightDescriptor = measureGroup.items[heightIndex];
-    const heightFormat = heightDescriptor ? unwrap(heightDescriptor).format : undefined;
+    // Bucket-driven roles: a lone Width measure keeps driving widths — never the Height role.
+    const { width, height } = getMekkoMeasures(dv, measureGroup);
+    const widthOnly = Boolean(width && !height);
+    const hasWidthMeasure = Boolean(width);
+    const heightIndex = measureCount >= 2 ? HEIGHT_MEASURE_INDEX : 0;
+    // Height, or Width when width-only — provides the point format and the non-stacked series name.
+    const primaryDescriptor = height ?? width;
+    const pointFormat = primaryDescriptor ? unwrap(primaryDescriptor).format : undefined;
 
     const buildPoint = (y: DataValue, z: number, viewIndex: number): IPointData => ({
         y: parseValue(y),
         z,
-        format: heightFormat,
+        format: pointFormat,
         name: viewByAttribute
             ? valueWithEmptyHandling(
                   getMappingHeaderFormattedName(viewByAttribute.items[viewIndex]),
@@ -127,22 +134,23 @@ export function getMekkoSeries(
 
     // Non-stacked layout from getBarColumnDimensions: [[MeasureGroup], [viewBy]].
     // twoDimData rows = measures; each row's columns are the viewBy values. One series.
-    const heightRow = data[heightIndex] ?? [];
     const widthRow = hasWidthMeasure ? data[WIDTH_MEASURE_INDEX] : undefined;
-    const seriesData = heightRow.map((value: DataValue, v: number) =>
-        buildPoint(value, widthRow ? finiteOrZero(widthRow[v]) : 1, v),
+    const baseRow = (widthOnly ? widthRow : data[heightIndex]) ?? [];
+    const seriesData = baseRow.map((value: DataValue, v: number) =>
+        buildPoint(widthOnly ? 0 : value, widthRow ? finiteOrZero(widthRow[v]) : 1, v),
     );
 
     return [
         {
             name: valueWithEmptyHandling(
-                heightDescriptor ? unwrap(heightDescriptor).name : "",
+                primaryDescriptor ? unwrap(primaryDescriptor).name : "",
                 emptyHeaderTitle,
             ),
             legendIndex: 0,
             seriesIndex: 0,
             color: colorStrategy.getColorByIndex(0),
             data: seriesData,
+            ...(widthOnly ? { minPointLength: MEKKO_WIDTH_ONLY_MIN_POINT_LENGTH } : {}),
         },
     ];
 }

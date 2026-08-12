@@ -6,6 +6,8 @@ import {
     type RangeConditionOperator,
 } from "@gooddata/sdk-model";
 
+import { type PivotTableNextConfig } from "./public.js";
+
 /**
  * Identifies the measure or attribute a conditional-formatting rule targets. Layout-neutral on
  * purpose: the same target applies whether the item renders as a column or — when transposed — as a
@@ -206,3 +208,18 @@ export type PivotTableNextConditionalFormattingConfig = {
      */
     conditionalFormatting?: IConditionalFormatting;
 };
+
+/**
+ * {@link PivotTableNextConfig} extended with the conditional formatting configuration.
+ *
+ * @remarks
+ * Exists because `PivotTableNextConfig` (`@public`) must not reference this `@alpha` config
+ * directly (api-extractor release-tag rule). Once conditional formatting graduates to `@public`,
+ * fold the config in there and keep this alias as a deprecated re-export — that preserves the
+ * type name only, so a change to the conditional formatting model still forces anyone holding
+ * generated embed code to regenerate it.
+ *
+ * @alpha
+ */
+export type PivotTableNextConfigWithConditionalFormatting = PivotTableNextConfig &
+    PivotTableNextConditionalFormattingConfig;

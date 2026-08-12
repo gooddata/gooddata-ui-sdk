@@ -62,7 +62,7 @@ export function SingleSelectionAttributeFilterElementsSelectItem({
     );
 
     return (
-        <div className={classes} onClick={onItemClick}>
+        <div className={classes} onClick={onItemClick} title={itemTitle}>
             <div className="gd-attribute-filter-list-item-label ">
                 <span>{itemTitle}</span>
                 {isSelected && isMobile && fullscreenOnMobile ? (

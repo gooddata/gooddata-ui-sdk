@@ -328,24 +328,16 @@ export function sanitizeFilters(
             );
         } else if (isRankingFilter(filter)) {
             // A ranking filter referencing a catalog measure by ObjRef need not have that measure in the
-            // buckets, and may have no attributes (granularity is added later) - mirrors measure value
-            // filters. Keep it as-is.
-            if (isCatalogRankingFilter(filter)) {
-                return true;
-            }
-            // Legacy ranking filter referencing a bucket measure by local identifier - it requires a
-            // slicing attribute and the ranked measure to be present in the buckets. A catalog "out of"
-            // attribute (ObjRef) is independent of the buckets, so a filter that ranks out of one survives
-            // even without any attribute bucket items.
-            const hasCatalogAttributes = filter.attributes?.some(
-                (attribute) => typeof attribute !== "string",
-            );
-            if (attributeBucketItems.length === 0 && !hasCatalogAttributes) {
-                return false;
-            }
-            const hasValidMeasure = measureBucketItems.some(
-                (measureBucketItem: IBucketItem) => measureBucketItem.localIdentifier === filter.measure,
-            );
+            // buckets - mirrors measure value filters. A filter referencing a bucket measure by local
+            // identifier requires that measure to be present in the buckets. Either way, if the filter
+            // ranks "out of" a bucket attribute (referenced by local identifier), that attribute must
+            // still be present in the buckets - a plain Top/Bottom N with no attributes is valid even
+            // without any attribute bucket items.
+            const hasValidMeasure =
+                isCatalogRankingFilter(filter) ||
+                measureBucketItems.some(
+                    (measureBucketItem: IBucketItem) => measureBucketItem.localIdentifier === filter.measure,
+                );
             const hasValidAttributes =
                 !filter.attributes ||
                 filter.attributes.every(

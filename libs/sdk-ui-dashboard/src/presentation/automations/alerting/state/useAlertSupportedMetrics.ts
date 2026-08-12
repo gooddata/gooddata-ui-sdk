@@ -5,16 +5,18 @@ import { useEffect, useMemo, useState } from "react";
 import { type IAutomationMetadataObject, type IInsight, type IWidget } from "@gooddata/sdk-model";
 import { fillMissingTitles } from "@gooddata/sdk-ui";
 
-import { useAlertingDialogContext } from "../../../contexts/AlertingDialogContext.js";
-import { useAutomationsContext } from "../../../contexts/AutomationsContext.js";
-import { type AlertAttribute, type AlertMetric } from "../../types.js";
-import { type IMeasureFormatMap, getMeasureFormatsFromExecution } from "../utils/getters.js";
+import { useAlertingDialogContext } from "../../contexts/AlertingDialogContext.js";
+import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
+import { useAttributeValuesFromExecResults } from "../DefaultAlertingDialog/hooks/useAttributeValuesFromExecResults.js";
+import {
+    type IMeasureFormatMap,
+    getMeasureFormatsFromExecution,
+} from "../DefaultAlertingDialog/utils/getters.js";
 import {
     getSupportedInsightAttributesByInsight,
     getSupportedInsightMeasuresByInsight,
-} from "../utils/items.js";
-
-import { useAttributeValuesFromExecResults } from "./useAttributeValuesFromExecResults.js";
+} from "../DefaultAlertingDialog/utils/items.js";
+import { type AlertAttribute, type AlertMetric } from "../types.js";
 
 export interface IUseAlertSupportedMetricsProps {
     insight?: IInsight;

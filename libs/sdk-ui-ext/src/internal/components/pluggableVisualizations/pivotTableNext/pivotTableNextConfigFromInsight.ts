@@ -1,26 +1,56 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import {
     type IInsightDefinition,
     type ISettings,
     insightProperties,
     insightVisualizationUrl,
 } from "@gooddata/sdk-model";
-import { type IColumnSizing, type PivotTableNextConfig } from "@gooddata/sdk-ui-pivot/next";
+import {
+    type IColumnSizing,
+    type PivotTableNextConfig,
+    type PivotTableNextConfigWithConditionalFormatting,
+} from "@gooddata/sdk-ui-pivot/next";
 
 import { type IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor.js";
-import { type PropWithMeta } from "../../../utils/embeddingCodeGenerator/types.js";
+import { type PropMeta, type PropWithMeta } from "../../../utils/embeddingCodeGenerator/types.js";
 import {
+    getConditionalFormattingFromProperties,
     getPaginationFromProperties,
     getTextWrappingFromProperties,
+    isConditionalFormattingEnabled,
 } from "../../../utils/propertiesHelper.js";
+import { removeUseless } from "../../../utils/removeUseless.js";
 import { createPivotTableNextConfig } from "../pivotTableNext/PluggablePivotTableNext.js";
 
 const AG_GRID_TOKEN_PLACEHOLDER: PivotTableNextConfig = {
     agGridToken: "<fill your AG Grid Enterprise license token here>",
 };
+
+function pivotTableNextConfigMeta(
+    name: "PivotTableNextConfig" | "PivotTableNextConfigWithConditionalFormatting",
+): PropMeta {
+    return {
+        typeImport: {
+            importType: "named",
+            name,
+            package: "@gooddata/sdk-ui-pivot/next",
+        },
+        cardinality: "scalar",
+    };
+}
+
+/**
+ * Only a config that actually carries conditional formatting references the `@alpha` extended
+ * type; every other snippet stays on the `@public` {@link PivotTableNextConfig}.
+ */
+export function pivotTableNextConfigPropMeta(config: unknown): PropMeta {
+    const hasConditionalFormatting =
+        typeof config === "object" && config !== null && "conditionalFormatting" in config;
+    return pivotTableNextConfigMeta(
+        hasConditionalFormatting ? "PivotTableNextConfigWithConditionalFormatting" : "PivotTableNextConfig",
+    );
+}
 
 export function isPivotTableNext(
     insightDefinition: IInsightDefinition,
@@ -33,51 +63,37 @@ export function isPivotTableNext(
 export function pivotTableNextConfigFromInsight(
     insight: IInsightDefinition,
     ctx: IEmbeddingCodeContext | undefined,
-): PivotTableNextConfig {
-    const baseConfig =
+): PivotTableNextConfigWithConditionalFormatting {
+    const baseConfig: PivotTableNextConfig =
         ctx?.settings && ctx.backend
-            ? createPivotTableNextConfig({ separators: ctx?.settings?.separators }, "none", ctx.settings)
+            ? createPivotTableNextConfig({ separators: ctx.settings.separators }, "none", ctx.settings)
             : {};
-    const menuProp = isEmpty(baseConfig.menu) ? {} : { menu: baseConfig.menu };
-    const separatorsProp = isEmpty(baseConfig.separators) ? {} : { separators: baseConfig.separators };
-    const measureGroupDimension = insightProperties(insight)?.["controls"]?.measureGroupDimension;
-    const metricsPositionProp = isEmpty(measureGroupDimension) ? {} : { measureGroupDimension };
-    const columnHeadersPosition = insightProperties(insight)?.["controls"]?.columnHeadersPosition;
-    const columnHeadersPositionProp = isEmpty(columnHeadersPosition) ? {} : { columnHeadersPosition };
-    const grandTotalsPosition = insightProperties(insight)?.["controls"]?.grandTotalsPosition;
-    const grandTotalsPositionProp = isEmpty(grandTotalsPosition) ? {} : { grandTotalsPosition };
-    const pagination = getPaginationFromProperties(insightProperties(insight));
-    const paginationProp = isEmpty(pagination) ? {} : { pagination };
-    const columnSizing: IColumnSizing = {
-        columnWidths: insightProperties(insight)?.["controls"]?.columnWidths,
-        defaultWidth: "autoresizeAll",
-        growToFit: true,
-    };
-    const textWrapping = getTextWrappingFromProperties(insightProperties(insight));
+    const properties = insightProperties(insight);
+    const controls = properties?.["controls"];
 
-    return {
-        ...menuProp,
-        ...separatorsProp,
-        ...metricsPositionProp,
-        ...columnHeadersPositionProp,
-        ...grandTotalsPositionProp,
-        ...paginationProp,
-        columnSizing,
-        textWrapping,
+    return removeUseless({
+        menu: baseConfig.menu,
+        separators: baseConfig.separators,
+        measureGroupDimension: controls?.measureGroupDimension,
+        columnHeadersPosition: controls?.columnHeadersPosition,
+        grandTotalsPosition: controls?.grandTotalsPosition,
+        pagination: getPaginationFromProperties(properties),
+        textWrapping: getTextWrappingFromProperties(properties),
+        conditionalFormatting: isConditionalFormattingEnabled(ctx?.settings)
+            ? getConditionalFormattingFromProperties(properties)
+            : undefined,
+        columnSizing: {
+            columnWidths: controls?.columnWidths,
+            defaultWidth: "autoresizeAll",
+            growToFit: true,
+        } satisfies IColumnSizing,
         ...AG_GRID_TOKEN_PLACEHOLDER,
-    };
+    } satisfies PivotTableNextConfigWithConditionalFormatting);
 }
 
 export function pivotTableNextConfigForInsightViewComponent(): PropWithMeta<PivotTableNextConfig> {
     return {
         value: AG_GRID_TOKEN_PLACEHOLDER,
-        meta: {
-            cardinality: "scalar",
-            typeImport: {
-                importType: "named",
-                name: "PivotTableNextConfig",
-                package: "@gooddata/sdk-ui-pivot/next",
-            },
-        },
+        meta: pivotTableNextConfigMeta("PivotTableNextConfig"),
     };
 }

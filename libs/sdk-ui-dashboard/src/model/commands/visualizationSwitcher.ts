@@ -118,3 +118,53 @@ export function updateVisualizationsFromSwitcherWidgetContent(
         },
     };
 }
+
+/**
+ * Payload of the {@link IChangeVisualizationSwitcherActiveVisualization} command.
+ * @beta
+ */
+export interface IChangeVisualizationSwitcherActiveVisualizationPayload {
+    /**
+     * Visualization switcher widget reference whose active visualization to change.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Identifier of the active visualization.
+     */
+    readonly activeVisualizationIdentifier: string;
+}
+
+/**
+ * @beta
+ */
+export interface IChangeVisualizationSwitcherActiveVisualization extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.VISUALIZATION_SWITCHER_WIDGET.CHANGE_ACTIVE_VISUALIZATION";
+    readonly payload: IChangeVisualizationSwitcherActiveVisualizationPayload;
+}
+
+/**
+ * Creates the ChangeVisualizationSwitcherActiveVisualization command. Dispatching this command will result in the change of the active visualization
+ * in the visualization switcher widget.
+ *
+ * @param ref - reference of the visualization switcher widget to modify
+ * @param activeVisualizationIdentifier - identifier of the active visualization
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @beta
+ */
+export function changeVisualizationSwitcherActiveVisualization(
+    ref: ObjRef,
+    activeVisualizationIdentifier: string,
+    correlationId?: string,
+): IChangeVisualizationSwitcherActiveVisualization {
+    return {
+        type: "GDC.DASH/CMD.VISUALIZATION_SWITCHER_WIDGET.CHANGE_ACTIVE_VISUALIZATION",
+        correlationId,
+        payload: {
+            ref,
+            activeVisualizationIdentifier,
+        },
+    };
+}

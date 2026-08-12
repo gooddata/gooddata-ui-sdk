@@ -11,7 +11,7 @@ import {
     type IWidget,
 } from "@gooddata/sdk-model";
 
-import { IntlWrapper } from "../../../../../localization/IntlWrapper.js";
+import { IntlWrapper } from "../../../../localization/IntlWrapper.js";
 
 // ---------------------------------------------------------------------------
 // Mocks — vi.mock calls are hoisted, so factories must not reference top-level
@@ -27,25 +27,28 @@ vi.mock("@gooddata/sdk-ui", async (importOriginal: () => Promise<Record<string, 
     };
 });
 
-vi.mock("../../utils/items.js", () => ({
+vi.mock("../../DefaultAlertingDialog/utils/items.js", () => ({
     getSupportedInsightMeasuresByInsight: vi.fn().mockReturnValue([]),
     getSupportedInsightAttributesByInsight: vi.fn().mockReturnValue([]),
 }));
 
-vi.mock("../../utils/getters.js", async (importOriginal: () => Promise<Record<string, unknown>>) => {
-    const original = await importOriginal();
-    return {
-        ...original,
-        getMeasureFormatsFromExecution: vi.fn().mockReturnValue({}),
-    };
-});
+vi.mock(
+    "../../DefaultAlertingDialog/utils/getters.js",
+    async (importOriginal: () => Promise<Record<string, unknown>>) => {
+        const original = await importOriginal();
+        return {
+            ...original,
+            getMeasureFormatsFromExecution: vi.fn().mockReturnValue({}),
+        };
+    },
+);
 
 // Context mocks — the hooks read these via useAutomationsContext /
 // useAlertingDialogContext. We inject the mock values through module mocking.
 
 const executionResultByRefMock = vi.fn();
 
-vi.mock("../../../../contexts/AutomationsContext.js", () => ({
+vi.mock("../../../contexts/AutomationsContext.js", () => ({
     useAutomationsContext: () => ({
         locale: "en-US",
         catalogDateDatasets: [] as ICatalogDateDataset[],
@@ -53,7 +56,7 @@ vi.mock("../../../../contexts/AutomationsContext.js", () => ({
     }),
 }));
 
-vi.mock("../../../../contexts/AlertingDialogContext.js", () => ({
+vi.mock("../../../contexts/AlertingDialogContext.js", () => ({
     useAlertingDialogContext: () => ({
         executionResultByRef: executionResultByRefMock,
     }),
@@ -65,8 +68,8 @@ vi.mock("../../../../contexts/AlertingDialogContext.js", () => ({
 
 import * as sdkUi from "@gooddata/sdk-ui";
 
-import * as gettersModule from "../../utils/getters.js";
-import * as itemsModule from "../../utils/items.js";
+import * as gettersModule from "../../DefaultAlertingDialog/utils/getters.js";
+import * as itemsModule from "../../DefaultAlertingDialog/utils/items.js";
 import {
     useAlertSupportedMetrics,
     type IUseAlertSupportedMetricsProps,

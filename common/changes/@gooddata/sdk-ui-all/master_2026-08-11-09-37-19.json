@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "fix(sdk-ui-ext): allow ranking filter on bucket metric in insights with no attributes",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "ivan.nejezchleb@gooddata.com"
+}

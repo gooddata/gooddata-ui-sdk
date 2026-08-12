@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -14,10 +14,13 @@ import {
 import { type VisType } from "@gooddata/sdk-ui";
 import { useId } from "@gooddata/sdk-ui-kit";
 
+import { changeVisualizationSwitcherActiveVisualization } from "../../../model/commands/visualizationSwitcher.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { useDashboardScheduledEmails } from "../../../model/react/useDasboardScheduledEmails/useDashboardScheduledEmails.js";
 import { useDashboardAlerts } from "../../../model/react/useDashboardAlerting/useDashboardAlerts.js";
+import { useDashboardCommand } from "../../../model/react/useDashboardCommand.js";
 import { selectInsightsMap } from "../../../model/store/insights/insightsSelectors.js";
+import { selectVisualizationSwitcherActiveVisualizationByWidgetRef } from "../../../model/store/ui/uiSelectors.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 import { DashboardItem } from "../../presentationComponents/DashboardItems/DashboardItem.js";
 import { DashboardItemVisualization } from "../../presentationComponents/DashboardItems/DashboardItemVisualization.js";
@@ -47,7 +50,21 @@ export function ViewModeDashboardVisualizationSwitcher({
     screen,
     exportData,
 }: IDashboardVisualizationSwitcherProps) {
-    const [activeVisualizationId, setActiveVisualizationId] = useState(initialActiveVisualizationId);
+    const activeVisualizationSelector = useMemo(
+        () => selectVisualizationSwitcherActiveVisualizationByWidgetRef(widget.ref),
+        [widget.ref],
+    );
+    const activeVisualizationIdFromStore = useDashboardSelector(activeVisualizationSelector);
+    const runCommand = useDashboardCommand(changeVisualizationSwitcherActiveVisualization);
+
+    const activeVisualizationId = activeVisualizationIdFromStore ?? initialActiveVisualizationId;
+
+    const setActiveVisualizationId = useCallback(
+        (activeVisualizationId: string) => {
+            runCommand(widget.ref, activeVisualizationId);
+        },
+        [runCommand, widget.ref],
+    );
 
     const activeVisualization =
         widget.visualizations.find((visualization) => visualization.identifier === activeVisualizationId) ??

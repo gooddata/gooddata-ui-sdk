@@ -29,6 +29,13 @@
             background-color: var(--gd-palette-complementary-2);
             cursor: not-allowed;
         }
+
+        // Repeated with :focus-within to outweigh the focus rule above, so the border stays error-colored
+        // while the field is being corrected.
+        &--error,
+        &--error:focus-within {
+            border-color: var(--gd-palette-error-base);
+        }
     }
 
     &__icon-before {

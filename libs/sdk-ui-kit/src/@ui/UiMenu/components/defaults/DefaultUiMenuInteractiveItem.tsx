@@ -16,12 +16,21 @@ import {
     type IUiMenuItemData,
 } from "../../types.js";
 
-function getTooltipId<T extends IUiMenuItemData = object>(
-    item: IUiMenuInteractiveItem<T>,
-    makeItemId: (item: IUiMenuInteractiveItem<T>) => string | undefined,
-): string | undefined {
-    const itemId = makeItemId(item);
-    return item.tooltip && itemId ? `${itemId}__tooltip` : undefined;
+function hasIconTooltip(item: { tooltip?: ReactNode; iconRight?: ReactNode }): boolean {
+    return !!item.tooltip && !!item.iconRight;
+}
+
+function getItemRole(
+    selectionRole: IUiMenuInteractiveItem["selectionRole"],
+): "menuitem" | "menuitemradio" | "menuitemcheckbox" {
+    switch (selectionRole) {
+        case "radio":
+            return "menuitemradio";
+        case "checkbox":
+            return "menuitemcheckbox";
+        default:
+            return "menuitem";
+    }
 }
 
 /**
@@ -81,7 +90,7 @@ export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = 
         }
     }
     const isTooltipOpen = !!item.tooltip && isKeyboardFocused && !isDismissed;
-    useCloseOnEscape(isTooltipOpen, () => setIsDismissed(true), true);
+    useCloseOnEscape(isTooltipOpen && !hasIconTooltip(item), () => setIsDismissed(true), true);
 
     const handleMouseFocus = useCallback(() => {
         if (controlType !== "mouse") {
@@ -111,27 +120,16 @@ export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = 
     );
 
     const dataTestId = typeof itemDataTestId === "function" ? itemDataTestId(item) : itemDataTestId;
-    const tooltipId = getTooltipId(item, makeItemId);
-    // Only link while open — the sr-only copy it points to is empty otherwise.
+
     return (
         <li
             ref={scrollToItem}
-            role="menuitem"
             {...item.ariaAttributes}
+            role={getItemRole(item.selectionRole)}
+            aria-checked={item.selectionRole ? !!item.isSelected : item.ariaAttributes?.["aria-checked"]}
             aria-haspopup={item.subItems ? "menu" : item.ariaAttributes?.["aria-haspopup"]}
             aria-disabled={item.isDisabled}
-            // Pin the name so the tooltip's sr-only copy (a descendant) doesn't fold into it too.
-            aria-label={
-                item.tooltip
-                    ? (item.ariaAttributes?.["aria-label"] ?? item.stringTitle)
-                    : item.ariaAttributes?.["aria-label"]
-            }
-            aria-describedby={
-                isTooltipOpen
-                    ? [tooltipId, item.ariaAttributes?.["aria-describedby"]].filter(Boolean).join(" ") ||
-                      undefined
-                    : item.ariaAttributes?.["aria-describedby"]
-            }
+            aria-label={item.ariaAttributes?.["aria-label"]}
             onMouseMove={handleMouseFocus}
             onClick={item.isDisabled ? undefined : handleSelect}
             tabIndex={-1}
@@ -152,38 +150,54 @@ export function DefaultUiMenuInteractiveItem<T extends IUiMenuItemData = object>
     isFocused,
     isTooltipOpen,
 }: IUiMenuInteractiveItemProps<T>): ReactNode {
-    const { useContextStore, createSelector } = typedUiMenuContextStore<T>();
-    const selector = createSelector((ctx) => ({ makeItemId: ctx.makeItemId }));
-    const { makeItemId } = useContextStore(selector);
-    const tooltipId = getTooltipId(item, makeItemId);
+    const useIconTooltip = hasIconTooltip(item);
+
+    const itemInner = (
+        <div
+            className={e("item", {
+                isFocused,
+                isSelected: !!item.isSelected,
+                isDisabled: !!item.isDisabled,
+                isDestructive: !!item.isDestructive,
+            })}
+        >
+            {item.iconLeft ? item.iconLeft : null}
+            <ShortenedText className={e("item-title")} ellipsisPosition={"end"}>
+                {item.stringTitle}
+            </ShortenedText>
+
+            {!!item.subItems && <i className="gd-icon-navigateright" />}
+            {useIconTooltip ? (
+                <UiTooltip
+                    anchor={item.iconRight}
+                    content={item.tooltip}
+                    optimalPlacement
+                    triggerBy={["hover"]}
+                    inlineAnchor
+                    accessibilityHidden
+                    arrowPlacement="bottom-end"
+                    width={item.tooltipWidth}
+                />
+            ) : item.iconRight ? (
+                item.iconRight
+            ) : null}
+            {item.tooltip ? <span className="sr-only">{item.tooltip}</span> : null}
+        </div>
+    );
+
+    if (!item.tooltip) {
+        return itemInner;
+    }
 
     return (
         <UiTooltip
-            id={tooltipId}
-            anchor={
-                <div
-                    className={e("item", {
-                        isFocused,
-                        isSelected: !!item.isSelected,
-                        isDisabled: !!item.isDisabled,
-                        isDestructive: !!item.isDestructive,
-                    })}
-                >
-                    {item.iconLeft ? item.iconLeft : null}
-                    <ShortenedText className={e("item-title")} ellipsisPosition={"end"}>
-                        {item.stringTitle}
-                    </ShortenedText>
-
-                    {!!item.subItems && <i className="gd-icon-navigateright" />}
-                    {item.iconRight ? item.iconRight : null}
-                </div>
-            }
+            anchor={itemInner}
             content={item.tooltip}
-            disabled={!item.tooltip}
             optimalPlacement
-            isOpen={isTooltipOpen ? true : undefined}
-            triggerBy={["hover"]}
-            arrowPlacement={"left"}
+            isOpen={useIconTooltip ? isTooltipOpen : isTooltipOpen || undefined}
+            triggerBy={useIconTooltip ? [] : ["hover"]}
+            accessibilityHidden
+            arrowPlacement="left"
             width={item.tooltipWidth}
         />
     );

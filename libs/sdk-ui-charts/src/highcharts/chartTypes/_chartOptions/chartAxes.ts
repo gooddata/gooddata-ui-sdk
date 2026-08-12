@@ -14,11 +14,13 @@ import {
     isComboChart,
     isHeatmap,
     isLineChart,
+    isMekko,
     isOneOfTypes,
     isScatterPlot,
     isSupportingJoinedAttributeAxisName,
     unwrap,
 } from "../_util/common.js";
+import { getMekkoMeasures } from "../mekko/mekkoChartOptions.js";
 
 import { supportedDualAxesChartTypes } from "./chartCapabilities.js";
 
@@ -122,6 +124,24 @@ function getHeatmapYAxes(stackByAttribute: IUnwrappedAttributeHeadersWithItems |
     return [
         {
             label: stackByAttribute ? stackByAttribute.formOf.name : "",
+        },
+    ];
+}
+
+// Mekko's Y axis reads the Height measure; blank when width-only.
+function getMekkoYAxes(
+    dv: DataViewFacade,
+    config: IChartConfig,
+    measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
+): IAxis[] {
+    const { height } = getMekkoMeasures(dv, measureGroup);
+    const heightItem = height ? unwrap(height) : undefined;
+
+    return [
+        {
+            label: config.yLabel || (heightItem?.name ?? ""),
+            format: config.yFormat || heightItem?.format,
+            seriesIndices: range(measureGroup.items.length),
         },
     ];
 }
@@ -241,6 +261,10 @@ export function getYAxes(
 
     if (isHeatmap(type)) {
         return getHeatmapYAxes(stackByAttribute);
+    }
+
+    if (isMekko(type)) {
+        return getMekkoYAxes(dv, config, measureGroup);
     }
 
     const isDualAxes =

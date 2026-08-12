@@ -2,6 +2,7 @@
 
 import { type IChatConversationVisualisationContent } from "@gooddata/sdk-backend-spi";
 import {
+    type GenAIChatEffort,
     type GenAIObjectType,
     type IGenAIObjectReference,
     type IGenAIUserContext,
@@ -49,6 +50,12 @@ export type StoredConversation = {
         agentId: string;
         previousAgentId: string | undefined;
     };
+    /**
+     * The effort this conversation runs at, seeded from its history when it is opened and
+     * overwritten whenever the user picks a different one. Undefined means nothing is recorded
+     * yet, the conversation runs at the default effort.
+     */
+    reasoningEffort?: GenAIChatEffort;
 };
 
 export type StoreContext = {

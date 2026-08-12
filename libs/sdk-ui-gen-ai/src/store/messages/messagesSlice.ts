@@ -7,6 +7,7 @@ import { type GenAIChatEffort, type GenAIChatInteractionUserFeedback } from "@go
 import { type SdkErrorType } from "@gooddata/sdk-ui";
 
 import { selectDefaultAgentId } from "../../components/utils/agentSelection.js";
+import { DEFAULT_EFFORT, deriveConversationEffort } from "../../components/utils/effortSelection.js";
 import {
     type AssistantMessage,
     type Contents,
@@ -80,7 +81,8 @@ type MessagesSliceState = {
      */
     selectedAgentId: string | undefined;
     /**
-     * The effort level the user selected for the next message.
+     * The effort level the user selected for the next message, used only while no conversation is
+     * selected. With conversations the effort lives per conversation in conversationsData.
      */
     selectedEffort: GenAIChatEffort;
     /**
@@ -134,7 +136,7 @@ const initialState: MessagesSliceState = {
     currentConversation: undefined,
     conversationsLoaded: false,
     selectedAgentId: undefined,
-    selectedEffort: "MEDIUM",
+    selectedEffort: DEFAULT_EFFORT,
     agents: undefined,
     conversationsData: {},
 };
@@ -194,6 +196,16 @@ const setNormalizedConversation = (
         data.order = normalizedOrder;
         data.items = normalizedItems;
     }
+};
+
+const seedConversationEffort = (state: MessagesSliceState, conversationLocalId: string | undefined) => {
+    const data = getConversationData(state.conversationsData, conversationLocalId);
+
+    if (!data || data.reasoningEffort !== undefined) {
+        return;
+    }
+
+    data.reasoningEffort = deriveConversationEffort(data.order.map((localId) => data.items[localId]));
 };
 
 const setConversationInProgress = (
@@ -391,6 +403,7 @@ const messagesSlice = createSlice({
         ) => {
             setNormalizedConversation(state, currentConversation, conversationItems);
             state.selectedAgentId = currentConversation.agentId ?? state.selectedAgentId;
+            seedConversationEffort(state, currentConversation.localId);
             state.threadId = threadId;
             if (state.currentConversation) {
                 const data = getConversationData(state.conversationsData, state.currentConversation.localId);
@@ -746,6 +759,7 @@ const messagesSlice = createSlice({
                 state.loaded = true;
             }
             state.selectedAgentId = payload.conversation.agentId ?? state.selectedAgentId;
+            seedConversationEffort(state, state.currentConversation?.localId);
         },
         setSelectedAgentAction: (
             state,
@@ -797,7 +811,13 @@ const messagesSlice = createSlice({
             }
         },
         setSelectedEffortAction: (state, { payload }: PayloadAction<{ effort: GenAIChatEffort }>) => {
-            state.selectedEffort = payload.effort;
+            const data = getConversationData(state.conversationsData, state.currentConversation?.localId);
+
+            if (data) {
+                data.reasoningEffort = payload.effort;
+            } else {
+                state.selectedEffort = payload.effort;
+            }
         },
         applyPendingAgentSwitchAction: (
             state,

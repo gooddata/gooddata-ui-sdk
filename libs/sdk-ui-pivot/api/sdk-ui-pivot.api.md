@@ -624,6 +624,9 @@ export type PivotTableNextConditionalFormattingConfig = {
 // @public
 export type PivotTableNextConfig = PivotTableNextTranspositionConfig & PivotTableNextTextWrappingConfig & PivotTableNextColumnsSizingConfig & PivotTableNextMenuConfig & PivotTableNextFormattingConfig & PivotTableNextExecutionCancellingConfig & PivotTableNextLayoutConfig & PivotTableNextGrandTotalsPositionConfig & PivotTableNextCellSelectionConfig & PivotTableNextAgGridLicenseConfig & PivotTableNextPaginationConfig & PivotTableNextAccessibilityConfig & PivotTableNextExperimentalConfig;
 
+// @alpha
+export type PivotTableNextConfigWithConditionalFormatting = PivotTableNextConfig & PivotTableNextConditionalFormattingConfig;
+
 // @public
 export type PivotTableNextExecutionCancellingConfig = {
     enableExecutionCancelling?: boolean;

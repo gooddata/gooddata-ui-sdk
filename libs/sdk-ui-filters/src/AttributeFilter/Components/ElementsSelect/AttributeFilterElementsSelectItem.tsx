@@ -95,6 +95,7 @@ export function AttributeFilterElementsSelectItem({
             tabIndex={-1}
             aria-rowindex={index}
             aria-label={itemTitle}
+            title={itemTitle}
         >
             <div role={"gridcell"} className="gd-attribute-filter-list-item-label">
                 <label className={labelClasses}>

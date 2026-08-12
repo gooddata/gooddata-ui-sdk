@@ -6384,6 +6384,7 @@ export interface IUiComboboxInputProps {
     autoFocus?: boolean;
     // (undocumented)
     dataTestId?: string;
+    isError?: boolean;
     name?: string;
     // (undocumented)
     onBlur?: (event: FocusEvent_2<HTMLInputElement>) => void;
@@ -7278,6 +7279,7 @@ export type IUiMenuInteractiveItem<T extends IUiMenuItemData = object> = {
     stringTitle: string;
     isDisabled?: boolean;
     isSelected?: boolean;
+    selectionRole?: "radio" | "checkbox";
     isDestructive?: boolean;
     tooltip?: ReactNode;
     tooltipWidth?: number;
@@ -7938,6 +7940,7 @@ export interface IUiTextInputProps {
     iconBefore?: IconType;
     // (undocumented)
     inputRef?: Ref<HTMLInputElement>;
+    isError?: boolean;
     label?: string;
     // (undocumented)
     name?: string;

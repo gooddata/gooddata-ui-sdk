@@ -715,6 +715,7 @@ export type IChatConversationCreateOptions = {
 export type IChatConversationDashboardContent = {
     type: "dashboard";
     dashboard: IDashboard | null;
+    insights: IInsight[] | null;
     saved: boolean;
 };
 
@@ -749,6 +750,7 @@ export type IChatConversationItem = {
     feedback?: IChatConversationFeedback;
     agentId?: string;
     oldAgentId?: string;
+    reasoningEffort?: GenAIChatEffort;
 };
 
 // @public
@@ -822,9 +824,6 @@ export interface IChatConversationThread {
 
 // @internal
 export interface IChatConversationThreadQuery {
-    query(options?: {
-        signal?: AbortSignal;
-    }): Promise<IChatConversationItem[]>;
     stream(): ReadableStream<IChatConversationItem | IChatConversationError>;
     withAllowedRelationshipTypes(relationshipTypes?: IAllowedRelationshipType[]): IChatConversationThreadQuery;
     withCreateLimit(createLimit: number): IChatConversationThreadQuery;

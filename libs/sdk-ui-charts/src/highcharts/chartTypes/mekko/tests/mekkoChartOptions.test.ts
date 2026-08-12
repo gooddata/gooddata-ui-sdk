@@ -2,18 +2,121 @@
 
 import { describe, expect, it } from "vitest";
 
-import { type DataViewFacade, VisualizationTypes } from "@gooddata/sdk-ui";
+import { type IMeasureDescriptor, type IMeasureGroupDescriptor } from "@gooddata/sdk-model";
+import { BucketNames, type DataViewFacade, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { type IUnwrappedAttributeHeadersWithItems } from "../../../typings/mess.js";
 import { type ISeriesItem } from "../../../typings/unsafe.js";
 import {
     collapseMekkoViewByItems,
     dropZeroWidthMekkoColumns,
+    getMekkoEffectiveConfig,
+    getMekkoMeasures,
+    getMekkoWidthOnlyYAxisProps,
     isMekkoPercentBlockedByNegatives,
 } from "../mekkoChartOptions.js";
 
 const series = (points: Array<{ y?: number; z?: number }>): ISeriesItem =>
     ({ data: points }) as unknown as ISeriesItem;
+
+const dvWithEmptyBuckets = (emptyBuckets: string[]): DataViewFacade =>
+    ({
+        def: () => ({ isBucketEmpty: (localId: string) => emptyBuckets.includes(localId) }),
+    }) as unknown as DataViewFacade;
+
+const measureGroup = (...names: string[]): IMeasureGroupDescriptor["measureGroupHeader"] =>
+    ({
+        items: names.map(
+            (name, index) =>
+                ({ measureHeaderItem: { localIdentifier: `m${index}`, name } }) as IMeasureDescriptor,
+        ),
+    }) as IMeasureGroupDescriptor["measureGroupHeader"];
+
+describe("getMekkoMeasures", () => {
+    it("assigns Width to the first and Height to the last item with two measures", () => {
+        const { width, height } = getMekkoMeasures(dvWithEmptyBuckets([]), measureGroup("Width", "Height"));
+        expect(width?.measureHeaderItem.name).toBe("Width");
+        expect(height?.measureHeaderItem.name).toBe("Height");
+    });
+
+    it("assigns a lone measure by its bucket", () => {
+        const widthOnly = getMekkoMeasures(
+            dvWithEmptyBuckets([BucketNames.SECONDARY_MEASURES]),
+            measureGroup("Width"),
+        );
+        expect(widthOnly.width?.measureHeaderItem.name).toBe("Width");
+        expect(widthOnly.height).toBeUndefined();
+
+        const heightOnly = getMekkoMeasures(
+            dvWithEmptyBuckets([BucketNames.MEASURES]),
+            measureGroup("Height"),
+        );
+        expect(heightOnly.width).toBeUndefined();
+        expect(heightOnly.height?.measureHeaderItem.name).toBe("Height");
+    });
+
+    it("keeps the height-only treatment for a lone measure without bucket information", () => {
+        const { width, height } = getMekkoMeasures(
+            dvWithEmptyBuckets([BucketNames.MEASURES, BucketNames.SECONDARY_MEASURES]),
+            measureGroup("Solo"),
+        );
+        expect(width).toBeUndefined();
+        expect(height?.measureHeaderItem.name).toBe("Solo");
+    });
+
+    it("returns no measures for an empty measure group", () => {
+        expect(getMekkoMeasures(dvWithEmptyBuckets([BucketNames.MEASURES]), measureGroup())).toEqual({
+            height: undefined,
+        });
+    });
+});
+
+describe("getMekkoEffectiveConfig", () => {
+    it("passes non-mekko config through unchanged", () => {
+        const config = { type: VisualizationTypes.COLUMN, stackMeasuresToPercent: true };
+        expect(getMekkoEffectiveConfig(config, dvWithEmptyBuckets([BucketNames.STACK]))).toBe(config);
+    });
+
+    it("drops stale stackMeasures* without a Stack By bucket", () => {
+        const config = {
+            type: VisualizationTypes.MEKKO,
+            stackMeasures: true,
+            stackMeasuresToPercent: true,
+        };
+        expect(getMekkoEffectiveConfig(config, dvWithEmptyBuckets([BucketNames.STACK]))).toMatchObject({
+            stackMeasures: false,
+            stackMeasuresToPercent: false,
+        });
+    });
+
+    it("locks 100% stacking for width-only with Stack By", () => {
+        const config = { type: VisualizationTypes.MEKKO };
+        expect(
+            getMekkoEffectiveConfig(config, dvWithEmptyBuckets([BucketNames.SECONDARY_MEASURES])),
+        ).toMatchObject({ stackMeasuresToPercent: true });
+    });
+
+    it("keeps the user's stacking choice with both measures and Stack By", () => {
+        const config = { type: VisualizationTypes.MEKKO, stackMeasuresToPercent: false };
+        expect(getMekkoEffectiveConfig(config, dvWithEmptyBuckets([]))).toBe(config);
+    });
+});
+
+describe("getMekkoWidthOnlyYAxisProps", () => {
+    it("pins and hides the axis in the width-only non-stacked state, overriding saved controls", () => {
+        expect(getMekkoWidthOnlyYAxisProps(true, false, { visible: true, min: "5" })).toEqual({
+            min: "0",
+            max: "1",
+            visible: false,
+        });
+    });
+
+    it("keeps saved axis props otherwise", () => {
+        const yAxisProps = { min: "5" };
+        expect(getMekkoWidthOnlyYAxisProps(true, true, yAxisProps)).toBe(yAxisProps);
+        expect(getMekkoWidthOnlyYAxisProps(false, false, yAxisProps)).toBe(yAxisProps);
+    });
+});
 
 describe("isMekkoPercentBlockedByNegatives", () => {
     it("is true for a Mekko whose series include a negative value", () => {

@@ -143,6 +143,7 @@ import {
 import { type IChangeDashboardTimezoneOverride } from "./timezone.js";
 import {
     type IAddVisualizationToVisualizationSwitcherWidgetContent,
+    type IChangeVisualizationSwitcherActiveVisualization,
     type IUpdateVisualizationsFromVisualizationSwitcherWidgetContent,
 } from "./visualizationSwitcher.js";
 
@@ -234,6 +235,7 @@ export type DashboardCommands =
     | IChangeRichTextWidgetFilterSettings
     | IAddVisualizationToVisualizationSwitcherWidgetContent
     | IUpdateVisualizationsFromVisualizationSwitcherWidgetContent
+    | IChangeVisualizationSwitcherActiveVisualization
     //alpha
     | IDrill
     | IDrillDown

@@ -181,7 +181,7 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
             },
         });
 
-        await query.query();
+        query.stream();
 
         const request = vi.mocked(GenAiApi_PostMessages).mock.calls[0][2];
         const widgets = request.aiSendMessageRequest.userContext?.view?.dashboard?.widgets;
@@ -234,7 +234,7 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
             },
         });
 
-        await query.query();
+        query.stream();
 
         const request = vi.mocked(GenAiApi_PostMessages).mock.calls[0][2];
         const widget = request.aiSendMessageRequest.userContext?.view?.dashboard?.widgets?.[0];
@@ -268,7 +268,7 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
             },
         });
 
-        await query.query();
+        query.stream();
 
         const request = vi.mocked(GenAiApi_PostMessages).mock.calls[0][2];
         const widget = request.aiSendMessageRequest.userContext?.view?.dashboard?.widgets?.[0];
